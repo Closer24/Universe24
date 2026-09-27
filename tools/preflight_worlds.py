@@ -1,9 +1,8 @@
-"""The pre-GO check of the world files: LOAD every world RUN_LIST.md names, run none.
+"""The pre-GO check of the world files: LOAD every world a run list names, run none.
 
 The model owner's rule (2026-09-24, through the Boss at 04:30Z): nothing runs before it
 is checked and approved. This tool does the engine's half of the preflight at the GO
-without a run: for every world file named in a run list (`docs/designs/detector_law/
-RUN_LIST.md` by default; the backticked `*.json` names in its tables, a brace group such
+without a run: for every world file named in a run list (given by `--list`; the backticked `*.json` names in its tables, a brace group such
 as `bell_{a0b0,a0b1}.json` expanded), it resolves the file under `examples/events/`
 (a path as written, or a bare name searched under that tree), decodes and parses it
 with the engine's own loader (`parse_nature_beam_world`; the old runner's loader is
@@ -19,8 +18,7 @@ message) or MISSING (a name the list carries and the tree does not: a world stil
 write), and exits 1 when any world is refused; a missing world is reported, not a
 failure (`--strict` makes it one). Nothing here runs a rule or reads a record.
 
-    PYTHONPATH=src python tools/preflight_worlds.py
-    PYTHONPATH=src python tools/preflight_worlds.py --list docs/designs/detector_law/RUN_LIST.md --root examples/events
+    PYTHONPATH=src python tools/preflight_worlds.py --list <a run list> --root examples/events
     PYTHONPATH=src python tools/preflight_worlds.py examples/events/massive_record/muon_moving_clock_speed_third_14.json
 """
 
@@ -43,7 +41,6 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.events.world import NatureBeamWorld
 from event_universe.world_files import parse_nature_beam_world
 
-DEFAULT_LIST = Path("docs/designs/detector_law/RUN_LIST.md")
 DEFAULT_ROOT = Path("examples/events")
 NAME = re.compile(r"`([A-Za-z0-9_./{},-]*\.json)`")
 BRACE = re.compile(r"\{([^{}]*)\}")
@@ -175,10 +172,12 @@ def main(argv: list[str] | None = None) -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("worlds", nargs="*", help="world files to load (none: the list's)")
-    parser.add_argument("--list", type=Path, default=DEFAULT_LIST, help="the run list (RUN_LIST.md)")
+    parser.add_argument("--list", type=Path, help="the run list")
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="the worlds' tree")
     parser.add_argument("--strict", action="store_true", help="a missing world fails too")
     args = parser.parse_args(argv)
+    if not args.worlds and args.list is None:
+        parser.error("name the world files or a run list with --list")
     names = args.worlds or listed(args.list.read_text(encoding="utf-8"))
     outcomes = preflight(names, args.root)
     for outcome in outcomes:

@@ -246,9 +246,7 @@ def receiver_body(position: list[int], family: str = "light") -> dict:
 
 
 def receiver_cube(document: dict, name: str, corner: list[int], family: str = "light") -> None:
-    """ONE DETECTOR (record 1899): the cube of side DETECTOR_SIDE of receiver bodies from
-    `corner`, read as the one set `name` (its sensitivity its whole cube, the click the
-    detector's, never a Node's)."""
+    """One detector: a cube of side DETECTOR_SIDE of receiver bodies from `corner`, read as the one set `name`."""
     positions = cube_positions(document["shape"], corner)
     document["measured"].extend(receiver_body(position, family) for position in positions)
     document["detectors"].append({"name": name, "positions": positions})
@@ -326,9 +324,7 @@ def emitter_world(
 
 
 def lawful_wheel(world, line: dict) -> bool:
-    """A giving line's W is the rule's at the emitting body's read Node with the family of
-    clicks' level the line carries (`read_clocks`: the level at the read Node, then at its six
-    reads, GAMEBOARD; the rule reads the Node's own level alone, item 36), its u below it."""
+    """A giving line's W, the rule's at the emitting body's read Node with the level the line carries, its u below it."""
     block = world.measured[line["measured"]].block
     at_node, _reads = line["read_clocks"]
     return line["W"] == wheel_of(block.pair, at_node) and 0 <= line["u"] < line["W"]
@@ -363,9 +359,7 @@ def wheel_of(pair, content: int, gamma: int = NODE_CLOCK) -> int:
 
 
 def on_the_file(document: dict, clock: list[int]) -> dict:
-    """The emitter world moved onto the families file: the path, no integers of its own, the
-    given clock on the emitter; light is the charge family (9.86 (2) (b)), the emitter body of
-    matter with its kind (9.91 (7))."""
+    """The emitter world on the families file: its path, no integers of its own, light the charge family, the emitter body of matter."""
     moved = json.loads(json.dumps(document))
     names = {family["name"]: family for family in moved["universe"]}
     moved["universe"] = FILE
