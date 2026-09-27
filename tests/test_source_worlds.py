@@ -186,8 +186,9 @@ def test_the_record_count_and_the_table_are_the_algebras_integers():
 
 @pytest.mark.xfail(
     strict=True,
-    reason="the loader reads `readings`, reads no `sourced` and requires the residue keys "
-    "K, N, release (record 2199 items 2 and 3; the ledger's source row); LAWFUL when they land",
+    reason="the loader requires the old form's world keys N, age_bound, body_record, clock_stamp "
+    "and massive_record, which the loop still reads (Main Loop's next piece on #1198, #1194's "
+    "b-marks); the mark comes off when those reads go",
 )
 @pytest.mark.parametrize("name", NAMES)
 def test_the_source_worlds_load_lawful(name):

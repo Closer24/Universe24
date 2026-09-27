@@ -1,10 +1,4 @@
-"""THE BODY ON ONE NODE, COMMIT 6 (ALGEBRA.md #the-interval, #the-primitives; the one
-stroke of record 2106; BUILD.md section 26 item 65): a body gives its own family from its
-`stock`, its quanta lowered by one per giving, the stock spent; the loader's refusals; the
-self-source slot lowers the step by (the six squared differences) div P_2 exactly where a unit
-above 0 is declared, the remainder untouched, the inverse exact; two wells of one family may
-stand anywhere (the separation rule of 9.35 retired). The spin's step's tests are the folder's,
-tests/test_feature_spins_step.py. HOST; no pin."""
+"""The body on one Node: a body gives its own family from its stock, the loader's refusals, and the self-source lowers the step exactly where declared, with the inverse exact. HOST; no pin."""
 
 from __future__ import annotations
 
