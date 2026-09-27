@@ -189,7 +189,7 @@ def emitter_body(
 def layer_world(receiver: object = None) -> dict:
     """A layer of 80 x 9 x 1 (x closed): the emitter across the width at [2, 34) and three detector cubes
     s0, s1, s2 at x in [70, 72]; `receiver` names the ladder's sets in order (ALGEBRA.md #rule3)."""
-    measured = [emitter_body([2, 0, 0], 8, receiver=receiver, extents=[32, 9, 1])]
+    measured = [emitter_body([2, 0, 0], 8, extents=[32, 9, 1])]  # the receiver set after the seeding
     document = {
         "shape": [80, 9, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
@@ -211,6 +211,9 @@ def layer_world(receiver: object = None) -> dict:
     for index, y in enumerate((0, 3, 6)):
         receiver_cube(document, f"s{index}", [70, y, 0])
     seed_on_the_mode(document)
+    if receiver is not None:
+        measured[0]["emitter"]["receiver"] = receiver
+        document["stamp"] = input_stamp(document)
     return document
 
 

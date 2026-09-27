@@ -298,14 +298,16 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     document["universe"][1]["name"] = "source"
     document["measured"][0]["family"] = "source"
     matter: dict = family_entry("matter", [156, 157], reads())
-    if clock is not None:
-        matter["clock"] = clock  # None: no clock (the refusal's edge case)
+    matter["clock"] = [512, 1] if clock is None else clock  # seeded as recorded; None deletes it after
     document["universe"].append(matter)
     document["measured"] = document["measured"][:1]
     if matter_emitter:
         document["measured"].append(emitter_at(100, stock, family="matter"))
     document["detectors"] = []
     seed_on_the_mode(document)
+    if clock is None:  # no clock (the refusal's edge case), the stamp recomputed
+        del matter["clock"]
+        document["stamp"] = input_stamp(document)
     return document
 
 

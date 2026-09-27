@@ -21,11 +21,15 @@ def own_family_world(stock: int | None) -> dict:
     body = emitter_at(100, 1, family="source")
     body["amount"] = 4
     body["stocks"] = {}
-    if stock is not None:
-        body["stock"] = stock
+    body["stock"] = 2
     document["measured"].append(body)
     document["universe"][1]["clock"] = [512, 1]
-    seed_on_the_mode(document)  # the emitter's mode and the stamp
+    seed_on_the_mode(document)  # the emitter's mode and the stamp, as recorded at the stock 2
+    if stock is None:  # the refusals' edge cases, altered after the seeding
+        del body["stock"]
+    else:
+        body["stock"] = stock
+    document["stamp"] = input_stamp(document)
     return document
 
 
