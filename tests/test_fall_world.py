@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 from event_universe.core.schema import Context
@@ -15,6 +16,7 @@ WORLD = ROOT / "examples" / "events" / "generated" / "fall.json"
 
 def test_the_falls_world_its_mode_file_and_its_expectation_agree():
     """The world: one universe file in the law's form, two bodies by their Nodes with their counts, momentum and phase_denominator, a detector on each, the readings of the momentum and the centre; the mode file carries the world's digest, the giver's mode with its period by the one-Node rule and the light body's own reading; the expectation file's two sections name the row and carry the DETECTOR pins and the GAMEBOARD pins apart; the frame takes the resting body and names the giving body's key where it refuses it today."""
+    sys.set_int_max_str_digits(0)  # the mode file's rotation is an exact fraction of hundreds of digits
     document = json.loads(WORLD.read_text(encoding="utf-8"))
     universe = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))
     rows = {row["name"]: row for row in universe["families"]}

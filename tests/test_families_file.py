@@ -73,6 +73,8 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     assert "held" not in entries[2]
     assert entries[2]["reads"][1] == {"family": "charge", "weight": 1, "by": "q", "twist": "own"}
     for path in (ROOT / "examples/events").glob("*/*.json"):
+        if path.name.endswith((".mode.json", ".expectation.json")):  # the tool's files beside a world
+            continue
         text = json.loads(path.read_text(encoding="utf-8"))
         # a world of the engine; the check-mode worlds (Nature24's generator, ahead of the
         # audit of ALGEBRA.md #the-primitives) carry none of the keys the loader still requires
