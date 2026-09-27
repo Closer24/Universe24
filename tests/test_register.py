@@ -1,23 +1,5 @@
-"""THE REGISTER OF PRIMITIVES, FOUND BY THEIR FOLDERS (issue #1154, cuts 1 and 2; the
-model owner's decisions of 2026-09-26 through the Boss, records 2208, 2212, 2221 and 2224;
-the short procedure of skills/workflow.md, point 5; ALGEBRA.md 9.110 item 7, 9.111 item 7,
-9.112 item 1, 9.117).
-
-The engine holds one register, name to function, read by the central loop alone; a
-primitive's identity is its unique English name, the key of the ledger's table
-(docs/designs/generic_engine/ENGINE_LEDGER.md section 3); every primitive is one folder
-under src/event_universe/features/<name>/ (the name without the article: "the spin's step"
-is spins_step) declaring its name, place (a code of 9.91 (8)), word (9.111 item 7), reads,
-writes (the values named once in 9.117 item 1) and order (9.117 item 3), and holding its
-function (`apply`, the mathematician's folders) or binding the loop's method (`bind`); the
-register discovers the folders, so adding a feature touches no shared file. The refusals
-at load, by name: a folder without a declaration or with a name not its own; a name
-registered twice; a term naming a primitive the register lacks or one not built; two
-writers of one value at one place with no order (a body's value written by a click at (ii)
-is ordered at (iv), 9.117 item 1; a remainder is the writer's own and never collides); a
-call at a place other than the declared one. Cut 2 binds the names to today's methods and
-moves no body of code: every shipped world bit for bit (the digest tests of the suites; the
-five worlds' comparison of the gate)."""
+"""The register of primitives found by their folders: one register, name to function, read by the loop
+alone; each folder declares its name, place, word, reads and writes, and the register refuses the rest."""
 
 from __future__ import annotations
 
