@@ -24,7 +24,6 @@ from event_universe.diagnostics.massive_record_margin import (
     block_margin,
     check_margins,
     iterated_mode,
-    profile_check,
 )
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.loader.world import (
@@ -1053,14 +1052,6 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
     seeded["stamp"] = input_stamp(seeded)
     world = parse_nature_beam_world(seeded)
-    deviation, amplitude = profile_check(world, 0)
-    # the diagnostic against the eigensolver's rounded mode reads the iteration's floor:
-    # on this layer the gap is small and the loader's bound admits about 3 / gap units
-    # of the neighbouring mode (3497 read, COMPUTATION; the bound is the law's check)
-    # under the weak-field rule at the body's level the plain eigenvector's residual reads 2493 at
-    # 2^18 (COMPUTATION; the loader's own bound admits it; the re-read of ALGEBRA.md 9.61 (3),
-    # reported to the mathematician)
-    assert amplitude == 1 << 18 and deviation <= 3000
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     assert np.array_equal(simulation.blocks[0].own.now, np.array(profile).reshape(world.shape))

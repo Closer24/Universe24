@@ -75,7 +75,7 @@ def seeded(
 
 
 def checked(document: dict) -> list[str]:
-    """The check as the runner and the preflight tool call it: the margins first, then the
+    """The check as the runner calls it: the margins first, then the
     body's conditions on the engine as constructed."""
     world = parse_nature_beam_world(document)
     readings = check_margins(world)

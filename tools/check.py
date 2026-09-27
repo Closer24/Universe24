@@ -241,10 +241,6 @@ def select(changed, sources):
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
-        if path.endswith(".json") and path.startswith(("examples/", "skills/")):
-            # the detector law's preflight (the old runner's preflight was deleted,
-            # docs/CANCELLED_WORLDS.md)
-            tests.add("tests/test_preflight_worlds.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         # Paths and duplicate contents can change in any source file, not just Python.

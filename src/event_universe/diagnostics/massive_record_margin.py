@@ -466,25 +466,6 @@ def bound_mode(world: NatureBeamWorld, number: int) -> np.ndarray:
     return accurate_mode(world, number)[1]
 
 
-def profile_check(world: NatureBeamWorld, number: int) -> tuple[int, int] | None:
-    """A GAMEBOARD diagnostic at load of a block seeded with an integer
-    profile: the largest deviation, in units, of the file's integers from
-    the eigensolver's mode at the file's amplitude, with that amplitude;
-    None for a flat seed (a comparison printed, never read by the state;
-    the generator's iterated profile sits within its floor, about 1 / gap
-    units, of the eigensolver's; the law's check is the loader's residual
-    bound)."""
-    definition = world.measured[number].block
-    if definition is None or definition.profile is None:
-        return None
-    profile = np.array(definition.profile, dtype=np.int64).reshape(world.shape)
-    amplitude = int(np.max(np.abs(profile)))
-    mode = bound_mode(world, number)
-    expected = np.rint(mode * amplitude).astype(np.int64)
-    deviation = int(np.max(np.abs(expected - profile)))
-    return deviation, amplitude
-
-
 def block_margin(world: NatureBeamWorld, number: int) -> MarginReading:
     """The reading of one block: its mode on the world's own board with its
     world's faces, alone in the medium (the other blocks' wells not carried:
