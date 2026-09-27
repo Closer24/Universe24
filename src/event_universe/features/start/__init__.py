@@ -155,9 +155,14 @@ def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
 LIFT = 1 << (6 * 8)  # the right side lifted before a solve, so the floors fall far below it
 ROUNDS = 8  # refinements on the exact residual per precision
 PRECISION_STEP = 1 << (4 * 8)  # the fine unit's growth where the certificate does not close
-PRECISIONS = 3  # growths of the fine unit before the division act decides a value at a half
+PRECISIONS = 2  # the fine unit's growths, one, before a value within the margin of a half rounds up
+MARGIN_ROOM = 1 << (
+    4 * 4
+)  # the rounds end once the margin is 2^16 below a half: only a half is left uncertified
 SWEEPS = 8  # the conjugate gradients' cap, times the extents' sum
-STOP = 1 << (4 * 8)  # a sweep stops once the residual is below the right side's 2^-32: a round's worth
+STOP = 1 << (
+    4 * 8 + 8
+)  # a sweep stops once the residual is below the right side's 2^-40: a round's worth
 VECTOR_BITS = (
     4 * 8 + 8
 )  # the fast lane's vectors stay below 2^40, so their halves' products fit the width
@@ -314,7 +319,7 @@ def certified(
 
 
 def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
-    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows and the rounds repeat; after the last growth the division act decides a value within the margin of a half (a rest exactly at a half rounds up). The cost is the load's."""
+    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's."""
     check_counts(
         np.abs(counts), 1 + int(np.abs(counts).max())
     )  # a signed family's counts by their sizes
@@ -347,8 +352,8 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
             rounds += 1
             worst = residual(fine, pair, wrap, free)
             size = sizes(worst)
-            if floor is not None and 2 * size >= floor:
-                break  # the residual at the solver's floor: the rest of the way is the unit's
+            if margin * MARGIN_ROOM <= half or (floor is not None and 2 * size >= floor):
+                break  # only a half is left uncertified, or the residual at the solver's floor
             floor = size
             margin = int(
                 division(1, bound_wall, np.array(bound_top * size + bound_wall - 1, dtype=object))
@@ -357,7 +362,7 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
             if closed:
                 return FieldAtRest(levels.astype(np.int64), fine, unit, rounds, 1)
             fine = fine + solved(counts, solver, free, -worst)
-    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half, 1)[0])
+    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half + margin, 1)[0])
     return FieldAtRest(levels.astype(np.int64), fine, unit, rounds, 1)
 
 

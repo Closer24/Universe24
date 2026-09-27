@@ -596,7 +596,7 @@ same line, with its own exact residual rho, bounds the inverse, ||A^-1|| <=
 ||T|| / (6 den x scale - ||rho||), so the field stands within ||A^-1|| ||R||
 of the exact rest, and where every free Node is farther than that from a
 half the levels are the rest's nearest integers; a Node nearer takes a
-finer unit, and at the last growth the division act decides. Generic (the
+finer unit once, then rounds up, the half's own side. Generic (the
 row's pair), vector (the levels by the division act, the certificate in
 integers; the guess is no value of the law), local (the six reads and the
 rewrite); the cost is the load's.
