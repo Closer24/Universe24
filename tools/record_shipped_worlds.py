@@ -186,12 +186,29 @@ def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
     """The world stepped `intervals` times (its recorded count, or the count this tool picks) and
     its digest, with the counts that name a difference when the digest moves; a world the law
     refuses on the way keeps its count and is recorded with the refusing step and the refusal's
-    words, which the digest covers, so the replay refuses the same step the same way; a recorded
+    words, which the digest covers, so the replay refuses the same step the same way (a world refused
+    at the load is recorded with no run, the refusal's words its whole reading); a recorded
     world keeps its recorded count on every re-record, a new one gets the count this tool picks."""
     document = json.loads(path.read_text(encoding="utf-8"))
     stamp = input_stamp(document)
     started = time.monotonic()
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    try:
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    except ValueError as refusal:  # refused at the load: no run, the refusal's words the whole reading
+        words = str(refusal)
+        digest = digest_of({"refused": [0, words]})
+        return {
+            "stamp": stamp,
+            "ticks": int(document["ticks"]),
+            "intervals": 0,
+            "digest": digest,
+            "records": 0,
+            "clicks": 0,
+            "lines": 0,
+            "seconds": round(time.monotonic() - started, 2),
+            "refused_at": 0,
+            "refused": words,
+        }
     lines: list[dict[str, object]] = []
     simulation.record = lines.append
     ticks = int(document["ticks"])
