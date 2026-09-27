@@ -32,11 +32,7 @@ QUANTA = 250  # the content per Node for e / f = 0.8 at GAMMA
 
 
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md #the-line; item 44): on the periodic chain
-    of 12 with QUANTA at every Node, one step of the engine on random rows equals w a_next + r' = R
-    S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain rule's levels bit
-    for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2 - (1 + f)(1 - num /
-    den), f = ((Gamma - c) / Gamma)^2: 1.982617 at the pace 0.75, 1.977750 in the vacuum, within 10^-5."""
+    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md #the-line; item 44): on the periodic chain of 12 with QUANTA at every Node, one step of the engine on random rows equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2: 1.982617 at the pace 0.75, 1.977750 in the vacuum, within 10^-5."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
@@ -118,10 +114,7 @@ def group_pace_light(k: float, ratio: float) -> float:
 
 @pytest.mark.diagnostic
 def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
-    """(iii) THE SLAB, a GameBoard reading (a diagnostic, not a measurement): the flux test's Gaussian packet of light (40 Links, k = 0.3024) on the open chain of
-    400, 400 intervals with and without a slab of 40 Nodes at [150, 190) holding QUANTA each: the transmitted
-    packet's centroid lags the vacuum's by the slab's delay 40 (1 / v' - 1 / v) (6.23 Links; read 6.16),
-    within 15 percent; 0.974 of the energy beyond the slab in the vacuum run and 0.946 with it."""
+    """(iii) THE SLAB, a GameBoard reading (a diagnostic, not a measurement): the flux test's Gaussian packet of light (40 Links, k = 0.3024) on the open chain of 400, 400 intervals with and without a slab of 40 Nodes at [150, 190) holding QUANTA each: the transmitted packet's centroid lags the vacuum's by the slab's delay 40 (1 / v' - 1 / v) (6.23 Links; read 6.16), within 15 percent; 0.974 of the energy beyond the slab in the vacuum run and 0.946 with it."""
     k = 0.3024
     x = np.arange(400)
     envelope = np.exp(-(((x - 60) / 14.0) ** 2))
@@ -161,11 +154,7 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
 
 
 def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_content():
-    """(iv) UNDER THE FIXED WALL (BUILD.md section 26 item 34), the periodic chain of 60, QUANTA at [20, 30),
-    random rows: (a) the engine's `conserved_form` is the form at the pace p_i = Gamma - c_i, 3 L (den / num)
-    Gamma p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at Nodes and L p_i p_j (a_i b_j + a_j b_i) on Links;
-    (b) a Node's share changes by L times the currents on its Links plus (L / num) p_i (a_next - a_before)
-    (r - r'), exactly; (c) the books' form by that term over 40 intervals; (d) 30 steps back return bit for bit."""
+    """(iv) UNDER THE FIXED WALL (BUILD.md section 26 item 34), the periodic chain of 60, QUANTA at [20, 30), random rows: (a) the engine's `conserved_form` is the form at the pace p_i = Gamma - c_i, 3 L (den / num) Gamma p_i (a^2 + b^2) - 6 L (den / num) p_i c_i a b at Nodes and L p_i p_j (a_i b_j + a_j b_i) on Links; (b) a Node's share changes by L times the currents on its Links plus (L / num) p_i (a_next - a_before) (r - r'), exactly; (c) the books' form by that term over 40 intervals; (d) 30 steps back return bit for bit."""
     rng = np.random.default_rng(23)
     simulation = DetectorLawSimulation(
         parse_nature_beam_world(content_chain(60, PERIODIC, range(20, 30), QUANTA))
@@ -244,10 +233,7 @@ def one_node(length: int, i: int) -> np.ndarray:
 
 
 def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it():
-    """(v) `node_clock` is REQUIRED under `detector_law` (refused without it by name, an integer from 1); the
-    load bound names the clock and the content (the slab of (iii) at Gamma = 10^6 refused naming Gamma and
-    M); the registered light clock declares 10^6 and loads, A's clock pair (10^6 - 64, 10^6) at its Nodes
-    and (10^6, 10^6) in the vacuum, its wheel 4171875 on [800, 801] (the step 576), the kind's own 2427."""
+    """(v) `node_clock` is REQUIRED under `detector_law` (refused without it by name, an integer from 1); the load bound names the clock and the content (the slab of (iii) at Gamma = 10^6 refused naming Gamma and M); the registered light clock declares 10^6 and loads, A's clock pair (10^6 - 64, 10^6) at its Nodes and (10^6, 10^6) in the vacuum, its wheel 4171875 on [800, 801] (the step 576), the kind's own 2427."""
     document = content_chain(12, PERIODIC, [], 1)
     del document["node_clock"]
     with pytest.raises(ValueError, match="node_clock is required: Gamma"):
@@ -300,10 +286,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
 
 @pytest.mark.diagnostic
 def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
-    """(vi) On the emitter world (the stock 4 at [5, 37), the screen at [70, 72]): the content at the body's
-    centre is 4 at the load and falls by one at each giving (the giving line's `content` and `node_clock`);
-    at the screen's first body 1, rising by one after each gather line; the vacuum 0 until the clicks' front
-    comes (14 Links at one per interval), then the waves; the books balanced; a GameBoard reading, a diagnostic, not a measurement."""
+    """(vi) On the emitter world (the stock 4 at [5, 37), the screen at [70, 72]): the content at the body's centre is 4 at the load and falls by one at each giving (the giving line's `content` and `node_clock`); at the screen's first body 1, rising by one after each gather line; the vacuum 0 until the clicks' front comes (14 Links at one per interval), then the waves; the books balanced; a GameBoard reading, a diagnostic, not a measurement."""
     document = emitter_world(stock=4)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
@@ -352,10 +335,7 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
 
 
 def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_elsewhere():
-    """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md #the-counts-line, #the-ladder): on the open chain of
-    200 with light bodies of QUANTA at [90, 110), the clock record's level is the content at the bodies'
-    Nodes with the remainder 0 (the hold) and 0 elsewhere at the load; THE FRONT: nothing before the cone of
-    one Link per interval, the long waves at the pace 1 / sqrt 3, the field never above twice the content."""
+    """(vii) THE FAMILY OF CLICKS (record 1982; ALGEBRA.md #the-counts-line, #the-ladder): on the open chain of 200 with light bodies of QUANTA at [90, 110), the clock record's level is the content at the bodies' Nodes with the remainder 0 (the hold) and 0 elsewhere at the load; THE FRONT: nothing before the cone of one Link per interval, the long waves at the pace 1 / sqrt 3, the field never above twice the content."""
     document = content_chain(200, CHAIN, range(90, 110), QUANTA)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     clock = simulation.held_records[2]
@@ -392,10 +372,7 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
 
 
 def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
-    """(viii) THE EXACT BACKWARD RUN EVERYWHERE (record 1994; item 34): the periodic chain of 60 with a body
-    of QUANTA at [20, 30) and a light record of random rows: the clicks' field rises and falls at Nodes
-    over 30 intervals, and the joint step inverts bit for bit, the wall 3 den Gamma the same at every
-    interval so no two states merge. The edge case: the field did move."""
+    """(viii) THE EXACT BACKWARD RUN EVERYWHERE (record 1994; item 34): the periodic chain of 60 with a body of QUANTA at [20, 30) and a light record of random rows: the clicks' field rises and falls at Nodes over 30 intervals, and the joint step inverts bit for bit, the wall 3 den Gamma the same at every interval so no two states merge. The edge case: the field did move."""
     rng = np.random.default_rng(31)
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
@@ -422,11 +399,7 @@ def test_the_joint_step_inverts_bit_for_bit_wherever_the_clock_falls():
 
 
 def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_cannot_be():
-    """(ix) THE FAMILY GENERICITY (record 2066; item 51): the family whose level is the Node clock is the one
-    declaring `held: "content"`, no world key, no name in the engine; refused by name: the retired world
-    keys, a held family with a quantum other than 1, a clock or a charge, two families holding the content,
-    a read naming a family not held or none, no `reads`, a measured event of a held family, `held` naming
-    it, an emitter given into it, six families (record 2081)."""
+    """(ix) THE FAMILY GENERICITY (record 2066; item 51): the family whose level is the Node clock is the one declaring `held: "content"`, no world key, no name in the engine; refused by name: the retired world keys, a held family with a quantum other than 1, a clock or a charge, two families holding the content, a read naming a family not held or none, no `reads`, a measured event of a held family, `held` naming it, an emitter given into it, six families (record 2081)."""
     good = content_chain(12, PERIODIC, [], 1)
     parse_nature_beam_world(good)
     for key, value in (("clock_family", "clicks"), ("charge_family", "charge"), ("charge_strength", 1)):
@@ -513,9 +486,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
 
 
 def test_a_held_family_steps_at_the_pair_its_row_declares():
-    """THE HELD FAMILY'S PAIR IS ITS ROW'S (the model owner, 2026-09-27; ALGEBRA.md #the-line): the
-    family holding the content at [1, 2], [3, 5] and [800, 809] loads, and one field step on random
-    levels is 3 den a_next + r' = num S_6(a_now) - 3 den a_before + r bit for bit; [1, 1] the same."""
+    """THE HELD FAMILY'S PAIR IS ITS ROW'S (the model owner, 2026-09-27; ALGEBRA.md #the-line): the family holding the content at [1, 2], [3, 5] and [800, 809] loads, and one field step on random levels is 3 den a_next + r' = num S_6(a_now) - 3 den a_before + r bit for bit; [1, 1] the same."""
     rng = np.random.default_rng(5)
     for num, den in ((1, 1), (1, 2), (3, 5), (800, 809)):
         document = content_chain(12, PERIODIC, [3], 5)

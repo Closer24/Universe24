@@ -19,10 +19,7 @@ STOCK = 3
 
 
 def reversible_world(ticks: int = 400) -> dict:
-    """The emitter chain of 80 (x closed) with the stock 3, light and the matter kind of charge
-    -1, a fifth family `positive` of light's pair and charge +1 held by one body at x = 55, the
-    screen at [70, 72]; seeded on the mode by the generator (the profile, the clock pair, the
-    period, the given rows under the stamp)."""
+    """The emitter chain of 80 (x closed) with the stock 3, light and the matter kind of charge -1, a fifth family `positive` of light's pair and charge +1 held by one body at x = 55, the screen at [70, 72]; seeded on the mode by the generator (the profile, the clock pair, the period, the given rows under the stamp)."""
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
@@ -98,9 +95,7 @@ def run_states(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[
 
 
 def click_ticks(lines: list[dict]) -> tuple[list[int], list[int]]:
-    """The intervals of the giving clicks (the windows' opens, SINCE COMMIT 7: the quantum moves
-    and the record is made at the open, the line is named at the close) and of the taking
-    clicks."""
+    """The intervals of the giving clicks (the windows' opens, SINCE COMMIT 7: the quantum moves and the record is made at the open, the line is named at the close) and of the taking clicks."""
     giving = [line["opened"] for line in lines if line["event"] == "giving"]
     taking = [line["tick"] for line in lines if line["event"] == "gather"]
     return giving, taking
@@ -112,10 +107,7 @@ def close_ticks(lines: list[dict]) -> list[int]:
 
 
 def inverse_close_interval(simulation: DetectorLawSimulation, lines: list[dict], t: int) -> None:
-    """The window's close stepped back by hand (the close is named from the run's events, as a
-    click is, ALGEBRA.md #a-familys-declaration): the window reopened on its record where the record still
-    stands (a taking since then lost it, the click's one loss), then the interval stepped back
-    (the write of the interval subtracted by the engine's inverse, the rows stepped back)."""
+    """The window's close stepped back by hand (the close is named from the run's events, as a click is, ALGEBRA.md #a-familys-declaration): the window reopened on its record where the record still stands (a taking since then lost it, the click's one loss), then the interval stepped back (the write of the interval subtracted by the engine's inverse, the rows stepped back)."""
     line = next(line for line in lines if line["event"] == "giving" and line["tick"] == t)
     live = simulation.records.get(line["record"])
     if live is not None:
@@ -126,11 +118,7 @@ def inverse_close_interval(simulation: DetectorLawSimulation, lines: list[dict],
 
 
 def test_between_clicks_the_board_returns_bit_for_bit_where_the_clock_rises_and_falls():
-    """1. From the load to the interval before the first giving click, every interval back
-    returns the load's rows bit for bit: the bodies' own records, the family of clicks and the
-    family of charge (their levels and remainders), the held quanta; the family of clicks' level
-    fell at Nodes during the run (the falls counted, above 0), and at some Node it fell to 0 and
-    rose again (the edge case). ALGEBRA.md #the-direction: the wall constant, one to one."""
+    """1. From the load to the interval before the first giving click, every interval back returns the load's rows bit for bit: the bodies' own records, the family of clicks and the family of charge (their levels and remainders), the held quanta; the family of clicks' level fell at Nodes during the run (the falls counted, above 0), and at some Node it fell to 0 and rose again (the edge case). ALGEBRA.md #the-direction: the wall constant, one to one."""
     document = reversible_world()
     probe, _, lines, _ = run_states(document, 120)
     first_giving = click_ticks(lines)[0][0]
@@ -159,15 +147,7 @@ def test_between_clicks_the_board_returns_bit_for_bit_where_the_clock_rises_and_
 
 
 def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
-    """1. Across the first giving click and the first taking click. (a) NO RULE UNDOES A CLICK
-    (the owner's word of record 2011): stepping back across the taking click leaves the deleted
-    record deleted and the taken quantum with its taker (the screen's first body's held content
-    and the field held at it stay the click's). (b) THE CLICK'S ONE LOSS: with the click's
-    ledger undone by hand (the held quanta of the interval before restored, the fields held
-    again), the backward run across the taking click returns every row bit for bit but the
-    deleted record's, and across the giving click, with the given record removed (its rows at
-    its write the file's given rows on the body's Nodes) and the stock restored, returns every
-    row bit for bit with nothing lost; then down to the load exactly."""
+    """1. Across the first giving click and the first taking click. (a) NO RULE UNDOES A CLICK (the owner's word of record 2011): stepping back across the taking click leaves the deleted record deleted and the taken quantum with its taker (the screen's first body's held content and the field held at it stay the click's). (b) THE CLICK'S ONE LOSS: with the click's ledger undone by hand (the held quanta of the interval before restored, the fields held again), the backward run across the taking click returns every row bit for bit but the deleted record's, and across the giving click, with the given record removed (its rows at its write the file's given rows on the body's Nodes) and the stock restored, returns every row bit for bit with nothing lost; then down to the load exactly."""
     document = reversible_world()
     probe, _, lines, _ = run_states(document, 200)
     giving_ticks, taking_ticks = click_ticks(lines)
@@ -230,14 +210,7 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
 def inverse_giving_interval(
     simulation: DetectorLawSimulation, lines: list[dict], states: list[dict], t: int
 ) -> None:
-    """The giving click's interval (the window's open, SINCE COMMIT 7) stepped back by hand, the
-    click's act undone: the given record removed (made at the open with nothing written yet,
-    its rows zero, asserted: the writes come with the window's intervals and the engine's
-    inverse subtracts them); every record and both fields stepped back at the content the
-    interval began with (the hold before the click, which every forward step read: ONE ORDER
-    FOR BOTH CLICKS, ALGEBRA.md #the-primitives, item 58; the giving's hold at once HISTORY), the
-    body's stock restored and the fields held again first. Nothing is lost at a giving
-    click."""
+    """The giving click's interval (the window's open, SINCE COMMIT 7) stepped back by hand, the click's act undone: the given record removed (made at the open with nothing written yet, its rows zero, asserted: the writes come with the window's intervals and the engine's inverse subtracts them); every record and both fields stepped back at the content the interval began with (the hold before the click, which every forward step read: ONE ORDER FOR BOTH CLICKS, ALGEBRA.md #the-primitives, item 58; the giving's hold at once HISTORY), the body's stock restored and the fields held again first. Nothing is lost at a giving click."""
     line = next(line for line in lines if line["event"] == "giving" and line["opened"] == t)
     # the given record: present unless a taking click deleted it since (then the click's one
     # loss, already accounted); at its open nothing is written on it
@@ -258,16 +231,7 @@ def inverse_giving_interval(
 
 
 def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
-    """2. Over 400 intervals with three giving clicks and their taking clicks: at every interval
-    the books balance, the held quanta plus the records in flight are the load's total, and the
-    bodies' Q plus the flights' q are the load's total (-3 - 3 + 1 = -5); at every giving click
-    the giver's held content falls by one, the given record's content is 1, its residue u is
-    in [0, W) with W the rule's at the first shell Node, and the click's interval is the
-    counted one, 2 W (wait - 1) < (2 u + 1) P <= 2 W wait from the residue read before it
-    (ALGEBRA.md #the-ladder); at every taking click the taker's held content rises by one, the
-    record's content is 1, and the detector is the one the increment ladder chooses on the
-    plain flux against the norm's rational (Born's rule at the taking end, ALGEBRA.md #the-ladder and (3),
-    item 36)."""
+    """2. Over 400 intervals with three giving clicks and their taking clicks: at every interval the books balance, the held quanta plus the records in flight are the load's total, and the bodies' Q plus the flights' q are the load's total (-3 - 3 + 1 = -5); at every giving click the giver's held content falls by one, the given record's content is 1, its residue u is in [0, W) with W the rule's at the first shell Node, and the click's interval is the counted one, 2 W (wait - 1) < (2 u + 1) P <= 2 W wait from the residue read before it (ALGEBRA.md #the-ladder); at every taking click the taker's held content rises by one, the record's content is 1, and the detector is the one the increment ladder chooses on the plain flux against the norm's rational (Born's rule at the taking end, ALGEBRA.md #the-ladder and (3), item 36)."""
     document = reversible_world()
     period = parse_nature_beam_world(document).measured[0].block.emitter.period
     lines: list[dict] = []
@@ -338,12 +302,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
 
 
 def test_between_clicks_the_weighted_form_is_exact_where_the_field_stands():
-    """2. The conserved form of ALGEBRA.md #the-direction and (13) on the given light record, interval
-    by interval from its write to its taking click: its change with the field of the interval's
-    start in force is the remainders' term exactly (ALGEBRA.md #the-direction), and with the field's move the
-    weights' change exactly (ALGEBRA.md #the-counts-line, the Node terms alone under the Node's own pace); where
-    the field stands the form is constant but for the remainders' term. The content light reads
-    here is the effective content c - q Lambda d, light being of charge -1 (ALGEBRA.md #the-paces)."""
+    """2. The conserved form of ALGEBRA.md #the-direction and (13) on the given light record, interval by interval from its write to its taking click: its change with the field of the interval's start in force is the remainders' term exactly (ALGEBRA.md #the-direction), and with the field's move the weights' change exactly (ALGEBRA.md #the-counts-line, the Node terms alone under the Node's own pace); where the field stands the form is constant but for the remainders' term. The content light reads here is the effective content c - q Lambda d, light being of charge -1 (ALGEBRA.md #the-paces)."""
     document = reversible_world()
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)

@@ -146,6 +146,12 @@ jobs:
             echo "the branch moved past ${{ steps.pull.outputs.sha }}; the new head's own run records it"
             exit 0
           fi
+          # a pull request that touches no world path plans no world job (tools/check.py --plan), so
+          # there is no entry to merge and nothing to record: the record on the branch stands
+          if ! ls artifacts/shards/*/record/*.record.json >/dev/null 2>&1; then
+            echo "no world ran on this pull request (the plan ran the suite alone); the record stands"
+            exit 0
+          fi
           # the whole record (a push, a dispatch for the whole, or the body's line "RECORD: all")
           # refuses a merge short of any world; a pull request's plan records the worlds that ran
           every_world=""
