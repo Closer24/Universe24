@@ -236,6 +236,7 @@ def world(
             "family": family,
             "amount": block.get("amount", 1),
             "momentum": block.get("momentum", [0, 0, 0]),
+            "momentum_before": block.get("momentum", [0, 0, 0]),
             "stocks": {},  # the body's stocks of other families' quanta (record 2128 (1))
             "ramp": 0,
             "start": 0,
