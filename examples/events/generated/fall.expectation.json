@@ -1,0 +1,53 @@
+{
+ "format": "world-expectation-v1",
+ "row": "ALGEBRA.md #the-rows-against-nature (i) THE FALL, written before any run from the law's lines and the folder's chain rest alone: the chain 400 x 1 x 1 open on x, the heavy body of 30 Nodes of 3,600 quanta at x = 185..214 giving light quanta (N = 1024, lambda_q = 4, the window period 9 by its mode), the light body of 3 Nodes of 3,000 at x = 285..287 released at rest; the [1, 1] field at rest falls from 3,600 at the heavy body toward both open faces (0 beyond them) and passes the light body's Nodes; c_+ - c_- = -35 at the light body's two faces (x = 288 and 284, D = 4), a = 0.00088 Links per interval^2 toward the heavy body (Gamma = 10,000); W = 3 Q M = 1,728,000, the momentum grows by a W = 1512 per interval; the centre at 286 - a t^2 / 2; the touch (70 Links) at t = 400 at 0.350 Links per interval, below the wall; the given records travel at the dispersion's group velocity 0.44721 and reach the falling body at t with t - t_k = (70 - a t^2 / 2) / 0.44721; PROVISIONAL until the owner's word on the hold's write (the finding of 18:0xZ)",
+ "DETECTOR": [
+  {
+   "detector": "at_fall",
+   "count": 44,
+   "band": 4,
+   "row": "the records that reach the falling body before the touch at t = 400: the k-th given at 9 k, the wait (70 - a t^2 / 2) / 0.44721"
+  },
+  {
+   "detector": "at_fall",
+   "mean_interval": 76,
+   "band": 6,
+   "row": "the mean wait over those clicks from the giving (136 intervals for the first record)"
+  }
+ ],
+ "GAMEBOARD": [
+  {
+   "body": 1,
+   "interval": 200,
+   "momentum": [
+    -302400,
+    0,
+    0
+   ],
+   "band": 30000,
+   "row": "the momentum growing by a W per interval toward the heavy body (the feed's row), a diagnostic and no measurement"
+  },
+  {
+   "body": 1,
+   "interval": 200,
+   "centre": [
+    268,
+    0,
+    0
+   ],
+   "band": 2,
+   "row": "the centre at 286 - a t^2 / 2"
+  },
+  {
+   "body": 1,
+   "interval": 400,
+   "centre": [
+    216,
+    0,
+    0
+   ],
+   "band": 3,
+   "row": "the same at 400"
+  }
+ ]
+}
