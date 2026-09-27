@@ -97,7 +97,7 @@ from event_universe.features.giving import (
     GivingTerm,
     GivingWrites,
 )
-from event_universe.features.hold import TENSOR_AXES, HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
+from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
@@ -836,10 +836,6 @@ class DetectorLawSimulation:
 
     # The register of primitives: one register, name to function, read by the loop alone
 
-    def _wait(self) -> int:
-        """WAIT is one interval, always (ALGEBRA.md #the-interval): a value sent at the start of t is combined in t."""
-        return 1
-
     def _method(self, name: str) -> Callable[..., object]:
         """The loop's method `name` resolved at each call (a test's spy set on the instance is honoured); the folders' own functions replace it cut by cut."""
 
@@ -1269,7 +1265,8 @@ class DetectorLawSimulation:
                     continue
                 for part, value, before in writes.parts:
                     record = self.held_parts[family][part - 1]
-                    group, axes = self._part_axes(family, part)
+                    degree = self.main_loop.function_of("the degree", "(i)")
+                    group, axes = degree(self.families[family].parts, part)
                     factor = self.families[family].held_factors[group]
                     if booking(factor, writes.time_level, momentum_of[block.number], axes):
                         self._sourced_ever[(family, part)] = True
@@ -1366,22 +1363,6 @@ class DetectorLawSimulation:
         elif not 0 <= node[j] < self.shape[j]:
             return None
         return node[0], node[1], node[2]
-
-    def _part_axes(self, family: int, part: int) -> tuple[int, tuple[int, ...]]:
-        """A component's part group (0 the time part, 1 the vector, 2 the tensor)
-        and the axes it multiplies (ALGEBRA.md #the-interval: n_a for the vector,
-        n_a n_b for the tensor), by the family's parts list."""
-        offset = 0
-        for group, count in enumerate(self.families[family].parts):
-            if part < offset + count:
-                index = part - offset
-                if group == 0:
-                    return 0, ()
-                if group == 1:
-                    return 1, (index,)
-                return 2, TENSOR_AXES[index]
-            offset += count
-        raise ValueError(f"the part {part} is beyond the family's components")
 
     def _unhold_dipoles(self, line: Callable[..., object]) -> None:
         """The interval's dipole writes taken back (the inverse, before the fields
@@ -1490,7 +1471,7 @@ class DetectorLawSimulation:
     def _neighbour_nodes(
         self, node: tuple[int, ...], wrap: tuple[bool, bool, bool]
     ) -> list[tuple[int, int, int]]:
-        """The six reads of a Node as `_neighbours` makes them: the wrap on a
+        """The six reads of a Node as the send makes them: the wrap on a
         periodic axis, the Node itself twice on a folded axis of extent 1,
         none beyond an open face."""
         nodes: list[tuple[int, int, int]] = []
@@ -2267,9 +2248,10 @@ class DetectorLawSimulation:
         sigma_self = self._self_source(live, True)
         plain = axis_contents is None and twisted is None and live.im_now is None and sigma_self is None
         if not plain:
-            receive = self.register.at("the receive", "(i)")
+            receive = self.main_loop.function_of("the receive", "(i)")
+            level_step = self.main_loop.function_of("the phase", "(i)")
             reads_re, reads_im = self._transport(receive, live, twisted, True)
-            a_before, live.remainder = self._level_step(
+            a_before, live.remainder = level_step(
                 num,
                 den,
                 gamma,
@@ -2284,23 +2266,20 @@ class DetectorLawSimulation:
             )
             if sigma_self is not None:
                 a_before -= sigma_self  # the same multiple of the wall off (ALGEBRA.md #the-interval)
-            if live.im_now is not None:
-                assert live.im_before is not None and live.im_remainder is not None
-                im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
-                im_a_before, live.im_remainder = self._level_step(
-                    num,
-                    den,
-                    gamma,
-                    content,
-                    axis_contents,
-                    im_reads,
+            if live.im_now is not None and live.im_before is not None and live.im_remainder is not None:
+                ir = self.main_loop.function_of("the internal representation", "(i)")
+                rule = (num, den, gamma, content, axis_contents)
+                im = ir(
+                    level_step,
+                    rule,
+                    reads_im,
                     live.im_before,
                     live.im_now,
                     live.im_remainder,
                     not field,
                     -1,
                 )
-                live.im_now = live.im_before
+                im_a_before, live.im_remainder, live.im_now, _ = im
                 live.im_before = im_a_before
         elif live.box is None or self._window(live.box, self.kind_wrap[live.family]) is None:
             arrivals = self._axis_sums(live.before, self.kind_wrap[live.family])
@@ -2385,17 +2364,10 @@ class DetectorLawSimulation:
 
     # The rule
 
-    def _neighbours(self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None) -> np.ndarray:
-        """The sum of the six arrivals at every Node (the receive; a folded axis gives the Node itself twice), on the world's faces or the family's."""
-        total = np.zeros_like(a)
-        for port in self.ports.arrivals(a, wrap):
-            total += port
-        return total
-
     def _axis_sums(
         self, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The two arrivals summed per axis at every Node, the three arrival sums rule3 reads; their sum is `_neighbours` (ALGEBRA.md #the-line)."""
+        """The two arrivals summed per axis at every Node, the three arrival sums rule3 reads; their sum is the send's (ALGEBRA.md #the-line)."""
         arr = self.ports.arrivals(a, wrap)
         sums = tuple(arr[port_of(axis, 1)] + arr[port_of(axis, -1)] for axis in range(3))
         return sums[0], sums[1], sums[2]
@@ -2506,35 +2478,6 @@ class DetectorLawSimulation:
         start = ReceiveStart(re, im, twisted, tuple(links))
         writes = cast(ReceiveWrites, line(self._receive_term, start, None))
         return list(writes.re), None if writes.im is None else list(writes.im)
-
-    @staticmethod
-    def _level_step(
-        num: np.ndarray,
-        den: np.ndarray,
-        gamma: int,
-        content: np.ndarray | int,
-        axis_contents: tuple[np.ndarray, ...] | None,
-        reads: list[np.ndarray],
-        now: np.ndarray,
-        other: np.ndarray,
-        remainder: np.ndarray,
-        weak_field: bool,
-        direction: int = 1,
-    ) -> tuple[np.ndarray, np.ndarray]:
-        """One level's step by rule3 in `direction` from its three per-axis arrival sums, `now` the level read and `other` the far level (ALGEBRA.md #the-interval, #the-direction)."""
-        integers, self_coefficient, wall = coefficients(
-            num, den, gamma, content, ISOTROPIC if axis_contents is None else axis_contents, weak_field
-        )
-        return rule3(
-            integers,
-            (reads[0], reads[1], reads[2]),
-            self_coefficient,
-            wall,
-            now,
-            other,
-            remainder,
-            direction,
-        )
 
     def _self_source(self, live: LiveRecord, inverse: bool) -> np.ndarray | None:
         """THE SELF-SOURCE'S SLOT (ALGEBRA.md #a-familys-declaration, #the-interval, #the-second-level): per family with a unit
@@ -2926,7 +2869,8 @@ class DetectorLawSimulation:
         for level_now, level_before in levels:
             now = level_now.astype(object)
             before = level_before.astype(object)
-            reads = self._neighbours(level_before, self.kind_wrap[family]).astype(object)
+            send = self.main_loop.function_of("the send", "(i)")
+            reads = send(self.ports, level_before, self.kind_wrap[family]).astype(object)
             node = wall * form_term(self_coefficient, wall_at, now, before)
             links = wall * now * reads
             total = ratio_sum(
@@ -3076,9 +3020,10 @@ class DetectorLawSimulation:
             # the arrivals per axis after the transport, the rule per level on the whole
             # board (HOST: no window shortcut here); the second level allocated by the
             # first rotation that writes it
-            receive = self.register.at("the receive", "(i)")
+            receive = self.main_loop.function_of("the receive", "(i)")
+            level_step = self.main_loop.function_of("the phase", "(i)")
             reads_re, reads_im = self._transport(receive, live, twisted, False)
-            nxt, live.remainder = self._level_step(
+            nxt, live.remainder = level_step(
                 num,
                 den,
                 gamma,
@@ -3093,24 +3038,20 @@ class DetectorLawSimulation:
             if sigma_self is not None:
                 nxt -= sigma_self  # the self-source's term, w Sigma_self off the right side (ALGEBRA.md #the-interval)
             if reads_im is not None or live.im_now is not None:
-                if live.im_now is None:
-                    live.im_now = np.zeros_like(live.now)
-                    live.im_before = np.zeros_like(live.now)
-                    live.im_remainder = np.zeros_like(live.now)
-                assert live.im_before is not None and live.im_remainder is not None
-                im_reads = [np.zeros_like(live.now) for _ in range(3)] if reads_im is None else reads_im
-                im_next, live.im_remainder = self._level_step(
-                    num,
-                    den,
-                    gamma,
-                    content,
-                    axis_contents,
-                    im_reads,
+                ir = self.main_loop.function_of("the internal representation", "(i)")
+                rule = (num, den, gamma, content, axis_contents)
+                im = ir(
+                    level_step,
+                    rule,
+                    reads_im,
                     live.im_now,
                     live.im_before,
                     live.im_remainder,
                     not field,
+                    1,
+                    live.now,
                 )
+                im_next, live.im_remainder, live.im_now, live.im_before = im
             live.box = None
         elif window is None:
             arrivals = self._axis_sums(live.now, self.kind_wrap[live.family])
@@ -3354,7 +3295,7 @@ class DetectorLawSimulation:
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
         """The sum of the six neighbours' amplitudes at the Nodes (flat
-        indices) alone, as `_neighbours` reads them over the board (the wrap
+        indices) alone, as the send reads them over the board (the wrap
         on a periodic axis, 0 beyond a zero face, the row itself on an axis
         of one layer); HOST: the cost is the Nodes asked, not the board."""
         coordinates = np.stack(np.unravel_index(nodes, self.shape), axis=0)

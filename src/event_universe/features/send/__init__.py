@@ -1,28 +1,28 @@
-"""THE SEND (ALGEBRA.md #the-interval): the Port puts on its Link weight x the component's level at the interval's start.
-
-One folder, one primitive (record 2221 (3)); the register finds it by this folder and reads
-DECLARATION, the row of ALGEBRA.md #the-primitives for this name (cut 2: bind gives the loop's method that
-implements it today, resolved at each call; the next cut moves the body of code here).
-"""
+"""THE SEND (ALGEBRA.md #the-interval): the Port puts on its Link weight x the component's level at the interval's start; one folder, one primitive, the register reads DECLARATION and its function `send`."""
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from typing import Any
 
+import numpy as np
+
 from event_universe.core.register import Declaration
+
+
+def send(ports: Any, a: np.ndarray, wrap: tuple[bool, bool, bool] | None = None) -> np.ndarray:
+    """The sum of the six arrivals at every Node through the GameBoard's Ports (a folded axis gives the Node itself twice), on the world's faces or the family's (`wrap`)."""
+    total = np.zeros_like(a)
+    for port in ports.arrivals(a, wrap):
+        total += port
+    return total
+
 
 DECLARATION = Declaration(
     "the send",
     "(i)",
     ("the level now", "the weight"),
     ("the Link's value",),
-    None,
+    send,
     "ALGEBRA.md #the-interval",
     word="the step",
 )
-
-
-def bind(loop: Any) -> Callable[..., object]:
-    """The loop's method `_neighbours`, resolved at each call (cut 2)."""
-    return loop._method("_neighbours")  # type: ignore[no-any-return]

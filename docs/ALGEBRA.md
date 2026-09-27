@@ -43,18 +43,22 @@ Node, every family's clock unit); the amplitude bound A_bound, the
 largest level a record may reach before the run is refused; Lambda, the
 charge's weight; the momentum unit Q_unit; the twist table ([the transport](#the-transport)).
 
-A family's row: its parts (1 for a scalar; [1, 3] a time part and a
-vector; [1, 3, 6] a time part, a vector and a symmetric tensor); its
-phase (1, one level per Node; 2, a pair); its pair [num, den], the
-cosine of its rest rotation, cos omega_0 = num / den, or the word "body"
-where every body and record declares its own; its reads, each a read
-family with a signed weight, a twist (an integer, or "own") and by
-(plain, or q, the reading record's charge sign); its held writer (the
-count word, the held factors, the dipole); its self-source unit P_2 (0
-off); its clicks (whether it takes and gives, and its quantum's norm T,
-one integer per family, the action of one quantum). T is a declaration:
-Rule3 is linear and its form's scale is free, so no line of Rule3 fixes
-T; nature pins it and no body declares it.
+A family's row: its parts (1 for a scalar; [1, 3] a time part and a vector;
+[1, 3, 6] a time part, a vector and a symmetric tensor); its phase (1, one
+level per Node; 2, a pair); its kinds (the key `kinds`, an integer from 1,
+required; every shipped family declares 1): a family of k kinds holds k
+counts and k levels at every Node, each stepping by the family's one line,
+and a read's weight is one integer for every kind or a k x k integer matrix
+mixing them, the read the bilinear form over the kinds; its pair [num, den],
+the cosine of its rest rotation, cos omega_0 = num / den, or the word "body"
+where every body and record declares its own; its reads, each a read family
+with a signed weight, a twist (an integer, or "own") and by (plain, or q,
+the reading record's charge sign); its held writer (the count word, the held
+factors, the dipole); its self-source unit P_2 (0 off); its clicks (whether
+it takes and gives, and its quantum's norm T, one integer per family, the
+action of one quantum). T is a declaration: Rule3 is linear and its form's
+scale is free, so no line of Rule3 fixes T; nature pins it and no body
+declares it.
 
 ### The interval
 
@@ -620,46 +624,43 @@ falls by 3 x 10^-5 per Link there. A one-Node body of one quantum binds
 nothing and is a free record: its velocity is v_g(k) with no count to
 follow it.
 
-The run beside these numbers (the cube of side 12 on [800, 1200] at
-1000 per Node at v = 1 / 3 on a periodic box, 10^4 intervals): the
-count's centroid against v t, the slope v within the remainder; the
-share inside the cube 0.92 at the start, falling by at most 3 x 10^-5
-per Link; the clock's period 2 pi / omega_b(k), 7.74 intervals at k =
-0. A larger fall, or a slope that drifts, names a missing law; the
-body's own numbers are never patched.
+The run beside these numbers (the cube of side 12 on [800, 1200] at 1000 per
+Node at v = 1 / 3 on a periodic box, 10^4 intervals): the count's centroid
+against v t, the slope v within the remainder; the share inside the cube
+0.92 at the start, falling by at most 3 x 10^-5 per Link; the clock's period
+2 pi / omega_b(k), 7.74 intervals at k = 0. A larger fall, or a slope that
+drifts, names a missing law; the body's own numbers are never patched.
 
 ## What the law says of nature
 
 ### The postulates
 
-1. The world is Nodes and Events. Space is the GameBoard; an Event is a
-wall crossed by a remainder at a Node: a level stepped, a count moved,
-a click; nothing else happens.
-2. A Node holds bounded local information: its NodeState, fixed in
-size, read from itself and its six neighbours; no read beyond them, no
-list that grows with the world, nothing of the past kept. Every physical update
-uses its own record and the six causally available neighbours with
-fixed work and storage for a fixed set of families (LOCALITY-1); a
-self-field estimated or subtracted from anything global is forbidden,
-whatever the size of its final answer.
-3. Consistency is local and causal: an Event first changes its own
-Node and travels Link by Link, one Link per interval, each Node
-updating on receipt under the same rule. The one exception is the
-click: a record ends at once, whole, at the detector.
-4. The causal speed is one Link per interval, built in; every other
-speed is a rational, a count of Links over a count of intervals.
-5. Every physical calculation is on bounded integers; there is no
-float, no root and no draw in the law; a Node keeps only the law's own
-numbers: each record's two levels and its remainder, the family's pair
-and the Node clock from the content there.
-6. A measurement is a detector's click, an action of the law on the
-state: the record ends at the detector and the detector's own record
-changes. Only a click is compared with nature or pinned as an
-expectation; displays and the host's readings read state and write
-nothing.
-7. The Inside is the GameBoard, where no one measures; the Outside is
-the detectors and their clicks, the only thing claimed to represent
-nature.
+1. The world is Nodes and Events. Space is the GameBoard; an Event is a wall
+crossed by a remainder at a Node: a level stepped, a count moved, a click;
+nothing else happens.
+2. A Node holds bounded local information: its NodeState, fixed in size,
+read from itself and its six neighbours; no read beyond them, no list that
+grows with the world, nothing of the past kept. Every physical update uses
+its own record and the six causally available neighbours with fixed work and
+storage for a fixed set of families (LOCALITY-1); a self-field estimated or
+subtracted from anything global is forbidden, whatever the size of its final
+answer.
+3. Consistency is local and causal: an Event first changes its own Node and
+travels Link by Link, one Link per interval, each Node updating on receipt
+under the same rule. The one exception is the click: a record ends at once,
+whole, at the detector.
+4. The causal speed is one Link per interval, built in; every other speed is
+a rational, a count of Links over a count of intervals.
+5. Every physical calculation is on bounded integers; there is no float, no
+root and no draw in the law; a Node keeps only the law's own numbers: each
+record's two levels and its remainder, the family's pair and the Node clock
+from the content there.
+6. A measurement is a detector's click, an action of the law on the state:
+the record ends at the detector and the detector's own record changes. Only
+a click is compared with nature or pinned as an expectation; displays and
+the host's readings read state and write nothing.
+7. The Inside is the GameBoard, where no one measures; the Outside is the
+detectors and their clicks, the only thing claimed to represent nature.
 
 ### The constants
 
@@ -698,8 +699,7 @@ path's length within the well's reach.
 e advances 6 pi U_p per orbit with U_p the potential at a (1 - e^2).
 (e) THE MOVING CLOCK: a body at velocity v has its tick lengthened by
 the dispersion's factor, 0.8146 against 1 / gamma = 0.8165 (gamma the
-Lorentz factor) at k =
-0.18556 per Link, the GameBoard's own term inside the rows' bands.
+Lorentz factor) at k = 0.18556 per Link, the GameBoard's own term inside the rows' bands.
 (f) THE CHARGE: like signs a hill, unlike a hollow; a reader of charge q
 reads + q Lambda d in its pace and - q Lambda (**n** . **A**) div W on
 its vector part, so like charges moving together repel less.
