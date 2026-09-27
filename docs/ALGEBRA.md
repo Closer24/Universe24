@@ -41,7 +41,8 @@ product bound) is derived from the integer width, never written.
 The universe's integers: the Node clock Gamma (the pace of an empty
 Node, every family's clock unit); the amplitude bound A_bound, the
 largest level a record may reach before the run is refused; Lambda, the
-charge's weight; the momentum unit Q_unit; the twist table ([the transport](#the-transport)).
+charge's weight; the momentum unit Q_unit; the twist table ([the transport](#the-transport));
+`least_residues`, the fewest remainder values the pair of a giving family must give at its giving Node, so that the ladder's residue u is spread over them (a pair with fewer is refused by name: the number is the file's, the rule the law's).
 
 A family's row: its parts (1 for a scalar; [1, 3] a time part and a vector;
 [1, 3, 6] a time part, a vector and a symmetric tensor); its phase (1, one
