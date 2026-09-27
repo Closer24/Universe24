@@ -35,6 +35,11 @@
     0,
     0
    ],
+   "spin_before": [
+    0,
+    0,
+    0
+   ],
    "moment": [
     0,
     0,
@@ -42,6 +47,11 @@
    ],
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -80142,6 +80152,11 @@
     0,
     0
    ],
+   "spin_before": [
+    0,
+    0,
+    0
+   ],
    "moment": [
     0,
     0,
@@ -80149,6 +80164,11 @@
    ],
    "amount": 4812,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160188,6 +160208,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {},
    "extents": [
@@ -160201,6 +160226,11 @@
    ],
    "q": 0,
    "spin": [
+    0,
+    0,
+    0
+   ],
+   "spin_before": [
     0,
     0,
     0
@@ -160227,6 +160257,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160243,6 +160278,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160255,6 +160295,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160275,6 +160320,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160291,6 +160341,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160303,6 +160358,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160323,6 +160383,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160335,6 +160400,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160355,6 +160425,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160367,6 +160442,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160387,6 +160467,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160399,6 +160484,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160419,6 +160509,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160435,6 +160530,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160447,6 +160547,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160467,6 +160572,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160479,6 +160589,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160499,6 +160614,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160511,6 +160631,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160531,6 +160656,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160543,6 +160673,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160563,6 +160698,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160579,6 +160719,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160591,6 +160736,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160611,6 +160761,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160623,6 +160778,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160643,6 +160803,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160655,6 +160820,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160675,6 +160845,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160687,6 +160862,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160707,6 +160887,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160723,6 +160908,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160735,6 +160925,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160755,6 +160950,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160767,6 +160967,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160787,6 +160992,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160799,6 +161009,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160819,6 +161034,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160831,6 +161051,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160851,6 +161076,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160867,6 +161097,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160879,6 +161114,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160899,6 +161139,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160911,6 +161156,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160931,6 +161181,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160943,6 +161198,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160963,6 +161223,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -160975,6 +161240,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -160995,6 +161265,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161011,6 +161286,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161023,6 +161303,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161043,6 +161328,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161055,6 +161345,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161075,6 +161370,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161087,6 +161387,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161107,6 +161412,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161119,6 +161429,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161139,6 +161454,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161155,6 +161475,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161167,6 +161492,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161187,6 +161517,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161199,6 +161534,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161219,6 +161559,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161231,6 +161576,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161251,6 +161601,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161263,6 +161618,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161283,6 +161643,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161299,6 +161664,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161311,6 +161681,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161331,6 +161706,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161343,6 +161723,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161363,6 +161748,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161375,6 +161765,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161395,6 +161790,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161407,6 +161807,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161427,6 +161832,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161443,6 +161853,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161455,6 +161870,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161475,6 +161895,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161487,6 +161912,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161507,6 +161937,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161519,6 +161954,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161539,6 +161979,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161551,6 +161996,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161571,6 +162021,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161587,6 +162042,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161599,6 +162059,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161619,6 +162084,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161631,6 +162101,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161651,6 +162126,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161663,6 +162143,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161683,6 +162168,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161695,6 +162185,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161715,6 +162210,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161731,6 +162231,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161743,6 +162248,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161763,6 +162273,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161775,6 +162290,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161795,6 +162315,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161807,6 +162332,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161827,6 +162357,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161839,6 +162374,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161859,6 +162399,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161875,6 +162420,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161887,6 +162437,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161907,6 +162462,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161919,6 +162479,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161939,6 +162504,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161951,6 +162521,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -161971,6 +162546,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -161983,6 +162563,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162003,6 +162588,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162019,6 +162609,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162031,6 +162626,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162051,6 +162651,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162063,6 +162668,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162083,6 +162693,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162095,6 +162710,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162115,6 +162735,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162127,6 +162752,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162147,6 +162777,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162163,6 +162798,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162175,6 +162815,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162195,6 +162840,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162207,6 +162857,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162227,6 +162882,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162239,6 +162899,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162259,6 +162924,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162271,6 +162941,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162291,6 +162966,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162307,6 +162987,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162319,6 +163004,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162339,6 +163029,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162351,6 +163046,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162371,6 +163071,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162383,6 +163088,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162403,6 +163113,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162415,6 +163130,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162435,6 +163155,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162451,6 +163176,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162463,6 +163193,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162483,6 +163218,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162495,6 +163235,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162515,6 +163260,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162527,6 +163277,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162547,6 +163302,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162559,6 +163319,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162579,6 +163344,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162595,6 +163365,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162607,6 +163382,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162627,6 +163407,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162639,6 +163424,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162659,6 +163449,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162671,6 +163466,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162691,6 +163491,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162703,6 +163508,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162723,6 +163533,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162739,6 +163554,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162751,6 +163571,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162771,6 +163596,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162783,6 +163613,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162803,6 +163638,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162815,6 +163655,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162835,6 +163680,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162847,6 +163697,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162867,6 +163722,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162883,6 +163743,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162895,6 +163760,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162915,6 +163785,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162927,6 +163802,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162947,6 +163827,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162959,6 +163844,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -162979,6 +163869,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -162991,6 +163886,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163011,6 +163911,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163027,6 +163932,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163039,6 +163949,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163059,6 +163974,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163071,6 +163991,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163091,6 +164016,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163103,6 +164033,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163123,6 +164058,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163135,6 +164075,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163155,6 +164100,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163171,6 +164121,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163183,6 +164138,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163203,6 +164163,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163215,6 +164180,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163235,6 +164205,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163247,6 +164222,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163267,6 +164247,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163279,6 +164264,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163299,6 +164289,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163315,6 +164310,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163327,6 +164327,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163347,6 +164352,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163359,6 +164369,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163379,6 +164394,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163391,6 +164411,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163411,6 +164436,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163423,6 +164453,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163443,6 +164478,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163459,6 +164499,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163471,6 +164516,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163491,6 +164541,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163503,6 +164558,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163523,6 +164583,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163535,6 +164600,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163555,6 +164625,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163567,6 +164642,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163587,6 +164667,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163603,6 +164688,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163615,6 +164705,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163635,6 +164730,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163647,6 +164747,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163667,6 +164772,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163679,6 +164789,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163699,6 +164814,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163711,6 +164831,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163731,6 +164856,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163747,6 +164877,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163759,6 +164894,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163779,6 +164919,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163791,6 +164936,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163811,6 +164961,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163823,6 +164978,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163843,6 +165003,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163855,6 +165020,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163875,6 +165045,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163891,6 +165066,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163903,6 +165083,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163923,6 +165108,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163935,6 +165125,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163955,6 +165150,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163967,6 +165167,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -163987,6 +165192,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -163999,6 +165209,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164019,6 +165234,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164035,6 +165255,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164047,6 +165272,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164067,6 +165297,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164079,6 +165314,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164099,6 +165339,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164111,6 +165356,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164131,6 +165381,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164143,6 +165398,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164163,6 +165423,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164179,6 +165444,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164191,6 +165461,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164211,6 +165486,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164223,6 +165503,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164243,6 +165528,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164255,6 +165545,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164275,6 +165570,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164287,6 +165587,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164307,6 +165612,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164323,6 +165633,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164335,6 +165650,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164355,6 +165675,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164367,6 +165692,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164387,6 +165717,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164399,6 +165734,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164419,6 +165759,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164431,6 +165776,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164451,6 +165801,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164467,6 +165822,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164479,6 +165839,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164499,6 +165864,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164511,6 +165881,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164531,6 +165906,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164543,6 +165923,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164563,6 +165948,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164575,6 +165965,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164595,6 +165990,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164611,6 +166011,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164623,6 +166028,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164643,6 +166053,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164655,6 +166070,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164675,6 +166095,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164687,6 +166112,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164707,6 +166137,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164719,6 +166154,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164739,6 +166179,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164755,6 +166200,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164767,6 +166217,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164787,6 +166242,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164799,6 +166259,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164819,6 +166284,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164831,6 +166301,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164851,6 +166326,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164863,6 +166343,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164883,6 +166368,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164899,6 +166389,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164911,6 +166406,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164931,6 +166431,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164943,6 +166448,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164963,6 +166473,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -164975,6 +166490,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -164995,6 +166515,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165007,6 +166532,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165027,6 +166557,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165043,6 +166578,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165055,6 +166595,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165075,6 +166620,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165087,6 +166637,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165107,6 +166662,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165119,6 +166679,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165139,6 +166704,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165151,6 +166721,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165171,6 +166746,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165187,6 +166767,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165199,6 +166784,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165219,6 +166809,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165231,6 +166826,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165251,6 +166851,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165263,6 +166868,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165283,6 +166893,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165295,6 +166910,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165315,6 +166935,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165331,6 +166956,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165343,6 +166973,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165363,6 +166998,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165375,6 +167015,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165395,6 +167040,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165407,6 +167057,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165427,6 +167082,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165439,6 +167099,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165459,6 +167124,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165475,6 +167145,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165487,6 +167162,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165507,6 +167187,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165519,6 +167204,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165539,6 +167229,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165551,6 +167246,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165571,6 +167271,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165583,6 +167288,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165603,6 +167313,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165619,6 +167334,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165631,6 +167351,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165651,6 +167376,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165663,6 +167393,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165683,6 +167418,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165695,6 +167435,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165715,6 +167460,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165727,6 +167477,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165747,6 +167502,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165763,6 +167523,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165775,6 +167540,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165795,6 +167565,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165807,6 +167582,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165827,6 +167607,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165839,6 +167624,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165859,6 +167649,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165875,6 +167670,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165887,6 +167687,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165907,6 +167712,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165919,6 +167729,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -165939,6 +167754,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165955,6 +167775,11 @@
     0,
     0
    ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
    "fixed": true,
    "stocks": {}
   },
@@ -165967,6 +167792,11 @@
    "family": "charge",
    "amount": 1,
    "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
     0,
     0,
     0
@@ -167978,7 +169808,7 @@
   }
  ],
  "stamp": {
-  "hash": "21c23edf22c2573b004eb873662cc7e84d3893f7273145414cc76ba5dd6860cc"
+  "hash": "b3a874153c00ab0fff5121799b75269edc5ee8cecd0fe777290b189d26d6df25"
  },
  "age_bound": 2060
 }

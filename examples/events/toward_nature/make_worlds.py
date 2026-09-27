@@ -219,6 +219,7 @@ def holder_nodes(position: list[int], extents: list[int], amount: int) -> list[d
             "family": "matter",
             "amount": amount,
             "momentum": [0, 0, 0],
+            "momentum_before": [0, 0, 0],
             "stocks": {},
             "fixed": True,  # a tool held in place (ALGEBRA.md #the-primitives; record 2157)
         }

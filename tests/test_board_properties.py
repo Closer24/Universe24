@@ -75,10 +75,12 @@ def small_world(
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
+                "momentum_before": [0, 0, 0],
                 "fixed": False,
                 "side": well_side,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "spin_before": [0, 0, 0],
                 "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": list(pair),
@@ -381,16 +383,7 @@ def test_conservation_between_clicks():
 
 
 def test_reversibility_except_the_click():
-    """8.8's inverse UNDER THE FIXED WALL (the model owner's record 1994 and his word of
-    2026-09-25; ALGEBRA.md #the-counts-line; BUILD.md section 26 item 34): (a) the joint
-    step inverts BIT FOR BIT, remainders and the family of clicks' own field included, over
-    the whole run with no receiver named, though the family's level falls at Nodes as its
-    waves pass (the falls counted, above 0): the wall 3 den Gamma is the same at every
-    interval, so no two states merge (item 32's finding A, the loss where the wall 3 den
-    (Gamma + c) shrank, HISTORY). (b) With the receiver named the inverse from the run's end
-    returns the state at the click's interval exactly, without the deleted summand: the
-    click's deletion is the one act the inverse cannot undo, the deleted summand in neither
-    state."""
+    """8.8's inverse UNDER THE FIXED WALL (the model owner's record 1994 and his word of 2026-09-25; ALGEBRA.md #the-counts-line; BUILD.md section 26 item 34): (a) the joint step inverts BIT FOR BIT, remainders and the family of clicks' own field included, over the whole run with no receiver named, though the family's level falls at Nodes as its waves pass (the falls counted, above 0): the wall 3 den Gamma is the same at every interval, so no two states merge (item 32's finding A, the loss where the wall 3 den (Gamma + c) shrank, HISTORY). (b) With the receiver named the inverse from the run's end returns the state at the click's interval exactly, without the deleted summand: the click's deletion is the one act the inverse cannot undo, the deleted summand in neither state."""
     unnamed = small_world(receiver_named=False)
     contents: list[np.ndarray] = []
     simulation, states, clicks = run(unnamed, contents=contents)

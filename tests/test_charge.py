@@ -287,6 +287,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "amount": 1,
             "stocks": {},
             "momentum": [0, 0, 0],
+            "momentum_before": [0, 0, 0],
             "fixed": False,
         }
     ]
@@ -298,6 +299,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "family": "light",
             "amount": 1,
             "momentum": [0, 0, 0],
+            "momentum_before": [0, 0, 0],
             "fixed": False,
             "stocks": {CHARGE_FAMILY_NAME: 1},
         }

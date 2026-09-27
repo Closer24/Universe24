@@ -242,104 +242,7 @@ def run_chain_digests() -> dict[str, str]:
 
 @pytest.mark.diagnostic
 def test_the_light_record_is_byte_identical_without_the_key():
-    """BUILD.md (p), a GameBoard reading (three host digests, a diagnostic and not a
-    measurement): the first build's chain world over 600 intervals gives the digests read at
-    the head f4a3971a before any line of the build was written: the state and the audit
-    the witness that the rows are byte for byte; the events' digest moved ONCE, at the GO's
-    fold (BUILD.md section 14), by the two fields added to every gather line (`click_at`,
-    `clock_source`; the gate reviewer's line on the click's time and key (i)), and the audit's digest once, by issue
-    #1086's momentum books (the blocks' held momentum, the transit and escape not accounted,
-    the scope of `balanced` named), every other field byte for byte; then all three once more
-    by item 10 (the lamp's own take of its record from the first interval after the train, the
-    record alive at 600 carrying its pointers; BUILD.md section 18); then all three once more
-    by the emitter as a clicking body (BUILD.md section 26: the chain world's lamp an emitter
-    body of the kind [7, 8] on the well [8, 7], six givings at their rungs, the grace and the
-    own take retired), then once more by the write on the circle of 2 N with before = -now
-    and the excited record's norm as the one-way flux into its centre Node over one period
-    (ALGEBRA.md #the-click and (6), ALGEBRA.md #rule3; BUILD.md section 26 item 13), then once more by
-    the flux reading at every detector with the cumulative ladder and the deletion at the click,
-    on the chain world's faces closed (item 14), then once more by the residue from the law
-    on the rich well [801, 700] with the take's data gone (item 15), then the events and the
-    audit once more by the given pair on the clock's half step (item 17), then the state and the
-    audit once more by the detector cube at [70, 72] (item 18; the events unchanged, the six
-    clicks at the same intervals), then all three by the emitter's coupling to the light it
-    givings and the residue read after the excited record's first advance (item 19), the
-    digests read at that head; then the state once more by the `extents` of every block
-    written beside its `side` on the snapshot (item 23; the events and the audit unchanged),
-    then the events and the audit by the click rule of ALGEBRA.md #the-click (the model
-    owner's word, record 1918; item 24: the excited record's running total accruing its
-    centre Node's share of its conserved form, the emitter's seed raised to 2^20, the six
-    givings at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all
-    three by the generator as the operator iterated with the stop (the owner's word of
-    2026-09-25; item 25: the emitter's seed and clock the iteration's, within the floor of
-    the eigensolver's), then all three by the generator's working amplitude 2^28 (the names'
-    regeneration of 2026-09-25, item 25 amended: the muon layer's well hovered at 1.5 times
-    the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), then all
-    three by THE GIVEN TRAIN (ALGEBRA.md #the-click; item 27: the chain world's emitter body
-    the train's 32 Nodes at [2, 34) with the well [699, 700], light on the given clock
-    [512, 1] of N = 1024, every giving the train written on the Nodes), the digests read at
-    that head; SINCE THE TIGHTENINGS (BUILD.md section 26 item 28) the closed chain bounds
-    matter too (one border for every family: the events and the audit moved, the state
-    digest unchanged); SINCE THE REMAINDER KEPT (the model owner's decision (1) of record
-    1962; BUILD.md section 26 item 29) the residues of the stock's givings spread from the
-    kept remainder and all three digests moved; SINCE THE COUPLING RETIRED (decision (2),
-    item 30) the excited record and the given light advance by the rule alone and all three
-    moved once more; SINCE THE NODE CLOCK (decision (5), item 31) all three moved once more
-    (the remainders Gamma times the plain ones in the vacuum and the wall of the body's
-    content at its Nodes, the wheel and the residues read there, the norms on the lines in
-    the clock's units); SINCE THE RENAME (record 1978, no cell) the events digest moved once
-    more with the two line fields' names, the giving line's `nodes` and the gather line's
-    `detectors` (the state and the audit unchanged); SINCE THE FAMILY OF CLICKS (ALGEBRA.md #the-counts-line; item 32) all three moved once more (the fourth family declared in the chain world,
-    one record of it over the board, held at the bodies' Nodes at their content and
-    spreading from them by the plain step, every Node's clock pair read from its level);
-    SINCE THE RESEED RETIRED (ALGEBRA.md #the-ladder; item 33) all three moved
-    once more (the body's own record continuing under its one identity, its levels never
-    rewritten, the residues read at the click at the first shell Node, the givings at the
-    counted intervals, the giving lines' fields); SINCE THE FIXED WALL (the model owner's
-    record 1994; item 34) all three moved once more (the paced reads at and beside the
-    bodies, the forms' units Gamma squared, the giving lines' `read_clocks`); SINCE THE FAMILY
-    OF CHARGE (ALGEBRA.md #the-paces; item 35) all three moved once more (the fifth family declared
-    in the chain world, one record of it over the board held at the bodies' Nodes at their
-    charge 0, the giving lines' `charge`, the snapshot's `charge` entry; the rows bit for bit);
-    SINCE THE NODE'S OWN PACE (ALGEBRA.md #the-direction; item 36) all three moved once more (the
-    pace on the Node's own sum at and beside the bodies, the forms as exact rationals, the
-    giving lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md #what-a-body-is; item 37)
-    the state digest moved once more (the block entry's `rotation`, None under the lattice
-    body; the events and the audit unchanged); SINCE THE GIVING CLICK (record 2016) the events
-    and the state digests moved with the lines' names alone (`giving` for `birth`,
-    `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42) the state digest moved once more (the block
-    entry's `body's Node` for `rotation`, None under the lattice body; the events and the audit
-    unchanged: the one rule factored and the support box of item 43 bit for bit); SINCE THE WEAK FIELD (ALGEBRA.md #the-line; item 44) all three moved (the rule, Gamma 10^4,
-    the amplitude 2^22, the seed 50 x 2^12: every level, remainder, giving line and book); SINCE THE
-    STOCK AS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; item 47) all three moved (the emitter's
-    level one more, its one own quantum beside the held stock: every pace at its Nodes, the
-    giving lines' content and the books per family); SINCE THE FAMILY GENERICITY (record 2066;
-    item 51) the state digest alone moved once more, by the state's entries (`node_clock` and
-    `held_fields` in place of `clock` and `charge`), the events and the audit unchanged: the
-    rows, the held levels and every line bit for bit; SINCE ITEM 53 the state digest once
-    more by the source word alone (`held_fields[].held` "sign"); SINCE ITEM 57 (the model
-    owner's record 2089) the events digest alone moved, by the gather line's entry `unit`
-    deleted with the engine's constant (the rows, the held levels, the state and the audit
-    bit for bit; the five-world comparison against 776c0d0d); SINCE ITEM 58 (ALGEBRA.md #the-primitives, one order for both clicks) all three moved: the giving's lowered quanta are held
-    after the held families' step with the takings', so the given record's norm reads the
-    content as it stands and the fields read the giving from the next interval (a defect
-    against ALGEBRA.md #the-line repaired, the mathematician's line; the giving worlds alone move); read
-    again at this head; SINCE THE SPIN AS STATE (ALGEBRA.md #a-familys-declaration, #the-interval; the one
-    stroke's commit 6, BUILD.md section 26 item 65) the state digest alone moved once more,
-    by the block entry's `spin` (the events and the audit bit for bit: no shipped body
-    spins); SINCE THE WINDOW AS THE ONE GIVING (ALGEBRA.md #the-primitives; commit 7,
-    item 66) all three moved: the chain world's emitter gives by the window at its 32 Nodes
-    at the weight 3 (its seed 2^10, the train's profile and its keys retired), every giving
-    line named at the close with the window's length; SINCE RECORD 2157 (ALGEBRA.md #the-primitives; item 67) the state digest alone moved once more, by the block entry's `fixed`
-    (the events and the audit bit for bit); SINCE THE FOUR-VECTOR CLICK WITHOUT THE RECOIL
-    (ALGEBRA.md #the-primitives, #the-interval; commit 5 in part, item 69) the events digest alone moved
-    once more, by the `momentum` key of every click and giving line (the sign per axis of the
-    quantum's direction; the rows, the state and the audit bit for bit); SINCE THE RESIDUE
-    LINES (ALGEBRA.md #the-primitives; item 70) the state digest alone moved once more, by the
-    state's `law` entry gone (one engine, no law's name; the events and the audit bit for
-    bit); SINCE THE SEAT'S NAMES (record 2108; item 74) the state digest alone moved once
-    more, by the block entry's key `node_record` in place of `seat` (the events and the
-    audit bit for bit)."""
+    """BUILD.md (p), a GameBoard reading (three host digests, a diagnostic and not a measurement): the first build's chain world over 600 intervals gives the digests read at the head f4a3971a before any line of the build was written: the state and the audit the witness that the rows are byte for byte; the events' digest moved ONCE, at the GO's fold (BUILD.md section 14), by the two fields added to every gather line (`click_at`, `clock_source`; the gate reviewer's line on the click's time and key (i)), and the audit's digest once, by issue #1086's momentum books (the blocks' held momentum, the transit and escape not accounted, the scope of `balanced` named), every other field byte for byte; then all three once more by item 10 (the lamp's own take of its record from the first interval after the train, the record alive at 600 carrying its pointers; BUILD.md section 18); then all three once more by the emitter as a clicking body (BUILD.md section 26: the chain world's lamp an emitter body of the kind [7, 8] on the well [8, 7], six givings at their rungs, the grace and the own take retired), then once more by the write on the circle of 2 N with before = -now and the excited record's norm as the one-way flux into its centre Node over one period (ALGEBRA.md #the-click and (6), ALGEBRA.md #rule3; BUILD.md section 26 item 13), then once more by the flux reading at every detector with the cumulative ladder and the deletion at the click, on the chain world's faces closed (item 14), then once more by the residue from the law on the rich well [801, 700] with the take's data gone (item 15), then the events and the audit once more by the given pair on the clock's half step (item 17), then the state and the audit once more by the detector cube at [70, 72] (item 18; the events unchanged, the six clicks at the same intervals), then all three by the emitter's coupling to the light it givings and the residue read after the excited record's first advance (item 19), the digests read at that head; then the state once more by the `extents` of every block written beside its `side` on the snapshot (item 23; the events and the audit unchanged), then the events and the audit by the click rule of ALGEBRA.md #the-click (the model owner's word, record 1918; item 24: the excited record's running total accruing its centre Node's share of its conserved form, the emitter's seed raised to 2^20, the six givings at (2 u + 1) P / (2 W) after their reads; the state at 600 unchanged), then all three by the generator as the operator iterated with the stop (the owner's word of 2026-09-25; item 25: the emitter's seed and clock the iteration's, within the floor of the eigensolver's), then all three by the generator's working amplitude 2^28 (the names' regeneration of 2026-09-25, item 25 amended: the muon layer's well hovered at 1.5 times the bound at 2^20; the emitter's profile and clock the iteration's at 2^28), then all three by THE GIVEN TRAIN (ALGEBRA.md #the-click; item 27: the chain world's emitter body the train's 32 Nodes at [2, 34) with the well [699, 700], light on the given clock [512, 1] of N = 1024, every giving the train written on the Nodes), the digests read at that head; SINCE THE TIGHTENINGS (BUILD.md section 26 item 28) the closed chain bounds matter too (one border for every family: the events and the audit moved, the state digest unchanged); SINCE THE REMAINDER KEPT (the model owner's decision (1) of record 1962; BUILD.md section 26 item 29) the residues of the stock's givings spread from the kept remainder and all three digests moved; SINCE THE COUPLING RETIRED (decision (2), item 30) the excited record and the given light advance by the rule alone and all three moved once more; SINCE THE NODE CLOCK (decision (5), item 31) all three moved once more (the remainders Gamma times the plain ones in the vacuum and the wall of the body's content at its Nodes, the wheel and the residues read there, the norms on the lines in the clock's units); SINCE THE RENAME (record 1978, no cell) the events digest moved once more with the two line fields' names, the giving line's `nodes` and the gather line's `detectors` (the state and the audit unchanged); SINCE THE FAMILY OF CLICKS (ALGEBRA.md #the-counts-line; item 32) all three moved once more (the fourth family declared in the chain world, one record of it over the board, held at the bodies' Nodes at their content and spreading from them by the plain step, every Node's clock pair read from its level); SINCE THE RESEED RETIRED (ALGEBRA.md #the-ladder; item 33) all three moved once more (the body's own record continuing under its one identity, its levels never rewritten, the residues read at the click at the first shell Node, the givings at the counted intervals, the giving lines' fields); SINCE THE FIXED WALL (the model owner's record 1994; item 34) all three moved once more (the paced reads at and beside the bodies, the forms' units Gamma squared, the giving lines' `read_clocks`); SINCE THE FAMILY OF CHARGE (ALGEBRA.md #the-paces; item 35) all three moved once more (the fifth family declared in the chain world, one record of it over the board held at the bodies' Nodes at their charge 0, the giving lines' `charge`, the snapshot's `charge` entry; the rows bit for bit); SINCE THE NODE'S OWN PACE (ALGEBRA.md #the-direction; item 36) all three moved once more (the pace on the Node's own sum at and beside the bodies, the forms as exact rationals, the giving lines' `pace`, the plain flux); SINCE THE BODY RECORD (ALGEBRA.md #what-a-body-is; item 37) the state digest moved once more (the block entry's `rotation`, None under the lattice body; the events and the audit unchanged); SINCE THE GIVING CLICK (record 2016) the events and the state digests moved with the lines' names alone (`giving` for `birth`, `given_norm` for `born_norm`; the state's record entries carry `giving`); SINCE THE BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42) the state digest moved once more (the block entry's `body's Node` for `rotation`, None under the lattice body; the events and the audit unchanged: the one rule factored and the support box of item 43 bit for bit); SINCE THE WEAK FIELD (ALGEBRA.md #the-line; item 44) all three moved (the rule, Gamma 10^4, the amplitude 2^22, the seed 50 x 2^12: every level, remainder, giving line and book); SINCE THE STOCK AS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; item 47) all three moved (the emitter's level one more, its one own quantum beside the held stock: every pace at its Nodes, the giving lines' content and the books per family); SINCE THE FAMILY GENERICITY (record 2066; item 51) the state digest alone moved once more, by the state's entries (`node_clock` and `held_fields` in place of `clock` and `charge`), the events and the audit unchanged: the rows, the held levels and every line bit for bit; SINCE ITEM 53 the state digest once more by the source word alone (`held_fields[].held` "sign"); SINCE ITEM 57 (the model owner's record 2089) the events digest alone moved, by the gather line's entry `unit` deleted with the engine's constant (the rows, the held levels, the state and the audit bit for bit; the five-world comparison against 776c0d0d); SINCE ITEM 58 (ALGEBRA.md #the-primitives, one order for both clicks) all three moved: the giving's lowered quanta are held after the held families' step with the takings', so the given record's norm reads the content as it stands and the fields read the giving from the next interval (a defect against ALGEBRA.md #the-line repaired, the mathematician's line; the giving worlds alone move); read again at this head; SINCE THE SPIN AS STATE (ALGEBRA.md #a-familys-declaration, #the-interval; the one stroke's commit 6, BUILD.md section 26 item 65) the state digest alone moved once more, by the block entry's `spin` (the events and the audit bit for bit: no shipped body spins); SINCE THE WINDOW AS THE ONE GIVING (ALGEBRA.md #the-primitives; commit 7, item 66) all three moved: the chain world's emitter gives by the window at its 32 Nodes at the weight 3 (its seed 2^10, the train's profile and its keys retired), every giving line named at the close with the window's length; SINCE RECORD 2157 (ALGEBRA.md #the-primitives; item 67) the state digest alone moved once more, by the block entry's `fixed` (the events and the audit bit for bit); SINCE THE FOUR-VECTOR CLICK WITHOUT THE RECOIL (ALGEBRA.md #the-primitives, #the-interval; commit 5 in part, item 69) the events digest alone moved once more, by the `momentum` key of every click and giving line (the sign per axis of the quantum's direction; the rows, the state and the audit bit for bit); SINCE THE RESIDUE LINES (ALGEBRA.md #the-primitives; item 70) the state digest alone moved once more, by the state's `law` entry gone (one engine, no law's name; the events and the audit bit for bit); SINCE THE SEAT'S NAMES (record 2108; item 74) the state digest alone moved once more, by the block entry's key `node_record` in place of `seat` (the events and the audit bit for bit)."""
     assert run_chain_digests() == {
         "events": "be458a826af93758056f1a5f845f25ce53787ff63122bc87d1991ffbf96e0467",
         "state": "4ad93f10916fb60cba5ef90eee02fe816bb316a66728c1653cc40833dc7ad6ff",
@@ -392,6 +295,7 @@ def test_the_loaders_refusals_name_the_key():
             "amount": 4,
             "stocks": {},
             "momentum": [0, 0, 0],
+            "momentum_before": [0, 0, 0],
             "fixed": False,
             "lamp": {"rate": [1, 40], "wheel": [1, 64], "train": 2},
         }
@@ -506,10 +410,12 @@ def test_the_blocks_drive_steps_its_cells_and_leaves_the_rows():
                         "side": 3,
                         "q": 0,
                         "spin": [0, 0, 0],
+                        "spin_before": [0, 0, 0],
                         "twist": 0,
                         "moment": [0, 0, 0],
                         "pair": [800, 800],
                         "momentum": momentum,
+                        "momentum_before": momentum,
                         "fixed": False,
                         "seed": 5,
                     }
@@ -651,6 +557,7 @@ def test_a_seeded_block_at_rest_counts_its_cycles():
                     "side": 10,
                     "q": 0,
                     "spin": [0, 0, 0],
+                    "spin_before": [0, 0, 0],
                     "twist": 0,
                     "moment": [0, 0, 0],
                     "pair": [800, 800],
@@ -715,6 +622,7 @@ def test_the_margin_rule_refuses_below_the_margin_and_prints_the_extent():
                     "side": 28,
                     "q": 0,
                     "spin": [0, 0, 0],
+                    "spin_before": [0, 0, 0],
                     "twist": 0,
                     "moment": [0, 0, 0],
                     "pair": [1600, 1609],
@@ -989,6 +897,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         "side": 14,
         "q": 0,
         "spin": [0, 0, 0],
+        "spin_before": [0, 0, 0],
         "twist": 0,
         "moment": [0, 0, 0],
         "pair": [3200, 3227],
@@ -1299,10 +1208,12 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
                 "ramp": 0,
                 "start": 0,
                 "momentum": momentum,
+                "momentum_before": momentum,
                 "fixed": False,
                 "side": 12,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "spin_before": [0, 0, 0],
                 "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [800, 801],
@@ -1362,10 +1273,12 @@ def test_a_block_that_steps_off_the_board_refuses_the_interval():
                 "ramp": 0,
                 "start": 0,
                 "momentum": [-64, 0, 0],
+                "momentum_before": [-64, 0, 0],
                 "fixed": False,
                 "side": 12,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "spin_before": [0, 0, 0],
                 "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [800, 800],
@@ -1403,10 +1316,12 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
                 "ramp": 0,
                 "start": 0,
                 "momentum": [0, 0, 0],
+                "momentum_before": [0, 0, 0],
                 "fixed": False,
                 "side": 1,
                 "q": 0,
                 "spin": [0, 0, 0],
+                "spin_before": [0, 0, 0],
                 "twist": 0,
                 "moment": [0, 0, 0],
                 "pair": [1, 2],
