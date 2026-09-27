@@ -25,7 +25,6 @@ Triple = tuple[int, int, int]
 Quadruple = tuple[int, int, int, int, int]
 Vector = tuple[int, int, int]
 
-FINE_SIZE = 1 << 10  # the fine table's length: k = k_1 x 2^10 + k_0 (ALGEBRA.md #the-primitives)
 IDENTITY_TRIPLE: Triple = (1, 0, 1)
 IDENTITY_QUADRUPLE: Quadruple = (1, 0, 0, 0, 1)
 
@@ -81,10 +80,8 @@ class TwistTable:
     coarse: tuple[Triple, ...]
 
     def check(self) -> None:
-        if len(self.fine) != FINE_SIZE:
-            raise ValueError(f"the fine table holds {len(self.fine)} triples, not {FINE_SIZE}")
-        if not self.coarse:
-            raise ValueError("the coarse table is empty")
+        if not self.fine or not self.coarse:
+            raise ValueError("the fine or the coarse table is empty")
         for name, table in (("fine", self.fine), ("coarse", self.coarse)):
             if table[0] != IDENTITY_TRIPLE:
                 raise ValueError(f"the {name} table's first triple is not the identity (1, 0, 1)")
@@ -97,11 +94,11 @@ class TwistTable:
     @property
     def bound(self) -> int:
         """The largest |k| the table gives."""
-        return len(self.coarse) * FINE_SIZE - 1
+        return len(self.coarse) * len(self.fine) - 1
 
     def triple(self, k: int) -> Triple:
         size = abs(k)
-        coarse_index, fine_index = divmod(size, FINE_SIZE)
+        coarse_index, fine_index = divmod(size, len(self.fine))
         if coarse_index >= len(self.coarse):
             raise ValueError(
                 f"the twist {k} is beyond the table's bound {self.bound} (ALGEBRA.md #the-primitives)"
