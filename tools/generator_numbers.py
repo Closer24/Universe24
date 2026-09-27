@@ -1,4 +1,4 @@
-"""The numbers a generator writes into the files for the engine to read (a host module).
+"""The numbers a generator writes into the files for the engine to read (a host tool, outside the engine).
 
 The engine's loader computes no float (the integer rule, the model owner's record
 2071; tests/test_integer_algebra.py), so the roundings that ALGEBRA.md names as

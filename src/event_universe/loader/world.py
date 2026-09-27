@@ -35,6 +35,9 @@ Vector = tuple[int, int, int]
 # the ceiling of a row's amplitude is the width's (the rule's total and the transport's room bound it below); the rule's int64 total
 AMPLITUDE_BOUND = MAX_WORK_INT
 TOTAL_BOUND = MAX_WORK_INT + 1
+# the law's two numbers of the twist table (ALGEBRA.md #the-primitives): theta_unit = 1 / (4 Gamma 2^16), |k| = k_1 2^10 + k_0
+TWIST_UNIT_SCALE = 1 << 16
+TWIST_FINE_COUNT = 1 << 10
 # light's kind: the pair [1, 1], the value every family without a declared pair reads (no branch on a name)
 MASSLESS_PAIR = (1, 1)
 # a body of one Node
@@ -63,24 +66,21 @@ class TwistTable:
 
 
 def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: int | None) -> TwistTable:
-    """The twist table read and checked in integers (ALGEBRA.md #the-primitives):
-    {unit, fine, coarse}; unit a multiple of 4 Gamma (theta_unit = 1 / unit radians per unit
-    of k, the table's own number); the fine triples a power of two in count (the split of |k|),
-    the coarse from 1; each triple three integers, c from 1, s from 0, d from 1 with
-    c^2 + s^2 = d^2, the first the angle 0's and the angles never falling along the table (the
-    nearest triple of each angle is the generator's number, checked by its own test); the
-    product of the largest d of each part times 3 (A + 1) inside the width (the transport's
-    total), which bounds every d and the coarse count."""
+    """The twist table read and checked in integers (ALGEBRA.md #the-primitives): {unit, fine, coarse};
+    unit = 4 Gamma 2^16 and 2^10 fine triples (the law's two numbers, theta_unit = 1 / (4 Gamma 2^16)
+    radians per unit of k and |k| = k_1 2^10 + k_0), the coarse from 1; each triple three integers,
+    c from 1, s from 0, d from 1 with c^2 + s^2 = d^2, the first the angle 0's and the angles never
+    falling along the table (the nearest triple of each angle is the generator's number, checked by
+    its own test); the product of the largest d of each part times 3 (A + 1) inside the width (the
+    transport's total), which bounds every d and the coarse count."""
     obj = _object(value, label, {"unit", "fine", "coarse"}, {"unit", "fine", "coarse"})
     if amplitude_bound is None:
-        raise ValueError(
-            f"{label}: a world with a twist table declares `amplitude_bound` (the transport's room needs A)"
-        )
+        raise ValueError(f"{label}: a world with a twist table declares `amplitude_bound`")
     unit = _integer(obj["unit"], f"{label}.unit", 1)
-    if unit % (4 * node_clock):
+    if unit != 4 * node_clock * TWIST_UNIT_SCALE:
         raise ValueError(
-            f"{label}.unit {unit} is no multiple of 4 Gamma = {4 * node_clock}: theta_unit = 1 / unit "
-            "radians per unit of k, the quarter turn a whole number of units (ALGEBRA.md #the-primitives)"
+            f"{label}.unit {unit} is not 4 Gamma 2^16 = {4 * node_clock * TWIST_UNIT_SCALE}: "
+            "theta_unit = 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md #the-primitives)"
         )
     parts: list[tuple[tuple[int, int, int], ...]] = []
     for name in ("fine", "coarse"):
@@ -89,10 +89,9 @@ def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: in
             raise ValueError(
                 f"{label}.{name} must be a list of triples [c, s, d] (ALGEBRA.md #the-primitives)"
             )
-        if name == "fine" and len(rows) & (len(rows) - 1):
+        if name == "fine" and len(rows) != TWIST_FINE_COUNT:
             raise ValueError(
-                f"{label}.fine holds {len(rows)} triples, no power of two: |k| splits into the fine and the "
-                "coarse index by the fine table's size (ALGEBRA.md #the-transport)"
+                f"{label}.fine holds {len(rows)} triples, not 2^10: |k| = k_1 2^10 + k_0 (ALGEBRA.md #the-primitives)"
             )
         triples: list[tuple[int, int, int]] = []
         for index, row in enumerate(rows):
@@ -154,8 +153,7 @@ def _refuse_under_law(obj: dict[str, object], label: str, keys: set[str]) -> Non
 STAMP_KEYS = {"hash"}
 BLOCK_KEYS = {
     "side",
-    # the box's extents per axis in place of `side` (the slabs of ALGEBRA.md
-    # ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 23)
+    # the box's extents per axis in place of `side` (the slabs of ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 23)
     "extents",
     "pair",
     # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval; the one stroke, commit 1):
@@ -177,15 +175,12 @@ BLOCK_KEYS = {
     "start",
     "margin",
     # the emitter as a clicking body (ALGEBRA.md #the-click; LAB_TOOLS.md A.1):
-    # the excited records in turn on the body's Nodes, each clicking at its
-    # own rung, the given record written once by E^T at that interval
+    # the excited records in turn on the body's Nodes, each clicking at its own rung, the given record written once by E^T at that interval
     "emitter",
     # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
-    # 7): an emitting block names the detector set whose one detector is its
-    # record's ladder; admitted on an emitting block alone
+    # 7): an emitting block names the detector set whose one detector is its record's ladder; admitted on an emitting block alone
     "receiver",
-    # the stock of the body's own family where its emitter gives it (ALGEBRA.md
-    # ALGEBRA.md #the-primitives; commit 6)
+    # the stock of the body's own family where its emitter gives it (ALGEBRA.md #the-primitives; commit 6)
     "stock",
 }
 # a well's margin kind, the loader's rule between keys: a pin world's margins or a control world's
@@ -228,10 +223,8 @@ class FamilyDefinition:
     lifetime: int | None = None
     hand: int | None = None
     phase_per_age: tuple[int, int] | None = None
-    # The record kind's pair [num, den] on the six-neighbour term of the
-    # local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md
-    # section 1): light's kind is the value (1, 1) (every family without
-    # the key `pair`); a massive kind declares den > num, its rest
+    # The record kind's pair [num, den] on the six-neighbour term of the local detector law's rule
+    # (`massive-record-v1`, MASSIVE_RECORD.md section 1): light's kind is the value (1, 1) (every family without the key `pair`); a massive kind declares den > num, its rest
     # frequency cos omega_0 = num / den.
     pair: tuple[int, int] = MASSLESS_PAIR
     # THE FAMILY GENERICITY (the model owner's record 2066 of 2026-09-25
@@ -2413,7 +2406,7 @@ def parse_world_document(
             "the world.universe",
         )
     shape_value = cast(tuple[object, ...], obj["shape"])
-    extents = tuple(_integer(item, "shape", 1) for item in shape_value)  # the GameBoard bounds an extent
+    extents = tuple(_integer(item, "shape", 1) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])
     boundary, periodic = _boundary(obj["boundary"])
     closed = tuple(isinstance(boundary, dict) and boundary.get(axis) == CLOSED_FACE for axis in AXES)
@@ -2500,9 +2493,7 @@ def parse_world_document(
             "a world with a massive family declares `amplitude_bound`, the amplitude "
             "A every row stays below (the load bound and the rows' run-time assertion use it; no default)"
         )
-    bound = (
-        MAX_WORK_INT if amplitude_bound is None else amplitude_bound
-    )  # undeclared: the width is the cap
+    bound = MAX_WORK_INT if amplitude_bound is None else amplitude_bound
     # THE BODIES AND THE DETECTORS through the frame (loader/frame.py, `BODY`, `DETECTOR`):
     # every key checked with the families known, an unknown key refused by name
     bodies = frame.bodies(obj["measured"], Context(tuple(family.name for family in families)))

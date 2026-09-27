@@ -11,14 +11,15 @@ import pytest
 
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.generator_numbers import rotation_twist, twist_triple
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import PACES_SHAPE as SHAPE
 from tests.bodies import paces_world, parts_of
 from tests.running import refused
-from tests.worlds import FILE, emitter_world, on_the_file
+from tests.worlds import FILE, emitter_world, load_file, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
+GENERATOR = load_file("generator_numbers", ROOT / "tools" / "generator_numbers.py")  # the host's numbers
+rotation_twist, twist_triple = GENERATOR.rotation_twist, GENERATOR.twist_triple
 GAMMA = 10_000
 UNIT = 4 * GAMMA * 65536
 
@@ -212,11 +213,11 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     good = twisted_world()
     parse_nature_beam_world(good)
     for change, match in (
-        (lambda t: t.__setitem__("unit", 7), "is no multiple of 4 Gamma"),
+        (lambda t: t.__setitem__("unit", 7), "is not 4 Gamma 2"),
         (lambda t: t["coarse"].__setitem__(200, [3, 4, 6]), "is no triple of the table"),
         # a triple planted out of order: the loader checks the angles' order in integers (item 73)
         (lambda t: t["coarse"].__setitem__(200, [3, 4, 5]), "turns back below the entry before it"),
-        (lambda t: t["fine"].pop(), "no power of two"),
+        (lambda t: t["fine"].pop(), "triples, not 2"),
     ):
         broken = json.loads(json.dumps(good))
         change(broken["twist_table"])
