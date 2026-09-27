@@ -1,13 +1,5 @@
-"""The algebra gate: the physical modules hold integer mathematics only (the model owner's word of
-2026-09-22, record 920; the six verbs of the law act on integers; a root is the seventh verb, outside
-the law, record 249, admitted only where ALLOWED_ROOTS lists it by function with its reason). The gate
-reads the source as tokens and as a syntax tree, never running a world: no float literal, no `/`, no
-import of random, fractions, decimal, cmath or statistics, of math only gcd and isqrt and no alias of
-them; every numpy dtype int64, bool or object and every allocation with a dtype; none of numpy's
-functions or methods that leave the integers (sqrt, mean, divide, exp, the trigonometric ones, linalg,
-linspace, random, fft, polyfit, interp), no builtin float; a root only in the listed functions, so that
-the list is always the inventory. The self-tests at the end show the gate catches each violation.
-"""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import,
+dtype or numpy function, and a root only in the functions ALLOWED_ROOTS names, each with its reason."""
 
 from __future__ import annotations
 

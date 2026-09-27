@@ -118,8 +118,8 @@ family's pair [num, den]:
 At the vacuum's pace p_0 = p_a = Gamma the line is the plain second-order
 wave rule of the pair: a_next + a_before = 2 cos omega a_now with the
 six-neighbour coupling, the rotation omega_0 with cos omega_0 = num /
-den at wave number zero. The field families (phase 1, held) step with
-the pace 1 and the wall 3 den, the same line at first order.
+den at wave number zero. A held family's field steps at its row's pair,
+[1, 1] or any other, with the pace 1 and the wall 3 den, at first order.
 
 ### The direction
 
