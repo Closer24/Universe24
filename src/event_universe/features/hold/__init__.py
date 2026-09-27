@@ -34,8 +34,7 @@ DECLARATION = Declaration(
                             "factors": ListOf(Integer(least=1)),
                             "dipole": OneOf(("spin", "moment")),
                             "dipole_div": Integer(least=1),
-                        },
-                        frozenset({"dipole_div"}),
+                        }
                     )
                 },
                 frozenset({"held"}),
