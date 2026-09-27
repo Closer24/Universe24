@@ -104,6 +104,7 @@ def body_world() -> dict:
                 "nodes": [[5, 0, 0], [6, 0, 0]],
                 "count": 1,
                 "momentum": [0, 0, 0],
+                "momentum_before": [0, 0, 0],
             }
         ],
         "detectors": [],
