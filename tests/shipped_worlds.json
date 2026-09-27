@@ -1,6 +1,6 @@
 {
  "format": "shipped-worlds-digest",
- "recorded_at": "c7800638",
+ "recorded_at": "636fe3f522235fb69c9a03031b949027df092b00",
  "worlds": {
   "examples/events/dark_body/bright.json": {
    "stamp": {
@@ -34,7 +34,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "6569671f3d6151c4ba4bfbc239ffa7bf526e1dea34fd4db1623f685eac1b4e41",
+   "digest": "3f1ba949f0fc7c327b8e11a7c37817b896cce93dfa1f9a42447d7c85b478fa4a",
    "records": 1,
    "clicks": 0,
    "lines": 203
@@ -45,7 +45,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "35cf1353144fa79a155e723021bded5ab30d83ad6a1b9ab1f0e4aa9d2740f209",
+   "digest": "ea6e27a69686ae3cc3e856f4e5fdd49f98c8ccfe57c8e11318053ffda3d70833",
    "records": 1,
    "clicks": 0,
    "lines": 403
@@ -56,7 +56,7 @@
    },
    "ticks": 3000,
    "intervals": 200,
-   "digest": "8f5ec852becfa43e7e517161af223076ffd0c96147ebb7405f9d8d97ea6760eb",
+   "digest": "85fe3b56622fe3ec6ea1416867a3eb3a3dda3c6e1c958f5fdc26d4e77e29317f",
    "records": 1,
    "clicks": 0,
    "lines": 204
@@ -67,7 +67,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "1b2aa8f25c3287538301c40fd9e608543127ede242bd28c3868d16b83a7f4210",
+   "digest": "474a0e1c246c4e230d418ff1eb5f93c352217b6d5845deeb25a541d49db61fe2",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -78,7 +78,7 @@
    },
    "ticks": 3500,
    "intervals": 200,
-   "digest": "e46e64f92e910741c796ebcdf252150427056e761ec3ff448e6b3893cd27e575",
+   "digest": "66306ead87dd68dee78b9c4af708f080ee81b52eb2e63bdf49ab90c91f881d2f",
    "records": 1,
    "clicks": 0,
    "lines": 201
@@ -89,7 +89,7 @@
    },
    "ticks": 9500,
    "intervals": 200,
-   "digest": "00c792ae4307cc08c043b22af2288983dc5b17000f912ce1c871508049c99226",
+   "digest": "ecb23d2289884dff35912ee29bd9c505a9142b01ab5b74cbc35c7da8bb945bb0",
    "records": 1,
    "clicks": 0,
    "lines": 401
@@ -122,7 +122,7 @@
    },
    "ticks": 20500,
    "intervals": 200,
-   "digest": "0c6ff8f19c49aa1c3fbec8442c3e28ca2daecdde3150efbcef46392de7318b76",
+   "digest": "6e65672f9dfb0bc6db24ccf08a464de8c6bdf75058ab02a806602c571e9f03d8",
    "records": 1,
    "clicks": 0,
    "lines": 404
@@ -133,7 +133,7 @@
    },
    "ticks": 70992,
    "intervals": 200,
-   "digest": "7cb322fb0b84251a666c8b8073a9ac181454b14298cb929c1d6180b318af8eb2",
+   "digest": "46afc5fcd13187fc4a7b0b8bb5bf477bf775710a48b4ef758e6902003f2f03bf",
    "records": 2,
    "clicks": 0,
    "lines": 205
@@ -144,7 +144,7 @@
    },
    "ticks": 35304,
    "intervals": 3000,
-   "digest": "05309268eceb1d9696e5f0b7c726b86b45ae845d1756d72ad67ee04f1a92b361",
+   "digest": "6d4dfbcf7f0daddc32007079639447ae6372f64aab3c40c5ae1e8d262bf1418b",
    "records": 2,
    "clicks": 9,
    "lines": 9102
@@ -168,7 +168,7 @@
    },
    "ticks": 3600,
    "intervals": 200,
-   "digest": "38bcf6d98bcf458e92cfd2f7dfbfb87984e663a09439556902a36c9be65e1f6a",
+   "digest": "da102fd6970312c6ee9714ca376c9536214d5970412049d995d9ec3225786e6d",
    "records": 12,
    "clicks": 0,
    "lines": 631
@@ -179,7 +179,7 @@
    },
    "ticks": 5966,
    "intervals": 200,
-   "digest": "841e4f351b9657408fadf128368e5d422d1878a778550e07098e58f052042c28",
+   "digest": "c3a930424f335280b8a6255493cee35792a278f736c16d7789ec5f8026632419",
    "records": 4,
    "clicks": 0,
    "lines": 608
@@ -201,7 +201,7 @@
    },
    "ticks": 8206,
    "intervals": 200,
-   "digest": "16cd21fb0e94ebcd55b47fa5d780c1641f1d9eb7442ce6b39d075e380a643ccd",
+   "digest": "842bef276bd8475e89b62e540faa9c6b89cc6731c578dd27c686b22633e75c20",
    "records": 4,
    "clicks": 0,
    "lines": 607
@@ -225,7 +225,7 @@
    },
    "ticks": 10558,
    "intervals": 200,
-   "digest": "d8cbad90b5e3717905ea3fcc1786ec59ea2899f9507cee2e1cdb2e3422f0ce45",
+   "digest": "d0f7910a70cbc1a35435f029021d5aea9d7618c42ca8afdb84f4c20076f6d254",
    "records": 1,
    "clicks": 1,
    "lines": 165,
@@ -238,7 +238,7 @@
    },
    "ticks": 6150,
    "intervals": 200,
-   "digest": "652820f5f3bfc936c4f8e0f48b740056a25a195fec9be2c01a21c1e15c901788",
+   "digest": "beab32bf0e33cf7c35fb74a813c5adabe7038aa0ddab23e257f4a0fe232bb8ed",
    "records": 9,
    "clicks": 1,
    "lines": 630
