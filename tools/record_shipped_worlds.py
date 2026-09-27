@@ -22,10 +22,22 @@ count is recorded beside the digest and the test replays exactly it. A world who
 change that moved it, with the reason in that commit's message; the test never writes.
 
     PYTHONPATH=src python tools/record_shipped_worlds.py [world.json ...]
+
+CI RECORDS THE REGRESSION (the model owner's word of 2026-09-27): no agent runs the 22 worlds
+for a record again. The replay test hands `run` a folder, and every world's entry is written
+there as `<world path with '/' as '__'>.record.json` beside the digest it compares; the
+world jobs upload the folder, and one job merges every entry into the record with
+
+    PYTHONPATH=src python tools/record_shipped_worlds.py --merge <folder> --recorded-at <sha>
+
+the recorded count of intervals kept, a refusing world at its refusal, every world the folder
+does not name kept as recorded; where the record then differs from the head's, the job commits
+it to the pull request's branch and the new head replays it bit for bit.
 """
 
 from __future__ import annotations
 
+import argparse
 import dataclasses
 import hashlib
 import json
@@ -44,6 +56,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
 RECORD = ROOT / "tests" / "shipped_worlds.json"
 FORMAT = "shipped-worlds-digest"
+ENTRY_SUFFIX = ".record.json"  # one world's entry, written by the replay for CI's merge
 # the folders whose worlds are ahead of the loader's words (their structure tests hold their
 # load as expected failures; `generated`: the readable example of the law's form, its giving body
 # refused at load until the mode file): not shipped worlds of the engine
@@ -182,12 +195,13 @@ def digest_of(reading: dict[str, Any]) -> str:
     return hashlib.sha256(b"".join(parts)).hexdigest()
 
 
-def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
+def run(path: Path, intervals: int | None = None, write_to: Path | None = None) -> dict[str, Any]:
     """The world stepped `intervals` times (its recorded count, or the count this tool picks) and
     its digest, with the counts that name a difference when the digest moves; a world the law
     refuses on the way keeps its count and is recorded with the refusing step and the refusal's
     words, which the digest covers, so the replay refuses the same step the same way; a recorded
-    world keeps its recorded count on every re-record, a new one gets the count this tool picks."""
+    world keeps its recorded count on every re-record, a new one gets the count this tool picks.
+    With `write_to`, the entry is also written there as the world's own record file for CI's merge."""
     document = json.loads(path.read_text(encoding="utf-8"))
     stamp = input_stamp(document)
     started = time.monotonic()
@@ -223,12 +237,71 @@ def run(path: Path, intervals: int | None = None) -> dict[str, Any]:
     }
     if refused is not None:
         entry["refused_at"], entry["refused"] = refused_at, refused
+    if write_to is not None:
+        key = path.resolve().relative_to(ROOT).as_posix()
+        write_to.mkdir(parents=True, exist_ok=True)
+        (write_to / (key.replace("/", "__") + ENTRY_SUFFIX)).write_text(
+            json.dumps({key: {k: v for k, v in entry.items() if k != "seconds"}}), encoding="utf-8"
+        )
     return entry
 
 
+def write_record(worlds: dict[str, Any], recorded_at: str) -> None:
+    """The record written once, sorted by world, with the commit it was recorded at."""
+    RECORD.write_text(
+        json.dumps(
+            {"format": FORMAT, "recorded_at": recorded_at, "worlds": dict(sorted(worlds.items()))},
+            indent=1,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
+def merge(folder: Path, recorded_at: str) -> list[str]:
+    """Every world's record file under `folder` (the shards' uploads, any depth) merged into the
+    record: a named world replaced by its entry, every other world kept as recorded; the record
+    is written only where a world's entry moved, so a record that replays as it stands keeps its
+    commit and is not rewritten for the sha alone; the worlds merged, sorted."""
+    recorded: dict[str, Any] = (
+        json.loads(RECORD.read_text(encoding="utf-8")) if RECORD.exists() else {"worlds": {}}
+    )
+    worlds: dict[str, Any] = dict(recorded.get("worlds", {}))
+    merged: list[str] = []
+    for file in sorted(folder.rglob("*" + ENTRY_SUFFIX)):
+        for key, entry in json.loads(file.read_text(encoding="utf-8")).items():
+            worlds[key] = entry
+            merged.append(key)
+    if worlds != recorded.get("worlds", {}):
+        write_record(worlds, recorded_at)
+    return sorted(merged)
+
+
 def main(argv: list[str] | None = None) -> int:
-    names = argv if argv is not None else sys.argv[1:]
-    paths = [Path(n).resolve() for n in names] if names else shipped_worlds()
+    parser = argparse.ArgumentParser(
+        description="record or merge the shipped worlds' regression digests"
+    )
+    parser.add_argument(
+        "worlds", nargs="*", help="the world files to record; none for every shipped world"
+    )
+    parser.add_argument(
+        "--merge", type=Path, metavar="FOLDER", help="merge the record files under FOLDER"
+    )
+    parser.add_argument(
+        "--recorded-at", metavar="SHA", help="the commit written into the record; HEAD's"
+    )
+    args = parser.parse_args(argv)
+    recorded_at = (
+        args.recorded_at
+        or subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True
+        ).stdout.strip()
+    )
+    if args.merge is not None:
+        merged = merge(args.merge, recorded_at)
+        print("merged", len(merged), "worlds at", recorded_at, "into", RECORD.relative_to(ROOT))
+        return 0
+    paths = [Path(n).resolve() for n in args.worlds] if args.worlds else shipped_worlds()
     recorded: dict[str, Any] = (
         json.loads(RECORD.read_text(encoding="utf-8")) if RECORD.exists() else {"worlds": {}}
     )
@@ -239,17 +312,8 @@ def main(argv: list[str] | None = None) -> int:
         entry.pop("seconds")
         worlds[key] = entry
         print(key, json.dumps(entry))
-    commit = subprocess.run(
-        ["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True
-    ).stdout.strip()
-    RECORD.write_text(
-        json.dumps(
-            {"format": FORMAT, "recorded_at": commit, "worlds": dict(sorted(worlds.items()))}, indent=1
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-    print("recorded", len(worlds), "worlds at", commit, "into", RECORD.relative_to(ROOT))
+    write_record(worlds, recorded_at)
+    print("recorded", len(worlds), "worlds at", recorded_at, "into", RECORD.relative_to(ROOT))
     return 0
 
 
