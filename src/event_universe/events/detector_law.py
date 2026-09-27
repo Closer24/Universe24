@@ -3124,7 +3124,7 @@ class DetectorLawSimulation:
                 live.pointers[detector] += value
                 live.absorbed += value
             increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
-            self.register.at("the clicks", "(ii)")(live, increments)
+            self._ladder_click(live, increments)
 
     def _window_centre(self, block: Block) -> tuple[int, int, int]:
         """The body's Node of a block with a window (its centre Node)."""
@@ -3367,32 +3367,23 @@ class DetectorLawSimulation:
         return ladder
 
     def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
-        """The increment ladder: the record's running total gains this interval's one-way flux into its ladder's detectors in the declared order; the click fires at the first interval at which the total crosses the threshold fixed at the giving, at the detector whose segment holds it (Born's rule its theorem); the record is deleted whole after the interval's advances."""
+        """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""
         if live.clicked:
             return
-        if live.norm <= 0:
-            # a record without its norm yet (the point emitter's open window, item
-            # 50): the bookings enter the running total, the click waits for the norm
-            live.total += sum(increments)
-            return
+        click = self.main_loop.function_of("the clicks", "(ii)")
         ladder = self._ladder_of(live)
-        # the norm as the exact rational norm / pace (item 36): the plain
-        # flux C against it, 2 W pace C against (2 u + 1) norm
-        threshold = (2 * live.u + 1) * live.norm
-        running = 2 * live.wheel * live.pace * live.total
-        for detector in ladder:
-            running += 2 * live.wheel * live.pace * increments[detector]
-            live.total += increments[detector]
-            if running >= threshold:
-                live.first_rung[detector] = self.tick
-                if detector in self.set_block:
-                    self.rung_counts[(live.identity, detector)] = self._body_count(
-                        self.block_by_number[self.set_block[detector]]
-                    )
-                self._gather_line(live, detector)
-                live.clicked = True
-                self.dead.append(live.identity)
-                return
+        detector, live.total = click(
+            live.u, live.norm, live.wheel, live.pace, live.total, ladder, increments
+        )
+        if detector is None:
+            return
+        live.first_rung[detector] = self.tick
+        if detector in self.set_block:
+            block = self.block_by_number[self.set_block[detector]]
+            self.rung_counts[(live.identity, detector)] = self._body_count(block)
+        self._gather_line(live, detector)
+        live.clicked = True
+        self.dead.append(live.identity)
 
     def record_form(self, live: LiveRecord) -> Ratio:
         """The conserved form I of the record, a GAMEBOARD diagnostic read by the books: the one form of the rule, `conserved_form`, from the rule's own integers, L [w (a^2 + b^2) - S a b] / R at the Nodes and L now_i SUM_j before_j on the Links, L the least common multiple of the distinct numerators, an exact rational, conserved by the rule up to the remainders' bounded jitter."""
