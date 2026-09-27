@@ -249,7 +249,7 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     loop.crystals = {
         b.number: c
         for b in loop.blocks
-        if (c := crystal.read_term(dict(b.definition.declared), b.definition.clock)) is not None
+        if (c := crystal.read_term(dict(b.definition.declared))) is not None
     }
     # The blocks' Nodes: a block's Nodes carry its detector's index (the flux
     # into them booked to it, never chosen: the detector is on no ladder); a

@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, feeding, guards, output
+from event_universe.events import after_step, assembly, feeding, guards, output, pair
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -37,9 +37,7 @@ from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.crystal import CrystalTerm
 from event_universe.features.giving import (
-    THE_CLOSE,
     THE_OPEN,
-    THE_WRITE,
     GivingOwn,
     GivingStart,
     GivingTerm,
@@ -49,7 +47,6 @@ from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrite
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.recoil import (
-    GIVING,
     TAKING,
     RecoilOwn,
     RecoilStart,
@@ -287,6 +284,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _polarised = after_step.polarised
     _crystal_click = after_step.crystal_click
     _crystal_stage = after_step.crystal_stage
+    _window_write = after_step.window_write
+    _point_windows = after_step.point_windows
+    _close_window = after_step.close_window
+    _pair_click = pair.pair_click
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
         """The count's line's act: each body's quanta moved by its record's current through its Nodes' Ports."""
@@ -1029,7 +1030,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def _emit(self, block: Block) -> None:
         """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here; for a crystal (features/crystal) the emitter is the pair's giving definition on the block; the component along the body's moment and the twist are the loader's integers (ALGEBRA.md #the-second-level)."""
         world = self.world
-        emitter = block.definition.emitter if block.crystal_giving is None else block.crystal_giving
+        emitter = after_step.emitter_of(block)
         own: LiveRecord | NodeRecord | None = (
             block.node_record if block.node_record is not None else block.own
         )
@@ -1897,7 +1898,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
         """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
-        emitter = block.definition.emitter if block.crystal_giving is None else block.crystal_giving
+        emitter = after_step.emitter_of(block)
         if emitter is None:
             raise ValueError(f"the body {block.number} gives with no emitter declared")
         norm = emitter.norm if emitter.norm is not None else 1
@@ -1915,37 +1916,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         )
         function = self.main_loop.function_of("the giving", "(ii)")
         return cast(GivingWrites, function(term, start, own))
-
-    def _window_write(self, live: LiveRecord) -> None:
-        """One interval of an open window right after the record's own step: the body's rotation written into the given row at the body's Nodes, the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in."""
-        block = self.block_by_number.get(live.emitter) if live.emitter is not None else None
-        if block is None or block.window != live.identity:
-            return
-        emitter = block.definition.emitter
-        if emitter is None or emitter.weight is None:
-            return
-        written = self._giving_act(
-            block, GivingStart(THE_WRITE, 0, (0, 0, 0), self._body_levels(block), 0, (0, 0, 0)), live
-        )
-        if written.level is not None:
-            live.now[block.mask] += written.level
-        flux_tally = [0, 0, 0]
-        flux = self.body_outward_flux(live, block, flux_tally)
-        closing = self._giving_act(
-            block,
-            GivingStart(
-                THE_CLOSE, 0, (0, 0, 0), None, flux, (flux_tally[0], flux_tally[1], flux_tally[2])
-            ),
-            live,
-        )
-        live.outward = closing.own.outward
-        live.outward_tally = list(closing.own.tally)
-        live.window += 1
-        if live.box is not None:
-            live.box = tuple(
-                (min(lo, low), max(hi, high))
-                for (lo, hi), (low, high) in zip(live.box, self.mask_box(block.mask), strict=True)
-            )
 
     def _body_levels(self, block: Block) -> np.ndarray:
         """The body's rotation's level now at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
@@ -1982,57 +1952,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 if tally is not None:
                     tally[axis] += side * outward
         return total
-
-    def _point_windows(self) -> None:
-        """The point emitters' windows closed after the interval's bookings: the given record's norm, residue and wheel fixed from what left the body, the window's count and the record's box settled, the giving line written."""
-        for block in self.blocks:
-            if block.window is None:
-                continue
-            live = self.records.get(block.window)
-            emitter = block.definition.emitter
-            if live is None or emitter is None or emitter.weight is None or emitter.norm is None:
-                block.window = None
-                continue
-            if live.clicked:
-                # taken while its window was open (its own body's Node's set reading the returning light, the light clock): the window closes at the click, the record named
-                self._close_window(block, live)
-                continue
-            # (d) the close: the folder's close act on the outward norm summed over the window
-            if self._giving_act(
-                block, GivingStart(THE_CLOSE, 0, (0, 0, 0), None, 0, (0, 0, 0)), live
-            ).closed:
-                self._close_window(block, live)
-
-    def _close_window(self, block: Block, live: LiveRecord) -> None:
-        """The window's close (ALGEBRA.md; item 50): the writing ends, the record is named on its giving line with the window's length and the open's interval, the next excitation's count starts (the quantum moved at the open: the stock, the content and the ledger's rows as the train emitter's; the norm T from the open)."""
-        emitter = block.definition.emitter
-        assert emitter is not None
-        live.window_open = False
-        block.window = None
-        if live.giving_line is not None and self.record is not None:
-            line = dict(live.giving_line)
-            line["tick"] = self.tick
-            line["norm"] = live.norm
-            line["pace"] = live.pace
-            line["window"] = live.window
-            line["outward"] = live.outward
-            line["opened"] = self.tick - live.window  # the open's interval (HOST)
-            # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md #the-primitives, #the-interval): the count 1, the space part the sign per axis of the outward flux over the window (DETECTOR)
-            line["momentum"] = self.direction_of(live.outward_tally)
-            self.record(line)
-        outward = live.outward_tally
-        self._recoils.append(
-            (
-                block.number,
-                GIVING,
-                (int(outward[0]), int(outward[1]), int(outward[2])),
-                (live.period_numerator, live.period_denominator),
-            )
-        )
-        live.giving_line = None
-        block.wait = 0
-        if self.stock_of(block) > 0:
-            block.excitations += 1
 
     def _point_window_inverse(self, block: Block) -> None:
         """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write subtracted (an addition inverts), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
@@ -2113,6 +2032,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""
         if live.clicked:
             return
+        if live.pair_record is not None:
+            return self._pair_click(live, increments)
         click = self.main_loop.function_of("the clicks", "(ii)")
         ladder = self._ladder_of(live)
         while True:
