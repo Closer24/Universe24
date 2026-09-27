@@ -1,5 +1,5 @@
 {
- "comment": "Seconds per test file and per shipped world from a junit record (tools/check.py --record-seconds); the CI shards balance on them.",
+ "comment": "Seconds per test file from a junit record (tools/check.py --record-seconds); the CI shards balance on them.",
  "files": {
   "tests/test_architecture.py": 0.4,
   "tests/test_axis_paces.py": 0.0,
@@ -60,29 +60,5 @@
   "tests/test_transport.py": 1.7,
   "tests/test_vector_holds.py": 0.1,
   "tests/test_weak_field_rule.py": 0.0
- },
- "worlds": {
-  "examples/events/dark_body/bright.json": 226.6,
-  "examples/events/dark_body/dark.json": 114.1,
-  "examples/events/massive_record/boxed_clock_side_20_at_rest.json": 4.3,
-  "examples/events/massive_record/boxed_clock_side_20_moving.json": 23.8,
-  "examples/events/massive_record/boxed_clock_side_28_at_rest.json": 4.6,
-  "examples/events/massive_record/boxed_clock_side_28_moving.json": 34.0,
-  "examples/events/massive_record/deep_well_clock_at_rest_40.json": 1.5,
-  "examples/events/massive_record/deep_well_clock_speed_third_40.json": 2.5,
-  "examples/events/massive_record/light_clock.json": 25.8,
-  "examples/events/massive_record/muon_moving_clock_at_rest_14.json": 2.4,
-  "examples/events/massive_record/muon_moving_clock_speed_third_14.json": 1.7,
-  "examples/events/point_emitter/point_chain.json": 0.6,
-  "examples/events/point_emitter/point_light_clock.json": 12.2,
-  "examples/events/toward_nature/bending.json": 169.6,
-  "examples/events/toward_nature/lorentz_moving.json": 3.9,
-  "examples/events/toward_nature/lorentz_moving_long.json": 4.2,
-  "examples/events/toward_nature/lorentz_rest.json": 18.1,
-  "examples/events/toward_nature/lorentz_rest_long.json": 1.7,
-  "examples/events/toward_nature/redshift_bottom.json": 58.6,
-  "examples/events/toward_nature/redshift_bottom_long.json": 29.8,
-  "examples/events/toward_nature/redshift_top.json": 1.5,
-  "examples/events/toward_nature/redshift_top_long.json": 1.2
  }
 }

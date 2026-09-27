@@ -1,5 +1,5 @@
 {
-  "comment": "One owner per area (the owner's decision of 2026-09-27, 05:40Z, on #1198). An area is a path or a folder ending in '/'; the longest match names the owner; a path in no area is free. A pull request's author is the owner whose session link its body carries; one touching another owner's area needs the line 'HANDED BY <owner>: <files>' in its body, the arbiter's hand-over covering any area (tools/ownership.py). The record tests/shipped_worlds.json is in no area: CI's record job commits it on every pull request (the owner's word of 2026-09-27).",
+  "comment": "One owner per area (the owner's decision of 2026-09-27, 05:40Z, on #1198). An area is a path or a folder ending in '/'; the longest match names the owner; a path in no area is free. A pull request's author is the owner whose session link its body carries; one touching another owner's area needs the line 'HANDED BY <owner>: <files>' in its body, the arbiter's hand-over covering any area (tools/ownership.py).",
   "arbiter": "Boss",
   "owners": {
     "Nature24": {
@@ -20,7 +20,7 @@
         "src/event_universe/events/detector_law.py",
         "law/step.json",
         "tools/run_inputs.py",
-        "tools/record_shipped_worlds.py"
+        "tools/state_digest.py"
       ]
     },
     "Mathematician": {

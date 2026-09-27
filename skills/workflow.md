@@ -310,10 +310,10 @@ that day ("we said without 85 worlds"; "put it in the skill"):
   one per table rule, key and family kind, so that every engine code path is
   replayed once; the whole register (109 worlds on 2026-09-20) is replayed
   only under `--full` or on demand. The gate set is listed with what each
-  world covers. The gate set is `tests/shipped_worlds.json` (every shipped
-  world, replayed bit for bit on every pull request that runs a world);
-  `tools/record_shipped_worlds.py` re-records it; a new key or rule adds the world
-  that first uses it to the record, with the line it covers.
+  world covers. No gate set stands today: the worlds recorded on the
+  earlier engine are no reference for this one, no world replays in CI, and the
+  first world checked on the new engine is Bell when it is right (the owner,
+  2026-09-27).
 - **Check the near tests, then push; CI runs the whole suite (the owner,
   2026-09-27).** `python tools/check.py` selects the changed files' tests and
   the gates; when they pass, push and open the pull request READY. CI runs the

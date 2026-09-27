@@ -4,8 +4,6 @@ import argparse
 import ast
 import io
 import json
-import os
-import re
 import subprocess
 import sys
 from pathlib import Path
@@ -31,15 +29,9 @@ def every_pull_request() -> list[str]:
 
 
 SECONDS = Path(__file__).with_name("test_seconds.json")
-REGRESSION = "tests/test_shipped_worlds.py"
-WORLD_TEST = "test_a_shipped_world_runs_bit_for_bit_as_recorded"
-# a pull request touching none of these runs no world, so it skips the regression (the owner's word)
-RUNS_A_WORLD = ("src/", "law/", "examples/", "tools/", "tests/shipped_worlds.json", REGRESSION)
-SUITE_SHARDS, HEAVY_WORLDS, WORLD_SHARDS = 3, 3, 2
-# the worlds replayed on every pull request that runs a world (the model owner, 2026-09-27); the
-# whole record on a push to main, on the body's line "RECORD: all" or on the Boss's dispatch
-RECORD_PLAN = Path(__file__).with_name("record_plan.json")
-RECORD_ALL_LINE = re.compile(r"^\s*RECORD:\s*all\s*$", re.MULTILINE)
+# no world replays in CI (the owner's decision of 2026-09-27: the worlds recorded on the earlier
+# engine are no reference for this one); the plan is the test suite alone, in equal shards
+SUITE_SHARDS = 3
 UNRECORDED_SECONDS = 5.0
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 
@@ -54,72 +46,25 @@ def balanced(seconds, count):
     return [sorted(group) for group in groups]
 
 
-def every_world_planned() -> bool:
-    """Whether the whole record replays: the environment's RECORD_ALL (a push to main, a dispatch
-    for the whole) or the pull request's body carrying the line "RECORD: all"."""
-    return os.environ.get("RECORD_ALL", "").lower() == "true" or bool(
-        RECORD_ALL_LINE.search(os.environ.get("PR_BODY", ""))
-    )
-
-
-def shards(runs_worlds, every_world=None):
-    """The CI jobs by name, each its pytest targets: the suite in equal parts, and where a world
-    runs, the heaviest shipped worlds each alone and the rest in equal parts; on a pull request
-    the worlds of tools/record_plan.json alone unless the whole record is planned."""
-    if every_world is None:
-        every_world = every_world_planned()
+def shards():
+    """The CI jobs by name, each its pytest targets: the test suite in equal parts by their
+    recorded seconds; no world job."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
-    files = sorted(
-        p.relative_to(ROOT).as_posix()
-        for p in (ROOT / "tests").glob("test_*.py")
-        if p.relative_to(ROOT).as_posix() != REGRESSION
-    )
+    files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob("test_*.py"))
     suite = {f: table["files"].get(f, UNRECORDED_SECONDS) for f in files}
-    plan = {f"suite {i + 1}": group for i, group in enumerate(balanced(suite, SUITE_SHARDS))}
-    if not runs_worlds:
-        return plan
-    record = json.loads((ROOT / "tests/shipped_worlds.json").read_text(encoding="utf-8"))
-    planned = json.loads(RECORD_PLAN.read_text(encoding="utf-8"))["every_pull_request"]
-    names = record["worlds"] if every_world else [w for w in record["worlds"] if w in planned]
-    worlds = {w: table["worlds"].get(w, UNRECORDED_SECONDS) for w in names}
-    heavy = sorted(worlds, key=lambda w: (-worlds[w], w))[:HEAVY_WORLDS]
-    for world in heavy:
-        plan[f"world {Path(world).parent.name}/{Path(world).stem}"] = [
-            f"{REGRESSION}::{WORLD_TEST}[{world}]"
-        ]
-    rest = {w: s for w, s in worlds.items() if w not in heavy}
-    tree = ast.parse((ROOT / REGRESSION).read_text(encoding="utf-8"))
-    others = [
-        f"{REGRESSION}::{node.name}"
-        for node in tree.body
-        if isinstance(node, ast.FunctionDef)
-        and node.name.startswith("test_")
-        and node.name != WORLD_TEST
-    ]
-    for i, group in enumerate(balanced(rest, WORLD_SHARDS)):
-        plan[f"worlds {i + 1}"] = (others if i == 0 else []) + [
-            f"{REGRESSION}::{WORLD_TEST}[{w}]" for w in group
-        ]
-    return plan
+    return {f"suite {i + 1}": group for i, group in enumerate(balanced(suite, SUITE_SHARDS))}
 
 
 def record_seconds(junit):
-    """The seconds per test file and per shipped world read from a junit file, written to the table."""
+    """The seconds per test file read from a junit file, written to the table."""
     import xml.etree.ElementTree as ElementTree
 
-    files, worlds = {}, {}
+    files = {}
     for case in ElementTree.parse(junit).getroot().iter("testcase"):
-        path, name, seconds = (
-            case.get("classname", "").replace(".", "/") + ".py",
-            case.get("name", ""),
-            float(case.get("time", 0)),
-        )
-        if path == REGRESSION and name.startswith(WORLD_TEST + "["):
-            worlds[name[len(WORLD_TEST) + 1 : -1]] = round(seconds, 1)
-        else:
-            files[path] = round(files.get(path, 0.0) + seconds, 1)
+        path = case.get("classname", "").replace(".", "/") + ".py"
+        files[path] = round(files.get(path, 0.0) + float(case.get("time", 0)), 1)
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
-    table.update(files=dict(sorted(files.items())), worlds=dict(sorted(worlds.items())))
+    table.update(files=dict(sorted(files.items())))
     SECONDS.write_text(json.dumps(table, indent=1) + "\n", encoding="utf-8")
 
 
@@ -319,16 +264,13 @@ def main():
         record_seconds(args.record_seconds)
         return
     if args.plan:
-        base = git("merge-base", args.base, "HEAD")
-        touched = git("diff", "--name-only", base).splitlines()
-        runs_worlds = any(p.startswith(RUNS_A_WORLD) for p in touched)
-        print("shards=" + json.dumps(list(shards(runs_worlds))))
+        print("shards=" + json.dumps(list(shards())))
         return
     for target in args.tests:
         if not (ROOT / target.split("::")[0]).exists():
             parser.error(f"additional test target does not exist: {target}")
     if args.shard:
-        targets = shards(runs_worlds=True)[args.shard]
+        targets = shards()[args.shard]
         commands = (LINT if args.shard == "suite 1" else []) + [
             ["pytest", "-n", "auto", *targets, "--junitxml=artifacts/junit.xml"]
         ]
