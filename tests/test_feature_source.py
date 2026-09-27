@@ -186,7 +186,7 @@ def test_the_run_files_record_gives_the_readmes_counts():
     assert not plain.at[28, 16, 16] and not plain.at[0, 0, 0]  # 12 Links out: no count; the corner: none
 
 
-def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_unbuilt():
+def test_the_declaration_is_the_ledgers_row_and_the_register_binds_its_function():
     assert DECLARATION.name == "the source" and folder_of(DECLARATION.name) == "source"
     assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
     assert DECLARATION.writes == ("a family's level at a Node", "the record's remainder")
@@ -196,6 +196,6 @@ def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_unbuilt():
     assert THE_WORD in DECLARATION.section and "9.117" in DECLARATION.section
     register = discover()
     declaration = register.declarations["the source"]
-    assert declaration.section == DECLARATION.section and not declaration.built
+    assert declaration.section == DECLARATION.section and declaration.function is apply
     step = parse_nature_beam_world(emitter_world(stock=1, ticks=2)).step
     assert register.writers("a family's level at a Node", "(iv)", step) == ("the hold", "the source")
