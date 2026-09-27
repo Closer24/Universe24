@@ -6,12 +6,15 @@ import dataclasses
 import json
 from pathlib import Path
 
+from event_universe.core.rule3 import THE_REWRITE
 from event_universe.core.step import STEP_FILE, read_step
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm
 from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLDS = ("massive_record/light_clock.json", "point_emitter/point_chain.json")
+NO_OWN = HoldOwn({}, {})
 
 
 def spied(world: str) -> tuple[DetectorLawSimulation, list[tuple[str, str]], list[str]]:
@@ -81,7 +84,12 @@ def test_a_loop_out_of_the_files_order_or_calling_a_primitive_outside_an_act_fai
     close = simulation._close_interval
 
     def close_and_cheat() -> None:
-        simulation.register.declarations["the hold"].function(advance=False)
+        line = simulation.register.declarations["the hold"].function
+        line(
+            HoldTerm("content", (1,), (1,), None, 1),
+            HoldStart(THE_REWRITE, 0, (0, 0, 0), 1, None),
+            NO_OWN,
+        )
         close()
 
     simulation._close_interval = close_and_cheat  # type: ignore[method-assign]
