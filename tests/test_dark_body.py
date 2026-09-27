@@ -26,7 +26,7 @@ def test_the_files_are_the_generators_and_the_pins_are_declared_blind():
         document = load(name)
         assert document["universe"] == "examples/events/universe.json"  # item 59
         world = parse_nature_beam_world(document)
-        assert world.node_clock == 10_000 and world.body_record is False
+        assert world.node_clock == 10_000
         # the three families of ALGEBRA.md #the-primitives (the one stroke, commit 1)
         assert [family.name for family in world.families] == ["gravity", "charge", "matter"]
         assert [family.parts for family in world.families] == [(1, 3, 6), (1, 3), (1,)]
