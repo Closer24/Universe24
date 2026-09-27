@@ -162,6 +162,8 @@ Since 2026-09-17, by the model owner's decision, an implementation specialist do
 
 **Press every agent every 15 minutes (the owner, 2026-09-27).** At each check the Boss asks every role, in one standing message: what blocks you or what you wait for and from whom; which PR or issue comment you have not answered; your next PR and when. The Boss acts on each answer at once, and never waits for an agent to report on its own.
 
+**A message to a session is a one-shot Routine (2026-09-27).** A re-fire of a standing Routine can be dropped without a run recorded (the pings of 02:41Z to 04:20Z reached nobody while their fires reported success); a message the Boss must land is its own Routine bound to the session, firing within two minutes, and the Boss verifies delivery by the session's `updated_at` and by the answer on #1198; an order that must not be lost is also one comment on the agent's pull request.
+
 **Merging one at a time (2026-09-17).** Two green pull requests merged back to back broke `main` (#204, then #205): the second's pins were made against the base before the first merged, and CI never ran on the combined tree. The rule: merge one pull request at a time, and before merging the next bring `main` into its branch (a merge, never a rebase) and let CI run on that merged head, or run its affected selection locally on the merge result; `git merge-tree` shows textual conflicts only, never semantic ones. A pin made on an older base is a semantic conflict, and a green check on the old base is no evidence about the tree that merging produces.
 
 The record of a day is never copied into a second document; 5.4, the register's index, MIGRATION and the READMEs link to it.
