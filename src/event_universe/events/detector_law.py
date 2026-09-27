@@ -64,6 +64,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from math import gcd
+from typing import cast
 
 import numpy as np
 
@@ -76,6 +77,12 @@ from event_universe.events.world import (
     TWIST_FINE_BITS,
     BlockDefinition,
     NatureBeamWorld,
+)
+from event_universe.features.self_source import (
+    OwnLevel,
+    SelfSourceStart,
+    SelfSourceTerm,
+    SelfSourceWrites,
 )
 from event_universe.features.signed_read import SignedReadStart, SignedReadTerm, content_of
 
@@ -2676,14 +2683,14 @@ class DetectorLawSimulation:
         )
 
     def _self_source(self, live: LiveRecord, inverse: bool) -> np.ndarray | None:
-        """THE SELF-SOURCE'S SLOT (ALGEBRA.md 9.78 (3), 9.91 (5), 9.97; commit 6): per
-        family with a unit P_2 above 0, per Node, from the levels at the interval's
-        start, Sigma_self = (SUM over the six Links of SUM over the family's records and
-        components of (a_j - a_i)^2) div P_2; the step's right side loses w Sigma_self,
-        which lowers a_next by Sigma_self exactly and leaves the remainder (a multiple of
-        the wall). None at P_2 = 0 (every shipped family: the line is not evaluated).
-        Backward the same array from the `before` levels. HOST: once per family per
-        interval, before any record of the family steps (the first request)."""
+        """THE SELF-SOURCE'S SLOT (ALGEBRA.md 9.78 (3), 9.91 (5), 9.97): per family with
+        a unit P_2 above 0, the folder's line (features/self_source) through the register
+        on every level of the family at the interval's start with its six Links; the
+        step's right side loses w Sigma_self, which lowers a_next by Sigma_self exactly
+        and leaves the remainder (a multiple of the wall). None at P_2 = 0 (every shipped
+        family: the line is not evaluated). Backward the same array from the `before`
+        levels. HOST: once per family per interval, before any record of the family
+        steps (the first request)."""
         family = live.family
         unit = self.families[family].self_unit
         if unit <= 0:
@@ -2693,10 +2700,10 @@ class DetectorLawSimulation:
         if cached is not None and cached[0] == self.tick:
             return cached[1]
         wrap = self.kind_wrap[family]
-        total = np.zeros(self.shape, dtype=np.int64)
         records = [record for record in self.records.values() if record.family == family]
         if family in self.held_records:
             records.extend([self.held_records[family], *self.held_parts[family]])
+        levels = []
         for record in records:
             for level in (
                 record.before if inverse else record.now,
@@ -2704,11 +2711,15 @@ class DetectorLawSimulation:
             ):
                 if level is None or (record.silent and record.held_part):
                     continue
-                for axis in range(3):
-                    for sigma in (1, -1):
-                        difference = self._arrival(level, axis, sigma, wrap) - level
-                        total += difference * difference
-        sigma_self = np.floor_divide(total, unit)
+                links = tuple(
+                    self._arrival(level, axis, sigma, wrap) for axis in range(3) for sigma in (1, -1)
+                )
+                levels.append(OwnLevel(level, links))
+        term = SelfSourceTerm(unit, self.world.amplitude_bound)
+        line = self.register.at("the self-source", "(i)")
+        sigma_self: np.ndarray = cast(
+            SelfSourceWrites, line(term, SelfSourceStart(tuple(levels)))
+        ).source
         self._sources[key] = (self.tick, sigma_self)
         return sigma_self
 
