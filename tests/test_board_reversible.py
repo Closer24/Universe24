@@ -213,7 +213,7 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
     simulation.held = copy.deepcopy(states[t_taking - 1]["held"])
-    simulation._hold()
+    simulation._hold(simulation.register.at("the hold", "(iv)"))
     simulation.step_inverse()
     assert_same(rows_of(simulation), states[t_taking - 1], lost={deleted})
     lost = {deleted}
@@ -260,7 +260,7 @@ def inverse_giving_interval(
     # stepped forward at the content the interval began with; the inverse restores that hold
     # and steps back as across a taking
     simulation.held = copy.deepcopy(states[t - 1]["held"])
-    simulation._hold()
+    simulation._hold(simulation.register.at("the hold", "(iv)"))
     simulation.step_inverse()
 
 

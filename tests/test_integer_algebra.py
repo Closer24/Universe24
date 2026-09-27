@@ -115,22 +115,7 @@ ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
     # the ray law's modules (nature_beam.py, meeting.py, engine.py) and their roots were
     # deleted on 2026-09-26 (docs/CANCELLED_WORLDS.md)
     ("events/world.py", None): "at load: T_HEADING = isqrt(3 Q^2), the flight's resolution on a heading",
-    (
-        "events/world.py",
-        "body_weight",
-    ): "at load: E' of a body's declared momentum under `optical`, a declared rounding",
-    ("events/world.py", "scaled_label"): "at load: the label's rounding k(|a|) to the momentum scale",
-    ("events/world.py", "column_scales"): "at load: the parser's refusal names the bound's root",
     ("events/world.py", "flight_bound"): "at load: the flight table's T_D for the parser's bound",
-    ("events/world.py", "_covariant"): "at load: the covariant identity's E' from the declared square",
-    (
-        "events/world.py",
-        "_same_class",
-    ): "a predicate at load: is the product a perfect square (the same class of T_D)",
-    (
-        "events/world.py",
-        "_massive_families",
-    ): "at load: the parser's refusal names the largest admitted momentum",
 }
 
 
