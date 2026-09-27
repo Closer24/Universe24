@@ -1505,7 +1505,10 @@ def test_every_declared_wheel_is_refused_by_name():
             lambda d: d["measured"][0].__setitem__("take", [-15, 56]),
             r"measured\[0\] has unknown keys: take",
         ),
-        (lambda d: d["universe"][1].__setitem__("take", [-19, 86]), r"families\[1\]\.take is refused"),
+        (
+            lambda d: d["universe"][1].__setitem__("take", [-19, 86]),
+            r"families\[1\] has unknown keys: take",
+        ),
     ):
         document = json.loads(json.dumps(base))
         mutate(document)

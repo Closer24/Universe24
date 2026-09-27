@@ -351,7 +351,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(set_wheel)
     on_light = chain_world()
     on_light["universe"][0]["take"] = [-15, 56]
-    with pytest.raises(ValueError, match=r"families\[0\]\.take is refused"):
+    with pytest.raises(ValueError, match=r"families\[0\] has unknown keys: take"):
         parse_nature_beam_world(on_light)
 
 

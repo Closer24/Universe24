@@ -291,10 +291,9 @@ FLAG_WORDS = {"flag", "flags", "version", "schema_version"}
 @pytest.mark.xfail(
     strict=True,
     reason="the ledger's item 'no flag, family name, number or version in the code' (records 2172 "
-    "to 2174, 2182): the loader still holds the identities' version strings ('beam-v1', "
-    "'amplitude-v1', 'bohr-v1', 'columns-v1', 'weak-v1', 'meeting-v1', 'optical-v1', 'hand-v1', "
-    "'binding-v1') and the key 'schema_version'; the review after the merge takes them out and the "
-    "mark comes off",
+    "to 2174, 2182): the loader holds no version string since its cuts (record 2226); the one hit "
+    "left is the word 'version', a key of the artifacts' retention index in "
+    "src/event_universe/retention.py (the host's); the mark comes off when that key is renamed",
 )
 def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
     """(e) The engine has no flag and no version (the Boss's record 2182, the model owner: "in the

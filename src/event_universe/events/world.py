@@ -1,303 +1,4 @@
-"""The world file of the engine: its keys and their refusals (one engine, no law's
-name and no version, ALGEBRA.md 9.90 (1); the world keys `law`, `model_id` and
-`detector_law` refused by name).
-
-A world is a JSON object with nothing of the earlier engines' schemas (no
-`contents`, no `initial_shadows`, no `wait_per_quantum`, no `dynamics`; none of
-the old engine's keys): the refusal names the key at fault. What a world declared
-under the ray law, cancelled (docs/CANCELLED_WORLDS.md; [the Beam Law](../../../docs/BEAM_LAW.md),
-the model owner, 2026-09-19):
-
-- `shape`, three positive extents; `boundary` `"open"` (the default: the edge
-  is infinity on every face, what leaves clicks on the face detector) or an
-  object with any of the keys `x`, `y`, `z`, each `"open"` or `"periodic"`,
-  the missing axes open; `ticks`;
-- `K`, the clock's rate, one for the world: an integer K, the content per
-  phase step per self-creation, read as the pair `[1, K]`, or (since
-  2026-09-20, the four unifications (2), BEAM_LAW note 33) a pair `[n, d]`
-  of phase steps per unit of content per self-creation like `release`, the
-  turn of a measured event `by_clock(age, content x n, d)`
-  (`NatureBeamWorld.turn`), refused at half the circle; the record carries
-  the key as declared; `N`,
-  the steps of the phase circle (64 by default, a power of two from 2 through
-  4096); `release` `[n, d]`, the rays a measured event of a free family
-  releases per self-creation per declared direction per unit of content,
-  read off its clock; `suspension` `[n, d]`, the rate of the
-  clock's count: a measured event owes `by_clock(age, presence x n, d)`
-  intervals after its self-creation, the presence being the amount of every
-  ray at its Node of every number but its own (an integer w is accepted as
-  `[w, 1]`; `[1, 1]` by default; 0 or `[0, d]` for none); `width`, the
-  width S of the push (the model owner's D1, 2026-09-19): a free measured
-  event of content M with the momentum component p on an axis steps one
-  Link per (S x M + p) / p self-creations on that axis, an integer from 1
-  (the default: the rule as it was, one Link per (M + p) / p); 0 or a
-  negative width is refused; `age_bound`, the largest age a ray may carry
-  (an integer from 1; the age is the count of intervals since the measured
-  event that created the ray, kept whole on the record since 2026-09-20 so
-  that a measured event may read it; BEAM_LAW section 2): on a GameBoard with an
-  open axis it is by default twice the flight bound, the age at which every
-  straight ray has left a GameBoard of that diameter (`flight_bound`); on a
-  GameBoard periodic on every axis, which no ray leaves, it is required and
-  refused if absent; a declared ray's `age` must not exceed it, and a run
-  in which a ray on the GameBoard carries an age beyond it is refused;
-  `action`, optional: h, the quantum of action of the turn by momentum (an
-  integer from 1, in label units times Links; the model owner's decision
-  of 2026-09-20 on Bohr, "put it as parameters outside the GameBoard like the
-  age"; BEAM_LAW section 10, note 30): a measured event that declares
-  `phase_by_momentum` turns its phase, at every Link it steps on an axis
-  whose momentum component is p, so that after k Links stepped on that
-  axis the phase has turned floor(k x |p| x N / h) mod N steps (the count
-  k derived from its age by the step rule, the turn at one step the
-  difference of two floors, no register anywhere); absent by default, and
-  without it nothing turns by momentum;
-- `directions`, optional: integer vectors beyond the six headings that a
-  lamp, a measured event or a ray in transit may name; the world's direction
-  table `D` is the two rest vectors (0, 0, 0) ("here a", "here b"), the six
-  headings in Port order and these, in that order; each declared vector is
-  primitive with every component in -P .. P, P = `direction_bound` (64 by
-  default, at most 4096 entries in the table);
-- `families`: each with a `name`, its `quantum` (h, required: the content
-  of one unit of it per phase step of its emitter's turn; the kind of the
-  family follows from it and is not declared: h = 0 is a free family,
-  matter, whose measured events release at the world's rate, whose rays
-  carry no content and are read for gravity and electricity, their label
-  the amount along the direction; h >= 1 is a paid family, light, released
-  only by a lamp that spends its content: a release costs the emitter
-  quantum x s per unit at a self-creation whose turn is s steps, the unit
-  carries that content and the momentum quantum x s along its direction,
-  and a click measures it, E = h f), for a free family its `charge`, the
-  charge per unit of content, rho, an integer or a pair `[n, d]` (d from
-  1; an integer c is `[c, 1]`; 0 by default; the model owner's decision
-  of 2026-09-20, Highlights 5.4: a measured event's charge is rho times
-  its content, and the electric push is one product per arriving free
-  ray, M_A x (rho_A rho_B - 1) x V_B), for a paid family since the same
-  day its `charge` as a whole charge per unit of amount (D-1, the
-  physicist's design of the weak force and the owner's "go on
-  everything", item (2); BEAM_LAW note 36 (ii)): an integer c, a pair
-  with a denominator other than 1 refused, read on the charge line of the
-  books only, so that the charge of a measured event is rho times its
-  content for a free family and the declared whole charge times the
-  amount (the units it clicked) for a paid family; the push is untouched
-  (a paid ray pushes by its label, and the paid family's electric column
-  value stays 0), and a lamp on a measured event of a charged paid family
-  is refused (its releases would create charge from nothing: a charged
-  paid family is given by a transformation or declared in transit), and
-  since the
-  same day the columns (the model owner, Highlights 5.4, "one mechanism
-  for all the laws on the GameBoard"; the mathematician's verified form,
-  the identity `columns-v1`): the push is a signed inner product over the
-  columns a family declares per unit of content, `gravity` the built-in
-  first column of every family (the value [1, 1], the sign minus, never
-  declared), `charge` the built-in second column (the sign plus; the
-  family key `charge` is the shorthand for its value) and, per family,
-  `columns`, an object of column name to `{"value": n or [n, d], "sign":
-  1 or -1}` for any further column (a name's sign is the column's, one
-  per name across the world; a family that does not name a column
-  carries [0, 1] there; a paid family's values must be 0; at most
-  `COLUMN_LIMIT` columns in all; the world's column order is gravity,
-  charge, then the names in the order of their first declaration),
-  `lifetime` (L, optional, since 2026-09-20: the model owner's decision
-  on the strong force's range, "the lifetime L, counted on the event's own
-  age"; an integer from 1 through `age_bound`, a scalar: the flight gives
-  every direction one speed, so L intervals of flight are a sphere; an
-  event in transit whose age reaches L at the end of the walk makes no
-  next event but a click on the border `lifetime`, booked exactly as an
-  open face books an escape; absent, the family's events live for ever,
-  as every family did),
-  `phase` (true by default; false: the family has no phase circle, its rays
-  carry phase 0 and never turn, its measured events never turn, no
-  `phase_window` is accepted for it) and `phase_per_link` (an integer
-  0 .. N - 1, 0 by default: the phase steps a ray of the family turns at
-  every Link crossed). The key `kind` of the first NatureBeam worlds is refused
-  naming this derivation and docs/MIGRATION.md (one canonical form);
-- `measured`: the measured events at the start, one per Node, each with a
-  `position`, its `family`, its `amount` (a positive whole number of units,
-  below K x N / 2 for a family with a phase circle), optionally `held`
-  (since 2026-09-20, the physicist's design of the strong force: an object
-  of family name to a positive whole content the measured event holds of
-  that family beside its own, so that a nucleon is one measured event
-  holding its charged family and one unit of a strong family; the event's
-  own family may not be named, an unknown family, a content below 1 or
-  not an integer is refused; a free family held is released at the
-  world's rate like its own, a paid one is inert; its charge in every
-  column is the rational sum over what it holds; the phase-turn bound
-  covers the total), and optionally its
-  `phase`, its `momentum` (three integers), `fixed` (true: an apparatus held in place, it takes
-  pushes into its momentum and never steps), its `span` (three odd
-  integers from 1, `[1, 1, 1]` by default: the measured event is a body on
-  the set of `span_x x span_y x span_z` Nodes centred on its `position`,
-  ONE record on all of them, the model owner's principle of 2026-09-19
-  applied to the electron on 2026-09-20, "the electron of width 3", BEAM_LAW
-  section 10, note 30: its clock, its threshold and its push read the one
-  reading set summed over its Nodes, the step moves the whole set as one
-  and is refused onto a Node of another measured event, through an open
-  face the whole body clicks on the face detector, on a periodic axis it
-  wraps, no collision acts at any of its Nodes, its releases are
-  apportioned whole over its Nodes; a span must fit the axis and the body
-  must lie inside the GameBoard on an open axis), `phase_by_momentum` (true:
-  the body turns its phase by its momentum label at every Link it steps,
-  over the world's `action`; false by default; refused without `action`,
-  on a `fixed` measured event, which never steps, and on a family without
-  a phase circle), its `directions` (the
-  directions it releases on and re-emits on, as vectors or indices of the
-  world's table; the six headings by default), its `table` (family name to
-  `read`, `measure`, `rerelease` or `pass`, or to an object `{"rule": ...,
-  "phase_window": s, "reads": key}`; the table is generated from the
-  families' keys by `default_table`, a free family read, the push taken and
-  the rays going on, a paid family measured, the click, and a world declares
-  only the entries that differ: a window, a rule off the default, a `reads`
-  component; an entry equal to the default is accepted and changes nothing)
-  and, for a measured event of a paid family, its `lamp` (`wheel` `[r, W]`, the
-  giving wheel's rate, required: u = ordinal x r mod W the record's coordinate on
-  the ladder, [1, N] the count of givings mod N, BEAM_LAW note 46; `rate` `[n, d]` units
-  per self-creation per direction, `directions` the directions it releases
-  on, the six headings by default, and optionally its `phase_window`); and,
-  since 2026-09-20 (the weak force, `weak-v1`: the model owner's "go on
-  everything", item (1), the transformation `become`; the physicist's
-  design, WEAK.md section 2; BEAM_LAW note 36 (iii)), its `become`, the
-  clock trigger of the transformation: `{"at": a, "into": family,
-  "products": [[family, amount, content per unit], ...], "crowd": c}`:
-  at the self-creation whose clock reaches `at` (the event's own age
-  against the key, `nature_beam.ages_at_key`, the one `by_clock` the
-  lifetime reads: first at `at`, then every `at`) the measured event
-  becomes an event of the family `into`, the products are paid from what
-  it holds of its own family (their content R = the sum of amount x
-  content, at most its declared `amount`), the rest moves to `into`, the
-  products are given at that self-creation as pending rows (product k on
-  the direction counted from (clock age + k) mod the directions, the
-  parent's phase, the recoil over all of them, free and paid), and its
-  `become` key and every `become` entry of its table are consumed;
-  `crowd`, optional, an integer from 0, the gate: the transformation
-  fires only at a self-creation at which the count the clock read is
-  below it (the law's form of the condition that keeps a bound neutron
-  stable). A free product carries the content 0, a paid one from 1; the
-  transformation's charges must balance at load (rho_into x (amount - R)
-  plus the paid products' whole charges against rho_from x amount), and
-  the run is refused at the trigger if the event holds less than R. The
-  click trigger is a table entry whose rule is `become`, `{"rule":
-  "become", "phase_window": s, "phase_width": w, "into": ...,
-  "products": [...]}`: an arrival that passes the threshold and the
-  window is clicked exactly as `measure` clicks it and then the same
-  transformation fires, its products given at the reader's next
-  self-creation (the same interval if it self-creates in it); no `at`,
-  no `crowd` (the window is the gate);
-  every measured event is given its number at parsing, 1, 2, ... in
-  declaration order;
-- `phase_window`, the declared window of a detector and of an emitter: a
-  setting `s`, an integer from 0 through N - 1, and since 2026-09-20 (the
-  weak force, the neutrino first: the model owner's "go on everything";
-  BEAM_LAW note 36) its width `phase_width`, an integer w from 1 through N,
-  N / 2 by default: the w consecutive steps of the circle centred on the
-  setting, [s - floor(w / 2), s - floor(w / 2) + w), a phase at the distance
-  d = (phase - s) mod N inside when (d + floor(w / 2)) mod N < w
-  (`nature_beam.window_admits`, the one floor of the window and its width;
-  at the default N / 2 it is the half circle as it was, d < N / 4 or
-  d >= 3 N / 4, exactly N / 2 steps, for N = 2 the one step d = 0). On a
-  table entry (any rule but `pass`) the response is made only to a ray
-  whose own phase falls in the window; a ray outside it passes. On a lamp,
-  a release only at the self-creations whose clock phase falls in the
-  window. A width is refused where a window is (on `pass`, on a family
-  without a phase circle), without its window's setting, at 0 and beyond
-  N; the admitted fraction of a source's rays is w / N exactly when the
-  source's stride over the circle is coprime to N (the register's series
-  J2). On a table entry
-  the centre may instead be read from a reading (issue #363, 2026-09-20:
-  the settings of a Bell run decided by GameBoard events): `{"reads":
-  "<family>", "offset": s}` sets the centre to the phase of the coherent
-  pointer (`nature_beam.coherent_pointer`, the first moment over the
-  circle) of the named family's rows present at the set in the interval
-  (the one reading set: every row at the set but the reader's own number)
-  plus the offset s in phase steps (0 by default); the width is the law's.
-  With no row of the named family at the set (or a zero pointer) the entry
-  passes, the `pass` record naming `window` None and `reads`; every `click`
-  of such an entry carries the `window` used. Refused: an unknown family,
-  a family without a phase circle, the entry's own family, the form on
-  `pass` (as any window on `pass`) and on a lamp;
-- `reads` on a table entry: the component of the Node's one reading that
-  the response's record carries, `scalar` (the presence), `outside`, `here`,
-  `vector` (the net flow), `tensor` (the traceless part) or `age` (the age
-  moment, sum amount x age over the set: a reading aid of the measured
-  event, the external thing, since 2026-09-20; the GameBoard's rules never read
-  the age whole); `vector` by default on `read`, `scalar` otherwise. No
-  rule of the GameBoard changes with it: every coupling reads the one reading,
-  the moments of the arrivals (`nature_beam.read_arrivals`); the one thing
-  the key selects beside the record is what the clock counts
-  (`measured.count_component`): the age moment on an entry that reads
-  `age`, the presence on every other entry;
-- `in_transit`, optional: rays at the start, each with a `position`,
-  `family`, `number` (the measured event whose continuation it is),
-  `direction` (a vector of the world's table or its index), `amount`,
-  `phase` and optionally `age` (0 through `age_bound`), booked as initial
-  content of the transit line; the default is an empty GameBoard that the
-  releases fill;
-- `detectors`, optional: named sets of measured events, each with a `name`,
-  its `positions` (the `position` of a measured event each, a body on a
-  set named by its centre, each in at most one detector),
-  its `threshold` (1 by default): the smallest amount of a family arriving
-  at the detector's Nodes in one interval, summed over the whole set and
-  over every number but each Node's own; a smaller set passes; and its
-  `reading`, `"wave"` (the default since 2026-09-20; the model owner: "on
-  the GameBoard a ray, in the world a wave") or `"beam"` (the model owner,
-  2026-09-19): a detector is a set of Nodes with ONE record (a click says
-  "here, in one of these" and not which; the declared width is the
-  position's uncertainty). Under `wave` the record is the square of the
-  coherent pointer of the rays the set clicked in the interval, the
-  window reads the set's phase and the set's phase is returned to its
-  measured events; under `beam` the arriving rays are paired by opposite
-  phase over the set, a paired couple passes on and the rest click, the
-  record is the plain count. A measured event outside every detector is a
-  detector of one Node with the default reading.
-
-Refused, naming the key: `kind` on a family (the quantum decides it),
-`charge` on a measured event (since 2026-09-20 the charge is the family's
-per unit of content, docs/MIGRATION.md), a family `charge` whose
-denominator is 0 or whose parts are not integers, a paid family's `charge`
-with a denominator other than 1, a lamp on a measured event of a charged
-paid family, a `become` without `into` or `products`, `into` naming an
-unknown family or the event's own, a product naming an unknown family, a
-product's amount below 1, a free product's content other than 0, a paid
-product's content below 1, a product's label beyond the bound, `at` below
-1 or absent on the clock trigger, `at` or `crowd` on a table entry, `crowd`
-negative or not an integer, `into` or `products` on an entry whose rule is
-not `become`, a `become` whose products' content exceeds the event's
-`amount` or whose charges do not balance, `become` on a family (a key of
-the measured event), a detector named as a
-face detector is (`face:+x` and the five others), `headings` on a lamp
-(`directions` replaces it),
-`heading` on a ray in transit (`direction` replaces it), a column named
-`gravity` (built in), `charge` declared both as the key and under
-`columns`, a column's `sign` other than 1 or -1, a column value with a
-denominator of 0 or a part that is not an integer, a column object with
-other keys, one name with two signs across the families, a nonzero
-column value on a paid family, more than `COLUMN_LIMIT` columns, a
-declared reader whose push over a column from the largest release of a
-family could pass 2^62 - 1 (the parser's static budget, per reader, per
-family and per column, and the sum over the columns), `dynamics`,
-`max_active_owners`, `port_map`, `output`, `capacity`, `groups`, a direction
-that is not primitive, a component beyond P, a direction the world does not
-declare, a label `Q x content x amount` beyond 2^62 - 1 on a declared ray or
-a lamp's release (Q = `LABEL_SCALE` = 64: the momentum label of a ray is
-along the unit vector of its direction at the flight's scale, the
-model owner's decision of 2026-09-19 on the physics-rule reviewer's
-verdict, [BEAM_LAW section 2](../../../docs/BEAM_LAW.md), so every declared
-`momentum` and every momentum of the record is in label units, Q per unit
-of amount along a heading), `phase_per_link` outside 0 .. N - 1, `age_bound`
-below 1 or absent on a GameBoard periodic on every axis, a declared `age`
-beyond it, `action` below 1 or not an integer, a `span` that is not three
-odd integers from 1 or larger than its axis, a body whose Nodes leave the
-GameBoard on an open axis, two measured events sharing a Node, a detector
-naming a Node of a body that is not its `position`, `phase_by_momentum`
-without `action`, on a `fixed` measured event or on a family without a
-phase circle, a turning body whose product `ticks x |p| x N` (the
-count of Links stepped within the run is at most `ticks`) exceeds
-2^62 - 1 for a declared momentum component p, a `lifetime` that is not
-one integer from 1 (a list or a per-axis value, 0, a negative number, a
-fraction) or beyond `age_bound`, a `phase_width` outside 1 .. N, on `pass`,
-on a family without a phase circle or without a `phase_window`, a declared ray of a family with a
-lifetime at an age at or beyond it, a detector named `lifetime` (the
-border's name), and `held` naming the event's own family, an unknown
-family or a content that is not a positive integer.
-"""
+"""The world file translated to the loop's classes: the frame (loader/frame.py) reads the three files through the schemas and hands the checked values here; this module builds the loop's classes from them (NatureBeamWorld, FamilyDefinition, MeasuredDefinition, BlockDefinition, EmitterDefinition, DetectorDefinition, TwistTable), keeps the rules between keys the cards do not state, and runs the loop's load-time checks (the node clock's bound, the held bodies, the initial state, the body's fit); it leaves with the loop's reads of the old form's keys (ALGEBRA.md 9.117 item 2, 9.90 (1))."""
 
 from __future__ import annotations
 
@@ -320,252 +21,44 @@ from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import frame
 from event_universe.loader.frame import EngineStart
 
-# ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md 9.90 (1); the model owner's
-# records 2103 and 2107; the cancel of docs/CANCELLED_WORLDS.md section 9): the
-# constants BEAM_LAW ("beam-v1"), LAW_VALUE ("beam") and OLD_LAW_VALUE ("rays") are
-# CANCELLED; the world keys `law` and `model_id` are refused by name (RETIRED_KEYS);
-# a refusal names the file and the key, never a law
+# the ray law's table rules and its contact rule, read by the loop's fixed values alone (DEAD, the paper writer's)
 TABLES = ("read", "measure", "rerelease", "pass", "become")
-# The rule of the transformation (the weak force, 2026-09-20): the click
-# and then the change of family with the products released.
-# The rule of a contact where the world declared none: a body that arrives
-# at a body is a paid arrival (its momentum is its own label, kappa = 1),
-# and the keys' rule for a paid arrival is `measure` (the model owner,
-# 2026-09-20; docs/BEAM_LAW.md note 31 (ix)).
 CONTACT_DEFAULT = "measure"
-# The quantum of a free family: its unit costs nothing and carries no content.
+# the quantum of a free family: its unit costs nothing
 FREE_QUANTUM = 0
-# The components of the one reading a table entry may select for its record;
-# `age` is the age moment, the reading aid of the measured event (the
-# external thing). Since clock-age-v1 (the model owner's word of
-# 2026-09-21, record 394) the clock counts the age moment by default on
-# every entry; the word `presence` selects the presence for the clock (its
-# record then carries the presence, the zeroth moment, as `scalar` does).
+# the readings a record may carry (the loop's words)
 AGE_READS = "age"
 PRESENCE_WORD = "presence"
 READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS, PRESENCE_WORD)
-# The one scale Q of the law (BEAM_LAW sections 2 and 3): the time resolution
-# of the flight, where the turn of a direction is T_d = isqrt(3 |v|^2
-# Q^2) and a ray makes S_1 Manhattan steps per T_d / Q intervals in the mean,
-# and the length of the momentum label, `LABEL_SCALE` below.
+# the one scale Q of the momentum label and the flight's resolution (LABEL_SCALE); the bounds of an amount, a norm and a momentum component on the 64-bit work register
 Q = 64
-# The bound of an amount, a content, a clock and a momentum component of this
-# law: the 64-bit work register with a bit to spare for one more sum.
 AMOUNT_BOUND = (1 << 62) - 1
-# The emitter's norm T, one period's action P e_c in the flux's units (ALGEBRA.md
-# 9.17 (7) (e) and (f), 9.19 (3)), is quadratic in the record's levels times the
-# family's wall: at the registered amplitude 50 x 2^20 it passes 2^62. It is
-# admitted up to this bound; the engine's form and running total are exact
-# Python integers (the object arrays of `form_share`).
 NORM_BOUND = (1 << 126) - 1
 MOMENTUM_BOUND = (1 << 62) - 1
-# The momentum label's scale is the same Q: the label of a unit is the
-# integer vector nearest Q D / |D| (`nature_beam.unit_label`, exactly Q e_d
-# on a heading), so a label component is within Q x content x amount per
-# row, and the parser's bound is that product (the model owner's decision of
-# 2026-09-19, the physics-rule reviewer's correction 3).
 LABEL_SCALE = Q
-# The direction table: two rest vectors, the six headings, the declared rest.
+# the direction table: two rest vectors, the six headings, the declared rest (the ray law's fixed table, DEAD)
 REST_DIRECTIONS = 2
 HEADING_OFFSET = REST_DIRECTIONS
 FIXED_DIRECTIONS = REST_DIRECTIONS + 6
 DEFAULT_DIRECTION_BOUND = 64
 MAX_DIRECTIONS = 4096
 Vector = tuple[int, int, int]
-# THE WORLD'S KEYS are the frame's schema (loader/frame.py, `WORLD` and `HANDED`)
-# The identity of the amplitude law (`amplitude-v1`; the model owner,
-# 2026-09-20, Highlights 5.4, "DECIDED: `amplitude-v1` is built"; the
-# physicist's and the mathematician's design, docs/designs/amplitude-v1/DESIGN.md;
-# docs/BEAM_LAW.md note 37): in a recorded world (a lamp declared) an event in
-# transit is a record with rows (the store's columns `record`, `branch` and
-# `multiplicity`), a re-emission may split a row by integer weights, rows of
-# one record in antiphase cancel at the merge, and the click's reading `sum`
-# accumulates one record's rows at a set for the ladder of the apparatus's
-# layer. Absent (false by default), no row carries a record and every world
-# reads as it did, byte for byte.
-# The circle must hold the quarter turn of a reflection in a recorded world
-# (`phase` + N / 4 exact on the tables): N below 4 is refused with it.
-AMPLITUDE_LEAST_STEPS = 4
-# The world key `doppler` of the reading's weight at the relative speed
-# (`doppler-v1`, 2026-09-20, BEAM_LAW note 38 as it was), deleted on
-# 2026-09-21 with the crossing rule (the model owner's record 158 of
-# 2026-09-20; note 48): a moving body's Doppler is the count of the rows
-# it crosses, no weight. A world that declares the key is refused as an
-# unknown key (MIGRATION).
 
 
-# The flight table's resolution on a heading, T_h = isqrt(3 Q^2) = 110: the one
-# root of `drive-b-v1`, formed at load as the flight table's is, never at run
-# time (docs/designs/drive_b/DESIGN.md section 2).
+# the flight table's resolution on a heading, isqrt(3 Q^2) = 110
 T_HEADING = integer_root(3 * LABEL_SCALE * LABEL_SCALE)
-# The identity of the directional drive (the model owner's approval of form B,
-# 2026-09-22, record 652 of the log of 2026-09-20; docs/designs/drive_b/DESIGN.md;
-# light_speed/FORM.md section 3.1 (c)): under the world key `drive_b` a body's
-# three drive accumulators gain p_a Q each against ONE wall, Q^2 S M + |p|_1 T_h,
-# and the axis furthest over the wall steps (`core.integer.by_line`), the
-# Bresenham line of the momentum with no coincident fire lost. Absent, the
-# per-axis drive of BEAM_LAW note 17 runs unchanged, byte for byte.
-# The identity of the centred step (the model owner's word through the Boss,
-# 2026-09-22, record 953 of the log of 2026-09-20; the cause of the atom's
-# widening, docs/designs/atom_give/CAUSE.md section 2 (v); the design
-# docs/designs/atom_give/CENTRED_STEP.md): under the world key `centred_step`
-# the count of a body's step is the NEAREST whole number of its accumulator in
-# units of the wall, on both drives (`core.integer.by_drive` and `by_line`,
-# `centred`), so a step fires when the accumulated motion passes half a Link
-# beyond the Node and the whole wall is subtracted: the body's Node the
-# nearest to its accumulated motion, the lag of the Node behind the motion
-# (half a Link per axis in the mean, which turns the push read at the Node
-# along the motion) zero in the mean. Every other count keeps the whole
-# part. Absent, every registered world replays byte for byte.
-# The identity of the atom's levels (`atom-level-v1`, 2026-09-22; the model
-# owner's word of record 973 through the Boss; docs/designs/atom_levels/
-# LEVELS.md section 2 (b), the virial form on the physics-rule reviewer's
-# recommendation): under the world key `atom_level` a body that declares
-# `level` carries, beside its action rows, the action gained on each axis
-# since its last return (DESIGN.md's give rows without the modulus), the
-# count of its self-creations since that return and the level at its last
-# release; at a return (the momentum's declared component crossing zero in
-# the declared sense) its level is the whole part of n_l x (the action
-# gained) over 2 h d_l x (the count), and the rise of that level above the
-# last released one is released as one row per declared direction of the
-# declared paid family, content h_q x (the rise), the row's phase turning
-# that many steps per interval of its age (the Planck identity as a rule of
-# the row). Absent by default: every registered world byte for byte.
 
 
-# The identity of the covariant readings, a hypothesis beside the law (the
-# model owner's decision of 2026-09-21, record 270 of the log of 2026-09-20;
-# DERIVATIONS_BEAM section 17 as amended in 17.6 per the physics-rule
-# reviews, records 297 and 314): under the world key `covariant_readings`
-# every measured event carries its energy readings (the exact square
-# W = E'_0^2 + d p . p at the declared c^2 = [1, d], E'_0 = Q S M, and E'
-# the largest integer with E'^2 <= W, kept by comparisons), its
-# self-creations are gated by a second owed count (one self-creation per
-# E' / E'_0 intervals in the mean), the drive's wall loses its cap term and
-# the release runs per lattice interval. Absent, nothing of it is computed
-# and every world reads as it did, byte for byte.
-# The identity of the turn by momentum, a physical hypothesis beside the
-# law (the model owner's decision of 2026-09-20 on Bohr): the record carries
-# it when the world declares `action`.
-# The identity of the one mechanism of the columns (the model owner,
-# 2026-09-20, "one mechanism for all the laws on the GameBoard"; the
-# mathematician's verified form): the record carries it when a world
-# declares a column beyond `charge`. The two built-in columns, gravity
-# and charge, are the law as it was, integer by integer.
-# The identity of the transformation `become` (the weak force in the
-# world's terms, the model owner's "go on everything", 2026-09-20): the
-# record carries it when a measured event declares `become` or a table
-# entry's rule is `become`.
-# The identity of the meeting (the model owner, 2026-09-20, "DECIDED: the
-# meeting, M-R": an event in transit reads the crowd as a body does, a
-# report; `events/meeting.py`): the record carries it when the world
-# declares `meeting: true`; absent, no paid unit reads the crowd and every
-# world reads as it did, byte for byte.
-# The identity of the rows' rule at a Node for general relativity's formulas
-# (the model owner's "go" of 2026-09-21, record 303, in its generic form,
-# records 421 to 428 and REVIEW_3; docs/designs/one_wall/NOTE.md): under the
-# world key `optical: gamma` (gamma the post-Newtonian parameter, a
-# non-negative integer, nature's 1) the row's flight joins the age wall's
-# declared set at the coefficient f = 1 + gamma (`measured.age_wall_set`),
-# and every row of content in free space is pushed by the crowd's flow with
-# the weight (1 + gamma) x content x e_D and turns to the fan's direction
-# nearest its whole momentum (`nature_beam.optical_turn`). Absent, nothing
-# of it exists and every world reads as it did, byte for byte.
-# The identity of the flow label (`flow-link-v1`; the model owner's decision of
-# 2026-09-22, record 915 of docs/LOG_2026-09-20.md, on the Flow Weight
-# Designer's design docs/designs/flow_weight/DESIGN.md, the physics-rule
-# reviewer's ADMISSIBLE of record 902): under the world key `flow_link` (a
-# boolean, absent by default) the arrival flow every reader sums counts each
-# arriving row of direction D with the flow label f_D, the integer vector
-# nearest |p_D| D / S_1 (the label per Euclidean Link of the line, S_1 = |a| +
-# |b| + |c| the line's Nodes per period), in place of the unit label u_D, the
-# integer vector nearest |p_D| D / |D| (the label per Node); |p_D| is Q for
-# the photon and a massive family's `momentum_magnitude`. Formed once at load
-# by one Euclidean division per component (`nature_beam.flow_label`), read
-# by the flow's sums alone (`nature_beam.CrowdMoments`, a body's push through
-# the group moment of a free family's rays); the age moment, the wall, the
-# flight, the collision, the phase and the momentum a click moves untouched.
-# Absent, the flow labels are the labels and every world reads as it did,
-# byte for byte.
-# The identity of the hand (`hand-v1`; the model owner, 2026-09-20, record
-# 128 of docs/LOG_2026-09-20.md, "the hand's three choices confirmed"; the
-# physicist's design hand/DESIGN.md with the mathematician's FORM.md; BEAM_LAW
-# note 39): the record carries it when a family, a lamp, a transit row or a
-# table entry declares `hand`, a lamp's `branches` name the hands of their
-# labels, or a measured event declares an `axis`. Absent, no row carries a
-# hand and every world reads as it did, byte for byte.
-# The two hands of a row, its helicity relative to its own direction: +1 a
-# right-handed screw along u_d, -1 a left-handed one; 0 no hand, every row
-# of every world without a declaration.
-HANDS = (-1, 1)
+# no hand: every row of every world
 NO_HAND = 0
-# The identity of the binding that costs content (`binding-v1`, the model
-# owner's record 115 of 2026-09-20, the physicist's design
-# docs/designs/binding_v1/DESIGN.md; BEAM_LAW note 40): at a contact under
-# `measure` the refused body gives the paid content it carries (`held` of a
-# paid family other than its own) to the flight on the heading opposite to
-# the refused step (`engine._give`). The record carries it when a measured
-# event holds a paid family at load, or from the first give of a run (the
-# engine's fact); no registered world does either, and every world without
-# one reads as it did, byte for byte.
-# The identity of the local detector law (the model owner's words of
-# 2026-09-23, docs/designs/detector_law/DESIGN.md): the ray splits at every
-# free Node inside the board and holds its amplitudes; outside only clicks
-# through a detector. The record carries it when the world declares
-# `detector_law: true`; absent, the ray law as built runs unchanged.
-# The identity of the massive record kind (the chief physicist's design of
-# 2026-09-23, docs/designs/detector_law/MASSIVE_RECORD.md, on the model
-# owner's words of records 1381 to 1425): a second record kind beside light
-# under the local detector law, its rule the same six-neighbour step with
-# a declared pair [num, den] on the six-neighbour term (a gap, its rest
-# mass); a family declares the kind by the key `pair`; its faces are the
-# world's `boundary`, ONE BORDER FOR EVERY FAMILY (the family key `faces`
-# refused by name since 2026-09-25, BUILD.md section 26 item 28). The
-# record carries the identity when the world declares
-# `massive_record: true`; absent, every world reads as it did, byte for
-# byte.
-# The amplitude bound A of a record's row under the massive record kind
-# (Reviewer 3's MUST 3 on step 2; BUILD.md section 3): the rule's total at a
-# Node under the Node clock, Gamma x num x 6 x A + 6 x den x M x A + 3 x
-# den x (Gamma + M) x (A + 1), must stay below 2^63 for every declared pair
-# with the world's Gamma and its whole content M, checked at load; the
-# ceiling A = 2^28 (the model owner's decision (5) of record 1962; BUILD.md
-# section 26 item 31: at Gamma = 10^6 on the pair [3200, 3236] the total is
-# 7.8 x 10^18, below 2^63 = 9.2 x 10^18; the rows' amplitudes stay at the
-# seed's order, the pointers alone square them, as Python integers; the
-# 2^40 of MUST 3 was the plain rule's ceiling, HISTORY).
+# the ceiling A of a row's amplitude where a world declares none, and the rule's int64 total
 AMPLITUDE_BOUND = 1 << 28
 TOTAL_BOUND = 1 << 63
-# Light's kind: the pair [1, 1] on the six-neighbour term, the value every
-# family without a declared pair reads (no branch on a name).
+# light's kind: the pair [1, 1], the value every family without a declared pair reads (no branch on a name)
 MASSLESS_PAIR = (1, 1)
-# The identity of the massive rows (`massive-rows-v1`; the model owner's yes
-# of 2026-09-21, record 332 of docs/LOG_2026-09-20.md; the mathematician's
-# design docs/designs/massive_rows/DESIGN.md, the physics-rule review's
-# three rounds): under the world key `massive_rows` a paid family may be
-# declared `massive`, its rows flying at the pace |p| / E' of the rest
-# energy E'_0 = Q S M (M the family's `quantum`, S the world's `width`)
-# and the momentum label p_D per direction at the scale p (the lamp's
-# `momentum_magnitude`), turning de Broglie's |p_a| N / h at every axis
-# Link over the world's `action` h, and completing by handing ONE quantum
-# (M and the one label) to the chosen set at the record's completion (the
-# placed fraction f_F = 0, the completion's quantum q_F = M). Every family
-# carries the same tables by value (a family without the flag Flight's
-# numbers, (phase_per_link, 1) and the pair (1, 0)), so a world without the
-# key reads as it did, byte for byte. Absent (false by default), no family
-# may be declared massive.
-# The two built-in columns of every family: the first, gravity, has the
-# value [1, 1] on every unit of content and the sign minus (like contents
-# pull together); the second, charge, the family's `charge` per unit of
-# content and the sign plus (like charges push apart). Neither is declared
-# under `columns`.
-# CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's columns, the only family names in the loader (read by the cancelled parse alone)
-# A column's declaration on a family: its value per unit of content and
-# the column's sign.
-# The most columns a world may carry, the built-in two included: the
-# per-group work of the push is then fixed (the mathematician's P2).
-# The span of a measured event on one Node (the default): a body of one.
+# a body of one Node
 ONE_NODE: tuple[int, int, int] = (1, 1, 1)
+# the keys of an inline family (a unit test's list); the universe file's entries are the cards' and translate to them (universe_file_entries)
 FAMILY_KEYS = {
     "name",
     "quantum",
@@ -607,63 +100,20 @@ FAMILY_KEYS = {
     "reads",
     "components",
 }
-# The border every event in transit of a family with a lifetime clicks on
-# when its age reaches the lifetime: named like a face detector in the
-# records, the books' escaped lines summing it with the faces'; a declared
-# detector may not take the name.
+# the border's name no detector may take
 LIFETIME_NAME = "lifetime"
-# The key of the first NatureBeam worlds that named the kind; the quantum decides it.
-KIND_KEY = "kind"
-# The key of the NatureBeam worlds before 2026-09-20 that gave a measured event its
-# own whole charge; the charge is the family's per unit of content.
-# CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's legacy charge key (read by the cancelled parse alone)
-# The charge per unit of content of a family with none: 0 as the pair [0, 1].
+# the charge per unit of content of a family with none: 0 as the pair [0, 1]
 NO_CHARGE = (0, 1)
-# The block's keys (massive-record-v1, MASSIVE_RECORD.md sections 4 to 7;
-# the build's plan BUILD.md section 3): admitted on a measured event that
-# declares `side`, under the world key `massive_record` alone.
-# THE OWNER'S CONSTANT: at most twenty families on a GameBoard (the model
-# owner's record 2081 of 2026-09-25 through the Boss, "lift the cap, put it at
-# 20": every family works in every experiment; record 1875's three, 1982's
-# four and 9.48's five HISTORY; BUILD.md section 26 item 54)
+# at most twenty families on a GameBoard (the model owner's word of 2026-09-25)
 MOST_FAMILIES = 20
-# THE ONE FAMILIES FILE (ALGEBRA.md 9.83 (2), 9.85 (3), 9.79 (1); the model owner's
-# record 2075 through the Boss; BUILD.md section 26 item 59): the universe's
-# families as laws and the universe's integers, one canonical copy at
-# examples/events/families.json, referenced by every world of the detector law
-# as the value of `families` (its repository path); a world may instead list
-# its families inline (the unit tests' small lists, the owner's decision 2 of
-# record 2081). The file: {"law", "integers": {"node_clock", "amplitude_bound"},
-# "families": [entries]}; an entry: name, quantum, charge, pair, reads,
-# representation ("scalar"; the vector and tensor parts ride on 9.86), phase
-# (2, the two levels), self_unit (0, the self-source off), booked, and either
-# held {"count": "content" | "sign", "factor": 1} (a field family) or clicks
-# {"gives", "takes"} (a family of records); every key required, refused by
-# name when missing; booked must be the derivation's (false for a held
-# family, true otherwise). Under the file the world declares no node_clock and
-# no amplitude_bound (the universe's integers, one copy) and every emitter
-# declares its given clock (a light record's clock is its emitter's, 9.85 (3)).
-# THE UNIVERSE FILE (the Boss's record 2128 (3); ALGEBRA.md 9.90 (6) read UNIVERSE): what
-# repeats in every experiment, the families and the universe's integers; no `law` key,
-# no name and no version (one engine)
-# THE UNIVERSE'S INTEGERS are the frame's schema (loader/frame.py, `INTEGERS`)
-# THE TWIST TABLE in the integers block (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c), (d)):
-# {unit, fine, coarse}; `unit` the integer 4 Gamma 2^16 whose inverse is theta_unit in
-# radians; `fine` 2^10 triples (c, s, d) for the angles k_0 theta_unit; `coarse` at most
-# 2^15 triples for the angles k_1 2^10 theta_unit; every triple c^2 + s^2 = d^2 exactly,
-# d at most 10^9, the nearest the generator finds (`twist_triple`); the transport's
-# triple for k = k_1 2^10 + k_0 is their exact product.
+# the twist table (ALGEBRA.md 9.81 (2) (b), 9.96 (2) (c), (d)): unit = 4 Gamma 2^16, 2^10 fine triples, at most 2^15 coarse triples, d at most 10^9
 TWIST_UNIT_SCALE = 1 << 16
 TWIST_FINE_BITS = 10
 TWIST_COARSE_MOST = 1 << 15
 TWIST_TRIPLE_BOUND = 10**9
-# THE ENTRY's keys are the folders' cards (loader/frame.py, `entry_kind`; ALGEBRA.md 9.117 item 2)
+# the three forms of a family's parts (ALGEBRA.md 9.86 (2)), the held source's two dipoles, and a read's twist word (the reading record's own rotation, 9.91 (6))
 PARTS_FORMS = ((1,), (1, 3), (1, 3, 6))
-HELD_COUNTS = ("content", "sign")
 HELD_DIPOLES = ("spin", "moment")
-# a read's twist (ALGEBRA.md 9.81 (2), 9.91 (6), 9.96 (2) (b)): an integer or "own"
-# (the reading record's own rotation in the table's unit, round(2^16 omega_0), times
-# the read's weight: Lambda_v is Lambda and no separate twist exists)
 READ_TWIST_WORDS = ("own",)
 
 
@@ -677,12 +127,6 @@ class TwistTable:
     unit: int
     fine: tuple[tuple[int, int, int], ...]
     coarse: tuple[tuple[int, int, int], ...]
-
-
-# THE TWIST "OWN" AND THE NEAREST TRIPLE are the generators' numbers since item 73
-# (`event_universe.generator_numbers`: round(2^16 omega_0) written under `twist` on
-# every body and every emitter, the triples written into the universe file); the
-# loader computes no float (the integer rule, record 2071) and reads the integers.
 
 
 def _twist_table(value: object, label: str, node_clock: int, amplitude_bound: int) -> TwistTable:
@@ -863,11 +307,6 @@ def _refuse_under_law(obj: dict[str, object], label: str, keys: set[str]) -> Non
         )
 
 
-# THE FILE'S STAMP (record 1886; ALGEBRA.md 9.22 (7) (i); 9.90 (3) (c)): the
-# digest of the whole file, written by the generator under the key `stamp` and
-# compared at load; the law identifier that stood beside it is CANCELLED (one
-# engine, 9.90 (1)); a change of the engine that moves the initial state is read
-# in the digest of the regenerated file.
 STAMP_KEYS = {"hash"}
 BLOCK_KEYS = {
     "side",
@@ -908,82 +347,17 @@ BLOCK_KEYS = {
     # 9.96 (5); commit 6)
     "stock",
 }
-# The margin rule's two kinds of world (MASSIVE_RECORD.md section 11 item 4,
-# Reviewer 3's two lines): a pin world's Nodes two extents from a
-# non-periodic face and a periodic side of s + 4 extents; a control world's
-# one extent and s + 2 extents.
+# a well's margin kind, the loader's rule between keys: a pin world's margins or a control world's
 MARGIN_KINDS = ("pin", "control")
-# THE BODY'S KEYS are the frame's schema (loader/frame.py, `BODY`)
-# CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's lamp keys (read by the cancelled parse alone)
-# A table entry's object form: the rule, a window on any rule but `pass`
-# with its width, the reading's component the record carries, on a
-# `become` entry the transformation's `into` and `products`, and the parity
-# filter `hand` (`hand-v1`: the entry's rule applies to arrivals of that
-# hand only; refused on `pass`).
-# CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's table keys (read by the cancelled parse alone)
-TABLE_ENTRY_KEYS = {
-    "rule",
-    "phase_window",
-    "phase_width",
-    "reads",
-    "into",
-    "products",
-    "inputs",
-    "weights",
-    "turn",
-    "rotate",
-    "gate",
-    "turns",
-    "hand",
-}
-# The split (the amplitude law, 2026-09-20, the owner's unification (2):
-# the split is `rerelease` with a vector of integer weights and the
-# multiplicity, one rule): on a `rerelease` entry, `weights`
-# (one integer from 0 per declared direction of the measured event, at
-# least one positive) and `turns` (a phase step per direction, 0 by
-# default): an arriving row (w, m, p) is re-emitted as the rows (w a_i,
-# m x A, p + t_i) with A = sum a_i^2; without `weights` every weight is 1,
-# the equal k-way split. Refused on a rule other than
-# `rerelease` and on a free family's entry (free families never branch).
-# CANCELLED (docs/CANCELLED_WORLDS.md section 9; ALGEBRA.md 9.90 (1)): the ray law's split, transform, become, clock, window and transit keys (read by the cancelled parse alone)
-SPLIT_KEYS = ("inputs", "weights", "turns")
-TRANSFORM_KEYS = {"into", "products"}
-# The clock trigger's keys (the measured event's `become`): the age `at`
-# which it fires, the family it becomes, its products and the `crowd` gate.
-# The keys of the clock trigger that a table entry (the click trigger) may
-# not carry: the window is its gate.
-CLOCK_ONLY_KEYS = ("at", "crowd")
-# A window read from a reading (issue #363, 2026-09-20): the family whose
-# rows at the set give the centre, and the offset added to it.
-WINDOW_READING_KEYS = {"reads", "offset"}
-# THE DETECTOR'S KEYS are the frame's schema (loader/frame.py, `DETECTOR`)
-# The readings a detector may declare; the first is the default: `wave`
-# since 2026-09-20 (the model owner: "on the GameBoard a ray, in the world a
-# wave"; `beam` was the default from 2026-09-19 to 2026-09-20).
+# the detector's readings, the loop's words; the first is every detector's (the key is gone)
 DETECTOR_READINGS = ("wave", "beam")
-# The third reading, of a record's rows (the design, section
-# 0): the set reads the sum of the rows of one record and one label that
-# arrived at its Nodes, squared, accumulated over the record's lifetime;
-# the crowd's pointer gives the set's phase as under `wave`, and a window
-# on its entry is the rotation of the record's labels, not a gate.
 SUM_READING = "sum"
-# The keys of the deleted `reversible-detector-v1`, refused by name.
-REVERSIBLE_KEYS = ("port_map", "output", "capacity", "groups", "reference_phase")
-# The face detectors, one per open face of the GameBoard, named by the face in
-# Port order (an open face is a detector, the model owner, 2026-09-19); a
-# declared detector may not take one of these names.
+# the face detectors' names in Port order, and the prefix of a body's own set; a declared detector takes neither
 FACE_NAMES = ("face:+x", "face:-x", "face:+y", "face:-y", "face:+z", "face:-z")
-# The layer's name of a measured event's set outside every declared
-# detector, `measured:<number>`; a declared detector's name may not use
-# the prefix, so that no name collides.
 RESERVED_SET_PREFIX = "measured:"
-# The GameBoard's faces per axis: open (the default) or periodic (the wrap).
+# the GameBoard's axes and the words of a face: open, periodic, or closed (a zero face without the take)
 AXES = ("x", "y", "z")
 BOUNDARIES = ("open", "periodic")
-# detector-law-v1 (DECLARATIONS.md section 10, Reviewer 3's line, 2026-09-24):
-# a face declared "closed" is a zero face for light WITHOUT the open face's
-# take (a mirror: the level 0 beyond it, no face detector, no sponge), per
-# axis, admitted under `detector_law` alone (the ray law has no rows).
 CLOSED_FACE = "closed"
 
 
@@ -1522,37 +896,9 @@ class NatureBeamWorld:
         return None
 
 
-# THE RETIRED KEY OF THE TAKE (ALGEBRA.md 9.19 (3); BUILD.md section 26 items 14 and 15):
-# refused by name on an inline family with what stands in its place (every other retired key
-# is no key of the frame's schemas and is refused there as unknown)
-RETIRED_KEYS = {
-    "take": "the take retired: nothing absorbs, no Port follows a wave (9.19 (3))",
-}
-
-
-def _refuse_retired(value: object, label: str, keys: tuple[str, ...]) -> None:
-    """A retired key on `value` (an object) is refused naming the key and its
-    successor; the loader accepts no world written under the retired forms."""
-    if not isinstance(value, dict):
-        return
-    for key in keys:
-        if key in value:
-            raise ValueError(
-                f"{label}.{key} is refused: {RETIRED_KEYS[key]} "
-                "(a retired key; BUILD.md section 26 item 15)"
-            )
-
-
 def _object(value: object, label: str, allowed: set[str], required: set[str]) -> dict[str, object]:
     if not isinstance(value, dict):
         raise ValueError(f"{label} must be a JSON object")
-    retired = [key for key in (*REVERSIBLE_KEYS, "headings", "heading") if key in value]
-    if retired:
-        raise ValueError(
-            f"{label} declares {', '.join(retired)}, a key of the deleted law of "
-            "events or its reversible detector (see docs/MIGRATION.md; a lamp and a ray declare "
-            "`directions` and `direction`)"
-        )
     unknown = set(value) - allowed
     if unknown:
         raise ValueError(f"{label} has unknown keys: {', '.join(sorted(unknown))}")
@@ -2059,13 +1405,6 @@ def _families(
     # reads resolved by name once every family is read
     generic: list[FamilyAttributes] = []
     for index, entry in enumerate(value):
-        if isinstance(entry, dict) and KIND_KEY in entry:
-            raise ValueError(
-                f"families[{index}] declares {KIND_KEY}, a key removed on 2026-09-19: "
-                "the kind of a family follows from its quantum (0 free, 1 or more paid) and is "
-                "not declared; see docs/MIGRATION.md"
-            )
-        _refuse_retired(entry, f"families[{index}]", ("take",))
         obj = _object(entry, f"families[{index}]", FAMILY_KEYS, {"name", "quantum"})
         # NO DEFAULT (record 2089; item 57): the pair, the charge and the reads declared
         # (the clock `phase_per_link` on the given family, 9.62 (1)); the ray law's
@@ -3934,19 +3273,6 @@ def parse_world_document(
         assert isinstance(declared_probes, tuple)
         probes = tuple(_address(item, "probes", shape) for item in declared_probes)
     action = None
-    declared = obj.get("measured", [])
-    if phase_steps < AMPLITUDE_LEAST_STEPS and any(
-        isinstance(entry, dict) and "lamp" in entry
-        for entry in (declared if isinstance(declared, list) else [])
-    ):
-        # A record's circle holds the quarter turn of a reflection (the
-        # amplitude law; every lamp givings records). Read off the document
-        # before the measured events are parsed, so that this refusal
-        # precedes theirs (`tests/test_amplitude_record.py` (b)).
-        raise ValueError(
-            f"a lamp is refused with N {phase_steps}: a record's circle holds the "
-            f"quarter turn of a reflection, at least {AMPLITUDE_LEAST_STEPS} steps"
-        )
     families = _families(
         obj["families"],
         phase_steps,
