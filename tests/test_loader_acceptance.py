@@ -22,7 +22,18 @@ ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
 START = ROOT / "examples" / "events" / "engine_start.json"
-SOURCE_FOLDER = ROOT / "examples" / "events" / "source"
+# one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
+SOURCED = {
+    "name": "field",
+    "sign": 0,
+    "parts": [1],
+    "phase": 2,
+    "pair": [1000, 1019],
+    "quantum": 1,
+    "reads": [],
+    "self_source": {"unit": 0},
+    "sourced": {"of": "matter", "weight": 1, "scale": 18910},
+}
 VERSION_STRING = re.compile(r"-v[0-9]+$")
 VERSION_WORDS = {"version", "schema_version"}
 
@@ -130,42 +141,6 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
     assert simulation.leaks() == []
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="ALGEBRA.md #the-primitives row 'the source' with record 2226: the frame reads `sourced` from the "
-    "source folder's card (#1206) and `world.py` carries it as the family's source term (#1236); "
-    "the fragment's `control` family declares neither held, clicks nor sourced, and the law "
-    "(ALGEBRA.md #the-primitives) refuses a family that does none: the unsourced control waits on the owner's word",
-)
-def test_b2_the_word_sourced_on_a_family_of_the_universe_loads(tmp_path, monkeypatch):
-    """ALGEBRA.md #the-primitives row 'the source', ALGEBRA.md #the-paces (record 2217): the universe with
-    the source's fragment (`sourced` {of, weight, scale} and the table form with `cap`) loads,
-    and the emitter's unit world runs on it with every family on."""
-    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    fragment = json.loads((SOURCE_FOLDER / "universe_entries.json").read_text(encoding="utf-8"))
-    universe["families"] = universe["families"] + fragment["families"]
-    assert any("sourced" in entry for entry in fragment["families"])
-    placed = place(tmp_path, monkeypatch, universe, emitter_world(stock=1, ticks=4))
-    simulation = DetectorLawSimulation(parse_nature_beam_world(placed))
-    assert [f.name for f in simulation.families] == [f["name"] for f in universe["families"]]
-    simulation.step()
-    assert simulation.leaks() == []
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="record 2199 item 1 with record 2226: K, release and width are gone (#1236); the source "
-    "worlds still carry no N, which the loader requires while the loop reads it",
-)
-def test_b3_the_word_readings_on_the_shipped_source_world_loads():
-    """Record 2199 item 1 (the output declared in one format; Main Loop's interface: a name, a
-    kind and the kind's keys per reading) with 9.117 row 'the source': the shipped rest world of
-    the source, whose readings each carry a name, loads as it stands."""
-    document = json.loads((SOURCE_FOLDER / "source_rest.json").read_text(encoding="utf-8"))
-    assert all("name" in reading for reading in document["readings"])
-    parse_nature_beam_world(document)
-
-
 def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_body(
     tmp_path, monkeypatch
 ):
@@ -204,8 +179,7 @@ def test_c2_every_key_of_a_familys_entry_is_a_folders_schema_and_not_a_line_of_t
         for key in (getattr(declaration, "schema", None) or ())
     }
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    fragment = json.loads((SOURCE_FOLDER / "universe_entries.json").read_text(encoding="utf-8"))
-    keys = {key for entry in universe["families"] + fragment["families"] for key in entry} - {"name"}
+    keys = {key for entry in universe["families"] + [SOURCED] for key in entry} - {"name"}
     assert keys <= words, f"keys of a family's entry no folder declares: {sorted(keys - words)}"
     offending = [
         f"{path.relative_to(ROOT)}:{line} {value!r}"
