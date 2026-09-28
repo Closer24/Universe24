@@ -213,12 +213,11 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     readings, box = generate(world), counted_cube(8, 2, 3000)
     reading = readings["bodies"][0]
     rest = start_rest(box, (1, 4))
-    level = loader_level(world, GAMMA)  # twice the world's whole content, at most Gamma - 1
+    level = loader_level(world, GAMMA)  # the loader's load_level: matter reads gravity at 1, charge at 1
     mode = bound_mode(box, KIND, GAMMA, content=rest.levels, bound_level=level)
     at_level = amplitude_unit(KIND, GAMMA, np.array([level]))
-    assert (
-        level == min(2 * 8 * 3000, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude == at_level
-    )
+    reach = 2 * (1 * sum(node["count"] for node in nodes) + 1 * 0)  # the content, and the charge 0
+    assert level == min(reach, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude == at_level
     assert at_level < amplitude_unit(KIND, GAMMA, rest.levels)  # the unit falls with the content
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
     assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
