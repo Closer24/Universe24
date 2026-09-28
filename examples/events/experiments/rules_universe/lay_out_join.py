@@ -4,33 +4,17 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import os
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
-from event_universe.world_files import input_digest  # the mode file names the world by its digest
-
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 
 UNIVERSE_OF_RECORD = "examples/events/planck.json"  # the rule's own universe of record (#1411): three rows, Gamma = 12,000, T = 1, the twist table at 4 Gamma 2^16
-UNIVERSE_NAME = "rules_universe_over_gamma.json"  # a file of its own beside Bell's worlds' rules_universe.json, which keeps the form of #1403
 ENGINE = "examples/events/engine_start.json"
-GAMMA = 12_000  # the Node clock, a multiple of 6: every pair exact over it
-QUANTUM_ACTION = 1  # T, the one unit
-PAIRS_OVER_GAMMA = {
-    "gravity": [1, 1],
-    "charge": [1, 1],
-    "matter": [8_000, 12_000],
-}  # the three rows of planck.json (the Closer 13:52), the matter pair written over Gamma and the two real fields as [1, 1] (the loader derives their ranks from the pair [1, 1] itself; written as [12000, 12000] it refuses the spin's step by name) (Cheshbon 13:09, 14:12: THE WALL IS ONE, w = 6 Gamma^3; the loader's reduction to lowest terms shrank the walls and raised A to 1,334,399,890, so the count's line's int64 bound refused the world at interval 1, the finding of 13:58); the polarisation and the third are messages under the divisor 1 and leave the file
-MATTER_PAIR = PAIRS_OVER_GAMMA["matter"]  # cos omega_0 = 2 / 3, the first pair past the exact bands
-DIVISORS = {
-    "gravity": 1,
-    "charge": 400_000,
-}  # the well is the count; the charge's divisor derived from Gamma, 0.86 (Gamma div 2)^(3 / 2), one quantum per window (Cheshbon's #1410, planck.json of #1411)
 ENGINES = {  # the counts and the edge per engine (Cheshbon 14:12 Israel time): on the engine of today (the level read once) the edge is 0.345 Gamma = 4,136, so 3,000 and 4,000 disperse and 5,000 binds; with the corrected term the edge is 0.2255 Gamma = 2,706 and the counts return to 3,000 and 4,000 (the Closer 14:30)
     "today": {
         "small": 4_400,
@@ -56,7 +40,6 @@ PIXELS = {  # Cheshbon's numbers per count (14:12 Israel time): the bound rotati
     7_000: {"omega_b": 0.564, "kappa": 1.20},
 }
 CLOCK_UNIT = 1 << 16  # den of the clock pair [a, den], 2 cos omega_b = a / den (Cheshbon 13:51)
-TAIL_UNIT = 1 << 16  # the tail's ratio t = e^(-kappa) as a pair over 2^16 (Cheshbon 14:12)
 DENOMINATOR = 1024  # every body's phase denominator
 FACE_DEPTH = 3
 SHAPE = [32, 9, 1]
@@ -65,19 +48,9 @@ LEFT_X = 7  # the smaller body's Node; the deeper at LEFT_X + the distance
 
 
 def rules_universe(folder: Path) -> str:
-    """The rule's own universe of record with its three rows written over Gamma (the pairs' numerators m over Gamma, THE WALL IS ONE), written beside the worlds; the path the worlds name, relative to the repository root where the folder lies under it. When planck.json itself carries the pairs over Gamma the worlds name it directly."""
-    document = json.loads((ROOT / UNIVERSE_OF_RECORD).read_text(encoding="utf-8"))
-    document["families"] = [
-        {**family, "pair": list(PAIRS_OVER_GAMMA[family["name"]])}
-        for family in document["families"]
-        if family["name"] in PAIRS_OVER_GAMMA
-    ]
-    for family in document["families"]:
-        if "held" in family:
-            family["held"] = {**family["held"], "divisor": DIVISORS[family["name"]]}
-    path = folder / UNIVERSE_NAME
-    path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
-    return path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path)
+    """The rule's own universe of record, `examples/events/planck.json` (#1411, #1419: the three rows in pairs over Gamma, Gamma = 12,000, T = 1, the charge's divisor 400,000 derived); the path the worlds name. A folder elsewhere names the repository's file all the same."""
+    del folder  # the file of record lives beside universe.json, never copied
+    return UNIVERSE_OF_RECORD
 
 
 def pixel(x: int, count: int) -> dict[str, Any]:
@@ -119,73 +92,20 @@ def world(universe: str, distance: int) -> dict[str, Any]:
     }
 
 
-def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
-    """The mode file of the two pixels by Cheshbon's line of 14:12 Israel time (the Moving Clock's tool `tools/pixel_mode.py` writes the same when it carries the tail): the bound state's profile in integers, the amplitude at the Node b = isqrt(c T den div (2 den - a)) from the clock pair [a, den] (the form D = now^2 - next before at rest with now = before = b gives the count c = D div T), the tail on the neighbours b t^n rounded at the Manhattan distance n Links, t = e^(-kappa) as a pair over 2^16, until the level falls under 1; both time levels equal at every Node (the standing phase); the world's digest names the world."""
-    shape = document["shape"]
-    count = shape[0] * shape[1] * shape[2]
-    bodies = []
-    for body in document["measured"]:
-        node = body["nodes"][0]
-        c = node["count"]
-        numbers = PIXELS[c]
-        a = numbers.get("a") or round(
-            2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT
-        )  # the stated pair over 2^16 where given (Cheshbon 13:51, the Closer 14:17)
-        amplitude = math.isqrt(c * QUANTUM_ACTION * CLOCK_UNIT // (2 * CLOCK_UNIT - a))
-        tail = numbers.get("t") or round(
-            math.exp(-numbers["kappa"]) * TAIL_UNIT
-        )  # the stated pair over 2^16 where given (Cheshbon 14:12, the Closer 14:16)
-        x0, y0, z0 = node["node"]
-        profile = [0] * count
-        for x in range(shape[0]):
-            for y in range(shape[1]):
-                for z in range(shape[2]):
-                    distance = abs(x - x0) + abs(y - y0) + abs(z - z0)
-                    level = amplitude * tail**distance // TAIL_UNIT**distance
-                    if level >= 1:
-                        profile[(x * shape[1] + y) * shape[2] + z] = level
-        bodies.append(
-            {
-                "family": body["family"],
-                "pair": list(MATTER_PAIR),
-                "profile": profile,
-                "clock": [a, CLOCK_UNIT],
-                "moving": {"now": profile, "before": list(profile)},
-                "recipe": {
-                    "row": "Cheshbon 14:12: b = isqrt(c T den div (2 den - a)) at the Node, b t^n on the neighbours at the Manhattan distance n, t = e^(-kappa) over 2^16, both levels equal",
-                    "count": c,
-                    "amplitude": amplitude,
-                    "tail_over_2_16": tail,
-                    "omega_b": numbers["omega_b"],
-                    "kappa": numbers["kappa"],
-                },
-            }
-        )
-    return {"rest": {}, "bodies": bodies, "world_digest": input_digest(document)}
-
-
 def write_mode(world_path: Path, document: dict[str, Any]) -> None:
-    """The mode file beside the world: by the Moving Clock's tool `tools/pixel_mode.py` (the generator of the rule's universe, the owner's word of 14:32 Israel time: the input a count at a Node with the clock pair and the tail's ratio, the output the bound state) where the tool is in the tree, else by the recipe here until it lands."""
-    tool = ROOT / "tools" / "pixel_mode.py"
-    if not tool.exists():
-        world_path.with_suffix(".mode.json").write_text(
-            json.dumps(pixel_mode(document)) + "\n", encoding="utf-8"
-        )
-        return
-    command = [
-        sys.executable,
-        str(tool),
-        "--input",
-        str(world_path),
-        "--out",
-        str(world_path.with_suffix(".mode.json")),
-    ]
-    for body in document["measured"]:
-        c = body["nodes"][0]["count"]
+    """The mode file beside the world by the generator of the rule's universe, `tools/pixel_mode.py` (#1417; the owner's word of 14:32 Israel time: the input a count at a Node with the clock pair and the tail's ratio per count, the output the bound state; no mode written by hand)."""
+    command = [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(world_path)]
+    for c in sorted({body["nodes"][0]["count"] for body in document["measured"]}):
         numbers = PIXELS[c]
-        a = numbers.get("a") or round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
-        t = numbers.get("t") or round(math.exp(-numbers["kappa"]) * TAIL_UNIT)
-        command += ["--clock", str(c), str(a), str(CLOCK_UNIT), "--tail", str(c), str(t)]
+        command += [
+            "--clock",
+            str(c),
+            str(numbers["a"]),
+            str(CLOCK_UNIT),
+            "--tail",
+            str(c),
+            str(numbers["t"]),
+        ]
     subprocess.run(command, check=True, cwd=ROOT, env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
 
 
@@ -257,7 +177,6 @@ def main() -> None:
                 "universe": universe,
                 "worlds": ["join", "part"],
                 "counts": [COUNT_SMALL, COUNT_DEEP],
-                "gamma": GAMMA,
             }
         )
     )
