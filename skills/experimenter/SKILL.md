@@ -34,7 +34,7 @@ Every number the experiment prints or registers is one of two kinds:
 
 ## Code the experiment lacks
 
-The Experimenter writes code only where the Closer hands a line: a small pull request from `main` on a branch of its own, one dedicated test whose expected value is derived from the law inside the test, no number in the code, `python tools/check.py` green before opening, Cheshbon's reading against the law on #1325 before the merge, the Closer merging on green. Everything else that is missing is a finding.
+A problem the Experimenter knows is his to solve at once (the owner, 2026-09-28): a small pull request from `main` on a branch of its own, one dedicated test whose expected value is derived from the law inside the test, no number in the code, `python tools/check.py` green before opening, Cheshbon's reading against the law on #1325 before the merge, the Closer merging on green; no waiting for a line. A problem he does not know goes to Cheshbon and to the Closer at the same time, one comment on #1325 and one Routine each, never one after the other; a missing law line is Cheshbon's.
 
 ## What the experimenter never does
 

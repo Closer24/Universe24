@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+
 from event_universe.core.rule3 import NO_READ, rule3
+
+Levels = tuple[tuple[int, ...], tuple[int, ...]]
 
 
 def period_by_the_rule(a: int, b: int) -> int:
@@ -23,3 +27,36 @@ def period_by_the_rule(a: int, b: int) -> int:
     raise ValueError(
         f"the clock [{a}, {b}] is not back within {t} intervals, four quarter turns of its first ({quarter} intervals) and one interval each"
     )
+
+
+def moving_levels(
+    moving: object, clock: tuple[int, int] | None, count: int, label: str, bound: int
+) -> Levels | None:
+    """A moving body's two levels from the mode file's `moving` entry, `now` and `before` (ALGEBRA.md #the-generator (e)), each one integer per Node in x-major order, not all zero, within the amplitude bound and the clock's denominator; None where the entry carries no levels (a resting body's are its profile); every defect refused by name."""
+    if not isinstance(moving, Mapping) or "now" not in moving:
+        return None
+    found: list[tuple[int, ...]] = []
+    for word in ("now", "before"):
+        values = moving.get(word)
+        if (
+            not isinstance(values, list)
+            or len(values) != count
+            or any(type(v) is not int for v in values)
+        ):
+            raise ValueError(
+                f"{label}.moving.{word} must be {count} integers, one per Node in x-major order"
+            )
+        level = tuple(int(v) for v in values)
+        amplitude = max(abs(v) for v in level)
+        if amplitude == 0:
+            raise ValueError(f"{label}.moving.{word} must not be all zero")
+        if amplitude > bound:
+            raise ValueError(
+                f"{label}.moving.{word}'s amplitude {amplitude} is above the amplitude bound {bound}"
+            )
+        if clock is None or clock[1] < amplitude:
+            raise ValueError(
+                f"{label}.moving.{word} needs the clock [a, b] beside it with b at least {amplitude}"
+            )
+        found.append(level)
+    return found[0], found[1]
