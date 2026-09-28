@@ -15,6 +15,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.ports import arrival
 from event_universe.core.rule3 import coefficients, form_term, rule3, rule_total_bound
 from event_universe.features.start import (
     NO_READ,
@@ -521,6 +522,139 @@ def pair_of(row: dict[str, Any], label: str) -> Pair:
     return int(pair[0]), int(pair[1])
 
 
+def outward_ports(mask: np.ndarray, wrap: Wrap) -> list[tuple[int, int, np.ndarray]]:
+    """Per axis and side, the body's Nodes whose Link through that Port leads to a Node outside the body (core/ports.py `outward`): none on an axis of one layer, none through an open face (no Node and no Port beyond it)."""
+    found = []
+    for axis in range(3):
+        if mask.shape[axis] == 1:
+            continue
+        for side in (1, -1):
+            beyond = np.asarray(arrival(mask.astype(np.int64), axis, side, wrap[axis])) == 0
+            if not wrap[axis]:
+                face = [slice(None)] * 3
+                face[axis] = slice(-1, None) if side == 1 else slice(0, 1)
+                beyond[tuple(face)] = False
+            ports = mask & beyond
+            if ports.any():
+                found.append((axis, side, ports))
+    return found
+
+
+def train_of(
+    body_levels: tuple[np.ndarray, np.ndarray],
+    body_rule: tuple[np.ndarray, np.ndarray, int],
+    mask: np.ndarray,
+    light_rule: tuple[np.ndarray, np.ndarray, int],
+    bound_charge: np.ndarray,
+    paces: np.ndarray,
+    divisor: int,
+    action: int,
+    period: int,
+    wrap: Wrap,
+    most_intervals: int,
+) -> dict[str, Any]:
+    """THE TRAIN of one quantum, a reading by Rule3 alone (ALGEBRA.md #the-primitives, the giving's row): the body's record turning in its own rule from its two levels; the given family's record on the GameBoard in its rule at the paces of its reads; each interval the outer shell gains (M_pol x a_body) div E_s at both levels, the division act with the remainder carried at the Node (M_pol the bound charge the body holds there, E_s the given row's divisor); the outward flux through the outer Ports, wall x (now_j before_i - before_j now_i) summed where positive, accumulated until it reaches T (`quantum_action`): the intervals and the periods N_q of the giver's rotation until the close; refused by name past `most_intervals` (the world's run) without a close."""
+    now_b, before_b = body_levels[0].astype(np.int64), body_levels[1].astype(np.int64)
+    read_b, self_b, wall_b = body_rule
+    read_l, self_l, wall_l = light_rule
+    carry_b = np.zeros_like(now_b)
+    now_l, before_l, carry_l = np.zeros_like(now_b), np.zeros_like(now_b), np.zeros_like(now_b)
+    rest_now, rest_before = np.zeros_like(now_b), np.zeros_like(now_b)
+    ports = outward_ports(mask, wrap)
+    outward, peak = 0, 0
+    for interval in range(1, most_intervals + 1):
+        next_b, carry_b = rule3(
+            (read_b, read_b, read_b), arrivals(now_b, wrap), self_b, wall_b, now_b, before_b, carry_b
+        )
+        now_b, before_b = np.asarray(next_b, dtype=np.int64), now_b
+        next_l, carry_l = rule3(
+            (read_l, read_l, read_l), arrivals(now_l, wrap), self_l, wall_l, now_l, before_l, carry_l
+        )
+        now_l, before_l = np.asarray(next_l, dtype=np.int64), now_l
+        for level, source, rest in ((now_l, now_b, rest_now), (before_l, before_b, rest_before)):
+            # the division act with the remainder carried at the Node (core.rule3, the line with no read)
+            value, carry = rule3(
+                NO_READ, NO_READ, bound_charge[mask] * source[mask], divisor, 1, 0, rest[mask]
+            )
+            level[mask] += np.asarray(value, dtype=np.int64)
+            rest[mask] = np.asarray(carry, dtype=np.int64)
+        peak = max(peak, int(np.abs(now_l).max()))
+        for axis, side, at in ports:
+            now_j = np.asarray(arrival(now_l, axis, side, wrap[axis]))[at]
+            before_j = np.asarray(arrival(before_l, axis, side, wrap[axis]))[at]
+            flux = now_j * before_l[at] - before_j * now_l[at]
+            # in the form's units: the flux over the pace squared at the Node (the form's Node term is over p^2)
+            positive = np.where(flux > 0, flux, 0).astype(object)
+            squares = paces[at].astype(object) * paces[at].astype(object)
+            outward += int(np.asarray(rule3(NO_READ, NO_READ, wall_l, squares, positive, 0, 0)[0]).sum())
+        if outward >= action:
+            return {"intervals": interval, "periods": [interval, period], "flux": outward, "peak": peak}
+    return {
+        "refused": f"the outward flux {outward} did not reach T = {action} in {most_intervals} intervals (the peak {peak})"
+    }
+
+
+def given_train(
+    body: dict[str, Any],
+    rows: dict[str, Any],
+    integers: dict[str, Any],
+    levels: tuple[np.ndarray, np.ndarray],
+    body_rule: tuple[np.ndarray, np.ndarray, int],
+    mask: np.ndarray,
+    fields: dict[str, FieldAtRest],
+    total: np.ndarray,
+    gamma: int,
+    wrap: Wrap,
+    clock: tuple[int, int],
+    ticks: int | None,
+) -> dict[str, Any]:
+    """The reading `train` of a giving body (ALGEBRA.md #the-primitives, the giving's row, THE TRAIN): the given record's rule at the paces of the given row's plain reads on the world's rests, the bound charge the short-range held family the given row reads (den above num, the reach of a held family its pair), the given row's divisor E_s and the universe's quantum action T; no reading on a body that gives nothing, on a given row that holds nothing or reads no short-range family."""
+    emitter = body.get("emitter")
+    if not isinstance(emitter, dict):
+        return {}
+    row = rows[emitter["family"]]
+    held = row.get("held") or {}
+    plain = [read for read in row.get("reads", []) if read.get("by") in (1, "plain")]
+    short = [
+        read
+        for read in plain
+        if pair_of(rows[read["family"]], read["family"])[1]
+        > pair_of(rows[read["family"]], read["family"])[0]
+    ]
+    if "divisor" not in held or len(short) != 1 or ticks is None:
+        return {}
+    content = np.zeros(total.shape, dtype=np.int64)
+    for read in plain:
+        name = read["family"]
+        if name not in fields:
+            other = rows[name]
+            fields[name] = start_rest(
+                total, pair_of(other, name), wrap, (other.get("held") or {}).get("divisor")
+            )
+        weight = read["weight"]
+        content = (
+            content + int(integers[weight] if isinstance(weight, str) else weight) * fields[name].levels
+        )
+    pair = emitter.get("pair", row.get("pair"))
+    if not (isinstance(pair, list) and len(pair) == 2):
+        return {}
+    light_rule = rule_integers((int(pair[0]), int(pair[1])), gamma, content)
+    found = train_of(
+        levels,
+        body_rule,
+        mask,
+        light_rule,
+        fields[short[0]["family"]].levels.astype(np.int64),
+        (gamma - content).astype(np.int64),
+        int(held["divisor"]),
+        int(integers["quantum_action"]),
+        period_by_the_rule(*clock),
+        wrap,
+        int(ticks),
+    )
+    return {"train": found}
+
+
 def given_wavelength(
     body: dict[str, Any], rows: dict[str, Any], clock: tuple[int, int]
 ) -> dict[str, int]:
@@ -665,6 +799,33 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             # 2 cos omega_b; now = before is no mode), written under `moving` as a moving body's are
             read_w, self_w, wall_w = rule_integers(pair, gamma, content)
             still = two_levels(written, read_w, self_w, wall_w, wrap)
+            train: dict[str, Any] = {}
+            if "quantum_action" in integers and not momentum[axis]:
+                # THE SCALE c T (ALGEBRA.md #the-generator (f), the universe's quantum action): the two levels
+                # scaled together so that the record's form is its quanta's action, c T with c the body's quanta
+                form = conserved_form(still[0], still[1], self_w, wall_w, pair[0], gamma - content, wrap)
+                still = scaled_to_norm(
+                    still[0],
+                    still[1],
+                    form,
+                    Fraction(int(counts.sum()) * int(integers["quantum_action"])),
+                    mode.amplitude,
+                )
+                written = still[0]
+                train = given_train(
+                    body,
+                    rows,
+                    integers,
+                    still,
+                    (read_w, self_w, wall_w),
+                    counts > 0,
+                    fields,
+                    total,
+                    gamma,
+                    wrap,
+                    clock,
+                    document.get("ticks"),
+                )
             moving = {
                 "axis": axis,
                 "momentum": momentum[axis],
@@ -686,6 +847,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "period": period_by_the_rule(*clock),
                     "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
                     **given_wavelength(body, rows, clock),
+                    **train,
                     "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
                     "in_the_worlds_well": in_world,
                     "profile": written,
