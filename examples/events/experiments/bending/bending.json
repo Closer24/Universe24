@@ -108,7 +108,7 @@
    ],
    "emitter": {
     "family": "charge",
-    "weight": 1,
+    "weight": 3,
     "norm": 180255439696889394,
     "norm_denominator": 3948169
    },
