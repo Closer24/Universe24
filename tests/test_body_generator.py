@@ -224,7 +224,8 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (2 * 24000 + 1 * 5)
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
     assert reading["period"] == period_by_the_rule(*reading["rotation"])
-    assert np.array_equal(reading["profile"], mode.profile)
+    written = reading["profile"]  # half the unit by the division act: twice it is the mode's within two
+    assert np.abs(written).max() == mode.amplitude // 2 and np.abs(2 * written - mode.profile).max() <= 2
     at_rest = {"pair": [1, 4], "cycle": 1, "at_bodies": int(rest.levels[box > 0].min()), "at_corner": 0}
     at_rest["iterations"] = rest.iterations
     assert readings["rest"]["gravity"] == at_rest and np.array_equal(reading["content"], rest.levels)

@@ -630,6 +630,9 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             if momentum[axis]:
                 rotation = proper_rotation(rotation, moved.triple, moved.top)
             clock = clock_pair(rotation, mode.amplitude)
+            # the profile written at half the unit (ALGEBRA.md #the-generator (f): the final scale comes
+            # from c T): the record's norm is the written levels' squares, the headroom under A the run's
+            (written,) = to_amplitude((mode.profile,), mode.amplitude // 2)
             moving = {
                 "axis": axis,
                 "momentum": momentum[axis],
@@ -652,7 +655,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
                     "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
                     "in_the_worlds_well": in_world,
-                    "profile": mode.profile,
+                    "profile": written,
                     "content": content,
                     "moving": moving,
                 }
