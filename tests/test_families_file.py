@@ -93,7 +93,7 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     assert [
         (f["name"], f["pair"], f.get("held", {}).get("divisor")) for f in document["families"]
     ] == rows
-    assert all(set(f) <= {"name", "pair", "held", "spins_step"} for f in document["families"])
+    assert all(set(f) <= {"name", "pair", "held"} for f in document["families"])  # no spins_step
     world = {"shape": [40, 1, 1], "boundary": {"x": "closed", "y": "periodic", "z": "periodic"}, "N": 64}
     world |= {"ticks": 10, "face_depth": 1, "engine": "examples/events/engine_start.json"}
     world |= {"universe": planck, "detectors": [{"name": "taker", "block": 2}]}
@@ -256,8 +256,8 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(R(by=2), r"by must be one of \[1, 'q'\], not 2")
     refuses(H(lambda h: h.update(factors=[1, 4])), r"held\.factors must be 3")
     refuses(H(lambda h: h.update(dipole="twist")), r"dipole must be one of \['spin', 'moment'\]")
-    refuses(lambda d: d["families"][0].pop("spins_step"), "holds the spin's dipole and lacks spins_step")
-    refuses(lambda d: d["families"][0]["spins_step"].update(curl=3), r"spins_step\.curl must be a list")
+    good["families"][0].pop("spins_step")  # optional on the spin's holder: the file loads without it
+    refuses(lambda d: d["families"][0].update(spins_step={"curl": 3}), "spins_step lacks keys: tidal")
     refuses(lambda d: d.__setitem__("law", "beam-v1"), "the universe file .* has unknown keys: law")
     (tmp_path / "universe.json").write_text(json.dumps(good), encoding="utf-8")
     document["stamp"] = input_stamp(document)
