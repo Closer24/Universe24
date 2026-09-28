@@ -701,7 +701,7 @@ def _node_clock_bound(
     ) -> int:
         quanta, counts = sum(entry.held), counts or (sum(entry.held),)
         if family.held == "sign":
-            declared = entry.block.q if entry.block is not None else 0
+            declared = entry.block.q * quanta if entry.block is not None else 0
             quanta = abs(
                 declared
                 + sum(other.charge[0] * held for other, held in zip(families, entry.held, strict=True))
@@ -760,10 +760,10 @@ def _families_of(
             numerator, denominator = int(pair_list[0]), int(pair_list[1])
             if numerator > MAX_VALUE or denominator > MAX_VALUE:
                 raise ValueError(f"{label}.pair must be [num, den], two integers up to {MAX_VALUE}")
-            if denominator < numerator:
+            if denominator < 1 or (denominator <= abs(numerator) and denominator != numerator):
                 raise ValueError(
-                    f"{label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
-                    "(den > num a massive kind, its gap cos omega_0 = num / den; den = num light's kind)"
+                    f"{label}.pair [{numerator}, {denominator}]: den from 1, and den > |num| a massive kind "
+                    "(its gap cos omega_0 = num / den, a negative numerator the mirror band; den = num light's kind)"
                 )
             pair = (numerator, denominator)
         clock: tuple[int, int] | None = None
@@ -1719,6 +1719,7 @@ def _counted(
         phase_denominator=_integer(obj["phase_denominator"], f"{label}.phase_denominator", 1)
         if "phase_denominator" in obj
         else None,
+        q=_integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND) if "q" in obj else 0,
         declared={key: value for key, value in obj.items() if key not in frame.COUNTED.keys},
     )
     return MeasuredDefinition(
@@ -2338,10 +2339,8 @@ def parse_world_document(
     twist_table: TwistTable | None = None
     if "twist_table" in obj:
         twist_table = _twist_table(obj["twist_table"], "twist_table", amplitude_bound)
-    # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26
-    # item 51): the families' roles of items 32 and 35 are their own
-    # declarations (`held`, `reads`), read by `_families` below; the world
-    # keys clock_family, charge_family and charge_strength are retired
+    # THE FAMILY GENERICITY (record 2066; item 51): the families' roles are their own declarations (`held`,
+    # `reads`), read by `_families` below; the world keys clock_family, charge_family and charge_strength retired
     mode_axis: int | None = None
     if "mode_axis" in obj:
         mode_axis = AXES.index(str(obj["mode_axis"]))

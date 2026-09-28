@@ -1,7 +1,5 @@
 """The worlds of record (examples/events/experiments, the universe of record): every Bell world loads with the mode file beside it under the three held rows of the file, gravity and the free charge as the sum at their divisor and the bound charge `polarisation` at the pair [1, 2] and the divisor 1, each with a record of its own; the bound charge's level at the load is the start folder's rest, a GameBoard diagnostic read here and labelled so: above 0 at every body's Node and nowhere above the largest count (the rest's line 12 a = S_6(a) + 6 sigma at [1, 2] bounds a by the largest source), and 0 beyond the reach of every body (the sum of the sources times the pair's decay per Link below one unit; ALGEBRA.md "The well": kappa^2 = 6 den / num - 6, the decay per Link the root of lambda + 1 / lambda = 2 + kappa^2)."""
 
-from __future__ import annotations
-
 import json
 from pathlib import Path
 
