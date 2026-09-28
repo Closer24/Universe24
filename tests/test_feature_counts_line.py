@@ -175,10 +175,8 @@ def test_the_count_is_conserved_exactly_and_the_inverse_undoes_the_line():
     shape = (4, 3, 2)
     amplitude = 1 << 8
     norm, weight = 5000, 7
-    term = CountTerm(norm, weight, amplitude, 1 << 21)
-    count = generator.integers(1 << 20, 1 << 21, size=shape).astype(
-        np.int64
-    )  # each Node holds what it gives
+    term = CountTerm(norm, weight, amplitude, 1 << 21)  # each Node holds what it gives:
+    count = generator.integers(1 << 20, 1 << 21, size=shape).astype(np.int64)
     remainder = generator.integers(0, norm, size=shape).astype(np.int64)
     for periodic in (True, False):
         for _ in range(50):
@@ -233,14 +231,11 @@ def test_a_node_at_0_gives_nothing_and_a_node_giving_more_than_it_holds_is_refus
     assert writes.count.ravel().tolist() == [2 * weight, 0]
     count[1] = 2 * weight - 1
     with pytest.raises(
-        ValueError, match=rf"move {2 * weight} quanta from a Node holding {2 * weight - 1} < "
+        ValueError, match=rf"move {2 * weight} quanta from a Node holding {count[1, 0, 0]} "
     ):
         apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
     ports = lambda a: tuple(across(a, axis, sigma, True) for axis in range(3) for sigma in (1, -1))  # noqa: E731
     for holding in (0, 2 * weight - 1):
         count[1] = holding
         writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1, ports))
-        assert writes.count.ravel().tolist() == [0, holding] and sum(writes.net).ravel().tolist() == [
-            0,
-            0,
-        ]
+        assert writes.count.ravel().tolist() == [0, holding] and not sum(writes.net).any()
