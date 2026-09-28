@@ -92,11 +92,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         reads, self_coefficient, wall = coefficients(
             num, den, gamma, content, (rng.randint(-30, 30), rng.randint(-30, 30), rng.randint(-30, 30))
         )
-        arrivals = (
-            rng.randint(-(10**6), 10**6),
-            rng.randint(-(10**6), 10**6),
-            rng.randint(-(10**6), 10**6),
-        )
+        arrivals = tuple(rng.randint(-(10**6), 10**6) for _ in range(3))
         now, before = rng.randint(-(10**6), 10**6), rng.randint(-(10**6), 10**6)
         remainder = rng.randint(0, wall - 1)
         total = (

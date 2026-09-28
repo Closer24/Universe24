@@ -188,10 +188,8 @@ def test_the_count_is_conserved_exactly_and_the_inverse_undoes_the_line():
     remainder = generator.integers(0, norm, size=shape).astype(np.int64)
     for periodic in (True, False):
         for _ in range(50):
-            levels = [
-                generator.integers(-amplitude, amplitude + 1, size=shape).astype(np.int64)
-                for _ in range(4)
-            ]
+            bounds = (-amplitude, amplitude + 1)
+            levels = [generator.integers(*bounds, size=shape).astype(np.int64) for _ in range(4)]
             here = Levels(*levels)
             links = links_of(here, periodic)
             forward = apply(term, CountStart(count, remainder, here, links, 1))

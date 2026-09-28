@@ -52,12 +52,8 @@ def planted(simulation: DetectorLawSimulation, parts, block) -> tuple[int, int]:
     y_part = parts[2]
     ahead = (centre[0], centre[1], centre[2] + 1)
     behind = (centre[0], centre[1], centre[2] - 1)
-    curl_x = (
-        int(z_part.now[above])
-        - int(z_part.now[below])
-        - int(y_part.now[ahead])
-        + int(y_part.now[behind])
-    )
+    z_now, y_now = z_part.now, y_part.now
+    curl_x = int(z_now[above]) - int(z_now[below]) - int(y_now[ahead]) + int(y_now[behind])
     return wall, curl_x
 
 

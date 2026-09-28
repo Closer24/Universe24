@@ -62,17 +62,9 @@ def bell_world(right: dict | None = None) -> dict:
         a_body([40], window),
         a_body([64], window),
     ]
-    document = {
-        "shape": [80, 1, 1],
-        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
-        "ticks": 400,
-    }
-    document |= {
-        "N": record["N"],
-        "engine": record["engine"],
-        "universe": record["universe"],
-        "measured": bodies,
-    }
+    faces = {"x": "closed", "y": "periodic", "z": "periodic"}
+    document = {"shape": [80, 1, 1], "boundary": faces, "ticks": 400}
+    document |= {key: record[key] for key in ("N", "engine", "universe")} | {"measured": bodies}
     document["detectors"] = [sets[0], {"name": "crystal_set", "block": CRYSTAL}, *sets[1:]]
     document["stamp"] = input_stamp(document)
     return document
@@ -98,12 +90,8 @@ def test_the_card_is_built_at_ii_and_the_pair_is_declared_at_the_half_quantum():
     assert registered.built and registered.function is apply
     assert registered.schema is not None and "crystal" in registered.schema.places["a body"].keys
     writes = apply(CrystalTerm(), CrystalStart(7, 3, (0, 1), (512, 1)), CrystalOwn())
-    assert (writes.labels, writes.norm, writes.denominator, writes.clock) == (
-        ((0, 1), (0, 1)),
-        7,
-        6,
-        (512, 2),
-    )
+    expected = (((0, 1), (0, 1)), 7, 6, (512, 2))
+    assert (writes.labels, writes.norm, writes.denominator, writes.clock) == expected
     with pytest.raises(ValueError, match="clock is a pair of integers from 1"):
         apply(CrystalTerm(), CrystalStart(7, 3, (0, 1), (0, 1)), CrystalOwn())
     with pytest.raises(ValueError, match="norm is from 1"):

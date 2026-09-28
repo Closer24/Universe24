@@ -182,18 +182,7 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
     """The ray law's and the retired keys as unknown keys, a missing key, a wrong kind, a family the universe lacks (on the body, in its stocks, in its emitter), a bad mapping."""
     good = json.loads((ROOT / "tests" / "light_clock.json").read_text(encoding="utf-8"))
     context = Context(tuple(entry["name"] for entry in shipped()["families"]))
-    retired = (
-        "lamp",
-        "phase",
-        "directions",
-        "table",
-        "become",
-        "span",
-        "wheel",
-        "take",
-        "coupling",
-        "cavity",
-    )
+    retired = tuple("lamp phase directions table become span wheel take coupling cavity".split())
     S = lambda key, value: lambda d: d["measured"][0].__setitem__(key, value)  # noqa: E731
     D = lambda key, value: lambda d: d["detectors"][0].__setitem__(key, value)  # noqa: E731
     defects = [(S(k, 1), rf"measured\[0\] has unknown keys: {k} \(the keys: ") for k in retired]

@@ -76,11 +76,8 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
     written = apply(term, a_write(levels), own)
     assert rows(written) == ([[2, -1, 0], [0, 1, -2]], [[1, 1, 0], [1, 2, 2]])
     pending = apply(term, a_close(334, (5, 0, -1)), written.own)
-    assert (
-        not pending.closed
-        and pending.direction is None
-        and written.own.window == pending.own.window == 1
-    )
+    assert not pending.closed and pending.direction is None
+    assert written.own.window == pending.own.window == 1
     assert (pending.own.outward, pending.own.tally) == (334, (5, 0, -1))
     again = apply(term, a_write(levels), pending.own)
     assert rows(again) == ([[2, -1, 0], [0, 2, -1]], [[2, 2, 0], [2, 1, 1]])
@@ -119,11 +116,8 @@ def test_the_declaration_is_the_ledgers_row():
     """The folder declares the row of ALGEBRA.md #the-primitives in the register's form: "the giving" at (ii), the word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function is `apply`, the act the loop calls."""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
-    assert DECLARATION.writes == (
-        "a family's level at a Node",
-        "a body's content M_k",
-        "a body's momentum n",
-    )
+    assert DECLARATION.writes[0] == "a family's level at a Node"
+    assert DECLARATION.writes[1:] == ("a body's content M_k", "a body's momentum n")
     assert DECLARATION.place_of("a body's momentum n") == "(iv)"
     assert DECLARATION.place_of("a family's level at a Node") == "(ii)" and DECLARATION.function is apply
     assert DECLARATION.section.startswith(THE_WORD)

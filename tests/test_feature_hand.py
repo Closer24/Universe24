@@ -32,10 +32,8 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
     spin, momentum = (2, -3, 4), (5, 1, -2)
     assert booking(spin, momentum) == 10 - 3 - 8 == -1
     right, left = HandTerm(1), HandTerm(-1)
-    assert (
-        not apply(right, HandStart(spin, momentum)).admitted
-        and apply(left, HandStart(spin, momentum)).admitted
-    )
+    assert not apply(right, HandStart(spin, momentum)).admitted
+    assert apply(left, HandStart(spin, momentum)).admitted
     assert apply(right, HandStart(spin, momentum)).booking == -1
     assert (
         apply(right, HandStart((0, 0, 0), momentum)).admitted
