@@ -55,7 +55,7 @@ Local Git/Python and available CI log tools are sufficient. Changes to tests are
 allowed within the assigned scope; changing physics or weakening a requirement is
 not a way to fix a red gate. Keep original acceptance failures visible even when
 a different candidate passes. Hand behavior failures to fields/architecture,
-unexpected physical drift to regression-check, and the final evidence to Boss/PR review.
+unexpected physical drift to physics-rule-validation, and the final evidence to the Closer's PR review.
 
 ## Notation (the owner, 2026-09-21, record 184)
 

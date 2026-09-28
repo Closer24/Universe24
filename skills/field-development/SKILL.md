@@ -5,7 +5,7 @@ description: Implement or repair Universe24 local field transport and response c
 
 # Field development
 
-The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The coder, Main Loop (Coder 3 until record 2209), alone writes the engine's code until it is generic, then only the central loop (record 2204); every support is a generic primitive for every run.
+The team and the way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow. Since 2026-09-28 the engine is generic: a new primitive is one folder found by its name, its line Cheshbon's, its build the Experimenter's when the Closer hands it to him; every support is a generic primitive for every run.
 
 For a directional response claim, trace the field's vector or Port channels from
 transport through sampling, response and actual outgoing motion. A scalar delay

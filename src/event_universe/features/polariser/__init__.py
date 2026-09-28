@@ -1,15 +1,15 @@
-"""THE POLARISER (ALGEBRA.md #the-primitives, the row "the polariser"): at a polariser body's Nodes the record's pair is turned back by the body's angle through the transport's rotation and its second level is taken by the body's second set, the first level passing to its first set, so the shares of the click are cos^2 and sin^2 of the angle between the record's pair and the axis, the ladder then as written; the angle an exact pair (m, j) with the triple (m^2 - j^2, 2 m j, m^2 + j^2), no float; a body with no polariser key polarises nothing."""
+"""THE POLARISER (ALGEBRA.md #the-primitives, the row "the polariser"): at a polariser body's Nodes the record's pair is turned back by the body's angle through the transport's rotation and its second level is taken by the body's second set, the first level passing to its first set, so the shares of the click are cos^2 and sin^2 of the angle between the record's pair and the axis, the ladder then as written; the angle an exact pair (m, j) with the triple (m^2 - j^2, 2 m j, m^2 + j^2), no float; THE SWITCHING (the row, as Aspect's of 1982): a card with two angles (`angles`) and a period (`every`) turns by each in turn by the body's own clock, the angle read at the record's passage (`at`); a body with no polariser key polarises nothing."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
-from event_universe.core.rule3 import rule3
+from event_universe.core.rule3 import NO_READ, rule3
 from event_universe.core.schema import Integer, ListOf, ObjectOf, Schema, Word
 
 Pair = tuple[int, int]
@@ -21,10 +21,12 @@ THE_WORD = "a hypothesis under its own name: the transport's rotation turned bac
 
 @dataclass(frozen=True)
 class PolariserTerm:
-    """The body's declaration: the angle as the exact pair (m, j), j from 0 (no turn) to m (a quarter turn), and the two sets' names, the first for the level along the axis and the second for the level across it."""
+    """The body's declaration: the angle as the exact pair (m, j), j from 0 (no turn) to m (a quarter turn), and the two sets' names, the first for the level along the axis and the second for the level across it; a switching card carries its two angles with its period `every` (an integer of intervals from 1), `angle` the one in force."""
 
     angle: Pair
     sets: tuple[str, str]
+    angles: tuple[Pair, Pair] | None = None
+    every: int | None = None
 
 
 @dataclass(frozen=True)
@@ -56,12 +58,25 @@ def triple_of(angle: Pair) -> Triple:
     return (m * m - j * j, 2 * m * j, m * m + j * j)
 
 
+def at(term: PolariserTerm, count: int) -> PolariserTerm:
+    """The term in force at the body's count of intervals (the count act (b) on the body, its own clock): a card with one angle stands; a switching card turns by its first angle for `every` intervals and by its second for the next `every`, periodic (the count div the period and its parity, two division acts of Rule3)."""
+    if term.angles is None or term.every is None:
+        return term
+    periods = int(rule3(NO_READ, NO_READ, 1, term.every, 0, 0, count)[0])
+    parity = periods - 2 * int(rule3(NO_READ, NO_READ, 1, 2, 0, 0, periods)[0])
+    return replace(term, angle=term.angles[parity])
+
+
 def check(term: PolariserTerm, start: PolariserStart) -> None:
-    """The refusals by name: m from 1 and j from 0 to m; two sets with distinct names; the levels integer arrays of one shape within the width."""
-    m, j = term.angle
-    if m < 1 or j < 0 or j > m:
+    """The refusals by name: m from 1 and j from 0 to m for every angle; the two angles with their period from 1 together; two sets with distinct names; the levels integer arrays of one shape within the width."""
+    for m, j in (term.angle, *(term.angles or ())):
+        if m < 1 or j < 0 or j > m:
+            raise ValueError(
+                f"the polariser's angle is a pair (m, j) with m from 1 and j from 0 to m, got {(m, j)}"
+            )
+    if (term.angles is None) != (term.every is None) or (term.every is not None and term.every < 1):
         raise ValueError(
-            f"the polariser's angle is a pair (m, j) with m from 1 and j from 0 to m, got {term.angle}"
+            f"a switching polariser declares its two angles with its period `every` from 1 together, got {term.angles} every {term.every}"
         )
     first, second = term.sets
     if not first or not second or first == second:
@@ -92,13 +107,21 @@ def apply(term: PolariserTerm, start: PolariserStart, own: PolariserOwn) -> Pola
 
 
 def read_term(body: dict[str, Any]) -> PolariserTerm | None:
-    """The term of a body's `polariser` key as the file writes it, None for a body with no key (it polarises nothing)."""
+    """The term of a body's `polariser` key as the file writes it, None for a body with no key (it polarises nothing); one `angle`, or two `angles` with `every`; another mix is refused by name."""
     entry = body.get("polariser")
     if entry is None:
         return None
-    m, j = entry["angle"]
     first, second = entry["sets"]
-    return PolariserTerm((int(m), int(j)), (str(first), str(second)))
+    sets = (str(first), str(second))
+    if ("angle" in entry) == ("angles" in entry) or ("every" in entry) != ("angles" in entry):
+        raise ValueError(
+            "a polariser body declares one `angle`, or its two `angles` with its period `every` (the switching)"
+        )
+    if "angle" in entry:
+        m, j = entry["angle"]
+        return PolariserTerm((int(m), int(j)), sets)
+    angles = tuple((int(m), int(j)) for m, j in entry["angles"])
+    return PolariserTerm(angles[0], sets, (angles[0], angles[1]), int(entry["every"]))
 
 
 DECLARATION = Declaration(
@@ -118,7 +141,13 @@ DECLARATION = Declaration(
             "a body": ObjectOf(
                 {
                     "polariser": ObjectOf(
-                        {"angle": ListOf(Integer(least=0), 2), "sets": ListOf(Word(), 2)}
+                        {
+                            "angle": ListOf(Integer(least=0), 2),
+                            "angles": ListOf(ListOf(Integer(least=0), 2), 2),
+                            "every": Integer(least=1),
+                            "sets": ListOf(Word(), 2),
+                        },
+                        frozenset({"angle", "angles", "every"}),
                     )
                 },
                 frozenset({"polariser"}),

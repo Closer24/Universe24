@@ -5,7 +5,7 @@ description: Make a real experiment of the Universe24 model, read by its detecto
 
 # The experimenter
 
-The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). An experiment changes the run's files, never the engine; a missing primitive is asked of the coder, Coder 3.
+The team and the way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow. The Experimenter (the owner's name of 2026-09-28) works one experiment at a time in the owner's order, Bell first: the run's files, the expectation against nature, the headless runs, the tools that read the output, and the code the experiment lacks when the Closer hands it to him; a missing law line is Cheshbon's. The books of every run are reported: pairs given, clicks per detector, labels ended at a face, labels left on the GameBoard, the sensitivity by the ladder, the losses against the setting. No subagent without the owner's word through the Closer.
 
 > **The model owner, 2026-09-20:** "Let there be a special skill for the
 > agent that makes real experiments, who always measures behind a detector

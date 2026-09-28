@@ -1,0 +1,81 @@
+name: cleanup-branches
+# A manual cleanup of the repository's branches (the model owner, 2026-09-28).
+# Never touches the default branch, a protected branch or a branch with an open pull request.
+# A branch is a candidate when its pull request is merged or closed, or when it has no pull
+# request at all and its last commit is older than `stale_days`. The run lists the candidates;
+# it deletes them only when started with dry_run=false.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: list the candidates only; false deletes them
+        type: boolean
+        required: true
+        default: true
+      stale_days:
+        description: a branch with no pull request is stale after this many days without a commit
+        type: string
+        required: true
+        default: "30"
+permissions:
+  contents: write
+  pull-requests: read
+concurrency:
+  group: cleanup-branches
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      STALE_DAYS: ${{ inputs.stale_days }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - name: List the branches, their pull requests and their last commits
+        run: |
+          set -euo pipefail
+          # every branch with its protection flag and the date of its last commit
+          gh api --paginate "repos/$GH_REPO/branches?per_page=100" \
+            --jq '.[] | [.name, (.protected|tostring)] | @tsv' > branches.tsv
+          # every pull request's head branch with its state, newest first
+          gh pr list --repo "$GH_REPO" --state all --limit 5000 \
+            --json headRefName,state --jq '.[] | [.headRefName, .state] | @tsv' > pulls.tsv
+          cutoff=$(date -u -d "$STALE_DAYS days ago" +%s)
+          : > candidates.txt
+          : > kept.txt
+          while IFS=$'\t' read -r name protected; do
+            if [ "$name" = "$DEFAULT_BRANCH" ] || [ "$protected" = "true" ]; then
+              echo "$name	kept: default or protected" >> kept.txt
+              continue
+            fi
+            states=$(awk -F'\t' -v b="$name" '$1 == b {print $2}' pulls.tsv | sort -u | tr '\n' ',')
+            case "$states" in
+              *OPEN*) echo "$name	kept: an open pull request" >> kept.txt; continue ;;
+              *MERGED*|*CLOSED*) echo "$name	pull request $states" >> candidates.txt; continue ;;
+            esac
+            last=$(gh api "repos/$GH_REPO/branches/$name" --jq '.commit.commit.committer.date')
+            if [ "$(date -u -d "$last" +%s)" -lt "$cutoff" ]; then
+              echo "$name	no pull request, last commit $last" >> candidates.txt
+            else
+              echo "$name	kept: no pull request, a commit within $STALE_DAYS days" >> kept.txt
+            fi
+          done < branches.tsv
+          echo "## Candidates ($(wc -l < candidates.txt))"; cat candidates.txt
+          echo "## Kept ($(wc -l < kept.txt))"; cat kept.txt
+      - name: Delete the candidates (dry_run=false only)
+        if: ${{ inputs.dry_run == false }}
+        run: |
+          set -euo pipefail
+          while IFS=$'\t' read -r name reason; do
+            if [ "$name" = "$DEFAULT_BRANCH" ]; then continue; fi
+            gh api -X DELETE "repos/$GH_REPO/git/refs/heads/$name" && echo "deleted $name ($reason)"
+          done < candidates.txt
+      - name: Keep the lists as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cleanup-branches
+          path: |
+            candidates.txt
+            kept.txt

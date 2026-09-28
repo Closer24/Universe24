@@ -40,17 +40,17 @@ from typing import Any
 
 from event_universe.core.readings import Readings
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.world_files import parse_nature_beam_world
+from event_universe.world_files import load_world
 
 OUTPUT_FORMAT = "one-command-output-v1"
 
 
 def input_mode(path: Path) -> str:
     """The run's mode of one input as its engine start file declares it
-    (`parse_nature_beam_world` reads the file and refuses a missing key by
-    name); an input the loader refuses is reported by the run itself."""
+    (`load_world` reads the file with the generator's mode file beside it and
+    refuses a missing key by name); an input the loader refuses is reported by the run itself."""
     try:
-        world = parse_nature_beam_world(json.loads(path.read_text(encoding="utf-8")))
+        world = load_world(path)
     except ValueError, OSError:
         return "refused"
     return world.start.mode if world.start is not None else "refused"
@@ -76,7 +76,7 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     stamp = document.get("stamp") if isinstance(document, dict) else None
     output["stamp"] = stamp if isinstance(stamp, dict) else None
     try:
-        world = parse_nature_beam_world(document)
+        world = load_world(source)  # the mode file beside the world handed with its files
         simulation = DetectorLawSimulation(world)
     except Exception as error:  # noqa: BLE001 - every refusal is written, none hidden
         output["verdict"] = "REFUSED"
