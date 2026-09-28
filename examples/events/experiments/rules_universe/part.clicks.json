@@ -1,0 +1,272 @@
+{
+ "world": "part.json",
+ "kind": "WORLD (d), THE CLICK JOINS AND PARTS: the counts, the moves and the records against the expectation",
+ "verdict": "REFUSED IN THE RUN",
+ "refusal": "at interval 13: the twist on the Port toward +x reaches |k| = 50978, beyond the twist table (1 coarse triples; ALGEBRA.md #the-primitives)",
+ "ticks_run": 12,
+ "1_the_counts": {
+  "label": "GAMEBOARD",
+  "start": [
+   10,
+   12
+  ],
+  "end": [
+   21,
+   28
+  ],
+  "every_10": [
+   [
+    0,
+    [
+     10,
+     12
+    ]
+   ],
+   [
+    10,
+    [
+     21,
+     28
+    ]
+   ]
+  ],
+  "edge": 8.27,
+  "under_the_edge_at": null,
+  "expected_dissolution_intervals": null,
+  "verdict": "MATCH"
+ },
+ "2_the_moves": {
+  "label": "GAMEBOARD",
+  "moves": [
+   {
+    "interval": 1,
+    "left": 29,
+    "right": 14,
+    "kind": "relay"
+   },
+   {
+    "interval": 6,
+    "left": -18,
+    "right": 1,
+    "kind": "relay"
+   },
+   {
+    "interval": 7,
+    "left": 0,
+    "right": 1,
+    "kind": "relay"
+   },
+   {
+    "interval": 9,
+    "left": 0,
+    "right": -1,
+    "kind": "relay"
+   },
+   {
+    "interval": 10,
+    "left": 0,
+    "right": 1,
+    "kind": "relay"
+   }
+  ],
+  "count_of_transfers": 0,
+  "quanta_transferred": 0,
+  "count_of_relays": 5,
+  "first_relay_interval": 1,
+  "first_move_interval": null,
+  "expected_first_click_interval": null,
+  "verdict": "MATCH"
+ },
+ "3_the_records": {
+  "label": "HOST",
+  "alive_at_the_end": 2,
+  "expected": 2,
+  "verdict": "MATCH",
+  "event_lines": {
+   "block": 22,
+   "click": 2
+  },
+  "clicks_at_the_faces": 0,
+  "faces": "a click at an open face is no click and is not counted (Cheshbon 14:55, the Closer 15:02)"
+ },
+ "5_the_record": {
+  "label": "GAMEBOARD",
+  "small": {
+   "count_over_the_last_period": 23.57,
+   "period_intervals": 7.33,
+   "count_at_the_end": 21,
+   "expected": {
+    "amplitude_b": 5,
+    "record_count": [
+     9.6,
+     9.9
+    ],
+    "period": [
+     6.9,
+     8.0
+    ]
+   },
+   "count_verdict": "MISS",
+   "period_verdict": "MATCH"
+  },
+  "deep": {
+   "count_over_the_last_period": 26.91,
+   "period_intervals": 11.0,
+   "count_at_the_end": 28,
+   "expected": {
+    "amplitude_b": 6,
+    "record_count": [
+     9.2,
+     9.2
+    ],
+    "period": [
+     9.2,
+     9.2
+    ]
+   },
+   "count_verdict": "MISS",
+   "period_verdict": "MISS"
+  },
+  "clock_ratio_deep_over_small": 1.501,
+  "expected_clock_ratio": [
+   1.08,
+   1.23,
+   1.38
+  ],
+  "ratio_verdict": "MISS"
+ },
+ "6_the_hierarchy": null,
+ "4_the_levels": {
+  "label": "GAMEBOARD",
+  "readings": {
+   "matter_x7": [
+    [
+     0,
+     4
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     -1
+    ],
+    [
+     3,
+     -4
+    ],
+    [
+     4,
+     -4
+    ],
+    [
+     5,
+     -2
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     0
+    ],
+    [
+     10,
+     -3
+    ],
+    [
+     11,
+     -2
+    ]
+   ],
+   "matter_x13": [
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     -1
+    ],
+    [
+     3,
+     -5
+    ],
+    [
+     4,
+     -7
+    ],
+    [
+     5,
+     -7
+    ],
+    [
+     6,
+     -4
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     9,
+     9
+    ],
+    [
+     10,
+     8
+    ],
+    [
+     11,
+     5
+    ]
+   ],
+   "matter_support": [
+    [
+     0,
+     38
+    ],
+    [
+     5,
+     58
+    ],
+    [
+     10,
+     98
+    ]
+   ],
+   "matter_total": [
+    [
+     0,
+     53
+    ],
+    [
+     5,
+     70
+    ],
+    [
+     10,
+     133
+    ]
+   ]
+  }
+ }
+}
