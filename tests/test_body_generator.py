@@ -23,6 +23,7 @@ from tools.body_generator import (
     clock_pair,
     conserved_form,
     generate,
+    loader_level,
     moving_body,
     moving_mode,
     packet_current,
@@ -195,21 +196,13 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     def row(name, pair, held, reads):
         return {"name": name, "pair": pair, "held": held, "reads": reads}
 
-    reads = [
-        {"family": "gravity", "weight": "one", "by": 1},
-        {"family": "charge", "weight": 1, "by": "q"},
-    ]
-    families = [
-        row("gravity", [1, 4], {"count": "content", "divisor": 40000}, []),
-        row("charge", [1, 1], {"count": "sign", "divisor": 40000}, []),
-    ]
+    reads = [{"family": "gravity", "weight": "one", "by": 1}]
+    reads.append({"family": "charge", "weight": 1, "by": "q"})
+    families = [row("gravity", [1, 4], {"count": "content", "divisor": 40000}, [])]
+    families += [row("charge", [1, 1], {"count": "sign", "divisor": 40000}, [])]
     families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
-    table = {
-        "unit": 4 * GAMMA * 65536,
-        "fine": [[1, 0, 1]],
-        "coarse": [[1, 0, 1]],
-    }  # the own twist's scale
-    integers = {"one": 1, "momentum_unit": 64, "twist_table": table}
+    table = {"unit": 4 * GAMMA * 65536, "fine": [[1, 0, 1]], "coarse": [[1, 0, 1]]}
+    integers = {"one": 1, "momentum_unit": 64, "twist_table": table}  # the table: the own twist's scale
     (tmp_path / "universe.json").write_text(json.dumps({"families": families, "integers": integers}))
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
@@ -220,16 +213,26 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     readings, box = generate(world), counted_cube(8, 2, 3000)
     reading = readings["bodies"][0]
     rest = start_rest(box, (1, 4))
-    mode = bound_mode(box, KIND, GAMMA, content=rest.levels)
+    level = loader_level(world, GAMMA)  # the loader's load_level: matter reads gravity at 1, charge at 1
+    mode = bound_mode(box, KIND, GAMMA, content=rest.levels, bound_level=level)
+    at_level = amplitude_unit(KIND, GAMMA, np.array([level]))
+    reach = 2 * (1 * sum(node["count"] for node in nodes) + 1 * 0)  # the content, and the charge 0
+    assert level == min(reach, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude == at_level
+    assert at_level < amplitude_unit(KIND, GAMMA, rest.levels)  # the unit falls with the content
+    weighed = {
+        **world,
+        "universe": str(tmp_path / "weighed.json"),
+    }  # the reads' weight and a charge move the level
+    doubled = {"families": families, "integers": {**integers, "one": 2}}
+    (tmp_path / "weighed.json").write_text(json.dumps(doubled))
+    charged = {**weighed, "measured": [{**body, "q": 5}]}
+    assert loader_level(weighed, GAMMA) == min(2 * (2 * 24000 + 1 * 0), GAMMA - 1)
+    assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (2 * 24000 + 1 * 5)
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
     assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
-    assert readings["rest"]["gravity"] == {
-        "pair": [1, 4],
-        "iterations": rest.iterations,
-        "cycle": 1,
-        "at_bodies": 3000,
-        "at_corner": 0,
-    }
+    at_rest = {"pair": [1, 4], "cycle": 1, "at_bodies": 3000, "at_corner": 0}
+    at_rest["iterations"] = rest.iterations
+    assert readings["rest"]["gravity"] == at_rest
     assert np.array_equal(reading["content"], rest.levels)
     still = reading["moving"]  # one path: at the momentum 0 the pair (m, 0) and the mode's levels
     assert still["phase_pair"] == [64, 0] and still["triple"] == [1, 0, 1]
@@ -237,9 +240,8 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     moving = {**body, "momentum": [0, 3 * 64 * 24000 // 40, 0]}
     moved = generate({**world, "measured": [moving]})["bodies"][0]["moving"]
     assert moved["axis"] == 1 and moved["velocity_named"] == [1, 40] and moved["phase_pair"][0] == 64
-    assert moved["now"].shape == (8, 8, 8) and abs(
-        Fraction(*moved["velocity"]) - Fraction(1, 40)
-    ) < Fraction(1, 100)
+    velocity = Fraction(*moved["velocity"])
+    assert moved["now"].shape == (8, 8, 8) and abs(velocity - Fraction(1, 40)) < Fraction(1, 100)
 
     def refused(entry: dict) -> str:
         return generate({**world, "measured": [entry]})["bodies"][0]["refused"]
@@ -249,9 +251,7 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     assert "declares its phase_denominator" in refused(without)
     assert "the row's pair is 'body', not [num, den]" in refused({**body, "family": "light"})
     two = generate({**world, "measured": [body, {**body, "family": "light"}]})["bodies"]
-    deeper = Fraction(
-        *two[0]["in_the_worlds_well"]["rotation"]
-    )  # a second body deepens the world's well:
+    deeper = Fraction(*two[0]["in_the_worlds_well"]["rotation"])  # a second body deepens the well
     assert deeper != Fraction(*two[0]["rotation"]) and "refused" in two[1]  # the clock's rotation moves
     with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
         bound_mode(counted_cube(8, 4, 3000), (800, 809), GAMMA)
