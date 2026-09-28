@@ -443,6 +443,11 @@ def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
     return int(nearest), denominator
 
 
+def bounded(fraction: Fraction, denominator: int) -> list[int]:
+    """A reading of the mode file as a pair on the mode's own denominator (the amplitude unit A, its resolution) by the division act, so that no integer of the file leaves the width: the exact fraction stays the generator's own (ALGEBRA.md #the-bound)."""
+    return list(clock_pair(fraction, denominator))
+
+
 def proper_rotation(rotation: Fraction, triple: Triple, top: Fraction) -> Fraction:
     """The packet's rotation at its moving centre, 2 cos(Omega(k)) with Omega(k) = omega(k) - k omega'(k) on the body's own bound band omega(k) = omega_0 + Delta (1 - cos k), omega_0 the rest rotation's angle and Delta the packet's top velocity at a quarter turn per Link, k the phase per Link of the triple; the loader's proper pair of a moving body, the angles by the host's arc cosine as the twist's (ALGEBRA.md #the-rows-against-nature (e), #the-generator (e), #the-velocity)."""
     omega_0 = acos(float(rotation) / 2)
@@ -649,7 +654,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 rotation, share = rotation_and_share(
                     (level,), (total,), wall, counts, gamma, pair, "mode in the world's well", content
                 )
-                in_world = {"rotation": [rotation.numerator, rotation.denominator]}
+                in_world = {"rotation": bounded(rotation, mode.amplitude)}
             except ValueError as refusal:
                 in_world = {"refused": str(refusal)}
                 rotation = mode.rotation
@@ -670,8 +675,8 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 "phase_pair": list(moved.pair),
                 "triple": list(moved.triple),
                 "velocity_named": [moved.named.numerator, moved.named.denominator],
-                "velocity": [moved.velocity.numerator, moved.velocity.denominator],
-                "top_velocity": [moved.top.numerator, moved.top.denominator],
+                "velocity": bounded(moved.velocity, mode.amplitude),
+                "top_velocity": bounded(moved.top, mode.amplitude),
                 "now": np.moveaxis(moved.now, 0, axis) if momentum[axis] else still[0],
                 "before": np.moveaxis(moved.before, 0, axis) if momentum[axis] else still[1],
             }
@@ -680,12 +685,12 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "amplitude_unit": mode.amplitude,
                     "iterations": mode.iterations,
                     "cycle": mode.cycle,
-                    "rotation": [mode.rotation.numerator, mode.rotation.denominator],
+                    "rotation": bounded(mode.rotation, mode.amplitude),
                     "clock": list(clock),
                     "period": period_by_the_rule(*clock),
                     "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
                     **given_wavelength(body, rows, clock),
-                    "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
+                    "share_inside": bounded(mode.share_inside, mode.amplitude),
                     "in_the_worlds_well": in_world,
                     "profile": written,
                     "content": content,

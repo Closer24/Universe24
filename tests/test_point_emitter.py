@@ -29,8 +29,7 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
             and first["window"] >= 1
             and first["opened"] + first["window"] == first["tick"]
         )
-        # the close: the outward sum reached T, the record's norm its rows'; the stock fell at
-        # each open (the quantum moves at the open), a window still open counted
+        # the close: the outward sum reached T, the record's norm its rows'; the stock fell at each open (the quantum moves at the open), a window still open counted
         assert first["outward"] * emitter["norm_denominator"] >= emitter["norm"]
         assert first["norm"] > 0 and first["pace"] >= 1
         opened = len(givings) + (1 if simulation.blocks[0].window is not None else 0)
@@ -38,16 +37,12 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         if len(givings) > 1:
             assert givings[1]["opened"] > first["tick"]  # the next giving after the close
         windows[weight] = first["window"]
-        # the record's rows: a light record with rows spread from the body's Node, the body's Node's level
-        # written every interval of its window
+        # the record's rows: a light record with rows spread from the body's Node, the body's Node's level written every interval of its window
         live = simulation.records.get(first["record"])
         if live is not None:
             assert live.family == 0 and not live.window_open and live.window == first["window"]
     ratio = windows[1] / windows[4]
-    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world:
-    # g = 1 1124 intervals, g = 4 64, the ratio 17.6 beside g^2 = 16 (the outward norm as the
-    # square of the written amplitude); the band is a diagnostic check that the weight enters the
-    # window, not a measurement pinned against nature; it admits the build-up
+    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world: g = 1 1124 intervals, g = 4 64, the ratio 17.6 beside g^2 = 16 (the outward norm as the square of the written amplitude); the band is a diagnostic check that the weight enters the window, not a measurement pinned against nature; it admits the build-up
     assert 8 < ratio < 64, windows
 
 
@@ -87,9 +82,7 @@ def test_the_window_inverts_bit_for_bit():
 def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_action():
     document = point_world(2, ticks=10)
     parse_nature_beam_world(document)
-    # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too
-    # (the level at its centre Node), the key `point_emitter` is retired and refused by name,
-    # and so are the train's keys; the weight and the action are required on every emitter
+    # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too (the level at its centre Node), the key `point_emitter` is retired and refused by name, and so are the train's keys; the weight and the action are required on every emitter
     no_weight = json.loads(json.dumps(document))
     del no_weight["measured"][0]["emitter"]["weight"]
     no_weight["stamp"] = input_stamp(no_weight)
