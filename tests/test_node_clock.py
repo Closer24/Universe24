@@ -14,7 +14,7 @@ from event_universe.core.rule3 import coefficients, rule_total_bound
 from event_universe.events.detector_law import DetectorLawSimulation, form_json
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import CHAIN, GAMMA, PAIR, content_chain, light_body, six_reads
-from tests.running import planted
+from tests.running import planted, refused
 from tests.worlds import NODE_CLOCK, PERIODIC, emitter_world, family_entry, lawful_wheel
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
@@ -219,24 +219,13 @@ def one_node(length: int, i: int) -> np.ndarray:
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it():
     """(v) `node_clock` is REQUIRED under `detector_law` (refused without it by name, an integer from 1); the load bound names the clock and the content (the slab of (iii) at Gamma = 10^6 refused naming Gamma and M); the registered light clock loads under the families file's Gamma = 10^4, A's clock pair (10^4, 10^4) at its Nodes as in the vacuum (its count 65 over the divisor 40000 adds nothing at the start, the first increment at the 615th interval, 616 x 65 = 40040), its wheel (4 x 10^8, 1203) on its own pair [800, 802] at the level 0 and the kind [800, 1200]'s (8 x 10^10, 9) in the vacuum."""
-    document = content_chain(12, PERIODIC, [], 1)
-    del document["node_clock"]
-    with pytest.raises(ValueError, match="node_clock is required: Gamma"):
-        parse_nature_beam_world(document)
-    ray = content_chain(12, PERIODIC, [], 1)
-    ray["detector_law"] = (
-        False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
-    )
-    with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
-        parse_nature_beam_world(ray)
-    zero = content_chain(12, PERIODIC, [], 1)
-    zero["node_clock"] = 0
-    with pytest.raises(ValueError, match="node_clock"):
-        parse_nature_beam_world(zero)
+    document = {k: v for k, v in content_chain(12, PERIODIC, [], 1).items() if k != "node_clock"}
+    refused(document, "node_clock is required: Gamma")
+    flag = {**content_chain(12, PERIODIC, [], 1), "detector_law": False}  # the flag was the law's name
+    refused(flag, "the world has unknown keys: detector_law")
+    refused({**content_chain(12, PERIODIC, [], 1), "node_clock": 0}, "node_clock")
     heavy = content_chain(400, CHAIN, range(150, 190), 250000, gamma=1_000_000)
-    world = parse_nature_beam_world(
-        heavy
-    )  # A derived at this Gamma: every pair's total fits inside the width
+    world = parse_nature_beam_world(heavy)  # A derived at this Gamma: every pair's total fits the width
     for pair in (tuple(f["pair"]) for f in heavy["universe"]):
         assert rule_total_bound(*pair, 1_000_000, 999_999, world.amplitude_bound, True) < 1 << 63
     registered = json.loads((ROOT / "tests/light_clock.json").read_text(encoding="utf-8"))

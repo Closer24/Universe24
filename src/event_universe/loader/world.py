@@ -418,11 +418,12 @@ class NatureBeamWorld:
     # under the Node clock, BUILD.md section 26 item 31, on a world without
     # the kind, where no row is bounded so).
     amplitude_bound: int = AMPLITUDE_BOUND
-    # THE NODE CLOCK (ALGEBRA.md #the-paces; BUILD.md section 26 item 31):
-    # Gamma, the world key `node_clock`, the clock pair (Gamma, Gamma + M) at
-    # every Node; required under the detector law, 0 on a world without it
-    # (the ray law has no rule with a division).
+    # THE NODE CLOCK (ALGEBRA.md #the-paces): Gamma, the key `node_clock`, the clock pair
+    # (Gamma, Gamma + M) at every Node, required; and its growth per interval, the step of the
+    # key's pair form [Gamma_0, step] (GAMMA IS NOT CONSTANT, `derived.clock_of`), 0 on an
+    # integer key: a constant clock, bit for bit
     node_clock: int = 0
+    clock_step: int = 0
     # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's
     # integer `momentum_unit`; every body's wall is W = 3 Q M with M its quanta,
     # its velocity n / W Links per interval; required under the detector law,
@@ -2291,11 +2292,10 @@ def parse_world_document(
     # REQUIRED with no default
     if "node_clock" not in obj:
         raise ValueError(
-            "node_clock is required: Gamma, the one integer of "
-            "the Node clock (e, f) = (Gamma, Gamma + M) at every Node, no default (ALGEBRA.md "
-            "ALGEBRA.md #the-paces; BUILD.md section 26 item 31)"
+            "node_clock is required: Gamma, the one integer of the Node clock (e, f) = (Gamma, Gamma "
+            "+ M) at every Node, or [Gamma_0, step], no default (ALGEBRA.md #the-paces; BUILD.md 26 31)"
         )
-    node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
+    node_clock, clock_step = derived.clock_of(obj["node_clock"], entries, AMOUNT_BOUND)
     # THE AMPLITUDE BOUND A, derived from the width and the rule's integers of every declared pair at the
     # pace's edge and bounded by the least of the three totals (`derived.width_bound`); never written
     amplitude_bound = derived_amplitude(derived.paired(entries, node_clock), obj["measured"], node_clock)
@@ -2304,9 +2304,8 @@ def parse_world_document(
     # `momentum_unit`, REQUIRED with no default (the wall W = 3 Q M of every body)
     if "momentum_unit" not in obj:
         raise ValueError(
-            "momentum_unit is required: Q, the momentum's unit "
-            "of the universe's integers, the wall W = 3 Q M of every body, no default (ALGEBRA.md "
-            "ALGEBRA.md #the-primitives, #the-well; the model owner's record 2089)"
+            "momentum_unit is required: Q, the momentum's unit of the universe's integers, the wall "
+            "W = 3 Q M of every body, no default (ALGEBRA.md #the-primitives, #the-well; record 2089)"
         )
     momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
     # THE QUANTUM'S ACTION T (ALGEBRA.md #a-familys-declaration; the owner's word of 2026-09-28): one T for
@@ -2408,6 +2407,7 @@ def parse_world_document(
         closed=closed,
         amplitude_bound=bound,
         node_clock=node_clock,
+        clock_step=clock_step,
         momentum_unit=momentum_unit,
         quantum_action=quantum_action,
         twist_table=twist_table,

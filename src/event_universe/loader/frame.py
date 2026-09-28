@@ -24,7 +24,7 @@ from event_universe.loader import cards
 # the universe's integers (ALGEBRA.md #a-familys-declaration, #the-interval, #the-primitives): Gamma the Node clock, T the quantum's action (`quantum_action`, one for every family), Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and the derived A where the transport is built; the amplitude bound is no key: A is derived from the integer width and the rule's integers (the loader's `derived_amplitude`), and `amplitude_bound` in a file is refused by name as any unknown key; Lambda (the charge's read weight) left the files with THE FAMILIES FROM THE RULE (every weight 1) and is refused by name as any unknown key
 INTEGERS = ObjectOf(
     {
-        "node_clock": Integer(least=1),
+        "node_clock": Either((Integer(least=1), ListOf(Integer(), 2))),
         "quantum_action": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_steps": Integer(least=2),
@@ -57,7 +57,7 @@ WORLD = ObjectOf(
         "face_depth": Integer(least=1),
         "probes": ListOf(ListOf(Integer(least=0), 3)),
         "mode_axis": OneOf(("x", "y", "z")),
-        "node_clock": Integer(least=1),
+        "node_clock": Either((Integer(least=1), ListOf(Integer(), 2))),
         "quantum_action": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_families": Integer(least=1),
