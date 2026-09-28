@@ -14,27 +14,34 @@ from event_universe.world_files import input_digest  # the mode file names the w
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from lay_out_join import DENOMINATOR, ENGINE, ROOT, STEPS, UNIVERSE_NAME  # noqa: E402
+from lay_out_join import (  # noqa: E402
+    CLOCK_UNIT,
+    DENOMINATOR,
+    EDGE,
+    ENGINE,
+    PIXELS,
+    QUANTUM_ACTION,
+    ROOT,
+    STEPS,
+    TAIL_UNIT,
+    UNIVERSE_NAME,
+)
 
-COUNT = 3_000  # the pixel's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000): it binds itself
+COUNT = 5_000  # the pixel's count: on the engine of today (the level once) the edge is 0.345 Gamma = 4,136 (Cheshbon 14:12 Israel), so 3,000 disperses and 5,000 binds; 3,000 again with the corrected term (the Closer 14:21)
 PULLS = (0, 2, 4, 6)  # the second pixel's distance in Links along x; 0 the white pixel alone
-NET_X = {
-    2: 1000,
-    4: 410,
-    6: 170,
-}  # Cheshbon's blind number of 13:46 Israel: the net tally along x, quanta per interval at the pulse's peak
-RAW_PER_PORT = 1000  # Cheshbon's blind number: the raw clicks (both signs) per interval through each of the six Ports, about
+BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
+RAW_PER_PORT = 1000  # Cheshbon's blind number of 13:46 Israel at 3,000: the raw clicks (both signs) per interval through each of the six Ports, about
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's number of intervals
-CLOCK_PAIR = {
-    3_000: [90326, 65536]
-}  # Cheshbon's clock pair of 13:51 Israel: 2 cos omega_b = a / b at the count, omega_b = 0.8105 at 3,000 from the bound state's equation
-KAPPA = {
-    3_000: 0.446
-}  # the tail's decay per Link at the count (ALGEBRA.md THE BOUND BODY IS ONE NODE: kappa = acosh((9 / 2) cos omega_b - 2), 0.45 at 3,000)
 SHAPE = [15, 3, 3]  # a chain along x, open at both ends, three wide: six Ports with a neighbour each
 FACE_DEPTH = 1
 AXIS = [1, 1]  # the row's y and z
 BODY_X = 4  # the white pixel's Node; the second pixel toward +x
+
+
+def net_along_x(count: int, distance: int) -> int:
+    """Cheshbon's blind number of 13:46 Israel for the pull: the net tally along the axis about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 and 2, 4, 6 Links), with omega_b and kappa of the count on the engine of the day."""
+    numbers = PIXELS[count]
+    return round(count * numbers["omega_b"] * math.exp(-numbers["kappa"] * distance))
 
 
 def one_node(x: int, count: int) -> dict[str, Any]:
@@ -58,15 +65,15 @@ def neighbours(x: int) -> list[list[int]]:
 
 
 def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
-    """The mode file of the pixels by the recipe of the Closer's word of 13:54 and 14:06 Israel (the clock's tool `tools/pixel_mode.py` writes the same when it lands): each body's record is the integer root of its count at its Node, and with `tail` the same times e^(-kappa d) at every Node d Links away (the Link distance along the axes) while it rounds to 1 or more, both time levels equal (the rest phase), the clock pair Cheshbon's; the world's digest names the world."""
+    """The mode file of the pixels by Cheshbon's line of 14:12 Israel (the clock's tool `tools/pixel_mode.py`, #1417, writes the same): the bound state's profile in integers, the amplitude at the Node b = isqrt(c T den div (2 den - a)) from the clock pair [a, den] (the form D = now^2 - next before at rest with now = before = b gives the count c = D div T; isqrt(c) loaded a count of 1,812 at 3,000), with `tail` the level b t^n rounded at every Node n Links away (the Link distance along the axes), t = e^(-kappa) as a pair over 2^16, while it is 1 or more; both time levels equal (the standing phase); the family's pair from the universe file; a body under the edge is content alone; the world's digest names the world."""
     shape = document["shape"]
     universe = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))
     pairs = {family["name"]: list(family["pair"]) for family in universe["families"]}
     bodies = []
     for body in document["measured"]:
         node = body["nodes"][0]
-        count, root = int(node["count"]), math.isqrt(int(node["count"]))
-        if count not in CLOCK_PAIR:  # a body under the edge binds no record: content alone
+        count = int(node["count"])
+        if count < EDGE:  # a body under the edge binds no record: content alone
             bodies.append(
                 {
                     "family": body["family"],
@@ -75,24 +82,43 @@ def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
                 }
             )
             continue
+        numbers = PIXELS[count]
+        a = numbers.get("a") or round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
+        amplitude = math.isqrt(count * QUANTUM_ACTION * CLOCK_UNIT // (2 * CLOCK_UNIT - a))
+        ratio = round(math.exp(-numbers["kappa"]) * TAIL_UNIT)
         profile = [0] * (shape[0] * shape[1] * shape[2])
         for x in range(shape[0]):
             for y in range(shape[1]):
                 for z in range(shape[2]):
-                    distance = sum(abs(a - b) for a, b in zip((x, y, z), node["node"], strict=True))
-                    level = round(root * math.exp(-KAPPA[count] * distance)) if tail else 0
-                    if distance == 0 or level >= 1:
-                        profile[(x * shape[1] + y) * shape[2] + z] = root if distance == 0 else level
+                    distance = sum(abs(p - q) for p, q in zip((x, y, z), node["node"], strict=True))
+                    level = (
+                        amplitude * ratio**distance // TAIL_UNIT**distance
+                        if tail or distance == 0
+                        else 0
+                    )
+                    if level >= 1:
+                        profile[(x * shape[1] + y) * shape[2] + z] = level
         bodies.append(
             {
                 "family": body["family"],
                 "pair": pairs[body["family"]],
                 "profile": profile,
-                "clock": list(CLOCK_PAIR[count]),
+                "clock": [a, CLOCK_UNIT],
                 "moving": {"now": profile, "before": list(profile)},
-                "recipe": "the pixel's record isqrt(c) at its Node"
-                + (", its tail e^(-kappa d) per Link" if tail else "")
-                + ", both levels equal, the clock pair Cheshbon's",
+                "recipe": {
+                    "row": "Cheshbon 14:12 Israel: b = isqrt(c T den div (2 den - a)) at the Node"
+                    + (
+                        ", b t^n on the Nodes n Links away, t = e^(-kappa) over 2^16"
+                        if tail
+                        else ", no tail"
+                    )
+                    + ", both levels equal",
+                    "count": count,
+                    "amplitude": amplitude,
+                    "tail_over_2_16": ratio if tail else None,
+                    "omega_b": numbers["omega_b"],
+                    "kappa": numbers["kappa"],
+                },
             }
         )
     return {"rest": {}, "bodies": bodies, "world_digest": input_digest(document)}
@@ -135,7 +161,7 @@ def world(universe: str, pull: int) -> dict[str, Any]:
 
 def expectation(pull: int) -> dict[str, Any]:
     """The blind expectation: the law's row in words (THE COLOURS ARE THE THREE AXES), Cheshbon's numbers before the run, the reversible row; the `axes` section axis_tallies.py reads (the net tally per axis at the pulse's peak, the raw over the axes, the first click, the band Cheshbon's)."""
-    net = [NET_X[pull], 0, 0] if pull else [0, 0, 0]
+    net = [net_along_x(COUNT, pull), 0, 0] if pull else [0, 0, 0]
     return {
         "format": "world-expectation-v1",
         "status": "BLIND: the row of THE COLOURS ARE THE THREE AXES; Cheshbon's numbers before the run; no number of a run here",
@@ -150,8 +176,8 @@ def expectation(pull: int) -> dict[str, Any]:
         ),
         "DETECTOR": [],
         "blind": {
-            "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about 1,000, 410 and 170 quanta per interval at the pulse's peak (M omega_b e^(-kappa d)), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge (1,000) disperses within about ten intervals",
-            "edge_quanta_per_node": 2706,
+            "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; the band plus or minus 30 percent (the Closer 14:16)",
+            "edge_quanta_per_node": EDGE,
             "horizon_quanta_per_node": 6000,
             "raw_clicks_per_port_per_interval": RAW_PER_PORT,
             "net_tally_per_interval": net,
@@ -168,7 +194,7 @@ def expectation(pull: int) -> dict[str, Any]:
             "net_per_interval": net,
             "raw_ratio": [1, 1, 1],
             "first_click": 1,
-            "band": None,
+            "band": BAND,
             "row": "axis_tallies.py reads the clicks at the pixel's detector: per axis the net tally (the sum of the tallies' components) and the raw (the sum of their magnitudes), the net per interval at the peak interval, the net and the raw over the axes, the first click's interval; MATCH within `band` of `net_per_interval` on every axis once Cheshbon writes it, else the reading alone; the net 0 on every axis reads white (DETECTOR: the clicks; the tallies a reading of them)",
         },
     }
