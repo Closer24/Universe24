@@ -14,7 +14,7 @@ sys.path.insert(0, str(HERE))
 from lay_out_axes import pixel_mode  # noqa: E402  (the pixels' mode files by the recipe)
 from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
-COUNT = 3_000  # the body's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000) under the corrected term (the Closer 14:30 Israel: the files ready for 3,000 for the moment the term returns; on the engine of today the edge is 4,136 and the run at 5,000 refuses, the reading in #1422)
+COUNT = 4_400  # the body's count on the engine of today: the bound window 4,133 <= c <= about 5,900 (Cheshbon 14:39 Israel), the Closer's word of 14:47; 3,000 again with the corrected term
 BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
 TENTS = (
     0,
