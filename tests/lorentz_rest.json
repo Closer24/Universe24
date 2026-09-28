@@ -12,7 +12,7 @@
  "ticks": 3600,
  "N": 1024,
  "engine": "examples/events/engine_start.json",
- "universe": "examples/events/universe.json",
+ "universe": "tests/universe_fixtures.json",
  "measured": [
   {
    "position": [
@@ -13687,6 +13687,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "a25be35485e0af93c099e4c381bc06080af0df9272a4fc7f9ab4cfdbdac1a3b2"
+  "hash": "e3907d7f7875a167b59613bc530961338b67589f582b46cdf621ed9ea26a3640"
  }
 }

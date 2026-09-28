@@ -335,6 +335,10 @@ def _seed_key(document: dict) -> str:
         bare.pop(key, None)
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
         entry.pop("clock", None)
+    if isinstance(bare.get("universe"), str):
+        bare["universe"] = (
+            "examples/events/universe.json"  # the fixtures' own universe copy (E_s of the write) is no part of the key
+        )
     for body in bare.get("measured", ()):
         if isinstance(body.get("emitter"), dict):
             body["q"] = 0  # the giver's sign, a key the recorded seeding never read (recorded at 0)
