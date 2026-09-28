@@ -220,7 +220,12 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
             own_record = loop._massive_record(
                 identity, number, entry.family, definition.kind, definition.twist
             )
-            if definition.profile is not None:
+            if definition.levels is not None:
+                # a moving body's two levels as the generator wrote them (ALGEBRA.md #the-generator (e))
+                now, before = definition.levels
+                own_record.now[:] = np.array(now, dtype=np.int64).reshape(loop.shape)
+                own_record.before[:] = np.array(before, dtype=np.int64).reshape(loop.shape)
+            elif definition.profile is not None:
                 # the declared integer profile over the whole board at both
                 # levels (a standing start on the bound mode: MASSIVE_RECORD.md
                 # section 11 item 7), the world file's integers and nothing else
