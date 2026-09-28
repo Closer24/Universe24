@@ -432,10 +432,12 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     booked["universe"][2]["booked"] = True  # HISTORY (item 53): derived, not declared
     with pytest.raises(ValueError, match="unknown keys: booked"):
         parse_nature_beam_world(booked)
-    twice = json.loads(json.dumps(good))
-    twice["universe"][3]["held"] = {"count": "content", "factors": [1], "divisor": 40000}
-    with pytest.raises(ValueError, match="two families hold 'content'"):
-        parse_nature_beam_world(twice)
+    twice = json.loads(json.dumps(good))  # two holders of the content: the second at its own divisor
+    twice["universe"][3]["held"] = {"count": "content", "factors": [1], "divisor": 1}
+    twice["stamp"] = input_stamp(twice)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(twice))
+    held = [f for f, family in enumerate(simulation.families) if family.held == "content"]
+    assert len(held) == 2 and simulation.held_records[held[0]] is not simulation.held_records[held[1]]
     source = json.loads(json.dumps(good))
     source["universe"][2]["held"] = {"count": "momentum", "factors": [1], "divisor": 40000}
     with pytest.raises(ValueError, match=r"held\.count must be one of"):
