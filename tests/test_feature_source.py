@@ -106,20 +106,15 @@ def test_the_refusals_by_name():
     assert int(negative.counts.ravel()[1]) == -1 and int(negative.remainders.ravel()[1]) == SCALE - 1
     with pytest.raises(ValueError, match="weight x count"):
         apply(
-            SourceTerm(3, 2, 1 << 40, 1),
-            SourceStart(SHAPE, argument(1 << 30, 0, 0, 0, 0, 0)),
-            zeros(),
+            SourceTerm(3, 2, 1 << 40, 1), SourceStart(SHAPE, argument(1 << 30, 0, 0, 0, 0, 0)), zeros()
         )
     with pytest.raises(ValueError, match="shaped by the GameBoard"):
         apply(PLAIN, SourceStart((3, 2, 1), argument(1, 2, 3, 4, 5, 6)), zeros())
     with pytest.raises(ValueError, match="int64"):
         apply(PLAIN, SourceStart(SHAPE, np.zeros(SHAPE, dtype=np.int32)), zeros())
     with pytest.raises(ValueError, match="leave the bound"):
-        apply(
-            SourceTerm(3, 2, 1, SCALE, cap=1 << 40),
-            SourceStart(SHAPE, argument(1 << 30, 0, 0, 0, 0, 0)),
-            zeros(),
-        )
+        capped = SourceTerm(3, 2, 1, SCALE, cap=1 << 40)
+        apply(capped, SourceStart(SHAPE, argument(1 << 30, 0, 0, 0, 0, 0)), zeros())
 
 
 def test_the_trace_hand_identity_at_a_node():

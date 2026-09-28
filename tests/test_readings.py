@@ -196,8 +196,7 @@ def test_the_one_command_writes_the_readings_beside_todays_keys(tmp_path: Path):
     """The output file carries `readings` in the declared order beside today's keys; the clicks reading is today's clicks of that detector; a world without the key writes an empty list."""
     output = run_world(
         declared(
-            emitter_world(stock=2, ticks=120),
-            [SIX[0], {"name": "alive", "kind": "alive", "every": 60}],
+            emitter_world(stock=2, ticks=120), [SIX[0], {"name": "alive", "kind": "alive", "every": 60}]
         ),
         tmp_path,
     )
