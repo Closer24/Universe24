@@ -75,7 +75,7 @@ def place(tmp_path: Path, monkeypatch, universe: dict, document: dict) -> dict:
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
     placed = copy.deepcopy(document)
-    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+    for key in ("node_clock", "amplitude_bound", "momentum_unit", "twist_table"):
         placed.pop(key, None)  # the universe's integers, never a world's (record 2089)
     placed["universe"] = "universe.json"
     placed["engine"] = "start.json"
