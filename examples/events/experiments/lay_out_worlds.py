@@ -700,8 +700,9 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
     write("bending", name, document, expectation)
 
 
-PLANCK = "examples/events/planck.json"  # the rule's own universe beside the shipped universe (Nature24's file, #1411: gravity over 1, charge over 400,000, matter [2, 3]); the folder rule/ the worlds' as in Bell's
-RULE_GAMMA = 24  # the rule's universe's node clock (the owner's word, 2026-09-28, 15:11 Israel: a whole universe in small; 12,000 the second run), cited for the expectations' formulas only
+PLANCK = "examples/events/planck.json"  # the rule's own universe at Gamma 24 beside the shipped universe (Nature24's file, #1430: gravity [24, 24] over 1, charge [24, 24] over 36, matter [16, 24]); the folder rule/ the worlds' as in Bell's
+PLANCK_6000 = "examples/events/planck_6000.json"  # the run of record after 24 (the owner's word, 2026-09-28, 15:44 Israel: Gamma 6,000 in place of 12,000), Nature24's file when it lands; a world naming it loads then
+RULE_GAMMA = 24  # the rule's universe's node clock (the owner's word, 2026-09-28, 15:11 Israel: a whole universe in small; 6,000 the second run), cited for the expectations' formulas only
 EDGE_RATIO = 0.2255  # the count under which a one-Node body disperses, as a share of Gamma (ALGEBRA.md, THE BOUND BODY IS ONE NODE); 0.345 on an engine with the level once
 GIVER_EDGE_RATIO = (
     4447 / 12000
@@ -725,12 +726,22 @@ PAIRS_AT_24 = {
     8: (103723, 65536, 23747),
     10: (114155, 65536, 18423),
 }  # per count, Cheshbon's table of 15:22: the clock pair [a, 65536] (2 cos omega_b) and the tail t = e^-kappa over 2^16, handed to tools/pixel_mode.py until the tool derives them by Rule3 alone (the owner's word of 15:28)
-GAMMA_12000_NUMBERS = {
-    "clock_ratio": 1.066,
-    "clock_ratio_band": [1.03, 1.10],
-    "giver_period": 7.58,
-    "giver_period_band": [7.4, 7.8],
-    "row": "Cheshbon's blind numbers of 14:39 Israel on the engine of today (the level once, the edge 4,136): the giver 4,400 and the taker 5,000, the giver's clock 7.58 intervals (7.4 to 7.8), the ratio of the two pixels' periods taker over giver 1.066 (1.03 to 1.10), which tools/well_clocks.py reads as `clock_ratio` = the first clock over the second (its inverse, 0.938); after the conformal term returns the pixels 4,000 and 3,000 (13:17 and 13:39): the giver's period 9.55 and the ratio 1.125 today / 1.5 with the term; in the twin 1",
+PAIRS_AT_6000 = {
+    2000: (103723, 65536, 23747),
+    1500: (90329, 65536, 41948),
+}  # Cheshbon's table of 15:50 for Gamma 6,000: the same c over Gamma as 8 and 6 of 24, so the same pair and tail (the rule's numbers depend on c over Gamma alone, his line 15:50 (a))
+GAMMA_6000_NUMBERS = {
+    "clocks": ["giver_clock", "taker_clock"],
+    "giver_record_level": 69,
+    "taker_record_level": 49,
+    "giver_period": 9.55,
+    "taker_period": 7.75,
+    "clock_ratio": 1.232,
+    "clock_ratio_band": [1.15, 1.32],
+    "light_wavelength_at_the_giver": 5.29,
+    "light_wavelength_at_the_taker": 4.18,
+    "stepping_gamma_ratio_drift_per_interval": 0.00026,
+    "row": "Cheshbon's table for Gamma 6,000 (2026-09-28, 15:50 Israel, item 3e), the run of record after 24 (the owner's word of 15:44): on the law (the level twice, the edge 1,353, the horizon 3,000, the charge's divisor 141,862) the giver 2,000 (omega_b 0.6578, the period 9.55, kappa 1.015, t 0.362, the level b 69 at its Node, the wells 263, 34, 5 along the tail) and the taker 1,500 (0.8105, 7.75, kappa 0.446, t 0.640, b 49, the wells 615, 252, 103), 60 Links apart on the open x axis; tools/well_clocks.py reads `clock_ratio` as the first clock over the second, here the giver's cycle over the taker's, 9.55 / 7.75 = 1.232 within 1.15 to 1.32 (his band, about 3 percent, the quantisation 1 over 1,500); the given light's wavelength 5.29 at the giver (5 to the Link) and 4.18 at the taker; in the twin every ratio 1; on the engine of today (the level once) the pair would be 2,200 and 2,500 with the ratio 1.066 (1.03 to 1.10). The blind number of GAMMA IS NOT CONSTANT (the owner's word of 15:44, under its own name; Cheshbon's line of 15:50 (6), the Closer's order of 15:55): with a Gamma stepping by 6 every interval the clocks' ratio is not fixed but grows by about 2.6e-4 per interval, on 2,200 / 2,500 from 1.066 to 1.10 over 130 intervals; the first runs are at a fixed Gamma, the stepping Gamma a dedicated look after them, this world first",
 }
 
 
@@ -758,6 +769,9 @@ def pixel_modes(name: str, pairs: dict[int, tuple[int, int, int]], gamma: int = 
     """The mode file of a world of `rule/` from tools/pixel_mode.py with Cheshbon's pairs per count (the Closer's order of 2026-09-28, 15:32 Israel): the giver's entry takes `wavelength` by his line and every pixel `twist` 0 (his line of 15:27 (3): a pixel's rotation lives in its clock pair, the twist is the transport's) until the tool writes them; the universe file the world names must be the rule's at `gamma`, or the pairs are not its."""
     path = HERE / "rule" / f"{name}.json"
     document = json.loads(path.read_text(encoding="utf-8"))
+    if not (ROOT / document["universe"]).exists():
+        print(f"{name}: no mode file, {document['universe']} is not in the tree yet")
+        return
     universe = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))
     if int(universe["integers"]["node_clock"]) != gamma:
         raise ValueError(
@@ -781,10 +795,13 @@ def rule_redshift(
     stock: int,
     gamma: int = RULE_GAMMA,
     numbers: dict[str, Any] | None = None,
+    universe: str = PLANCK,
+    margin: int | None = None,
 ) -> None:
     """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel, and his word of 15:11: Gamma 24; Cheshbon's pair of 15:22 (6e)): light ([1, 1], the divisor 1) between two pixels of different counts on the board 24 x 9 x 9, open on x and closed on y and z, the pixels on the middle row `distance` Links apart at z = 0 (the row `tools/well_clocks.py` reads), the giver (`giver`, 8: q = 1, a body without q gives no light; the window's norm 1 over 1, T the unit of the rule's universe, until the emitter's norm leaves the file) and the taker (`taker`, 10, its clock the slower), the taker's Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(giver) / omega_b(taker)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight, within the rounding at Gamma 24), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `taker` equal to `giver` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file the tool's through `pixel_modes`; nothing here is run."""
     # the board of Cheshbon's pair: 24 along x with the pixels six Links from the faces (their tails of one and two Links outside the face slab of four), nine closed rows on y and z; on a chain of one row a pixel's one-dimensional well grows with the board's length, on a strip open on y the faces take the light within four Links
-    margin, side = distance // 2, 9
+    # the pixels `margin` Links from the x faces (half the distance at 24: six, the tails of one and two Links outside the face slab of four; at 6,000 twenty, the taker's tail of eight Links), nine closed rows on y and z
+    margin, side = distance // 2 if margin is None else margin, 9
     mid = side // 2
     giver_x, taker_x = margin, margin + distance
     length = taker_x + margin
@@ -822,7 +839,7 @@ def rule_redshift(
         detectors,
         readings,
         face_depth=4,
-        universe=PLANCK,
+        universe=universe,
     )
     expectation = {
         "row": (
@@ -927,7 +944,21 @@ def main() -> None:
     rule_redshift("rule_redshift_twin", 8, 8, 12, 1500, 12, gamma=24, numbers=GAMMA_24_NUMBERS)
     for name in ("rule_redshift", "rule_redshift_twin"):
         pixel_modes(name, PAIRS_AT_24)
-    # Gamma 12,000 stays the second run if 24 is too coarse (the Closer, 15:12 Israel), on its own universe file when named: rule_redshift("rule_redshift_12000", 4400, 5000, 60, 1500, 200, gamma=12000, numbers=GAMMA_12000_NUMBERS) and the twin at 4,400
+    # Gamma 6,000, the run of record after 24 (the owner, 15:44 Israel), Cheshbon's pair of 15:50 (3e) on the law: the giver 2,000 and the taker 1,500, the twin 2,000 and 2,000, 60 Links apart, the giver's stock the horizon 3,000; the worlds name Nature24's planck_6000.json and their mode files are written when it is in the tree
+    for name, taker in (("rule_redshift_6000", 1500), ("rule_redshift_6000_twin", 2000)):
+        rule_redshift(
+            name,
+            2000,
+            taker,
+            60,
+            1500,
+            3000,
+            gamma=6000,
+            numbers=GAMMA_6000_NUMBERS,
+            universe=PLANCK_6000,
+            margin=20,
+        )
+        pixel_modes(name, PAIRS_AT_6000, 6000)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,84 @@
+{
+ "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 2000 at x = 20, the taker a pixel of 1500 at x = 80 (60 Links on, the tails of one and two Links never touching), light of the charge family given by the giver at the weight 1 with the stock 3000 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
+ "DETECTOR": [
+  {
+   "detector": "taker",
+   "mean_interval": 2,
+   "band": 1,
+   "row": "Cheshbon's blind number at Gamma 24 is his to write (his table of 15:22 names the click's reach, ln(b1 b2 / T) / kappa, three to four Links, and the tail's well at the neighbour one to four quanta); the pin carried meanwhile is his 12,000 line of 13:39 and 14:39 Israel: one level written about every 1.6 intervals, the runner rounding the read to an integer, 2 within 1"
+  }
+ ],
+ "WELL": {
+  "rows": "light_rows",
+  "levels": [
+   "light_beside_the_giver",
+   "light_beside_the_taker"
+  ],
+  "clocks": [
+   "giver_clock",
+   "taker_clock"
+  ],
+  "axis_y": 4,
+  "windows": [
+   [
+    22,
+    51
+   ],
+   [
+    49,
+    78
+   ]
+  ],
+  "giver_record_level": 69,
+  "taker_record_level": 49,
+  "giver_period": 9.55,
+  "taker_period": 7.75,
+  "clock_ratio": 1.232,
+  "clock_ratio_band": [
+   1.15,
+   1.32
+  ],
+  "light_wavelength_at_the_giver": 5.29,
+  "light_wavelength_at_the_taker": 4.18,
+  "stepping_gamma_ratio_drift_per_interval": 0.00026,
+  "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles of the two pixels and their ratio (the first clock over the second: the taker's over the giver's), the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written",
+  "shift_ratio": null,
+  "shift_ratio_band": null,
+  "shift_ratio_row": "the light's relative shift of wave number over the pixel's relative shift of cycle (well_clocks' `shift_ratio`): Cheshbon's line to write; at Gamma 24 the stretch 5.29 to 6.90 is read on windows of six Links, within the rounding to the Link (his line of 15:22 (5d))"
+ },
+ "GAMEBOARD": [
+  {
+   "body": 0,
+   "interval": 1400,
+   "centre": [
+    20,
+    4,
+    0
+   ],
+   "band": 0,
+   "row": "the giver's pixel on its Node"
+  },
+  {
+   "body": 1,
+   "interval": 1400,
+   "centre": [
+    80,
+    4,
+    0
+   ],
+   "band": 0,
+   "row": "the taker's pixel on its Node"
+  },
+  {
+   "reversible": 1500,
+   "row": "THE REVERSIBLE ROW: the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept"
+  }
+ ],
+ "GAMEBOARD_checks": [
+  "(i) `well_on_the_chain` between the pixels: the tails of both below one unit there (kappa 1.015 per Link at 8, 1.269 at 10; the tail ends within two Links), so the light crosses a flat chain and only the pixels' Nodes are deep",
+  "(ii) `giver_clock` against `taker_clock`: the bound rotation omega_b(c) of each pixel from the one-Node line, the pixel of more quanta slower; the count breathing one quantum at T = 1 is the reading, not a defect (the Closer, 15:30)",
+  "(iii) `light_beside_the_giver` against `light_beside_the_taker`: the period the same at both (the rotation is conserved in flight), the wavelength from `light_rows` longer beside the taker",
+  "(iv) the twin (both pixels of one count): every ratio 1, the taker's clicks at the giver's rate",
+  "then the DETECTOR reading in kind: the taker's mean click interval, one click at a time"
+ ]
+}
