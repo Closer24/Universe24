@@ -13,12 +13,15 @@ from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm
 from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
-WORLDS = ("massive_record/light_clock.json", "dark_body/dark.json")
+WORLDS = (
+    "light_clock.json",
+    "lorentz_rest.json",
+)  # the rule tests' own small worlds under tests/ (the shipped worlds left with the worlds' replay)
 
 
 def spied(world: str) -> tuple[DetectorLawSimulation, list[tuple[str, str]], list[str]]:
-    """A shipped world's loop with a spy on the register: the lookups in order, and every built primitive called outside an act."""
-    document = json.loads((ROOT / "examples" / "events" / world).read_text(encoding="utf-8"))
+    """A world's loop with a spy on the register: the lookups in order, and every built primitive called outside an act."""
+    document = json.loads((ROOT / "tests" / world).read_text(encoding="utf-8"))
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     register = simulation.register
     lookups: list[tuple[str, str]] = []

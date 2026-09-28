@@ -255,9 +255,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         match=r"\.pair \[.*Gamma = 1000000 and the content M = 20000000 .*not below 2\^63",
     ):
         parse_nature_beam_world(heavy)
-    registered = json.loads(
-        (ROOT / "examples/events/massive_record/light_clock.json").read_text(encoding="utf-8")
-    )
+    registered = json.loads((ROOT / "tests/light_clock.json").read_text(encoding="utf-8"))
     # the integers of ALGEBRA.md #the-rows-against-nature from the families file alone (item 59)
     assert registered["universe"] == "examples/events/universe.json"
     assert "node_clock" not in registered and "amplitude_bound" not in registered

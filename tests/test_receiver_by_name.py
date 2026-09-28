@@ -13,7 +13,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import CLOSED_CHAIN, emitter, light_clock_world, massive_world, seed_source
 from tests.worlds import lawful_wheel
 
-LIGHT_CLOCK = Path(__file__).resolve().parents[1] / "examples/events/massive_record/light_clock.json"
+LIGHT_CLOCK = Path(__file__).resolve().parents[1] / "tests/light_clock.json"
 Spy = dict[int, tuple[list[int], list[int], int, int, int]]
 
 
@@ -232,7 +232,7 @@ def test_the_lines_time():
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
-    """The registered world `examples/events/massive_record/light_clock.json` (the one table's form: [760, 3, 3] with the face slabs 32 deep, A the chain's point extruded, [1, 3, 3] at x = 631, giving by the window (commit 7) with its stock of 64, the mirror at [690, 694) and the mirror behind A at [629, 631), A's `receiver` at_well the set at its own Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A givings (its excitations click at their rungs), and its records click at at_well when the mirror returns them into A's Nodes (the line at the rung, the record deleted at it; at least one within the 700, the round trip about 300 intervals after the giving; under the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its kicks and no body is held in place (the mirrors fed, #1279): twelve records return by their round trips and one reaches its rung at A's own Nodes 12 intervals after its giving), none at the faces; the books balanced. The edge case: the file on disk is byte for byte what the test read."""
+    """The light clock's file `tests/light_clock.json` (the rule tests' own small world in today's form; the shipped worlds left the repository with the worlds' replay) (the one table's form: [760, 3, 3] with the face slabs 32 deep, A the chain's point extruded, [1, 3, 3] at x = 631, giving by the window (commit 7) with its stock of 64, the mirror at [690, 694) and the mirror behind A at [629, 631), A's `receiver` at_well the set at its own Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A givings (its excitations click at their rungs), and its records click at at_well when the mirror returns them into A's Nodes (the line at the rung, the record deleted at it; at least one within the 700, the round trip about 300 intervals after the giving; under the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its kicks and no body is held in place (the mirrors fed, #1279): twelve records return by their round trips and one reaches its rung at A's own Nodes 12 intervals after its giving), none at the faces; the books balanced. The edge case: the file on disk is byte for byte what the test read."""
     before = LIGHT_CLOCK.read_bytes()
     document = json.loads(before)
     world = parse_nature_beam_world(document)

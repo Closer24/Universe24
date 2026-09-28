@@ -24,7 +24,7 @@ from event_universe.features.counts_line import (
 )
 from event_universe.world_files import input_digest, parse_world_document, world_files
 
-TOWARD = Path(__file__).resolve().parents[1] / "examples" / "events" / "toward_nature"
+TOWARD = Path(__file__).resolve().parents[1] / "tests"  # the rule tests' own small worlds
 
 
 def links_of(levels: Levels, periodic: bool | tuple[bool, bool, bool] = True) -> tuple[Levels, ...]:
