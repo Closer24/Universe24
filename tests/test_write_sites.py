@@ -10,46 +10,17 @@ PACKAGE = ROOT / "src" / "event_universe"
 LEVELS = frozenset({"now", "before", "im_now", "im_before", "remainder"})
 Site = tuple[str, str, str, str]  # (module, function, "index" or "rebind", the level's name)
 
-# the sites the loop writes levels at, each the application of a declared act: the record's own
-# step (Rule3, `_advance`, `_advance_inverse`, `_advance_node_record`, pair.second_level), the
-# giving's window write through the write's line and its inverse by the folder's step back
-# (after_step.window_write, `_point_window_inverse`), the hold's writes and the source's through
-# the line (`_hold`, `_source_stage`), THE START through the line (assembly.start_at_rest) and
-# the bodies' own records at the load (assembly.bodies)
+# the sites the loop writes levels at, each the application of a declared act (the record's own step by Rule3; the giving's window write through the write's line and its inverse by the folder's step back; the hold's and the source's writes through the line; THE START through the line; the bodies' own records at the load): per module, "function kind level" sites separated by ";"
+SITES_TEXT = """
+events/after_step.py: window_write index before; window_write index im_now; window_write index now
+events/assembly.py: bodies index before; bodies index now; start_at_rest index before; start_at_rest index now; start_at_rest index remainder
+events/detector_law.py: _advance index remainder; _advance rebind before; _advance rebind im_before; _advance rebind im_now; _advance rebind now; _advance rebind remainder; _advance_inverse index remainder; _advance_inverse rebind before; _advance_inverse rebind im_before; _advance_inverse rebind im_now; _advance_inverse rebind now; _advance_inverse rebind remainder; _advance_node_record rebind before; _advance_node_record rebind now; _advance_node_record rebind remainder; _hold index before; _hold index now; _hold index remainder; _point_window_inverse index before; _point_window_inverse index now; _source_stage index now
+events/pair.py: second_level rebind im_before; second_level rebind im_now
+"""
 SITES: frozenset[Site] = frozenset(
-    {
-        ("events/after_step.py", "window_write", "index", "before"),
-        ("events/after_step.py", "window_write", "index", "im_now"),
-        ("events/after_step.py", "window_write", "index", "now"),
-        ("events/assembly.py", "bodies", "index", "before"),
-        ("events/assembly.py", "bodies", "index", "now"),
-        ("events/assembly.py", "start_at_rest", "index", "before"),
-        ("events/assembly.py", "start_at_rest", "index", "now"),
-        ("events/assembly.py", "start_at_rest", "index", "remainder"),
-        ("events/detector_law.py", "_advance", "index", "remainder"),
-        ("events/detector_law.py", "_advance", "rebind", "before"),
-        ("events/detector_law.py", "_advance", "rebind", "im_before"),
-        ("events/detector_law.py", "_advance", "rebind", "im_now"),
-        ("events/detector_law.py", "_advance", "rebind", "now"),
-        ("events/detector_law.py", "_advance", "rebind", "remainder"),
-        ("events/detector_law.py", "_advance_inverse", "index", "remainder"),
-        ("events/detector_law.py", "_advance_inverse", "rebind", "before"),
-        ("events/detector_law.py", "_advance_inverse", "rebind", "im_before"),
-        ("events/detector_law.py", "_advance_inverse", "rebind", "im_now"),
-        ("events/detector_law.py", "_advance_inverse", "rebind", "now"),
-        ("events/detector_law.py", "_advance_inverse", "rebind", "remainder"),
-        ("events/detector_law.py", "_advance_node_record", "rebind", "before"),
-        ("events/detector_law.py", "_advance_node_record", "rebind", "now"),
-        ("events/detector_law.py", "_advance_node_record", "rebind", "remainder"),
-        ("events/detector_law.py", "_hold", "index", "before"),
-        ("events/detector_law.py", "_hold", "index", "now"),
-        ("events/detector_law.py", "_hold", "index", "remainder"),
-        ("events/detector_law.py", "_point_window_inverse", "index", "before"),
-        ("events/detector_law.py", "_point_window_inverse", "index", "now"),
-        ("events/detector_law.py", "_source_stage", "index", "now"),
-        ("events/pair.py", "second_level", "rebind", "im_before"),
-        ("events/pair.py", "second_level", "rebind", "im_now"),
-    }
+    (module, *site.split())  # type: ignore[misc]
+    for module, _, sites in (line.partition(": ") for line in SITES_TEXT.strip().splitlines())
+    for site in sites.split("; ")
 )
 
 
