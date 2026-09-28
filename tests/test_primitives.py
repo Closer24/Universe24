@@ -187,9 +187,8 @@ def test_the_helicity_is_the_sign_of_the_spin_against_the_momentum():
     assert P.helicity((0, 0, 5), (3, 0, 0)) == 0  # the spin across the motion
     assert P.helicity((0, 0, 0), (3, 0, 0)) == 0 and P.helicity((0, 0, 5), (0, 0, 0)) == 0
     assert P.helicity_admits(0, (0, 0, 5), (0, 0, -3))
-    assert P.helicity_admits(-1, (0, 0, 5), (0, 0, -3)) and not P.helicity_admits(
-        1, (0, 0, 5), (0, 0, -3)
-    )
+    admits = P.helicity_admits
+    assert admits(-1, (0, 0, 5), (0, 0, -3)) and not admits(1, (0, 0, 5), (0, 0, -3))
 
 
 def test_the_hosts_table_generator_writes_exact_triples_within_their_angles():

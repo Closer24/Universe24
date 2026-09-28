@@ -15,6 +15,7 @@ from tests.worlds import emitter_world, family_entry, reads, seed_on_the_mode
 
 LIGHT, MATTER, POSITIVE = 0, 1, 2
 STOCK = 3
+ACTION = 1 << 16  # the fixture's quantum action T, 2^16 under the seed 2^12 of `emitter_world`
 
 
 def reversible_world(ticks: int = 400) -> dict:
@@ -258,9 +259,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
                 previous_residue = (line["u"], line["W"])
                 read_at = line["tick"]
             if line["event"] == "gather":
-                taker = next(
-                    n for n in range(len(simulation.held)) if simulation.held[n] != held_before[n]
-                )
+                taker = next(n for n, held in enumerate(simulation.held) if held != held_before[n])
                 assert sum(simulation.held[taker]) == sum(held_before[taker]) + 1
                 assert line["content"] == 1 and line["record"] not in simulation.records
                 total, increments, ladder, u, norm, wheel, pace = seen[line["record"]]
@@ -343,3 +342,33 @@ def test_the_bookings_and_the_bodys_clock_return_with_the_rows_across_a_close_wi
         inverse_close_interval(simulation, lines, t) if t in closes else simulation.step_inverse()
         assert_same(rows_of(simulation), forward[t - 1][0])
         assert bookings_of(simulation) == forward[t - 1][1], t - 1
+
+
+def test_the_well_of_a_body_with_a_record_is_its_records_form_and_returns_with_the_rows():
+    """Under a declared T (the fixture's quantum action) a body with a record sources every held family from its record's form: at every Node the well's count is (D_i + r_i) div T with D_i = a_now^2 - a_next a_before read from the record's three levels around the step and r_i the remainder carried from the interval before, `node_sources` hands the hold those counts where they are nonzero, and the declared count stays a reading; without T no well is laid and the declared form stands; forward to the interval before the first giving, then back, the counts of each interval are laid again at its inverse and the rows, the held levels and the well's remainders return bit for bit (ALGEBRA.md #what-a-body-is, #the-direction)."""
+    plain, states, _, _ = run_states(reversible_world(), 4)
+    assert all(block.well is None for block in plain.blocks) and states[4]["tick"] == 4
+    document = {**reversible_world(), "quantum_action": ACTION}
+    document["stamp"] = input_stamp(document)
+    simulation, states, lines, _ = run_states(document, 0)
+    block, record = simulation.blocks[0], simulation.blocks[0].own
+    assert record is not None and block.well is None
+    wells, zero = [], np.zeros(simulation.shape, np.int64)
+    for _ in range(8):
+        before, now = record.before, record.now
+        carry = zero if block.well_remainder is None else block.well_remainder
+        simulation.step()
+        count = now * now - record.now * before + carry
+        assert np.array_equal(block.well, count // ACTION)
+        assert np.array_equal(block.well_remainder, count % ACTION)
+        laid = [((int(x), 0, 0), int(block.well[x, 0, 0])) for x in np.nonzero(block.well)[0]]
+        assert laid and simulation.node_sources(0, "content") == laid
+        assert simulation.body_source(0, "content") == sum(simulation.held[0])
+        wells.append(block.well.copy())
+        states.append(rows_of(simulation))
+    assert click_ticks(lines) == ([], [])
+    for tick in range(8, 0, -1):
+        simulation.step_inverse()
+        assert np.array_equal(block.well, wells[tick - 1])
+        assert_same(rows_of(simulation), states[tick - 1])
+    assert not block.well_remainder.any()

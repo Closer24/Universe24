@@ -231,6 +231,11 @@ class Block:
     moved: bool = False
     previous_sum: int = 0
     own: LiveRecord | None = None
+    # THE WELL OF A BODY WITH A RECORD (ALGEBRA.md #what-a-body-is): its record's D_i div T at
+    # every Node as the interval's step left them, the counts the hold reads, and the source row's
+    # remainder r_i per Node (`record_form`); None where the universe declares no T
+    well: np.ndarray | None = None
+    well_remainder: np.ndarray | None = None
     # THE BODY'S RECORD AT ITS BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42, item 37
     # HISTORY): the standing record on the body's Node under the world key
     # `body_record`, its own rows then nowhere else on the GameBoard (`own`

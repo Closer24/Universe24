@@ -240,13 +240,7 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     body["phase_denominator"] = 64  # one form: every body carries the phase's m
-    body["emitter"] = {
-        "family": "light",
-        "weight": 1,
-        "norm": 1,
-        "norm_denominator": 1,
-        "receiver": "set",
-    }
+    body["emitter"] = dict(family="light", weight=1, norm=1, norm_denominator=1, receiver="set")
     world = {"shape": [8, 8, 8], "boundary": dict.fromkeys("xyz", "periodic"), "node_clock": GAMMA}
     world |= {"measured": [body], "universe": str(tmp_path / "universe.json")}
     readings, box = generate(world), counted_cube(8, 2, 3000)
