@@ -86,6 +86,7 @@ ARMS = {
     "right": 178 - CRYSTAL_SLAB[1],
 }  # Links from the slab's faces to each polariser's near face: equal (57 and 57), so the two labels' delays are equal
 
+REVERSIBLE_INTERVALS = 4000  # the reversible row's N on every Bell world (tools/reversible.py: N forward and N back on a fresh copy, the row's cost twice the run's): the fixed chains' whole run; on the switching worlds the same N, within which the first window closes and both polarisers switch (every 7 and every 11 intervals by their clocks), the Closer's 08:53Z on the interval's measured cost
 COINCIDENCE_WINDOW = 24  # intervals: a left click and a right click within it are one pair (the owner's 22:26Z, as Aspect's window); the tool coincidences.py reads it here; (h) asks the giving's period above it and the two paths' delays within it; MathB's 23:36Z (EXPLORATORY): the arrival's spread by dispersion over 58 Links about 8 to 10 intervals, the giving's period about 50 to 60, so a window of 16 to 32; the plus set stands on the polariser's far face so its click follows the minus set's by about 5 intervals (3 Links at the pair's group velocity 0.55), not 75 as with the far cubes of the first layout
 SETTINGS = {
     "left": {"a": ANGLES["a"], "a2": ANGLES["a2"]},
@@ -334,7 +335,7 @@ def bell(left: str, right: str) -> None:
                 "row": "the right polariser at rest within a Link",
             },
             {
-                "reversible": document["ticks"],
+                "reversible": REVERSIBLE_INTERVALS,
                 "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)",
             },
         ],
@@ -437,7 +438,7 @@ def bell_switching(crystal_count: int = GIVING_COUNT, suffix: str = "") -> None:
                 "row": "the crystal's slab in place",
             },
             {
-                "reversible": document["ticks"],
+                "reversible": REVERSIBLE_INTERVALS,
                 "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)",
             },
         ],

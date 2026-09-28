@@ -159,8 +159,7 @@ def block_world(
             if key in block:
                 entry[key] = block[key]
         if block["pair"][0] * kind[1] > block["pair"][1] * kind[0]:
-            # every well declares its seed (the suite's amplitude 2^20 where a test names
-            # none) and its margin kind: no loader default
+            # every well declares its seed (the suite's amplitude 2^20 where a test names none) and its margin kind: no loader default
             if "seed" not in entry:
                 entry["seed"] = 1 << 20
             entry.setdefault("margin", "pin")
