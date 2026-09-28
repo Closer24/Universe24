@@ -51,8 +51,7 @@ def test_duplicate_gate_detects_copies_but_allows_empty_package_markers(tmp_path
 
 
 def test_json_gate_ignores_object_key_order_but_preserves_semantic_array_order(tmp_path):
-    first = tmp_path / "first.json"
-    second = tmp_path / "second.json"
+    first, second = tmp_path / "first.json", tmp_path / "second.json"
     first.write_text('{"operations": [1, 2], "cost": 3}', encoding="utf-8")
     second.write_text('{"cost": 3,\n "operations": [1, 2]}', encoding="utf-8")
     assert not duplicate_files(tmp_path)

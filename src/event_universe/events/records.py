@@ -263,6 +263,12 @@ class Block:
     # remainder r_i per Node (`record_form`); None where the universe declares no T
     well: np.ndarray | None = None
     well_remainder: np.ndarray | None = None
+    # THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD: the counts laid at the last return of the record (the standing lay), the well summed since, the intervals since and the sign of the record's level at the body's Node at the last reading
+    period_counts: np.ndarray | None = None
+    period_sum: np.ndarray | None = None
+    period_length: int = 0
+    period_sign: int = 0
+    period_flips: int = 0
     # THE BODY'S RECORD AT ITS BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42, item 37
     # HISTORY): the standing record on the body's Node under the world key
     # `body_record`, its own rows then nowhere else on the GameBoard (`own`
