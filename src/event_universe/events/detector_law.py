@@ -296,14 +296,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if block.counts is None or block.count_remainder is None:
             block.counts, block.count_remainder = self._lay_count(block, live)
         if once.counts_are_the_well(self.families, block):
-            block.counts = np.array(block.well, dtype=np.int64)
+            block.counts = once.counts_laid(block, self._centre_node(block))
         wall, wrap = self.kind_wall(block.family, block.definition.pair), self.kind_wrap[block.family]
         term = CountTerm(block.count_norm, wall, self.world.amplitude_bound, int(block.counts.max()))
         levels = (live.now, live.before, live.im_now, live.im_before)
         arrived = [None if a is None else self.ports.arrivals(a, wrap) for a in levels]
         links = tuple(Levels(*(None if a is None else a[port] for a in arrived)) for port in range(6))
-        held = tuple(self.ports.arrivals(block.counts, wrap))
-        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction, held)
+        ports = lambda array: tuple(self.ports.arrivals(array, wrap))  # noqa: E731
+        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction, ports)
         writes = cast(CountWrites, line(term, start, None))
         block.counts, block.count_remainder = writes.count, writes.remainder
         if direction > 0:

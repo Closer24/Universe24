@@ -224,18 +224,23 @@ def test_the_declaration_is_the_registers_row():
     assert DECLARATION.writes == ("the count at a Node", "the count's remainder", "a body's position")
 
 
-def test_a_node_at_0_gives_nothing_and_a_node_gives_at_most_what_it_holds():
-    """Two Nodes on a periodic axis of two, the record's levels (1, 0) now and (0, 1) before: the current into the first Node through each of its two x Ports is the weight, the second Node gives twice the weight. Holding exactly that it ends at 0 and the first holds it all; holding one less its result is clamped at 0 (the move a reading); holding nothing, with the counts across the Ports handed, its Ports' currents are blocked at both ends and nothing moves."""
-    weight, norm = 7, 1
-    now, before = np.array([[[1]], [[0]]], dtype=np.int64), np.array([[[0]], [[1]]], dtype=np.int64)
-    here, term = Levels(now, before, None, None), CountTerm(norm, weight, 1, 2 * weight)
+def test_a_node_at_0_gives_nothing_and_a_node_giving_more_than_it_holds_is_refused_by_name():
+    """Two Nodes on a periodic axis of two, the record's levels (1, 0) now and (0, 1) before: the current into the first Node through each of its two x Ports is the weight, the second Node gives twice the weight. Holding exactly that it ends at 0 and the first holds it all; holding one less the line is refused by name with the quanta and the count where no arrivals are handed (the guard behind the block, never a clamp); with the Ports' arrivals handed a Node holding nothing or one less than it would give is starved, its Ports' currents are blocked at both ends and nothing moves."""
+    weight, now = 7, np.array([[[1]], [[0]]], dtype=np.int64)
+    here, term = Levels(now, 1 - now, None, None), CountTerm(1, weight, 1, 2 * weight)
     count = np.array([[[0]], [[2 * weight]]], dtype=np.int64)
     writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
     assert writes.count.ravel().tolist() == [2 * weight, 0]
     count[1] = 2 * weight - 1
-    writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
-    assert writes.count.ravel().tolist() == [2 * weight, 0]
-    count[1] = 0
-    beside = tuple(across(count, axis, sigma, True) for axis in range(3) for sigma in (1, -1))
-    writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1, beside))
-    assert writes.count.ravel().tolist() == [0, 0] and sum(writes.net).ravel().tolist() == [0, 0]
+    with pytest.raises(
+        ValueError, match=rf"move {2 * weight} quanta from a Node holding {2 * weight - 1} < "
+    ):
+        apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
+    ports = lambda a: tuple(across(a, axis, sigma, True) for axis in range(3) for sigma in (1, -1))  # noqa: E731
+    for holding in (0, 2 * weight - 1):
+        count[1] = holding
+        writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1, ports))
+        assert writes.count.ravel().tolist() == [0, holding] and sum(writes.net).ravel().tolist() == [
+            0,
+            0,
+        ]

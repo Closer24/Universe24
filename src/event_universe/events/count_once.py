@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 def counts_are_the_well(families: Sequence[FamilyDefinition], block: Block) -> bool:
-    """THE COUNT IS THE RECORD'S FORM (THE ALGEBRA OF CLUSTERS (1); the Closer's ruling of 2026-09-28, 15:19 Israel): whether the count's line lays its counts from the body's well, D div T at every Node of the record, at every interval, the line's move a reading of it: the well is laid and the family that holds the content holds it at the divisor 1 (the well is the count); the declared count is then a reading."""
+    """THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD (THE ALGEBRA OF CLUSTERS (1); Cheshbon's line of 2026-09-28, 15:41 Israel): whether the count's line lays its counts from the body's well, D div T at every Node of the record, read once per period of the standing record and never from the instantaneous form: the well is laid and the family that holds the content holds it at the divisor 1 (the well is the count); the declared count is then a reading."""
     holds = any(row.held == "content" and row.held_divisor == 1 for row in families)
     return block.well is not None and holds
 
@@ -28,3 +28,24 @@ def written(
 ) -> int:
     """The held level at a Node after the hold's act: the level itself (the count there, once; the same at the inverse, where the well laid back is that interval's count) where the count is read once, else the standing level plus the signed increment (the sourced field)."""
     return level if read_once(block, definition) else int(standing) + sign * level
+
+
+def counts_laid(block: Block, node: Sequence[int]) -> np.ndarray:
+    """The counts the line steps this interval: the well of the loaded record at the first act, then the standing lay, replaced once per period of the record by the well summed over the period div the period's length ((sum D) div (P T), the well D div T per interval), the period read from the record's own return at the body's Node (two sign changes of its level now); the standing lay between returns (Cheshbon's line of 15:41 and 15:46: the count follows the form over the record's clock, not the instantaneous form)."""
+    well = np.asarray(block.well, dtype=np.int64)
+    if block.period_counts is None or block.period_sum is None:
+        block.period_counts, block.period_sum = well.copy(), np.zeros_like(well)
+        block.period_length = block.period_flips = 0
+        block.period_sign = 0
+    block.period_sum += well
+    block.period_length += 1
+    level = int(block.own.now[tuple(node)]) if block.own is not None else 0
+    sign = 1 if level > 0 else -1 if level < 0 else 0
+    if sign and block.period_sign and sign != block.period_sign:
+        block.period_flips += 1
+    if sign:
+        block.period_sign = sign
+    if block.period_flips >= 2:
+        block.period_counts = block.period_sum // block.period_length
+        block.period_sum, block.period_length, block.period_flips = np.zeros_like(well), 0, 0
+    return block.period_counts.copy()
