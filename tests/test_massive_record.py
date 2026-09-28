@@ -1,7 +1,5 @@
 """The massive record kind: the rule with a pair per record kind on the six-neighbour term, on a chain and at a corner, light's pair [1, 1] bit for bit, the conserved form to the remainders' jitter, the byte identity of the light record without the key, and the loader's refusals; every source is an emitter body seeded on its bound mode."""
 
-from __future__ import annotations
-
 import hashlib
 import json
 from fractions import Fraction

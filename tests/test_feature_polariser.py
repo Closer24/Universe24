@@ -1,7 +1,5 @@
 """THE POLARISER, its own folder (ALGEBRA.md #the-primitives, the row "the polariser"; the owner's yes of 21:10 Israel time): the record's pair turned back by the body's angle through the transport's rotation, its second level to the body's second set and its first to the first, the shares cos^2 and sin^2 of the angle between the pair and the axis; the angle an exact pair, no float, no number in the code."""
 
-from __future__ import annotations
-
 import copy
 import json
 

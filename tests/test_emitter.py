@@ -1,7 +1,5 @@
 """The emitter as a clicking body (ALGEBRA.md #the-click): its excited records click in turn at their own rungs, each click giving one photon written once at both levels, the stock falling by one each time."""
 
-from __future__ import annotations
-
 import json
 from dataclasses import replace
 from fractions import Fraction
@@ -303,7 +301,6 @@ def test_the_loaders_refusals_name_their_keys():
         del document["measured"][0]["emitter"]["norm_denominator"]
 
     refused(no_action, "declares no `norm_denominator`", on_mode=True)
-
     for key, value, message in (
         ("emits", "light", "has unknown keys: emits"),
         ("own_grace", 3, "has unknown keys: own_grace"),

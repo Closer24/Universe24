@@ -1,7 +1,5 @@
 """The main loop's guards (core/main_loop.py, core/ports.py): a cheating primitive is refused by name (a write its card does not name, a place not its own, a write into the interval's start, two writers out of the file's order), an honest one passes and its write lands, the six arrivals are one exchange per array per interval on the neighbours' addresses, and the walk is the file's. HOST; no physics, no pin."""
 
-from __future__ import annotations
-
 import json
 
 import numpy as np
