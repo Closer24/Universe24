@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, feeding, guards, output, pair
+from event_universe.events import after_step, assembly, body_language, feeding, guards, output, pair
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -198,8 +198,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 self.recoil_wall = bounded_lcm(
                     self.recoil_wall, self._wavelength(entry.block.emitter.clock, f"measured[{number}]")
                 )
-        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock
-        self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int]]] = []
+        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock, the record
+        self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int], int]] = []
+        self.recoil_kicks: dict[int, list[int]] = {}
         self._crystal_clicks: list[tuple[int, LiveRecord]] = []
         assembly.state_arrays(self, world)
         self.kind_num = PairView(self, 0)
@@ -449,7 +450,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1, the kick written to both levels of n (the feed's KEEP pair exchanges them every interval); a body with no period declares no term."""
-        for number, sense, tally, clock in self._recoils:
+        for number, sense, tally, clock, identity in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
             if block is None or emitter is None or emitter.period is None:
@@ -467,9 +468,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 (stores[0], stores[1], stores[2]),
             )
             writes = cast(RecoilWrites, function(term, RecoilStart(tally), own))
-            for axis, (kicked, rest) in enumerate(zip(writes.momentum, writes.remainders, strict=True)):
-                block.momentum_before[axis] += kicked - own.momentum[axis]
-                block.momentum[axis], block.hold_value[("recoil", axis)] = kicked, rest
+            body_language.recoil(self, block, number, sense, identity, tally, own.momentum, writes)
         self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
@@ -1086,7 +1085,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             part=emitter.part,
             twist=emitter.twist,
         )
-        live.window_open = True
+        live.window_open, live.giver_clock = True, self._body_count(block)
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
         if emitter.receiver is not None:
@@ -2014,9 +2013,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         measured = self.detector_measured[detector]
         if measured is None or self.detector_face[detector]:
             return
-        tally = live.momentum_tally.get(detector, [0, 0, 0])
+        t = live.momentum_tally.get(detector, [0, 0, 0])
         clock = (live.period_numerator, live.period_denominator)
-        self._recoils.append((measured, TAKING, (int(tally[0]), int(tally[1]), int(tally[2])), clock))
+        self._recoils.append((measured, TAKING, (int(t[0]), int(t[1]), int(t[2])), clock, live.identity))
 
     def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
         """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""

@@ -20,7 +20,9 @@ written before the run), the comparison per pin: MATCH within the band or MISS, 
 value read; a row of the expectation file naming a `twin` input compares the RATIO of this
 input's mean click interval at the detector to the twin's, both exact fractions, against
 `ratio` [num, den] within `band` [num, den], after both inputs ran (row (e) THE MOVING CLOCK:
-the factor read from the clicks of the moving world and its resting twin). Nothing else is compared; a GameBoard
+the factor read from the clicks of the moving world and its resting twin); a GAMEBOARD row naming an
+`equivalent` input compares the two outputs' click intervals per detector (THE ONE-NODE EQUIVALENCE,
+`equivalence_rows`). Nothing else is compared; a GameBoard
 reading is not written. The output carries no time, so two inputs run
 together give the same files as each alone (the test of record 1887); the
 wall seconds go to the summary printed.
@@ -129,6 +131,14 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
                 "interval": gather["click"],
                 "giving": gather["giving"],
                 "record": gather["record"],
+                # THE BODY'S LANGUAGE (HIGHLIGHTS line 7): the giver, the taker, the quantum T, the
+                # exact tally and the two bodies' counts, read from the click line as the engine wrote it
+                "giver": gather["giver"],
+                "taker": gather["taker"],
+                "norm": gather["norm"],
+                "tally": gather["tally"],
+                "giver_clock": gather["giver_clock"],
+                "clock": gather.get("clock"),
             }
         )
     counts: dict[str, int] = {detector.name: 0 for detector in world.detectors}
@@ -179,6 +189,8 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
             }
         )
     for pin in expectation.get("GAMEBOARD", []):
+        if "equivalent" in pin:
+            continue  # the one-Node equivalence is compared after both inputs ran (`equivalence_rows`)
         # a pin of the expectation file's GAMEBOARD section (a diagnostic, never a measurement): a
         # body's momentum or centre at a named interval, read from the declared readings, each
         # component within the band
@@ -268,6 +280,61 @@ def ratio_rows(out_dir: Path, inputs: list[Path], name: str) -> list[str]:
     return [str(v["verdict"]) for v in verdicts]
 
 
+def equivalence_rows(out_dir: Path, inputs: list[Path], name: str) -> list[str]:
+    """THE ONE-NODE EQUIVALENCE (HIGHLIGHTS line 28: a body that functions as one at a click can be
+    shown as one Node): the expectation file's GAMEBOARD rows naming an `equivalent` input (the same
+    world with the body as one Node or as its cube, the twin one of the inputs): per detector the two
+    outputs' click intervals in order, the same count and every interval within `within` of its twin's,
+    the count per detector and the records alive equal; `read` the largest shift and the count
+    difference, MATCH or MISS, written into this input's output after both ran; a GAMEBOARD diagnostic,
+    no measurement."""
+    paths = {path.stem: path for path in inputs}
+    expectation_path = paths[name].with_suffix(".expectation.json")
+    expectation = (
+        json.loads(expectation_path.read_text(encoding="utf-8")) if expectation_path.exists() else {}
+    )
+    rows = [pin for pin in expectation.get("GAMEBOARD", []) if "equivalent" in pin]
+    if not rows:
+        return []
+    output_path = out_dir / f"{name}.output.json"
+    output = json.loads(output_path.read_text(encoding="utf-8"))
+    verdicts: list[dict[str, object]] = []
+    for pin in rows:
+        twin, within = str(pin["equivalent"]), int(pin["within"])
+        twin_path = out_dir / f"{twin}.output.json"
+        read: list[int] | None = None
+        if twin in paths and twin_path.exists():
+            other = json.loads(twin_path.read_text(encoding="utf-8"))
+            shift, difference = (
+                0,
+                abs(int(output.get("records_alive", 0)) - int(other.get("records_alive", 0))),
+            )
+            for detector in sorted({*output.get("counts", {}), *other.get("counts", {})}):
+                here = sorted(
+                    int(c["interval"]) for c in output.get("clicks", []) if c["detector"] == detector
+                )
+                there = sorted(
+                    int(c["interval"]) for c in other.get("clicks", []) if c["detector"] == detector
+                )
+                difference += abs(len(here) - len(there))
+                shift = max([shift, *(abs(a - b) for a, b in zip(here, there, strict=False))])
+            read = [shift, difference]
+        verdicts.append(
+            {
+                "kind": "equivalent",
+                "equivalent": twin,
+                "within": within,
+                "read": read,
+                "verdict": "MATCH"
+                if read is not None and read[0] <= within and read[1] == 0
+                else "MISS",
+            }
+        )
+    output["pins"] = [*output.get("pins", []), *verdicts]
+    write_output(out_dir, name, output)
+    return [str(v["verdict"]) for v in verdicts]
+
+
 def write_output(out_dir: Path, name: str, output: dict[str, object]) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{name}.output.json"
@@ -318,6 +385,7 @@ def main(argv: list[str] | None = None) -> int:
             rows.append(future.result())
     for row in rows:
         row.setdefault("pins", []).extend(ratio_rows(arguments.out, arguments.inputs, str(row["name"])))
+        row["pins"].extend(equivalence_rows(arguments.out, arguments.inputs, str(row["name"])))
     for row in rows:
         print(json.dumps(row, sort_keys=True))
     return 0 if all(row["verdict"] == "LAWFUL" for row in rows) else 1
