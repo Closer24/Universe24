@@ -529,7 +529,7 @@ def two_slits(name: str, universe: str, wavelength: int, wall: int, stock: int) 
     write("two_slits", name, document, expectation)
 
 
-def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> None:
+def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int, weight: int = 1) -> None:
     """The bending (b) on Cheshbon's line (#1325, 05:41Z and 05:43Z): the board 300 x 120 x 1 (z of extent 1, the [1, 1] rest Poisson's of the plane), the heavy body of 30 x 30 Nodes of `heavy` centred at (60, 60), the giver of 3 x 3 Nodes of 2,001 in a tube of mirrors 40 Nodes wide along +x with the beam's axis `gap` + 1 Nodes above the body's face (b = `gap` free Links), the screen at x = 260 (L = 200 from the body's centre) carrying one strip per Node across its whole face; beside the beam two small matter clocks of 3 x 3 Nodes of 2,001, one in the well at the beam's level (mirrored below the body) and one far from it, and the light's level at a Node deep in the well and at one outside, every interval (the redshift's second reading, GAMEBOARD); `heavy` None lays the twin with no heavy body, the same beam, screen and clocks, so that the centroid's shift is the difference of two DETECTOR readings (tools/beam_centroid.py). Nothing here is run."""
     face, centre, side = 74, 60, 30  # the heavy body's top face, its centre, its side
     axis = face + gap + 1  # the beam's axis: `gap` free Nodes between the face and the beam
@@ -546,7 +546,7 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
     screen_nodes = box(screen_x, screen_x + 3, 0, height - 1, 0, 0)
     heavy_box = (centre - side // 2, centre + side // 2 - 1, centre - side // 2, face)  # 45..74
     measured = [
-        giver(giver_nodes, giver_count, stock, weight=3),
+        giver(giver_nodes, giver_count, stock, weight=weight),
         body(tube, MIRROR),
         body(screen_nodes, WINDOW),
         body(box(centre - 1, centre + 1, clock_y - 1, clock_y + 1, 0, 0), clock_count),
