@@ -50,13 +50,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     # gravity rank 3 and real; the charge rank 2 with clicks (light its wave); matter a scalar of quanta
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and "clicks" not in gravity
     assert gravity["pair"] == [1, 1] == charge["pair"]  # the pair as written (THE WALL IS ONE)
-    spin = {
-        "count": "content",
-        "divisor": 40000,
-        "factors": [1, 1, 1],
-        "dipole": "spin",
-        "dipole_div": 1,
-    }
+    spin = {"count": "content", "divisor": 40000, "factors": [1] * 3, "dipole": "spin", "dipole_div": 1}
     moment = {"count": "sign", "divisor": 40000, "factors": [1, 1], "dipole": "moment", "dipole_div": 2}
     assert gravity["held"] == spin and gravity["reads"] == []
     assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == moment
@@ -116,6 +110,8 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     signs = [simulation.node_sources(number, "sign") for number in range(3)]
     assert signs == [[((10, 0, 0), 8)], [((20, 0, 0), -6)], [((30, 0, 0), 0)]]
     assert [simulation._body_charge(number) for number in range(3)] == [8, -6, 0]
+    six = {**world, "universe": "examples/events/planck_6000.json", "measured": bodies}  # after 24
+    assert parse_nature_beam_world(six).families[2].pair == (4000, 6000)  # Gamma 6,000, the record's
     inline = {**world, "measured": bodies, "node_clock": 24, "momentum_unit": 64, "twist_table": table}
     inline["universe"] = [*document["families"], third := {"name": "third", "pair": [-12, 24]}]
     f, least = [[1, 0, 1], [1999, 1998000, 1998001]], derived.MAX_WORK_INT // (3 * 1998001**2) - 1
