@@ -52,9 +52,9 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_face():
-    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: A's momentum runs positive under the loader's period by the rule (item 3), so the booking S . n is positive at A's own set; the hand +1 admits every click there (13 at `at_well`, none at the face, the same run as with no hand, A's momentum 1846) and the hand -1 refuses them all, each record walking the ladder on to the face (19 there, none at `at_well`, A's momentum 523 with its takings gone), measured once on this fixture."""
+    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: A's momentum runs negative under the loader's period by the rule (item 3) with its recoil carried on both levels of n, so the booking S . n is negative at A's own set; the hand -1 admits the clicks there (14 at `at_well`, one at the face where the booking's sign differs, A's momentum -7202) and the hand +1 refuses them, each record walking the ladder on to the face (14 there, one at `at_well`, A's momentum -4574 with its takings gone), measured once on this fixture."""
     document = json.loads(LIGHT_CLOCK.read_bytes())
-    for hand, at_well, at_face, momentum in ((-1, 0, 19, 523), (1, 13, 0, 1846)):
+    for hand, at_well, at_face, momentum in ((-1, 14, 1, -7202), (1, 1, 14, -4574)):
         world = parse_nature_beam_world(copy.deepcopy(document))
         families = list(world.families)
         families[1] = replace(families[1], hand=hand)
