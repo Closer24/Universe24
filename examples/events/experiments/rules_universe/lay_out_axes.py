@@ -37,6 +37,7 @@ PULLS = (0, 2, 4, 6)  # the second pixel's distance in Links along x; 0 the whit
 TAIL = {
     3_000: 41_943,
     4_000: 23_724,
+    4_400: 49_395,
     5_000: 34_734,
     6_000: 24_904,
 }  # Cheshbon's tail factor t = e^(-kappa) over 2^16 per count (14:12 Israel; the Closer 14:16), stated in integers
