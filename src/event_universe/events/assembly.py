@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING, Any, cast
 import numpy as np
 
 from event_universe.core.rule3 import THE_LOAD
-from event_universe.events import one_node
 from event_universe.features import crystal, polariser
 from event_universe.features.receive import ReceiveTerm
 from event_universe.loader.world import NatureBeamWorld
@@ -198,6 +197,9 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
 
 def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     """The bodies' blocks: every measured event with a block, its Nodes written into its family's pair arrays, its own record seeded on its Nodes, the blocks' Nodes on the detector map and the receiver by name."""
+    # The blocks (massive-record-v1): every measured event with a block,
+    # its Nodes written into its kind's pair arrays, its own record
+    # seeded on its Nodes and its momentum on its wall W = 3 Q M (`wall_of`).
     for number, entry in enumerate(world.measured):
         if entry.block is None:
             continue
@@ -210,10 +212,7 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
         block = loop._block(number, entry, definition, corner, mask)
         loop._write_pair(block)
         identity = -1 - number
-        block.node_record = one_node.node_record_of(world, definition, loop.shape, identity)
-        if block.node_record is not None:
-            block.previous_sum = block.node_record.now
-        elif definition.seed > 0:
+        if definition.seed > 0:
             own_record = loop._massive_record(
                 identity, number, entry.family, definition.kind, definition.twist
             )
@@ -230,7 +229,8 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
                 own_record.now[:] = profile
                 own_record.before[:] = profile
             else:
-                # THE SEED FALLBACK LEFT: a body's own record comes from its mode's two levels or profile alone
+                # THE SEED FALLBACK LEFT (the owner's word, 2026-09-28: a write without a row of the law
+                # leaves): a body's own record comes from its mode record's two levels or profile alone
                 raise ValueError(
                     f"measured[{number}] needs its `seed` as its composed mode's profile (the generator's "
                     "levels or profile in its mode file); a flat scalar seed is no mode record and no row of the law"

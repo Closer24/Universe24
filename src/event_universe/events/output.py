@@ -7,6 +7,7 @@ from math import gcd
 from typing import TYPE_CHECKING
 
 from event_universe.core.rule3 import division_forward, rungs
+from event_universe.events import one_node
 
 if TYPE_CHECKING:
     from event_universe.events import detector_law, records
@@ -351,6 +352,10 @@ def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[
                     if block.own is None
                     else form_json(simulation.record_form(block.own))
                 ),
+                # THE BOUND BODY IS ONE NODE as a reading (GAMEBOARD): bound per the files, and the
+                # lattice record's levels at the Node with the one-Node line's rotation there
+                "bound": one_node.one_node_body(simulation.world, block.definition),
+                "rotation": one_node.rotation_reading(simulation, block),
                 # the body's Node's record, (a, b, r) at the body's Node (ALGEBRA.md #what-a-body-is; item 42; GAMEBOARD)
                 "node_record": (
                     None

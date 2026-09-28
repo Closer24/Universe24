@@ -847,11 +847,23 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.wait = 0
         block.emit_now = False
 
+    def node_record_clock(self, block: Block) -> tuple[int, int]:
+        """The body's Node's pair this interval: the declared clock pair [num_c, den_c] of the body's mode at rest, and on a moving body the proper pair of the drive's momentum now (the world's `proper_clock` at the momentum's whole part along its one axis, the same m the drive hops with), the moving mode's rotation at its moving centre per interval; the rest pair at m = 0."""
+        clock = block.definition.clock
+        assert clock is not None
+        table = block.definition.proper_clock
+        if table is None:
+            return int(clock[0]), int(clock[1])
+        index = max(abs(int(component)) for component in self._momentum_now(block))
+        num_c, den_c = table[index]
+        return int(num_c), int(den_c)
+
     def node_record_rule(self, block: Block) -> tuple[int, int, int, int]:
-        """THE ONE RULE AT THE BODY'S NODE (ALGEBRA.md #the-primitives, THE BOUND BODY IS ONE NODE; #what-a-body-is): the integers the body's Node record is stepped with, (num, den, Gamma, c): its kind's pair (the family's, [2, 3] in the rule's own universe; the bound rotation omega_b(c) comes from the pace at its Node and no clock is declared) and the Node's clock pair as its record reads it, (Gamma - c, Gamma) with c the content there (the well is the count under the divisor 1)."""
+        """THE ONE RULE AT THE BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42): the integers the body's Node's record is stepped with, (num, den, Gamma, c): the body's Node's pair this interval as [num_c, 2 den_c] (`node_record_clock`: the body's clock pair in the rule's convention, 2 cos omega = num_c / den_c, the proper pair of its momentum on a moving body), the world's Gamma and the body's Node's own effective content c (Gamma - p at the body's centre Node, the family of clicks' level less the charge's read, uniform over its Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
+        num_c, den_c = self.node_record_clock(block)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
         pace, gamma = self.node_clock_pair(centre, block.family)
-        return int(block.definition.kind[0]), int(block.definition.kind[1]), gamma, gamma - pace
+        return num_c, 2 * den_c, gamma, gamma - pace
 
     def node_record_coefficients(self, block: Block) -> tuple[int, int]:
         """The one rule's coefficients at the body's Node with the six reads returning the body's Node (S_6 = 6 a): (the coefficient on a, the wall) = (6 num (Gamma - c) + 6 den c, 3 den Gamma) = (6 num_c p + 12 den_c c, 6 den_c Gamma), six times ALGEBRA.md #what-a-body-is's (K, den_c Gamma): the same rotation as rationals (ALGEBRA.md #what-a-body-is)."""
