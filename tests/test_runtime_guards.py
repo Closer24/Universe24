@@ -10,8 +10,7 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-GUARDED = ("src", "tools")
-READERS = ("src", "tools", "tests", "examples")
+GUARDED, READERS = ("src", "tools"), ("src", "tools", "tests", "examples")
 WORD = re.compile(r"\b[A-Za-z_]\w*\b")
 
 
@@ -55,8 +54,7 @@ def grown_asserts(head: dict[str, str], base: dict[str, str]) -> list[str]:
 
 def unused_names(guarded: dict[str, str], corpus: str) -> list[str]:
     """The module-level names of `guarded` that the corpus names only once, at their definition."""
-    words = Counter(WORD.findall(corpus))
-    found = []
+    words, found = Counter(WORD.findall(corpus)), []
     for name, text in sorted(guarded.items()):
         for node in ast.parse(text).body:
             targets = (

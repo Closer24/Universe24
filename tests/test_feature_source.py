@@ -134,8 +134,5 @@ def test_the_declaration_is_the_ledgers_row_and_the_register_binds_its_function(
     declaration = register.declarations["the source"]
     assert declaration.section == DECLARATION.section and declaration.function is apply
     step = parse_nature_beam_world(emitter_world(stock=1, ticks=2)).step
-    assert register.writers("a family's level at a Node", "(iv)", step) == (
-        "the hold",
-        "the source",
-        "the recoil",
-    )
+    writers = ("the hold", "the source", "the recoil")
+    assert register.writers("a family's level at a Node", "(iv)", step) == writers

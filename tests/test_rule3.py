@@ -14,8 +14,7 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "src" / "event_universe"
-GAMMA = 10_000
+SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
 
 
 def old_isotropic(
@@ -38,8 +37,7 @@ def old_axes(
 ) -> tuple[tuple[int, int, int], int, int]:
     """The engine's `axis_rule_coefficients` before the cut, the oracle of the four paces."""
     pace = gamma - content
-    paces = [pace - axis_contents[axis] for axis in range(3)]
-    gamma_squared = gamma * gamma
+    paces, gamma_squared = [pace - axis_contents[axis] for axis in range(3)], gamma * gamma
     reads = (2 * paces[0] ** 2 * num, 2 * paces[1] ** 2 * num, 2 * paces[2] ** 2 * num)
     squares = paces[0] ** 2 + paces[1] ** 2 + paces[2] ** 2
     self_coefficient = (
@@ -92,11 +90,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         reads, self_coefficient, wall = coefficients(
             num, den, gamma, content, (rng.randint(-30, 30), rng.randint(-30, 30), rng.randint(-30, 30))
         )
-        arrivals = (
-            rng.randint(-(10**6), 10**6),
-            rng.randint(-(10**6), 10**6),
-            rng.randint(-(10**6), 10**6),
-        )
+        arrivals = tuple(rng.randint(-(10**6), 10**6) for _ in range(3))
         now, before = rng.randint(-(10**6), 10**6), rng.randint(-(10**6), 10**6)
         remainder = rng.randint(0, wall - 1)
         total = (
@@ -109,10 +103,8 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         assert (nxt, carried) == (total // wall, total % wall) and 0 <= carried < wall
         stepped_back = (before, remainder)
         assert rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1) == stepped_back
-    generator = np.random.default_rng(9)
-    shape = (4, 3, 2)
-    num = np.full(shape, 800, dtype=np.int64)
-    den = np.full(shape, 809, dtype=np.int64)
+    generator, shape = np.random.default_rng(9), (4, 3, 2)
+    num, den = np.full(shape, 800, dtype=np.int64), np.full(shape, 809, dtype=np.int64)
     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
     arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(3))
     now = generator.integers(-(10**6), 10**6, shape, dtype=np.int64)
@@ -172,8 +164,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
 
 def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
     """The engine's records step and step back through rule3 alone (+1 forward, -1 back, a spy on the one name the engine imports), and the operation primitive of the register is rule3 itself."""
-    calls = {"forward": 0, "backward": 0}
-    real_rule = detector_law.rule3
+    calls, real_rule = {"forward": 0, "backward": 0}, detector_law.rule3
 
     def spy_rule(*args: object) -> object:
         calls["forward" if len(args) < 8 or args[7] == 1 else "backward"] += 1

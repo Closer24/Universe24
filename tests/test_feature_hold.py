@@ -60,11 +60,8 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
     nodes = ((("n", 4, 0, 0), 50), (("n", 5, 0, 0), 14))
     whole = apply(over, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {}))
     each = apply(over, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None, nodes), HoldOwn({}, {}))
-    assert [(k, n) for _p, k, n, _b in whole.parts] == [
-        (None, 4 * 64 * 3120 // (7 * 12480)),
-        (None, 0),
-        (None, 0),
-    ]
+    first = 4 * 64 * 3120 // (7 * 12480)
+    assert [(k, n) for _p, k, n, _b in whole.parts] == [(None, first), (None, 0), (None, 0)]
     assert [(k, n) for p, k, n, _b in each.parts if p == 1] == [
         (k, 4 * c * 3120 // (7 * 12480)) for k, c in nodes
     ]
