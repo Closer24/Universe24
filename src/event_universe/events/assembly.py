@@ -369,8 +369,7 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
         record.now[index] = [now for _, now, _ in written]
         record.before[index] = [before for _, _, before in written]
         record.remainder[...] = field.remainder  # the folder's rest of the remainders (THE START)
-        for number in range(len(loop.held)):
-            block = loop.block_by_number.get(number)
-            for node, _value in loop.node_sources(number, source) if block is not None else ():
+        for number, block in loop.block_by_number.items():
+            for node, _value in loop.node_sources(number, source):
                 block.hold_carry[(family, "n", *node)] = int(field.carries[node])
         loop.node_level[family] = record.now
