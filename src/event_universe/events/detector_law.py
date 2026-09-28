@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, feeding, guards, output, pair
+from event_universe.events import after_step, assembly, body_language, feeding, guards, output, pair
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -46,13 +46,7 @@ from event_universe.features.giving import (
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
-from event_universe.features.recoil import (
-    TAKING,
-    RecoilOwn,
-    RecoilStart,
-    RecoilTerm,
-    RecoilWrites,
-)
+from event_universe.features.recoil import TAKING, RecoilOwn, RecoilStart, RecoilTerm, RecoilWrites
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
     KEYS,
@@ -191,21 +185,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             else None
         )
         assembly.universe_values(self, world)
-        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the wavelengths 2 N q / p over the clocks [p, q] of the families a body of the world gives and of the emitters
+        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the givers' wavelengths, each the mode's `wavelength` on the emitter's clock [2 N, lambda_q] (a family's row's clock is not read here)
         self.recoil_wall = 1
-        givers = [e.block.emitter for e in world.measured if e.block and e.block.emitter]
-        for index, row in enumerate(world.families):
-            if row.phase_per_age is not None and any(g.family == index for g in givers):
-                self.recoil_wall = bounded_lcm(
-                    self.recoil_wall, self._wavelength(row.phase_per_age, f"families[{index}]")
-                )
         for number, entry in enumerate(world.measured):
             if entry.block is not None and entry.block.emitter is not None:
                 self.recoil_wall = bounded_lcm(
                     self.recoil_wall, self._wavelength(entry.block.emitter.clock, f"measured[{number}]")
                 )
-        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock
-        self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int]]] = []
+        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock, the record
+        self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int], int]] = []
+        self.recoil_kicks: dict[int, list[int]] = {}
         self._crystal_clicks: list[tuple[int, LiveRecord]] = []
         assembly.state_arrays(self, world)
         self.kind_num = PairView(self, 0)
@@ -455,7 +444,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1, the kick written to both levels of n (the feed's KEEP pair exchanges them every interval); a body with no period declares no term."""
-        for number, sense, tally, clock in self._recoils:
+        for number, sense, tally, clock, identity in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
             if block is None or emitter is None or emitter.period is None:
@@ -473,9 +462,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 (stores[0], stores[1], stores[2]),
             )
             writes = cast(RecoilWrites, function(term, RecoilStart(tally), own))
-            for axis, (kicked, rest) in enumerate(zip(writes.momentum, writes.remainders, strict=True)):
-                block.momentum_before[axis] += kicked - own.momentum[axis]
-                block.momentum[axis], block.hold_value[("recoil", axis)] = kicked, rest
+            body_language.recoil(self, block, number, sense, identity, tally, own.momentum, writes)
         self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
@@ -1092,7 +1079,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             part=emitter.part,
             twist=emitter.twist,
         )
-        live.window_open = True
+        live.window_open, live.giving_remainders = True, None
+        live.giver_clock = self._body_count(block)
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
         if emitter.receiver is not None:
@@ -1893,14 +1881,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._ladder_click(live, increments)
 
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
-        """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
+        """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term the giving's coupling as a pair and the quantum action T (until the loader reads the universe's [1, k] and T, the file's emitter declaration: the weight g as the pair [g, 1], T = norm div norm_denominator), the own record from the window's record (`live`), none at the open."""
         emitter = after_step.emitter_of(block)
         if emitter is None:
             raise ValueError(f"the body {block.number} gives with no emitter declared")
         norm = emitter.norm if emitter.norm is not None else 1
         denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
         weight = emitter.weight if emitter.weight is not None else 1
-        term = GivingTerm(weight, norm, denominator, emitter.family)
+        term = GivingTerm((weight, 1), division_forward(norm, denominator, 0)[0], emitter.family)
         own = (
             GivingOwn(None, 0, (0, 0, 0))
             if live is None
@@ -1908,32 +1896,30 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 live.window,
                 live.outward,
                 (live.outward_tally[0], live.outward_tally[1], live.outward_tally[2]),
+                live.giving_remainders,
             )
         )
         function = self.main_loop.function_of("the giving", "(ii)")
         return cast(GivingWrites, function(term, start, own))
 
-    def _body_levels(self, block: Block) -> np.ndarray:
-        """The body's rotation's level now at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
+    def _body_levels(self, block: Block, before: bool = False) -> np.ndarray:
+        """The body's rotation's level now (or before) at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
         if block.node_record is not None:
-            count = int(np.count_nonzero(block.mask))
-            return np.full(count, int(block.node_record.now), dtype=np.int64)
+            level = block.node_record.before if before else block.node_record.now
+            return np.full(int(np.count_nonzero(block.mask)), int(level), dtype=np.int64)
         assert block.own is not None
-        return np.asarray(block.own.now[block.mask], dtype=np.int64)
+        return np.asarray((block.own.before if before else block.own.now)[block.mask], dtype=np.int64)
 
     def body_outward_flux(self, live: LiveRecord, block: Block, tally: list[int] | None = None) -> int:
-        """The outward flux through the body's outer Ports this interval, wall times (now_j before_i - before_j now_i) where positive over the Ports to Nodes outside the body (none beyond an open face, on a folded axis or along the record's own component), the second level added; with `tally` the flux per axis signed by the side."""
+        """The outward flux through the body's outer Ports this interval, wall times (now_j before_i - before_j now_i) where positive over every Port to a Node outside the body on every axis (the record's own axis and an axis of one layer among them: the giving's row reads the outward current through the body's outer Ports, Cheshbon's 04:25Z (5c); none beyond an open face), the second level added; with `tally` the flux per axis signed by the side."""
         wall = self.kind_wall(live.family)
         wrap = self.kind_wrap[live.family]
-        own_axis = self.booked_axis(live)
         mask = block.mask
         levels = [(live.now, live.before)]
         if live.im_now is not None and live.im_before is not None:
             levels.append((live.im_now, live.im_before))
         total = 0
         for axis in range(3):
-            if self.shape[axis] == 1 or axis == own_axis:
-                continue
             for side in (1, -1):
                 ports = self.ports.outward(mask, wrap)[port_of(axis, side)]
                 if not ports.any():
@@ -1950,7 +1936,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return total
 
     def _point_window_inverse(self, block: Block) -> None:
-        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write subtracted (an addition inverts), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
+        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write at both levels subtracted through the folder's inverse (the levels written that interval from the same body levels and the remainders after, the remainders before kept), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
         live = self.records.get(block.window) if block.window is not None else None
         emitter = block.definition.emitter
         if live is None or emitter is None or emitter.weight is None or live.window <= 0:
@@ -1958,8 +1944,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         undone = [0, 0, 0]
         live.outward -= self.body_outward_flux(live, block, undone)
         live.outward_tally = [kept - gone for kept, gone in zip(live.outward_tally, undone, strict=True)]
-        live.now[block.mask] -= emitter.weight * self._body_levels(block)
-        live.window -= 1
+        levels = (self._body_levels(block), self._body_levels(block, before=True))
+        writes = self._giving_act(
+            block, GivingStart(THE_INVERSE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live
+        )
+        undone_levels = cast(tuple[np.ndarray, np.ndarray], writes.level)
+        live.now[block.mask] -= undone_levels[0]
+        live.before[block.mask] -= undone_levels[1]
+        live.giving_remainders, live.window = writes.own.remainders, live.window - 1
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
         """The sum of the six neighbours' amplitudes at the Nodes (flat indices) alone, as the send reads them over the board (the wrap on a periodic axis, 0 beyond a zero face, the row itself on an axis of one layer); HOST: the cost is the Nodes asked, not the board."""
@@ -2020,9 +2012,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         measured = self.detector_measured[detector]
         if measured is None or self.detector_face[detector]:
             return
-        tally = live.momentum_tally.get(detector, [0, 0, 0])
+        t = live.momentum_tally.get(detector, [0, 0, 0])
         clock = (live.period_numerator, live.period_denominator)
-        self._recoils.append((measured, TAKING, (int(tally[0]), int(tally[1]), int(tally[2])), clock))
+        self._recoils.append((measured, TAKING, (int(t[0]), int(t[1]), int(t[2])), clock, live.identity))
 
     def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
         """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""
