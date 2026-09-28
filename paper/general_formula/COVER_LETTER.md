@@ -24,13 +24,15 @@ name a universe whose every number is the rule's, with zero free numbers,
 in which every bound body is one Node between an edge and a horizon and
 the observer is a cluster of such Nodes. Outside the lattice there are
 detectors and their clicks only; everything compared with nature is a
-click or a count of clicks. Eighteen experiments are written as blind
-expectations from the algebra, each beside the form of nature it is
-compared with (Einstein's, Lorentz's, de Broglie's, Born's, Malus's,
-Bell's), and the paper says plainly that none is run in it and that no
-agreement with nature is claimed; the forms of nature are on the
-comparison side only, never an input. Every hypothesis is named as one,
-and the paper's last section lists what is open by name.
+click or a count of clicks. The paper is algebra alone: it holds no run,
+no code and no experiment. The forms of nature (Einstein's, Lorentz's,
+de Broglie's, Born's, Malus's, Bell's) are derived from the line as
+predictions, each beside the form it is compared with, and the paper says
+plainly that nothing is run in it and that no agreement with nature is
+claimed; the forms of nature are on the comparison side only, never an
+input. Every claim carries its mark (theorem, derived, computed,
+assumption, hypothesis), and the paper's last section lists what is open
+by name.
 
 **Why this journal.** The paper belongs to the family of deterministic
 lattice and cellular-automaton models of physics whose foundational
