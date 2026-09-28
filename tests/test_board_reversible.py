@@ -22,19 +22,10 @@ def reversible_world(ticks: int = 400) -> dict:
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
-    document["universe"].insert(
-        POSITIVE, family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
-    )
-    document["measured"].append(
-        {
-            "position": [55, 0, 0],
-            "family": "positive",
-            "amount": 1,
-            "stocks": {},
-            "momentum": [0, 0, 0],
-            "momentum_before": [0, 0, 0],
-        }
-    )
+    positive = family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
+    document["universe"].insert(POSITIVE, positive)
+    body = {"position": [55, 0, 0], "family": "positive", "amount": 1, "stocks": {}}
+    document["measured"].append({**body, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]})
     seed_on_the_mode(document)
     document["stamp"] = input_stamp(document)
     return document
@@ -42,22 +33,15 @@ def reversible_world(ticks: int = 400) -> dict:
 
 def rows_of(simulation: DetectorLawSimulation) -> dict[str, object]:
     """Every row of the board: the records' two levels and remainders (the bodies' own among them), both fields' rows, the held quanta and the interval."""
+    three = lambda record: (record.now.copy(), record.before.copy(), record.remainder.copy())  # noqa: E731
+    content, sign = simulation.held_record("content"), simulation.held_record("sign")
+    records = {identity: three(live) for identity, live in simulation.records.items()}
+    held = copy.deepcopy(simulation.held)
     return {
-        "records": {
-            identity: (live.now.copy(), live.before.copy(), live.remainder.copy())
-            for identity, live in simulation.records.items()
-        },
-        "clock": (
-            simulation.held_record("content").now.copy(),
-            simulation.held_record("content").before.copy(),
-            simulation.held_record("content").remainder.copy(),
-        ),
-        "charge": (
-            simulation.held_record("sign").now.copy(),
-            simulation.held_record("sign").before.copy(),
-            simulation.held_record("sign").remainder.copy(),
-        ),
-        "held": copy.deepcopy(simulation.held),
+        "records": records,
+        "clock": three(content),
+        "charge": three(sign),
+        "held": held,
         "tick": simulation.tick,
     }
 
@@ -253,9 +237,8 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
                     assert 2 * wheel * (wait - 1) < (2 * u + 1) * period <= 2 * wheel * wait
                 else:
                     u, wheel = residue_at_open
-                    assert (
-                        2 * wheel * (line["wait"] - 1) < (2 * u + 1) * period <= 2 * wheel * line["wait"]
-                    )
+                    wait = line["wait"]
+                    assert 2 * wheel * (wait - 1) < (2 * u + 1) * period <= 2 * wheel * wait
                 previous_residue = (line["u"], line["W"])
                 read_at = line["tick"]
             if line["event"] == "gather":
@@ -278,10 +261,7 @@ def test_between_clicks_the_weighted_form_is_exact_where_the_field_stands():
     document = reversible_world()
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    gamma = simulation.node_clock
-    followed: int | None = None
-    previous_rows = None
-    checked = 0
+    gamma, followed, previous_rows, checked = simulation.node_clock, None, None, 0
     for _ in range(200):
         # the content light reads: the effective content c - q Lambda d, light of charge -1 here (ALGEBRA.md #the-paces)
         content_start = simulation._effective_content(LIGHT).copy()
@@ -304,27 +284,46 @@ def test_between_clicks_the_weighted_form_is_exact_where_the_field_stands():
         num = simulation.kind_num[live.family]
         value = form_I(simulation, live.family, now, before, content_start)
         previous = form_I(simulation, live.family, prev_now, prev_before, content_start)
-        read_coefficient = coefficients(
-            num.astype(object),
-            simulation.kind_den[live.family].astype(object),
-            gamma,
-            content_start.astype(object),
-        )[0][0]
+        den, content = simulation.kind_den[live.family].astype(object), content_start.astype(object)
+        read_coefficient = coefficients(num.astype(object), den, gamma, content)[0][0]
         drift = Fraction(0)
         for node in zip(*np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True):
-            drift += Fraction(
-                (int(now[node]) - int(prev_before[node]))
-                * (int(prev_remainder[node]) - int(remainder[node])),
-                3 * int(read_coefficient[node]),
+            change, kept = (
+                int(now[node]) - int(prev_before[node]),
+                int(prev_remainder[node]) - int(remainder[node]),
             )
+            drift += Fraction(change * kept, 3 * int(read_coefficient[node]))
         assert value - previous == drift, simulation.tick
-        exchange = exchange_of(
-            simulation, live.family, now, before, content_start, simulation._effective_content(LIGHT)
-        )
-        moved = form_I(simulation, live.family, now, before, simulation._effective_content(LIGHT))
+        effective = simulation._effective_content(LIGHT)
+        exchange = exchange_of(simulation, live.family, now, before, content_start, effective)
+        moved = form_I(simulation, live.family, now, before, effective)
         assert moved - value == exchange, simulation.tick
-        if np.array_equal(content_start, simulation._effective_content(LIGHT)):
+        if np.array_equal(content_start, effective):
             assert exchange == 0
         checked += 1
         previous_rows = (now.copy(), before.copy(), remainder.copy())
     assert checked > 20
+
+
+def bookings_of(simulation: DetectorLawSimulation) -> dict[str, object]:
+    """The hidden bookings the inverse returns: per record the pointers, the absorbed sum, the momentum tally and the ladder's total; per body the clock's sum and the cycle's start."""
+    tallies = lambda live: {d: list(t) for d, t in live.momentum_tally.items()}  # noqa: E731
+    records = {
+        i: (list(r.pointers), r.absorbed, tallies(r), r.total) for i, r in simulation.records.items()
+    }
+    return {"records": records, "clocks": [(b.previous_sum, b.cycle_start) for b in simulation.blocks]}
+
+
+def test_the_bookings_and_the_bodys_clock_return_with_the_rows_across_a_close_with_stock_left():
+    """Nature24's finding of 2026-09-28 (#1377, the REVERSIBLE row): the emitter world of stock 2 stepped 160 intervals, then back to 148 through the window's close at 150 (reopened by hand as the closes are): every row bit for bit, and the records' bookings (the pointers, the absorbed sum, the momentum tally, the ladder's total) and the bodies' clocks (the sum, the cycle's start) as the forward intervals had them; the record's box and the cycle's length are the host's readings and not compared."""
+    world, lines = parse_nature_beam_world(emitter_world(stock=2, ticks=600)), []
+    simulation = DetectorLawSimulation(world, observer=lines.append)
+    forward = [(rows_of(simulation), bookings_of(simulation))]
+    for _ in range(160):
+        simulation.step()
+        forward.append((rows_of(simulation), bookings_of(simulation)))
+    assert 150 in (closes := set(close_ticks(lines))) and click_ticks(lines)[1] == [148]
+    for t in range(160, 148, -1):
+        inverse_close_interval(simulation, lines, t) if t in closes else simulation.step_inverse()
+        assert_same(rows_of(simulation), forward[t - 1][0])
+        assert bookings_of(simulation) == forward[t - 1][1], t - 1

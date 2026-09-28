@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.core.rule3 import coefficients
+from event_universe.core.rule3 import coefficients, rule_total_bound
 from event_universe.events.detector_law import DetectorLawSimulation, form_json
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import CHAIN, GAMMA, PAIR, content_chain, light_body, six_reads
@@ -245,10 +245,11 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     with pytest.raises(ValueError, match="node_clock"):
         parse_nature_beam_world(zero)
     heavy = content_chain(400, CHAIN, range(150, 190), 250000, gamma=1_000_000)
-    with pytest.raises(
-        ValueError, match=r"\.pair \[.*Gamma = 1000000 and the content M = 20000000 .*not below 2\^63"
-    ):
-        parse_nature_beam_world(heavy)
+    world = parse_nature_beam_world(
+        heavy
+    )  # A derived at this Gamma: every pair's total fits inside the width
+    for pair in (tuple(f["pair"]) for f in heavy["universe"]):
+        assert rule_total_bound(*pair, 1_000_000, 999_999, world.amplitude_bound, True) < 1 << 63
     registered = json.loads((ROOT / "tests/light_clock.json").read_text(encoding="utf-8"))
     # the integers of ALGEBRA.md #the-rows-against-nature from the families file alone (item 59)
     assert registered["universe"] == "examples/events/universe.json"

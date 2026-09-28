@@ -9,7 +9,6 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-SHARED_UNIVERSE = "examples/events/generated/universe.json"  # the shipped families' rows, no divisor
 UNIVERSE = (
     "examples/events/experiments/universe.json"  # the rows of record: the held rows with `divisor`
 )
@@ -641,6 +640,8 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
             "band": 1.4,
             "before_the_axis_pace_term": -2.7,
             "row_as_written": -3.8,
+            "level_twice_over_once": 2,
+            "level_twice_over_once_row": "the owner's line (10:40 Israel): the bending reads the level twice (THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the axis pace Gamma - 2c) and the redshift once (the clock Gamma - c), so the shift with the level twice over the shift with it once is 2 by the law's line alone, independent of G (E_s), the count, Gamma and L: 5.5 / 2.7 before the run (2.0 within the rounding; the row's form 4 U_b L / 2 U_b L = 3.8 / 1.9), nature's 4GM / b c^2 over Newton's 2GM / b c^2",
             "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's; the body lies at y below the axis, so a shift toward it is negative: the algebra's -5.5 (the conformal pace and the level once more in the axis pace, both in the law) within 1.4 Links (the rounding's 0.5 and the draw's 0.9 at the stock over a tube 40 wide), the engine's expectation once both terms are in core, a difference an engine defect; -2.7 before the axis-pace term; the row's -3.8 (4 U_b L, U_b = c_b / Gamma, nature's form) beside it, never tuned to",
         },
         "GAMEBOARD": [
@@ -664,6 +665,10 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
                 "centre": [centre, clock_y, 0],
                 "band": 1,
                 "row": "the clock in the well within a Link (its fall by the wave's law over the run below a Link)",
+            },
+            {
+                "reversible": ticks,
+                "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)",
             },
         ],
         "GAMEBOARD_checks": [
@@ -689,8 +694,8 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
 
 
 def universe_of_record() -> None:
-    """The universe file of record beside the worlds: the shipped rows with `divisor` inside every held row (the hold's write as a sum, the owner's word; the frame's `held` card takes the key since #1312, a key at the family's top level is refused); the numbers are the approvals'."""
-    document = json.loads((ROOT / SHARED_UNIVERSE).read_text(encoding="utf-8"))
+    """The universe file of record beside the worlds, the one universe every world reads: its held rows with `divisor` (the hold's write as a sum, the owner's word; the frame's `held` card takes the key since #1312, a key at the family's top level is refused); the numbers are the approvals'."""
+    document = json.loads((ROOT / UNIVERSE).read_text(encoding="utf-8"))
     for family in document["families"]:
         if "held" in family:
             family["held"]["divisor"] = DIVISOR[family["name"]]
