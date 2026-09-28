@@ -1,31 +1,78 @@
 {
  "format": "world-expectation-v1",
  "status": "BLIND: the row of THE CLICK JOINS AND PARTS; Cheshbon's numbers before the run; no number of a run here",
- "row": "ALGEBRA.md THE CLICK JOINS AND PARTS: two bound bodies of one Node, the counts 4,400 and 4,700 (the edge 4,133 on the engine of today, Cheshbon 14:12), on the rule's own universe (Gamma = 12,000, the divisors 1, the pair [2, 3], T = 1), 2 Links apart: their tails overlap (kappa per Link in the blind numbers), the count's line reads the overlap and clicks, the tail biased toward the deeper, so the smaller gives quantum by quantum to the deeper until its count falls under the edge 0.2255 Gamma = 2,706 and dissolves; one record for the joined cluster (the one non-local act)",
+ "row": "ALGEBRA.md THE CLICK JOINS AND PARTS: two bound bodies of one Node, the counts 10 and 12 (the edge 8.27 = 0.3444 Gamma on the engine 'today'), on the rule's own universe (Gamma = 24, T = 1, the divisors of the file), 3 Links apart: their tails overlap (kappa per Link in the blind numbers), the count's line reads the overlap and clicks, the tail biased toward the deeper, so the smaller gives quantum by quantum to the deeper until its count falls under the edge and dissolves; one record for the joined cluster (the one non-local act)",
  "DETECTOR": [],
  "faces": "a face is no body and a click at an open face is no click (Cheshbon 14:55, the Closer 15:02 Israel time): a record that reaches a face ends and is not counted; the reading of (d) is the two Nodes' counts and the count's line's moves between them",
  "blind": {
-  "row": "Cheshbon's numbers of 13:03 and 13:18 Israel time (2026-09-28) before the run: under T = 1 every remainder crosses, the first click at interval 1; the join at two Links (the overlap 0.41, the transfer about 0.33 radians per interval) dissolves the smaller within about 3 to 10 intervals; at five Links (the overlap 0.107, 0.087 radians per interval) within about 30 to 70; the click's reach is about 18 Links, so neither world parts",
-  "edge_quanta_per_node": 4133,
-  "horizon_quanta_per_node": 6000,
+  "row": "Cheshbon's numbers before the run (2026-09-28, 13:03, 13:18 and 15:22 Israel time): under T = 1 every remainder crosses, the first click at interval 1 where the tails overlap; the smaller dissolves within about two bound periods once the clicks run; the click's reach is ln(b_1 b_2 / T) / kappa Links; at Gamma = 24 the count is quantised in tenths of the pixel, so every blind number carries a band of one quantum, 10 to 15 percent, the count breathes by one quantum and a pixel of 6 or 7 is not realisable under the law (Cheshbon 15:22, item 5)",
+  "gamma": 24,
+  "edge_quanta_per_node": 8.27,
+  "horizon_quanta_per_node": 12,
   "counts": [
-   4400,
-   4700
+   10,
+   12
   ],
   "tail_kappa_per_link": {
-   "4400": 0.283,
-   "4700": 0.48
+   "10": 0.631,
+   "12": 0.976
   },
   "bound_rotation": {
-   "4400": 0.829,
-   "4700": 0.8055
+   "10": 0.7779,
+   "12": 0.6741
   },
-  "click_reach_links": 18,
+  "bound_period_intervals": {
+   "10": 8.08,
+   "12": 9.32
+  },
+  "clock_ratio_deep_over_small": 1.153,
+  "click_reach_links": 4,
   "first_click_interval": 1,
   "dissolution_intervals": [
-   3,
-   10
+   10,
+   20
   ],
+  "record": {
+   "row": "THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD (Cheshbon 15:41, the Closer 15:46): the file declares the record by its amplitude b, the count is (the sum of D over the period) div (P T), read once per period; the realisable pixels at 24 are b = 5 (the counts about 8 to 10) and b = 8 (about 12 to 15) under the law; the run's count at each Node over the last period and the period from the level's sign changes are read against this table",
+   "bodies": {
+    "small": {
+     "amplitude_b": 5,
+     "counts": [
+      9,
+      11
+     ],
+     "record_count": [
+      9.6,
+      9.9
+     ],
+     "period": [
+      6.9,
+      8.0
+     ]
+    },
+    "deep": {
+     "amplitude_b": 6,
+     "counts": [
+      12,
+      12
+     ],
+     "record_count": [
+      9.2,
+      9.2
+     ],
+     "period": [
+      9.2,
+      9.2
+     ]
+    }
+   },
+   "clock_ratio_deep_over_small": [
+    1.08,
+    1.23,
+    1.38
+   ],
+   "band": "one quantum on every count, 10 to 15 percent; the period to one interval"
+  },
   "clicks_expected": "a run of clicks from the smaller to the deeper until the smaller's record ends",
   "records_at_the_end": 1
  },

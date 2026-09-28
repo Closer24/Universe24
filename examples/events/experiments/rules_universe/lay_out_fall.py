@@ -1,4 +1,4 @@
-"""WORLD (c) OF THE RULE'S OWN UNIVERSE: THE FALL AS THE CLICKS' BIAS (ALGEBRA.md THE RULE'S OWN UNIVERSE, THE BOUND BODY IS ONE NODE, THE UNIVERSE IS BOUND; the owner's decision of 2026-09-28, 13:01 Israel; the Closer's assignment of 13:34; Cheshbon's layout and blind numbers of 13:09): a bound body of one Node on the matter pair [2, 3] (3,000 quanta, above the edge 0.2255 Gamma = 2,706) beside a tent of the held gravity, a content-only body of 50, 100 or 200 quanta at the neighbouring Node (under the divisor 1 the well is the count, so the tent lays a pace gradient over the body), and a control with no tent. The tail of the body's record on the two sides of its Node is the GameBoard reading (Cheshbon: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200, kappa_minus = 0.446), and the fall is the clicks' bias: the tail's remainder crosses T earlier on the well's side, so the count's line moves the body's quanta toward the well in the same ratio (51.2, 51.3 and 52.9 percent of the moves), read from the body's centre by fall_bias.py until a reading of the count's moves exists. Run from the repository root: python examples/events/experiments/rules_universe/lay_out_fall.py; it writes the four worlds and their expectation files beside the universe file of world (d); the mode files come from tools/body_generator.py."""
+"""WORLD (c) OF THE RULE'S OWN UNIVERSE: THE FALL AS THE CLICKS' BIAS (ALGEBRA.md THE RULE'S OWN UNIVERSE, THE BOUND BODY IS ONE NODE, THE UNIVERSE IS BOUND; the owner's decision of 2026-09-28, 13:01 Israel; the Closer's assignment of 13:34; Cheshbon's layout and blind numbers of 13:09): a bound body of one Node on the matter pair [2, 3] (3,000 quanta, above the edge 0.2255 Gamma = 2,706) beside a cluster of pixels along +x (THE SCREEN IS A CLUSTER, Cheshbon 14:55 Israel: the heavy body is a sieve of bound pixels, a tent of held content is not a body), and a control with no cluster. The tail of the body's record on the two sides of its Node is the GameBoard reading (Cheshbon: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200, kappa_minus = 0.446), and the fall is the clicks' bias: the tail's remainder crosses T earlier on the well's side, so the count's line moves the body's quanta toward the well in the same ratio (51.2, 51.3 and 52.9 percent of the moves), read from the body's centre by fall_bias.py until a reading of the count's moves exists. Run from the repository root: python examples/events/experiments/rules_universe/lay_out_fall.py; it writes the control and one world per cluster with their expectation and mode files (the pixels' modes through tools/pixel_mode.py)."""
 
 from __future__ import annotations
 
@@ -11,35 +11,42 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from lay_out_axes import pixel_mode  # noqa: E402  (the pixels' mode files by the recipe)
+from lay_out_axes import (  # noqa: E402
+    COUNT_BY_GAMMA,
+    PLANCK,
+    RECORD,
+    edges,
+    gamma_of,
+    pixel_mode,
+)
 from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
-COUNT = 4_400  # the body's count on the engine of today: the bound window 4,133 <= c <= about 5,900 (Cheshbon 14:39 Israel), the Closer's word of 14:47; 3,000 again with the corrected term
-BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
-TENTS = (
-    0,
-    50,
-    100,
-    200,
-)  # the tent's count at the neighbouring Node, Cheshbon's layout of 13:09 Israel; 0 the control without a tent
-TAIL_RATIO = {
-    50: 1.025,
-    100: 1.053,
-    200: 1.122,
-}  # Cheshbon's blind number: the tail toward the well over the tail away, e^(-kappa_plus) / e^(-kappa_minus), kappa_minus = 0.446
+COUNT = COUNT_BY_GAMMA[
+    gamma_of(PLANCK)
+]  # the falling pixel's count at the file's Gamma: 10 at 24 (Cheshbon 15:22), 2,000 at 6,000 (Cheshbon 15:50), 4,400 at 12,000
+BAND = 0.15  # the band on every blind number at Gamma = 24: one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22 Israel)
+CLUSTERS: dict[str, dict[str, int] | None] = {
+    "control": None,
+    "sieve_1": {"pixels": 1, "spacing": 2, "count": {24: 8, 6_000: 2_000}, "distance": 2},
+    "sieve_2": {"pixels": 2, "spacing": 2, "count": {24: 8, 6_000: 2_000}, "distance": 2},
+    "sieve_4": {"pixels": 4, "spacing": 2, "count": {24: 8, 6_000: 2_000}, "distance": 2},
+}  # THE SCREEN IS A CLUSTER (Cheshbon 14:55 Israel, the Closer 14:59): the heavy body is a cluster of pixels, a sieve along +x beyond the falling pixel: `pixels` how many, `spacing` the sieve's period in Links, `count` per pixel, `distance` in Links from the falling pixel to the first; Cheshbon's sieve at Gamma = 24 (15:22 Israel, item 6: pixels of 8 at the period 2), one, two and four of them in place of the tents 50, 100 and 200, the first two Links from the falling pixel (the click's reach at 24 about 3 to 4 Links, item 5c); None the control with no cluster
+TAIL_RATIO: dict[
+    str, float
+] = {}  # the tail's ratio toward the cluster over away is under the rounding at Gamma = 24 (Cheshbon 15:22 Israel, item 5e: a shift of kappa about 0.05); read at 12,000, the second run (the Closer 15:30)
 BIAS = {
-    50: 0.512,
-    100: 0.513,
-    200: 0.529,
-}  # Cheshbon's blind number: the share of the count's moves toward the well
-KAPPA_AWAY = 0.446  # the tail's decay per Link away from the well at 3,000
+    "sieve_1": 0.51,
+    "sieve_2": 0.51,
+    "sieve_4": 0.51,
+}  # the blind share of the count's moves toward the cluster at Gamma = 24 by Cheshbon's line of 13:09 (the moves' bias in the tails' ratio) from his shift of 15:22, item 5e: about 0.05, so 0.51 within one quantum
+KAPPA_AWAY = 1.269  # the tail's decay per Link away from the cluster at 10 on the law at Gamma = 24 (Cheshbon 15:22 Israel)
 PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 1000  # the run's length: the Experimenter's proposal until Cheshbon's number of moves
-SHAPE = [9, 3, 3]  # Cheshbon's board: the chain of 9 along x, open at both ends, three wide
+WIDTH = 3  # the chain's y and z: three wide, periodic, six Ports with a neighbour each
+MARGIN = 4  # Links of chain beyond the last pixel and before the falling one, the faces open
 FACE_DEPTH = 1
 AXIS = [1, 1]  # the row's y and z
-BODY_X = 4  # the body's Node; the tent one Link toward +x, the well's side
-TENT_X = 5
+BODY_X = MARGIN  # the falling pixel's Node; the cluster toward +x, the well's side
 
 
 def one_node(x: int, count: int) -> dict[str, Any]:
@@ -53,9 +60,31 @@ def one_node(x: int, count: int) -> dict[str, Any]:
     }
 
 
-def world(universe: str, tent: int) -> dict[str, Any]:
-    """The body at BODY_X and, where the tent's count is above 0, the tent at TENT_X; the readings: the matter level at the body's Node and at both neighbours every interval (the tail on both sides), the gravity level at the three Nodes (the tent's field), the matter rows (the level over the board), the body's centre and momentum, the support and total, the records alive."""
-    measured = [one_node(BODY_X, COUNT)] + ([one_node(TENT_X, tent)] if tent else [])
+def sieve_count(cluster: dict[str, Any]) -> int:
+    """The count of the sieve's pixels at the file's Gamma (8 at 24, 2,000 at 6,000: Cheshbon 15:22 and 15:50)."""
+    count = cluster["count"]
+    return int(count[gamma_of(PLANCK)] if isinstance(count, dict) else count)
+
+
+def cluster_nodes(cluster: dict[str, Any] | None) -> list[int]:
+    """The x of every pixel of the cluster: from BODY_X + distance, one every `spacing` Links, `pixels` of them; none for the control."""
+    if cluster is None:
+        return []
+    first = BODY_X + int(cluster["distance"])
+    return [first + k * int(cluster["spacing"]) for k in range(int(cluster["pixels"]))]
+
+
+def shape_of(cluster: dict[str, int] | None) -> list[int]:
+    """The chain's length: the falling pixel, the cluster and MARGIN Links beyond its last pixel."""
+    last = max(cluster_nodes(cluster), default=BODY_X)
+    return [last + MARGIN + 1, WIDTH, WIDTH]
+
+
+def world(universe: str, cluster: dict[str, int] | None) -> dict[str, Any]:
+    """The falling pixel at BODY_X and the cluster's pixels along +x; the readings: the matter level at the falling pixel's Node and at both neighbours every interval (the tail on both sides), the gravity level at the three Nodes (the cluster's well), the matter rows, the falling pixel's centre and momentum, the support and total, the records alive."""
+    measured = [one_node(BODY_X, COUNT)] + [
+        one_node(x, sieve_count(cluster)) for x in cluster_nodes(cluster)
+    ]
     readings: list[dict[str, Any]] = (
         [
             {"name": f"matter_x{x}", "kind": "level", "family": "matter", "node": [x, *AXIS], "every": 1}
@@ -81,7 +110,7 @@ def world(universe: str, tent: int) -> dict[str, Any]:
         ]
     )
     return {
-        "shape": SHAPE,
+        "shape": shape_of(cluster),
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "ticks": TICKS,
         "N": STEPS,
@@ -94,29 +123,33 @@ def world(universe: str, tent: int) -> dict[str, Any]:
     }
 
 
-def expectation(tent: int) -> dict[str, Any]:
-    """The blind expectation: the law's row in words (THE UNIVERSE IS BOUND: the fall is the clicks' bias), Cheshbon's numbers before the run, the reversible row; the `fall` section fall_bias.py reads (the tail's ratio and the moves' bias, the band Cheshbon's)."""
-    ratio, bias = TAIL_RATIO.get(tent), BIAS.get(tent)
+def expectation(name: str, cluster: dict[str, int] | None) -> dict[str, Any]:
+    """The blind expectation: the law's row in words (THE UNIVERSE IS BOUND: the fall is the clicks' bias; THE SCREEN IS A CLUSTER: the heavy body a cluster of pixels), Cheshbon's numbers before the run where written, the reversible row; the `fall` section fall_bias.py reads (the tail's ratio and the moves' bias, the band 0.3)."""
+    ratio, bias = TAIL_RATIO.get(name), BIAS.get(name)
     return {
         "format": "world-expectation-v1",
-        "status": "BLIND: the row of THE UNIVERSE IS BOUND, the fall as the clicks' bias; Cheshbon's numbers before the run; no number of a run here",
+        "status": "BLIND: the row of THE UNIVERSE IS BOUND, the fall as the clicks' bias toward a cluster of pixels; Cheshbon's numbers before the run; no number of a run here",
         "row": (
-            f"ALGEBRA.md THE UNIVERSE IS BOUND, THE BOUND BODY IS ONE NODE: a bound body of one Node of {COUNT} quanta on the matter pair [2, 3] "
-            "of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1), its tail evanescent by kappa = 0.446 per Link, "
+            f"ALGEBRA.md THE UNIVERSE IS BOUND, THE BOUND BODY IS ONE NODE, THE SCREEN IS A CLUSTER: a bound body of one Node of {COUNT} quanta on the matter pair "
+            "of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1), its tail evanescent, "
             + (
-                f"beside a tent of the held gravity, a content-only body of {tent} quanta one Link toward +x: the well is the count, so the pace on the well's side is lower, the local band nearer the record's rotation, the tail longer there, and the tail's remainder crosses T earlier on that side: the fall is the clicks' bias toward the well, no force"
-                if tent
-                else "with no tent, the control: the tail alike on both sides, the count's moves unbiased, the body's centre standing within a Link"
+                f"beside a cluster of {cluster['pixels']} pixels of {sieve_count(cluster)} quanta every {cluster['spacing']} Links along +x, the first {cluster['distance']} Links away: the wells of the cluster's pixels lower the pace on that side, the local band nearer the record's rotation, the tail longer there, and the tail's remainder crosses T earlier on that side: the fall is the clicks' bias toward the cluster, no force"
+                if cluster
+                else "with no cluster, the control: the tail alike on both sides, the count's moves unbiased, the body's centre standing within a Link"
             )
         ),
         "DETECTOR": [],
         "blind": {
-            "row": "Cheshbon's numbers of 13:09 Israel time (2026-09-28) before the run, at 3,000 under the corrected term: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200 (kappa_minus = 0.446); the count's moves biased toward the well in the same ratio: 51.2, 51.3 and 52.9 percent; the control 1 and 50 percent; the band plus or minus 30 percent (the Closer 14:16)",
-            "edge_quanta_per_node": 2706,
-            "horizon_quanta_per_node": 6000,
+            "row": "Cheshbon's numbers before the run (THE SCREEN IS A CLUSTER, 14:55 Israel time, 2026-09-28; the cluster's numbers asked at 15:05): the tail's ratio toward the cluster over away and the count's moves biased toward the cluster in the same ratio; the control 1 and 50 percent; the band plus or minus 30 percent (the Closer 14:16)",
+            **edges(gamma_of(PLANCK)),
+            "record": {"count": COUNT, **RECORD.get(COUNT, {})},
+            "sieve_record": None
+            if cluster is None
+            else {"count": sieve_count(cluster), **RECORD.get(sieve_count(cluster), {})},
             "tail_kappa_per_link_away": KAPPA_AWAY,
-            "tail_ratio_well_over_away": ratio if tent else 1.0,
-            "moves_toward_well_share": bias if tent else 0.5,
+            "tail_ratio_well_over_away": ratio if cluster else 1.0,
+            "moves_toward_well_share": bias if cluster else 0.5,
+            "cluster": None if cluster is None else {**cluster, "count": sieve_count(cluster)},
         },
         "GAMEBOARD": [
             {
@@ -126,13 +159,13 @@ def expectation(tent: int) -> dict[str, Any]:
         ],
         "fall": {
             "body": [BODY_X, *AXIS],
-            "well_side": [TENT_X, *AXIS],
+            "well_side": [BODY_X + 1, *AXIS],
             "far_side": [BODY_X - 1, *AXIS],
             "axis": 0,
-            "tail_ratio": ratio if tent else 1.0,
-            "bias": bias if tent else 0.5,
+            "tail_ratio": ratio if cluster else 1.0,
+            "bias": bias if cluster else 0.5,
             "band": BAND,
-            "row": "fall_bias.py reads the tail's ratio from the matter levels at the two neighbours (the largest level on the well's side over the largest on the far side, GAMEBOARD) and the moves' bias from the body's centre along the axis (the moves toward the well over all moves, the count's line's clicks as the centre shows them); MATCH within `band` once Cheshbon writes it, else the reading alone",
+            "row": "fall_bias.py reads the tail's ratio from the matter levels at the two neighbours (the largest level on the cluster's side over the largest on the far side, GAMEBOARD) and the moves' bias from the body's centre along the axis (the moves toward the cluster over all moves, the count's line's clicks as the centre shows them); MATCH within `band` of Cheshbon's numbers once written, else the reading alone",
         },
     }
 
@@ -145,15 +178,15 @@ def main() -> None:
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
     universe = PLANCK
-    for tent in TENTS:
-        name = f"fall_tent_{tent}"
-        document = world(universe, tent)
+    for label, cluster in CLUSTERS.items():
+        name = f"fall_{label}"
+        document = world(universe, cluster)
         (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
         (folder / f"{name}.mode.json").write_text(
             json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
         )
         (folder / f"{name}.expectation.json").write_text(
-            json.dumps(expectation(tent), indent=1) + "\n", encoding="utf-8"
+            json.dumps(expectation(label, cluster), indent=1) + "\n", encoding="utf-8"
         )
 
 

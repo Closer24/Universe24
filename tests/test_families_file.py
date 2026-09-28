@@ -13,10 +13,10 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.loader import derived, frame
 from event_universe.world_files import input_stamp, parse_nature_beam_world, read_repository_json
 from tests.running import refused
-from tests.worlds import FILE, HELD_MOMENT, HELD_SPIN, emitter_specimen, family_entry, on_the_file
+from tests.worlds import FILE, emitter_specimen, family_entry, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
-ATTRIBUTES = {"name", "pair", "held", "clock", "spins_step"}  # the file's rows; the rest derives
+ATTRIBUTES = {"name", "m", "pair", "held", "clock", "spins_step"}  # the file's rows; the rest derives
 
 
 def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_names_it():
@@ -36,7 +36,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     names = [entry["name"] for entry in document["families"]]
     assert names == ["gravity", "charge", "matter"]
     gravity, charge, matter = document["families"]
-    # THE FAMILIES FROM THE RULE (ALGEBRA.md #a-familys-declaration): the file holds the rows of the five numbers (the pairs, the two divisors, the light clock and the spin's step until it leaves) and nothing the rule derives: parts, phase, clicks, reads, the dipoles and the weights (`loader/derived.py`)
+    # THE FAMILIES FROM THE RULE: the file holds the rows of the five numbers and nothing the rule derives
     assert all(set(entry) <= ATTRIBUTES for entry in document["families"])
     spins = {"curl": [1, 4], "tidal": [3, 4]}
     held, moment = {"count": "content", "divisor": 40000}, {"count": "sign", "divisor": 40000}
@@ -46,11 +46,20 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     entries, integers = frame.universe(FILE, {FILE: read_repository_json(FILE)}, discover())
     # the frame reads the table's lists as tuples (core/schema.py); the same numbers
     assert json.loads(json.dumps(integers)) == document["integers"] and len(entries) == 3
-    gravity, charge, matter = (derived.filled(entry, entries) for entry in entries)
-    # gravity: ten components, one level, held content with the spin's dipole, no reads, no clicks; the charge: four components, two levels, held sign with the moment's dipole halved, reads gravity, and clicks (light is its wave); matter: a scalar, two levels, the pair on every body, reads gravity plainly and the charge by its sign, clicks; every weight 1, every twist own
+    gravity, charge, matter = (derived.filled(entry, entries, 10000) for entry in entries)
+    # gravity rank 3 and real; the charge rank 2 with clicks (light its wave); matter a scalar of quanta
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and "clicks" not in gravity
-    assert gravity["held"] == {**HELD_SPIN, "factors": [1, 1, 1]} and gravity["reads"] == []
-    assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == HELD_MOMENT
+    assert gravity["pair"] == [1, 1] == charge["pair"]  # the pair as written (THE WALL IS ONE)
+    spin = {
+        "count": "content",
+        "divisor": 40000,
+        "factors": [1, 1, 1],
+        "dipole": "spin",
+        "dipole_div": 1,
+    }
+    moment = {"count": "sign", "divisor": 40000, "factors": [1, 1], "dipole": "moment", "dipole_div": 2}
+    assert gravity["held"] == spin and gravity["reads"] == []
+    assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == moment
     assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
     assert charge["clicks"] == {"gives": True, "takes": True, "quantum": 1} == matter["clicks"]
     assert matter["parts"] == [1] and matter["phase"] == 2 and "held" not in matter
@@ -81,41 +90,38 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
 
 
 def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_world_on_it():
-    """THE RULE'S OWN UNIVERSE (ALGEBRA.md; Cheshbon's table of 2026-09-28, 13:03 Israel, and his lines of 13:44 and 13:46): examples/events/planck.json holds Gamma = 12,000 (a multiple of 6), T = 1, the twist table at the unit 4 Gamma 2^16, and three rows of the rule's pairs written over Gamma (the band the reduced pair, the wall and the amplitude unit the pair's as written: the reduced [2, 3] puts the count's line beyond int64, the de Broglie Experimenter's finding of 13:58 Israel), gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at the divisor 400,000 (0.86 (Gamma / 2)^(3 / 2), derived from Gamma: one quantum per window), matter [8000, 12000]; the spin's step's row on gravity until the step leaves; nothing else. A world of three pixels (one Node each) on it loads with the ranks derived and THE SIGN IS THE BODY'S: the sign's source at a pixel's Node is its q times its count. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-6000, 12000] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name."""
+    """THE RULE'S OWN UNIVERSE (ALGEBRA.md; the owner's word of 2026-09-28, 15:11 Israel: Gamma = 24, a whole universe in small): examples/events/planck.json holds Gamma = 24 (a multiple of 6; the horizon 12, the pixels 6 to 11), T = 1, and three rows in pairs over Gamma: gravity [24, 24] content at the divisor 1, charge [24, 24] sign at the divisor 36 (0.86 (Gamma / 2)^(3 / 2), one quantum per window, derived from Gamma), matter [16, 24]; the least residues 1 (light's pair leaves one remainder value at Gamma = 24); nothing else. THE FINDING (Nature24, 15:30 Israel): the width's amplitude unit at Gamma = 24 is A = 37,066,663,599,756 (the wall 6 Gamma^3 = 82,944), so the transport's total 3 d_1 d_0 (A + 1) admits d_1 d_0 below 83,000 and no table of the tool's form (its triples reach d = 10^9) loads; the file carries the identity table [1, 0, 1] alone, so it loads and a nonzero twist is refused by name at the step until the mathematician's line on A at a small Gamma. A world of three pixels (one Node each) on it loads with the ranks derived and THE SIGN IS THE BODY'S: the sign's source at a pixel's Node is its q times its count. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-12, 24] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name."""
     planck = "examples/events/planck.json"
-    document = json.loads((ROOT / planck).read_text(encoding="utf-8"))
-    table = document["integers"].pop("twist_table")
-    units = dict(node_clock=12000, quantum_action=1, momentum_unit=64, most_steps=65536, width=63)
-    assert document["integers"] == {**units, "most_families": 20, "least_residues": 500}
-    assert (table["unit"], len(table["fine"]), len(table["coarse"])) == (4 * 12000 * 65536, 1024, 32768)
+    table = (document := json.loads((ROOT / planck).read_bytes()))["integers"].pop("twist_table")
+    units = dict(node_clock=24, quantum_action=1, momentum_unit=64, most_steps=65536, width=63)
+    assert document["integers"] == {**units, "most_families": 20, "least_residues": 1}
+    assert table == {"unit": 4 * 24 * 65536, "fine": [[1, 0, 1]], "coarse": [[1, 0, 1]]}  # the finding
     assert [f["name"] for f in document["families"]] == ["gravity", "charge", "matter"]
-    assert [f["pair"] for f in document["families"]] == [[12000, 12000], [12000, 12000], [8000, 12000]]
-    assert [f.get("held", {}).get("divisor") for f in document["families"]] == [1, 400000, None]
+    assert [f["pair"] for f in document["families"]] == [[24, 24], [24, 24], [16, 24]]
+    assert [f.get("held", {}).get("divisor") for f in document["families"]] == [1, 36, None]
     assert all(set(f) <= {"name", "pair", "held"} for f in document["families"])  # no spins_step
     world = {"shape": [40, 1, 1], "boundary": {"x": "closed", "y": "periodic", "z": "periodic"}, "N": 64}
     world |= {"ticks": 10, "face_depth": 1, "engine": "examples/events/engine_start.json"}
     world |= {"universe": planck, "detectors": [{"name": "taker", "block": 2}]}
-    n = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
-    at = ((10, 3000, 1), (20, 300, -1), (30, 3000, 0))
+    n, at = {"momentum": [0] * 3, "momentum_before": [0] * 3}, ((10, 8, 1), (20, 6, -1), (30, 8, 0))
     node = lambda x, c: [{"node": [x, 0, 0], "count": c}]  # noqa: E731
     bodies = [{"family": "matter", "nodes": node(x, c), "q": q, **n} for x, c, q in at]
-    loaded = parse_nature_beam_world({**world, "measured": bodies})
+    loaded = parse_nature_beam_world({**world, "measured": bodies})  # three pixels, count in [6, 12)
     ranks = [("gravity", (1, 3, 6), "content"), ("charge", (1, 3), "sign"), ("matter", (1,), None)]
     assert [(f.name, f.parts, f.held) for f in loaded.families] == ranks
-    assert loaded.families[2].pair == (8000, 12000)  # as written: its wall sets the amplitude unit
+    assert loaded.families[2].pair == (16, 24) and (A := loaded.amplitude_bound) > 0
+    assert 384 * A * A <= derived.MAX_WORK_INT - 10 < 384 * (A + 1) ** 2  # the count's line's, w 16
     assert [entry.block.q for entry in loaded.measured if entry.block is not None] == [1, -1, 0]
     simulation = DetectorLawSimulation(loaded)
     signs = [simulation.node_sources(number, "sign") for number in range(3)]
-    assert signs == [[((10, 0, 0), 3000)], [((20, 0, 0), -300)], [((30, 0, 0), 0)]]
-    assert [simulation._body_charge(number) for number in range(3)] == [3000, -300, 0]
-    inline = {**world, "measured": bodies, "node_clock": 12000, "momentum_unit": 64}
-    inline["twist_table"] = table
-    inline["universe"] = [*document["families"], third := {"name": "third", "pair": [-6000, 12000]}]
-    assert parse_nature_beam_world(inline).families[3].pair == (-6000, 12000)
-    big = [1000014128, 63246, 1000014130]  # a triple of d near 10^9: the transport's total bounds A
-    wide = {**inline, "twist_table": {**table, "fine": [[1, 0, 1], big], "coarse": [[1, 0, 1], big]}}
-    assert parse_nature_beam_world(wide).amplitude_bound == derived.MAX_WORK_INT // (3 * big[2] ** 2) - 1
-    for pair, match in (([-12000, 12000], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1")):
+    assert signs == [[((10, 0, 0), 8)], [((20, 0, 0), -6)], [((30, 0, 0), 0)]]
+    assert [simulation._body_charge(number) for number in range(3)] == [8, -6, 0]
+    inline = {**world, "measured": bodies, "node_clock": 24, "momentum_unit": 64, "twist_table": table}
+    inline["universe"] = [*document["families"], third := {"name": "third", "pair": [-12, 24]}]
+    f, least = [[1, 0, 1], [1999, 1998000, 1998001]], derived.MAX_WORK_INT // (3 * 1998001**2) - 1
+    w = parse_nature_beam_world({**inline, "twist_table": {**table, "fine": f, "coarse": f}})
+    assert (w.families[3].pair, w.amplitude_bound) == ((-12, 24), least)  # a wide table: the transport's
+    for pair, match in (([-24, 24], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1")):
         refused({**inline, "universe": [*document["families"], {**third, "pair": pair}]}, match)
 
 
@@ -233,10 +239,37 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         (tmp_path / "universe.json").write_text(json.dumps(broken), encoding="utf-8")
         refused(json.loads(json.dumps(document)), match)
 
+    C = {"gives": True, "takes": True, "quantum": 2}  # noqa: N806  # a clicks card at another quantum
+    H = lambda f: lambda d: f(d["families"][0]["held"])  # noqa: E731  # a change of the held row
+    R = lambda **k: lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", **k}])  # noqa: E731, N806
     refuses(lambda d: d["integers"].pop("node_clock"), "integers lacks keys: node_clock")
-    refuses(lambda d: d["integers"].__setitem__("Lambda", 0), r"Lambda is 0, below its least 1")
-    refuses(lambda d: d["families"][0].pop("pair"), r"families\[0\] lacks keys: pair")
-    refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
+    refuses(lambda d: d["integers"].__setitem__("Lambda", 1), r"integers has unknown keys: Lambda")
+    refuses(lambda d: d["families"][2].pop("pair"), r"the family 'matter' lacks keys: m")
+    # THE FAMILIES FROM THE RULE: a key the rule fixes, declared at another value, is refused by name
+    refuses(
+        lambda d: d["families"][0].__setitem__("parts", [1]),
+        r"families\[0\]\.parts \[1\] contradicts the rule",
+    )
+    refuses(
+        lambda d: d["families"][1].__setitem__("phase", 1),
+        r"families\[1\]\.phase 1 contradicts the rule",
+    )
+    refuses(
+        lambda d: d["families"][0].__setitem__("clicks", C),
+        r"families\[0\]\.clicks .* contradicts the rule",
+    )
+    refuses(R(weight=2), r"families\[2\]\.reads .* contradicts the rule, which fixes")
+    refuses(R(twist=0), r"families\[2\]\.reads .* contradicts the rule, which fixes")
+    refuses(
+        lambda d: d["families"][2].__setitem__("reads", []),
+        r"families\[2\]\.reads \[\] contradicts the rule",
+    )
+    refuses(
+        H(lambda h: h.update(factors=[1, 4, 2])), r"families\[0\]\.held\.factors \[1, 4, 2\] contradicts"
+    )
+    refuses(
+        H(lambda h: h.update(dipole_div=2)), r"families\[0\]\.held\.dipole_div 2 contradicts the rule"
+    )
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\], not 3")
     # the self-source's unit (ALGEBRA.md #the-interval; commit 6): 0, or at least 24 A
     refuses(lambda d: d["families"][0].__setitem__("self_source", {"unit": 24}), "is below 24 A")
@@ -244,17 +277,16 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     refuses(lambda d: d["families"][2].update(spins_step=d["families"][0]["spins_step"]), "no spin's")
     refuses(lambda d: d["families"][0].pop("name"), r"families\[0\] lacks keys: name")
     refuses(lambda d: d["families"][0].__setitem__("quantum", 0), "quantum is 0, below its least 1")
-    C = {"gives": True, "takes": True, "quantum": 2}  # noqa: N806  # a clicks card at another quantum
-    refuses(lambda d: d["families"][2].__setitem__("clicks", C), "differs from the row's quantum 1")
-    H = lambda f: lambda d: f(d["families"][0]["held"])  # noqa: E731  # a change of the held row
+    refuses(
+        lambda d: d["families"][2].__setitem__("clicks", C),
+        r"families\[2\]\.clicks .* contradicts the rule",
+    )
     # no default written for the dipole's divisor: the universe file writes it (the hold's card)
     refuses(H(lambda h: h.update(dipole="spin", dipole_div=0)), r"dipole_div is 0, below its least 1")
     refuses(H(lambda h: h.pop("divisor")), r"held lacks (keys: )?divisor")  # the sum's divisor E_s
     refuses(lambda d: d["families"][2].update(pair="mine"), r"pair must be a list, not 'mine'")
-    R = lambda **k: lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", **k}])  # noqa: E731, N806
     refuses(R(weight="Mu"), "names 'Mu', no integer")
     refuses(R(by=2), r"by must be one of \[1, 'q'\], not 2")
-    refuses(H(lambda h: h.update(factors=[1, 4])), r"held\.factors must be 3")
     refuses(H(lambda h: h.update(dipole="twist")), r"dipole must be one of \['spin', 'moment'\]")
     good["families"][0].pop("spins_step")  # optional on the spin's holder: the file loads without it
     refuses(lambda d: d["families"][0].update(spins_step={"curl": 3}), "spins_step lacks keys: tidal")
@@ -298,7 +330,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     giving_matter = emitter_specimen(stock=1, ticks=10)
     names = {family["name"]: family for family in giving_matter["universe"]}
     names["matter"]["pair"] = "body"
-    giving_matter["universe"].append(family_entry("heavy", [1600, 1618], names["matter"]["reads"]))
+    giving_matter["universe"].append(family_entry("heavy", [1600, 1618]))
     body = giving_matter["measured"][0]
     body["family"] = "heavy"
     body["stocks"] = {"matter": 1}
@@ -313,7 +345,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
 def test_age_bound_fixed_sign_and_the_family_clock_are_refused_by_name_when_absent_or_wrong():
     """The keys #1236 made required, no default: each refused by the schema's or the loader's name."""
     for change, match in (
-        (lambda d: d["universe"][0].pop("pair"), r"universe\[0\] lacks keys: pair"),
+        (lambda d: d["universe"][0].pop("pair"), r"the family 'light' lacks keys: m"),
         (lambda d: d["universe"][0].__setitem__("clock", 3), r"clock must be a list, not 3"),
         (lambda d: d["universe"][0].__setitem__("clock", [1, 0]), r"has q from 1"),
     ):

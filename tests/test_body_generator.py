@@ -184,10 +184,11 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
 
 def test_a_givers_levels_at_the_scale_c_t_and_its_train_do_not_depend_on_t(tmp_path):
     """The universe's quantum action T (ALGEBRA.md #the-generator (f), the giving's row THE TRAIN): a resting giver's two levels are scaled so that the record's form is c T (c its quanta) to the grain; `train` is the intervals until the outward flux of the given record, written at the shell as (M_pol x a_body) div E_s each interval, reaches T in the form's units (over the pace squared); doubling T scales the levels by root two and leaves the train as it is (the flux grows with T as the close does)."""
-    well, read = {"count": "content", "divisor": 1}, [{"family": "well", "weight": 1, "by": 1}]
-    rows = [{"name": "well", "pair": [1, 2], "held": well, "reads": []}]
-    rows += [{"name": "light", "pair": [1, 1], "held": {"count": "sign", "divisor": 400}, "reads": read}]
-    rows += [{"name": "matter", "pair": list(KIND), "held": None, "reads": read}]
+    rows = [
+        {"name": "well", "pair": [1, 2], "held": {"count": "content", "divisor": 1}}
+    ]  # the rule's form
+    rows += [{"name": "light", "pair": [1, 1], "held": {"count": "sign", "divisor": 400}}]
+    rows += [{"name": "matter", "pair": list(KIND)}]
     table = {"unit": 4 * GAMMA * 65536, "fine": [[1, 0, 1]], "coarse": [[1, 0, 1]]}
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     still = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0], "phase_denominator": 64}
@@ -214,16 +215,18 @@ def test_a_givers_levels_at_the_scale_c_t_and_its_train_do_not_depend_on_t(tmp_p
 def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name(tmp_path):
     """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly (a read by the sign skipped, a weight named in the integers); a giver (an emitter, a crystal) and a moving body carry an entry, a wall none (content alone); the held field is the start folder's rest over the row's divisor (the sum: at E_s = 40,000 a count of 3000 rests at 0 and the body has no well); the refusals by name, [800, 809]'s shallow well."""
 
-    def row(name, pair, held, reads):
-        return {"name": name, "pair": pair, "held": held, "reads": reads}
+    def row(
+        name, pair, held=None
+    ):  # the rule's form: the reads derive (matter reads gravity at 1, charge by q)
+        return (
+            {"name": name, "pair": pair} if held is None else {"name": name, "pair": pair, "held": held}
+        )
 
-    reads = [{"family": "gravity", "weight": "one", "by": 1}]
-    reads.append({"family": "charge", "weight": 1, "by": "q"})
-    families = [row("gravity", [1, 4], {"count": "content", "divisor": 1}, [])]  # the body's own well
-    families += [row("charge", [1, 1], {"count": "sign", "divisor": 40000}, [])]
-    families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
+    families = [row("gravity", [1, 4], {"count": "content", "divisor": 1})]  # the body's own well
+    families += [row("charge", [1, 1], {"count": "sign", "divisor": 40000})]
+    families += [row("matter", list(KIND)), row("light", "body")]
     table = {"unit": 4 * GAMMA * 65536, "fine": [[1, 0, 1]], "coarse": [[1, 0, 1]]}
-    integers = {"one": 1, "momentum_unit": 64, "twist_table": table}  # the table: the own twist's scale
+    integers = {"momentum_unit": 64, "twist_table": table}  # the table: the own twist's scale
     (tmp_path / "universe.json").write_text(json.dumps({"families": families, "integers": integers}))
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
@@ -240,12 +243,8 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     reach = 2 * (1 * sum(node["count"] for node in nodes) + 1 * 0)  # the content, and the charge 0
     assert level == min(reach, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude == at_level
     assert at_level < amplitude_unit(KIND, GAMMA, rest.levels)  # the unit falls with the content
-    weighed = {**world, "universe": str(tmp_path / "weighed.json")}  # the weight and a charge move it
-    doubled = {"families": families, "integers": {**integers, "one": 2}}
-    (tmp_path / "weighed.json").write_text(json.dumps(doubled))
-    charged = {**weighed, "measured": [{**body, "q": 5}]}
-    assert loader_level(weighed, GAMMA) == min(2 * (2 * 24000 + 1 * 0), GAMMA - 1)
-    assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (2 * 24000 + 1 * 5)
+    charged = {**world, "measured": [{**body, "q": 5}]}  # a charge moves it at the one weight 1
+    assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (1 * 24000 + 1 * 5)
     assert reading["rotation"] == list(clock_pair(mode.rotation, mode.amplitude))  # on A, bounded
     assert reading["period"] == period_by_the_rule(*reading["rotation"])
     written = reading[

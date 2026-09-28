@@ -24,7 +24,6 @@ from tests.bodies import (
     QUANTA,
     charged_chain,
     content_chain,
-    set_strength,
     six_reads,
 )
 from tests.running import planted
@@ -70,39 +69,35 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
     now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
     slab = [QUANTA if 20 <= i < 30 else 0 for i in range(60)]
-    for strength in (1, 3):
-        for matter_charge in (-1, 1):
-            document = charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, matter_charge, strength, 1)
-            simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-            assert [simulation.families[f].held for f in simulation.held_families] == ["content", "sign"]
-            matter_reads = ((CLICKS, 1, "plain", 0), (CHARGE, strength, "sign", 0))
-            assert simulation.families[MATTER].reads == matter_reads
-            assert simulation.family_charge == [1, matter_charge, 0, 0, 0]
-            assert [int(v) for v in simulation.level_of("sign")[:, 0, 0]] == slab
-            assert [int(v) for v in simulation.level_of("content")[:, 0, 0]] == slab
-            effective = [max(c - matter_charge * strength * c, 0) for c in slab]
-            assert [int(v) for v in simulation._effective_content(MATTER)[:, 0, 0]] == effective
-            assert [int(v) for v in simulation._effective_content(NEUTRAL)[:, 0, 0]] == slab
-            assert simulation.node_clock_pair((25, 0, 0), MATTER) == (GAMMA - effective[25], GAMMA)
-            assert simulation.node_clock_pair((25, 0, 0), NEUTRAL) == (GAMMA - QUANTA, GAMMA)
-            assert simulation.node_clock_pair((5, 0, 0), MATTER) == (GAMMA, GAMMA)
-            assert simulation.wheel_at(MATTER, (25, 0, 0))[1] == wheel_of(PAIR, effective[25], GAMMA)
-            # one step of the rule on each family's record (the engine's `_advance`, the step's own on a record: a massive record in the register is a block's own)
-            lit = [max(c - strength * c, 0) for c in slab]
-            for family, pair, reading in (
-                (MATTER, PAIR, effective),
-                (NEUTRAL, (1, 1), slab),
-                (LIGHT, (1, 1), lit),
-            ):
-                live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
-                simulation._advance(live)
-                levels, remainders = rule_step(pair, reading, now, before, True)
-                assert [int(v) for v in live.now[:, 0, 0]] == levels, family
-                assert [int(v) for v in live.remainder[:, 0, 0]] == remainders, family
-                assert np.array_equal(live.before, now)
-    parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 98, 1))
-    with pytest.raises(ValueError, match="measured\\[0\\]: the pace of 'light' could reach 0"):
-        parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 99, 1))
+    for matter_charge in (-1, 1):  # THE FAMILIES FROM THE RULE: the one weight 1 (Lambda left the files)
+        document = charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, matter_charge, 1)
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        assert [simulation.families[f].held for f in simulation.held_families] == ["content", "sign"]
+        matter_reads = ((CLICKS, 1, "plain", "own"), (CHARGE, 1, "sign", "own"))
+        assert simulation.families[MATTER].reads == matter_reads
+        assert simulation.family_charge == [1, matter_charge, 0, 0, 0]
+        assert [int(v) for v in simulation.level_of("sign")[:, 0, 0]] == slab
+        assert [int(v) for v in simulation.level_of("content")[:, 0, 0]] == slab
+        effective = [max(c - matter_charge * c, 0) for c in slab]
+        assert [int(v) for v in simulation._effective_content(MATTER)[:, 0, 0]] == effective
+        assert [int(v) for v in simulation._effective_content(NEUTRAL)[:, 0, 0]] == slab
+        assert simulation.node_clock_pair((25, 0, 0), MATTER) == (GAMMA - effective[25], GAMMA)
+        assert simulation.node_clock_pair((25, 0, 0), NEUTRAL) == (GAMMA - QUANTA, GAMMA)
+        assert simulation.node_clock_pair((5, 0, 0), MATTER) == (GAMMA, GAMMA)
+        assert simulation.wheel_at(MATTER, (25, 0, 0))[1] == wheel_of(PAIR, effective[25], GAMMA)
+        # one step of the rule on each family's record (the engine's `_advance`, the step's own on a record: a massive record in the register is a block's own)
+        lit = [max(c - c, 0) for c in slab]
+        for family, pair, reading in (
+            (MATTER, PAIR, effective),
+            (NEUTRAL, (1, 1), slab),
+            (LIGHT, (1, 1), lit),
+        ):
+            live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
+            simulation._advance(live)
+            levels, remainders = rule_step(pair, reading, now, before, True)
+            assert [int(v) for v in live.now[:, 0, 0]] == levels, family
+            assert [int(v) for v in live.remainder[:, 0, 0]] == remainders, family
+            assert np.array_equal(live.before, now)
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
@@ -152,7 +147,7 @@ def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
         rng = np.random.default_rng(37)
         simulation = DetectorLawSimulation(
             parse_nature_beam_world(
-                charged_chain(60, boundary, range(20, 30), QUANTA, 1, -1, 1, 2 * QUANTA)
+                charged_chain(60, boundary, range(20, 30), QUANTA, 1, -1, 2 * QUANTA)
             )
         )
         starts = []
@@ -194,7 +189,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     world = parse_nature_beam_world(good)
     assert world.held_families == (CLICKS, CHARGE) and world.families[CHARGE].held == "sign"
     assert world.families[CHARGE].name == CHARGE_FAMILY_NAME
-    assert world.families[MATTER].reads == ((CLICKS, 1, "plain", 0), (CHARGE, 1, "sign", 0))
+    assert world.families[MATTER].reads == ((CLICKS, 1, "plain", "own"), (CHARGE, 1, "sign", "own"))
 
     def copy() -> dict:
         return json.loads(json.dumps(good))
@@ -208,16 +203,23 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
         retired[key] = value
         refused(retired, f"the world has unknown keys: {key}")
     weak = copy()
-    set_strength(weak, 0)
+    weak["universe"][MATTER]["reads"] = [
+        {"family": "clicks"},
+        {"family": CHARGE_FAMILY_NAME, "weight": 0},
+    ]
     refused(weak, r"reads\[1\].weight")
     by = copy()
-    by["universe"][MATTER]["reads"][1]["by"] = "signed"
+    by["universe"][MATTER]["reads"] = [
+        {"family": "clicks"},
+        {"family": CHARGE_FAMILY_NAME, "by": "signed"},
+    ]
     refused(by, r"reads\[1\].by must be one of")
-    twice = copy()
-    twice["universe"][MATTER]["reads"].append(
-        {"family": CHARGE_FAMILY_NAME, "weight": 2, "twist": 0, "by": "q"}
-    )
-    refused(twice, "reads names 'charge' twice")
+    twice = copy()  # THE FAMILIES FROM THE RULE: a reads list against the rule's is refused by name
+    twice["universe"][MATTER]["reads"] = [
+        {"family": "clicks"},
+        {"family": CHARGE_FAMILY_NAME, "weight": 2},
+    ]
+    refused(twice, r"families\[1\]\.reads .* contradicts the rule")
     unlabelled = copy()
     del unlabelled["universe"][MATTER]["sign"]  # THE FAMILIES FROM THE RULE: the sign derives as 0
     assert parse_nature_beam_world(unlabelled).families[MATTER].charge == (0, 1)
@@ -228,33 +230,34 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     split["universe"][LIGHT]["sign"] = [1, 2]
     refused(split, r"universe\[0\]\.sign must be one of \[-1, 0, 1\], not \[1, 2\]")
     same = copy()  # several families may hold one source, each at its own pair and divisor
-    same["universe"][CHARGE]["held"] = {"count": "content", "factors": [1], "divisor": 40000}
+    same["universe"][CHARGE].update(pair=[1, 2], held={"count": "content", "divisor": 40000})  # the well
     assert sum(f.held == "content" for f in parse_nature_beam_world(same).families) == 2
     quantum = copy()
     quantum["universe"][CHARGE]["quantum"] = 2
-    quantum["universe"][CHARGE]["clicks"] = {"gives": True, "takes": True, "quantum": 2}
-    refused(quantum, "a held family is counted in quanta")
-    clocked = copy()
-    clocked["universe"][CHARGE]["clock"] = [512, 1]
+    refused(quantum, r"families\[4\]\.quantum 2 contradicts the rule")
+    clocked = (
+        copy()
+    )  # the sign's holder clicks and may give (the shipped row's clock); a real field never
+    clocked["universe"][CLICKS]["clock"] = [512, 1]
     refused(clocked, "gives nothing and declares a clock")
     charged = copy()
     charged["universe"][CHARGE]["sign"] = 1
     refused(charged, "a held family carries none")
     unknown = copy()
-    unknown["universe"][MATTER]["reads"][1]["family"] = "ions"
+    unknown["universe"][MATTER]["reads"] = [{"family": "clicks"}, {"family": "ions"}]
     refused(unknown, r"reads\[1\]\.family names 'ions', no family of the universe")
-    body = copy()
+    body = copy()  # a real field (the content's holder) has no body; the sign's holder clicks and may
     body["measured"] = [
         {
             "position": [3, 0, 0],
-            "family": CHARGE_FAMILY_NAME,
+            "family": "clicks",
             "amount": 1,
             "stocks": {},
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
         }
     ]
-    refused(body, r"measured\[0\] is of the held family 'charge'")
+    refused(body, r"measured\[0\] is of the held family 'clicks'")
     held = copy()
     held["measured"] = [
         {
@@ -263,21 +266,19 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
             "amount": 1,
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
-            "stocks": {CHARGE_FAMILY_NAME: 1},
+            "stocks": {"clicks": 1},
         }
     ]
-    refused(held, r"measured\[0\].stocks names the held family 'charge'")
+    refused(held, r"measured\[0\].stocks names the held family 'clicks'")
 
 
 def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_lambda():
     """(v) THE REGISTERED WORLDS' CASE (every family of charge 0): on the chain of 60 with a body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family of charge is 0 everywhere at the load and after 40 intervals, and the records' rows are bit for bit the same at Lambda = 1 and Lambda = 7 (no charge is read: the strength weighs nothing); THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26 item 55): the never-sourced sign family is named at no interval, the planted matter record (no body of its family) is, and a row planted in the sign family is named. The edge case: the giving lines of the emitter world carry the charge 0."""
-    rows = {}
-    for strength in (1, 7):
+    if True:  # one weight, 1 (THE FAMILIES FROM THE RULE: Lambda left the files)
         rng = np.random.default_rng(41)
         document = content_chain(60, CHAIN, range(20, 30), QUANTA)  # a face on x: the sum's sink
-        set_strength(document, strength)
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        assert simulation.families[MATTER].reads[1][1] == strength
+        assert simulation.families[MATTER].reads[1][1] == 1
         assert not held_record(simulation, "sign").now.any()
         lives = []
         for family in (0, 1):
@@ -300,10 +301,6 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
         assert simulation.leaks() == [CHARGE_FAMILY_NAME, "matter"]
         held_record(simulation, "sign").now[3, 0, 0] = 0
         assert simulation.leaks() == ["matter"]
-        rows[strength] = [(live.now.copy(), live.before.copy(), live.remainder.copy()) for live in lives]
-    for one, seven in zip(rows[1], rows[7], strict=True):
-        for x, y in zip(one, seven, strict=True):
-            assert np.array_equal(x, y)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(
         parse_nature_beam_world(emitter_world(stock=2, ticks=600)), observer=lines.append

@@ -242,8 +242,8 @@ def test_the_loaders_refusals_name_the_key():
         parse_nature_beam_world(lamp_on_kind)
     # light's kind written out, [1, 1], is a value and not a massive kind
     written = json.loads(json.dumps(base))
-    written["universe"][1]["pair"] = [1, 1]
-    written["universe"][1]["clock"] = [77, 25]
+    written["universe"][1].update(pair=[1, 1], clock=[77, 25])
+    del written["twist_table"]  # matter on light's kind: its A puts the table's total beyond int64
     world = parse_nature_beam_world(written)
     assert not world.families[1].massive_kind
 

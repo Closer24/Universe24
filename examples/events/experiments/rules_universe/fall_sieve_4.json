@@ -1,6 +1,6 @@
 {
  "shape": [
-  9,
+  17,
   3,
   3
  ],
@@ -23,7 +23,7 @@
       1,
       1
      ],
-     "count": 4400
+     "count": 10
     }
    ],
    "momentum": [
@@ -43,11 +43,83 @@
    "nodes": [
     {
      "node": [
-      5,
+      6,
       1,
       1
      ],
-     "count": 200
+     "count": 8
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      8,
+      1,
+      1
+     ],
+     "count": 8
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      10,
+      1,
+      1
+     ],
+     "count": 8
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      12,
+      1,
+      1
+     ],
+     "count": 8
     }
    ],
    "momentum": [

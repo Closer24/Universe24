@@ -15,7 +15,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import PACES_SHAPE as SHAPE
 from tests.bodies import paces_world, parts_of
 from tests.running import refused
-from tests.worlds import FILE, HELD_MOMENT, emitter_world, on_the_file
+from tests.worlds import FILE, emitter_world, on_the_file
 
 # THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
 pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
@@ -33,17 +33,8 @@ def table() -> dict:
 
 
 def twisted_world() -> dict:
-    """The paces world with the matter family's read on gravity twisted by "own" and the shipped twist table (an inline world declares it as a world key)."""
-    document = paces_world()
-    for family in document["universe"]:
-        if family["name"] == "matter":
-            family["reads"][0]["twist"] = "own"
-        if family["name"] == "charge":
-            # the charge with its vector part (the shipped file's entry on the inline list)
-            family.update({"parts": [1, 3], "held": dict(HELD_MOMENT)})
-    document["twist_table"] = table()
-    document["stamp"] = input_stamp(document)
-    return document
+    """The paces world: the matter family's derived read on gravity twists by "own" over the shipped twist table (THE FAMILIES FROM THE RULE; an inline world declares the table as a world key)."""
+    return paces_world()
 
 
 def composed(k: int, rows: dict) -> tuple[int, int, int]:

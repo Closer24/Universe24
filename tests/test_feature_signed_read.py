@@ -93,9 +93,9 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
 
 @pytest.mark.diagnostic
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond_it():
-    """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <= 1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not a measurement); at Lambda = 3 the hill beyond the hollow at a slab Node enters at the floor 0."""
+    """The charged chain: a matter record of charge +1 reads c - d at the one weight 1 (THE FAMILIES FROM THE RULE: Lambda left the files), p = 1000 <= 1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not a measurement), and the hollow filled to the vacuum's pace at a slab Node reads the floor 0."""
     admitted = DetectorLawSimulation(
-        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1, 1, 1))
+        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1, 1))
     )
     for _ in range(3):
         admitted.step()
@@ -103,11 +103,7 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond
         assert np.array_equal(writes.content, admitted._effective_content(MATTER))
         # a GameBoard reading (a diagnostic), not a measurement
         assert int(np.max(admitted.node_clock - writes.content)) == CHAIN_GAMMA
-    refused = DetectorLawSimulation(
-        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1, 1, 3))
-    )
-    floored = apply(term_of(refused, MATTER), start_of(refused, MATTER), own_of(refused, MATTER))
-    assert int(floored.content[20, 0, 0]) == 0 and int(np.min(floored.content)) == 0
+    assert int(writes.content[20, 0, 0]) == 0 and int(np.min(writes.content)) == 0
 
 
 def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edge():
