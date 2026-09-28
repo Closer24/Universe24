@@ -36,20 +36,18 @@ from reversible import forward, reversible_row, step_back  # noqa: E402
 
 GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # the universe of record
 START = ROOT / "examples" / "events" / "engine_start.json"
-UNIT = 1 << 20  # the test's twist unit: theta_unit = 1 / UNIT radians
-CLOCK = (
-    153 * 10**6,
-    10**8,
-)  # 2 cos omega_b = 1.53 at a fine unit (the mode's clock is at the amplitude unit)
+UNIT, CLOCK = (
+    1 << 20,
+    (153 * 10**6, 10**8),
+)  # the test's twist unit: theta_unit = 1 / UNIT radians; 2 cos omega_b = 1.53 at a fine unit (the mode's clock is at the amplitude unit)
 AMPLITUDE, NODES = 1_000_000, 9
 WAVE, K_Q = (
     0.3,
     round(0.05 * UNIT),
-)  # the record's phase per Link before the click (radians); the quantum's wave number in the twist's unit
+)  # the phase per Link before the click (radians); the wave number in the twist's unit
 
 
-def triple_of(angle: int, _axis: int) -> tuple[int, int, int]:
-    """The test's table: the exact Pythagorean triple (m^2 - j^2, 2 m j, m^2 + j^2) nearest the angle in theta units, j from tan of the half angle."""
+def triple_of(angle: int, _axis: int) -> tuple[int, int, int]:  # the exact triple nearest the angle
     m = 1_000_000
     j = round(m * tan(abs(angle) / UNIT / 2))
     return (m * m - j * j, (1 if angle >= 0 else -1) * 2 * m * j, m * m + j * j)
@@ -66,8 +64,9 @@ def plane_wave(k: float, phase: float) -> tuple[tuple[int, ...], tuple[int, ...]
 OFFSETS = (tuple(x - NODES // 2 for x in range(NODES)), (0,) * NODES, (0,) * NODES)
 
 
-def current(levels: tuple[tuple[int, ...], tuple[int, ...]]) -> int:
-    """The record's current along +x summed over the Links, now_j before_i - before_j now_i from Node i to its neighbour j (the count's line's booking, ALGEBRA.md #the-counts-line)."""
+def current(
+    levels: tuple[tuple[int, ...], tuple[int, ...]],
+) -> int:  # the count's line's current along +x
     now, before = levels
     return sum(now[i + 1] * before[i] - before[i + 1] * now[i] for i in range(NODES - 1))
 
@@ -157,8 +156,7 @@ def test_in_the_loop_the_givers_record_turns_at_the_close_opposite_to_the_light_
     unit = json.loads(GENERATED.read_text(encoding="utf-8"))["integers"]["twist_table"]["unit"]
     wave_number = round(unit * 2 * pi / 7) // 100  # a slow quantum: the turn inside the table's angles
     world = load_world(path := giver_world(tmp_path, monkeypatch, wave_number))
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(world, observer=lines.append)
+    simulation = DetectorLawSimulation(world, observer=(lines := []).append)
     block, quanta = simulation.blocks[0], sum(world.measured[0].block.counts)  # M the body's count
     while not lines_of(lines, "recoil") and simulation.tick < world.ticks:
         wall = simulation.wall_of(block)  # W as the interval starts, before the giving's open
