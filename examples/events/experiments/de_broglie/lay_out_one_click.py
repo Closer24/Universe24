@@ -1,4 +1,4 @@
-"""THE ONE-CLICK HEALTH LOOK (the owner's word of 2026-09-28, 07:06 Israel time, through the Closer): before an experiment's first look, one click on a small GameBoard, read at the Nodes themselves (GAMEBOARD, labelled so) and at one detector: a giving body of 3 x 3 Nodes with one quantum in stock, in a tube of mirrors three empty Nodes from it (its mouth open toward +x), a window body across the beam carrying one detector strip on its face, a mirror body beyond it, and the faces open; the readings: the light's level at Nodes along the beam every interval, its rows every few intervals (the record's centroid, its wavelength by the sign changes along the beam, its largest level against the amplitude bound, the levels on both sides of the window and of the mirror), the giver's centre and the records alive; the strip's click is the one measurement (DETECTOR). Every count is the two slits' (the wall's and the tube's 9000, the window's 2000, the giver's 2001), the universe the two slits' beside it. Run from the repository root: python examples/events/experiments/de_broglie/lay_out_one_click.py [--out <folder>]; the world and its universe file are written under this folder and nothing else."""
+"""THE ONE-CLICK HEALTH LOOK (the owner's word of 2026-09-28, 07:06 Israel time, through the Closer): before an experiment's first look, one click on a small GameBoard, read at the Nodes themselves (GAMEBOARD, labelled so) and at one detector: a giving body of 3 x 3 Nodes with one quantum in stock, in a tube of mirrors three empty Nodes from it (its mouth open toward +x), a window body across the beam carrying one detector strip on its face, a mirror body beyond it, and the faces open; the readings: the light's level at Nodes along the beam every interval, its rows every few intervals (the record's centroid, its wavelength by the sign changes along the beam, its largest level against the amplitude bound, the levels on both sides of the window and of the mirror), the giver's centre and the records alive; the strip's click is the one measurement (DETECTOR). Every count is the two slits' (the wall's and the tube's 9000, the window's 2000, the giver's 2001), the universe the one of record. Run from the repository root: python examples/events/experiments/de_broglie/lay_out_one_click.py [--out <folder>]; the world is written under this folder and nothing else; it names the universe of record."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from lay_out_two_slits import (
     STEPS,
     body,
     box,
-    universe_beside,
+    universe_of_record,
 )
 
 HERE = Path(__file__).resolve().parent
@@ -39,7 +39,7 @@ STRIP = range(
 )  # the detector strip on the window's face, eight Nodes about the beam
 
 
-def one_click(folder: Path) -> dict[str, Any]:
+def one_click() -> dict[str, Any]:
     """The world: the giver in its tube, the window with its strip, the mirror, the readings along the beam."""
     interior = range(FACE_DEPTH, SHAPE[1] - FACE_DEPTH)
     y0 = BEAM_Y - 1
@@ -99,7 +99,7 @@ def one_click(folder: Path) -> dict[str, Any]:
         "ticks": TICKS,
         "N": STEPS,
         "engine": ENGINE,
-        "universe": universe_beside(folder),
+        "universe": universe_of_record(),
         "measured": measured,
         "detectors": detectors,
         "readings": readings,
@@ -113,7 +113,7 @@ def main() -> None:
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    document = one_click(folder)
+    document = one_click()
     (folder / f"{WORLD_NAME}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
     print(
         json.dumps(

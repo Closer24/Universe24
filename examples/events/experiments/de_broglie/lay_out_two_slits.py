@@ -1,4 +1,4 @@
-"""THE TWO SLITS (g) with light, the first look of the de Broglie Experimenter (ALGEBRA.md #the-rows-against-nature (g); the row (j) follows with a matter record when Cheshbon gives the lighter family's row): the world laid out in the law's form (ALGEBRA.md #what-a-body-is) from the numbers Cheshbon writes on #1325 before any run, every physical value in the files and none in the engine. The apparatus, as the recipe rules of record say: a giving body of 3 x 3 Nodes in a tube of mirrors (one arm along +x), a wall body with two openings d Links apart at a count above the mirror's line of ALGEBRA.md #the-paces, and a screen body L Links beyond the wall's far face carrying the detector sets in strips on its own face, each strip one named detector (a set on its body's own Nodes, docs/ENGINE.md, the world file). The mode file beside the world is the generator's (tools/body_generator.py --out); nothing here is a mode number. Run from the repository root: python examples/events/experiments/de_broglie/lay_out_two_slits.py [--out <folder>]; it rewrites the world, its expectation and its universe file under this folder (or the folder named) and nothing else."""
+"""THE TWO SLITS (g) with light, the first look of the de Broglie Experimenter (ALGEBRA.md #the-rows-against-nature (g); the row (j) follows with a matter record when Cheshbon gives the lighter family's row): the world laid out in the law's form (ALGEBRA.md #what-a-body-is) from the numbers Cheshbon writes on #1325 before any run, every physical value in the files and none in the engine. The apparatus, as the recipe rules of record say: a giving body of 3 x 3 Nodes in a tube of mirrors (one arm along +x), a wall body with two openings d Links apart at a count above the mirror's line of ALGEBRA.md #the-paces, and a screen body L Links beyond the wall's far face carrying the detector sets in strips on its own face, each strip one named detector (a set on its body's own Nodes, docs/ENGINE.md, the world file). The mode file beside the world is the generator's (tools/body_generator.py --out); nothing here is a mode number. Run from the repository root: python examples/events/experiments/de_broglie/lay_out_two_slits.py [--out <folder>]; it rewrites the world and its expectation under this folder (or the folder named) and nothing else; the world names the universe of record."""
 
 from __future__ import annotations
 
@@ -10,9 +10,8 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 ENGINE = "examples/events/engine_start.json"
-# the universe of record beside Bell's worlds (the held rows with `divisor`, the generator's amplitude
-# bound), or the shipped generated universe until #1331 is on main; the two slits' universe file is
-# written beside the world with the given family's clock key at the record's wavelength (rule 6)
+# the universe of record, the one file of the universe (the Closer's word of 08:04 Israel: one universe, no copy);
+# the given record's wavelength is the generator's reading `wavelength` of the mode file (#1353), no key
 UNIVERSE_OF_RECORD = (
     "examples/events/experiments/universe.json",
     "examples/events/generated/universe.json",
@@ -28,10 +27,6 @@ WORLD_NAME = "two_slits_light"
 
 # THE NUMBERS TO SET FROM CHESHBON'S LINE ON #1325 (asked 05:08 Israel time, 2026-09-28); until his
 # line these are the Experimenter's proposal, and a run on them is a first look and says so.
-WAVELENGTH_CLOCK = [
-    1024,
-    3,
-]  # the given family's clock [p, q]: lambda_q = 2 N q / p must be a whole number of Links (the loader's rule for the universe's wall L), the nearest whole to the giver's own wavelength 5.92 on the light band in this world's well (the generator's reading): 6 Links; rule 6 to the nearest Link
 GIVER_COUNT = 2001  # the giver's count per Node (`least_residues`: the shell wheel above 500 at 2001)
 MIRROR = (
     9000  # the tube's and the wall's count per Node, above the mirror's line at the record's wavelength
@@ -71,21 +66,15 @@ def body(nodes: list[list[int]], count: int, **keys: Any) -> dict[str, Any]:
     }
 
 
-def universe_beside(folder: Path) -> str:
-    """The universe file of record copied beside the world with the given family's clock at the record's wavelength; the repository path the world names."""
-    source = next((ROOT / path for path in UNIVERSE_OF_RECORD if (ROOT / path).exists()), None)
+def universe_of_record() -> str:
+    """The repository path of the universe file of record the world names; no copy and no key of the wavelength (the generator's reading)."""
+    source = next((path for path in UNIVERSE_OF_RECORD if (ROOT / path).exists()), None)
     if source is None:
         raise FileNotFoundError("no universe file of record in the tree")
-    document = json.loads(source.read_text(encoding="utf-8"))
-    for family in document["families"]:
-        if family["name"] == GIVING_FAMILY:
-            family["clock"] = list(WAVELENGTH_CLOCK)
-    path = folder / "universe.json"
-    path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
-    return path.resolve().relative_to(ROOT).as_posix()
+    return source
 
 
-def two_slits(folder: Path) -> dict[str, Any]:
+def two_slits() -> dict[str, Any]:
     """The world: the giver in its tube, the wall with two openings, the screen with its strips, the readings of the GameBoard check plan."""
     interior = range(FACE_DEPTH, HEIGHT - FACE_DEPTH)
     middle = (HEIGHT - 1) / 2  # the axis of the apparatus, between two Nodes
@@ -176,7 +165,7 @@ def two_slits(folder: Path) -> dict[str, Any]:
         "ticks": TICKS,
         "N": STEPS,
         "engine": ENGINE,
-        "universe": universe_beside(folder),
+        "universe": universe_of_record(),
         "measured": measured,
         "detectors": strips,
         "readings": readings,
@@ -349,7 +338,6 @@ def strips_expected(document: dict[str, Any]) -> list[dict[str, Any]]:
 
 def expectation(document: dict[str, Any]) -> dict[str, Any]:
     """The expectation file's frame: the row, the form of the world, the GAMEBOARD checks; the DETECTOR shares per strip enter from Cheshbon's line and no run."""
-    wavelength = 2 * STEPS * WAVELENGTH_CLOCK[1] / WAVELENGTH_CLOCK[0]
     return {
         "format": "world-expectation-v1",
         "status": "FIRST LOOK: the strips' shares await Cheshbon's blind expectation on #1325 (asked 05:08 Israel time, 2026-09-28); no number here is compared before his line",
@@ -358,8 +346,8 @@ def expectation(document: dict[str, Any]) -> dict[str, Any]:
             f"in a tube of {MIRROR} (one arm along +x), the wall of {WALL_THICKNESS} x {HEIGHT - 2 * FACE_DEPTH} Nodes of {MIRROR} "
             f"with two openings of {OPENING} Nodes d = {SLIT_DISTANCE} Links apart, the screen of {SCREEN} L = {SCREEN_DISTANCE} Links "
             f"beyond the wall's far face carrying {len(document['detectors'])} strips of {STRIP} Nodes on its face, each strip one detector; "
-            f"the given family's clock {WAVELENGTH_CLOCK} (lambda_q = {wavelength:g} Links for the recoil); the record's wavelength "
-            "on the GameBoard is the giver's rotation on the light band (cos k = 3 cos omega_b - 2), the generator's number in the mode file; "
+            "the record's wavelength lambda_q is the giver's rotation on the light band (cos k = 3 cos omega_b den / num - 2), "
+            "the generator's reading `wavelength` in the mode file, the recoil's and the wall L's (#1353), no key of the files; "
             "the strips' shares cos^2 (pi d y / (lambda L)) under one opening's envelope, the exact term the two arms' phases k . r (Cheshbon's line); "
             f"the stock {STOCK}; written before any run"
         ),
@@ -386,7 +374,7 @@ def main() -> None:
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    document = two_slits(folder)
+    document = two_slits()
     expected = expectation(document)
     expected["GAMEBOARD"] = [
         {"body": number, "interval": TICKS // 2, "centre": centre, "band": 1, "row": row}

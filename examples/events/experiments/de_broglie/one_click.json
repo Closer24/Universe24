@@ -12,7 +12,7 @@
  "ticks": 400,
  "N": 1024,
  "engine": "examples/events/engine_start.json",
- "universe": "examples/events/experiments/de_broglie/universe.json",
+ "universe": "examples/events/experiments/universe.json",
  "measured": [
   {
    "family": "matter",
