@@ -1,0 +1,74 @@
+{
+ "shape": [
+  61,
+  5,
+  5
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 3000,
+ "N": 1024,
+ "engine": "examples/events/engine_start.json",
+ "universe": "examples/events/experiments/planck.json",
+ "measured": [
+  {
+   "family": "third",
+   "nodes": [
+    {
+     "node": [
+      30,
+      2,
+      2
+     ],
+     "count": 3000
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  }
+ ],
+ "detectors": [
+  {
+   "name": "at_pixel",
+   "block": 0
+  }
+ ],
+ "readings": [
+  {
+   "name": "pixel_level",
+   "kind": "level",
+   "family": "third",
+   "node": [
+    30,
+    2,
+    2
+   ],
+   "every": 1
+  },
+  {
+   "name": "pixel_centre",
+   "kind": "centre",
+   "body": 0,
+   "every": 10
+  },
+  {
+   "name": "third_rows",
+   "kind": "rows",
+   "family": "third",
+   "every": 10
+  }
+ ],
+ "face_depth": 32
+}

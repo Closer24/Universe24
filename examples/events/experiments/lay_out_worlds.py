@@ -24,6 +24,12 @@ MOMENTUM_UNIT = 64  # Q, the universe's momentum unit (W = 3 Q M)
 MIRROR = 8000  # a mirror or a wall: above B's line c > Gamma (1 - sin(k / 2)) at lambda 4 (2,929) and 16 (8,050)
 WINDOW = 2000  # a window: the giver where its arm passes, a screen, a polariser, the falling body
 NORM = {"norm": 180255439696889394, "norm_denominator": 3948169}  # carried from generated/fall.json
+RULE_UNIVERSE = "examples/events/experiments/planck.json"  # THE RULE'S OWN UNIVERSE (ALGEBRA.md; Cheshbon's table of 13:03 Israel, 2026-09-28): Gamma 12,000, the pairs [1, 1], [1, 2], [2, 3] and [-1, 2], the divisors 1, T the unit; Nature24 writes the file beside the universe of record
+THIRD = "third"  # the family on the band [-1, 2] (ALGEBRA.md THE EXACT BANDS, THE THIRD): the name its row carries in the rule's universe file
+PIXEL = 3000  # a white pixel's count, one Node: above the self-binding edge 0.2255 Gamma = 2,706, below the horizon Gamma div 2 = 6,000 and the giver's bound 4,447 (Cheshbon, 13:03 Israel)
+THIRD_COUNT = 1000  # the third pulled off the pixel, one of its three interval states: a third of the count (an assumption stated on #1325 at 13:09 Israel; Cheshbon's line decides)
+TUBE = 6  # Links from the pixel to the pulled third: twice the tail's reach of three Links, so the tails no longer overlap and the tube between them carries the pull (the same assumption)
+RULE_TICKS = 3000  # the intervals of the rule's universe's first looks: a thousand periods of the third's rotation (the period 3)
 VELOCITY = Fraction(
     1, 5
 )  # the moving bodies' v in Links per interval, below matter's 0.25 and light's 0.447
@@ -713,6 +719,86 @@ def universe_at(wavelength: int, path: Path) -> str:
     return path.relative_to(ROOT).as_posix()
 
 
+def rule_pixel(x: int, count: int, shape: list[int]) -> dict[str, Any]:
+    """A body of one Node on the third's band at the chain's axis, the count its whole content (the well is the count under the divisor 1)."""
+    return body([[x, shape[1] // 2, shape[2] // 2]], count, family=THIRD)
+
+
+def white_pixel(name: str, third: bool) -> None:
+    """THE RULE'S OWN UNIVERSE, the first looks (a) and (b) (the owner's word of 13:01 Israel, 2026-09-28; ALGEBRA.md THE THREE COLOURS ARE THREE INTERVAL STATES, THE BOUND BODY IS ONE NODE): (a) a white pixel of PIXEL quanta on [-1, 2] at one Node of a chain stands RULE_TICKS intervals, its three consecutive levels summing to 0 at every interval and its quantum constant, giving and taking nothing; (b) a third pulled TUBE Links off it along the chain, with a detector on each body: the tube between them clicks along its axis, the interval between the clicks the tension, the third's count per Node (Cheshbon's blind number in the expectation before the run); the reader tube_clicks.py reads both."""
+    shape = [61, 5, 5]
+    pixel_x, third_x = shape[0] // 2, shape[0] // 2 + TUBE
+    axis = [pixel_x, shape[1] // 2, shape[2] // 2]
+    measured = [rule_pixel(pixel_x, PIXEL, shape)]
+    detectors = [{"name": "at_pixel", "block": 0}]
+    readings = [
+        reading("pixel_level", "level", 1, family=THIRD, node=axis),
+        reading("pixel_centre", "centre", 10, body=0),
+        reading("third_rows", "rows", 10, family=THIRD),
+    ]
+    if third:
+        measured.append(rule_pixel(third_x, THIRD_COUNT, shape))
+        detectors.append({"name": "at_third", "block": 1})
+        readings += [
+            reading("third_level", "level", 1, family=THIRD, node=[third_x, axis[1], axis[2]]),
+            reading(
+                "tube_level", "level", 1, family=THIRD, node=[pixel_x + TUBE // 2, axis[1], axis[2]]
+            ),
+            reading("third_centre", "centre", 10, body=1),
+        ]
+    document = world(shape, CHAIN, RULE_TICKS, measured, detectors, readings, universe=RULE_UNIVERSE)
+    white = {
+        "node": axis,
+        "levels_sum": 0,
+        "row": "THE THREE COLOURS ARE THREE INTERVAL STATES (ALGEBRA.md): at the pixel's Node the three consecutive levels a_before, a_now, a_next sum to 0 at every interval and the quantum a_now^2 - a_next a_before is constant; read from `pixel_level` by tube_clicks.py (GAMEBOARD)",
+    }
+    expectation: dict[str, Any] = {
+        "format": "world-expectation-v1",
+        "lacks": "the rule's universe file (Nature24's planck.json), the loader's negative numerator (the band [-1, 2]) and the generator's mode of a pixel on that band (Newton); until they land the world lays out and does not load",
+        "row": (
+            f"THE RULE'S OWN UNIVERSE, the first look (a): a white pixel of {PIXEL} quanta on the third's band at one Node stands {RULE_TICKS} intervals: the exact rotation of period 3 leaves no remainder at rest, so it gives nothing and takes nothing, its three interval states sum to 0 and its quantum stands (THE EXACT BANDS)"
+            if not third
+            else f"THE RULE'S OWN UNIVERSE, the first look (b): a third of {THIRD_COUNT} quanta pulled {TUBE} Links off the white pixel of {PIXEL} along the chain: the tube between them carries the third's count per Node, its remainders cross T and click along the tube's axis, the interval between the clicks the tension, the count itself (ALGEBRA.md THE THIRD; Cheshbon's line of 12:26 Israel)"
+        ),
+        "DETECTOR": (
+            [
+                {
+                    "detector": "at_pixel",
+                    "count": 0,
+                    "band": 0,
+                    "row": "a white pixel at rest gives nothing and takes nothing: no click over the run (THE EXACT BANDS, the rest rotation exact)",
+                }
+            ]
+            if not third
+            else []
+        ),
+        "GAMEBOARD": [
+            {
+                "body": 0,
+                "interval": RULE_TICKS,
+                "centre": axis,
+                "band": 0 if not third else 1,
+                "row": "the pixel stands at its Node"
+                + ("" if not third else " within a Link: a bound body moves by clicks alone"),
+            },
+            {
+                "reversible": RULE_TICKS,
+                "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)",
+            },
+        ],
+        "white": white,
+    }
+    if third:
+        expectation["tube"] = {
+            "detector": "at_third",
+            "axis": 0,
+            "tension": None,
+            "band": None,
+            "row": "the clicks at the third along the tube's axis: the interval between consecutive clicks is the tension, the third's count per Node, and every click's tally points along the axis; Cheshbon's blind number and band before the run (`tension`, `band`), the reader tube_clicks.py compares (DETECTOR: the clicks; the spacing a reading of them)",
+        }
+    write("rule", name, document, expectation)
+
+
 def main() -> None:
     universe_of_record()
     the_fall()
@@ -732,6 +818,9 @@ def main() -> None:
     (HERE / "bending").mkdir(exist_ok=True)
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
+    (HERE / "rule").mkdir(exist_ok=True)
+    white_pixel("white_pixel", False)
+    white_pixel("white_pixel_third", True)
 
 
 if __name__ == "__main__":

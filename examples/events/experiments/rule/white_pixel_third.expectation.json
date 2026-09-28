@@ -1,0 +1,39 @@
+{
+ "format": "world-expectation-v1",
+ "lacks": "the rule's universe file (Nature24's planck.json), the loader's negative numerator (the band [-1, 2]) and the generator's mode of a pixel on that band (Newton); until they land the world lays out and does not load",
+ "row": "THE RULE'S OWN UNIVERSE, the first look (b): a third of 1000 quanta pulled 6 Links off the white pixel of 3000 along the chain: the tube between them carries the third's count per Node, its remainders cross T and click along the tube's axis, the interval between the clicks the tension, the count itself (ALGEBRA.md THE THIRD; Cheshbon's line of 12:26 Israel)",
+ "DETECTOR": [],
+ "GAMEBOARD": [
+  {
+   "body": 0,
+   "interval": 3000,
+   "centre": [
+    30,
+    2,
+    2
+   ],
+   "band": 1,
+   "row": "the pixel stands at its Node within a Link: a bound body moves by clicks alone"
+  },
+  {
+   "reversible": 3000,
+   "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)"
+  }
+ ],
+ "white": {
+  "node": [
+   30,
+   2,
+   2
+  ],
+  "levels_sum": 0,
+  "row": "THE THREE COLOURS ARE THREE INTERVAL STATES (ALGEBRA.md): at the pixel's Node the three consecutive levels a_before, a_now, a_next sum to 0 at every interval and the quantum a_now^2 - a_next a_before is constant; read from `pixel_level` by tube_clicks.py (GAMEBOARD)"
+ },
+ "tube": {
+  "detector": "at_third",
+  "axis": 0,
+  "tension": null,
+  "band": null,
+  "row": "the clicks at the third along the tube's axis: the interval between consecutive clicks is the tension, the third's count per Node, and every click's tally points along the axis; Cheshbon's blind number and band before the run (`tension`, `band`), the reader tube_clicks.py compares (DETECTOR: the clicks; the spacing a reading of them)"
+ }
+}
