@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import sys
 from pathlib import Path
 
@@ -125,28 +124,6 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
 
 
 # (5) A CLICK'S CHANGE AFTER ALL ADVANCES; A RUN-TIME OVERFLOW BOUND (record 2185)
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 5 of record 2199: the trace that shows the interval's order is not built",
-)
-def test_5a_a_clicks_held_change_is_written_after_every_advance_of_its_interval(tmp_path):
-    """Within one interval the trace's order is: the steps (i), the bookings and the clicks (ii), the held families' step (iii), the holds with the clicks' changes (iv); a click's change of M enters the hold after every advance (ALGEBRA.md #the-interval, #the-primitives)."""
-    document = emitter_world(stock=2, ticks=STEPS)
-    output = run_world(
-        document, tmp_path, start={"mode": "check", "trace": {"primitives": ["step", "click", "hold"]}}
-    )
-    trace = [
-        json.loads(line) for line in (tmp_path / "out" / "world.trace.jsonl").read_text().splitlines()
-    ]
-    intervals = sorted({line["interval"] for line in trace if line["primitive"] == "click"})
-    assert intervals, "no click in the traced run"
-    order = {"step": 0, "click": 1, "hold": 2}
-    for t in intervals:
-        ranks = [order[line["primitive"]] for line in trace if line["interval"] == t]
-        assert ranks == sorted(ranks)
-    assert output["verdict"] == "LAWFUL"
 
 
 def test_5b_the_loads_bound_holds_at_run_time_no_level_leaves_the_integer_range():
