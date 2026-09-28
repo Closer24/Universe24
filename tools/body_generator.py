@@ -533,8 +533,9 @@ def given_wavelength(
     emitter = body.get("emitter")
     if not isinstance(emitter, dict):
         return {}
-    row = rows[emitter["family"]]
-    pair = emitter.get("pair", row.get("pair"))
+    pair = emitter.get("pair", rows[emitter["family"]].get("pair"))
+    if not (isinstance(pair, list) and len(pair) == 2):
+        return {}  # the record's pair is the body's word and the emitter declares none: no band to read
     found = wavelength_of(clock, (int(pair[0]), int(pair[1])))
     return {} if found is None else {"wavelength": found}
 
