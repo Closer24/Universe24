@@ -1,7 +1,5 @@
 """The family of charge (ALGEBRA.md #the-paces): a field family held at every body's Nodes at its signed charge and stepping by its own plain rule elsewhere, read by the other families at the weight Lambda."""
 
-from __future__ import annotations
-
 import json
 from dataclasses import replace
 from pathlib import Path

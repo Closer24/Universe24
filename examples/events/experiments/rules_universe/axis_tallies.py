@@ -92,8 +92,42 @@ def moves_per_axis(series: list[list[int]]) -> dict[str, Any]:
     }
 
 
-def run_moves(world_path: Path, axes: dict[str, Any]) -> dict[str, Any]:
-    """The world run headless with the engine's own functions, the counts at the pixel's Node and its six neighbours read from the loop's block after every interval (GAMEBOARD), the moves per axis from them; a refusal in the run is named with its interval."""
+def period_of(levels: list[int]) -> float | None:
+    """The period in intervals from the sign changes of the level at the Node (two changes per period); None under two changes."""
+    signs = [(v > 0) - (v < 0) for v in levels if v != 0]
+    changes = sum(1 for a, b in zip(signs, signs[1:], strict=False) if a != b)
+    return None if changes < 2 else round(2 * (len(levels) - 1) / changes, 2)
+
+
+def record_reading(
+    levels: list[int], counts: list[int], record: dict[str, Any] | None
+) -> dict[str, Any]:
+    """THE RECORD (GAMEBOARD): the pixel's record at its Node over the run: the period from the level's sign changes, the amplitude b = max|level| over the last period, the count over the last period (the mean of the held counts at the Node, else the last ten intervals); against Cheshbon's table from the generator run as Rule3 in integers (15:43 Israel: b and the period per count) within one quantum and one interval, or the reading alone."""
+    period = period_of(levels)
+    window = int(round(period)) if period else 10
+    recent, amplitude = counts[-window:], max((abs(v) for v in levels[-window:]), default=None)
+    read: dict[str, Any] = {
+        "label": "GAMEBOARD",
+        "period_intervals": period,
+        "amplitude_b": amplitude,
+        "count_over_the_last_period": round(sum(recent) / len(recent), 2) if recent else None,
+        "expected": record,
+    }
+    if record and record.get("b") is not None and amplitude is not None:
+        read["b_verdict"] = "MATCH" if abs(amplitude - int(record["b"])) <= 1 else "MISS"
+    if record and record.get("period") is not None:
+        read["period_verdict"] = (
+            "MISS"
+            if period is None
+            else ("MATCH" if abs(period - float(record["period"])) <= 1 else "MISS")
+        )
+    return read
+
+
+def run_moves(
+    world_path: Path, axes: dict[str, Any], record: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """The world run headless with the engine's own functions, the counts at the pixel's Node and its six neighbours read from the loop's block after every interval (GAMEBOARD), the moves per axis from them, the record's level at the Node every interval and its reading (the period, b, the count over the last period) against the blind `record`; a refusal in the run is named with its interval."""
     from event_universe.events.detector_law import DetectorLawSimulation
     from event_universe.world_files import load_world
 
@@ -106,7 +140,7 @@ def run_moves(world_path: Path, axes: dict[str, Any]) -> dict[str, Any]:
     ]
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
-    series, support, refusal = [], [], None
+    series, support, levels, refusal = [], [], [], None
     for _ in range(world.ticks):
         try:
             simulation.step()
@@ -114,6 +148,8 @@ def run_moves(world_path: Path, axes: dict[str, Any]) -> dict[str, Any]:
             refusal = f"at interval {simulation.tick + 1}: {stop}"
             break
         series.append([int(block.counts[x, y, z]) for x, y, z in around])
+        if block.own is not None:
+            levels.append(int(block.own.now[node[0], node[1], node[2]]))
         if (simulation.tick % 10 == 0 or simulation.tick < 10) and block.own is not None:
             level = int(
                 block.own.now[node[0], node[1], node[2]]
@@ -126,6 +162,7 @@ def run_moves(world_path: Path, axes: dict[str, Any]) -> dict[str, Any]:
         "expected": axes.get("net_per_interval"),
         "records_alive": len(simulation.records),
         "record_support": support,
+        "record": record_reading(levels, [row[0] for row in series], record),
         **rows,
     }
 
@@ -146,7 +183,8 @@ def main() -> None:
             world = Path(argument).resolve()
             blind = json.loads(world.with_suffix(".expectation.json").read_text(encoding="utf-8"))
             axes = blind.get("axes", {})
-            text = json.dumps({"world": world.name, **run_moves(world, axes)}, indent=1)
+            record = blind.get("blind", {}).get("record")
+            text = json.dumps({"world": world.name, **run_moves(world, axes, record)}, indent=1)
             print(text)
             world.with_name(f"{world.stem}.moves.json").write_text(text + "\n", encoding="utf-8")
         return
