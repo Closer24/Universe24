@@ -13,13 +13,15 @@ from event_universe.world_files import input_digest, load_world
 from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
-WORLD = ROOT / "examples" / "events" / "experiments" / "rules_universe" / "fall_tent_0.json"
+WORLD = ROOT / "examples" / "events" / "experiments" / "rules_universe" / "fall_control.json"
+UNIVERSE = "examples/events/experiments/rules_universe/rules_universe_over_gamma.json"  # Gamma 12,000
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 COUNT, A, DEN, TAIL = 5000, 93270, 65536, 34734  # the pixel of 5,000, its pair and tail: Cheshbon's line
 
 
 def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_both_levels(tmp_path):
     document = json.loads(WORLD.read_text(encoding="utf-8"))
+    document["universe"] = UNIVERSE  # the pixel of 5,000 and its pair are the 12,000 file's
     document["measured"][0]["nodes"][0]["count"] = COUNT
     world = tmp_path / "pixel.json"
     world.write_text(json.dumps(document), encoding="utf-8")
@@ -30,12 +32,8 @@ def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_b
     families = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))["families"]
     pair = next(family["pair"] for family in families if family["name"] == "matter")
     amplitude = isqrt(COUNT * DEN // (2 * DEN - A))  # T = 1 in the rule's own universe file
-    assert (entry["family"], entry["pair"], entry["clock"], entry["count"]) == (
-        "matter",
-        pair,
-        [A, DEN],
-        COUNT,
-    )
+    assert entry["family"] == "matter" and entry["pair"] == pair
+    assert entry["clock"] == [A, DEN] and entry["count"] == COUNT
     assert (entry["amplitude"], entry["tail"]) == (amplitude, [TAIL, 1 << 16])
     simulation = DetectorLawSimulation(load_world(world))
     own = simulation.blocks[0].own
@@ -50,6 +48,7 @@ def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_b
 
 def test_a_body_of_two_nodes_a_count_without_its_rows_and_a_row_given_twice_are_refused_by_name():
     document = json.loads(WORLD.read_text(encoding="utf-8"))
+    document["universe"] = UNIVERSE  # the pixel of 5,000 and its pair are the 12,000 file's
     document["measured"][0]["nodes"][0]["count"] = 3000  # the world's count is the day's
     with pytest.raises(
         ValueError, match="measured\\[0\\] has the count 3000 and no --clock and --tail rows"
