@@ -524,7 +524,6 @@ ORDERS = {
     ("(iv)", "a family's level at a Node"): ("the hold", "the source"),
     ("(iv)", "a body's content M_k"): ("the clicks", "the giving", "the clicks list"),
     ("(iv)", "a body's momentum n"): ("the giving", "the recoil"),
-    ("(v)", "a body's momentum n"): ("the feed", "the induction"),
     ("(i)", "the arrivals"): ("the receive", "the internal representation"),
     ("(ii)", "the record's tally"): ("the clicks", "the lifetime"),
 }
