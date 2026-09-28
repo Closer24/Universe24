@@ -2,7 +2,7 @@
  "world": "part.json",
  "kind": "WORLD (d), THE CLICK JOINS AND PARTS: the counts, the moves and the records against the expectation",
  "verdict": "REFUSED IN THE RUN",
- "refusal": "at interval 5: the pace of 'charge' (family 1, axis 0) is -702 at the Node (12, 4, 0) at interval 4: the pace stays above 0 (the content 12702 at or beyond Gamma = 12000; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "refusal": "at interval 5: the pace of 'charge' (family 1, axis 0) is -644 at the Node (7, 4, 0) at interval 4: the pace stays above 0 (the content 12644 at or beyond Gamma = 12000; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
  "ticks_run": 4,
  "1_the_counts": {
   "label": "GAMEBOARD",
@@ -37,12 +37,12 @@
    {
     "interval": 1,
     "left": -2,
-    "right": 0
+    "right": -1
    },
    {
     "interval": 2,
     "left": 2,
-    "right": 2
+    "right": 3
    },
    {
     "interval": 3,
@@ -89,11 +89,11 @@
    "matter_x12": [
     [
      0,
-     120
+     119
     ],
     [
      1,
-     78
+     77
     ],
     [
      2,
@@ -101,7 +101,7 @@
     ],
     [
      3,
-     -66
+     -65
     ]
    ],
    "matter_support": [
@@ -113,7 +113,7 @@
    "matter_total": [
     [
      0,
-     1406
+     1405
     ]
    ]
   }

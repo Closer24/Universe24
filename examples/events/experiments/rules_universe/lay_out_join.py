@@ -36,10 +36,10 @@ PART_DISTANCE = 5  # Links between the two Nodes: the tails still overlap (the c
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's blind number of clicks
 STEPS = 1024  # N, the phase's steps
 PIXELS = {  # Cheshbon's numbers per count (14:12 Israel time): the bound rotation omega_b and the tail's kappa per Link on the engine of today (the level once); 3,000 and 4,000 under the corrected term (13:39, 13:41)
-    3_000: {"omega_b": 0.8105, "kappa": 0.446},
-    4_000: {"omega_b": 0.6578, "kappa": 1.02},
-    5_000: {"omega_b": 0.778, "kappa": 0.63},
-    6_000: {"omega_b": 0.674, "kappa": 0.98},
+    3_000: {"omega_b": 0.8105, "kappa": 0.446, "a": 90_326},
+    4_000: {"omega_b": 0.6578, "kappa": 1.02, "a": 103_722},
+    5_000: {"omega_b": 0.778, "kappa": 0.63, "a": 93_270},
+    6_000: {"omega_b": 0.674, "kappa": 0.98, "a": 102_340},
     7_000: {"omega_b": 0.564, "kappa": 1.20},
 }
 CLOCK_UNIT = 1 << 16  # den of the clock pair [a, den], 2 cos omega_b = a / den (Cheshbon 13:51)
@@ -114,7 +114,9 @@ def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
         node = body["nodes"][0]
         c = node["count"]
         numbers = PIXELS[c]
-        a = round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
+        a = numbers.get("a") or round(
+            2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT
+        )  # the stated pair over 2^16 where given (Cheshbon 13:51, the Closer 14:17)
         amplitude = math.isqrt(c * QUANTUM_ACTION * CLOCK_UNIT // (2 * CLOCK_UNIT - a))
         tail = round(math.exp(-numbers["kappa"]) * TAIL_UNIT)
         x0, y0, z0 = node["node"]
