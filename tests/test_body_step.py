@@ -1,7 +1,5 @@
 """The body on one Node: a body gives its own family from its stock, the loader's refusals, and the self-source lowers the step exactly where declared, with the inverse exact. HOST; no pin."""
 
-from __future__ import annotations
-
 import numpy as np
 import pytest
 

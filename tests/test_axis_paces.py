@@ -1,7 +1,5 @@
 """The four paces: a reading family's pace on the axis a is p_a = p_0 - t_a (the reads' aa parts halved, the remainder kept at the Node), the rule's reads along a weigh 2 p_a^2 num, and the inverse reads the same paces. HOST; no pin."""
 
-from __future__ import annotations
-
 import numpy as np
 import pytest
 

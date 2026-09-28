@@ -759,9 +759,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     # THE BODIES ON ONE NODE (ALGEBRA.md #the-interval, #a-familys-declaration, #the-primitives; the one stroke, commit 6): the spin's step, written once for any body and any read (the feed and the induction left: derived, ALGEBRA.md #the-primitives)
 
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
-        """THE BODY'S STEP AT (v): the spin's step's line (features/spins_step) on the body from the fields as the interval leaves them (per read with a dipole the read family's vector part and, for the spin's dipole, its time part at the body's Node's six neighbours with the row's two weights), the body's momentum, wall, spin and spin before and its remainders under the line's keys; the writes the spin, the spin before and the remainders back."""
+        """THE BODY'S STEP AT (v): the spin's step's line (features/spins_step) on the body from the fields as the interval leaves them (per read with a dipole the read family's vector part and, for the spin's dipole, its time part at the body's Node's six neighbours with the row's two weights), the body's momentum, wall, spin and spin before and its remainders under the line's keys; the writes the spin, the spin before and the remainders back; a body with no spin and no moment reads no spin's holder and skips the act (a pixel of the rule's universe, the Closer's ruling of 2026-09-28, 15:32 Israel)."""
         definition = self.families[block.family]
-        if not definition.reads:
+        if not definition.reads or not any((*block.spin, *block.spin_before, *block.definition.moment)):
             return
         centre = self._window_centre(block)
         wrap = self.kind_wrap[block.family]
