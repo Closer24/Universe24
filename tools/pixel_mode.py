@@ -93,9 +93,8 @@ def period_reading(
         nxt = step(board, content, now, before, remainder)
         here = int(now[node])
         if here > 0 and sign <= 0:
-            if returned:
+            if returned and best is not None:
                 state[:] = [now, before, remainder]
-                assert best is not None
                 return (length, summed, largest, best[0], best[1], best[2])
             returned = True
         if here:
