@@ -22,7 +22,6 @@ from lay_out_join import (  # noqa: E402
     QUANTUM_ACTION,
     ROOT,
     STEPS,
-    UNIVERSE_NAME,
 )
 from pixel_mode import (  # noqa: E402  (the generator of the rule's universe, #1417)
     TAIL_UNIT,
@@ -40,6 +39,7 @@ TAIL = {
 EDGE_OF_THE_TERM = 2_706  # the edge of the bound body under the corrected term, 0.2255 Gamma (ALGEBRA.md THE BOUND BODY IS ONE NODE); on the engine of today lay_out_join's EDGE, 4,136
 BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
 RAW_PER_PORT = 1000  # Cheshbon's blind number of 13:46 Israel at 3,000: the raw clicks (both signs) per interval through each of the six Ports, about
+PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's number of intervals
 SHAPE = [15, 3, 3]  # a chain along x, open at both ends, three wide: six Ports with a neighbour each
 FACE_DEPTH = 1
@@ -187,7 +187,7 @@ def main() -> None:
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    universe = (folder / UNIVERSE_NAME).relative_to(ROOT).as_posix()
+    universe = PLANCK
     for pull in PULLS:
         name = f"pulled_pixel_{pull}" if pull else "white_pixel"
         document = world(universe, pull)

@@ -12,7 +12,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 from lay_out_axes import pixel_mode  # noqa: E402  (the pixels' mode files by the recipe)
-from lay_out_join import DENOMINATOR, ENGINE, ROOT, STEPS, UNIVERSE_NAME  # noqa: E402
+from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
 COUNT = 3_000  # the body's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000) under the corrected term (the Closer 14:30 Israel: the files ready for 3,000 for the moment the term returns; on the engine of today the edge is 4,136 and the run at 5,000 refuses, the reading in #1422)
 BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
@@ -33,6 +33,7 @@ BIAS = {
     200: 0.529,
 }  # Cheshbon's blind number: the share of the count's moves toward the well
 KAPPA_AWAY = 0.446  # the tail's decay per Link away from the well at 3,000
+PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 1000  # the run's length: the Experimenter's proposal until Cheshbon's number of moves
 SHAPE = [9, 3, 3]  # Cheshbon's board: the chain of 9 along x, open at both ends, three wide
 FACE_DEPTH = 1
@@ -143,7 +144,7 @@ def main() -> None:
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    universe = (folder / UNIVERSE_NAME).relative_to(ROOT).as_posix()
+    universe = PLANCK
     for tent in TENTS:
         name = f"fall_tent_{tent}"
         document = world(universe, tent)
