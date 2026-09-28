@@ -694,7 +694,7 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
     write("bending", name, document, expectation)
 
 
-PLANCK = "examples/events/experiments/planck.json"  # the rule's own universe beside the universe of record (Nature24's file; the folder rule/ the worlds' as in Bell's)
+PLANCK = "examples/events/planck.json"  # the rule's own universe beside the shipped universe (Nature24's file, #1411: gravity over 1, charge over 400,000, matter [2, 3]); the folder rule/ the worlds' as in Bell's
 RULE_GAMMA = 12000  # the rule's universe's node clock, cited for the expectations' formulas only
 EDGE = 2706  # 0.2255 Gamma, the count under which a one-Node body disperses (ALGEBRA.md, THE BOUND BODY IS ONE NODE)
 GIVER_EDGE = 4447  # the giving pixel's bound (Cheshbon, 2026-09-28, 13:22 Israel): its count with its bound charge keeps the pace positive
@@ -712,7 +712,7 @@ def pixel(node: list[int], count: int, **keys: Any) -> dict[str, Any]:
 
 
 def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int, stock: int) -> None:
-    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a chain along x, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
+    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a chain along x, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447, its charge q = 1: a body without q gives no light; the window's norm 1 over 1, T the unit of the rule's universe, until the emitter's norm leaves the file) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
     margin = 20
     giver_x, taker_x = margin, margin + distance
     length = taker_x + margin
@@ -721,8 +721,9 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
         pixel(
             [giver_x, 0, 0],
             deep,
+            q=1,
             moment=[0, 0, 1],
-            emitter={"family": "charge", "weight": 1},
+            emitter={"family": "charge", "weight": 1, "norm": 1, "norm_denominator": 1},
             stocks={"charge": stock},
         ),
         pixel([taker_x, 0, 0], shallow),

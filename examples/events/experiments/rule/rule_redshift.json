@@ -12,7 +12,7 @@
  "ticks": 1500,
  "N": 1024,
  "engine": "examples/events/engine_start.json",
- "universe": "examples/events/experiments/planck.json",
+ "universe": "examples/events/planck.json",
  "measured": [
   {
    "family": "matter",
@@ -37,6 +37,7 @@
     0
    ],
    "phase_denominator": 1024,
+   "q": 1,
    "moment": [
     0,
     0,
@@ -44,7 +45,9 @@
    ],
    "emitter": {
     "family": "charge",
-    "weight": 1
+    "weight": 1,
+    "norm": 1,
+    "norm_denominator": 1
    },
    "stocks": {
     "charge": 200
