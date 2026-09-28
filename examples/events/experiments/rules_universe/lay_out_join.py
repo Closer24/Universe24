@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 
 UNIVERSE_OF_RECORD = "examples/events/planck.json"  # the rule's own universe of record (#1411): three rows, Gamma = 12,000, T = 1, the twist table at 4 Gamma 2^16
-UNIVERSE_NAME = "rules_universe.json"
+UNIVERSE_NAME = "rules_universe_over_gamma.json"  # a file of its own beside Bell's worlds' rules_universe.json, which keeps the form of #1403
 ENGINE = "examples/events/engine_start.json"
 GAMMA = 12_000  # the Node clock, a multiple of 6: every pair exact over it
 QUANTUM_ACTION = 1  # T, the one unit
