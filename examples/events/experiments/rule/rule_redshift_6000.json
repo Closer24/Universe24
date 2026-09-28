@@ -1,6 +1,6 @@
 {
  "shape": [
-  24,
+  100,
   9,
   9
  ],
@@ -12,18 +12,18 @@
  "ticks": 1500,
  "N": 1024,
  "engine": "examples/events/engine_start.json",
- "universe": "examples/events/planck.json",
+ "universe": "examples/events/planck_6000.json",
  "measured": [
   {
    "family": "matter",
    "nodes": [
     {
      "node": [
-      6,
+      20,
       4,
       0
      ],
-     "count": 8
+     "count": 2000
     }
    ],
    "momentum": [
@@ -50,7 +50,7 @@
     "norm_denominator": 1
    },
    "stocks": {
-    "charge": 12
+    "charge": 3000
    }
   },
   {
@@ -58,11 +58,11 @@
    "nodes": [
     {
      "node": [
-      18,
+      80,
       4,
       0
      ],
-     "count": 8
+     "count": 1500
     }
    ],
    "momentum": [
@@ -83,7 +83,7 @@
    "name": "taker",
    "positions": [
     [
-     18,
+     80,
      4,
      0
     ]
@@ -102,7 +102,7 @@
    "kind": "level",
    "family": "charge",
    "node": [
-    9,
+    23,
     4,
     0
    ],
@@ -113,7 +113,7 @@
    "kind": "level",
    "family": "charge",
    "node": [
-    15,
+    77,
     4,
     0
    ],
@@ -148,7 +148,7 @@
    "kind": "level",
    "family": "gravity",
    "node": [
-    12,
+    50,
     4,
     0
    ],

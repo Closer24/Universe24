@@ -1,5 +1,5 @@
 {
- "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 8 at x = 6, the taker a pixel of 8 at x = 18 (12 Links on, the tails of one and two Links never touching), light of the charge family given by the giver at the weight 1 with the stock 12 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
+ "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 2000 at x = 20, the taker a pixel of 2000 at x = 80 (60 Links on, the tails of one and two Links never touching), light of the charge family given by the giver at the weight 1 with the stock 3000 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
  "DETECTOR": [
   {
    "detector": "taker",
@@ -15,33 +15,32 @@
    "light_beside_the_taker"
   ],
   "clocks": [
-   "taker_clock",
-   "giver_clock"
+   "giver_clock",
+   "taker_clock"
   ],
   "axis_y": 4,
   "windows": [
    [
-    8,
-    13
+    22,
+    51
    ],
    [
-    11,
-    16
+    49,
+    78
    ]
   ],
-  "giver_record_level": 5,
-  "taker_record_level": 8,
-  "giver_record_count": 9,
-  "taker_record_count": 13,
-  "giver_period": 10.5,
-  "taker_period": 12.5,
-  "clock_ratio": 1.2,
+  "giver_record_level": 69,
+  "taker_record_level": 49,
+  "giver_period": 9.55,
+  "taker_period": 7.75,
+  "clock_ratio": 1.232,
   "clock_ratio_band": [
-   1.05,
-   1.35
+   1.15,
+   1.32
   ],
-  "light_wavelength_at_the_giver": 5.4,
-  "light_wavelength_at_the_taker": 6.9,
+  "light_wavelength_at_the_giver": 5.29,
+  "light_wavelength_at_the_taker": 4.18,
+  "stepping_gamma_ratio_drift_per_interval": 0.00026,
   "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles of the two pixels and their ratio (the first clock over the second: the taker's over the giver's), the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written",
   "shift_ratio": null,
   "shift_ratio_band": null,
@@ -52,7 +51,7 @@
    "body": 0,
    "interval": 1400,
    "centre": [
-    6,
+    20,
     4,
     0
    ],
@@ -63,7 +62,7 @@
    "body": 1,
    "interval": 1400,
    "centre": [
-    18,
+    80,
     4,
     0
    ],

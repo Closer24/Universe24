@@ -1,7 +1,5 @@
 """The engine's acceptance tests: attributes read by kind, never by name; the adversarial universe, the cap of twenty families, the null family, an added attribute, the closed engine (no family name, universe integer, default, flag or version in the code) and the rule as one function; a support not built yet is xfail strict and loses its mark when it lands."""
 
-from __future__ import annotations
-
 import ast
 import json
 import random
