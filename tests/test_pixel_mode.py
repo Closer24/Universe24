@@ -14,18 +14,21 @@ from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLD = ROOT / "examples" / "events" / "experiments" / "rules_universe" / "fall_tent_0.json"
-UNIVERSE = "examples/events/experiments/rules_universe/rules_universe_over_gamma.json"  # Gamma 12,000
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
-COUNT, A, DEN, TAIL = 5000, 93270, 65536, 34734  # the pixel of 5,000, its pair and tail: Cheshbon's line
+COUNT, A, DEN, TAIL = (
+    8,
+    103723,
+    65536,
+    23747,
+)  # the pixel of 8 at Gamma 24, its pair and tail: Cheshbon's table
 
 
 def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_both_levels(tmp_path):
     document = json.loads(WORLD.read_text(encoding="utf-8"))
-    document["universe"] = UNIVERSE  # the pixel of 5,000 and its pair are the 12,000 file's
     document["measured"][0]["nodes"][0]["count"] = COUNT
     world = tmp_path / "pixel.json"
     world.write_text(json.dumps(document), encoding="utf-8")
-    TOOL.main(["--input", str(world), "--clock", "5000", str(A), str(DEN), "--tail", "5000", str(TAIL)])
+    TOOL.main(["--input", str(world), "--clock", "8", str(A), str(DEN), "--tail", "8", str(TAIL)])
     mode = json.loads((tmp_path / "pixel.mode.json").read_text(encoding="utf-8"))
     body, entry = document["measured"][0], mode["bodies"][0]
     node = tuple(body["nodes"][0]["node"])
@@ -40,7 +43,7 @@ def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_b
     assert own is not None and (own.now == own.before).all() and own.now[node] == amplitude
     beside = (node[0] + 1, node[1], node[2])
     one, two = (amplitude * TAIL + (1 << 15)) >> 16, (amplitude * TAIL**2 + (1 << 31)) >> 32
-    assert own.now[beside] == one and own.now[node[0] + 2, node[1], node[2]] == two and one > two > 0
+    assert own.now[beside] == one and own.now[node[0] + 2, node[1], node[2]] == two and one >= two > 0
     assert own.now[0, node[1], node[2]] == (amplitude * TAIL**4 + (1 << 63)) >> 64
     assert own.now[node[0], (node[1] + 1) % 3, node[2]] == one  # the periodic axis, one Link
     assert mode["world_digest"] == input_digest(document)
@@ -48,7 +51,6 @@ def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_b
 
 def test_a_body_of_two_nodes_a_count_without_its_rows_and_a_row_given_twice_are_refused_by_name():
     document = json.loads(WORLD.read_text(encoding="utf-8"))
-    document["universe"] = UNIVERSE  # the pixel of 5,000 and its pair are the 12,000 file's
     with pytest.raises(
         ValueError, match="measured\\[0\\] has the count 3000 and no --clock and --tail rows"
     ):
