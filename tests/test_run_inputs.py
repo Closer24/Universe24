@@ -69,10 +69,12 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     good["engine"] = relative
     good["readings"] = [{"name": "n", "kind": "momentum", "body": 0, "every": 50}]
     good["stamp"] = input_stamp(good)
-    good_path = write(inputs, "good", good)
+    good_path, twin_path = write(inputs, "good", good), write(inputs, "twin", good)
     # the expectation file beside the world, two sections: DETECTOR pins join the pins file's,
     # GAMEBOARD pins read the declared readings at the named interval (a diagnostic)
-    expectation = {"DETECTOR": [{"detector": "screen", "count": 2, "band": 1}]}
+    ratio = {"detector": "screen", "twin": "twin", "ratio": [1, 1], "band": [0, 1]}
+    nowhere = {"detector": "screen", "twin": "nowhere", "ratio": [1, 1], "band": [1, 1]}
+    expectation = {"DETECTOR": [{"detector": "screen", "count": 2, "band": 1}, ratio, nowhere]}
     expectation["GAMEBOARD"] = [{"body": 0, "interval": 50, "momentum": [0, 0, 0], "band": 0}]
     good_path.with_suffix(".expectation.json").write_text(json.dumps(expectation), encoding="utf-8")
     pins = tmp_path / "pins.json"
@@ -86,7 +88,7 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     ]
     pins.write_text(json.dumps({"good": good_pins}), encoding="utf-8")
     out = tmp_path / "out"
-    inputs = [str(bad_path), str(good_path)]
+    inputs = [str(bad_path), str(good_path), str(twin_path)]
     assert main(["--out", str(out), "--jobs", "2", "--pins", str(pins), *inputs]) == 1
     refused = json.loads((out / "bad.output.json").read_text(encoding="utf-8"))
     assert refused["verdict"] == "REFUSED" and "lacks keys: momentum" in refused["reason"]
@@ -95,9 +97,10 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     assert good["verdict"] == "LAWFUL"
     read = good["counts"]["screen"]
     waits = [c["interval"] - c["giving"] for c in good["clicks"] if c["detector"] == "screen"]
-    first = min(waits)
-    mean = (2 * sum(waits) + len(waits)) // (2 * len(waits))
-    assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 8
+    first, mean = min(waits), (2 * sum(waits) + len(waits)) // (2 * len(waits))
+    assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 10
+    assert [pin["verdict"] for pin in good["pins"][8:]] == ["MATCH", "MISS"]
+    assert good["pins"][8]["read"] == [1, 1] and good["pins"][9]["read"] is None
     momentum = [line for line in good["readings"] if line["name"] == "n"][0]["lines"][1]["momentum"]
     assert good["pins"][7]["read"] == momentum and good["pins"][7]["kind"] == "momentum"
     assert good["pins"][7]["verdict"] == ("MATCH" if momentum == [0, 0, 0] else "MISS")
@@ -125,11 +128,8 @@ def test_a_leak_refuses_the_run_naming_the_family(tmp_path: Path, monkeypatch):
     row = run_input(str(path), str(tmp_path), [])
     assert row["verdict"] == "LEAK"
     output = json.loads((tmp_path / "leaky.output.json").read_text(encoding="utf-8"))
-    assert (
-        output["verdict"] == "LEAK"
-        and "['ghost']" in output["reason"]
-        and "interval 1" in output["reason"]
-    )
+    reason = output["reason"]
+    assert output["verdict"] == "LEAK" and "['ghost']" in reason and "interval 1" in reason
     assert "clicks" not in output
     monkeypatch.setattr(DetectorLawSimulation, "leaks", lambda self: [])
     assert run_input(str(path), str(tmp_path), [])["verdict"] == "LAWFUL"
