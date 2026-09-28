@@ -3,12 +3,17 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
 from tests.bodies import KIND, paces_world, parts_of
 from tests.bodies import PACES_SHAPE as SHAPE
+
+# THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
+pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
+
 
 GAMMA = 10_000
 

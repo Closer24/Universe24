@@ -22,9 +22,9 @@ from event_universe.features.signed_read import (
     stability_bound,
 )
 from event_universe.world_files import parse_nature_beam_world
+from tests.bodies import CHAIN, MATTER, QUANTA, charged_chain
 from tests.bodies import GAMMA as CHAIN_GAMMA
-from tests.bodies import MATTER, QUANTA, charged_chain
-from tests.worlds import PERIODIC, emitter_world
+from tests.worlds import emitter_world
 
 GAMMA = 10_000
 SHAPE = (3, 3, 3)
@@ -98,7 +98,7 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond_it():
     """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <= 1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not a measurement); at Lambda = 3 the hill beyond the hollow at a slab Node enters at the floor 0."""
     admitted = DetectorLawSimulation(
-        parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 1))
+        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1, 1, 1))
     )
     for _ in range(3):
         admitted.step()
@@ -107,7 +107,7 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond
         # a GameBoard reading (a diagnostic), not a measurement
         assert int(np.max(admitted.node_clock - writes.content)) == CHAIN_GAMMA
     refused = DetectorLawSimulation(
-        parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, 1, 3))
+        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1, 1, 3))
     )
     floored = apply(term_of(refused, MATTER), start_of(refused, MATTER), own_of(refused, MATTER))
     assert int(floored.content[20, 0, 0]) == 0 and int(np.min(floored.content)) == 0

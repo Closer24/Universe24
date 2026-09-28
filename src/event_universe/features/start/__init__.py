@@ -104,12 +104,9 @@ def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     unit = field_unit(counts, num)
     line = np.moveaxis(counts, axis, 0).reshape(-1)
     extent = int(line.shape[0])
-    clamped = [int(c) * unit for c in line]
     bodies = [i for i, c in enumerate(line) if c != 0]
     diagonal = 6 * den - 4 * num
-    fine_values = [0] * extent
-    for i in bodies:
-        fine_values[i] = clamped[i]
+    fine_values = [int(c) * unit for c in line]  # the counts times the unit at the bodies, 0 between
 
     def solve(nodes: list[int], left: int, right: int) -> None:
         """One free segment between two known values: the determinants' recurrence, then one exact division per Node by the division act."""
@@ -304,18 +301,21 @@ def certified(
 
 
 def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int | None = None) -> FieldAtRest:
-    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's. With a divisor the rest is the sum's (the hold's row as a sum, 6 den a - num S_6(a) = 3 den sigma): no Node is clamped, the counts are the weighted sources at the bodies' Nodes, and the line's right side is 3 den x the source x the unit div the divisor at every Node, the residual read against it; the fine unit is derived from the rest's bound as well as the counts (the tent of the whole source over the longest extent, at most half the source total per side times the extent, rises above the counts on a long chain); a board periodic on its every axis at [1, 1] gives the source no sink and is refused by name."""
+    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's. With a divisor the rest is the sum's (the hold's row as a sum, 6 den a - num S_6(a) = 3 den sigma): no Node is clamped, the counts are the weighted sources at the bodies' Nodes, and the line's right side is 3 den x the source x the unit div the divisor at every Node, the residual read against it; the fine unit is derived from the rest's bound as well as the counts (the tent of the whole source over the longest extent, at most half the source total per side times the extent, rises above the counts on a long chain); a board periodic on its every axis at [1, 1] has no sink: under a source total other than 0 it is refused by name, and under the total 0 (a signed family balanced) the rest stands up to a constant, solved with one Node of no source held as the gauge and written at the mean 0."""
     check_counts(np.abs(counts), 1 + int(np.abs(counts).max()))  # a signed family's counts by size
     num, den = pair
     if num < 1 or den < num:
         raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
     long = [axis for axis in range(len(wrap)) if counts.shape[axis] > 1]
-    if divisor is not None and (divisor < 1 or (num == den and all(wrap[axis] for axis in long))):
+    closed = divisor is not None and num == den and all(wrap[axis] for axis in long)
+    if divisor is not None and (divisor < 1 or (closed and (int(counts.sum()) != 0 or counts.all()))):
         raise ValueError(
-            f"the sum's rest needs a divisor from 1 (got {divisor}) and an open face: a board periodic "
-            "on every axis at [1, 1] gives the source no sink (ALGEBRA.md #the-generator (g))"
+            f"the sum's rest needs a divisor from 1 (got {divisor}) and a sink: a board periodic on every "
+            f"axis at [1, 1] rests only under the source total 0 (got {int(counts.sum())}), one Node free"
         )
     clamped = np.zeros(counts.shape, dtype=np.int64) if divisor is not None else counts
+    if closed:  # the balanced rest up to a constant: a Node of no source the gauge, the mean taken off
+        clamped.ravel()[int(np.flatnonzero(counts.ravel() == 0)[0])] = 1
     solver, free = line_solver(clamped, pair, wrap)
     nodes = int(np.count_nonzero(free))
     ones = np.zeros(counts.shape, dtype=object)
@@ -340,12 +340,13 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int | None = N
     reach = 0 if divisor is None else int(division(tent, 2 * divisor, np.array(1, dtype=object))) + 1
     unit = field_unit(counts, num, reach)
     fine = np.zeros(counts.shape, dtype=object)
-    fine[...] = clamped.astype(object) * unit
+    fine[...] = clamped.astype(object) * (0 if divisor is not None else unit)  # the gauge Node at 0
     side = np.zeros(counts.shape, dtype=object)
     if divisor is not None:
         side[...] = division(3 * den * unit, divisor, counts.astype(object))
     side = side.ravel()[free]
     fine = fine + solved(counts, solver, free, side - residual(fine, pair, wrap, free), bound_bits)
+    fine = fine - division(1, fine.size, np.array(fine.sum() if closed else 0, dtype=object))
     rounds = 0
     grown = False
     while True:

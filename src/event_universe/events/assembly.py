@@ -339,7 +339,7 @@ def held_records(loop: DetectorLawSimulation) -> None:
 
 
 def start_at_rest(loop: DetectorLawSimulation) -> None:
-    """THE START (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): every held family's time part at the load at its rest, the solution of the family's line with the sum's sources on its right side, 6 den a - num S_6(a) = 3 den sigma, by the folder found by its name, once before the first interval and never in it; the sources the bodies' weighted counts at their Nodes (a body in the law's form the count declared at each Node, the hold's row; a body of the old form its one source at every Node of its mask), each over the row's divisor E_s inside the folder, 0 elsewhere and beyond an open face; its levels written at both levels with the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family; a board periodic on its every axis at [1, 1] has no rest under a source (ALGEBRA.md #the-generator (g): the source has no sink), so its family starts at the load's 0 and the field rises from the sources in the run."""
+    """THE START (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): every held family's time part at the load at its rest, the solution of the family's line with the sum's sources on its right side, 6 den a - num S_6(a) = 3 den sigma, by the folder found by its name, once before the first interval and never in it; the sources the bodies' weighted counts at their Nodes (a body in the law's form the count declared at each Node, the hold's row; a body of the old form its one source at every Node of its mask), each over the row's divisor E_s inside the folder, 0 elsewhere and beyond an open face; its levels written at both levels with the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family: a board periodic on its every axis at [1, 1] has no sink (ALGEBRA.md #the-generator (g)), so under a source total other than 0 the world is refused at the load, and under the total 0 (a signed family balanced) the rest is written at the mean 0."""
     start = loop.register.at("the start", "any")
     for family, record in loop.held_records.items():
         source = cast(str, loop.families[family].held)
@@ -353,8 +353,7 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
             counts[mask] = loop.body_source(number, source)
             for node, value in loop.node_sources(number, source):
                 counts[node] = value
-        sink = any(not wrap[axis] for axis in range(len(loop.shape)) if loop.shape[axis] > 1)
-        if not counts.any() or (num == den and not sink):
+        if not counts.any():
             continue
         try:
             field: Any = start(counts, (num, den), wrap, divisor)
