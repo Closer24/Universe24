@@ -38,8 +38,7 @@ def declared_folders() -> list[tuple[str, str, bool]]:
     return found
 
 
-# the values named once in ALGEBRA.md #the-primitives (and the source row's own word for its
-# remainder): the rows of 9.117 write these and no other
+# the values named once in ALGEBRA.md #the-primitives (and the source row's own word for its remainder): the rows of 9.117 write these and no other
 NAMED_VALUES = {
     "a family's level at a Node",
     "the level next, the remainder",

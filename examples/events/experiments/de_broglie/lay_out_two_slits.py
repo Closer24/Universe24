@@ -18,10 +18,6 @@ UNIVERSE_OF_RECORD = (
 )
 STEPS = 1024  # N, the phase's steps of every world of record
 DENOMINATOR = 1024  # every body's phase denominator, the pair (m, j) the generator fills
-NORM = {
-    "norm": 180255439696889394,
-    "norm_denominator": 3948169,
-}  # the giver's norm, as Bell's files carry it
 GIVING_FAMILY = "charge"  # the light; the matter record of (j) names the lighter family here
 WORLD_NAME = "two_slits_light"
 
@@ -109,7 +105,10 @@ def two_slits() -> dict[str, Any]:
         }
         for k, y0 in enumerate(range(interior.start, interior.stop, STRIP))
     ]
-    emitter = {"family": GIVING_FAMILY, "weight": 1, **NORM}
+    emitter = {
+        "family": GIVING_FAMILY,
+        "weight": 1,
+    }  # no norm of its own: the window closes at the universe's T
     measured = [
         body(giver_nodes, GIVER_COUNT, moment=[0, 0, 1], emitter=emitter, stocks={GIVING_FAMILY: STOCK}),
         body(wall_nodes, MIRROR),

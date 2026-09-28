@@ -16,8 +16,7 @@ from tests.running import planted
 from tests.worlds import NODE_CLOCK, family_entry
 from tests.worlds import reads as family_reads
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -87,8 +86,7 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
                     for (ii, j), m in matrix.items()
                     if ii == i
                 )
-                # the remainders' term under the weak-field rule, (a_next - a_before) (r -
-                # r') / (3 R) at a Node without content, R = 2 Gamma^2 num (ALGEBRA.md #the-line)
+                # the remainders' term under the weak-field rule, (a_next - a_before) (r - r') / (3 R) at a Node without content, R = 2 Gamma^2 num (ALGEBRA.md #the-line)
                 remainder_term = (level(a_next, i) - level(a_before, i)) * Fraction(
                     int(r_old[i, 0, 0]) - int(r_new[i, 0, 0]), 3 * 2 * NODE_CLOCK**2 * num
                 )
@@ -237,8 +235,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
                 int(now[i, 0, 0]) * int(before[j, 0, 0]) - int(before[i, 0, 0]) * int(now[j, 0, 0])
             )
             inward += max(g, Fraction(0))
-        # the tally in the form's units: the wall times the plain current, unweighted
-        # (ALGEBRA.md #the-direction; item 36; the pace at both ends, item 34, HISTORY)
+        # the tally in the form's units: the wall times the plain current, unweighted (ALGEBRA.md #the-direction; item 36; the pace at both ends, item 34, HISTORY)
         assert offers.get(pair, 0) == inward * wall and offers.get(far, 0) == 0
 
 
