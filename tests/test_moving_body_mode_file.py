@@ -23,6 +23,10 @@ WORLD = (
 def mode_entry(momentum: int) -> dict:
     world = json.loads(WORLD)
     world["measured"][0].update({"momentum": [momentum, 0, 0], "momentum_before": [momentum, 0, 0]})
+    world["measured"][0]["emitter"] = {
+        "family": "matter",
+        "weight": 1,
+    }  # a giver: a body neither giving nor moving has no entry
     entry: dict = mode_document((reading := generate(world)), *split_levels(reading))["bodies"][0]
     assert "refused" not in entry, entry.get("refused")
     return entry
