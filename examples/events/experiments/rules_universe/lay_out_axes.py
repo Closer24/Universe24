@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Any
+
+from event_universe.world_files import input_digest  # the mode file names the world by its digest
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -22,6 +25,12 @@ NET_X = {
 }  # Cheshbon's blind number of 13:46 Israel: the net tally along x, quanta per interval at the pulse's peak
 RAW_PER_PORT = 1000  # Cheshbon's blind number: the raw clicks (both signs) per interval through each of the six Ports, about
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's number of intervals
+CLOCK_PAIR = {
+    3_000: [90326, 65536]
+}  # Cheshbon's clock pair of 13:51 Israel: 2 cos omega_b = a / b at the count, omega_b = 0.8105 at 3,000 from the bound state's equation
+KAPPA = {
+    3_000: 0.446
+}  # the tail's decay per Link at the count (ALGEBRA.md THE BOUND BODY IS ONE NODE: kappa = acosh((9 / 2) cos omega_b - 2), 0.45 at 3,000)
 SHAPE = [15, 3, 3]  # a chain along x, open at both ends, three wide: six Ports with a neighbour each
 FACE_DEPTH = 1
 AXIS = [1, 1]  # the row's y and z
@@ -46,6 +55,47 @@ def neighbours(x: int) -> list[list[int]]:
         [node[0] + dx, node[1] + dy, node[2] + dz]
         for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
     ]
+
+
+def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
+    """The mode file of the pixels by the recipe of the Closer's word of 13:54 and 14:06 Israel (the clock's tool `tools/pixel_mode.py` writes the same when it lands): each body's record is the integer root of its count at its Node, and with `tail` the same times e^(-kappa d) at every Node d Links away (the Link distance along the axes) while it rounds to 1 or more, both time levels equal (the rest phase), the clock pair Cheshbon's; the world's digest names the world."""
+    shape = document["shape"]
+    universe = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))
+    pairs = {family["name"]: list(family["pair"]) for family in universe["families"]}
+    bodies = []
+    for body in document["measured"]:
+        node = body["nodes"][0]
+        count, root = int(node["count"]), math.isqrt(int(node["count"]))
+        if count not in CLOCK_PAIR:  # a body under the edge binds no record: content alone
+            bodies.append(
+                {
+                    "family": body["family"],
+                    "pair": pairs[body["family"]],
+                    "mode": "none: content alone, under the edge",
+                }
+            )
+            continue
+        profile = [0] * (shape[0] * shape[1] * shape[2])
+        for x in range(shape[0]):
+            for y in range(shape[1]):
+                for z in range(shape[2]):
+                    distance = sum(abs(a - b) for a, b in zip((x, y, z), node["node"], strict=True))
+                    level = round(root * math.exp(-KAPPA[count] * distance)) if tail else 0
+                    if distance == 0 or level >= 1:
+                        profile[(x * shape[1] + y) * shape[2] + z] = root if distance == 0 else level
+        bodies.append(
+            {
+                "family": body["family"],
+                "pair": pairs[body["family"]],
+                "profile": profile,
+                "clock": list(CLOCK_PAIR[count]),
+                "moving": {"now": profile, "before": list(profile)},
+                "recipe": "the pixel's record isqrt(c) at its Node"
+                + (", its tail e^(-kappa d) per Link" if tail else "")
+                + ", both levels equal, the clock pair Cheshbon's",
+            }
+        )
+    return {"rest": {}, "bodies": bodies, "world_digest": input_digest(document)}
 
 
 def world(universe: str, pull: int) -> dict[str, Any]:
@@ -127,14 +177,17 @@ def expectation(pull: int) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
+    parser.add_argument("--no-tail", action="store_true", help="the mode files without the tail")
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
     universe = (folder / UNIVERSE_NAME).relative_to(ROOT).as_posix()
     for pull in PULLS:
         name = f"pulled_pixel_{pull}" if pull else "white_pixel"
-        (folder / f"{name}.json").write_text(
-            json.dumps(world(universe, pull), indent=1) + "\n", encoding="utf-8"
+        document = world(universe, pull)
+        (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        (folder / f"{name}.mode.json").write_text(
+            json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
         )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(pull), indent=1) + "\n", encoding="utf-8"

@@ -1,7 +1,5 @@
 """The hold's folder: every division through core.rule3, forward then back exact; the dipole's terms; the refusals; the card bound, the loop's hold being this folder's line."""
 
-from __future__ import annotations
-
 import json
 import random
 from pathlib import Path

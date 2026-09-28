@@ -11,6 +11,7 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
+from lay_out_axes import pixel_mode  # noqa: E402  (the pixels' mode files by the recipe)
 from lay_out_join import DENOMINATOR, ENGINE, ROOT, STEPS, UNIVERSE_NAME  # noqa: E402
 
 COUNT = 3_000  # the body's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000): it binds itself
@@ -137,14 +138,17 @@ def expectation(tent: int) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
+    parser.add_argument("--no-tail", action="store_true", help="the mode files without the tail")
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
     universe = (folder / UNIVERSE_NAME).relative_to(ROOT).as_posix()
     for tent in TENTS:
         name = f"fall_tent_{tent}"
-        (folder / f"{name}.json").write_text(
-            json.dumps(world(universe, tent), indent=1) + "\n", encoding="utf-8"
+        document = world(universe, tent)
+        (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        (folder / f"{name}.mode.json").write_text(
+            json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
         )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(tent), indent=1) + "\n", encoding="utf-8"
