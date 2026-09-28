@@ -36,13 +36,13 @@ GIVER_COUNT = 2001  # the giver's count per Node (`least_residues`: the shell wh
 MIRROR = (
     9000  # the tube's and the wall's count per Node, above the mirror's line at the record's wavelength
 )
-WINDOW = 2000  # the screen's count per Node, a window
+SCREEN = 9000  # the screen's count per Node: the mirror's, the strips booking the one-way inward flux at their Ports (the owner's word through the Closer; Cheshbon's yes, 02:27Z)
 OPENING = 4  # the width of each opening in Nodes
 SLIT_DISTANCE = 16  # d, the distance between the two openings' centres in Links
 SCREEN_DISTANCE = 97  # L, from the wall's far face to the screen's face in Links
 STRIP = 4  # the height of one strip of the screen in Nodes
 STOCK = 400  # the giver's stock of quanta
-TICKS = 4500  # the run's length in intervals: the last giving within ~4,000, the flight of 124 Links at the group velocity 0.518 (Cheshbon, 02:18Z)
+TICKS = 6000  # the run's length in intervals: the last giving within ~4,000, the flight of 124 Links at the group velocity 0.518 and the returns from the mirror screen (Cheshbon's yes, 02:27Z)
 FACE_DEPTH = 8
 
 WALL_X = 40  # the wall's near face; the wall is 4 Nodes thick
@@ -120,7 +120,7 @@ def two_slits(folder: Path) -> dict[str, Any]:
     measured = [
         body(giver_nodes, GIVER_COUNT, moment=[0, 0, 1], emitter=emitter, stocks={GIVING_FAMILY: STOCK}),
         body(wall_nodes, MIRROR),
-        body(screen_nodes, WINDOW),
+        body(screen_nodes, SCREEN),
         body(tube, MIRROR),
     ]
     centre_y = int(middle + 0.5)
@@ -230,7 +230,7 @@ def expectation(document: dict[str, Any]) -> dict[str, Any]:
         "row": (
             f"ALGEBRA.md #the-rows-against-nature (g) THE TWO SLITS: the giver of 3 x 3 Nodes of {GIVER_COUNT} "
             f"in a tube of {MIRROR} (one arm along +x), the wall of {WALL_THICKNESS} x {HEIGHT - 2 * FACE_DEPTH} Nodes of {MIRROR} "
-            f"with two openings of {OPENING} Nodes d = {SLIT_DISTANCE} Links apart, the screen of {WINDOW} L = {SCREEN_DISTANCE} Links "
+            f"with two openings of {OPENING} Nodes d = {SLIT_DISTANCE} Links apart, the screen of {SCREEN} L = {SCREEN_DISTANCE} Links "
             f"beyond the wall's far face carrying {len(document['detectors'])} strips of {STRIP} Nodes on its face, each strip one detector; "
             f"the given family's clock {WAVELENGTH_CLOCK} (lambda_q = {wavelength:g} Links for the recoil); the record's wavelength "
             "on the GameBoard is the giver's rotation on the light band (cos k = 3 cos omega_b - 2), the generator's number in the mode file; "
