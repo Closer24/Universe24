@@ -29,14 +29,18 @@
     16
    ]
   ],
-  "giver_period": 9.55,
-  "taker_period": 12.23,
-  "clock_ratio": 1.28,
+  "giver_record_level": 5,
+  "taker_record_level": 8,
+  "giver_record_count": 9,
+  "taker_record_count": 13,
+  "giver_period": 10.5,
+  "taker_period": 12.5,
+  "clock_ratio": 1.2,
   "clock_ratio_band": [
-   1.15,
-   1.45
+   1.05,
+   1.35
   ],
-  "light_wavelength_at_the_giver": 5.29,
+  "light_wavelength_at_the_giver": 5.4,
   "light_wavelength_at_the_taker": 6.9,
   "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles of the two pixels and their ratio (the first clock over the second: the taker's over the giver's), the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written",
   "shift_ratio": null,

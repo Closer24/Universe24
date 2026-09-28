@@ -29,6 +29,7 @@ from event_universe.features.start import (
     division,
 )
 from event_universe.features.start import rest as start_rest
+from event_universe.loader import derived
 from event_universe.loader.mode import period_by_the_rule
 from event_universe.loader.world import load_level
 from event_universe.world_files import input_digest
@@ -197,10 +198,16 @@ def rotation_and_share(
     return rotation, share
 
 
+def filled_rows(families: list[dict[str, Any]], gamma: int) -> list[dict[str, Any]]:
+    """The universe file's rows with every key the rule fixes filled by the loader's derivation (THE FAMILIES FROM THE RULE: the file holds the rule's form, the generator reads the rows as the loader does)."""
+    return [derived.filled(row, tuple(families), gamma) for row in families]
+
+
 def loader_level(document: dict[str, Any], gamma: int) -> int:
     """The level the loader reads its amplitude bound at, by the loader's own function `load_level` (loader/world.py; Cheshbon's lines of 2026-09-28, 00:20Z and 02:05Z; the Closer's word of 05:50 Israel): the families' reads with their weights (a weight named in the universe's integers resolved) and every body's source per family as the loader reads them, its content (its counts' sum with its stocks) or its signed charge (its `q` with the rows' `sign` over its held quanta), twice the largest family's reach, at most Gamma - 1."""
     universe = read_document(document["universe"])
-    rows, integers = universe["families"], universe.get("integers", {})
+    integers = universe.get("integers", {})
+    rows = filled_rows(universe["families"], gamma)
     names = [row["name"] for row in rows]
     reads = [
         [
@@ -685,9 +692,9 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
         for axis in "xyz"
     )
     universe = read_document(document["universe"])
-    rows = {row["name"]: row for row in universe["families"]}
     integers = universe.get("integers", {})
     gamma = int(document.get("node_clock", integers.get("node_clock", 0)))
+    rows = {row["name"]: row for row in filled_rows(universe["families"], gamma)}
     bound_level = loader_level(document, gamma)
     # the own twist's scale from the file: theta_unit = 1 / unit, "own" = round(unit omega_0 / (4 Gamma)) (ALGEBRA.md #the-primitives)
     twist_scale = int(

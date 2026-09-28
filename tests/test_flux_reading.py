@@ -12,7 +12,6 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.bodies import massive_world
 from tests.running import planted
 from tests.worlds import NODE_CLOCK, family_entry
-from tests.worlds import reads as family_reads
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
@@ -147,7 +146,7 @@ def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
 def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integers():
     """(c) the engine's `conserved_form` is 3 I times the family's wall times Gamma (the Node clock, ALGEBRA.md #the-paces; BUILD.md section 26 item 31: I with the clock's weights (den f / (Gamma num)) on the squares and (2 den M / (Gamma num)) on now x before at the seven Nodes with content, the well at 20 and the six receiver bodies, M = 1) on planted rows, exact against the Fraction form, for light (the wall 1) and for a massive family with a well ([8, 7] on the kind [7, 8]: the wall 56); (d) the engine's `detector_inflow_tally` into a set of three Nodes (a detector cube cut by the chain, record 1899) counts the two outer Ports only (the Links inside the set are no Ports), exact against the Fraction fluxes, and 0 into a set the record does not reach."""
     document = massive_world([40, 1, 1], PERIODIC, [800, 809])
-    document["universe"].append(family_entry("source", [7, 8], family_reads()))
+    document["universe"].append(family_entry("source", [7, 8]))
     document["measured"] = [
         {
             "position": [20, 0, 0],

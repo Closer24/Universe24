@@ -74,7 +74,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
     assert light["pair"] == [1, 1]
     broken = json.loads(json.dumps(document))
     del broken["universe"][0]["pair"]
-    refused(broken, r"universe\[0\] lacks keys: pair")
+    refused(broken, r"the family 'light' lacks keys: m")  # THE MASS IS ONE INTEGER: m, or the older pair
     for key in ("momentum", "stocks"):  # the body's schema (loader/frame.py, BODY)
         broken = json.loads(json.dumps(document))
         del broken["measured"][0][key]

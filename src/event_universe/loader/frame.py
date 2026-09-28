@@ -21,12 +21,11 @@ from event_universe.core.schema import (
 )
 from event_universe.loader import cards
 
-# the universe's integers (ALGEBRA.md #a-familys-declaration, #the-interval, #the-primitives): Gamma the Node clock, T the quantum's action (`quantum_action`, one for every family), Lambda the charge's read weight, Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and the derived A where the transport is built; the amplitude bound is no key: A is derived from the integer width and the rule's integers (the loader's `derived_amplitude`), and `amplitude_bound` in a file is refused by name as any unknown key
+# the universe's integers (ALGEBRA.md #a-familys-declaration, #the-interval, #the-primitives): Gamma the Node clock, T the quantum's action (`quantum_action`, one for every family), Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and the derived A where the transport is built; the amplitude bound is no key: A is derived from the integer width and the rule's integers (the loader's `derived_amplitude`), and `amplitude_bound` in a file is refused by name as any unknown key; Lambda (the charge's read weight) left the files with THE FAMILIES FROM THE RULE (every weight 1) and is refused by name as any unknown key
 INTEGERS = ObjectOf(
     {
         "node_clock": Integer(least=1),
         "quantum_action": Integer(least=1),
-        "Lambda": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_steps": Integer(least=2),
         "most_families": Integer(least=1),
@@ -40,9 +39,7 @@ INTEGERS = ObjectOf(
             }
         ),
     },
-    frozenset(
-        {"Lambda", "quantum_action"}
-    ),  # Lambda: the charge's weight is the one weight 1 (THE FAMILIES FROM THE RULE), named only by a read that declares it; T optional until the giving's pull request requires it
+    frozenset({"quantum_action"}),  # T optional until the giving's pull request requires it
 )
 UNIVERSE_KEYS = ("integers", "families")
 # the start file (ALGEBRA.md #a-familys-declaration): the run's mode, check (every measured event read beside its blind expectation, no pin compared) or pin (the pins compared); no law's name, no version
@@ -220,6 +217,7 @@ def entry_kind(register: Register) -> ObjectOf:
     declared = cards.at(register, "a family's entry")
     keys = {
         "name": Word(),
+        "m": Integer(least=1),
         "quantum": Integer(least=1),
         "clock": CLOCK,
         "spins_step": SPINS_STEP,
@@ -231,7 +229,7 @@ def entry_kind(register: Register) -> ObjectOf:
     keys["held"] = ObjectOf(held.keys, held.optional | {"factors", "dipole", "dipole_div"})
     read = cast(ObjectOf, reads.of)
     keys["reads"] = ListOf(ObjectOf(read.keys, read.optional | {"weight", "twist", "by"}), reads.length)
-    derived = {"parts", "phase", "clicks", "reads", "sign", "self_source", "quantum"}
+    derived = {"parts", "phase", "clicks", "reads", "sign", "self_source", "quantum", "pair", "m"}
     return ObjectOf(keys, declared.optional | derived | {"clock", "spins_step", "lifetime", "hand"})
 
 

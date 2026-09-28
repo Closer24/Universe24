@@ -709,13 +709,17 @@ GIVER_EDGE_RATIO = (
 
 
 GAMMA_24_NUMBERS = {
-    "giver_period": 9.55,
-    "taker_period": 12.23,
-    "clock_ratio": 1.28,
-    "clock_ratio_band": [1.15, 1.45],
-    "light_wavelength_at_the_giver": 5.29,
+    "giver_record_level": 5,
+    "taker_record_level": 8,
+    "giver_record_count": 9,
+    "taker_record_count": 13,
+    "giver_period": 10.5,
+    "taker_period": 12.5,
+    "clock_ratio": 1.2,
+    "clock_ratio_band": [1.05, 1.35],
+    "light_wavelength_at_the_giver": 5.4,
     "light_wavelength_at_the_taker": 6.90,
-    "row": "Cheshbon's table of 2026-09-28, 15:22 Israel and its item (6) for world (e), Gamma 24 under the law's line (the level twice): the pixel 8 rotates at omega_b 0.6578 (the period 9.55, kappa 1.015, t 0.362, the level 4 at its Node, the tail 1, 1, 0), the pixel 10 at 0.5137 (12.23, kappa 1.269, t 0.281, the level 6, the tail 2, 0, 0); tools/well_clocks.py reads `clock_ratio` as the first clock over the second, here the taker's cycle over the giver's, 12.23 / 9.55 = 1.28 within 1.15 to 1.45 (his band: one quantum of the count is 10 to 15 percent); the given light's wavelength 2 pi / acos(3 cos omega_b - 2): 5.29 at the giver (5 to the Link, the mode's `wavelength`) and 6.90 at the taker; in the twin every ratio 1; the taker's click interval his to write; what breaks in integers so small is his line (5): the count breathes one quantum, and the pixels 6 and 7 are not realisable on the law (the Closer, 15:30)",
+    "row": "Cheshbon's table from the integer generator at Gamma 24 (2026-09-28, 15:43 Israel; the Closer, 15:47: the blind expectation of every look at 24, b written beside the counts, no re-layout before the tool): the realisable pixels on the law are b = 5 (the count 8 to 10, the record's count D about 9, the period P about 10.5) and b = 8 (the count 12 to 15, D about 13, P about 12.5); for world (e) the giver b = 5 and the taker b = 8, the clocks' ratio about 1.2 within 1.05 to 1.35, tools/well_clocks.py reading it as the first clock over the second, here the taker's cycle over the giver's; the given light's wavelength from 2 cos omega_b = 1.6: cos k = 3 x 0.8 - 2 = 0.4, lambda 5.4, 5 to the Link (the mode's `wavelength`); the count is the record's D, read, and breathes one quantum at T = 1 (the Closer, 15:30). The file's counts 8 and 10 and their mode files stand on his table of 15:22 (the pixel 8 at omega_b 0.6578, the period 9.55, the level 4, the tail 1, 1, 0; the pixel 10 at 0.5137, 12.23, the level 6, the tail 2, 0, 0; 6.90 the wavelength beside the taker) until the tool derives the record by Rule3 alone; in the twin every ratio 1; the taker's click interval and the giver's stock his to write",
 }
 PAIRS_AT_24 = {
     8: (103723, 65536, 23747),
