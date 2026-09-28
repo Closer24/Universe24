@@ -1,0 +1,20 @@
+{
+ "format": "world-expectation-v1",
+ "status": "BLIND: the row of THE CLICK JOINS AND PARTS; Cheshbon's numbers before the run; no number of a run here",
+ "row": "ALGEBRA.md THE CLICK JOINS AND PARTS: two bound bodies of one Node at the count 3,000 on the rule's own universe (Gamma = 12,000, the divisors 1, the pair [2, 3], T = 1), 5 Links apart: beyond both tails the Link's current leaves no remainder crossing T: no click, the two bodies stay parted, two records",
+ "DETECTOR": [],
+ "blind": {
+  "row": "Cheshbon's numbers of 13:03 Israel time (2026-09-28) before the run; the count of clicks and the first click's interval asked on #1325",
+  "edge_quanta_per_node": 2706,
+  "horizon_quanta_per_node": 6000,
+  "tail_kappa_per_link_at_3000": 0.45,
+  "clicks_expected": 0,
+  "records_at_the_end": 2
+ },
+ "GAMEBOARD": [
+  {
+   "reversible": 300,
+   "row": "the whole run forward and back on a fresh copy, every row bit for bit, the clicks keep the clicks; a diagnostic, MATCH or MISS with the first interval and Node that deviate"
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+{
+ "format": "world-expectation-v1",
+ "status": "BLIND: the row of THE CLICK JOINS AND PARTS; Cheshbon's numbers before the run; no number of a run here",
+ "row": "ALGEBRA.md THE CLICK JOINS AND PARTS: two bound bodies of one Node at the count 3,000 on the rule's own universe (Gamma = 12,000, the divisors 1, the pair [2, 3], T = 1), 2 Links apart: their tails overlap (kappa = 0.45 per Link, the tail ends within three Links), the count's line reads the overlap and clicks, the tail biased toward the deeper, so one gives quantum by quantum to the other until its count falls under the edge 0.2255 Gamma = 2,706 and dissolves; one record for the joined cluster (the one non-local act)",
+ "DETECTOR": [],
+ "blind": {
+  "row": "Cheshbon's numbers of 13:03 Israel time (2026-09-28) before the run; the count of clicks and the first click's interval asked on #1325",
+  "edge_quanta_per_node": 2706,
+  "horizon_quanta_per_node": 6000,
+  "tail_kappa_per_link_at_3000": 0.45,
+  "clicks_expected": "a run of clicks toward the deeper until the smaller's record ends",
+  "records_at_the_end": 1
+ },
+ "GAMEBOARD": [
+  {
+   "reversible": 300,
+   "row": "the whole run forward and back on a fresh copy, every row bit for bit, the clicks keep the clicks; a diagnostic, MATCH or MISS with the first interval and Node that deviate"
+  }
+ ]
+}
