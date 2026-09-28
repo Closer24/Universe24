@@ -1,7 +1,5 @@
 """The document lock: only the three, the skills and the entry files exist; each of the three stays under its cap with no history marker; every path a document or a skill cites in backticks exists in the tree."""
 
-from __future__ import annotations
-
 import re
 from pathlib import Path
 
