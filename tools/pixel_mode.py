@@ -1,4 +1,4 @@
-"""The mode file of a one-Node body (ALGEBRA.md #the-primitives, THE BOUND BODY IS ONE NODE, THE RULE'S OWN UNIVERSE): for every measured body of one declared Node with a count c, the record at its Node as the profile isqrt(c) there at both levels (c T = a^2 at T = 1, the amplitude the count's root), its bound rotation's clock pair [a, b] (2 cos omega_b in integers, Cheshbon's line per count) given on the command line and never held in the tool, the family's pair from the universe file, the twist as the generator writes it (round(unit omega / (4 Gamma)), ALGEBRA.md #the-primitives) and `world_digest` the world's one digest; a body that is not one Node, or a count with no pair given, is refused by name. Usage: `python tools/pixel_mode.py --input <world.json> --clock <count> <a> <b> [--clock ...] [--out <world.mode.json>]`."""
+"""The mode file of a one-Node body (ALGEBRA.md #the-primitives, THE BOUND BODY IS ONE NODE, THE RULE'S OWN UNIVERSE; Cheshbon's line of 2026-09-28, 14:12 Israel): for every measured body of one declared Node with a count c, its bound mode at rest over the whole board, the amplitude at its Node b = isqrt(c T den div (2 den - a)) from the form D = now^2 - next x before at rest (the count c = D div T) with its bound rotation's clock pair [a, den] (2 cos omega_b in integers), the tail on every other Node round(b t^d) with d the Manhattan distance to the pixel (the shorter way on a periodic axis) and t = e^-kappa as an integer over 2^16, until the level falls below 1; both levels the profile (the standing phase); the clock pair and the tail per count given on the command line and never held in the tool, the family's pair from the universe file, the twist as the generator writes it (round(unit omega / (4 Gamma))) and `world_digest` the world's one digest; a body that is not one Node, or a count with no pair given, is refused by name. Usage: `python tools/pixel_mode.py --input <world.json> --clock <count> <a> <den> <tail> [--clock ...] [--out <world.mode.json>]`."""
 
 from __future__ import annotations
 
@@ -10,77 +10,115 @@ from typing import Any
 
 from event_universe.world_files import input_digest, world_files
 
+TAIL_UNIT = 1 << 16  # the tail's factor per Link t is given as an integer over 2^16 (Cheshbon's line)
 
-def clock_table(pairs: list[list[int]]) -> dict[int, tuple[int, int]]:
-    """The clock pair per count from the command line's `--clock count a b` entries, a count named twice refused."""
-    table: dict[int, tuple[int, int]] = {}
-    for count, a, b in pairs:
+
+def clock_table(rows: list[list[int]]) -> dict[int, tuple[int, int, int]]:
+    """The clock pair [a, den] and the tail's factor (t x 2^16) per count from the command line's `--clock count a den tail` entries; a count named twice, or a value below 1, refused by name."""
+    table: dict[int, tuple[int, int, int]] = {}
+    for count, a, den, tail in rows:
         if count in table:
             raise ValueError(f"--clock {count} is given twice")
-        if a < 1 or b < 1:
+        if min(a, den, tail) < 1 or a >= 2 * den:
             raise ValueError(
-                f"--clock {count} {a} {b}: a and b are positive integers, 2 cos omega as a rational"
+                f"--clock {count} {a} {den} {tail}: a and den positive with a below 2 den (2 cos omega_b as a "
+                "rational) and the tail's factor positive (t over 2^16)"
             )
-        table[count] = (a, b)
+        table[count] = (a, den, tail)
     return table
+
+
+def amplitude(count: int, action: int, clock: tuple[int, int]) -> int:
+    """The amplitude of the bound mode at the pixel from the form at rest: b = isqrt(c T den div (2 den - a))."""
+    a, den = clock
+    return isqrt(count * action * den // (2 * den - a))
+
+
+def tail_level(level: int, tail: int, distance: int) -> int:
+    """The level at a Node `distance` Links from the pixel: round(b t^d) in integers, t = tail / 2^16."""
+    scale = TAIL_UNIT**distance
+    return (level * tail**distance + scale // 2) // scale
+
+
+def profile_of(
+    node: tuple[int, int, int],
+    shape: tuple[int, int, int],
+    periodic: tuple[bool, bool, bool],
+    level: int,
+    tail: int,
+) -> list[int]:
+    """The profile over the whole board (x-major, one integer per Node): the amplitude at the pixel and round(b t^d) at every Node at the Manhattan distance d (the shorter way on a periodic axis), 0 where the level falls below 1."""
+    profile = []
+    for x in range(shape[0]):
+        for y in range(shape[1]):
+            for z in range(shape[2]):
+                distance = 0
+                for here, there, side, wrap in zip((x, y, z), node, shape, periodic, strict=True):
+                    gap = abs(here - there)
+                    distance += min(gap, side - gap) if wrap else gap
+                profile.append(tail_level(level, tail, distance))
+    return profile
 
 
 def pixel_entry(
     number: int,
     body: dict[str, Any],
-    shape: tuple[int, int, int],
+    world: dict[str, Any],
     pair: list[int],
-    clock: tuple[int, int],
+    action: int,
+    row: tuple[int, int, int],
     twist_scale: int,
 ) -> dict[str, Any]:
-    """One body's entry: the profile over the whole board (x-major, one integer per Node) with isqrt(count) at the body's Node, its clock, pair and twist."""
+    """One body's entry: its family's pair, its count, the amplitude b, the clock [a, den], the tail's factor over 2^16, the twist and the profile over the whole board."""
     nodes = body.get("nodes")
     if not isinstance(nodes, list) or len(nodes) != 1:
         raise ValueError(
             f"measured[{number}] is not a body of one declared Node: this tool writes the pixel's record alone"
         )
     (x, y, z), count = nodes[0]["node"], int(nodes[0]["count"])
-    profile = [0] * (shape[0] * shape[1] * shape[2])
-    profile[(x * shape[1] + y) * shape[2] + z] = isqrt(count)
-    a, b = clock
-    twist = round(twist_scale * acos(a / (2 * b)))
+    shape = tuple(int(side) for side in world["shape"])
+    periodic = tuple(world["boundary"][axis] == "periodic" for axis in "xyz")
+    a, den, tail = row
+    level = amplitude(count, action, (a, den))
+    profile = profile_of(
+        (x, y, z), (shape[0], shape[1], shape[2]), (periodic[0], periodic[1], periodic[2]), level, tail
+    )
+    twist = round(twist_scale * acos(a / (2 * den)))
     return {
         "family": body["family"],
         "pair": pair,
         "count": count,
-        "amplitude": isqrt(count),
-        "clock": [a, b],
+        "amplitude": level,
+        "clock": [a, den],
+        "tail": [tail, TAIL_UNIT],
         "twist": twist,
         "profile": profile,
     }
 
 
-def pixel_mode(document: dict[str, Any], clocks: dict[int, tuple[int, int]]) -> dict[str, Any]:
+def pixel_mode(document: dict[str, Any], clocks: dict[int, tuple[int, int, int]]) -> dict[str, Any]:
     """The mode document of a world of one-Node bodies: `world_digest` and `bodies`, one entry per measured event in the world's order."""
     universe = world_files(document)[document["universe"]]
     pairs = {family["name"]: list(family["pair"]) for family in universe["families"]}
-    gamma = int(document.get("node_clock", universe["integers"]["node_clock"]))
-    twist_scale = int(universe["integers"]["twist_table"]["unit"]) // (4 * gamma)
-    shape = tuple(int(side) for side in document["shape"])
+    integers = universe["integers"]
+    gamma = int(document.get("node_clock", integers["node_clock"]))
+    if "quantum_action" not in integers:
+        raise ValueError(
+            "the universe file declares no quantum_action T: the count c = D div T needs it"
+        )
+    action = int(integers["quantum_action"])
+    twist_scale = int(integers["twist_table"]["unit"]) // (4 * gamma)
     bodies = []
     for number, body in enumerate(document.get("measured", [])):
-        count = (
-            int(body["nodes"][0]["count"])
-            if isinstance(body.get("nodes"), list) and body["nodes"]
-            else None
-        )
+        nodes = body.get("nodes")
+        count = int(nodes[0]["count"]) if isinstance(nodes, list) and nodes else None
         if count not in clocks:
             raise ValueError(
-                f"measured[{number}] has the count {count} and no --clock pair was given for it"
+                f"measured[{number}] has the count {count} and no --clock row was given for it"
             )
         bodies.append(
             pixel_entry(
-                number,
-                body,
-                (shape[0], shape[1], shape[2]),
-                pairs[body["family"]],
-                clocks[count],
-                twist_scale,
+                number, body, document, pairs[body["family"]], action, clocks[count], twist_scale
             )
         )
     return {"world_digest": input_digest(document), "bodies": bodies}
@@ -92,11 +130,11 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--clock",
         type=int,
-        nargs=3,
+        nargs=4,
         action="append",
-        metavar=("COUNT", "A", "B"),
+        metavar=("COUNT", "A", "DEN", "TAIL"),
         required=True,
-        help="the clock pair [a, b] of the bound rotation for every body of that count (2 cos omega_b as a rational, b at least isqrt(count))",
+        help="for every body of that count: the clock pair [a, den] of the bound rotation (2 cos omega_b as a rational) and the tail's factor per Link t as an integer over 2^16",
     )
     parser.add_argument(
         "--out",
@@ -109,7 +147,9 @@ def main(argv: list[str] | None = None) -> None:
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
     out.write_text(json.dumps(mode) + "\n", encoding="utf-8")
     for body in mode["bodies"]:
-        print(json.dumps({key: value for key, value in body.items() if key != "profile"}))
+        reading = {key: value for key, value in body.items() if key != "profile"}
+        reading["support"] = sum(1 for level in body["profile"] if level)
+        print(json.dumps(reading))
 
 
 if __name__ == "__main__":

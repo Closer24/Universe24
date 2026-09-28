@@ -63,16 +63,13 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
 def test_the_rule_is_the_designs_integers_on_a_chain():
     """One step of the engine's rule equals the design's line 3 a_next + r' = a_E + a_W + 4 a - 3 a_before + r on a one-layer chain (the y and z neighbours the row itself), with the remainder kept."""
     world = parse_nature_beam_world(chain_world())
-    simulation = DetectorLawSimulation(world)
-    rng = np.random.default_rng(7)
+    simulation, rng = DetectorLawSimulation(world), np.random.default_rng(7)
     now = rng.integers(-UNIT, UNIT, size=(80, 1, 1), dtype=np.int64)
     before = rng.integers(-UNIT, UNIT, size=(80, 1, 1), dtype=np.int64)
     remainder = rng.integers(0, 3, size=(80, 1, 1), dtype=np.int64)
-    total = send(simulation.ports, now) - 3 * before + remainder
-    expected = np.zeros_like(now)
+    total, expected = send(simulation.ports, now) - 3 * before + remainder, np.zeros_like(now)
     for x in range(80):
-        left = now[x - 1, 0, 0] if x > 0 else 0
-        right = now[x + 1, 0, 0] if x < 79 else 0
+        left, right = now[x - 1, 0, 0] if x > 0 else 0, now[x + 1, 0, 0] if x < 79 else 0
         expected[x, 0, 0] = left + right + 4 * now[x, 0, 0] - 3 * before[x, 0, 0] + remainder[x, 0, 0]
     assert np.array_equal(total, expected)
     nxt = np.floor_divide(total, 3)
@@ -331,8 +328,7 @@ def test_detector_is_one_connected_cube_of_side_three():
         document["stamp"] = input_stamp(document)  # the stamp over the whole file (item 28)
         if refusal is None:
             simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-            detector = simulation.detector_names.index("cube")
-            nodes = {tuple(p) for p in positions}
+            detector, nodes = simulation.detector_names.index("cube"), {tuple(p) for p in positions}
             assert {
                 tuple(int(v) for v in node)
                 for node in zip(*np.nonzero(simulation.detector_at_node == detector), strict=True)
