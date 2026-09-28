@@ -20,7 +20,7 @@ from tests.worlds import SOURCED, emitter_world
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
-GENERATED = ROOT / "examples" / "events" / "generated" / "universe.json"  # matter's pair declared
+GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # matter's pair declared
 START = ROOT / "examples" / "events" / "engine_start.json"
 VERSION_STRING = re.compile(r"-v[0-9]+$")
 VERSION_WORDS = {"version", "schema_version"}
@@ -109,6 +109,11 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
     """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q the signed sum of its counts by the row's `sign`; the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
     universe = json.loads(GENERATED.read_text(encoding="utf-8"))
     next(row for row in universe["families"] if row["name"] == "matter")["sign"] = -1
+    for row in universe[
+        "families"
+    ]:  # the load test's divisors alike, the bound charge's well of record aside
+        if "held" in row:
+            row["held"]["divisor"] = 40000
     world = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
     entry, (strip,) = world.measured[0], world.detectors
     assert entry.block.declared == {"polariser": {"angle": (2, 1), "sets": ("rest", "strip")}}
@@ -127,7 +132,9 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
     parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
     for row in [row for row in universe["families"] if "held" in row]:
         row["held"] = {**row["held"], "divisor": 1}
-    with pytest.raises(ValueError, match="the pace of 'charge' could reach 0 .* to 10000"):
+    with pytest.raises(
+        ValueError, match="the pace of 'charge' could reach 0 .* to 20000"
+    ):  # the charge reads gravity and the polarisation at divisor 1
         parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
 
 
@@ -145,7 +152,7 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     entry = {"family": "matter", "pair": [800, 1200], "profile": profile, "clock": [1530, 1000]}
     entry["wavelength"] = 7  # the mode's lambda_q: the given clock [2 N, 7], the row's [512, 1] not read
     mode = {"world_digest": placed["stamp"]["hash"], "bodies": [{**entry, "twist": 45875}]}
-    big = {"profile": [v << 11 for v in profile], "clock": [3 << 20, 1 << 21]}
+    big = {"profile": [v << 40 for v in profile], "clock": [3 << 49, 1 << 50]}  # above the derived A
 
     def loaded(change=None):
         broken = copy.deepcopy(mode)

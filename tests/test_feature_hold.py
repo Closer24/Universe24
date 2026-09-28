@@ -172,7 +172,9 @@ def test_a_body_in_the_laws_form_sources_each_node_by_the_count_there(tmp_path):
     """The hold's row on a body in the law's form (ALGEBRA.md #what-a-body-is; ENGINE.md the `nodes` row): a held family's time part at each of the body's Nodes gains (the count declared THERE + r) div E_s each interval by the carried division with a remainder of its own, never the body's whole count at every Node. Two runs from the load's level 0 (THE START left out: its rest depends on the divisor) at two divisors, one above the body's whole count and one twice its largest count and above, differ after the first interval by the increments alone: (2 c div E_s) - (c div E_s) at a Node of count c under the first and 0 under the second, so the difference is 1 at the one Node whose count is at least half the first divisor and 0 elsewhere, where the whole count would make the two runs agree at every Node."""
     counts = {(4, 0, 0): 5, (5, 0, 0): 7, (6, 0, 0): 1}
     whole, largest = sum(counts.values()), max(counts.values())
-    universe = json.loads((ROOT / "examples/events/generated/universe.json").read_text(encoding="utf-8"))
+    universe = json.loads(
+        (ROOT / "examples/events/experiments/universe.json").read_text(encoding="utf-8")
+    )
     body = {"family": "matter", "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     body["nodes"] = [{"node": list(node), "count": count} for node, count in counts.items()]
     levels, strip = {}, {"name": "strip", "positions": [[6, 0, 0]]}
