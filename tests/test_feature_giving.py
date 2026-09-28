@@ -88,7 +88,7 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
 
 def test_the_refusals_by_name():
     """The coupling and the action from 1; the act one of the four; an open on an open one, a write or a close on none, an inverse with nothing written; the quanta from 1 at the open; every field named, no default"""
-    with pytest.raises(ValueError, match="needs the coupling's pair and the quantum action T from 1"):
+    with pytest.raises(ValueError, match="needs the coupling's numerator signed and never 0"):
         apply(GivingTerm((1, 0), 1000, 0), an_open(1, NO_TALLY), CLOSED)
     with pytest.raises(ValueError, match="inverse steps back a write, and none is written"):
         apply(TERM, a_write((np.zeros(1), np.zeros(1)), THE_INVERSE), GivingOwn(0, 0, NO_TALLY))

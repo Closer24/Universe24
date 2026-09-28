@@ -17,13 +17,12 @@ ACTION = 1 << 16  # the fixture's quantum action T, 2^16 under the seed 2^12 of 
 
 
 def reversible_world(ticks: int = 400) -> dict:
-    """The emitter chain of 80 (x closed) with the stock 3, light and the matter kind of charge -1, a fifth family `positive` of light's pair and charge +1 held by one body at x = 55, the screen at [70, 72]; seeded on the mode by the generator (the profile, the clock pair, the period, the given rows under the stamp)."""
+    """The emitter chain of 80 (x closed) with the stock 3, the emitter's and the screen's quanta of sign -1 (THE SIGN IS THE BODY'S: Q = q times the quanta), a fifth family `positive` of light's pair held by one body of sign +1 at x = 55, the screen at [70, 72]; seeded on the mode by the generator (the profile, the clock pair, the period, the given rows under the stamp)."""
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
-    document["universe"][LIGHT]["sign"] = -1
-    document["universe"][MATTER]["sign"] = -1
-    positive = family_entry("positive", [1, 1], clock=[512, 1], sign=1)
-    document["universe"].insert(POSITIVE, positive)
-    body = {"position": [55, 0, 0], "family": "positive", "amount": 1, "stocks": {}}
+    for entry in document["measured"]:
+        entry["q"] = -1
+    document["universe"].insert(POSITIVE, family_entry("positive", [1, 1], clock=[512, 1]))
+    body = {"position": [55, 0, 0], "family": "positive", "amount": 1, "stocks": {}, "q": 1}
     document["measured"].append({**body, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]})
     seed_on_the_mode(document)
     document["stamp"] = input_stamp(document)
@@ -212,21 +211,25 @@ def inverse_giving_interval(
 def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     """2. Over 400 intervals with three giving clicks and their taking clicks: at every interval the books balance, the held quanta plus the records in flight are the load's total, and the bodies' Q plus the flights' q are the load's total (-3 - 3 + 1 = -5); at every giving click the giver's held content falls by one, the given record's content is 1, its residue u is in [0, W) with W the rule's at the first shell Node, and the click's interval is the counted one, 2 W (wait - 1) < (2 u + 1) P <= 2 W wait from the residue read before it (ALGEBRA.md #the-ladder); at every taking click the taker's held content rises by one, the record's content is 1, and the detector is the one the increment ladder chooses on the plain flux against the norm's rational (Born's rule at the taking end, ALGEBRA.md #the-ladder and (3), item 36)."""
     document = reversible_world()
+    document["ticks"] = (
+        1200  # the emitter world's own run: the STOCK windows open with the giver's rotation
+    )
+    document["stamp"] = input_stamp(document)
     period = parse_nature_beam_world(document).measured[0].block.emitter.period
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     seen: Seen = {}
     spy_on(simulation, seen)
-    charge, total_quanta = simulation.family_charge, sum(sum(h) for h in simulation.held)
+    total_quanta = sum(sum(h) for h in simulation.held)
     total_charge = sum(simulation._body_charge(n) for n in range(len(simulation.held)))
     # the emitter's own quantum and its stock of STOCK light quanta, all of charge -1, the screen's three light bodies and the positive body (ALGEBRA.md #the-paces; item 47)
     assert total_charge == -(STOCK + 1) - 3 + 1
     block = simulation.blocks[0]
     previous_residue, residue_at_open = None, (0, 1)
     read_at, held_before = 0, copy.deepcopy(simulation.held)
-    for _ in range(400):
+    while len(click_ticks(lines)[0]) < STOCK or not click_ticks(lines)[1]:
         own = block.own
-        assert own is not None
+        assert own is not None and simulation.tick < document["ticks"]
         residue_before, opens_before = (own.u, own.wheel), block.givings
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
@@ -235,7 +238,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
         assert sum(sum(h) for h in simulation.held) + sum(f.content for f in in_flight) == total_quanta
         assert (
             sum(simulation._body_charge(n) for n in range(len(simulation.held)))
-            + sum(charge[f.family] * f.content for f in in_flight)
+            + sum(simulation.block_by_number[f.emitter].definition.q * f.content for f in in_flight)
         ) == total_charge
         if block.givings > opens_before:
             # THE OPEN (commit 7): the giving lowers the given family's content held at the body (item 47) and makes the record, its content 1; the line comes at the close; the residue the count to this open was read on is the one before this interval

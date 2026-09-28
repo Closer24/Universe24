@@ -84,13 +84,12 @@ def charged_chain(
     nodes,
     amount: int,
     light_charge: int,
-    matter_charge: int,
     divisor: int = 40000,
 ) -> dict:
-    """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes`, light and matter charged (the sign declared on the family until the owner's word on a body's charge), a neutral fifth family, every read at the one weight 1 (Lambda left the files) and the held rows' divisor E_s `divisor`."""
+    """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes` with the sign `light_charge` each (THE SIGN IS THE BODY'S: Q = q times the quanta), a neutral fifth family, every read at the one weight 1 (Lambda left the files) and the held rows' divisor E_s `divisor`."""
     document = content_chain(length, boundary, nodes, amount, divisor=divisor)
-    document["universe"][LIGHT]["sign"] = light_charge
-    document["universe"][MATTER]["sign"] = matter_charge
+    for body in document["measured"]:
+        body["q"] = light_charge
     document["universe"].insert(NEUTRAL, family_entry("neutral", [1, 1], clock=[512, 1]))
     return document
 

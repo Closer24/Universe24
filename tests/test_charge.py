@@ -18,14 +18,13 @@ from tests.bodies import (
     LIGHT,
     MATTER,
     NEUTRAL,
-    PAIR,
     QUANTA,
     charged_chain,
     content_chain,
     six_reads,
 )
 from tests.running import planted
-from tests.worlds import CHARGE_FAMILY_NAME, PERIODIC, emitter_world, seed_on_the_mode, wheel_of
+from tests.worlds import CHARGE_FAMILY_NAME, PERIODIC, emitter_world, seed_on_the_mode
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
@@ -61,55 +60,19 @@ def rule_step(
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
-def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone():
-    """(i) THE READING WITH ONE SIGN (ALGEBRA.md #the-paces): on the periodic chain of 60 with light bodies of QUANTA quanta and charge +1 at [20, 30) (Q = +QUANTA there; the held rows' divisor 1, so each field's level at the start is the count over it, QUANTA at the bodies' Nodes and 0 elsewhere, ALGEBRA.md #the-primitives the row "the hold"), a matter record of charge -1 is advanced at the effective content c + Lambda d = 2 QUANTA at the slab (the hill deepened: its pace Gamma - 2 QUANTA, the clock pair the engine reports), one of charge +1 at c - Lambda d = 0 (the hill filled to the vacuum's pace at Lambda = 1), the neutral record at c alone and a record of the charged light itself (q = +1) at c - Lambda c, each bit for bit the rule's on random rows; at Lambda = 3 the -1 record reads 4 QUANTA and the +1 records 0 (the row's floor: a hill lessens a hollow and never exceeds it). The wheel at a slab Node is the rule's at the effective content. The edge case: the engine refuses the load where the pace could reach 0 at a body's Nodes (its content plus Lambda times its charge in size not below Gamma: Lambda = 99 at the content 10 and the charge 10 gives 10 + 990, 1000, at Gamma 1000; at Lambda = 98 it loads)."""
-    rng = np.random.default_rng(35)
-    now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
-    before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
-    slab = [QUANTA if 20 <= i < 30 else 0 for i in range(60)]
-    for matter_charge in (-1, 1):  # THE FAMILIES FROM THE RULE: the one weight 1 (Lambda left the files)
-        document = charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, matter_charge, 1)
-        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-        assert [simulation.families[f].held for f in simulation.held_families] == ["content", "sign"]
-        matter_reads = ((CLICKS, 1, "plain", "own"), (CHARGE, 1, "sign", "own"))
-        assert simulation.families[MATTER].reads == matter_reads
-        assert simulation.family_charge == [1, matter_charge, 0, 0, 0]
-        assert [int(v) for v in simulation.level_of("sign")[:, 0, 0]] == slab
-        assert [int(v) for v in simulation.level_of("content")[:, 0, 0]] == slab
-        effective = [max(c - matter_charge * c, 0) for c in slab]
-        assert [int(v) for v in simulation._effective_content(MATTER)[:, 0, 0]] == effective
-        assert [int(v) for v in simulation._effective_content(NEUTRAL)[:, 0, 0]] == slab
-        assert simulation.node_clock_pair((25, 0, 0), MATTER) == (GAMMA - effective[25], GAMMA)
-        assert simulation.node_clock_pair((25, 0, 0), NEUTRAL) == (GAMMA - QUANTA, GAMMA)
-        assert simulation.node_clock_pair((5, 0, 0), MATTER) == (GAMMA, GAMMA)
-        assert simulation.wheel_at(MATTER, (25, 0, 0))[1] == wheel_of(PAIR, effective[25], GAMMA)
-        # one step of the rule on each family's record (the engine's `_advance`, the step's own on a record: a massive record in the register is a block's own)
-        lit = [max(c - c, 0) for c in slab]
-        for family, pair, reading in (
-            (MATTER, PAIR, effective),
-            (NEUTRAL, (1, 1), slab),
-            (LIGHT, (1, 1), lit),
-        ):
-            live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
-            simulation._advance(live)
-            levels, remainders = rule_step(pair, reading, now, before, True)
-            assert [int(v) for v in live.now[:, 0, 0]] == levels, family
-            assert [int(v) for v in live.remainder[:, 0, 0]] == remainders, family
-            assert np.array_equal(live.before, now)
-
-
-@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     """(ii) THE HOLD AT Q (ALGEBRA.md #the-paces, #the-primitives the row "the hold"): on the emitter world with light and the matter kind both of charge -1 (the emitter's one own quantum of matter and its stock of 4 light quanta at [5, 37) (item 47), the screen's three light bodies of one quantum at [70, 72], the cube of side 3 on a chain), Q is -5 at the emitter and -1 at each screen body; the family of charge at the start is Q div 40000 = -1 at their Nodes (the division act's floor, the remainder 39995 carried on the emitter) and 0 in the vacuum; the emitter's Q rises by one at each giving (a held light quantum given, its label in flight on the given record; the body's own quantum and its own charge stay) and the giving line carries the Q the clicking record was advanced under, -5 + the givings before it, with the content 0 (the count 5 over 40000 writes no increment in the run), the screen's first body's Q falls by one at each click there (the label held); the emitter's carried remainder gains its Q after each interval's clicks and stays above 0, so no increment is written; the whole charge of the bodies and of the records in flight is -8 at every interval; the books balanced. The edge case: a light body of charge 0 in a world whose bodies carry charge holds Q = 0 (the neutral chain, (v))."""
     document = emitter_world(stock=4, on_mode=False)
-    document["universe"][LIGHT]["sign"] = -1
-    document["universe"][MATTER]["sign"] = -1
+    for body in document["measured"]:
+        body[
+            "q"
+        ] = -1  # THE SIGN IS THE BODY'S: Q = q M, the emitter's and the screen bodies' quanta of sign -1
     seed_on_the_mode(document)  # the stamp covers the charges
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     charge, emitter = held_record(simulation, "sign"), simulation.blocks[0]
     key = (simulation.held_families[1], 0)  # the family of charge's time part on the body's remainders
-    assert simulation.family_charge == [-1, -1, 0, 0] and simulation.families[key[0]].held == "sign"
+    assert simulation.family_charge == [0, 0, 0, 0] and simulation.families[key[0]].held == "sign"
     assert np.all(charge.now[5:37] == -1) and not charge.now[37:70].any() and not charge.before.any()
     assert simulation.level_of("sign") is charge.now and not charge.remainder.any()
     assert simulation._body_charge(0) == -5 and simulation._body_charge(1) == -1
@@ -125,11 +88,10 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
         carried += simulation._body_charge(0)
         assert emitter.hold_carry[key] == carried and carried > 0
         bodies = sum(simulation._body_charge(number) for number in range(len(simulation.held)))
-        flight = sum(simulation.family_charge[live.family] for live in simulation.records.values())
-        flight -= sum(
-            simulation.family_charge[block.own.family]
-            for block in simulation.blocks
-            if block.own is not None and block.own.identity in simulation.records
+        flight = sum(  # the given quanta in flight carry their giver's sign (THE SIGN IS THE BODY'S)
+            simulation.block_by_number[live.emitter].definition.q * live.content
+            for live in simulation.records.values()
+            if live.given
         )
         assert bodies + flight == -8, simulation.tick
     assert givings == 4 and clicks >= 1
@@ -144,9 +106,7 @@ def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
     for boundary in (PERIODIC, CHAIN):
         rng = np.random.default_rng(37)
         simulation = DetectorLawSimulation(
-            parse_nature_beam_world(
-                charged_chain(60, boundary, range(20, 30), QUANTA, 1, -1, 2 * QUANTA)
-            )
+            parse_nature_beam_world(charged_chain(60, boundary, range(20, 30), QUANTA, 1, 2 * QUANTA))
         )
         starts = []
         for family in (LIGHT, NEUTRAL):
@@ -183,7 +143,7 @@ def test_the_joint_step_with_both_fields_inverts_bit_for_bit():
 
 def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     """(iv) THE FAMILY GENERICITY (record 2066; item 51): the family of charge is the family declaring `held: "sign"` and Lambda the weight of a reading family's read on it; the world keys `charge_family` and `charge_strength` are refused by name (retired); a weight below 1 is refused; a family without `charge` is refused under the detector law, a charge beyond one sign (|q| > 1) is refused and a charge with a denominator other than 1 (the paid family's whole charge, D-1 of 2026-09-20, the check before this one) is refused; the family of charge is refused as the family of clicks, on a quantum other than 1, on a clock of its own and with a charge of its own; a measured event of it and `held` naming it are refused; a world with the family declared loads, its index among the held families, its reads the matter family's."""
-    good = charged_chain(12, PERIODIC, [], 1, 0, 0)
+    good = charged_chain(12, PERIODIC, [], 1, 0)
     world = parse_nature_beam_world(good)
     assert world.held_families == (CLICKS, CHARGE) and world.families[CHARGE].held == "sign"
     assert world.families[CHARGE].name == CHARGE_FAMILY_NAME
@@ -218,9 +178,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
         {"family": CHARGE_FAMILY_NAME, "weight": 2},
     ]
     refused(twice, r"families\[1\]\.reads .* contradicts the rule")
-    unlabelled = copy()
-    del unlabelled["universe"][MATTER]["sign"]  # THE FAMILIES FROM THE RULE: the sign derives as 0
-    assert parse_nature_beam_world(unlabelled).families[MATTER].charge == (0, 1)
+    assert parse_nature_beam_world(copy()).families[MATTER].charge == (0, 1)  # the sign derives as 0
     strong = copy()
     strong["universe"][MATTER]["sign"] = 2
     refused(strong, r"universe\[1\]\.sign must be one of \[-1, 0, 1\], not 2")
@@ -271,7 +229,7 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
 
 
 def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_lambda():
-    """(v) THE REGISTERED WORLDS' CASE (every family of charge 0): on the chain of 60 with a body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family of charge is 0 everywhere at the load and after 40 intervals, and the records' rows are bit for bit the same at Lambda = 1 and Lambda = 7 (no charge is read: the strength weighs nothing); THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26 item 55): the never-sourced sign family is named at no interval, the planted matter record (no body of its family) is, and a row planted in the sign family is named. The edge case: the giving lines of the emitter world carry the charge 0."""
+    """(v) THE REGISTERED WORLDS' CASE (every family of charge 0): on the chain of 60 with a body of QUANTA quanta at [20, 30) and matter and light records of random rows, the family of charge is 0 everywhere at the load and after 40 intervals, and the records' rows are bit for bit the same at Lambda = 1 and Lambda = 7 (no charge is read: the strength weighs nothing); THE LEAK TEST (the model owner's record 2075 (3); BUILD.md section 26 item 55): the never-sourced sign family is named at no interval, the planted matter record (no body of its family) is, and a row planted in the sign family is named. The edge case: the giving lines of the emitter world carry the giver's own Q = q M."""
     if True:  # one weight, 1 (THE FAMILIES FROM THE RULE: Lambda left the files)
         rng = np.random.default_rng(41)
         document = content_chain(60, CHAIN, range(20, 30), QUANTA)  # a face on x: the sum's sink
@@ -300,10 +258,12 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
         held_record(simulation, "sign").now[3, 0, 0] = 0
         assert simulation.leaks() == ["matter"]
     lines: list[dict] = []
-    simulation = DetectorLawSimulation(
-        parse_nature_beam_world(emitter_world(stock=2, ticks=600)), observer=lines.append
-    )
+    document = emitter_world(stock=2, ticks=600)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     for _ in range(600):
         simulation.step()
     givings = [line for line in lines if line["event"] == "giving"]
-    assert givings and all(line["charge"] == 0 for line in givings)
+    # THE SIGN IS THE BODY'S: the giving line carries the giver's own Q = q M, its quanta before each open
+    body = document["measured"][0]
+    held = body["amount"] + body["stocks"]["light"]
+    assert [line["charge"] for line in givings] == [body["q"] * held, body["q"] * (held - 1)]

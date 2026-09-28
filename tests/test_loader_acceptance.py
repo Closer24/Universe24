@@ -92,6 +92,7 @@ def body_world() -> dict:
             {
                 "family": "matter",
                 "nodes": [{"node": [5, 0, 0], "count": 1}, {"node": [6, 0, 0], "count": 1}],
+                "q": -1,
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
                 "polariser": {"angle": [2, 1], "sets": ["rest", "strip"]},
@@ -104,9 +105,8 @@ def body_world() -> dict:
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
 ):
-    """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q the signed sum of its counts by the row's `sign`; the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
+    """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q its sign q times its counts (THE SIGN IS THE BODY'S); the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
     universe = json.loads(GENERATED.read_text(encoding="utf-8"))
-    next(row for row in universe["families"] if row["name"] == "matter")["sign"] = -1
     for row in universe[
         "families"
     ]:  # the load test's divisors alike, the bound charge's well of record aside
@@ -115,8 +115,9 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
     world = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
     entry, (strip,) = world.measured[0], world.detectors
     assert entry.block.declared == {"polariser": {"angle": (2, 1), "sets": ("rest", "strip")}}
-    assert entry.block.q == 0
-    assert sum(f.charge[0] * h for f, h in zip(world.families, entry.held, strict=True)) == -2
+    assert (
+        entry.block.q == -1 and entry.block.q * sum(entry.held) == -2
+    )  # THE SIGN IS THE BODY'S: Q = q M
     assert (strip.positions, strip.block) == (((6, 0, 0),), 0)
     simulation = DetectorLawSimulation(world)
     assert simulation.step() is None and simulation.leaks() == []

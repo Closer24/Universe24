@@ -314,11 +314,12 @@ def _seed_key(document: dict) -> str:
     for body in bare.get("measured", ()):
         if isinstance(body.get("emitter"), dict):
             body["q"] = 0  # the giver's sign, a key the recorded seeding never read (recorded at 0)
+        if isinstance(body.get("emitter"), dict):
             for key in ("weight", "norm", "norm_denominator"):
                 body["emitter"].pop(key, None)
     # THE FAMILIES FROM THE RULE: the keys the rule derives are no part of the key, so a fixture in the
-    # rule's form and the same fixture in the older form share their recorded seeding (the sign and the
-    # self-source stay in the key until the owner's word on a body's charge and on the slot)
+    # rule's form and the same fixture in the older form share their recorded seeding (a family's sign, where a
+    # fixture still declares one, and the self-source stay in the key as recorded; THE SIGN IS THE BODY'S moves the sign to q)
     bare.pop("twist_table", None)
     bare.pop("Lambda", None)
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
@@ -327,6 +328,9 @@ def _seed_key(document: dict) -> str:
         if isinstance(entry.get("held"), dict):
             for key in ("factors", "dipole", "dipole_div"):
                 entry["held"].pop(key, None)
+        entry.pop(
+            "sign", None
+        )  # THE SIGN IS THE BODY'S (the owner's word of 17:16 Israel): the key left the files
         if entry.get("sign") == 0:  # the rule's own values, written or not, are one key
             del entry["sign"]
         if entry.get("self_source") == {"unit": 0}:
@@ -416,13 +420,11 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     return row["profile"]
 
 
-def family_entry(name: str, pair, clock=None, sign: int = 0) -> dict:
-    """A family of quanta in the rule's form (the universe file's row): its name and its pair, its clock where it gives; its sign where a test declares one (the sign stands declared until the owner's word on a body's charge)."""
+def family_entry(name: str, pair, clock=None) -> dict:
+    """A family of quanta in the rule's form (the universe file's row): its name and its pair, its clock where it gives (THE SIGN IS THE BODY'S: a family carries none)."""
     entry: dict = {"name": name, "pair": pair}
     if clock is not None:
         entry["clock"] = list(clock)
-    if sign:
-        entry["sign"] = sign
     return entry
 
 

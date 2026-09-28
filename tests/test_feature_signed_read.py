@@ -94,7 +94,7 @@ def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond_it():
     """The charged chain: a matter record of charge +1 reads c - d at the one weight 1 (THE FAMILIES FROM THE RULE: Lambda left the files), p = 1000 <= 1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not a measurement), and the hollow filled to the vacuum's pace at a slab Node reads the floor 0."""
     admitted = DetectorLawSimulation(
-        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1, 1))
+        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1))
     )
     for _ in range(3):
         admitted.step()

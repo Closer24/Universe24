@@ -155,17 +155,14 @@ BLOCK_KEYS = {
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md #a-familys-declaration)
     "clock",
-    # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md
-    # ALGEBRA.md #the-velocity; BUILD.md section 26 item 46), beside `clock` on a moving block
+    # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md ALGEBRA.md #the-velocity; BUILD.md section 26 item 46), beside `clock` on a moving block
     "proper_clock",
     "ramp",
     "start",
     "margin",
-    # the emitter as a clicking body (ALGEBRA.md #the-click; LAB_TOOLS.md A.1):
-    # the excited records in turn on the body's Nodes, each clicking at its own rung, the given record written once by E^T at that interval
+    # the emitter as a clicking body (ALGEBRA.md #the-click; LAB_TOOLS.md A.1): the excited records in turn on the body's Nodes, each clicking at its own rung, the given record written once by E^T at that interval
     "emitter",
-    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
-    # 7): an emitting block names the detector set whose one detector is its record's ladder; admitted on an emitting block alone
+    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item 7): an emitting block names the detector set whose one detector is its record's ladder; admitted on an emitting block alone
     "receiver",
     # the stock of the body's own family where its emitter gives it (ALGEBRA.md #the-primitives; commit 6)
     "stock",
@@ -195,20 +192,12 @@ class FamilyDefinition:
     lifetime: int | None = None
     hand: int | None = None
     phase_per_age: tuple[int, int] | None = None
-    # The record kind's pair [num, den] on the six-neighbour term of the local detector law's rule
-    # (`massive-record-v1`, MASSIVE_RECORD.md section 1): light's kind is the value (1, 1) (every family without the key `pair`); a massive kind declares den > num, its rest
-    # frequency cos omega_0 = num / den.
+    # The record kind's pair [num, den] on the six-neighbour term of the local detector law's rule (`massive-record-v1`, MASSIVE_RECORD.md section 1): light's kind is the value (1, 1) (every family without the key `pair`); a massive kind declares den > num, its rest frequency cos omega_0 = num / den.
     pair: tuple[int, int] = MASSLESS_PAIR
-    # THE FAMILY GENERICITY (record 2066; item 53): what a family IS is declared here and read by the engine as
-    # attributes alone, never by a name or a role: `held`, the source a body writes at its Nodes ("content" its
-    # quanta, "sign" the signed sum of them by the rows' signs); `reads`, the held families whose levels enter its
-    # pace, (family index, weight, by) each, by "plain" or "sign"; `components`, the representation's count.
+    # THE FAMILY GENERICITY (record 2066; item 53): what a family IS is declared here and read by the engine as attributes alone, never by a name or a role: `held`, the source a body writes at its Nodes ("content" its quanta, "sign" the signed sum of them by the rows' signs); `reads`, the held families whose levels enter its pace, (family index, weight, by) each, by "plain" or "sign"; `components`, the representation's count.
     held: str | None = None
     reads: tuple[tuple[int, int, str, int | str], ...] = ()
-    # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md #the-primitives, #the-interval
-    # (1); the one stroke, commit 1): (1,) a scalar, (1, 3) the time part and
-    # the vector, (1, 3, 6) the symmetric tensor over the four directions; the
-    # component order fixed once, (t), (x, y, z), (xx, yy, zz, xy, xz, yz)
+    # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md #the-primitives, #the-interval (1); the one stroke, commit 1): (1,) a scalar, (1, 3) the time part and the vector, (1, 3, 6) the symmetric tensor over the four directions; the component order fixed once, (t), (x, y, z), (xx, yy, zz, xy, xz, yz)
     parts: tuple[int, ...] = (1,)
     # the levels at a Node (ALGEBRA.md #the-interval): 1 the pair (a_now, a_before, r); 2 the
     # two levels with their remainders (the second level not yet allocated:
@@ -369,9 +358,10 @@ class MeasuredDefinition:
     # the ray law's splits and lamp, read by the loop as None (its cancelled branches)
     splits: tuple[None, ...] = ()
     lamp: None = None
-    # The block (massive-record-v1): the measured event's Nodes, pair,
-    # seed and the rest, or None (a body of one Node or a span as before).
+    # The block (massive-record-v1): the measured event's Nodes, pair, seed and the rest, or None (a body of
+    # one Node or a span as before); `q` the body's sign, its charge Q = q times the quanta it holds
     block: BlockDefinition | None = None
+    q: int = 0
 
 
 @dataclass(frozen=True)
@@ -1569,6 +1559,7 @@ def _measured(
                 turning,
                 tuple(held),
                 block=block,
+                q=_integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND) if "q" in obj else 0,
             )
         )
     return tuple(found)
@@ -1732,6 +1723,7 @@ def _counted(
         False,
         tuple(held),
         block=block,
+        q=_integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND) if "q" in obj else 0,
     )
 
 
@@ -2389,6 +2381,12 @@ def parse_world_document(
                 "closes when the outward norm reaches the excitation's action norm / "
                 "norm_denominator, the generator's exact rational (ALGEBRA.md)"
             )
+    # THE SIGN IS THE BODY'S (the owner's word of 2026-09-28): a family's sign beside a body's q is refused
+    signed = [index for index, family in enumerate(families) if family.charge[0] != 0]
+    if signed and any((m.block.q if m.block is not None else m.q) != 0 for m in measured):
+        raise ValueError(
+            f"universe[{signed[0]}] declares a sign and a body declares q: the sign is the body's q alone"
+        )
     _input_stamp_check(as_written, measured, digest)
     _initial_state_checks(shape, periodic, families, measured)
     detectors = _detectors(frame.detectors(obj["detectors"]), shape, periodic, measured)
