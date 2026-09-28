@@ -125,8 +125,7 @@ def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
             )
         return total
 
-    start, node = form(live.now, live.before), 200
-    one_way, signed = Fraction(0), Fraction(0)
+    start, node, one_way, signed = form(live.now, live.before), 200, Fraction(0), Fraction(0)
     for _ in range(600):
         a_now, a_before = live.now.copy(), live.before.copy()
         simulation._advance(live)

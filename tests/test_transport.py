@@ -99,8 +99,7 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
     num_all, den_all = simulation.pair_arrays(matter)
     simulation._advance(live)
     assert live.im_now is not None and live.im_now.any()
-    rows = table()
-    node, reads = (6, 2, 2), 0
+    rows, node, reads = table(), (6, 2, 2), 0
     for axis in range(3):
         for side, sigma in enumerate((1, -1)):
             j = list(node)
