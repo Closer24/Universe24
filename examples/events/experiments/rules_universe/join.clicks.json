@@ -1,239 +1,29 @@
 {
  "world": "join.json",
  "kind": "WORLD (d), THE CLICK JOINS AND PARTS: the counts, the moves and the records against the expectation",
- "verdict": "LAWFUL",
- "refusal": null,
- "ticks_run": 300,
+ "verdict": "REFUSED IN THE RUN",
+ "refusal": "at interval 2: the pace of 'matter' (family 2, axis 0) is -805 at the Node (9, 4, 0) at interval 1: the pace stays above 0 (the content 12805 at or beyond Gamma = 12000; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "ticks_run": 1,
  "1_the_counts": {
   "label": "GAMEBOARD",
   "start": [
-   3000,
-   4000
+   5000,
+   6000
   ],
   "end": [
-   2996,
-   4002
+   5000,
+   6000
   ],
   "every_10": [
    [
     0,
     [
-     3000,
-     4000
-    ]
-   ],
-   [
-    10,
-    [
-     2993,
-     3994
-    ]
-   ],
-   [
-    20,
-    [
-     2995,
-     3988
-    ]
-   ],
-   [
-    30,
-    [
-     2993,
-     3997
-    ]
-   ],
-   [
-    40,
-    [
-     2997,
-     4000
-    ]
-   ],
-   [
-    50,
-    [
-     2993,
-     3996
-    ]
-   ],
-   [
-    60,
-    [
-     3005,
-     3987
-    ]
-   ],
-   [
-    70,
-    [
-     2996,
-     3993
-    ]
-   ],
-   [
-    80,
-    [
-     2993,
-     3987
-    ]
-   ],
-   [
-    90,
-    [
-     3014,
-     3995
-    ]
-   ],
-   [
-    100,
-    [
-     2995,
-     3995
-    ]
-   ],
-   [
-    110,
-    [
-     2987,
-     3995
-    ]
-   ],
-   [
-    120,
-    [
-     3008,
-     4000
-    ]
-   ],
-   [
-    130,
-    [
-     3006,
-     3999
-    ]
-   ],
-   [
-    140,
-    [
-     2996,
-     3992
-    ]
-   ],
-   [
-    150,
-    [
-     3006,
-     4004
-    ]
-   ],
-   [
-    160,
-    [
-     2998,
-     3996
-    ]
-   ],
-   [
-    170,
-    [
-     2995,
-     4013
-    ]
-   ],
-   [
-    180,
-    [
-     2997,
-     4001
-    ]
-   ],
-   [
-    190,
-    [
-     3006,
-     4007
-    ]
-   ],
-   [
-    200,
-    [
-     2993,
-     4006
-    ]
-   ],
-   [
-    210,
-    [
-     2990,
-     4000
-    ]
-   ],
-   [
-    220,
-    [
-     2991,
-     3991
-    ]
-   ],
-   [
-    230,
-    [
-     2992,
-     4008
-    ]
-   ],
-   [
-    240,
-    [
-     3003,
-     4002
-    ]
-   ],
-   [
-    250,
-    [
-     2995,
-     4004
-    ]
-   ],
-   [
-    260,
-    [
-     2987,
-     4002
-    ]
-   ],
-   [
-    270,
-    [
-     3001,
-     4000
-    ]
-   ],
-   [
-    280,
-    [
-     3004,
-     3997
-    ]
-   ],
-   [
-    290,
-    [
-     2996,
-     3991
-    ]
-   ],
-   [
-    300,
-    [
-     2996,
-     4002
+     5000,
+     6000
     ]
    ]
   ],
-  "edge": 2706,
+  "edge": 4136,
   "under_the_edge_at": null,
   "expected_dissolution_intervals": [
    3,
@@ -243,223 +33,19 @@
  },
  "2_the_moves": {
   "label": "GAMEBOARD",
-  "moves": [
-   {
-    "interval": 1,
-    "left": 0,
-    "right": -1
-   },
-   {
-    "interval": 2,
-    "left": -1,
-    "right": 3
-   },
-   {
-    "interval": 3,
-    "left": 0,
-    "right": -4
-   },
-   {
-    "interval": 4,
-    "left": 3,
-    "right": 2
-   },
-   {
-    "interval": 5,
-    "left": -3,
-    "right": -1
-   },
-   {
-    "interval": 6,
-    "left": 1,
-    "right": 4
-   },
-   {
-    "interval": 7,
-    "left": 1,
-    "right": -3
-   },
-   {
-    "interval": 8,
-    "left": -4,
-    "right": 1
-   },
-   {
-    "interval": 9,
-    "left": 1,
-    "right": -2
-   },
-   {
-    "interval": 10,
-    "left": -5,
-    "right": -5
-   },
-   {
-    "interval": 11,
-    "left": 3,
-    "right": 2
-   },
-   {
-    "interval": 12,
-    "left": -1,
-    "right": 2
-   },
-   {
-    "interval": 13,
-    "left": 1,
-    "right": 2
-   },
-   {
-    "interval": 15,
-    "left": 1,
-    "right": -2
-   },
-   {
-    "interval": 16,
-    "left": 0,
-    "right": -5
-   },
-   {
-    "interval": 17,
-    "left": 1,
-    "right": 0
-   },
-   {
-    "interval": 18,
-    "left": -3,
-    "right": -1
-   },
-   {
-    "interval": 19,
-    "left": 4,
-    "right": 4
-   },
-   {
-    "interval": 20,
-    "left": -4,
-    "right": -8
-   },
-   {
-    "interval": 21,
-    "left": 3,
-    "right": 10
-   },
-   {
-    "interval": 22,
-    "left": -6,
-    "right": -5
-   },
-   {
-    "interval": 23,
-    "left": 5,
-    "right": -6
-   },
-   {
-    "interval": 24,
-    "left": -2,
-    "right": 6
-   },
-   {
-    "interval": 25,
-    "left": 14,
-    "right": 4
-   },
-   {
-    "interval": 26,
-    "left": 1,
-    "right": -1
-   },
-   {
-    "interval": 27,
-    "left": -5,
-    "right": 4
-   },
-   {
-    "interval": 28,
-    "left": 3,
-    "right": -2
-   },
-   {
-    "interval": 29,
-    "left": -5,
-    "right": -6
-   },
-   {
-    "interval": 30,
-    "left": -10,
-    "right": 5
-   },
-   {
-    "interval": 31,
-    "left": 12,
-    "right": 4
-   },
-   {
-    "interval": 32,
-    "left": -3,
-    "right": 0
-   },
-   {
-    "interval": 33,
-    "left": 1,
-    "right": -8
-   },
-   {
-    "interval": 34,
-    "left": 0,
-    "right": 4
-   },
-   {
-    "interval": 35,
-    "left": 2,
-    "right": -2
-   },
-   {
-    "interval": 36,
-    "left": 3,
-    "right": 4
-   },
-   {
-    "interval": 37,
-    "left": -7,
-    "right": -12
-   },
-   {
-    "interval": 38,
-    "left": -4,
-    "right": 8
-   },
-   {
-    "interval": 39,
-    "left": -1,
-    "right": -6
-   },
-   {
-    "interval": 40,
-    "left": 1,
-    "right": 11
-   },
-   {
-    "interval": 41,
-    "left": -5,
-    "right": -5
-   }
-  ],
-  "count_of_moves": 299,
-  "quanta_moved": 1934,
-  "first_move_interval": 1,
+  "moves": [],
+  "count_of_moves": 0,
+  "quanta_moved": 0,
+  "first_move_interval": null,
   "expected_first_click_interval": 1,
-  "verdict": "MATCH"
+  "verdict": "MISS"
  },
  "3_the_records": {
   "label": "HOST",
   "alive_at_the_end": 2,
   "expected": 1,
   "verdict": "MISS",
-  "event_lines": {
-   "block": 600,
-   "click": 87
-  }
+  "event_lines": {}
  },
  "4_the_levels": {
   "label": "GAMEBOARD",
@@ -467,201 +53,25 @@
    "matter_x7": [
     [
      0,
-     54
-    ],
-    [
-     1,
-     32
-    ],
-    [
-     2,
-     -11
-    ],
-    [
-     3,
-     -43
-    ],
-    [
-     4,
-     -47
-    ],
-    [
-     5,
-     -23
-    ],
-    [
-     6,
-     12
-    ],
-    [
-     7,
-     29
-    ],
-    [
-     8,
-     19
-    ],
-    [
-     9,
-     -1
-    ],
-    [
-     10,
-     -12
-    ],
-    [
-     11,
-     -8
+     109
     ]
    ],
    "matter_x9": [
     [
      0,
-     63
-    ],
-    [
-     1,
-     41
-    ],
-    [
-     2,
-     -8
-    ],
-    [
-     3,
-     -48
-    ],
-    [
-     4,
-     -62
-    ],
-    [
-     5,
-     -46
-    ],
-    [
-     6,
-     -1
-    ],
-    [
-     7,
-     37
-    ],
-    [
-     8,
-     49
-    ],
-    [
-     9,
-     31
-    ],
-    [
-     10,
-     -2
-    ],
-    [
-     11,
-     -28
+     143
     ]
    ],
    "matter_support": [
     [
      0,
-     2
-    ],
-    [
-     5,
-     21
-    ],
-    [
-     10,
-     93
-    ],
-    [
-     15,
-     142
-    ],
-    [
-     20,
-     187
-    ],
-    [
-     25,
-     221
-    ],
-    [
-     30,
-     234
-    ],
-    [
-     35,
-     239
-    ],
-    [
-     40,
-     255
-    ],
-    [
-     45,
-     263
-    ],
-    [
-     50,
-     263
-    ],
-    [
-     55,
-     266
+     95
     ]
    ],
    "matter_total": [
     [
      0,
-     117
-    ],
-    [
-     5,
-     236
-    ],
-    [
-     10,
-     455
-    ],
-    [
-     15,
-     586
-    ],
-    [
-     20,
-     755
-    ],
-    [
-     25,
-     783
-    ],
-    [
-     30,
-     1021
-    ],
-    [
-     35,
-     1312
-    ],
-    [
-     40,
-     1165
-    ],
-    [
-     45,
-     1078
-    ],
-    [
-     50,
-     1281
-    ],
-    [
-     55,
-     1291
+     1406
     ]
    ]
   }
