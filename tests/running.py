@@ -208,13 +208,21 @@ def stamped(document: dict) -> dict:
     return document
 
 
-def run_point_world(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[dict]]:
+def run_point_world(
+    document: dict, ticks: int, givings: int | None = None
+) -> tuple[DetectorLawSimulation, list[dict]]:
+    """The world stepped `ticks` intervals with the books balanced; with `givings`, stepped instead until that many windows have closed (the giving line named at the close, the horizon the window the engine writes by the law and no number), within the world's own `ticks`."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    for _ in range(ticks):
+    while (simulation.tick < ticks) if givings is None else (len(lines_of(lines, "giving")) < givings):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
+        assert givings is None or simulation.tick <= document["ticks"]  # within the world's own run
     return simulation, lines
+
+
+def lines_of(lines: list[dict], event: str) -> list[dict]:
+    return [line for line in lines if line["event"] == event]
 
 
 GENERATED_DIRECTORIES = {
