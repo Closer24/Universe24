@@ -347,9 +347,7 @@ def draw(seed: int) -> dict[str, Any]:
     if sign_holder:
         holders.append(sign_holder)
 
-    # THE FAMILIES FROM THE RULE: every drawn row is in the rule's form (the name, the pair, the held count
-    # with the sum's divisor, the clock where it gives, the spin's step's row on the content's real field);
-    # the parts, phase, clicks, quantum, reads and the held factors and dipole derive in the loader
+    # THE FAMILIES FROM THE RULE: every drawn row is in the rule's form (the name, the pair, the held count with the sum's divisor, the clock where it gives, the spin's step's row on the content's real field); the parts, phase, clicks, quantum, reads and the held factors and dipole derive in the loader
     if content_holder:
         families.append(
             {
