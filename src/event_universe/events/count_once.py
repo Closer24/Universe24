@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from math import isqrt
 from typing import TYPE_CHECKING, cast
 
 import numpy as np
@@ -37,6 +38,7 @@ def counts_laid(block: Block, node: Sequence[int]) -> np.ndarray:
     well = np.asarray(block.well, dtype=np.int64)
     laid, summed = block.period_counts, block.period_sum
     if laid is None or summed is None:
+        declared_within_gate(block)
         laid, summed = well.copy(), np.zeros_like(well)
         block.period_length = block.period_flips = block.period_sign = 0
     summed += well
@@ -52,3 +54,19 @@ def counts_laid(block: Block, node: Sequence[int]) -> np.ndarray:
         summed, block.period_length, block.period_flips = np.zeros_like(well), 0, 0
     block.period_counts, block.period_sum = laid, summed
     return laid.copy()
+
+
+def declared_within_gate(block: Block) -> None:
+    """THE GATE ON A DECLARED COUNT (Cheshbon's line of 15:46): a count declared at a Node that is not D div T of its mode there within the rounding of the mode's amplitude, |c - D div T| <= 2 isqrt(c) + 1, is refused by name at the first lay, D the mode's form at rest, b^2 (2 den - a) div den for its clock pair [a, den] and its profile's level b at the Node; within it the declared count is a reading and the record's form is the count."""
+    definition, own = block.definition, block.own
+    if own is None or definition.clock is None or definition.profile is None:
+        return
+    a, den = definition.clock
+    for node, count in zip(definition.nodes or (), definition.counts or (), strict=True):
+        level = int(definition.profile[int(np.ravel_multi_index(tuple(node), own.now.shape))])
+        form = division_forward(level * level * (2 * den - a), den, 0)[0]
+        if abs(int(count) - form) > 2 * isqrt(int(count)) + 1:
+            raise ValueError(
+                f"measured[{block.number}] declares the count {count} at the Node {list(node)} and its mode's "
+                f"form there is {form}: a declared count is D div T of its mode within 2 isqrt(c) + 1"
+            )

@@ -5,8 +5,12 @@ from __future__ import annotations
 import json
 from math import isqrt
 from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
 
 import event_universe.world_files as world_files
+from event_universe.events import count_once
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import load_world
 from tests.worlds import load_file
@@ -23,18 +27,16 @@ def pixel_world(tmp_path: Path) -> Path:
     identity = dict(unit=4 * GAMMA << 16, fine=[[1, 0, 1]], coarse=[[1, 0, 1]])
     universe["integers"].update(node_clock=GAMMA, twist_table=identity)
     for family, (num, den, divisor) in zip(universe["families"], ROWS, strict=True):
-        family.update(
-            pair=[num, den],
-            **({} if divisor is None else {"held": family["held"] | {"divisor": divisor}}),
-        )
+        family["pair"] = [num, den]
+        if divisor:
+            family["held"]["divisor"] = divisor
     universe["families"][0]["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
     (tmp_path / "planck.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     document = json.loads((EVENTS / "experiments" / "rules_universe" / "fall_tent_0.json").read_bytes())
     document.update(universe="planck.json", engine="start.json", readings=[])
-    document["measured"][0].update(
-        q=1, nodes=[dict(document["measured"][0]["nodes"][0], count=int(COUNT))]
-    )
+    body = document["measured"][0]
+    body.update(q=1, nodes=[dict(body["nodes"][0], count=int(COUNT))])
     (world := tmp_path / "pixel.json").write_text(json.dumps(document), encoding="utf-8")
     TOOL.main(["--input", str(world), "--clock", COUNT, *CLOCK, "--tail", COUNT, TAIL])
     mode = json.loads((tmp_path / "pixel.mode.json").read_text(encoding="utf-8"))
@@ -45,20 +47,24 @@ def pixel_world(tmp_path: Path) -> Path:
 
 def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(tmp_path, monkeypatch):
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = pixel_world(tmp_path)
-    simulation = DetectorLawSimulation(load_world(world))
-    node = tuple(json.loads(world.read_text(encoding="utf-8"))["measured"][0]["nodes"][0]["node"])
+    simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
+    node = tuple(simulation.world.measured[0].block.nodes[0])
     names = [family.name for family in simulation.families]
     gravity, charge, matter = (names.index(name) for name in ("gravity", "charge", "matter"))
     block, lays = simulation.blocks[0], []
     for _ in range(20):
+        carried = None if block.count_remainder is None else int(block.count_remainder.sum())
         simulation.step()  # no refusal: the pace stays above 0 and no count falls below 0
         well, level = block.well, simulation.held_records[gravity].now
         assert well is not None and block.counts is not None and level[node] == well[node] > 0
         assert simulation._effective_content(charge)[node] == simulation._effective_content(matter)[node]
         assert simulation.node_clock_pair(node, charge) == (GAMMA - level[node], GAMMA)
         assert block.counts.min() >= 0 and block.counts[node] > 0 and block.period_counts is not None
+        moved = int((block.count_norm * block.counts + block.count_remainder).sum())  # T c + r after
+        assert carried is None or moved == block.count_norm * block.period_counts.sum() + carried
         lays.append(int(block.period_counts[node]))
-    assert 1 < len(set(lays)) < 6 and min(lays) > isqrt(
-        int(COUNT)
-    )  # read once per period, not per interval
+    assert 1 < len(set(lays)) < 6 and min(lays) > isqrt(int(COUNT))  # read once per period
+    half = SimpleNamespace(**{**vars(block.definition), "counts": (int(COUNT) // 2,)})  # off its mode
+    off = SimpleNamespace(number=0, own=block.own, definition=half)
+    with pytest.raises(ValueError, match="a declared count is D div T of its mode within 2 isqrt"):
+        count_once.declared_within_gate(off)

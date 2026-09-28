@@ -26,8 +26,8 @@ def pixel_world(tmp_path: Path, monkeypatch, divisor: int) -> Path:
         family.get("held", {}).update(divisor=divisor) if "held" in family else None
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
-    body = {"family": "matter", "nodes": [{"node": list(NODE), "count": COUNT}]}
-    body.update(momentum=[0, 0, 0], momentum_before=[0, 0, 0], phase_denominator=1024)
+    body = dict(family="matter", nodes=[{"node": list(NODE), "count": COUNT}], phase_denominator=1024)
+    body.update(momentum=[0, 0, 0], momentum_before=[0, 0, 0])
     world = {"shape": [SIDE, SIDE, SIDE], "boundary": {"x": "closed", "y": "closed", "z": "closed"}}
     world.update(ticks=64, N=1024, measured=[body], universe="universe.json", engine="start.json")
     world["detectors"] = [{"name": "own", "positions": [list(NODE)]}]

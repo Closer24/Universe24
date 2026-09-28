@@ -227,15 +227,13 @@ def test_a_node_at_0_gives_nothing_and_a_node_giving_more_than_it_holds_is_refus
     weight, now = 7, np.array([[[1]], [[0]]], dtype=np.int64)
     here, term = Levels(now, 1 - now, None, None), CountTerm(1, weight, 1, 2 * weight)
     count = np.array([[[0]], [[2 * weight]]], dtype=np.int64)
-    writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
-    assert writes.count.ravel().tolist() == [2 * weight, 0]
+    line = lambda p=None: apply(term, CountStart(count, count * 0, here, links_of(here), 1, p))  # noqa: E731
+    assert line().count.ravel().tolist() == [2 * weight, 0]
     count[1] = 2 * weight - 1
-    with pytest.raises(
-        ValueError, match=rf"move {2 * weight} quanta from a Node holding {count[1, 0, 0]} "
-    ):
-        apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
-    ports = lambda a: tuple(across(a, axis, sigma, True) for axis in range(3) for sigma in (1, -1))  # noqa: E731
+    with pytest.raises(ValueError, match=f"a Node holding {count[1, 0, 0]} < {2 * weight}"):
+        line()
+    ports = lambda a: tuple(across(a, x, s, True) for x in range(3) for s in (1, -1))  # noqa: E731
     for holding in (0, 2 * weight - 1):
         count[1] = holding
-        writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1, ports))
-        assert writes.count.ravel().tolist() == [0, holding] and not sum(writes.net).any()
+        moved = line(ports)
+        assert moved.count.ravel().tolist() == [0, holding] and not sum(moved.net).any()
