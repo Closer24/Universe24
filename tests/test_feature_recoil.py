@@ -126,8 +126,8 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
         apply(TERM, START, RecoilOwn((0, 0, 0), (0, WALL, 0)))
 
 
-def test_two_kicks_with_the_feed_running_sum_on_both_levels_of_the_momentum():
-    """The emitter's unit world under THE START (the feed running at (v), its KEEP pair exchanging the two levels of n every interval), Q = 64 giving two quanta of light of wavelength 4, L = 4: each giving kicks the giver by -sigma x 3 Q P_body (L div lambda_q) div L, and after both the body holds the exact floor of the sum on `momentum` and on `momentum_before` alike (ALGEBRA.md #the-primitives, the rows of the recoil and the feed); a kick written to one level alone shows on every second interval and two kicks never sum."""
+def test_two_kicks_sum_on_both_levels_of_the_momentum():
+    """The emitter's unit world under THE START (no feed: the momentum's two levels move by the recoil alone), Q = 64 giving two quanta of light of wavelength 4, L = 4: each giving kicks the giver by -sigma x 3 Q P_body (L div lambda_q) div L, and after both the body holds the exact floor of the sum on `momentum` and on `momentum_before` alike (ALGEBRA.md #the-primitives, the rows of the recoil and the feed); a kick written to one level alone shows on every second interval and two kicks never sum."""
     document = emitter_world(stock=2, ticks=600)
     period = parse_nature_beam_world(document).measured[0].block.emitter.period
     wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4

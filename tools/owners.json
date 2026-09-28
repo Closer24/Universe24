@@ -30,8 +30,6 @@
       "areas": [
         "docs/ALGEBRA.md",
         "tools/body_generator.py",
-        "src/event_universe/features/feed/",
-        "src/event_universe/features/induction/",
         "src/event_universe/features/recoil/"
       ]
     },
