@@ -1,4 +1,4 @@
-"""The mode file of a one-Node body (ALGEBRA.md #the-primitives, THE BOUND BODY IS ONE NODE, THE RULE'S OWN UNIVERSE; Cheshbon's line of 2026-09-28, 14:12 Israel): for every measured body of one declared Node with a count c, its bound mode at rest over the whole board, the amplitude at its Node b = isqrt(c T den div (2 den - a)) from the form D = now^2 - next x before at rest (the count c = D div T) with its bound rotation's clock pair [a, den] (2 cos omega_b in integers), the tail on every other Node round(b t^d) with d the Manhattan distance to the pixel (the shorter way on a periodic axis) and t = e^-kappa as an integer over 2^16, until the level falls below 1; both levels the profile (the standing phase); the clock pair and the tail per count given on the command line and never held in the tool, the family's pair from the universe file, the twist as the generator writes it (round(unit omega / (4 Gamma))) and `world_digest` the world's one digest; a body that is not one Node, or a count with no pair given, is refused by name. Usage: `python tools/pixel_mode.py --input <world.json> --clock <count> <a> <den> <tail> [--clock ...] [--out <world.mode.json>]`."""
+"""The mode file of a one-Node body (ALGEBRA.md #the-primitives, THE BOUND BODY IS ONE NODE, THE RULE'S OWN UNIVERSE; Cheshbon's line of 2026-09-28, 14:12 Israel): for every measured body of one declared Node with a count c, its bound mode at rest over the whole board, the amplitude at its Node b = isqrt(c T den div (2 den - a)) from the form D = now^2 - next x before at rest (the count c = D div T) with its bound rotation's clock pair [a, den] (2 cos omega_b in integers), the tail on every other Node round(b t^d) with d the Manhattan distance to the pixel (the shorter way on a periodic axis) and t = e^-kappa as an integer over 2^16, until the level falls below 1; both levels the profile (the standing phase); the clock pair and the tail per count given on the command line and never held in the tool, the family's pair from the universe file, the twist as the generator writes it (round(unit omega / (4 Gamma))) and `world_digest` the world's one digest; a body that is not one Node, or a count with no pair given, is refused by name. Usage: `python tools/pixel_mode.py --input <world.json> --clock <count> <a> <den> --tail <count> <t> [...] [--out <world.mode.json>]`."""
 
 from __future__ import annotations
 
@@ -13,18 +13,28 @@ from event_universe.world_files import input_digest, world_files
 TAIL_UNIT = 1 << 16  # the tail's factor per Link t is given as an integer over 2^16 (Cheshbon's line)
 
 
-def clock_table(rows: list[list[int]]) -> dict[int, tuple[int, int, int]]:
-    """The clock pair [a, den] and the tail's factor (t x 2^16) per count from the command line's `--clock count a den tail` entries; a count named twice, or a value below 1, refused by name."""
+def clock_table(clocks: list[list[int]], tails: list[list[int]]) -> dict[int, tuple[int, int, int]]:
+    """The clock pair [a, den] and the tail's factor (t x 2^16) per count from the command line's `--clock count a den` and `--tail count t` entries; a count named twice, a count with one of the two alone, or a value below 1, refused by name."""
     table: dict[int, tuple[int, int, int]] = {}
-    for count, a, den, tail in rows:
+    tail_of: dict[int, int] = {}
+    for count, tail in tails:
+        if count in tail_of:
+            raise ValueError(f"--tail {count} is given twice")
+        if tail < 1:
+            raise ValueError(f"--tail {count} {tail}: the tail's factor is positive (t over 2^16)")
+        tail_of[count] = tail
+    for count, a, den in clocks:
         if count in table:
             raise ValueError(f"--clock {count} is given twice")
-        if min(a, den, tail) < 1 or a >= 2 * den:
+        if min(a, den) < 1 or a >= 2 * den:
             raise ValueError(
-                f"--clock {count} {a} {den} {tail}: a and den positive with a below 2 den (2 cos omega_b as a "
-                "rational) and the tail's factor positive (t over 2^16)"
+                f"--clock {count} {a} {den}: a and den positive with a below 2 den (2 cos omega_b as a rational)"
             )
-        table[count] = (a, den, tail)
+        if count not in tail_of:
+            raise ValueError(f"--clock {count} has no --tail {count} <t> beside it")
+        table[count] = (a, den, tail_of.pop(count))
+    if tail_of:
+        raise ValueError(f"--tail {min(tail_of)} has no --clock {min(tail_of)} <a> <den> beside it")
     return table
 
 
@@ -114,7 +124,7 @@ def pixel_mode(document: dict[str, Any], clocks: dict[int, tuple[int, int, int]]
         count = int(nodes[0]["count"]) if isinstance(nodes, list) and nodes else None
         if count not in clocks:
             raise ValueError(
-                f"measured[{number}] has the count {count} and no --clock row was given for it"
+                f"measured[{number}] has the count {count} and no --clock and --tail rows were given for it"
             )
         bodies.append(
             pixel_entry(
@@ -130,11 +140,20 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--clock",
         type=int,
-        nargs=4,
+        nargs=3,
         action="append",
-        metavar=("COUNT", "A", "DEN", "TAIL"),
+        metavar=("COUNT", "A", "DEN"),
         required=True,
-        help="for every body of that count: the clock pair [a, den] of the bound rotation (2 cos omega_b as a rational) and the tail's factor per Link t as an integer over 2^16",
+        help="for every body of that count: the clock pair [a, den] of the bound rotation, 2 cos omega_b as a rational",
+    )
+    parser.add_argument(
+        "--tail",
+        type=int,
+        nargs=2,
+        action="append",
+        metavar=("COUNT", "T"),
+        required=True,
+        help="for every body of that count: the tail's factor per Link t = e^-kappa as an integer over 2^16",
     )
     parser.add_argument(
         "--out",
@@ -143,7 +162,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
-    mode = pixel_mode(document, clock_table(args.clock))
+    mode = pixel_mode(document, clock_table(args.clock, args.tail))
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
     out.write_text(json.dumps(mode) + "\n", encoding="utf-8")
     for body in mode["bodies"]:
