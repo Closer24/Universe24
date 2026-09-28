@@ -53,8 +53,8 @@ CRYSTAL_SLAB = (
     41,
 )  # the slab of 3 x 3 x 1 Nodes in the tube's mouth, across the channel of three Nodes' height (y = 39..41), the pair leaving its faces at x = 119 and 121
 ROW = 40  # the y of the crystal's row, where the polarisers and the far bodies stand
-CHANNEL_MIRROR = 9000  # the channel's walls (Cheshbon's 03:39Z): the pair's mirror line at lambda 8.5 is 6,388, and a wall of 8,000 shows faces of 6,351 to 7,967 in the bound charge's well, so the channel's walls stand at 9,000 (faces about 7,100); the tube's walls stay at MIRROR against the pump's line 2,929
-ANALYSER = 4500  # the polarisers and the plus bodies (Cheshbon's 04:25Z): the level inside about 0.92 x 4,500 = 4,140, above the pump's line 2,929 (a mirror for lambda 4, so the pump passing beside the crystal stays in the channel) and below the pair's line 6,388 (a window for lambda 8.5)
+CHANNEL_MIRROR = 9000  # the channel's walls and the tube's two blocks (Cheshbon's 03:39Z and 04:47Z): the pair's rotation is the crystal's own (its clock in the mode file) and the pump's the emitter's, each wavelength on the light's band, and a wall of four Nodes is a mirror for a wavelength above that wavelength's line (4,284 at the pump's lambda 5.16 and 4,662 at the pair's 5.58 on the clocks of the mode files of 07:33 Israel); a wall of 8,000 shows faces of 6,351 to 7,967 in the bound charge's well, so the channel's walls and the blocks stand at 9,000 (faces about 7,100), above both lines; the back mirror stays at MIRROR
+ANALYSER = 4500  # the polarisers and the plus bodies: the level inside about 0.92 x 4,500 = 4,140, below both lines (4,284 for the pump's lambda 5.16, 4,662 for the pair's 5.58: Cheshbon's 04:47Z), so a window for both: the pump passing beside the crystal reaches the detectors and stands in the books as labels taken by a body that is no detector; the count that is a mirror for the pump and a window for the pair lies between the two lines (about 4,900 within 190 on the generator's table, thin) or the symmetric case (the crystal rotating at 0.336, half the pump's, the pair's line 7,101, the polarisers at 6,000): set with the crystal's design after the generator of the clean form (T of the universe, every profile at c T), the Closer's 07:58 Israel and Cheshbon's 04:53Z; 4,500 stands until then
 WALL_GAP = 5  # Nodes between every window body and a wall (Cheshbon's 04:22Z and 04:28Z): the bound charge's well of a wall decays 0.127 per Link at [1, 2], 1,029 at the Node beside a wall of 9,000 and 0 in integers six Links away, so a window one Node from a wall falls into it (the feed reads the tail's slope: the emitter's momentum -66,712 per interval at two Links) and five Nodes away feels no force
 WINDOW_GAP = (
     4  # Nodes between two window bodies: the tail of a body of 4,500 is 0 in integers five Links away
@@ -64,10 +64,10 @@ TUBE = (
     119 - WALL_GAP - 1,
     121 + WALL_GAP + 1,
     121 + WALL_GAP + 4,
-)  # the tube's two walls, x = 110..113 and 127..130, five Nodes from the emitter's columns; the mouth 114..126
+)  # the tube's two walls, x = 110..113 and 127..130, five Nodes from the emitter's columns, each the inner column range of one block with the channel's bottom wall on its side (walls()); the mouth 114..126
 BACK_MIRROR = box(
-    119, 121, 12 - WALL_GAP - 4, 12 - WALL_GAP - 1, 0, 0
-)  # the emitter's back mirror at y = 3..6, five Nodes below its bottom row
+    TUBE[0] - WALL_GAP, TUBE[3] + WALL_GAP, 12 - WALL_GAP - 4, 12 - WALL_GAP - 1, 0, 0
+)  # the emitter's back mirror, a box across x = 105..135 at y = 3..6: five Nodes below the emitter's bottom row and below the tube's blocks, five Nodes beyond each block on x (Cheshbon's 05:01Z: bodies are boxes alone; the gap between the mirror and the blocks is a labyrinth of five Nodes, a bounded geometric loss of the pump to the face)
 CHANNEL = (
     CRYSTAL_SLAB[2] - WALL_GAP - 3 - 4,
     CRYSTAL_SLAB[2] - WALL_GAP - 3 - 1,
@@ -142,7 +142,7 @@ def blind_expectation() -> dict[str, Any]:
             "sd_of_S_by_pairs_per_cell": {"64": 0.177, "256": 0.088, "1024": 0.044},
             "same_outcome_counts_at_64": "54.6 +- 2.8 in the three positive cells, 9.4 +- 2.8 in a_b2; the marginals 32 +- 4",
             "pairs_per_giving": "Cheshbon's 01:23Z on the slab: the block across the whole channel takes nearly every pump quantum, so the pairs per pump quantum are at least 0.9, not about one half; the stock 64 gives about 60 pairs per chain, and 256 and 1024 coincidences per cell need the stock about 280 and 1100; the two crystal counts give the same S, E, marginals and yield within the spread, a difference a finding against the crystal's row",
-            "pair_in_flight": "the pair's rotation half the pump's by conservation, its wavelength 8.5 Links at the pump's lambda 4 (9.9 at 4.78), the group velocity 0.550, the flight of 58 Links 104 to 105 intervals on both sides",
+            "pair_in_flight": "the pair's rotation is the crystal's own (the law's crystal row: the conservation fixes the sum of the labels' rotations, the crystal the division; half the pump's only in the symmetric case), read from the crystal's clock in the mode file, and its wavelength the band's at that rotation: on the mode files of 07:33 Israel the crystal's 0.6266 gives lambda 5.58 and the emitter's 0.6727 the pump's 5.16 (Cheshbon's 04:47Z, correcting 8.5 written from the crystal's clock as if half the pump's); the group velocity about 0.55, the flight of 57 Links about 105 intervals on both sides",
         },
         "row": f"{LAW_TEXT}: one form, the local law with the click's one non-local act alone (one label ends everywhere at once, the other goes on as the taken row); the owner's 22:35Z: the correlation lies in the pair record's amplitude spread to both sides and each detector clicks alone from the amplitude that reached it; no cell tuned; S reported twice, by the pair record and within the coincidence window; the joint-click form and the |S| <= 2 local form of the earlier text are deleted from the law",
     }
@@ -164,13 +164,20 @@ UNDER_THE_SUM = (
     "charge `polarisation` [1, 2] at the divisor 1 is the well of every body's own count; five Nodes between "
     "every window body and a wall and four between window bodies (Cheshbon's 04:22Z and 04:28Z: the wall's well "
     "decays 0.127 per Link and pulls a body two Links away onto it; at six Links its tail is 0 in integers), so at "
-    "the load the emitter and the crystal hold 1,583 to 1,892, below the pump's window line 2,929 at lambda 4; the "
-    "polarisers and the plus bodies of 4,500 hold 3,567 to 4,371, mirrors for the pump and windows for the pair "
-    "(the pump passing beside the crystal stays in the channel, on the board in the books); the channel's walls of "
-    "9,000 hold 7,144 to 8,948, above the pair's mirror line 6,388 at lambda 8.5, and the tube's walls of 8,000 "
-    "6,339 to 7,654, above the pump's 2,929; the mode files are the generator's on that rest, entries for the "
-    "emitter and the crystal alone, the profile at an eighth of the unit and the two levels of the standing mode; "
-    "nothing of Bell reads a held level (the polariser and the ladder alone)"
+    "the load (the files of 08:21 Israel, four boxes of walls) the emitter and the crystal hold 1,583 to 1,892; the "
+    "polarisers and the plus bodies of 4,500 hold 3,567 to 4,371; the channel's top wall of 9,000 7,144 to 8,855 and "
+    "the two blocks 7,145 to 9,000, the back mirror of 8,000 6,350 to 7,871; gravity at most 133; the tail beside a "
+    "wall 1,015, 0 in integers at the bodies five Nodes away; the wavelengths from the mode files' clocks by the "
+    "band (cos k = 6 cos omega - 2 for the light [1, 2], cos omega = clock[0] / (4 clock[1])): the emitter's "
+    "[6819814, 4803839] gives the pump lambda 4.36 and the crystal's [6585916, 4803839] the pair 4.15 (the "
+    "control's crystal of 1001, [7600500, 4803839], 5.29), and a wall of four Nodes is a mirror above the line "
+    "Gamma (1 - sin(pi / lambda)): 3,402 for the pump, 3,133 for the pair (4,403 for the control's pair), so the "
+    "polarisers of 4,500 are mirrors for both on these files (Cheshbon's 04:47Z read 5.16 and 5.58 on the files of "
+    "07:33 Israel, lines 4,284 and 4,662, windows for both): the crystal's count against the pump's rotation is "
+    "the design that puts the polarisers between the two lines, set with the generator of the clean form; the "
+    "mode files are the generator's on that rest, entries for the emitter and the crystal alone, the profile at an "
+    "eighth of the unit and the two levels of the standing mode; nothing of Bell reads a held level (the polariser "
+    "and the ladder alone)"
 )
 NATURE = (
     "against nature (the Experimenter's expectation, Nature24 archived): for a maximally entangled pair nature "
@@ -218,27 +225,19 @@ def convergence() -> str:
 
 
 def walls() -> list[dict[str, Any]]:
-    """The mirrors of the channel and the tube (rule 1: above the mirror line, four Nodes thick, nothing tunnels): the channel of nineteen rows (y = 31..49) along the crystal's row between the polarisers, its top wall (y = 50..53) at CHANNEL_MIRROR, and on each side one body of the channel's bottom wall (y = 27..30, at CHANNEL_MIRROR) with the tube's wall below it (at MIRROR), the mouth x = 114..126 open; every wall five Nodes from every window body (WALL_GAP), so the bound charge's well of a wall pulls no body; the pump that passes beside the crystal stays in the channel, reflected by the polarisers of ANALYSER (Cheshbon's 04:25Z); the channel guides the pair to the polarisers instead of the open faces (the owner's 23:08Z: the photons that wander)."""
-    left = body(box(TUBE[0], TUBE[1], BACK_MIRROR[0][1], CHANNEL[0] - 1, 0, 0), MIRROR)
-    right = body(box(TUBE[2], TUBE[3], BACK_MIRROR[0][1], CHANNEL[0] - 1, 0, 0), MIRROR)
-    # each tube wall and the channel's bottom wall on its side are ONE body (a body's own well pulls it nowhere; two touching bodies pull each other, whatever their counts), the tube's Nodes at MIRROR and the channel's at CHANNEL_MIRROR
-    left["nodes"] += body(box(CHANNEL_X[0], TUBE[1], CHANNEL[0], CHANNEL[1], 0, 0), CHANNEL_MIRROR)[
-        "nodes"
-    ]
-    right["nodes"] += body(box(TUBE[2], CHANNEL_X[1], CHANNEL[0], CHANNEL[1], 0, 0), CHANNEL_MIRROR)[
-        "nodes"
-    ]
+    """The mirrors of the channel and the tube (rule 1: above the mirror line, four Nodes thick, nothing tunnels), four boxes and nothing else (Cheshbon's 05:01Z: a box's own well pulls it nowhere; a U's inner face reads its own tail through the feed and the body flies; two touching bodies pull each other whatever their counts): the channel's top wall (y = 50..53, at CHANNEL_MIRROR) along the crystal's row between the polarisers; on each side one block from the tube's wall up through the channel's bottom wall (x = 68..113 and 127..172, y = 12..30, at CHANNEL_MIRROR), the tube's mouth x = 114..126 open between them; the back mirror across x = 105..135 at y = 3..6 (at MIRROR), five Nodes below the blocks and the emitter; every wall five Nodes from every window body (WALL_GAP), so the bound charge's well of a wall pulls no body; the pump that passes beside the crystal goes on to the polarisers (ANALYSER); the channel guides the pair to the polarisers instead of the open faces (the owner's 23:08Z: the photons that wander)."""
+    bottom = BACK_MIRROR[-1][1] + WALL_GAP + 1  # y = 12, the blocks' lowest row, five above the mirror
     return [
         body(box(CHANNEL_X[0], CHANNEL_X[1], CHANNEL[2], CHANNEL[3], 0, 0), CHANNEL_MIRROR),
-        left,
-        right,
+        body(box(CHANNEL_X[0], TUBE[1], bottom, CHANNEL[1], 0, 0), CHANNEL_MIRROR),
+        body(box(TUBE[2], CHANNEL_X[1], bottom, CHANNEL[1], 0, 0), CHANNEL_MIRROR),
+        body(BACK_MIRROR, MIRROR),
     ]
 
 
 def bell(left: str, right: str) -> None:
     """One chain of BELL at the settings named: the one-arm emitter in its tube, the crystal's slab in the tube's mouth, the two polarisers and the two far bodies on the crystal's row."""
     emitter_nodes = box(119, 121, 12, 14, 0, 0)
-    back_mirror = BACK_MIRROR
     left_nodes = box(60, 62, CHANNEL_ROWS[0], CHANNEL_ROWS[1], 0, 0)
     right_nodes = box(178, 180, CHANNEL_ROWS[0], CHANNEL_ROWS[1], 0, 0)
     left_far = box(60 - WINDOW_GAP - 3, 60 - WINDOW_GAP - 1, CHANNEL_ROWS[0], CHANNEL_ROWS[1], 0, 0)
@@ -258,7 +257,6 @@ def bell(left: str, right: str) -> None:
         body(left_far, ANALYSER),
         body(right_far, ANALYSER),
         body(box(*CRYSTAL_SLAB, 0, 0), GIVING_COUNT, crystal={}),
-        body(back_mirror, MIRROR),
         *walls(),
     ]
     detectors = [
@@ -293,7 +291,7 @@ def bell(left: str, right: str) -> None:
         "format": "world-expectation-v1",
         "lacks": f"the crystal ({LAW_TEXT}: a body of matter on one Node with the key `crystal`, declaring nothing else; its folder and the loop's hook none on main; the pair record of rank 2 with two identical labels of a half quantum each, its rotation the crystal's own, no key for the wavelength; the labels' clicks, one click line per label with the pair's record identity, where main writes one click per record), the polariser's loop hook (#1309), the charge family's `least_residues` in the universe file, the mode file by the generator (the norm, the clock by rule 6), the hold's line taking the universe of record's `divisor`; the crystal's share of the arriving record (the pairs per giving) is the approver's; "
         + FEED_FINDING,
-        "row": f"ALGEBRA.md #the-rows-against-nature (h) BELL on the owner's design (22:00Z) and {LAW_TEXT}: the plane 241 x 60 x 1 open on x and y; the emitter of 3 x 3 Nodes of {GIVING_COUNT} at x = 119..121, y = 12..14 fires one arm along +y (its back mirror of {MIRROR} at y = 3..6, five Nodes below it, and the tube's two mirrors at x = {TUBE[0]}..{TUBE[1]} and {TUBE[2]}..{TUBE[3]} up to y = {CHANNEL[0] - 1}, five Nodes from its columns, each one body with the channel's bottom wall above it; the mouth x = 114..126 open, the pump beside the crystal kept in the channel by the polarisers: rule 2), the stock {STOCK} givings (N = {STEPS}, lambda_q = 4); the crystal a slab of 3 x 3 x 1 Nodes of {GIVING_COUNT} at x = {CRYSTAL_SLAB[0]}..{CRYSTAL_SLAB[1]}, y = {CRYSTAL_SLAB[2]}..{CRYSTAL_SLAB[3]} in the tube's mouth, across a channel of nineteen rows between the channel's walls of {CHANNEL_MIRROR} four Nodes thick (y = {CHANNEL[0]}..{CHANNEL[1]} and {CHANNEL[2]}..{CHANNEL[3]} for x = {CHANNEL_X[0]}..{CHANNEL_X[1]}, eight Nodes from the crystal's rows, the top wall its back mirror; the one-Node equivalence fails, `share_inside` below, so the row's cube stands here as the slab) takes the arriving record by its click and in the same interval gives one pair record (rank 2, two identical labels of a half quantum each) from its Ports along -x and +x (the angles fixed as Aspect 1981; the pair's rotation the crystal's own, no key; the switching chain and the crystal-count control beside these four in one series); the left polariser of 3 x 19 Nodes of {ANALYSER} at x = 60..62 and the right at 178..180 across the channel's rows y = {CHANNEL_ROWS[0]}..{CHANNEL_ROWS[1]} (mirrors for the pump, windows for the pair: the record enters; {ARMS['left']} Links each from the crystal), the settings {left} = {theta_left:.4f} and {right} = {theta_right:.4f} radians (the exact pairs {ANGLES[left]} and {ANGLES[right]}), each with its own set (minus) offered before its far set (plus) on the plus body of 3 x 19 Nodes of {ANALYSER} four Nodes beyond the polariser's far face at x = 53..55 and 185..187 (MathB's 23:36Z: the plus click about 5 intervals after the minus click of the same pair, within the window; the far cubes of the first layout put it 75 intervals later and emptied the window); each label clicks alone at its own detector at its own interval; the numbers of record: E({left}, {right}) = cos 2({left} - {right}) = {e:.4f} on the exact pairs (the nominal {nominal:.4f}), the marginals one half = {marginal(STOCK)} of {STOCK} pairs at each far set, S = {s_value():.4f} = 2 sqrt 2 over the four chains, the row's and nature's one number; S at or below 2 is a finding, no cell is tuned; S counted twice by coincidences.py, by the pair record and within the window of {COINCIDENCE_WINDOW} intervals; written before any run",
+        "row": f"ALGEBRA.md #the-rows-against-nature (h) BELL on the owner's design (22:00Z) and {LAW_TEXT}: the plane 241 x 60 x 1 open on x and y; the emitter of 3 x 3 Nodes of {GIVING_COUNT} at x = 119..121, y = 12..14 fires one arm along +y (its back mirror of {MIRROR} a box across x = {BACK_MIRROR[0][0]}..{BACK_MIRROR[-1][0]} at y = 3..6, five Nodes below it; the tube's two walls the inner columns of two blocks of {CHANNEL_MIRROR}, x = {CHANNEL_X[0]}..{TUBE[1]} and {TUBE[2]}..{CHANNEL_X[1]} from y = 12 up through the channel's bottom wall y = {CHANNEL[1]}, five Nodes from its columns and from the mirror; bodies are boxes alone, Cheshbon's 05:01Z; the mouth x = 114..126 open, the pump beside the crystal on to the polarisers, windows for both wavelengths at 4,500: rule 2), the stock {STOCK} givings (N = {STEPS}, lambda_q = 4); the crystal a slab of 3 x 3 x 1 Nodes of {GIVING_COUNT} at x = {CRYSTAL_SLAB[0]}..{CRYSTAL_SLAB[1]}, y = {CRYSTAL_SLAB[2]}..{CRYSTAL_SLAB[3]} in the tube's mouth, across a channel of nineteen rows between the channel's walls of {CHANNEL_MIRROR} four Nodes thick (y = {CHANNEL[0]}..{CHANNEL[1]} and {CHANNEL[2]}..{CHANNEL[3]} for x = {CHANNEL_X[0]}..{CHANNEL_X[1]}, eight Nodes from the crystal's rows, the top wall its back mirror; the one-Node equivalence fails, `share_inside` below, so the row's cube stands here as the slab) takes the arriving record by its click and in the same interval gives one pair record (rank 2, two identical labels of a half quantum each) from its Ports along -x and +x (the angles fixed as Aspect 1981; the pair's rotation the crystal's own, no key; the switching chain and the crystal-count control beside these four in one series); the left polariser of 3 x 19 Nodes of {ANALYSER} at x = 60..62 and the right at 178..180 across the channel's rows y = {CHANNEL_ROWS[0]}..{CHANNEL_ROWS[1]} (mirrors for the pump, windows for the pair: the record enters; {ARMS['left']} Links each from the crystal), the settings {left} = {theta_left:.4f} and {right} = {theta_right:.4f} radians (the exact pairs {ANGLES[left]} and {ANGLES[right]}), each with its own set (minus) offered before its far set (plus) on the plus body of 3 x 19 Nodes of {ANALYSER} four Nodes beyond the polariser's far face at x = 53..55 and 185..187 (MathB's 23:36Z: the plus click about 5 intervals after the minus click of the same pair, within the window; the far cubes of the first layout put it 75 intervals later and emptied the window); each label clicks alone at its own detector at its own interval; the numbers of record: E({left}, {right}) = cos 2({left} - {right}) = {e:.4f} on the exact pairs (the nominal {nominal:.4f}), the marginals one half = {marginal(STOCK)} of {STOCK} pairs at each far set, S = {s_value():.4f} = 2 sqrt 2 over the four chains, the row's and nature's one number; S at or below 2 is a finding, no cell is tuned; S counted twice by coincidences.py, by the pair record and within the window of {COINCIDENCE_WINDOW} intervals; written before any run",
         "DETECTOR": [],  # no pin chosen: the blind expectation carries the numbers, the run decides
         "correlation": {
             "E": round(e, 4),
@@ -356,7 +354,6 @@ def bell(left: str, right: str) -> None:
 def bell_switching(crystal_count: int = GIVING_COUNT, suffix: str = "") -> None:
     """The switching chain: the board of the fixed-angle chains with both polarisers switching their settings in flight by their own clocks (the owner's 22:10Z, as Aspect 1982; the card of #1315: `angles` and `every`): the left between a and a2 every 7 intervals, the right between b and b2 every 11; one world reads the four correlations, the setting of each click derived by the tool from the click's interval and the polariser's card (the angle read at the passage, never at the giving)."""
     emitter_nodes = box(119, 121, 12, 14, 0, 0)
-    back_mirror = BACK_MIRROR
     left_nodes = box(60, 62, CHANNEL_ROWS[0], CHANNEL_ROWS[1], 0, 0)
     right_nodes = box(178, 180, CHANNEL_ROWS[0], CHANNEL_ROWS[1], 0, 0)
     left_far = box(60 - WINDOW_GAP - 3, 60 - WINDOW_GAP - 1, CHANNEL_ROWS[0], CHANNEL_ROWS[1], 0, 0)
@@ -380,7 +377,6 @@ def bell_switching(crystal_count: int = GIVING_COUNT, suffix: str = "") -> None:
         body(left_far, ANALYSER),
         body(right_far, ANALYSER),
         body(box(*CRYSTAL_SLAB, 0, 0), crystal_count, crystal={}),
-        body(back_mirror, MIRROR),
         *walls(),
     ]
     detectors = [
