@@ -97,7 +97,7 @@ def step_back(
     opened: dict[int, list[tuple[int, int]]],
     t: int,
 ) -> None:
-    """The interval t stepped back: across a click (a giving's open, a window's close with its recoil, a taking) the click's ledger undone by hand first (NO RULE UNDOES A CLICK), the record made at an open removed, a window's close reopened on its record, then the engine's inverse, then the record a taking deleted restored from the host's copy."""
+    """The interval t stepped back: across a click (a giving's open, a window's close with its recoil, a taking) the click's ledger undone by hand first (NO RULE UNDOES A CLICK), the record made at an open removed, a window's close reopened on its record, the recoil's turn of the body's record undone from the copy on its line, then the engine's inverse, then the record a taking deleted restored from the host's copy."""
     givings = [line for line in lines if line["event"] == "giving"]
     opens = opened.get(t, [])
     closes = [line for line in givings if line["tick"] == t]
@@ -114,6 +114,19 @@ def step_back(
         if live is not None:
             block = simulation.block_by_number[int(line["measured"])]
             live.window_open, block.window = True, live.identity
+    for line in lines:
+        # the recoil's turn of the body's own record undone from the host's copy on the line (the click keeps the click)
+        block = (
+            simulation.block_by_number.get(int(line["measured"])) if line["event"] == "recoil" else None
+        )
+        if (
+            line["event"] == "recoil"
+            and line["tick"] == t
+            and block is not None
+            and block.own is not None
+        ):
+            block.own.now[block.mask] = np.array(line["levels_before"][0], dtype=np.int64)
+            block.own.before[block.mask] = np.array(line["levels_before"][1], dtype=np.int64)
     simulation.step_inverse()
     for line in takings:
         simulation.records[int(line["record"])] = lost[int(line["record"])]

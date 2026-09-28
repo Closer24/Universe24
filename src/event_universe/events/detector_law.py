@@ -25,7 +25,15 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, body_language, guards, output, pair
+from event_universe.events import (
+    after_step,
+    assembly,
+    body_language,
+    guards,
+    momentum_reading,
+    output,
+    pair,
+)
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.inverse import block_clock_inverse, booking_inverse
@@ -36,13 +44,7 @@ from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.crystal import CrystalTerm
-from event_universe.features.giving import (
-    THE_OPEN,
-    GivingOwn,
-    GivingStart,
-    GivingTerm,
-    GivingWrites,
-)
+from event_universe.features.giving import THE_OPEN, GivingOwn, GivingStart, GivingTerm, GivingWrites
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
@@ -285,7 +287,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _write_line = after_step.write_line
     _point_windows = after_step.point_windows
     _close_window = after_step.close_window
-    _read_momentum = after_step.read_momentum
+    _read_momentum = momentum_reading.read_momentum
     _pair_click = pair.pair_click
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
@@ -376,13 +378,15 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         for argument in self._source_argument.values():
             argument[...] = 0
 
-    def _triple_of(self, angle: int, axis: int) -> tuple[int, int, int]:
-        """The twist table's triple of an angle in the twist's unit, the receive's reading, refused by name beyond the table or without one (the Port toward +axis named)."""
-        cosine, sine, d = receive_triple(self._receive_term, angle, port_of(axis, 1))
-        return int(cosine), int(sine), int(d)
+    def _write_at_mask(
+        self, live: LiveRecord, mask: np.ndarray, levels: tuple[np.ndarray, np.ndarray], sign: int
+    ) -> None:
+        """The loop's one site for levels written at a body's Nodes into a record's two levels, added (+1) or taken back (-1): the window's inverse and the recoil's turn (the write's gate)."""
+        live.now[mask] += sign * levels[0]
+        live.before[mask] += sign * levels[1]
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
-        """The recoil's act (features/recoil): per click of the interval on a body with a record of its own, a mode clock and a mode reading of the quantum's wave number on a world with a twist table, the folder's turn of the record's two levels at the body's Nodes by delta k = sigma_a (k_q div M) per Link along each axis with a tally (the Node's offset from the body's centre), the angle's remainder carried at the body through the write's line, the taker at +1 and the giver at -1; a body without them takes no recoil; the momentum n is a reading of the record's current (`_read_momentum`), no level of the click's."""
+        """The recoil's act (features/recoil): per click of the interval on a body with a record of its own, a mode clock and a mode reading of the quantum's wave number on a world with a twist table, the folder's turn of the record's two levels at the body's Nodes by delta k = sigma_a (k_q div M) per Link along each axis with a tally (the Node's offset from the body's centre; the triple the receive's reading of the table), the angle's remainder carried at the body through the write's line, the taker at +1 and the giver at -1, the turned levels written at the loop's one site (`_write_at_mask`); a body without them takes no recoil; the momentum n is a reading of the record's current (`_read_momentum`), no level of the click's."""
         for number, sense, tally, identity in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
@@ -393,17 +397,23 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 continue
             nodes, centre = np.argwhere(block.mask), self._window_centre(block)
             offsets = tuple(tuple(int(v) for v in nodes[:, axis] - centre[axis]) for axis in range(3))
-            levels = tuple(tuple(int(v) for v in level[block.mask]) for level in (live.now, live.before))
-            term = RecoilTerm(
-                emitter.wave_number, self._body_count(block), clock, sense, self._triple_of
-            )
+            before = (live.now[block.mask].copy(), live.before[block.mask].copy())
+            levels = tuple(tuple(int(v) for v in level) for level in before)
+
+            def triple_of(k: int, axis: int) -> tuple[int, int, int]:
+                c, sine, d = receive_triple(self._receive_term, k, port_of(axis, 1))
+                return int(c), int(sine), int(d)
+
+            term = RecoilTerm(emitter.wave_number, self._body_count(block), clock, sense, triple_of)
             values = {k[1:]: v for k, v in block.hold_value.items() if k[0] == "recoil"}
             carries = {k[1:]: v for k, v in block.hold_carry.items() if k[0] == "recoil"}
             start = RecoilStart(
                 tally, (levels[0], levels[1]), (offsets[0], offsets[1], offsets[2]), self._write_line
             )
             writes = cast(RecoilWrites, function(term, start, RecoilOwn(values, carries)))
-            body_language.recoil(self, block, number, sense, identity, tally, writes)
+            turned = tuple(np.asarray(level, dtype=np.int64) for level in writes.levels)
+            self._write_at_mask(live, block.mask, (turned[0] - before[0], turned[1] - before[1]), 1)
+            body_language.recoil(self, block, number, sense, identity, tally, before, writes)
         self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
@@ -1866,9 +1876,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         writes = self._giving_act(
             block, GivingStart(THE_INVERSE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live
         )
-        undone_levels = cast(tuple[np.ndarray, np.ndarray], writes.level)
-        live.now[block.mask] -= undone_levels[0]
-        live.before[block.mask] -= undone_levels[1]
+        self._write_at_mask(live, block.mask, cast(tuple[np.ndarray, np.ndarray], writes.level), -1)
         live.giving_remainders, live.window = writes.own.remainders, live.window - 1
         self.ports.begin()
 

@@ -101,8 +101,7 @@ def _twist_table(value: object, label: str, amplitude_bound: int | None) -> Twis
             if index == 0 and (c, s, d) != (1, 0, 1):
                 raise ValueError(f"{where} [{c}, {s}, {d}] is not the angle 0's triple [1, 0, 1]")
             if triples and s * triples[-1][0] < triples[-1][1] * c:
-                # the angles in order: tan (s / c) never falls from one entry to the next
-                # (the nearest-triple property is the generator's, checked by its own test)
+                # the angles in order: tan (s / c) never falls from one entry to the next (the nearest-triple property is the generator's, checked by its own test)
                 raise ValueError(
                     f"{where} [{c}, {s}, {d}] turns back below the entry before it: the table's "
                     "angles rise with k (ALGEBRA.md #the-primitives; the generator writes the "
@@ -146,11 +145,9 @@ BLOCK_KEYS = {
     # the box's extents per axis in place of `side` (the slabs of ALGEBRA.md #a-familys-declaration; BUILD.md section 26 item 23)
     "extents",
     "pair",
-    # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval; the one stroke, commit 1):
-    # the body's rest pair on a family whose pair is the body's
+    # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval; the one stroke, commit 1): the body's rest pair on a family whose pair is the body's
     "kind",
-    # THE BODY'S NUMBERS the holds read (ALGEBRA.md #the-interval; commit 2): its
-    # charge Q (`q`), its spin S and its moment mu (the momentum n is `momentum`)
+    # THE BODY'S NUMBERS the holds read (ALGEBRA.md #the-interval; commit 2): its charge Q (`q`), its spin S and its moment mu (the momentum n is `momentum`)
     "spin",
     "moment",
     # the body's own record's twist "own", the generator's integer (item 73)

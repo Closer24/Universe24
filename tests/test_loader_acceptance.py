@@ -150,8 +150,9 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     (tmp_path / "giver.json").write_text(json.dumps(placed), encoding="utf-8")
     profile = [0] * 5 + [1000, 1000] + [0] * 9
     entry = {"family": "matter", "pair": [800, 1200], "profile": profile, "clock": [1530, 1000]}
-    entry["wavelength"] = 7  # the mode's lambda_q: the given clock [2 N, 7], the row's [512, 1] not read
-    entry["wave_number"] = 2_000_000  # the mode's k_q in the twist's unit, the recoil's row
+    entry.update(
+        wavelength=7, wave_number=2_000_000
+    )  # lambda_q (the given clock [2 N, 7]) and k_q in the twist's unit, the recoil's row
     mode = {"world_digest": placed["stamp"]["hash"], "bodies": [{**entry, "twist": 45875}]}
     big = {"profile": [v << 40 for v in profile], "clock": [3 << 49, 1 << 50]}  # above the derived A
 

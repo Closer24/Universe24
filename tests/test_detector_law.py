@@ -372,8 +372,9 @@ def test_detector_is_one_connected_cube_of_side_three():
 
 def test_a_familys_rows_clock_enters_no_wall_of_the_loop():
     """The law's row "the recoil": no wall L and no store; a family's row's clock enters nothing of the loop and is not checked, on the given family and on any other (light or matter at [7, 1] on N = 1024, 2048 / 7 no whole number of Links): the loop builds and steps as without it."""
-    world = parse_nature_beam_world(stamped(emitter_world(stock=2, ticks=120)))
-    families = list(world.families)
+    families = list(
+        (world := parse_nature_beam_world(stamped(emitter_world(stock=2, ticks=120)))).families
+    )
     for name in ("light", "matter"):
         index = next(i for i, f in enumerate(families) if f.name == name)
         families[index] = replace(families[index], phase_per_age=(7, 1))
