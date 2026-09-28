@@ -67,8 +67,8 @@ def test_the_twist_tables_triples_are_exact_and_the_nearest_of_their_angles():
 
 
 def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
-    dark = json.loads((ROOT / "examples/events/dark_body/dark.json").read_text())
-    world = parse_nature_beam_world(dark)
+    clock = json.loads((ROOT / "tests/light_clock.json").read_text())
+    world = parse_nature_beam_world(clock)
     body = world.measured[0].block
     assert body is not None and body.emitter is not None
     # the body's own record turns at its mode's rotation, 2 cos omega = a / b
@@ -76,7 +76,6 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     assert body.twist == round(65536 * math.acos(a / (2 * b)))
     # the window's light turns at the emitter's rotation (ALGEBRA.md #the-primitives); its component along z
     assert body.emitter.twist == body.twist and body.emitter.part == 3
-    clock = json.loads((ROOT / "examples/events/massive_record/light_clock.json").read_text())
     beam = parse_nature_beam_world(clock).measured[0].block
     # SINCE COMMIT 7 the light clock's A gives by the window too (the train retired): its
     # light turns at its own rotation, the component along z
