@@ -33,10 +33,11 @@ NONE = (0, 0, 0)
 
 def exact_floor(clicks: list[tuple[int, int, int, int]]) -> int:
     """The hand check: the floor of the sum over the clicks of sense x sigma x 3 Q P / lambda."""
-    total = sum(
+    kicks = (
         Fraction(sense * sigma * 3 * UNIT * period, wavelength)
         for sense, sigma, period, wavelength in clicks
     )
+    total = sum(kicks)
     return total.numerator // total.denominator
 
 
@@ -68,19 +69,17 @@ def test_the_store_on_the_wall_makes_the_sum_over_clicks_the_exact_floor():
     reviewer = [(TAKING, 1, 20, 7), (TAKING, 1, 20, 4)]
     assert run_clicks(reviewer[:1]).momentum == (548, 0, 0)
     assert run_clicks(reviewer).momentum == (1508, 0, 0) and exact_floor(reviewer) == 1508
+    six = [
+        (TAKING, 1, 7),
+        (TAKING, -1, 4),
+        (GIVING, 1, 9),
+        (TAKING, 1, 7),
+        (TAKING, 1, 9),
+        (GIVING, -1, 4),
+    ]
     mixed = [
         (sense, sigma, 20 + step % 3, wavelength)
-        for step, (sense, sigma, wavelength) in enumerate(
-            [
-                (TAKING, 1, 7),
-                (TAKING, -1, 4),
-                (GIVING, 1, 9),
-                (TAKING, 1, 7),
-                (TAKING, 1, 9),
-                (GIVING, -1, 4),
-            ]
-            * 4
-        )
+        for step, (sense, sigma, wavelength) in enumerate(six * 4)
     ]
     for count in range(1, len(mixed) + 1):
         own = run_clicks(mixed[:count])
@@ -140,9 +139,8 @@ def test_two_kicks_with_the_feed_running_sum_on_both_levels_of_the_momentum():
     givings = [line["momentum"] for line in lines if line["event"] == "giving" and "momentum" in line]
     # the two givings' direction labels as this fixture reads them under THE START: one way, so the kicks add
     assert len(givings) == 2 and givings[0] == givings[1] and givings[0][0] != 0
-    total = -sum(sigma[0] for sigma in givings) * Fraction(
-        3 * document["momentum_unit"] * period, wavelength
-    )
+    kick = Fraction(3 * document["momentum_unit"] * period, wavelength)
+    total = -sum(sigma[0] for sigma in givings) * kick
     expected = [total.numerator // total.denominator, 0, 0]
     block = simulation.blocks[0]
     assert simulation.recoil_wall == wavelength and expected[0] != 0

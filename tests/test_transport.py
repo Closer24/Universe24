@@ -61,8 +61,7 @@ def test_the_twist_tables_triples_are_exact_and_the_nearest_of_their_angles():
     for name, step in (("fine", 1), ("coarse", 1 << 10)):
         for k, (c, s, d) in list(enumerate(rows[name]))[:: max(1, len(rows[name]) // 64)]:
             assert c * c + s * s == d * d and 1 <= d <= 10**9 and math.gcd(math.gcd(c, s), d) == 1
-            # the angle within the triples' own resolution of its target (the nearest n / m with
-            # m at most 31622: no triple below 2 / m, the fine angles all read 0)
+            # the angle within the triples' own resolution of its target (the nearest n / m with m at most 31622: no triple below 2 / m, the fine angles all read 0)
             assert abs(math.atan2(s, c) - k * step / UNIT) <= 2 / 31622
     assert rows["fine"][0] == [1, 0, 1] and rows["coarse"][0] == [1, 0, 1]
     c, s, d = rows["coarse"][200]
@@ -80,8 +79,7 @@ def test_the_loader_writes_the_twist_own_and_the_given_lights_component():
     # the window's light turns at the emitter's rotation (ALGEBRA.md #the-primitives); its component along z
     assert body.emitter.twist == body.twist and body.emitter.part == 3
     beam = parse_nature_beam_world(clock).measured[0].block
-    # SINCE COMMIT 7 the light clock's A gives by the window too (the train retired): its
-    # light turns at its own rotation, the component along z
+    # SINCE COMMIT 7 the light clock's A gives by the window too (the train retired): its light turns at its own rotation, the component along z
     assert beam is not None and beam.emitter is not None
     assert (
         beam.emitter.twist == beam.twist == round(65536 * math.acos(beam.clock[0] / (2 * beam.clock[1])))
@@ -107,8 +105,7 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
     now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     live = simulation.planted_record(matter, now.copy(), before.copy(), twist=twist)
-    # the angle per Port at the slab Node (6, 2, 2), k = sigma x twist x (V here + V arrived): toward
-    # +x, +twist x (5 + 5); toward -x at the slab's left edge, -twist x 5; no y or z twist (V_y = V_z = 0)
+    # the angle per Port at the slab Node (6, 2, 2), k = sigma x twist x (V here + V arrived): toward +x, +twist x (5 + 5); toward -x at the slab's left edge, -twist x 5; no y or z twist (V_y = V_z = 0)
     angles = (twist * 10, -twist * 5, 0, 0, 0, 0)
     content = simulation._effective_content(matter).copy()
     num_all, den_all = simulation.pair_arrays(matter)
@@ -131,8 +128,7 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
     total = read * reads + self_coefficient * int(now[node]) - wall * int(before[node])
     assert int(live.now[node]) == total // wall
     assert live.im_now[node] != 0 or live.im_remainder is not None
-    # one interval back: the levels and the remainders as before the step (the transport a
-    # pure function of the arrivals, recomputed)
+    # one interval back: the levels and the remainders as before the step (the transport a pure function of the arrivals, recomputed)
     simulation._advance_inverse(live)
     assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
     assert not live.remainder.any()
@@ -199,8 +195,7 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
     diagonal["measured"][0]["moment"] = [1, 1, 0]
     diagonal["stamp"] = input_stamp(diagonal)
     refused(diagonal, "lies on 2 axes")
-    # the table on an inline world: the unit from 1, the fine count a power of two, the identities and the angles' order checked (the
-    # nearest triple the retired generator's, item 73)
+    # the table on an inline world: the unit from 1, the fine count a power of two, the identities and the angles' order checked (the nearest triple the retired generator's, item 73)
     good = twisted_world()
     parse_nature_beam_world(good)
     for change, match in (
