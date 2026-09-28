@@ -43,7 +43,7 @@
    "nodes": [
     {
      "node": [
-      25,
+      12,
       4,
       0
      ],
@@ -77,11 +77,11 @@
    "every": 1
   },
   {
-   "name": "matter_x25",
+   "name": "matter_x12",
    "kind": "level",
    "family": "matter",
    "node": [
-    25,
+    12,
     4,
     0
    ],
