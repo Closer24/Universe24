@@ -45,6 +45,8 @@ from multiprocessing import get_context
 from pathlib import Path
 from typing import Any
 
+from reversible import reversible_row
+
 from event_universe.core.readings import Readings
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import load_world
@@ -191,6 +193,13 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     for pin in expectation.get("GAMEBOARD", []):
         if "equivalent" in pin:
             continue  # the one-Node equivalence is compared after both inputs ran (`equivalence_rows`)
+        if "reversible" in pin:
+            # THE REVERSIBLE ROW (HIGHLIGHTS line 33: every experiment runs back to its start and every
+            # row returns; the click keeps the click): N intervals forward and N back on a fresh copy of
+            # the world, the clicks' ledgers undone by the host (`tools/reversible.py`); a GAMEBOARD
+            # diagnostic, MATCH or MISS with the first interval and Node that deviate
+            verdicts.append(reversible_row(lambda: fresh_copy(source), int(pin["reversible"])))
+            continue
         # a pin of the expectation file's GAMEBOARD section (a diagnostic, never a measurement): a
         # body's momentum or centre at a named interval, read from the declared readings, each
         # component within the band
@@ -230,6 +239,12 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
         "pins": [v["verdict"] for v in verdicts],
         "seconds": time.monotonic() - started,
     }
+
+
+def fresh_copy(source: Path) -> tuple[DetectorLawSimulation, list[dict[str, Any]]]:
+    """A fresh simulation of the input with its lines observed (the givings and the takings the reversible row steps back through)."""
+    lines: list[dict[str, Any]] = []
+    return DetectorLawSimulation(load_world(source), observer=lines.append), lines
 
 
 def mean_wait(output: dict[str, Any], detector: str) -> Fraction | None:

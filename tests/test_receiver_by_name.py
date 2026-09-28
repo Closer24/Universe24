@@ -107,20 +107,15 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
             pointers, ladder, u, norm, wheel, pace = seen[line["record"]]
             assert ladder == [screen] and u == line["u"] and wheel == givings[line["record"]]["W"]
             assert lawful_wheel(simulation.world, givings[line["record"]])
-            # the cumulative rule on the click's own pointers (ALGEBRA.md #rule3), the
-            # plain flux against the norm's rational norm / pace (item 36)
+            # the cumulative rule on the click's own pointers (ALGEBRA.md #rule3), the plain flux against the norm's rational norm / pace (item 36)
             assert pace == givings[line["record"]]["pace"]
             assert 2 * wheel * pace * pointers[screen] >= (2 * u + 1) * norm
-            # the detectors off the ladder: booked, never chosen, counted in T; `beside` books
-            # while its Nodes are its own (SINCE item 48 the Ports are re-read at every hop, so
-            # once the stepping body covers [60, 62] the set has no Node and no Port)
+            # the detectors off the ladder: booked, never chosen, counted in T; `beside` books while its Nodes are its own (SINCE item 48 the Ports are re-read at every hop, so once the stepping body covers [60, 62] the set has no Node and no Port)
             assert pointers[own] >= 0
             if head < 60:
                 assert pointers[beside] > 0
             assert line["T"] == sum(pointers) == pointers[screen] + pointers[beside] + pointers[own]
-        # the line's `detectors` is a HOST listing in the detectors' order (the detector
-        # list's, its rungs cumulative in that order); the click's fields are
-        # compared without it
+        # the line's `detectors` is a HOST listing in the detectors' order (the detector list's, its rungs cumulative in that order); the click's fields are compared without it
         dumps.append([json.dumps({k: v for k, v in g.items() if k != "detectors"}) for g in found])
     assert dumps[0] == dumps[1]
     # a world with no emitter carries no receiver
@@ -130,9 +125,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
     plain["stamp"] = input_stamp(plain)  # the stamp without the given pair (record 1886)
     simulation, _ = run(plain, 10)
     assert not simulation.has_receiver
-    # (c) without `receiver` the ladder is every declared set in the declared order; the
-    # emitter at rest here (SINCE item 48 a stepping body covering the set at [60, 62] takes
-    # its Nodes and its Ports, so the set books nothing from then on)
+    # (c) without `receiver` the ladder is every declared set in the declared order; the emitter at rest here (SINCE item 48 a stepping body covering the set at [60, 62] takes its Nodes and its Ports, so the set books nothing from then on)
     resting = chain_of_200(None)
     resting["measured"][0]["momentum"] = [0, 0, 0]
     resting["stamp"] = input_stamp(resting)
@@ -172,10 +165,7 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert simulation.detector_names[own_detector] == "measured:0"
     found = gathers(lines)
     assert found and all(g["chosen"] == [["screen", 0, "0"]] for g in found)
-    # A's own detector books nothing of the light leaving A's Nodes (the outward flux is
-    # negative); SINCE COMMIT 7 (the window, ALGEBRA.md #the-primitives) the light leaves both ways
-    # and the half toward x = 0 returns off the mirror into A's Nodes and books there
-    # (COMPUTATION), off every ladder by name: never chosen
+    # A's own detector books nothing of the light leaving A's Nodes (the outward flux is negative); SINCE COMMIT 7 (the window, ALGEBRA.md #the-primitives) the light leaves both ways and the half toward x = 0 returns off the mirror into A's Nodes and books there (COMPUTATION), off every ladder by name: never chosen
     assert all(own_detector not in seen[g["record"]][1] for g in found)
     givings = {line["record"]: line for line in lines if line["event"] == "giving"}
     assert all(seen[g["record"]][4] == givings[g["record"]]["W"] for g in found)
@@ -190,10 +180,7 @@ def test_the_blocks_own_cell_is_on_no_ladder():
     assert simulation.receiver_detector == {0: simulation.detector_names.index("at_well")}
     found = gathers(lines)
     assert found and all(g["chosen"] == [["at_well", 0, "0"]] for g in found)
-    # SINCE COMMIT 7 (the window at every Node of the 32-Node body) the set at A's own Nodes
-    # books the light leaving A's faces as it piles up inside them, so a record may click at
-    # A before the mirror's return (COMPUTATION; the one-Node body's Node of the shipped light clock
-    # clicks on the return alone, tests/test_receiver_by_name.py's light clock test)
+    # SINCE COMMIT 7 (the window at every Node of the 32-Node body) the set at A's own Nodes books the light leaving A's faces as it piles up inside them, so a record may click at A before the mirror's return (COMPUTATION; the one-Node body's Node of the shipped light clock clicks on the return alone, tests/test_receiver_by_name.py's light clock test)
     assert all(g["tick"] == g["click"] > g["giving"] for g in found)
 
 

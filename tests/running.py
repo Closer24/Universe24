@@ -17,6 +17,7 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.features.send import send
+from event_universe.loader.world import derived_amplitude
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.worlds import ROOT, emitter_world
 
@@ -455,12 +456,17 @@ def draw(seed: int) -> dict[str, Any]:
                 "pair": rng.choice(PAIRS),
                 "quantum": 1,
                 "reads": reads_of(),
-                "self_source": {"unit": 0 if rng.random() < 0.7 else 24 * AMPLITUDE * rng.randint(1, 3)},
+                "self_source": {"unit": 0 if rng.random() < 0.7 else rng.randint(1, 3)},
                 "clicks": clicks(),
             }
         )
     for entry in families:  # one quantum per family: the row's is the clicks card's
         entry["quantum"] = entry["clicks"]["quantum"] if "clicks" in entry else 1
+    # a drawn self-source stands at a multiple of 24 A, A the loader's derived amplitude bound of this
+    # universe with the template's bodies (ALGEBRA.md #the-interval, #a-familys-declaration)
+    floor = 24 * derived_amplitude(families, TEMPLATE["measured"], TEMPLATE["node_clock"])
+    for entry in families:
+        entry["self_source"]["unit"] *= floor
     rng.shuffle(families)
     return {"seed": seed, "families": families, "roles": roles, "holders": holders}
 
@@ -468,7 +474,9 @@ def draw(seed: int) -> dict[str, Any]:
 TEMPLATE = emitter_world(stock=1, ticks=INTERVALS)
 
 
-AMPLITUDE = int(TEMPLATE["amplitude_bound"])
+AMPLITUDE = (
+    1 << 22
+)  # the planted rows' amplitude unit, the fixtures' (ALGEBRA.md #the-line; A itself is derived by the loader)
 
 
 def string_constants(path: Path) -> list[tuple[int, str]]:
@@ -516,7 +524,6 @@ ORDERS = {
     ("(iv)", "a family's level at a Node"): ("the hold", "the source"),
     ("(iv)", "a body's content M_k"): ("the clicks", "the giving", "the clicks list"),
     ("(iv)", "a body's momentum n"): ("the giving", "the recoil"),
-    ("(v)", "a body's momentum n"): ("the feed", "the induction"),
     ("(i)", "the arrivals"): ("the receive", "the internal representation"),
     ("(ii)", "the record's tally"): ("the clicks", "the lifetime"),
 }
