@@ -50,7 +50,6 @@ def small_world(
         "ticks": INTERVALS,
         "N": 64,
         "engine": "examples/events/engine_start.json",
-        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
