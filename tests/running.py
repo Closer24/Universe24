@@ -214,15 +214,15 @@ def run_point_world(
     """The world stepped `ticks` intervals with the books balanced; with `givings`, stepped instead until that many windows have closed (the giving line named at the close, the horizon the window the engine writes by the law and no number), within the world's own `ticks`."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    while (simulation.tick < ticks) if givings is None else (closed(lines) < givings):
+    while (simulation.tick < ticks) if givings is None else (len(lines_of(lines, "giving")) < givings):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
         assert givings is None or simulation.tick <= document["ticks"]  # within the world's own run
     return simulation, lines
 
 
-def closed(lines: list[dict]) -> int:
-    return sum(1 for line in lines if line["event"] == "giving")
+def lines_of(lines: list[dict], event: str) -> list[dict]:
+    return [line for line in lines if line["event"] == event]
 
 
 GENERATED_DIRECTORIES = {

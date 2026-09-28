@@ -6,6 +6,7 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from tests.bodies import point_world
+from tests.running import lines_of
 from tests.running import run as run_emitter
 from tests.running import run_point_world as run_point
 from tests.worlds import emitter_world, seed_on_the_mode
@@ -23,10 +24,6 @@ def mirrored_emitter_world(ticks: int) -> dict:
     receiver_cube(document, "screen", [7, 0, 0])
     seed_on_the_mode(document)
     return document
-
-
-def lines_of(lines: list[dict], event: str) -> list[dict]:
-    return [line for line in lines if line["event"] == event]
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")

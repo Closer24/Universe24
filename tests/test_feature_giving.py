@@ -41,6 +41,11 @@ def a_close(flux: int, tally: tuple[int, int, int]) -> GivingStart:
     return GivingStart(THE_CLOSE, 0, NO_TALLY, None, flux, tally)
 
 
+def rows(writes) -> tuple[list[list[int]], list[list[int]]]:
+    """The act's two levels written and the two remainders after it, as lists."""
+    return [level.tolist() for level in writes.level], [r.tolist() for r in writes.own.remainders]
+
+
 def test_the_bulk_share_keeps_the_velocity_on_the_moving_row_and_is_symmetric():
     """The moving rows: a body of M = 65 on W = 3 Q M at v = 1 / 4 has n = 3120; a giving takes the share 48 and leaves n = 3072, the new wall's quarter (issue #1156); with n not divisible by M the velocity stays within one unit of n on the new wall; a negative n gives the mirror image."""
     wall, momentum = 3 * 64 * 65, 3 * 64 * 65 // 4  # the drive wall 3 Q M, a hop every 4 intervals
@@ -64,30 +69,23 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
     own = apply(term, an_open(2, NO_TALLY), CLOSED).own
     levels = (np.array([7, -2, 0], dtype=np.int64), np.array([1, 5, -4], dtype=np.int64))
     tripled = apply(TERM, a_write(levels), own)
-    assert [level.tolist() for level in tripled.level] == [[21, -6, 0], [3, 15, -12]]
-    assert [r.tolist() for r in tripled.own.remainders] == [[0, 0, 0], [0, 0, 0]]
+    assert rows(tripled) == ([[21, -6, 0], [3, 15, -12]], [[0, 0, 0], [0, 0, 0]])
     # the law's coupling: the body's content at each Node of the shell over the charge's divisor
     per_node = apply(GivingTerm((np.array([2, 3, 6]), 4), 1000, 0), a_write(levels), own)
-    assert [level.tolist() for level in per_node.level] == [[3, -2, 0], [0, 3, -6]]
-    assert [r.tolist() for r in per_node.own.remainders] == [[2, 2, 0], [2, 3, 0]]
+    assert rows(per_node) == ([[3, -2, 0], [0, 3, -6]], [[2, 2, 0], [2, 3, 0]])
     written = apply(term, a_write(levels), own)
-    assert [level.tolist() for level in written.level] == [[2, -1, 0], [0, 1, -2]]
-    assert written.own.window == 1 and [r.tolist() for r in written.own.remainders] == [
-        [1, 1, 0],
-        [1, 2, 2],
-    ]
+    assert rows(written) == ([[2, -1, 0], [0, 1, -2]], [[1, 1, 0], [1, 2, 2]])
     pending = apply(term, a_close(334, (5, 0, -1)), written.own)
-    assert not pending.closed and pending.direction is None and pending.own.window == 1
+    assert (
+        not pending.closed
+        and pending.direction is None
+        and written.own.window == pending.own.window == 1
+    )
     assert (pending.own.outward, pending.own.tally) == (334, (5, 0, -1))
     again = apply(term, a_write(levels), pending.own)
-    assert [level.tolist() for level in again.level] == [[2, -1, 0], [0, 2, -1]]
-    assert [r.tolist() for r in again.own.remainders] == [[2, 2, 0], [2, 1, 1]]
+    assert rows(again) == ([[2, -1, 0], [0, 2, -1]], [[2, 2, 0], [2, 1, 1]])
     undone = apply(term, a_write(levels, THE_INVERSE), again.own)
-    assert [level.tolist() for level in undone.level] == [[2, -1, 0], [0, 2, -1]]
-    assert undone.own.window == 1 and [r.tolist() for r in undone.own.remainders] == [
-        [1, 1, 0],
-        [1, 2, 2],
-    ]
+    assert rows(undone) == ([[2, -1, 0], [0, 2, -1]], [[1, 1, 0], [1, 2, 2]]) and undone.own.window == 1
     closed = apply(term, a_close(666, (0, 0, -6)), again.own)
     assert closed.closed and closed.direction == (1, 0, -1)
     assert (closed.own.window, closed.own.outward, closed.own.tally) == (None, 1000, (5, 0, -7))
