@@ -294,28 +294,27 @@ PERIODIC_CHAIN = {"x": "periodic", "y": "periodic", "z": "periodic"}
 
 
 def test_the_blocks_cells_and_its_pair_on_them():
-    """BUILD.md (e): a block of side 3 at (2, 2, 2) on an open 8^3 board of the kind [800, 809] with the well [800, 800]: den reads 809 on every Node but the 27 Nodes, 800 there, num 800 everywhere; the Nodes are the cube. The edge case: a pair that is no well is refused."""
-    world = parse_nature_beam_world(
-        block_world(
-            [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 800]}]
-        )
-    )
-    simulation = DetectorLawSimulation(world)
-    block = simulation.blocks[0]
-    assert int(block.mask.sum()) == 27 and block.mask[2:5, 2:5, 2:5].all()
-    den = simulation.kind_den[1]
-    assert np.all(simulation.kind_num[1] == 800)
-    assert np.all(den[block.mask] == 800) and np.all(den[~block.mask] == 809)
-    assert block.own is not None and int(block.own.now[3, 3, 3]) == UNIT
-    # a raised pair is a BARRIER (DECLARATIONS.md section 15 M1-6): admitted, no own record,
-    # its seed and clock keys refused; the kind's own pair refused (no cavity, item 28)
+    """BUILD.md (e): a block of side 3 at (2, 2, 2) on an open 8^3 board of the kind [800, 809], a BARRIER at [800, 810] (DECLARATIONS.md section 15 M1-6): den reads 809 on every Node but the 27 Nodes, 810 there, num 800 everywhere; the Nodes are the cube; a barrier is admitted with no own record. The edge cases: the well [800, 800] with a flat scalar seed is refused by name (a body's own record comes from its mode record alone; the old seed fallback left), a barrier's seed and clock keys are refused, the kind's own pair is refused (no cavity, item 28)."""
     barrier = parse_nature_beam_world(
         block_world(
             [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 810]}]
         )
     )
     assert barrier.measured[0].block is not None and barrier.measured[0].block.seed == 0
-    assert DetectorLawSimulation(barrier).blocks[0].own is None
+    simulation = DetectorLawSimulation(barrier)
+    block = simulation.blocks[0]
+    assert int(block.mask.sum()) == 27 and block.mask[2:5, 2:5, 2:5].all()
+    den = simulation.kind_den[1]
+    assert np.all(simulation.kind_num[1] == 800)
+    assert np.all(den[block.mask] == 810) and np.all(den[~block.mask] == 809)
+    assert block.own is None
+    well = block_world(
+        [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 800]}]
+    )
+    with pytest.raises(
+        ValueError, match=r"measured\[0\] needs its `seed` as its composed mode's profile"
+    ):
+        DetectorLawSimulation(parse_nature_beam_world(well))
     with pytest.raises(ValueError, match="refused on a barrier"):
         parse_nature_beam_world(
             block_world(
@@ -815,64 +814,39 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         parse_nature_beam_world(empty)
 
 
-def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
-    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13 item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the set's Nodes (the detector index at them the set's); an emitter's record (the emitter body of the source kind at [100, 132) on a chain of 300, two givings at the direction [0, 0, 0], the emitter naming the set; a wall of light's kind behind it at [88, 96), eight Nodes deep at the gap's pair [1, 2] (the mirror line of light's kind: at the train's rotation, cos omega = 2 / 3 at lambda = 4 Links on the chain, the gap's line 2 cos omega = (4 + 2 cos k') / 6 has no real k', so the train is evanescent inside, e^(-1.32) per Node, ALGEBRA.md #the-band-at-a-pace), so the half given toward x = 0 returns whole and the giving is one-armed toward the block 68 Links ahead) books its whole flux into the block's Nodes to the set and clicks once there: C_B(infinity) = T above the rung's theta = (2 u + 1) T / (2 V) for every residue u, the click at the set certain and the open face never reached (two-armed, without the mirror, half the flux leaves by the face and the click at the set is Born's coin, P(B) = C_B / T = 1 / 2, an event of the residue and no claim); the click stamped with the block's own count as the interval began and named by `clock_source`, the record deleted whole at it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block stepping, its Nodes and the set's Nodes following it): the record still clicks once at the set, the books balanced. The loader: a set's `wheel` refused by name."""
-    for momentum in ([0, 0, 0], [-64, 0, 0]):
-        document = massive_world([300, 1, 1], CHAIN, [800, 809])
-        document["ticks"] = 1200
-        document["universe"].append(source_family())
-        document["measured"] = [
-            dict(emitter_at(100, 2), receiver="B_nodes"),
-            {
-                "position": [200, 0, 0],
-                "family": "matter",
-                "amount": 1,
-                "stocks": {},
-                "ramp": 0,
-                "start": 0,
-                "momentum": momentum,
-                "momentum_before": momentum,
-                "side": 12,
-                "q": 0,
-                "spin": [0, 0, 0],
-                "spin_before": [0, 0, 0],
-                "twist": 0,
-                "moment": [0, 0, 0],
-                "pair": [800, 801],
-                "seed": 50 << 12,
-                "margin": "control",
-            },
-        ]
-        document["detectors"] = [{"name": "B_nodes", "block": 1}]
-        seed_source(document, 0)  # the recorded seeding of the two-body fixture (tests/seeds.json)
-        # the mirror behind the emitter: a wall of light's kind at the gap's pair [1, 2], eight Nodes deep
-        wall = dict(document["measured"][1], family="light", amount=1, side=1, pair=[1, 2])
-        wall = {**{k: v for k, v in wall.items() if k not in ("seed", "margin")}, "momentum": [0, 0, 0]}
-        for x in range(88, 96):
-            document["measured"].append(dict(wall, position=[x, 0, 0], momentum_before=[0, 0, 0]))
-        document["stamp"] = input_stamp(document)
-        world = parse_nature_beam_world(document)
-        lines: list[dict] = []
-        simulation = DetectorLawSimulation(world, observer=lines.append)
-        assert (simulation.kind_den[0][88:96, 0, 0] == 2).all()  # the gap's pair at the wall
-        block = simulation.blocks[1]
-        detector = simulation.detector_names.index("B_nodes")
-        assert int(simulation.detector_at_node[205, 0, 0]) == detector
-        identity = simulation.next_identity
-        count_at_rung: int | None = None
-        for _ in range(1200):
-            count_before = simulation._body_count(block)
-            simulation.step()
-            assert simulation.books()["balanced"], simulation.tick
-            found = [g for g in lines if g["event"] == "gather" and g["record"] == identity]
-            if found and count_at_rung is None:
-                count_at_rung = count_before
-                break
-        gathers = [g for g in lines if g["event"] == "gather" and g["record"] == identity]
-        assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "B_nodes", gathers
-        assert gathers[0]["clock_source"] == "measured:1" and gathers[0]["clock"] == count_at_rung
-        assert gathers[0]["tick"] == gathers[0]["click"] and identity not in simulation.records
-        assert np.array_equal(simulation.detector_at_node == detector, block.mask)
+def test_a_set_at_a_blocks_cells_waits_for_the_blocks_mode_its_flat_seed_refused_by_name():
+    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13 item 1): the two-body fixture of the emitter body of the source kind at [100, 132) on a chain of 300 (seeded on its mode as recorded) naming the set `B_nodes` at the twelve Nodes of the block B at 200, whose seed is the flat scalar 50 x 2^12 and no mode record: the loop refuses B by name at the load (the old seed fallback left; a body's own record comes from its mode record alone). The booking of the flux into the set and its stepping with the block return with B's mode from the generator in the law's form. The edge case: an unknown key on the set is refused by name."""
+    document = massive_world([300, 1, 1], CHAIN, [800, 809])
+    document["ticks"] = 1200
+    document["universe"].append(source_family())
+    document["measured"] = [
+        dict(emitter_at(100, 2), receiver="B_nodes"),
+        {
+            "position": [200, 0, 0],
+            "family": "matter",
+            "amount": 1,
+            "stocks": {},
+            "ramp": 0,
+            "start": 0,
+            "momentum": [0, 0, 0],
+            "momentum_before": [0, 0, 0],
+            "side": 12,
+            "q": 0,
+            "spin": [0, 0, 0],
+            "spin_before": [0, 0, 0],
+            "twist": 0,
+            "moment": [0, 0, 0],
+            "pair": [800, 801],
+            "seed": 50 << 12,
+            "margin": "control",
+        },
+    ]
+    document["detectors"] = [{"name": "B_nodes", "block": 1}]
+    seed_source(document, 0)  # the recorded seeding of the two-body fixture (tests/seeds.json)
+    with pytest.raises(
+        ValueError, match=r"measured\[1\] needs its `seed` as its composed mode's profile"
+    ):
+        DetectorLawSimulation(parse_nature_beam_world(document))
     bad = document
     bad["detectors"] = [{"name": "B_nodes", "block": 1, "wheel": 64}]
     bad["stamp"] = input_stamp(bad)  # the stamp over the whole file (item 28)
@@ -944,13 +918,13 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
 
 
 def test_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():
-    """Issue #1086 (a GAMEBOARD diagnostic, no law, no pin): the books' `momentum` carries `held` as the sum of the blocks' declared momentum vectors ([64, 0, 0] for one block pushed to k = 3; [0, 0, 0] at rest), `transit` and `escaped` null with the note that they are not accounted, and `balanced_scope` naming content alone; the run's record carries the same scope line."""
+    """Issue #1086 (a GAMEBOARD diagnostic, no law, no pin): the books' `momentum` carries `held` as the sum of the blocks' declared momentum vectors ([64, 0, 0] for one barrier block pushed to k = 3; [0, 0, 0] at rest), `transit` and `escaped` null with the note that they are not accounted, and `balanced_scope` naming content alone; the run's record carries the same scope line."""
     world = parse_nature_beam_world(
         block_world(
             [24, 24, 24],
             {**PERIODIC, "x": "closed"},
             [800, 809],
-            [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0]}],
+            [{"position": [10, 10, 10], "side": 3, "pair": [800, 810], "momentum": [64, 0, 0]}],
         )
     )
     simulation = DetectorLawSimulation(world)
