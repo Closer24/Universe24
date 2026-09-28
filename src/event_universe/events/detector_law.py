@@ -220,8 +220,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.momentum_before = [int(component) for component in entry.momentum_before]
         return block
 
-    # The register of primitives: one register, name to function, read by the loop alone
-
     def _engine_register(self) -> Register:
         """The register filled from the features' folders and bound to this loop: a built primitive's function is its folder's or the loop's method of today; a row not built has none."""
         register = discover()
@@ -549,8 +547,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self.ports.begin()
             held = {} if held is None else held
             if act == THE_ADVANCE and once.no_field(self.families, self.world.quantum_action):
-                for record in self.held_records.values():
-                    record.now.fill(0)  # THE WELL IS THE COUNT AND NO FIELD: the level is the lay alone
+                for family, record in self.held_records.items():
+                    if self.families[family].held_divisor == 1:
+                        record.now.fill(0)  # THE WELL IS THE COUNT AND NO FIELD: the level is the lay
             for number in range(len(self.held)) if body is None else (body,):
                 block = self.block_by_number.get(number)
                 if body is None and act == THE_INVERSE and block is not None and block.well is not None:
