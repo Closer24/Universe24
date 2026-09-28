@@ -373,5 +373,17 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
         index = tuple(nodes.T)
         record.now[index] = [now for _, now, _ in written]
         record.before[index] = [before for _, _, before in written]
-        record.remainder[...] = 0
+        # THE REST OF THE REMAINDERS (the fall's tent test of 2026-09-28): the level's remainder at the half wall, the
+        # division act's unbiased origin, and each body's hold carries spread over its Nodes, j E_s div N for the
+        # j-th Node, so the source stream is steady from the first interval; with the remainders at 0 the first
+        # units arrive together after E_s div count intervals while the faces drain from the first, and the
+        # second-order rule keeps the deficit as a velocity of the whole field (a defect, not a finding)
+        record.remainder[...] = (3 * den - 1) // 2
+        for number in range(len(loop.held)):
+            block = loop.block_by_number.get(number)
+            nodes_of = [node for node, value in loop.node_sources(number, source) if value]
+            if block is None or not nodes_of:
+                continue
+            for j, node in enumerate(nodes_of):
+                block.hold_carry[(family, "n", *node)] = (j * divisor) // len(nodes_of)
         loop.node_level[family] = record.now

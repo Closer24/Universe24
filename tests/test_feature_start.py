@@ -78,10 +78,29 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
         divisor = definition.held_divisor
         expected = rest(counts, definition.pair, simulation.kind_wrap[family], divisor).levels
         assert np.array_equal(record.now, expected) and np.array_equal(record.before, expected)
-        assert not record.remainder.any() and simulation.node_level[family] is record.now
+        assert (
+            record.remainder == (3 * definition.pair[1] - 1) // 2
+        ).all()  # the remainder's origin, the half wall
+        assert simulation.node_level[family] is record.now
         assert (expected != 0).sum() > (counts != 0).sum()  # the field reaches beyond the bodies
         started += 1
     assert started >= 1
+    # THE REST OF THE HOLD'S CARRIES: over the file's divisor the body's Nodes carry j E_s div N, so the source stream is
+    # steady from the first interval and the held total moves only by the loads less the faces' flux, within the
+    # rounding's reservoir (two per Node) and one unit per interval; with carries at 0 the whole field sinks
+    steady = DetectorLawSimulation(parse_nature_beam_world(stamped(emitter_world(stock=1, ticks=2))))
+    block = steady.block_by_number[0]
+    for family in steady.held_records:
+        divisor = steady.families[family].held_divisor
+        nodes = [node for node, value in steady.node_sources(0, steady.families[family].held) if value]
+        assert [block.hold_carry[(family, "n", *node)] for node in nodes] == [
+            j * divisor // len(nodes) for j in range(len(nodes))
+        ]
+    totals = [sum(int(record.now.sum()) for record in steady.held_records.values())]
+    for _ in range(40):
+        steady.step()
+        totals.append(sum(int(record.now.sum()) for record in steady.held_records.values()))
+    assert max(abs(total - totals[0]) for total in totals) <= 40 + 2 * int(np.prod(steady.shape))
 
 
 def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
