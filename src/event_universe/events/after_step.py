@@ -157,24 +157,24 @@ def emitter_of(block: Block) -> EmitterDefinition | None:
 
 
 def window_write(loop: DetectorLawSimulation, live: LiveRecord) -> None:
-    """One interval of an open window right after the record's own step (out of the loop's module, the loop's method of the same duty): the body's rotation written into the given row at the body's Nodes (the second row of a pair record at its second level, the quarter turn, the window's count and norm the first row's), the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in; the emitter the crystal's giving definition on a crystal body."""
+    """One interval of an open window right after the record's own step (out of the loop's module, the loop's method of the same duty): the body's rotation written into the given row at the body's Nodes at both levels through the folder's write, (level + r) div k with the remainders kept on the record, now from the body's now and before from its before (a rotation is two levels, ALGEBRA.md #the-generator (d); one level alone is a kick the two-level rule doubles; the second row of a pair record at its second level, the quarter turn, the window's count and norm the first row's), the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in; the emitter the crystal's giving definition on a crystal body."""
     block = loop.block_by_number.get(live.emitter) if live.emitter is not None else None
     ledger = live.pair_record
     if block is None or block.window != (live.identity if ledger is None else ledger.rows[0]):
         return
-    emitter = emitter_of(block)
-    if emitter is None or emitter.weight is None:
+    if emitter_of(block) is None:
         return
-    written = loop._giving_act(
-        block, GivingStart(THE_WRITE, 0, (0, 0, 0), loop._body_levels(block), 0, (0, 0, 0)), live
-    )
+    levels = (loop._body_levels(block), loop._body_levels(block, before=True))
+    written = loop._giving_act(block, GivingStart(THE_WRITE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live)
     if ledger is not None and live.identity == ledger.rows[1]:
         # the second row of a pair record: the first row turned by a quarter, its second level written; the outward norm and the window's count are the first row's
         if written.level is not None:
-            cast(np.ndarray, live.im_now)[block.mask] += written.level
+            cast(np.ndarray, live.im_now)[block.mask] += written.level[0]
         return
     if written.level is not None:
-        live.now[block.mask] += written.level
+        live.now[block.mask] += written.level[0]
+        live.before[block.mask] += written.level[1]
+        live.giving_remainders = written.own.remainders
     flux_tally = [0, 0, 0]
     flux = loop.body_outward_flux(live, block, flux_tally)
     closing = loop._giving_act(
@@ -218,7 +218,7 @@ def close_window(loop: DetectorLawSimulation, block: Block, live: LiveRecord) ->
     emitter = emitter_of(block)
     if emitter is None:
         raise ValueError(f"the body {block.number} closes a window with no emitter declared")
-    live.window_open = False
+    live.window_open = False  # the write's remainders stay on the record: a close stepped back by hand reopens the window on them
     for identity in live.pair_record.rows if live.pair_record is not None else ():
         loop.records[identity].window_open = False
     block.window = None
