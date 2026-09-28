@@ -8,7 +8,7 @@ import json
 import sys
 from dataclasses import dataclass
 from fractions import Fraction
-from math import acos, cos, isqrt
+from math import acos, cos, isqrt, pi
 from pathlib import Path
 from typing import Any
 
@@ -426,6 +426,14 @@ def moving_body(
     return MovingBody(now, before, (denominator, j), (a, sense * b, c), velocity, named, rest, top)
 
 
+def wavelength_of(clock: tuple[int, int], given_pair: Pair) -> int | None:
+    """The given record's wavelength lambda_q of a giver's mode on the given family's band (ALGEBRA.md #the-primitives, the recoil's row; #the-rows-against-nature (g)): cos k = 3 cos omega_b den / num - 2 along one axis with 2 cos omega_b = a / b the mode's clock and [num, den] the given record's pair, k by the host's arc cosine as the twist's, 2 pi / k to the nearest whole Link; None where the band does not hold the rotation (no wave of that band at the giver's rotation)."""
+    cosine = 3 * clock[0] * given_pair[1] / (2 * clock[1] * given_pair[0]) - 2
+    if not -1 < cosine < 1:
+        return None
+    return max(1, round(2 * pi / acos(cosine)))
+
+
 def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
     """The clock [a, b] with 2 cos omega_b = a / b on the denominator given (the amplitude unit A, the mode's resolution), a the nearest integer by the division act with the load d over the wall 2 d."""
     scaled = rotation * denominator
@@ -511,6 +519,19 @@ def pair_of(row: dict[str, Any], label: str) -> Pair:
             f"{label}: the row's pair is {pair!r}, not [num, den]; the generator takes the family's"
         )
     return int(pair[0]), int(pair[1])
+
+
+def given_wavelength(
+    body: dict[str, Any], rows: dict[str, Any], clock: tuple[int, int]
+) -> dict[str, int]:
+    """The reading `wavelength` of a giving body: lambda_q of its mode on the given record's band (the given family's row's pair, or the emitter's own `pair` where the row declares none); no reading on a body that gives nothing or whose rotation the band does not hold."""
+    emitter = body.get("emitter")
+    if not isinstance(emitter, dict):
+        return {}
+    row = rows[emitter["family"]]
+    pair = emitter.get("pair", row.get("pair"))
+    found = wavelength_of(clock, (int(pair[0]), int(pair[1])))
+    return {} if found is None else {"wavelength": found}
 
 
 def generate(document: dict[str, Any]) -> dict[str, Any]:
@@ -647,6 +668,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "clock": list(clock),
                     "period": period_by_the_rule(*clock),
                     "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
+                    **given_wavelength(body, rows, clock),
                     "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
                     "in_the_worlds_well": in_world,
                     "profile": mode.profile,

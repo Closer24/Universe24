@@ -145,6 +145,7 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     (tmp_path / "giver.json").write_text(json.dumps(placed), encoding="utf-8")
     profile = [0] * 5 + [1000, 1000] + [0] * 9
     entry = {"family": "matter", "pair": [800, 1200], "profile": profile, "clock": [1530, 1000]}
+    entry["wavelength"] = 7  # the mode's lambda_q: the given clock [2 N, 7], the row's [512, 1] not read
     mode = {"world_digest": placed["stamp"]["hash"], "bodies": [{**entry, "twist": 45875}]}
     big = {"profile": [v << 11 for v in profile], "clock": [3 << 20, 1 << 21]}
 
@@ -161,12 +162,14 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     assert (block.clock, block.twist, block.seed) == ((1530, 1000), 45875, 1000)
     assert block.profile[5:7] == (1000, 1000) and block.emitter.receiver == ("strip",)
     assert block.emitter.period == period_by_the_rule(1530, 1000)
+    assert block.emitter.clock == (2048, 7) and DetectorLawSimulation(loaded()).recoil_wall == 7
     B = lambda key, value: lambda m: m["bodies"][0].__setitem__(key, value)  # noqa: E731
     defects = (
         (lambda m: m.__setitem__("world_digest", "0" * 64), "is not this world's digest"),
         (lambda m: m["bodies"][0].pop("twist"), "from the mode file .* no twist"),
         (B("family", "charge"), "the body of 'matter'"),
         (B("clock", [1530, 999]), "at least the profile's amplitude 1000"),
+        (B("wavelength", 0), "wavelength must be an integer from 1 through"),
         (lambda m: m["bodies"][0].update(big), "above the world's amplitude bound"),
         (lambda m: m.__setitem__("bodies", []), "bodies must be 1 objects"),
     )
