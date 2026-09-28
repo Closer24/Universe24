@@ -1,7 +1,7 @@
 {
  "world": "white_pixel.json",
- "refusal": "at interval 7: the pace of 'charge' (family 1, axis 0) is -1 at the Node (4, 1, 1) at interval 6: the pace stays above 0 (the content 25 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
- "ticks_run": 6,
+ "refusal": "at interval 10: the pace of 'charge' (family 1, axis 0) is -9 at the Node (4, 1, 1) at interval 9: the pace stays above 0 (the content 33 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "ticks_run": 9,
  "expected": [
   0,
   0,
@@ -17,29 +17,44 @@
   [
    2,
    7,
-   -2
+   -3
   ],
   [
    3,
-   7,
-   -6
+   8,
+   -7
   ],
   [
    4,
-   19,
-   -8
+   25,
+   -6
   ],
   [
    5,
-   29,
-   -7
+   44,
+   0
+  ],
+  [
+   6,
+   53,
+   6
+  ],
+  [
+   7,
+   44,
+   7
+  ],
+  [
+   8,
+   59,
+   2
   ]
  ],
  "record": {
   "label": "GAMEBOARD",
-  "period_intervals": null,
-  "amplitude_b": 8,
-  "count_over_the_last_period": 18.2,
+  "period_intervals": 7.0,
+  "amplitude_b": 7,
+  "count_over_the_last_period": 10.0,
   "expected": {
    "count": 10,
    "b": 5,
@@ -50,7 +65,7 @@
  },
  "kind": "moves",
  "label": "GAMEBOARD",
- "intervals": 4,
+ "intervals": 7,
  "net": [
   0,
   0,
@@ -98,9 +113,9 @@
  "first_move": null,
  "share_toward_plus_x": null,
  "pixel_count": {
-  "start": 18,
-  "end": 18,
-  "least": 18
+  "start": 10,
+  "end": 10,
+  "least": 9
  },
  "white": true
 }
