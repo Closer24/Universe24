@@ -208,7 +208,7 @@ def test_the_loaders_refusals_name_the_key():
     base = massive_world([4, 4, 4], "open", [2, 3])
     reversed_pair = json.loads(json.dumps(base))
     reversed_pair["universe"][1]["pair"] = [3, 2]
-    with pytest.raises(ValueError, match="den >= num"):
+    with pytest.raises(ValueError, match=r"den > \|num\|"):
         parse_nature_beam_world(reversed_pair)
     # one border for every family (BUILD.md section 26 item 28): `faces` refused by name on both kinds
     for family in (0, 1):
