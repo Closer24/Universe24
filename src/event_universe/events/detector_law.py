@@ -759,16 +759,18 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     # THE BODIES ON ONE NODE (ALGEBRA.md #the-interval, #a-familys-declaration, #the-primitives; the one stroke, commit 6): the spin's step, written once for any body and any read (the feed and the induction left: derived, ALGEBRA.md #the-primitives)
 
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
-        """THE BODY'S STEP AT (v): the spin's step's line (features/spins_step) on the body from the fields as the interval leaves them (per read with a dipole the read family's vector part and, for the spin's dipole, its time part at the body's Node's six neighbours with the row's two weights), the body's momentum, wall, spin and spin before and its remainders under the line's keys; the writes the spin, the spin before and the remainders back; a body with no spin and no moment reads no spin's holder and skips the act (a pixel of the rule's universe, the Closer's ruling of 2026-09-28, 15:32 Israel)."""
+        """THE BODY'S STEP AT (v): the spin's step's line (features/spins_step) on the body from the fields as the interval leaves them (per read with a dipole the read family's vector part and, for the spin's dipole, its time part at the body's Node's six neighbours with the row's two weights), the body's momentum, wall, spin and spin before and its remainders under the line's keys; the writes the spin, the spin before and the remainders back; a body with no spin and no moment reads no spin's holder and skips the act (a pixel of the rule's universe, the Closer's ruling of 2026-09-28, 15:32 Israel), and with a moment alone it reads the moment's holder and not a spin's holder without the row: Omega x S vanishes at S = 0, the torque mu x B_q stands (a light's giver of the rule's universe, the Closer's order of 17:04 Israel)."""
         definition = self.families[block.family]
-        if not definition.reads or not any((*block.spin, *block.spin_before, *block.definition.moment)):
+        still = not any((*block.spin, *block.spin_before))
+        if not definition.reads or (still and not any(block.definition.moment)):
             return
         centre = self._window_centre(block)
         wrap = self.kind_wrap[block.family]
         reads: list[SpinRead] = []
         for position, (other, weight, by, _) in enumerate(definition.reads):
             read = self.families[other]
-            if len(read.parts) < 2 or read.held_dipole is None:
+            unrowed = still and read.held_dipole == "spin" and read.spin_weights is None
+            if len(read.parts) < 2 or read.held_dipole is None or unrowed:
                 continue
             factor = weight if by == "plain" else -self._body_charge(block.number) * weight
             x, y, z = (self._ports_of(p.now, p.silent, centre, wrap) for p in self.held_parts[other][:3])
@@ -786,10 +788,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             (int(block.spin[0]), int(block.spin[1]), int(block.spin[2])),
             (int(block.spin_before[0]), int(block.spin_before[1]), int(block.spin_before[2])),
         )
-        own = SpinStepOwn(
-            {key: value for key, value in block.hold_value.items() if key[0] in KEYS},
-            {key: value for key, value in block.hold_carry.items() if key[0] in KEYS},
-        )
+        pair = block.hold_value, block.hold_carry
+        own = SpinStepOwn(*({k: v for k, v in h.items() if k[0] in KEYS} for h in pair))
         moment = block.definition.moment
         term = SpinStepTerm((int(moment[0]), int(moment[1]), int(moment[2])), self.node_clock)
         writes = cast(SpinStepWrites, line(term, start, own))
