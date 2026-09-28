@@ -23,7 +23,7 @@
       4,
       0
      ],
-     "count": 4400
+     "count": 10
     }
    ],
    "q": 1,
@@ -44,11 +44,11 @@
    "nodes": [
     {
      "node": [
-      9,
+      10,
       4,
       0
      ],
-     "count": 4700
+     "count": 12
     }
    ],
    "q": 1,
@@ -79,11 +79,11 @@
    "every": 1
   },
   {
-   "name": "matter_x9",
+   "name": "matter_x10",
    "kind": "level",
    "family": "matter",
    "node": [
-    9,
+    10,
     4,
     0
    ],
