@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe.events.records import LiveRecord
+from event_universe.events.window import pair_rows
 
 if TYPE_CHECKING:
     from event_universe.events.detector_law import DetectorLawSimulation
@@ -15,7 +16,8 @@ if TYPE_CHECKING:
 def fingerprints_of(
     loop: DetectorLawSimulation, *records: LiveRecord
 ) -> dict[str, dict[object, object]]:
-    """The ledger's words of the named records and the bodies' counts, stamped for the audit: a rebound array by its identity, an integer by its value."""
+    """The ledger's words of the named records and the bodies' counts, stamped for the audit: a rebound array by its identity, an integer by its value; a pair record's two rows are one tally, so naming one names both."""
+    records = tuple(row for live in records for row in pair_rows(loop, live))
     return {
         "a body's content M_k": {number: tuple(row) for number, row in enumerate(loop.held)},
         "the record's tally": {

@@ -986,7 +986,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         # the body's own record is not ended and never rewritten (ALGEBRA.md #the-ladder)
         block.givings += 1
         identity, self.next_identity = self.next_identity, self.next_identity + 1
-        rows = giving_window.pair_rows(self, live)
+        rows = tuple(np.zeros(self.shape, dtype=np.int64) for _ in range(3))
         live = LiveRecord(
             identity,
             number,
@@ -1784,23 +1784,18 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         live.before = live.now
         live.now = nxt
         live.age += 1
-        rows = (
-            tuple(self.records[i] for i in live.pair_record.rows if i in self.records)
-            if live.pair_record
-            else (live,)
-        )
         if live.window_open:
             # the window's write right after the record's own step, before any booking reads the rows
             with self.main_loop.act(
                 "the giving",
                 "(ii)",
                 self._card_writes("the giving"),
-                lambda: self.fingerprints_of(*rows),
+                lambda: self.fingerprints_of(live),
             ):
                 self._window_write(live)
         # the flux reading: the one-way inward flux into every detector, booked to its pointer, then the click
         with self.main_loop.act(
-            "the clicks", "(ii)", self._card_writes("the clicks"), lambda: self.fingerprints_of(*rows)
+            "the clicks", "(ii)", self._card_writes("the clicks"), lambda: self.fingerprints_of(live)
         ):
             before_booking = list(live.pointers)
             for detector, value in self.detector_inflow_tally(live).items():
