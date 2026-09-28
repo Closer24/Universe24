@@ -14,6 +14,11 @@ if TYPE_CHECKING:
     from event_universe.loader.world import FamilyDefinition
 
 
+def no_field(families: Sequence[FamilyDefinition], action: int) -> bool:
+    """THE WELL IS THE COUNT AND NO FIELD (ALGEBRA.md; Cheshbon's line of 2026-09-28, 18:05 Israel): in the rule's own universe (the file declares T and a family holds content at the divisor 1: the well is the count) a held family has no record that Rule3 steps and no rest that THE START solves; its level at a Node is the count laid there div its divisor at every interval, and the well at a distance is the matter record's own count there. The universe of record (no T) keeps its sourced fields."""
+    return action > 0 and any(row.held == "content" and row.held_divisor == 1 for row in families)
+
+
 def counts_are_the_well(families: Sequence[FamilyDefinition], block: Block) -> bool:
     """THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD (THE ALGEBRA OF CLUSTERS (1); Cheshbon's line of 2026-09-28, 15:41 Israel): whether the count's line lays its counts from the body's well, D div T at every Node of the record, read once per period of the standing record and never from the instantaneous form: the well is laid and the family that holds the content holds it at the divisor 1 (the well is the count); the declared count is then a reading."""
     holds = any(row.held == "content" and row.held_divisor == 1 for row in families)
@@ -21,7 +26,7 @@ def counts_are_the_well(families: Sequence[FamilyDefinition], block: Block) -> b
 
 
 def read_once(block: Block | None, definition: FamilyDefinition) -> bool:
-    """Whether the held level at the body's Nodes is the count itself: the body's well is laid (the universe declares T) and the family holds at the divisor 1."""
+    """Whether the held level at the body's Nodes is the count itself, written once and never added: the body's well is laid (the universe declares T) and the family holds at the divisor 1 (THE WELL IS THE COUNT AND NO FIELD); a family holding at a divisor above 1 keeps the sourced field's carried division."""
     return block is not None and block.well is not None and definition.held_divisor == 1
 
 
@@ -62,19 +67,18 @@ def counts_laid(block: Block, node: Sequence[int]) -> np.ndarray:
 
 
 def declared_within_gate(block: Block) -> None:
-    """THE GATE ON A DECLARED COUNT (Cheshbon's line of 15:46): a count declared at a Node that is not D div T of its mode there within the rounding of the mode's amplitude, |c - D div T| <= 2 isqrt(c) + 1, is refused by name at the first lay, D the mode's form at rest, b^2 (2 den - a) div den for its clock pair [a, den] and its profile's level b at the Node; within it the declared count is a reading and the record's form is the count."""
-    definition, own = block.definition, block.own
-    if own is None or definition.clock is None or definition.profile is None:
+    """THE GATE READS THE FORM AT ANY PHASE (Cheshbon's line of 2026-09-28, 18:05 Israel; #1464): a count declared at a Node that is not the loaded record's form there after one interval of Rule3 (D div T, the well `record_form` lays at the first act, D = B^2 sin^2 omega_b at every phase, no phase formula) within the rounding of the record's amplitude, |c - D div T| <= 2 isqrt(c) + 1, is refused by name at the first lay; within it the declared count is a reading and the record's form is the count."""
+    definition, well = block.definition, block.well
+    if well is None or definition.profile is None:
         return
-    a, den = definition.clock
     for node, count in zip(definition.nodes or (), definition.counts or (), strict=True):
-        level = int(definition.profile[int(np.ravel_multi_index(tuple(node), own.now.shape))])
-        form = division_forward(level * level * (2 * den - a), den, 0)[0]
+        form = int(well[tuple(node)])
         off = abs(
             int(count) - form
         )  # off <= 2 isqrt(c) + 1 as integer squares: (off - off mod 2)^2 <= 4 c
         if (off - (off & 1)) ** 2 > 4 * int(count):
             raise ValueError(
-                f"measured[{block.number}] declares the count {count} at the Node {list(node)} and its mode's "
-                f"form there is {form}: a declared count is D div T of its mode within 2 isqrt(c) + 1"
+                f"measured[{block.number}] declares the count {count} at the Node {list(node)} and its "
+                f"record's form there after one interval is {form}: a declared count is D div T of its "
+                "record within 2 isqrt(c) + 1"
             )

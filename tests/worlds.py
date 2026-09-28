@@ -344,8 +344,7 @@ def _apply(document: dict, written: dict) -> None:
 
 def seed_on_the_mode(document: dict) -> None:
     """The fixture's bodies seeded on their modes as the retired generator wrote them once (tests/seeds.json): a fixture the table does not hold is refused by name (a new fixture is seeded by the mathematician's tool)."""
-    key = _seed_key(document)
-    table = _seeds()["seed_on_the_mode"]
+    key, table = _seed_key(document), _seeds()["seed_on_the_mode"]
     if key not in table:
         raise ValueError(
             f"no recorded seeding for this fixture ({key[:12]}): tests/seeds.json holds the fixtures as recorded"
@@ -411,3 +410,32 @@ def on_the_file(document: dict) -> dict:
             entry["moment"] = [0, 0, 1]
     moved["stamp"] = input_stamp(moved)
     return moved
+
+
+GAMMA_12000, PIXEL_12000 = 12000, 4400  # the rule's file in its form at 12,000 (#1419), Cheshbon's pixel
+ROWS_12000 = ([12000, 12000, 1], [12000, 12000, 400000], [8000, 12000, None])  # #1419's rows over Gamma
+
+
+def pixel_at_12000(tmp_path: Path, tool, shape=(41, 41, 1), node=(20, 20, 0), mode: bool = True) -> Path:
+    """The tree's planck.json in its form at Gamma 12,000: the three rows over Gamma, the identity twist table (a pixel's twist is 0), the spin's row the loop still asks; a pixel of PIXEL_12000 with q = 1 on a board open on x and y (a pixel needs its board), its mode by the tool when asked."""
+    events = ROOT / "examples" / "events"
+    universe = json.loads((events / "planck.json").read_text(encoding="utf-8"))
+    identity = dict(unit=4 * GAMMA_12000 << 16, fine=[[1, 0, 1]], coarse=[[1, 0, 1]])
+    universe["integers"].update(node_clock=GAMMA_12000, twist_table=identity)
+    for family, (num, den, divisor) in zip(universe["families"], ROWS_12000, strict=True):
+        family["pair"] = [num, den]
+        if divisor:
+            family["held"]["divisor"] = divisor
+    universe["families"][0]["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((events / "engine_start.json").read_bytes())
+    body = dict(
+        family="matter", q=1, nodes=[dict(node=list(node), count=PIXEL_12000)], momentum=[0, 0, 0]
+    )
+    body.update(momentum_before=[0, 0, 0], phase_denominator=1024)  # the fall world's pixel (#1403)
+    document = dict(shape=list(shape), boundary=dict(x="open", y="open", z="periodic"), detectors=[])
+    document.update(ticks=64, N=1024, face_depth=1, universe="u.json", engine="e.json", measured=[body])
+    (world := tmp_path / "pixel.json").write_text(json.dumps(document), encoding="utf-8")
+    if mode:
+        tool.main(["--input", str(world)])  # the record Rule3 makes of the count
+    return world
