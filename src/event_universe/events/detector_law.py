@@ -9,7 +9,6 @@ from typing import cast
 import numpy as np
 
 from event_universe.core.game_board import box_centre
-from event_universe.core.integer import bounded_lcm
 from event_universe.core.main_loop import MainLoop, Stage, read_only
 from event_universe.core.ports import Ports, port_of
 from event_universe.core.register import Register, discover
@@ -46,6 +45,7 @@ from event_universe.features.giving import (
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
+from event_universe.features.receive import triple as receive_triple
 from event_universe.features.recoil import TAKING, RecoilOwn, RecoilStart, RecoilTerm, RecoilWrites
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
@@ -185,16 +185,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             else None
         )
         assembly.universe_values(self, world)
-        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the givers' wavelengths, each the mode's `wavelength` on the emitter's clock [2 N, lambda_q] (a family's row's clock is not read here)
-        self.recoil_wall = 1
-        for number, entry in enumerate(world.measured):
-            if entry.block is not None and entry.block.emitter is not None:
-                self.recoil_wall = bounded_lcm(
-                    self.recoil_wall, self._wavelength(entry.block.emitter.clock, f"measured[{number}]")
-                )
-        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock, the record
-        self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int], int]] = []
-        self.recoil_kicks: dict[int, list[int]] = {}
+        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record
+        self._recoils: list[tuple[int, int, tuple[int, int, int], int]] = []
+        self.recoil_turns: dict[int, list[int]] = {}
         self._crystal_clicks: list[tuple[int, LiveRecord]] = []
         assembly.state_arrays(self, world)
         self.kind_num = PairView(self, 0)
@@ -291,6 +284,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _write_line = after_step.write_line
     _point_windows = after_step.point_windows
     _close_window = after_step.close_window
+    _read_momentum = after_step.read_momentum
     _pair_click = pair.pair_click
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
@@ -315,6 +309,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         writes = cast(CountWrites, line(term, start, None))
         block.counts, block.count_remainder = writes.count, writes.remainder
         self._follow_count(block)
+        if direction > 0:
+            self._read_momentum(block, arrived, wall)
 
     def _body_count(self, block: Block) -> int:
         """The count at the body, its quanta: the declared count per Node over its Nodes (the record's norm in quanta, ALGEBRA.md #what-a-body-is; the count's line moves them between the Nodes and loses none)."""
@@ -433,38 +429,34 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         for argument in self._source_argument.values():
             argument[...] = 0
 
-    def _wavelength(self, clock: tuple[int, int], label: str) -> int:
-        """The wavelength 2 N q / p of a clock [p, q] on the world's N steps (the law's row "the recoil"); a clock whose wavelength is no whole number of Links is refused by name."""
-        numerator, denominator = clock
-        whole, rest = division_forward(2 * self.world.phase_steps * denominator, numerator, 0)
-        if rest:
-            raise ValueError(
-                f"{label} declares the clock {list(clock)} on N = {self.world.phase_steps} steps: its "
-                f"wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
-            )
-        return whole
+    def _triple_of(self, angle: int, axis: int) -> tuple[int, int, int]:
+        """The twist table's triple of an angle in the twist's unit, the receive's reading, refused by name beyond the table or without one (the Port toward +axis named)."""
+        cosine, sine, d = receive_triple(self._receive_term, angle, port_of(axis, 1))
+        return int(cosine), int(sine), int(d)
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
-        """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1, the kick written to both levels of n (the feed's KEEP pair exchanges them every interval); a body with no period declares no term."""
-        for number, sense, tally, clock, identity in self._recoils:
+        """The recoil's act (features/recoil): per click of the interval on a body with a record of its own, a mode clock and a mode reading of the quantum's wave number on a world with a twist table, the folder's turn of the record's two levels at the body's Nodes by delta k = sigma_a (k_q div M) per Link along each axis with a tally (the Node's offset from the body's centre), the angle's remainder carried at the body through the write's line, the taker at +1 and the giver at -1; a body without them takes no recoil; the momentum n is a reading of the record's current (`_read_momentum`), no level of the click's."""
+        for number, sense, tally, identity in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
-            if block is None or emitter is None or emitter.period is None:
+            live, clock = (block.own, block.definition.clock) if block is not None else (None, None)
+            if block is None or emitter is None or emitter.wave_number is None or live is None:
                 continue
+            if clock is None or self._receive_term is None:
+                continue
+            nodes, centre = np.argwhere(block.mask), self._window_centre(block)
+            offsets = tuple(tuple(int(v) for v in nodes[:, axis] - centre[axis]) for axis in range(3))
+            levels = tuple(tuple(int(v) for v in level[block.mask]) for level in (live.now, live.before))
             term = RecoilTerm(
-                emitter.period,
-                self._wavelength(clock, f"measured[{number}]"),
-                sense,
-                self.recoil_wall,
-                self.momentum_unit,
+                emitter.wave_number, self._body_count(block), clock, sense, self._triple_of
             )
-            stores = [block.hold_value.get(("recoil", axis), 0) for axis in range(3)]
-            own = RecoilOwn(
-                (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
-                (stores[0], stores[1], stores[2]),
+            values = {k[1:]: v for k, v in block.hold_value.items() if k[0] == "recoil"}
+            carries = {k[1:]: v for k, v in block.hold_carry.items() if k[0] == "recoil"}
+            start = RecoilStart(
+                tally, (levels[0], levels[1]), (offsets[0], offsets[1], offsets[2]), self._write_line
             )
-            writes = cast(RecoilWrites, function(term, RecoilStart(tally, self._write_line), own))
-            body_language.recoil(self, block, number, sense, identity, tally, own.momentum, writes)
+            writes = cast(RecoilWrites, function(term, start, RecoilOwn(values, carries)))
+            body_language.recoil(self, block, number, sense, identity, tally, writes)
         self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
@@ -2013,8 +2005,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if measured is None or self.detector_face[detector]:
             return
         t = live.momentum_tally.get(detector, [0, 0, 0])
-        clock = (live.period_numerator, live.period_denominator)
-        self._recoils.append((measured, TAKING, (int(t[0]), int(t[1]), int(t[2])), clock, live.identity))
+        self._recoils.append((measured, TAKING, (int(t[0]), int(t[1]), int(t[2])), live.identity))
 
     def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
         """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""

@@ -274,28 +274,24 @@ class EmitterDefinition:
     receiver: tuple[str, ...] | None
     # THE GIVEN CLOCK: the given record's clock [p, q], [2 N, lambda_q] of the mode's `wavelength`, or the row's for a mode file without one
     clock: tuple[int, int]
-    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval; commit 1): the
-    # given family's declared pair, or the emitter's own `pair` on a family whose pair is the body's
+    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives; commit 1): the given family's, or the emitter's own `pair` on a family whose pair is the body's
     pair: tuple[int, int] = MASSLESS_PAIR
     period: int | None = None
     norm: int | None = None
     given: None = None  # the ray law's given train, read by the loop as None (its cancelled branch)
-    # THE POINT EMITTER'S NORM DENOMINATOR (ALGEBRA.md; item 50): the excitation's action T as the exact rational
-    # norm / norm_denominator, in the form's units, which the window's outward norm is read against; required on every emitter (commit 7)
+    # THE POINT EMITTER'S NORM DENOMINATOR (ALGEBRA.md; item 50): T the exact rational norm / norm_denominator in the form's units, the window's outward norm read against it; required on every emitter (commit 7)
     norm_denominator: int | None = None
-    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md; item 50): the
-    # body's coupling to the given family, one integer, the body's Node's rotation
-    # copied at that weight into the given row at the body's Node every interval of
-    # the window; required on every emitter (commit 7: the window the one giving)
+    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md; item 50): the body's coupling to the given family, one integer, the body's Node's
+    # rotation copied at that weight into the given row at the body's Node every interval of the window; required on every emitter (commit 7)
     weight: int | None = None
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md #the-second-level, #the-interval; commit 4): the
     # index in the given family's parts, 0 on a scalar family, 1 + the axis of the
     # body's moment on a vector family (the component along mu)
     part: int = 0
-    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; commit 4): round(2^16
-    # omega_0), the record's rest rotation from its pair (a massive kind) or from its
-    # wavelength on light's dispersion (a train) or its emitter's rotation (a window)
+    # THE GIVEN RECORD'S TWIST "OWN" (ALGEBRA.md #the-primitives; commit 4): round(2^16 omega_0), the giver's
     twist: int = 0
+    # THE QUANTUM'S WAVE NUMBER k_q in the twist's unit (the recoil's row): the mode's reading `wave_number`; None off the mode, no recoil
+    wave_number: int | None = None
 
 
 @dataclass(frozen=True)
@@ -310,8 +306,7 @@ class BlockDefinition:
     pair: tuple[int, int]
     # THE BODY'S KIND (ALGEBRA.md #the-primitives, #the-interval): the rest pair of the body's own record, its family's declared pair or, on a family whose pair is the body's, the body's own `kind`
     kind: tuple[int, int]
-    # the well's own record's amplitude on its Nodes at interval 0 (0 silent), or its profile's; declared in the file, no default (the model owner, 2026-09-25; BUILD.md section 26 item 28)
-    seed: int
+    seed: int  # the well's own record's amplitude on its Nodes at interval 0 (0 silent), or its profile's; declared in the file, no default (the model owner, 2026-09-25; BUILD.md section 26 item 28)
     spin: tuple[int, int, int]
     spin_before: tuple[int, int, int]
     # the box's extents per axis (x, y, z); a cube's (side, side, side), `side` its x extent
@@ -1386,6 +1381,7 @@ def _emitter(
     clock_pair: tuple[int, int] | None = None,
     twist: int = 0,
     wavelength: int | None = None,
+    wave_number: int | None = None,
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6), #a-familys-declaration): the given family (a paid family), the given record's clock [2 N, lambda_q] with lambda_q the mode's reading `wavelength` (the giver's rotation on the given band; the recoil's row) or, for a giver whose mode file carries none, the row's `clock` [p, q]; the given labels, the ladder by name, the norm (the generator's integer), the period P_body by the one-Node rule from the mode's clock pair, the twist "own" the body's; no wheel, residue order, seed, period, clock or twist of its own: each is the law's, the keys refused by name."""
     obj = cast(dict[str, object], value)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
@@ -1478,6 +1474,7 @@ def _emitter(
         norm_denominator=norm_denominator,
         part=part,
         twist=twist,  # the given record's twist "own" is its giver's (ALGEBRA.md #the-primitives; the files' emitters agree)
+        wave_number=wave_number,
     )
 
 
@@ -1666,7 +1663,7 @@ def _counted(
     profile: tuple[int, ...] | None = None
     clock: tuple[int, int] | None = None
     levels: Levels | None = None
-    amplitude, twist, wavelength = 0, None, None
+    amplitude, twist, wavelength, wave_number = 0, None, None, None
     if mode is not None:
         mode_label = f"the mode file's bodies[{label[len('measured[') : -1]}]"
         if (
@@ -1690,6 +1687,8 @@ def _counted(
             twist = _integer(mode["twist"], f"{mode_label}.twist", 0)
         if "wavelength" in mode:
             wavelength = _integer(mode["wavelength"], f"{mode_label}.wavelength", 1)
+        if "wave_number" in mode:
+            wave_number = _integer(mode["wave_number"], f"{mode_label}.wave_number", 0)
         levels = moving_levels(
             mode.get("moving"), clock, shape[0] * shape[1] * shape[2], mode_label, bounds[0]
         )
@@ -1722,6 +1721,7 @@ def _counted(
             clock_pair=clock,
             twist=twist,
             wavelength=wavelength,
+            wave_number=wave_number,
         )
     block = BlockDefinition(
         extents[0],

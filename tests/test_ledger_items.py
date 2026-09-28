@@ -93,37 +93,25 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
     assert int(np.abs(simulation.sourced_records[null_index].now).sum()) == 0
 
 
-# (4) THE CLICK THAT KEEPS THE MOMENTUM, WITH ITS RECOIL'S STORE (ALGEBRA.md #the-primitives.111 item 2)
+# (4) THE CLICK THAT KEEPS THE MOMENTUM: n A READING (ALGEBRA.md #the-primitives, the recoil's row)
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
-def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer():
-    """At a giving's close the body's held vector n changes along the click's axis, opposite to the given light, by 3 Q P_body (L div lambda_q) div L with the store on the body's record; two givings each way cancel (the law's row "the recoil"; ALGEBRA.md #the-interval, #the-primitives)."""
+def test_4_the_bodys_momentum_is_the_reading_of_its_records_current_through_the_givings():
+    """No click writes a body's momentum (the law's row "the recoil": the momentum a reading, no level): the emitter of the older form keeps its declared 0 at every interval through two windows' closes, both levels alike, and a giver whose mode carries no wave number (the fixture off the mode) takes no turn, its recoil book empty (ALGEBRA.md #the-interval, #the-primitives)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     lines: list[dict] = []
     simulation.record = lines.append
-    # the first window closed (its light toward +x): the horizon the window the engine writes
-    while not lines_of(lines, "giving"):
-        simulation.step()
-    kicked = list(simulation.blocks[0].momentum)
-    (first,) = lines_of(lines, "giving")
-    unit, wall = document["momentum_unit"], simulation.recoil_wall
-    wavelength = (
-        2 * document["N"] * document["universe"][0]["clock"][1] // document["universe"][0]["clock"][0]
-    )
-    period = simulation.world.measured[0].block.emitter.period
-    kick = 3 * unit * period * (wall // wavelength) // wall  # 3 Q P_body (L div lambda_q) div L
-    assert kicked == [-first["momentum"][0] * kick, 0, 0] and kick > 0  # opposite to the given light
-    # the second window closed, its light toward -x: the kicks cancel
     while len(lines_of(lines, "giving")) < 2:
         simulation.step()
-        assert simulation.tick <= 2 * first["tick"] + STEPS
+        block = simulation.blocks[0]
+        assert block.momentum == [0, 0, 0] and block.momentum_before == [0, 0, 0]
+        assert simulation.tick <= 2 * STEPS
     givings = [line["momentum"] for line in lines if line.get("event") == "giving"]
-    assert len(givings) == 2 and all(
-        momentum[1:] == [0, 0] for momentum in givings
-    )  # the senses the run's
+    assert all(momentum[1:] == [0, 0] for momentum in givings) and lines_of(lines, "recoil") == []
+    assert simulation.recoil_turns == {} and not hasattr(simulation, "recoil_wall")
 
 
 # (5) A CLICK'S CHANGE AFTER ALL ADVANCES; A RUN-TIME OVERFLOW BOUND (record 2185)

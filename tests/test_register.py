@@ -44,7 +44,6 @@ NAMED_VALUES = {
     "a family's level at a Node",
     "the level next, the remainder",
     "the paces",
-    "a Port's accumulator",
     "a body's content M_k",
     "a body's momentum n",
     "a body's spin S",
@@ -58,7 +57,7 @@ ROWS_OF_9_117 = (
     "the source",
     "the giving",
     "the clicks",
-    "the recoil's accumulator",
+    "the recoil",
     "the feed",
     "the induction",
     "the spin's step",
@@ -94,7 +93,6 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
     assert PLACES == ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
     assert WORDS == ("the right side", "the step", "after the step", "any")
     assert folder_of("the spin's step") == "spins_step" and folder_of("the self-source") == "self_source"
-    assert folder_of("the recoil's accumulator") == "recoils_accumulator"
     assert folder_of("the signed read") == "signed_read" and folder_of("hold") == "hold"
     assert DEFERRED_VALUES == {
         "a body's content M_k",

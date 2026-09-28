@@ -25,14 +25,6 @@ def bounded_gcd(first: int, second: int) -> int:
     raise ArithmeticError("bounded gcd iteration limit exceeded")
 
 
-def bounded_lcm(first: int, second: int) -> int:
-    """The least common multiple of two checked magnitudes through the bounded gcd; 0 where either is 0."""
-    a, b = abs(checked_work(first)), abs(checked_work(second))
-    if a == 0 or b == 0:
-        return 0
-    return checked_work(a * b // bounded_gcd(a, b))
-
-
 def reduced(numerator: int, denominator: int) -> tuple[int, int]:
     """A rational as the pair (n, d) in lowest terms with d positive."""
     common = bounded_gcd(abs(numerator), denominator) or 1
