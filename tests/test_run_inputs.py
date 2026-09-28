@@ -87,11 +87,10 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     inputs = ["--pins", str(pins), str(bad_path), str(good_path), str(twin_path)]
     assert main(["--out", str(out := tmp_path / "out"), "--jobs", "2", *inputs]) == 1
     refused = json.loads((out / "bad.output.json").read_text(encoding="utf-8"))
-    assert refused["verdict"] == "REFUSED" and "lacks keys: momentum" in refused["reason"]
-    assert "clicks" not in refused
+    assert refused["verdict"] == "REFUSED" and "clicks" not in refused
+    assert "lacks keys: momentum" in refused["reason"]
     good = json.loads((out / "good.output.json").read_text(encoding="utf-8"))
-    assert good["verdict"] == "LAWFUL"
-    read = good["counts"]["screen"]
+    assert good["verdict"] == "LAWFUL" and (read := good["counts"]["screen"]) >= 0
     waits = [c["interval"] - c["giving"] for c in good["clicks"] if c["detector"] == "screen"]
     first, mean = min(waits), (2 * sum(waits) + len(waits)) // (2 * len(waits))
     assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 12
