@@ -317,10 +317,10 @@ def emitter_specimen(stock: int = 4, ticks: int = 1200, on_mode: bool = True) ->
 
 
 def lawful_wheel(world, line: dict) -> bool:
-    """A giving line's W, the rule's at the emitting body's read Node with the level the line carries, its u below it."""
+    """A giving line's W, the rule's at the emitting body's read Node with the level the line carries as the signed read reads it (the reads' sum enters the pace at no less than 0, ALGEBRA.md #the-paces), its u below it."""
     block = world.measured[line["measured"]].block
     at_node, _reads = line["read_clocks"]
-    return line["W"] == wheel_of(block.pair, at_node) and 0 <= line["u"] < line["W"]
+    return line["W"] == wheel_of(block.pair, max(at_node, 0)) and 0 <= line["u"] < line["W"]
 
 
 def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]

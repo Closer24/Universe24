@@ -17,6 +17,10 @@ from tests.bodies import paces_world, parts_of
 from tests.running import refused
 from tests.worlds import FILE, HELD_MOMENT, emitter_world, on_the_file
 
+# THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
+pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
+
+
 ROOT = Path(__file__).resolve().parents[1]
 OWN_TWIST = 9785  # round(2^16 acos(800 / 809)), the retired generator's rounding of the pair's rest rotation, measured once
 GAMMA = 10_000

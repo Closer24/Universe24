@@ -115,19 +115,23 @@ def inverse_close_interval(simulation: DetectorLawSimulation, lines: list[dict],
 
 
 def test_between_clicks_the_board_returns_bit_for_bit_where_the_field_rises_and_falls():
-    """1. From the load to the interval before the first giving click, every interval back returns the load's rows bit for bit: the bodies' own records, the family of clicks and the family of charge (their levels and remainders), the held quanta; the family of charge's level at the load is its rest (THE START, ALGEBRA.md #the-generator): -1 at the emitter's 32 Nodes (its Q = -4 over the divisor 40000, the division act's floor; ALGEBRA.md #the-primitives the row "the hold") and at the screen's three (Q = -1 each), -1 between them, the positive body's +1 over the divisor adding 0 at x = 55 (a body stands in another's well) and up to two Nodes beyond, 0 at the faces' three; it ran and waved: it fell at Nodes (the falls counted, above 0) and rose again at Nodes that had fallen (every rise is one, no level being above 0: the edge case); the family of clicks' level stays 0 (the counts 4, 1 and 1 over the divisor add no increment in 400 intervals). ALGEBRA.md #the-direction: the wall constant, one to one."""
+    """1. From the load to the interval before the first giving click, every interval back returns the load's rows bit for bit: the bodies' own records, the family of clicks and the family of charge (their levels and remainders), the held quanta; the family of charge's level at the load is its rest (THE START on the sum's sources, ALGEBRA.md #the-generator; the hold's row): the tent of the signed sources over the divisor (this copy's 100: the emitter's -4 over 32 Nodes, the screen's -1 x 3, the positive body's +1), negative from the first Node to the screen and 0 only beyond the closed faces, no level above 0; the tent's nearest integers are no fixed point of the integer line, so the field waves within one unit: it fell at Nodes (the falls counted, above 0) and rose again at Nodes that had fallen; the family of clicks' level is its own small tent (the counts 4, 1 and 1 over the divisor) and stays within one of it. ALGEBRA.md #the-direction: the wall constant, one to one."""
     document = reversible_world()
+    for entry in document["universe"]:
+        if "held" in entry:
+            entry["held"] = {**entry["held"], "divisor": 100}  # a copy: the tent stands in whole levels
+    document["stamp"] = input_stamp(document)
     probe, _, lines, _ = run_states(document, 120)
     first_giving = click_ticks(lines)[0][0]
     assert first_giving > 10
     simulation, states, lines, _ = run_states(document, first_giving - 1)
     assert not [line for line in lines if line["event"] in ("giving", "gather")]
     levels = np.stack([state["charge"][0] for state in states])  # (interval, x, y, z)
-    assert np.all(levels[0][3:76] == -1) and not levels[0][:3].any() and not levels[0][76:].any()
+    assert (levels[0] <= 0).all() and (levels[0][:73] < 0).all()  # the tent, 0 only beyond the faces
     falls = int(np.sum(levels[1:] < levels[:-1]))
     rises = int(np.sum(levels[1:] > levels[:-1]))
-    assert falls > 0 and rises > 0 and int(levels.max()) == 0
-    assert not np.stack([state["clock"][0] for state in states]).any()
+    assert falls > 0 and rises > 0 and int(levels.max()) <= 0
+    assert (np.stack([state["clock"][0] for state in states]) >= -1).all()  # within one of its tent
     for t in range(first_giving - 1, 0, -1):
         simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
