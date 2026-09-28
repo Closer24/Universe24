@@ -16,7 +16,7 @@ import event_universe.world_files as world_files
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.running import AMPLITUDE, INTERVALS, SEEDS, TEMPLATE, WORDS, draw, reads_of
+from tests.running import INTERVALS, SEEDS, TEMPLATE, WORDS, draw, reads_of
 from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,7 +29,7 @@ def recorder():  # type: ignore[no-untyped-def]
 
 
 SHIPPED = json.loads((ROOT / "examples/events/universe.json").read_text(encoding="utf-8"))
-INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"], "amplitude_bound": AMPLITUDE}
+INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"]}
 
 
 def world_of(drawn: dict[str, Any]) -> dict[str, Any]:

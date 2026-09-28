@@ -16,7 +16,7 @@ from event_universe.core.integer import MAX_WORK_INT  # noqa: E402
 
 WORLD = (
     '{"shape": [120, 1, 1], "boundary": {"x": "open", "y": "periodic", "z": "periodic"}, "ticks": 1, "N": 64, "engine":'
-    ' "examples/events/engine_start.json", "universe": "examples/events/generated/universe.json", "face_depth": 16, "detectors": [],'
+    ' "examples/events/engine_start.json", "universe": "examples/events/experiments/universe.json", "face_depth": 16, "detectors": [],'
     ' "measured": [{"family": "matter", "phase_denominator": 256, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0], "nodes":'
     ' [{"node": [59, 0, 0], "count": 1000}, {"node": [60, 0, 0], "count": 1000}, {"node": [61, 0, 0], "count": 1000}]}]}'
 )
