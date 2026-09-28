@@ -87,7 +87,7 @@ def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
     for number, body in enumerate(document["measured"]):
         count = int(body["nodes"][0]["count"])
         if (
-            count not in PIXELS
+            count not in PIXEL_NUMBERS
         ):  # a body under the edge (no bound rotation of its own) binds no record: content alone
             bodies.append(
                 {
