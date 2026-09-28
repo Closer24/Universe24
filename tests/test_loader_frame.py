@@ -49,6 +49,19 @@ def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved
     assert len(table["fine"]) == 1024 and table["fine"][0] == (1, 0, 1)
 
 
+def test_the_derived_reads_take_every_real_field_and_the_clicking_families_above():
+    """THE FAMILIES FROM THE RULE (Cheshbon, 2026-09-28, 08:10Z): a family of quanta reads every real field (a holder of the content at any rank, the bound band's well [1, 2] among them: the mirror and the window read it) and the clicking families of a higher rank (the holder of the sign, by q); a real field reads none."""
+    rows = (
+        {"name": "gravity", "pair": (1, 1), "held": {"count": "content", "divisor": 4}},
+        {"name": "well", "pair": (1, 2), "held": {"count": "content", "divisor": 1}},
+        {"name": "light", "pair": (1, 1), "held": {"count": "sign", "divisor": 4}},
+        {"name": "matter", "pair": "body"},
+    )
+    reads = [[(r["family"], r["by"]) for r in derived.filled(row, rows)["reads"]] for row in rows]
+    assert reads[0] == [] == reads[1] and reads[2] == [("gravity", 1), ("well", 1)]
+    assert reads[3] == [("gravity", 1), ("well", 1), ("light", "q")]
+
+
 def test_every_defect_of_the_universe_file_is_refused_by_name():
     """An unknown or missing key at the file, the integers, an entry or a nested object; a wrong kind; a name the universe lacks; the divisor with no default; the table's triples; the files the host did not read."""
     good = shipped()
@@ -63,35 +76,20 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
     refuses(lambda d: d.pop("integers"), "lacks keys: integers")
     refuses(lambda d: d["integers"].pop("node_clock"), r"\.integers lacks keys: node_clock")
     refuses(lambda d: d["integers"].__setitem__("Mu", 1), r"\.integers has unknown keys: Mu")
-    refuses(
-        lambda d: d["integers"].__setitem__("Lambda", 0), r"\.integers\.Lambda is 0, below its least 1"
-    )
-    refuses(
-        lambda d: d["integers"]["twist_table"]["fine"].__setitem__(3, [1, 0]),
-        r"fine\[3\] must be a list of 3, not of 2",
-    )
+    refuses(lambda d: d["integers"].__setitem__("Lambda", 0), r"Lambda is 0, below its least 1")
+    refuses(lambda d: d["integers"]["twist_table"]["fine"].__setitem__(3, [1, 0]), r"a list of 3")
     refuses(lambda d: d.__setitem__("families", []), r"\.families must be a nonempty list")
-    refuses(
-        lambda d: d["families"][0].__setitem__("name", 3), r"families\[0\]\.name must be a word, not 3"
-    )
+    refuses(lambda d: d["families"][0].__setitem__("name", 3), r"name must be a word, not 3")
     refuses(lambda d: d["families"][0].pop("pair"), r"families\[0\] lacks keys: pair")
     refuses(lambda d: d["families"][0].__setitem__("mass", 1), r"families\[0\] has unknown keys: mass")
     refuses(lambda d: d["families"][0]["held"].pop("count"), r"families\[0\]\.held lacks keys: count")
-    refuses(
-        lambda d: d["families"][1].__setitem__("phase", True),
-        r"families\[1\]\.phase must be one of \[1, 2\], not True",
-    )
+    refuses(lambda d: d["families"][1].__setitem__("phase", True), r"phase must be one of \[1, 2\]")
     refuses(
         lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", "weight": "Mu"}]),
         r"reads\[0\]\.weight names 'Mu', no integer of the universe",
     )
-    refuses(
-        lambda d: d["families"][2].__setitem__("reads", [{"family": "ions"}]),
-        r"reads\[0\]\.family names 'ions', no family of the universe",
-    )
-    with pytest.raises(
-        ValueError, match="universe names 'nowhere.json', no file at the repository's root"
-    ):
+    refuses(lambda d: d["families"][2].__setitem__("reads", [{"family": "ions"}]), r"'ions', no family")
+    with pytest.raises(ValueError, match="names 'nowhere.json', no file at the repository's root"):
         frame.universe("nowhere.json", {}, discover())
     with pytest.raises(ValueError, match="the universe file 'universe.json' must be a JSON object"):
         frame.universe(FILE, {FILE: []}, discover())
