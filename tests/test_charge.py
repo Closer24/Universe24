@@ -114,8 +114,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     seed_on_the_mode(document)  # the stamp covers the charges
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    charge = held_record(simulation, "sign")
-    emitter = simulation.blocks[0]
+    charge, emitter = held_record(simulation, "sign"), simulation.blocks[0]
     key = (simulation.held_families[1], 0)  # the family of charge's time part on the body's remainders
     assert simulation.family_charge == [-1, -1, 0, 0] and simulation.families[key[0]].held == "sign"
     assert np.all(charge.now[5:37] == -1) and not charge.now[37:70].any() and not charge.before.any()
@@ -123,8 +122,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     assert simulation._body_charge(0) == -5 and simulation._body_charge(1) == -1
     carried = emitter.hold_carry[key]
     assert carried == 39995 and np.all(charge.now[70:73] == -1)
-    givings = 0
-    clicks = 0
+    givings, clicks = 0, 0
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick

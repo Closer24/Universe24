@@ -168979,29 +168979,19 @@
   {
    "name": "gravity",
    "pair": [
-    1,
-    1
+    12000,
+    12000
    ],
    "held": {
     "count": "content",
     "divisor": 1
-   },
-   "spins_step": {
-    "curl": [
-     1,
-     4
-    ],
-    "tidal": [
-     3,
-     4
-    ]
    }
   },
   {
    "name": "charge",
    "pair": [
-    1,
-    1
+    12000,
+    12000
    ],
    "held": {
     "count": "sign",
@@ -169011,8 +169001,8 @@
   {
    "name": "matter",
    "pair": [
-    2,
-    3
+    8000,
+    12000
    ]
   }
  ]

@@ -1,14 +1,25 @@
 {
  "format": "world-expectation-v1",
  "status": "BLIND: the row of THE CLICK JOINS AND PARTS; Cheshbon's numbers before the run; no number of a run here",
- "row": "ALGEBRA.md THE CLICK JOINS AND PARTS: two bound bodies of one Node, the counts 3,000 and 4,000, on the rule's own universe (Gamma = 12,000, the divisors 1, the pair [2, 3], T = 1), 5 Links apart: the tails still overlap (the click's reach under T = 1 is about 18 Links, Cheshbon 13:18), so there is no parting at five Links: the slow join, the transfer cycle about 11 intervals, the smaller dissolved in about 30 to 70 intervals, one record",
+ "row": "ALGEBRA.md THE CLICK JOINS AND PARTS: two bound bodies of one Node, the counts 4,400 and 4,700 (the edge 4,133 on the engine of today, Cheshbon 14:12), on the rule's own universe (Gamma = 12,000, the divisors 1, the pair [2, 3], T = 1), 5 Links apart: the tails still overlap (the click's reach under T = 1 is about 18 Links, Cheshbon 13:18), so there is no parting at five Links: the slow join, the transfer cycle about 11 intervals, the smaller dissolved in about 30 to 70 intervals, one record",
  "DETECTOR": [],
+ "faces": "a face is no body and a click at an open face is no click (Cheshbon 14:55, the Closer 15:02 Israel time): a record that reaches a face ends and is not counted; the reading of (d) is the two Nodes' counts and the count's line's moves between them",
  "blind": {
   "row": "Cheshbon's numbers of 13:03 and 13:18 Israel time (2026-09-28) before the run: under T = 1 every remainder crosses, the first click at interval 1; the join at two Links (the overlap 0.41, the transfer about 0.33 radians per interval) dissolves the smaller within about 3 to 10 intervals; at five Links (the overlap 0.107, 0.087 radians per interval) within about 30 to 70; the click's reach is about 18 Links, so neither world parts",
-  "edge_quanta_per_node": 2706,
+  "edge_quanta_per_node": 4133,
   "horizon_quanta_per_node": 6000,
-  "tail_kappa_per_link_at_3000": 0.45,
-  "tail_kappa_per_link_at_4000": 1.02,
+  "counts": [
+   4400,
+   4700
+  ],
+  "tail_kappa_per_link": {
+   "4400": 0.283,
+   "4700": 0.48
+  },
+  "bound_rotation": {
+   "4400": 0.829,
+   "4700": 0.8055
+  },
   "click_reach_links": 18,
   "first_click_interval": 1,
   "dissolution_intervals": [

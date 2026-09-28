@@ -48,8 +48,7 @@ def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the
     sums = axis_sums(now)
     num_all, den_all = simulation.pair_arrays(matter)  # the well's pair at the body's Nodes
     for node in ((7, 2, 2), (8, 5, 1), (2, 3, 3), (4, 4, 4)):
-        t = (int(axis_contents[0][node]), 0, 0)
-        c = int(content[node])
+        t, c = (int(axis_contents[0][node]), 0, 0), int(content[node])
         num, den = int(num_all[node]), int(den_all[node])
         reads, self_coefficient, wall = coefficients(num, den, GAMMA, c, t)
         total = sum(reads[a] * int(sums[a][node]) for a in range(3))

@@ -20,8 +20,7 @@ GAMMA = 10_000
 
 def own_family_world(stock: int | None) -> dict:
     """The matter emitter world with the emitter giving ITS OWN family (`source`, its well the source well): its `stock` of its own quanta, `amount` 4."""
-    document = matter_emitter_world(False, [512, 1])
-    body = emitter_at(100, 1, family="source")
+    document, body = matter_emitter_world(False, [512, 1]), emitter_at(100, 1, family="source")
     body["amount"] = 4
     body["stocks"] = {}
     body["stock"] = 2
@@ -47,8 +46,7 @@ def test_a_body_gives_its_own_family_from_its_stock_and_its_quanta_fall_by_one_p
     block = simulation.blocks[1]  # the light emitter of the chain world is blocks[0]
     own = block.family
     assert simulation.held[block.number][own] == 4 and simulation.stock_of(block) == 2
-    wall = simulation.wall_of(block)
-    givings = []
+    wall, givings = simulation.wall_of(block), []
     for _ in range(900):  # two windows and their rungs (commit 7)
         simulation.step()
         if block.givings > len(givings):

@@ -251,8 +251,7 @@ def test_e3_no_key_of_the_files_has_a_default_written_in_the_engine():
     assert defaults == [], defaults
 
 
-VERSION_STRING = re.compile(r"-v[0-9]+$")
-FLAG_WORDS = {"flag", "flags", "version", "schema_version"}
+VERSION_STRING, FLAG_WORDS = re.compile(r"-v[0-9]+$"), {"flag", "flags", "version", "schema_version"}
 
 
 def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
