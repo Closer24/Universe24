@@ -73,6 +73,32 @@ def record_reading(
     return {"label": "GAMEBOARD", **read}
 
 
+def breathing_reading(
+    counts: list[list[int]], levels: dict[str, list[int]], blind: dict[str, Any]
+) -> dict[str, Any] | None:
+    """THE HIERARCHY IS RECURSIVE (GAMEBOARD): the breathing period of the pair's total count (the sign changes of the total about its mean over the run) against Cheshbon's P_2, and its ratio to the pixel's period (from the level's sign changes at the first body's Node) against the band; None where the expectation carries no such number."""
+    if "pair_breathing_period_intervals" not in blind:
+        return None
+    totals = [sum(c) for c in counts]
+    mean = sum(totals) / len(totals)
+    pair_period = period_of([round((t - mean) * 2) for t in totals])
+    pixel_period = period_of(next(iter(levels.values()), []))
+    ratio = round(pair_period / pixel_period, 2) if pair_period and pixel_period else None
+    low, high = blind["period_ratio_band"]
+    return {
+        "label": "GAMEBOARD",
+        "name": blind.get("name", "THE HIERARCHY IS RECURSIVE"),
+        "pair_total_start_end": [totals[0], totals[-1]],
+        "pair_breathing_period_intervals": pair_period,
+        "expected_pair_breathing_period_intervals": blind["pair_breathing_period_intervals"],
+        "pixel_period_intervals": pixel_period,
+        "expected_pixel_period_intervals": blind["pixel_period_intervals"],
+        "period_ratio_pair_over_pixel": ratio,
+        "expected_period_ratio": [low, blind["period_ratio_pair_over_pixel"], high],
+        "verdict": within(ratio, low, high, 0.0),
+    }
+
+
 def table(report: dict[str, Any]) -> str:
     """The algebra / engine / difference table of one world for #1325, in Markdown: the blind number, the run's number and the difference per row; a refused run shows the refusal."""
     rows = [
@@ -108,6 +134,17 @@ def table(report: dict[str, Any]) -> str:
                 f"{mid} ({low} to {high})",
                 str(record["clock_ratio_deep_over_small"]),
                 record["ratio_verdict"],
+            )
+        )
+    breathing = report.get("6_the_hierarchy")
+    if breathing:
+        low, mid, high = breathing["expected_period_ratio"]
+        rows.append(
+            (
+                "the pair's breathing period / the pixel's period (THE HIERARCHY IS RECURSIVE)",
+                f"{breathing['expected_pair_breathing_period_intervals']} / {breathing['expected_pixel_period_intervals']} = {mid} ({low} to {high})",
+                f"{breathing['pair_breathing_period_intervals']} / {breathing['pixel_period_intervals']} = {breathing['period_ratio_pair_over_pixel']}",
+                breathing["verdict"],
             )
         )
     counts, moves, records = report["1_the_counts"], report["2_the_moves"], report["3_the_records"]
@@ -226,6 +263,7 @@ def read(world_path: Path) -> dict[str, Any]:
             "faces": "a click at an open face is no click and is not counted (Cheshbon 14:55, the Closer 15:02)",
         },
         "5_the_record": record_reading(counts, levels, blind.get("record")),
+        "6_the_hierarchy": breathing_reading(counts, levels, blind),
         "4_the_levels": {
             "label": "GAMEBOARD",
             "readings": {
