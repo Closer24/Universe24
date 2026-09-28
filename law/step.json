@@ -1,126 +1,33 @@
 {
  "interval": [
-  [
-   "(iv)",
-   "the hold",
-   {
-    "advance": false
-   }
-  ],
-  [
-   "(i)",
-   "the pair"
-  ],
-  [
-   "(i)",
-   "the degree"
-  ],
-  [
-   "(i)",
-   "the signed read"
-  ],
-  [
-   "(i)",
-   "the send"
-  ],
-  [
-   "(i)",
-   "the wait"
-  ],
-  [
-   "(i)",
-   "the receive"
-  ],
-  [
-   "(i)",
-   "the internal representation"
-  ],
-  [
-   "(i)",
-   "the self-source"
-  ],
-  [
-   "(i)",
-   "the phase"
-  ],
-  [
-   "(i)",
-   "the operation"
-  ],
-  [
-   "(ii)",
-   "the clicks"
-  ],
-  [
-   "(ii)",
-   "the count's line"
-  ],
-  [
-   "(ii)",
-   "the lifetime"
-  ],
-  [
-   "(ii)",
-   "the giving"
-  ],
-  [
-   "(ii)",
-   "the clicks list"
-  ],
-  [
-   "(ii)",
-   "the hand"
-  ],
-  [
-   "(ii)",
-   "the polariser"
-  ],
-  [
-   "(ii)",
-   "the crystal"
-  ],
-  [
-   "(iv)",
-   "the hold",
-   {
-    "advance": true
-   }
-  ],
-  [
-   "(iv)",
-   "the source"
-  ],
-  [
-   "(iv)",
-   "the recoil"
-  ],
-  [
-   "(v)",
-   "the feed"
-  ],
-  [
-   "(v)",
-   "the induction"
-  ],
-  [
-   "(v)",
-   "the spin's step"
-  ],
-  [
-   "(v)",
-   "the recoil's accumulator"
-  ],
-  [
-   "any",
-   "the trace"
-  ],
-  [
-   "any",
-   "the start"
-  ],
-  [
-   "any",
-   "the write"
-  ]
+  ["(iv)", "the hold", {"advance": false}],
+  ["(i)", "the pair"],
+  ["(i)", "the degree"],
+  ["(i)", "the signed read"],
+  ["(i)", "the send"],
+  ["(i)", "the wait"],
+  ["(i)", "the receive"],
+  ["(i)", "the internal representation"],
+  ["(i)", "the self-source"],
+  ["(i)", "the phase"],
+  ["(i)", "the operation"],
+  ["(ii)", "the clicks"],
+  ["(ii)", "the count's line"],
+  ["(ii)", "the lifetime"],
+  ["(ii)", "the giving"],
+  ["(ii)", "the clicks list"],
+  ["(ii)", "the hand"],
+  ["(ii)", "the polariser"],
+  ["(ii)", "the crystal"],
+  ["(iv)", "the hold", {"advance": true}],
+  ["(iv)", "the source"],
+  ["(iv)", "the recoil"],
+  ["(v)", "the feed"],
+  ["(v)", "the induction"],
+  ["(v)", "the spin's step"],
+  ["(v)", "the recoil's accumulator"],
+  ["any", "the trace"],
+  ["any", "the start"],
+  ["any", "the write"]
  ]
 }

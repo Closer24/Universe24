@@ -286,6 +286,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _crystal_click = after_step.crystal_click
     _crystal_stage = after_step.crystal_stage
     _window_write = after_step.window_write
+    _write_line = after_step.write_line
     _point_windows = after_step.point_windows
     _close_window = after_step.close_window
     _pair_click = pair.pair_click
@@ -460,7 +461,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
                 (stores[0], stores[1], stores[2]),
             )
-            writes = cast(RecoilWrites, function(term, RecoilStart(tally), own))
+            writes = cast(RecoilWrites, function(term, RecoilStart(tally, self._write_line), own))
             for axis, (kicked, rest) in enumerate(zip(writes.momentum, writes.remainders, strict=True)):
                 block.momentum_before[axis] += kicked - own.momentum[axis]
                 block.momentum[axis], block.hold_value[("recoil", axis)] = kicked, rest
@@ -630,12 +631,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                                     self.held_parts[family][i].now[node] -= value
                         w = self._held_writes(line, block, family, act)
                     else:
-                        factors, divisor = (
-                            (definition.held_factors[0],),
-                            cast(int, definition.held_divisor),
-                        )
-                        term = HoldTerm(source, (1,), factors, None, 1, divisor)
-                        start = HoldStart(act, self.body_source(number, source), (0, 0, 0), 1, None)
+                        divisor = cast(int, definition.held_divisor)
+                        term = HoldTerm(source, (1,), (definition.held_factors[0],), None, 1, divisor)
+                        count = self.body_source(number, source)
+                        start = HoldStart(act, count, (0, 0, 0), 1, None, (), self._write_line)
                         own = self.span_hold.get((family, number), HoldOwn({}, {}))
                         w = cast(HoldWrites, line(term, start, own))
                         self.span_hold[(family, number)] = w.own
@@ -709,7 +708,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         term = HoldTerm(source, parts, factors, row.held_dipole, row.held_dipole_div, divisor)
         count = self.body_source(block.number, source)
         n = (int(momentum[0]), int(momentum[1]), int(momentum[2]))
-        start = HoldStart(act, count, n, self.wall_of(block), vector, per_node)
+        start = HoldStart(act, count, n, self.wall_of(block), vector, per_node, self._write_line)
         writes = cast(HoldWrites, line(term, start, HoldOwn(values, carries)))
         centre = self._centre_node(block) if any(key[0] == "d" for key in writes.own.values) else []
         for stored, written in (
@@ -1943,8 +1942,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         undone = [0, 0, 0]
         live.outward -= self.body_outward_flux(live, block, undone)
         live.outward_tally = [kept - gone for kept, gone in zip(live.outward_tally, undone, strict=True)]
-        live.now[block.mask] -= emitter.weight * self._body_levels(block)
-        live.before[block.mask] -= emitter.weight * self._body_levels(block, before=True)
+        after_step.shell_write(self, block, live, -1)
         live.window -= 1
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:

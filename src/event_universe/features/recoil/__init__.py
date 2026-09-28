@@ -1,12 +1,13 @@
-"""The recoil of a click on a held body's momentum (ALGEBRA.md #the-primitives, the row "the recoil"): n_a += sense x sigma_a x 3 Q P_body x (L div lambda_q) div L per axis, the giver with the opposite sign, the store one remainder per axis on the universe's wall L (the least common multiple of the world's declared wavelengths, every lambda_q dividing it), so that clicks of every wavelength add exactly; the fraction W P_body / (M lambda_q) with W = 3 Q M, the body's quanta cancelled; the division Rule3's division act with the remainder carried."""
+"""The recoil of a click on a held body's momentum (ALGEBRA.md #the-primitives, the row "the recoil"): n_a += sense x sigma_a x 3 Q P_body x (L div lambda_q) div L per axis, the giver with the opposite sign, the store one remainder per axis on the universe's wall L (the least common multiple of the world's declared wavelengths, every lambda_q dividing it), so that clicks of every wavelength add exactly; the fraction W P_body / (M lambda_q) with W = 3 Q M, the body's quanta cancelled; the division one act of the write per axis (features/write, the line the loop hands in the start; Rule3's carried division when none is handed) with the remainder carried."""
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
-from event_universe.core.rule3 import division_forward
+from event_universe.core.rule3 import THE_ADVANCE, Key, carried, division_forward
 
 TAKING = 1
 GIVING = -1
@@ -14,6 +15,11 @@ THREE = 3  # the momentum's wall W = 3 Q M (ALGEBRA.md #the-primitives, the row 
 
 # the word of ALGEBRA.md #the-primitives for this primitive
 THE_WORD = "from the rule ALGEBRA.md #the-line and the click, the store a remainder of the division on the record"
+Counts = tuple[tuple[Key, int], ...]
+Levels = tuple[tuple[Key, int, int], ...]
+# the write's line (features/write): (act, wall, coefficient, the counts per key, values, carries) ->
+# per key (key, now, before), the remainders written back into the two dicts
+WriteLine = Callable[[str, int, int, Counts, dict[Key, int], dict[Key, int]], Levels]
 
 
 @dataclass(frozen=True)
@@ -29,9 +35,10 @@ class RecoilTerm:
 
 @dataclass(frozen=True)
 class RecoilStart:
-    """What the click booked: the tally per axis."""
+    """What the click booked: the tally per axis; the write's line the loop hands (features/write; None: the folder's carried division per axis)."""
 
     tally: tuple[int, int, int]
+    write: WriteLine | None = None
 
 
 @dataclass(frozen=True)
@@ -53,6 +60,20 @@ class RecoilWrites:
 def sign_of(value: int) -> int:
     """sigma: -1, 0 or 1, the direction of travel and never the size (ALGEBRA.md #the-primitives)."""
     return (value > 0) - (value < 0)
+
+
+def carried_line(
+    act: str,
+    wall: int,
+    coefficient: int,
+    counts: Counts,
+    values: dict[Key, int],
+    carries: dict[Key, int],
+) -> Levels:
+    """The write's line by Rule3's carried division alone, per key (coefficient x count + r) div wall with the remainder at the key: the folder's own when the loop hands no write, the same arithmetic features/write wraps."""
+    return tuple(
+        (key, *carried(act, key, coefficient * count, wall, values, carries)) for key, count in counts
+    )
 
 
 def check(term: RecoilTerm, own: RecoilOwn) -> None:
@@ -88,18 +109,22 @@ def check(term: RecoilTerm, own: RecoilOwn) -> None:
 
 
 def apply(term: RecoilTerm, start: RecoilStart, own: RecoilOwn) -> RecoilWrites:
-    """The primitive: per axis with a tally, n_a += sense x sigma_a x 3 Q P_body (L div lambda_q) div L with the store carried on L (ALGEBRA.md #the-primitives, the row "the recoil")."""
+    """The primitive: per axis with a tally, n_a += sense x sigma_a x 3 Q P_body (L div lambda_q) div L with the store carried on L, one act of the write's line at the advance, the axis its key (ALGEBRA.md #the-primitives, the rows "the recoil" and "the write")."""
     check(term, own)
     share, _ = division_forward(term.wall, term.wavelength, 0)
     amount = THREE * term.unit * term.period * share
     momentum = list(own.momentum)
     stores = list(own.remainders)
-    for axis in range(len(momentum)):
-        sigma = sign_of(start.tally[axis])
-        if sigma == 0:
-            continue
-        whole, stores[axis] = division_forward(term.sense * sigma * amount, term.wall, stores[axis])
+    line = start.write if start.write is not None else carried_line
+    carries: dict[Key, int] = {(axis,): store for axis, store in enumerate(stores)}
+    counts = tuple(
+        ((axis,), term.sense * sign_of(start.tally[axis]) * amount)
+        for axis in range(len(momentum))
+        if sign_of(start.tally[axis]) != 0
+    )
+    for (axis, *_), whole, _ in line(THE_ADVANCE, term.wall, 1, counts, {}, carries):
         momentum[axis] += whole
+        stores[axis] = carries[(axis,)]
     return RecoilWrites((momentum[0], momentum[1], momentum[2]), (stores[0], stores[1], stores[2]))
 
 
