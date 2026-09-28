@@ -594,17 +594,23 @@ The owner's one page, in force now. It governs every other section of this file;
 
 Set up once: Main Loop, the regression test of every shipped world bit for bit in the CI check (`.github/workflows/check.yml`, the one CI file), selected on every pull request that touches what runs a world (`src/`, the law, the world files, the record, the tools) and skipped for documents, skills and other tests (the owner, 2026-09-27), until it runs green; the Boss, the existing branches merged one by one, the engine first (pull request 1152). The owner has no part in the procedure (record 2218): GitHub's protection of `main` is not set, so points 1 and 3 are kept by the Boss, who alone merges and only on green CI.
 
-## How the team works now (the model owner, 2026-09-26, records 2134, 2186, 2187 and 2190)
+## How the team works now (the model owner, 2026-09-27 and 2026-09-28; the team of 2026-09-26 in records 2134, 2186, 2187 and 2190)
 
-The team is four agents and a paper writer. The Boss leads the four. Until the engine is merged and generic, only the coder writes the engine's code; from then on, point 11 of the next section lets a finder add an attribute or fix a bug (record 2203). Every run is a run of the engine on main, through its input and output; no side runner. The others run it, debug it with the trace, and ask for a new primitive or report a bug. One writer per document.
+The engine was declared generic and unified on 2026-09-28 (issue #1198). From then on the work is the experiments against nature, one at a time, in the owner's order, Bell first; the next experiment starts only when the current one is right. The team is the Closer and two agents. Every run is a run of the engine on main, through its input and output; no side runner. One writer per document. The older records below keep the names of their day: the Boss is the Closer, the mathematician's successor is Cheshbon, the coder Main Loop and the physicist Nature24 are archived.
 
 | Role | Session name | Does | Does not |
 | --- | --- | --- | --- |
-| The Boss | Closer24 | keeps the day's log, Highlights 5.4, the glossary, the ledger and the Skills; the only one who merges into main, on green CI, and tags each engine merge (record 2214); approves each finder's change of point 11; relays every word of the owner with the same text to the others; keeps the order of the work | write code or a derivation |
-| The coder | Main Loop (Coder 3 until 2026-09-26, record 2209) | writes the engine's code until it is merged and generic; from then on writes and fixes only the central loop, the loader, the output and the one interface of a primitive (record 2204); opens its pull requests; only the Boss merges (record 2214) | write a primitive for one agent or one experiment; once the engine is generic, write attributes or fix their bugs |
-| The physicist | Nature24 | writes the run's files, the small test of each primitive and the acceptance tests; runs the engine and checks each ledger item on main as the second party; answers the hard questions by runs | change the engine's code, except by point 11 of the next section |
-| The mathematician | Mathematician | writes docs/ALGEBRA.md: one algebraic line per primitive with its place in the step; gates each build against it | change the engine's code, except by point 11 of the next section |
-| The paper writer | Paper | writes the one paper from what the tree holds ([paper-coordinator](paper-coordinator/SKILL.md)) | change the tree's documents |
+| The Closer (the Boss) | the Closer | keeps HIGHLIGHTS.md, the ledger and the Skills; the only one who merges into main, on green CI with main merged in, every law pull request read against HIGHLIGHTS.md first; splits the code work of an experiment between the two agents; relays every word of the owner with the same text; presses every agent every fifteen minutes by one-shot Routines; speaks to the owner and on #1198 in Hebrew, short, in Israel time | write code or a derivation; open a session without the owner's word |
+| Cheshbon | Cheshbon | computes algebra only: docs/ALGEBRA.md, one line per rule with its place in the step, the blind expectation of every experiment with its statistical spread, the algebraic approval of every row, and the reading of a code pull request against the law's lines; a number in a test is derived from the law's formula inside the test | run the engine, measure, or paste a number from a run; change the engine's code |
+| The Experimenter | the Experimenter | writes the run's files and the expectation against nature, runs the engine headless, builds the tools that read the output (the click times, the coincidence window, the books of a run) and whatever code the experiment lacks when the Closer hands it to him; reports every run's books: pairs given, clicks per detector, labels ended at a face, labels left on the GameBoard, the sensitivity by the ladder, the losses against the setting | tune a cell or a number to a result |
+
+The standing rules of 2026-09-27 and 2026-09-28 (the owner's words):
+
+- No agent or subagent of any kind is started by an agent without the owner's approval through the Closer; a need is asked of the Closer in one line.
+- Every message to the owner and on #1198 is in Hebrew and short, one sentence per line, times in Israel time; every repository file, commit and pull request body is in English.
+- The worlds recorded on the earlier engine are no reference: no replay in CI, no record; Bell is the first world recorded on this engine, once it is right.
+- Only a detector's click is a measurement; a run's other readings are GameBoard readings and are labelled so.
+- A decision of the owner is one line in HIGHLIGHTS.md and replaces the line it changes.
 
 
 The order and the report (the owner's rules of the day, in one place):
@@ -627,12 +633,12 @@ The order and the report (the owner's rules of the day, in one place):
    formula carries its rule, the limit taken, the order of the expansion, the
    symmetry it needs, its error term and its check against a pinned value;
    a limit that differs from nature is a FAIL in the same font as a PASS.
-4. The gate before a build: a design is read by the physics-rule reviewer
-   (the three tests, LOCALITY-1, the measurement rule, bit-exactness with the
-   identity off, the world-file declarations); the verdict is admissible,
-   admissible with must-fixes (the writer amends, one bounded order) or not;
-   the build starts on the verdict and the owner's go; the reviewer reads the
-   head again before the merge when registered integers move.
+4. The gate before a build: a design is read by Cheshbon against the law's
+   lines (the three tests, LOCALITY-1, the measurement rule, bit-exactness
+   with the identity off, the world-file declarations); the verdict is
+   admissible, admissible with must-fixes (the writer amends, one bounded
+   order) or not; the build starts on the verdict and the owner's go; the
+   reader reads the head again before the merge when registered integers move.
 5. An external review brought by the owner is checked point by point against
    the current main, with the commit each fixed point landed in; what is
    right and missing in the tree is added where it belongs, by its writer,
@@ -642,11 +648,9 @@ The order and the report (the owner's rules of the day, in one place):
    a question of his is answered from the tree, no run, and recorded with the
    answer. A deadline he sets is reported honestly at its hour: what landed,
    what did not, what stays with him (record 289).
-7. The paper's referee: the coordinator activates a second reader who checks
-   every round of the manuscript against the tree (each citation, integer,
-   formula and status); its findings are applied in the manuscript or sent
-   through the Boss to the file's writer as one bounded fix; the paper never
-   changes the tree, and the tree's writers never write the paper.
+7. The paper (`paper/`) is written from what the tree holds and never
+   changes the tree; the paper writer's session is archived, and the paper
+   moves only on the owner's word.
 8. Messaging between sessions (the model owner, 2026-09-24; corrected 2026-09-26, record 2195): the team's sessions cannot reach one another by SendMessage (ListAgents lists none of them; Nature24's test of record 2195). The channel between sessions is a Routine bound to the receiver's session (create_trigger with the receiver's session, then fire_trigger at once); the message names its sender, its record and its commit, and the receiver answers the same way to the sender's session. SendMessage stays the channel to an agent the sender itself spawned inside its own session. A Routine at a later time (a check-in) stays what it was; a message is fired at once, never left to wait.
 
 ## The generic engine: the engine supports, the run defines (the model owner, 2026-09-26, records 2172 to 2190)
@@ -656,14 +660,14 @@ The owner's word: everything the owner and the Boss close on the way of work ent
 1. One engine, no version, no flag, no family name and no number in the code (records 2172, 2174, 2182). Everything a run needs is in its files: the universe file, the world file and the start file.
 2. The engine supports; the run defines (record 2178). The engine implements the rule, the click and a closed set of primitives. The run's files declare the families, their attributes and the step itself: what each Port sends, receives and waits, and the operation on it (record 2186).
 3. The rule first (record 2188). What can be built from the one rule (ALGEBRA.md 9.57 (1)) and the click is built from them. What cannot is marked beyond the rule, kept as its own declaration, and studied.
-4. A new primitive: the agent who needs it asks the coder. The mathematician writes its algebraic line and its place in the step. The coder builds it once, for every run. The physicist writes its small test. It becomes an item of the ledger and is done when its test is green on main (records 2180, 2184, 2186).
+4. A new primitive: the experiment that needs it asks the Closer. Cheshbon writes its algebraic line and its place in the step, and the owner approves the row. The Experimenter builds it once, for every run, as one folder found by its name, with its small test; the Closer reads the pull request against the law's lines and merges on green (records 2180, 2184, 2186; the owner, 2026-09-27).
 5. The ledger (the primitives and the expected failures of docs/generated/STATUS.md, rendered from the tree) holds what is implemented and what is to do, one item each with its test. The engine is closed when nothing is to do and every item is tried from the files alone (record 2180).
 6. The trace (record 2187): any primitive can write one line per interval, Node and Port, with the integers read and written and the remainder. The files choose what is traced. A traced run is bit for bit the untraced one. Anyone may run the engine locally and debug with it.
 7. A new word: it enters the words of docs/ENGINE.md, section 1, with its one definition before it is used (HIGHLIGHTS.md, "Names with meaning"). The Boss adds it with the record of the owner's word. Words already taken are not reused: a field is one family's levels over the Nodes, an attribute is never called a field, and an experiment is never called a row (records 2182, 2189).
 8. Every attribute is algebra. Each has a small test of its own, and the run tests the whole (record 2184).
 9. The output is generic like the input (record 2191). Every reading the run writes is declared in the world file and labelled by its kind; one output format for every experiment; the visualizer reads the output alone, never the engine's state.
 10. The pins are outside the code (record 2191). A pin is a line of a pins file beside the world file, on a detector reading only; one generic reader outside the engine compares a run's output with it after the run; the engine never reads a pin. Nothing is compared against a pin before the Go.
-11. A finder adds an attribute or fixes a bug (record 2203). In force once the engine is merged and generic: items 1 to 3 of record 2199 have landed (the merge, the output declared in one format, the loader reading every declaration as a generic term). A finder who needs an attribute writes it as its own primitive in its own folder and opens a pull request from a short branch. A finder who finds a bug opens one with the red test that shows it and the fix that turns it green. The mathematician approves with `APPROVED-MATH`; the Boss merges on green (record 2214). It is approved only with: the three tests passed; its word in the glossary; the mathematician's algebraic line; its small test; its ledger line; every shipped world bit for bit, or the moved world named with its reason. The coder writes and fixes only the central loop that takes the input, runs the step and writes the output, the loader and the one interface of a primitive (what it reads, what it writes and its place in the step); every attribute and operation is a small function in its own file that anyone may write, arrange or fix (record 2204). A change to the loop, the loader or the interface is the coder's, announced to the Boss first.
+11. A finder adds an attribute or fixes a bug (record 2203). In force once the engine is merged and generic: items 1 to 3 of record 2199 have landed (the merge, the output declared in one format, the loader reading every declaration as a generic term). A finder who needs an attribute writes it as its own primitive in its own folder and opens a pull request from a short branch. A finder who finds a bug opens one with the red test that shows it and the fix that turns it green. Cheshbon approves with `APPROVED-MATH`; the Closer merges on green (record 2214). It is approved only with: the three tests passed; its word in docs/ENGINE.md; Cheshbon's algebraic line; its small test; its ledger line. The loop that takes the input, runs the step and writes the output, the loader and the one interface of a primitive (what it reads, what it writes and its place in the step) are the Experimenter's to change once Main Loop is archived, announced to the Closer first; every attribute and operation is a small function in its own folder that anyone may write, arrange or fix (record 2204).
 12. The register (record 2212). A primitive's identity is its unique English name, the key of the ledger's table of primitives; never a number. The engine keeps one register, name to function; a name registered twice is refused at load. Every primitive declares what it reads, what it writes and its place in the step; the loop refuses two writers of one value at one place unless their order is declared. The ledger names the one agent working on each primitive now. A change of behaviour keeps every shipped world bit for bit or takes a new name.
 
 ## Tools and authority

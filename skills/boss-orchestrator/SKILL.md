@@ -5,7 +5,7 @@ description: Coordinate Universe24 specialists, research, candidates and durable
 
 # Boss orchestration
 
-The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The Boss leads the four (the Boss, the coder Main Loop, the physicist Nature24, the mathematician) and the paper writer, owns the ledger and the glossary, and writes every closed way of work into the Skills.
+The Boss is called the Closer (the owner, 2026-09-28); the older records below keep the name of their day. The team and the way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow. The Closer leads the two agents, Cheshbon (algebra only) and the Experimenter (the run's files, the runs, the tools and the code the experiment lacks), splits the code work between them, owns the ledger, and writes every closed way of work into the Skills. No agent starts a session or a subagent without the owner's word through the Closer.
 
 For implementation dispatch, apply [the published-design requirement](../workflow.md#implement-from-a-published-design): provide the authoritative path and commit before behavior work, and route design changes to affected owners.
 
@@ -279,19 +279,14 @@ and failure analysis to the test owner; Boss coordinates the returned results.
 | --- | --- |
 | Field law or response | [field-development](../field-development/SKILL.md) |
 | Missing numerical law or physical acceptance | [physics-rule-validation](../physics-rule-validation/SKILL.md), then [mathematical-validation](../mathematical-validation/SKILL.md) and the implementation owner |
-| State/interfaces/dependencies | [architecture-review](../architecture-review/SKILL.md) |
 | Mathematical invariants and physical comparisons | [mathematical-validation](../mathematical-validation/SKILL.md) |
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |
 | Focused tests | [test-runner](../test-runner/SKILL.md) |
 | Reproducible execution | [simulation-runner](../simulation-runner/SKILL.md) |
 | A real experiment, read by its detectors' clicks only | [experimenter](../experimenter/SKILL.md) |
-| Regression | [regression-check](../regression-check/SKILL.md) |
 | PR review/merge | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) |
-| The manuscript, with its referee | [paper-coordinator](../paper-coordinator/SKILL.md) |
-| A design, a hypothesis or a verdict on physics (item by item) | Nature24's session (the physicist), by direct message; a review file by [physics-rule-validation](../physics-rule-validation/SKILL.md) before its build |
-| A derivation, the map's status, order and error term | the derivation mathematician's session, by direct message ([the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190)) |
-| The law's text, the genericity probe, a host-only unification | the architect's session, by direct message |
-| A gallery page | the Visualiser's session, by direct message |
+| A derivation, an expectation, the algebraic approval of a row, the reading of a code pull request against the law | Cheshbon's session, by a one-shot Routine |
+| A design, a hypothesis or a verdict on physics, the run's files, a run, a tool | the Experimenter's session, by a one-shot Routine |
 
 One agent may use several skills. Exploration normally uses one owner unless parallel experiments are genuinely independent. Do not create idle agents to match the routing table.
 
@@ -312,7 +307,7 @@ One agent may use several skills. Exploration normally uses one owner unless par
 use SendMessage").** The Boss talks to every session with the SendMessage
 tool, after ListAgents shows the receiver as reachable; a Routine is created
 only for what must happen at a later time (a check-in, a re-read after a
-run's expected end); the rule is [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190),
+run's expected end); the rule is [the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190),
 item 8, and binds every role. The name "the order by Routine" below is the
 order's form, kept from record 309; its channel is the direct message.
 
@@ -323,7 +318,7 @@ Boss opens the pull request when the writer's tool refuses and merges on
 green; one writer per document; the physics-rule reviewer before a build and
 on the head before a merge that moves registered integers; every word of the
 owner recorded at once. The list is in
-[the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190).
+[the shared workflow](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190).
 
 ## Persistence and self-improvement
 
