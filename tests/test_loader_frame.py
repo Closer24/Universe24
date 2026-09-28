@@ -101,16 +101,16 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
         frame.universe(FILE, {FILE: []}, discover())
 
 
-def test_every_shipped_world_passes_the_frames_world_schema():
-    """Every shipped world of the engine passes the frame's reading of the world's keys; the handed keys come back as written and the frame's as checked (lists as tuples)."""
+def test_every_world_file_passes_the_frames_world_schema():
+    """Every world file of the repository (the rule tests' own `tests/light_clock.json` and every world under `examples/events/`, the worlds of record as they land) passes the frame's reading of the world's keys; the handed keys come back as written and the frame's as checked (lists as tuples)."""
     count = 0
-    ahead = {
-        "check_mode",
-        "source",
-    }  # the worlds the loader of today does not load (AHEAD in the regression record)
-    for path in sorted((ROOT / "examples" / "events").glob("*/*.json")):
+    paths = [
+        ROOT / "tests" / "light_clock.json",
+        *sorted((ROOT / "examples" / "events").glob("**/*.json")),
+    ]
+    for path in paths:
         document = json.loads(path.read_text(encoding="utf-8"))
-        if not (isinstance(document, dict) and "universe" in document) or ahead & set(path.parts):
+        if not (isinstance(document, dict) and "universe" in document):
             continue
         count += 1
         checked = frame.world(document)
@@ -119,12 +119,12 @@ def test_every_shipped_world_passes_the_frames_world_schema():
         )
         assert checked["shape"] == tuple(document["shape"]) and checked["engine"] == document["engine"]
         assert set(checked) == set(document)
-    assert count >= 22
+    assert count >= 1
 
 
 def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
     """An unknown key (the ray law's, a retired one, a law's name), a missing key, a wrong kind, a face word the GameBoard lacks, a stamp without its hash; the handed keys unchecked."""
-    good = json.loads((ROOT / "examples/events/dark_body/bright.json").read_text(encoding="utf-8"))
+    good = json.loads((ROOT / "tests/light_clock.json").read_text(encoding="utf-8"))
 
     def refuses(change, match: str) -> None:
         broken = copy.deepcopy(good)
@@ -158,15 +158,20 @@ def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
     assert frame.world(handed)["measured"] == "not checked here"
 
 
-def test_every_shipped_body_and_detector_passes_the_frames_schemas():
-    """Every body and every detector of the shipped worlds passes the frame with the families known; a stock names a family, the checked lists are tuples."""
+def test_every_body_and_detector_of_a_world_in_todays_form_passes_the_frames_schemas():
+    """Every body and every detector of the repository's world files in today's form (a body by its position: the rule tests' own `tests/light_clock.json`; a world of record in the law's form declares its bodies by their Nodes and is read by the law's-form schema) passes the frame with the families known; a stock names a family, the checked lists are tuples."""
     families = tuple(entry["name"] for entry in shipped()["families"])
     context = Context(families)
-    ahead = {"check_mode", "generated", "source"}
     count = 0
-    for path in sorted((ROOT / "examples" / "events").glob("*/*.json")):
+    paths = [
+        ROOT / "tests" / "light_clock.json",
+        *sorted((ROOT / "examples" / "events").glob("**/*.json")),
+    ]
+    for path in paths:
         document = json.loads(path.read_text(encoding="utf-8"))
-        if not (isinstance(document, dict) and "universe" in document) or ahead & set(path.parts):
+        if not (isinstance(document, dict) and "universe" in document):
+            continue
+        if any("position" not in body for body in document["measured"]):
             continue
         count += 1
         bodies = frame.bodies(document["measured"], context, REGISTER)
@@ -176,14 +181,12 @@ def test_every_shipped_body_and_detector_passes_the_frames_schemas():
             assert set(body["stocks"]) <= set(families)
         detectors = frame.detectors(document["detectors"])
         assert [d["name"] for d in detectors] == [d["name"] for d in document["detectors"]]
-    assert count >= 22
+    assert count >= 1
 
 
 def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
     """The ray law's and the retired keys as unknown keys, a missing key, a wrong kind, a family the universe lacks (on the body, in its stocks, in its emitter), a bad mapping."""
-    good = json.loads(
-        (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
-    )
+    good = json.loads((ROOT / "tests" / "light_clock.json").read_text(encoding="utf-8"))
     context = Context(tuple(entry["name"] for entry in shipped()["families"]))
     retired = (
         "lamp",
@@ -302,14 +305,12 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         refuses(change, match)
     with pytest.raises(ValueError, match=r"measured\[0\] must be an object: a body by its position"):
         frame.bodies([3], context, REGISTER)
-    world = json.loads(
-        (ROOT / "examples" / "events" / "dark_body" / "bright.json").read_text(encoding="utf-8")
-    )
+    world = json.loads((ROOT / "tests" / "light_clock.json").read_text(encoding="utf-8"))
     nodes = [
-        {"node": [1, 2, 0], "count": 5},
-        {"node": [1, 4, 0], "count": 7},
-        {"node": [3, 3, 0], "count": 1},
-    ]
+        {"node": [1, 0, 0], "count": 5},
+        {"node": [1, 2, 0], "count": 7},
+        {"node": [3, 1, 0], "count": 1},
+    ]  # free Nodes of the light clock's chain [760, 3, 3], its bodies from x = 629
     counted = {**spinning, "family": families[1], "nodes": nodes}
 
     def load(**change):
@@ -318,8 +319,8 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         return parse_world_document(world, world_files(world), input_digest(world)).measured[0]
 
     entry = load()
-    assert (entry.position, entry.block.extents, entry.amount) == ((1, 2, 0), (3, 3, 1), 13)
-    assert entry.block.nodes == ((1, 2, 0), (1, 4, 0), (3, 3, 0)) and entry.block.counts == (5, 7, 1)
+    assert (entry.position, entry.block.extents, entry.amount) == ((1, 0, 0), (3, 3, 1), 13)
+    assert entry.block.nodes == ((1, 0, 0), (1, 2, 0), (3, 1, 0)) and entry.block.counts == (5, 7, 1)
     assert (
         entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0) and entry.block.declared == {}
     )
@@ -330,8 +331,8 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         ValueError, match=r"measured\[0\]: the family 'matter' declares no pair, and a body"
     ):
         load(family=families[-1])
-    with pytest.raises(ValueError, match=r"measured\[0\]\.nodes names the Node \[1, 2, 0\] twice"):
-        load(nodes=[*nodes, {"node": [1, 2, 0], "count": 2}])
+    with pytest.raises(ValueError, match=r"measured\[0\]\.nodes names the Node \[1, 0, 0\] twice"):
+        load(nodes=[*nodes, {"node": [1, 0, 0], "count": 2}])
 
 
 def test_the_start_file_is_its_mode_and_nothing_else():

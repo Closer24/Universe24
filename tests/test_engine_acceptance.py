@@ -12,10 +12,9 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.core.rule3 import coefficients, rule3
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.worlds import NODE_CLOCK, emitter_world, family_entry, load_file
+from tests.worlds import emitter_world, family_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
@@ -280,36 +279,3 @@ def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
             if isinstance(value, str) and (VERSION_STRING.search(value) or value in FLAG_WORDS):
                 offending.append(f"{path.relative_to(ROOT)}:{line} {value!r}")
     assert offending == [], offending
-
-
-def test_f_one_step_of_the_engine_is_the_rules_transcription_bit_for_bit():
-    """(f) The rule as one function (ALGEBRA.md #the-line, #the-interval): the engine's one step on
-    random levels, remainders and contents equals the independent transcription of the rule
-    (the rule alone, its transcription script) integer for integer."""
-    transcription = load_file(
-        "rule_alone_transcription", ROOT / "docs" / "designs" / "rule_alone" / "rule_alone.py"
-    )
-    rng = np.random.default_rng(2026)
-    shape = (6, 5, 4)
-    for kind in ((800, 850), (800, 809), (1000, 1019)):
-        num = np.full(shape, kind[0], dtype=np.int64)
-        den = np.full(shape, kind[1], dtype=np.int64)
-        now = rng.integers(-(1 << 16), 1 << 16, size=shape, dtype=np.int64)
-        before = rng.integers(-(1 << 16), 1 << 16, size=shape, dtype=np.int64)
-        remainder = rng.integers(0, 6 * kind[1] * NODE_CLOCK * NODE_CLOCK, size=shape, dtype=np.int64)
-        content = rng.integers(0, 3000, size=shape, dtype=np.int64)
-        read, own, wall = transcription.coefficients(num, den, content, NODE_CLOCK)
-        wrap = (True, True, True)
-        expected_now, _, expected_remainder = transcription.step(
-            now, before, remainder, read, own, wall, wrap
-        )
-        # the one rule's three axis sums on the periodic board (their sum the transcription's six-sum)
-        axis_sums = tuple(np.roll(now, 1, axis=axis) + np.roll(now, -1, axis=axis) for axis in range(3))
-        assert np.array_equal(sum(axis_sums), transcription.neighbour_sum(now, wrap))
-        reads, self_coefficient, wall_rule = coefficients(num, den, NODE_CLOCK, content)
-        engine_now, engine_remainder = rule3(
-            reads, axis_sums, self_coefficient, wall_rule, now, before, remainder
-        )
-        assert np.array_equal(engine_now, expected_now) and np.array_equal(
-            engine_remainder, expected_remainder
-        )

@@ -422,7 +422,7 @@ without a derived expectation is a research run and says so in its page
 and its record. (3) The derivation mathematician's targets
 (their sections of ALGEBRA.md) are the source of every series' expectations; a
 target not reached marks a quantity a run may only measure. (4) The
-register's `expectations.json` entries carry a `derivation` field, and the
+register's `<world>.expectation.json` entries carry a `derivation` field, and the
 review of an experiment's pull request checks the derivation before the
 numbers. (5) An experiment names, before the run, the vector or tensor it
 will read after the detector and its form (the readings by type in
@@ -717,7 +717,7 @@ stabilisation of the engine and the freeze:
    once, at the freeze; the docs after the code; the reviewer reads once
    after the merge ([physics-rule-validation](physics-rule-validation/SKILL.md)).
 5. **Every world has its test-run line, written by the world's writer before
-   the run** (the `expectations.json` beside the world):
+   the run** (the `<world>.expectation.json` beside the world):
    what a clean preliminary run must show, with no pin and no target number;
    the Preliminary Runner runs each feature's experiments on the writer's
    branch as soon as it is pushed and reports clean or what broke; a defect in

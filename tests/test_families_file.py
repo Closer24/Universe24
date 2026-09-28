@@ -160,7 +160,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
             read["family"] = rename[read["family"]]
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
-    clock = json.loads((ROOT / "examples/events/massive_record/light_clock.json").read_text())
+    clock = json.loads((ROOT / "tests/light_clock.json").read_text())
     a = DetectorLawSimulation(parse_nature_beam_world(clock))
     renamed = json.loads(json.dumps(clock))
     for entry in renamed["measured"]:

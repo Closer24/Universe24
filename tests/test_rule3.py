@@ -229,9 +229,7 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
     assert "src/event_universe/events/detector_law.py" not in found
     for home, functions in SHIFT_HOME.items():
         assert found.pop(home) == functions
-    assert {name for name in found if not name.startswith("src/event_universe/diagnostics/")} == set(), (
-        found
-    )
+    assert found == {}, found
     # the engine, core and the folders hold no split of their own (the loader's parse of the
     # refused key `splits` in world.py is a refusal, not a step, and goes with world.py)
     stepping = [SOURCE / "events" / "detector_law.py", *sorted((SOURCE / "core").glob("*.py"))]
