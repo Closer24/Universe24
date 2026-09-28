@@ -29,6 +29,7 @@ from event_universe.core.rule3 import (
 from event_universe.events import after_step, assembly, body_language, feeding, guards, output, pair
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
+from event_universe.events.inverse import block_clock_inverse, booking_inverse
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
 from event_universe.events.output import form_json as form_json
 from event_universe.events.records import Block, DetectorLawLayer, Ledger, LiveRecord, NodeRecord
@@ -288,6 +289,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _crystal_click = after_step.crystal_click
     _crystal_stage = after_step.crystal_stage
     _window_write = after_step.window_write
+    _booking_inverse = booking_inverse
+    _block_clock_inverse = block_clock_inverse
     _write_line = after_step.write_line
     _point_windows = after_step.point_windows
     _close_window = after_step.close_window
@@ -1186,16 +1189,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 )
         block.previous_sum = total
         if self.record is not None:
-            self.record(
-                {
-                    "event": "block",
-                    "tick": self.tick,
-                    "measured": block.number,
-                    "corner": list(block.corner),
-                    "sum": total,
-                    "centre": at_centre,
-                }
-            )
+            event = {"event": "block", "tick": self.tick, "measured": block.number}
+            self.record({**event, "corner": list(block.corner), "sum": total, "centre": at_centre})
 
     # The inverse map (ALGEBRA.md 8.8): the step is a bijection but for the click; the property test of 9.20 (B) 4 runs it backwards
 
@@ -1283,6 +1278,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def step_inverse(self) -> None:
         """One interval backward in the joint inverse's fixed order (the bodies' step back, every family at the interval's start levels, the held families and their hold last); no hop, click or giving in the interval."""
         self.ports.begin()
+        for live in self.records.values():
+            self._booking_inverse(live)
         # the bodies' step back first (ALGEBRA.md #the-interval; commit 6): the momentum and the spin as the interval began, from the fields as it left them
         for block in self.blocks:
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
@@ -1320,6 +1317,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 self._advance_node_record(block, -1)
             elif block.own is not None:
                 self._advance_inverse(block.own)
+            self._block_clock_inverse(block)
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
         self._hold(hold, THE_INVERSE, held)
@@ -1936,7 +1934,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return total
 
     def _point_window_inverse(self, block: Block) -> None:
-        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write at both levels subtracted through the folder's inverse (the levels written that interval from the same body levels and the remainders after, the remainders before kept), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
+        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write at both levels subtracted through the folder's inverse (the levels written that interval from the same body levels and the remainders after, the remainders before kept), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after; the write is in place, so the Ports' cache of arrivals taken before it is emptied (a third in-place writer beside the hold and the pair region)."""
         live = self.records.get(block.window) if block.window is not None else None
         emitter = block.definition.emitter
         if live is None or emitter is None or emitter.weight is None or live.window <= 0:
@@ -1952,6 +1950,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         live.now[block.mask] -= undone_levels[0]
         live.before[block.mask] -= undone_levels[1]
         live.giving_remainders, live.window = writes.own.remainders, live.window - 1
+        self.ports.begin()
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
         """The sum of the six neighbours' amplitudes at the Nodes (flat indices) alone, as the send reads them over the board (the wrap on a periodic axis, 0 beyond a zero face, the row itself on an axis of one layer); HOST: the cost is the Nodes asked, not the board."""
