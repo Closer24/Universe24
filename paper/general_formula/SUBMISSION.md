@@ -12,15 +12,16 @@ journal third.
   packages only (geometry, amsmath, amssymb, amsthm, booktabs, graphicx,
   hyperref, caption, microtype, float, enumitem, longtable, array); it
   compiles from a clean directory holding `main.tex` and `figures/` alone,
-  28 pages, no undefined reference.
+  30 pages, no undefined reference.
 - `main.pdf`, the compiled output at the same commit.
 - `figures/`: the two figures the paper includes (`lattice.pdf`,
   `octahedron.pdf`), both drawn by `octahedron.py` from the definitions,
-  none by a generative tool.
+  none by a generative tool; `algebraic_runs.py`, the script that computes
+  every number of the paper's table from the law's formulas.
 - The title page: the title, the author's name, affiliation, email and
   ORCID.
-- The abstract: 247 words (the journal's template asks 150 to 250),
-  1494 characters (arXiv allows 1920).
+- The abstract: 246 words (the journal's template asks 150 to 250),
+  1488 characters (arXiv allows 1920).
 - Keywords after the abstract (six).
 - The declarations in the journal's list: funding, competing interests,
   ethics approval, consent to participate and for publication, data and
@@ -39,9 +40,11 @@ journal third.
 The paper is algebra alone: every formula is `docs/ALGEBRA.md`'s, the
 theorems are proved on the lattice, every claim carries its mark (theorem,
 derived, computed, assumption, hypothesis), and the forms of nature are
-derived from the line as predictions with the form of nature beside each.
-It holds no run, no code and no experiment, and no agreement with nature
-is claimed; the experiments are a second part, after their runs.
+derived from the line as predictions with the form of nature beside each,
+and every experiment is run algebraically on a declared world, its numbers
+computed by `algebraic_runs.py` from the law's formulas. It holds no run
+of the engine, and no agreement with nature is claimed; the runs on the
+engine are a second part.
 
 ## GitHub (the author's hand, with the Boss)
 
@@ -68,7 +71,7 @@ is claimed; the experiments are a second part, after their runs.
    (the paper's words, the macros written out); the author as on the
    title page; the licence CC BY 4.0, the author's choice (the usual
    choice for a paper whose code is MIT; irrevocable for each version);
-   the comment line: "28 pages, 2 figures; code and documents at
+   the comment line: "30 pages, 2 figures; code and documents at
    doi:10.5281/zenodo.22738746".
 5. After the posting, the arXiv identifier goes into the cover letter.
 

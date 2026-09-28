@@ -14,6 +14,10 @@ manuscript.
 - `general_formula/figures/lattice.pdf` and `octahedron.pdf`: the two
   figures, drawn from the definitions with no run by
   `python paper/general_formula/octahedron.py --output paper/general_formula/figures`.
+- `general_formula/algebraic_runs.py`: the experiments run algebraically,
+  every number of the paper's table computed from the law's formulas on
+  declared worlds, by no run of the engine:
+  `python paper/general_formula/algebraic_runs.py`.
 - `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
   the journal.
 - `general_formula/COVER_LETTER.md`: the cover letter for the journal.
