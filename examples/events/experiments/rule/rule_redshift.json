@@ -1,12 +1,12 @@
 {
  "shape": [
   100,
-  1,
+  9,
   1
  ],
  "boundary": {
   "x": "open",
-  "y": "periodic",
+  "y": "open",
   "z": "periodic"
  },
  "ticks": 1500,
@@ -20,7 +20,7 @@
     {
      "node": [
       20,
-      0,
+      4,
       0
      ],
      "count": 4000
@@ -59,7 +59,7 @@
     {
      "node": [
       80,
-      0,
+      4,
       0
      ],
      "count": 3000
@@ -84,7 +84,7 @@
    "positions": [
     [
      80,
-     0,
+     4,
      0
     ]
    ]
@@ -103,7 +103,7 @@
    "family": "charge",
    "node": [
     24,
-    0,
+    4,
     0
    ],
    "every": 1
@@ -114,7 +114,7 @@
    "family": "charge",
    "node": [
     76,
-    0,
+    4,
     0
    ],
    "every": 1
@@ -149,7 +149,7 @@
    "family": "gravity",
    "node": [
     50,
-    0,
+    4,
     0
    ],
    "every": 100

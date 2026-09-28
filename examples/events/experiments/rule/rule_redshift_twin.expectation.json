@@ -18,7 +18,7 @@
    "giver_clock",
    "taker_clock"
   ],
-  "axis_y": 0,
+  "axis_y": 4,
   "windows": [
    [
     24,
@@ -44,7 +44,7 @@
    "interval": 1400,
    "centre": [
     20,
-    0,
+    4,
     0
    ],
    "band": 0,
@@ -55,7 +55,7 @@
    "interval": 1400,
    "centre": [
     80,
-    0,
+    4,
     0
    ],
    "band": 0,

@@ -712,39 +712,43 @@ def pixel(node: list[int], count: int, **keys: Any) -> dict[str, Any]:
 
 
 def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int, stock: int) -> None:
-    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a chain along x, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447, its charge q = 1: a body without q gives no light; the window's norm 1 over 1, T the unit of the rule's universe, until the emitter's norm leaves the file) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
-    margin = 20
+    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a strip of nine rows along x, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447, its charge q = 1: a body without q gives no light; the window's norm 1 over 1, T the unit of the rule's universe, until the emitter's norm leaves the file) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
+    margin, rows, mid = (
+        20,
+        9,
+        4,
+    )  # a strip of nine rows as world (d)'s: on a chain of one row a pixel's one-dimensional well grows with the board's length (the pace negative at its Node), on the strip it stays the count's
     giver_x, taker_x = margin, margin + distance
     length = taker_x + margin
     window = max(8, distance // 4)
     measured = [
         pixel(
-            [giver_x, 0, 0],
+            [giver_x, mid, 0],
             deep,
             q=1,
             moment=[0, 0, 1],
             emitter={"family": "charge", "weight": 1, "norm": 1, "norm_denominator": 1},
             stocks={"charge": stock},
         ),
-        pixel([taker_x, 0, 0], shallow),
+        pixel([taker_x, mid, 0], shallow),
     ]
-    detectors = [{"name": "taker", "positions": [[taker_x, 0, 0]]}]
+    detectors = [{"name": "taker", "positions": [[taker_x, mid, 0]]}]
     last = (ticks - 1) - (ticks - 1) % 200
     readings = [
         reading("light_rows", "rows", 20, family="charge"),
-        reading("light_beside_the_giver", "level", 1, family="charge", node=[giver_x + 4, 0, 0]),
-        reading("light_beside_the_taker", "level", 1, family="charge", node=[taker_x - 4, 0, 0]),
+        reading("light_beside_the_giver", "level", 1, family="charge", node=[giver_x + 4, mid, 0]),
+        reading("light_beside_the_taker", "level", 1, family="charge", node=[taker_x - 4, mid, 0]),
         reading("giver_clock", "cycle", 1, body=0),
         reading("taker_clock", "cycle", 1, body=1),
         reading("giver_centre", "centre", 200, body=0),
         reading("taker_centre", "centre", 200, body=1),
         reading(
-            "well_on_the_chain", "level", 100, family="gravity", node=[(giver_x + taker_x) // 2, 0, 0]
+            "well_on_the_chain", "level", 100, family="gravity", node=[(giver_x + taker_x) // 2, mid, 0]
         ),
     ]
     document = world(
-        [length, 1, 1],
-        {"x": "open", "y": "periodic", "z": "periodic"},
+        [length, rows, 1],
+        {"x": "open", "y": "open", "z": "periodic"},
         ticks,
         measured,
         detectors,
@@ -771,7 +775,7 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
             "rows": "light_rows",
             "levels": ["light_beside_the_giver", "light_beside_the_taker"],
             "clocks": ["giver_clock", "taker_clock"],
-            "axis_y": 0,
+            "axis_y": mid,
             "windows": [[giver_x + 4, giver_x + 4 + window], [taker_x - 4 - window, taker_x - 4]],
             "clock_ratio": 1.125,
             "clock_ratio_with_the_term": 1.5,
@@ -786,14 +790,14 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
             {
                 "body": 0,
                 "interval": last,
-                "centre": [giver_x, 0, 0],
+                "centre": [giver_x, mid, 0],
                 "band": 0,
                 "row": "the giver's pixel on its Node",
             },
             {
                 "body": 1,
                 "interval": last,
-                "centre": [taker_x, 0, 0],
+                "centre": [taker_x, mid, 0],
                 "band": 0,
                 "row": "the taker's pixel on its Node",
             },
