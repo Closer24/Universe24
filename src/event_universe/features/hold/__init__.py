@@ -1,4 +1,4 @@
-"""The hold: a body's writes into a held family at its Nodes, the count a source into the field's line ((count + r) div the row's divisor E_s added at the time part each interval, the remainder carried), the vector and tensor parts factor x count x n_a (x n_b) div W (div W^2) with the remainder carried, the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md #the-primitives the row "the hold", ALGEBRA.md #the-interval, #the-four-acts)."""
+"""The hold: a body's writes into a held family at its Nodes, the count a source into the field's line ((count + r) div the row's divisor E_s added at the time part each interval, the remainder carried), the vector and tensor parts factor x count x n_a (x n_b) div (E_s W) (div (E_s W^2)) with the remainder carried, at a body in the law's form per Node with the count declared there, the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md #the-primitives the row "the hold", ALGEBRA.md #the-interval, #the-four-acts)."""
 
 from __future__ import annotations
 
@@ -61,10 +61,10 @@ class HoldOwn:
 
 @dataclass(frozen=True)
 class HoldWrites:
-    """The writes of one act: the time part's increment of this interval ((count + r) div E_s at the advance, the one subtracted at the inverse, 0 at the load and at a rewrite), per part (its index, now, before), per dipole term ((i, j, sigma), now, before), and the body's remainders after."""
+    """The writes of one act: the time part's increment of this interval ((count + r) div E_s at the advance, the one subtracted at the inverse, 0 at the load and at a rewrite), per part (its index, the Node's key at a body in the law's form or None for the whole body, now, before), per dipole term ((i, j, sigma), now, before), and the body's remainders after."""
 
     time_level: int
-    parts: tuple[tuple[int, int, int], ...]
+    parts: tuple[tuple[int, Key | None, int, int], ...]
     dipoles: tuple[tuple[Vector, int, int], ...]
     own: HoldOwn
     node_levels: tuple[tuple[Key, int], ...] = ()  # the time part's increment per Node of the law's form
@@ -114,8 +114,14 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
         (key, time_increment(start.act, key, count, term.divisor, values, carries))
         for key, count in start.nodes
     )
-    parts: list[tuple[int, int, int]] = []
+    parts: list[tuple[int, Key | None, int, int]] = []
     index = 0
+    # the vector and tensor parts over the row's divisor E_s as the time part, the source one tensor at
+    # one scale (ALGEBRA.md the row "the hold"): at a body in the law's form per Node with the count
+    # declared there, else the whole body's count at every Node
+    sources: tuple[tuple[Key | None, int], ...] = (
+        tuple((key, count) for key, count in start.nodes) if start.nodes else ((None, start.count),)
+    )
     for group, count in enumerate(term.parts):
         for k in range(count):
             if group == 0:
@@ -123,15 +129,16 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
             axes = (k,) if group == 1 else TENSOR_AXES[k]
             part = index + k
             if start.act != THE_UNHOLD:
-                now, before = carried(
-                    start.act,
-                    (part,),
-                    booking(term.factors[group], start.count, start.momentum, axes),
-                    start.wall ** len(axes),
-                    values,
-                    carries,
-                )
-                parts.append((part, now, before))
+                for node, source in sources:
+                    now, before = carried(
+                        start.act,
+                        (part,) if node is None else (part, *node[1:]),
+                        booking(term.factors[group], source, start.momentum, axes),
+                        term.divisor * start.wall ** len(axes),
+                        values,
+                        carries,
+                    )
+                    parts.append((part, node, now, before))
         index += count
     dipoles: list[tuple[Vector, int, int]] = []
     if (
