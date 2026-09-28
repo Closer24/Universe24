@@ -61,11 +61,11 @@ def test_a_box_takes_the_certified_rest_the_clamps_levels_and_a_half_rounded_up_
 
 
 def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
-    """THE START in the loop (ALGEBRA.md #the-generator, THE START): at the load, after the held records and the hold's first write, every held family's time part is the folder's rest on the counts the hold wrote at the bodies' Nodes, at both levels with the remainder 0, before the first interval; a family no body holds stays at 0."""
+    """THE START in the loop (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): at the load, after the held records, every held family's time part is the folder's rest on the sum's sources, the bodies' weighted counts at their Nodes over the row's divisor, at both levels with the remainder 0, before the first interval; a family no body holds stays at 0; the field reaches beyond the bodies and sits below the source's height where the divisor is one."""
     document = emitter_world(stock=1, ticks=2)
     for entry in document["universe"]:
         if "held" in entry:
-            entry["held"] = {**entry["held"], "divisor": 1}  # a copy: the sources' loads are the counts
+            entry["held"] = {**entry["held"], "divisor": 1}  # a copy: the sources are the counts
     simulation = DetectorLawSimulation(parse_nature_beam_world(stamped(document)))
     started = 0
     for family, record in simulation.held_records.items():
@@ -74,11 +74,12 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
         for number in range(len(simulation.held)):  # every body's Nodes, a block's or a span's
             block = simulation.block_by_number.get(number)
             mask = block.mask if block is not None else simulation.span_masks[number]
-            counts[mask] = simulation.body_source(number, definition.held) // definition.held_divisor
+            counts[mask] = simulation.body_source(number, definition.held)
         if not counts.any():
             assert not record.now.any() and not record.before.any()
             continue
-        expected = rest(counts, definition.pair, simulation.kind_wrap[family]).levels
+        divisor = definition.held_divisor
+        expected = rest(counts, definition.pair, simulation.kind_wrap[family], divisor).levels
         assert np.array_equal(record.now, expected) and np.array_equal(record.before, expected)
         assert not record.remainder.any() and simulation.node_level[family] is record.now
         assert (expected != 0).sum() > (counts != 0).sum()  # the field reaches beyond the bodies
