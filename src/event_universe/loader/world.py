@@ -201,16 +201,11 @@ class FamilyDefinition:
     # (`massive-record-v1`, MASSIVE_RECORD.md section 1): light's kind is the value (1, 1) (every family without the key `pair`); a massive kind declares den > num, its rest
     # frequency cos omega_0 = num / den.
     pair: tuple[int, int] = MASSLESS_PAIR
-    # THE FAMILY GENERICITY (record 2066; item 53): what a family IS is declared here and read by the engine as
-    # attributes alone, never by a name or a role: `held`, the source a body writes at its Nodes ("content" its
-    # quanta, "sign" the signed sum of them by the rows' signs); `reads`, the held families whose levels enter its
-    # pace, (family index, weight, by) each, by "plain" or "sign"; `components`, the representation's count.
+    # THE FAMILY GENERICITY (record 2066; item 53): what a family IS is declared here and read by the engine as attributes alone, never by a name or a role: `held`, the source a body writes at its Nodes ("content" its quanta, "sign" the signed sum of them by the rows' signs); `reads`, the held families whose levels enter its pace, (family index, weight, by) each, by "plain" or "sign"; `components`, the representation's count.
     held: str | None = None
     reads: tuple[tuple[int, int, str, int | str], ...] = ()
-    # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md #the-primitives, #the-interval
-    # (1); the one stroke, commit 1): (1,) a scalar, (1, 3) the time part and
-    # the vector, (1, 3, 6) the symmetric tensor over the four directions; the
-    # component order fixed once, (t), (x, y, z), (xx, yy, zz, xy, xz, yz)
+    # THE REPRESENTATION AS A LIST OF PARTS (ALGEBRA.md #the-primitives, #the-interval (1); the one stroke, commit 1): (1,) a scalar,
+    # (1, 3) the time part and the vector, (1, 3, 6) the symmetric tensor over the four directions; the component order fixed once, (t), (x, y, z), (xx, yy, zz, xy, xz, yz)
     parts: tuple[int, ...] = (1,)
     # the levels at a Node (ALGEBRA.md #the-interval): 1 the pair (a_now, a_before, r); 2 the
     # two levels with their remainders (the second level not yet allocated:
@@ -282,10 +277,8 @@ class EmitterDefinition:
     # THE POINT EMITTER'S NORM DENOMINATOR (ALGEBRA.md; item 50): the excitation's action T as the exact rational
     # norm / norm_denominator, in the form's units, which the window's outward norm is read against; required on every emitter (commit 7)
     norm_denominator: int | None = None
-    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md; item 50): the
-    # body's coupling to the given family, one integer, the body's Node's rotation
-    # copied at that weight into the given row at the body's Node every interval of
-    # the window; required on every emitter (commit 7: the window the one giving)
+    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md; item 50): the body's coupling to the given family, one integer, the body's Node's
+    # rotation copied at that weight into the given row at the body's Node every interval of the window; required on every emitter
     weight: int | None = None
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md #the-second-level, #the-interval; commit 4): the
     # index in the given family's parts, 0 on a scalar family, 1 + the axis of the
@@ -430,20 +423,13 @@ class NatureBeamWorld:
     # detector-law-v1: per axis, whether the face is declared "closed" (a
     # zero face for light with no take); never on a periodic axis.
     closed: tuple[bool, bool, bool] = (False, False, False)
-    # massive-record-v1: the world key `amplitude_bound`, the amplitude A
-    # every row stays below (declared on a massive world; the ceiling 2^28
-    # under the Node clock, BUILD.md section 26 item 31, on a world without
-    # the kind, where no row is bounded so).
+    # the amplitude A every row stays below, derived from the width and the declared pairs (`derived_amplitude`), never a key
     amplitude_bound: int = AMPLITUDE_BOUND
-    # THE NODE CLOCK (ALGEBRA.md #the-paces; BUILD.md section 26 item 31):
-    # Gamma, the world key `node_clock`, the clock pair (Gamma, Gamma + M) at
-    # every Node; required under the detector law, 0 on a world without it
-    # (the ray law has no rule with a division).
+    # THE NODE CLOCK (ALGEBRA.md #the-paces; BUILD.md section 26 item 31): Gamma, the world key `node_clock`, the clock pair
+    # (Gamma, Gamma + M) at every Node; required under the detector law, 0 on a world without it (the ray law has no rule with a division)
     node_clock: int = 0
-    # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's
-    # integer `momentum_unit`; every body's wall is W = 3 Q M with M its quanta,
-    # its velocity n / W Links per interval; required under the detector law,
-    # 0 on a world without it
+    # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's integer `momentum_unit`; every body's wall is
+    # W = 3 Q M with M its quanta, its velocity n / W Links per interval; required under the detector law, 0 on a world without it
     momentum_unit: int = 0
     # THE QUANTUM'S ACTION T (ALGEBRA.md #a-familys-declaration; the owner's word of 2026-09-28): the
     # universe's integer `quantum_action`, one T for every family; read where declared, 0 where it is not
@@ -477,11 +463,8 @@ class NatureBeamWorld:
     def hypotheses(self) -> list[str]:
         """CANCELLED (ALGEBRA.md #the-primitives): the identities of the physical hypotheses a world of the ray law
         declared beside it, an empty list on every world (one engine, no identity)."""
-        # ONE ENGINE (ALGEBRA.md #the-primitives; docs/CANCELLED_WORLDS.md section 9): no
-        # identity stands beside the engine; the ray law's identities this property
-        # listed (bohr, columns, weak, meeting, amplitude, massive-rows, hand,
-        # covariant-readings, drive-b, flow-link, centred-step, atom-level, binding)
-        # are CANCELLED and never appended
+        # ONE ENGINE (ALGEBRA.md #the-primitives; docs/CANCELLED_WORLDS.md section 9): no identity stands beside the engine; the ray
+        # law's identities this property listed (bohr, columns, weak, meeting, amplitude, massive-rows, hand, covariant-readings, drive-b, flow-link, centred-step, atom-level, binding) are CANCELLED and never appended
         return []
 
     @property
@@ -693,14 +676,14 @@ def _held_bodies_checks(
 def _one_weight_per_pair(
     families: Sequence[FamilyDefinition], measured: Sequence[MeasuredDefinition]
 ) -> None:
-    """ONE WEIGHT PER PAIR (ALGEBRA.md, a family's write; the Closer's line of 2026-09-28): a family with bodies in the world reads a held family at the weight its bodies source it with, its quantum times the held row's time factor; a read at another weight is refused by name. A family with no bodies (light) is exempt: it reads and sources by its record alone."""
+    """ONE WEIGHT PER PAIR (ALGEBRA.md, a family's write; the Closer's line of 2026-09-28): a family with bodies in the world reads a held family plainly at the weight its bodies source it with, its quantum times the held row's time factor; a read at another weight is refused by name. A family with no bodies (light) is exempt, and so is a read by q (the charge's weight Lambda is a free number)."""
     with_bodies = {entry.family for entry in measured}
     for family in families:
         if family.name not in {families[index].name for index in with_bodies}:
             continue
-        for other, weight, _by, _twist in family.reads:
+        for other, weight, by, _twist in family.reads:
             read = families[other]
-            if read.held is None:
+            if read.held is None or by != "plain":  # the charge's read by q weighs Lambda, a free number
                 continue
             expected = family.quantum * read.held_factors[0]
             if weight != expected:
@@ -1103,12 +1086,9 @@ def _block(
     else:
         kind = family.pair
     if family.massive_kind:
-        # A well lowers the pair; a BARRIER raises it (num' / den' below the
-        # kind's: the matter wall of DECLARATIONS.md section 15 M1-6, the
-        # mirror line of the matter kind), a block with no bound mode, no
-        # seed and no clock; the kind's own pair is no body (the cavity of
-        # form (I), a record held by mirror faces of its own, is refused by
-        # name: BUILD.md section 26 item 28).
+        # A well lowers the pair; a BARRIER raises it (num' / den' below the kind's: the matter wall of DECLARATIONS.md section 15
+        # M1-6, the mirror line of the matter kind), a block with no bound mode, no seed and no clock; the kind's own pair is no body
+        # (the cavity of form (I), a record held by mirror faces of its own, is refused by name: BUILD.md section 26 item 28).
         if pair[0] * kind[1] == pair[1] * kind[0]:
             raise ValueError(
                 f"{label}.pair [{pair[0]}, {pair[1]}] is the kind's own pair "
@@ -1162,10 +1142,8 @@ def _block(
                 f"{label}.clock is admitted only beside a profile (the mode's 2 cos "
                 "omega belongs to the mode's integers, ALGEBRA.md #a-familys-declaration)"
             )
-    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md #the-velocity; BUILD.md section 26
-    # item 46): beside `clock`, on a block whose momentum lies on one axis, the
-    # |P| + 1 pairs [num, den] indexed by the momentum's whole part, the first
-    # the clock itself (the rest pair at K = 0)
+    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md #the-velocity; BUILD.md section 26 item 46): beside `clock`, on a block
+    # whose momentum lies on one axis, the |P| + 1 pairs [num, den] indexed by the momentum's whole part, the first the clock itself (the rest pair at K = 0)
     proper_clock: tuple[tuple[int, int], ...] | None = None
     if "proper_clock" in obj:
         moving_axes = [axis for axis in range(3) if int(momentum[axis]) != 0]
@@ -1292,14 +1270,10 @@ def _block(
             twist=_integer(obj["twist"], f"{label}.twist", 0),
             quantum_action=quantum_action,
         )
-        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; BUILD.md
-        # section 26 item 47): the quanta a body gives are the given family's,
-        # held at the body under `held`; a giving lowers them and leaves the
-        # body's own quanta and its charge (a body spending its own quantum
-        # per giving would lose charge by giving light: refused)
-        # A BODY GIVING ITS OWN FAMILY (ALGEBRA.md #the-primitives; commit 6): its stock is `stock`, a
-        # count of its own quanta set aside for giving, from 1 to `amount`; each giving lowers
-        # M by one; `stock` is refused where the given family is another (its stock is `held`)
+        # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; BUILD.md section 26 item 47): the quanta a body gives are the given
+        # family's, held at the body under `held`; a giving lowers them and leaves the body's own quanta and its charge (a body spending
+        # its own quantum per giving would lose charge by giving light: refused). A BODY GIVING ITS OWN FAMILY (ALGEBRA.md #the-primitives;
+        # commit 6): its stock is `stock`, a count of its own quanta set aside for giving, from 1 to `amount`; each giving lowers M by one; `stock` is refused where the given family is another (its stock is `held`)
         if emitter.family == names[family.name]:
             if "stock" not in obj:
                 raise ValueError(
@@ -2037,12 +2011,9 @@ def _connected_pieces(
     return pieces
 
 
-# THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899;
-# ALGEBRA.md #the-ladder): a detector is one region, a cube of side 3 or more; its
-# sensitivity is its whole cube, read by the flux into it through its Ports
-# from outside; the click is the detector's, reported by its name and never
-# by a Node. The cube is cut by the GameBoard on an axis whose extent is
-# below the side (a chain's or a layer's thin axis), as a block's cube is.
+# THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899; ALGEBRA.md #the-ladder): a detector is one region, a cube of
+# side 3 or more; its sensitivity is its whole cube, read by the flux into it through its Ports from outside; the click is the detector's,
+# reported by its name and never by a Node. The cube is cut by the GameBoard on an axis whose extent is below the side (a chain's or a layer's thin axis), as a block's cube is.
 DETECTOR_SIDE = 3
 
 
@@ -2319,14 +2290,10 @@ def parse_world_document(
         raise ValueError(
             f"N {phase_steps} must be a power of two from 2 (through the universe's most_steps)"
         )
-    # THE FACE SLAB (ALGEBRA.md #the-ladder, the mathematician's reading: a face
-    # one Node deep books 0.15 of a packet and reflects the rest, the slab as
-    # deep as the packet books 0.96): the receiver `face` at every open
-    # border is the slab of this depth, one detector, last on every ladder;
-    # REQUIRED on a GameBoard with an open face under the detector law and
-    # refused without that law (the slab is its receiver), NO DEFAULT (the
-    # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
-    # item 28); 0 on a GameBoard with no open face (no slab)
+    # THE FACE SLAB (ALGEBRA.md #the-ladder, the mathematician's reading: a face one Node deep books 0.15 of a packet and reflects the
+    # rest, the slab as deep as the packet books 0.96): the receiver `face` at every open border is the slab of this depth, one detector,
+    # last on every ladder; REQUIRED on a GameBoard with an open face under the detector law and refused without that law (the slab is
+    # its receiver), NO DEFAULT (the model owner's rule through the Boss, 2026-09-25; BUILD.md section 26 item 28); 0 on a GameBoard with no open face (no slab)
     open_axes = [name for axis, name in enumerate(AXES) if not periodic[axis] and not closed[axis]]
     if open_axes and "face_depth" not in obj:
         raise ValueError(
@@ -2341,11 +2308,8 @@ def parse_world_document(
                 f"face_depth {face_depth} leaves no interior on the open axis {name} of "
                 f"extent {shape[axis]} (two slabs of the depth fill it)"
             )
-    # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md
-    # ALGEBRA.md #the-paces and (3); BUILD.md section 26 item 31): Gamma, one integer from
-    # 1, the clock pair (e, f) = (Gamma, Gamma + M) at every Node under the
-    # detector law's rule (M the content held at the Node, 0 in the vacuum);
-    # REQUIRED with no default
+    # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md #the-paces and (3); BUILD.md section 26 item 31): Gamma,
+    # one integer from 1, the clock pair (e, f) = (Gamma, Gamma + M) at every Node under the detector law's rule (M the content held at the Node, 0 in the vacuum); REQUIRED with no default
     if "node_clock" not in obj:
         raise ValueError(
             "node_clock is required: Gamma, the one integer of "

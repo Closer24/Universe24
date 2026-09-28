@@ -29,14 +29,18 @@ def recorder():  # type: ignore[no-untyped-def]
 
 
 SHIPPED = json.loads((ROOT / "examples/events/universe.json").read_text(encoding="utf-8"))
-INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"]}
+INTEGERS = {
+    **SHIPPED["integers"],
+    "node_clock": TEMPLATE["node_clock"],
+    "quantum_action": TEMPLATE["quantum_action"],
+}
 
 
 def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
     """The world on the drawn universe: the emitter test world's chain of 80 with its body of the drawn body family (the shipped kind and well, the seed on the mode as the template carries it), its emitter giving the drawn given family to the screen of three receivers, or the body alone where the draw has one family."""
     roles = drawn["roles"]
     document = copy.deepcopy(TEMPLATE)
-    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+    for key in ("node_clock", "amplitude_bound", "momentum_unit", "quantum_action"):
         document.pop(key, None)
     document["universe"] = "universe.json"
     document["engine"] = "start.json"
