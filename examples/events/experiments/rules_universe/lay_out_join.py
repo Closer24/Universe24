@@ -28,9 +28,13 @@ DIVISORS = {
     "gravity": 1,
     "charge": 400_000,
 }  # the well is the count; the charge's divisor derived from Gamma, 0.86 (Gamma div 2)^(3 / 2), one quantum per window (Cheshbon's #1410, planck.json of #1411)
-COUNT_SMALL = 5_000  # the smaller body's count: on the engine of today (the level once) the edge is 0.345 Gamma = 4,136 (Cheshbon 14:12 Israel time), so 3,000 and 4,000 disperse and 5,000 binds
-COUNT_DEEP = 6_000  # the deeper body's count: the tail biased toward it
-EDGE = 4_136  # the edge of the bound body on the engine of today; 2,706 with the corrected term
+ENGINES = {  # the counts and the edge per engine (Cheshbon 14:12 Israel time): on the engine of today (the level read once) the edge is 0.345 Gamma = 4,136, so 3,000 and 4,000 disperse and 5,000 binds; with the corrected term the edge is 0.2255 Gamma = 2,706 and the counts return to 3,000 and 4,000 (the Closer 14:30)
+    "today": {"small": 5_000, "deep": 6_000, "edge": 4_136},
+    "term": {"small": 3_000, "deep": 4_000, "edge": 2_706},
+}
+COUNT_SMALL = ENGINES["today"]["small"]  # the smaller body's count; main() sets the three from --engine
+COUNT_DEEP = ENGINES["today"]["deep"]  # the deeper body's count: the tail biased toward it
+EDGE = ENGINES["today"]["edge"]  # the edge of the bound body
 JOIN_DISTANCE = 2  # Links between the two Nodes: the tails overlap (the tail ends within three Links)
 PART_DISTANCE = 5  # Links between the two Nodes: the tails still overlap (the click's reach is about 18), the slow join
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's blind number of clicks
@@ -72,6 +76,7 @@ def pixel(x: int, count: int) -> dict[str, Any]:
     return {
         "family": "matter",
         "nodes": [{"node": [x, AXIS_Y, 0], "count": count}],
+        "q": 1,  # THE SIGN IS THE BODY'S: a body of the rule's universe is its count at its Node and its q (the owner's word of 14:32 Israel time)
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
         "phase_denominator": DENOMINATOR,
@@ -191,7 +196,15 @@ def expectation(name: str, distance: int) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
+    parser.add_argument(
+        "--engine",
+        choices=sorted(ENGINES),
+        default="today",
+        help="the counts and the edge: today (the level read once) or term (the corrected term)",
+    )
     args = parser.parse_args()
+    global COUNT_SMALL, COUNT_DEEP, EDGE  # noqa: PLW0603  (the script's three numbers from the option)
+    COUNT_SMALL, COUNT_DEEP, EDGE = (ENGINES[args.engine][key] for key in ("small", "deep", "edge"))
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
     universe = rules_universe(folder)
