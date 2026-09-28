@@ -50,13 +50,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     # gravity rank 3 and real; the charge rank 2 with clicks (light its wave); matter a scalar of quanta
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and "clicks" not in gravity
     assert gravity["pair"] == [1, 1] == charge["pair"]  # the pair as written (THE WALL IS ONE)
-    spin = {
-        "count": "content",
-        "divisor": 40000,
-        "factors": [1, 1, 1],
-        "dipole": "spin",
-        "dipole_div": 1,
-    }
+    spin = {"count": "content", "divisor": 40000, "factors": [1] * 3, "dipole": "spin", "dipole_div": 1}
     moment = {"count": "sign", "divisor": 40000, "factors": [1, 1], "dipole": "moment", "dipole_div": 2}
     assert gravity["held"] == spin and gravity["reads"] == []
     assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == moment
@@ -92,38 +86,38 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
 def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_world_on_it():
     """THE RULE'S OWN UNIVERSE (ALGEBRA.md; the owner's word of 2026-09-28, 15:11 Israel: Gamma = 24, a whole universe in small): examples/events/planck.json holds Gamma = 24 (a multiple of 6; the horizon 12, the pixels 6 to 11), T = 1, and three rows in pairs over Gamma: gravity [24, 24] content at the divisor 1, charge [24, 24] sign at the divisor 36 (0.86 (Gamma / 2)^(3 / 2), one quantum per window, derived from Gamma), matter [16, 24]; the least residues 1 (light's pair leaves one remainder value at Gamma = 24); nothing else. THE FINDING (Nature24, 15:30 Israel): the width's amplitude unit at Gamma = 24 is A = 37,066,663,599,756 (the wall 6 Gamma^3 = 82,944), so the transport's total 3 d_1 d_0 (A + 1) admits d_1 d_0 below 83,000 and no table of the tool's form (its triples reach d = 10^9) loads; the file carries the identity table [1, 0, 1] alone, so it loads and a nonzero twist is refused by name at the step until the mathematician's line on A at a small Gamma. A world of three pixels (one Node each) on it loads with the ranks derived and THE SIGN IS THE BODY'S: the sign's source at a pixel's Node is its q times its count. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-12, 24] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name."""
     planck = "examples/events/planck.json"
-    document = json.loads((ROOT / planck).read_text(encoding="utf-8"))
-    table = document["integers"].pop("twist_table")
+    table = (document := json.loads((ROOT / planck).read_bytes()))["integers"].pop("twist_table")
     units = dict(node_clock=24, quantum_action=1, momentum_unit=64, most_steps=65536, width=63)
     assert document["integers"] == {**units, "most_families": 20, "least_residues": 1}
     assert table == {"unit": 4 * 24 * 65536, "fine": [[1, 0, 1]], "coarse": [[1, 0, 1]]}  # the finding
-    rows = [("gravity", [24, 24], 1), ("charge", [24, 24], 36), ("matter", [16, 24], None)]
-    assert [
-        (f["name"], f["pair"], f.get("held", {}).get("divisor")) for f in document["families"]
-    ] == rows
+    assert [f["name"] for f in document["families"]] == ["gravity", "charge", "matter"]
+    assert [f["pair"] for f in document["families"]] == [[24, 24], [24, 24], [16, 24]]
+    assert [f.get("held", {}).get("divisor") for f in document["families"]] == [1, 36, None]
     assert all(set(f) <= {"name", "pair", "held"} for f in document["families"])  # no spins_step
     world = {"shape": [40, 1, 1], "boundary": {"x": "closed", "y": "periodic", "z": "periodic"}, "N": 64}
     world |= {"ticks": 10, "face_depth": 1, "engine": "examples/events/engine_start.json"}
     world |= {"universe": planck, "detectors": [{"name": "taker", "block": 2}]}
-    n = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
-    at = ((10, 8, 1), (20, 6, -1), (30, 8, 0))  # pixels of the window 6 to 11 under the horizon 12
+    n, at = {"momentum": [0] * 3, "momentum_before": [0] * 3}, ((10, 8, 1), (20, 6, -1), (30, 8, 0))
     node = lambda x, c: [{"node": [x, 0, 0], "count": c}]  # noqa: E731
     bodies = [{"family": "matter", "nodes": node(x, c), "q": q, **n} for x, c, q in at]
-    loaded = parse_nature_beam_world({**world, "measured": bodies})
+    loaded = parse_nature_beam_world({**world, "measured": bodies})  # three pixels, count in [6, 12)
     ranks = [("gravity", (1, 3, 6), "content"), ("charge", (1, 3), "sign"), ("matter", (1,), None)]
     assert [(f.name, f.parts, f.held) for f in loaded.families] == ranks
-    assert loaded.families[2].pair == (16, 24) and loaded.amplitude_bound == 37066663599756
+    assert loaded.families[2].pair == (16, 24) and (A := loaded.amplitude_bound) > 0
+    assert 384 * A * A <= derived.MAX_WORK_INT - 10 < 384 * (A + 1) ** 2  # the count's line's, w 16
     assert [entry.block.q for entry in loaded.measured if entry.block is not None] == [1, -1, 0]
     simulation = DetectorLawSimulation(loaded)
     signs = [simulation.node_sources(number, "sign") for number in range(3)]
     assert signs == [[((10, 0, 0), 8)], [((20, 0, 0), -6)], [((30, 0, 0), 0)]]
     assert [simulation._body_charge(number) for number in range(3)] == [8, -6, 0]
-    inline = {**world, "measured": bodies, "node_clock": 24, "momentum_unit": 64}
-    inline["twist_table"], third = table, {"name": "third", "pair": [-12, 24]}
-    inline["universe"] = [*document["families"], third]
-    assert parse_nature_beam_world(inline).families[3].pair == (-12, 24)
-    refusals = (([-24, 24], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1"))
-    for pair, match in refusals:
+    six = {**world, "universe": "examples/events/planck_6000.json", "measured": bodies}  # after 24
+    assert parse_nature_beam_world(six).families[2].pair == (4000, 6000)  # Gamma 6,000, the record's
+    inline = {**world, "measured": bodies, "node_clock": 24, "momentum_unit": 64, "twist_table": table}
+    inline["universe"] = [*document["families"], third := {"name": "third", "pair": [-12, 24]}]
+    f, least = [[1, 0, 1], [1999, 1998000, 1998001]], derived.MAX_WORK_INT // (3 * 1998001**2) - 1
+    w = parse_nature_beam_world({**inline, "twist_table": {**table, "fine": f, "coarse": f}})
+    assert (w.families[3].pair, w.amplitude_bound) == ((-12, 24), least)  # a wide table: the transport's
+    for pair, match in (([-24, 24], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1")):
         refused({**inline, "universe": [*document["families"], {**third, "pair": pair}]}, match)
 
 

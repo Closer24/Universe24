@@ -1,0 +1,33 @@
+{
+ "world": "pulled_pixel_6.json",
+ "refusal": "at interval 3: the twist on the Port toward +x reaches |k| = 67332, beyond the twist table (1 coarse triples; ALGEBRA.md #the-primitives)",
+ "ticks_run": 2,
+ "expected": [
+  0.003,
+  0,
+  0
+ ],
+ "records_alive": 2,
+ "record_support": [
+  [
+   1,
+   6,
+   3
+  ]
+ ],
+ "record": {
+  "label": "GAMEBOARD",
+  "period_intervals": null,
+  "amplitude_b": 3,
+  "count_over_the_last_period": 18.0,
+  "expected": {
+   "count": 10,
+   "b": 5,
+   "period": 12.0
+  },
+  "b_verdict": "MISS",
+  "period_verdict": "MISS"
+ },
+ "kind": "moves",
+ "intervals": 1
+}

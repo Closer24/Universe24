@@ -1,0 +1,59 @@
+{
+ "integers": {
+  "node_clock": 6000,
+  "quantum_action": 1,
+  "momentum_unit": 64,
+  "most_steps": 65536,
+  "width": 63,
+  "most_families": 20,
+  "least_residues": 1,
+  "twist_table": {
+   "unit": 1572864000,
+   "fine": [
+    [
+     1,
+     0,
+     1
+    ]
+   ],
+   "coarse": [
+    [
+     1,
+     0,
+     1
+    ]
+   ]
+  }
+ },
+ "families": [
+  {
+   "name": "gravity",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "count": "content",
+    "divisor": 1
+   }
+  },
+  {
+   "name": "charge",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "count": "sign",
+    "divisor": 141862
+   }
+  },
+  {
+   "name": "matter",
+   "pair": [
+    4000,
+    6000
+   ]
+  }
+ ]
+}
