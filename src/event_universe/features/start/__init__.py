@@ -37,9 +37,9 @@ def check_counts(counts: np.ndarray, gamma: int) -> None:
     """The refusals by name: the counts an int64 array of nonnegative integers below Gamma, at least one nonzero (ALGEBRA.md #the-paces, the guard's lower side)."""
     if counts.dtype != np.int64 or counts.size == 0 or not counts.any():
         raise ValueError("the counts are an int64 array (integers only), not zero everywhere: no body")
-    low, high = int(counts.min()), int(counts.max())
-    if low < 0 or high >= gamma:
-        raise ValueError(f"a count {low if low < 0 else high}: the counts stay in [0, Gamma = {gamma})")
+    edge = int(counts.min()) if int(counts.min()) < 0 else int(counts.max())
+    if edge < 0 or edge >= gamma:
+        raise ValueError(f"a count {edge}: the counts stay in [0, Gamma) with Gamma = {gamma}")
 
 
 def division(numerator_coefficient: Any, wall: Any, level: np.ndarray) -> np.ndarray:
