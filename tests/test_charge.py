@@ -143,9 +143,8 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
         assert bodies + flight == -8, simulation.tick
     assert givings == 4 and clicks >= 1
     giving_lines = [line for line in lines if line["event"] == "giving"]
-    assert [(line["charge"], line["content"]) for line in giving_lines] == [
-        (-5 + k, 0) for k in range(4)
-    ]
+    charges = [(line["charge"], line["content"]) for line in giving_lines]
+    assert charges == [(-5 + k, 0) for k in range(4)]
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
