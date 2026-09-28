@@ -643,9 +643,7 @@ def _pair_bound(
     ):  # no amplitude declared: the total is not bounded at load (a massive family requires one)
         return
     weak_field = node_clock > 1
-    reach = (
-        min(content, (node_clock - 1) // 2) if weak_field else content
-    )  # the axis pace Gamma - 2 c above 0
+    reach = min(content, (node_clock - 1) // 2) if weak_field else content
     total = max(
         rule_total_bound(numerator, denominator, node_clock, level, bound, weak_field)
         for level in (0, reach)
