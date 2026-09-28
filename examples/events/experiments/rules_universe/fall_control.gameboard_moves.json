@@ -1,22 +1,117 @@
 {
  "world": "fall_control.json",
- "refusal": "at interval 2: the pace of 'charge' (family 1, axis 0) is 0 at the Node (4, 1, 1) at interval 1: the pace stays above 0 (the content 24 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
- "ticks_run": 1,
+ "refusal": "at interval 10: the pace of 'charge' (family 1, axis 0) is -10 at the Node (4, 1, 1) at interval 9: the pace stays above 0 (the content 34 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "ticks_run": 9,
  "expected": null,
  "records_alive": 1,
- "record_support": [],
+ "record_support": [
+  [
+   1,
+   1,
+   2
+  ],
+  [
+   2,
+   7,
+   -4
+  ],
+  [
+   3,
+   7,
+   -7
+  ],
+  [
+   4,
+   19,
+   -5
+  ],
+  [
+   5,
+   35,
+   1
+  ],
+  [
+   6,
+   39,
+   7
+  ],
+  [
+   7,
+   51,
+   7
+  ],
+  [
+   8,
+   61,
+   1
+  ]
+ ],
  "record": {
   "label": "GAMEBOARD",
-  "period_intervals": null,
-  "amplitude_b": null,
-  "count_over_the_last_period": null,
+  "period_intervals": 7.0,
+  "amplitude_b": 7,
+  "count_over_the_last_period": 10.0,
   "expected": {
    "count": 10,
    "b": 5,
    "period": 12.0
   },
+  "b_verdict": "MISS",
   "period_verdict": "MISS"
  },
  "kind": "moves",
- "intervals": 0
+ "label": "GAMEBOARD",
+ "intervals": 7,
+ "net": [
+  0,
+  0,
+  0
+ ],
+ "raw": [
+  0,
+  0,
+  0
+ ],
+ "net_over_axes": [
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   1
+  ]
+ ],
+ "raw_over_axes": [
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   1
+  ]
+ ],
+ "peak_interval": 1,
+ "net_per_interval_at_peak": [
+  0,
+  0,
+  0
+ ],
+ "first_move": null,
+ "share_toward_plus_x": null,
+ "pixel_count": {
+  "start": 10,
+  "end": 9,
+  "least": 9
+ },
+ "white": true
 }
