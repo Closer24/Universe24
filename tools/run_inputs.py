@@ -5,9 +5,10 @@ Every input file is run in its own process (the runs share nothing), at most
 input and says LAWFUL or REFUSED with the reason (the loader's integer checks
 of record 1886: the input stamp, the profiles against the eigen-equation, the
 clocks, the bodies, the families); a lawful input is then run under the law
-for its declared ticks, headless, and ONE output file `<name>.output.json` is
-written into `--out`: the input's name, its stamp (the law and the hash), the
-verdict, the ticks, the clicks (the detector's name and the interval of each
+for its declared ticks, headless (a guard's refusal inside the run is written
+too, REFUSED with its reason and interval), and ONE output file
+`<name>.output.json` is written into `--out`: the input's name, its stamp (the
+law and the hash), the verdict, the ticks, the clicks (the detector's name and the interval of each
 click line, DETECTOR), the count per detector, and, where `--pins` registers a
 blind pin for the input (`{"<name>": [{"detector": ..., "count": ..., "band":
 ...}]}` on the count of clicks, `{"detector": ..., "first_click": ..., "band":
@@ -91,7 +92,16 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     output["mode"] = world.start.mode if world.start is not None else None
     clicks: list[dict[str, object]] = []
     for _ in range(world.ticks):
-        simulation.step()
+        try:
+            simulation.step()
+        except Exception as error:  # noqa: BLE001 - a refusal inside the run is written, none hidden
+            # A REFUSAL INSIDE THE RUN (the engine's guards: the amplitude bound, the twist
+            # table, the wall): the verdict REFUSED with the reason and the interval, the
+            # output written as at a refusal at the load, never an exception escaping the run
+            output["verdict"] = "REFUSED"
+            output["reason"] = f"{type(error).__name__} at interval {simulation.tick}: {error}"
+            write_output(Path(out_dir), name, output)
+            return {"name": name, "verdict": "REFUSED", "seconds": time.monotonic() - started}
         # THE LEAK TEST IN EVERY RUN (the model owner's record 2075 (3); BUILD.md
         # section 26 item 55): a family with no source stays exactly zero at
         # every interval, or the run is refused naming the family
