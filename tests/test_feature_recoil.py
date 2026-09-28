@@ -206,10 +206,8 @@ def test_the_declaration_is_the_ledgers_row():
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the recoil"]
     assert registered.reads == DECLARATION.reads and registered.function is apply
-    assert (
-        registered.place_of("a family's level at a Node") == "(iv)"
-        and "the twist table" in DECLARATION.reads
-    )
+    assert registered.place_of("a family's level at a Node") == "(iv)"
+    assert "the twist table" in DECLARATION.reads
     # a giver whose mode carries no wave number takes no recoil (the fixture off the mode, tests/worlds.py)
     off_mode = simulation.world.measured[0].block
     assert off_mode is not None and off_mode.emitter is not None and off_mode.emitter.wave_number is None

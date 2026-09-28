@@ -534,7 +534,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block = self.block_by_number.get(number)
         if block is None or (block.well is None and not block.definition.counts):
             return []
-        weight = 1 if source == "content" else self.families[block.family].charge[0]
+        weight = 1 if source == "content" else block.definition.q + self.families[block.family].charge[0]
         laid = block.well if block.well is not None else block.counts
         if laid is not None:
             moved = zip(*np.nonzero(laid), strict=True)
@@ -731,7 +731,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def _body_charge(self, number: int) -> int:
         """A body's charge Q (ALGEBRA.md #the-paces): the sum of the signs of the quanta it holds, an integer of either sign, moved with the labels at the clicks (the held books)."""
         block = self.block_by_number.get(number)
-        declared = block.definition.q if block is not None else 0
+        declared = block.definition.q * sum(self.held[number]) if block is not None else 0
         return declared + sum(
             sign * quanta for sign, quanta in zip(self.family_charge, self.held[number], strict=True)
         )

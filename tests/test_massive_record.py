@@ -208,7 +208,7 @@ def test_the_loaders_refusals_name_the_key():
     base = massive_world([4, 4, 4], "open", [2, 3])
     reversed_pair = json.loads(json.dumps(base))
     reversed_pair["universe"][1]["pair"] = [3, 2]
-    with pytest.raises(ValueError, match="den >= num"):
+    with pytest.raises(ValueError, match=r"den > \|num\|"):
         parse_nature_beam_world(reversed_pair)
     # one border for every family (BUILD.md section 26 item 28): `faces` refused by name on both kinds
     for family in (0, 1):
@@ -347,9 +347,8 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
     assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
-    assert (
-        own is not None and own.identity == -1
-    )  # the standing record continues (ALGEBRA.md #the-ladder)
+    assert own is not None
+    assert own.identity == -1
     assert all(
         live.family == 0 and live.content == 1 for live in simulation.records.values() if live is not own
     )
