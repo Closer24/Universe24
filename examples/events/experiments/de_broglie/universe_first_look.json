@@ -1,7 +1,6 @@
 {
  "integers": {
   "node_clock": 10000,
-  "Lambda": 1,
   "momentum_unit": 64,
   "most_steps": 65536,
   "width": 63,
@@ -168978,32 +168977,13 @@
  "families": [
   {
    "name": "gravity",
-   "sign": 0,
-   "parts": [
-    1,
-    3,
-    6
-   ],
-   "phase": 1,
    "pair": [
     1,
     1
    ],
-   "quantum": 1,
    "held": {
     "count": "content",
-    "factors": [
-     1,
-     4,
-     2
-    ],
-    "dipole": "spin",
-    "dipole_div": 1,
     "divisor": 40000
-   },
-   "reads": [],
-   "self_source": {
-    "unit": 0
    },
    "spins_step": {
     "curl": [
@@ -169018,117 +168998,35 @@
   },
   {
    "name": "charge",
-   "sign": 0,
-   "parts": [
-    1,
-    3
-   ],
-   "phase": 2,
    "pair": [
     1,
     1
    ],
-   "quantum": 1,
-   "held": {
-    "count": "sign",
-    "factors": [
-     1,
-     1
-    ],
-    "dipole": "moment",
-    "dipole_div": 2,
-    "divisor": 300000
-   },
-   "reads": [
-    {
-     "family": "gravity",
-     "weight": 1,
-     "twist": "own",
-     "by": 1
-    },
-    {
-     "family": "polarisation",
-     "weight": 1,
-     "twist": "own",
-     "by": 1
-    }
-   ],
-   "self_source": {
-    "unit": 0
-   },
-   "clicks": {
-    "gives": true,
-    "takes": true,
-    "quantum": 1
-   },
    "clock": [
     512,
     1
-   ]
-  },
-  {
-   "name": "matter",
-   "sign": 0,
-   "parts": [
-    1
    ],
-   "phase": 2,
-   "pair": [
-    800,
-    1200
-   ],
-   "quantum": 1,
-   "reads": [
-    {
-     "family": "gravity",
-     "weight": 1,
-     "twist": "own",
-     "by": 1
-    },
-    {
-     "family": "charge",
-     "weight": "Lambda",
-     "twist": "own",
-     "by": "q"
-    },
-    {
-     "family": "polarisation",
-     "weight": 1,
-     "twist": "own",
-     "by": 1
-    }
-   ],
-   "self_source": {
-    "unit": 0
-   },
-   "clicks": {
-    "gives": true,
-    "takes": true,
-    "quantum": 1
+   "held": {
+    "count": "sign",
+    "divisor": 300000
    }
   },
   {
+   "name": "matter",
+   "pair": [
+    800,
+    1200
+   ]
+  },
+  {
    "name": "polarisation",
-   "sign": 0,
-   "parts": [
-    1
-   ],
-   "phase": 1,
    "pair": [
     1,
     2
    ],
-   "quantum": 1,
    "held": {
     "count": "content",
-    "factors": [
-     1
-    ],
     "divisor": 1
-   },
-   "reads": [],
-   "self_source": {
-    "unit": 0
    }
   }
  ]
