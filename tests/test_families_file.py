@@ -124,6 +124,13 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     # the shipped file's three entries with the test world's own integers (its A is 2^22, the shipped file's 2^20), written as a families file of the test's root
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     document["integers"]["node_clock"] = inline["node_clock"]
+    charge = next(row for row in document["families"] if row["name"] == "charge")
+    for row in inline[
+        "universe"
+    ]:  # the inline light holds the sign as the file's charge does: one E_s for the window's write on both sides
+        if row["name"] == "light":
+            row["held"] = dict(charge["held"])
+    inline["stamp"] = input_stamp(inline)
     (tmp_path / "universe.json").write_text(json.dumps(document), encoding="utf-8")
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
@@ -166,7 +173,9 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
 ):
     """Every family renamed adversarially in the whole universe file: the light clock runs bit for bit."""
     rename = {"gravity": "matter", "charge": "gravity", "matter": "charge"}
-    universe = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
+    universe = json.loads(
+        (ROOT / "tests/universe_fixtures.json").read_text(encoding="utf-8")
+    )  # the light clock's own universe copy (the write's divisor)
     for entry in universe["families"]:
         entry["name"] = rename[entry["name"]]
         for read in entry.get("reads", []):
