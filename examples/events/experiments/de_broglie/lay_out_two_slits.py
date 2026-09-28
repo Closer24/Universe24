@@ -29,9 +29,9 @@ WORLD_NAME = "two_slits_light"
 # THE NUMBERS TO SET FROM CHESHBON'S LINE ON #1325 (asked 05:08 Israel time, 2026-09-28); until his
 # line these are the Experimenter's proposal, and a run on them is a first look and says so.
 WAVELENGTH_CLOCK = [
-    512,
+    354,
     1,
-]  # the given family's clock [p, q]: lambda_q = 2 N q / p (the recoil's), rule 6
+]  # the given family's clock [p, q]: lambda_q = 2 N q / p = 5.785 Links, the giver's own wavelength on the light band (Cheshbon's line of 02:18Z, 2026-09-28), rule 6
 GIVER_COUNT = 2001  # the giver's count per Node (`least_residues`: the shell wheel above 500 at 2001)
 MIRROR = (
     9000  # the tube's and the wall's count per Node, above the mirror's line at the record's wavelength
@@ -42,7 +42,7 @@ SLIT_DISTANCE = 16  # d, the distance between the two openings' centres in Links
 SCREEN_DISTANCE = 97  # L, from the wall's far face to the screen's face in Links
 STRIP = 4  # the height of one strip of the screen in Nodes
 STOCK = 400  # the giver's stock of quanta
-TICKS = 6000  # the run's length in intervals
+TICKS = 4500  # the run's length in intervals: the last giving within ~4,000, the flight of 124 Links at the group velocity 0.518 (Cheshbon, 02:18Z)
 FACE_DEPTH = 8
 
 WALL_X = 40  # the wall's near face; the wall is 4 Nodes thick
@@ -180,6 +180,47 @@ def two_slits(folder: Path) -> dict[str, Any]:
     }
 
 
+# CHESHBON'S BLIND EXPECTATION OF THE STRIPS (#1325, 02:18Z, 2026-09-28; lambda = 5.785, d = 16, L = 97, the
+# stock 400; the exact two-arm phases k . r on the surface's wavevector with Huygens' sum over each opening's
+# four Nodes): his strips are numbered 0..63 over y = 0..255 (the centre 31.5); the strips here start at the
+# face slab's edge (y = FACE_DEPTH), so his strip j is the strip j - FACE_DEPTH // STRIP here. The share per strip
+# and its binomial sd on the stock; the band read as two sd (the draw's, "The rows against nature").
+CHESHBON_STRIPS = {
+    31: (0.049, 4.3),
+    32: (0.049, 4.3),
+    21: (0.037, 3.8),
+    42: (0.037, 3.8),
+    6: (0.015, 2.4),
+    56: (0.015, 2.4),
+    14: (0.0005, 0.5),
+    26: (0.0005, 0.5),
+    37: (0.0005, 0.5),
+    49: (0.0005, 0.5),
+}
+
+
+def strips_expected(document: dict[str, Any]) -> list[dict[str, Any]]:
+    """The expectation's `strips`: Cheshbon's share per named strip, the count on the stock and the band of two sd."""
+    offset = FACE_DEPTH // STRIP
+    names = {k: strip["name"] for k, strip in enumerate(document["detectors"])}
+    found = []
+    for his, (share, sd) in sorted(CHESHBON_STRIPS.items()):
+        mine = his - offset
+        if mine in names:
+            found.append(
+                {
+                    "detector": names[mine],
+                    "cheshbon_strip": his,
+                    "share": share,
+                    "count": round(STOCK * share),
+                    "sd": sd,
+                    "band": round(2 * sd),
+                    "row": "Cheshbon's blind share (02:18Z) of the clicks on the screen at the stock 400; the band two binomial sd",
+                }
+            )
+    return found
+
+
 def expectation(document: dict[str, Any]) -> dict[str, Any]:
     """The expectation file's frame: the row, the form of the world, the GAMEBOARD checks; the DETECTOR shares per strip enter from Cheshbon's line and no run."""
     wavelength = 2 * STEPS * WAVELENGTH_CLOCK[1] / WAVELENGTH_CLOCK[0]
@@ -197,7 +238,7 @@ def expectation(document: dict[str, Any]) -> dict[str, Any]:
             f"the stock {STOCK}; written before any run"
         ),
         "DETECTOR": [],
-        "strips": [],
+        "strips": strips_expected(document),
         "GAMEBOARD": [],
         "GAMEBOARD_checks": [
             "(i) `behind_the_wall` (away from the openings) stays 0 behind the opaque wall; `at_left_opening` and `at_right_opening` carry the record's level in the openings",
