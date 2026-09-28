@@ -30,8 +30,7 @@ def tool(name: str):
 
 
 def test_the_file_names_every_built_primitive_at_its_declared_place_and_the_writers_follow_it():
-    register = discover()
-    step = read_step(shipped(), "d")
+    register, step = discover(), read_step(shipped(), "d")
     register.check_step(step)
     listed = [name for names in step.places.values() for name in names]
     assert set(register.built_names()) <= set(listed) and len(listed) == len(set(listed))
@@ -40,8 +39,7 @@ def test_the_file_names_every_built_primitive_at_its_declared_place_and_the_writ
             assert register.declarations[name].place == place, name
     assert step.places["(iii)"] == () and step.places["any"] == ("the trace", "the start", "the write")
     assert step.acts[0][:2] == ("(iv)", "the hold")
-    holds = [act for act in step.acts if act[1] == "the hold"]
-    hold = ("(iv)", "the hold")
+    holds, hold = [act for act in step.acts if act[1] == "the hold"], ("(iv)", "the hold")
     assert holds == [(*hold, (("advance", False),)), (*hold, (("advance", True),))]
     for (place, value), expected in ORDERS.items():
         assert register.writers(value, place, step) == expected, (place, value)
@@ -83,8 +81,7 @@ def test_the_host_reads_the_file_the_loader_carries_it_and_the_run_writes_its_di
     ):
         partial.at("the source", "(iv)")
     # the one command writes the digest beside the stamp
-    module = tool("run_inputs")
-    source = tmp_path / "world.json"
+    module, source = tool("run_inputs"), tmp_path / "world.json"
     source.write_text(json.dumps(document), encoding="utf-8")
     module.run_input(str(source), str(tmp_path), [])
     world_file = tmp_path / "world.json"
@@ -95,8 +92,7 @@ def test_the_host_reads_the_file_the_loader_carries_it_and_the_run_writes_its_di
 
 
 def test_each_defect_of_the_file_is_refused_by_name(tmp_path, monkeypatch):
-    good = shipped()
-    register = discover()
+    good, register = shipped(), discover()
 
     def refused(change, match):
         broken = json.loads(json.dumps(good))

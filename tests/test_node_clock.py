@@ -85,8 +85,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
         live = planted(simulation, 1, uniform, uniform.copy(), np.zeros((12, 1, 1), dtype=np.int64))
         readings = []
         for _ in range(60):
-            a_before = int(live.before[5, 0, 0])
-            a_now = int(live.now[5, 0, 0])
+            a_before, a_now = int(live.before[5, 0, 0]), int(live.now[5, 0, 0])
             simulation._advance(live)
             if abs(a_now) > amplitude // 2:
                 readings.append((int(live.now[5, 0, 0]) + a_before) / a_now)
@@ -112,14 +111,11 @@ def group_pace_light(k: float, ratio: float) -> float:
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     """(iii) THE SLAB, a GameBoard reading (a diagnostic, not a measurement): the flux test's Gaussian packet of light (40 Links, k = 0.3024) on the open chain of 400, 400 intervals with and without a slab of 40 Nodes at [150, 190) holding QUANTA each (the held row's divisor 1, the level at the slab the count at the start; the record alone is advanced): the transmitted packet's centroid lags the vacuum's by the slab's delay 40 (1 / v' - 1 / v) (6.23 Links; read 6.16), within 15 percent; 0.974 of the energy beyond the slab in the vacuum run and 0.946 with it."""
-    k = 0.3024
-    x = np.arange(400)
-    envelope = np.exp(-(((x - 60) / 14.0) ** 2))
-    omega = math.acos((math.cos(k) + 2.0) / 3.0)
+    k, x = 0.3024, np.arange(400)
+    envelope, omega = np.exp(-(((x - 60) / 14.0) ** 2)), math.acos((math.cos(k) + 2.0) / 3.0)
     now = np.rint(UNIT * envelope * np.cos(k * (x - 60))).astype(np.int64).reshape(400, 1, 1)
     before = np.rint(UNIT * envelope * np.cos(k * (x - 60) + omega)).astype(np.int64).reshape(400, 1, 1)
-    centroids = {}
-    beyond = {}
+    centroids, beyond = {}, {}
     for slab in (False, True):
         nodes = range(150, 190) if slab else []
         simulation = DetectorLawSimulation(
@@ -137,8 +133,7 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     pace = group_pace_light(k, 1.0)
     # the dispersion's factor under the weak field, f = (p / Gamma)^2 (ALGEBRA.md #the-rows-against-nature)
     slowed = group_pace_light(k, ((GAMMA - QUANTA) / GAMMA) ** 2)
-    delay = 40.0 * (1.0 / slowed - 1.0 / pace)
-    lag = centroids[False] - centroids[True]
+    delay, lag = 40.0 * (1.0 / slowed - 1.0 / pace), centroids[False] - centroids[True]
     # the slab's faces reflect more under the weak field (the index at f = (p / Gamma)^2, 0.5625 here, against 0.75 under the first-order rule): 0.946 beyond against 0.956 (COMPUTATION); the floors are read values of a GameBoard reading, not measurements compared with nature
     assert beyond[False] > 0.97 and beyond[True] > 0.94, ("GameBoard reading, diagnostic", beyond)
     assert 0.85 * delay * pace < lag < 1.15 * delay * pace, (
@@ -164,8 +159,7 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
         # (a) the form from the rule's integers (item 44): L [w (a^2 + b^2) - S_i a b] / R_i at the Nodes, the Links plain
         integers = [coefficients(num, den, GAMMA, c) for c in content]
-        reads = six_reads(before, True)
-        expected = Fraction(0)
+        reads, expected = six_reads(before, True), Fraction(0)
         for i in range(60):
             a, b = int(now[i, 0, 0]), int(before[i, 0, 0])
             (read_i, _, _), self_i, wall_i = integers[i]
@@ -195,11 +189,9 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         # (c) the books' form's remainder identity, exact, over 40 intervals
         previous = Fraction(*simulation.record_form(live))
         for _ in range(40):
-            a_before = live.before.astype(object)
-            r = live.remainder.astype(object)
+            a_before, r = live.before.astype(object), live.remainder.astype(object)
             simulation._advance(live)
-            current = Fraction(*simulation.record_form(live))
-            term = Fraction(0)
+            current, term = Fraction(*simulation.record_form(live)), Fraction(0)
             for i in range(60):
                 term += Fraction(
                     int(live.now[i, 0, 0] - a_before[i, 0, 0])
@@ -257,8 +249,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
     # the registered world's matter family (the families file's third entry, item 60) at the body's kind [800, 809] (the pair on the body, ALGEBRA.md #the-interval)
-    matter = [family.name for family in world.families].index("matter")
-    kind = block.definition.kind
+    matter, kind = [family.name for family in world.families].index("matter"), block.definition.kind
     # the beam body's Node's kind [800, 1200] since commit 7 (the one-Node emitter of the window)
     assert kind == (800, 1200) and world.families[matter].pair_on_body
     # A's count 65 (its one own quantum beside its stock of 64 light quanta, item 47) is the source over the divisor 40000: the level 0 at the start and for 614 intervals (616 x 65 = 40040 at the 615th)
@@ -283,14 +274,12 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     assert simulation.body_source(0, "content") == 5 and simulation.body_source(1, "content") == 1
     carried = block.hold_carry[(2, 0)]  # the family of clicks' time part on the body's remainders
     assert carried == 5 and not simulation.level_of("content").any()
-    givings_seen = 0
-    clicks_seen = 0
+    givings_seen, clicks_seen = 0, 0
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
         # the quantum moves at the window's open (the body's count of givings), the line is named at the close; the hold at (iv) reads the count the interval's clicks left
-        givings_seen = block.givings
-        clicks_seen = sum(1 for line in lines if line["event"] == "gather")
+        givings_seen, clicks_seen = block.givings, sum(1 for line in lines if line["event"] == "gather")
         assert simulation.body_source(0, "content") == 5 - givings_seen
         assert simulation.body_source(1, "content") == 1 + clicks_seen
         carried += simulation.body_source(0, "content")
