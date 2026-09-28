@@ -47,6 +47,9 @@ def test_the_tallies_per_axis_on_made_up_outputs(tmp_path: Path):
     moves = axis_tallies.moves_per_axis(series)
     assert moves["net"] == [3, 1, 0] and moves["raw"] == [3, 1, 0] and moves["peak_interval"] == 1
     assert moves["net_per_interval_at_peak"] == [2, 1, 0] and moves["pixel_count"]["least"] == 5
+    assert moves["share_toward_plus_x"] == 1.0 and "| the record's b" in axis_tallies.table(
+        Path("w.json"), {}, {}
+    )
     record = axis_tallies.record_reading(
         [5, 3, -2, -5, -3, 2, 5, 3, -2, -5], [10] * 10, {"b": 5, "period": 6.5}
     )

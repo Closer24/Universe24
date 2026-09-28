@@ -1,7 +1,5 @@
 """The start file and no default: every world names the start file, a key the law reads and the world leaves out is refused by name, a key the law never reads is refused by name, and the runner's own options. HOST; no pin."""
 
-from __future__ import annotations
-
 import json
 import sys
 from pathlib import Path

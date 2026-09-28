@@ -87,6 +87,7 @@ def moves_per_axis(series: list[list[int]]) -> dict[str, Any]:
         "peak_interval": None if peak is None else peak + 1,
         "net_per_interval_at_peak": None if peak is None else per_interval[peak][0],
         "first_move": next((t + 1 for t, (_, r) in enumerate(per_interval) if any(r)), None),
+        "share_toward_plus_x": None if raw[0] == 0 else round((raw[0] + net[0]) / (2 * raw[0]), 3),
         "pixel_count": {"start": series[0][0], "end": series[-1][0], "least": min(s[0] for s in series)},
         "white": bool(per_interval) and all(v == 0 for v in net),
     }
@@ -177,6 +178,34 @@ def report(world: Path, output: Path) -> dict[str, Any]:
     return rows
 
 
+def table(world: Path, read: dict[str, Any], blind: dict[str, Any]) -> str:
+    """The algebra / engine / difference table of one world for #1325 (GAMEBOARD): the record's b and period against Cheshbon's, the net tally per axis at the peak against the blind, the moves' share toward +x against the fall's bias where the world declares it, the pixel's count, the refusal by name."""
+    record, axes, fall = read.get("record", {}), blind.get("axes", {}), blind.get("fall", {})
+    rows = [f"| {world.stem} | algebra | engine | difference |", "|---|---|---|---|"]
+    expected = record.get("expected") or {}
+    rows.append(
+        f"| the record's b, the period | {expected.get('b')}, {expected.get('period')} | {record.get('amplitude_b')}, {record.get('period_intervals')} | {record.get('b_verdict', 'no number')}, {record.get('period_verdict', 'no number')} |"
+    )
+    rows.append(
+        f"| the net tally per axis at the peak | {axes.get('net_per_interval')} | {read.get('net_per_interval_at_peak')} (net {read.get('net')}, raw {read.get('raw')}) | white {read.get('white')} |"
+    )
+    if fall:
+        share = read.get("share_toward_plus_x")
+        verdict = (
+            "no move"
+            if share is None
+            else ("MATCH" if abs(share - float(fall["bias"])) <= float(fall["band"]) else "MISS")
+        )
+        rows.append(
+            f"| the moves' share toward the cluster | {fall.get('bias')} | {share} | {verdict} |"
+        )
+    rows.append(
+        f"| the pixel's count (start, end, least) | {expected.get('count')} | {read.get('pixel_count')} | intervals run {read.get('ticks_run')} |"
+    )
+    rows.append(f"| refused | none | {read.get('refusal') or 'none'} | |")
+    return "\n".join(rows)
+
+
 def main() -> None:
     if len(sys.argv) > 2 and sys.argv[1] == "--run":
         for argument in sys.argv[2:]:
@@ -184,8 +213,10 @@ def main() -> None:
             blind = json.loads(world.with_suffix(".expectation.json").read_text(encoding="utf-8"))
             axes = blind.get("axes", {})
             record = blind.get("blind", {}).get("record")
-            text = json.dumps({"world": world.name, **run_moves(world, axes, record)}, indent=1)
+            read = run_moves(world, axes, record)
+            text = json.dumps({"world": world.name, **read}, indent=1)
             print(text)
+            print(table(world, read, blind))
             world.with_name(f"{world.stem}.moves.json").write_text(text + "\n", encoding="utf-8")
         return
     arguments = [Path(a).resolve() for a in sys.argv[1:]]
