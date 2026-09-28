@@ -106,8 +106,7 @@ def body_world() -> dict:
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
 ):
-    """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q the signed sum of its
-    counts by the row's `sign`; the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
+    """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q the signed sum of its counts by the row's `sign`; the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
     universe = json.loads(GENERATED.read_text(encoding="utf-8"))
     next(row for row in universe["families"] if row["name"] == "matter")["sign"] = -1
     world = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
@@ -135,8 +134,7 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
 def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_file(
     tmp_path, monkeypatch
 ):
-    """#what-a-body-is, #the-primitives (the recoil's row): a giving body by its Nodes takes its profile, clock and
-    twist from the mode file beside the world (this world's by `world_digest`), its receiver a list; defects refused by name."""
+    """#what-a-body-is, #the-primitives (the recoil's row): a giving body by its Nodes takes its profile, clock and twist from the mode file beside the world (this world's by `world_digest`), its receiver a list; defects refused by name."""
     world, universe = body_world(), json.loads(GENERATED.read_text(encoding="utf-8"))
     world["N"] = 1024  # the given clock [512, 1] whole in the wavelength (the loop's L)
     giver = {"family": "charge", "weight": 1, "norm": 100, "norm_denominator": 1, "receiver": ["strip"]}
@@ -201,8 +199,7 @@ def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_bo
     "the loop's families from the checked entries by the cards' keys and reads a body's and an emitter's `pair`",
 )
 def test_c2_every_key_of_a_familys_entry_is_a_folders_schema_and_not_a_line_of_the_loader():
-    """Record 2226 (1) and (2): every key of a shipped family's entry is one folder's card; the loader
-    names none of those keys as a string of its own."""
+    """Record 2226 (1) and (2): every key of a shipped family's entry is one folder's card; the loader names none of those keys as a string of its own."""
     register = discover()
     words = {
         key

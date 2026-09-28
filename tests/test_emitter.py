@@ -1,5 +1,4 @@
-"""The emitter as a clicking body (ALGEBRA.md #the-click): its excited records click in turn at their own
-rungs, each click giving one photon written once at both levels, the stock falling by one each time."""
+"""The emitter as a clicking body (ALGEBRA.md #the-click): its excited records click in turn at their own rungs, each click giving one photon written once at both levels, the stock falling by one each time."""
 
 from __future__ import annotations
 

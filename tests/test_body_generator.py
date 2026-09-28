@@ -189,14 +189,14 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
 
 
 def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name(tmp_path):
-    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly (a read by the sign skipped, a weight named in the integers); the refusals by name, [800, 809]'s shallow well."""
+    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly (a read by the sign skipped, a weight named in the integers); a giver (an emitter, a crystal) and a moving body carry an entry, a wall none (content alone); the held field is the start folder's rest over the row's divisor (the sum: at E_s = 40,000 a count of 3000 rests at 0 and the body has no well); the refusals by name, [800, 809]'s shallow well."""
 
     def row(name, pair, held, reads):
         return {"name": name, "pair": pair, "held": held, "reads": reads}
 
     reads = [{"family": "gravity", "weight": "one", "by": 1}]
     reads.append({"family": "charge", "weight": 1, "by": "q"})
-    families = [row("gravity", [1, 4], {"count": "content", "divisor": 40000}, [])]
+    families = [row("gravity", [1, 4], {"count": "content", "divisor": 1}, [])]  # the body's own well
     families += [row("charge", [1, 1], {"count": "sign", "divisor": 40000}, [])]
     families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
     table = {"unit": 4 * GAMMA * 65536, "fine": [[1, 0, 1]], "coarse": [[1, 0, 1]]}
@@ -205,35 +205,55 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     body["phase_denominator"] = 64  # one form: every body carries the phase's m
-    faces = {"x": "periodic", "y": "periodic", "z": "periodic"}
-    world = {"shape": [8, 8, 8], "boundary": faces, "node_clock": GAMMA, "measured": [body]}
-    world["universe"] = str(tmp_path / "universe.json")
+    body["emitter"] = {
+        "family": "light",
+        "weight": 1,
+        "norm": 1,
+        "norm_denominator": 1,
+        "receiver": "set",
+    }
+    world = {"shape": [8, 8, 8], "boundary": dict.fromkeys("xyz", "periodic"), "node_clock": GAMMA}
+    world |= {"measured": [body], "universe": str(tmp_path / "universe.json")}
     readings, box = generate(world), counted_cube(8, 2, 3000)
     reading = readings["bodies"][0]
-    rest = start_rest(box, (1, 4))
+    rest = start_rest(box, (1, 4), PERIODIC, 1)  # the sum's rest over the row's divisor (THE START)
     level = loader_level(world, GAMMA)  # the loader's load_level: matter reads gravity at 1, charge at 1
     mode = bound_mode(box, KIND, GAMMA, content=rest.levels, bound_level=level)
     at_level = amplitude_unit(KIND, GAMMA, np.array([level]))
     reach = 2 * (1 * sum(node["count"] for node in nodes) + 1 * 0)  # the content, and the charge 0
     assert level == min(reach, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude == at_level
     assert at_level < amplitude_unit(KIND, GAMMA, rest.levels)  # the unit falls with the content
-    weighed = {
-        **world,
-        "universe": str(tmp_path / "weighed.json"),
-    }  # the reads' weight and a charge move the level
+    weighed = {**world, "universe": str(tmp_path / "weighed.json")}  # the weight and a charge move it
     doubled = {"families": families, "integers": {**integers, "one": 2}}
     (tmp_path / "weighed.json").write_text(json.dumps(doubled))
     charged = {**weighed, "measured": [{**body, "q": 5}]}
     assert loader_level(weighed, GAMMA) == min(2 * (2 * 24000 + 1 * 0), GAMMA - 1)
     assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (2 * 24000 + 1 * 5)
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
-    assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
-    at_rest = {"pair": [1, 4], "cycle": 1, "at_bodies": 3000, "at_corner": 0}
+    assert reading["period"] == period_by_the_rule(*reading["rotation"])
+    written = reading[
+        "profile"
+    ]  # an eighth of the unit by the division act: eight times it is the mode's within eight and the unit's remainder by eight
+    assert (
+        np.abs(written).max() == mode.amplitude // 8
+        and np.abs(8 * written - mode.profile).max() <= 8 + mode.amplitude % 8
+    )
+    at_rest = {"pair": [1, 4], "cycle": 1, "at_bodies": int(rest.levels[box > 0].min()), "at_corner": 0}
     at_rest["iterations"] = rest.iterations
     assert readings["rest"]["gravity"] == at_rest and np.array_equal(reading["content"], rest.levels)
     still = reading["moving"]  # one path: at the momentum 0 the pair (m, 0) and the mode's levels
     assert still["phase_pair"] == [64, 0] and still["triple"] == [1, 0, 1]
-    assert still["velocity_named"] == [0, 1] and np.array_equal(still["now"], mode.profile)
+    read_w, self_w, wall_w = rule_integers(
+        KIND, GAMMA, reading["content"] if "content" in reading else rest.levels
+    )
+    before = two_levels(written, read_w, self_w, wall_w, PERIODIC)[
+        1
+    ]  # the second level the read act halved
+    assert (
+        still["velocity_named"] == [0, 1]
+        and np.array_equal(still["now"], written)
+        and np.array_equal(still["before"], before)
+    )
     moving = {**body, "momentum": [0, 3 * 64 * 24000 // 40, 0]}
     moved = generate({**world, "measured": [moving]})["bodies"][0]["moving"]
     assert moved["axis"] == 1 and moved["velocity_named"] == [1, 40] and moved["phase_pair"][0] == 64
@@ -244,6 +264,13 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
         return generate({**world, "measured": [entry]})["bodies"][0]["refused"]
 
     assert "moves along one axis" in refused({**body, "momentum": [1, 1, 0]})
+    wall = {k: v for k, v in body.items() if k != "emitter"}  # no giving, no momentum: content alone
+    assert generate({**world, "measured": [wall]})["bodies"][0]["mode"].startswith("none: no giving")
+    assert "profile" in generate({**world, "measured": [{**wall, "crystal": {}}]})["bodies"][0]
+    summed = [{**families[0], "held": {"count": "content", "divisor": 40000}}, *families[1:]]
+    (tmp_path / "summed.json").write_text(json.dumps({"families": summed, "integers": integers}))
+    no_well = generate({**world, "universe": str(tmp_path / "summed.json")})["bodies"][0]["refused"]
+    assert "zero everywhere: no body" in no_well  # at E_s = 40000 a count of 3000 rests at 0: no well
     without = {k: v for k, v in body.items() if k != "phase_denominator"}
     assert "declares its phase_denominator" in refused(without)
     assert "the row's pair is 'body', not [num, den]" in refused({**body, "family": "light"})

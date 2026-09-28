@@ -1,5 +1,4 @@
-"""The flux reading (ALGEBRA.md #rule3): e_i(t) - e_i(t - 1) is the sum of G_ij over the reads of i,
-exactly up to the remainders' own term, on planted rows and on the engine's run."""
+"""The flux reading (ALGEBRA.md #rule3): e_i(t) - e_i(t - 1) is the sum of G_ij over the reads of i, exactly up to the remainders' own term, on planted rows and on the engine's run."""
 
 from __future__ import annotations
 
