@@ -17,19 +17,15 @@ from tests.worlds import NODE_CLOCK, emitter_world, lawful_wheel
 
 def wall_form(simulation, family: int, now, before, content=None) -> Fraction:
     """A record's conserved form under the Node's own pace (ALGEBRA.md #the-direction) from its two levels and the clicks' levels `content` (the engine's array when None), in the engine's units (the scale 3 L, L the numerators' lcm): [3 L (den / num) Gamma (a^2 + b^2) - 6 L (den / num) c_i a b] / p_i at the Nodes, p_i = Gamma - c_i, and L (a_i b_j + a_j b_i) on the Links; an exact rational over the six reads."""
-    gamma = simulation.node_clock
-    levels = simulation.level_of("content") if content is None else content
+    gamma, levels = simulation.node_clock, simulation.level_of("content") if content is None else content
     num = simulation.kind_num[family].astype(object)
-    den = simulation.kind_den[family].astype(object)
-    wall = simulation.kind_wall(family)
-    a = now.astype(object)
-    b = before.astype(object)
+    den, wall = simulation.kind_den[family].astype(object), simulation.kind_wall(family)
+    a, b = now.astype(object), before.astype(object)
     read = send(simulation.ports, before, simulation.kind_wrap[family]).astype(object)
     (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
         num, den, gamma, levels.astype(object)
     )
-    node = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b)
-    total = Fraction(0)
+    node, total = wall * (wall_at * (a * a + b * b) - self_coefficient * a * b), Fraction(0)
     for index in zip(*np.nonzero(node), strict=True):
         total += Fraction(int(node[index]), int(read_coefficient[index]))
     return total - int(np.sum(wall * a * read))
@@ -66,8 +62,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     alone["detectors"] = []
     alone["stamp"] = input_stamp(alone)  # the stamp of the body alone (its given pair gone)
     solitary = DetectorLawSimulation(parse_nature_beam_world(alone))
-    body = solitary.block_by_number[0]
-    centre = np.zeros(solitary.shape, dtype=bool)
+    body, centre = solitary.block_by_number[0], np.zeros(solitary.shape, dtype=bool)
     centre[21, 0, 0] = True
     assert np.array_equal(solitary.centre_mask(body), centre)
     action = 0
@@ -95,8 +90,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         # SINCE COMMIT 7 the line is named at the window's close: the open (`opened`, the click's interval) falls the count after the read, the next count starts at the close
         assert line["opened"] - read_at == expected == line["wait"], (line["opened"], u, wheel)
         assert 2 * wheel * (line["wait"] - 1) < (2 * u + 1) * period <= 2 * wheel * line["wait"]
-        read_at = line["tick"]
-        previous = (line["u"], line["W"])
+        read_at, previous = line["tick"], (line["u"], line["W"])
         # the residue read at the first shell Node, the body's corner at x = 5
         assert line["read_node"] == [5, 0, 0]
         # THE BODY'S OWN RECORD CONTINUES (ALGEBRA.md #the-ladder): the same record, the body's identity, before and after every giving; the line's residue on it after the click
@@ -175,10 +169,8 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    block = simulation.block_by_number[0]
-    emitter = document["measured"][0]["emitter"]
-    given = None
-    closed = None
+    block, emitter = simulation.block_by_number[0], document["measured"][0]["emitter"]
+    given, closed = None, None
     extent: list[tuple[int, int, int]] = []
     while simulation.tick < 400:
         simulation.step()
