@@ -17,8 +17,7 @@ from tests.worlds import chain_world, emitter_world  # noqa: E402
 
 
 def write(directory: Path, name: str, document: dict) -> Path:
-    path = directory / f"{name}.json"
-    path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+    (path := directory / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", "utf-8")
     return path
 
 
@@ -34,8 +33,7 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
     b = write(inputs, "chain_small", chain)
     together = tmp_path / "together"
     assert main(["--out", str(together), "--jobs", "2", str(a), str(b)]) == 0
-    alone_a = tmp_path / "alone_a"
-    alone_b = tmp_path / "alone_b"
+    alone_a, alone_b = tmp_path / "alone_a", tmp_path / "alone_b"
     assert main(["--out", str(alone_a), "--jobs", "1", str(a)]) == 0
     assert main(["--out", str(alone_b), "--jobs", "1", str(b)]) == 0
     for name, alone in (("emitter_small", alone_a), ("chain_small", alone_b)):
@@ -45,7 +43,8 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
         assert output["format"] == OUTPUT_FORMAT and output["verdict"] == "LAWFUL"
         assert output["ticks"] == 250 and output["stamp"]["hash"]
         assert output["counts"]["screen"] >= 1 and output["pins"] == []
-        keys = {"detector", "interval", "giving", "record"}
+        keys = {"detector", "interval", "giving", "record", "giver", "taker", "norm", "tally"}
+        keys |= {"giver_clock", "clock"}  # the body's language on every click
         assert all(set(click) == keys for click in output["clicks"])
         clicked = [c for c in output["clicks"] if c["detector"] is not None]
         assert sum(output["counts"].values()) == len(clicked)
@@ -53,10 +52,8 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
 
 def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path: Path):
     """An input whose body lacks a key of the frame (its momentum) is REFUSED by name, its output carrying the reason and no clicks, and the command's exit is 1; a lawful input with pins registered before the run reads MATCH within the band and MISS outside it, the value read written beside each: a pin on the count of clicks, a pin on the detector's first click (the least interval since the record's giving among its clicks) and a pin on the mean interval since the giving over its clicks (ALGEBRA.md #the-ladder; a detector with no click reads None and MISS)."""
-    inputs = tmp_path / "inputs"
-    inputs.mkdir()
-    # THE MODE PIN (item 57): the pins are compared under the mode "pin" alone; a start file
-    # of that mode, named by its path relative to the repository's root
+    (inputs := tmp_path / "inputs").mkdir()
+    # THE MODE PIN (item 57): the pins are compared under the mode "pin" alone; a start file of that mode, named by its path relative to the repository's root
     start = tmp_path / "start_pin.json"
     start.write_text(json.dumps({"mode": "pin"}), encoding="utf-8")
     relative = os.path.relpath(start, Path(__file__).resolve().parents[1])
@@ -70,14 +67,14 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     good["readings"] = [{"name": "n", "kind": "momentum", "body": 0, "every": 50}]
     good["stamp"] = input_stamp(good)
     good_path, twin_path = write(inputs, "good", good), write(inputs, "twin", good)
-    # the expectation file beside the world, two sections: DETECTOR pins join the pins file's,
-    # GAMEBOARD pins read the declared readings at the named interval (a diagnostic)
+    # the expectation file beside the world, two sections: DETECTOR pins join the pins file's, GAMEBOARD pins read the declared readings at the named interval (a diagnostic) and the one-Node equivalence against a twin
     ratio = {"detector": "screen", "twin": "twin", "ratio": [1, 1], "band": [0, 1]}
     nowhere = {"detector": "screen", "twin": "nowhere", "ratio": [1, 1], "band": [1, 1]}
     expectation = {"DETECTOR": [{"detector": "screen", "count": 2, "band": 1}, ratio, nowhere]}
     expectation["GAMEBOARD"] = [{"body": 0, "interval": 50, "momentum": [0, 0, 0], "band": 0}]
+    expectation["GAMEBOARD"].append({"equivalent": "twin", "within": 0})
+    expectation["GAMEBOARD"].append({"equivalent": "nowhere", "within": 1})
     good_path.with_suffix(".expectation.json").write_text(json.dumps(expectation), encoding="utf-8")
-    pins = tmp_path / "pins.json"
     good_pins = [
         {"detector": "screen", "count": 2, "band": 1},
         {"detector": "screen", "count": 40, "band": 1},
@@ -86,10 +83,9 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
         {"detector": "screen", "mean_interval": 100, "band": 60},
         {"detector": "nowhere", "mean_interval": 100, "band": 1000},
     ]
-    pins.write_text(json.dumps({"good": good_pins}), encoding="utf-8")
-    out = tmp_path / "out"
-    inputs = [str(bad_path), str(good_path), str(twin_path)]
-    assert main(["--out", str(out), "--jobs", "2", "--pins", str(pins), *inputs]) == 1
+    (pins := tmp_path / "pins.json").write_text(json.dumps({"good": good_pins}), encoding="utf-8")
+    inputs = ["--pins", str(pins), str(bad_path), str(good_path), str(twin_path)]
+    assert main(["--out", str(out := tmp_path / "out"), "--jobs", "2", *inputs]) == 1
     refused = json.loads((out / "bad.output.json").read_text(encoding="utf-8"))
     assert refused["verdict"] == "REFUSED" and "lacks keys: momentum" in refused["reason"]
     assert "clicks" not in refused
@@ -98,8 +94,10 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     read = good["counts"]["screen"]
     waits = [c["interval"] - c["giving"] for c in good["clicks"] if c["detector"] == "screen"]
     first, mean = min(waits), (2 * sum(waits) + len(waits)) // (2 * len(waits))
-    assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 10
-    assert [pin["verdict"] for pin in good["pins"][8:]] == ["MATCH", "MISS"]
+    assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 12
+    assert [pin["verdict"] for pin in good["pins"][8:]] == ["MATCH", "MISS"] * 2
+    assert good["pins"][10]["read"] == [0, 0] and good["pins"][11]["read"] is None
+    assert good["clicks"][0]["giver"] == 0 and good["clicks"][0]["taker"] == 1  # the screen's entry
     assert good["pins"][8]["read"] == [1, 1] and good["pins"][9]["read"] is None
     momentum = [line for line in good["readings"] if line["name"] == "n"][0]["lines"][1]["momentum"]
     assert good["pins"][7]["read"] == momentum and good["pins"][7]["kind"] == "momentum"
