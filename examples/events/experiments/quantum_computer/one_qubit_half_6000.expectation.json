@@ -1,0 +1,71 @@
+{
+ "format": "world-expectation-v1",
+ "row": "ALGEBRA.md #the-rows-against-nature (k) THE TWO-QUBIT COMPUTER, one qubit: the row (l) MACH-ZEHNDER on the plane 48 x 48 x 1 of the rule's universe at Gamma 6000 (examples/events/planck_6000.json); the giving pixel of 2700 (the horizon on the law, its rotation 0.468) at x = 6 on the row y = 14, giving light of wavelength 7.6 with the stock 100; the first splitter a diagonal of 5 Nodes of 1598 along (1, 1) at (14, 14), one Node deep along the beam, the count by bisection on Cheshbon's table to s = 1/2 (s = 0.500 there); the mirrors diagonal bands three Nodes thick of 2300 at (14, 34) and (34, 14) (s = 0.99); the second splitter at (34, 34); the arms equal by the square (20 Links each way); the cross exit's set a body of 1400 per Node across the beam 5 Links beyond the second splitter along +x and the straight exit's along +y; no walls (a cluster of hundreds of Nodes buries its pace at the divisor 1); the phase gate a window of 1500 per Node, 3 Nodes deep, across the transmitted arm, Cheshbon's phase 3.11 radians; written before any run, no pin: the run says",
+ "DETECTOR": [],
+ "blind_expectation": {
+  "shares": {
+   "cross_exit": 0.0002,
+   "straight_exit": 0.9998
+  },
+  "cheshbon_17_10_israel": "at equal arms 1.00 (0.97 to 1.0) at the cross exit and 0 at the straight; the half-turn gate 1,500 x 3 gives 0.00 (0 to 0.03) at the cross exit; the quarter-turn gate 1,400 x 2 gives 0.41; the band plus or minus 0.05 at 100 clicks and 0.1 at 30; the window returns 23 to 36 percent, a loss by name lowering the visibility to the window's 4 s (1 - s)",
+  "gate_phase_radians": 3.11,
+  "gate_loss": [
+   0.23,
+   0.36
+  ],
+  "controlled_phase": "g_c^2 A^2 / (4 Gamma) is exactly 0 on the file (the reads derived at the weight 1, a light record writing no level another record reads, no sourced row); through a pixel (a control quantum's click into the gate's body moving its count by one, k' moving by 1.6 x 10^-3 radians per Node per quantum) 5 x 10^-3 radians over three Nodes, below the band; a controlled phase of order one is a hypothesis under its own name",
+  "E_of_h": {
+   "0": 1.0,
+   "pi/8": 0.707,
+   "pi/4": 0.0,
+   "3pi/8": -0.707,
+   "row": "cos 2(a - b) at the four settings, the controlled phase within 5 x 10^-3 of it: (k) at 6,000 is (h) without a gate (Cheshbon, 17:10 Israel)"
+  },
+  "row": "the row (l): the clicks' shares 4 s (1 - s) cos^2 (Delta / 2) at the cross exit and one minus that at the straight exit, Delta = (k_in - k) l the gate's phase (the row (k), the window body as a phase gate); the band is the draw's on the clicks, sqrt(p (1 - p) / n) per exit"
+ },
+ "lines": {
+  "wavelength": 7.6,
+  "wave_number": 0.826,
+  "mirror_line": 1795,
+  "bound_threshold": 1353,
+  "splitter_table": {
+   "1400": 0.232,
+   "1500": 0.357,
+   "1700": 0.648,
+   "2000": 0.92,
+   "2300": 0.989,
+   "2600": 0.999
+  },
+  "splitter_count": 1598,
+  "giver_pair": [
+   116978,
+   65536,
+   17398
+  ],
+  "row": "Cheshbon's lines of 17:10 Israel at Gamma 6,000 on the law (the level twice in the Link): the giver's light at 7.6, the mirror line 1,795, the bound threshold 1,353, the reflected share per count from the transfer matrix on Rule3's equation; the giver's pair derived from his rotation by the band's line until his own numbers; at Gamma 24 no bound body is a splitter for the light and the row is not laid there"
+ },
+ "GAMEBOARD": [
+  {
+   "body": 0,
+   "interval": 1400,
+   "centre": [
+    6,
+    14,
+    0
+   ],
+   "band": 0,
+   "row": "the giver's pixel on its Node"
+  },
+  {
+   "reversible": 1500,
+   "row": "THE REVERSIBLE ROW: the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept"
+  }
+ ],
+ "GAMEBOARD_checks": [
+  "(i) `light_rows` every 20 intervals and `at_first_splitter`: the record from the giver to the first splitter, then two arms (the row (l): the record's rows show the two arms)",
+  "(ii) `on_the_transmitted_arm` against `on_the_reflected_arm`: the two arms' levels of one order (s near one half); one arm empty names the splitter's count a mirror or a vacuum",
+  "(iii) `at_second_splitter`: the two arms meeting; `records_alive`: the records in flight and the labels left at the end",
+  "then the DETECTOR reading in kind: the clicks per exit, their shares against the row's forms, the books (the quanta given, the clicks per detector, the labels ended at a face, the labels left on the GameBoard)"
+ ],
+ "lacks": "the universe file planck_6000.json on main (pull request #1450); Cheshbon's own clock pair and tail for the giver of 2,700 (derived here from his rotation); the two-qubit world (the crystal's pair record of (h) at 6,000) after Bell's world at 6,000; the pace guard's reading of a cluster's own wells at the divisor 1 (the diagonals of 5 and 13 Nodes)"
+}

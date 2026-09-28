@@ -144,7 +144,7 @@ def test_the_refusals_by_name():
     next(f for f in doc["universe"] if f["name"] == "clicks").pop("spins_step")
     with pytest.raises(ValueError, match="needs the time part at the six neighbours and its row"):
         DetectorLawSimulation(parse_nature_beam_world({**doc, "stamp": input_stamp(doc)})).step()
-    doc["measured"][0].update(spin=[0, 0, 0], spin_before=[0, 0, 0])  # no spin, no moment: no spin read
+    doc["measured"][0].update(spin=[0, 0, 0], spin_before=[0, 0, 0], moment=[0, 0, 1])  # no spin: no row
     DetectorLawSimulation(parse_nature_beam_world({**doc, "stamp": input_stamp(doc)})).step()
     start = lambda *reads: SpinStepStart(THE_ADVANCE, reads, (0, 0, 0), 1, (0, 0, 0), (0, 0, 0))  # noqa: E731
     with pytest.raises(ValueError, match="spin or moment"):

@@ -1,0 +1,22 @@
+{
+ "world": "fall_control.json",
+ "refusal": "at interval 2: the pace of 'charge' (family 1, axis 0) is 0 at the Node (4, 1, 1) at interval 1: the pace stays above 0 (the content 24 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "ticks_run": 1,
+ "expected": null,
+ "records_alive": 1,
+ "record_support": [],
+ "record": {
+  "label": "GAMEBOARD",
+  "period_intervals": null,
+  "amplitude_b": null,
+  "count_over_the_last_period": null,
+  "expected": {
+   "count": 10,
+   "b": 5,
+   "period": 12.0
+  },
+  "period_verdict": "MISS"
+ },
+ "kind": "moves",
+ "intervals": 0
+}
