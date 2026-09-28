@@ -1910,18 +1910,15 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return np.asarray((block.own.before if before else block.own.now)[block.mask], dtype=np.int64)
 
     def body_outward_flux(self, live: LiveRecord, block: Block, tally: list[int] | None = None) -> int:
-        """The outward flux through the body's outer Ports this interval, wall times (now_j before_i - before_j now_i) where positive over the Ports to Nodes outside the body (none beyond an open face, on a folded axis or along the record's own component), the second level added; with `tally` the flux per axis signed by the side."""
+        """The outward flux through the body's outer Ports this interval, wall times (now_j before_i - before_j now_i) where positive over every Port to a Node outside the body on every axis (the record's own axis and an axis of one layer among them: the giving's row reads the outward current through the body's outer Ports, Cheshbon's 04:25Z (5c); none beyond an open face), the second level added; with `tally` the flux per axis signed by the side."""
         wall = self.kind_wall(live.family)
         wrap = self.kind_wrap[live.family]
-        own_axis = self.booked_axis(live)
         mask = block.mask
         levels = [(live.now, live.before)]
         if live.im_now is not None and live.im_before is not None:
             levels.append((live.im_now, live.im_before))
         total = 0
         for axis in range(3):
-            if self.shape[axis] == 1 or axis == own_axis:
-                continue
             for side in (1, -1):
                 ports = self.ports.outward(mask, wrap)[port_of(axis, side)]
                 if not ports.any():
