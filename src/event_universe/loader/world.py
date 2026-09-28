@@ -237,8 +237,7 @@ class FamilyDefinition:
 
     @property
     def booked(self) -> bool:
-        """The detectors book the family's records at their Ports: exactly a
-        family with clicks (derived, item 53; ALGEBRA.md #the-interval)."""
+        """The detectors book the family's records at their Ports: exactly a family with clicks (derived, item 53; ALGEBRA.md #the-interval)."""
         return self.clicks is not None
 
     @property

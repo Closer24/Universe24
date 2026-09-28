@@ -78,8 +78,7 @@ CHARGE_FAMILY = {
 CHARGE_STRENGTH = 1
 
 
-# the family of clicks holds the content (ALGEBRA.md #the-counts-line) and the family of charge the signed
-# charge (ALGEBRA.md #the-paces); a reading family reads the content plainly and the charge by its sign at Lambda
+# the family of clicks holds the content (ALGEBRA.md #the-counts-line) and the family of charge the signed charge (ALGEBRA.md #the-paces); a reading family reads the content plainly and the charge by its sign at Lambda
 CLOCK_FAMILY_NAME = "clicks"
 
 
@@ -254,8 +253,7 @@ def _emitter_world(
     stock: int, ticks: int, on_mode: bool, kind: list[int], well: list[int], seed: int, bound: int
 ) -> dict:
     """The emitter's unit world: a chain of 80 (x closed), an emitter of the matter `kind` in the `well` at [5, 37) on its mode with `stock` givings of light, and the receiver cube `screen` at [70, 72]."""
-    # the giving is the window's (ALGEBRA.md #the-primitives): the body's rotation written
-    # at its Nodes at the weight 3 (3 x 2^20 under the bound 2^22)
+    # the giving is the window's (ALGEBRA.md #the-primitives): the body's rotation written at its Nodes at the weight 3 (3 x 2^20 under the bound 2^22)
     emitter: dict = {"family": "light", "receiver": ["screen"], "weight": 3}
     document = {
         "shape": [80, 1, 1],
@@ -338,9 +336,7 @@ def _seed_key(document: dict) -> str:
     bare = json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"}))
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
         entry.get("held", {}).pop("divisor", None)  # a key the recorded seeding never read
-    # the keys the law retired and the keys it added on 2026-09-28 (one quantum action, the derived
-    # amplitude, the giving's coupling, the wavelength from the giver's rotation) are no part of the key:
-    # the seedings were recorded once and stand under either form of the files
+    # the keys the law retired and the keys it added on 2026-09-28 (one quantum action, the derived amplitude, the giving's coupling, the wavelength from the giver's rotation) are no part of the key: the seedings were recorded once and stand under either form of the files
     for key in ("amplitude_bound", "quantum_action", "giving_coupling"):
         bare.pop(key, None)
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():

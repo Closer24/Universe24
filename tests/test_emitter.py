@@ -57,8 +57,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
     norm = givings[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in givings)
-    # the norm T is the universe's `quantum_action`, one action for every family (ALGEBRA.md "The universe's
-    # integers"): the loop's excitation norm is T, and the period P_body is the loader's by the one-Node rule
+    # the norm T is the universe's `quantum_action`, one action for every family (ALGEBRA.md "The universe's integers"): the loop's excitation norm is T, and the period P_body is the loader's by the one-Node rule
     period = parse_nature_beam_world(document).measured[0].block.emitter.period
     assert norm == document["quantum_action"] and period > 0
     by_tick = {entry["tick"]: entry for entry in trace}
@@ -264,16 +263,12 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(no_held_stock, "lacks keys: stocks")  # item 57: no default
 
-    # the generator's integers (ALGEBRA.md #the-click): a norm the
-    # emitter does not declare refuses the simulation at its first
-    # excitation; a `given` profile of the wrong count, or one that writes no
-    # motion, refuses the loader (ALGEBRA.md #the-click)
+    # the generator's integers (ALGEBRA.md #the-click): a norm the emitter does not declare refuses the simulation at its first excitation; a `given` profile of the wrong count, or one that writes no motion, refuses the loader (ALGEBRA.md #the-click)
     def with_norm(document):
         document["measured"][0]["emitter"]["norm"] = 1000  # the window's action is the universe's T
 
     refused(with_norm, "emitter has unknown keys: norm", on_mode=True)
-    # the mathematician's gate item 8: a body that givings declares its seed
-    # as its composed mode's profile; a flat scalar seed is refused
+    # the mathematician's gate item 8: a body that givings declares its seed as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
     # THE GIVEN TRAIN RETIRED (commit 7; ALGEBRA.md #the-primitives): its keys `train` and `given` are refused by name with their successor, the window; the window's integers are required on every emitter: the weight g from 1, the action's denominator
     refused(
