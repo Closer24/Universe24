@@ -765,7 +765,7 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
                 "detector": "taker",
                 "mean_interval": 2,
                 "band": 1,
-                "row": "Cheshbon's blind number (2026-09-28, 13:39 Israel): with E_s(charge) of the rule's universe derived from Gamma (0.86 (Gamma div 2)^(3/2), about 400,000, one quantum per window) the giving writes one level about every 1.6 intervals, so the taker's mean click interval is about 1.6 intervals, modulated at the period 9.55 x 1.125 = 10.7; the runner rounds the read to an integer: 2 within 1",
+                "row": "Cheshbon's blind number (2026-09-28, 13:39 and 14:39 Israel): with E_s(charge) of the rule's universe derived from Gamma (about 400,000, one quantum per window) the giving writes one level about every 1.6 intervals, so the taker's mean click interval is about 1.6 intervals on a strip where the light cannot spread, modulated at the giver's period times the clock ratio; on the wide board the taker reads a 1 / r share of the light and the interval grows by about 377 over the taker's face (Cheshbon 14:39); the runner rounds the read to an integer: 2 within 1 on the strip, the wide board's number his to write",
             }
         ],
         "WELL": {
@@ -774,10 +774,11 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
             "clocks": ["giver_clock", "taker_clock"],
             "axis_y": mid,
             "windows": [[giver_x + 4, giver_x + 4 + window], [taker_x - 4 - window, taker_x - 4]],
-            "clock_ratio": 1.125,
-            "clock_ratio_with_the_term": 1.5,
-            "giver_period": 9.55,
-            "clock_ratio_row": "Cheshbon's blind number (2026-09-28, 13:17 and 13:39 Israel): the ratio of the two pixels' periods, the giver's cycle over the taker's as tools/well_clocks.py reads it (`clock_ratio`, the first clock over the second), 1.125 under the engine of today (the pace Gamma - c once: 9,000 / 8,000) and 1.5 with the conformal term (the level twice: 6,000 / 4,000); the same line read the other way is the taker's over the giver's, 0.889 and 0.667; the giver's period 9.55 intervals; the band Cheshbon's to write; in the twin 1",
+            "clock_ratio": 1.066 if deep == 4400 else 1.125,
+            "clock_ratio_band": [1.03, 1.10] if deep == 4400 else None,
+            "giver_period": 7.58 if deep == 4400 else 9.55,
+            "giver_period_band": [7.4, 7.8] if deep == 4400 else None,
+            "clock_ratio_row": "Cheshbon's blind numbers: on the engine of today (the level once, the edge 4,136; his line of 14:39 Israel) the giver 4,400 and the taker 5,000, the giver's clock 7.58 intervals (7.4 to 7.8), the ratio of the two pixels' periods taker over giver 1.066 (1.03 to 1.10), which tools/well_clocks.py reads as `clock_ratio` = the first clock over the second (the giver over the taker: its inverse, 0.938); after the conformal term returns the pixels 4,000 and 3,000 (13:17 and 13:39): the giver's period 9.55 and the ratio 1.125 today / 1.5 with the term (the giver's cycle over the taker's); in the twin 1",
             "shift_ratio": None,
             "shift_ratio_band": None,
             "shift_ratio_row": "the light's relative shift of wave number over the pixel's relative shift of cycle (well_clocks' `shift_ratio`): Cheshbon's line to write; the 1.125 / 1.5 relayed under this name (the Closer, 13:22) are the clock ratio above",
@@ -853,8 +854,10 @@ def main() -> None:
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
     (HERE / "rule").mkdir(exist_ok=True)
-    rule_redshift("rule_redshift", 4000, 3000, 60, 1500, 200)
-    rule_redshift("rule_redshift_twin", 4000, 4000, 60, 1500, 200)
+    rule_redshift(
+        "rule_redshift", 4400, 5000, 60, 1500, 200
+    )  # the engine of today (the edge 4,136): the giver 4,400, the taker 5,000 (Cheshbon, 14:39 Israel); after the term returns 4,000 and 3,000
+    rule_redshift("rule_redshift_twin", 4400, 4400, 60, 1500, 200)
 
 
 if __name__ == "__main__":
