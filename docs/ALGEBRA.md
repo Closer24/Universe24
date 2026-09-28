@@ -114,13 +114,13 @@ family's pair [num, den]:
 
   w   = 6 den Gamma^2,
   R_a = 2 num p_a^2,
-  S   = 12 den Gamma^2 - 6 (p_0^2 + Gamma^2)(den - num) - 4 num (p_x^2 + p_y^2 + p_z^2).
+  S   = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num (p_x^2 + p_y^2 + p_z^2).
 
 At the vacuum's pace p_0 = p_a = Gamma the line is the plain second-order
 wave rule of the pair: a_next + a_before = 2 cos omega a_now with the
 six-neighbour coupling, the rotation omega_0 with cos omega_0 = num /
-den at wave number zero. A held family's field steps at its row's pair,
-[1, 1] or any other, with the pace 1 and the wall 3 den, at first order.
+den at wave number zero. A held family's field steps at its row's pair with the pace 1 and the wall 3 den, at first order.
+THE PACE IS CONFORMAL: below the vacuum's pace every family's rotation at every wave number obeys sin^2 (omega / 2) = (p / Gamma)^2 sin^2 (omega_vac(k) / 2), the pace multiplying the clock of every wave and every bound mode alike (the isotropic S is 12 den (Gamma^2 - p^2); the light's line was so already, the matter's mass term stood half at the vacuum's pace), so two clocks at one level shift alike, d ln omega / d c = 2 tan (omega / 2) / (omega p), and a packet's fall in a pace gradient, Delta x 2 tan (omega_0 / 2) x (c_+ - c_-) / (p D), does not depend on its family or its shape beyond the band's own (the owner's word, 2026-09-28).
 
 ### The direction
 
@@ -669,9 +669,9 @@ one click, its energy the quantum's norm T of its family. Newton's
 constant is not declared: a body of energy count s makes the level c(r)
 = s times the reference flux over E_s over the distance r in Links (the
 hold's row: the count enters the field's line over the row's divisor E_s),
-and the level slows the clock by the potential Phi = -c / (2 Gamma), so
+and the level slows the clock by the potential Phi = -c / Gamma, so
 
-  G = (the reference flux) / (2 Gamma E_s) per unit of energy count,
+  G = (the reference flux) / (Gamma E_s) per unit of energy count,
 
 with the reference flux a number of the GameBoard's geometry (about 1.4 for
 a cube of side 3) and the divisor E_s the energy unit setting the mass of one unit of level.
@@ -684,7 +684,7 @@ count and never by less: the quantum of gravity is the click.
 ### The rows against nature
 
 Each row is a detector's click on a declared world, read blind, with
-U_b = c_b / (2 Gamma) the potential at the point named; the bands are
+U_b = c_b / Gamma the potential at the point named (the clock's shift per level, the conformal pace); the bands are
 the rounding's, one Node of centroid or one interval, and the draw's
 where counts are read.
 
@@ -715,4 +715,4 @@ defect, and no body's numbers are patched to meet it.
 1. Whether a body at rest jitters when its current's swing reaches T / 2: on sixteen Nodes the swing over 400 intervals is one percent of T / 2.
 2. The self-source's cubic term: not in the engine, the line is the squares' sum alone.
 3. The twist table's small angles: a triple with d at most 10^9 reaches no angle below 6.3 x 10^-5 radians.
-4. The equivalence principle: whether Delta x d omega_0 / d c is one number for every body of matter; the fall with two light bodies reads it.
+4. The equivalence principle holds to the band's own shape: Delta x 2 tan (omega_0 / 2) differs by a tenth across the bound bodies of the clock's table; the fall with two light bodies reads the rest.
