@@ -4,7 +4,7 @@
  "row": "ALGEBRA.md THE COLOURS ARE THE THREE AXES, THE BOUND BODY IS ONE NODE: a bound body of one Node of 3000 quanta on the matter pair [2, 3] of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1); the colours are the three tallies of the count's line, one per axis, and at rest they balance: an isotropic tail carries no net current through any Port, the net tally 0 on every axis: the pixel is white",
  "DETECTOR": [],
  "blind": {
-  "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about 1,000, 410 and 170 quanta per interval at the pulse's peak (M omega_b e^(-kappa d)), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge (1,000) disperses within about ten intervals",
+  "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; the band plus or minus 30 percent (the Closer 14:16)",
   "edge_quanta_per_node": 2706,
   "horizon_quanta_per_node": 6000,
   "raw_clicks_per_port_per_interval": 1000,
@@ -34,7 +34,7 @@
    1
   ],
   "first_click": 1,
-  "band": null,
+  "band": 0.3,
   "row": "axis_tallies.py reads the clicks at the pixel's detector: per axis the net tally (the sum of the tallies' components) and the raw (the sum of their magnitudes), the net per interval at the peak interval, the net and the raw over the axes, the first click's interval; MATCH within `band` of `net_per_interval` on every axis once Cheshbon writes it, else the reading alone; the net 0 on every axis reads white (DETECTOR: the clicks; the tallies a reading of them)"
  }
 }

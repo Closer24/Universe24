@@ -88,8 +88,7 @@ def cited_paths(text: str) -> list[str]:
 
 def missing_paths(root: Path) -> list[str]:
     """Every cited path of the three, the entry files and the skills that the tree lacks, as document:line path."""
-    skills = sorted(p.relative_to(root).as_posix() for p in (root / "skills").rglob("*.md"))
-    found = []
+    skills, found = sorted(p.relative_to(root).as_posix() for p in (root / "skills").rglob("*.md")), []
     for rel in (*THE_THREE, *ENTRY_FILES, *skills):
         if not (root / rel).exists():
             continue

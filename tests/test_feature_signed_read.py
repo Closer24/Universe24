@@ -24,8 +24,7 @@ from tests.bodies import CHAIN, MATTER, QUANTA, charged_chain
 from tests.bodies import GAMMA as CHAIN_GAMMA
 from tests.worlds import emitter_world
 
-GAMMA = 10_000
-SHAPE = (3, 3, 3)
+GAMMA, SHAPE = 10_000, (3, 3, 3)
 
 
 def term_of(simulation: DetectorLawSimulation, family: int) -> SignedReadTerm:

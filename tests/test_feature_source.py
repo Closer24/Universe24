@@ -1,7 +1,5 @@
 """The source's folder (ALGEBRA.md #the-primitives row "the source"; ALGEBRA.md #the-paces): the line's integers on the run files' numbers, the carried remainder's exact floor, the table form, the write's locality, the inverse bit for bit, the refusals by name, the hand identity, the run file's record against the README's counts, the declaration the ledger's row."""
 
-from __future__ import annotations
-
 from fractions import Fraction
 from pathlib import Path
 
@@ -136,8 +134,5 @@ def test_the_declaration_is_the_ledgers_row_and_the_register_binds_its_function(
     declaration = register.declarations["the source"]
     assert declaration.section == DECLARATION.section and declaration.function is apply
     step = parse_nature_beam_world(emitter_world(stock=1, ticks=2)).step
-    assert register.writers("a family's level at a Node", "(iv)", step) == (
-        "the hold",
-        "the source",
-        "the recoil",
-    )
+    writers = ("the hold", "the source", "the recoil")
+    assert register.writers("a family's level at a Node", "(iv)", step) == writers

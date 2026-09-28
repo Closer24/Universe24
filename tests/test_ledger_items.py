@@ -16,8 +16,7 @@ from tests.worlds import emitter_world, family_entry
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-STEPS = 120
-READING_KINDS = {"DETECTOR", "GAMEBOARD", "HOST"}
+STEPS, READING_KINDS = 120, {"DETECTOR", "GAMEBOARD", "HOST"}
 
 
 def families_of(document: dict) -> list[dict]:

@@ -23,10 +23,8 @@ def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_ca
     document["stamp"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.blocks[0]
-    s = sum(simulation.held[0])
-    wall = simulation.wall_of(block)
-    gravity = parts_of(simulation, "clicks")
-    charge = parts_of(simulation, "charge")
+    s, wall = sum(simulation.held[0]), simulation.wall_of(block)
+    gravity, charge = parts_of(simulation, "clicks"), parts_of(simulation, "charge")
     assert [record.part for record in gravity] == list(range(10))
     inside = block.mask
     assert int(gravity[0].now[inside].min()) == s == int(gravity[0].now[inside].max())
@@ -58,8 +56,7 @@ def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exac
     document = parts_world(spin=[0, 0, 5], moment=[4, 0, 0])
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     gravity = parts_of(simulation, "clicks")
-    charge = parts_of(simulation, "charge")
-    centre = (4, 3, 3)
+    charge, centre = parts_of(simulation, "charge"), (4, 3, 3)
     # S x e_x = (0, S_z, -S_y) = (0, 5, 0): the y component at the Node +- e_x gains +-5
     assert int(gravity[2].now[5, 3, 3]) == 5 and int(gravity[2].now[3, 3, 3]) == -5
     # S x e_y = (-S_z, 0, S_x) = (-5, 0, 0): the x component at the Node +- e_y gains -+5
