@@ -164,10 +164,8 @@ def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_retur
     held, free = simulation.blocks
     for _ in range(8):  # before the free body's first hop under the rest's pull
         simulation.step()
-    # under the hold as a sum the two bodies' fields add (no hole where the small body stands: ALGEBRA.md
-    # the hold's row, "a body stands in another's well"): THE START writes the sum's rest of both sources
-    # on this board closed on x, so each body stands in the other's tent from the first interval and falls
-    # toward the other's content, the free body toward -x, the big body toward +x
+    # under the hold as a sum the two bodies' fields add ("a body stands in another's well"): THE START writes
+    # the rest of both sources on the board closed on x, so each falls toward the other's content at once
     assert free.momentum[0] < 0 and free.momentum[1:] == [0, 0] and free.momentum_before[1:] == [0, 0]
     assert abs(free.momentum_before[0]) <= abs(free.momentum[0]) and free.hold_carry[("feed", 0)] > 0
     assert held.momentum[0] > 0 and held.momentum[1:] == [0, 0]

@@ -11,8 +11,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import emitter_at, matter_emitter_world, parts_of, parts_world
 from tests.worlds import seed_on_the_mode
 
-# THE START left out in every test of this module (the fixture): the fixture's board is periodic on every axis, which has
-# no rest under a source (ALGEBRA.md #the-generator (g)), and the recorded seedings (tests/seeds.json) bind the board
+# THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
 pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
 
 

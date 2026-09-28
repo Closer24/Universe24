@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from event_universe.core.register import discover
 from event_universe.events.detector_law import DetectorLawSimulation
@@ -52,12 +53,8 @@ def test_a_box_takes_the_certified_rest_the_clamps_levels_and_a_half_rounded_up_
     halves[0], halves[10] = True, True
     assert (found.levels[halves] == 3).all() and (clamped.levels[halves] == 2).all()
     assert (found.levels[~halves] == clamped.levels[~halves]).all()
-    try:
+    with pytest.raises(ValueError, match="no body"):
         rest(np.zeros((9, 1, 1), dtype=np.int64), (1, 1), (True, True, True))
-    except ValueError as refusal:
-        assert "no body" in str(refusal)
-    else:
-        raise AssertionError("counts with no body were not refused")
 
 
 def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
@@ -111,21 +108,13 @@ def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
         left = 6 * den * fine - num * neighbours - side
         assert (np.abs(left) < found.unit).all(), (pair, faces)
         assert (found.levels[counts > 0] > 0).all() and (found.levels >= 0).all()
-    for bad, message in (
-        ((numerators, (True, True, True), 7), "a sink"),
-        ((numerators, wrap, 0), "divisor from 1"),
-    ):
-        try:
-            rest(bad[0], (1, 1), bad[1], bad[2])
-        except ValueError as refusal:
-            assert message in str(refusal)
-        else:
-            raise AssertionError(f"not refused: {message}")
+    for faces, divisor, message in (((True, True, True), 7, "a sink"), (wrap, 0, "divisor from 1")):
+        with pytest.raises(ValueError, match=message):
+            rest(numerators, (1, 1), faces, divisor)
     ring = np.zeros((16, 1, 1), dtype=np.int64)  # a signed family balanced on a board with no face
     ring[3, 0, 0], ring[11, 0, 0] = 2, -2
     levels = rest(ring, (1, 1), (True, True, True), 1).levels[:, 0, 0]
-    # -Delta^2 a = 3 sigma: the slope jumps by 6 at each source, so the two arcs of 8 Links carry the slopes
-    # -3 and +3, the tent's height is 24, and at the mean 0 the peak and the trough are +12 and -12
+    # -Delta^2 a = 3 sigma: the slope jumps by 6 at each source, so the two arcs of 8 Links carry -3 and +3 (24 high)
     assert int(levels[3]) == 12 and int(levels[11]) == -12 and int(levels.sum()) == 0
     assert (np.diff(levels[3:12]) == -3).all() and (np.diff(np.roll(levels, -11)[:9]) == 3).all()
 

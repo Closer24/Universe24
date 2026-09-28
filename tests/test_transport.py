@@ -17,8 +17,7 @@ from tests.bodies import paces_world, parts_of
 from tests.running import refused
 from tests.worlds import FILE, HELD_MOMENT, emitter_world, on_the_file
 
-# THE START left out in every test of this module (the fixture): the fixture's board is periodic on every axis, which has
-# no rest under a source (ALGEBRA.md #the-generator (g)), and the recorded seedings (tests/seeds.json) bind the board
+# THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
 pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
 
 

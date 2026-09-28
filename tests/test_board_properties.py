@@ -13,6 +13,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.rule3 import coefficients
+from event_universe.events import assembly
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import exchange_of, form_I
@@ -537,11 +538,7 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
 def output_of(serialized: str) -> dict:
     """The run's output from its input text alone (the model owner's word through the Boss, 23:51Z: the same input gives the same output): the input's hash, the click lines (the receiver and the interval) and the digest of the final state's rows, for one process."""
     document = json.loads(serialized)
-    from event_universe.events import assembly
-
-    assembly.start_at_rest = lambda loop: (
-        None
-    )  # THE START left out in this process too (the module's docstring)
+    assembly.start_at_rest = lambda loop: None  # THE START left out in this process too
     simulation, states, clicks = run(document)
     digest = hashlib.sha256()
     for identity in sorted(states[-1]):
