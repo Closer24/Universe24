@@ -610,6 +610,18 @@ def _boundary(value: object) -> tuple[str | dict[str, str], tuple[bool, bool, bo
     )
 
 
+def load_level(
+    reads: Sequence[Sequence[tuple[int, int]]],
+    sources: Sequence[Sequence[int]],
+    node_clock: int | None = None,
+) -> int:
+    """The content the load bound is read at, the loader's and the generator's one function (ALGEBRA.md #the-counts-line, "The bound"): twice the whole content a family reads, the sum over every body of its reads' weights times the body's source for the read family (`reads` per family its (family, weight) pairs, `sources` per body its source per family), the largest over the families; with the Node clock, at most Gamma - 1 (the level a Node can read, the pace positive; a wave off a zero face doubles), the level the generator derives its amplitude unit at so that its profile stands inside the universe's bound."""
+    reach = max(
+        (2 * sum(w * body[o] for o, w in family for body in sources) for family in reads), default=0
+    )
+    return reach if node_clock is None else min(reach, node_clock - 1)
+
+
 def _pair_bound(
     numerator: int,
     denominator: int,
@@ -618,9 +630,7 @@ def _pair_bound(
     node_clock: int = 1,
     content: int = 0,
 ) -> None:
-    """The load bound of a pair on the rule's integers (MUST 3; ALGEBRA.md #the-line, #the-rows-against-nature):
-    6 A R + A |S| + w (A + 1) with (R, S, w) the rule's coefficients at the two levels a Node can read, the
-    larger, inside the width; refused by name above it."""
+    """The load bound of a pair on the rule's integers (MUST 3; ALGEBRA.md #the-line, #the-rows-against-nature): 6 A R + A |S| + w (A + 1) with (R, S, w) the rule's coefficients at the two levels a Node can read, the larger, inside the width; refused by name above it."""
     # THE BOUND FROM THE RULE'S OWN INTEGERS (ALGEBRA.md #the-line, #the-rows-against-nature;
     # BUILD.md section 26 item 44): 6 A R + A |S| + w (A + 1) with (R, S, w)
     # the weak-field rule's coefficients at the level 0 and at the level M
@@ -723,14 +733,8 @@ def _node_clock_bound(
                     f"{node_clock} (ALGEBRA.md #the-paces: the charge's hill hastens a clock at most to "
                     "the vacuum's; BUILD.md section 26 items 34, 35 and 51)"
                 )
-    content = 0
-    for family in families:
-        reach = 2 * sum(
-            weight * source_of(families[other], entry)
-            for other, weight, _, _ in family.reads
-            for entry in measured
-        )
-        content = max(content, reach)
+    sources = [[source_of(family, entry) for family in families] for entry in measured]
+    content = load_level([[(o, w) for o, w, _, _ in f.reads] for f in families], sources)
     for index, family in enumerate(families):
         if family.pair_on_body:
             continue  # the bodies' kinds are read below (ALGEBRA.md #the-interval)
@@ -739,23 +743,10 @@ def _node_clock_bound(
         )
     for number, entry in enumerate(measured):
         if entry.block is not None:
-            _pair_bound(
-                entry.block.pair[0],
-                entry.block.pair[1],
-                f"measured[{number}]",
-                amplitude_bound,
-                node_clock,
-                content,
-            )
+            _pair_bound(*entry.block.pair, f"measured[{number}]", amplitude_bound, node_clock, content)
             if families[entry.family].pair_on_body:
-                _pair_bound(
-                    entry.block.kind[0],
-                    entry.block.kind[1],
-                    f"measured[{number}].kind",
-                    amplitude_bound,
-                    node_clock,
-                    content,
-                )
+                kind = entry.block.kind
+                _pair_bound(*kind, f"measured[{number}].kind", amplitude_bound, node_clock, content)
 
 
 def _families_of(

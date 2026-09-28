@@ -29,6 +29,7 @@ from event_universe.features.start import (
 )
 from event_universe.features.start import rest as start_rest
 from event_universe.loader.mode import period_by_the_rule
+from event_universe.loader.world import load_level
 from event_universe.world_files import input_digest
 
 Triple = tuple[int, int, int]  # (a, b, c) with a^2 + b^2 = c^2: cos k = a / c, sin k = b / c, exact
@@ -196,9 +197,31 @@ def rotation_and_share(
 
 
 def loader_level(document: dict[str, Any], gamma: int) -> int:
-    """The loader's level of a world in the law's form, the content its amplitude bound is read at, as the loader reads it (loader/world.py, the load bound: M twice the world's whole content, the most any one Node can hold, at most Gamma - 1; Cheshbon's lines of 2026-09-28, 00:20Z and 02:05Z): twice the sum of the counts of the world's bodies, at most Gamma - 1."""
-    counts = [int(node["count"]) for body in document["measured"] for node in body.get("nodes", [])]
-    return min(2 * sum(counts), gamma - 1)
+    """The level the loader reads its amplitude bound at, by the loader's own function `load_level` (loader/world.py; Cheshbon's lines of 2026-09-28, 00:20Z and 02:05Z; the Closer's word of 05:50 Israel): the families' reads with their weights (a weight named in the universe's integers resolved) and every body's source per family as the loader reads them, its content (its counts' sum with its stocks) or its signed charge (its `q` with the rows' `sign` over its held quanta), twice the largest family's reach, at most Gamma - 1."""
+    universe = read_document(document["universe"])
+    rows, integers = universe["families"], universe.get("integers", {})
+    names = [row["name"] for row in rows]
+    reads = [
+        [
+            (names.index(r["family"]), int(integers.get(r["weight"], r["weight"])))
+            for r in row.get("reads", [])
+        ]
+        for row in rows
+    ]
+    sources = []
+    for body in document["measured"]:
+        held = [0] * len(names)
+        held[names.index(body["family"])] += sum(int(node["count"]) for node in body.get("nodes", []))
+        for name, stock in body.get("stocks", {}).items():
+            held[names.index(name)] += int(stock)
+        charge = abs(
+            int(body.get("q", 0))
+            + sum(int(row.get("sign", 0)) * h for row, h in zip(rows, held, strict=True))
+        )
+        sources.append(
+            [charge if (row.get("held") or {}).get("count") == "sign" else sum(held) for row in rows]
+        )
+    return int(load_level(reads, sources, gamma))
 
 
 def bound_mode(
