@@ -309,14 +309,7 @@ def test_the_engine_registers_every_folder_on_disk_and_checks_every_term():
     names = {name for _label, name in terms}
     assert (
         names <= set(register.built_names())
-        and {
-            "the pair",
-            "the send",
-            "the operation",
-            "the signed read",
-            "the hold",
-            "the giving",
-        }
+        and {"the pair", "the send", "the operation", "the signed read", "the hold", "the giving"}
         <= names
     )
     assert any(label.startswith("measured[") and name == "the giving" for label, name in terms)
