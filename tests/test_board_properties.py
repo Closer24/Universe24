@@ -1,7 +1,5 @@
 """The GameBoard's six properties on a small periodic world (a well, one light record, one receiver, 60 intervals): equivariance under the 48, translation, conservation of the content and the form between clicks, reversibility except the click, locality, and only the click reads; bit for bit on the engine's integers. THE START is left out throughout (the fixture `the_loads_hold_alone`): a board periodic on every axis has no rest under a source (ALGEBRA.md #the-generator (g)), and the properties are the loop's from the load's slab, whatever the start."""
 
-from __future__ import annotations
-
 import hashlib
 import itertools
 import json

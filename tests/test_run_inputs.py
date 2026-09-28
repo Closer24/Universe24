@@ -1,7 +1,5 @@
 """The one command (tools/run_inputs.py): input files in, one output file per experiment out, each in its own process; each input LAWFUL or REFUSED at load, a lawful one run and its clicks written per detector with the pin's verdict. COMPUTATION on small worlds; no pin of nature."""
 
-from __future__ import annotations
-
 import json
 import os
 import sys

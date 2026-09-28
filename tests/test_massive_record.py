@@ -1,7 +1,5 @@
 """The massive record kind: the rule with a pair per record kind on the six-neighbour term, on a chain and at a corner, light's pair [1, 1] bit for bit, the conserved form to the remainders' jitter, the byte identity of the light record without the key, and the loader's refusals; every source is an emitter body seeded on its bound mode."""
 
-from __future__ import annotations
-
 import hashlib
 import json
 from fractions import Fraction
@@ -300,8 +298,7 @@ def test_the_blocks_cells_and_its_pair_on_them():
     assert int(block.mask.sum()) == 27 and block.mask[2:5, 2:5, 2:5].all()
     den = simulation.kind_den[1]
     assert np.all(simulation.kind_num[1] == 800)
-    assert np.all(den[block.mask] == 810) and np.all(den[~block.mask] == 809)
-    assert block.own is None
+    assert np.all(den[block.mask] == 810) and np.all(den[~block.mask] == 809) and block.own is None
     well = block_world(
         [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 800]}]
     )
@@ -347,8 +344,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
     assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
-    assert own is not None
-    assert own.identity == -1
+    assert own is not None and own.identity == -1
     assert all(
         live.family == 0 and live.content == 1 for live in simulation.records.values() if live is not own
     )

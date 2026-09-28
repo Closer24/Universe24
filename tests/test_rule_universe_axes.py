@@ -1,7 +1,5 @@
 """The reader of worlds (a) and (b) of the rule's universe (examples/events/experiments/rules_universe/axis_tallies.py) on made-up outputs: the net and the raw tallies per axis from the clicks at the pixel's detector against the blind numbers."""
 
-from __future__ import annotations
-
 import json
 import sys
 from pathlib import Path
