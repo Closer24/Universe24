@@ -91,10 +91,11 @@ def bulk_share(momentum: tuple[int, int, int], quanta: int) -> tuple[int, int, i
 
 
 def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:
-    """The refusals by name: the coupling and the action from 1; the act one of the four; an open on an open window, a write, a close or an inverse on none; the quanta from 1 at the open; the write or the inverse without the body's levels; the inverse without a write to step back."""
-    if np.min(term.coupling[0]) < 1 or term.coupling[1] < 1 or term.action < 1:
+    """The refusals by name: the coupling's numerator never 0 (its sign the giver's), its denominator and the action from 1; the act one of the four; an open on an open window, a write, a close or an inverse on none; the quanta from 1 at the open; the write or the inverse without the body's levels; the inverse without a write to step back."""
+    if np.any(np.asarray(term.coupling[0]) == 0) or term.coupling[1] < 1 or term.action < 1:
         raise ValueError(
-            f"the giving needs the coupling's pair and the quantum action T from 1, got the coupling "
+            f"the giving needs the coupling's numerator signed and never 0 (THE SIGN IS THE BODY'S), its "
+            f"denominator and the quantum action T from 1, got the coupling "
             f"{[np.asarray(term.coupling[0]).tolist(), term.coupling[1]]}, T = {term.action} (ALGEBRA.md)"
         )
     if start.act not in ACTS:

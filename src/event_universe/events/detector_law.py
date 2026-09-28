@@ -535,7 +535,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block = self.block_by_number.get(number)
         if block is None or (block.well is None and not block.definition.counts):
             return []
-        weight = 1 if source == "content" else block.definition.q + self.families[block.family].charge[0]
+        weight = 1 if source == "content" else block.definition.q
         laid = block.well if block.well is not None else block.counts
         if laid is not None:
             moved = zip(*np.nonzero(laid), strict=True)
@@ -731,12 +731,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return content
 
     def _body_charge(self, number: int) -> int:
-        """A body's charge Q (ALGEBRA.md #the-paces): the sum of the signs of the quanta it holds, an integer of either sign, moved with the labels at the clicks (the held books)."""
-        block = self.block_by_number.get(number)
-        declared = block.definition.q * sum(self.held[number]) if block is not None else 0
-        return declared + sum(
-            sign * quanta for sign, quanta in zip(self.family_charge, self.held[number], strict=True)
-        )
+        """A body's charge Q = q M (ALGEBRA.md #the-paces; THE SIGN IS THE BODY'S, the owner's word of 2026-09-28): its sign q times the quanta it holds, an integer of either sign, moved with the labels at the clicks (the held books)."""
+        entry = self.world.measured[number]
+        return (entry.block.q if entry.block is not None else entry.q) * sum(self.held[number])
 
     def stock_of(self, block: Block) -> int:
         """THE STOCK of the family a body gives (ALGEBRA.md #the-paces, #the-primitives): its held quanta of another family; of its own family, its declared `stock` less its givings (each giving lowered M by one, the held count of its own)."""
