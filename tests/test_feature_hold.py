@@ -29,8 +29,7 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.running import stamped
 from tests.worlds import emitter_world
 
-ROOT = Path(__file__).resolve().parents[1]
-ENGINE_START = "examples/events/engine_start.json"
+ROOT, ENGINE_START = Path(__file__).resolve().parents[1], "examples/events/engine_start.json"
 
 
 def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_first_value_twice():
@@ -38,8 +37,7 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
     rng = random.Random(7)
     for _ in range(300):
         wall = rng.randint(1, 10**6)
-        numerator = rng.randint(-(10**9), 10**9)
-        carry = rng.randint(0, wall - 1)
+        numerator, carry = rng.randint(-(10**9), 10**9), rng.randint(0, wall - 1)
         value, carried = division_forward(numerator, wall, carry)
         assert (value, carried) == divmod(numerator + carry, wall)
         value_before, carry_before = division_back(numerator, wall, value, carried)

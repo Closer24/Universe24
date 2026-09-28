@@ -159,8 +159,7 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a phase-2 read takes D_i = now^2 - next x before as handed in, times the weight, a hill at the floor 0."""
     shape = (2, 1, 1)
     a = np.array([[[5]], [[7]]], dtype=np.int64)
-    b = np.array([[[1]], [[-2]]], dtype=np.int64)
-    c = np.array([[[3]], [[0]]], dtype=np.int64)
+    b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
     term = SignedReadTerm(
         ((1, 2, signed_read.BY_PLAIN), (2, -3, signed_read.BY_PLAIN), (3, 4, signed_read.BY_SIGN)),
         -1,
@@ -174,8 +173,7 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     )
     assert not silent.content.any() and silent.content.shape == shape
     before = np.array([[[3]], [[-4]]], dtype=np.int64)
-    now = np.array([[[5]], [[6]]], dtype=np.int64)
-    after = np.array([[[7]], [[2]]], dtype=np.int64)
+    now, after = np.array([[[5]], [[6]]], dtype=np.int64), np.array([[[7]], [[2]]], dtype=np.int64)
     invariant = now * now - after * before  # formed by the loop from the last step's three levels
     assert invariant.tolist() == [[[25 - 21]], [[36 + 8]]]
     sourced = SignedReadTerm(((5, -2, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
@@ -186,8 +184,7 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
 def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_by_name():
     """A read by a word other than plain or sign is refused naming the family and the word; a read whose reach leaves int64 is refused before any product; two reads whose reach together leaves int64 too."""
     shape = (2, 1, 1)
-    level = np.array([[[3]], [[-4]]], dtype=np.int64)
-    own = SignedReadOwn(0, "matter", 0)
+    level, own = np.array([[[3]], [[-4]]], dtype=np.int64), SignedReadOwn(0, "matter", 0)
     with pytest.raises(ValueError, match="the read of family 1 is by 'signed': by 'plain' or by 'sign'"):
         apply(
             SignedReadTerm(((1, 1, "signed"),), 1, (800, 850), GAMMA),
