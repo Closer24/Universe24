@@ -10,6 +10,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "src"))
+from event_universe.world_files import (
+    input_digest,  # noqa: E402  (the loader's own digest, the mode file's stamp)
+)
+
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 
@@ -258,6 +263,63 @@ def stepping_expectation(layout: Layout, parts: bool) -> dict[str, Any]:
     }
 
 
+WORLD_INTEGERS = (
+    "momentum_unit",
+    "twist_table",
+    "quantum_action",
+    "least_residues",
+    "most_families",
+)  # the universe's integers a world carries at its top level when its universe is inline (the loader's keys); width and most_steps are the engine's
+
+
+def stepping_world(layout: Layout, document: dict[str, Any], step: int) -> dict[str, Any]:
+    """The parting under a rising Gamma (GAMMA IS NOT CONSTANT, #1463): the same world with the universe file's rows inline and `node_clock` the pair [Gamma_0, step], the pair living in that key alone (the loader refuses a world-level clock beside a universe file); the rows and the integers copied from the file of record, nothing written by hand."""
+    universe = json.loads((ROOT / layout.universe).read_text(encoding="utf-8"))
+    stepping = {key: value for key, value in document.items() if key != "universe"}
+    stepping["universe"] = universe["families"]
+    for key in WORLD_INTEGERS:
+        stepping[key] = universe["integers"][key]
+    stepping["node_clock"] = [layout.gamma, step]
+    return stepping
+
+
+def write_stepping_mode(
+    layout: Layout, world_path: Path, document: dict[str, Any], twin: dict[str, Any]
+) -> None:
+    """The stepping world's mode file: the bodies by the tool on the twin world that names the universe file (the tool reads the family's pair from the file), stamped with the stepping world's own digest by the loader's `input_digest`; the bodies are the same bodies at the same Nodes."""
+    twin_path = world_path.with_name(f"{world_path.stem}.twin.json")
+    twin_path.write_text(json.dumps(twin, indent=1) + "\n", encoding="utf-8")
+    try:
+        write_mode(layout, twin_path, twin)
+        mode = json.loads(twin_path.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    finally:
+        twin_path.unlink(missing_ok=True)
+        twin_path.with_suffix(".mode.json").unlink(missing_ok=True)
+    mode["world_digest"] = input_digest(document)
+    world_path.with_suffix(".mode.json").write_text(json.dumps(mode, indent=1) + "\n", encoding="utf-8")
+
+
+def stepping_parting_expectation(layout: Layout, step: int, blind: dict[str, Any]) -> dict[str, Any]:
+    """The parting's expectation under the rising Gamma: Cheshbon's number (17:25) is the dissolution row itself, the smaller pixel dissolving at the interval given as the edge rises, one record at the end; at a constant Gamma never (the sibling world `part`)."""
+    table = layout.stepping
+    assert table is not None and int(table["node_clock"][1]) == step
+    low = table["dissolution_interval"] - table["band"]
+    high = table["dissolution_interval"] + table["band"]
+    changed = dict(blind)
+    changed["row"] = (
+        f"ALGEBRA.md GAMMA IS NOT CONSTANT (Cheshbon 17:25 Israel time): the parting of {layout.small:,} and {layout.deep:,} at {layout.distances['part']} Links "
+        f"under node_clock [{layout.gamma:,}, {step}]: no click passes, and the edge 0.2255 Gamma_t rises by about one quantum every interval, so the smaller pixel dissolves "
+        f"at about interval {table['dissolution_interval']} ({low} to {high}) with no transfer; at a constant Gamma (the world `part`) it never dissolves"
+    )
+    changed["blind"] = {
+        **blind["blind"],
+        "dissolution_intervals": [low, high],
+        "records_at_the_end": 1,
+        "clicks_expected": "no click: the bodies stand apart beyond the reach; the smaller dissolves under the rising edge alone",
+    }
+    return changed
+
+
 def hierarchy_expectation(layout: Layout) -> dict[str, Any]:
     """THE HIERARCHY IS RECURSIVE, the blind expectation of the equal pair (Cheshbon 16:35 Israel time): the breathing period of the pair's total count P_2 against the pixel's period P_1, the ratio about e^(kappa d) with its band; no number of a run."""
     table = layout.hierarchy
@@ -384,6 +446,12 @@ def main() -> None:
         help="a suffix on the world names (join, part, hierarchy), e.g. _6000, so that the files of another Gamma stand beside the files at 24",
     )
     parser.add_argument(
+        "--stepping",
+        type=int,
+        default=0,
+        help="with a step above 0, also the parting under a rising Gamma: the world `part<suffix>_stepping` with node_clock [Gamma_0, step] and the universe's rows inline (Cheshbon's blind number in its expectation where the table gives it)",
+    )
+    parser.add_argument(
         "--universe",
         default=UNIVERSE_OF_RECORD,
         help="the universe file the worlds name, relative to the repository root; Gamma is read from it",
@@ -410,6 +478,25 @@ def main() -> None:
         (folder / f"{file_name}.expectation.json").write_text(
             json.dumps(blind, indent=1) + "\n", encoding="utf-8"
         )
+    if args.stepping:
+        if layout.stepping is None or int(layout.stepping["node_clock"][1]) != args.stepping:
+            raise ValueError(
+                f"no blind number of Cheshbon for a step of {args.stepping} at Gamma = {layout.gamma:,}"
+            )
+        twin = world(layout, layout.distances["part"])
+        document = stepping_world(layout, twin, args.stepping)
+        file_name = f"part{args.suffix}_stepping"
+        (folder / f"{file_name}.json").write_text(
+            json.dumps(document, indent=1) + "\n", encoding="utf-8"
+        )
+        write_stepping_mode(layout, folder / f"{file_name}.json", document, twin)
+        blind = stepping_parting_expectation(
+            layout, args.stepping, expectation(layout, "part", layout.distances["part"])
+        )
+        (folder / f"{file_name}.expectation.json").write_text(
+            json.dumps(blind, indent=1) + "\n", encoding="utf-8"
+        )
+        worlds.append((file_name, document, blind))
     print(
         json.dumps(
             {
