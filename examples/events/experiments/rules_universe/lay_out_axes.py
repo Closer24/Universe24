@@ -27,7 +27,22 @@ from pixel_mode import (  # noqa: E402  (the generator of the rule's universe, #
     pixel_entry,
 )
 
-COUNT = 10  # the pixel's count at Gamma = 24 (the owner's word of 15:11 Israel; Cheshbon's table of 15:22: the pixels 8 to 11 realisable on the law, 6 and 7 not; (a), (b), (c) at 10, b = 6); 4,400 on Gamma = 12,000 was the second run
+PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
+COUNT_BY_GAMMA = {
+    24: 10,
+    6_000: 2_000,
+    12_000: 4_400,
+}  # the pixel's count per Gamma of the universe file on the law: 10 at 24 (Cheshbon 15:22, the pixels 8 to 11), 2,000 at 6,000 (Cheshbon 15:50, the run of record after 24 by the owner's word of 15:44), 4,400 at 12,000 (the older run, the engine of today)
+
+
+def gamma_of(universe: str) -> int:
+    """The Node clock Gamma of the universe file the worlds name (24 by the owner's word of 15:11 Israel; 6,000 the run of record after it)."""
+    return int(json.loads((ROOT / universe).read_text(encoding="utf-8"))["integers"]["node_clock"])
+
+
+COUNT = COUNT_BY_GAMMA[
+    gamma_of(PLANCK)
+]  # the pixel's count at the file's Gamma (10 at 24 (the owner's word of 15:11 Israel; Cheshbon's table of 15:22: the pixels 8 to 11 realisable on the law, 6 and 7 not; (a), (b), (c) at 10, b = 6); 4,400 on Gamma = 12,000 was the second run
 PIXEL_NUMBERS = {
     **PIXELS,
     4_400: {"omega_b": 0.8290, "kappa": 0.283, "a": 88_553},
@@ -35,6 +50,10 @@ PIXEL_NUMBERS = {
     9: {"omega_b": 0.5826, "kappa": 1.164, "a": 109_453},
     10: {"omega_b": 0.5137, "kappa": 1.269, "a": 114_155},
     11: {"omega_b": 0.4550, "kappa": 1.341, "a": 117_736},
+    1_500: {"omega_b": 0.8105, "kappa": 0.446, "a": 90_329},
+    2_000: {"omega_b": 0.6578, "kappa": 1.015, "a": 103_723},
+    2_200: {"omega_b": 0.8290, "kappa": 0.283, "a": 88_553},
+    2_500: {"omega_b": 0.7779, "kappa": 0.631, "a": 93_378},
 }  # Cheshbon's numbers per count: on Gamma = 12,000 (14:39 Israel, beside lay_out_join's table) and on Gamma = 24 under the law, the level twice (15:22 Israel: omega_b, kappa and the clock pair [a, 65536] for the counts 8 to 11)
 PULLS = (0, 2, 4, 6)  # the second pixel's distance in Links along x; 0 the white pixel alone
 TAIL = {
@@ -49,16 +68,14 @@ RECORD = {
     9: {"b": 5, "period": 11.0},
     10: {"b": 5, "period": 12.0},
     11: {"b": 8, "period": 13.3},
+    1_500: {"b": 49, "period": 7.75},
+    2_000: {"b": 69, "period": 9.55},
+    2_500: {"b": 98, "period": 12.23},
 }  # Cheshbon's table from the generator as Rule3 in integers at Gamma = 24 (15:43 Israel): the standing record's amplitude b = max|now| and its period P in intervals per count on the law (the realisable pixels b = 5 at 8 to 10 and b = 8 at 12 to 15; (a), (b), (c) at b = 5), the blind reading of the record at its Node
 EDGE_RATIO = (
     0.2255,
     0.3444,
 )  # the edge of the bound body over Gamma: under the corrected term (ALGEBRA.md THE BOUND BODY IS ONE NODE) and on the engine of today, the level once (Cheshbon 14:12 and 14:39 Israel)
-
-
-def gamma_of(universe: str) -> int:
-    """The Node clock Gamma of the universe file the worlds name (12,000 today; 24 by the owner's word of 15:11 Israel)."""
-    return int(json.loads((ROOT / universe).read_text(encoding="utf-8"))["integers"]["node_clock"])
 
 
 def edges(gamma: int) -> dict[str, int]:
@@ -72,7 +89,6 @@ def edges(gamma: int) -> dict[str, int]:
 
 BAND = 0.15  # the band on every blind number at Gamma = 24: one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22 Israel); 0.3 on 12,000 (the Closer 14:16)
 RAW_PER_PORT = 1000  # Cheshbon's blind number of 13:46 Israel at 3,000: the raw clicks (both signs) per interval through each of the six Ports, about
-PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's number of intervals
 SHAPE = [15, 3, 3]  # a chain along x, open at both ends, three wide: six Ports with a neighbour each
 FACE_DEPTH = 1

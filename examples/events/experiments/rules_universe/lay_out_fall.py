@@ -11,7 +11,9 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from lay_out_axes import (  # noqa: E402  (the pixels' modes through the tool)
+from lay_out_axes import (  # noqa: E402
+    COUNT_BY_GAMMA,
+    PLANCK,
     RECORD,
     edges,
     gamma_of,
@@ -19,13 +21,15 @@ from lay_out_axes import (  # noqa: E402  (the pixels' modes through the tool)
 )
 from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
-COUNT = 10  # the falling pixel's count at Gamma = 24 (Cheshbon's table of 15:22 Israel: the pixels 8 to 11 on the law; (a), (b), (c) at 10, b = 6); 4,400 on 12,000 was the second run
+COUNT = COUNT_BY_GAMMA[
+    gamma_of(PLANCK)
+]  # the falling pixel's count at the file's Gamma: 10 at 24 (Cheshbon 15:22), 2,000 at 6,000 (Cheshbon 15:50), 4,400 at 12,000
 BAND = 0.15  # the band on every blind number at Gamma = 24: one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22 Israel)
 CLUSTERS: dict[str, dict[str, int] | None] = {
     "control": None,
-    "sieve_1": {"pixels": 1, "spacing": 2, "count": 8, "distance": 2},
-    "sieve_2": {"pixels": 2, "spacing": 2, "count": 8, "distance": 2},
-    "sieve_4": {"pixels": 4, "spacing": 2, "count": 8, "distance": 2},
+    "sieve_1": {"pixels": 1, "spacing": 2, "count": {24: 8, 6_000: 2_000}, "distance": 2},
+    "sieve_2": {"pixels": 2, "spacing": 2, "count": {24: 8, 6_000: 2_000}, "distance": 2},
+    "sieve_4": {"pixels": 4, "spacing": 2, "count": {24: 8, 6_000: 2_000}, "distance": 2},
 }  # THE SCREEN IS A CLUSTER (Cheshbon 14:55 Israel, the Closer 14:59): the heavy body is a cluster of pixels, a sieve along +x beyond the falling pixel: `pixels` how many, `spacing` the sieve's period in Links, `count` per pixel, `distance` in Links from the falling pixel to the first; Cheshbon's sieve at Gamma = 24 (15:22 Israel, item 6: pixels of 8 at the period 2), one, two and four of them in place of the tents 50, 100 and 200, the first two Links from the falling pixel (the click's reach at 24 about 3 to 4 Links, item 5c); None the control with no cluster
 TAIL_RATIO: dict[
     str, float
@@ -56,7 +60,13 @@ def one_node(x: int, count: int) -> dict[str, Any]:
     }
 
 
-def cluster_nodes(cluster: dict[str, int] | None) -> list[int]:
+def sieve_count(cluster: dict[str, Any]) -> int:
+    """The count of the sieve's pixels at the file's Gamma (8 at 24, 2,000 at 6,000: Cheshbon 15:22 and 15:50)."""
+    count = cluster["count"]
+    return int(count[gamma_of(PLANCK)] if isinstance(count, dict) else count)
+
+
+def cluster_nodes(cluster: dict[str, Any] | None) -> list[int]:
     """The x of every pixel of the cluster: from BODY_X + distance, one every `spacing` Links, `pixels` of them; none for the control."""
     if cluster is None:
         return []
@@ -73,7 +83,7 @@ def shape_of(cluster: dict[str, int] | None) -> list[int]:
 def world(universe: str, cluster: dict[str, int] | None) -> dict[str, Any]:
     """The falling pixel at BODY_X and the cluster's pixels along +x; the readings: the matter level at the falling pixel's Node and at both neighbours every interval (the tail on both sides), the gravity level at the three Nodes (the cluster's well), the matter rows, the falling pixel's centre and momentum, the support and total, the records alive."""
     measured = [one_node(BODY_X, COUNT)] + [
-        one_node(x, int(cluster["count"])) for x in cluster_nodes(cluster)
+        one_node(x, sieve_count(cluster)) for x in cluster_nodes(cluster)
     ]
     readings: list[dict[str, Any]] = (
         [
@@ -123,7 +133,7 @@ def expectation(name: str, cluster: dict[str, int] | None) -> dict[str, Any]:
             f"ALGEBRA.md THE UNIVERSE IS BOUND, THE BOUND BODY IS ONE NODE, THE SCREEN IS A CLUSTER: a bound body of one Node of {COUNT} quanta on the matter pair "
             "of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1), its tail evanescent, "
             + (
-                f"beside a cluster of {cluster['pixels']} pixels of {cluster['count']} quanta every {cluster['spacing']} Links along +x, the first {cluster['distance']} Links away: the wells of the cluster's pixels lower the pace on that side, the local band nearer the record's rotation, the tail longer there, and the tail's remainder crosses T earlier on that side: the fall is the clicks' bias toward the cluster, no force"
+                f"beside a cluster of {cluster['pixels']} pixels of {sieve_count(cluster)} quanta every {cluster['spacing']} Links along +x, the first {cluster['distance']} Links away: the wells of the cluster's pixels lower the pace on that side, the local band nearer the record's rotation, the tail longer there, and the tail's remainder crosses T earlier on that side: the fall is the clicks' bias toward the cluster, no force"
                 if cluster
                 else "with no cluster, the control: the tail alike on both sides, the count's moves unbiased, the body's centre standing within a Link"
             )
@@ -135,11 +145,11 @@ def expectation(name: str, cluster: dict[str, int] | None) -> dict[str, Any]:
             "record": {"count": COUNT, **RECORD.get(COUNT, {})},
             "sieve_record": None
             if cluster is None
-            else {"count": cluster["count"], **RECORD.get(int(cluster["count"]), {})},
+            else {"count": sieve_count(cluster), **RECORD.get(sieve_count(cluster), {})},
             "tail_kappa_per_link_away": KAPPA_AWAY,
             "tail_ratio_well_over_away": ratio if cluster else 1.0,
             "moves_toward_well_share": bias if cluster else 0.5,
-            "cluster": cluster,
+            "cluster": None if cluster is None else {**cluster, "count": sieve_count(cluster)},
         },
         "GAMEBOARD": [
             {
