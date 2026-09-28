@@ -1,5 +1,5 @@
 {
- "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 5000 at x = 20, the taker a pixel of 5000 at x = 80 (60 Links on, the tails of three Links never touching), light of the charge family given by the deep one at the weight 1 with the stock 200 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
+ "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 4000 at x = 20, the taker a pixel of 4000 at x = 80 (60 Links on, the tails of three Links never touching), light of the charge family given by the deep one at the weight 1 with the stock 200 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
  "DETECTOR": [],
  "DETECTOR_row": "the taker's mean click interval (`mean_interval` on `taker`) against Cheshbon's line: the giver's rotation omega_b(deep) received at the taker, the taker's own omega_b(shallow); the number and its band before the run",
  "WELL": {
@@ -23,11 +23,12 @@
     76
    ]
   ],
-  "period_ratio": 0.889,
-  "period_ratio_with_the_term": 0.667,
-  "period_ratio_row": "Cheshbon's blind number (the Closer's line of 2026-09-28, 13:16 Israel): the ratio of the two pixels' periods, the taker's cycle over the giver's (the shallow pixel of 3,000 over the deep one of 5,000, the one-Node line's bound rotation at each count), 0.889 under the engine of today (before the term) and 0.667 with the conformal term; the band Cheshbon's to write; in the twin 1",
-  "shift_ratio": null,
+  "period_ratio": null,
+  "period_ratio_row": "the ratio of the two pixels' periods, the taker's cycle over the giver's (the one-Node line's bound rotation at each count): Cheshbon's number for the giver at 4,000 to write (his 0.889 under the engine of today and 0.667 with the conformal term were for a giver at 5,000, above the giver's bound); in the twin 1",
+  "shift_ratio": 1.125,
+  "shift_ratio_with_the_term": 1.5,
   "shift_ratio_band": null,
+  "shift_ratio_row": "Cheshbon's blind number (his reading of the layout, 2026-09-28, 13:17 Israel, the Closer's line of 13:22): the light's relative shift of wave number over the pixel's relative shift of cycle, 1.125 under the engine of today (before the term) and 1.5 with the conformal term; the band Cheshbon's to write; in the twin every ratio 1",
   "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles at the two depths and their ratio, the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written"
  },
  "GAMEBOARD": [

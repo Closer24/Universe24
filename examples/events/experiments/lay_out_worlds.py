@@ -697,6 +697,7 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
 PLANCK = "examples/events/planck.json"  # the rule's own universe beside the universe of record (Nature24's file)
 RULE_GAMMA = 12000  # the rule's universe's node clock, cited for the expectations' formulas only
 EDGE = 2706  # 0.2255 Gamma, the count under which a one-Node body disperses (ALGEBRA.md, THE BOUND BODY IS ONE NODE)
+GIVER_EDGE = 4447  # the giving pixel's bound (Cheshbon, 2026-09-28, 13:22 Israel): its count with its bound charge keeps the pace positive
 
 
 def pixel(node: list[int], count: int, **keys: Any) -> dict[str, Any]:
@@ -705,11 +706,13 @@ def pixel(node: list[int], count: int, **keys: Any) -> dict[str, Any]:
         raise ValueError(
             f"a pixel of {count} is no bound body: the count lies outside [{EDGE}, {RULE_GAMMA // 2})"
         )
+    if "emitter" in keys and count > GIVER_EDGE:
+        raise ValueError(f"a giving pixel of {count} lies above the giver's bound {GIVER_EDGE}")
     return body([node], count, **keys)
 
 
 def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int, stock: int) -> None:
-    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a chain along x, the giver the deep pixel (`deep`, 5,000 of 12,000) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
+    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a chain along x, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
     margin = 20
     giver_x, taker_x = margin, margin + distance
     length = taker_x + margin
@@ -763,11 +766,12 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
             "clocks": ["giver_clock", "taker_clock"],
             "axis_y": 0,
             "windows": [[giver_x + 4, giver_x + 4 + window], [taker_x - 4 - window, taker_x - 4]],
-            "period_ratio": 0.889,
-            "period_ratio_with_the_term": 0.667,
-            "period_ratio_row": "Cheshbon's blind number (the Closer's line of 2026-09-28, 13:16 Israel): the ratio of the two pixels' periods, the taker's cycle over the giver's (the shallow pixel of 3,000 over the deep one of 5,000, the one-Node line's bound rotation at each count), 0.889 under the engine of today (before the term) and 0.667 with the conformal term; the band Cheshbon's to write; in the twin 1",
-            "shift_ratio": None,
+            "period_ratio": None,
+            "period_ratio_row": "the ratio of the two pixels' periods, the taker's cycle over the giver's (the one-Node line's bound rotation at each count): Cheshbon's number for the giver at 4,000 to write (his 0.889 under the engine of today and 0.667 with the conformal term were for a giver at 5,000, above the giver's bound); in the twin 1",
+            "shift_ratio": 1.125,
+            "shift_ratio_with_the_term": 1.5,
             "shift_ratio_band": None,
+            "shift_ratio_row": "Cheshbon's blind number (his reading of the layout, 2026-09-28, 13:17 Israel, the Closer's line of 13:22): the light's relative shift of wave number over the pixel's relative shift of cycle, 1.125 under the engine of today (before the term) and 1.5 with the conformal term; the band Cheshbon's to write; in the twin every ratio 1",
             "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles at the two depths and their ratio, the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written",
         },
         "GAMEBOARD": [
@@ -840,8 +844,8 @@ def main() -> None:
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
     (HERE / "rule_redshift").mkdir(exist_ok=True)
-    rule_redshift("rule_redshift", 5000, 3000, 60, 1500, 200)
-    rule_redshift("rule_redshift_twin", 5000, 5000, 60, 1500, 200)
+    rule_redshift("rule_redshift", 4000, 3000, 60, 1500, 200)
+    rule_redshift("rule_redshift_twin", 4000, 4000, 60, 1500, 200)
 
 
 if __name__ == "__main__":
