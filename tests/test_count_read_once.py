@@ -63,8 +63,8 @@ def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(
         lays.append(int(block.period_counts[node]))
     assert 1 < len(set(lays)) < 6 and min(lays) > isqrt(int(COUNT))  # read once per period
     half = SimpleNamespace(**{**vars(block.definition), "counts": (int(COUNT) // 2,)})  # off its mode
-    off = SimpleNamespace(number=0, own=block.own, definition=half)
-    with pytest.raises(ValueError, match="a declared count is D div T of its mode within 2 isqrt"):
+    off = SimpleNamespace(number=0, own=block.own, well=block.well, definition=half)
+    with pytest.raises(ValueError, match="a declared count is D div T of its record within 2 isqrt"):
         count_once.declared_within_gate(off)
 
 
