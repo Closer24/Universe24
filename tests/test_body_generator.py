@@ -229,7 +229,7 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     charged = {**weighed, "measured": [{**body, "q": 5}]}
     assert loader_level(weighed, GAMMA) == min(2 * (2 * 24000 + 1 * 0), GAMMA - 1)
     assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (2 * 24000 + 1 * 5)
-    assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
+    assert reading["rotation"] == list(clock_pair(mode.rotation, mode.amplitude))  # on A, bounded
     assert reading["period"] == period_by_the_rule(*reading["rotation"])
     written = reading[
         "profile"

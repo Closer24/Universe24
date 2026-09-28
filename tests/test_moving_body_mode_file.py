@@ -12,6 +12,8 @@ sys.path.insert(0, __file__.rsplit("/tests/", 1)[0] + "/tools")
 
 from body_generator import generate, mode_document, split_levels  # noqa: E402
 
+from event_universe.core.integer import MAX_WORK_INT  # noqa: E402
+
 WORLD = (
     '{"shape": [120, 1, 1], "boundary": {"x": "open", "y": "periodic", "z": "periodic"}, "ticks": 1, "N": 64, "engine":'
     ' "examples/events/engine_start.json", "universe": "examples/events/generated/universe.json", "face_depth": 16, "detectors": [],'
@@ -49,3 +51,14 @@ def test_the_mode_file_carries_the_moving_bodys_two_levels_and_its_proper_pair()
     with pytest.raises(ValueError, match="above the amplitude bound"):
         moving_levels(m, clock, 120, "b", 1)
 
+
+def test_every_integer_of_the_mode_file_stays_within_the_width() -> None:
+    """The mode file's readings (the rotation, the rotation in the world's well, the velocity, the top velocity, the share inside) are pairs on the mode's own denominator A, so no integer of the file leaves the engine's width whatever the board; at rest the rotation is the clock's own pair."""
+    entry = mode_entry(3 * 64 * 3000 // 20)
+    integers = [v for v in json.loads(json.dumps(entry)).values() if isinstance(v, int)]
+    integers += [v for pair in ("rotation", "share_inside") for v in entry[pair]]
+    integers += [v for pair in ("velocity", "top_velocity") for v in entry["moving"][pair]]
+    integers += entry["in_the_worlds_well"].get("rotation", [])
+    assert all(abs(v) <= MAX_WORK_INT for v in integers)
+    rest = mode_entry(0)  # at rest the clock is the rotation's own pair; moving, the proper pair
+    assert rest["rotation"] == rest["clock"]
