@@ -1,0 +1,119 @@
+{
+ "status": "BLIND: written from the law's line and the files before any run; GAMEBOARD readings",
+ "row": "NEWTON'S FALL OF TWO WHOLE BODIES: each body the fixed point of its binding row on its Nodes (the generator), each falling in the other's content (every held row the other sources, gravity's long reach and the binding row's short one, the pace reads them all) at a = Delta |d omega_b / dc| grad(c) toward the other; the closing of the two count-weighted centroids along x from rest; the touch when the bodies' faces meet",
+ "delta_band_curvature": 0.2981,
+ "bodies": [
+  {
+   "centre": [
+    12,
+    12,
+    12
+   ],
+   "nodes": 1013,
+   "quanta": 30079,
+   "clock": [
+    347,
+    258
+   ],
+   "two_cos": 1.345,
+   "centre_pace": 4823,
+   "d_omega_dc": "9.012e-05",
+   "mode_neighbour_sum_K": 2.6298,
+   "gradient_at_start_levels_per_link": 0.4968,
+   "gravity_alone_gradient_at_start": 0.4968,
+   "acceleration_at_start": "1.335e-05"
+  },
+  {
+   "centre": [
+    35,
+    12,
+    12
+   ],
+   "nodes": 1009,
+   "quanta": 29445,
+   "clock": [
+    341,
+    254
+   ],
+   "two_cos": 1.3425,
+   "centre_pace": 4850,
+   "d_omega_dc": "9.017e-05",
+   "mode_neighbour_sum_K": 2.6338,
+   "gradient_at_start_levels_per_link": 0.5054,
+   "gravity_alone_gradient_at_start": 0.5054,
+   "acceleration_at_start": "1.359e-05"
+  }
+ ],
+ "gap_links_at_start": 10,
+ "closing_links_at_intervals": {
+  "25": 0.009,
+  "50": 0.034,
+  "75": 0.077,
+  "100": 0.136,
+  "125": 0.213,
+  "150": 0.306,
+  "175": 0.417,
+  "200": 0.546,
+  "250": 0.855,
+  "300": 1.237,
+  "400": 2.226,
+  "500": 3.537,
+  "600": 5.208
+ },
+ "each_body_links_at_intervals": {
+  "25": [
+   0.004,
+   0.004
+  ],
+  "50": [
+   0.017,
+   0.017
+  ],
+  "75": [
+   0.038,
+   0.039
+  ],
+  "100": [
+   0.068,
+   0.069
+  ],
+  "125": [
+   0.105,
+   0.107
+  ],
+  "150": [
+   0.152,
+   0.155
+  ],
+  "175": [
+   0.207,
+   0.211
+  ],
+  "200": [
+   0.27,
+   0.275
+  ],
+  "250": [
+   0.423,
+   0.432
+  ],
+  "300": [
+   0.611,
+   0.626
+  ],
+  "400": [
+   1.098,
+   1.128
+  ],
+  "500": [
+   1.74,
+   1.797
+  ],
+  "600": [
+   2.554,
+   2.654
+  ]
+ },
+ "touch_interval_blind": 804,
+ "band": "the engine's centroids within 30 percent of the closing at every listed interval, the touch within 30 percent; a finding otherwise"
+}

@@ -14,12 +14,16 @@ factor of about 60). `check_angles` reports the largest miss against the represe
 `SMALLEST_ANGLE`; the table's form waits for the mathematician's line (a coarser unit, a
 larger d, or the fine part folded into the coarse).
 
-    PYTHONPATH=src python tools/twist_table.py OUT.json [--coarse N] [--gamma G] [--fine F]
+    PYTHONPATH=src python tools/twist_table.py OUT.json [--coarse N] [--gamma G] [--fine F] [--bound D]
 
 THE FINE COUNT IS THE FILE'S (ALGEBRA.md #the-transport: F the fine table's length, a power of two):
 `--fine F` writes F fine triples; at a small Gamma every fine angle lies under the representable
 floor and the fine part is the identity (as the universe of record's is), and a small F keeps the
 transport's total 3 d_1 d_0 (A + 1) inside the width with the coarse part at the step F theta_unit.
+THE BOUND ON d IS THE TABLE'S (`--bound D`, 10^9 by default): the representable floor is about
+2 / sqrt(D), so a large Gamma, whose angles per Link are small, takes a larger D (10^11 at 6,000:
+the floor 6.3 x 10^-6 radians under the pixels' turns of 3 x 10^-5), the width still holding the
+transport's total with the fine part the identity.
 """
 
 from __future__ import annotations
@@ -40,21 +44,26 @@ UNIT_SCALE = 1 << 16
 TWIST_FINE_COUNT = 1 << 10  # the fine table this tool writes; the loader takes the file's own count
 DENOMINATOR_BOUND = 10**9
 COARSE_DEFAULT = 1 << 15  # at most 2^15 coarse entries (ALGEBRA.md #the-primitives)
-SMALLEST_ANGLE = 2.0 * math.atan(
-    1.0 / math.isqrt(DENOMINATOR_BOUND)
-)  # the representable floor, about 6.3e-5
+
+
+def smallest_angle(bound: int = DENOMINATOR_BOUND) -> float:
+    """The representable floor under the bound on d, 2 atan(1 / isqrt(bound)): about 6.3e-5 at 10^9."""
+    return 2.0 * math.atan(1.0 / math.isqrt(bound))
+
+
+SMALLEST_ANGLE = smallest_angle()
 
 
 def theta_unit(gamma: int = GAMMA) -> float:
     return 1.0 / (4 * gamma * UNIT_SCALE)
 
 
-def triple_for(angle: float) -> Triple:
+def triple_for(angle: float, bound: int = DENOMINATOR_BOUND) -> Triple:
     """The triple whose angle is nearest `angle`: n / m nearest tan(angle / 2) with m^2 + n^2
-    at most 10^9, (m^2 - n^2, 2 m n, m^2 + n^2)."""
+    at most the bound (10^9 by default), (m^2 - n^2, 2 m n, m^2 + n^2)."""
     if angle == 0.0:
         return (1, 0, 1)
-    ratio = Fraction(math.tan(angle / 2.0)).limit_denominator(int(math.isqrt(DENOMINATOR_BOUND)))
+    ratio = Fraction(math.tan(angle / 2.0)).limit_denominator(int(math.isqrt(bound)))
     n, m = ratio.numerator, ratio.denominator
     return (m * m - n * n, 2 * m * n, m * m + n * n)
 
@@ -64,19 +73,26 @@ def angle_of(triple: Triple) -> float:
     return math.atan2(s, c)
 
 
-def build(coarse: int = COARSE_DEFAULT, gamma: int = GAMMA, fine: int = TWIST_FINE_COUNT) -> TwistTable:
+def build(
+    coarse: int = COARSE_DEFAULT,
+    gamma: int = GAMMA,
+    fine: int = TWIST_FINE_COUNT,
+    bound: int = DENOMINATOR_BOUND,
+) -> TwistTable:
     unit = theta_unit(gamma)
-    fine_entries = tuple(triple_for(k * unit) for k in range(fine))
-    coarse_entries = tuple(triple_for(k * fine * unit) for k in range(coarse))
+    fine_entries = tuple(triple_for(k * unit, bound) for k in range(fine))
+    coarse_entries = tuple(triple_for(k * fine * unit, bound) for k in range(coarse))
     return TwistTable(fine_entries, coarse_entries)
 
 
-def check_angles(table: TwistTable, gamma: int = GAMMA, tolerance: float | None = None) -> float:
+def check_angles(
+    table: TwistTable, gamma: int = GAMMA, tolerance: float | None = None, bound: int = DENOMINATOR_BOUND
+) -> float:
     """Every triple's angle within `tolerance` of its target (ALGEBRA.md #the-primitives asks theta_unit /
     2^10; the representable floor SMALLEST_ANGLE is the default here, the finding above);
     returns the largest miss (HOST)."""
     unit = theta_unit(gamma)
-    allowed = SMALLEST_ANGLE if tolerance is None else tolerance
+    allowed = smallest_angle(bound) if tolerance is None else tolerance
     largest = 0.0
     for name, entries, step in (
         ("fine", table.fine, unit),
@@ -100,10 +116,11 @@ def main() -> None:
     parser.add_argument("--coarse", type=int, default=COARSE_DEFAULT)
     parser.add_argument("--gamma", type=int, default=GAMMA)
     parser.add_argument("--fine", type=int, default=TWIST_FINE_COUNT)
+    parser.add_argument("--bound", type=int, default=DENOMINATOR_BOUND)
     args = parser.parse_args()
-    table = build(args.coarse, args.gamma, args.fine)
+    table = build(args.coarse, args.gamma, args.fine, args.bound)
     table.check()
-    miss = check_angles(table, args.gamma)
+    miss = check_angles(table, args.gamma, bound=args.bound)
     print(
         f"the largest miss of an angle {miss:.3e} radians against the asked theta_unit / 2^10 = "
         f"{theta_unit(args.gamma) / TWIST_FINE_COUNT:.3e} (the finding in this tool's docstring)"
