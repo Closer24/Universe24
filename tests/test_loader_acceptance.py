@@ -18,12 +18,10 @@ from tests.running import family_names, string_constants, written_defaults
 from tests.worlds import SOURCED, emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-ENGINE = ROOT / "src" / "event_universe"
-UNIVERSE = ROOT / "examples" / "events" / "universe.json"
+ENGINE, UNIVERSE = ROOT / "src" / "event_universe", ROOT / "examples" / "events" / "universe.json"
 GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # matter's pair declared
 START = ROOT / "examples" / "events" / "engine_start.json"
-VERSION_STRING = re.compile(r"-v[0-9]+$")
-VERSION_WORDS = {"version", "schema_version"}
+VERSION_STRING, VERSION_WORDS = re.compile(r"-v[0-9]+$"), {"version", "schema_version"}
 
 
 def loader_modules() -> list[Path]:
@@ -190,8 +188,7 @@ def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_bo
     tmp_path, monkeypatch
 ):
     """Record 2226 (2): an unknown key of the world, of a family's entry or of a body is refused by name, never read silently."""
-    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    world = emitter_world(stock=1, ticks=4)
+    universe, world = json.loads(UNIVERSE.read_text(encoding="utf-8")), emitter_world(stock=1, ticks=4)
     with pytest.raises(ValueError, match="nonsense_world_key"):
         parse_nature_beam_world(
             place(tmp_path, monkeypatch, universe, {**world, "nonsense_world_key": 1})

@@ -40,9 +40,22 @@ def gamma_of(universe: str) -> int:
     return int(json.loads((ROOT / universe).read_text(encoding="utf-8"))["integers"]["node_clock"])
 
 
-COUNT = COUNT_BY_GAMMA[
-    gamma_of(PLANCK)
-]  # the pixel's count at the file's Gamma (10 at 24 (the owner's word of 15:11 Israel; Cheshbon's table of 15:22: the pixels 8 to 11 realisable on the law, 6 and 7 not; (a), (b), (c) at 10, b = 6); 4,400 on Gamma = 12,000 was the second run
+GAMMA = gamma_of(
+    PLANCK
+)  # the Gamma the layout lays for: the file of record's, or --gamma (6,000 names planck_6000.json until Nature24 writes it, the Closer 16:31 Israel)
+COUNT = COUNT_BY_GAMMA[GAMMA]  # the pixel's count at that Gamma
+UNIVERSE = PLANCK  # the universe file the worlds name
+
+
+def choose(gamma: int | None) -> str:
+    """The layout's Gamma: the file of record's when None, else the given one with the file planck_<gamma>.json beside the file of record (planck.json itself where it carries that Gamma); the pixel's count follows; the worlds' names carry _<gamma> where it is not the file of record's."""
+    global GAMMA, COUNT, UNIVERSE
+    GAMMA = gamma_of(PLANCK) if gamma is None else int(gamma)
+    COUNT = COUNT_BY_GAMMA[GAMMA]
+    UNIVERSE = PLANCK if GAMMA == gamma_of(PLANCK) else f"examples/events/planck_{GAMMA}.json"
+    return "" if UNIVERSE == PLANCK else f"_{GAMMA}"
+
+
 PIXEL_NUMBERS = {
     **PIXELS,
     4_400: {"omega_b": 0.8290, "kappa": 0.283, "a": 88_553},
@@ -205,7 +218,7 @@ def expectation(pull: int) -> dict[str, Any]:
         "DETECTOR": [],
         "blind": {
             "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes on a closed board and 2 : 1 : 1 with the faces open along x (Cheshbon 15:22, Gamma = 24); at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; at Gamma = 24 the pull M omega_b e^(-kappa d) at 10 is under one quantum per interval (0.41 at 2 Links), the band one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22)",
-            **edges(gamma_of(PLANCK)),
+            **edges(GAMMA),
             "record": {"count": COUNT, **RECORD.get(COUNT, {})},
             "raw_clicks_per_port_per_interval": RAW_PER_PORT,
             "net_tally_per_interval": net,
@@ -232,20 +245,29 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
     parser.add_argument("--no-tail", action="store_true", help="the mode files without the tail")
+    parser.add_argument(
+        "--gamma",
+        type=int,
+        default=None,
+        help="the Gamma to lay for (the file of record's when omitted; 6,000 names planck_6000.json)",
+    )
     args = parser.parse_args()
+    suffix = choose(args.gamma)
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    universe = PLANCK
     for pull in PULLS:
-        name = f"pulled_pixel_{pull}" if pull else "white_pixel"
-        document = world(universe, pull)
+        name = (f"pulled_pixel_{pull}" if pull else "white_pixel") + suffix
+        document = world(UNIVERSE, pull)
         (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
-        (folder / f"{name}.mode.json").write_text(
-            json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
-        )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(pull), indent=1) + "\n", encoding="utf-8"
         )
+        if (ROOT / UNIVERSE).exists():
+            (folder / f"{name}.mode.json").write_text(
+                json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
+            )
+        else:
+            print(f"{name}: the mode file waits for {UNIVERSE}")
 
 
 if __name__ == "__main__":

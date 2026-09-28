@@ -183,8 +183,7 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
         lines: list[dict] = []
         simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
         k = 0.3
-        omega = math.acos((math.cos(k) + 2) / 3)
-        x = np.arange(300)
+        omega, x = math.acos((math.cos(k) + 2) / 3), np.arange(300)
         envelope = np.exp(-(((x - 150) / 14.0) ** 2))
         now = np.rint(UNIT * envelope * np.cos(k * (x - 150))).astype(np.int64).reshape(300, 1, 1)
         before = (
@@ -196,5 +195,4 @@ def test_a_deep_face_slab_books_a_packets_energy_and_a_shallow_one_a_part():
         for _ in range(600):
             simulation.step()
         clicks[depth] = [line for line in lines if line["event"] == "gather"]
-    assert len(clicks[40]) == 1 and clicks[40][0]["chosen"] == [["face", 0, "0"]]
-    assert clicks[1] == []
+    assert len(clicks[40]) == 1 and clicks[40][0]["chosen"] == [["face", 0, "0"]] and clicks[1] == []

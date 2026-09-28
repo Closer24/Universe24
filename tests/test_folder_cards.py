@@ -13,8 +13,7 @@ import pytest
 from event_universe.core.register import discover
 from event_universe.core.step import STEP_FILE, read_step
 
-ROOT = Path(__file__).resolve().parents[1]
-FEATURES = "src/event_universe/features"
+ROOT, FEATURES = Path(__file__).resolve().parents[1], "src/event_universe/features"
 
 
 def positional_cards(text: str) -> int:
@@ -82,8 +81,7 @@ def test_a_card_by_position_and_a_built_folder_missing_from_the_step_file_fail(t
     assert grown({"f/new.py": 1}, {}) == [
         "f/new.py: 1 Declaration(...) by position, above the merge base's 0; name the words"
     ]
-    register = discover()
-    shipped = json.loads((ROOT / STEP_FILE).read_text(encoding="utf-8"))
+    register, shipped = discover(), json.loads((ROOT / STEP_FILE).read_text(encoding="utf-8"))
     built = set(register.built_names())
     shipped["interval"] = [act for act in shipped["interval"] if act[1] != sorted(built)[0]]
     with pytest.raises(ValueError, match="leaves out the built primitive"):
