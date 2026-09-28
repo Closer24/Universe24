@@ -70,7 +70,7 @@ def look(world_dir: Path, out_dir: Path, diagnostic: bool) -> dict[str, Any]:
         f"(the twin's {'none' if not clicks[WORLDS[1]] else clicks[WORLDS[1]][0]['read']}); before the run "
         f"{'none' if taker is None else taker['pin']} within {'none' if taker is None else taker['band']} -- "
         f"{'MISS (no pin)' if taker is None else taker['verdict']}",
-        f"2. GAMEBOARD  the pixels' clock ratio, the giver's cycle over the taker's: {decimal(this['clock_ratio'])} "
+        f"2. GAMEBOARD  the pixels' clock ratio, the taker's cycle over the giver's: {decimal(this['clock_ratio'])} "
         f"(the cycles {decimal(this['clock_cycles'][0])} and {decimal(this['clock_cycles'][1])}); before the run "
         f"{well.get('clock_ratio')} ({well.get('clock_ratio_with_the_term')} with the term, the giver's period "
         f"{well.get('giver_period')}) -- {verdict(this['clock_ratio'], well.get('clock_ratio'), band)}; the twin's "
