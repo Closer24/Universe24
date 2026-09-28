@@ -14,8 +14,7 @@ TWIST_FINE_COUNT = (
     1 << 10
 )  # the shipped table's fine count, the test's own number (the loader takes the file's)
 
-# a hand table: the angles are the host's, the identities exact; the fine table filled with
-# (3, 4, 5) beyond its first entries so that its length is 2^10
+# a hand table: the angles are the host's, the identities exact; the fine table filled with (3, 4, 5) beyond its first entries so that its length is 2^10
 FINE = ((1, 0, 1), (3, 4, 5), (5, 12, 13), (8, 15, 17)) + ((3, 4, 5),) * (TWIST_FINE_COUNT - 4)
 COARSE = ((1, 0, 1), (7, 24, 25), (20, 21, 29))
 TABLE = P.TwistTable(FINE, COARSE)
@@ -201,8 +200,7 @@ def test_the_hosts_table_generator_writes_exact_triples_within_their_angles():
     assert table.bound == 4 * TWIST_FINE_COUNT - 1
     # the unit: 1 / (4 Gamma 2^16) radians per unit of k (ALGEBRA.md #the-primitives)
     assert tool.theta_unit() == 1.0 / (4 * 10_000 * 65536)
-    # THE FINDING (the tool's docstring): the asked precision theta_unit / 2^10 cannot be met
-    # with d at most 10^9; every fine angle lies below the floor and its triple is the identity's
+    # THE FINDING (the tool's docstring): the asked precision theta_unit / 2^10 cannot be met with d at most 10^9; every fine angle lies below the floor and its triple is the identity's
     assert 0 < largest <= tool.SMALLEST_ANGLE and all(triple == (1, 0, 1) for triple in table.fine)
     with pytest.raises(ValueError, match="misses its angle"):
         tool.check_angles(table, tolerance=tool.theta_unit() / TWIST_FINE_COUNT)
