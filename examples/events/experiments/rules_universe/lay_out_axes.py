@@ -184,6 +184,7 @@ def expectation(pull: int) -> dict[str, Any]:
         "blind": {
             "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes on a closed board and 2 : 1 : 1 with the faces open along x (Cheshbon 15:22, Gamma = 24); at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; at Gamma = 24 the pull M omega_b e^(-kappa d) at 10 is under one quantum per interval (0.41 at 2 Links), the band one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22)",
             **edges(gamma_of(PLANCK)),
+            "record": {"count": COUNT, **RECORD.get(COUNT, {})},
             "raw_clicks_per_port_per_interval": RAW_PER_PORT,
             "net_tally_per_interval": net,
             "first_click": 1,

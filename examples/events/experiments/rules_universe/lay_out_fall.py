@@ -11,7 +11,7 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from lay_out_axes import edges, gamma_of, pixel_mode  # noqa: E402  (the pixels' modes through the tool)
+from lay_out_axes import RECORD, edges, gamma_of, pixel_mode  # noqa: E402  (the pixels' modes through the tool)
 from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
 COUNT = 10  # the falling pixel's count at Gamma = 24 (Cheshbon's table of 15:22 Israel: the pixels 8 to 11 on the law; (a), (b), (c) at 10, b = 6); 4,400 on 12,000 was the second run
@@ -127,6 +127,10 @@ def expectation(name: str, cluster: dict[str, int] | None) -> dict[str, Any]:
         "blind": {
             "row": "Cheshbon's numbers before the run (THE SCREEN IS A CLUSTER, 14:55 Israel time, 2026-09-28; the cluster's numbers asked at 15:05): the tail's ratio toward the cluster over away and the count's moves biased toward the cluster in the same ratio; the control 1 and 50 percent; the band plus or minus 30 percent (the Closer 14:16)",
             **edges(gamma_of(PLANCK)),
+            "record": {"count": COUNT, **RECORD.get(COUNT, {})},
+            "sieve_record": None
+            if cluster is None
+            else {"count": cluster["count"], **RECORD.get(int(cluster["count"]), {})},
             "tail_kappa_per_link_away": KAPPA_AWAY,
             "tail_ratio_well_over_away": ratio if cluster else 1.0,
             "moves_toward_well_share": bias if cluster else 0.5,
