@@ -88,7 +88,7 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
 
 
 def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
-    """THE START ON THE SUM'S SOURCES (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): the rest solves 6 den a - num S_6(a) = 3 den sigma, sigma the weighted count over the divisor at the bodies' Nodes, 0 beyond an open face, no Node clamped; the certified values' exact residual stays below one fine unit, on a chain and on a box alike, at [1, 1] and at the short-range pairs (at [1, 2] the line is (Delta^2 - 6) a = -6 sigma, the level inside a thick body its source: the divisor 1 gives the count at the body's centre); a board periodic on its every axis at [1, 1] has no rest and is refused by name; a divisor below 1 is refused."""
+    """THE START ON THE SUM'S SOURCES (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): the rest solves 6 den a - num S_6(a) = 3 den sigma, sigma the weighted count over the divisor at the bodies' Nodes, 0 beyond an open face, no Node clamped; the certified values' exact residual stays below one fine unit, on a chain and on a box alike, at [1, 1] and at the short-range pairs (at [1, 2] the line is (Delta^2 - 6) a = -6 sigma, the level inside a thick body its source: the divisor 1 gives the count at the body's centre); a board periodic on its every axis at [1, 1] has no rest under a source total other than 0 and is refused by name, and under the total 0 (a signed family balanced) its rest stands up to a constant and is written at the mean 0 (the ring of 16 with the sources +2 and -2: the tent's slopes -3 and +3, its peak and trough +12 and -12); a divisor below 1 is refused."""
     numerators, divisor, wrap = chain(), 7, (False, True, True)
     box = np.zeros((6, 5, 4), dtype=np.int64)
     box[1:3, 1:3, 1] = 9
@@ -112,7 +112,7 @@ def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
         assert (np.abs(left) < found.unit).all(), (pair, faces)
         assert (found.levels[counts > 0] > 0).all() and (found.levels >= 0).all()
     for bad, message in (
-        ((numerators, (True, True, True), 7), "no sink"),
+        ((numerators, (True, True, True), 7), "a sink"),
         ((numerators, wrap, 0), "divisor from 1"),
     ):
         try:
@@ -121,6 +121,13 @@ def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
             assert message in str(refusal)
         else:
             raise AssertionError(f"not refused: {message}")
+    ring = np.zeros((16, 1, 1), dtype=np.int64)  # a signed family balanced on a board with no face
+    ring[3, 0, 0], ring[11, 0, 0] = 2, -2
+    levels = rest(ring, (1, 1), (True, True, True), 1).levels[:, 0, 0]
+    # -Delta^2 a = 3 sigma: the slope jumps by 6 at each source, so the two arcs of 8 Links carry the slopes
+    # -3 and +3, the tent's height is 24, and at the mean 0 the peak and the trough are +12 and -12
+    assert int(levels[3]) == 12 and int(levels[11]) == -12 and int(levels.sum()) == 0
+    assert (np.diff(levels[3:12]) == -3).all() and (np.diff(np.roll(levels, -11)[:9]) == 3).all()
 
 
 def test_the_falls_tent_is_the_sums_rest_on_the_open_chain():

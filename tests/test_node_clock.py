@@ -31,8 +31,9 @@ VACUUM_WHEEL = (
 QUANTA = 250  # the content per Node for e / f = 0.8 at GAMMA
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_e_over_f():
-    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md #the-line; item 44): on the periodic chain of 12 with QUANTA at every Node (the held row's divisor 1: the level at the bodies' Nodes is the count at the start, ALGEBRA.md #the-primitives the row "the hold"), one step of the engine on random rows equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2: 1.982617 at the pace 0.75, 1.977750 in the vacuum, within 10^-5."""
+    """(i) THE RULE IN INTEGERS UNDER THE WEAK FIELD (ALGEBRA.md #the-line; item 44): on the periodic chain of 12 with QUANTA at every Node (THE START left out: the load's slab, the count at the bodies' Nodes, is the level the rule is read at; a chain periodic at [1, 1] has no rest under a source, ALGEBRA.md #the-generator (g)), one step of the engine on random rows equals w a_next + r' = R S_6(a_now) + S a_now - w a_before + r in Python integers; with no content the plain rule's levels bit for bit. (ii) THE ROTATION of a uniform record of the matter kind, 2 cos omega' = 2 - (1 + f)(1 - num / den), f = ((Gamma - c) / Gamma)^2: 1.982617 at the pace 0.75, 1.977750 in the vacuum, within 10^-5."""
     rng = np.random.default_rng(11)
     for family, (num, den) in ((0, (1, 1)), (1, PAIR)):
         rows_now = rng.integers(-UNIT, UNIT, size=(12, 1, 1), dtype=np.int64)
@@ -471,6 +472,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     assert world.held_families == (2, 3) and DetectorLawSimulation(world).held_families == [2, 3]
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_held_family_steps_at_the_pair_its_row_declares():
     """THE HELD FAMILY'S PAIR IS ITS ROW'S (the model owner, 2026-09-27; ALGEBRA.md #the-line): the family holding the content at [1, 2], [3, 5] and [800, 809] loads, and one field step on random levels is 3 den a_next + r' = num S_6(a_now) - 3 den a_before + r bit for bit; [1, 1] the same."""
     rng = np.random.default_rng(5)

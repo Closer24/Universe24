@@ -141,8 +141,8 @@ def test_the_refusals_by_name_and_the_declarations_the_loop_does_not_call_yet():
 
 
 def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_returns_it():
-    """The binding (the owner's word of 09:37Z): on a periodic board a big body held in place (`fixed`) and a small free body 5 Links ahead on x; the feed reads the content's time part at the small body's faces once the field reaches them, so its momentum turns toward the big body (n = -2 on x by interval 10, the second level one interval behind, no hop), the held body is not fed; ten steps back return both levels, the drive and every remainder of the feed to the load's, bit for bit."""
-    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    """The binding (the owner's word of 09:37Z): on a board closed on x a big body held in place (`fixed`) and a small free body 5 Links ahead on x; the feed reads the content's time part at the small body's faces once the field reaches them, so its momentum turns toward the big body (the field at its rest from the load, THE START, so the pull acts from the first interval and n on x falls over eight intervals, the second level one interval behind, before the body's first hop), the held body is not fed; eight steps back return both levels, the drive and every remainder of the feed to the load's, bit for bit."""
+    periodic = {"x": "closed", "y": "periodic", "z": "periodic"}  # the sum's sink: a face on x
     big = {
         "position": [2, 3, 3],
         "side": 2,
@@ -162,16 +162,16 @@ def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_retur
     document["stamp"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     held, free = simulation.blocks
-    for _ in range(10):
+    for _ in range(8):  # before the free body's first hop under the rest's pull
         simulation.step()
     # under the hold as a sum the two bodies' fields add (no hole where the small body stands: ALGEBRA.md
-    # the hold's row, "a body stands in another's well"), and on this board periodic on every axis at
-    # [1, 1] the sources have no sink, so THE START writes 0 and the field rises from both bodies in the
-    # run: each body falls toward the other's content, the free body toward -x, the big body toward +x
+    # the hold's row, "a body stands in another's well"): THE START writes the sum's rest of both sources
+    # on this board closed on x, so each body stands in the other's tent from the first interval and falls
+    # toward the other's content, the free body toward -x, the big body toward +x
     assert free.momentum[0] < 0 and free.momentum[1:] == [0, 0] and free.momentum_before[1:] == [0, 0]
     assert abs(free.momentum_before[0]) <= abs(free.momentum[0]) and free.hold_carry[("feed", 0)] > 0
     assert held.momentum[0] > 0 and held.momentum[1:] == [0, 0]
-    for _ in range(10):
+    for _ in range(8):
         simulation.step_inverse()
     assert free.momentum == [0, 0, 0] == free.momentum_before
     assert all(value == 0 for key, value in free.hold_carry.items() if key[0] == "feed")

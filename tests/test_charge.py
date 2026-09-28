@@ -286,7 +286,7 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
     rows = {}
     for strength in (1, 7):
         rng = np.random.default_rng(41)
-        document = content_chain(60, PERIODIC, range(20, 30), QUANTA)
+        document = content_chain(60, CHAIN, range(20, 30), QUANTA)  # a face on x: the sum's sink
         set_strength(document, strength)
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
         assert simulation.families[MATTER].reads[1][1] == strength

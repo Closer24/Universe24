@@ -72,10 +72,12 @@ WELL = [800, 801]
 
 
 def paces_world() -> dict:
-    """A periodic board with a body of matter at rest and the families with parts (gravity
-    [1, 3, 6] holding the content); the matter family reads gravity's time part at 1."""
+    """A periodic board with a body of matter at rest and the families with parts (gravity [1, 3, 6]
+    holding the content); the matter family reads gravity's time part at 1. Its tests leave THE START
+    out (the fixture): a board periodic on every axis has no rest under a source (ALGEBRA.md
+    #the-generator (g)), and the recorded seedings (tests/seeds.json) bind the board as recorded."""
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control"}
-    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    periodic = dict.fromkeys("xyz", "periodic")
     document = block_world(PACES_SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
     for family in document["universe"]:
         if family["name"] == "clicks":
@@ -439,9 +441,9 @@ def parts_of(simulation: DetectorLawSimulation, name: str) -> list:
 
 def parts_world(**body: object) -> dict:
     """A periodic board with one body of matter at [3, 2, 2] of side 3 and the families with parts
-    (gravity [1, 3, 6] and charge [1, 3])."""
+    (gravity [1, 3, 6] and charge [1, 3]); its tests leave THE START out (the fixture), as `paces_world`."""
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control", **body}
-    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    periodic = dict.fromkeys("xyz", "periodic")
     document = block_world(SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
     for family in document["universe"]:
         if family["name"] == "clicks":

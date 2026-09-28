@@ -1,4 +1,4 @@
-"""The GameBoard's six properties on a small periodic world (a well, one light record, one receiver, 60 intervals): equivariance under the 48, translation, conservation of the content and the form between clicks, reversibility except the click, locality, and only the click reads; bit for bit on the engine's integers."""
+"""The GameBoard's six properties on a small periodic world (a well, one light record, one receiver, 60 intervals): equivariance under the 48, translation, conservation of the content and the form between clicks, reversibility except the click, locality, and only the click reads; bit for bit on the engine's integers. THE START is left out throughout (the fixture `the_loads_hold_alone`): a board periodic on every axis has no rest under a source (ALGEBRA.md #the-generator (g)), and the properties are the loop's from the load's slab, whatever the start."""
 
 from __future__ import annotations
 
@@ -253,6 +253,7 @@ def compare_runs(reference_states, states, transform_array, identities):
                 assert np.array_equal(transform_array(x), y), (t, identity, level)
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_equivariance_under_the_cube_group():
     """48 of 48 transformed worlds give the transformed states at every interval, the remainders included, and the same click at the same interval."""
     document = small_world()
@@ -265,6 +266,7 @@ def test_equivariance_under_the_cube_group():
         assert moved_clicks == clicks, g
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_translation_on_the_torus():
     """7 of 7 shifts (one Link along each axis in each sign, and the diagonal (3, 5, 7))."""
     document = small_world()
@@ -404,6 +406,7 @@ def manhattan_ball(node, radius: int) -> np.ndarray:
     return distance <= radius
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_locality():
     """Two runs whose initial elements differ at one Node of the light record by one unit of `now`: at every interval m the difference is inside the Manhattan ball of radius m about that Node, and nonzero somewhere for every m <= 12."""
     document = small_world(receiver_named=False)
@@ -427,6 +430,7 @@ def test_locality():
             assert np.any(difference), m
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_only_the_click_reads():
     """(b) for 200 random elements, two Nodes whose seven inputs are equal by construction (the pair, the row and remainder, the six neighbours' rows) give equal outputs; (c) two runs whose records differ only in their residues u are identical until the first click."""
     document = small_world(receiver_named=False)
@@ -468,6 +472,7 @@ def scaled_world(side: int) -> dict:
     return small_world(receiver=(side - 3, side - 3, 2), side=side, pair=(850, 800), well_side=4)
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 @pytest.mark.parametrize("side", [12, 24, 48])
 def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
     """The owner's question on large boards (the Boss's 22:55Z): the host time per Node per interval and the state's memory per Node stay within a constant across 12^3, 24^3 and 48^3 (every step linear or bilinear in the levels), and the generator's cost for the composed mode is reported; HOST readings, printed, no pin. The bound asserted: the time per Node per interval at 48^3 within five times that at 12^3 (the small board's fixed costs dominate it)."""
@@ -532,6 +537,11 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
 def output_of(serialized: str) -> dict:
     """The run's output from its input text alone (the model owner's word through the Boss, 23:51Z: the same input gives the same output): the input's hash, the click lines (the receiver and the interval) and the digest of the final state's rows, for one process."""
     document = json.loads(serialized)
+    from event_universe.events import assembly
+
+    assembly.start_at_rest = lambda loop: (
+        None
+    )  # THE START left out in this process too (the module's docstring)
     simulation, states, clicks = run(document)
     digest = hashlib.sha256()
     for identity in sorted(states[-1]):
@@ -544,6 +554,7 @@ def output_of(serialized: str) -> dict:
     }
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_same_input_gives_the_same_output():
     """The owner's word (the Boss's relay of 23:51Z): the same input file run twice, and run in two separate processes at once, gives byte-identical outputs (the clicks and the final state's digest, with the input's own hash). The edge cases: a one-unit change in the input's seed profile changes the input's hash and gives a different output (the loader of this head admits it; record 1886's load check refuses it), never silently the same output; a one-unit change in the planted record's row gives a different output (test 5's difference)."""
     serialized = json.dumps(small_world(), sort_keys=True)
