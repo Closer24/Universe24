@@ -12,7 +12,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.running import Seen, chosen_by_the_rule, spy_on
+from tests.running import Seen, chosen_by_the_rule, spy_on, stamped
 from tests.worlds import (
     EMITTER_PAIR,
     NODE_CLOCK,
@@ -401,20 +401,14 @@ def test_detector_is_one_connected_cube_of_side_three():
 
 
 def test_the_wall_l_is_over_the_clocks_of_the_families_a_body_gives_and_the_emitters():
-    """The law's row "the recoil" (#1289): L is the least common multiple of the wavelengths 2 N q / p over the clocks of the families a body of the world gives and the emitters' own; a clock on a family no body gives enters nothing and is not checked (matter [7, 1] on N = 1024: 2048 / 7 is no whole number of Links), so L stands as without it. The edge case: the same clock on the given family (light) is refused at load by name."""
-    document = emitter_world(stock=2, ticks=120)
-    document["stamp"] = input_stamp(document)
-    world = parse_nature_beam_world(document)
+    """The law's row "the recoil": L is the least common multiple of the givers' wavelengths, each the mode's `wavelength` on the emitter's clock [2 N, lambda_q] (the row's clock for a mode file without one); a family's row's clock enters nothing and is not checked, on the given family and on any other (light or matter at [7, 1] on N = 1024, 2048 / 7 no whole number of Links), so L stands as without it. The edge case: the same clock on the given family (light) is refused at load by name."""
+    world = parse_nature_beam_world(stamped(emitter_world(stock=2, ticks=120)))
     families = list(world.families)
     light, matter = (next(i for i, f in enumerate(families) if f.name == n) for n in ("light", "matter"))
     wall = DetectorLawSimulation(world).recoil_wall
     families[matter] = replace(families[matter], phase_per_age=(7, 1))
     assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
-    families[matter], families[light] = (
-        world.families[matter],
-        replace(families[light], phase_per_age=(7, 1)),
-    )
-    with pytest.raises(
-        ValueError, match=rf"families\[{light}\] declares the clock \[7, 1\] on N = 1024"
-    ):
-        DetectorLawSimulation(replace(world, families=tuple(families)))
+    families[light] = replace(families[light], phase_per_age=(7, 1))
+    clock = world.measured[0].block.emitter.clock  # type: ignore[union-attr]
+    assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
+    assert wall == 2 * world.phase_steps * clock[1] // clock[0]

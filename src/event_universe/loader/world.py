@@ -272,7 +272,7 @@ class EmitterDefinition:
     branches: tuple[tuple[int, int], ...]
     label_hands: tuple[int, int] | None
     receiver: tuple[str, ...] | None
-    # THE GIVEN CLOCK (ALGEBRA.md #the-primitives; item 59): the given record's clock [p, q], the family's own or the emitter's `clock`
+    # THE GIVEN CLOCK: the given record's clock [p, q], [2 N, lambda_q] of the mode's `wavelength`, or the row's for a mode file without one
     clock: tuple[int, int]
     # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval; commit 1): the
     # given family's declared pair, or the emitter's own `pair` on a family whose pair is the body's
@@ -1385,24 +1385,16 @@ def _emitter(
     moment: tuple[int, int, int] = (0, 0, 0),
     clock_pair: tuple[int, int] | None = None,
     twist: int = 0,
+    wavelength: int | None = None,
 ) -> EmitterDefinition:
-    """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6),
-    ALGEBRA.md #a-familys-declaration): the given family a paid family whose row's `clock` [p, q] is the
-    given record's clock (lambda_q), the given labels, the ladder by name, the norm (the generator's
-    integer); the period P_body by the one-Node rule from the body's own mode's clock pair, never
-    declared (ALGEBRA.md #the-primitives, the recoil's row, L479); the twist "own" the body's, the
-    given record turning as its giver's mode. No wheel, no residue order, no seed, no period, no
-    clock, no twist of its own: each is the law's, and the keys are refused by name."""
+    """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6), #a-familys-declaration): the given family (a paid family), the given record's clock [2 N, lambda_q] with lambda_q the mode's reading `wavelength` (the giver's rotation on the given band; the recoil's row) or, for a giver whose mode file carries none, the row's `clock` [p, q]; the given labels, the ladder by name, the norm (the generator's integer), the period P_body by the one-Node rule from the mode's clock pair, the twist "own" the body's; no wheel, residue order, seed, period, clock or twist of its own: each is the law's, the keys refused by name."""
     obj = cast(dict[str, object], value)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{label}.family names an unknown family")
     given_family = families[names[name]]
-    # a body may give its own family (ALGEBRA.md #the-primitives; commit 6): the given record
-    # carries the emitter's declared pair, the stock is the body's `stock` of its own quanta
-    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval): the emitter's
-    # `pair` [num, den], required when the given family's pair is the body's
-    # and refused when the family declares one (one copy)
+    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval): the emitter's `pair` [num, den], required when the
+    # given family's pair is the body's (a body giving its own family, its stock its own quanta) and refused when the family declares one
     given_pair: tuple[int, int]
     if given_family.pair_on_body:
         if "pair" not in obj:
@@ -1429,15 +1421,17 @@ def _emitter(
             f"{label} givings into the held family {name!r}: it takes and gives "
             "nothing (ALGEBRA.md #the-counts-line)"
         )
-    # THE GIVEN CLOCK (ALGEBRA.md #the-primitives; item 59): a light record's clock is its
-    # emitter's, `clock` [p, q] on the emitter, REQUIRED when the given family
-    # declares none (the families file's light) and refused when it does (one copy)
-    if given_family.phase_per_age is None:
+    # THE GIVEN CLOCK: [2 N, lambda_q] from the mode's `wavelength` (the giver's rotation on the given band, no key: ALGEBRA.md
+    # #the-primitives, the crystal's and the recoil's rows); the family's row's `clock` [p, q] where the mode file carries none
+    if wavelength is not None:
+        clock = (2 * phase_steps, wavelength)
+    elif given_family.phase_per_age is None:
         raise ValueError(
-            f"{label}: the given family {name!r} declares no clock; the given record's clock is the "
-            "family's row's `clock` [p, q] (ALGEBRA.md #the-primitives, the recoil's row)"
+            f"{label}: the given family {name!r} declares no clock and the mode file no wavelength; the "
+            "given record's clock is the mode's `wavelength` (ALGEBRA.md #the-primitives, the recoil's row)"
         )
-    clock = (int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1]))
+    else:
+        clock = (int(given_family.phase_per_age[0]), int(given_family.phase_per_age[1]))
     step = clock[0] // clock[1]
     if step % 2 == 1 and most_steps is not None and 2 * phase_steps > most_steps:
         raise ValueError(
@@ -1448,11 +1442,9 @@ def _emitter(
     branches: tuple[tuple[int, int], ...] = ((0, 1),)
     label_hands: tuple[int, int] | None = None
     receiver = _receiver_names(obj, label)
-    # THE PERIOD FROM THE BODY'S OWN MODE (ALGEBRA.md #the-primitives, the recoil's row, L479: P_body by
-    # the one-Node rule from its clock pair, never declared; a body seeded off its mode has none)
+    # THE PERIOD FROM THE BODY'S OWN MODE (the recoil's row: P_body by the one-Node rule from its clock pair, never declared; none off the mode)
     period = None if clock_pair is None else period_by_the_rule(clock_pair[0], clock_pair[1])
-    # THE POINT EMITTER'S WEIGHT (ALGEBRA.md; item 50): an integer from
-    # 1; the world's `point_emitter` key pairs it with the absence of a train
+    # THE POINT EMITTER'S WEIGHT (ALGEBRA.md; item 50): an integer from 1; `point_emitter` pairs it with no train
     weight = None if "weight" not in obj else _integer(obj["weight"], f"{label}.weight", 1)
     norm_denominator = (
         None
@@ -1674,7 +1666,7 @@ def _counted(
     profile: tuple[int, ...] | None = None
     clock: tuple[int, int] | None = None
     levels: Levels | None = None
-    amplitude, twist = 0, None
+    amplitude, twist, wavelength = 0, None, None
     if mode is not None:
         mode_label = f"the mode file's bodies[{label[len('measured[') : -1]}]"
         if (
@@ -1696,6 +1688,8 @@ def _counted(
                 )
         if "twist" in mode:
             twist = _integer(mode["twist"], f"{mode_label}.twist", 0)
+        if "wavelength" in mode:
+            wavelength = _integer(mode["wavelength"], f"{mode_label}.wavelength", 1)
         levels = moving_levels(
             mode.get("moving"), clock, shape[0] * shape[1] * shape[2], mode_label, bounds[0]
         )
@@ -1727,6 +1721,7 @@ def _counted(
             moment=moment,
             clock_pair=clock,
             twist=twist,
+            wavelength=wavelength,
         )
     block = BlockDefinition(
         extents[0],
