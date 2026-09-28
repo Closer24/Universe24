@@ -132,7 +132,7 @@ def test_the_terms_are_read_from_the_bodys_declared_key_at_the_load_and_the_seco
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 4,
         "N": 64,
-        "universe": "examples/events/generated/universe.json",
+        "universe": "examples/events/experiments/universe.json",
         "engine": "examples/events/engine_start.json",
         "measured": [
             {
@@ -201,7 +201,7 @@ def test_the_switching_turns_by_each_angle_in_turn_by_the_bodys_own_count():
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
         "ticks": 4,
         "N": 64,
-        "universe": "examples/events/generated/universe.json",
+        "universe": "examples/events/experiments/universe.json",
         "engine": "examples/events/engine_start.json",
         "measured": [
             {

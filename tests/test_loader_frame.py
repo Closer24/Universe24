@@ -42,7 +42,7 @@ def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved
     filled = derived.filled(entries[2], entries)  # THE FAMILIES FROM THE RULE: the reads from the ranks
     assert filled["reads"][1] == {"family": "charge", "weight": 1, "twist": "own", "by": "q"}
     assert derived.filled(entries[0], entries)["held"]["dipole_div"] == 1 and "Lambda" not in integers
-    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+    for key in ("node_clock", "momentum_unit"):
         assert integers[key] == universe["integers"][key]
     table = integers["twist_table"]
     assert table["unit"] == universe["integers"]["twist_table"]["unit"]

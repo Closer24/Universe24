@@ -3,7 +3,11 @@ through the Boss, records 2239 and 2241; #1198, gate 7: no recorded baseline fil
 
 For every Python file under `src/` the counts: total lines, docstring lines, comment lines,
 references to records or decisions ("record 2234", "decision 3"), sites of Rule3's arithmetic
-outside its one function and sites that shift an array across Nodes; for every Python file of
+outside its one function, sites that shift an array across Nodes and sites that write a level onto
+the GameBoard (an item of, or the attribute, `now`, `before`, `im_now`, `im_before` or `remainder`
+assigned or augmented: the write's gate, the model owner's word of 2026-09-28: every level written
+is one act of the write, features/write, or Rule3's own step, applied by the loop at its sites at
+the merge base and nowhere new); for every Python file of
 `src/`, `tools/` and `tests/`, the names imported from the loop's module beyond its public entry.
 A file within the limits (every docstring one line, no record reference, under 400 lines, none of
 the sites) passes whatever its counts. A file beyond them holds each count at or below the same
@@ -48,6 +52,7 @@ RULE_ARITHMETIC = (
 RULE_HOME = PACKAGE / "core" / "rule3.py"
 LEVEL_SHIFT = re.compile(r"np\.roll\(|self\._shift\(|\.take\(")
 SHIFT_HOME = PACKAGE / "core" / "ports.py"
+LEVELS = frozenset({"now", "before", "im_now", "im_before", "remainder"})
 COUNTS = (
     "lines",
     "docstring_lines",
@@ -55,6 +60,7 @@ COUNTS = (
     "record_references",
     "rule_arithmetic_sites",
     "level_shift_sites",
+    "level_write_sites",
 )
 SCOPES = ("src", "tools", "tests")
 
@@ -74,6 +80,28 @@ def docstring_of(node: ast.AST) -> ast.Expr | None:
         if isinstance(body[0].value.value, str):
             return body[0]
     return None
+
+
+def written_object(target: ast.expr) -> ast.expr:
+    """The object a subscript writes into, through a call around it (`cast(np.ndarray, live.im_now)[mask]`)."""
+    while isinstance(target, ast.Call) and target.args:
+        target = target.args[-1]
+    return target
+
+
+def level_write_sites(tree: ast.AST) -> int:
+    """The assignments and augmented assignments whose target is an item of, or the attribute, a level of any object (`now`, `before`, `im_now`, `im_before`, `remainder`): the loop's applications of the write's act and of Rule3's step, and nothing new."""
+    found = 0
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign | ast.AugAssign | ast.AnnAssign):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            for target in targets:
+                for element in target.elts if isinstance(target, ast.Tuple) else [target]:
+                    held = (
+                        written_object(element.value) if isinstance(element, ast.Subscript) else element
+                    )
+                    found += isinstance(held, ast.Attribute) and held.attr in LEVELS
+    return found
 
 
 def shape_of(root: Path, path: Path) -> dict[str, int]:
@@ -106,6 +134,7 @@ def shape_of(root: Path, path: Path) -> dict[str, int]:
         "level_shift_sites": (
             0 if path.resolve() == (root / SHIFT_HOME).resolve() else len(LEVEL_SHIFT.findall(text))
         ),
+        "level_write_sites": level_write_sites(tree),
         "multi_line_docstrings": multi_line,
     }
 
@@ -266,7 +295,7 @@ def record(root: Path) -> dict[str, Any]:
 
 
 def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
-    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference, 400 lines, a site of Rule3's arithmetic or of a shift across Nodes."""
+    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference, 400 lines, a site of Rule3's arithmetic, of a shift across Nodes or of a write of a level onto the GameBoard."""
     found: list[str] = []
     if shape["multi_line_docstrings"]:
         found.append(f"{rel} has {shape['multi_line_docstrings']} docstring(s) beyond one line")
@@ -274,7 +303,7 @@ def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
         found.append(f"{rel} refers to {shape['record_references']} record(s) or decision(s)")
     if shape["lines"] >= NEW_FILE_LINES:
         found.append(f"{rel} has {shape['lines']} lines (the limit {NEW_FILE_LINES})")
-    for key in ("rule_arithmetic_sites", "level_shift_sites"):
+    for key in ("rule_arithmetic_sites", "level_shift_sites", "level_write_sites"):
         if shape[key]:
             found.append(f"{rel} has {shape[key]} {key.replace('_', ' ')}")
     return found
