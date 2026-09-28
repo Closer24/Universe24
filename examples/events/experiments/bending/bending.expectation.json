@@ -1,0 +1,54 @@
+{
+ "format": "world-expectation-v1",
+ "row": "ALGEBRA.md #the-rows-against-nature (b) THE BENDING on the board 240 x 128 x 1 (z periodic of extent 1, the [1, 1] rest Poisson's of the plane): the giver of 9 Nodes of 2000 at x = 14..16 on the axis y = 64 in a tube of 8000 (the beam along +x), the heavy body of 20 x 20 Nodes of 8000 at x = 60..79, y = 76..95 (its near face b = 12 Links from the axis), the screen of 4 x 128 Nodes of 2000 at x = 200..203 carrying 128 strips of one Node on its face (L = 130.5 Links from the body's centre); the centroid of the clicks over the strips shifted by 4 U_b L toward the body against the twin, U_b = c_b / (2 Gamma) the gravity level on the axis beside the body (the generator's rest, a GAMEBOARD number); the band one Node (the rounding's) plus the draw's over the stock 400; DRAFT until Cheshbon's blind line on #1325 (the world, the number under the gravity divisor of the owner's word, the band, the run's length) and until the plane's form of the row is confirmed; written before any run",
+ "DETECTOR": [],
+ "CENTROID": {
+  "strips": "screen_",
+  "twin": "bending_twin",
+  "shift": null,
+  "band": 1,
+  "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's, toward the body (-y is away, +y toward the body at y > the axis): 4 U_b L, Cheshbon's number under the divisor of the owner's word; None until his line"
+ },
+ "GAMEBOARD": [
+  {
+   "body": 0,
+   "interval": 4500,
+   "centre": [
+    15,
+    64,
+    0
+   ],
+   "band": 1,
+   "row": "the giver at rest within a Link"
+  },
+  {
+   "body": 2,
+   "interval": 4500,
+   "centre": [
+    201,
+    63,
+    0
+   ],
+   "band": 1,
+   "row": "the screen at rest within a Link"
+  },
+  {
+   "body": 3,
+   "interval": 4500,
+   "centre": [
+    69,
+    85,
+    0
+   ],
+   "band": 1,
+   "row": "the heavy body at rest within a Link"
+  }
+ ],
+ "GAMEBOARD_checks": [
+  "(i) `gravity_on_the_axis_*` at interval 0: the plane's rest beside the heavy body, falling with the distance from it, 0 in the twin; no transient after the start",
+  "(ii) `light_rows` every 100 intervals: one record leaves the tube along +x, passes the body without touching it (the beam's half-width at x = 60..79 below b), reaches the screen",
+  "(iii) `light_support`: the record's support never on the heavy body's Nodes (a beam that touches the body is reflected, not bent: the design's b is too small)",
+  "(iv) `giver_centre`, `tube_centre`, `screen_centre`, `heavy_centre`: within a Link over the run",
+  "then the DETECTOR reading in kind: the strips' centroid on the axis in the twin and toward the body in the world of record, one record at a time"
+ ]
+}

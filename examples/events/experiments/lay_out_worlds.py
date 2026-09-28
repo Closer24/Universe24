@@ -530,6 +530,116 @@ def two_slits(name: str, universe: str, wavelength: int, wall: int, stock: int) 
     write("two_slits", name, document, expectation)
 
 
+def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> None:
+    """The bending (b): a beam from a giver in a tube along +x past a heavy body at the side of the beam, its near face `gap` Links from the beam's axis, and a screen L Links beyond the body's centre carrying one strip per Node across y (pixels); `heavy` None lays the twin world with no heavy body, the same beam and screen, so that the centroid's shift is the difference of two DETECTOR readings (tools/beam_centroid.py). The numbers are the draft's until Cheshbon's line replaces them; nothing here is run."""
+    axis, giver_x = 64, (14, 16)
+    giver_nodes = box(giver_x[0], giver_x[1], axis - 1, axis + 1, 0, 0)
+    tube = (
+        box(10, 13, axis - 1, axis + 1, 0, 0)
+        + box(10, 16, axis - 4, axis - 2, 0, 0)
+        + box(10, 16, axis + 2, axis + 4, 0, 0)
+    )
+    heavy_box = (60, 79, axis + gap, axis + gap + 19)  # x0, x1, y0, y1: the body's centre at x = 69.5
+    screen_x = 200
+    screen_nodes = box(screen_x, screen_x + 3, 0, 127, 0, 0)
+    measured = [
+        giver(giver_nodes, WINDOW, stock, weight=3),
+        body(tube, MIRROR),
+        body(screen_nodes, WINDOW),
+    ]
+    if heavy is not None:
+        measured.append(body(box(*heavy_box, 0, 0), heavy))
+    detectors = [{"name": f"screen_{y:03d}", "positions": [[screen_x, y, 0]]} for y in range(128)]
+    readings = [
+        reading("light_support", "support", 50, family="charge"),
+        reading("light_rows", "rows", 100, family="charge"),
+        reading("giver_centre", "centre", 500, body=0),
+        reading("tube_centre", "centre", 500, body=1),
+        reading("screen_centre", "centre", 500, body=2),
+        *[
+            reading(f"gravity_on_the_axis_{x}", "level", 500, family="gravity", node=[x, axis, 0])
+            for x in (40, 60, 70, 80, 120, 199)
+        ],
+    ]
+    if heavy is not None:
+        readings.append(reading("heavy_centre", "centre", 500, body=3))
+        readings.append(reading("heavy_momentum", "momentum", 500, body=3))
+    document = world(
+        [240, 128, 1],
+        {"x": "open", "y": "open", "z": "periodic"},
+        ticks,
+        measured,
+        detectors,
+        readings,
+        face_depth=8,
+    )
+    distance = screen_x - (heavy_box[0] + heavy_box[1]) / 2  # L: the body's centre to the screen's face
+    last = (ticks - 1) - (ticks - 1) % 500  # the last interval the centre readings (every 500) reach
+    expectation: dict[str, Any] = {
+        "format": "world-expectation-v1",
+        "row": (
+            f"ALGEBRA.md #the-rows-against-nature (b) THE BENDING on the board 240 x 128 x 1 (z periodic of extent 1, "
+            f"the [1, 1] rest Poisson's of the plane): the giver of 9 Nodes of {WINDOW} at x = 14..16 on the axis "
+            f"y = {axis} in a tube of {MIRROR} (the beam along +x), "
+            + (
+                f"the heavy body of 20 x 20 Nodes of {heavy} at x = {heavy_box[0]}..{heavy_box[1]}, "
+                f"y = {heavy_box[2]}..{heavy_box[3]} (its near face b = {gap} Links from the axis), "
+                if heavy is not None
+                else "no heavy body (the twin: the same beam and screen, the centroid's reference), "
+            )
+            + f"the screen of 4 x 128 Nodes of {WINDOW} at x = {screen_x}..{screen_x + 3} carrying 128 strips of one "
+            f"Node on its face (L = {distance:.1f} Links from the body's centre); the centroid of the clicks over the "
+            f"strips shifted by 4 U_b L toward the body against the twin, U_b = c_b / (2 Gamma) the gravity level on "
+            f"the axis beside the body (the generator's rest, a GAMEBOARD number); the band one Node (the rounding's) "
+            f"plus the draw's over the stock {stock}; DRAFT until Cheshbon's blind line on #1325 (the world, the "
+            f"number under the gravity divisor of the owner's word, the band, the run's length) and until the plane's "
+            f"form of the row is confirmed; written before any run"
+        ),
+        "DETECTOR": [],
+        "CENTROID": {
+            "strips": "screen_",
+            "twin": "bending_twin",
+            "shift": None,
+            "band": 1,
+            "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's, toward the body (-y is away, +y toward the body at y > the axis): 4 U_b L, Cheshbon's number under the divisor of the owner's word; None until his line",
+        },
+        "GAMEBOARD": [
+            {
+                "body": 0,
+                "interval": last,
+                "centre": [15, axis, 0],
+                "band": 1,
+                "row": "the giver at rest within a Link",
+            },
+            {
+                "body": 2,
+                "interval": last,
+                "centre": [screen_x + 1, 63, 0],
+                "band": 1,
+                "row": "the screen at rest within a Link",
+            },
+        ],
+        "GAMEBOARD_checks": [
+            "(i) `gravity_on_the_axis_*` at interval 0: the plane's rest beside the heavy body, falling with the distance from it, 0 in the twin; no transient after the start",
+            "(ii) `light_rows` every 100 intervals: one record leaves the tube along +x, passes the body without touching it (the beam's half-width at x = 60..79 below b), reaches the screen",
+            "(iii) `light_support`: the record's support never on the heavy body's Nodes (a beam that touches the body is reflected, not bent: the design's b is too small)",
+            "(iv) `giver_centre`, `tube_centre`, `screen_centre`, `heavy_centre`: within a Link over the run",
+            "then the DETECTOR reading in kind: the strips' centroid on the axis in the twin and toward the body in the world of record, one record at a time",
+        ],
+    }
+    if heavy is not None:
+        expectation["GAMEBOARD"].append(
+            {
+                "body": 3,
+                "interval": last,
+                "centre": [69, axis + gap + 9, 0],
+                "band": 1,
+                "row": "the heavy body at rest within a Link",
+            }
+        )
+    write("bending", name, document, expectation)
+
+
 def universe_of_record() -> None:
     """The universe file of record beside the worlds: the shipped rows with `divisor` inside every held row (the hold's write as a sum, the owner's word; the frame's `held` card takes the key since #1312, a key at the family's top level is refused); the numbers are the approvals'."""
     document = json.loads((ROOT / SHARED_UNIVERSE).read_text(encoding="utf-8"))
@@ -565,6 +675,9 @@ def main() -> None:
         400,
     )
     two_slits("two_slits_lambda_4", UNIVERSE, 4, MIRROR, 400)
+    (HERE / "bending").mkdir(exist_ok=True)
+    bending("bending", MIRROR, 12, 5000, 400)
+    bending("bending_twin", None, 12, 5000, 400)
 
 
 if __name__ == "__main__":

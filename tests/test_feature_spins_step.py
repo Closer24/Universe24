@@ -62,9 +62,7 @@ def planted(simulation: DetectorLawSimulation, parts, block) -> tuple[int, int]:
 
 
 def test_the_loop_turns_the_spin_by_the_curl_at_the_bodys_node_and_inverts_exactly():
-    """S = (0, 0, 5) at rest; gravity's z component planted at +A at the Node + e_y and -A at - e_y (the curl's
-    x component 2 A): after one interval Omega_x = (curl V)_x div (2 x 4) at the row's weight 1 / 4, (Omega x S)_y =
-    -Omega_x S_z, S_y steps by (2 (Omega x S)_y + carry) div (W Gamma) from S_0; the inverse restores S and the carries."""
+    """S = (0, 0, 5) at rest; gravity's z component planted at +A at the Node + e_y and -A at - e_y (the curl's x component 2 A): after one interval Omega_x = (curl V)_x div (2 x 4) at the row's weight 1 / 4, (Omega x S)_y = -Omega_x S_z, S_y steps by (2 (Omega x S)_y + carry) div (W Gamma) from S_0; the inverse restores S and the carries."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(parts_world(spin=[0, 0, 5], side=1)))
     block = simulation.blocks[0]
     assert simulation._window_centre(block) == (3, 2, 2)
@@ -84,9 +82,7 @@ def test_the_loop_turns_the_spin_by_the_curl_at_the_bodys_node_and_inverts_exact
 
 
 def test_the_torque_turns_the_spin_by_the_moment_and_the_charge_curl_at_the_reads_weight_alone():
-    """ALGEBRA.md #the-primitives: the torque is mu x B_q at the read's weight alone (the moment carries the charge): a
-    body of charge 0 with the moment (0, 1, 0) and the spin 0, the charge's z part planted at +A at + e_y and -A at
-    - e_y, steps its spin's z by 2 (mu x B_q)_z div (W Gamma), B_q,x = curl_x div 2 (Q = 0 is no factor); inverted."""
+    """ALGEBRA.md #the-primitives: the torque is mu x B_q at the read's weight alone (the moment carries the charge): a body of charge 0 with the moment (0, 1, 0) and the spin 0, the charge's z part planted at +A at + e_y and -A at - e_y, steps its spin's z by 2 (mu x B_q)_z div (W Gamma), B_q,x = curl_x div 2 (Q = 0 is no factor); inverted."""
     document = parts_world(spin=[0, 0, 0], moment=[0, 1, 0], side=1)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.blocks[0]
@@ -102,8 +98,7 @@ def test_the_torque_turns_the_spin_by_the_moment_and_the_charge_curl_at_the_read
 
 
 def test_the_curl_and_the_gradient_are_the_read_acts_on_the_six_neighbours():
-    """(curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z) and cyclic, a missing neighbour 0; the
-    gradient ahead minus behind per axis, 0 on an axis with a neighbour missing."""
+    """(curl V)_x = V_z(+y) - V_z(-y) - V_y(+z) + V_y(-z) and cyclic, a missing neighbour 0; the gradient ahead minus behind per axis, 0 on an axis with a neighbour missing."""
     vector = (ZERO, (0, 0, 0, 0, 5, -7), (0, 0, 3, -11, 0, 0))
     assert curl(vector) == (3 + 11 - 5 - 7, 0, 0)
     assert curl((NONE, (None, None, None, None, 5, None), NONE)) == (-5, 0, 0)
@@ -113,9 +108,7 @@ def test_the_curl_and_the_gradient_are_the_read_acts_on_the_six_neighbours():
 
 
 def test_the_inverse_undoes_the_advance_exactly():
-    """On synthetic integers an advance then an inverse returns the spin, the spin before and the
-    carries (the state before the advance); the omega, torque and steps of the inverse are the
-    advance's, so the inverse subtracts what the step added."""
+    """On synthetic integers an advance then an inverse returns the spin, the spin before and the carries (the state before the advance); the omega, torque and steps of the inverse are the advance's, so the inverse subtracts what the step added."""
     term = SpinStepTerm((0, 0, 1), GAMMA)
     reads = (
         SpinRead(
