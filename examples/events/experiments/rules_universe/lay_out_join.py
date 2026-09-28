@@ -97,6 +97,11 @@ HIERARCHY = {  # THE HIERARCHY IS RECURSIVE (Cheshbon 16:35 Israel time, the Clo
         },
     },
 }
+STEPPING_GAMMA = {  # GAMMA IS NOT CONSTANT (the owner's word of 15:44 Israel time; Cheshbon 15:50 and 17:25): under node_clock [Gamma_0, 6] the edge 0.2255 Gamma_t rises by 1.353 quanta per interval, so a pixel that does not accumulate dissolves after (c / 0.2255 - Gamma_0) / 6 intervals; at a constant Gamma never. The blind number of the parting world, where no click passes: per engine and Gamma the smaller's count, the node_clock pair and the interval of its dissolution with its band; it enters the expectation under its name before the file takes the pair (Nature24's loader line)
+    "term": {
+        6_000: {"count": 1_500, "node_clock": [6_000, 6], "dissolution_interval": 109, "band": 15},
+    },
+}
 RECORD_RATIO_BAND = (
     0.15  # the band on the clocks' ratio deep over small (Cheshbon 15:43: 1.2, 1.05 to 1.35)
 )
@@ -126,6 +131,9 @@ class Layout:
         self.horizon = self.gamma // 2
         self.distances = DISTANCES[self.gamma]
         self.dissolution = DISSOLUTION[self.gamma]
+        self.stepping = STEPPING_GAMMA.get(engine, {}).get(
+            self.gamma
+        )  # the rising Gamma's blind number where Cheshbon gives it
         self.hierarchy = HIERARCHY.get(engine, {}).get(
             self.gamma
         )  # the cluster's breathing where Cheshbon's number is given
@@ -223,6 +231,30 @@ def record_expectation(layout: Layout) -> dict[str, Any] | None:
             round(ratio + RECORD_RATIO_BAND, 2),
         ],
         "band": "one quantum on every count, 10 to 15 percent; the period to one interval",
+    }
+
+
+def stepping_expectation(layout: Layout, parts: bool) -> dict[str, Any]:
+    """GAMMA IS NOT CONSTANT, the blind number of the parting world (Cheshbon 17:25 Israel time): with the universe file's node_clock the pair [Gamma_0, 6] the smaller pixel, which no click reaches, dissolves as the edge rises, at the interval given with its band; at a constant Gamma never. Nothing where the table is not given or the world is not the parting."""
+    table = layout.stepping
+    if table is None or not parts or int(table["count"]) != layout.small:
+        return {}
+    return {
+        "stepping_gamma": {
+            "name": "GAMMA IS NOT CONSTANT",
+            "row": (
+                f"with node_clock {table['node_clock']} the edge 0.2255 Gamma_t rises by about one quantum every interval and the smaller pixel ({layout.small:,}), which no click reaches, "
+                f"dissolves at about interval {table['dissolution_interval']} ({table['dissolution_interval'] - table['band']} to {table['dissolution_interval'] + table['band']}); "
+                "at a constant Gamma it never dissolves: the one reading that tells a rising Gamma from a constant one (Cheshbon 17:25); the file takes the pair by Nature24's loader line"
+            ),
+            "node_clock": list(table["node_clock"]),
+            "dissolution_interval_of_the_smaller": [
+                table["dissolution_interval"] - table["band"],
+                table["dissolution_interval"],
+                table["dissolution_interval"] + table["band"],
+            ],
+            "at_constant_gamma": "never",
+        }
     }
 
 
@@ -326,6 +358,7 @@ def expectation(layout: Layout, name: str, distance: int) -> dict[str, Any]:
             if parts
             else "a run of clicks from the smaller to the deeper until the smaller's record ends",
             "records_at_the_end": 2 if parts else 1,
+            **stepping_expectation(layout, parts),
         },
         "GAMEBOARD": [
             {

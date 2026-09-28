@@ -35,7 +35,21 @@
   "dissolution_intervals": null,
   "record": null,
   "clicks_expected": "no click: the bodies stand apart beyond the reach",
-  "records_at_the_end": 2
+  "records_at_the_end": 2,
+  "stepping_gamma": {
+   "name": "GAMMA IS NOT CONSTANT",
+   "row": "with node_clock [6000, 6] the edge 0.2255 Gamma_t rises by about one quantum every interval and the smaller pixel (1,500), which no click reaches, dissolves at about interval 109 (94 to 124); at a constant Gamma it never dissolves: the one reading that tells a rising Gamma from a constant one (Cheshbon 17:25); the file takes the pair by Nature24's loader line",
+   "node_clock": [
+    6000,
+    6
+   ],
+   "dissolution_interval_of_the_smaller": [
+    94,
+    109,
+    124
+   ],
+   "at_constant_gamma": "never"
+  }
  },
  "GAMEBOARD": [
   {
