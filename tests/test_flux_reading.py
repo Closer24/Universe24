@@ -50,8 +50,7 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
     """(a) on a periodic chain of 60, five intervals, random rows and remainders."""
     for family, (num, den) in ((0, (1, 1)), (1, (800, 809))):
         simulation = chain_world(None, 60, PERIODIC)
-        matrix = reads(simulation, family, 60)
-        rng = np.random.default_rng(3)
+        matrix, rng = reads(simulation, family, 60), np.random.default_rng(3)
         now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
         before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
         remainder = rng.integers(0, 3 * den, size=(60, 1, 1), dtype=np.int64)
@@ -107,8 +106,7 @@ def test_the_local_flux_identity_is_exact_on_the_rules_integers():
 def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
     """(b) a Gaussian packet of 40 Links at k = 0.3024 on light's open chain of 400, read at the Node 200 over 600 intervals: the one-way inward flux 1.0017 of I (the backward part of the planted packet, 1.35 percent, returns through the -x face, no Node beyond the board, and passes the Node too; the excess the lattice's counter-flow on the passage; before the take retired the sponge took that part and the reading was 0.9865), the signed sum 7 x 10^4 against I 5.9 x 10^11 (COMPUTATION on the rule's integers: a GameBoard reading of the record's two levels, a diagnostic, not a click)."""
     simulation = chain_world(None, 400, {"x": "open", "y": "periodic", "z": "periodic"})
-    matrix = reads(simulation, 0, 400)
-    k = 0.3024
+    matrix, k = reads(simulation, 0, 400), 0.3024
     omega = math.acos((math.cos(k) + 2) / 3)  # the chain's band at light's pair
     x = np.arange(400)
     envelope = np.exp(-(((x - 60) / 14.0) ** 2))
@@ -128,10 +126,8 @@ def test_a_packets_one_way_inward_flux_into_one_cell_is_its_conserved_form():
             )
         return total
 
-    start = form(live.now, live.before)
-    node = 200
-    one_way = Fraction(0)
-    signed = Fraction(0)
+    start, node = form(live.now, live.before), 200
+    one_way, signed = Fraction(0), Fraction(0)
     for _ in range(600):
         a_now, a_before = live.now.copy(), live.before.copy()
         simulation._advance(live)
@@ -208,8 +204,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
         now[25:] = 0
         before[25:] = 0  # nothing at the far set's Node 30 nor beside it
         live = planted(simulation, family, now, before, np.zeros((40, 1, 1), dtype=np.int64))
-        wall = simulation.kind_wall(family)
-        expected = Fraction(0)
+        wall, expected = simulation.kind_wall(family), Fraction(0)
         for i in range(40):
             num = int(simulation.kind_num[family][i, 0, 0])
             den = int(simulation.kind_den[family][i, 0, 0])
@@ -224,10 +219,8 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             expected += Fraction(wall_i * (a * a + b * b) - self_i * a * b, 3 * read_i)
             expected -= Fraction(1, 3) * a * read
         assert Fraction(*simulation.conserved_form(live)) == 3 * wall * expected
-        pair = simulation.detector_names.index("pair")
-        far = simulation.detector_names.index("far")
-        offers = simulation.detector_inflow_tally(live)
-        inward = Fraction(0)
+        pair, far = simulation.detector_names.index("pair"), simulation.detector_names.index("far")
+        offers, inward = simulation.detector_inflow_tally(live), Fraction(0)
         for i, j in ((5, 4), (7, 8)):
             g = Fraction(
                 int(now[i, 0, 0]) * int(before[j, 0, 0]) - int(before[i, 0, 0]) * int(now[j, 0, 0])
@@ -246,8 +239,7 @@ def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_
         ("the detector-law layer", layer_world(), 60),
     ):
         world = parse_nature_beam_world(document)
-        simulation = DetectorLawSimulation(world)
-        checked = 0
+        simulation, checked = DetectorLawSimulation(world), 0
         for _ in range(intervals):
             simulation.step()
             for live in simulation.records.values():

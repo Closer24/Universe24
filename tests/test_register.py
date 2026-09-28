@@ -162,11 +162,8 @@ def test_a_term_naming_an_unknown_or_unbuilt_primitive_is_refused_by_name():
             "the hold", "(iv)", ("a body's content M_k",), ("a family's level at a Node",), noop, ""
         )
     )
-    register.add(
-        Declaration(
-            "the source", "(iv)", ("the record's form",), ("a family's level at a Node",), None, ""
-        )
-    )
+    level = ("a family's level at a Node",)
+    register.add(Declaration("the source", "(iv)", ("the record's form",), level, None, ""))
     register.check_terms([("universe.families[0].held", "the hold")])
     with pytest.raises(ValueError, match="names the primitive 'the well', which the register lacks"):
         register.check_terms([("universe.families[0].well", "the well")])
