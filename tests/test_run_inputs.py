@@ -27,8 +27,7 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
     chain = chain_world(stock=2)
     chain["ticks"] = 250
     chain["stamp"] = input_stamp(chain)  # the stamp over the whole file (item 28)
-    inputs = tmp_path / "inputs"
-    inputs.mkdir()
+    (inputs := tmp_path / "inputs").mkdir()
     a = write(inputs, "emitter_small", emitter)
     b = write(inputs, "chain_small", chain)
     together = tmp_path / "together"
@@ -51,19 +50,16 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
 
 
 def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path: Path):
-    """An input whose body lacks a key of the frame (its momentum) is REFUSED by name, its output carrying the reason and no clicks, and the command's exit is 1; a lawful input with pins registered before the run reads MATCH within the band and MISS outside it, the value read written beside each: a pin on the count of clicks, a pin on the detector's first click (the least interval since the record's giving among its clicks) and a pin on the mean interval since the giving over its clicks (ALGEBRA.md #the-ladder; a detector with no click reads None and MISS)."""
+    """An input whose body lacks a key of the frame (its momentum) is REFUSED by name, its output carrying the reason and no clicks, and the command's exit is 1; a lawful input with pins registered before the run reads MATCH within the band and MISS outside it, the value read written beside each: a pin on the count of clicks, a pin on the detector's first click (the least interval since the record's giving among its clicks) and a pin on the mean interval since the giving over its clicks (ALGEBRA.md #the-ladder; a detector with no click reads None and MISS); the GAMEBOARD row `reversible` runs 60 intervals forward and back across the first giving's open and reads MATCH (HIGHLIGHTS line 33; across a window's close with stock left, and from interval 160 on, the same world reads MISS today: the engine's findings, named in the row)."""
     (inputs := tmp_path / "inputs").mkdir()
     # THE MODE PIN (item 57): the pins are compared under the mode "pin" alone; a start file of that mode, named by its path relative to the repository's root
-    start = tmp_path / "start_pin.json"
-    start.write_text(json.dumps({"mode": "pin"}), encoding="utf-8")
+    (start := tmp_path / "start_pin.json").write_text(json.dumps({"mode": "pin"}), encoding="utf-8")
     relative = os.path.relpath(start, Path(__file__).resolve().parents[1])
-    bad = emitter_world(stock=2, ticks=200)
-    bad["engine"] = relative
+    bad = {**emitter_world(stock=2, ticks=200), "engine": relative}
     del bad["measured"][0]["momentum"]  # refused by name at the frame (the old residual check is gone)
     bad["stamp"] = input_stamp(bad)
     bad_path = write(inputs, "bad", bad)
-    good = emitter_world(stock=2, ticks=250)
-    good["engine"] = relative
+    good = {**emitter_world(stock=2, ticks=250), "engine": relative}
     good["readings"] = [{"name": "n", "kind": "momentum", "body": 0, "every": 50}]
     good["stamp"] = input_stamp(good)
     good_path, twin_path = write(inputs, "good", good), write(inputs, "twin", good)
@@ -74,6 +70,9 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     expectation["GAMEBOARD"] = [{"body": 0, "interval": 50, "momentum": [0, 0, 0], "band": 0}]
     expectation["GAMEBOARD"].append({"equivalent": "twin", "within": 0})
     expectation["GAMEBOARD"].append({"equivalent": "nowhere", "within": 1})
+    expectation["GAMEBOARD"].append(
+        {"reversible": 60}
+    )  # forward and back across the first giving's open
     good_path.with_suffix(".expectation.json").write_text(json.dumps(expectation), encoding="utf-8")
     good_pins = [
         {"detector": "screen", "count": 2, "band": 1},
@@ -93,11 +92,12 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     assert good["verdict"] == "LAWFUL" and (read := good["counts"]["screen"]) >= 0
     waits = [c["interval"] - c["giving"] for c in good["clicks"] if c["detector"] == "screen"]
     first, mean = min(waits), (2 * sum(waits) + len(waits)) // (2 * len(waits))
-    assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 12
-    assert [pin["verdict"] for pin in good["pins"][8:]] == ["MATCH", "MISS"] * 2
-    assert good["pins"][10]["read"] == [0, 0] and good["pins"][11]["read"] is None
+    assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 13
+    assert [pin["verdict"] for pin in good["pins"][9:]] == ["MATCH", "MISS"] * 2
+    assert (good["pins"][11]["read"], good["pins"][12]["read"]) == ([0, 0], None)
     assert good["clicks"][0]["giver"] == 0 and good["clicks"][0]["taker"] == 1  # the screen's entry
-    assert good["pins"][8]["read"] == [1, 1] and good["pins"][9]["read"] is None
+    assert (good["pins"][9]["read"], good["pins"][10]["read"]) == ([1, 1], None)
+    assert (good["pins"][8]["kind"], good["pins"][8]["verdict"]) == ("reversible", "MATCH")
     momentum = [line for line in good["readings"] if line["name"] == "n"][0]["lines"][1]["momentum"]
     assert good["pins"][7]["read"] == momentum and good["pins"][7]["kind"] == "momentum"
     assert good["pins"][7]["verdict"] == ("MATCH" if momentum == [0, 0, 0] else "MISS")
