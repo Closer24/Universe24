@@ -8,7 +8,7 @@ import json
 import sys
 from dataclasses import dataclass
 from fractions import Fraction
-from math import acos, isqrt
+from math import acos, copysign, cos, isqrt
 from pathlib import Path
 from typing import Any
 
@@ -391,6 +391,13 @@ def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
     return int(nearest), denominator
 
 
+def proper_rotation(rotation: Fraction, triple: Triple, velocity: Fraction) -> Fraction:
+    """The packet's rotation at its centre, 2 cos(omega_b - k v): the phase the moving centre gains per interval, the rest rotation's angle less the phase k per Link (the triple's, signed by its sense) times the velocity v in Links per interval; the loader's proper pair of a moving body, the angles by the host's arc cosine as the twist's (ALGEBRA.md #the-generator (e), #the-velocity)."""
+    omega = acos(float(rotation) / 2)
+    phase = copysign(acos(triple[0] / triple[2]), triple[1])
+    return Fraction(2 * cos(omega - phase * float(velocity)))
+
+
 def two_levels(
     profile: np.ndarray, read: np.ndarray, self_coefficient: np.ndarray, wall: int, wrap: Wrap
 ) -> tuple[np.ndarray, np.ndarray]:
@@ -570,6 +577,8 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             except ValueError as refusal:
                 in_world = {"refused": str(refusal)}
                 rotation = mode.rotation
+            if momentum[axis]:
+                rotation = proper_rotation(rotation, moved.triple, moved.velocity)
             clock = clock_pair(rotation, mode.amplitude)
             moving = {
                 "axis": axis,
@@ -602,6 +611,24 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
     return {"rest": rests, "bodies": readings}
 
 
+def split_levels(
+    reading: dict[str, Any],
+) -> tuple[list[np.ndarray | None], list[tuple[np.ndarray, np.ndarray] | None]]:
+    """The arrays taken out of the generator's reading before it is printed: each body's profile and, on a body with a momentum, its two levels (a resting body's levels are its profile, not written twice)."""
+    profiles: list[np.ndarray | None] = []
+    levels: list[tuple[np.ndarray, np.ndarray] | None] = []
+    for body in reading["bodies"]:
+        profiles.append(body.pop("profile", None))
+        body.pop("content", None)
+        moving = body.get("moving")
+        if moving is None:
+            levels.append(None)
+            continue
+        now, before = moving.pop("now"), moving.pop("before")
+        levels.append((now, before) if moving["momentum"] else None)
+    return profiles, levels
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, required=True, help="the world file in the law's form")
@@ -619,19 +646,25 @@ def main() -> None:
     reading["world_digest"] = input_digest(
         json.loads(document)
     )  # the one digest of a world, the loader's
-    profiles: list[np.ndarray | None] = []
-    for body in reading["bodies"]:
-        profiles.append(body.pop("profile", None))
-        body.pop("content", None)
-        if "moving" in body:
-            body["moving"].pop("now")
-            body["moving"].pop("before")
+    profiles, levels = split_levels(reading)
     print(json.dumps(reading))
     if args.out is not None:
-        for body, profile in zip(reading["bodies"], profiles, strict=True):
-            if profile is not None:
-                body["profile"] = profile.ravel().tolist()
-        args.out.write_text(json.dumps(reading))
+        args.out.write_text(json.dumps(mode_document(reading, profiles, levels)))
+
+
+def mode_document(
+    reading: dict[str, Any],
+    profiles: list[np.ndarray | None],
+    levels: list[tuple[np.ndarray, np.ndarray] | None],
+) -> dict[str, Any]:
+    """The mode file's document: the reading with every body's profile as a flat list and, on a moving body, its two levels `now` and `before` under `moving` (ALGEBRA.md #the-generator (e)), the loader's to read."""
+    for body, profile, pair in zip(reading["bodies"], profiles, levels, strict=True):
+        if profile is not None:
+            body["profile"] = profile.ravel().tolist()
+        if pair is not None:
+            body["moving"]["now"] = pair[0].ravel().tolist()
+            body["moving"]["before"] = pair[1].ravel().tolist()
+    return reading
 
 
 if __name__ == "__main__":
