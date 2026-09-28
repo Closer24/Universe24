@@ -22,8 +22,9 @@ def reversible_world(ticks: int = 400) -> dict:
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
-    positive = family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
-    document["universe"].insert(POSITIVE, positive)
+    document["universe"].insert(
+        POSITIVE, family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
+    )
     body = {"position": [55, 0, 0], "family": "positive", "amount": 1, "stocks": {}}
     document["measured"].append({**body, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]})
     seed_on_the_mode(document)
