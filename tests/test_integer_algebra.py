@@ -29,7 +29,6 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/after_step.py": "the acts after the step the engine hooks per record: the hand's check at a click, the lifetime's end, the polariser's turn and its set's share, the polariser bodies' terms; functions taking the engine, bound as its methods",
     "events/body_language.py": "the recoil written into the body's own record and told as one event line beside the click; integer turns and sums, no arithmetic of its own",
     "events/record_well.py": "the well of a body with a record: its record's one interval and its form laid after it, D_i div T by the source's act through the write's line; no arithmetic of its own beyond the count",
-    "events/count_once.py": "the count read once and the form over its period: the well summed over the period by Rule3's division act, the gate on a declared count by integer squares; no root",
     "events/one_node.py": "the bound body of one Node: derived from the files (one Node, a massive pair, the divisors 1) and its record made from its mode's two levels at its Node; no arithmetic",
     "events/inverse.py": "the inverse's returns: the interval's bookings at the detectors' Ports and the body's clock taken back; integer sums and differences, no arithmetic of its own",
     "events/momentum_reading.py": "the momentum as a reading of the record's current: the count's line's booking products summed in whole integers, the division act to the nearest unit",
