@@ -54,8 +54,7 @@ def test_the_emitter_chain_steps_the_same_with_the_boxes_and_without(monkeypatch
 def test_a_record_wrapping_a_periodic_board_steps_and_returns_the_same(monkeypatch) -> None:
     document = block_world([14, 10, 6], PERIODIC, [800, 809], [], ticks=100)
     rng = np.random.default_rng(43)
-    now = np.zeros((14, 10, 6), dtype=np.int64)
-    before = np.zeros((14, 10, 6), dtype=np.int64)
+    now, before = np.zeros((14, 10, 6), dtype=np.int64), np.zeros((14, 10, 6), dtype=np.int64)
     now[11:14, 0:2, 4:6] = rng.integers(-UNIT, UNIT, size=(3, 2, 2))
     before[11:14, 0:2, 4:6] = rng.integers(-UNIT, UNIT, size=(3, 2, 2))
     boxed = DetectorLawSimulation(parse_nature_beam_world(document))

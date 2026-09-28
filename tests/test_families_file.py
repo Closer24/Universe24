@@ -81,14 +81,15 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
 
 
 def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_world_on_it():
-    """THE RULE'S OWN UNIVERSE (ALGEBRA.md; Cheshbon's table of 2026-09-28, 13:03 Israel, and his lines of 13:44 and 13:46): examples/events/planck.json holds Gamma = 12,000 (a multiple of 6), T = 1, the twist table at the unit 4 Gamma 2^16, and three rows of the rule's pairs in lowest terms, gravity [1, 1] at the divisor 1, charge [1, 1] at the divisor 400,000 (0.86 (Gamma / 2)^(3 / 2), derived from Gamma: one quantum per window), matter [2, 3]; the spin's step's row on gravity until the step leaves; nothing else. A world of three pixels (one Node each) on it loads with the ranks derived and THE SIGN IS THE BODY'S: the sign's source at a pixel's Node is its q times its count. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-1, 2] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name."""
+    """THE RULE'S OWN UNIVERSE (ALGEBRA.md; Cheshbon's table of 2026-09-28, 13:03 Israel, and his lines of 13:44 and 13:46): examples/events/planck.json holds Gamma = 12,000 (a multiple of 6), T = 1, the twist table at the unit 4 Gamma 2^16, and three rows of the rule's pairs written over Gamma (the band the reduced pair, the wall and the amplitude unit the pair's as written: the reduced [2, 3] puts the count's line beyond int64, the de Broglie Experimenter's finding of 13:58 Israel), gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at the divisor 400,000 (0.86 (Gamma / 2)^(3 / 2), derived from Gamma: one quantum per window), matter [8000, 12000]; the spin's step's row on gravity until the step leaves; nothing else. A world of three pixels (one Node each) on it loads with the ranks derived and THE SIGN IS THE BODY'S: the sign's source at a pixel's Node is its q times its count. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-6000, 12000] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name."""
     planck = "examples/events/planck.json"
     document = json.loads((ROOT / planck).read_text(encoding="utf-8"))
     table = document["integers"].pop("twist_table")
     units = dict(node_clock=12000, quantum_action=1, momentum_unit=64, most_steps=65536, width=63)
     assert document["integers"] == {**units, "most_families": 20, "least_residues": 500}
     assert (table["unit"], len(table["fine"]), len(table["coarse"])) == (4 * 12000 * 65536, 1024, 32768)
-    rows = [("gravity", [1, 1], 1), ("charge", [1, 1], 400000), ("matter", [2, 3], None)]
+    rows = [("gravity", [12000, 12000], 1), ("charge", [12000, 12000], 400000)]
+    rows.append(("matter", [8000, 12000], None))
     assert [
         (f["name"], f["pair"], f.get("held", {}).get("divisor")) for f in document["families"]
     ] == rows
@@ -98,23 +99,22 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     world |= {"universe": planck, "detectors": [{"name": "taker", "block": 2}]}
     n = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     at = ((10, 3000, 1), (20, 300, -1), (30, 3000, 0))
-    bodies = [
-        {"family": "matter", "nodes": [{"node": [x, 0, 0], "count": c}], "q": q, **n} for x, c, q in at
-    ]
+    node = lambda x, c: [{"node": [x, 0, 0], "count": c}]  # noqa: E731
+    bodies = [{"family": "matter", "nodes": node(x, c), "q": q, **n} for x, c, q in at]
     loaded = parse_nature_beam_world({**world, "measured": bodies})
     ranks = [("gravity", (1, 3, 6), "content"), ("charge", (1, 3), "sign"), ("matter", (1,), None)]
     assert [(f.name, f.parts, f.held) for f in loaded.families] == ranks
-    assert loaded.families[2].pair == (2, 3)
+    assert loaded.families[2].pair == (8000, 12000)  # as written: its wall sets the amplitude unit
     assert [entry.block.q for entry in loaded.measured if entry.block is not None] == [1, -1, 0]
     simulation = DetectorLawSimulation(loaded)
     signs = [simulation.node_sources(number, "sign") for number in range(3)]
     assert signs == [[((10, 0, 0), 3000)], [((20, 0, 0), -300)], [((30, 0, 0), 0)]]
     assert [simulation._body_charge(number) for number in range(3)] == [3000, -300, 0]
     inline = {**world, "measured": bodies, "node_clock": 12000, "momentum_unit": 64}
-    inline["twist_table"], third = table, {"name": "third", "pair": [-1, 2]}
+    inline["twist_table"], third = table, {"name": "third", "pair": [-6000, 12000]}
     inline["universe"] = [*document["families"], third]
-    assert parse_nature_beam_world(inline).families[3].pair == (-1, 2)
-    refusals = (([-2, 2], r"pair \[-2, 2\]: den from 1, and den > \|num\|"), ([1, 0], "den from 1"))
+    assert parse_nature_beam_world(inline).families[3].pair == (-6000, 12000)
+    refusals = (([-12000, 12000], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1"))
     for pair, match in refusals:
         refused({**inline, "universe": [*document["families"], {**third, "pair": pair}]}, match)
 
