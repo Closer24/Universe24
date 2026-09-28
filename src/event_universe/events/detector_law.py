@@ -36,23 +36,11 @@ from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.crystal import CrystalTerm
-from event_universe.features.giving import (
-    THE_OPEN,
-    GivingOwn,
-    GivingStart,
-    GivingTerm,
-    GivingWrites,
-)
+from event_universe.features.giving import THE_OPEN, GivingOwn, GivingStart, GivingTerm, GivingWrites
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
-from event_universe.features.recoil import (
-    TAKING,
-    RecoilOwn,
-    RecoilStart,
-    RecoilTerm,
-    RecoilWrites,
-)
+from event_universe.features.recoil import TAKING, RecoilOwn, RecoilStart, RecoilTerm, RecoilWrites
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
     KEYS,
@@ -1913,13 +1901,13 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         function = self.main_loop.function_of("the giving", "(ii)")
         return cast(GivingWrites, function(term, start, own))
 
-    def _body_levels(self, block: Block) -> np.ndarray:
-        """The body's rotation's level now at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
+    def _body_levels(self, block: Block, before: bool = False) -> np.ndarray:
+        """The body's rotation's level now (or before) at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
         if block.node_record is not None:
-            count = int(np.count_nonzero(block.mask))
-            return np.full(count, int(block.node_record.now), dtype=np.int64)
+            level = block.node_record.before if before else block.node_record.now
+            return np.full(int(np.count_nonzero(block.mask)), int(level), dtype=np.int64)
         assert block.own is not None
-        return np.asarray(block.own.now[block.mask], dtype=np.int64)
+        return np.asarray((block.own.before if before else block.own.now)[block.mask], dtype=np.int64)
 
     def body_outward_flux(self, live: LiveRecord, block: Block, tally: list[int] | None = None) -> int:
         """The outward flux through the body's outer Ports this interval, wall times (now_j before_i - before_j now_i) where positive over the Ports to Nodes outside the body (none beyond an open face, on a folded axis or along the record's own component), the second level added; with `tally` the flux per axis signed by the side."""
@@ -1950,7 +1938,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return total
 
     def _point_window_inverse(self, block: Block) -> None:
-        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write subtracted (an addition inverts), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
+        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write at both levels subtracted (an addition inverts), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
         live = self.records.get(block.window) if block.window is not None else None
         emitter = block.definition.emitter
         if live is None or emitter is None or emitter.weight is None or live.window <= 0:
@@ -1959,6 +1947,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         live.outward -= self.body_outward_flux(live, block, undone)
         live.outward_tally = [kept - gone for kept, gone in zip(live.outward_tally, undone, strict=True)]
         live.now[block.mask] -= emitter.weight * self._body_levels(block)
+        live.before[block.mask] -= emitter.weight * self._body_levels(block, before=True)
         live.window -= 1
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:

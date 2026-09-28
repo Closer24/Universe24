@@ -157,7 +157,7 @@ def emitter_of(block: Block) -> EmitterDefinition | None:
 
 
 def window_write(loop: DetectorLawSimulation, live: LiveRecord) -> None:
-    """One interval of an open window right after the record's own step (out of the loop's module, the loop's method of the same duty): the body's rotation written into the given row at the body's Nodes (the second row of a pair record at its second level, the quarter turn, the window's count and norm the first row's), the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in; the emitter the crystal's giving definition on a crystal body."""
+    """One interval of an open window right after the record's own step (out of the loop's module, the loop's method of the same duty): the body's rotation written into the given row at the body's Nodes at both levels, now from the body's now and before from its before (a rotation is two levels, ALGEBRA.md #the-generator (d); one level alone is a kick the two-level rule doubles; the second row of a pair record at its second level, the quarter turn, the window's count and norm the first row's), the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in; the emitter the crystal's giving definition on a crystal body."""
     block = loop.block_by_number.get(live.emitter) if live.emitter is not None else None
     ledger = live.pair_record
     if block is None or block.window != (live.identity if ledger is None else ledger.rows[0]):
@@ -175,6 +175,7 @@ def window_write(loop: DetectorLawSimulation, live: LiveRecord) -> None:
         return
     if written.level is not None:
         live.now[block.mask] += written.level
+        live.before[block.mask] += emitter.weight * loop._body_levels(block, before=True)
     flux_tally = [0, 0, 0]
     flux = loop.body_outward_flux(live, block, flux_tally)
     closing = loop._giving_act(
