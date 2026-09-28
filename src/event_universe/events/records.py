@@ -119,6 +119,9 @@ class LiveRecord:
     window_open: bool = False
     window: int = 0
     giving_remainders: tuple[np.ndarray, np.ndarray] | None = None
+    # THE WINDOW WRITES BOTH LEVELS (Cheshbon's line of 2026-09-28, 13:16 Israel): the write's step from the levels found at the giver's Nodes, one pair per written interval, taken back at the inverse; THE CLOSE RETURNS THE CURRENT: the zero mode's velocity B taken at the close, its support and the giver's carries before it, undone across the click by hand (tools/reversible)
+    giving_books: list[tuple[np.ndarray, np.ndarray]] = field(default_factory=list)
+    zero_mode: tuple[int, np.ndarray, tuple[int, int]] | None = None
     # THE FAMILY GENERICITY (the record; item 51): a body's own standing
     # record (the lattice body's, held by the law at the body and read by no
     # detector, its inverse with the body's), marked on the record and not
@@ -274,6 +277,11 @@ class Block:
     # THE POINT EMITTER (item 50): the identity of the given record whose
     # window is open at this body, None when none is
     window: int | None = None
+    close_carry: tuple[int, int] = (
+        0,
+        0,
+    )  # the close's two carried remainders (the weights', the velocity's)
+    books_identity: int = 0  # the hold's books as the interval's giving stage saw them; other books at the inverse are the host's
     new_cycle: bool = False
     # the interval the current cycle began and the last cycle's length (the
     # emitted record's period for its grace, the block's grace for its emitted records)

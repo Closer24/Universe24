@@ -32,7 +32,8 @@ def a_body(nodes: range | list[int], count: int, **keys: object) -> dict:
     """A body of matter in the law's form on the chain: its Nodes with one count, at rest, the phase's denominator of the worlds of record, and its keys."""
     at = [{"node": [x, 0, 0], "count": count} for x in nodes]
     rest = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0], "phase_denominator": 1024}
-    return {"family": "matter", "nodes": at, **rest, **keys}
+    signed = {"q": 1} if "emitter" in keys or "crystal" in keys else {}  # a giver's sign
+    return {"family": "matter", "nodes": at, **rest, **signed, **keys}
 
 
 def bell_world(right: dict | None = None) -> dict:

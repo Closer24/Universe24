@@ -18,6 +18,7 @@ from tests.worlds import (
     emitter_rung,
     family_entry,
     mode_profile,
+    one_quantum_per_window,
     reads,
     receiver_cube,
     seed_on_the_mode,
@@ -149,7 +150,9 @@ def block_world(
             "side": block["side"],
             "pair": block["pair"],
             # the body's numbers (ALGEBRA.md #the-interval; commit 2), no loader default
-            "q": block.get("q", 0),
+            "q": block.get(
+                "q", 1 if "emitter" in block else 0
+            ),  # a giver signed: a neutral body gives no light
             "spin": block.get("spin", [0, 0, 0]),
             "spin_before": block.get("spin", [0, 0, 0]),
             "moment": block.get("moment", [0, 0, 0]),
@@ -216,7 +219,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
             "extents": [32, 1, 1],
-            "q": 0,
+            "q": 1,  # the giver's sign: a neutral body gives no light
             "spin": [0, 0, 0],
             "spin_before": [0, 0, 0],
             "twist": 0,
@@ -292,6 +295,9 @@ def seed_source(document: dict, number: int) -> None:
         emitter_rung(document, number)  # the window's rung
     # the input stamp: the law and the hash of the integers
     document["stamp"] = input_stamp(document)
+    one_quantum_per_window(
+        document
+    )  # the seeded giver's T at one quantum per window (the ruling of 14:46 Israel)
 
 
 def source_family() -> dict:
@@ -351,7 +357,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
             "momentum": [0, 0, 0],
             "momentum_before": [0, 0, 0],
             "extents": [1, 1, 1],
-            "q": 0,
+            "q": 1,  # the giver's sign: a neutral body gives no light
             "spin": [0, 0, 0],
             "spin_before": [0, 0, 0],
             "twist": 0,
@@ -365,7 +371,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
     document["detectors"] = []
     seed_on_the_mode(document)
     document["measured"][0]["emitter"]["weight"] = weight
-    document["stamp"] = input_stamp(document)
+    one_quantum_per_window(document)  # T at the weight set after the seeding (the stamp renewed there)
     return document
 
 
@@ -387,7 +393,7 @@ def emitter(
         "momentum": [momentum, 0, 0],
         "momentum_before": [momentum, 0, 0],
         "extents": [32, 1, 1],
-        "q": 0,
+        "q": 1,  # the giver's sign: a neutral body gives no light
         "spin": [0, 0, 0],
         "spin_before": [0, 0, 0],
         "twist": 0,

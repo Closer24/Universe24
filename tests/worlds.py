@@ -8,6 +8,8 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
+
 from event_universe.core.rule3 import coefficients
 from event_universe.core.step import STEP_FILE
 from event_universe.world_files import input_stamp
@@ -183,7 +185,7 @@ def emitter_body(
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
         "extents": extents,
-        "q": 0,
+        "q": 1,
         "spin": [0, 0, 0],
         "spin_before": [0, 0, 0],
         "twist": 0,
@@ -275,7 +277,7 @@ def _emitter_world(
                 "momentum": [0, 0, 0],
                 "momentum_before": [0, 0, 0],
                 "extents": [32, 1, 1],
-                "q": 0,
+                "q": 1,
                 "spin": [0, 0, 0],
                 "spin_before": [0, 0, 0],
                 "twist": 0,
@@ -335,8 +337,13 @@ def _seed_key(document: dict) -> str:
         bare.pop(key, None)
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
         entry.pop("clock", None)
+    if isinstance(bare.get("universe"), str):
+        bare["universe"] = (
+            "examples/events/universe.json"  # the fixtures' own universe copy (E_s of the write) is no part of the key
+        )
     for body in bare.get("measured", ()):
         if isinstance(body.get("emitter"), dict):
+            body["q"] = 0  # the giver's sign, a key the recorded seeding never read (recorded at 0)
             for key in ("weight", "norm", "norm_denominator"):
                 body["emitter"].pop(key, None)
     return input_digest(bare)
@@ -357,6 +364,35 @@ def _apply(document: dict, written: dict) -> None:
     )  # over the document as it stands (the recorded stamp's document)
 
 
+def one_quantum_per_window(document: dict) -> None:
+    """THE FIXTURES' T (the Closer's ruling of 2026-09-28, 14:46 Israel, on Cheshbon's formula of 14:12, confirmed with the faces 15:04): a seeded giver's quantum action T = floor(0.745 (g M a_body)^2 N_face), the outward flux of one interval at the write's amplitude with E_s at its floor 1 through the giver's N_face outer Ports, so its window closes in one interval; a_body the body's own record's level as the seeding loads it, M its count at the Node as the write reads it (the quanta it holds), g the emitter's weight; written as the emitter's norm over 1 and stamped (T is the fixture's, not the engine's)."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+    from event_universe.world_files import input_stamp, parse_nature_beam_world
+
+    givers = [body for body in document["measured"] if isinstance(body.get("emitter"), dict)]
+    if not givers or any("norm" not in body["emitter"] for body in givers):
+        return  # the rung not yet recorded on every giver: the seeding's later act calls again
+    document["stamp"] = input_stamp(
+        document
+    )  # over the document as it stands (a key set after the seeding)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(json.dumps(document))))
+    for body in givers:
+        block = simulation.blocks[document["measured"].index(body)]
+        level = int(np.abs(block.own.now).max()) if block.own is not None else 0
+        counts = [count for _node, count in simulation.node_sources(block.number, "content")]
+        # the write's M: the count at the Node, or the old form's quanta after the open lowers the given family's by one
+        quanta = max(counts) if counts else simulation.body_source(block.number, "content") - 1
+        weight = int(body["emitter"].get("weight", 1)) * quanta * level
+        given = [family.name for family in simulation.families].index(body["emitter"]["family"])
+        faces = sum(
+            int(np.count_nonzero(ports))
+            for ports in simulation.ports.outward(block.mask, simulation.kind_wrap[given])
+        )
+        body["emitter"]["norm"] = (745 * weight * weight * faces) // 1000
+        body["emitter"]["norm_denominator"] = 1
+    document["stamp"] = input_stamp(document)
+
+
 def seed_on_the_mode(document: dict) -> None:
     """The fixture's bodies seeded on their modes as the retired generator wrote them once (tests/seeds.json): a fixture the table does not hold is refused by name (a new fixture is seeded by the mathematician's tool)."""
     key = _seed_key(document)
@@ -366,6 +402,7 @@ def seed_on_the_mode(document: dict) -> None:
             f"no recorded seeding for this fixture ({key[:12]}): tests/seeds.json holds the fixtures as recorded"
         )
     _apply(document, table[key])
+    one_quantum_per_window(document)  # the built fixtures' T on the recorded rung
 
 
 def emitter_rung(document: dict, number: int) -> None:

@@ -36,14 +36,14 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         live = simulation.records.get(first["record"])
         if live is not None:
             assert live.family == 0 and not live.window_open and live.window == first["window"]
-    ratio = windows[1] / windows[4]
-    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world: g = 1 1124 intervals, g = 4 64, the ratio 17.6 beside g^2 = 16 (the outward norm as the square of the written amplitude); the band is a diagnostic check that the weight enters the window, not a measurement pinned against nature; it admits the build-up
-    assert 8 < ratio < 64, windows
+    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world: the fixture's T = floor(0.745 (g M a_body)^2 N_face) scales as the square of the written amplitude, as the outward flux does, so the window's length is the body's rotation's and not the weight's: the same window at g = 1 and g = 4 (16 intervals here, the rotor's sine per interval below the threshold pixel's 0.745, the finding of 15:10 Israel)
+    assert windows[1] == windows[4] >= 1, windows
 
 
 def test_the_window_writes_the_bodys_rotation_at_both_levels():
     """The giving's write is the body's rotation, two levels (ALGEBRA.md #the-primitives the giving's row; #the-generator (d)): at the first write of a window the given record's `now` at the body's Nodes is the weight times the body's level now and its `before` the weight times the body's level before, so the record starts as the body's mode turning and not as a kick of one level; the inverse takes both back (the bit-for-bit test below)."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(point_world(4, ticks=400)))
+    document = point_world(4, ticks=400)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block, mask = simulation.blocks[0], simulation.blocks[0].mask
     while block.window is None:
         simulation.step()
@@ -51,7 +51,12 @@ def test_the_window_writes_the_bodys_rotation_at_both_levels():
     live, now = simulation.records[block.window], simulation._body_levels(block)  # type: ignore[index]
     before = simulation._body_levels(block, before=True)
     assert live.window == 1 and not np.array_equal(now, before) and np.abs(before).max() > 0
-    assert np.array_equal(live.now[mask], 4 * now) and np.array_equal(live.before[mask], 4 * before)
+    # the write g q M(n) a_body over E_s (Cheshbon's line of 13:16 Israel): M the quanta the body holds at its Node after the open lowered the given family's by one, E_s 1 where the given family holds nothing
+    body = document["measured"][0]
+    quanta = simulation.body_source(0, "content")
+    assert quanta == body["amount"] + body["stocks"]["light"] - 1 and body["q"] == 1
+    assert np.array_equal(live.now[mask], 4 * quanta * now)
+    assert np.array_equal(live.before[mask], 4 * quanta * before)
 
 
 def test_the_window_inverts_bit_for_bit():
@@ -65,18 +70,18 @@ def test_the_window_inverts_bit_for_bit():
             opened = simulation.tick
             break
     assert opened is not None
-    for _ in range(20):
-        simulation.step()
     live = simulation.records[simulation.blocks[0].window]  # type: ignore[index]
-    assert live.window_open and live.window >= 20 and int(np.abs(live.now).max()) > 0
+    for _ in range(6):  # inside the window: it closes at the fixture's T (16 intervals on this world)
+        simulation.step()
+    assert live.window_open and live.window >= 6 and int(np.abs(live.now).max()) > 0
     state = (live.now.copy(), live.before.copy(), live.remainder.copy(), live.window, live.outward)
     record = simulation.blocks[0].own
     assert record is not None
     record_state = (record.now.copy(), record.before.copy(), record.remainder.copy())
-    for _ in range(40):
+    for _ in range(6):
         simulation.step()
-    assert live.window == state[3] + 40
-    for _ in range(40):
+    assert live.window_open and live.window == state[3] + 6
+    for _ in range(6):
         simulation.step_inverse()
     assert np.array_equal(live.now, state[0]) and np.array_equal(live.before, state[1])
     assert np.array_equal(live.remainder, state[2])

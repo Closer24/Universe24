@@ -56,6 +56,8 @@ def ledger_of(simulation: DetectorLawSimulation) -> dict[str, Any]:
             (list(b.momentum), list(b.momentum_before), dict(b.hold_value), dict(b.hold_carry))
             for b in simulation.blocks
         ],
+        "counts": [None if b.counts is None else b.counts.copy() for b in simulation.blocks],
+        "wells": [(copy.deepcopy(b.well), copy.deepcopy(b.well_remainder)) for b in simulation.blocks],
     }
 
 
@@ -65,7 +67,15 @@ def restore_ledger(simulation: DetectorLawSimulation, ledger: dict[str, Any]) ->
     for block, (momentum, before, value, carry) in zip(simulation.blocks, ledger["blocks"], strict=True):
         block.momentum, block.momentum_before = list(momentum), list(before)
         block.hold_value, block.hold_carry = StampedMap(value), StampedMap(carry)
+    # the held levels rewritten from the books against the bodies' counts as the interval began (the ledger's), the interval's own counts put back for the count's line's inverse
+    current = [(b.counts, b.well, b.well_remainder) for b in simulation.blocks]
+    for block, counts, (well, remainder) in zip(
+        simulation.blocks, ledger["counts"], ledger["wells"], strict=True
+    ):
+        block.counts, block.well, block.well_remainder = counts, well, remainder
     simulation._hold(simulation.register.at("the hold", "(iv)"), THE_REWRITE)
+    for block, (counts, well, remainder) in zip(simulation.blocks, current, strict=True):
+        block.counts, block.well, block.well_remainder = counts, well, remainder
 
 
 def forward(
@@ -115,6 +125,18 @@ def step_back(
         if live is not None:
             block = simulation.block_by_number[int(line["measured"])]
             live.window_open, block.window = True, live.identity
+            if (
+                live.zero_mode is not None
+            ):  # THE CLOSE RETURNS THE CURRENT undone by hand: the velocity added back on its support, the giver's carries before it
+                velocity, support, carries = live.zero_mode
+                count = int(np.count_nonzero(support))
+                simulation._write_at_mask(
+                    live,
+                    support,
+                    (np.full(count, velocity, dtype=np.int64), np.zeros(count, dtype=np.int64)),
+                    1,
+                )
+                block.close_carry, live.zero_mode = carries, None
     for line in lines:
         # the recoil's turn of the body's own record undone from the host's copy on the line (the click keeps the click)
         block = (
