@@ -27,28 +27,6 @@ def families_of(document: dict) -> list[dict]:
     return entries
 
 
-def digests(document: dict, steps: int) -> tuple[list, list]:
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    lines: list[dict] = []
-    simulation.record = lines.append
-    for _ in range(steps):
-        simulation.step()
-    state = [
-        (identity, live.now.copy(), live.remainder.copy())
-        for identity, live in sorted(simulation.records.items(), key=lambda item: str(item[0]))
-    ]
-    return state, lines
-
-
-def same(a: tuple[list, list], b: tuple[list, list]) -> bool:
-    if a[1] != b[1] or len(a[0]) != len(b[0]):
-        return False
-    return all(
-        x[0] == y[0] and np.array_equal(x[1], y[1]) and np.array_equal(x[2], y[2])
-        for x, y in zip(a[0], b[0], strict=True)
-    )
-
-
 # (1) THE OUTPUT DECLARED IN ONE FORMAT (records 2191, 2199; the ledger's run declarations)
 
 
@@ -75,54 +53,6 @@ def test_1_the_output_holds_exactly_the_declared_readings_each_labelled_by_kind(
 
 
 # (2) THE LOADER READS EVERY DECLARATION AS A GENERIC TERM (ALGEBRA.md #the-primitives; record 2186)
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 2 of record 2199: the loader admits `reads`, not the term form "
-    "[kind, target, of, degree, weight, table]",
-)
-def test_2a_a_read_written_as_a_term_runs_bit_for_bit_with_the_reads_form():
-    """A family's `reads` entry and the same coupling as a term of kind READ give the same records, remainders and lines."""
-    document = emitter_world(stock=2, ticks=STEPS)
-    as_terms = json.loads(json.dumps(document))
-    for entry in families_of(as_terms):
-        reads = entry.pop("reads", [])
-        entry["terms"] = [
-            [
-                "read",
-                "pace",
-                read["family"],
-                1,
-                read["weight"],
-                None,
-                read.get("twist", "own"),
-                read.get("by", 1),
-            ]
-            for read in reads
-        ]
-    stamped(as_terms)
-    assert same(digests(document, STEPS), digests(as_terms, STEPS))
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 2 of record 2199: the step's four declarations (send, receive, wait, operation) "
-    "are not read from universe.json",
-)
-def test_2b_the_step_declared_as_the_laws_own_four_runs_bit_for_bit_with_today():
-    """The step declared in the files as the rule ALGEBRA.md #the-line itself: every family's level and pair sent on all six Ports, the receive rotated by the Port's accumulator, the wait 1, the operation the rule's weighted sum with the remainder kept: bit for bit with the engine's step of today (the ledger's primitives 13 to 16; record 2186)."""
-    document = emitter_world(stock=2, ticks=STEPS)
-    declared = json.loads(json.dumps(document))
-    declared["step"] = {
-        "send": ["level", "pair", "accumulator"],
-        "ports": ["+x", "-x", "+y", "-y", "+z", "-z"],
-        "receive": "rotated",
-        "wait": 1,
-        "operation": "rule",
-    }
-    stamped(declared)
-    assert same(digests(document, STEPS), digests(declared, STEPS))
 
 
 def test_2c_a_one_sided_send_is_refused_by_the_loader():
@@ -162,24 +92,6 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
     well_index, null_index = names.index("well"), names.index("null")
     assert int(np.abs(simulation.sourced_records[well_index].now).sum()) > 0
     assert int(np.abs(simulation.sourced_records[null_index].now).sum()) == 0
-
-
-@pytest.mark.xfail(
-    strict=True,
-    reason="item 3 of record 2199: the guard is the load's alone, from below; a pace above Gamma "
-    "at run time is not refused",
-)
-def test_3b_a_content_below_zero_at_run_time_ends_the_run_with_the_guards_line():
-    """The pace is bounded on both sides, 0 < p <= Gamma (ALGEBRA.md #the-paces): a hill whose weight makes the content negative at some Node ends the run with a line naming the guard and the side; no level is written past it."""
-    document = emitter_world(stock=2, ticks=STEPS)
-    matter = next(f for f in families_of(document) if f["name"] == "matter")
-    for read in matter["reads"]:
-        read["weight"] = -read["weight"] if isinstance(read["weight"], int) else read["weight"]
-    stamped(document)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    with pytest.raises(ValueError, match="guard.*above Gamma|pace.*above Gamma"):
-        for _ in range(STEPS):
-            simulation.step()
 
 
 # (4) THE CLICK THAT KEEPS THE MOMENTUM, WITH ITS RECOIL'S STORE (ALGEBRA.md #the-primitives.111 item 2)

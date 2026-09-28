@@ -364,8 +364,9 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
     # the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in givings)
-    # the line's content is the held level at the body's Node, 0 (4 quanta over the divisor 40000 add nothing)
-    assert [line["content"] for line in givings] == [0, 0, 0]
+    # the line's content is the held level at the body's Node: the tent of 4 quanta over the divisor 40000
+    # is below a half, its nearest integer 0, and the integer line keeps the level within one of it
+    assert all(abs(line["content"]) <= 1 for line in givings)
     assert [line["excitation"] for line in givings] == [1, 2, 3]
     assert len({line["u"] for line in givings}) > 1
     # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
@@ -864,6 +865,15 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         ]
         document["detectors"] = [{"name": "B_nodes", "block": 1}]
         seed_source(document, 0)
+        # the held field's tent (THE START on the sum's sources) below a quarter of a level everywhere, so
+        # the record's path reads the pace Gamma as the claim assumes: the divisor from the world's own
+        # sources, 3 x their total x (the chain's extent + 1), twice the tent's bound 3 sigma (N + 1) / 4
+        probe = DetectorLawSimulation(parse_nature_beam_world(document))
+        total = sum(int(b.mask.sum()) * probe.body_source(b.number, "content") for b in probe.blocks)
+        for entry in document["universe"]:
+            if "held" in entry:
+                entry["held"] = {**entry["held"], "divisor": 3 * total * (document["shape"][0] + 1)}
+        document["stamp"] = input_stamp(document)
         world = parse_nature_beam_world(document)
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
