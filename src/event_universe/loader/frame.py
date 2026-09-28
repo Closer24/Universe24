@@ -21,11 +21,11 @@ from event_universe.core.schema import (
 )
 from event_universe.loader import cards
 
-# the universe's integers (ALGEBRA.md #a-familys-declaration, #the-interval, #the-primitives): Gamma the Node clock, A the amplitude bound, Lambda the charge's read weight, Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and A where the transport is built
+# the universe's integers (ALGEBRA.md #a-familys-declaration, #the-interval, #the-primitives): Gamma the Node clock, T the quantum's action (`quantum_action`, one for every family), Lambda the charge's read weight, Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and the derived A where the transport is built; the amplitude bound is no key: A is derived from the integer width and the rule's integers (the loader's `derived_amplitude`), and `amplitude_bound` in a file is refused by name as any unknown key
 INTEGERS = ObjectOf(
     {
         "node_clock": Integer(least=1),
-        "amplitude_bound": Integer(least=1),
+        "quantum_action": Integer(least=1),
         "Lambda": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_steps": Integer(least=2),
@@ -39,7 +39,8 @@ INTEGERS = ObjectOf(
                 "coarse": ListOf(ListOf(Integer(), 3)),
             }
         ),
-    }
+    },
+    frozenset({"quantum_action"}),  # optional until the giving's pull request requires it
 )
 UNIVERSE_KEYS = ("integers", "families")
 # the start file (ALGEBRA.md #a-familys-declaration): the run's mode, check (every measured event read beside its blind expectation, no pin compared) or pin (the pins compared); no law's name, no version
@@ -57,8 +58,8 @@ WORLD = ObjectOf(
         "face_depth": Integer(least=1),
         "probes": ListOf(ListOf(Integer(least=0), 3)),
         "mode_axis": OneOf(("x", "y", "z")),
-        "amplitude_bound": Integer(least=1),
         "node_clock": Integer(least=1),
+        "quantum_action": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_families": Integer(least=1),
         "least_residues": Integer(least=1),
@@ -70,8 +71,8 @@ WORLD = ObjectOf(
             "face_depth",
             "probes",
             "mode_axis",
-            "amplitude_bound",
             "node_clock",
+            "quantum_action",
             "momentum_unit",
             "most_families",
             "least_residues",

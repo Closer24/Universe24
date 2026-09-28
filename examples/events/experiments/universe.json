@@ -1,7 +1,6 @@
 {
  "integers": {
   "node_clock": 10000,
-  "amplitude_bound": 4270079,
   "Lambda": 1,
   "momentum_unit": 64,
   "most_steps": 65536,
