@@ -1,7 +1,5 @@
 """The generator by Rule3 alone (tools/body_generator.py): the read and division acts iterated to the first repeat give the bound mode at rest and in motion, the held field at rest under its family's pair is the well the mode sits on; a pair that binds nothing is refused."""
 
-from __future__ import annotations
-
 import json
 import math
 from fractions import Fraction
@@ -209,10 +207,8 @@ def test_a_givers_levels_at_the_scale_c_t_and_its_train_do_not_depend_on_t(tmp_p
         form = conserved_form(now, before, self_coefficient, wall, KIND[0], GAMMA - content, PERIODIC)
         assert abs(form / (8 * 3000 * action) - 1) < Fraction(1, 1000) and reading["profile"] is not None
         train = reading["train"]
-        assert (
-            train["flux"] >= action > train["flux"] - train["peak"] ** 2 * wall
-            and train["intervals"] >= 1
-        )
+        assert train["flux"] >= action > train["flux"] - train["peak"] ** 2 * wall
+        assert train["intervals"] >= 1
         found.append((train["intervals"], int(np.abs(now).max())))
     assert found[0][0] == found[1][0] and abs(found[1][1] / found[0][1] - 2**0.5) < 0.01
 

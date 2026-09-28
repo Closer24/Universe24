@@ -1,7 +1,5 @@
 """THE FRAME OF THE FILES READ THROUGH THE SCHEMAS (the Boss's word of 2026-09-26 22:12Z; record 2226; ALGEBRA.md #the-primitives): loader/frame.py reads the universe file, the world's own keys, the bodies, the detectors and the start file by schemas and the folders' cards; every defect refused by name, no default."""
 
-from __future__ import annotations
-
 import copy
 import json
 from pathlib import Path
