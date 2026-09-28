@@ -12,14 +12,15 @@ Site = tuple[str, str, str, str]  # (module, function, "index" or "rebind", the 
 
 # the sites the loop writes levels at, each the application of a declared act: the record's own
 # step (Rule3, `_advance`, `_advance_inverse`, `_advance_node_record`, pair.second_level), the
-# giving's shell write through the write's line (after_step.shell_write), the hold's writes and
-# the source's through the line (`_hold`, `_source_stage`), THE START through the line
-# (assembly.start_at_rest) and the bodies' own records at the load (assembly.bodies)
+# giving's window write through the write's line and its inverse by the folder's step back
+# (after_step.window_write, `_point_window_inverse`), the hold's writes and the source's through
+# the line (`_hold`, `_source_stage`), THE START through the line (assembly.start_at_rest) and
+# the bodies' own records at the load (assembly.bodies)
 SITES: frozenset[Site] = frozenset(
     {
-        ("events/after_step.py", "shell_write", "index", "before"),
-        ("events/after_step.py", "shell_write", "index", "im_now"),
-        ("events/after_step.py", "shell_write", "index", "now"),
+        ("events/after_step.py", "window_write", "index", "before"),
+        ("events/after_step.py", "window_write", "index", "im_now"),
+        ("events/after_step.py", "window_write", "index", "now"),
         ("events/assembly.py", "bodies", "index", "before"),
         ("events/assembly.py", "bodies", "index", "now"),
         ("events/assembly.py", "start_at_rest", "index", "before"),
@@ -43,6 +44,8 @@ SITES: frozenset[Site] = frozenset(
         ("events/detector_law.py", "_hold", "index", "before"),
         ("events/detector_law.py", "_hold", "index", "now"),
         ("events/detector_law.py", "_hold", "index", "remainder"),
+        ("events/detector_law.py", "_point_window_inverse", "index", "before"),
+        ("events/detector_law.py", "_point_window_inverse", "index", "now"),
         ("events/detector_law.py", "_source_stage", "index", "now"),
         ("events/pair.py", "second_level", "rebind", "im_before"),
         ("events/pair.py", "second_level", "rebind", "im_now"),
@@ -89,7 +92,7 @@ def test_no_module_writes_a_level_outside_the_named_sites():
 
 
 def test_the_folders_calling_rule3s_division_act_are_the_named_ones():
-    """The callers of Rule3's division act (`carried`, `division_forward`, `division_back`) among the folders are the named ones: the write, the four level writers through their fallback `carried_line` (the hold also reading the dipole back, the recoil also checking its wall), and the folders dividing a body's own value and no level (the spin's step; the feed and the induction, derived by the law and leaving the engine); a new folder with a division of its own fails by name."""
+    """The callers of Rule3's division act (`carried`, `division_forward`, `division_back`) among the folders are the named ones: the write, the hold, the source and the recoil through their fallback `carried_line` (the hold also reading the dipole back, the recoil also checking its wall), the giving's division act on the row when no line is handed and its own step back, and the folders dividing a body's own value and no level (the spin's step; the feed and the induction, derived by the law and leaving the engine); a new folder with a division of its own fails by name."""
     calls: dict[str, set[str]] = {}
     for path in sorted((PACKAGE / "features").rglob("*.py")):
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
@@ -98,7 +101,7 @@ def test_the_folders_calling_rule3s_division_act_are_the_named_ones():
                     calls.setdefault(str(path.relative_to(PACKAGE)), set()).add(node.func.id)
     assert calls == {
         "features/feed/__init__.py": {"division_forward", "division_back"},
-        "features/giving/__init__.py": {"carried"},
+        "features/giving/__init__.py": {"division_forward"},
         "features/hold/__init__.py": {"carried", "division_back"},
         "features/induction/__init__.py": {"division_forward", "division_back"},
         "features/recoil/__init__.py": {"carried", "division_forward"},
