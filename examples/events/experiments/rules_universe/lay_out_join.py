@@ -110,7 +110,9 @@ def expectation(name: str, distance: int) -> dict[str, Any]:
             "edge_quanta_per_node": 2706,
             "horizon_quanta_per_node": 6000,
             "tail_kappa_per_link_at_3000": 0.45,
-            "clicks_expected": "a run of clicks toward the deeper until the smaller's record ends" if joins else 0,
+            "clicks_expected": "a run of clicks toward the deeper until the smaller's record ends"
+            if joins
+            else 0,
             "records_at_the_end": 1 if joins else 2,
         },
         "GAMEBOARD": [
@@ -130,7 +132,9 @@ def main() -> None:
     folder.mkdir(parents=True, exist_ok=True)
     universe = rules_universe(folder)
     for name, distance in (("join", JOIN_DISTANCE), ("part", PART_DISTANCE)):
-        (folder / f"{name}.json").write_text(json.dumps(world(universe, distance), indent=1) + "\n", encoding="utf-8")
+        (folder / f"{name}.json").write_text(
+            json.dumps(world(universe, distance), indent=1) + "\n", encoding="utf-8"
+        )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(name, distance), indent=1) + "\n", encoding="utf-8"
         )
