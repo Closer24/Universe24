@@ -205,7 +205,8 @@ def test_e1_no_family_name_of_the_universe_is_a_constant_of_the_engine():
 
 
 def test_e2_no_integer_of_the_universe_is_a_literal_of_the_engine():
-    """(e) The universe's integers (the Node clock, the quantum's action where the file declares it, the twist table's unit) come from the file alone; none is a numeric literal of the engine's code."""
+    """(e) The universe's integers (the Node clock, the quantum's action where the file declares it, the twist
+    table's unit) come from the file alone; none is a numeric literal of the engine's code."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     integers = universe["integers"]
     values = {int(integers[key]) for key in ("node_clock", "quantum_action") if key in integers}

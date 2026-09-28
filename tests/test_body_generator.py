@@ -45,13 +45,15 @@ def counted_cube(box: int, side: int, count: int) -> np.ndarray:
 
 
 def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np.ndarray]:
-    """The check's oracle in floats: the top eigenvector of the symmetric form on the periodic box, as the level a_i = phi_i p_i."""
+    """The check's oracle in floats: the top eigenvector of the symmetric form on the periodic box under the conformal line, as the level a_i = phi_i p_a,i."""
     num, den = pair
     shape = counts.shape
     idx = np.arange(counts.size).reshape(shape)
-    p = (GAMMA - counts).astype(float)
-    u = (p / GAMMA) ** 2
-    on_site = 2 - (1 + u) * (den - num) / den - 2 * num * u / den
+    p0, p = (
+        (GAMMA - counts).astype(float),
+        (GAMMA - 2 * counts).astype(float),
+    )  # the clock's and the Link's pace
+    on_site = 2 - 2 * (den - num) * (p0 / GAMMA) ** 2 / den - 2 * num * (p / GAMMA) ** 2 / den
     rows, cols, vals = [], [], []
     for axis in range(3):
         j = np.roll(idx, -1, axis=axis)
@@ -72,16 +74,18 @@ def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np
 
 
 def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
-    """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 198, the float mode's rotation and profile to 10^-6, 0.76 inside the cube, the clock's period 8."""
+    """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 251, the float mode's rotation and profile to 10^-6, 0.92 inside the cube, the clock's period 8."""
     counts = counted_cube(12, 4, 3000)
     mode = bound_mode(counts, KIND, GAMMA)
-    assert (mode.iterations, mode.cycle) == (198, 1) and mode.rotation > Fraction(2 * KIND[0], KIND[1])
+    assert (mode.iterations, mode.cycle) == (251, 1) and mode.rotation > Fraction(2 * KIND[0], KIND[1])
     value, level = float_top_mode(counts, KIND)
     assert abs(float(mode.rotation) - value) < 1e-6
     profile = mode.profile.astype(float)
     profile /= np.linalg.norm(profile)
     assert abs(float(np.sum(profile * level)) - 1) < 1e-6
-    assert Fraction(75, 100) < mode.share_inside < Fraction(77, 100)
+    assert (
+        Fraction(91, 100) < mode.share_inside < Fraction(93, 100)
+    )  # the level enters the Link twice: a deeper well
     assert int(np.abs(mode.profile).max()) == mode.amplitude
     clock = clock_pair(mode.rotation, mode.amplitude)
     assert clock[1] == mode.amplitude and period_by_the_rule(*clock) == round(

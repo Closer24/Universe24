@@ -72,7 +72,8 @@ def test_a_record_wrapping_a_periodic_board_steps_and_returns_the_same(monkeypat
         plain.step()
         outside_is_zero(boxed)
         assert np.array_equal(live.now, other.now) and np.array_equal(live.remainder, other.remainder)
-    assert live.box is None  # the box wrapped every axis: the whole board, the step then the plain one
+    # the box wrapped every axis: the whole board, the step then the plain one
+    assert live.box is None
     for _ in range(40):
         boxed.step_inverse()
         plain.step_inverse()

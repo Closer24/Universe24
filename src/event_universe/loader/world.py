@@ -633,7 +633,7 @@ def derived_amplitude(entries: Sequence[object], bodies: object, node_clock: int
     weak_field = node_clock > 1
     found = MAX_WORK_INT
     for numerator, denominator in pairs:
-        for level in (0, node_clock - 1 if weak_field else 0):
+        for level in (0, (node_clock - 1) // 2 if weak_field else 0):
             reads, self_coefficient, wall = coefficients(
                 numerator, denominator, node_clock, level, ISOTROPIC, weak_field
             )
