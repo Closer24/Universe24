@@ -224,8 +224,8 @@ def test_the_declaration_is_the_registers_row():
     assert DECLARATION.writes == ("the count at a Node", "the count's remainder", "a body's position")
 
 
-def test_a_node_gives_at_most_what_it_holds_and_a_current_moving_more_is_refused_by_name():
-    """Two Nodes on a periodic axis of two, the record's levels (1, 0) now and (0, 1) before: the current into the first Node through each of its two x Ports is the weight, the second Node gives twice the weight; holding exactly that it ends at 0, holding one less the line is refused by name with the quanta and the count."""
+def test_a_node_at_0_gives_nothing_and_a_node_gives_at_most_what_it_holds():
+    """Two Nodes on a periodic axis of two, the record's levels (1, 0) now and (0, 1) before: the current into the first Node through each of its two x Ports is the weight, the second Node gives twice the weight. Holding exactly that it ends at 0 and the first holds it all; holding one less its result is clamped at 0 (the move a reading); holding nothing, with the counts across the Ports handed, its Ports' currents are blocked at both ends and nothing moves."""
     weight, norm = 7, 1
     now, before = np.array([[[1]], [[0]]], dtype=np.int64), np.array([[[0]], [[1]]], dtype=np.int64)
     here, term = Levels(now, before, None, None), CountTerm(norm, weight, 1, 2 * weight)
@@ -233,8 +233,9 @@ def test_a_node_gives_at_most_what_it_holds_and_a_current_moving_more_is_refused
     writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
     assert writes.count.ravel().tolist() == [2 * weight, 0]
     count[1] = 2 * weight - 1
-    with pytest.raises(
-        ValueError,
-        match=rf"move {2 * weight} quanta from a Node holding {2 * weight - 1} < {2 * weight}",
-    ):
-        apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
+    writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1))
+    assert writes.count.ravel().tolist() == [2 * weight, 0]
+    count[1] = 0
+    beside = tuple(across(count, axis, sigma, True) for axis in range(3) for sigma in (1, -1))
+    writes = apply(term, CountStart(count, np.zeros_like(count), here, links_of(here), 1, beside))
+    assert writes.count.ravel().tolist() == [0, 0] and sum(writes.net).ravel().tolist() == [0, 0]

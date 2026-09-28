@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 def counts_are_the_well(families: Sequence[FamilyDefinition], block: Block) -> bool:
-    """THE COUNT IS THE RECORD'S FORM (THE ALGEBRA OF CLUSTERS (1)): whether the count's line lays its counts from the body's well, D div T at every Node of the record, so that every Node holds its count and gives at most that: the well is laid and the family that holds the content holds it at the divisor 1 (the well is the count); the declared count is then a reading."""
+    """THE COUNT IS THE RECORD'S FORM (THE ALGEBRA OF CLUSTERS (1); the Closer's ruling of 2026-09-28, 15:19 Israel): whether the count's line lays its counts from the body's well, D div T at every Node of the record, at every interval, the line's move a reading of it: the well is laid and the family that holds the content holds it at the divisor 1 (the well is the count); the declared count is then a reading."""
     holds = any(row.held == "content" and row.held_divisor == 1 for row in families)
     return block.well is not None and holds
 
@@ -26,5 +26,5 @@ def read_once(block: Block | None, definition: FamilyDefinition) -> bool:
 def written(
     block: Block | None, definition: FamilyDefinition, standing: np.integer | int, level: int, sign: int
 ) -> int:
-    """The held level at a Node after the hold's act: the level itself (the count there, once; the same at the inverse, where the well stepped back is the earlier count) where the count is read once, else the standing level plus the signed increment (the sourced field)."""
+    """The held level at a Node after the hold's act: the level itself (the count there, once; the same at the inverse, where the well laid back is that interval's count) where the count is read once, else the standing level plus the signed increment (the sourced field)."""
     return level if read_once(block, definition) else int(standing) + sign * level

@@ -1,4 +1,4 @@
-"""The count's line: T c_next + r' = T c_now + SUM over the six Ports of F_ij + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, F_ij = weight (now_i before_j - before_i now_j) the current into Node i from its neighbour j, the booking of the record's levels at the Link's two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md #the-counts-line.119 item 1, ALGEBRA.md #the-line); a count is never negative: a Node gives at most what it holds, and a current that would move more is refused by name (the owner's word of 2026-09-28, 14:32 Israel: the rule's universe holds counts alone)."""
+"""The count's line: T c_next + r' = T c_now + SUM over the six Ports of F_ij + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, F_ij = weight (now_i before_j - before_i now_j) the current into Node i from its neighbour j, the booking of the record's levels at the Link's two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md #the-counts-line.119 item 1, ALGEBRA.md #the-line); a count is never negative: a Node at 0 gives nothing (its outward current through a Port is blocked at both ends of the Link) and a Node gives at most what it holds (the line's result clamped at 0), the clamp and no refusal (the Closer's ruling of 2026-09-28, 15:19 Israel, on the owner's word of 14:32 that the rule's universe holds counts alone)."""
 
 from __future__ import annotations
 
@@ -46,6 +46,9 @@ class CountStart:
     here: Levels
     links: tuple[Levels, ...]
     direction: int
+    across: tuple[Any, ...] | None = (
+        None  # the count across each Port in the same order; None blocks nothing
+    )
 
 
 @dataclass(frozen=True)
@@ -93,6 +96,9 @@ def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
     for axis in range(3):
         through_plus = current(term.weight, start.here, start.links[2 * axis])
         through_minus = current(term.weight, start.here, start.links[2 * axis + 1])
+        if start.across is not None:
+            through_plus = nothing_from_empty(through_plus, start.count, start.across[2 * axis])
+            through_minus = nothing_from_empty(through_minus, start.count, start.across[2 * axis + 1])
         net.append(through_plus + through_minus)
     sigma = start.direction
     count, remainder = rule3(
@@ -104,22 +110,18 @@ def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
         0,
         start.remainder,
     )
-    never_negative(start.count, count)
-    return CountWrites(count, remainder, (net[0], net[1], net[2]))
+    return CountWrites(at_most_held(count), remainder, (net[0], net[1], net[2]))
 
 
-def never_negative(held: Any, count: Any) -> None:
-    """THE COUNT IS NEVER NEGATIVE: a Node gives at most the quanta it holds; the line's result below 0 at any Node is refused by name with the quanta it would move and the count held there (the Node's flat index in x-major order)."""
-    after = np.asarray(count)
-    if not bool(np.any(after < 0)):
-        return
-    index = int(np.argmin(after))
-    holding = int(np.asarray(held).ravel()[index])
-    moved = holding - int(after.ravel()[index])
-    raise ValueError(
-        f"the count's line would move {moved} quanta from a Node holding {holding} < {moved} (the Node "
-        f"{index} in x-major order): a count is never negative, a Node gives at most what it holds"
-    )
+def nothing_from_empty(through: Any, here: Any, there: Any) -> Any:
+    """THE COUNT IS NEVER NEGATIVE, the Link's side: a Node at 0 gives nothing, so the current through a Port is 0 where its giver (the Node here when the current flows out, the Node across when it flows in) holds no quantum; the same test at both ends of the Link."""
+    giver_empty = ((through < 0) & (here == 0)) | ((through > 0) & (there == 0))
+    return np.where(giver_empty, 0, through)
+
+
+def at_most_held(count: Any) -> Any:
+    """THE COUNT IS NEVER NEGATIVE, the Node's side: a Node gives at most what it holds, so the line's result below 0 is 0 (the clamp, a reading of the move; no refusal)."""
+    return np.maximum(count, 0)
 
 
 DECLARATION = Declaration(
