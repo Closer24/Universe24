@@ -23,12 +23,9 @@ from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, 
 UNIT = 1 << 20
 
 SIDE = 12
-SHAPE = (SIDE, SIDE, SIDE)
-PERIODIC = {"x": "periodic", "y": "periodic", "z": "periodic"}
-WELL_VERTEX = (3, 4, 5)
-GIVING = (8, 2, 7)
-RECEIVER = (9, 9, 2)
-WHEEL = 8
+SHAPE, PERIODIC = (SIDE, SIDE, SIDE), {"x": "periodic", "y": "periodic", "z": "periodic"}
+WELL_VERTEX, GIVING = (3, 4, 5), (8, 2, 7)
+RECEIVER, WHEEL = (9, 9, 2), 8
 INTERVALS = 90  # the reference record's click at 17 on this head (u = 0; read again under the Node clock, the same interval as before it: the vacuum's levels bit for bit, the norm and the flux both times Gamma; the 81 of the first build HISTORY)
 AMPLITUDE = 1 << 12
 
@@ -107,16 +104,14 @@ def small_world(
 
 def given_levels(simulation: DetectorLawSimulation) -> tuple[int, int]:
     """The giving's pair on the circle of 2 N (ALGEBRA.md #the-click) for light's clock [80, 25] on N = 64: the generator's integer (a host computation; no table in the engine), now = round(A sin(pi n / (d N))), the character half a step either side of its zero, before = -now."""
-    _ = simulation
-    steps = 64
+    _, steps = simulation, 64
     now = round(UNIT * math.sin(math.pi * 80 / (25 * steps)))
     return now, -now
 
 
 def plant(simulation: DetectorLawSimulation, node, u: int, ladder: bool = True, rows=None) -> LiveRecord:
     """The light record as its giving writes it: the pair on one Node (or the rows given), the residue u, the ladder the receiver's detector, the norm its conserved form."""
-    now = np.zeros(SHAPE, dtype=np.int64)
-    before = np.zeros(SHAPE, dtype=np.int64)
+    now, before = np.zeros(SHAPE, dtype=np.int64), np.zeros(SHAPE, dtype=np.int64)
     if rows is None:
         level_now, level_before = given_levels(simulation)
         now[node] = level_now
@@ -295,8 +290,7 @@ def test_conservation_between_clicks():
     simulation, states, clicks = run(document, contents=contents)
     paced = [np.maximum(content, 0) for content in contents]  # the read in force: the row's floor
     assert len(clicks) == 1
-    click_tick = clicks[0][0]
-    light = 1 << 40
+    click_tick, light = clicks[0][0], 1 << 40
     # (a) the content: the light record's quantum until the click, none after (the record deleted at its click); the well's own record carries no quantum of light
     for t, state in enumerate(states):
         if t < click_tick:
@@ -313,8 +307,7 @@ def test_conservation_between_clicks():
     gamma = simulation.node_clock
     for identity in (light, -1):
         family = 0 if identity == light else 1
-        num = simulation.kind_num[family]
-        exchanges = 0
+        num, exchanges = simulation.kind_num[family], 0
         for t in range(1, len(states)):
             if identity not in states[t] or identity not in states[t - 1]:
                 break
@@ -374,8 +367,7 @@ def test_reversibility_except_the_click():
     (click_tick, clicked) = clicks[0]
     for _ in range(INTERVALS - click_tick):
         simulation.step_inverse()
-    returned = state_of(simulation)
-    forward = states[click_tick]
+    returned, forward = state_of(simulation), states[click_tick]
     assert clicked in states[click_tick - 1] and clicked not in forward and clicked not in returned
     assert set(returned) == set(forward)
     for identity in returned:
@@ -384,8 +376,7 @@ def test_reversibility_except_the_click():
 
 
 def manhattan_ball(node, radius: int) -> np.ndarray:
-    grids = np.indices(SHAPE)
-    distance = np.zeros(SHAPE, dtype=np.int64)
+    grids, distance = np.indices(SHAPE), np.zeros(SHAPE, dtype=np.int64)
     for axis in range(3):
         d = np.abs(grids[axis] - node[axis])
         distance += np.minimum(d, SIDE - d)
@@ -400,8 +391,7 @@ def test_locality():
     changed = (GIVING[0] + 1, GIVING[1], GIVING[2])
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     level_now, level_before = given_levels(simulation)
-    now = np.zeros(SHAPE, dtype=np.int64)
-    before = np.zeros(SHAPE, dtype=np.int64)
+    now, before = np.zeros(SHAPE, dtype=np.int64), np.zeros(SHAPE, dtype=np.int64)
     now[GIVING] = level_now
     before[GIVING] = level_before
     now[changed] += 1
@@ -420,8 +410,7 @@ def test_locality():
 def test_only_the_click_reads():
     """(b) for 200 random elements, two Nodes whose seven inputs are equal by construction (the pair, the row and remainder, the six neighbours' rows) give equal outputs; (c) two runs whose records differ only in their residues u are identical until the first click."""
     document = small_world(receiver_named=False)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    rng = np.random.default_rng(11)
+    simulation, rng = DetectorLawSimulation(parse_nature_beam_world(document)), np.random.default_rng(11)
     a, b = (2, 2, 2), (8, 7, 9)
     for _ in range(200):
         now = rng.integers(-UNIT, UNIT, size=SHAPE, dtype=np.int64)
@@ -466,12 +455,9 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
     import tracemalloc
 
     started = time.perf_counter()
-    document = scaled_world(side)
-    generator_seconds = time.perf_counter() - started
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    shape = (side, side, side)
-    now = np.zeros(shape, dtype=np.int64)
-    before = np.zeros(shape, dtype=np.int64)
+    document, generator_seconds = scaled_world(side), time.perf_counter() - started
+    simulation, shape = DetectorLawSimulation(parse_nature_beam_world(document)), (side, side, side)
+    now, before = np.zeros(shape, dtype=np.int64), np.zeros(shape, dtype=np.int64)
     level_now, level_before = given_levels(simulation)
     now[(side - 4, 2, side - 5)] = level_now
     before[(side - 4, 2, side - 5)] = level_before
@@ -500,8 +486,7 @@ def test_the_host_cost_per_node_per_interval_is_bounded(side: int, capsys):
     simulation.records[live.identity] = live
     nodes = side**3
     tracemalloc.start()
-    started = time.perf_counter()
-    intervals = 20
+    started, intervals = time.perf_counter(), 20
     for _ in range(intervals):
         simulation.step()
     seconds = time.perf_counter() - started
@@ -540,8 +525,7 @@ def output_of(serialized: str) -> dict:
 def test_the_same_input_gives_the_same_output():
     """The owner's word (the Boss's relay of 23:51Z): the same input file run twice, and run in two separate processes at once, gives byte-identical outputs (the clicks and the final state's digest, with the input's own hash). The edge cases: a one-unit change in the input's seed profile changes the input's hash and gives a different output (the loader of this head admits it; record 1886's load check refuses it), never silently the same output; a one-unit change in the planted record's row gives a different output (test 5's difference)."""
     serialized = json.dumps(small_world(), sort_keys=True)
-    first = output_of(serialized)
-    second = output_of(serialized)
+    first, second = output_of(serialized), output_of(serialized)
     assert first == second and first["clicks"]
     with multiprocessing.get_context("spawn").Pool(2) as pool:
         apart = pool.map(output_of, [serialized, serialized])
@@ -560,8 +544,7 @@ def test_the_same_input_gives_the_same_output():
     document = json.loads(serialized)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     level_now, level_before = given_levels(simulation)
-    now = np.zeros(SHAPE, dtype=np.int64)
-    before = np.zeros(SHAPE, dtype=np.int64)
+    now, before = np.zeros(SHAPE, dtype=np.int64), np.zeros(SHAPE, dtype=np.int64)
     now[GIVING] = level_now + 1
     before[GIVING] = level_before
     # read before the click (the deleted summand leaves the final states alike)

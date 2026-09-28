@@ -50,10 +50,8 @@ def test_the_rule_on_a_chain_against_section_ones_integers():
     world = parse_nature_beam_world(
         massive_world([5, 1, 1], {"x": "open", "y": "periodic", "z": "periodic"}, [2, 3])
     )
-    simulation = DetectorLawSimulation(world)
-    now = np.array([0, 5, -7, 3, 0]).reshape(5, 1, 1)
-    before = np.array([1, 0, 2, -1, 0]).reshape(5, 1, 1)
-    vacuum_scale = 2 * NODE_CLOCK**2
+    simulation, now = DetectorLawSimulation(world), np.array([0, 5, -7, 3, 0]).reshape(5, 1, 1)
+    before, vacuum_scale = np.array([1, 0, 2, -1, 0]).reshape(5, 1, 1), 2 * NODE_CLOCK**2
     r = np.array([0, 1, 2, 0, 1]).reshape(5, 1, 1) * vacuum_scale
     live = planted(simulation, 1, now, before, r)
     a_next, r_next = step_once(simulation, live)
@@ -133,8 +131,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
     """BUILD.md (d): on a periodic 6^3 board at [128, 129] and at [1600, 1618] the form I stays within 10^-3 of its start over 200 intervals (measured: 3 x 10^-6) and the amplitude stays bounded (below 2 x 2^20); the books read the form under the key (GAMEBOARD). The edge case: light's pair [1, 1] on the same seed keeps the checkerboard component at its one unit (the double root's stationary alternation: the seed's checkerboard carries no velocity, so the secular solution of DESIGN.md 2.1 is not excited; the growing form is the withdrawn self-term form (A), not built), and the massive kind keeps it below 40 units (measured 11 and 18)."""
     now, before = checkerboard_seed(6)
     x, y, z = np.meshgrid(*[np.arange(6)] * 3, indexing="ij")
-    checker = (x + y + z) % 2 * 2 - 1
-    periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
+    checker, periodic = (x + y + z) % 2 * 2 - 1, {"x": "periodic", "y": "periodic", "z": "periodic"}
     for pair in ([128, 129], [1600, 1618]):
         document = massive_world([6, 6, 6], periodic, pair)
         world = parse_nature_beam_world(document)
@@ -142,8 +139,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
         live = planted(simulation, 1, now, before, np.zeros((6, 6, 6), dtype=np.int64))
         start = Fraction(*simulation.record_form(live))
         assert start > 0
-        peak = 0
-        projection = 0
+        peak, projection = 0, 0
         for _ in range(200):
             step_once(simulation, live)
             peak = max(peak, int(np.abs(live.now).max()))
@@ -170,8 +166,7 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
         world = parse_nature_beam_world(document)
         assert world.kind_periodic(1) == world.periodic == world.kind_periodic(0)
         simulation = DetectorLawSimulation(world)
-        now = np.array([0, 0, 0, 0, 9]).reshape(5, 1, 1)
-        zero = np.zeros((5, 1, 1), dtype=np.int64)
+        now, zero = np.array([0, 0, 0, 0, 9]).reshape(5, 1, 1), np.zeros((5, 1, 1), dtype=np.int64)
         live = planted(simulation, 1, now, zero, zero)
         a_next, r_next = step_once(simulation, live)
         # at Node 0: the total R S_6 = R (a_W + a_E + 4 x 0) = R a_W over the vacuum's wall w (the weak-field rule's integers at c = 0, item 44)
@@ -188,8 +183,7 @@ def test_every_family_reads_the_worlds_border_and_a_zero_face_when_open():
 def run_chain_digests() -> dict[str, str]:
     lines: list[dict] = []
     world = parse_nature_beam_world(chain_world())
-    simulation = DetectorLawSimulation(world, observer=lines.append)
-    books = []
+    simulation, books = DetectorLawSimulation(world, observer=lines.append), []
     for _ in range(600):
         simulation.step()
         books.append(simulation.books())
@@ -300,8 +294,7 @@ def test_the_blocks_cells_and_its_pair_on_them():
     assert int(block.mask.sum()) == 27 and block.mask[2:5, 2:5, 2:5].all()
     den = simulation.kind_den[1]
     assert np.all(simulation.kind_num[1] == 800)
-    assert np.all(den[block.mask] == 810) and np.all(den[~block.mask] == 809)
-    assert block.own is None
+    assert np.all(den[block.mask] == 810) and np.all(den[~block.mask] == 809) and block.own is None
     well = block_world(
         [8, 8, 8], "open", [800, 809], [{"position": [2, 2, 2], "side": 3, "pair": [800, 800]}]
     )
@@ -347,8 +340,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
     assert simulation.ledger.held_spent[0] == 3 and simulation.ledger.transit_released[0] == 3
     own = simulation.blocks[0].own
-    assert own is not None
-    assert own.identity == -1
+    assert own is not None and own.identity == -1
     assert all(
         live.family == 0 and live.content == 1 for live in simulation.records.values() if live is not own
     )
@@ -419,8 +411,7 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
     light = planted(simulation, 0, now, now, np.zeros((30, 1, 1), dtype=np.int64))
     simulation.records[light.identity] = light
     simulation.step()
-    field = light.now.ravel().tolist()
-    modes = [line for line in lines if line["event"] == "mode"]
+    field, modes = light.now.ravel().tolist(), [line for line in lines if line["event"] == "mode"]
     assert len(modes) == 1 and modes[0]["axis"] == "x"
     assert modes[0]["sums"] == [sum(field[r::3]) for r in range(3)]
     bad = dict(document)
@@ -488,8 +479,7 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
         live = planted(simulation, 1, now, before, np.zeros((6, 1, 1), dtype=np.int64))
         previous = Fraction(*simulation.record_form(live))
         for _ in range(60):
-            a_before = live.before.astype(object)
-            r = live.remainder.astype(object)
+            a_before, r = live.before.astype(object), live.remainder.astype(object)
             simulation._advance(live)
             current = Fraction(*simulation.record_form(live))
             remainders = int(
@@ -553,8 +543,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
     matter = [family.name for family in world.families].index("matter")
     assert world.families[matter].massive_kind and world.families[matter].phase_per_age == (512, 1)
-    simulation = DetectorLawSimulation(world)
-    other = DetectorLawSimulation(beside)
+    simulation, other = DetectorLawSimulation(world), DetectorLawSimulation(beside)
     identity: int | None = None
     given: int | None = None
     reached, compared = None, 0
