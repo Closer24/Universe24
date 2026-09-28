@@ -887,13 +887,7 @@ def main() -> None:
     # Gamma 24, the rule's universe file of record (the owner, 15:11 Israel): under the law's line (the level twice, the edge 6) the giver 8 and the taker 6 from Cheshbon's table of 15:22, the twin 8 and 8; on the engine of today (the edge 9) no giving pixel fits under the giver's bound 8.9, so the run at 24 waits for the term
     rule_redshift("rule_redshift", 8, 6, 60, 1500, 200, gamma=24, numbers=GAMMA_24_NUMBERS)
     rule_redshift("rule_redshift_twin", 8, 8, 60, 1500, 200, gamma=24, numbers=GAMMA_24_NUMBERS)
-    # Gamma 12,000, the second run if 24 is too coarse: the engine of today (the edge 4,136), the giver 4,400 and the taker 5,000 (14:39); after the term returns 4,000 and 3,000
-    rule_redshift(
-        "rule_redshift_12000", 4400, 5000, 60, 1500, 200, gamma=12000, numbers=GAMMA_12000_NUMBERS
-    )
-    rule_redshift(
-        "rule_redshift_12000_twin", 4400, 4400, 60, 1500, 200, gamma=12000, numbers=GAMMA_12000_NUMBERS
-    )
+    # Gamma 12,000 stays the second run if 24 is too coarse (the Closer, 15:12 Israel), on its own universe file when named: rule_redshift("rule_redshift_12000", 4400, 5000, 60, 1500, 200, gamma=12000, numbers=GAMMA_12000_NUMBERS) and the twin at 4,400
 
 
 if __name__ == "__main__":
