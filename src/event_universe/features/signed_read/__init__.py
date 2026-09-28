@@ -1,10 +1,9 @@
-"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces p_a = p_0 - c - c_a with the tensor's parts, and 0 < p <= P at every Node, P the last pace with the checkerboard factor (S - 6 R) / w at or above -2 (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
+"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces p_a = p_0 - c - c_a with the tensor's parts, and 0 < p at every Node (the pace bound alone: under the conformal line the plane wave is stable at every pace) (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
 
 from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
-from math import isqrt
 
 import numpy as np
 
@@ -68,23 +67,6 @@ class SignedReadWrites:
     axis_contents: tuple[np.ndarray, ...] | None
 
 
-def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int, int]:
-    """The guard's upper side as one integer inequality on the pace p_0 of a hill, a p^2 - b p <= c: the mode at wave number pi keeps (S - 6 R) + 2 w >= 0 on the rule's (R, S, w) at the axis pace 2 p_0 - Gamma, so a = den + 7 num, b = 8 num Gamma and c = 2 (den - num) Gamma^2 (ALGEBRA.md #the-paces, #the-line)."""
-    num, den = pair
-    return den + 7 * num, 8 * num * gamma, 2 * (den - num) * gamma * gamma
-
-
-def pace_bound(pair: tuple[int, int], gamma: int) -> int:
-    """The largest admitted pace P, the last p_0 with a p^2 - b p <= c: the quadratic's root by isqrt, then the exact edge by the inequality itself."""
-    a, b, c = stability_bound(pair, gamma)
-    bound = (b + isqrt(b * b + 4 * a * c)) // (2 * a)
-    while a * (bound + 1) * (bound + 1) - b * (bound + 1) <= c:
-        bound += 1
-    while a * bound * bound - b * bound > c:
-        bound -= 1
-    return bound
-
-
 def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
     """c = SUM over the reads of (weight x by x argument) at every Node, a single plain read at weight 1 the argument itself; a read by another word, or a sum whose reach leaves int64, is refused by name before any product is formed."""
     if len(term.reads) == 1 and term.reads[0][1] == 1 and term.reads[0][2] == BY_PLAIN:
@@ -112,10 +94,8 @@ def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
 
 
 def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) -> None:
-    """The two-sided guard 0 < p <= P on p_0 and every axis pace; a pace outside ends the run naming the Node, the family and the interval (ALGEBRA.md #the-paces)."""
+    """The guard 0 < p on p_0 and every axis pace: the pace bound alone under the conformal line (the plane wave is stable for every pace from 1, Cheshbon's line of 2026-09-28); a pace at or below 0 ends the run naming the Node, the family and the interval (ALGEBRA.md #the-paces)."""
     gamma = term.gamma
-    a, b, c = stability_bound(term.pair, gamma)
-    bound = pace_bound(term.pair, gamma)
     paces = [gamma - writes.content]
     if writes.axis_contents is not None:
         paces.extend(gamma - 2 * writes.content - t for t in writes.axis_contents)
@@ -128,16 +108,6 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
                 f"{tuple(int(i) for i in node)} at interval {own.interval}: the pace stays above 0 "
                 f"(the content {int(writes.content[node])} at or beyond Gamma = {gamma}; ALGEBRA.md "
                 "ALGEBRA.md #the-paces, the guard's lower side); the run ends"
-            )
-        high = int(np.max(pace))
-        if high > bound:
-            node = np.unravel_index(int(np.argmax(pace)), pace.shape)
-            raise RuntimeError(
-                f"the pace of {own.name!r} (family {own.family}, axis {axis}) is {high} at the Node "
-                f"{tuple(int(i) for i in node)} at interval {own.interval}, above the stability "
-                f"edge {bound} of its pair {list(term.pair)} at Gamma = {gamma} ({a} p^2 - {b} p <= "
-                f"{c}; ALGEBRA.md #the-paces, the guard's upper side: a hill beyond the edge); "
-                "the run ends"
             )
 
 

@@ -1,4 +1,4 @@
-"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md #the-primitives, the first row; ALGEBRA.md #the-paces; record 2224): the folder's read equals the engine's bit for bit on the emitter's world, the hand identity holds, the guard's edge (the checkerboard factor at -2) admits and refuses by name."""
+"""THE SIGNED READ WITH THE GUARD, its own folder (ALGEBRA.md #the-primitives, the first row; ALGEBRA.md #the-paces; record 2224): the folder's read equals the engine's bit for bit on the emitter's world, the hand identity holds, the guard's edge (the checkerboard factor at -2) admits and refuses by name."""
 
 from __future__ import annotations
 
@@ -6,7 +6,6 @@ import numpy as np
 import pytest
 
 from event_universe.core.register import folder_of
-from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features import signed_read
 from event_universe.features.signed_read import (
@@ -16,8 +15,6 @@ from event_universe.features.signed_read import (
     SignedReadStart,
     SignedReadTerm,
     apply,
-    pace_bound,
-    stability_bound,
 )
 from event_universe.world_files import parse_nature_beam_world
 from tests.bodies import CHAIN, MATTER, QUANTA, charged_chain
@@ -78,25 +75,6 @@ def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
                 assert pace == simulation.node_clock_pair(node, family)[0]
 
 
-def last_admitted_pace(pair: tuple[int, int], gamma: int) -> int:
-    """The edge by the rule itself: the last pace p_0 from Gamma with (S - 6 R) + 2 w >= 0 on the rule's (R, S, w) at the level Gamma - p_0 (the mode at wave number pi stays bounded), pace by pace."""
-    integers = [coefficients(*pair, gamma, gamma - pace) for pace in range(gamma, 3 * gamma)]
-    factors = [s - 6 * r[0] + 2 * w for r, s, w in integers]
-    return gamma + next(
-        i for i, (now, after) in enumerate(zip(factors, factors[1:], strict=False)) if now >= 0 > after
-    )
-
-
-def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
-    """The guard's bound P is the last pace with (S - 6 R) + 2 w >= 0 on the rule's (R, S, w) under the conformal line (the axis pace 2 p_0 - Gamma on a hill), the quadratic a p^2 - b p <= c of `stability_bound` holding at P and failing at P + 1; Gamma itself for [1, 1]."""
-    for pair in ((800, 809), (800, 850), (1, 1)):
-        bound = pace_bound(pair, CHAIN_GAMMA)
-        assert bound == last_admitted_pace(pair, CHAIN_GAMMA)
-        a, b, c = stability_bound(pair, CHAIN_GAMMA)
-        assert a * bound * bound - b * bound <= c < a * (bound + 1) ** 2 - b * (bound + 1)
-    assert pace_bound((1, 1), CHAIN_GAMMA) == CHAIN_GAMMA
-
-
 @pytest.mark.diagnostic
 def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond_it():
     """The charged chain: a matter record of charge +1 reads c - Lambda d; at Lambda = 1 p = 1000 <= 1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not a measurement); at Lambda = 3 the hill beyond the hollow at a slab Node enters at the floor 0."""
@@ -116,10 +94,8 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond
     assert int(floored.content[20, 0, 0]) == 0 and int(np.min(floored.content)) == 0
 
 
-def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edge():
-    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and the edge of [800, 850] is the arithmetic's check on the axis contents alone."""
-    assert stability_bound((800, 850), GAMMA) == (850 + 7 * 800, 8 * 800 * GAMMA, 2 * 50 * GAMMA * GAMMA)
-    assert pace_bound((800, 850), GAMMA) == last_admitted_pace((800, 850), GAMMA)
+def test_a_hill_enters_at_the_floor_and_the_axis_contents_keep_the_pace_above_zero():
+    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and the axis contents are guarded above 0 alone (no stability edge under the conformal line)."""
     term = SignedReadTerm(((1, -1, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
     own = SignedReadOwn(0, "matter", 7)
 
@@ -131,11 +107,11 @@ def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edg
     for depth in (152, 153, 100_010_000 - GAMMA):
         floored = apply(term, hill(depth), own)
         assert int(floored.content[1, 1, 1]) == 0 and int(floored.content[0, 0, 0]) == 0
-    # the same hill on the axis contents alone is caught on that axis
+    # an axis content that takes that axis's pace to 0 is caught on that axis (the lower side, the one guard)
     flat = np.zeros(SHAPE, dtype=np.int64)
     axis = np.zeros(SHAPE, dtype=np.int64)
-    axis[2, 0, 1] = -153
-    with pytest.raises(RuntimeError, match=r"axis 2\) is 10153 at the Node \(2, 0, 1\)"):
+    axis[2, 0, 1] = GAMMA
+    with pytest.raises(RuntimeError, match=r"axis 2\) is 0 at the Node \(2, 0, 1\)"):
         apply(
             SignedReadTerm(((1, 1, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA),
             SignedReadStart(SHAPE, {1: flat}, (flat, axis, flat)),
@@ -144,7 +120,7 @@ def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edg
 
 
 def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pace_above_zero():
-    """For den = num the edge is p <= Gamma exactly, and the floor keeps every hill at it (read as 0); a content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
+    """For den = num the floor keeps every hill at Gamma (read as 0); a content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
     massless = SignedReadTerm(((1, 1, signed_read.BY_PLAIN),), 0, (1, 1), GAMMA)
     own = SignedReadOwn(2, "light", 3)
     shape = (2, 2, 2)
