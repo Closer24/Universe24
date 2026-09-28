@@ -26,8 +26,8 @@ def counts_are_the_well(families: Sequence[FamilyDefinition], block: Block) -> b
 
 
 def read_once(block: Block | None, definition: FamilyDefinition) -> bool:
-    """Whether the held level at the body's Nodes is the count itself: the body's well is laid (the universe declares T) and the family holds at the divisor 1."""
-    return block is not None and block.well is not None and definition.held_divisor == 1
+    """Whether the held level at the body's Nodes is the count laid there div the row's divisor E_s, written once and never added: the body's well is laid (the universe declares T: the rule's own universe, THE WELL IS THE COUNT AND NO FIELD); under the universe of record the hold stays the sourced field."""
+    return block is not None and block.well is not None
 
 
 def written(

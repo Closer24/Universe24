@@ -172,7 +172,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             [0] * count,
             [0] * count,
         )
-        # the state built once from the parsed world, in this order (`events/assembly.py`)
         assembly.detectors(self, world)
         self.lifetime_detector = (
             self._detector("lifetime", None, True)
@@ -207,7 +206,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         corner: list[int],
         mask: np.ndarray,
     ) -> Block:
-        # a body's block from its measured entry: its Nodes, the detector under its position, its momentum and spin
         block = Block(
             number,
             entry.family,
@@ -550,6 +548,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if held is None or body is not None:
             self.ports.begin()
             held = {} if held is None else held
+            if act == THE_ADVANCE and once.no_field(self.families, self.world.quantum_action):
+                for record in self.held_records.values():
+                    record.now.fill(0)  # THE WELL IS THE COUNT AND NO FIELD: the level is the lay alone
             for number in range(len(self.held)) if body is None else (body,):
                 block = self.block_by_number.get(number)
                 if body is None and act == THE_INVERSE and block is not None and block.well is not None:
@@ -694,7 +695,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         gamma = self.node_clock
         effective = self._effective_content(family)
         content = int(effective[node])
-        # the rule's three integers at the Node (ALGEBRA.md #the-line; item 44): the coefficient on the six reads, the coefficient at the Node and the wall; the remainder moves on the multiples of their gcd
         axis_contents = self._axis_contents(family)
         reads, self_coefficient, wall = coefficients(
             num,
