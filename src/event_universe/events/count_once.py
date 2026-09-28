@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import numpy as np
+
+from event_universe.core.rule3 import division_forward
 
 if TYPE_CHECKING:
     from event_universe.events.records import Block
@@ -33,11 +35,11 @@ def written(
 def counts_laid(block: Block, node: Sequence[int]) -> np.ndarray:
     """The counts the line steps this interval: the well of the loaded record at the first act, then the standing lay, replaced once per period of the record by the well summed over the period div the period's length ((sum D) div (P T), the well D div T per interval), the period read from the record's own return at the body's Node (two sign changes of its level now); the standing lay between returns (Cheshbon's line of 15:41 and 15:46: the count follows the form over the record's clock, not the instantaneous form)."""
     well = np.asarray(block.well, dtype=np.int64)
-    if block.period_counts is None or block.period_sum is None:
-        block.period_counts, block.period_sum = well.copy(), np.zeros_like(well)
-        block.period_length = block.period_flips = 0
-        block.period_sign = 0
-    block.period_sum += well
+    laid, summed = block.period_counts, block.period_sum
+    if laid is None or summed is None:
+        laid, summed = well.copy(), np.zeros_like(well)
+        block.period_length = block.period_flips = block.period_sign = 0
+    summed += well
     block.period_length += 1
     level = int(block.own.now[tuple(node)]) if block.own is not None else 0
     sign = 1 if level > 0 else -1 if level < 0 else 0
@@ -45,7 +47,8 @@ def counts_laid(block: Block, node: Sequence[int]) -> np.ndarray:
         block.period_flips += 1
     if sign:
         block.period_sign = sign
-    if block.period_flips >= 2:
-        block.period_counts = block.period_sum // block.period_length
-        block.period_sum, block.period_length, block.period_flips = np.zeros_like(well), 0, 0
-    return block.period_counts.copy()
+    if block.period_flips >= 2:  # the average by Rule3's division act, the period's length the wall
+        laid = cast(np.ndarray, division_forward(cast(int, summed), block.period_length, 0)[0])
+        summed, block.period_length, block.period_flips = np.zeros_like(well), 0, 0
+    block.period_counts, block.period_sum = laid, summed
+    return laid.copy()
