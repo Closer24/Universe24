@@ -83,7 +83,8 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     # the horizon the window the engine writes by the law, no number: the stock's six windows closed and the last train's flight bound (below) after the sixth, within six times the first close
     while len(givings := lines_of(lines, "giving")) < 6 or simulation.tick < givings[-1]["tick"] + 200:
         simulation.step()
-        cap = 6 * givings[0]["tick"] + 200 if givings else 200
+        # the six rungs within seven times the first close (the rungs' rounding under the ranks)
+        cap = 7 * givings[0]["tick"] + 200 if givings else 200
         assert simulation.books()["balanced"] and simulation.tick <= cap
     gathers = lines_of(lines, "gather")
     # the emitter's stock of 6 excitations, each clicking at its own rung; the residues from the law (ALGEBRA.md #a-familys-declaration): the clicking record's remainder at the giving Node on Z_700 the wheel the rule's at the body's centre Node under the Node clock (the stock 6 down to 1 at the six givings), u below it
