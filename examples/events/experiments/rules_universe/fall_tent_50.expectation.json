@@ -1,0 +1,42 @@
+{
+ "format": "world-expectation-v1",
+ "status": "BLIND: the row of THE UNIVERSE IS BOUND, the fall as the clicks' bias; Cheshbon's numbers before the run; no number of a run here",
+ "row": "ALGEBRA.md THE UNIVERSE IS BOUND, THE BOUND BODY IS ONE NODE: a bound body of one Node of 3000 quanta on the matter pair [2, 3] of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1), its tail evanescent by kappa = 0.446 per Link, beside a tent of the held gravity, a content-only body of 50 quanta one Link toward +x: the well is the count, so the pace on the well's side is lower, the local band nearer the record's rotation, the tail longer there, and the tail's remainder crosses T earlier on that side: the fall is the clicks' bias toward the well, no force",
+ "DETECTOR": [],
+ "blind": {
+  "row": "Cheshbon's numbers of 13:09 Israel time (2026-09-28) before the run: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200 (kappa_minus = 0.446); the count's moves biased toward the well in the same ratio: 51.2, 51.3 and 52.9 percent; the control 1 and 50 percent",
+  "edge_quanta_per_node": 2706,
+  "horizon_quanta_per_node": 6000,
+  "tail_kappa_per_link_away": 0.446,
+  "tail_ratio_well_over_away": 1.025,
+  "moves_toward_well_share": 0.512
+ },
+ "GAMEBOARD": [
+  {
+   "reversible": 1000,
+   "row": "the whole run forward and back on a fresh copy, every row bit for bit, the clicks keep the clicks; a diagnostic, MATCH or MISS with the first interval and Node that deviate"
+  }
+ ],
+ "fall": {
+  "body": [
+   4,
+   1,
+   1
+  ],
+  "well_side": [
+   5,
+   1,
+   1
+  ],
+  "far_side": [
+   3,
+   1,
+   1
+  ],
+  "axis": 0,
+  "tail_ratio": 1.025,
+  "bias": 0.512,
+  "band": null,
+  "row": "fall_bias.py reads the tail's ratio from the matter levels at the two neighbours (the largest level on the well's side over the largest on the far side, GAMEBOARD) and the moves' bias from the body's centre along the axis (the moves toward the well over all moves, the count's line's clicks as the centre shows them); MATCH within `band` once Cheshbon writes it, else the reading alone"
+ }
+}

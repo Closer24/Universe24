@@ -70,10 +70,8 @@ def test_the_shares_are_cos_squared_and_sin_squared_of_the_angle_to_the_axis():
             PolariserOwn(),
         )
         assert (together.re[node], together.im[node]) == (alone.re[0], alone.im[0])
-        assert (
-            together.first[node] == together.re[node] ** 2
-            and together.second[node] == together.im[node] ** 2
-        )
+        assert together.first[node] == together.re[node] ** 2
+        assert together.second[node] == together.im[node] ** 2
 
 
 def test_the_refusals_by_name():
