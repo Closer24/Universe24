@@ -16,10 +16,10 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import well_clocks  # noqa: E402
 
-WORLDS = ("rule_redshift", "rule_redshift_twin")
+NAME = "rule_redshift"  # the world at Gamma 24 and its twin; --suffix _6000 names the run of record after it
 
 
-def run(world_dir: Path, out_dir: Path) -> int:
+def run(world_dir: Path, out_dir: Path, names: tuple[str, str]) -> int:
     """Both worlds through the runner in one call, two processes, the summary lines printed by it; the runner's exit code."""
     command = [
         sys.executable,
@@ -29,7 +29,7 @@ def run(world_dir: Path, out_dir: Path) -> int:
         "--jobs",
         "2",
     ]
-    command += [str(world_dir / f"{name}.json") for name in WORLDS]
+    command += [str(world_dir / f"{name}.json") for name in names]
     environment = {**os.environ, "PYTHONPATH": str(ROOT / "src")}
     return subprocess.run(command, check=False, env=environment, cwd=ROOT).returncode
 
@@ -46,45 +46,45 @@ def verdict(read: list[int] | None, expected: float | None, band: float | None) 
     return "MATCH" if abs(Fraction(*read) - Fraction(str(expected))) <= Fraction(str(band)) else "MISS"
 
 
-def look(world_dir: Path, out_dir: Path, diagnostic: bool) -> dict[str, Any]:
+def look(world_dir: Path, out_dir: Path, diagnostic: bool, names: tuple[str, str]) -> dict[str, Any]:
     """The five lines from the outputs beside the expectation files; the report returned with them."""
-    paths = {name: (world_dir / f"{name}.json", out_dir / f"{name}.output.json") for name in WORLDS}
-    outputs = {name: json.loads(paths[name][1].read_text(encoding="utf-8")) for name in WORLDS}
+    paths = {name: (world_dir / f"{name}.json", out_dir / f"{name}.output.json") for name in names}
+    outputs = {name: json.loads(paths[name][1].read_text(encoding="utf-8")) for name in names}
     expectation = json.loads(
-        paths[WORLDS[0]][0].with_suffix(".expectation.json").read_text(encoding="utf-8")
+        paths[names[0]][0].with_suffix(".expectation.json").read_text(encoding="utf-8")
     )
-    wells = {name: well_clocks.report(*paths[name]) for name in WORLDS}
-    well, this = expectation["WELL"], wells[WORLDS[0]]
-    pins = {name: outputs[name].get("pins", []) for name in WORLDS}
-    clicks = {name: [p for p in pins[name] if p.get("kind") == "mean_interval"] for name in WORLDS}
+    wells = {name: well_clocks.report(*paths[name]) for name in names}
+    well, this = expectation["WELL"], wells[names[0]]
+    pins = {name: outputs[name].get("pins", []) for name in names}
+    clicks = {name: [p for p in pins[name] if p.get("kind") == "mean_interval"] for name in names}
     reversible = {
-        name: [p["verdict"] for p in pins[name] if p.get("kind") == "reversible"] for name in WORLDS
+        name: [p["verdict"] for p in pins[name] if p.get("kind") == "reversible"] for name in names
     }
-    centres = {name: [p["verdict"] for p in pins[name] if p.get("kind") == "centre"] for name in WORLDS}
-    counts = {name: sum(int(c) for c in outputs[name].get("counts", {}).values()) for name in WORLDS}
-    taker = clicks[WORLDS[0]][0] if clicks[WORLDS[0]] else None
+    centres = {name: [p["verdict"] for p in pins[name] if p.get("kind") == "centre"] for name in names}
+    counts = {name: sum(int(c) for c in outputs[name].get("counts", {}).values()) for name in names}
+    taker = clicks[names[0]][0] if clicks[names[0]] else None
     first = "GAMEBOARD " if diagnostic else "DETECTOR  "
     band = well.get("clock_ratio_band")
     lines = [
         f"1. {first} the taker's mean click interval: {'none' if taker is None else taker['read']} intervals "
-        f"(the twin's {'none' if not clicks[WORLDS[1]] else clicks[WORLDS[1]][0]['read']}); before the run "
+        f"(the twin's {'none' if not clicks[names[1]] else clicks[names[1]][0]['read']}); before the run "
         f"{'none' if taker is None else taker['pin']} within {'none' if taker is None else taker['band']} -- "
         f"{'MISS (no pin)' if taker is None else taker['verdict']}",
-        f"2. GAMEBOARD  the pixels' clock ratio, the taker's cycle over the giver's: {decimal(this['clock_ratio'])} "
+        f"2. GAMEBOARD  the pixels' clock ratio, {well['clocks'][0]} over {well['clocks'][1]}: {decimal(this['clock_ratio'])} "
         f"(the cycles {decimal(this['clock_cycles'][0])} and {decimal(this['clock_cycles'][1])}); before the run "
         f"{well.get('clock_ratio')} ({well.get('clock_ratio_with_the_term')} with the term, the giver's period "
         f"{well.get('giver_period')}) -- {verdict(this['clock_ratio'], well.get('clock_ratio'), band)}; the twin's "
-        f"control {decimal(wells[WORLDS[1]]['clock_ratio'])} (1)",
+        f"control {decimal(wells[names[1]]['clock_ratio'])} (1)",
         f"3. GAMEBOARD  the light beside each pixel: the periods {decimal(this['light_periods'][0])} and "
         f"{decimal(this['light_periods'][1])}, their ratio {decimal(this['light_period_ratio'])} (conserved: 1); the "
         f"wavelengths {[decimal(w['wavelength']) for w in this['wavelengths']]}, the wave number's shift "
         f"{decimal(this['light_wave_number_shift'])}, over the clock's {decimal(this['clock_cycle_shift'])}: "
         f"{decimal(this['shift_ratio'])}; before the run {well.get('shift_ratio')}",
-        f"4. GAMEBOARD  the reversible row, the whole run forward and back: {WORLDS[0]} {reversible[WORLDS[0]]}, "
-        f"twin {reversible[WORLDS[1]]}",
-        f"5. GAMEBOARD  the pixels on their Nodes, the centre pins: {WORLDS[0]} {centres[WORLDS[0]]}, twin "
-        f"{centres[WORLDS[1]]}; the books: {counts[WORLDS[0]]} clicks, {outputs[WORLDS[0]].get('records_alive')} "
-        f"records alive; twin {counts[WORLDS[1]]} clicks, {outputs[WORLDS[1]].get('records_alive')} alive",
+        f"4. GAMEBOARD  the reversible row, the whole run forward and back: {names[0]} {reversible[names[0]]}, "
+        f"twin {reversible[names[1]]}",
+        f"5. GAMEBOARD  the pixels on their Nodes, the centre pins: {names[0]} {centres[names[0]]}, twin "
+        f"{centres[names[1]]}; the books: {counts[names[0]]} clicks, {outputs[names[0]].get('records_alive')} "
+        f"records alive; twin {counts[names[1]]} clicks, {outputs[names[1]].get('records_alive')} alive",
     ]
     if diagnostic:
         lines.insert(
@@ -100,13 +100,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--look", action="store_true", help="read the outputs there without running")
     parser.add_argument("--diagnostic", action="store_true", help="label every line GAMEBOARD")
     parser.add_argument("--worlds", type=Path, default=Path(__file__).resolve().parent / "rule")
+    parser.add_argument(
+        "--suffix", default="", help="the worlds' name suffix: _6000 for the run of record after 24"
+    )
     arguments = parser.parse_args(argv)
-    if not arguments.look and run(arguments.worlds, arguments.out) != 0:
+    names = (f"{NAME}{arguments.suffix}", f"{NAME}{arguments.suffix}_twin")
+    if not arguments.look and run(arguments.worlds, arguments.out, names) != 0:
         print("the run is not LAWFUL in both worlds; the outputs name the refusal")
         return 1
-    found = look(arguments.worlds, arguments.out, arguments.diagnostic)
+    found = look(arguments.worlds, arguments.out, arguments.diagnostic, names)
     print("\n".join(found["lines"]))
-    (arguments.out / "rule_redshift.look.json").write_text(
+    (arguments.out / f"{names[0]}.look.json").write_text(
         json.dumps(found, indent=1) + "\n", encoding="utf-8"
     )
     return 0
