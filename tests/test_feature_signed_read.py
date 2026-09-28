@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.register import folder_of
+from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features import signed_read
 from event_universe.features.signed_read import (
@@ -15,6 +16,7 @@ from event_universe.features.signed_read import (
     SignedReadStart,
     SignedReadTerm,
     apply,
+    pace_bound,
 )
 from event_universe.world_files import parse_nature_beam_world
 from tests.bodies import CHAIN, MATTER, QUANTA, charged_chain
@@ -73,6 +75,21 @@ def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
                 pace = simulation.node_clock - int(writes.content[node])
                 assert pace == hand_line(simulation, family, node)
                 assert pace == simulation.node_clock_pair(node, family)[0]
+
+
+def test_the_edge_is_where_the_conformal_lines_checkerboard_factor_crosses_minus_two():
+    """ALGEBRA.md #the-paces under the conformal line: P = isqrt(2 den Gamma^2 div (den + num)) is the largest pace with p^2 (den + num) <= 2 den Gamma^2; at one pace p on the clock and the Links (the axis contents undoing the level's second entry) the mode at wave number pi has (S - 6 R) + 2 w >= 0 at P and < 0 at P + 1; Gamma for light."""
+    for pair in ((800, 809), (800, 850), (3200, 3227), (1, 1)):
+        num, den = pair
+        bound = pace_bound(pair, CHAIN_GAMMA)
+        assert bound * bound * (den + num) <= 2 * den * CHAIN_GAMMA**2 < (bound + 1) ** 2 * (den + num)
+        assert bound >= CHAIN_GAMMA and (bound == CHAIN_GAMMA) == (num == den)
+        for pace, admitted in ((bound, True), (bound + 1, False)):
+            content = CHAIN_GAMMA - pace  # a hill: the axis contents -content keep every pace at p
+            (read, _, _), self_coefficient, wall = coefficients(
+                num, den, CHAIN_GAMMA, content, (-content,) * 3
+            )
+            assert (self_coefficient - 6 * read + 2 * wall >= 0) is admitted
 
 
 @pytest.mark.diagnostic
