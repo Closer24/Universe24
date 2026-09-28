@@ -124,7 +124,10 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
     wide["measured"][0]["nodes"] = [{"node": [x, 0, 0], "count": 2000} for x in range(4, 10)]
     loaded = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
     assert sum(loaded.measured[0].held) == 12_000
-    wide["measured"][0]["nodes"][0]["count"] = 10000
+    wide["measured"][0]["nodes"][0]["count"] = 10000  # read over the row's divisor: 10000 div 40000 = 0
+    parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
+    for row in [row for row in universe["families"] if "held" in row]:
+        row["held"] = {**row["held"], "divisor": 1}
     with pytest.raises(ValueError, match="the pace of 'charge' could reach 0 .* to 10000"):
         parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
 
