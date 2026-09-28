@@ -203,6 +203,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
     ]
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     source = [family.name for family in simulation.families].index("source")
+    divisor = next(f.held_divisor for f in simulation.families if f.held == "content")
     assert simulation.kind_wall(0) == 1 and simulation.kind_wall(source) == 56
     rng = np.random.default_rng(5)
     for family in (0, source):
@@ -218,7 +219,9 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             num = int(simulation.kind_num[family][i, 0, 0])
             den = int(simulation.kind_den[family][i, 0, 0])
             content = int(simulation.level_of("content")[i, 0, 0])
-            assert content == (1 if i in (5, 6, 7, 20, 30, 31, 32) else 0)
+            assert content == (
+                1 // divisor if i in (5, 6, 7, 20, 30, 31, 32) else 0
+            )  # the source over E_s
             (read_i, _, _), self_i, wall_i = coefficients(num, den, NODE_CLOCK, content)
             # the six reads plain, the Node's terms [w (a^2 + b^2) - S a b] / (3 R) (item 44)
             read = sum(Fraction(m) * int(before[j, 0, 0]) for (ii, j), m in matrix.items() if ii == i)

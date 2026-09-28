@@ -168993,6 +168993,7 @@
    "quantum": 1,
    "held": {
     "count": "content",
+    "divisor": 40000,
     "factors": [
      1,
      4,
@@ -169032,6 +169033,7 @@
    "quantum": 1,
    "held": {
     "count": "sign",
+    "divisor": 40000,
     "factors": [
      1,
      1

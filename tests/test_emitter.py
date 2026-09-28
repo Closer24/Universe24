@@ -54,9 +54,10 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     assert all(lawful_wheel(simulation.world, line) for line in givings)
     # the level at the body: its one own quantum beside the stock held, 5, 4, 3, 2 (the
     # stock as the given family's content, ALGEBRA.md #the-paces; item 47)
-    assert [line["content"] for line in givings] == [5, 4, 3, 2]
+    divisor = next(f.held_divisor for f in simulation.families if f.held == "content")
+    assert [line["content"] for line in givings] == [c // divisor for c in (5, 4, 3, 2)]
     assert [line["node_clock"] for line in givings] == [
-        [NODE_CLOCK - m, NODE_CLOCK] for m in (5, 4, 3, 2)
+        [NODE_CLOCK - m // divisor, NODE_CLOCK] for m in (5, 4, 3, 2)
     ]
     assert [line["excitation"] for line in givings] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in givings]
@@ -99,7 +100,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
     num, den = body.definition.pair
     read_coefficient = coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace)[0][0]
-    assert pace == NODE_CLOCK - 5 and action.numerator == norm  # one own quantum and the stock 4
+    assert pace == NODE_CLOCK - 5 // divisor  # one own quantum and the stock 4, over E_s: the level 0
     assert read_coefficient % action.denominator == 0
     by_tick = {entry["tick"]: entry for entry in trace}
     # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md #the-ladder, #the-postulates; BUILD.md
@@ -236,7 +237,8 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
             assert giving["tick"] == closed and giving["window"] == given.window > 1
             assert giving["opened"] == closed - given.window and giving["outward"] == given.outward
             assert giving["outward"] * given.pace >= given.norm == giving["norm"] > 0
-            assert giving["given_norm"] == 0 and giving["content"] == 2
+            divisor = next(f.held_divisor for f in simulation.families if f.held == "content")
+            assert giving["given_norm"] == 0 and giving["content"] == 2 // divisor
             assert giving["pace"] == given.pace and giving["nodes"] == 32
             assert giving["excitation"] == 1 and giving["train"] == 0
             assert given.u == giving["u"] and given.wheel == giving["W"]

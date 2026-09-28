@@ -142,9 +142,7 @@ def chain_world(
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
-        "measured": [
-            emitter_body([corner, 0, 0], stock, receiver),
-        ],
+        "measured": [emitter_body([corner, 0, 0], stock, receiver)],
         "detectors": [],
     }
     receiver_cube(document, "screen", [screen, 0, 0])
@@ -262,11 +260,7 @@ def _emitter_world(
     """The emitter's unit world: a chain of 80 (x closed), an emitter of the matter `kind` in the `well` at [5, 37) on its mode with `stock` givings of light, and the receiver cube `screen` at [70, 72]."""
     # the giving is the window's (ALGEBRA.md #the-primitives): the body's rotation written
     # at its Nodes at the weight 3 (3 x 2^20 under the bound 2^22)
-    emitter: dict = {
-        "family": "light",
-        "receiver": ["screen"],
-        "weight": 3,
-    }
+    emitter: dict = {"family": "light", "receiver": ["screen"], "weight": 3}
     document = {
         "shape": [80, 1, 1],
         "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
@@ -339,9 +333,7 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-SEEDS_FILE = (
-    ROOT / "tests" / "seeds.json"
-)  # the retired generator's seedings of every fixture, recorded once
+SEEDS_FILE = ROOT / "tests" / "seeds.json"  # the retired generator's seedings, recorded once
 
 
 def _seed_key(document: dict) -> str:
@@ -358,6 +350,8 @@ def _seeds() -> dict:
 
 
 def _apply(document: dict, written: dict) -> None:
+    from event_universe.world_files import input_stamp
+
     document.update(written["top"])
     for index, keys in written["measured"].items():
         document["measured"][int(index)].update(keys)
