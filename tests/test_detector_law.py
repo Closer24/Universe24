@@ -1,7 +1,5 @@
 """The engine's first gate: the loader's keys and refusals, the rule's step against the declared integers, and one chain world (an emitter body, a receiver, the open face) with one click per record, the books balanced every tick and the click's time near L / c after the giving."""
 
-from __future__ import annotations
-
 import math
 from dataclasses import replace
 
@@ -288,9 +286,7 @@ def test_the_increment_ladder_over_the_named_sets():
     forward_givings, backward_givings, differs = lockstep_givings(
         layer_world(["s0", "s1", "s2"]), layer_world(["s2", "s1", "s0"])
     )
-    assert (
-        len(forward_givings) == len(backward_givings) == 8 and differs is None
-    )  # the level 0 at the bodies
+    assert len(forward_givings) == len(backward_givings) == 8 and differs is None
     assert sorted(line["u"] for line in forward_givings) == sorted(g["u"] for g in gathers)
     reads = [1] + [line["tick"] for line in forward_givings[:-1]]
     agreed = [

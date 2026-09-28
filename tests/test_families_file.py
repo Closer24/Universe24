@@ -23,11 +23,11 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     assert "law" not in document  # one engine, no name and no version (record 2128)
     table = document["integers"].pop("twist_table")
-    expected = dict(node_clock=10000, momentum_unit=64, most_steps=65536)
-    expected.update(
-        width=63, most_families=20, least_residues=500
-    )  # the owner's two numbers, in the file
-    assert document["integers"] == expected
+    expected = dict(node_clock=10000, momentum_unit=64, most_steps=65536, width=63, most_families=20)
+    assert document["integers"] == {
+        **expected,
+        "least_residues": 500,
+    }  # the owner's two numbers, in the file
     # the twist table (ALGEBRA.md #the-primitives; commit 4): the unit 4 Gamma 2^16, 2^10 fine and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9
     assert table["unit"] == 4 * 10000 * 65536
     assert len(table["fine"]) == 1024 and len(table["coarse"]) == 32768
@@ -91,6 +91,45 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
                     assert entry.block.kind[1] > entry.block.kind[0]
 
 
+def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_world_on_it():
+    """THE RULE'S OWN UNIVERSE (ALGEBRA.md; Cheshbon's table of 2026-09-28, 13:03 Israel, and his lines of 13:44 and 13:46): examples/events/planck.json holds Gamma = 12,000 (a multiple of 6), T = 1, the twist table at the unit 4 Gamma 2^16, and three rows of the rule's pairs in lowest terms, gravity [1, 1] at the divisor 1, charge [1, 1] at the divisor 400,000 (0.86 (Gamma / 2)^(3 / 2), derived from Gamma: one quantum per window), matter [2, 3]; the spin's step's row on gravity until the step leaves; nothing else. A world of three pixels (one Node each) on it loads with the ranks derived and THE SIGN IS THE BODY'S: the sign's source at a pixel's Node is its q times its count. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-1, 2] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name."""
+    planck = "examples/events/planck.json"
+    document = json.loads((ROOT / planck).read_text(encoding="utf-8"))
+    table = document["integers"].pop("twist_table")
+    units = dict(node_clock=12000, quantum_action=1, momentum_unit=64, most_steps=65536, width=63)
+    assert document["integers"] == {**units, "most_families": 20, "least_residues": 500}
+    assert (table["unit"], len(table["fine"]), len(table["coarse"])) == (4 * 12000 * 65536, 1024, 32768)
+    rows = [("gravity", [1, 1], 1), ("charge", [1, 1], 400000), ("matter", [2, 3], None)]
+    assert [
+        (f["name"], f["pair"], f.get("held", {}).get("divisor")) for f in document["families"]
+    ] == rows
+    assert all(set(f) <= {"name", "pair", "held", "spins_step"} for f in document["families"])
+    world = {"shape": [40, 1, 1], "boundary": {"x": "closed", "y": "periodic", "z": "periodic"}, "N": 64}
+    world |= {"ticks": 10, "face_depth": 1, "engine": "examples/events/engine_start.json"}
+    world |= {"universe": planck, "detectors": [{"name": "taker", "block": 2}]}
+    n = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
+    at = ((10, 3000, 1), (20, 300, -1), (30, 3000, 0))
+    bodies = [
+        {"family": "matter", "nodes": [{"node": [x, 0, 0], "count": c}], "q": q, **n} for x, c, q in at
+    ]
+    loaded = parse_nature_beam_world({**world, "measured": bodies})
+    ranks = [("gravity", (1, 3, 6), "content"), ("charge", (1, 3), "sign"), ("matter", (1,), None)]
+    assert [(f.name, f.parts, f.held) for f in loaded.families] == ranks
+    assert loaded.families[2].pair == (2, 3)
+    assert [entry.block.q for entry in loaded.measured if entry.block is not None] == [1, -1, 0]
+    simulation = DetectorLawSimulation(loaded)
+    signs = [simulation.node_sources(number, "sign") for number in range(3)]
+    assert signs == [[((10, 0, 0), 3000)], [((20, 0, 0), -300)], [((30, 0, 0), 0)]]
+    assert [simulation._body_charge(number) for number in range(3)] == [3000, -300, 0]
+    inline = {**world, "measured": bodies, "node_clock": 12000, "momentum_unit": 64}
+    inline["twist_table"], third = table, {"name": "third", "pair": [-1, 2]}
+    inline["universe"] = [*document["families"], third]
+    assert parse_nature_beam_world(inline).families[3].pair == (-1, 2)
+    refusals = (([-2, 2], r"pair \[-2, 2\]: den from 1, and den > \|num\|"), ([1, 0], "den from 1"))
+    for pair, match in refusals:
+        refused({**inline, "universe": [*document["families"], {**third, "pair": pair}]}, match)
+
+
 def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     inline = emitter_specimen(stock=2, ticks=300)
     # the shipped file's three entries with the test world's own integers (its A is 2^22, the shipped file's 2^20), written as a families file of the test's root
@@ -114,10 +153,8 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     for _ in range(60):
         a.step()
         b.step()
-    renamed = [
-        {**line, "family": rename.get(line["family"], line["family"])} if "family" in line else line
-        for line in lines_a
-    ]
+    word = lambda line: rename.get(line["family"], line["family"])  # noqa: E731
+    renamed = [{**line, "family": word(line)} if "family" in line else line for line in lines_a]
     assert set(a.records) == set(b.records) and renamed == lines_b and len(lines_a) > 0
     for identity, live in a.records.items():
         other = b.records[identity]
@@ -167,13 +204,8 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
     for _ in range(120):
         a.step()
         b.step()
-    assert (
-        lines_a
-        and [
-            {**line, "family": rename[line["family"]]} if "family" in line else line for line in lines_a
-        ]
-        == lines_b
-    )
+    back = [{**line, "family": rename[line["family"]]} if "family" in line else line for line in lines_a]
+    assert lines_a and back == lines_b
     assert set(a.records) == set(b.records)
     for identity, live in a.records.items():
         other = b.records[identity]
@@ -194,9 +226,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     second["node_clock"] = 10000
     refused(second, "the world declares node_clock, which the engine never reads")
     ray = json.loads(json.dumps(document))
-    ray["detector_law"] = (
-        False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
-    )
+    ray["detector_law"] = False  # the flag was the law's name, refused by name (#the-primitives)
     refused(ray, "the world has unknown keys: detector_law")
     missing = json.loads(json.dumps(document))
     missing["universe"] = "examples/events/nowhere.json"
@@ -249,10 +279,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     # the self-source's unit (ALGEBRA.md #the-interval; commit 6): 0, or at least 24 A
     refuses(lambda d: d["families"][0].__setitem__("self_source", {"unit": 24}), "is below 24 A")
     refuses(lambda d: d["families"][0]["held"].__setitem__("count", "mass"), "count must be one of")
-    refuses(
-        lambda d: d["families"][2].__setitem__("spins_step", d["families"][0]["spins_step"]),
-        "holds no spin's dipole",
-    )
+    refuses(lambda d: d["families"][2].update(spins_step=d["families"][0]["spins_step"]), "no spin's")
     refuses(lambda d: d["families"][0].pop("name"), r"families\[0\] lacks keys: name")
     refuses(lambda d: d["families"][0].__setitem__("quantum", 0), "quantum is 0, below its least 1")
     refuses(

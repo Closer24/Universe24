@@ -1,7 +1,5 @@
 """THE COUNT'S LINE, its own folder (ALGEBRA.md #the-counts-line): Rule3 for the family of clicks with the record's current as its read; a body at rest keeps its count in place; a moving record carries its count at the group velocity; the count conserved exactly; the inverse; the int64 bound; the refusals; the declaration, bound."""
 
-from __future__ import annotations
-
 import json
 import math
 from pathlib import Path
@@ -119,8 +117,7 @@ def test_the_hold_sources_the_well_where_the_lines_quanta_are_and_no_corner_foll
     width = simulation.shape[0]
     assert sorted(moved) == sorted((((x + 1) % width, y, z), c) for (x, y, z), c in declared)
     simulation.step()
-    assert list(block.corner) == corner
-    assert np.array_equal(block.mask, mask)
+    assert list(block.corner) == corner and np.array_equal(block.mask, mask)
     assert not hasattr(simulation, "_follow_count")
 
 

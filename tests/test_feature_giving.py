@@ -1,7 +1,5 @@
 """THE GIVING, its own folder (ALGEBRA.md #the-primitives, the row "the giving" and "A BODY'S WRITE IS ONE ACT"; 9.107; issue #1156): the bulk share on the moving row's numbers, the three acts of a window and the write's inverse on synthetic integers (the write (level + r) div k at both levels with the remainder carried at the Node, the close at outward >= T), the refusals by name, the declaration."""
 
-from __future__ import annotations
-
 import numpy as np
 import pytest
 

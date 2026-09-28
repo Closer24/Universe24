@@ -78,8 +78,8 @@ WORLD = ObjectOf(
         }
     ),
 )
-# a pair of integers, a rational
-PAIR = ListOf(Integer(least=1), 2)
+# a pair of integers, a rational; A PAIR'S NUMERATOR MAY BE NEGATIVE (ALGEBRA.md, THE RULE'S OWN UNIVERSE: the third's band [-1, 2] is the mirror of [1, 2]); the denominator from 1 and den > |num| are `world.py`'s refusals by name
+PAIR = ListOf(Integer(), 2)
 # a family's clock, the pair form [p, q] of its phase per interval of age (ALGEBRA.md, a family's declaration): the frame's key beside the name; p from 0, q from 1 (the build's rule)
 CLOCK = ListOf(Integer(least=0), 2)
 # the spin's step's row: the two weights curl and tidal, each a pair (ALGEBRA.md #a-familys-declaration); the frame admits the key by name and kind, the spin's step's folder reads it (the leapfrog's span is core's SPAN, never a key of a row)
@@ -173,10 +173,11 @@ COUNTED = ObjectOf(
         "spin_before": AXES,
         "moment": AXES,
         "phase_denominator": Integer(least=1),
+        "q": Integer(),
         "stocks": MapOf(Name(), Integer(least=1)),
         "emitter": GIVER,
     },
-    frozenset({"spin", "spin_before", "moment", "phase_denominator", "stocks", "emitter"}),
+    frozenset({"spin", "spin_before", "moment", "phase_denominator", "q", "stocks", "emitter"}),
 )
 # a detector of the world file: its name, its Nodes, or the body it belongs to
 DETECTOR = ObjectOf(
