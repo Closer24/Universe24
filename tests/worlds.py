@@ -118,10 +118,7 @@ FILE = "examples/events/universe.json"
 
 
 def chain_world(
-    stock: int = 6,
-    receiver: object = None,
-    on_mode: bool = True,
-    faces: str = "closed",
+    stock: int = 6, receiver: object = None, on_mode: bool = True, faces: str = "closed"
 ) -> dict:
     """A chain of 80 Nodes (x closed): the emitter body at [2, 34) and the receiver cube `screen` at [70, 72]; with `faces` "open", a chain of 140 with the face receiver `face` at both ends (ALGEBRA.md #rule3)."""
     length, corner, screen = (140, 34, 100) if faces == "open" else (80, 2, 70)
@@ -292,7 +289,7 @@ def _emitter_world(
                 "seed": seed,  # the window's writes pile up at the body's Nodes (commit 7)
                 "margin": "control",
                 "emitter": emitter,
-            },
+            }
         ],
         "detectors": [],
     }
