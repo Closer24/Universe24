@@ -18,6 +18,7 @@
   ["(ii)", "the clicks list"],
   ["(ii)", "the hand"],
   ["(ii)", "the polariser"],
+  ["(ii)", "the crystal"],
   ["(iv)", "the hold", {"advance": true}],
   ["(iv)", "the source"],
   ["(iv)", "the recoil"],

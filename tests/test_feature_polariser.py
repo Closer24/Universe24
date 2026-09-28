@@ -17,11 +17,12 @@ from event_universe.features.polariser import (
     PolariserStart,
     PolariserTerm,
     apply,
+    at,
     read_term,
     triple_of,
 )
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.worlds import ROOT, emitter_world
+from tests.worlds import ROOT
 
 LIGHT_CLOCK = ROOT / "examples" / "events" / "massive_record" / "light_clock.json"
 
@@ -94,26 +95,8 @@ def test_the_refusals_by_name():
         )
 
 
-def test_the_loops_stage_turns_the_pair_at_the_bodys_nodes_and_books_nothing():
-    """The hook's stage on the emitter's unit world (the loop's stage called on the folder's `apply`; the body's `polariser` key through the loader is Nature24's follow-up, so the term is set on the loop): the one body's polariser at (2, 1), the triple (3, 4, 5); the given record with the level 5 planted at the body's 32 Nodes and no second level: the stage rebinds the pair to (3, -4) there (the rotation by minus the angle, the transport's rounding), whole, leaves the other Nodes, gives the record its second level at 0 elsewhere, and books nothing (the shares enter through the clicks' booking)."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
-    simulation.step()
-    (live,) = simulation.records.values()
-    mask = simulation.blocks[0].mask
-    simulation.polarisers = {0: PolariserTerm((2, 1), ("screen", "measured:1"))}
-    now = live.now.copy()
-    now[mask] = 5
-    live.now = now
-    outside, pointers = live.now[~mask].copy(), list(live.pointers)
-    simulation._polariser_stage(apply)
-    assert set(live.now[mask].tolist()) == {3} and set(live.im_now[mask].tolist()) == {-4}
-    assert (live.now[~mask] == outside).all() and not live.im_now[~mask].any()
-    assert live.im_before is not None and not live.im_before.any() and int(mask.sum()) == 32
-    assert live.pointers == pointers
-
-
 def test_the_bodys_own_set_books_the_fluxs_second_share_and_the_loop_admits_the_act():
-    """The booking's form on the shipped light clock (the mathematician's answer of 2026-09-27): A's polariser at (2, 1) with `at_well` (A's own set) as its second set and the face as its first; a record with the level 5 on A's Nodes offers 9 and 16 per Node, so the flux 100 at `at_well` books 64 and the flux 7 books 4 (7 x 16 div 25), a record with no level on A offers 0 and books 0, the face books its flux whole; a term whose second set is not a set on the body is refused by name at the terms' check; and two intervals through the main loop pass its audit under the card's two words, the record turned at A's Nodes carrying its second level."""
+    """The booking's form on the shipped light clock (the mathematician's answer of 2026-09-27): A's polariser at (2, 1) with `at_well` (A's own set) as its second set and the face as its first; a record with the level 5 on A's Nodes offers 9 and 16 per Node, so the flux 100 at `at_well` books 64 and the flux 7 books 4 (7 x 16 div 25), a record with no level on A offers 0 and books 0, the face books its flux whole; a term whose second set is not a set on the body is refused by name at the terms' check; and two intervals through the main loop pass its audit; the stage writes nothing (no level rebound, no second level laid, no pointer moved): the turn is read in the booking alone, since a turn written every interval the record passes is a scatterer at the body, not a polariser (measured on Bell's world, tests/test_feature_crystal.py)."""
     document = json.loads(LIGHT_CLOCK.read_bytes())
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     simulation.polarisers = {0: PolariserTerm((2, 1), ("face", "at_well"))}
@@ -133,8 +116,13 @@ def test_the_bodys_own_set_books_the_fluxs_second_share_and_the_loop_admits_the_
     while not simulation.records:
         simulation.step()
     simulation.step()
-    (given,) = simulation.records.values()
-    assert given.im_now is not None and given.im_now[simulation.blocks[0].mask].any()
+    before = {
+        live.identity: (live.now.copy(), list(live.pointers)) for live in simulation.records.values()
+    }
+    simulation._polariser_stage(apply)
+    for live in simulation.records.values():
+        assert live.im_now is None and (live.now == before[live.identity][0]).all()
+        assert live.pointers == before[live.identity][1]
 
 
 def test_the_terms_are_read_from_the_bodys_declared_key_at_the_load_and_the_second_set_is_checked():
@@ -173,3 +161,68 @@ def test_the_terms_are_read_from_the_bodys_declared_key_at_the_load_and_the_seco
     document["stamp"] = input_stamp(document)
     with pytest.raises(ValueError, match="names 'rest' as its second set"):
         DetectorLawSimulation(parse_nature_beam_world(document))
+
+
+def test_the_switching_turns_by_each_angle_in_turn_by_the_bodys_own_count():
+    """THE SWITCHING (the row, as Aspect's of 1982): a card with two angles and a period `every` reads as a term carrying both, `at` giving the first angle for `every` intervals and the second for the next, periodic, by two division acts of Rule3; one `angle` with `every`, two `angles` without it, or neither is refused by name, as is a period below 1 at the check; on the shipped light clock the body's own set books the share of the angle in force at the body's count (64 of 100 under (2, 1) at the first interval, 0 under (1, 0) at the next, the pair along the axis whole to the first set); the loader admits the card's `angles` and `every` on a body in the law's form."""
+    switching = read_term(
+        {"polariser": {"angles": [[2, 1], [1, 0]], "every": 3, "sets": ["face", "at_well"]}}
+    )
+    assert switching == PolariserTerm((2, 1), ("face", "at_well"), ((2, 1), (1, 0)), 3)
+    assert [at(switching, count).angle for count in range(8)] == [(2, 1)] * 3 + [(1, 0)] * 3 + [
+        (2, 1)
+    ] * 2
+    assert at(read_term({"polariser": {"angle": [2, 1], "sets": ["face", "at_well"]}}), 7).angle == (
+        2,
+        1,
+    )
+    for entry in (
+        {"angle": [2, 1], "every": 2, "sets": ["face", "at_well"]},
+        {"angles": [[2, 1], [1, 0]], "sets": ["face", "at_well"]},
+        {"sets": ["face", "at_well"]},
+    ):
+        with pytest.raises(ValueError, match="one `angle`, or its two `angles` with its period `every`"):
+            read_term({"polariser": entry})
+    start = PolariserStart(np.zeros(2, dtype=np.int64), np.zeros(2, dtype=np.int64))
+    with pytest.raises(ValueError, match="two angles with its period `every` from 1 together"):
+        apply(PolariserTerm((2, 1), ("face", "at_well"), ((2, 1), (1, 0)), 0), start, PolariserOwn())
+    document = json.loads(LIGHT_CLOCK.read_bytes())
+    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+    simulation.polarisers = {0: PolariserTerm((2, 1), ("face", "at_well"), ((2, 1), (1, 0)), 1)}
+    at_well = simulation.detector_names.index("at_well")
+    live = planted_record(simulation, 1, np.zeros(simulation.shape), np.zeros(simulation.shape))
+    live.now[simulation.blocks[0].mask] = 5
+    booked = []
+    for simulation.tick in (0, 1, 2):
+        booked.append(simulation._polarised(live, at_well, 100))
+    assert booked == [64, 0, 64]
+    world = {
+        "shape": [16, 1, 1],
+        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
+        "ticks": 4,
+        "N": 64,
+        "universe": "examples/events/generated/universe.json",
+        "engine": "examples/events/engine_start.json",
+        "measured": [
+            {
+                "family": "matter",
+                "nodes": [{"node": [6, 0, 0], "count": 1}],
+                "momentum": [0, 0, 0],
+                "momentum_before": [0, 0, 0],
+                "polariser": {"angles": [[2, 1], [1, 0]], "every": 3, "sets": ["rest", "strip"]},
+            },
+            {
+                "family": "matter",
+                "nodes": [{"node": [12, 0, 0], "count": 1}],
+                "momentum": [0, 0, 0],
+                "momentum_before": [0, 0, 0],
+            },
+        ],
+        "detectors": [
+            {"name": "strip", "positions": [[6, 0, 0]]},
+            {"name": "rest", "positions": [[12, 0, 0]]},
+        ],
+    }
+    world["stamp"] = input_stamp(world)
+    loaded = DetectorLawSimulation(parse_nature_beam_world(world))
+    assert loaded.polarisers == {0: PolariserTerm((2, 1), ("rest", "strip"), ((2, 1), (1, 0)), 3)}

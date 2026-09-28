@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from event_universe.events.output import Ratio
-from event_universe.loader.world import BlockDefinition
+from event_universe.loader.world import BlockDefinition, EmitterDefinition
 
 
 @dataclass
@@ -168,6 +168,8 @@ class LiveRecord:
     # rotation in the table's unit, the loader's integer; 0 for a record with none (a
     # held part, a planted record without one)
     twist: int = 0
+    # THE PAIR RECORD (ALGEBRA.md #the-ladder): the ledger the two rows of a rank-2 record share, None on a record of rank 1
+    pair_record: PairRecord | None = None
 
     def arrays(self) -> Iterator[np.ndarray]:
         """The record's arrays on the GameBoard: its two levels and remainder, and the second level's where the family has one."""
@@ -262,6 +264,8 @@ class Block:
     # inverted with the body
     hold_carry: dict[tuple[object, ...], int] = field(default_factory=dict)
     hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
+    # THE CRYSTAL'S GIVING (features/crystal): the pair's emitter definition set at the crystal's click from the arriving record's giver and the crystal's clock; None on every other body
+    crystal_giving: EmitterDefinition | None = None
 
 
 @dataclass
@@ -292,3 +296,14 @@ class DetectorLawLayer:
         self.gathers: list[dict[str, object]] = []
         self.given = 0
         self.gathered = 0
+
+
+@dataclass
+class PairRecord:
+    """THE PAIR RECORD of rank 2 (ALGEBRA.md #the-ladder, THE PAIR RECORD and THE LABELS' CLICKS): the ledger two records of one giving share, the rows of the 2 x 2 level (the second row the first turned by a quarter); each label's two sets (the first polariser body's the rows' label, the second's the columns', each in the card's order: along, across); the interval's bookings summed over the rows and how many rows booked; which label has clicked."""
+
+    rows: tuple[int, int]
+    sides: tuple[tuple[int, ...], tuple[int, ...]]
+    pending: list[int]
+    booked: int = 0
+    clicked: list[bool] = field(default_factory=lambda: [False, False])
