@@ -423,7 +423,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 SourceWrites,
                 function(
                     SourceTerm(family, of, weight, scale, cap),
-                    SourceStart(self.shape, self._source_argument[of]),
+                    SourceStart(self.shape, self._source_argument[of], self._write_line),
                     SourceOwn(self._source_remainders[family]),
                 ),
             )

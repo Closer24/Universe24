@@ -1,4 +1,4 @@
-"""The write: a body's one act onto the GameBoard (ALGEBRA.md #the-primitives, A BODY'S WRITE IS ONE ACT): every write of a body is (kappa x q(Node) + r) div E at a Node of the body each interval, at both levels of the body's rotation (the second the read act once more, halved), Rule3's carried division act with the remainder r at that Node; q(Node) the body's own quantity there (the hold: the count declared there times the body's tensor (1, n_a / W, n_a n_b / W^2); the giving: the body's record's two levels at the shell; the recoil: the click's tally), kappa the row's factor, E the row's divisor (E_s at the hold, k at the giving, the wall L at the recoil, the rest of the hold's line at THE START); the four instances one act, and no number is the act's own."""
+"""The write: a family's one act onto the GameBoard (ALGEBRA.md #the-primitives, A FAMILY'S WRITE IS ONE ACT): every write into a family's level is (w x q(Node) + r) div E at a Node each interval, at both levels of the writer's rotation, Rule3's carried division act with the remainder r at that Node; q(Node) the writer's own quantity there (a body: the count declared there times its tensor (1, n_a / W, n_a n_b / W^2); a record: its quanta there; the giving: the body's record's two levels at the shell; the recoil: the click's tally), w the row's weight, E the written row's divisor (E_s at the hold and the source, the wall L at the recoil, the rest of the hold's line at THE START); the hold, the source, the giving, THE START and the recoil are its five instances, and no number is the act's own."""
 
 from __future__ import annotations
 
@@ -65,8 +65,13 @@ def apply(term: WriteTerm, start: WriteStart, own: WriteOwn) -> WriteWrites:
 DECLARATION = Declaration(
     name="the write",
     place="any",
-    reads=("a body's content M_k", "the row's wall", "the row's coefficient"),
-    writes=("a body's remainders",),
+    reads=(
+        "a body's content M_k",
+        "the record's D_i at its Nodes from the step's end (before, now, next of (i))",
+        "the row's wall",
+        "the row's coefficient",
+    ),
+    writes=("a body's remainders", "the record's remainder"),
     function=apply,
     section="ALGEBRA.md #the-primitives, the row 'the write'; #the-interval; #the-four-acts",
     word="any",
