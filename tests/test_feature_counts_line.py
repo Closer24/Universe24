@@ -104,9 +104,7 @@ def test_the_hold_sources_the_well_where_the_lines_quanta_are_and_no_corner_foll
         TOWARD.parent / "examples" / "events" / "experiments" / "bell" / "bell_a_b.json"
     )  # bodies by their Nodes
     simulation = DetectorLawSimulation(world)
-    block = next(
-        block for block in simulation.blocks if block.own is not None and block.definition.counts
-    )
+    block = next(b for b in simulation.blocks if b.own is not None and b.definition.counts)
     declared = sorted(simulation.node_sources(block.number, "content"))
     assert (
         declared == sorted(zip(block.definition.nodes, block.definition.counts, strict=True))
@@ -121,9 +119,8 @@ def test_the_hold_sources_the_well_where_the_lines_quanta_are_and_no_corner_foll
         block.counts, 1, axis=0
     )  # the quanta one Link along x, as the line would move them
     moved = simulation.node_sources(block.number, "content")
-    assert sorted(moved) == sorted(
-        (((x + 1) % simulation.shape[0], y, z), c) for (x, y, z), c in declared
-    )
+    width = simulation.shape[0]
+    assert sorted(moved) == sorted((((x + 1) % width, y, z), c) for (x, y, z), c in declared)
     simulation.step()
     assert (
         list(block.corner) == corner

@@ -107,10 +107,8 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         )
         nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
         assert (nxt, carried) == (total // wall, total % wall) and 0 <= carried < wall
-        assert rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1) == (
-            before,
-            remainder,
-        )
+        stepped_back = (before, remainder)
+        assert rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1) == stepped_back
     generator = np.random.default_rng(9)
     shape = (4, 3, 2)
     num = np.full(shape, 800, dtype=np.int64)
