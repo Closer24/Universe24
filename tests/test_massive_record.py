@@ -544,8 +544,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     simulation, other = DetectorLawSimulation(world), DetectorLawSimulation(beside)
     identity: int | None = None
     given: int | None = None
-    reached, compared = None, 0
-    body = simulation.blocks[1].mask
+    reached, compared, body = None, 0, simulation.blocks[1].mask
     for tick in range(1, 301):
         simulation.step()
         other.step()

@@ -55,8 +55,7 @@ def levels_of(live) -> Levels:
 
 def centroid(weights: np.ndarray) -> float:
     """The centroid along x of a non-negative weight over the board, exact in Python integers."""
-    x = np.arange(weights.shape[0]).reshape(-1, 1, 1)
-    found = weights.astype(object)
+    x, found = np.arange(weights.shape[0]).reshape(-1, 1, 1), weights.astype(object)
     return int((x * found).sum()) / int(found.sum())
 
 
@@ -76,15 +75,13 @@ def test_the_shipped_resting_body_keeps_its_count_under_the_loops_own_record():
     simulation = shipped_world("lorentz_rest.json")
     block = simulation.blocks[0]
     weight = simulation.kind_wall(block.family, block.definition.pair)
-    wrap = simulation.kind_wrap[block.family]
-    count = block.mask.astype(np.int64)
+    wrap, count = simulation.kind_wrap[block.family], block.mask.astype(np.int64)
     quanta = int(count.sum())
     norm = int(block.own.norm) // quanta
     term = CountTerm(norm, weight, simulation.world.amplitude_bound, quanta)
     remainder = np.full_like(count, norm // 2)
     origin = norm * count.astype(object) + remainder.astype(object)
-    total = int(origin.sum())
-    swing = 0
+    total, swing = int(origin.sum()), 0
     for _ in range(200):
         simulation.step()
         here = levels_of(block.own)
@@ -113,8 +110,7 @@ def test_the_hold_sources_the_well_where_the_lines_quanta_are_and_no_corner_foll
     block.counts = np.roll(
         block.counts, 1, axis=0
     )  # the quanta one Link along x, as the line would move them
-    moved = simulation.node_sources(block.number, "content")
-    width = simulation.shape[0]
+    moved, width = simulation.node_sources(block.number, "content"), simulation.shape[0]
     assert sorted(moved) == sorted((((x + 1) % width, y, z), c) for (x, y, z), c in declared)
     simulation.step()
     assert list(block.corner) == corner and np.array_equal(block.mask, mask)
@@ -126,8 +122,7 @@ def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_gr
     simulation = shipped_world("lorentz_moving.json")
     block = simulation.blocks[0]
     family, (num, den) = block.family, block.definition.kind
-    weight = simulation.kind_wall(family, block.definition.pair)
-    wrap = simulation.kind_wrap[family]
+    weight, wrap = simulation.kind_wall(family, block.definition.pair), simulation.kind_wrap[family]
     reads, self_coefficient, wall = coefficients(num, den, simulation.world.node_clock, 0)
     k = 2 * math.pi / 8
     omega = math.acos((reads[0] * (2 * math.cos(k) + 4) + self_coefficient) / (2 * wall))
@@ -154,8 +149,7 @@ def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_gr
     term = CountTerm(norm, weight, simulation.world.amplitude_bound, quanta)
     total = int((norm * count.astype(object) + remainder.astype(object)).sum())
     count_start = centroid(count)
-    record_start = centroid(now.astype(object) ** 2 + im_now.astype(object) ** 2)
-    intervals = 600
+    record_start, intervals = centroid(now.astype(object) ** 2 + im_now.astype(object) ** 2), 600
     for _ in range(intervals):
         simulation._advance(live)
         here = levels_of(live)
@@ -171,10 +165,8 @@ def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_gr
 
 
 def test_the_count_is_conserved_exactly_and_the_inverse_undoes_the_line():
-    generator = np.random.default_rng(3)
-    shape = (4, 3, 2)
-    amplitude = 1 << 8
-    norm, weight = 5000, 7
+    generator, shape = np.random.default_rng(3), (4, 3, 2)
+    amplitude, norm, weight = 1 << 8, 5000, 7
     term = CountTerm(norm, weight, amplitude, 1 << 21)  # each Node holds what it gives:
     count = generator.integers(1 << 20, 1 << 21, size=shape).astype(np.int64)
     remainder = generator.integers(0, norm, size=shape).astype(np.int64)
