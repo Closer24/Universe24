@@ -546,6 +546,7 @@ def train_of(
     mask: np.ndarray,
     light_rule: tuple[np.ndarray, np.ndarray, int],
     bound_charge: np.ndarray,
+    paces: np.ndarray,
     divisor: int,
     action: int,
     period: int,
@@ -579,7 +580,9 @@ def train_of(
             now_j = np.asarray(arrival(now_l, axis, side, wrap[axis]))[at]
             before_j = np.asarray(arrival(before_l, axis, side, wrap[axis]))[at]
             flux = now_j * before_l[at] - before_j * now_l[at]
-            outward += int(flux[flux > 0].sum()) * wall_l
+            # in the form's units: the flux over the pace squared at the Node (the form's Node term is over p^2)
+            positive = np.where(flux > 0, flux, 0).astype(object)
+            outward += int((positive * wall_l // (paces[at].astype(object) ** 2)).sum())
         if outward >= action:
             return {"intervals": interval, "periods": [interval, period], "flux": outward, "peak": peak}
     return {
