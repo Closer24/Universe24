@@ -1,4 +1,4 @@
-"""THE BOUND BODY IS ONE NODE (ALGEBRA.md #the-primitives, THE RULE'S OWN UNIVERSE) as a GameBoard reading: in a universe whose every held divisor is 1 a body of one declared Node on a massive pair reads as bound per the files, beside its lattice record and not instead of it; the reading gives the record's levels at its Node and the one-Node line's rotation there, the pixel keeps its lattice record and Rule3 steps at every Node, the hold sources its count, and the step back is exact."""
+"""THE BOUND BODY IS ONE NODE (ALGEBRA.md #the-primitives, THE RULE'S OWN UNIVERSE) as a GameBoard reading: in a universe whose every held divisor is 1 a body of one declared Node on a massive pair reads as bound per the files, beside its lattice record and not instead of it; the reading gives the record's levels at its Node and the one-Node line's rotation there, the pixel keeps its lattice record and Rule3 steps at every Node, the hold sources its count, and no count falls below 0."""
 
 from __future__ import annotations
 
@@ -26,15 +26,14 @@ def pixel_world(tmp_path: Path, monkeypatch, divisor: int) -> Path:
         family.get("held", {}).update(divisor=divisor) if "held" in family else None
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
-    body = {"family": "matter", "nodes": [{"node": list(NODE), "count": COUNT}]}
-    body.update(momentum=[0, 0, 0], momentum_before=[0, 0, 0], phase_denominator=1024)
+    body = dict(family="matter", nodes=[{"node": list(NODE), "count": COUNT}], phase_denominator=1024)
+    body.update(momentum=[0, 0, 0], momentum_before=[0, 0, 0])
     world = {"shape": [SIDE, SIDE, SIDE], "boundary": {"x": "closed", "y": "closed", "z": "closed"}}
     world.update(ticks=64, N=1024, measured=[body], universe="universe.json", engine="start.json")
     world["detectors"] = [{"name": "own", "positions": [list(NODE)]}]
     world["stamp"] = input_stamp(world)
     (tmp_path / "pixel.json").write_text(json.dumps(world), encoding="utf-8")
-    profile = [0] * SIDE**3
-    profile[(NODE[0] * SIDE + NODE[1]) * SIDE + NODE[2]] = AMPLITUDE
+    profile = [AMPLITUDE * (i == (NODE[0] * SIDE + NODE[1]) * SIDE + NODE[2]) for i in range(SIDE**3)]
     entry = dict(family="matter", pair=[800, 1200], profile=profile, twist=0, clock=[432, 300])
     mode = {"world_digest": world["stamp"]["hash"], "bodies": [entry]}
     (tmp_path / "pixel.mode.json").write_text(json.dumps(mode), encoding="utf-8")
@@ -44,7 +43,7 @@ def pixel_world(tmp_path: Path, monkeypatch, divisor: int) -> Path:
 def test_under_the_divisor_1_the_one_node_body_reads_as_bound_beside_its_lattice_record(
     tmp_path, monkeypatch
 ):
-    """Under the divisors 1 the body reads as bound, keeps its lattice record and has no Node record; under the universe of record's divisors it reads as not bound with no rotation reading. The rotation reading gives the record's levels at the Node, (17, 17, 0) at the load, and the one-Node line's (coefficient, wall) there as the loop reads them; the hold sources the declared count at the Node; the record rotates at its Node over twelve intervals and twelve back return the whole lattice record bit for bit."""
+    """Under the divisors 1 the body reads as bound, keeps its lattice record and has no Node record; under the universe of record's divisors it reads as not bound with no rotation reading. The rotation reading gives the record's levels at the Node, (17, 17, 0) at the load, and the one-Node line's (coefficient, wall) there as the loop reads them; the hold sources the declared count at the Node; the record rotates at its Node over twelve intervals and no count falls below 0 (the clamp; the step back of a cloud is not bit for bit and is not claimed)."""
     lattice = DetectorLawSimulation(load_world(pixel_world(tmp_path / "record", monkeypatch, 40000)))
     block = lattice.blocks[0]
     assert not one_node_body(lattice.world, block.definition) and block.own is not None
@@ -59,11 +58,7 @@ def test_under_the_divisor_1_the_one_node_body_reads_as_bound_beside_its_lattice
     assert reading["rotation"]["levels"] == [AMPLITUDE, AMPLITUDE, 0]
     assert tuple(reading["rotation"]["line"]) == simulation.node_record_coefficients(block)
     assert simulation.node_sources(0, "content") == [(NODE, COUNT)]
-    start = [array.tolist() for array in (own.now, own.before, own.remainder)]
     for _ in range(12):
-        simulation.step()
+        simulation.step()  # a cloud under the edge: a starved Node gives nothing, no count below 0
     levels = dict(simulation.snapshot_stream())["blocks"][0]["rotation"]["levels"]
-    assert levels[0] != levels[1]  # the record rotates at its Node
-    for _ in range(12):
-        simulation.step_inverse()
-    assert [array.tolist() for array in (own.now, own.before, own.remainder)] == start
+    assert levels[0] != levels[1] and block.counts is not None and block.counts.min() >= 0

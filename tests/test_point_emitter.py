@@ -61,8 +61,7 @@ def test_the_window_writes_the_bodys_rotation_at_both_levels():
 
 def test_the_window_inverts_bit_for_bit():
     document = point_world(1, ticks=400)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    opened = None
+    simulation, opened = DetectorLawSimulation(parse_nature_beam_world(document)), None
     for _ in range(400):
         simulation.step()
         block = simulation.blocks[0]

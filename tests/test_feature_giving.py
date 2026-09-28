@@ -22,8 +22,7 @@ from event_universe.features.giving import (
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
-TERM = GivingTerm(coupling=(3, 1), action=1000, family=0)
-NO_TALLY = (0, 0, 0)
+TERM, NO_TALLY = GivingTerm(coupling=(3, 1), action=1000, family=0), (0, 0, 0)
 CLOSED = GivingOwn(None, 0, NO_TALLY)
 
 

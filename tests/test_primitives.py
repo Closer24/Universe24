@@ -53,8 +53,7 @@ def test_a_plane_rotation_keeps_the_norm_before_the_division_and_inverts_exactly
         back, before = P.rotate_plane_inverse(levels, triple, after)
         assert back == rotated and before == remainders  # ALGEBRA.md #the-transport
     # the quaternion's block, the same identities with four remainders
-    quadruple = (1, 2, 2, 4, 5)
-    block = (11, -7, 5, 3)
+    quadruple, block = (1, 2, 2, 4, 5), (11, -7, 5, 3)
     for remainders in ((0, 0, 0, 0), (1, 2, 3, 4)):
         rotated, after = P.rotate_quaternion(block, quadruple, remainders)
         assert all(0 <= rho < 5 for rho in after)
@@ -85,8 +84,7 @@ def test_the_transport_composes_the_generators_and_inverts_per_node():
     representation.check()
     assert representation.levels == 6 and representation.remainder_count == 6 + 4 + 4
     arrived = (120, -45, 300, 7, -88, 61)
-    angles = (2, -1, 1)
-    remainders = tuple(range(14))
+    angles, remainders = (2, -1, 1), tuple(range(14))
     remainders = tuple(r % 5 for r in remainders)
     levels, after = representation.transport(arrived, angles, remainders)
     assert len(levels) == 6 and len(after) == 14 and all(0 <= rho < 13 for rho in after)

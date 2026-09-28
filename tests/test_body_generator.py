@@ -38,8 +38,7 @@ GAMMA, KIND, OPEN = 10_000, (800, 1200), (False, False, False)
 
 
 def counted_cube(box: int, side: int, count: int) -> np.ndarray:
-    counts = np.zeros((box, box, box), dtype=np.int64)
-    low = (box - side) // 2
+    counts, low = np.zeros((box, box, box), dtype=np.int64), (box - side) // 2
     counts[low : low + side, low : low + side, low : low + side] = count
     return counts
 
@@ -56,8 +55,7 @@ def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np
     on_site = 2 - 2 * (den - num) * (p0 / GAMMA) ** 2 / den - 2 * num * (p / GAMMA) ** 2 / den
     rows, cols, vals = [], [], []
     for axis in range(3):
-        j = np.roll(idx, -1, axis=axis)
-        bond = num * p * np.roll(p, -1, axis=axis) / (3 * den * GAMMA**2)
+        j, bond = np.roll(idx, -1, axis=axis), num * p * np.roll(p, -1, axis=axis) / (3 * den * GAMMA**2)
         rows += [idx.ravel(), j.ravel()]
         cols += [j.ravel(), idx.ravel()]
         vals += [bond.ravel(), bond.ravel()]
@@ -152,14 +150,12 @@ def test_the_two_levels_and_the_amplitude_from_the_count_and_the_norm():
 def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
     """At (1, 0, 1) the twisted iteration is the resting mode bit for bit and at (99, 20, 101) its rotation within the rest's (the gauge); the moving body of (e): the packet's velocity bisected to the named one, both senses."""
     counts = counted_cube(12, 4, 3000)
-    rest = bound_mode(counts, KIND, GAMMA)
-    still = moving_mode(counts, KIND, GAMMA, AT_REST)
+    rest, still = bound_mode(counts, KIND, GAMMA), moving_mode(counts, KIND, GAMMA, AT_REST)
     assert np.array_equal(still.re, rest.profile) and not still.im.any()
     assert still.rotation == rest.rotation and still.iterations == rest.iterations
     long_counts = np.zeros((24, 12, 12), dtype=np.int64)
     long_counts[10:14, 4:8, 4:8] = 3000
-    long_rest = bound_mode(long_counts, KIND, GAMMA)
-    triple = (99, 20, 101)
+    long_rest, triple = bound_mode(long_counts, KIND, GAMMA), (99, 20, 101)
     moving = moving_mode(long_counts, KIND, GAMMA, triple)
     assert Fraction(2 * KIND[0], KIND[1]) < moving.rotation < long_rest.rotation
     # the stop is a two-cycle of the rounding: one more iteration returns a profile one unit away at most

@@ -48,8 +48,7 @@ def own_of(simulation: DetectorLawSimulation, family: int) -> SignedReadOwn:
 
 def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, ...]) -> int:
     """The trace's line of the pace's read at one Node (ALGEBRA.md #the-interval): per read the family, the signed weight, the level, by plain or by sign with q, the product; p_0 = Gamma - the sum."""
-    q = simulation.family_charge[family]
-    products = []
+    q, products = simulation.family_charge[family], []
     for other, weight, by, _twist in simulation.families[family].reads:
         level = int(simulation.node_level[other][node])
         products.append(weight * level if by == "plain" else -q * weight * level)
@@ -134,8 +133,7 @@ def test_a_hill_enters_at_the_floor_and_the_axis_contents_keep_the_pace_above_ze
 def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pace_above_zero():
     """For den = num the floor keeps every hill at Gamma (read as 0); a content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
     massless = SignedReadTerm(((1, 1, signed_read.BY_PLAIN),), 0, (1, 1), GAMMA)
-    own = SignedReadOwn(2, "light", 3)
-    shape = (2, 2, 2)
+    own, shape = SignedReadOwn(2, "light", 3), (2, 2, 2)
     hollow = np.zeros(shape, dtype=np.int64)
     hollow[0, 1, 0] = -1
     assert int(apply(massless, SignedReadStart(shape, {1: hollow}, None), own).content[0, 1, 0]) == 0
@@ -151,10 +149,8 @@ def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pa
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a phase-2 read takes D_i = now^2 - next x before as handed in, times the weight, a hill at the floor 0."""
-    shape = (2, 1, 1)
-    a = np.array([[[5]], [[7]]], dtype=np.int64)
-    b = np.array([[[1]], [[-2]]], dtype=np.int64)
-    c = np.array([[[3]], [[0]]], dtype=np.int64)
+    shape, a = (2, 1, 1), np.array([[[5]], [[7]]], dtype=np.int64)
+    b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
     term = SignedReadTerm(
         ((1, 2, signed_read.BY_PLAIN), (2, -3, signed_read.BY_PLAIN), (3, 4, signed_read.BY_SIGN)),
         -1,
@@ -168,8 +164,7 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     )
     assert not silent.content.any() and silent.content.shape == shape
     before = np.array([[[3]], [[-4]]], dtype=np.int64)
-    now = np.array([[[5]], [[6]]], dtype=np.int64)
-    after = np.array([[[7]], [[2]]], dtype=np.int64)
+    now, after = np.array([[[5]], [[6]]], dtype=np.int64), np.array([[[7]], [[2]]], dtype=np.int64)
     invariant = now * now - after * before  # formed by the loop from the last step's three levels
     assert invariant.tolist() == [[[25 - 21]], [[36 + 8]]]
     sourced = SignedReadTerm(((5, -2, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
@@ -180,8 +175,7 @@ def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
 def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_by_name():
     """A read by a word other than plain or sign is refused naming the family and the word; a read whose reach leaves int64 is refused before any product; two reads whose reach together leaves int64 too."""
     shape = (2, 1, 1)
-    level = np.array([[[3]], [[-4]]], dtype=np.int64)
-    own = SignedReadOwn(0, "matter", 0)
+    level, own = np.array([[[3]], [[-4]]], dtype=np.int64), SignedReadOwn(0, "matter", 0)
     with pytest.raises(ValueError, match="the read of family 1 is by 'signed': by 'plain' or by 'sign'"):
         apply(
             SignedReadTerm(((1, 1, "signed"),), 1, (800, 850), GAMMA),

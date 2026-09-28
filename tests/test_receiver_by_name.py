@@ -91,8 +91,7 @@ def test_one_line_per_record_at_the_receivers_rung_the_permutation_and_the_cells
         seen: Spy = {}
         simulation, lines = run(document, 500, seen=seen)
         screen = simulation.detector_names.index("screen")
-        beside = simulation.detector_names.index("beside")
-        own = simulation.blocks[0].detector
+        beside, own = simulation.detector_names.index("beside"), simulation.blocks[0].detector
         assert simulation.receiver_detector == {0: screen} and simulation.has_receiver
         found = gathers(lines)
         assert len(found) >= 3, found

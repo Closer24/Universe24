@@ -9,8 +9,7 @@ import pytest
 from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE = "src/event_universe"
-GATES = load_file("engine_gates", ROOT / "tools" / "engine_gates.py")
+PACKAGE, GATES = "src/event_universe", load_file("engine_gates", ROOT / "tools" / "engine_gates.py")
 BASE = load_file("merge_base", ROOT / "tools" / "merge_base.py")
 
 
