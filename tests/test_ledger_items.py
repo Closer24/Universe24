@@ -10,7 +10,7 @@ import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import parse_nature_beam_world
-from tests.running import run_world, stamped
+from tests.running import lines_of, run_world, stamped
 from tests.worlds import emitter_world, family_entry
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -104,10 +104,11 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     lines: list[dict] = []
     simulation.record = lines.append
-    for _ in range(90):  # the first giving at 69 (its light toward +x) with its window of 15 closed
+    # the first window closed (its light toward +x): the horizon the window the engine writes
+    while not lines_of(lines, "giving"):
         simulation.step()
     kicked = list(simulation.blocks[0].momentum)
-    (first,) = [line for line in lines if line.get("event") == "giving"]
+    (first,) = lines_of(lines, "giving")
     unit, wall = document["momentum_unit"], simulation.recoil_wall
     wavelength = (
         2 * document["N"] * document["universe"][0]["clock"][1] // document["universe"][0]["clock"][0]
@@ -115,8 +116,10 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
     period = simulation.world.measured[0].block.emitter.period
     kick = 3 * unit * period * (wall // wavelength) // wall  # 3 Q P_body (L div lambda_q) div L
     assert kicked == [-first["momentum"][0] * kick, 0, 0] and kick > 0  # opposite to the given light
-    for _ in range(90, STEPS):  # the second giving at 97, its light toward -x: the kicks cancel
+    # the second window closed, its light toward -x: the kicks cancel
+    while len(lines_of(lines, "giving")) < 2:
         simulation.step()
+        assert simulation.tick <= 2 * first["tick"] + STEPS
     givings = [line["momentum"] for line in lines if line.get("event") == "giving"]
     assert len(givings) == 2 and all(
         momentum[1:] == [0, 0] for momentum in givings
