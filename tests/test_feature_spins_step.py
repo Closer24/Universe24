@@ -35,10 +35,8 @@ TURN, NONE, ZERO = ((1, 4), (3, 4)), (None,) * 6, (0,) * 6
 def planted(simulation: DetectorLawSimulation, parts, block) -> tuple[int, int]:
     """The family's z part planted at +A at the body's Node + e_y and -A at its Node - e_y, the curl's x component at the centre; the body's wall and, after one interval, the curl read from the fields as the interval leaves them."""
     centre = simulation._window_centre(block)
-    amplitude = 1 << 20
-    z_part = parts[3]
-    above = (centre[0], centre[1] + 1, centre[2])
-    below = (centre[0], centre[1] - 1, centre[2])
+    amplitude, z_part = 1 << 20, parts[3]
+    above, below = (centre[0], centre[1] + 1, centre[2]), (centre[0], centre[1] - 1, centre[2])
     z_part.now[above] = amplitude
     z_part.before[above] = amplitude
     z_part.now[below] = -amplitude
@@ -48,8 +46,7 @@ def planted(simulation: DetectorLawSimulation, parts, block) -> tuple[int, int]:
     wall = simulation.wall_of(block)
     simulation.step()
     y_part = parts[2]
-    ahead = (centre[0], centre[1], centre[2] + 1)
-    behind = (centre[0], centre[1], centre[2] - 1)
+    ahead, behind = (centre[0], centre[1], centre[2] + 1), (centre[0], centre[1], centre[2] - 1)
     z_now, y_now = z_part.now, y_part.now
     curl_x = int(z_now[above]) - int(z_now[below]) - int(y_now[ahead]) + int(y_now[behind])
     return wall, curl_x
@@ -133,8 +130,7 @@ def test_the_inverse_undoes_the_advance_exactly():
 
 def test_the_refusals_by_name():
     term = SpinStepTerm((0, 0, 0), GAMMA)
-    own = SpinStepOwn({}, {})
-    zeros = (ZERO, ZERO, ZERO)
+    own, zeros = SpinStepOwn({}, {}), (ZERO, ZERO, ZERO)
     with pytest.raises(ValueError, match="act is one of"):
         apply(term, SpinStepStart("the hop", (), (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)
     with pytest.raises(ValueError, match="from 1"):

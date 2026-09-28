@@ -49,8 +49,7 @@ def own_of(simulation: DetectorLawSimulation, family: int) -> SignedReadOwn:
 
 def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, ...]) -> int:
     """The trace's line of the pace's read at one Node (ALGEBRA.md #the-interval): per read the family, the signed weight, the level, by plain or by sign with q, the product; p_0 = Gamma - the sum."""
-    q = simulation.family_charge[family]
-    products = []
+    q, products = simulation.family_charge[family], []
     for other, weight, by, _twist in simulation.families[family].reads:
         level = int(simulation.node_level[other][node])
         products.append(weight * level if by == "plain" else -q * weight * level)
@@ -126,8 +125,7 @@ def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edg
         floored = apply(term, hill(depth), own)
         assert int(floored.content[1, 1, 1]) == 0 and int(floored.content[0, 0, 0]) == 0
     # the same hill on the axis contents alone is caught on that axis
-    flat = np.zeros(SHAPE, dtype=np.int64)
-    axis = np.zeros(SHAPE, dtype=np.int64)
+    flat, axis = np.zeros(SHAPE, dtype=np.int64), np.zeros(SHAPE, dtype=np.int64)
     axis[2, 0, 1] = -153
     with pytest.raises(RuntimeError, match=r"axis 2\) is 10153 at the Node \(2, 0, 1\)"):
         apply(
@@ -140,8 +138,7 @@ def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edg
 def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pace_above_zero():
     """For den = num the edge is p <= Gamma exactly, and the floor keeps every hill at it (read as 0); a content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
     massless = SignedReadTerm(((1, 1, signed_read.BY_PLAIN),), 0, (1, 1), GAMMA)
-    own = SignedReadOwn(2, "light", 3)
-    shape = (2, 2, 2)
+    own, shape = SignedReadOwn(2, "light", 3), (2, 2, 2)
     hollow = np.zeros(shape, dtype=np.int64)
     hollow[0, 1, 0] = -1
     assert int(apply(massless, SignedReadStart(shape, {1: hollow}, None), own).content[0, 1, 0]) == 0
@@ -157,8 +154,7 @@ def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pa
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():
     """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a phase-2 read takes D_i = now^2 - next x before as handed in, times the weight, a hill at the floor 0."""
-    shape = (2, 1, 1)
-    a = np.array([[[5]], [[7]]], dtype=np.int64)
+    shape, a = (2, 1, 1), np.array([[[5]], [[7]]], dtype=np.int64)
     b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
     term = SignedReadTerm(
         ((1, 2, signed_read.BY_PLAIN), (2, -3, signed_read.BY_PLAIN), (3, 4, signed_read.BY_SIGN)),

@@ -22,11 +22,9 @@ from event_universe.features.source import (
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
-ROOT = Path(__file__).resolve().parents[1]
-SHAPE = (2, 3, 1)
+ROOT, SHAPE = Path(__file__).resolve().parents[1], (2, 3, 1)
 SCALE = 18_910  # E_s of the run files (D_peak 1,891,072 div 100)
-PEAK = 1_891_072
-PLAIN = SourceTerm(target=3, of=2, weight=1, scale=SCALE)
+PEAK, PLAIN = 1_891_072, SourceTerm(target=3, of=2, weight=1, scale=SCALE)
 TABLE = SourceTerm(target=4, of=2, weight=1, scale=SCALE, cap=60)
 
 
@@ -54,8 +52,7 @@ def test_the_line_on_the_run_files_numbers():
 def test_the_remainder_is_carried_so_the_sum_of_the_counts_is_the_exact_floor():
     """Over k intervals with the same D_i the counts sum to floor(k D_i / E_s), never less: at the peak 100 per interval plus one more every 263 intervals (72 x 263 = 18,936 > 18,910); on a Node with D_i = 7 the first count comes at the 2702nd interval."""
     start = SourceStart(SHAPE, argument(PEAK, 7, 0, 0, 0, 0))
-    own = zeros()
-    total = np.zeros(SHAPE, dtype=np.int64)
+    own, total = zeros(), np.zeros(SHAPE, dtype=np.int64)
     for k in range(1, 3001):
         writes = apply(PLAIN, start, own)
         total += writes.counts
@@ -84,8 +81,7 @@ def test_the_inverse_returns_the_start_bit_for_bit():
             argument(72, 3, 0, 500, 0, 976) if term.cap is None else argument(0, 0, 0, 0, 0, 0)
         )
         level = argument(10, -20, 30, 0, 5, 6)
-        writes = apply(term, start, own)
-        after = level.copy()
+        writes, after = apply(term, start, own), level.copy()
         after[writes.at] += writes.integers[writes.at]
         undo, before = invert(term, start, SourceOwn(writes.remainders), writes)
         restored = after.copy()

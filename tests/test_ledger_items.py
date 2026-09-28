@@ -117,8 +117,7 @@ def test_5b_the_loads_bound_holds_at_run_time_no_level_leaves_the_integer_range(
     """A run-time overflow bound: on a shipped world every level and remainder the run writes stays within 2^62 in magnitude at every interval, so no int64 wrap can pass unseen (record 2185; the load's bound of world.py checks the start alone)."""
     document = emitter_world(stock=2, ticks=STEPS)
     stamped(document)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    bound = 1 << 62
+    simulation, bound = DetectorLawSimulation(parse_nature_beam_world(document)), 1 << 62
     for _ in range(STEPS):
         simulation.step()
         for live in simulation.records.values():

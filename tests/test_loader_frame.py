@@ -18,8 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTER = discover()  # the folders' cards, the keys they declare at "a body" among them
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
 # one sourced entry (the word `sourced`, a card's key), as the retired source folder wrote it
-FRAME = ROOT / "src" / "event_universe" / "loader" / "frame.py"
-FILE = "universe.json"
+FRAME, FILE = ROOT / "src" / "event_universe" / "loader" / "frame.py", "universe.json"
 
 
 def shipped() -> dict:
@@ -142,8 +141,7 @@ def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
 def test_every_body_and_detector_of_a_world_in_todays_form_passes_the_frames_schemas():
     """Every body and every detector of the repository's world files in today's form (a body by its position: the rule tests' own `tests/light_clock.json`; a world of record in the law's form declares its bodies by their Nodes and is read by the law's-form schema) passes the frame with the families known; a stock names a family, the checked lists are tuples."""
     families = tuple(entry["name"] for entry in shipped()["families"])
-    context = Context(families)
-    count = 0
+    context, count = Context(families), 0
     paths = [
         ROOT / "tests" / "light_clock.json",
         *sorted((ROOT / "examples" / "events").glob("**/*.json")),

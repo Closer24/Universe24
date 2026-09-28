@@ -31,8 +31,7 @@ STEPS = 200
 
 
 def random_names(names: list[str], seed: int) -> dict[str, str]:
-    rng = random.Random(seed)
-    fresh = {}
+    rng, fresh = random.Random(seed), {}
     for name in names:
         fresh[name] = "".join(rng.choice(string.ascii_lowercase) for _ in range(9))
     return fresh
@@ -155,8 +154,7 @@ def test_d_an_attribute_added_in_the_file_alone_gives_its_effect_a_hill_on_gravi
     document = emitter_world(stock=1, ticks=20)
     matter = next(family for family in families_of(document) if family["name"] == "matter")
     assert matter["reads"], "the test world's matter family reads a held family"
-    hollow = json.loads(json.dumps(document))
-    hill = json.loads(json.dumps(document))
+    hollow, hill = json.loads(json.dumps(document)), json.loads(json.dumps(document))
     for read in next(f for f in families_of(hill) if f["name"] == "matter")["reads"]:
         read["weight"] = -int(read["weight"])
     stamped(hill)
@@ -192,8 +190,7 @@ def constants(tree: ast.AST) -> list[tuple[int, object]]:
 def test_e1_no_family_name_of_the_universe_is_a_constant_of_the_engine():
     """(e) The closed engine (records 2172 to 2174): a family's name from universe.json appears nowhere in the engine's code as a string constant (docstrings and comments aside; a name that is also an attribute key, such as `charge`, is the key's word and is left out)."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    names = {family["name"] for family in universe["families"]}
-    attribute_keys = {"charge", "clicks"}
+    names, attribute_keys = {family["name"] for family in universe["families"]}, {"charge", "clicks"}
     checked = names - attribute_keys
     assert checked
     offending = []
@@ -223,8 +220,7 @@ def test_e2_no_integer_of_the_universe_is_a_literal_of_the_engine():
 def world_key_defaults() -> list[str]:
     """Every `<obj>.get("<key>", <default>)` of the loader with a default that is not None: a key of the files with a default written in the code."""
     loader = ENGINE / "events" / "world.py"
-    tree = ast.parse(loader.read_text(encoding="utf-8"))
-    found = []
+    tree, found = ast.parse(loader.read_text(encoding="utf-8")), []
     for node in ast.walk(tree):
         if (
             isinstance(node, ast.Call)

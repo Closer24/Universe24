@@ -29,6 +29,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/after_step.py": "the acts after the step the engine hooks per record: the hand's check at a click, the lifetime's end, the polariser's turn and its set's share, the polariser bodies' terms; functions taking the engine, bound as its methods",
     "events/body_language.py": "the recoil written into the body's own record and told as one event line beside the click; integer turns and sums, no arithmetic of its own",
     "events/record_well.py": "the well of a body with a record: its record's one interval and its form laid after it, D_i div T by the source's act through the write's line; no arithmetic of its own beyond the count",
+    "events/count_once.py": "the count read once: whether the well is the count and the held level written once; no arithmetic",
     "events/one_node.py": "the bound body of one Node: derived from the files (one Node, a massive pair, the divisors 1) and its record made from its mode's two levels at its Node; no arithmetic",
     "events/inverse.py": "the inverse's returns: the interval's bookings at the detectors' Ports and the body's clock taken back; integer sums and differences, no arithmetic of its own",
     "events/momentum_reading.py": "the momentum as a reading of the record's current: the count's line's booking products summed in whole integers, the division act to the nearest unit",
@@ -88,8 +89,7 @@ NUMPY_FORBIDDEN = {
     "arctan2",
     "hypot",
 }
-BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int"}
-ROOT_NAMES = {"isqrt", "integer_root"}
+BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integer_root"}
 
 # Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
@@ -201,8 +201,7 @@ def numpy_violations(tree: ast.AST) -> list[str]:
                 found.append(f"np.{'.'.join(chain)} at line {node.lineno}")
         if not isinstance(node, ast.Call):
             continue
-        callee = node.func
-        keywords = {k.arg for k in node.keywords}
+        callee, keywords = node.func, {k.arg for k in node.keywords}
         if isinstance(callee, ast.Name) and callee.id == "float":
             found.append(f"float() at line {node.lineno}")
         if isinstance(callee, ast.Attribute):

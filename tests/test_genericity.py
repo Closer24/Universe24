@@ -34,8 +34,7 @@ INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"]}
 
 def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
     """The world on the drawn universe: the emitter test world's chain of 80 with its body of the drawn body family (the shipped kind and well, the seed on the mode as the template carries it), its emitter giving the drawn given family to the screen of three receivers, or the body alone where the draw has one family."""
-    roles = drawn["roles"]
-    document = copy.deepcopy(TEMPLATE)
+    roles, document = drawn["roles"], copy.deepcopy(TEMPLATE)
     for key in ("node_clock", "amplitude_bound", "momentum_unit"):
         document.pop(key, None)
     document["universe"] = "universe.json"
@@ -130,8 +129,7 @@ def state_reading(module, simulation: DetectorLawSimulation) -> dict[str, Any]: 
 def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tmp_path, monkeypatch):
     if seed in KEPT:
         pytest.xfail(KEPT[seed])
-    module = recorder()
-    drawn = draw(seed)
+    module, drawn = recorder(), draw(seed)
     families, document = drawn["families"], world_of(drawn)
     # the draw loads and runs (every family of the universe on, record 2075)
     placed = place(tmp_path, monkeypatch, families, document)
@@ -187,8 +185,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
         (read_coefficient, _, _), self_coefficient, wall = coefficients(
             num.astype(object), den.astype(object), simulation_d.node_clock, level.astype(object)
         )
-        read = reads_of(simulation_d, body_family)(before).astype(object)
-        total = Fraction(0)
+        read, total = reads_of(simulation_d, body_family)(before).astype(object), Fraction(0)
         for node in zip(*np.nonzero(now.astype(object) | before.astype(object) | read), strict=True):
             a, b = int(now[node]), int(before[node])
             total += Fraction(
@@ -198,8 +195,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
             total -= Fraction(1, 3) * a * int(read[node])
         return total
 
-    states = [(live.now.copy(), live.before.copy(), live.remainder.copy())]
-    levels = [level_in_force()]
+    states, levels = [(live.now.copy(), live.before.copy(), live.remainder.copy())], [level_in_force()]
     for _ in range(INTERVALS):
         simulation_d.step()
         (live,) = simulation_d.records.values()
@@ -220,8 +216,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
                 * (int(prev_remainder[node]) - int(remainder[node])),
                 3 * int(read_coefficient[node]),
             )
-        value = form(now, before, levels[t - 1])
-        previous = form(prev_now, prev_before, levels[t - 1])
+        value, previous = form(now, before, levels[t - 1]), form(prev_now, prev_before, levels[t - 1])
         assert value - previous == drift, (seed, t)
     # (e) running backward returns the start in the world of the Nodes, bit for bit
     simulation_e = DetectorLawSimulation(parse_nature_beam_world(placed))

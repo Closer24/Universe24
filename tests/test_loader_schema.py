@@ -151,14 +151,12 @@ def context_of(entries: list[dict]) -> Context:
 def test_the_shipped_universe_and_a_sourced_entry_pass_the_folders_schemas():
     """Every key of every shipped family entry beyond the frame's own (name, clock, spins_step) is one folder's, the folder named by its card; every entry passes the merged check with the integer's name read as the integer; an unknown attribute is refused by name."""
     register = discover()
-    owners = cards.owners(register)[FAMILY]
-    entries = shipped_entries()
+    owners, entries = cards.owners(register)[FAMILY], shipped_entries()
     frame_keys = {"name", "quantum", "clock", "spins_step"}  # loader/frame.py, entry_kind
     words = {key for entry in entries for key in entry} - frame_keys
     assert words <= set(owners), sorted(words - set(owners))
     assert owners["sourced"] == "the source" and owners["reads"] == "the signed read"
-    merged = cards.at(register, FAMILY)
-    context = context_of(entries)
+    merged, context = cards.at(register, FAMILY), context_of(entries)
     for entry in entries:  # THE FAMILIES FROM THE RULE: the rows filled by the rule pass the cards
         body = {k: v for k, v in derived.filled(entry, entries).items() if k not in frame_keys}
         checked = check_keys(body, merged.keys, merged.optional, entry["name"], context)
