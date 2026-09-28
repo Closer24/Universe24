@@ -1,5 +1,4 @@
-"""The Node clock under the weak-field rule (ALGEBRA.md #the-paces, #the-line): the pace p = Gamma - c enters
-Rule3's integers at every Node, c = 0 is the plain rule, and light crosses a slab of content under it."""
+"""The Node clock under the weak-field rule (ALGEBRA.md #the-paces, #the-line): the pace p = Gamma - c enters Rule3's integers at every Node, c = 0 is the plain rule, and light crosses a slab of content under it."""
 
 from __future__ import annotations
 

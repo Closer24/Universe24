@@ -1,5 +1,4 @@
-"""The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions:
-one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
+"""The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions: one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
 
 from __future__ import annotations
 
@@ -149,12 +148,13 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         assert t_taking < giving_ticks[1] or True  # a second giving may precede the taking
     end = t_taking + 5
     blind, states, lines, _ = run_states(document, end)
+    closes = close_ticks(lines)
     taking_line = next(line for line in lines if line["event"] == "gather")
     deleted = taking_line["record"]
     assert deleted not in states[t_taking]["records"] and deleted in states[t_taking - 1]["records"]
-    # (a) five intervals back with no click between: exact
+    # (a) five intervals back with no click between (a window's close among them stepped back by hand, as in (b)): exact
     for t in range(end, t_taking, -1):
-        blind.step_inverse()
+        inverse_close_interval(blind, lines, t) if t in closes else blind.step_inverse()
         assert_same(rows_of(blind), states[t - 1])
     # across the taking click without undoing its ledger: the record stays deleted, the taker
     # keeps its quantum
@@ -165,14 +165,13 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
     # (b) the same run again, the click's ledger undone by hand before each step across a click
     simulation, states, lines, _ = run_states(document, end)
     for t in range(end, t_taking, -1):
-        simulation.step_inverse()
+        inverse_close_interval(simulation, lines, t) if t in closes else simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
     simulation.held = copy.deepcopy(states[t_taking - 1]["held"])
     simulation._hold(simulation.register.at("the hold", "(iv)"), THE_REWRITE)
     simulation.step_inverse()
     assert_same(rows_of(simulation), states[t_taking - 1], lost={deleted})
     lost = {deleted}
-    closes = close_ticks(lines)
     for t in range(t_taking - 1, t_giving, -1):
         if t in giving_ticks:
             inverse_giving_interval(simulation, lines, states, t)

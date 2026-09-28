@@ -1,4 +1,4 @@
-"""The mode file of a moving body (ALGEBRA.md #the-generator (e), #the-rows-against-nature (e)): the generator writes the body's two levels under `moving`, the band's top velocity and the proper pair as its clock, 2 cos(Omega) with Omega = omega_0 + Delta (1 - cos k) - k Delta sin k derived here from the file's own numbers; the loader's reader takes the levels or refuses a defect by name; a resting body's file carries no levels; the world one open chain with one body of matter of three Nodes at 1000 by its Nodes with their counts."""
+"""The mode file of a moving body (ALGEBRA.md #the-generator (e), #the-rows-against-nature (e)): the generator writes the body's two levels under `moving`, the band's top velocity and the proper pair as its clock, 2 cos(Omega) with Omega = omega_0 + Delta (1 - cos k) - k Delta sin k derived here from the file's own numbers; the loader's reader takes the levels or refuses a defect by name; a resting body's file carries its two levels as well, the second the read act once more halved, not the first; the world one open chain with one body of matter of three Nodes at 1000 by its Nodes with their counts."""
 
 import json
 import sys
@@ -23,16 +23,24 @@ WORLD = (
 def mode_entry(momentum: int) -> dict:
     world = json.loads(WORLD)
     world["measured"][0].update({"momentum": [momentum, 0, 0], "momentum_before": [momentum, 0, 0]})
+    world["measured"][0]["emitter"] = {
+        "family": "matter",
+        "weight": 1,
+    }  # a giver: a body neither giving nor moving has no entry
     entry: dict = mode_document((reading := generate(world)), *split_levels(reading))["bodies"][0]
     assert "refused" not in entry, entry.get("refused")
     return entry
 
 
 def test_the_mode_file_carries_the_moving_bodys_two_levels_and_its_proper_pair() -> None:
-    """`now`, `before` and `top_velocity` under `moving` on a body with a momentum, no levels at rest; the clock the proper pair on the rest's denominator, above the rest's numerator by 2 cos(Omega) - 2 cos(omega_0) from the file's rotation, triple and top velocity within the pair's rounding; the reader takes the levels and refuses a defect by name."""
+    """`now`, `before` and `top_velocity` under `moving` on a body with a momentum, at rest the two levels of the standing mode, the second not the first; the clock the proper pair on the rest's denominator, above the rest's numerator by 2 cos(Omega) - 2 cos(omega_0) from the file's rotation, triple and top velocity within the pair's rounding; the reader takes the levels and refuses a defect by name."""
     moving, rest = mode_entry(3 * 64 * 3000 // 20), mode_entry(0)  # v = n / (3 Q M) = 1 / 20
     m, clock, rest_clock = moving["moving"], tuple(moving["clock"]), rest["clock"]
-    assert clock[1] == rest_clock[1] and clock[0] > rest_clock[0] and "now" not in rest["moving"]
+    assert (
+        clock[1] == rest_clock[1]
+        and clock[0] > rest_clock[0]
+        and rest["moving"]["before"] != rest["moving"]["now"]
+    )
     rot, tr, tv = rest["rotation"], m["triple"], m["top_velocity"]
     omega_0, k, delta = acos(rot[0] / rot[1] / 2), acos(tr[0] / tr[2]), tv[0] / tv[1]
     assert abs(2 * cos(omega_0 + delta * (1 - cos(k)) - k * delta * sin(k)) * clock[1] - clock[0]) <= 1

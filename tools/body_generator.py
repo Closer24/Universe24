@@ -8,7 +8,7 @@ import json
 import sys
 from dataclasses import dataclass
 from fractions import Fraction
-from math import acos, cos, isqrt
+from math import acos, cos, isqrt, pi
 from pathlib import Path
 from typing import Any
 
@@ -426,6 +426,14 @@ def moving_body(
     return MovingBody(now, before, (denominator, j), (a, sense * b, c), velocity, named, rest, top)
 
 
+def wavelength_of(clock: tuple[int, int], given_pair: Pair) -> int | None:
+    """The given record's wavelength lambda_q of a giver's mode on the given family's band (ALGEBRA.md #the-primitives, the recoil's row; #the-rows-against-nature (g)): cos k = 3 cos omega_b den / num - 2 along one axis with 2 cos omega_b = a / b the mode's clock and [num, den] the given record's pair, k by the host's arc cosine as the twist's, 2 pi / k to the nearest whole Link; None where the band does not hold the rotation (no wave of that band at the giver's rotation)."""
+    cosine = 3 * clock[0] * given_pair[1] / (2 * clock[1] * given_pair[0]) - 2
+    if not -1 < cosine < 1:
+        return None
+    return max(1, round(2 * pi / acos(cosine)))
+
+
 def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
     """The clock [a, b] with 2 cos omega_b = a / b on the denominator given (the amplitude unit A, the mode's resolution), a the nearest integer by the division act with the load d over the wall 2 d."""
     scaled = rotation * denominator
@@ -513,6 +521,20 @@ def pair_of(row: dict[str, Any], label: str) -> Pair:
     return int(pair[0]), int(pair[1])
 
 
+def given_wavelength(
+    body: dict[str, Any], rows: dict[str, Any], clock: tuple[int, int]
+) -> dict[str, int]:
+    """The reading `wavelength` of a giving body: lambda_q of its mode on the given record's band (the given family's row's pair, or the emitter's own `pair` where the row declares none); no reading on a body that gives nothing or whose rotation the band does not hold."""
+    emitter = body.get("emitter")
+    if not isinstance(emitter, dict):
+        return {}
+    pair = emitter.get("pair", rows[emitter["family"]].get("pair"))
+    if not (isinstance(pair, list) and len(pair) == 2):
+        return {}  # the record's pair is the body's word and the emitter declares none: no band to read
+    found = wavelength_of(clock, (int(pair[0]), int(pair[1])))
+    return {} if found is None else {"wavelength": found}
+
+
 def generate(document: dict[str, Any]) -> dict[str, Any]:
     """The generator on its input file, a world file in the law's form (ALGEBRA.md #the-generator): the GameBoard's shape and faces, the Node clock (the world's, or the universe's integer), the universe file it names (the families' rows: each body's family's pair and reads, the held families' pairs, the integers by name) and the bodies written by their Nodes with their counts; the held fields at rest under every body's count (the hold's clamp at every body's Nodes), then per body whose family reads a held field plainly its mode in its own well (the weighted sum of its own counts' fields at rest) by the one path of rest and motion, the phase's pair (m, 0) at the momentum 0, and its clock in the world's well (the rotation of that profile with every body's field); a body's refusal by name is written as its reading, the other bodies go on; no number in the tool or on the command line."""
     shape = tuple(int(n) for n in document["shape"])
@@ -560,6 +582,11 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             if len(axes) > 1:
                 raise ValueError(f"a moving body moves along one axis: the momentum {momentum} has two")
             plain = [read for read in row.get("reads", []) if read.get("by") in (1, "plain")]
+            if "emitter" not in body and "crystal" not in body and not axes:
+                # a wall, a screen, a polariser: no entry (the loader loads it as content alone, ENGINE.md);
+                # a giver (an emitter, a crystal) and a moving body carry theirs (Cheshbon's 03:35Z)
+                reading["mode"] = "none: no giving and no momentum, the body loads as content alone"
+                continue
             if not plain:
                 reading["mode"] = (
                     "none: the family reads no held field plainly, the body is content alone"
@@ -572,8 +599,11 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 if isinstance(weight, str):
                     weight = integers[weight]
                 held = rows[read["family"]]
+                divisor = (held.get("held") or {}).get("divisor")  # the sum's rest over the row's E_s
                 if read["family"] not in fields:
-                    rest = start_rest(total, pair_of(held, f"the held family {read['family']!r}"), wrap)
+                    rest = start_rest(
+                        total, pair_of(held, f"the held family {read['family']!r}"), wrap, divisor
+                    )
                     fields[read["family"]] = rest
                     rests[read["family"]] = {
                         "pair": list(held["pair"]),
@@ -586,7 +616,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 own_key = (id(body), read["family"])
                 if own_key not in own_fields:
                     own_fields[own_key] = start_rest(
-                        counts, pair_of(held, f"the held family {read['family']!r}"), wrap
+                        counts, pair_of(held, f"the held family {read['family']!r}"), wrap, divisor
                     )
                 own_content = own_content + int(weight) * own_fields[own_key].levels
             if "phase_denominator" not in body:
@@ -627,6 +657,14 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             if momentum[axis]:
                 rotation = proper_rotation(rotation, moved.triple, moved.top)
             clock = clock_pair(rotation, mode.amplitude)
+            # the profile written at an eighth of the unit (ALGEBRA.md #the-generator (f): the final scale
+            # comes from c T; Cheshbon's 04:22Z: the given record's peak about the body's level, under A / 4)
+            eighth = int(division(1, 8, np.array([mode.amplitude], dtype=np.int64))[0])
+            (written,) = to_amplitude((mode.profile,), eighth)
+            # a resting body's two levels: before the read act once more, halved ((d): the mode rotates by
+            # 2 cos omega_b; now = before is no mode), written under `moving` as a moving body's are
+            read_w, self_w, wall_w = rule_integers(pair, gamma, content)
+            still = two_levels(written, read_w, self_w, wall_w, wrap)
             moving = {
                 "axis": axis,
                 "momentum": momentum[axis],
@@ -635,8 +673,8 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 "velocity_named": [moved.named.numerator, moved.named.denominator],
                 "velocity": [moved.velocity.numerator, moved.velocity.denominator],
                 "top_velocity": [moved.top.numerator, moved.top.denominator],
-                "now": np.moveaxis(moved.now, 0, axis),
-                "before": np.moveaxis(moved.before, 0, axis),
+                "now": np.moveaxis(moved.now, 0, axis) if momentum[axis] else still[0],
+                "before": np.moveaxis(moved.before, 0, axis) if momentum[axis] else still[1],
             }
             reading.update(
                 {
@@ -647,9 +685,10 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "clock": list(clock),
                     "period": period_by_the_rule(*clock),
                     "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
+                    **given_wavelength(body, rows, clock),
                     "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
                     "in_the_worlds_well": in_world,
-                    "profile": mode.profile,
+                    "profile": written,
                     "content": content,
                     "moving": moving,
                 }
@@ -673,7 +712,7 @@ def split_levels(
             levels.append(None)
             continue
         now, before = moving.pop("now"), moving.pop("before")
-        levels.append((now, before) if moving["momentum"] else None)
+        levels.append((now, before))  # a resting body's two levels as well: its second is not its first
     return profiles, levels
 
 

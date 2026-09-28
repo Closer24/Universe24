@@ -114,13 +114,13 @@ family's pair [num, den]:
 
   w   = 6 den Gamma^2,
   R_a = 2 num p_a^2,
-  S   = 12 den Gamma^2 - 6 (p_0^2 + Gamma^2)(den - num) - 4 num (p_x^2 + p_y^2 + p_z^2).
+  S   = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num (p_x^2 + p_y^2 + p_z^2).
 
 At the vacuum's pace p_0 = p_a = Gamma the line is the plain second-order
 wave rule of the pair: a_next + a_before = 2 cos omega a_now with the
 six-neighbour coupling, the rotation omega_0 with cos omega_0 = num /
-den at wave number zero. A held family's field steps at its row's pair,
-[1, 1] or any other, with the pace 1 and the wall 3 den, at first order.
+den at wave number zero. A held family's field steps at its row's pair with the pace 1 and the wall 3 den, at first order.
+THE PACE IS CONFORMAL: below the vacuum's pace every family's rotation at every wave number obeys sin^2 (omega / 2) = (p / Gamma)^2 sin^2 (omega_vac(k) / 2), the pace multiplying the clock of every wave and every bound mode alike (the isotropic S is 12 den (Gamma^2 - p^2); the light's line was so already, the matter's mass term stood half at the vacuum's pace), so two clocks at one level shift alike, d ln omega / d c = 2 tan (omega / 2) / (omega p), and a packet's fall in a pace gradient, Delta x 2 tan (omega_0 / 2) x (c_+ - c_-) / (p D), does not depend on its family or its shape beyond the band's own (the owner's word, 2026-09-28).
 
 ### The direction
 
@@ -193,7 +193,7 @@ The **pace** of a Node for a family is what its reads make of the Node
 clock:
 
   p_0 = Gamma - SUM over the reads of (weight x by x the read family's time level at the Node),
-  p_a = p_0  - SUM over the reads of (weight x by x the read family's aa component div 2),  a = x, y, z,
+  p_a = p_0 - SUM over the reads of (weight x by x the read family's time level at the Node) - SUM over the reads of (weight x by x the read family's aa component div 2),  a = x, y, z,
 
 one division per read per axis with the remainder kept on the reading
 family's record. A positive weight is a hollow (the read family's level
@@ -201,7 +201,7 @@ slows the clock, an attraction); a negative weight is a hill. By "q" the
 weight is multiplied by the reading record's charge sign. A family with
 no reads steps at p_0 = p_a = Gamma, the plain rule. The clock's slowing
 is this pace: a record at a Node of pace p rotates and moves as a record
-at Gamma does, with its intervals p / Gamma as long.
+at Gamma does, with its intervals p / Gamma as long. THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the time level lowers the clock's pace p_0 once and each axis's pace p_a once more, so a wave's speed along a Link falls by the level twice (the Link as well as the clock, as nature's light past a body bends by twice the clock's share) while a mode's rest rotation, from S alone, falls by the level once (the owner's word, 2026-09-28, with Nature24's line of 08:55 Israel).
 
 THE GUARD, two-sided: 0 < p <= P at every Node, with the edge
 
@@ -669,9 +669,9 @@ one click, its energy the quantum's norm T of its family. Newton's
 constant is not declared: a body of energy count s makes the level c(r)
 = s times the reference flux over E_s over the distance r in Links (the
 hold's row: the count enters the field's line over the row's divisor E_s),
-and the level slows the clock by the potential Phi = -c / (2 Gamma), so
+and the level slows the clock by the potential Phi = -c / Gamma, so
 
-  G = (the reference flux) / (2 Gamma E_s) per unit of energy count,
+  G = (the reference flux) / (Gamma E_s) per unit of energy count,
 
 with the reference flux a number of the GameBoard's geometry (about 1.4 for
 a cube of side 3) and the divisor E_s the energy unit setting the mass of one unit of level.
@@ -679,12 +679,12 @@ A world at a smaller Gamma has stronger gravity per unit of content; the
 ratios between rows carry G once and cancel it. The quantum of distance is
 the Link, of time the interval; nothing between two Nodes or two intervals
 is observed. The potential at a body's Nodes changes by G per unit of energy
-count and never by less: the quantum of gravity is the click.
+count and never by less: the quantum of gravity is the click. THE THREE FREE NUMBERS AND THEIR BOUNDS (the owner's question, 2026-09-28, 09:30 Israel): E_s of gravity is fixed by no line of the law, as nature's G is fixed by none (Rule3 is linear and its form's scale is free: one count writes one level over E_s at any E_s; "the well is the count", the polarisation's divisor 1, is the bound charge's own family writing itself and no relation for gravity); it is free, and its bound is the law's and no person's: at every Node of every body the pace stays positive, count x (1 + K / E_s) < Gamma with K the hold's kernel summed over the body (about 51 for a body wider than the reach), so E_s > K x count / (Gamma - count) at the world's heaviest Node (the loader's guard is this line), and the reading's resolution bounds it above (a fall of one Link within the run, the bending's centroid above its draw); a relation that would fix it (E_s = K Gamma, a body at the pace's edge writing one level per count) is a hypothesis under its own name. The charge's E_s is free as alpha is, bounded below by the same pace at the bound charge's Nodes and by the train (one quantum at least one period, de Broglie's reading 4 x 10^4) and read by the train's N_q. The matter pair is free as the mass is, bounded by the band: den > num, and the reach cosh kappa = 3 den / num - 2 fitting the body's width.
 
 ### The rows against nature
 
 Each row is a detector's click on a declared world, read blind, with
-U_b = c_b / (2 Gamma) the potential at the point named; the bands are
+U_b = c_b / Gamma the potential at the point named (the clock's shift per level, the conformal pace); the bands are
 the rounding's, one Node of centroid or one interval, and the draw's
 where counts are read.
 
@@ -715,4 +715,4 @@ defect, and no body's numbers are patched to meet it.
 1. Whether a body at rest jitters when its current's swing reaches T / 2: on sixteen Nodes the swing over 400 intervals is one percent of T / 2.
 2. The self-source's cubic term: not in the engine, the line is the squares' sum alone.
 3. The twist table's small angles: a triple with d at most 10^9 reaches no angle below 6.3 x 10^-5 radians.
-4. The equivalence principle: whether Delta x d omega_0 / d c is one number for every body of matter; the fall with two light bodies reads it.
+4. The equivalence principle holds to the band's own shape: Delta x 2 tan (omega_0 / 2) differs by a tenth across the bound bodies of the clock's table; the fall with two light bodies reads the rest.

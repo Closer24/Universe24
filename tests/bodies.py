@@ -99,8 +99,7 @@ def charged_chain(
     strength: int = 1,
     divisor: int = 40000,
 ) -> dict:
-    """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes`, light and matter charged,
-    a neutral fifth family, Lambda = `strength` and the held rows' divisor E_s `divisor`."""
+    """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes`, light and matter charged, a neutral fifth family, Lambda = `strength` and the held rows' divisor E_s `divisor`."""
     document = content_chain(length, boundary, nodes, amount, divisor=divisor)
     document["universe"][LIGHT]["sign"] = light_charge
     document["universe"][MATTER]["sign"] = matter_charge
@@ -110,8 +109,7 @@ def charged_chain(
 
 
 def set_strength(document: dict, strength: int) -> None:
-    """Lambda on every reading family: the weight of its read on the family of charge (the
-    family genericity, BUILD.md section 26 item 51)."""
+    """Lambda on every reading family: the weight of its read on the family of charge (the family genericity, BUILD.md section 26 item 51)."""
     for family in document["universe"]:
         for read in family.get("reads", []):
             if read["family"] == CHARGE_FAMILY_NAME:
@@ -127,9 +125,7 @@ def block_world(
     ticks: int = 100,
     on_mode: bool = False,
 ) -> dict:
-    """A world of the massive kind `matter` with blocks, a light family on the clock [77, 25], and optionally
-    an emitter body of light (`emitter_at`) as the first measured event, seeded on its mode; with `on_mode`
-    every well seeded on its mode (a real body under the count's line: a flat seed sloshes and its quanta move)."""
+    """A world of the massive kind `matter` with blocks, a light family on the clock [77, 25], and optionally an emitter body of light (`emitter_at`) as the first measured event, seeded on its mode; with `on_mode` every well seeded on its mode (a real body under the count's line: a flat seed sloshes and its quanta move)."""
     matter: dict = family_entry("matter", kind, reads())
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md #the-click)
     families = [family_entry("light", [1, 1], reads(), clock=[512, 1]), matter]
@@ -207,8 +203,7 @@ def emitter_at(
     pair: list[int] | None = None,
     receiver: object = None,
 ) -> dict:
-    """An emitter body on a chain from x: the well of the family `own` over the train's 32 Nodes, seeded
-    on its mode, with `stock` givings of `family` and, with `receiver`, the ladder by name (ALGEBRA.md #the-click)."""
+    """An emitter body on a chain from x: the well of the family `own` over the train's 32 Nodes, seeded on its mode, with `stock` givings of `family` and, with `receiver`, the ladder by name (ALGEBRA.md #the-click)."""
     entry = emitter_body([x, 0, 0], stock, receiver=receiver, family=family)
     entry["family"] = own
     entry["pair"] = list(pair or SOURCE_WELL)
@@ -216,8 +211,7 @@ def emitter_at(
 
 
 def light_clock_world(faces: str, far_body: bool) -> dict:
-    """A chain of 173 (x closed, or open with `faces`): the emitter A at [100, 132) giving one train of light,
-    the set `A_face` at its head, and with `far_body` the cube `far` at [160, 162]."""
+    """A chain of 173 (x closed, or open with `faces`): the emitter A at [100, 132) giving one train of light, the set `A_face` at its head, and with `far_body` the cube `far` at [160, 162]."""
     document = massive_world([173, 1, 1], {"x": faces, "y": "periodic", "z": "periodic"}, [800, 809])
     document["ticks"] = 600
     document["measured"] = [
@@ -255,8 +249,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 
 
 def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
-    """A world of the massive kind `matter` beside light, with no emitter and no block; the face slab one Node
-    deep where the board is open."""
+    """A world of the massive kind `matter` beside light, with no emitter and no block; the face slab one Node deep where the board is open."""
     matter: dict = family_entry("matter", pair, reads())
     return {
         "shape": shape,
@@ -279,8 +272,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
 
 
 def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, stock: int = 1) -> dict:
-    """A chain of 200 Nodes (x open): the light emitter at [2, 34) beside the massive kind `matter`, and with
-    `matter_emitter` an emitter at [100, 132) giving `matter`; `clock` None declares no clock."""
+    """A chain of 200 Nodes (x open): the light emitter at [2, 34) beside the massive kind `matter`, and with `matter_emitter` an emitter at [100, 132) giving `matter`; `clock` None declares no clock."""
     document = chain_world(on_mode=False)
     document["shape"] = [200, 1, 1]
     document["ticks"] = 160
@@ -319,9 +311,7 @@ def source_family() -> dict:
 def content_chain(
     length: int, boundary: dict, nodes, amount: int, gamma: int = GAMMA, divisor: int = 40000
 ) -> dict:
-    """The chain [length, 1, 1] of the matter kind [800, 809] beside light with `amount` quanta
-    held at each Node of `nodes` (a light body per Node) under the Node clock `gamma`; the held rows'
-    divisor E_s `divisor`, 40000 as shipped (ALGEBRA.md #the-primitives, the row "the hold")."""
+    """The chain [length, 1, 1] of the matter kind [800, 809] beside light with `amount` quanta held at each Node of `nodes` (a light body per Node) under the Node clock `gamma`; the held rows' divisor E_s `divisor`, 40000 as shipped (ALGEBRA.md #the-primitives, the row "the hold")."""
     document = massive_world([length, 1, 1], boundary, list(PAIR))
     document["node_clock"] = gamma
     for family in document["universe"]:
@@ -344,8 +334,7 @@ def light_body(x: int, amount: int) -> dict:
 
 
 def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
-    """S_6 on a chain (y and z of extent 1 read the Node itself twice each): a_W + a_E + 4 a,
-    the ends reading 0 beyond an open x."""
+    """S_6 on a chain (y and z of extent 1 read the Node itself twice each): a_W + a_E + 4 a, the ends reading 0 beyond an open x."""
     values = [int(v) for v in levels[:, 0, 0]]
     length = len(values)
     out = []
@@ -357,8 +346,7 @@ def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
 
 
 def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 400) -> dict:
-    """The chain with the one-Node point emitter at its middle; the mode seeded first, the keys
-    and the weight set after, the stamp renewed."""
+    """The chain with the one-Node point emitter at its middle; the mode seeded first, the keys and the weight set after, the stamp renewed."""
     document = massive_world([length, 1, 1], CHAIN, POINT_KIND)
     document["ticks"] = ticks
     document["measured"] = [
@@ -397,8 +385,7 @@ def emitter(
     stock: int = 4,
     direction: list[int] | None = None,
 ) -> dict:
-    """An emitter body over the train's 32 Nodes from `position` on the matter kind [800, 809], seeded on its
-    mode, giving light with `stock` along `direction`, and its `receiver` where one is named."""
+    """An emitter body over the train's 32 Nodes from `position` on the matter kind [800, 809], seeded on its mode, giving light with `stock` along `direction`, and its `receiver` where one is named."""
     block = {
         "position": [position, 0, 0],
         "family": "matter",

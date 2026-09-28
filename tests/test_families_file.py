@@ -1,6 +1,4 @@
-"""THE ONE FAMILIES FILE WITH ITS THREE ENTRIES (ALGEBRA.md #a-familys-declaration, #the-primitives, #the-interval;
-record 2075): every shipped world names examples/events/universe.json; the loader refuses its defects by
-name; the emitter's clock and the body's kind stand where the family declares none. HOST; no pin."""
+"""THE ONE FAMILIES FILE WITH ITS THREE ENTRIES (ALGEBRA.md #a-familys-declaration, #the-primitives, #the-interval; record 2075): every shipped world names examples/events/universe.json; the loader refuses its defects by name; the emitter's clock and the body's kind stand where the family declares none. HOST; no pin."""
 
 from __future__ import annotations
 

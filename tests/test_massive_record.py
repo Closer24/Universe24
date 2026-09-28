@@ -896,11 +896,11 @@ def test_a_wall_of_lights_kind_is_a_mirror_line():
     assert all(block.own is None for block in simulation.blocks[1:])
     assert int(simulation.kind_den[0][40, 0, 0]) == 2 and int(simulation.kind_den[0][41, 0, 0]) == 2
     assert int(simulation.kind_den[0][39, 0, 0]) == 1 and int(simulation.kind_num[0][40, 0, 0]) == 1
-    for _ in range(200):
+    # two windows closed: the horizon the window the engine writes, within the stock's worth of the world's own ticks
+    while len(givings := [line for line in lines if line["event"] == "giving"]) < 2:
         simulation.step()
-        assert simulation.books()["balanced"], simulation.tick
+        assert simulation.books()["balanced"] and simulation.tick <= 6 * document["ticks"]
     # the measurement: nothing given crosses the wall to click at `screen` at [70, 72]
-    givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
     # 2 at the kind's own period: the level at the emitter's Nodes stays 0 (7 quanta over 40000 add nothing)
     assert len(givings) == 2 and gathers == []

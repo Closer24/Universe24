@@ -39,8 +39,7 @@ def random_names(names: list[str], seed: int) -> dict[str, str]:
 
 
 def renamed(document: dict, mapping: dict[str, str]) -> dict:
-    """Every family name in the document replaced: the entries' `name`, every `family`
-    value, and the keys of a body's `held` or `stocks` (its stocks by family); no other string."""
+    """Every family name in the document replaced: the entries' `name`, every `family` value, and the keys of a body's `held` or `stocks` (its stocks by family); no other string."""
 
     def walk(node: object, key: str | None) -> object:
         if isinstance(node, dict):
@@ -77,8 +76,7 @@ def stamped(document: dict) -> dict:
 
 
 def families_of(document: dict) -> list[dict]:
-    """The world's inline family list: under `universe` (record 2128's word, the engine branch)
-    or under `families` (the word before it)."""
+    """The world's inline family list: under `universe` (record 2128's word, the engine branch) or under `families` (the word before it)."""
     entries = (
         document["universe"] if isinstance(document.get("universe"), list) else document["families"]
     )
@@ -92,9 +90,7 @@ def extra_family(name: str) -> dict:
 
 
 def test_a_the_adversarial_universe_runs_bit_for_bit_under_random_family_names():
-    """(a) The shipped families renamed at random: the same records, remainders, held levels
-    and lines (the lines' family words renamed), and no leak. The engine reads a family by its
-    attributes and never by its name (records 2066, 2172 to 2174)."""
+    """(a) The shipped families renamed at random: the same records, remainders, held levels and lines (the lines' family words renamed), and no leak. The engine reads a family by its attributes and never by its name (records 2066, 2172 to 2174)."""
     document = emitter_world(stock=2, ticks=STEPS)
     names = [family["name"] for family in families_of(document)]
     mapping = random_names(names, seed=11)
@@ -135,8 +131,7 @@ def test_b_twenty_families_run_and_the_twenty_first_is_refused_by_the_loaders_ow
 
 
 def test_c_a_family_with_no_source_stays_exactly_zero_and_silent():
-    """(c) The null family (record 2075 (3)): declared with nothing that sources it, it carries
-    no record at any interval and the engine's leak reading stays empty."""
+    """(c) The null family (record 2075 (3)): declared with nothing that sources it, it carries no record at any interval and the engine's leak reading stays empty."""
     document = emitter_world(stock=2, ticks=STEPS)
     families_of(document).append(extra_family("nullfamily"))
     stamped(document)
@@ -156,10 +151,7 @@ def test_c_a_family_with_no_source_stays_exactly_zero_and_silent():
     "the weight from 1; when the support lands this passes and the mark comes off",
 )
 def test_d_an_attribute_added_in_the_file_alone_gives_its_effect_a_hill_on_gravity():
-    """(d) The added attribute: a matter family reading a held family with the weight -1 is a
-    hill (the pace raised where the level is), declared in the file with no code touched. The
-    check is the primitive's: the effective content under the weight -1 is the negative of the
-    content under +1 on the same board."""
+    """(d) The added attribute: a matter family reading a held family with the weight -1 is a hill (the pace raised where the level is), declared in the file with no code touched. The check is the primitive's: the effective content under the weight -1 is the negative of the content under +1 on the same board."""
     document = emitter_world(stock=1, ticks=20)
     matter = next(family for family in families_of(document) if family["name"] == "matter")
     assert matter["reads"], "the test world's matter family reads a held family"
@@ -198,9 +190,7 @@ def constants(tree: ast.AST) -> list[tuple[int, object]]:
 
 # green since the loader's cuts 3 and 4: the columns' 'gravity' left world.py with the ray law's parse
 def test_e1_no_family_name_of_the_universe_is_a_constant_of_the_engine():
-    """(e) The closed engine (records 2172 to 2174): a family's name from universe.json appears
-    nowhere in the engine's code as a string constant (docstrings and comments aside; a name
-    that is also an attribute key, such as `charge`, is the key's word and is left out)."""
+    """(e) The closed engine (records 2172 to 2174): a family's name from universe.json appears nowhere in the engine's code as a string constant (docstrings and comments aside; a name that is also an attribute key, such as `charge`, is the key's word and is left out)."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     names = {family["name"] for family in universe["families"]}
     attribute_keys = {"charge", "clicks"}
@@ -232,8 +222,7 @@ def test_e2_no_integer_of_the_universe_is_a_literal_of_the_engine():
 
 
 def world_key_defaults() -> list[str]:
-    """Every `<obj>.get("<key>", <default>)` of the loader with a default that is not None:
-    a key of the files with a default written in the code."""
+    """Every `<obj>.get("<key>", <default>)` of the loader with a default that is not None: a key of the files with a default written in the code."""
     loader = ENGINE / "events" / "world.py"
     tree = ast.parse(loader.read_text(encoding="utf-8"))
     found = []
@@ -257,8 +246,7 @@ def world_key_defaults() -> list[str]:
     "the loader still writes defaults for keys of the files; the review after the merge",
 )
 def test_e3_no_key_of_the_files_has_a_default_written_in_the_engine():
-    """(e) A flag or a default is a line of the files (the start file, the universe file, the
-    world file), never of the code (record 2089, records 2172 to 2174)."""
+    """(e) A flag or a default is a line of the files (the start file, the universe file, the world file), never of the code (record 2089, records 2172 to 2174)."""
     defaults = world_key_defaults()
     assert defaults == [], defaults
 
@@ -268,10 +256,7 @@ FLAG_WORDS = {"flag", "flags", "version", "schema_version"}
 
 
 def test_e4_no_flag_and_no_version_is_a_constant_of_the_engine():
-    """(e) The engine has no flag and no version (the Boss's record 2182, the model owner: "in the
-    code there will be no flags; they are in the run file only; there is no version in the
-    engine"; HIGHLIGHTS 5.6): no string constant of the engine's code names a version
-    (`<name>-v<digits>`) and none is the word of a flag or a version key."""
+    """(e) The engine has no flag and no version (the Boss's record 2182, the model owner: "in the code there will be no flags; they are in the run file only; there is no version in the engine"; HIGHLIGHTS 5.6): no string constant of the engine's code names a version (`<name>-v<digits>`) and none is the word of a flag or a version key."""
     offending = []
     for path in python_files():
         for line, value in constants(ast.parse(path.read_text(encoding="utf-8"))):

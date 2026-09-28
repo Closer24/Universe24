@@ -1,5 +1,4 @@
-"""The genericity test: a seeded generator draws one to twenty families with random English names and
-admitted attributes; every draw loads and runs, and five properties hold on each (a failing seed is kept)."""
+"""The genericity test: a seeded generator draws one to twenty families with random English names and admitted attributes; every draw loads and runs, and five properties hold on each (a failing seed is kept)."""
 
 from __future__ import annotations
 
