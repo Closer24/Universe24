@@ -32,7 +32,11 @@ DIVISORS = {
     "charge": 400_000,
 }  # the well is the count; the charge's divisor derived from Gamma, 0.86 (Gamma div 2)^(3 / 2), one quantum per window (Cheshbon's #1410, planck.json of #1411)
 ENGINES = {  # the counts and the edge per engine (Cheshbon 14:12 Israel time): on the engine of today (the level read once) the edge is 0.345 Gamma = 4,136, so 3,000 and 4,000 disperse and 5,000 binds; with the corrected term the edge is 0.2255 Gamma = 2,706 and the counts return to 3,000 and 4,000 (the Closer 14:30)
-    "today": {"small": 5_000, "deep": 6_000, "edge": 4_136},
+    "today": {
+        "small": 4_400,
+        "deep": 4_700,
+        "edge": 4_133,
+    },  # Cheshbon 14:39: on the file as it stands the count is read twice (2 c), so the bound window today is 4,133 <= c <= about 5,900; the pair 4,400 and 4,700, the ratio of the clocks 1.029
     "term": {"small": 3_000, "deep": 4_000, "edge": 2_706},
 }
 COUNT_SMALL = ENGINES["today"]["small"]  # the smaller body's count; main() sets the three from --engine
@@ -45,6 +49,8 @@ STEPS = 1024  # N, the phase's steps
 PIXELS = {  # Cheshbon's numbers per count (14:12 Israel time): the bound rotation omega_b and the tail's kappa per Link on the engine of today (the level once); 3,000 and 4,000 under the corrected term (13:39, 13:41)
     3_000: {"omega_b": 0.8105, "kappa": 0.446, "a": 90_326, "t": 41_943},
     4_000: {"omega_b": 0.6578, "kappa": 1.02, "a": 103_722, "t": 23_724},
+    4_400: {"omega_b": 0.8290, "kappa": 0.283, "a": 88_553, "t": 49_395},
+    4_700: {"omega_b": 0.8055, "kappa": 0.480, "a": 90_801, "t": 40_554},
     5_000: {"omega_b": 0.778, "kappa": 0.63, "a": 93_270, "t": 34_734},
     6_000: {"omega_b": 0.674, "kappa": 0.98, "a": 102_340, "t": 24_904},
     7_000: {"omega_b": 0.564, "kappa": 1.20},
