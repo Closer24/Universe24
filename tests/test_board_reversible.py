@@ -171,6 +171,22 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
     assert simulation.tick == 0
 
 
+def test_across_a_windows_close_with_stock_left_the_given_record_returns_bit_for_bit():
+    """THE CLOSE WITH STOCK LEFT (the reversible row's MISS at the interval before the first close): the first window closes while the emitter still holds stock, and the run stepped back across the close, the close undone by hand, returns the given record's rows (the write of every interval subtracted by the engine's inverse from the arrivals the interval's own levels give, never the interval's end's) and every other row bit for bit down to the open; no click between, nothing lost (the click test above compares the given record only where its taking has not lost it, so a close with stock stood unchecked)."""
+    document = reversible_world()
+    simulation, _, lines, _ = run_states(document, 200)
+    giving_ticks, taking_ticks = click_ticks(lines)
+    t_giving, t_close = giving_ticks[0], close_ticks(lines)[0]
+    end = min(t for t in giving_ticks + taking_ticks if t > t_close) - 1
+    assert t_giving < t_close < end
+    simulation, states, lines, _ = run_states(document, end)
+    close = next(line for line in lines if line["event"] == "giving")
+    assert simulation.stock_of(simulation.block_by_number[close["measured"]]) > 0
+    for t in range(end, t_giving, -1):
+        inverse_close_interval(simulation, lines, t) if t == t_close else simulation.step_inverse()
+        assert_same(rows_of(simulation), states[t - 1])
+
+
 def inverse_giving_interval(
     simulation: DetectorLawSimulation, lines: list[dict], states: list[dict], t: int
 ) -> None:
