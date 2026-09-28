@@ -281,6 +281,7 @@ class Block:
         0,
         0,
     )  # the close's two carried remainders (the weights', the velocity's)
+    books_identity: int = 0  # the hold's books as the interval's giving stage saw them; other books at the inverse are the host's
     new_cycle: bool = False
     # the interval the current cycle began and the last cycle's length (the
     # emitted record's period for its grace, the block's grace for its emitted records)

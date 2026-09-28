@@ -18,6 +18,7 @@ from tests.worlds import (
     emitter_rung,
     family_entry,
     mode_profile,
+    one_quantum_per_window,
     reads,
     receiver_cube,
     seed_on_the_mode,
@@ -294,6 +295,9 @@ def seed_source(document: dict, number: int) -> None:
         emitter_rung(document, number)  # the window's rung
     # the input stamp: the law and the hash of the integers
     document["stamp"] = input_stamp(document)
+    one_quantum_per_window(
+        document
+    )  # the seeded giver's T at one quantum per window (the ruling of 14:46 Israel)
 
 
 def source_family() -> dict:

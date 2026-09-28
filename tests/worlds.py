@@ -8,6 +8,8 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
+
 from event_universe.core.rule3 import coefficients
 from event_universe.core.step import STEP_FILE
 from event_universe.world_files import input_stamp
@@ -360,6 +362,29 @@ def _apply(document: dict, written: dict) -> None:
     document["stamp"] = input_stamp(
         document
     )  # over the document as it stands (the recorded stamp's document)
+
+
+def one_quantum_per_window(document: dict) -> None:
+    """THE FIXTURES' T (the Closer's ruling of 2026-09-28, 14:46 Israel, on Cheshbon's formula of 14:12, confirmed with the faces 15:04): a seeded giver's quantum action T = floor(0.745 (g M a_body)^2 N_face), the outward flux of one interval at the write's amplitude with E_s at its floor 1 through the giver's N_face outer Ports, so its window closes in one interval; a_body the body's own record's level as the seeding loads it, M its count per Node, g the emitter's weight; written as the emitter's norm over 1 and stamped (T is the fixture's, not the engine's)."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+    from event_universe.world_files import input_stamp, parse_nature_beam_world
+
+    givers = [body for body in document["measured"] if isinstance(body.get("emitter"), dict)]
+    if not givers:
+        return
+    simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(json.dumps(document))))
+    for body in givers:
+        block = simulation.blocks[document["measured"].index(body)]
+        level = int(np.abs(block.own.now).max()) if block.own is not None else 0
+        weight = int(body["emitter"].get("weight", 1)) * int(body.get("amount", 1)) * level
+        given = [family.name for family in simulation.families].index(body["emitter"]["family"])
+        faces = sum(
+            int(np.count_nonzero(ports))
+            for ports in simulation.ports.outward(block.mask, simulation.kind_wrap[given])
+        )
+        body["emitter"]["norm"] = (745 * weight * weight * faces) // 1000
+        body["emitter"]["norm_denominator"] = 1
+    document["stamp"] = input_stamp(document)
 
 
 def seed_on_the_mode(document: dict) -> None:

@@ -150,11 +150,7 @@ def step_back(
         ):
             block.own.now[block.mask] = np.array(line["levels_before"][0], dtype=np.int64)
             block.own.before[block.mask] = np.array(line["levels_before"][1], dtype=np.int64)
-    simulation.hold_restored = bool(
-        opens or closes or takings
-    )  # the hold's books restored by hand above: the loop's inverse leaves them
     simulation.step_inverse()
-    simulation.hold_restored = False
     for line in takings:
         simulation.records[int(line["record"])] = lost[int(line["record"])]
 

@@ -1077,8 +1077,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 "nodes": int(np.sum(block.mask)),
             }
             live.giving_line = giving_line  # named at the close (item 50)
-        # the next excitation and the count wait for the window's close
-        block.emit_now = False
+        block.emit_now = False  # the next excitation and the count wait for the window's close
         block.wait = 0
         own.u, own.wheel = residue, wheel
 
@@ -1214,7 +1213,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
         # the interval's dipole writes taken back first (ALGEBRA.md #the-interval; commit 2): they were the last writes of the forward interval, after the fields' step; then the hold's first phase back at the count the forward hold read (the store stepped back, the time part's increment off the end level) before the count's line returns the quanta
         hold = self.register.at("the hold", "(iv)")
-        held = None if getattr(self, "hold_restored", False) else self._hold(hold, THE_INVERSE)
+        held = None if giving_window.hold_restored(self) else self._hold(hold, THE_INVERSE)
         # the count's line back (its own inverse, the current reversed; ALGEBRA.md #the-counts-line): the quanta return to their Nodes before the records step back
         counts_line = self.register.at("the count's line", "(ii)")
         for block in self.blocks:
@@ -1779,8 +1778,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             live.age += 1
             return
         if live.mask is not None:
-            # the arm's row lives on its own side of the lamp (component 2)
-            nxt[~live.mask] = 0
+            nxt[~live.mask] = 0  # the arm's row lives on its own side of the lamp (component 2)
         live.before = live.now
         live.now = nxt
         live.age += 1

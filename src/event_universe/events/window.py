@@ -76,6 +76,8 @@ def giving_term(loop: DetectorLawSimulation, block: Block, emitter: Any) -> Givi
 def point_windows(loop: DetectorLawSimulation) -> None:
     """The point emitters' windows closed after the interval's bookings: the given record's norm, residue and wheel fixed from what left the body, the window's count and the record's box settled, the giving line written."""
     for block in loop.blocks:
+        block.books_identity = id(block.hold_value)
+    for block in loop.blocks:
         if block.window is None:
             continue
         live = loop.records.get(block.window)
@@ -99,3 +101,8 @@ def pair_rows(loop: DetectorLawSimulation, live: LiveRecord) -> tuple[LiveRecord
     if live.pair_record is None:
         return (live,)
     return tuple(loop.records[row] for row in live.pair_record.rows if row in loop.records)
+
+
+def hold_restored(loop: DetectorLawSimulation) -> bool:
+    """Whether the hold's books are no longer the interval's own (the host replaced them by hand across a click, NO RULE UNDOES A CLICK): then the loop steps no hold back."""
+    return any(id(block.hold_value) != block.books_identity for block in loop.blocks)
