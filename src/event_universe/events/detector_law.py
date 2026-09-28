@@ -25,17 +25,9 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import (
-    after_step,
-    assembly,
-    body_language,
-    guards,
-    momentum_reading,
-    output,
-    pair,
-    record_well,
-)
+from event_universe.events import after_step, assembly, body_language, guards, output, pair, record_well
 from event_universe.events import live as live_records
+from event_universe.events import momentum_reading as momentum
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.inverse import block_clock_inverse, booking_inverse
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -289,7 +281,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _record_form = record_well.record_form
     _point_windows = after_step.point_windows
     _close_window = after_step.close_window
-    _read_momentum = momentum_reading.read_momentum
+    _read_momentum = momentum.read_momentum
     _pair_click = pair.pair_click
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
