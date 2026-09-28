@@ -123,8 +123,7 @@ def chain_world(
     on_mode: bool = True,
     faces: str = "closed",
 ) -> dict:
-    """A chain of 80 Nodes (x closed): the emitter body at [2, 34) and the receiver cube `screen` at [70, 72];
-    with `faces` "open", a chain of 140 with the face receiver `face` at both ends (ALGEBRA.md #rule3)."""
+    """A chain of 80 Nodes (x closed): the emitter body at [2, 34) and the receiver cube `screen` at [70, 72]; with `faces` "open", a chain of 140 with the face receiver `face` at both ends (ALGEBRA.md #rule3)."""
     length, corner, screen = (140, 34, 100) if faces == "open" else (80, 2, 70)
     document = {
         "shape": [length, 1, 1],
@@ -152,8 +151,7 @@ def chain_world(
 
 
 def cube_positions(shape: list[int], corner: list[int]) -> list[list[int]]:
-    """The Nodes of a detector cube of side DETECTOR_SIDE from its lower corner, cut by the
-    GameBoard on an axis of extent below the side (a chain's or a layer's thin axis)."""
+    """The Nodes of a detector cube of side DETECTOR_SIDE from its lower corner, cut by the GameBoard on an axis of extent below the side (a chain's or a layer's thin axis)."""
     return [
         [corner[0] + dx, corner[1] + dy, corner[2] + dz]
         for dx in range(min(DETECTOR_SIDE, shape[0]))
@@ -170,8 +168,7 @@ def emitter_body(
     direction: list[int] | None = None,
     extents: list[int] | None = None,
 ) -> dict:
-    """An emitter body of EMITTER_KIND over the train's 32 Nodes along `direction`, seeded on its mode,
-    with its stock and given family, and with `receiver` the given records' ladder by name (ALGEBRA.md #the-click)."""
+    """An emitter body of EMITTER_KIND over the train's 32 Nodes along `direction`, seeded on its mode, with its stock and given family, and with `receiver` the given records' ladder by name (ALGEBRA.md #the-click)."""
     emitter: dict = {
         "family": family,
         "weight": 3,  # the window's weight (commit 7; the train retired)
@@ -205,8 +202,7 @@ def emitter_body(
 
 
 def layer_world(receiver: object = None) -> dict:
-    """A layer of 80 x 9 x 1 (x closed): the emitter across the width at [2, 34) and three detector cubes
-    s0, s1, s2 at x in [70, 72]; `receiver` names the ladder's sets in order (ALGEBRA.md #rule3)."""
+    """A layer of 80 x 9 x 1 (x closed): the emitter across the width at [2, 34) and three detector cubes s0, s1, s2 at x in [70, 72]; `receiver` names the ladder's sets in order (ALGEBRA.md #rule3)."""
     measured = [emitter_body([2, 0, 0], 8, extents=[32, 9, 1])]  # the receiver set after the seeding
     document = {
         "shape": [80, 9, 1],
@@ -398,8 +394,7 @@ def reads() -> list[dict]:
 def family_entry(
     name: str, pair, reads: list[dict], clock=None, sign: int = 0, quantum: int = 1
 ) -> dict:
-    """A family of records in the cards' form (the universe file's entry): one part, two levels,
-    its pair, its reads, the self-source off, clicks at the quantum; its clock and sign where given."""
+    """A family of records in the cards' form (the universe file's entry): one part, two levels, its pair, its reads, the self-source off, clicks at the quantum; its clock and sign where given."""
     entry = {
         "name": name,
         "sign": sign,
