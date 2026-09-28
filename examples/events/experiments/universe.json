@@ -1,7 +1,7 @@
 {
  "integers": {
   "node_clock": 10000,
-  "quantum_action": 10000000000000,
+  "quantum_action": 45655451855,
   "Lambda": 1,
   "momentum_unit": 64,
   "most_steps": 65536,
