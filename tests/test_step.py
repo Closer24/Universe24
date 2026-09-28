@@ -43,10 +43,8 @@ def test_the_file_names_every_built_primitive_at_its_declared_place_and_the_writ
     assert step.places["(iii)"] == () and step.places["any"] == ("the trace", "the start", "the write")
     assert step.acts[0][:2] == ("(iv)", "the hold")
     holds = [act for act in step.acts if act[1] == "the hold"]
-    assert holds == [
-        ("(iv)", "the hold", (("advance", False),)),
-        ("(iv)", "the hold", (("advance", True),)),
-    ]
+    hold = ("(iv)", "the hold")
+    assert holds == [(*hold, (("advance", False),)), (*hold, (("advance", True),))]
     for (place, value), expected in ORDERS.items():
         assert register.writers(value, place, step) == expected, (place, value)
     register.check_writers(step)

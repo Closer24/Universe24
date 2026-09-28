@@ -27,10 +27,7 @@ def test_the_act_per_key_is_the_carried_division_with_two_levels_exact_back_and_
                 assert before == own.values[key] and 0 <= advanced.own.carries[key] < wall
                 totals[key] += now
             back = apply(term, WriteStart(THE_INVERSE, counts), advanced.own)
-            assert (dict(back.own.values), dict(back.own.carries)) == (
-                dict(own.values),
-                dict(own.carries),
-            )
+            assert (back.own.values, back.own.carries) == (own.values, own.carries)
             own = advanced.own
         assert all(abs(totals[key] * wall - 40 * coefficient * count) < wall for key, count in counts)
     with pytest.raises(ValueError, match="wall is from 1"):
