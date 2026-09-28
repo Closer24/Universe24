@@ -196,9 +196,9 @@ def rotation_and_share(
 
 
 def loader_level(document: dict[str, Any], gamma: int) -> int:
-    """The loader's level of a world in the law's form, the content its amplitude bound is read at (Cheshbon's 00:20Z of 2026-09-28: min(M, Gamma - 1), M the world's content; the Newton Experimenter's line of 05:03 Israel, the Closer's word of 05:38): the sum of the counts of the world's bodies, at most Gamma - 1."""
+    """The loader's level of a world in the law's form, the content its amplitude bound is read at, as the loader reads it (loader/world.py, the load bound: M twice the world's whole content, the most any one Node can hold, at most Gamma - 1; Cheshbon's lines of 2026-09-28, 00:20Z and 02:05Z): twice the sum of the counts of the world's bodies, at most Gamma - 1."""
     counts = [int(node["count"]) for body in document["measured"] for node in body.get("nodes", [])]
-    return min(sum(counts), gamma - 1)
+    return min(2 * sum(counts), gamma - 1)
 
 
 def bound_mode(
