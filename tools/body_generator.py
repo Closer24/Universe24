@@ -590,6 +590,65 @@ def train_of(
     }
 
 
+def given_train(
+    body: dict[str, Any],
+    rows: dict[str, Any],
+    integers: dict[str, Any],
+    levels: tuple[np.ndarray, np.ndarray],
+    body_rule: tuple[np.ndarray, np.ndarray, int],
+    mask: np.ndarray,
+    fields: dict[str, FieldAtRest],
+    total: np.ndarray,
+    gamma: int,
+    wrap: Wrap,
+    clock: tuple[int, int],
+) -> dict[str, Any]:
+    """The reading `train` of a giving body (ALGEBRA.md #the-primitives, the giving's row, THE TRAIN): the given record's rule at the paces of the given row's plain reads on the world's rests, the bound charge the short-range held family the given row reads (den above num, the reach of a held family its pair), the given row's divisor E_s and the universe's quantum action T; no reading on a body that gives nothing, on a given row that holds nothing or reads no short-range family."""
+    emitter = body.get("emitter")
+    if not isinstance(emitter, dict):
+        return {}
+    row = rows[emitter["family"]]
+    held = row.get("held") or {}
+    plain = [read for read in row.get("reads", []) if read.get("by") in (1, "plain")]
+    short = [
+        read
+        for read in plain
+        if pair_of(rows[read["family"]], read["family"])[1]
+        > pair_of(rows[read["family"]], read["family"])[0]
+    ]
+    if "divisor" not in held or len(short) != 1:
+        return {}
+    content = np.zeros(total.shape, dtype=np.int64)
+    for read in plain:
+        name = read["family"]
+        if name not in fields:
+            other = rows[name]
+            fields[name] = start_rest(
+                total, pair_of(other, name), wrap, (other.get("held") or {}).get("divisor")
+            )
+        weight = read["weight"]
+        content = (
+            content + int(integers[weight] if isinstance(weight, str) else weight) * fields[name].levels
+        )
+    pair = emitter.get("pair", row.get("pair"))
+    if not (isinstance(pair, list) and len(pair) == 2):
+        return {}
+    light_rule = rule_integers((int(pair[0]), int(pair[1])), gamma, content)
+    found = train_of(
+        levels,
+        body_rule,
+        mask,
+        light_rule,
+        fields[short[0]["family"]].levels.astype(np.int64),
+        (gamma - content).astype(np.int64),
+        int(held["divisor"]),
+        int(integers["quantum_action"]),
+        period_by_the_rule(*clock),
+        wrap,
+    )
+    return {"train": found}
+
+
 def given_wavelength(
     body: dict[str, Any], rows: dict[str, Any], clock: tuple[int, int]
 ) -> dict[str, int]:
@@ -597,8 +656,9 @@ def given_wavelength(
     emitter = body.get("emitter")
     if not isinstance(emitter, dict):
         return {}
-    row = rows[emitter["family"]]
-    pair = emitter.get("pair", row.get("pair"))
+    pair = emitter.get("pair", rows[emitter["family"]].get("pair"))
+    if not (isinstance(pair, list) and len(pair) == 2):
+        return {}  # the record's pair is the body's word and the emitter declares none: no band to read
     found = wavelength_of(clock, (int(pair[0]), int(pair[1])))
     return {} if found is None else {"wavelength": found}
 
@@ -733,6 +793,32 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             # 2 cos omega_b; now = before is no mode), written under `moving` as a moving body's are
             read_w, self_w, wall_w = rule_integers(pair, gamma, content)
             still = two_levels(written, read_w, self_w, wall_w, wrap)
+            train: dict[str, Any] = {}
+            if "quantum_action" in integers and not momentum[axis]:
+                # THE SCALE c T (ALGEBRA.md #the-generator (f), the universe's quantum action): the two levels
+                # scaled together so that the record's form is its quanta's action, c T with c the body's quanta
+                form = conserved_form(still[0], still[1], self_w, wall_w, pair[0], gamma - content, wrap)
+                still = scaled_to_norm(
+                    still[0],
+                    still[1],
+                    form,
+                    Fraction(int(counts.sum()) * int(integers["quantum_action"])),
+                    mode.amplitude,
+                )
+                written = still[0]
+                train = given_train(
+                    body,
+                    rows,
+                    integers,
+                    still,
+                    (read_w, self_w, wall_w),
+                    counts > 0,
+                    fields,
+                    total,
+                    gamma,
+                    wrap,
+                    clock,
+                )
             moving = {
                 "axis": axis,
                 "momentum": momentum[axis],
@@ -754,6 +840,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "period": period_by_the_rule(*clock),
                     "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
                     **given_wavelength(body, rows, clock),
+                    **train,
                     "share_inside": [mode.share_inside.numerator, mode.share_inside.denominator],
                     "in_the_worlds_well": in_world,
                     "profile": written,
