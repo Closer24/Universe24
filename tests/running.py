@@ -38,16 +38,13 @@ def exchange_of(
     new: np.ndarray,
 ) -> Fraction:
     """The change of the form I of `form_I` when the family of clicks' levels move from `old` to `new` (ALGEBRA.md #the-counts-line, #the-line)."""
-    gamma = simulation.node_clock
-    num = simulation.kind_num[family].astype(object)
+    gamma, num = simulation.node_clock, simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
     (read_old, _, _), self_old, wall = coefficients(num, den, gamma, old.astype(object))
     (read_new, _, _), self_new, _wall = coefficients(num, den, gamma, new.astype(object))
-    a, b = now.astype(object), before.astype(object)
-    total = Fraction(0)
+    a, b, total = now.astype(object), before.astype(object), Fraction(0)
     for node in zip(*np.nonzero(a | b), strict=True):
-        squares = int(a[node]) ** 2 + int(b[node]) ** 2
-        product = int(a[node]) * int(b[node])
+        squares, product = int(a[node]) ** 2 + int(b[node]) ** 2, int(a[node]) * int(b[node])
         total += Fraction(
             int(wall[node]) * squares - int(self_new[node]) * product, 3 * int(read_new[node])
         )
@@ -68,14 +65,12 @@ def form_I(
     gamma = simulation.node_clock
     if content is None:
         content = simulation.level_of("content")
-    num = simulation.kind_num[family].astype(object)
-    den = simulation.kind_den[family].astype(object)
+    num, den = simulation.kind_num[family].astype(object), simulation.kind_den[family].astype(object)
     (read_coefficient, _, _), self_coefficient, wall = coefficients(
         num, den, gamma, content.astype(object)
     )
     read = reads_of(simulation, family)(before).astype(object)
-    now_o, before_o = now.astype(object), before.astype(object)
-    total = Fraction(0)
+    now_o, before_o, total = now.astype(object), before.astype(object), Fraction(0)
     for node in zip(*np.nonzero(now_o | before_o | read), strict=True):
         a, b = int(now_o[node]), int(before_o[node])
         total += Fraction(
@@ -102,8 +97,7 @@ def chosen_by_the_rule(
     pace: int,
 ) -> str:
     """The increment ladder of ALGEBRA.md #the-ladder on the click's own numbers: the first detector k at which 2 W p (C + f_1 + ... + f_k) >= (2 u + 1) T."""
-    threshold = (2 * u + 1) * norm
-    running = 2 * wheel * pace * total
+    threshold, running = (2 * u + 1) * norm, 2 * wheel * pace * total
     assert running < threshold
     for detector in ladder:
         running += 2 * wheel * pace * increments[detector]
@@ -342,8 +336,7 @@ def draw(seed: int) -> dict[str, Any]:
     if given and rng.random() < 0.5:
         sign_holder = given  # the given family holds the sign, as the shipped charge does
     elif rest and rng.random() < 0.5:
-        sign_holder = rest[0]
-        rest = rest[1:]
+        sign_holder, rest = rest[0], rest[1:]
     if sign_holder:
         holders.append(sign_holder)
 
@@ -405,8 +398,7 @@ def string_constants(path: Path) -> list[tuple[int, str]]:
 
 def written_defaults(path: Path) -> list[str]:
     """Every `<obj>.get("<key>", <default>)` of the module with a default that is not None: a key of the files with a default written in the code (record 2089)."""
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    found = []
+    tree, found = ast.parse(path.read_text(encoding="utf-8")), []
     for node in ast.walk(tree):
         if (
             isinstance(node, ast.Call)

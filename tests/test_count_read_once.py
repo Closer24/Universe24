@@ -81,3 +81,18 @@ def test_the_first_lay_is_the_declared_count_and_the_average_after_a_whole_perio
     changes = [index for index in range(1, 20) if signs[index] != signs[index - 1]]  # the sign changes
     assert lays[0] == int(COUNT) and len(changes) >= 3  # the declared count at its Node alone
     assert all(lay == int(COUNT) for lay in lays[: changes[2]]) and lays[changes[2]] != int(COUNT)
+
+
+def test_a_held_family_has_no_stepped_record_and_no_solved_rest_in_the_rules_universe(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
+    node, block = tuple(simulation.world.measured[0].block.nodes[0]), simulation.blocks[0]
+    gravity, charge = simulation.held_records[0].now, simulation.held_records[1].now
+    beside = (node[0] + 1, node[1], node[2])  # a neighbour of the pixel: the pace there reads its lay
+    assert gravity[node] == int(COUNT) and not gravity[beside] and not charge.any()  # c and c div E_s
+    for _ in range(20):
+        simulation.step()  # the level is the lay at every Node, no field stepped
+        assert (gravity == block.period_counts).all() and not charge.any()
+        assert simulation.node_clock_pair(beside, 2)[0] == GAMMA - block.period_counts[beside]

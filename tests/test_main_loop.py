@@ -225,8 +225,7 @@ def test_e_an_honest_primitive_passes_and_its_write_lands(tmp_path, monkeypatch)
         [("test", "the cheat")],
     )
     simulation.step()
-    assert simulation.blocks[0].spin == [0, 0, 1]
-    assert simulation.register.at("the cheat", "(v)") is apply
+    assert simulation.blocks[0].spin == [0, 0, 1] and simulation.register.at("the cheat", "(v)") is apply
     assert "the cheat" in simulation.main_loop.walked
 
 

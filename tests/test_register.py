@@ -178,8 +178,7 @@ def test_the_loop_calls_a_primitive_at_its_declared_place_alone():
     register.add(Declaration("the trace", "any", (), (), noop, "", word="any"))
     register.add(Declaration("the source", "(iv)", (), (), None, ""))
     register.add(Declaration("the wait", "(i)", (), (), None, "", binder=lambda loop: loop))
-    assert register.at("the hold", "(iv)") is noop
-    assert register.at("the trace", "(ii)") is noop
+    assert register.at("the hold", "(iv)") is noop and register.at("the trace", "(ii)") is noop
     with pytest.raises(
         ValueError, match="calls the primitive 'the hold' at the place \\(i\\), but it declares \\(iv\\)"
     ):

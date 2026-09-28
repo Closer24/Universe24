@@ -15,12 +15,7 @@ from tests.worlds import load_file
 ROOT = Path(__file__).resolve().parents[1]
 WORLD = ROOT / "examples" / "events" / "experiments" / "rules_universe" / "fall_control.json"
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
-COUNT, A, DEN, TAIL = (
-    8,
-    103723,
-    65536,
-    23747,
-)  # the pixel of 8 at Gamma 24, its pair and tail: Cheshbon's table
+COUNT, A, DEN, TAIL = 8, 103723, 65536, 23747  # the pixel of 8 at Gamma 24: Cheshbon's pair and tail
 
 
 def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_both_levels(tmp_path):

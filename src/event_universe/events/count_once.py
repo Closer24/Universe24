@@ -14,6 +14,11 @@ if TYPE_CHECKING:
     from event_universe.loader.world import FamilyDefinition
 
 
+def no_field(families: Sequence[FamilyDefinition], action: int) -> bool:
+    """THE WELL IS THE COUNT AND NO FIELD (ALGEBRA.md; Cheshbon's line of 2026-09-28, 18:05 Israel): in the rule's own universe (the file declares T and a family holds content at the divisor 1: the well is the count) a held family has no record that Rule3 steps and no rest that THE START solves; its level at a Node is the count laid there div its divisor at every interval, and the well at a distance is the matter record's own count there. The universe of record (no T) keeps its sourced fields."""
+    return action > 0 and any(row.held == "content" and row.held_divisor == 1 for row in families)
+
+
 def counts_are_the_well(families: Sequence[FamilyDefinition], block: Block) -> bool:
     """THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD (THE ALGEBRA OF CLUSTERS (1); Cheshbon's line of 2026-09-28, 15:41 Israel): whether the count's line lays its counts from the body's well, D div T at every Node of the record, read once per period of the standing record and never from the instantaneous form: the well is laid and the family that holds the content holds it at the divisor 1 (the well is the count); the declared count is then a reading."""
     holds = any(row.held == "content" and row.held_divisor == 1 for row in families)

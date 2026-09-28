@@ -344,8 +344,7 @@ def _apply(document: dict, written: dict) -> None:
 
 def seed_on_the_mode(document: dict) -> None:
     """The fixture's bodies seeded on their modes as the retired generator wrote them once (tests/seeds.json): a fixture the table does not hold is refused by name (a new fixture is seeded by the mathematician's tool)."""
-    key = _seed_key(document)
-    table = _seeds()["seed_on_the_mode"]
+    key, table = _seed_key(document), _seeds()["seed_on_the_mode"]
     if key not in table:
         raise ValueError(
             f"no recorded seeding for this fixture ({key[:12]}): tests/seeds.json holds the fixtures as recorded"

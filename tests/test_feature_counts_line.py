@@ -165,8 +165,7 @@ def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_gr
 
 
 def test_the_count_is_conserved_exactly_and_the_inverse_undoes_the_line():
-    generator, shape = np.random.default_rng(3), (4, 3, 2)
-    amplitude, norm, weight = 1 << 8, 5000, 7
+    generator, shape, amplitude, norm, weight = np.random.default_rng(3), (4, 3, 2), 1 << 8, 5000, 7
     term = CountTerm(norm, weight, amplitude, 1 << 21)  # each Node holds what it gives:
     count = generator.integers(1 << 20, 1 << 21, size=shape).astype(np.int64)
     remainder = generator.integers(0, norm, size=shape).astype(np.int64)
