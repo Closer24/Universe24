@@ -66,42 +66,10 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
     norm = givings[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in givings)
-    # the norm T: one period's action P e_c, the share of the record's
-    # conserved form at the body's centre Node summed over one period of its
-    # mode advanced alone (ALGEBRA.md #the-click and (f), ALGEBRA.md #rule3), the
-    # generator's integers `period` and `norm`, read on the board here (a
-    # GameBoard reading, a diagnostic and not a measurement): the body alone
-    # (the same world, its emitter and its screen removed), the share at the
-    # Node x = 21 (the corner 5 plus 32 // 2) from the two levels after each
-    # interval's step, summed over `period` intervals, bit for bit; the period
-    # the nearest integer to 2 pi / omega_b (63 on this well); the share the
-    # mode's own tick
-    emitter = document["measured"][0]["emitter"]
-    period = parse_nature_beam_world(document).measured[0].block.emitter.period  # P_body, the loader's
-    assert emitter["norm"] == norm and period > 0
-    alone = json.loads(json.dumps(document))
-    del alone["measured"][0]["emitter"]
-    alone["measured"] = alone["measured"][:1]
-    alone["detectors"] = []
-    alone["stamp"] = input_stamp(alone)  # the stamp of the body alone (its given pair gone)
-    solitary = DetectorLawSimulation(parse_nature_beam_world(alone))
-    body = solitary.block_by_number[0]
-    centre = np.zeros(solitary.shape, dtype=bool)
-    centre[21, 0, 0] = True
-    assert np.array_equal(solitary.centre_mask(body), centre)
-    action = 0
-    for _ in range(period):
-        solitary.step()
-        assert body.own is not None
-        action += Fraction(*solitary.form_share(body.own, centre))
-    # the file's norm in the body's own units (ALGEBRA.md #the-line; item 44): the action's numerator, its
-    # denominator a divisor of the rule's coefficient on the six reads at the centre, R = 2 p^2
-    # num with the pace Gamma - stock at the solitary body's centre
-    pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
-    num, den = body.definition.pair
-    read_coefficient = coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace)[0][0]
-    assert pace == NODE_CLOCK - 5 // divisor  # one own quantum and the stock 4, over E_s: the level 0
-    assert read_coefficient % action.denominator == 0
+    # the norm T is the universe's `quantum_action`, one action for every family (ALGEBRA.md "The universe's
+    # integers"): the loop's excitation norm is T, and the period P_body is the loader's by the one-Node rule
+    period = parse_nature_beam_world(document).measured[0].block.emitter.period
+    assert norm == document["quantum_action"] and period > 0
     by_tick = {entry["tick"]: entry for entry in trace}
     # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md #the-ladder, #the-postulates; BUILD.md
     # section 26 item 33): the residue u read at the previous click (after the first
@@ -224,7 +192,7 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
             assert given.window_open and given.window == 0 and given.train == 0 and given.age == 0
             assert not [line for line in lines if line["event"] == "giving"]
             assert not np.any(given.now) and not np.any(given.before)
-            assert given.norm == emitter["norm"] and given.pace == emitter["norm_denominator"]
+            assert given.norm == world.quantum_action == document["quantum_action"] and given.pace == 1
             assert given.content == 1 and given.emitter == 0
             assert given.ladder == [simulation.detector_names.index("screen")]
         elif given is not None and given.window == 1:
@@ -328,11 +296,10 @@ def test_the_loaders_refusals_name_their_keys():
     # emitter does not declare refuses the simulation at its first
     # excitation; a `given` profile of the wrong count, or one that writes no
     # motion, refuses the loader (ALGEBRA.md #the-click)
-    def no_norm(document):
-        document["measured"][0]["emitter"]["norm"] = 1000
-        del document["measured"][0]["emitter"]["norm"]
+    def with_norm(document):
+        document["measured"][0]["emitter"]["norm"] = 1000  # the window's action is the universe's T
 
-    refused(no_norm, "declares no `norm`", on_mode=True)
+    refused(with_norm, "emitter has unknown keys: norm", on_mode=True)
     # the mathematician's gate item 8: a body that givings declares its seed
     # as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
@@ -352,9 +319,9 @@ def test_the_loaders_refusals_name_their_keys():
     refused(no_weight, "declares no `weight`", on_mode=True)
 
     def no_action(document):
-        del document["measured"][0]["emitter"]["norm_denominator"]
+        del document["quantum_action"]
 
-    refused(no_action, "declares no `norm_denominator`", on_mode=True)
+    refused(no_action, "declares no `quantum_action`", on_mode=True)
 
     for key, value, message in (
         ("emits", "light", "has unknown keys: emits"),

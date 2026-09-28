@@ -363,6 +363,10 @@ def _apply(document: dict, written: dict) -> None:
     document.update(written["top"])
     for index, keys in written["measured"].items():
         document["measured"][int(index)].update(keys)
+    for body in document["measured"]:  # the recorded emitter's norm is the fixture's T = norm div den (Cheshbon's yes)
+        if isinstance(body.get("emitter"), dict) and "norm" in body["emitter"]:
+            norm, den = body["emitter"].pop("norm"), body["emitter"].pop("norm_denominator", 1)
+            document["quantum_action"] = norm // den
     document["stamp"] = input_stamp(
         document
     )  # over the document as it stands (the recorded stamp's document)

@@ -252,7 +252,7 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     spinning = {**body, "spin": [0, 1, 0], "spin_before": [0, 1, 1], "moment": [2, 0, 0]}
     (found,) = frame.bodies([spinning], context, REGISTER)
     assert found["spin"] == (0, 1, 0) and found["spin_before"] == (0, 1, 1)
-    giver = {"family": families[0], "weight": 3, "norm": 5, "norm_denominator": 2}
+    giver = {"family": families[0], "weight": 3}
     stocks = {families[0]: 4}
     (found,) = frame.bodies([{**body, "stocks": stocks, "emitter": giver}], context, REGISTER)
     assert found["stocks"] == stocks and found["emitter"] == giver
@@ -282,7 +282,7 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
         (S("polariser", {"angle": [2, 1]}), r"\.polariser lacks keys: sets"),
         (E(twist=1), r"\.emitter has unknown keys: twist "),
         (E(period=1), r"\.emitter has unknown keys: period "),
-        (S("emitter", {k: v for k, v in giver.items() if k != "norm"}), r"\.emitter lacks keys: norm"),
+        (S("emitter", {**giver, "norm": 5}), r"\.emitter has unknown keys: norm"),
         (E(weight=0), r"\.emitter\.weight is 0, below its least 1"),
         (E(family="nobody"), r"\.emitter\.family names 'nobody', no family"),
         (S("emitter", giver), rf"gives '{families[0]}', a family the body neither is nor stocks"),

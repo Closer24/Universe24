@@ -26,7 +26,6 @@ PRESENCE_WORD = "presence"
 READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS, PRESENCE_WORD)
 # the bounds of an amount, a norm and a momentum component, from the one width of the work register
 AMOUNT_BOUND = MAX_WORK_INT // 2
-NORM_BOUND = (MAX_WORK_INT + 1) ** 2 - 1
 MOMENTUM_BOUND = MAX_WORK_INT // 2
 Vector = tuple[int, int, int]
 
@@ -691,6 +690,26 @@ def _held_bodies_checks(
                     )
 
 
+def _one_weight_per_pair(families: Sequence[FamilyDefinition], measured: Sequence[MeasuredDefinition]) -> None:
+    """ONE WEIGHT PER PAIR (ALGEBRA.md, a family's write; the Closer's line of 2026-09-28): a family with bodies in the world reads a held family at the weight its bodies source it with, its quantum times the held row's time factor; a read at another weight is refused by name. A family with no bodies (light) is exempt: it reads and sources by its record alone."""
+    with_bodies = {entry.family for entry in measured}
+    for family in families:
+        if family.name not in {families[index].name for index in with_bodies}:
+            continue
+        for other, weight, _by, _twist in family.reads:
+            read = families[other]
+            if read.held is None:
+                continue
+            expected = family.quantum * read.held_factors[0]
+            if weight != expected:
+                raise ValueError(
+                    f"the read {family.name!r} -> {read.name!r} weighs {weight}, and the pair has one weight: "
+                    f"{family.name!r}'s quantum {family.quantum} times {read.name!r}'s held time factor "
+                    f"{read.held_factors[0]} = {expected}, the weight its bodies source {read.name!r} with "
+                    "(ALGEBRA.md, a family's write: action and reaction); declare the read at that weight"
+                )
+
+
 def _node_clock_bound(
     families: tuple[FamilyDefinition, ...],
     measured: tuple[MeasuredDefinition, ...],
@@ -1004,6 +1023,7 @@ def _block(
     most_steps: int | None,
     periodic: tuple[bool, bool, bool] = (True, True, True),
     least_residues: int | None = None,
+    quantum_action: int = 0,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event, each named in its refusal: `side` or `extents` makes a block and
     every other block key without them is refused; its `pair` a well on the massive kind or a gap on light's;
@@ -1268,6 +1288,7 @@ def _block(
             moment=moment,
             clock_pair=clock,
             twist=_integer(obj["twist"], f"{label}.twist", 0),
+            quantum_action=quantum_action,
         )
         # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; BUILD.md
         # section 26 item 47): the quanta a body gives are the given family's,
@@ -1366,11 +1387,12 @@ def _emitter(
     moment: tuple[int, int, int] = (0, 0, 0),
     clock_pair: tuple[int, int] | None = None,
     twist: int = 0,
+    quantum_action: int = 0,
 ) -> EmitterDefinition:
     """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6),
     ALGEBRA.md #a-familys-declaration): the given family a paid family whose row's `clock` [p, q] is the
-    given record's clock (lambda_q), the given labels, the ladder by name, the norm (the generator's
-    integer); the period P_body by the one-Node rule from the body's own mode's clock pair, never
+    given record's clock (lambda_q), the given labels, the ladder by name, the window's action the
+    universe's `quantum_action` T (no norm of the emitter's own); the period P_body by the one-Node rule from the body's own mode's clock pair, never
     declared (ALGEBRA.md #the-primitives, the recoil's row, L479); the twist "own" the body's, the
     given record turning as its giver's mode. No wheel, no residue order, no seed, no period, no
     clock, no twist of its own: each is the law's, and the keys are refused by name."""
@@ -1435,12 +1457,14 @@ def _emitter(
     # THE POINT EMITTER'S WEIGHT (ALGEBRA.md; item 50): an integer from
     # 1; the world's `point_emitter` key pairs it with the absence of a train
     weight = None if "weight" not in obj else _integer(obj["weight"], f"{label}.weight", 1)
-    norm_denominator = (
-        None
-        if "norm_denominator" not in obj
-        else _integer(obj["norm_denominator"], f"{label}.norm_denominator", 1)
-    )
-    norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
+    # THE WINDOW'S ACTION IS THE UNIVERSE'S T (ALGEBRA.md "The universe's integers"; the owner's word of
+    # 2026-09-28): the window closes when the outward norm reaches `quantum_action`, one T for every family
+    if quantum_action < 1:
+        raise ValueError(
+            f"{label} gives {name!r}, and the universe declares no `quantum_action`: the window closes at "
+            "the quantum's action T, the universe's integer, never at a norm of the emitter's own (ALGEBRA.md)"
+        )
+    norm, norm_denominator = quantum_action, 1
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md #the-second-level): on a vector family the
     # component along the body's moment mu, one axis; a scalar family's one component
     part = 0
@@ -1483,6 +1507,7 @@ def _measured(
     momentum_unit: int = 0,
     least_residues: int | None = None,
     mode_bodies: tuple[dict[str, object] | None, ...] = (),
+    quantum_action: int = 0,
 ) -> tuple[MeasuredDefinition, ...]:
     bodies = cast(
         tuple[dict[str, object], ...], value
@@ -1574,6 +1599,7 @@ def _measured(
             most_steps,
             periodic,
             least_residues,
+            quantum_action=quantum_action,
         )
         found.append(
             MeasuredDefinition(
@@ -1708,6 +1734,7 @@ def _counted(
             moment=moment,
             clock_pair=clock,
             twist=twist,
+            quantum_action=quantum_action,
         )
     block = BlockDefinition(
         extents[0],
@@ -2385,9 +2412,11 @@ def parse_world_document(
         momentum_unit,
         least_residues,
         _mode_bodies(files, digest, len(bodies)),
+        quantum_action,
     )
     _held_bodies_checks(families, measured)
     _node_clock_bound(families, measured, node_clock)
+    _one_weight_per_pair(families, measured)
     # THE WINDOW IS THE ONE GIVING (ALGEBRA.md #the-primitives; record 2082 (4);
     # commit 7): every emitter declares its weight g and its rung's action; the world
     # key `point_emitter` and the train are retired (RETIRED_KEYS)
@@ -2400,12 +2429,6 @@ def parse_world_document(
                 f"measured[{number}].emitter declares no `weight`: the body's rotation is "
                 "copied into the given row at its Node at a declared weight g, one integer from 1 "
                 "(ALGEBRA.md #the-primitives; commit 7)"
-            )
-        if block.emitter.norm is not None and block.emitter.norm_denominator is None:
-            raise ValueError(
-                f"measured[{number}].emitter declares no `norm_denominator`: the window "
-                "closes when the outward norm reaches the excitation's action norm / "
-                "norm_denominator, the generator's exact rational (ALGEBRA.md)"
             )
     _input_stamp_check(as_written, measured, digest)
     _initial_state_checks(shape, periodic, families, measured)

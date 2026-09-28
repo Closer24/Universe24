@@ -139,7 +139,7 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     twist from the mode file beside the world (this world's by `world_digest`), its receiver a list; defects refused by name."""
     world, universe = body_world(), json.loads(GENERATED.read_text(encoding="utf-8"))
     world["N"] = 1024  # the given clock [512, 1] whole in the wavelength (the loop's L)
-    giver = {"family": "charge", "weight": 1, "norm": 100, "norm_denominator": 1, "receiver": ["strip"]}
+    giver = {"family": "charge", "weight": 1, "receiver": ["strip"]}
     world["measured"][0].update(emitter=giver, stocks={"charge": 4}, moment=[0, 0, 1])
     placed = place(tmp_path, monkeypatch, universe, world)
     (tmp_path / "giver.json").write_text(json.dumps(placed), encoding="utf-8")

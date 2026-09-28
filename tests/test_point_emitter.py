@@ -20,7 +20,7 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
     for weight in (1, 4):
         document = point_world(weight)
         emitter = document["measured"][0]["emitter"]
-        assert emitter["norm_denominator"] >= 1 and "train" not in emitter and "given" not in emitter
+        assert document["quantum_action"] >= 1 and "train" not in emitter and "given" not in emitter
         simulation, lines = run(document, 4000)
         givings = [line for line in lines if line["event"] == "giving"]
         assert givings, weight
@@ -32,7 +32,7 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         )
         # the close: the outward sum reached T, the record's norm its rows'; the stock fell at
         # each open (the quantum moves at the open), a window still open counted
-        assert first["outward"] * emitter["norm_denominator"] >= emitter["norm"]
+        assert first["outward"] >= document["quantum_action"]
         assert first["norm"] > 0 and first["pace"] >= 1
         opened = len(givings) + (1 if simulation.blocks[0].window is not None else 0)
         assert simulation.held[0][0] == 2 - opened
@@ -97,9 +97,9 @@ def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_acti
     with pytest.raises(ValueError, match="declares no `weight`"):
         parse_nature_beam_world(no_weight)
     no_action = json.loads(json.dumps(document))
-    del no_action["measured"][0]["emitter"]["norm_denominator"]
+    del no_action["quantum_action"]
     no_action["stamp"] = input_stamp(no_action)
-    with pytest.raises(ValueError, match="declares no `norm_denominator`"):
+    with pytest.raises(ValueError, match="declares no `quantum_action`"):
         parse_nature_beam_world(no_action)
     for key, value in (("point_emitter", True), ("point_emitter", False)):
         retired = json.loads(json.dumps(document))

@@ -13571,9 +13571,7 @@
    ],
    "emitter": {
     "family": "charge",
-    "weight": 3,
-    "norm": 614944947801629108,
-    "norm_denominator": 3948169
+    "weight": 3
    },
    "receiver": "at_well",
    "twist": 43538,
@@ -13687,6 +13685,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "1805359dd6bd65f6bbaae56a64d4280cd3b482b86fe4c2a2239939c58d02837f"
+  "hash": "031071380f967ba058ad373859595c39392a11a47dec5144cdc485290d4c2853"
  }
 }

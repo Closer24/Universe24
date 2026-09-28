@@ -87,25 +87,21 @@ CLOCK = ListOf(Integer(least=0), 2)
 SPINS_STEP = ObjectOf({"curl": PAIR, "tidal": PAIR})
 # three integers on the axes
 AXES = ListOf(Integer(), 3)
-# a body's emitter, the giving of a clicking body (ALGEBRA.md #the-click to (6), ALGEBRA.md #the-primitives): the given family, the ladder by name, the given record's clock and pair where the family declares none, the period, the norm with its denominator, the weight, the window's read, the twist
+# a body's emitter, the giving of a clicking body (ALGEBRA.md #the-click to (6), ALGEBRA.md #the-primitives): the given family, the ladder by name, the given record's clock and pair where the family declares none, the period, the weight, the window's read, the twist; no norm: the window's action is the universe's `quantum_action`, and `norm` or `norm_denominator` is refused as an unknown key
 EMITTER = ObjectOf(
     {
         "family": Name(),
         "receiver": Either((Word(), ListOf(Word()))),
-        "norm": Integer(least=1),
         "weight": Integer(least=1),
-        "norm_denominator": Integer(least=1),
         "pair": Either((Integer(least=1), PAIR)),
     },
-    frozenset({"receiver", "norm", "weight", "norm_denominator", "pair"}),
+    frozenset({"receiver", "weight", "pair"}),
 )
-# an emitting body in the law's form (the mathematician's words of 2026-09-27 on #1198, what the giving's row reads): the given family, the giving's weight g, the window's norm T with its denominator, the ladder's receiver where named; no period (P_body is the mode's rotation), no clock, no pair, no twist
+# an emitting body in the law's form (the mathematician's words of 2026-09-27 on #1198, what the giving's row reads): the given family, the giving's weight g, the ladder's receiver where named (the window's action is the universe's T, no norm of the body's own); no period (P_body is the mode's rotation), no clock, no pair, no twist
 GIVER = ObjectOf(
     {
         "family": Name(),
         "weight": Integer(least=1),
-        "norm": Integer(least=1),
-        "norm_denominator": Integer(least=1),
         "receiver": Either((Word(), ListOf(Word()))),
     },
     frozenset({"receiver"}),

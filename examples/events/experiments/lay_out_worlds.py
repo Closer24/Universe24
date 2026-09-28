@@ -1,4 +1,4 @@
-"""The worlds of record of the 24 experiments laid out in the law's form (ALGEBRA.md #what-a-body-is): every body its family, its Nodes with their counts, its momentum's two levels and its phase denominator; the givers their emitter, stocks and moment; the sets by block or by positions; the readings the GameBoard check plan asks for. The counts follow the Boss's rules of record (#1198, 20:18Z and 20:36Z): a mirror or a wall at MIRROR quanta per Node, a window at WINDOW, one-armed givings by a mirror one Link behind the giver, the moving clock at VELOCITY Links per interval with the transverse mirror across the motion. Every mode number (the giver's norm, the clock, the phase's pair) is the generator's (tools/body_generator.py) and is not computed here: the emitter's norm is carried from the shipped fall world until the generator writes it. Run from the repository root: python examples/events/experiments/lay_out_worlds.py; it rewrites every world file under this folder and nothing else."""
+"""The worlds of record of the 24 experiments laid out in the law's form (ALGEBRA.md #what-a-body-is): every body its family, its Nodes with their counts, its momentum's two levels and its phase denominator; the givers their emitter, stocks and moment; the sets by block or by positions; the readings the GameBoard check plan asks for. The counts follow the Boss's rules of record (#1198, 20:18Z and 20:36Z): a mirror or a wall at MIRROR quanta per Node, a window at WINDOW, one-armed givings by a mirror one Link behind the giver, the moving clock at VELOCITY Links per interval with the transverse mirror across the motion. Every mode number (the giver's norm, the clock, the phase's pair) is the generator's (tools/body_generator.py) and is not computed here: Run from the repository root: python examples/events/experiments/lay_out_worlds.py; it rewrites every world file under this folder and nothing else."""
 
 from __future__ import annotations
 
@@ -23,7 +23,6 @@ GAMMA = 10000  # the universe's node clock, cited for the expectations' formulas
 MOMENTUM_UNIT = 64  # Q, the universe's momentum unit (W = 3 Q M)
 MIRROR = 8000  # a mirror or a wall: above B's line c > Gamma (1 - sin(k / 2)) at lambda 4 (2,929) and 16 (8,050)
 WINDOW = 2000  # a window: the giver where its arm passes, a screen, a polariser, the falling body
-NORM = {"norm": 180255439696889394, "norm_denominator": 3948169}  # carried from generated/fall.json
 VELOCITY = Fraction(
     1, 5
 )  # the moving bodies' v in Links per interval, below matter's 0.25 and light's 0.447
@@ -53,7 +52,7 @@ def giver(
     nodes: list[list[int]], count: int, stock: int, weight: int = 1, **keys: Any
 ) -> dict[str, Any]:
     """A giving body: the emitter of light (the charge family) with its stock and its moment."""
-    emitter = {"family": "charge", "weight": weight, **NORM}
+    emitter = {"family": "charge", "weight": weight}  # the window's action is the universe's T
     return body(nodes, count, moment=[0, 0, 1], emitter=emitter, stocks={"charge": stock}, **keys)
 
 
