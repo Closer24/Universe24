@@ -24,13 +24,9 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         givings = [line for line in lines if line["event"] == "giving"]
         assert givings, weight
         first = givings[0]
-        assert (
-            first["train"] == 0
-            and first["window"] >= 1
-            and first["opened"] + first["window"] == first["tick"]
-        )
-        # the close: the outward sum reached T, the record's norm its rows'; the stock fell at
-        # each open (the quantum moves at the open), a window still open counted
+        assert first["train"] == 0 and first["window"] >= 1
+        assert first["opened"] + first["window"] == first["tick"]
+        # the close: the outward sum reached T, the record's norm its rows'; the stock fell at each open (the quantum moves at the open), a window still open counted
         assert first["outward"] * emitter["norm_denominator"] >= emitter["norm"]
         assert first["norm"] > 0 and first["pace"] >= 1
         opened = len(givings) + (1 if simulation.blocks[0].window is not None else 0)
@@ -53,18 +49,15 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
 
 def test_the_window_writes_the_bodys_rotation_at_both_levels():
     """The giving's write is the body's rotation, two levels (ALGEBRA.md #the-primitives the giving's row; #the-generator (d)): at the first write of a window the given record's `now` at the body's Nodes is the weight times the body's level now and its `before` the weight times the body's level before, so the record starts as the body's mode turning and not as a kick of one level; the inverse takes both back (the bit-for-bit test below)."""
-    document = point_world(4, ticks=400)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    block = simulation.blocks[0]
+    simulation = DetectorLawSimulation(parse_nature_beam_world(point_world(4, ticks=400)))
+    block, mask = simulation.blocks[0], simulation.blocks[0].mask
     while block.window is None:
         simulation.step()
     simulation.step()  # the window's first write, right after the record's own step
-    live = simulation.records[block.window]  # type: ignore[index]
-    now, before = simulation._body_levels(block), simulation._body_levels(block, before=True)
+    live, now = simulation.records[block.window], simulation._body_levels(block)  # type: ignore[index]
+    before = simulation._body_levels(block, before=True)
     assert live.window == 1 and not np.array_equal(now, before) and np.abs(before).max() > 0
-    assert np.array_equal(live.now[block.mask], 4 * now) and np.array_equal(
-        live.before[block.mask], 4 * before
-    )
+    assert np.array_equal(live.now[mask], 4 * now) and np.array_equal(live.before[mask], 4 * before)
 
 
 def test_the_window_inverts_bit_for_bit():
