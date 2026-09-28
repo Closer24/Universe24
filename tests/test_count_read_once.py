@@ -22,7 +22,7 @@ GAMMA, ROWS = 12000, ([12000, 12000, 1], [12000, 12000, 400000], [8000, 12000, N
 
 
 def pixel_world(tmp_path: Path) -> Path:
-    """The tree's planck.json in its form at Gamma 12,000 (#1419; the tree's file is at 24): the three rows over Gamma, the identity twist table (a pixel's twist is 0), the spin's row the loop still asks; the fall world's pixel at COUNT with q = 1, its mode by the tool with the twist 0."""
+    """The tree's planck.json in its form at Gamma 12,000 (#1419; the tree's file is at 24): the three rows over Gamma, the identity twist table (a pixel's twist is 0), the spin's row the loop still asks; the fall world's pixel at COUNT with q = 1, its mode by the tool."""
     universe = json.loads((EVENTS / "planck.json").read_text(encoding="utf-8"))
     identity = dict(unit=4 * GAMMA << 16, fine=[[1, 0, 1]], coarse=[[1, 0, 1]])
     universe["integers"].update(node_clock=GAMMA, twist_table=identity)
@@ -31,17 +31,14 @@ def pixel_world(tmp_path: Path) -> Path:
         if divisor:
             family["held"]["divisor"] = divisor
     universe["families"][0]["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
-    (tmp_path / "planck.json").write_text(json.dumps(universe), encoding="utf-8")
-    (tmp_path / "start.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    document = json.loads((EVENTS / "experiments" / "rules_universe" / "fall_tent_0.json").read_bytes())
-    document.update(universe="planck.json", engine="start.json", readings=[])
-    body = document["measured"][0]
-    body.update(q=1, nodes=[dict(body["nodes"][0], count=int(COUNT))])
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    body = dict(family="matter", q=1, nodes=[dict(node=[4, 1, 1], count=int(COUNT))], momentum=[0, 0, 0])
+    body.update(momentum_before=[0, 0, 0], phase_denominator=1024)  # the fall world's pixel (#1403)
+    document = dict(shape=[9, 3, 3], boundary=dict(x="open", y="periodic", z="periodic"), detectors=[])
+    document.update(ticks=64, N=1024, face_depth=1, universe="u.json", engine="e.json", measured=[body])
     (world := tmp_path / "pixel.json").write_text(json.dumps(document), encoding="utf-8")
     TOOL.main(["--input", str(world), "--clock", COUNT, *CLOCK, "--tail", COUNT, TAIL])
-    mode = json.loads((tmp_path / "pixel.mode.json").read_text(encoding="utf-8"))
-    mode["bodies"][0]["twist"] = 0  # a pixel's twist is 0 (Cheshbon 15:27): no acos
-    (tmp_path / "pixel.mode.json").write_text(json.dumps(mode), encoding="utf-8")
     return world
 
 
@@ -49,16 +46,16 @@ def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
     node = tuple(simulation.world.measured[0].block.nodes[0])
-    names = [family.name for family in simulation.families]
-    gravity, charge, matter = (names.index(name) for name in ("gravity", "charge", "matter"))
+    by = {family.name: number for number, family in enumerate(simulation.families)}
     block, lays = simulation.blocks[0], []
     for _ in range(20):
         carried = None if block.count_remainder is None else int(block.count_remainder.sum())
         simulation.step()  # no refusal: the pace stays above 0 and no count falls below 0
-        well, level = block.well, simulation.held_records[gravity].now
+        well, level = block.well, simulation.held_records[by["gravity"]].now
         assert well is not None and block.counts is not None and level[node] == well[node] > 0
-        assert simulation._effective_content(charge)[node] == simulation._effective_content(matter)[node]
-        assert simulation.node_clock_pair(node, charge) == (GAMMA - level[node], GAMMA)
+        contents = [simulation._effective_content(by[name])[node] for name in ("charge", "matter")]
+        assert contents[0] == contents[1] == level[node]  # the count read once, down the ranks at 1
+        assert simulation.node_clock_pair(node, by["charge"]) == (GAMMA - level[node], GAMMA)
         assert block.counts.min() >= 0 and block.counts[node] > 0 and block.period_counts is not None
         moved = int((block.count_norm * block.counts + block.count_remainder).sum())  # T c + r after
         assert carried is None or moved == block.count_norm * block.period_counts.sum() + carried

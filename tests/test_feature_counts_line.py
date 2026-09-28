@@ -233,7 +233,6 @@ def test_a_node_at_0_gives_nothing_and_a_node_giving_more_than_it_holds_is_refus
     with pytest.raises(ValueError, match=f"a Node holding {count[1, 0, 0]} < {2 * weight}"):
         line()
     ports = lambda a: tuple(across(a, x, s, True) for x in range(3) for s in (1, -1))  # noqa: E731
-    for holding in (0, 2 * weight - 1):
-        count[1] = holding
+    for count[1] in (0, 2 * weight - 1):  # holding nothing, or one less than it would give
         moved = line(ports)
-        assert moved.count.ravel().tolist() == [0, holding] and not sum(moved.net).any()
+        assert moved.count.ravel().tolist() == [0, int(count[1, 0, 0])] and not sum(moved.net).any()

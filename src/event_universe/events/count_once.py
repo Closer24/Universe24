@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from math import isqrt
 from typing import TYPE_CHECKING, cast
 
 import numpy as np
@@ -65,7 +64,10 @@ def declared_within_gate(block: Block) -> None:
     for node, count in zip(definition.nodes or (), definition.counts or (), strict=True):
         level = int(definition.profile[int(np.ravel_multi_index(tuple(node), own.now.shape))])
         form = division_forward(level * level * (2 * den - a), den, 0)[0]
-        if abs(int(count) - form) > 2 * isqrt(int(count)) + 1:
+        off = abs(
+            int(count) - form
+        )  # off <= 2 isqrt(c) + 1 as integer squares: (off - off mod 2)^2 <= 4 c
+        if (off - (off & 1)) ** 2 > 4 * int(count):
             raise ValueError(
                 f"measured[{block.number}] declares the count {count} at the Node {list(node)} and its mode's "
                 f"form there is {form}: a declared count is D div T of its mode within 2 isqrt(c) + 1"

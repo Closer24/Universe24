@@ -33,8 +33,7 @@ def pixel_world(tmp_path: Path, monkeypatch, divisor: int) -> Path:
     world["detectors"] = [{"name": "own", "positions": [list(NODE)]}]
     world["stamp"] = input_stamp(world)
     (tmp_path / "pixel.json").write_text(json.dumps(world), encoding="utf-8")
-    profile = [0] * SIDE**3
-    profile[(NODE[0] * SIDE + NODE[1]) * SIDE + NODE[2]] = AMPLITUDE
+    profile = [AMPLITUDE * (i == (NODE[0] * SIDE + NODE[1]) * SIDE + NODE[2]) for i in range(SIDE**3)]
     entry = dict(family="matter", pair=[800, 1200], profile=profile, twist=0, clock=[432, 300])
     mode = {"world_digest": world["stamp"]["hash"], "bodies": [entry]}
     (tmp_path / "pixel.mode.json").write_text(json.dumps(mode), encoding="utf-8")
@@ -60,6 +59,6 @@ def test_under_the_divisor_1_the_one_node_body_reads_as_bound_beside_its_lattice
     assert tuple(reading["rotation"]["line"]) == simulation.node_record_coefficients(block)
     assert simulation.node_sources(0, "content") == [(NODE, COUNT)]
     for _ in range(12):
-        simulation.step()  # a cloud of 300 under the edge: the count's line clamps what a Node at 0 would give
+        simulation.step()  # a cloud under the edge: a starved Node gives nothing, no count below 0
     levels = dict(simulation.snapshot_stream())["blocks"][0]["rotation"]["levels"]
     assert levels[0] != levels[1] and block.counts is not None and block.counts.min() >= 0
