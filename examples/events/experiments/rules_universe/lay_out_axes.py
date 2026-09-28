@@ -4,28 +4,53 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Any
 
+from event_universe.world_files import input_digest  # the mode file names the world by its digest
+
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parents[3] / "tools"))
+from lay_out_join import (  # noqa: E402
+    CLOCK_UNIT,
+    DENOMINATOR,
+    ENGINE,
+    PIXELS,
+    QUANTUM_ACTION,
+    ROOT,
+    STEPS,
+)
+from pixel_mode import (  # noqa: E402  (the generator of the rule's universe, #1417)
+    TAIL_UNIT,
+    pixel_entry,
+)
 
-from lay_out_join import DENOMINATOR, ENGINE, ROOT, STEPS, UNIVERSE_NAME  # noqa: E402
-
-COUNT = 3_000  # the pixel's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000): it binds itself
+COUNT = 3_000  # the pixel's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000) under the corrected term (the Closer 14:30 Israel: the files ready for 3,000 for the moment the term returns; on the engine of today the edge is 0.345 Gamma = 4,136 and the run at 5,000 refuses, the reading in #1422)
 PULLS = (0, 2, 4, 6)  # the second pixel's distance in Links along x; 0 the white pixel alone
-NET_X = {
-    2: 1000,
-    4: 410,
-    6: 170,
-}  # Cheshbon's blind number of 13:46 Israel: the net tally along x, quanta per interval at the pulse's peak
-RAW_PER_PORT = 1000  # Cheshbon's blind number: the raw clicks (both signs) per interval through each of the six Ports, about
+TAIL = {
+    3_000: 41_943,
+    4_000: 23_724,
+    5_000: 34_734,
+    6_000: 24_904,
+}  # Cheshbon's tail factor t = e^(-kappa) over 2^16 per count (14:12 Israel; the Closer 14:16), stated in integers
+EDGE_OF_THE_TERM = 2_706  # the edge of the bound body under the corrected term, 0.2255 Gamma (ALGEBRA.md THE BOUND BODY IS ONE NODE); on the engine of today lay_out_join's EDGE, 4,136
+BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
+RAW_PER_PORT = 1000  # Cheshbon's blind number of 13:46 Israel at 3,000: the raw clicks (both signs) per interval through each of the six Ports, about
+PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's number of intervals
 SHAPE = [15, 3, 3]  # a chain along x, open at both ends, three wide: six Ports with a neighbour each
 FACE_DEPTH = 1
 AXIS = [1, 1]  # the row's y and z
 BODY_X = 4  # the white pixel's Node; the second pixel toward +x
+
+
+def net_along_x(count: int, distance: int) -> int:
+    """Cheshbon's blind number of 13:46 Israel for the pull: the net tally along the axis about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 and 2, 4, 6 Links), with omega_b and kappa of the count on the engine of the day."""
+    numbers = PIXELS[count]
+    return round(count * numbers["omega_b"] * math.exp(-numbers["kappa"] * distance))
 
 
 def one_node(x: int, count: int) -> dict[str, Any]:
@@ -46,6 +71,37 @@ def neighbours(x: int) -> list[list[int]]:
         [node[0] + dx, node[1] + dy, node[2] + dz]
         for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
     ]
+
+
+def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
+    """The mode file of the pixels by the generator of the rule's universe, `tools/pixel_mode.py` (#1417; Cheshbon's line of 14:12 Israel, the owner's word of 14:32: a body is its count at its Node and its record is the bound state from the count alone): each pixel's entry from the tool's `pixel_entry` with the clock pair [a, den] and the tail's factor t over 2^16 of its count from Cheshbon's table `PIXELS` (b = isqrt(c T den div (2 den - a)) at the Node, round(b t^d) at the Manhattan distance d, the twist as the generator's); without `tail` the factor is 0 (the Node alone, a diagnostic); a body under the edge binds no record and stays content alone; the world's digest names the world."""
+    universe = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))
+    pairs = {family["name"]: list(family["pair"]) for family in universe["families"]}
+    integers = universe["integers"]
+    twist_scale = int(integers["twist_table"]["unit"]) // (4 * int(integers["node_clock"]))
+    bodies = []
+    for number, body in enumerate(document["measured"]):
+        count = int(body["nodes"][0]["count"])
+        if (
+            count not in PIXELS
+        ):  # a body under the edge (no bound rotation of its own) binds no record: content alone
+            bodies.append(
+                {
+                    "family": body["family"],
+                    "pair": pairs[body["family"]],
+                    "mode": "none: content alone, under the edge",
+                }
+            )
+            continue
+        numbers = PIXELS[count]
+        a = numbers.get("a") or round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
+        factor = TAIL.get(count) or round(math.exp(-numbers["kappa"]) * TAIL_UNIT) if tail else 0
+        row = (a, CLOCK_UNIT, factor)
+        entry = pixel_entry(
+            number, body, document, pairs[body["family"]], QUANTUM_ACTION, row, twist_scale
+        )
+        bodies.append({**entry, "omega_b": numbers["omega_b"], "kappa": numbers["kappa"]})
+    return {"world_digest": input_digest(document), "bodies": bodies}
 
 
 def world(universe: str, pull: int) -> dict[str, Any]:
@@ -85,7 +141,7 @@ def world(universe: str, pull: int) -> dict[str, Any]:
 
 def expectation(pull: int) -> dict[str, Any]:
     """The blind expectation: the law's row in words (THE COLOURS ARE THE THREE AXES), Cheshbon's numbers before the run, the reversible row; the `axes` section axis_tallies.py reads (the net tally per axis at the pulse's peak, the raw over the axes, the first click, the band Cheshbon's)."""
-    net = [NET_X[pull], 0, 0] if pull else [0, 0, 0]
+    net = [net_along_x(COUNT, pull), 0, 0] if pull else [0, 0, 0]
     return {
         "format": "world-expectation-v1",
         "status": "BLIND: the row of THE COLOURS ARE THE THREE AXES; Cheshbon's numbers before the run; no number of a run here",
@@ -100,8 +156,8 @@ def expectation(pull: int) -> dict[str, Any]:
         ),
         "DETECTOR": [],
         "blind": {
-            "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about 1,000, 410 and 170 quanta per interval at the pulse's peak (M omega_b e^(-kappa d)), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge (1,000) disperses within about ten intervals",
-            "edge_quanta_per_node": 2706,
+            "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; the band plus or minus 30 percent (the Closer 14:16)",
+            "edge_quanta_per_node": EDGE_OF_THE_TERM,
             "horizon_quanta_per_node": 6000,
             "raw_clicks_per_port_per_interval": RAW_PER_PORT,
             "net_tally_per_interval": net,
@@ -118,7 +174,7 @@ def expectation(pull: int) -> dict[str, Any]:
             "net_per_interval": net,
             "raw_ratio": [1, 1, 1],
             "first_click": 1,
-            "band": None,
+            "band": BAND,
             "row": "axis_tallies.py reads the clicks at the pixel's detector: per axis the net tally (the sum of the tallies' components) and the raw (the sum of their magnitudes), the net per interval at the peak interval, the net and the raw over the axes, the first click's interval; MATCH within `band` of `net_per_interval` on every axis once Cheshbon writes it, else the reading alone; the net 0 on every axis reads white (DETECTOR: the clicks; the tallies a reading of them)",
         },
     }
@@ -127,14 +183,17 @@ def expectation(pull: int) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
+    parser.add_argument("--no-tail", action="store_true", help="the mode files without the tail")
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    universe = (folder / UNIVERSE_NAME).relative_to(ROOT).as_posix()
+    universe = PLANCK
     for pull in PULLS:
         name = f"pulled_pixel_{pull}" if pull else "white_pixel"
-        (folder / f"{name}.json").write_text(
-            json.dumps(world(universe, pull), indent=1) + "\n", encoding="utf-8"
+        document = world(universe, pull)
+        (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        (folder / f"{name}.mode.json").write_text(
+            json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
         )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(pull), indent=1) + "\n", encoding="utf-8"
