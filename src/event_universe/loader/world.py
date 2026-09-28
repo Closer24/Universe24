@@ -11,7 +11,7 @@ from event_universe.core.game_board import MAX_VALUE, Address3
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
-from event_universe.core.rule3 import rule_total_bound
+from event_universe.core.rule3 import division_forward, rule_total_bound
 from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import frame
@@ -705,7 +705,7 @@ def _node_clock_bound(
 
     # THE READS (ALGEBRA.md #the-counts-line, #the-paces): a family reads the pace Gamma - SUM weight x sign x
     # level over its reads; at a Node of a body in the law's form the held level is the body's source THERE (its
-    # count at the Node, the stocks spread over its Nodes): the pace is bounded per Node, not by the whole body
+    # count at the Node, the stocks over its Nodes) div the held row's divisor E_s (the hold's row): per Node
     def source_of(
         family: FamilyDefinition, entry: MeasuredDefinition, counts: tuple[int, ...] = ()
     ) -> int:
@@ -719,11 +719,15 @@ def _node_clock_bound(
             return -(-quanta // len(counts))
         return max(counts) - (-(quanta - sum(counts)) // len(counts))
 
+    def divisor_of(other: int) -> int:
+        return cast(int, families[other].held_divisor)
+
     for number, entry in enumerate(measured):
         counts = entry.block.counts or () if entry.block is not None else ()
         for family in families:
             reach = sum(
-                weight * source_of(families[other], entry, counts)
+                weight
+                * division_forward(source_of(families[other], entry, counts), divisor_of(other), 0)[0]
                 for other, weight, _, _ in family.reads
             )
             if family.reads and reach >= node_clock:
@@ -934,7 +938,6 @@ def _families_of(
     return families
 
 
-HELD_SOURCES = ("content", "sign")
 # a read's word `by` in the file (1 plain, "q" by the reading family's own sign) to the loop's word
 READ_BY: dict[object, str] = {1: "plain", "q": "sign"}
 
@@ -944,9 +947,9 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
     its field steps at the pair its row declares, [1, 1] or any other (no
     shortcut: the model owner, 2026-09-27), the quantum 1 (one click writes
     one unit), a clock only where it gives (the given record's), its own charge 0 (its
-    level is the source it holds, it carries none); a read names a held family;
-    under the detector law at most one family holds each source (the level
-    every other family reads is one array)."""
+    level is the source it holds, it carries none); a read names a held family, and
+    several families may hold one source, each at its own pair and divisor (the
+    short-range well beside gravity: the owner's word of 2026-09-28)."""
     for index, family in enumerate(families):
         label = f"families[{index}] ({family.name!r})"
         if family.held is not None:
@@ -972,13 +975,6 @@ def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
                     "a family's pace reads the held families' levels alone (ALGEBRA.md #the-counts-line, "
                     "ALGEBRA.md #the-paces; BUILD.md section 26 item 51)"
                 )
-    for source in HELD_SOURCES:
-        holders = [family.name for family in families if family.held == source]
-        if len(holders) > 1:
-            raise ValueError(
-                f"two families hold {source!r}: {holders}; one family holds each "
-                "source (the level the others read is one array; BUILD.md section 26 item 51)"
-            )
 
 
 def _window(value: object, label: str, phase_steps: int) -> int:
