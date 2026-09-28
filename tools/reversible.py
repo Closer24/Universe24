@@ -10,6 +10,7 @@ import numpy as np
 
 from event_universe.core.rule3 import THE_REWRITE
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.events.records import StampedMap
 
 
 def rows_of(simulation: DetectorLawSimulation) -> dict[str, np.ndarray]:
@@ -63,7 +64,7 @@ def restore_ledger(simulation: DetectorLawSimulation, ledger: dict[str, Any]) ->
     simulation.held = copy.deepcopy(ledger["held"])
     for block, (momentum, before, value, carry) in zip(simulation.blocks, ledger["blocks"], strict=True):
         block.momentum, block.momentum_before = list(momentum), list(before)
-        block.hold_value, block.hold_carry = dict(value), dict(carry)
+        block.hold_value, block.hold_carry = StampedMap(value), StampedMap(carry)
     simulation._hold(simulation.register.at("the hold", "(iv)"), THE_REWRITE)
 
 

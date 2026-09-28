@@ -109,8 +109,7 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
     assert rule_total_bound(KIND[0], KIND[1], GAMMA, 3000, amplitude + 1, True) > MAX_WORK_INT
     mode = bound_mode(counts, KIND, GAMMA)
     assert mode.amplitude == amplitude
-    # the fixed point at the coarser grain A / 2: the profile divided to A / 2 by the division
-    # act, then one read act and one division act at A / 2, returns within one unit of itself
+    # the fixed point at the coarser grain A / 2: the profile divided to A / 2 by the division act, then one read act and one division act at A / 2, returns within one unit of itself
     read, self_coefficient, wall = rule_integers(KIND, GAMMA, counts)
     (coarse,) = to_amplitude((mode.profile,), amplitude // 2)
     (again,) = to_amplitude(
@@ -169,8 +168,7 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
     assert Fraction(2 * KIND[0], KIND[1]) < moving.rotation < long_rest.rotation
     # the stop is a two-cycle of the rounding: one more iteration returns a profile one unit away at most
     assert moving.cycle == 2
-    # (e): the moving body is the rest mode with the phase k per Link; its velocity (the current over the form)
-    # rises with j, the bisection finds the named one within the pair's resolution, the sense the momentum's sign
+    # (e): the moving body is the rest mode with the phase k per Link; its velocity (the current over the form) rises with j, the bisection finds the named one within the pair's resolution, the sense the momentum's sign
     quanta, unit = int(long_counts.sum()), 64
     moved = moving_body(long_counts, KIND, GAMMA, 3 * unit * quanta // 20, unit, 1024, rest=long_rest)
     assert moved.named == Fraction(1, 20) and moved.pair[0] == 1024 and 0 < moved.pair[1] < 1024

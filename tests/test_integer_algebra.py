@@ -89,8 +89,7 @@ NUMPY_FORBIDDEN = {
 BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int"}
 ROOT_NAMES = {"isqrt", "integer_root"}
 
-# Every root in the physical modules today, by (module, function), with its
-# reason; `None` is the module level. The set found must equal this set.
+# Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
     # empty: no physical module takes a root today (docs/CANCELLED_WORLDS.md)
 }

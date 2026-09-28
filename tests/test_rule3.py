@@ -153,8 +153,7 @@ def test_the_forms_node_term_and_the_load_bound_read_the_same_integers():
     ) + amplitude * abs(self_coefficient) + wall * (amplitude + 1)
 
 
-# the rule's own lines in core/rule3.py: the Node's term, the far level's, the carry's and the
-# form's; the second set is the old two-function form, refused anywhere in src/ as well
+# the rule's own lines in core/rule3.py: the Node's term, the far level's, the carry's and the form's; the second set is the old two-function form, refused anywhere in src/ as well
 RULE_LINES = (
     r"self_coefficient \* now\b",
     r"wall \* other\b",
@@ -206,9 +205,7 @@ def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
     assert calls["backward"] >= 1 and simulation.books()["balanced"]
 
 
-# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a
-# Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the
-# transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
+# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
 SHIFT_HOME = {"src/event_universe/core/ports.py": {"arrival"}}
 SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 
@@ -236,8 +233,7 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
     for home, functions in SHIFT_HOME.items():
         assert found.pop(home) == functions
     assert found == {}, found
-    # the engine, core and the folders hold no split of their own (the loader's parse of the
-    # refused key `splits` in world.py is a refusal, not a step, and goes with world.py)
+    # the engine, core and the folders hold no split of their own (the loader's parse of the refused key `splits` in world.py is a refusal, not a step, and goes with world.py)
     stepping = [SOURCE / "events" / "detector_law.py", *sorted((SOURCE / "core").glob("*.py"))]
     stepping += sorted((SOURCE / "features").rglob("*.py"))
     for path in stepping:
