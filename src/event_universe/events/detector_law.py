@@ -26,7 +26,6 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.events import after_step, assembly, body_language, guards, output, pair, record_well
-from event_universe.events import count_once as once
 from event_universe.events import live as live_records
 from event_universe.events import momentum_reading as momentum
 from event_universe.events.geometry import GameBoardGeometry, PairView
@@ -290,8 +289,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return
         if block.counts is None or block.count_remainder is None:
             block.counts, block.count_remainder = self._lay_count(block, live)
-        if once.counts_are_the_well(self.families, block):
-            block.counts = once.counts_laid(block, self._centre_node(block))
         wall, wrap = self.kind_wall(block.family, block.definition.pair), self.kind_wrap[block.family]
         term = CountTerm(block.count_norm, wall, self.world.amplitude_bound, int(block.counts.max()))
         levels = (live.now, live.before, live.im_now, live.im_before)
@@ -531,8 +528,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if block is None or (block.well is None and not block.definition.counts):
             return []
         weight = 1 if source == "content" else block.definition.q + self.families[block.family].charge[0]
-        laid = block.period_counts if once.counts_are_the_well(self.families, block) else block.well
-        laid = laid if laid is not None else block.counts
+        laid = block.well if block.well is not None else block.counts
         if laid is not None:
             moved = zip(*np.nonzero(laid), strict=True)
             return [((int(x), int(y), int(z)), weight * int(laid[x, y, z])) for x, y, z in moved]
@@ -546,10 +542,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if held is None or body is not None:
             self.ports.begin()
             held = {} if held is None else held
-            if act == THE_ADVANCE and once.no_field(self.families, self.world.quantum_action):
-                for family, record in self.held_records.items():
-                    if self.families[family].held_divisor == 1:
-                        record.now.fill(0)  # THE WELL IS THE COUNT AND NO FIELD: the level is the lay
             for number in range(len(self.held)) if body is None else (body,):
                 block = self.block_by_number.get(number)
                 if body is None and act == THE_INVERSE and block is not None and block.well is not None:
@@ -581,7 +573,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     sign = -1 if act == THE_INVERSE else 1
                     for key, level in w.node_levels:
                         node = cast(tuple[int, int, int], key[1:])
-                        record.now[node] = once.written(block, definition, record.now[node], level, sign)
+                        record.now[node] = int(record.now[node]) + sign * level
                     if not w.node_levels:
                         mask = block.mask if block is not None else self.span_masks[number]
                         record.now[mask] += sign * w.time_level
@@ -1124,8 +1116,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _advance_inverse(self, live: LiveRecord) -> None:
         """One interval of the rule backwards on a record: from (a_next, a_now, r') to (a_now, a_before, r) with 3 den Gamma a_before - r = num SUM_j (Gamma - c_j) a_now,j + 6 den c a_now - (3 den Gamma a_next + r') under the fixed wall (the forward step's integers, the clock field of the interval's start), the remainder in [0, 3 den Gamma), exact at every Node; with a tensor part read, a twist or a second level the arrivals are stepped back per axis after the transport's inverse (`_transport`), both levels."""
-        if live.silent or (live.held_part and once.no_field(self.families, self.world.quantum_action)):
-            return  # a zero held part steps to zero exactly; a held family's record is the count, not stepped
+        if live.silent:
+            return  # a zero held part steps to zero exactly
         num, den = self.pair_arrays(live.family, live.pair)
         field = live.held_part
         gamma = 1 if field else self.node_clock
@@ -1677,8 +1669,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _advance(self, live: LiveRecord) -> None:
         # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md #the-click; the Boss's line of 2026-09-24 on the knot): no grace, no exemption, no own take, no fresh Port; the given record is written once and the law advances it (the retired forms in BUILD.md section 26). Every given record, light's kind or a massive kind alike, books its flux at the Nodes and clicks on its ladder (the click is the law's one action on any record, POSTULATES 10); a BLOCK'S own record (a massive kind, given of no emitter) books nothing and is on no ladder (massive-record-v1, MUST 2). THE BOOKING BY ATTRIBUTE (item 51; item 53): a held family's record and a body's own standing record are read by no detector; every other record is booked at the Ports (nothing declared: derived from `held`)
-        if live.silent or (live.held_part and once.no_field(self.families, self.world.quantum_action)):
-            return  # a zero held part steps to zero exactly; a held family's record is the count, not stepped
+        if live.silent:
+            return  # a zero held part steps to zero exactly
         field = live.held_part
         booked = not field and not live.standing
         # The rule with the record's pair on the six-neighbour term (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six neighbours, then D by 3 den with the remainder kept, then T; at light's pair [1, 1] the first build's integers bit for bit.

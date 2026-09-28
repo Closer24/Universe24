@@ -6,8 +6,7 @@ from typing import TYPE_CHECKING, Any, cast
 
 import numpy as np
 
-from event_universe.core.rule3 import THE_LOAD, division_forward
-from event_universe.events import count_once as once
+from event_universe.core.rule3 import THE_LOAD
 from event_universe.features import crystal, polariser
 from event_universe.features.receive import ReceiveTerm
 from event_universe.loader.world import NatureBeamWorld
@@ -339,7 +338,7 @@ def held_records(loop: DetectorLawSimulation) -> None:
 
 
 def start_at_rest(loop: DetectorLawSimulation) -> None:
-    """THE START (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): every held family's time part at the load at its rest, the solution of the family's line with the sum's sources on its right side, 6 den a - num S_6(a) = 3 den sigma, by the folder found by its name, once before the first interval and never in it; the sources the bodies' weighted counts at their Nodes (a body in the law's form the count declared at each Node, the hold's row; a body of the old form its one source at every Node of its mask), each over the row's divisor E_s inside the folder, 0 elsewhere and beyond an open face; its levels written at both levels through the write's line (features/write) at the load, each Node with a level its key at the wall 1 (the rest of the line the solver's), the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family: a board periodic on its every axis at [1, 1] has no sink (ALGEBRA.md #the-generator (g)), so under a source total other than 0 the world is refused at the load, and under the total 0 (a signed family balanced) the rest is written at the mean 0. THE WELL IS THE COUNT AND NO FIELD (Cheshbon's line of 2026-09-28, 18:05 Israel): in the rule's own universe (`count_once.no_field`) no rest is solved, the level at each source's Node is its count div the row's divisor E_s (the count itself at the divisor 1, 0 where E_s exceeds it) and the remainders and carries stay 0."""
+    """THE START (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): every held family's time part at the load at its rest, the solution of the family's line with the sum's sources on its right side, 6 den a - num S_6(a) = 3 den sigma, by the folder found by its name, once before the first interval and never in it; the sources the bodies' weighted counts at their Nodes (a body in the law's form the count declared at each Node, the hold's row; a body of the old form its one source at every Node of its mask), each over the row's divisor E_s inside the folder, 0 elsewhere and beyond an open face; its levels written at both levels through the write's line (features/write) at the load, each Node with a level its key at the wall 1 (the rest of the line the solver's), the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family: a board periodic on its every axis at [1, 1] has no sink (ALGEBRA.md #the-generator (g)), so under a source total other than 0 the world is refused at the load, and under the total 0 (a signed family balanced) the rest is written at the mean 0."""
     start = loop.register.at("the start", "any")
     for family, record in loop.held_records.items():
         source = cast(str, loop.families[family].held)
@@ -355,21 +354,20 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
                 counts[node] = value
         if not counts.any():
             continue
-        solved = not once.no_field(loop.families, loop.world.quantum_action)
         try:
-            field: Any = start(counts, (num, den), wrap, divisor) if solved else None
+            field: Any = start(counts, (num, den), wrap, divisor)
         except ValueError as refusal:
             raise ValueError(
                 f"the start of the held family {loop.families[family].name!r}: {refusal}"
             ) from refusal
-        levels = field.levels if solved else np.asarray(division_forward(counts, divisor, 0)[0])
+        levels = field.levels
         nodes = np.argwhere(levels)
         sources = tuple(((int(x), int(y), int(z)), int(levels[x, y, z])) for x, y, z in nodes)
         written, index = loop._write_line(THE_LOAD, 1, 1, sources, {}, {}), tuple(nodes.T)
         record.now[index] = [now for _, now, _ in written]
         record.before[index] = [before for _, _, before in written]
-        record.remainder[...] = field.remainder if solved else 0  # the folder's rest of the remainders
+        record.remainder[...] = field.remainder  # the folder's rest of the remainders
         for number, block in loop.block_by_number.items():
             for node, _value in loop.node_sources(number, source):
-                block.hold_carry[(family, "n", *node)] = int(field.carries[node]) if solved else 0
+                block.hold_carry[(family, "n", *node)] = int(field.carries[node])
         loop.node_level[family] = record.now
