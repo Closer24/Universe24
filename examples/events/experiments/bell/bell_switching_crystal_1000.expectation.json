@@ -37,6 +37,10 @@
    ],
    "band": 1,
    "row": "the crystal's slab in place"
+  },
+  {
+   "reversible": 16000,
+   "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)"
   }
  ],
  "runtime": "EXPLORATORY, one load of bell_a_b's stripped copy on this machine (Python 3.14, no interval): the parse 0.13 s, the build 0.01 s, the board 14460 Nodes; the interval's cost from the probes of this session about 0.01 s on a board of this size, so 4000 intervals about 40 s and a chain at 1024 pairs (the emitter's stock over the crystal's share, about 12,000 intervals) about 2 min",

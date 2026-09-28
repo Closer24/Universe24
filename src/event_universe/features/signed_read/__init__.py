@@ -1,4 +1,4 @@
-"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
+"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces p_a = p_0 - c - c_a with the tensor's parts, and 0 < p <= P at every Node with P = isqrt(2 den Gamma^2 div (den + num)), the conformal line's edge (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
 
 from __future__ import annotations
 
@@ -68,19 +68,10 @@ class SignedReadWrites:
     axis_contents: tuple[np.ndarray, ...] | None
 
 
-def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int]:
-    """The guard's upper side as one integer comparison, p^2 x left <= right with left = 18 num + 6 den and right = Gamma^2 (18 den + 6 num) (ALGEBRA.md #the-paces)."""
-    num, den = pair
-    edge = (
-        3 * 6
-    )  # the rule's own integer 18 = 3 x 6 (ALGEBRA.md #the-paces: 18 den + 6 num over 18 num + 6 den)
-    return edge * num + 6 * den, gamma * gamma * (edge * den + 6 * num)
-
-
 def pace_bound(pair: tuple[int, int], gamma: int) -> int:
-    """The largest admitted pace P = isqrt(right div left), so that p^2 x left <= right exactly when p <= P."""
-    left, right = stability_bound(pair, gamma)
-    return isqrt(right // left)
+    """The guard's edge P = isqrt(2 den Gamma^2 div (den + num)): the largest pace with p^2 (den + num) <= 2 den Gamma^2, where the mode at wave number pi keeps its factor (S - 6 R) / w = 2 - 2 (1 + num / den) (p / Gamma)^2 at or above -2; Gamma for light, above Gamma where num < den, every pace at or below Gamma inside it (ALGEBRA.md #the-paces, the conformal line)."""
+    num, den = pair
+    return isqrt(2 * den * gamma * gamma // (den + num))
 
 
 def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
@@ -110,13 +101,12 @@ def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
 
 
 def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) -> None:
-    """The two-sided guard 0 < p <= P on p_0 and every axis pace; a pace outside ends the run naming the Node, the family and the interval (ALGEBRA.md #the-paces)."""
+    """The two-sided guard 0 < p <= P on p_0 and every axis pace, P the conformal line's edge (`pace_bound`); a pace outside ends the run naming the Node, the family and the interval (ALGEBRA.md #the-paces)."""
     gamma = term.gamma
-    left, right = stability_bound(term.pair, gamma)
     bound = pace_bound(term.pair, gamma)
     paces = [gamma - writes.content]
     if writes.axis_contents is not None:
-        paces.extend(gamma - writes.content - t for t in writes.axis_contents)
+        paces.extend(gamma - 2 * writes.content - t for t in writes.axis_contents)
     for axis, pace in enumerate(paces):
         low = int(np.min(pace))
         if low <= 0:
@@ -132,10 +122,9 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
             node = np.unravel_index(int(np.argmax(pace)), pace.shape)
             raise RuntimeError(
                 f"the pace of {own.name!r} (family {own.family}, axis {axis}) is {high} at the Node "
-                f"{tuple(int(i) for i in node)} at interval {own.interval}, above the stability "
-                f"edge {bound} of its pair {list(term.pair)} at Gamma = {gamma} (p^2 x {left} <= "
-                f"{right}; ALGEBRA.md #the-paces, the guard's upper side: a hill beyond the edge); "
-                "the run ends"
+                f"{tuple(int(i) for i in node)} at interval {own.interval}, above the edge {bound} of its "
+                f"pair {list(term.pair)} at Gamma = {gamma} (p^2 (den + num) <= 2 den Gamma^2; ALGEBRA.md "
+                "#the-paces, the guard's upper side: a hill beyond the edge); the run ends"
             )
 
 

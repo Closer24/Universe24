@@ -84,7 +84,7 @@ def place(
 ) -> dict[str, Any]:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "universe.json").write_text(
-        json.dumps({"integers": INTEGERS, "families": families}), encoding="utf-8"
+        json.dumps({"integers": {**INTEGERS, "Lambda": 1}, "families": families}), encoding="utf-8"
     )
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     placed = copy.deepcopy(document)
