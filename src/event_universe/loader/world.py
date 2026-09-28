@@ -1517,7 +1517,17 @@ def _measured(
             bounds = (amplitude_bound, phase_steps, most_steps)
             found.append(
                 _counted(
-                    obj, label, families, names, shape, occupied, momentum_unit, mode, bounds, periodic
+                    obj,
+                    label,
+                    families,
+                    names,
+                    shape,
+                    occupied,
+                    momentum_unit,
+                    mode,
+                    bounds,
+                    periodic,
+                    quantum_action=quantum_action,
                 )
             )
             continue
@@ -1626,6 +1636,7 @@ def _counted(
     mode: dict[str, object] | None,
     bounds: tuple[int, int, int | None],
     periodic: tuple[bool, bool, bool],
+    quantum_action: int = 0,
 ) -> MeasuredDefinition:
     """A body in the law's form (ALGEBRA.md #what-a-body-is; the frame's `COUNTED`): its family, its Nodes with their counts, its momentum's two levels, its spin's two levels and its moment where declared, its stocks; the block's corner the Nodes' lowest per axis, its extents their box, its Nodes and counts kept for the loop (the mask and the count's line); the pair its family's, no seed, no well and no giving yet."""
     family_name = obj["family"]

@@ -75,7 +75,7 @@ def place(tmp_path: Path, monkeypatch, universe: dict, document: dict) -> dict:
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
     placed = copy.deepcopy(document)
-    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+    for key in ("node_clock", "amplitude_bound", "momentum_unit", "quantum_action"):
         placed.pop(key, None)  # the universe's integers, never a world's (record 2089)
     placed["universe"] = "universe.json"
     placed["engine"] = "start.json"
@@ -181,6 +181,29 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     for change, match in defects:
         with pytest.raises(ValueError, match=match):
             loaded(change)
+
+
+def test_b3_one_weight_per_pair_a_family_with_bodies_reads_a_held_family_at_the_weight_it_sources_it(
+    tmp_path, monkeypatch
+):
+    """ALGEBRA.md, a family's write (action and reaction): a family with bodies in the world reads a held family at its quantum times the row's time factor, the weight its bodies source it with; another weight is refused by name; a family with no bodies (the given light) reads at any weight."""
+    universe = json.loads(GENERATED.read_text(encoding="utf-8"))
+    matter = next(row for row in universe["families"] if row["name"] == "matter")
+    gravity = next(row for row in universe["families"] if row["name"] == "gravity")
+    read = next(item for item in matter["reads"] if item["family"] == "gravity")
+    assert read["weight"] == matter["quantum"] * gravity["held"]["factors"][0]
+    parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
+    read["weight"] = 2
+    with pytest.raises(
+        ValueError, match="'matter' -> 'gravity' weighs 2, and the pair has one weight: .* = 1"
+    ):
+        parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
+    read["weight"] = 1
+    charge = next(row for row in universe["families"] if row["name"] == "charge")
+    next(item for item in charge["reads"] if item["family"] == "gravity")["weight"] = (
+        2  # no bodies: exempt
+    )
+    parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
 
 
 def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_body(

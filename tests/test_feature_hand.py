@@ -52,7 +52,7 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_face():
-    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: the booking S . n is read from the run itself as each click is booked (S and n of A at the click, the row of the hand, ALGEBRA.md #the-primitives), and every click at A's own set is one the declared hand admits (sign(S . n) x hand never -1); a click the hand refuses walks the ladder on to the face, so every record ends at `at_well` or at the face, and the two hands part the run's clicks: the records clicking at `at_well` under -1 and under +1 are not the same set."""
+    """The shipped light clock over its own run (the file's `ticks`) with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: the booking S . n is read from the run itself as each click is booked (S and n of A at the click, the row of the hand, ALGEBRA.md #the-primitives), and every click at A's own set is one the declared hand admits (sign(S . n) x hand never -1); a click the hand refuses walks the ladder on to the face, so every record ends at `at_well` or at the face, and the two hands part the run's clicks: the records clicking at `at_well` under -1 and under +1 are not the same set."""
     document = json.loads(LIGHT_CLOCK.read_bytes())
     at_well: dict[int, set[int]] = {}
     for hand in (-1, 1):
@@ -66,7 +66,7 @@ def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_fa
         simulation.record = lambda line, b=body, out=lines: out.append(
             {**line, "booking": (tuple(b.spin), tuple(b.momentum))}
         )
-        for _ in range(700):
+        for _ in range(document["ticks"]):  # the world's own run: the windows close at the universe's T
             simulation.step()
         gathers = [line for line in lines if line["event"] == "gather"]
         assert gathers and {line["chosen"][0][0] for line in gathers} <= {"at_well", "face"}

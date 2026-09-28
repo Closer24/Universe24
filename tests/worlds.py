@@ -98,6 +98,9 @@ CLOCK_FAMILY = {
 
 # the Node clock Gamma of every test world (ALGEBRA.md #the-paces, #the-line)
 NODE_CLOCK = 10**4
+QUANTUM_ACTION = (
+    1 << 40
+)  # the fixtures' T where no recorded norm gives it: a giving closes within a test's run
 
 
 READS = [
@@ -130,6 +133,7 @@ def chain_world(
         "N": PHASE_STEPS,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": QUANTUM_ACTION,
         "momentum_unit": 64,
         "universe": [
             family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
@@ -207,6 +211,7 @@ def layer_world(receiver: object = None) -> dict:
         "N": PHASE_STEPS,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": QUANTUM_ACTION,
         "momentum_unit": 64,
         "universe": [
             family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
@@ -259,6 +264,7 @@ def _emitter_world(
         "N": 1024,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": QUANTUM_ACTION,
         "momentum_unit": 64,
         "universe": [
             family_entry("light", [1, 1], reads(), clock=[512, 1]),
@@ -436,6 +442,7 @@ def on_the_file(document: dict) -> dict:
     moved["universe"] = FILE
     del moved["node_clock"]
     del moved["momentum_unit"]
+    moved.pop("quantum_action", None)  # the universe file's T stands for a world on the file
     for entry in moved["measured"]:
         if entry["family"] == "light":
             entry["family"] = "charge"
