@@ -54,21 +54,11 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     ]
     assert [line["excitation"] for line in givings] == [1, 2, 3, 4]
     ticks = [line["tick"] for line in givings]
-    # the first residue is read after the body's first advance (ALGEBRA.md #rule3, #the-ladder; 0 on
-    # the seed itself), the tick ceil((2 u + 1) P / (2 W)) intervals after it (ALGEBRA.md #the-ladder)
+    # the first residue is read after the body's first advance (ALGEBRA.md #rule3, #the-ladder; 0 on the seed itself), the tick ceil((2 u + 1) P / (2 W)) intervals after it (ALGEBRA.md #the-ladder)
     assert ticks == sorted(ticks) and ticks[0] >= 2 and ticks[-1] < document["ticks"]
     norm = givings[0]["excitation_norm"]
     assert norm > 0 and all(line["excitation_norm"] == norm for line in givings)
-    # the norm T: one period's action P e_c, the share of the record's
-    # conserved form at the body's centre Node summed over one period of its
-    # mode advanced alone (ALGEBRA.md #the-click and (f), ALGEBRA.md #rule3), the
-    # generator's integers `period` and `norm`, read on the board here (a
-    # GameBoard reading, a diagnostic and not a measurement): the body alone
-    # (the same world, its emitter and its screen removed), the share at the
-    # Node x = 21 (the corner 5 plus 32 // 2) from the two levels after each
-    # interval's step, summed over `period` intervals, bit for bit; the period
-    # the nearest integer to 2 pi / omega_b (63 on this well); the share the
-    # mode's own tick
+    # the norm T: one period's action P e_c, the share of the record's conserved form at the body's centre Node summed over one period of its mode advanced alone (ALGEBRA.md #the-click and (f), ALGEBRA.md #rule3), the generator's integers `period` and `norm`, read on the board here (a GameBoard reading, a diagnostic and not a measurement): the body alone (the same world, its emitter and its screen removed), the share at the Node x = 21 (the corner 5 plus 32 // 2) from the two levels after each interval's step, summed over `period` intervals, bit for bit; the period the nearest integer to 2 pi / omega_b (63 on this well); the share the mode's own tick
     emitter = document["measured"][0]["emitter"]
     period = parse_nature_beam_world(document).measured[0].block.emitter.period  # P_body, the loader's
     assert emitter["norm"] == norm and period > 0
@@ -87,22 +77,14 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         solitary.step()
         assert body.own is not None
         action += Fraction(*solitary.form_share(body.own, centre))
-    # the file's norm in the body's own units (ALGEBRA.md #the-line; item 44): the action's numerator, its
-    # denominator a divisor of the rule's coefficient on the six reads at the centre, R = 2 p^2
-    # num with the pace Gamma - stock at the solitary body's centre
+    # the file's norm in the body's own units (ALGEBRA.md #the-line; item 44): the action's numerator, its denominator a divisor of the rule's coefficient on the six reads at the centre, R = 2 p^2 num with the pace Gamma - stock at the solitary body's centre
     pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
     num, den = body.definition.pair
     read_coefficient = coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace)[0][0]
     assert pace == NODE_CLOCK - 5 // divisor  # one own quantum and the stock 4, over E_s: the level 0
     assert read_coefficient % action.denominator == 0
     by_tick = {entry["tick"]: entry for entry in trace}
-    # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md #the-ladder, #the-postulates; BUILD.md
-    # section 26 item 33): the residue u read at the previous click (after the first
-    # advance for the first, interval 1) times the click at the first count t with 2 W t >=
-    # (2 u + 1) P, so each giving falls EXACTLY ceil((2 u + 1) P / (2 W)) intervals after
-    # its read (at least one), on the residue and the wheel the previous giving line
-    # carries; the first residue is on no line, read from the own record before the
-    # first giving (the trace's entry of interval 2, the state after the read at 1)
+    # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md #the-ladder, #the-postulates; BUILD.md section 26 item 33): the residue u read at the previous click (after the first advance for the first, interval 1) times the click at the first count t with 2 W t >= (2 u + 1) P, so each giving falls EXACTLY ceil((2 u + 1) P / (2 W)) intervals after its read (at least one), on the residue and the wheel the previous giving line carries; the first residue is on no line, read from the own record before the first giving (the trace's entry of interval 2, the state after the read at 1)
     period = parse_nature_beam_world(document).measured[0].block.emitter.period
     assert all(line["period"] == period for line in givings)
     first = by_tick[2]["excited_before"]
