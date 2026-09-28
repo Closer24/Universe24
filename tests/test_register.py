@@ -29,8 +29,7 @@ from tests.worlds import emitter_world
 
 def declared_folders() -> list[tuple[str, str, bool]]:
     """Every folder of the features package on disk with its declared name and whether it is built (a function or a bind), in the folders' order: the register lists nothing by hand (record 2221 (3)), so a folder added or built touches no shared file."""
-    package = Path(features.__file__).parent
-    found = []
+    package, found = Path(features.__file__).parent, []
     for folder in sorted(p for p in package.iterdir() if p.is_dir() and (p / "__init__.py").is_file()):
         module = importlib.import_module(f"{features.__name__}.{folder.name}")
         declaration = declaration_of(folder.name, module)
@@ -276,8 +275,7 @@ def test_the_register_finds_the_folders_and_refuses_a_folder_without_its_declara
 def test_the_engine_registers_every_folder_on_disk_and_checks_every_term():
     """On a shipped test world the engine's register holds exactly the folders' names in the folders' order, found on disk and listed nowhere by hand (the recoil's folder among them, PR #1165), each folder the name's, each with a place, a word and a section, the built ones bound to a function and the rows to do without one; the rows of 9.117 write the values named once (item 1) and the writers' orders are ALGEBRA.md #the-primitives's; every term a family or a body declares (the giving of an emitter among them) names a built primitive; the hold and the clicks are called through the register (the shipped worlds bit for bit: the suites' digests)."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
-    register = simulation.register
-    folders_found = declared_folders()
+    register, folders_found = simulation.register, declared_folders()
     assert register.names == tuple(name for _folder, name, _built in folders_found)
     assert set(register.built_names()) == {name for _folder, name, built in folders_found if built}
     assert "the recoil" in register.built_names() and len(folders_found) == len(register.names)

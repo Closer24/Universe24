@@ -24,8 +24,7 @@ def old_isotropic(
     pace = gamma - content
     if not weak_field:
         return pace * num, 6 * den * content, 3 * den * gamma
-    squares = pace * pace
-    gamma_squared = gamma * gamma
+    squares, gamma_squared = pace * pace, gamma * gamma
     self_coefficient = (
         12 * den * gamma_squared - 6 * (squares + gamma_squared) * (den - num) - 12 * num * squares
     )
