@@ -240,6 +240,7 @@ def close_window(loop: DetectorLawSimulation, block: Block, live: LiveRecord) ->
             GIVING,
             (int(outward[0]), int(outward[1]), int(outward[2])),
             (live.period_numerator, live.period_denominator),
+            live.identity,
         )
     )
     live.giving_line = None
