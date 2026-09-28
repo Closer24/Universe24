@@ -343,6 +343,17 @@ def _seed_key(document: dict) -> str:
         if isinstance(body.get("emitter"), dict):
             for key in ("weight", "norm", "norm_denominator"):
                 body["emitter"].pop(key, None)
+    # THE FAMILIES FROM THE RULE: the keys the rule derives are no part of the key, so a fixture in the
+    # rule's form and the same fixture in the older form share their recorded seeding (the sign and the
+    # self-source stay in the key until the owner's word on a body's charge and on the slot)
+    bare.pop("twist_table", None)
+    bare.pop("Lambda", None)
+    for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
+        for key in ("parts", "phase", "clicks", "quantum", "reads", "spins_step"):
+            entry.pop(key, None)
+        if isinstance(entry.get("held"), dict):
+            for key in ("factors", "dipole", "dipole_div"):
+                entry["held"].pop(key, None)
     return input_digest(bare)
 
 

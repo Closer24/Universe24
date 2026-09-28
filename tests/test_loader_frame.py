@@ -62,7 +62,7 @@ def test_the_derived_reads_take_every_real_field_and_the_clicking_families_above
         {"name": "light", "pair": (1, 1), "held": {"count": "sign", "divisor": 4}},
         {"name": "matter", "pair": "body"},
     )
-    reads = [[(r["family"], r["by"]) for r in derived.filled(row, rows)["reads"]] for row in rows]
+    reads = [[(r["family"], r["by"]) for r in derived.filled(row, rows, 4)["reads"]] for row in rows]
     assert reads[0] == [] == reads[1] and reads[2] == [("gravity", 1), ("well", 1)]
     assert reads[3] == [("gravity", 1), ("well", 1), ("light", "q")]
 
