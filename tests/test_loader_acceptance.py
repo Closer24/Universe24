@@ -106,10 +106,14 @@ def body_world() -> dict:
 def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_and_runs(
     tmp_path, monkeypatch
 ):
-    """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q the signed sum of its
-    counts by the row's `sign`; the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
+    """#the-stable-body: the body by family, Nodes with counts and momentum loads and steps; Q the signed sum of its counts by the row's `sign`; the set on its own Node its own; the card's key on `declared`; the pace bound per Node."""
     universe = json.loads(GENERATED.read_text(encoding="utf-8"))
     next(row for row in universe["families"] if row["name"] == "matter")["sign"] = -1
+    for row in universe[
+        "families"
+    ]:  # the load test's divisors alike, the bound charge's well of record aside
+        if "held" in row:
+            row["held"]["divisor"] = 40000
     world = parse_nature_beam_world(place(tmp_path, monkeypatch, universe, body_world()))
     entry, (strip,) = world.measured[0], world.detectors
     assert entry.block.declared == {"polariser": {"angle": (2, 1), "sets": ("rest", "strip")}}
@@ -128,15 +132,16 @@ def test_b1_a_body_declared_by_its_family_nodes_count_and_momentum_alone_loads_a
     parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
     for row in [row for row in universe["families"] if "held" in row]:
         row["held"] = {**row["held"], "divisor": 1}
-    with pytest.raises(ValueError, match="the pace of 'charge' could reach 0 .* to 10000"):
+    with pytest.raises(
+        ValueError, match="the pace of 'charge' could reach 0 .* to 20000"
+    ):  # the charge reads gravity and the polarisation at divisor 1
         parse_nature_beam_world(place(tmp_path, monkeypatch, universe, wide))
 
 
 def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_file(
     tmp_path, monkeypatch
 ):
-    """#what-a-body-is, #the-primitives (the recoil's row): a giving body by its Nodes takes its profile, clock and
-    twist from the mode file beside the world (this world's by `world_digest`), its receiver a list; defects refused by name."""
+    """#what-a-body-is, #the-primitives (the recoil's row): a giving body by its Nodes takes its profile, clock and twist from the mode file beside the world (this world's by `world_digest`), its receiver a list; defects refused by name."""
     world, universe = body_world(), json.loads(GENERATED.read_text(encoding="utf-8"))
     world["N"] = 1024  # the given clock [512, 1] whole in the wavelength (the loop's L)
     giver = {"family": "charge", "weight": 1, "receiver": ["strip"]}
@@ -145,6 +150,7 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     (tmp_path / "giver.json").write_text(json.dumps(placed), encoding="utf-8")
     profile = [0] * 5 + [1000, 1000] + [0] * 9
     entry = {"family": "matter", "pair": [800, 1200], "profile": profile, "clock": [1530, 1000]}
+    entry["wavelength"] = 7  # the mode's lambda_q: the given clock [2 N, 7], the row's [512, 1] not read
     mode = {"world_digest": placed["stamp"]["hash"], "bodies": [{**entry, "twist": 45875}]}
     big = {"profile": [v << 40 for v in profile], "clock": [3 << 49, 1 << 50]}  # above the derived A
 
@@ -161,12 +167,14 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     assert (block.clock, block.twist, block.seed) == ((1530, 1000), 45875, 1000)
     assert block.profile[5:7] == (1000, 1000) and block.emitter.receiver == ("strip",)
     assert block.emitter.period == period_by_the_rule(1530, 1000)
+    assert block.emitter.clock == (2048, 7) and DetectorLawSimulation(loaded()).recoil_wall == 7
     B = lambda key, value: lambda m: m["bodies"][0].__setitem__(key, value)  # noqa: E731
     defects = (
         (lambda m: m.__setitem__("world_digest", "0" * 64), "is not this world's digest"),
         (lambda m: m["bodies"][0].pop("twist"), "from the mode file .* no twist"),
         (B("family", "charge"), "the body of 'matter'"),
         (B("clock", [1530, 999]), "at least the profile's amplitude 1000"),
+        (B("wavelength", 0), "wavelength must be an integer from 1 through"),
         (lambda m: m["bodies"][0].update(big), "above the world's amplitude bound"),
         (lambda m: m.__setitem__("bodies", []), "bodies must be 1 objects"),
     )
@@ -201,8 +209,7 @@ def test_c1_an_unknown_key_is_refused_by_name_on_the_world_the_universe_and_a_bo
     "the loop's families from the checked entries by the cards' keys and reads a body's and an emitter's `pair`",
 )
 def test_c2_every_key_of_a_familys_entry_is_a_folders_schema_and_not_a_line_of_the_loader():
-    """Record 2226 (1) and (2): every key of a shipped family's entry is one folder's card; the loader
-    names none of those keys as a string of its own."""
+    """Record 2226 (1) and (2): every key of a shipped family's entry is one folder's card; the loader names none of those keys as a string of its own."""
     register = discover()
     words = {
         key

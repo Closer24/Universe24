@@ -175,8 +175,7 @@ def test_a_reading_reads_the_state_and_writes_nothing_into_the_run():
 
 
 def test_the_stride_reads_interval_zero_and_every_multiple_up_to_the_ticks():
-    """A reading every k is read at 0, k, 2k, ... up to the run's ticks; a stride beyond the
-    ticks leaves the loaded state alone."""
+    """A reading every k is read at 0, k, 2k, ... up to the run's ticks; a stride beyond the ticks leaves the loaded state alone."""
     document = declared(
         emitter_world(stock=1, ticks=10),
         [{"name": "a", "kind": "alive", "every": 3}, {"name": "b", "kind": "alive", "every": 50}],
@@ -194,12 +193,10 @@ def test_the_stride_reads_interval_zero_and_every_multiple_up_to_the_ticks():
 
 
 def test_the_one_command_writes_the_readings_beside_todays_keys(tmp_path: Path):
-    """The output file carries `readings` in the declared order beside today's keys; the clicks
-    reading is today's clicks of that detector; a world without the key writes an empty list."""
+    """The output file carries `readings` in the declared order beside today's keys; the clicks reading is today's clicks of that detector; a world without the key writes an empty list."""
     output = run_world(
         declared(
-            emitter_world(stock=2, ticks=120),
-            [SIX[0], {"name": "alive", "kind": "alive", "every": 60}],
+            emitter_world(stock=2, ticks=120), [SIX[0], {"name": "alive", "kind": "alive", "every": 60}]
         ),
         tmp_path,
     )

@@ -12,7 +12,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.running import Seen, chosen_by_the_rule, spy_on
+from tests.running import Seen, chosen_by_the_rule, lines_of, spy_on, stamped
 from tests.worlds import (
     EMITTER_PAIR,
     NODE_CLOCK,
@@ -23,8 +23,7 @@ from tests.worlds import (
     receiver_body,
 )
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -33,8 +32,7 @@ def test_the_loader_admits_the_key_and_refuses_the_ray_laws_instruments():
     assert world.hypotheses == []  # no identity beside the engine (ALGEBRA.md #the-primitives)
     block = world.measured[0].block
     assert block is not None and block.emitter is not None and block.emitter.family == 0
-    # the lamp is refused under the detector law (ALGEBRA.md #the-click): a giving
-    # has a clicking record behind it
+    # the lamp is refused under the detector law (ALGEBRA.md #the-click): a giving has a clicking record behind it
     with_lamp = chain_world()
     with_lamp["measured"][0] = {
         "position": [2, 0, 0],
@@ -87,16 +85,13 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     assert "face" not in DetectorLawSimulation(world).detector_names
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    for _ in range(600):
+    # the horizon the window the engine writes by the law, no number: the stock's six windows closed and the last train's flight bound (below) after the sixth, within six times the first close
+    while len(givings := lines_of(lines, "giving")) < 6 or simulation.tick < givings[-1]["tick"] + 200:
         simulation.step()
-        assert simulation.books()["balanced"], simulation.tick
-    givings = [line for line in lines if line["event"] == "giving"]
-    gathers = [line for line in lines if line["event"] == "gather"]
-    # the emitter's stock of 6 excitations, each clicking at its own rung; the
-    # residues from the law (ALGEBRA.md #a-familys-declaration): the clicking record's
-    # remainder at the giving Node on Z_700
-    # the wheel the rule's at the body's centre Node under the Node clock (the
-    # stock 6 down to 1 at the six givings), u below it
+        cap = 6 * givings[0]["tick"] + 200 if givings else 200
+        assert simulation.books()["balanced"] and simulation.tick <= cap
+    gathers = lines_of(lines, "gather")
+    # the emitter's stock of 6 excitations, each clicking at its own rung; the residues from the law (ALGEBRA.md #a-familys-declaration): the clicking record's remainder at the giving Node on Z_700 the wheel the rule's at the body's centre Node under the Node clock (the stock 6 down to 1 at the six givings), u below it
     assert len(givings) == 6 and all(lawful_wheel(world, line) for line in givings)
     assert len(gathers) + sum(1 for live in simulation.records.values() if live.family == 0) == 6
     assert len(gathers) >= 3 and all("clock" in g and "giving" in g and "click" in g for g in gathers)
@@ -104,11 +99,7 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
         assert gather["chosen"] == [["screen", 0, "0"]] and gather["click_at"] == "rung"
         assert gather["tick"] == gather["click"] and gather["record"] not in simulation.records
         flight = gather["click"] - gather["giving"]
-        # the train's head over 36 Links at v_g = 0.447 (80 intervals), then as
-        # much of the passage (72 intervals) as the residue asks (a residue near
-        # W waits for the whole train: the residues spread from the kept
-        # remainder, record 1962 (1)); the tapers' precursor a little before the
-        # head (COMPUTATION)
+        # the train's head over 36 Links at v_g = 0.447 (80 intervals), then as much of the passage (72 intervals) as the residue asks (a residue near W waits for the whole train: the residues spread from the kept remainder, record 1962 (1)); the tapers' precursor a little before the head (COMPUTATION)
         assert 60 <= flight <= 200, flight
     books = simulation.books()["families"]["light"]
     assert books["transit"]["absorbed"] == books["measured"]["measured"] == len(gathers)
@@ -166,17 +157,21 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(on_light)
 
 
-def run_layer(document: dict, ticks: int = 3000) -> tuple[list[dict], DetectorLawSimulation, Seen]:
-    """The layer world stepped with the books balanced at every interval; the gather lines, the simulation, and per clicked record what the click read (a spy on the engine's `_ladder_click`: the running total before the interval, the interval's increments, the ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
+def run_layer(
+    document: dict, ticks: int = 3000, gathers: int | None = None
+) -> tuple[list[dict], DetectorLawSimulation, Seen]:
+    """The layer world stepped with the books balanced at every interval (`ticks` intervals; with `gathers`, until that many records have clicked, within `gathers` times the first close's interval: the horizon the window the engine writes, no number); the gather lines, the simulation, and per clicked record what the click read (a spy on the engine's `_ladder_click`: the running total before the interval, the interval's increments, the ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     seen: Seen = {}
     spy_on(simulation, seen)
-    for _ in range(ticks):
+    while (simulation.tick < ticks) if gathers is None else (len(lines_of(lines, "gather")) < gathers):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    return [line for line in lines if line["event"] == "gather"], simulation, seen
+        closes = lines_of(lines, "giving")
+        assert gathers is None or not closes or simulation.tick <= gathers * closes[0]["tick"]
+    return lines_of(lines, "gather"), simulation, seen
 
 
 RESIDUES = 128  # the planted records' wheel: every residue once
@@ -272,17 +267,13 @@ def test_the_increment_ladder_over_the_named_sets():
     assert all(abs(forward[name] - backward[name]) <= 12 for name in forward), counts
     assert abs(forward["s0"] - forward["s2"]) <= 12 and min(forward.values()) > 0, counts
     # the emitter's own givings: the residues spread from the kept remainder
-    gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]))
+    gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]), gathers=8)
     assert len(gathers) == 8 and len({g["u"] for g in gathers}) > 1
     names = [simulation.detector_names.index(name) for name in ("s0", "s1", "s2")]
     for gather in gathers:
         assert gather["ladder"] == ["s0", "s1", "s2"] and gather["record"] not in simulation.records
         total, increments, ladder, u, norm, wheel, pace = seen[gather["record"]]
-        # the record's wheel the rule's at the body's Node with its content as the giving
-        # finds it (the own quantum and the stock 8 down to 1: 9 down to 2; ONE ORDER FOR
-        # BOTH CLICKS, ALGEBRA.md #the-primitives, item 58); the wheel divides the weak-field wall
-        # 6 den Gamma^2 (ALGEBRA.md #the-line; item 44); the norm's denominator divides the rule's read
-        # coefficient at the body's content the giving found
+        # the record's wheel the rule's at the body's Node with its content as the giving finds it (the own quantum and the stock 8 down to 1: 9 down to 2; ONE ORDER FOR BOTH CLICKS, ALGEBRA.md #the-primitives, item 58); the wheel divides the weak-field wall 6 den Gamma^2 (ALGEBRA.md #the-line; item 44); the norm's denominator divides the rule's read coefficient at the body's content the giving found
         assert ladder == names and (6 * EMITTER_PAIR[1] * NODE_CLOCK**2) % wheel == 0
         assert 0 <= u < wheel and any(
             coefficients(EMITTER_PAIR[0], EMITTER_PAIR[1], NODE_CLOCK, c)[0][0] % pace == 0
@@ -292,16 +283,7 @@ def test_the_increment_ladder_over_the_named_sets():
             simulation, total, increments, ladder, u, norm, wheel, pace
         )
         assert gather["T"] >= gather["sunk"] >= 0
-    # THE REVERSED ORDER under the family of clicks (ALGEBRA.md #the-counts-line; BUILD.md section 26
-    # item 32, FINDING C): the residues are the body's own record's, read at the first
-    # shell Node at each click (item 33), and the ladder's order is no input to them UNTIL
-    # the clock field differs at the body: the first click (at 136, at s0 under one order
-    # and at s2 under the other) writes its content at the set's first body (row 0 or row
-    # 6, no mirror images across the seam), the difference spreads by the family's own
-    # step to the body's shell (interval 216) and to the own record's remainder (240);
-    # every residue read before that agrees bit for bit (all eight here, the last read at
-    # 209: the tick counts intervals, item 33; on item 32's head six of eight, the two
-    # read after 309 differing; COMPUTATION)
+    # THE REVERSED ORDER under the family of clicks (ALGEBRA.md #the-counts-line; BUILD.md section 26 item 32, FINDING C): the residues are the body's own record's, read at the first shell Node at each click (item 33), and the ladder's order is no input to them UNTIL the clock field differs at the body: the first click (at 136, at s0 under one order and at s2 under the other) writes its content at the set's first body (row 0 or row 6, no mirror images across the seam), the difference spreads by the family's own step to the body's shell (interval 216) and to the own record's remainder (240); every residue read before that agrees bit for bit (all eight here, the last read at 209: the tick counts intervals, item 33; on item 32's head six of eight, the two read after 309 differing; COMPUTATION)
     forward_givings, backward_givings, differs = lockstep_givings(
         layer_world(["s0", "s1", "s2"]), layer_world(["s2", "s1", "s0"])
     )
@@ -317,9 +299,8 @@ def test_the_increment_ladder_over_the_named_sets():
     assert all(
         same for same, _read in agreed
     )  # every residue agrees: the clock field is 0 at the bodies
-    # one set on the emitter's row alone books a third of the flux: the last click at 1014
-    # under the one border (the well two Links from the closed face; item 28), COMPUTATION
-    one, _, _ = run_layer(layer_world("s1"))  # every giving a window and a rung (commit 7)
+    # one set on the emitter's row alone books a third of the flux: the last click at 1014 under the one border (the well two Links from the closed face; item 28), COMPUTATION
+    one, _, _ = run_layer(layer_world("s1"), gathers=8)  # every giving a window and a rung (commit 7)
     assert len(one) == 8 and all(gather["chosen"][0][0] == "s1" for gather in one)
     with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
         parse_nature_beam_world(layer_world(["s0", "screen"]))
@@ -390,20 +371,14 @@ def test_detector_is_one_connected_cube_of_side_three():
 
 
 def test_the_wall_l_is_over_the_clocks_of_the_families_a_body_gives_and_the_emitters():
-    """The law's row "the recoil" (#1289): L is the least common multiple of the wavelengths 2 N q / p over the clocks of the families a body of the world gives and the emitters' own; a clock on a family no body gives enters nothing and is not checked (matter [7, 1] on N = 1024: 2048 / 7 is no whole number of Links), so L stands as without it. The edge case: the same clock on the given family (light) is refused at load by name."""
-    document = emitter_world(stock=2, ticks=120)
-    document["stamp"] = input_stamp(document)
-    world = parse_nature_beam_world(document)
+    """The law's row "the recoil": L is the least common multiple of the givers' wavelengths, each the mode's `wavelength` on the emitter's clock [2 N, lambda_q] (the row's clock for a mode file without one); a family's row's clock enters nothing and is not checked, on the given family and on any other (light or matter at [7, 1] on N = 1024, 2048 / 7 no whole number of Links), so L stands as without it. The edge case: the same clock on the given family (light) is refused at load by name."""
+    world = parse_nature_beam_world(stamped(emitter_world(stock=2, ticks=120)))
     families = list(world.families)
     light, matter = (next(i for i, f in enumerate(families) if f.name == n) for n in ("light", "matter"))
     wall = DetectorLawSimulation(world).recoil_wall
     families[matter] = replace(families[matter], phase_per_age=(7, 1))
     assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
-    families[matter], families[light] = (
-        world.families[matter],
-        replace(families[light], phase_per_age=(7, 1)),
-    )
-    with pytest.raises(
-        ValueError, match=rf"families\[{light}\] declares the clock \[7, 1\] on N = 1024"
-    ):
-        DetectorLawSimulation(replace(world, families=tuple(families)))
+    families[light] = replace(families[light], phase_per_age=(7, 1))
+    clock = world.measured[0].block.emitter.clock  # type: ignore[union-attr]
+    assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
+    assert wall == 2 * world.phase_steps * clock[1] // clock[0]

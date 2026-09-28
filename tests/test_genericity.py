@@ -1,5 +1,4 @@
-"""The genericity test: a seeded generator draws one to twenty families with random English names and
-admitted attributes; every draw loads and runs, and five properties hold on each (a failing seed is kept)."""
+"""The genericity test: a seeded generator draws one to twenty families with random English names and admitted attributes; every draw loads and runs, and five properties hold on each (a failing seed is kept)."""
 
 from __future__ import annotations
 
@@ -216,10 +215,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
         now, before, remainder = states[t]
         prev_now, prev_before, prev_remainder = states[t - 1]
         (read_coefficient, _, _), _self, _wall = coefficients(
-            num.astype(object),
-            den.astype(object),
-            simulation_d.node_clock,
-            levels[t - 1].astype(object),
+            num.astype(object), den.astype(object), simulation_d.node_clock, levels[t - 1].astype(object)
         )
         drift = Fraction(0)
         for node in zip(*np.nonzero((now != prev_before) | (remainder != prev_remainder)), strict=True):

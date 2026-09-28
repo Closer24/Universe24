@@ -1,5 +1,4 @@
-"""The Node clock under the weak-field rule (ALGEBRA.md #the-paces, #the-line): the pace p = Gamma - c enters
-Rule3's integers at every Node, c = 0 is the plain rule, and light crosses a slab of content under it."""
+"""The Node clock under the weak-field rule (ALGEBRA.md #the-paces, #the-line): the pace p = Gamma - c enters Rule3's integers at every Node, c = 0 is the plain rule, and light crosses a slab of content under it."""
 
 from __future__ import annotations
 
@@ -18,8 +17,7 @@ from tests.bodies import CHAIN, GAMMA, PAIR, content_chain, light_body, six_read
 from tests.running import planted
 from tests.worlds import NODE_CLOCK, PERIODIC, emitter_world, family_entry, lawful_wheel, reads
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -143,9 +141,7 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
     slowed = group_pace_light(k, ((GAMMA - QUANTA) / GAMMA) ** 2)
     delay = 40.0 * (1.0 / slowed - 1.0 / pace)
     lag = centroids[False] - centroids[True]
-    # the slab's faces reflect more under the weak field (the index at f = (p / Gamma)^2, 0.5625
-    # here, against 0.75 under the first-order rule): 0.946 beyond against 0.956 (COMPUTATION);
-    # the floors are read values of a GameBoard reading, not measurements compared with nature
+    # the slab's faces reflect more under the weak field (the index at f = (p / Gamma)^2, 0.5625 here, against 0.75 under the first-order rule): 0.946 beyond against 0.956 (COMPUTATION); the floors are read values of a GameBoard reading, not measurements compared with nature
     assert beyond[False] > 0.97 and beyond[True] > 0.94, ("GameBoard reading, diagnostic", beyond)
     assert 0.85 * delay * pace < lag < 1.15 * delay * pace, (
         "GameBoard reading, diagnostic",
@@ -168,8 +164,7 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         now = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
         before = rng.integers(-UNIT, UNIT, size=(60, 1, 1), dtype=np.int64)
         live = planted(simulation, family, now, before, np.zeros((60, 1, 1), dtype=np.int64))
-        # (a) the form from the rule's integers (item 44): L [w (a^2 + b^2) - S_i a b] / R_i at
-        # the Nodes, the Links plain
+        # (a) the form from the rule's integers (item 44): L [w (a^2 + b^2) - S_i a b] / R_i at the Nodes, the Links plain
         integers = [coefficients(num, den, GAMMA, c) for c in content]
         reads = six_reads(before, True)
         expected = Fraction(0)
@@ -192,8 +187,7 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
                 flux += int(a_now[i, 0, 0]) * int(a_before[j, 0, 0]) - int(a_before[i, 0, 0]) * int(
                     a_now[j, 0, 0]
                 )
-            # the folded axes' self-reads carry no flux; the remainders' term (wall / R_i)
-            # (a_next - a_before)(r - r')
+            # the folded axes' self-reads carry no flux; the remainders' term (wall / R_i) (a_next - a_before)(r - r')
             remainders = Fraction(
                 (int(a_next[i, 0, 0]) - int(a_before[i, 0, 0]))
                 * (int(r_old[i, 0, 0]) - int(r_new[i, 0, 0])),
@@ -265,20 +259,16 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))
-    # the registered world's matter family (the families file's third entry, item 60) at the
-    # body's kind [800, 809] (the pair on the body, ALGEBRA.md #the-interval)
+    # the registered world's matter family (the families file's third entry, item 60) at the body's kind [800, 809] (the pair on the body, ALGEBRA.md #the-interval)
     matter = [family.name for family in world.families].index("matter")
     kind = block.definition.kind
     # the beam body's Node's kind [800, 1200] since commit 7 (the one-Node emitter of the window)
     assert kind == (800, 1200) and world.families[matter].pair_on_body
-    # A's count 65 (its one own quantum beside its stock of 64 light quanta, item 47) is the source over
-    # the divisor 40000: the level 0 at the start and for 614 intervals (616 x 65 = 40040 at the 615th)
+    # A's count 65 (its one own quantum beside its stock of 64 light quanta, item 47) is the source over the divisor 40000: the level 0 at the start and for 614 intervals (616 x 65 = 40040 at the 615th)
     assert sum(simulation.held[0]) == 65 and not simulation.level_of("content").any()
     assert simulation.node_clock_pair(centre, matter) == (NODE_CLOCK, NODE_CLOCK)
     assert simulation.node_clock_pair((100, 0, 0), matter) == (NODE_CLOCK, NODE_CLOCK)
-    # the wheel from the weak-field rule's integers (item 44) at the level 0: on the body's own pair
-    # [800, 802] at its Nodes W = 3 x 802 / gcd(800, 2406) = 1203 and g = 2 Gamma^2 x 2; the kind
-    # [800, 1200]'s own (80000000000, 9) in the vacuum
+    # the wheel from the weak-field rule's integers (item 44) at the level 0: on the body's own pair [800, 802] at its Nodes W = 3 x 802 / gcd(800, 2406) = 1203 and g = 2 Gamma^2 x 2; the kind [800, 1200]'s own (80000000000, 9) in the vacuum
     assert simulation.wheel_at(matter, centre, kind) == (400000000, 1203)
     assert simulation.wheel_at(matter, (100, 0, 0), kind) == (80000000000, 9)
     assert VACUUM_WHEEL == (200000000, 2427)  # the kind [800, 809]'s vacuum wheel, read elsewhere
@@ -301,8 +291,7 @@ def test_the_content_at_a_body_falls_at_a_giving_and_rises_at_a_click():
     for _ in range(document["ticks"]):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        # the quantum moves at the window's open (the body's count of givings), the line is named at
-        # the close; the hold at (iv) reads the count the interval's clicks left
+        # the quantum moves at the window's open (the body's count of givings), the line is named at the close; the hold at (iv) reads the count the interval's clicks left
         givings_seen = block.givings
         clicks_seen = sum(1 for line in lines if line["event"] == "gather")
         assert simulation.body_source(0, "content") == 5 - givings_seen

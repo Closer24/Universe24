@@ -528,6 +528,164 @@ def two_slits(name: str, universe: str, wavelength: int, wall: int, stock: int) 
     write("two_slits", name, document, expectation)
 
 
+def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> None:
+    """The bending (b) on Cheshbon's line (#1325, 05:41Z and 05:43Z): the board 300 x 120 x 1 (z of extent 1, the [1, 1] rest Poisson's of the plane), the heavy body of 30 x 30 Nodes of `heavy` centred at (60, 60), the giver of 3 x 3 Nodes of 2,001 in a tube of mirrors 40 Nodes wide along +x with the beam's axis `gap` + 1 Nodes above the body's face (b = `gap` free Links), the screen at x = 260 (L = 200 from the body's centre) carrying one strip per Node across its whole face; beside the beam two small matter clocks of 3 x 3 Nodes of 2,001, one in the well at the beam's level (mirrored below the body) and one far from it, and the light's level at a Node deep in the well and at one outside, every interval (the redshift's second reading, GAMEBOARD); `heavy` None lays the twin with no heavy body, the same beam, screen and clocks, so that the centroid's shift is the difference of two DETECTOR readings (tools/beam_centroid.py). Nothing here is run."""
+    face, centre, side = 74, 60, 30  # the heavy body's top face, its centre, its side
+    axis = face + gap + 1  # the beam's axis: `gap` free Nodes between the face and the beam
+    clock_y = centre - (side // 2) - gap - 1  # the clock in the well, mirrored below the body
+    giver_count, clock_count = 2001, 2001
+    giver_nodes = box(14, 16, axis - 1, axis + 1, 0, 0)
+    half = 20  # the tube's inner half-width: 40 Nodes across, the beam's spread at the screen about 22
+    tube = (
+        box(10, 13, axis - half, axis + half - 1, 0, 0)
+        + box(10, 16, axis - half - 3, axis - half - 1, 0, 0)
+        + box(10, 16, axis + half, axis + half + 2, 0, 0)
+    )
+    screen_x, height = 260, 120
+    screen_nodes = box(screen_x, screen_x + 3, 0, height - 1, 0, 0)
+    heavy_box = (centre - side // 2, centre + side // 2 - 1, centre - side // 2, face)  # 45..74
+    measured = [
+        giver(giver_nodes, giver_count, stock, weight=3),
+        body(tube, MIRROR),
+        body(screen_nodes, WINDOW),
+        body(box(centre - 1, centre + 1, clock_y - 1, clock_y + 1, 0, 0), clock_count),
+        body(box(199, 201, 19, 21, 0, 0), clock_count),
+    ]
+    if heavy is not None:
+        measured.append(body(box(*heavy_box, 0, 0), heavy))
+    detectors = [{"name": f"screen_{y:03d}", "positions": [[screen_x, y, 0]]} for y in range(height)]
+    deep, outside = [centre, axis, 0], [200, axis, 0]
+    readings = [
+        reading("light_support", "support", 50, family="charge"),
+        reading("light_rows", "rows", 100, family="charge"),
+        reading("light_deep_in_the_well", "level", 1, family="charge", node=deep),
+        reading("light_outside_the_well", "level", 1, family="charge", node=outside),
+        reading("clock_in_the_well", "cycle", 1, body=3),
+        reading("clock_far_away", "cycle", 1, body=4),
+        *[
+            reading(f"{what}_centre", "centre", 500, body=k)
+            for k, what in enumerate(("giver", "tube", "screen", "clock_in_the_well", "clock_far_away"))
+        ],
+        *[
+            reading(f"gravity_on_the_axis_{x}", "level", 500, family="gravity", node=[x, axis, 0])
+            for x in (15, 40, 60, 80, 120, 200, 259)
+        ],
+    ]
+    if heavy is not None:
+        readings.append(reading("heavy_centre", "centre", 500, body=5))
+        readings.append(reading("heavy_momentum", "momentum", 500, body=5))
+    document = world(
+        [300, height, 1],
+        {"x": "open", "y": "open", "z": "periodic"},
+        ticks,
+        measured,
+        detectors,
+        readings,
+        face_depth=8,
+    )
+    distance = screen_x - centre  # L: the body's centre to the screen's face
+    last = (ticks - 1) - (ticks - 1) % 500  # the last interval the centre readings (every 500) reach
+    expectation: dict[str, Any] = {
+        "format": "world-expectation-v1",
+        "row": (
+            f"ALGEBRA.md #the-rows-against-nature (b) THE BENDING on the board 300 x {height} x 1 (z periodic of extent 1, "
+            f"the [1, 1] rest Poisson's of the plane, c(r) = (3 S / 2 pi) ln(R / r)): the giver of 9 Nodes of {giver_count} "
+            f"at x = 14..16 on the axis y = {axis} in a tube of {MIRROR} of inner width {2 * half} (the beam along +x, "
+            f"its half-spread at the screen about 22 Nodes, so the centroid of {stock} clicks stands within about 0.9 "
+            f"Link, Cheshbon's line of 06:00Z), "
+            + (
+                f"the heavy body of {side} x {side} Nodes of {heavy} at x = {heavy_box[0]}..{heavy_box[1]}, "
+                f"y = {heavy_box[2]}..{heavy_box[3]} (S = {side * side * heavy} / E_s; its face b = {gap} free Links "
+                f"below the axis), "
+                if heavy is not None
+                else "no heavy body (the twin: the same beam, screen and clocks, the centroid's reference), "
+            )
+            + f"the screen of 4 x {height} Nodes of {WINDOW} at x = {screen_x}..{screen_x + 3} carrying {height} strips "
+            f"of one Node on its face (L = {distance} Links from the body's centre); the centroid of the clicks over "
+            f"the strips shifted toward the body against the twin; under the gravity divisor E_s = 100,000 "
+            f"(Cheshbon's line and the fall's need; the Experimenters' number, #1352) the level on the axis beside "
+            f"the body c_b = 47 (GAMEBOARD, the plane's rest; the count 6,000 per Node keeps every heavy body under "
+            f"the pace guard at E_s = 100,000, Cheshbon 06:17Z), U_b = c_b / Gamma = 4.7 x 10^-3; the numbers "
+            f"for one world (Cheshbon, 05:53Z, 06:00Z and 06:17Z; Nature24, 05:55Z), the algebra first and nature "
+            f"beside it: the law on main carries the conformal pace (S, THE PACE IS CONFORMAL) and the level once more "
+            f"in the axis pace (p_a = p_0 - c_a, the paces), so the engine's expectation once both terms are in core "
+            f"is 5.5 Links (S alone, the engine before the axis-pace term: 2.7, since light on [1, 1] was conformal "
+            f"already; theta = (d2 omega / dk_perp2)(d omega / dc) INT (dc / db) dy / v_g^2, the light's speed "
+            f"in the well (Gamma - 2 c) / Gamma); the row as written 4 U_b L = 3.8 with U_b = c_b / Gamma, nature's "
+            f"form, 1.45 below the lattice's (the band's omega / (k v_g)); the level once more "
+            f"in the axis pace is Nature24's time-and-space reading, Eddington's factor two; the band the rounding's 0.5 "
+            f"Link plus the draw's, the beam's half-spread of about 22 Nodes over the root of the clicks, 0.9 Link "
+            f"at {stock}; a beam that touches the body is reflected, not bent, so the record's "
+            f"support stays off the body's Nodes; the tube and the body are mirrors for the light by the bound "
+            f"charge's row (polarisation [1, 2] at the divisor 1, the universe of record after Bell's pull request); "
+            f"written before any run"
+        ),
+        "DETECTOR": [],
+        "WELL": {
+            "rows": "light_rows",
+            "levels": ["light_deep_in_the_well", "light_outside_the_well"],
+            "clocks": ["clock_in_the_well", "clock_far_away"],
+            "axis_y": axis,
+            "windows": [[heavy_box[0], heavy_box[1]], [185, 214]],
+            "shift_ratio": 0.92,
+            "shift_ratio_band": 0.15,
+            "shift_ratio_before_the_conformal_term": 2.4,
+            "row": "tools/well_clocks.py reads these (GAMEBOARD): the light's wavelength along the axis beside the body and far from it, its period at the two Nodes (conserved: the ratio 1), the matter clocks' mean cycles in the well and far away, and the ratio of the light's relative shift of wave number to the matter clock's relative shift of cycle at the same level c = 71 (Cheshbon 06:00Z; Pound-Rebka): the law's number 0.92 (THE PACE IS CONFORMAL: light 1.2 / Gamma per level, the matter clock 1.3 / Gamma; 0.92 the lattice band's omega / (k v_g), 1 for a Lorentzian band), 2.4 under the engine before the conformal term enters core (the matter clock at 0.5 / Gamma), which the owner's word names a defect, not a finding; at c = 47 the light's wavelength shifts 0.57 percent, the clock's cycle 0.61 percent longer (0.24 before the term; about 4 cycles over the run); in the twin every ratio is 1",
+        },
+        "CENTROID": {
+            "strips": "screen_",
+            "twin": "bending_twin",
+            "shift": -5.5,
+            "band": 1.4,
+            "before_the_axis_pace_term": -2.7,
+            "row_as_written": -3.8,
+            "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's; the body lies at y below the axis, so a shift toward it is negative: the algebra's -5.5 (the conformal pace and the level once more in the axis pace, both in the law) within 1.4 Links (the rounding's 0.5 and the draw's 0.9 at the stock over a tube 40 wide), the engine's expectation once both terms are in core, a difference an engine defect; -2.7 before the axis-pace term; the row's -3.8 (4 U_b L, U_b = c_b / Gamma, nature's form) beside it, never tuned to",
+        },
+        "GAMEBOARD": [
+            {
+                "body": 0,
+                "interval": last,
+                "centre": [15, axis, 0],
+                "band": 1,
+                "row": "the giver at rest within a Link",
+            },
+            {
+                "body": 2,
+                "interval": last,
+                "centre": [screen_x + 1, height // 2 - 1, 0],
+                "band": 1,
+                "row": "the screen at rest within a Link",
+            },
+            {
+                "body": 3,
+                "interval": last,
+                "centre": [centre, clock_y, 0],
+                "band": 1,
+                "row": "the clock in the well within a Link (its fall by the wave's law over the run below a Link)",
+            },
+        ],
+        "GAMEBOARD_checks": [
+            f"(i) `gravity_on_the_axis_*` at interval 0: the plane's rest, c = 47 at x = {centre} beside the body under E_s = 100,000, falling as the logarithm away from it, 0 in the twin; no transient after the start",
+            "(ii) `light_rows` every 100 intervals: one record leaves the tube along +x, passes the body without touching it, reaches the screen; `light_support` never on the heavy body's Nodes",
+            f"(iii) the redshift's second reading (Cheshbon, 06:00Z): `light_deep_in_the_well` at ({centre}, {axis}) against `light_outside_the_well` at (200, {axis}), every interval: the record's rotation per interval is the giver's at both (Rule3 is time-invariant with static paces), so the light's shift shows in its wave number, read from `light_rows` along the axis near x = {centre} against near x = 200 (d ln k / dc = 1.2 / Gamma per level, the same before and after the conformal term); `clock_in_the_well` against `clock_far_away` (the matter clock, `cycle`): d ln omega_0 / dc = 1.3 / Gamma per level under the law, 0.5 / Gamma before the conformal term enters core; the ratio in the WELL section; the twin's clock in the well equals the far one (the control)",
+            "(iv) `giver_centre`, `tube_centre`, `screen_centre`, `heavy_centre`, the clocks' centres: within a Link over the run",
+            "(v) light bending light (the source's row, a record sourcing gravity by D_i div T times omega_r / omega_m): a train of one quantum sources about 0.9 quanta over some 35 Nodes, c of order 10^-5 levels under E_s = 100,000, 0 in integers: not measurable, as in nature; the reciprocity stands in the books, not in a reading",
+            "then the DETECTOR reading in kind: the strips' centroid on the axis in the twin and toward the body in the world of record, one record at a time",
+        ],
+    }
+    if heavy is not None:
+        expectation["GAMEBOARD"].append(
+            {
+                "body": 5,
+                "interval": last,
+                "centre": [centre - 1, centre - 1, 0],
+                "band": 1,
+                "row": "the heavy body at rest within a Link",
+            }
+        )
+    write("bending", name, document, expectation)
+
+
 def universe_of_record() -> None:
     """The universe file of record beside the worlds, the one universe every world reads: its held rows with `divisor` (the hold's write as a sum, the owner's word; the frame's `held` card takes the key since #1312, a key at the family's top level is refused); the numbers are the approvals'."""
     document = json.loads((ROOT / UNIVERSE).read_text(encoding="utf-8"))
@@ -563,6 +721,9 @@ def main() -> None:
         400,
     )
     two_slits("two_slits_lambda_4", UNIVERSE, 4, MIRROR, 400)
+    (HERE / "bending").mkdir(exist_ok=True)
+    bending("bending", 6000, 8, 5800, 640)
+    bending("bending_twin", None, 8, 5800, 640)
 
 
 if __name__ == "__main__":

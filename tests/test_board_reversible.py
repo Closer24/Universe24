@@ -1,5 +1,4 @@
-"""The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions:
-one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
+"""The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions: one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
 
 from __future__ import annotations
 
@@ -24,8 +23,7 @@ def reversible_world(ticks: int = 400) -> dict:
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
     document["universe"].insert(
-        POSITIVE,
-        family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1),
+        POSITIVE, family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
     )
     document["measured"].append(
         {
@@ -149,15 +147,15 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         assert t_taking < giving_ticks[1] or True  # a second giving may precede the taking
     end = t_taking + 5
     blind, states, lines, _ = run_states(document, end)
+    closes = close_ticks(lines)
     taking_line = next(line for line in lines if line["event"] == "gather")
     deleted = taking_line["record"]
     assert deleted not in states[t_taking]["records"] and deleted in states[t_taking - 1]["records"]
-    # (a) five intervals back with no click between: exact
+    # (a) five intervals back with no click between (a window's close among them stepped back by hand, as in (b)): exact
     for t in range(end, t_taking, -1):
-        blind.step_inverse()
+        inverse_close_interval(blind, lines, t) if t in closes else blind.step_inverse()
         assert_same(rows_of(blind), states[t - 1])
-    # across the taking click without undoing its ledger: the record stays deleted, the taker
-    # keeps its quantum
+    # across the taking click without undoing its ledger: the record stays deleted, the taker keeps its quantum
     blind.step_inverse()
     after = rows_of(blind)
     assert deleted not in after["records"]
@@ -165,14 +163,13 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
     # (b) the same run again, the click's ledger undone by hand before each step across a click
     simulation, states, lines, _ = run_states(document, end)
     for t in range(end, t_taking, -1):
-        simulation.step_inverse()
+        inverse_close_interval(simulation, lines, t) if t in closes else simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1])
     simulation.held = copy.deepcopy(states[t_taking - 1]["held"])
     simulation._hold(simulation.register.at("the hold", "(iv)"), THE_REWRITE)
     simulation.step_inverse()
     assert_same(rows_of(simulation), states[t_taking - 1], lost={deleted})
     lost = {deleted}
-    closes = close_ticks(lines)
     for t in range(t_taking - 1, t_giving, -1):
         if t in giving_ticks:
             inverse_giving_interval(simulation, lines, states, t)
@@ -194,8 +191,7 @@ def inverse_giving_interval(
 ) -> None:
     """The giving click's interval (the window's open, SINCE COMMIT 7) stepped back by hand, the click's act undone: the given record removed (made at the open with nothing written yet, its rows zero, asserted: the writes come with the window's intervals and the engine's inverse subtracts them); every record and both fields stepped back at the content the interval began with (the hold before the click, which every forward step read: ONE ORDER FOR BOTH CLICKS, ALGEBRA.md #the-primitives, item 58; the giving's hold at once HISTORY), the body's stock restored and the fields held again first. Nothing is lost at a giving click."""
     line = next(line for line in lines if line["event"] == "giving" and line["opened"] == t)
-    # the given record: present unless a taking click deleted it since (then the click's one
-    # loss, already accounted); at its open nothing is written on it
+    # the given record: present unless a taking click deleted it since (then the click's one loss, already accounted); at its open nothing is written on it
     block = simulation.block_by_number[line["measured"]]
     if line["record"] in states[t]["records"]:
         written = states[t]["records"][line["record"]]
@@ -203,10 +199,7 @@ def inverse_giving_interval(
     simulation.records.pop(line["record"], None)
     if block.window == line["record"]:
         block.window = None
-    # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; item 58): the giving's lowered quanta
-    # are held after the held families' step, as a taking's, so every record and both fields
-    # stepped forward at the content the interval began with; the inverse restores that hold
-    # and steps back as across a taking
+    # ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; item 58): the giving's lowered quanta are held after the held families' step, as a taking's, so every record and both fields stepped forward at the content the interval began with; the inverse restores that hold and steps back as across a taking
     simulation.held = copy.deepcopy(states[t - 1]["held"])
     simulation._hold(simulation.register.at("the hold", "(iv)"), THE_REWRITE)
     simulation.step_inverse()
@@ -223,8 +216,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     charge = simulation.family_charge
     total_quanta = sum(sum(h) for h in simulation.held)
     total_charge = sum(simulation._body_charge(n) for n in range(len(simulation.held)))
-    # the emitter's own quantum and its stock of STOCK light quanta, all of charge -1, the
-    # screen's three light bodies and the positive body (ALGEBRA.md #the-paces; item 47)
+    # the emitter's own quantum and its stock of STOCK light quanta, all of charge -1, the screen's three light bodies and the positive body (ALGEBRA.md #the-paces; item 47)
     assert total_charge == -(STOCK + 1) - 3 + 1
     block = simulation.blocks[0]
     previous_residue = None
@@ -246,9 +238,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
             + sum(charge[f.family] * f.content for f in in_flight)
         ) == total_charge
         if block.givings > opens_before:
-            # THE OPEN (commit 7): the giving lowers the given family's content held at the
-            # body (item 47) and makes the record, its content 1; the line comes at the close;
-            # the residue the count to this open was read on is the one before this interval
+            # THE OPEN (commit 7): the giving lowers the given family's content held at the body (item 47) and makes the record, its content 1; the line comes at the close; the residue the count to this open was read on is the one before this interval
             residue_at_open = residue_before
             given_family = block.definition.emitter.family if block.definition.emitter else -1
             assert simulation.held[0][given_family] == held_before[0][given_family] - 1
@@ -293,8 +283,7 @@ def test_between_clicks_the_weighted_form_is_exact_where_the_field_stands():
     previous_rows = None
     checked = 0
     for _ in range(200):
-        # the content light reads: the effective content c - q Lambda d, light of charge -1 here
-        # (ALGEBRA.md #the-paces)
+        # the content light reads: the effective content c - q Lambda d, light of charge -1 here (ALGEBRA.md #the-paces)
         content_start = simulation._effective_content(LIGHT).copy()
         simulation.step()
         if followed is None:

@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-import copy
+import json
+import sys
+from pathlib import Path
 
 import pytest
 
@@ -16,47 +18,76 @@ from event_universe.features.crystal import (
     apply,
     read_term,
 )
-from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.worlds import emitter_world, receiver_cube
+from event_universe.world_files import input_digest, input_stamp, load_world
 
-EMITTER, LEFT, CRYSTAL, RIGHT = 0, 4, 5, 6  # the bodies' numbers in the Bell world below
+sys.path.insert(0, __file__.rsplit("/tests/", 1)[0] + "/tools")
+
+from body_generator import generate, mode_document, split_levels  # noqa: E402
+
+EMITTER, LEFT, CRYSTAL, RIGHT = 0, 1, 2, 3  # the bodies' numbers in the Bell world below
+RECORD = Path(
+    "examples/events/experiments/bell/bell_a_b.json"
+)  # Bell's world of record: its emitter's declaration
+
+
+def a_body(nodes: range | list[int], count: int, **keys: object) -> dict:
+    """A body of matter in the law's form on the chain: its Nodes with one count, at rest, the phase's denominator of the worlds of record, and its keys."""
+    at = [{"node": [x, 0, 0], "count": count} for x in nodes]
+    return {
+        "family": "matter",
+        "nodes": at,
+        "momentum": [0, 0, 0],
+        "momentum_before": [0, 0, 0],
+        "phase_denominator": 1024,
+        **keys,
+    }
 
 
 def bell_world(right: dict | None = None) -> dict:
-    """Bell's world on the emitter's unit world (a chain of 80, x closed): the emitter's one giving of light aimed at the crystal's set; a polariser body in the law's form at 44 with its own set `left_own` and its far set `left_far` (a cube at 40), the crystal a block of two Nodes at 50 with its own set (its term set on the loop after the load: a block gives from its own record, which the law's form has only with a mode file), a polariser at 58 with `right_own` and `right_far` (a cube at 64); the crystal's term is set after the load."""
-    document = emitter_world(stock=1, ticks=400)
-    document["measured"][EMITTER]["emitter"]["receiver"] = ["crystal_set"]
-
-    def polariser(x: int, card: dict) -> dict:
-        nodes = [{"node": [x, 0, 0], "count": 1}]
-        return {
-            "family": "matter",
-            "nodes": nodes,
-            "momentum": [0, 0, 0],
-            "momentum_before": [0, 0, 0],
-            "polariser": card,
-        }
-
-    crystal = copy.deepcopy(document["measured"][EMITTER])
-    crystal.pop("emitter")
-    crystal.pop("clock", None)
-    crystal.update(stocks={}, position=[50, 0, 0], extents=[2, 1, 1], seed=1 << 12)
-    document["measured"].append(polariser(44, {"angle": [2, 1], "sets": ["left_far", "left_own"]}))
-    document["measured"].append(crystal)
-    document["measured"].append(
-        polariser(58, right or {"angle": [1, 0], "sets": ["right_far", "right_own"]})
-    )
-    document["detectors"].extend(
-        [
-            {"name": "left_own", "positions": [[44, 0, 0]]},
-            {"name": "crystal_set", "block": CRYSTAL},
-            {"name": "right_own", "positions": [[58, 0, 0]]},
-        ]
-    )
-    receiver_cube(document, "left_far", [40, 0, 0])
-    receiver_cube(document, "right_far", [64, 0, 0])
+    """Bell's world on a chain of 80 (x closed) in the law's form on the universe of record: the emitter of three Nodes at Bell's giving count (its declaration the world of record's, one giving aimed at the crystal's set), a polariser body of one Node at 44 with its own set `left_own` and its far set `left_far` on a far body at 40, the crystal of two Nodes at Bell's giving count with the key `crystal` and its set on its Nodes, the right polariser at 58 (its card `right` where given) with `right_own` and `right_far` on a far body at 64; the givers' modes come from the generator (`bell_simulation`)."""
+    record = json.loads(RECORD.read_text(encoding="utf-8"))
+    emitter, window = record["measured"][EMITTER], record["measured"][1]["nodes"][0]["count"]
+    giving, count = {**emitter["emitter"], "receiver": ["crystal_set"]}, emitter["nodes"][0]["count"]
+    sets = [
+        {"name": n, "positions": [[x, 0, 0]]}
+        for n, x in (("left_own", 44), ("right_own", 58), ("left_far", 40), ("right_far", 64))
+    ]
+    bodies = [
+        a_body(
+            range(5, 8), count, moment=emitter["moment"], emitter=giving, stocks={giving["family"]: 1}
+        ),
+        a_body([44], window, polariser={"angle": [2, 1], "sets": ["left_far", "left_own"]}),
+        a_body([50, 51], count, crystal={}),
+        a_body([58], window, polariser=right or {"angle": [1, 0], "sets": ["right_far", "right_own"]}),
+        a_body([40], window),
+        a_body([64], window),
+    ]
+    document = {
+        "shape": [80, 1, 1],
+        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
+        "ticks": 400,
+    }
+    document |= {
+        "N": record["N"],
+        "engine": record["engine"],
+        "universe": record["universe"],
+        "measured": bodies,
+    }
+    document["detectors"] = [sets[0], {"name": "crystal_set", "block": CRYSTAL}, *sets[1:]]
     document["stamp"] = input_stamp(document)
     return document
+
+
+def bell_simulation(document: dict, folder: Path, observer=None) -> DetectorLawSimulation:
+    """The world written to `folder` with its mode file beside it from the generator (the givers' modes in the world's own well, `world_digest` the world's) and loaded as the host loads a world of record."""
+    folder.mkdir(parents=True, exist_ok=True)
+    path = folder / "bell_chain.json"
+    path.write_text(json.dumps(document), encoding="utf-8")
+    reading = generate(document)
+    mode = mode_document(reading, *split_levels(reading))
+    mode["world_digest"] = input_digest(document)
+    path.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    return DetectorLawSimulation(load_world(path), observer=observer)
 
 
 def test_the_card_is_built_at_ii_and_the_pair_is_declared_at_the_half_quantum():
@@ -80,13 +111,11 @@ def test_the_card_is_built_at_ii_and_the_pair_is_declared_at_the_half_quantum():
     assert read_term({"family": "matter"}) is None and read_term({"crystal": {}}) == CrystalTerm()
 
 
-def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_its_side():
-    """The loop on Bell's world, the main loop's audit admitting every act: the emitter's record clicks at the crystal's set and in the same interval the crystal gives the pair through the giving's open and window, named at the window's close (after the click, the intervals in this order and never the run's numbers) with the two identical labels, the arriving norm over twice its denominator and a residue of its own (the crystal's, read at its Node); the rows' label clicks alone at the left polariser's own set on the first row's line with the pair's one quantum, the columns' label alone at the right polariser's own set on the second row's line with the arriving record's residue (the second residue of the crystal's Node) and the content 0 (the half in the family's unit), whichever first; after the second click no row is alive. The refusals by name: a crystal on a body with an emitter, a world with one polariser body."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(bell_world()))
-    simulation.crystals = {CRYSTAL: CrystalTerm()}
-    assert ("measured[5].crystal", "the crystal") in simulation.family_terms()
+def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_its_side(tmp_path):
+    """The loop on Bell's world in the law's form (the givers' modes from the generator, the crystal a giver with the key `crystal`), the main loop's audit admitting every act: the emitter's record clicks at the crystal's set and in the same interval the crystal gives the pair through the giving's open and window, named at the window's close (after the click, the intervals in this order and never the run's numbers) with the two identical labels, the arriving norm over twice its denominator and a residue of its own (the crystal's, read at its Node); the rows' label clicks alone at the left polariser's own set on the first row's line with the pair's one quantum, the columns' label alone at the right polariser's own set on the second row's line with the arriving record's residue (the second residue of the crystal's Node) and the content 0 (the half in the family's unit), whichever first; after the second click no row is alive. The refusals by name: a crystal on a body with an emitter, a world with one polariser body."""
     lines: list[dict] = []
-    simulation.record = lines.append
+    simulation = bell_simulation(bell_world(), tmp_path, lines.append)
+    assert (f"measured[{CRYSTAL}].crystal", "the crystal") in simulation.family_terms()
     for _ in range(400):
         simulation.step()
     givings = [line for line in lines if line["event"] == "giving"]
@@ -112,7 +141,5 @@ def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_
     one_sided = bell_world()
     del one_sided["measured"][RIGHT]["polariser"]
     one_sided["stamp"] = input_stamp(one_sided)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(one_sided))
-    simulation.crystals = {CRYSTAL: CrystalTerm()}
     with pytest.raises(ValueError, match="needs two polariser bodies"):
-        simulation.family_terms()
+        bell_simulation(one_sided, tmp_path / "one_sided")

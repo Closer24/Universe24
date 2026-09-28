@@ -1,5 +1,4 @@
-"""The point emitter, a hypothesis under its own identity (`point_emitter`, off by default): a one-Node
-well gives by the window, its Node's rotation added to the given row every interval."""
+"""The point emitter, a hypothesis under its own identity (`point_emitter`, off by default): a one-Node well gives by the window, its Node's rotation added to the given row every interval."""
 
 from __future__ import annotations
 
@@ -50,6 +49,19 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
     # square of the written amplitude); the band is a diagnostic check that the weight enters the
     # window, not a measurement pinned against nature; it admits the build-up
     assert 8 < ratio < 64, windows
+
+
+def test_the_window_writes_the_bodys_rotation_at_both_levels():
+    """The giving's write is the body's rotation, two levels (ALGEBRA.md #the-primitives the giving's row; #the-generator (d)): at the first write of a window the given record's `now` at the body's Nodes is the weight times the body's level now and its `before` the weight times the body's level before, so the record starts as the body's mode turning and not as a kick of one level; the inverse takes both back (the bit-for-bit test below)."""
+    simulation = DetectorLawSimulation(parse_nature_beam_world(point_world(4, ticks=400)))
+    block, mask = simulation.blocks[0], simulation.blocks[0].mask
+    while block.window is None:
+        simulation.step()
+    simulation.step()  # the window's first write, right after the record's own step
+    live, now = simulation.records[block.window], simulation._body_levels(block)  # type: ignore[index]
+    before = simulation._body_levels(block, before=True)
+    assert live.window == 1 and not np.array_equal(now, before) and np.abs(before).max() > 0
+    assert np.array_equal(live.now[mask], 4 * now) and np.array_equal(live.before[mask], 4 * before)
 
 
 def test_the_window_inverts_bit_for_bit():

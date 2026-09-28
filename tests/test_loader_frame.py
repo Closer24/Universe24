@@ -1,6 +1,4 @@
-"""THE FRAME OF THE FILES READ THROUGH THE SCHEMAS (the Boss's word of 2026-09-26 22:12Z; record 2226;
-ALGEBRA.md #the-primitives): loader/frame.py reads the universe file, the world's own keys, the bodies, the
-detectors and the start file by schemas and the folders' cards; every defect refused by name, no default."""
+"""THE FRAME OF THE FILES READ THROUGH THE SCHEMAS (the Boss's word of 2026-09-26 22:12Z; record 2226; ALGEBRA.md #the-primitives): loader/frame.py reads the universe file, the world's own keys, the bodies, the detectors and the start file by schemas and the folders' cards; every defect refused by name, no default."""
 
 from __future__ import annotations
 
@@ -78,8 +76,7 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
     refuses(lambda d: d["families"][0].pop("parts"), r"families\[0\] lacks keys: parts")
     refuses(lambda d: d["families"][0].__setitem__("mass", 1), r"families\[0\] has unknown keys: mass")
     refuses(
-        lambda d: d["families"][0]["held"].pop("factors"),
-        r"families\[0\]\.held lacks keys: factors",
+        lambda d: d["families"][0]["held"].pop("factors"), r"families\[0\]\.held lacks keys: factors"
     )
     refuses(
         lambda d: d["families"][1].__setitem__("phase", True),

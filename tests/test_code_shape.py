@@ -1,6 +1,4 @@
-"""The shape of the code holds against the merge base, read from git (tools/record_code_shape.py; #1198, gate 7): a file
-beyond the limits grows no count, a new one stays within them, no new copied function, no new importer of the
-loop's internals, and the import contracts hold; no baseline file is kept."""
+"""The shape of the code holds against the merge base, read from git (tools/record_code_shape.py; #1198, gate 7): a file beyond the limits grows no count (the sites writing a level onto the GameBoard among them, the write's gate), a new one stays within them, no new copied function, no new importer of the loop's internals, and the import contracts hold; no baseline file is kept."""
 
 from __future__ import annotations
 
@@ -57,28 +55,25 @@ def test_a_grown_count_fails_against_the_merge_base_and_a_cut_passes(tmp_path):
 def test_a_new_file_meets_the_limits_from_its_first_commit(tmp_path):
     root = tree(tmp_path, SMALL)
     baseline = SHAPE.record(root)
-    tree(
-        root,
-        {
-            f"{PACKAGE}/core/b.py": '"""Two\nlines (record 2239)."""\n'
-            + "\n".join(f"x{i} = {i}" for i in range(400))
-            + "\nwall * before\nnp.roll(x0, 1)\n"
-        },
+    beyond = (
+        "\n".join(f"x{i} = {i}" for i in range(400))
+        + "\nwall * before\nnp.roll(x0, 1)\nlive.now[x0] += x1\n"
     )
+    tree(root, {f"{PACKAGE}/core/b.py": '"""Two\nlines (record 2239)."""\n' + beyond})
     found = SHAPE.violations(root, baseline)
     assert any("has 1 docstring(s) beyond one line and is new" in line for line in found)
     assert any("refers to 1 record(s) or decision(s) and is new" in line for line in found)
-    assert any("has 404 lines (the limit 400) and is new" in line for line in found)
+    assert any("has 405 lines (the limit 400) and is new" in line for line in found)
     assert any("has 1 rule arithmetic sites and is new" in line for line in found)
     assert any("has 1 level shift sites and is new" in line for line in found)
+    assert any("has 1 level write sites and is new" in line for line in found)
     good = '"""One line."""\n\n\ndef g(a):\n    return a\n'
     (root / PACKAGE / "core" / "b.py").write_text(good, encoding="utf-8")
     assert SHAPE.violations(root, baseline) == []
 
 
 def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp_path):
-    """The Boss's word of 18:11Z: a stub of 26 lines in the baseline grows to 151 lines within
-    the limits and passes; the same file with a two-line docstring is beyond them and ratchets."""
+    """The Boss's word of 18:11Z: a stub of 26 lines in the baseline grows to 151 lines within the limits and passes; the same file with a two-line docstring is beyond them and ratchets."""
     stub = (
         '"""One line."""\n\nfrom event_universe.core.register import Declaration\n\n'
         + "\n" * 21
