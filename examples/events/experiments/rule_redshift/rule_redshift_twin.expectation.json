@@ -1,0 +1,65 @@
+{
+ "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 5000 at x = 20, the taker a pixel of 5000 at x = 80 (60 Links on, the tails of three Links never touching), light of the charge family given by the deep one at the weight 1 with the stock 200 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
+ "DETECTOR": [],
+ "DETECTOR_row": "the taker's mean click interval (`mean_interval` on `taker`) against Cheshbon's line: the giver's rotation omega_b(deep) received at the taker, the taker's own omega_b(shallow); the number and its band before the run",
+ "WELL": {
+  "rows": "light_rows",
+  "levels": [
+   "light_beside_the_giver",
+   "light_beside_the_taker"
+  ],
+  "clocks": [
+   "giver_clock",
+   "taker_clock"
+  ],
+  "axis_y": 0,
+  "windows": [
+   [
+    24,
+    39
+   ],
+   [
+    61,
+    76
+   ]
+  ],
+  "shift_ratio": null,
+  "shift_ratio_band": null,
+  "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles at the two depths and their ratio, the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written"
+ },
+ "GAMEBOARD": [
+  {
+   "body": 0,
+   "interval": 1400,
+   "centre": [
+    20,
+    0,
+    0
+   ],
+   "band": 0,
+   "row": "the giver's pixel on its Node"
+  },
+  {
+   "body": 1,
+   "interval": 1400,
+   "centre": [
+    80,
+    0,
+    0
+   ],
+   "band": 0,
+   "row": "the taker's pixel on its Node"
+  },
+  {
+   "reversible": 1500,
+   "row": "THE REVERSIBLE ROW: the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept"
+  }
+ ],
+ "GAMEBOARD_checks": [
+  "(i) `well_on_the_chain` between the pixels: the tails of both below one unit there (kappa 0.45 per Link at 3,000, 1.27 at 5,000; the tail ends within three Links), so the light crosses a flat chain and only the pixels' Nodes are deep",
+  "(ii) `giver_clock` against `taker_clock`: the bound rotation omega_b(c) of each pixel from the one-Node line, the deep one slower",
+  "(iii) `light_beside_the_giver` against `light_beside_the_taker`: the period the same at both (the rotation is conserved in flight), the wavelength from `light_rows` longer beside the shallow pixel",
+  "(iv) the twin (both pixels at the same depth): every ratio 1, the taker's clicks at the giver's rate",
+  "then the DETECTOR reading in kind: the taker's mean click interval, one click at a time"
+ ]
+}

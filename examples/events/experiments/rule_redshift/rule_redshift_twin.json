@@ -1,0 +1,156 @@
+{
+ "shape": [
+  100,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 1500,
+ "N": 1024,
+ "engine": "examples/events/engine_start.json",
+ "universe": "examples/events/planck.json",
+ "measured": [
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      20,
+      0,
+      0
+     ],
+     "count": 5000
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024,
+   "moment": [
+    0,
+    0,
+    1
+   ],
+   "emitter": {
+    "family": "charge",
+    "weight": 1
+   },
+   "stocks": {
+    "charge": 200
+   }
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      80,
+      0,
+      0
+     ],
+     "count": 5000
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  }
+ ],
+ "detectors": [
+  {
+   "name": "taker",
+   "positions": [
+    [
+     80,
+     0,
+     0
+    ]
+   ]
+  }
+ ],
+ "readings": [
+  {
+   "name": "light_rows",
+   "kind": "rows",
+   "family": "charge",
+   "every": 20
+  },
+  {
+   "name": "light_beside_the_giver",
+   "kind": "level",
+   "family": "charge",
+   "node": [
+    24,
+    0,
+    0
+   ],
+   "every": 1
+  },
+  {
+   "name": "light_beside_the_taker",
+   "kind": "level",
+   "family": "charge",
+   "node": [
+    76,
+    0,
+    0
+   ],
+   "every": 1
+  },
+  {
+   "name": "giver_clock",
+   "kind": "cycle",
+   "body": 0,
+   "every": 1
+  },
+  {
+   "name": "taker_clock",
+   "kind": "cycle",
+   "body": 1,
+   "every": 1
+  },
+  {
+   "name": "giver_centre",
+   "kind": "centre",
+   "body": 0,
+   "every": 200
+  },
+  {
+   "name": "taker_centre",
+   "kind": "centre",
+   "body": 1,
+   "every": 200
+  },
+  {
+   "name": "well_on_the_chain",
+   "kind": "level",
+   "family": "gravity",
+   "node": [
+    50,
+    0,
+    0
+   ],
+   "every": 100
+  }
+ ],
+ "face_depth": 4
+}
