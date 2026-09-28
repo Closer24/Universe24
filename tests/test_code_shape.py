@@ -1,7 +1,5 @@
 """The shape of the code holds against the merge base, read from git (tools/record_code_shape.py; #1198, gate 7): a file beyond the limits grows no count (the sites writing a level onto the GameBoard among them, the write's gate), a new one stays within them, no new copied function, no new importer of the loop's internals, and the import contracts hold; no baseline file is kept."""
 
-from __future__ import annotations
-
 import subprocess
 from pathlib import Path
 
