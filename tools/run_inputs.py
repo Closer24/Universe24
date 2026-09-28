@@ -17,7 +17,10 @@ among its clicks), or `{"detector": ...,
 "mean_interval": ..., "band": ...}` on the mean over the detector's clicks of the
 interval since the record's giving (the passage rows, ALGEBRA.md #the-ladder),
 written before the run), the comparison per pin: MATCH within the band or MISS, with the
-value read. Nothing else is compared; a GameBoard
+value read; a row of the expectation file naming a `twin` input compares the RATIO of this
+input's mean click interval at the detector to the twin's, both exact fractions, against
+`ratio` [num, den] within `band` [num, den], after both inputs ran (row (e) THE MOVING CLOCK:
+the factor read from the clicks of the moving world and its resting twin). Nothing else is compared; a GameBoard
 reading is not written. The output carries no time, so two inputs run
 together give the same files as each alone (the test of record 1887); the
 wall seconds go to the summary printed.
@@ -35,6 +38,7 @@ import json
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
+from fractions import Fraction
 from multiprocessing import get_context
 from pathlib import Path
 from typing import Any
@@ -144,6 +148,8 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
         json.loads(expectation_path.read_text(encoding="utf-8")) if expectation_path.exists() else {}
     )
     for pin in [*pins, *expectation.get("DETECTOR", [])]:
+        if "twin" in pin:
+            continue  # the ratio row is compared after both inputs ran (`ratio_rows`)
         # a pin on the COUNT of clicks at the detector, on its FIRST click (the
         # least interval since the record's giving among its clicks: the stock's
         # fastest passage; for one record given at interval 0 the interval of the
@@ -214,6 +220,54 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
     }
 
 
+def mean_wait(output: dict[str, Any], detector: str) -> Fraction | None:
+    """The mean interval since the record's giving over the detector's clicks of one output, exact; None with no click."""
+    waits = [
+        int(c["interval"]) - int(c["giving"])
+        for c in output.get("clicks", [])
+        if c["detector"] == detector
+    ]
+    return Fraction(sum(waits), len(waits)) if waits else None
+
+
+def ratio_rows(out_dir: Path, inputs: list[Path], name: str) -> list[str]:
+    """The expectation file's DETECTOR rows naming a `twin`: the ratio of this input's mean click interval at the detector to the twin's (the twin one of the inputs, its output beside this one), MATCH within the band or MISS, written into this input's output file after both ran; the verdicts returned for the summary."""
+    paths = {path.stem: path for path in inputs}
+    expectation_path = paths[name].with_suffix(".expectation.json")
+    expectation = (
+        json.loads(expectation_path.read_text(encoding="utf-8")) if expectation_path.exists() else {}
+    )
+    rows = [pin for pin in expectation.get("DETECTOR", []) if "twin" in pin]
+    if not rows:
+        return []
+    output_path = out_dir / f"{name}.output.json"
+    output = json.loads(output_path.read_text(encoding="utf-8"))
+    verdicts: list[dict[str, object]] = []
+    for pin in rows:
+        detector, twin = str(pin["detector"]), str(pin["twin"])
+        twin_path = out_dir / f"{twin}.output.json"
+        read: Fraction | None = None
+        if twin in paths and twin_path.exists():
+            here = mean_wait(output, detector)
+            there = mean_wait(json.loads(twin_path.read_text(encoding="utf-8")), detector)
+            read = here / there if here is not None and there else None
+        expected, band = Fraction(*pin["ratio"]), Fraction(*pin["band"])
+        verdicts.append(
+            {
+                "detector": detector,
+                "kind": "ratio",
+                "twin": twin,
+                "pin": [expected.numerator, expected.denominator],
+                "band": [band.numerator, band.denominator],
+                "read": None if read is None else [read.numerator, read.denominator],
+                "verdict": "MATCH" if read is not None and abs(read - expected) <= band else "MISS",
+            }
+        )
+    output["pins"] = [*output.get("pins", []), *verdicts]
+    write_output(out_dir, name, output)
+    return [str(v["verdict"]) for v in verdicts]
+
+
 def write_output(out_dir: Path, name: str, output: dict[str, object]) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{name}.output.json"
@@ -262,6 +316,8 @@ def main(argv: list[str] | None = None) -> int:
         ]
         for future in futures:
             rows.append(future.result())
+    for row in rows:
+        row.setdefault("pins", []).extend(ratio_rows(arguments.out, arguments.inputs, str(row["name"])))
     for row in rows:
         print(json.dumps(row, sort_keys=True))
     return 0 if all(row["verdict"] == "LAWFUL" for row in rows) else 1
