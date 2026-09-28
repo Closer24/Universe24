@@ -1,6 +1,4 @@
-"""The shape of the code holds against the merge base, read from git (tools/record_code_shape.py; #1198, gate 7): a file
-beyond the limits grows no count, a new one stays within them, no new copied function, no new importer of the
-loop's internals, and the import contracts hold; no baseline file is kept."""
+"""The shape of the code holds against the merge base, read from git (tools/record_code_shape.py; #1198, gate 7): a file beyond the limits grows no count, a new one stays within them, no new copied function, no new importer of the loop's internals, and the import contracts hold; no baseline file is kept."""
 
 from __future__ import annotations
 
@@ -77,8 +75,7 @@ def test_a_new_file_meets_the_limits_from_its_first_commit(tmp_path):
 
 
 def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp_path):
-    """The Boss's word of 18:11Z: a stub of 26 lines in the baseline grows to 151 lines within
-    the limits and passes; the same file with a two-line docstring is beyond them and ratchets."""
+    """The Boss's word of 18:11Z: a stub of 26 lines in the baseline grows to 151 lines within the limits and passes; the same file with a two-line docstring is beyond them and ratchets."""
     stub = (
         '"""One line."""\n\nfrom event_universe.core.register import Declaration\n\n'
         + "\n" * 21
