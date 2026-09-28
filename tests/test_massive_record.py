@@ -338,11 +338,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
         assert simulation.books()["balanced"], simulation.tick
     givings = [line for line in lines if line["event"] == "giving"]
     assert len(givings) == 3
-    # the residues from the law (ALGEBRA.md #a-familys-declaration) on the body's own wheel (700
-    # on the source well in the vacuum; at its Node the wheel of its content under
-    # the Node clock, ALGEBRA.md #the-paces, read from the rule), spread from the remainder
-    # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
-    # the coupling's back-action HISTORY)
+    # the residues from the law (ALGEBRA.md #a-familys-declaration) on the body's own wheel (700 on the source well in the vacuum; at its Node the wheel of its content under the Node clock, ALGEBRA.md #the-paces, read from the rule), spread from the remainder kept at the Nodes (the model owner's decisions (1) and (2) of record 1962; the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in givings)
     # the line's content is the held level at the body's Node: the tent of 4 quanta over the divisor 40000, within 1
     assert all(abs(line["content"]) <= 1 for line in givings)
@@ -646,10 +642,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         if len([line for line in lines if line["event"] == "gather"]) == 2:
             break
     gathers = [line for line in lines if line["event"] == "gather"]
-    # both records click, each once, in either order (under the click rule of
-    # ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's
-    # click and may reach its rung at the screen first when its residue is
-    # the smaller)
+    # both records click, each once, in either order (under the click rule of ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's click and may reach its rung at the screen first when its residue is the smaller)
     assert sorted(gather["record"] for gather in gathers) == sorted(identities) and len(identities) == 2
     for gather in gathers:
         identity = gather["record"]

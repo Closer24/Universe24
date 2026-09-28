@@ -332,9 +332,7 @@ def _seed_key(document: dict) -> str:
     bare = json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"}))
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
         entry.get("held", {}).pop("divisor", None)  # a key the recorded seeding never read
-    # the keys the law retired and the keys it added on 2026-09-28 (one quantum action, the derived
-    # amplitude, the giving's coupling, the wavelength from the giver's rotation) are no part of the key:
-    # the seedings were recorded once and stand under either form of the files
+    # the keys the law retired and the keys it added on 2026-09-28 (one quantum action, the derived amplitude, the giving's coupling, the wavelength from the giver's rotation) are no part of the key: the seedings were recorded once and stand under either form of the files
     for key in ("amplitude_bound", "quantum_action", "giving_coupling"):
         bare.pop(key, None)
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():

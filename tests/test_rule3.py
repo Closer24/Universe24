@@ -193,9 +193,7 @@ def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
     assert calls["backward"] >= 1 and simulation.books()["balanced"]
 
 
-# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a
-# Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the
-# transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
+# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
 SHIFT_HOME = {"src/event_universe/core/ports.py": {"arrival"}}
 SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 

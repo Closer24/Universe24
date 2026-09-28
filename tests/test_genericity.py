@@ -163,10 +163,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
     placed_b = place(tmp_path, monkeypatch, families_b, document)
     simulation_b, lines_b = run(placed_b)
     assert module.digest_of(module.run_reading(simulation_b, lines_b)) == digest
-    # (d) Rule3's conserved form where no click and no load acts: the body alone, its own
-    # record's step the exact identity value - previous = the remainders' drift (ALGEBRA.md
-    # ALGEBRA.md #the-line; item 44), the record's own pair (ALGEBRA.md #the-primitives), the level in force the body's plain
-    # reads summed (weight x the read family's level as the interval began)
+    # (d) Rule3's conserved form where no click and no load acts: the body alone, its own record's step the exact identity value - previous = the remainders' drift (ALGEBRA.md ALGEBRA.md #the-line; item 44), the record's own pair (ALGEBRA.md #the-primitives), the level in force the body's plain reads summed (weight x the read family's level as the interval began)
     plain, document_d = alone(drawn, families)
     placed_d = place(tmp_path, monkeypatch, plain, document_d)
     simulation_d = DetectorLawSimulation(parse_nature_beam_world(placed_d))

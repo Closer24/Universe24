@@ -65,11 +65,7 @@ def form_I(
     before: np.ndarray,
     content: np.ndarray | None = None,
 ) -> Fraction:
-    # the form from the rule's own integers (ALGEBRA.md #the-line)
-    # at the scale of the plain form (the engine's rational over 3 L): with (R_i, S_i, w_i) the
-    # weak-field rule's coefficients at the Node, [w_i (a^2 + b^2) - S_i a b] / (3 R_i) at the
-    # Nodes and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the vacuum, where R = 2
-    # Gamma^2 num, S = 0, w = 6 den Gamma^2)
+    # the form from the rule's own integers (ALGEBRA.md #the-line) at the scale of the plain form (the engine's rational over 3 L): with (R_i, S_i, w_i) the weak-field rule's coefficients at the Node, [w_i (a^2 + b^2) - S_i a b] / (3 R_i) at the Nodes and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the vacuum, where R = 2 Gamma^2 num, S = 0, w = 6 den Gamma^2)
     gamma = simulation.node_clock
     if content is None:
         content = simulation.level_of("content")
