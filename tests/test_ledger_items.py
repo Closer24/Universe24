@@ -77,8 +77,8 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
     document = emitter_world(stock=2, ticks=STEPS)
     well = {
         **family_entry(
-            "well", [52, 53], [], clock=[512, 1]
-        ),  # the depth of [1000, 1019] at a numerator the walls admit under the bound 2^24
+            "well", [52, 53], clock=[512, 1]
+        ),  # the depth of [1000, 1019] under the bound 2^24
         "sourced": {"of": "matter", "weight": 1, "scale": 1000},
     }
     null = {**well, "name": "null", "sourced": {**well["sourced"], "of": "charge"}}

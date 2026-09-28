@@ -15,7 +15,7 @@ pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
 
 
 def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_carried():
-    """The body at momentum n = (64, 0, 0) on its wall W and content s: gravity's x part at its Nodes (4 s n_x + r) div W, xx (2 s n_x^2 + r) div W^2, the other components 0 (n_y = n_z = 0); the remainders carried, so over intervals the written value steps between the two integers around 4 s n_x / W with the mean the exact fraction; the charge Q = 2 gives its time part 2 and its current (2 n_x) div W; every unsourced part exactly zero and silent."""
+    """The body at momentum n = (64, 0, 0) on its wall W and content s: gravity's x part at its Nodes (s n_x + r) div W, xx (s n_x^2 + r) div W^2 (THE FAMILIES FROM THE RULE: the held factors are 1, the linearised field's 4 and 2 left the files), the other components 0 (n_y = n_z = 0); the remainders carried, so over intervals the written value steps between the two integers around s n_x / W with the mean the exact fraction; the charge Q = 2 gives its time part 2 and its current (2 n_x) div W; every unsourced part exactly zero and silent."""
     document = parts_world(momentum=[64, 0, 0], q=2)
     for entry in document["universe"]:
         if "held" in entry:
@@ -30,8 +30,8 @@ def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_ca
     assert [record.part for record in gravity] == list(range(10))
     inside = block.mask
     assert int(gravity[0].now[inside].min()) == s == int(gravity[0].now[inside].max())
-    assert int(gravity[1].now[inside].min()) == (4 * s * 64) // wall == int(gravity[1].now[inside].max())
-    assert int(gravity[4].now[inside].min()) == (2 * s * 64 * 64) // (wall * wall)
+    assert int(gravity[1].now[inside].min()) == (s * 64) // wall == int(gravity[1].now[inside].max())
+    assert int(gravity[4].now[inside].min()) == (s * 64 * 64) // (wall * wall)
     for part in (2, 3, 5, 6, 7, 8, 9):
         assert not gravity[part].now.any() and gravity[part].silent, part
     assert int(charge[0].now[inside].min()) == 2 == int(charge[0].now[inside].max())
@@ -44,7 +44,7 @@ def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_ca
         at_body = gravity[1].now[block.mask]  # the body hops: read at its Nodes now
         assert int(at_body.min()) == int(at_body.max())
         written.append(int(at_body[0]))
-    exact = 4 * s * 64 / wall
+    exact = s * 64 / wall
     assert min(written) in (int(exact), int(exact) + 1) and max(written) in (int(exact), int(exact) + 1)
     assert abs(sum(written) / len(written) - exact) < 1.0 / len(written) + 1e-9
     assert simulation.leaks() == []

@@ -81,7 +81,7 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
     refuses(lambda d: d.pop("integers"), "lacks keys: integers")
     refuses(lambda d: d["integers"].pop("node_clock"), r"\.integers lacks keys: node_clock")
     refuses(lambda d: d["integers"].__setitem__("Mu", 1), r"\.integers has unknown keys: Mu")
-    refuses(lambda d: d["integers"].__setitem__("Lambda", 0), r"Lambda is 0, below its least 1")
+    refuses(lambda d: d["integers"].__setitem__("Lambda", 1), r"integers has unknown keys: Lambda")
     refuses(lambda d: d["integers"]["twist_table"]["fine"].__setitem__(3, [1, 0]), r"a list of 3")
     refuses(lambda d: d.__setitem__("families", []), r"\.families must be a nonempty list")
     refuses(lambda d: d["families"][0].__setitem__("name", 3), r"name must be a word, not 3")

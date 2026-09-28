@@ -86,7 +86,7 @@ def families_of(document: dict) -> list[dict]:
 
 def extra_family(name: str) -> dict:
     """A paid family declaring the light kind and nothing that sources it."""
-    return family_entry(name, [1, 1], [], clock=[512, 1])
+    return family_entry(name, [1, 1], clock=[512, 1])
 
 
 def test_a_the_adversarial_universe_runs_bit_for_bit_under_random_family_names():

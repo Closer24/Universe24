@@ -753,8 +753,9 @@ def _families_of(
     if len(set(names)) != len(names):
         raise ValueError(f"two families named {next(n for n in names if names.count(n) > 1)!r}")
     found: list[FamilyDefinition] = []
-    for index, obj in enumerate(derived.filled(entry, entries, gamma) for entry in entries):
+    for index, row in enumerate(entries):
         label = f"families[{index}]"
+        obj = derived.filled(row, entries, gamma, label)
         parts_value = tuple(cast(tuple[object, ...], obj["parts"]))
         if parts_value not in PARTS_FORMS:
             raise ValueError(
@@ -2344,10 +2345,6 @@ def parse_world_document(
     twist_table: TwistTable | None = None
     if "twist_table" in obj:
         twist_table = _twist_table(obj["twist_table"], "twist_table", amplitude_bound)
-    # THE FAMILY GENERICITY (the model owner's record 2066; BUILD.md section 26
-    # item 51): the families' roles of items 32 and 35 are their own
-    # declarations (`held`, `reads`), read by `_families` below; the world
-    # keys clock_family, charge_family and charge_strength are retired
     mode_axis: int | None = None
     if "mode_axis" in obj:
         mode_axis = AXES.index(str(obj["mode_axis"]))

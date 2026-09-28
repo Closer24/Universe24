@@ -39,71 +39,35 @@ PHASE_STEPS = 1024
 TRAIN_LENGTH = 32  # the train's Nodes along K: 8 periods of the wavelength 4
 
 
+# THE FAMILIES FROM THE RULE: every fixture's family is a row of the rule's form (its name, its pair, its held
+# count with the sum's divisor, its clock where it gives); the parts, phase, clicks, quantum, reads and the held
+# factors and dipole derive in the loader (loader/derived.py), a declared value against the rule refused by name
 # a sourced family's entry (the source verb's card), the loader tests' one copy
 SOURCED = {
     "name": "field",
-    "sign": 0,
-    "parts": [1],
-    "phase": 2,
     "pair": [1000, 1019],
-    "quantum": 1,
-    "reads": [],
-    "self_source": {"unit": 0},
     "sourced": {"of": "matter", "weight": 1, "scale": 18910},
 }
-HELD_MOMENT = {"count": "sign", "factors": [1, 1], "dipole": "moment", "dipole_div": 2, "divisor": 40000}
-HELD_SPIN = {
-    "count": "content",
-    "factors": [1, 4, 2],
-    "dipole": "spin",
-    "dipole_div": 1,
-    "divisor": 40000,
-}
+HELD_MOMENT = {"count": "sign", "divisor": 40000}
+HELD_SPIN = {"count": "content", "divisor": 40000}
+SPINS_STEP = {
+    "curl": [1, 4],
+    "tidal": [3, 4],
+}  # the spin's step's row, required while the step is a folder
 CHARGE_FAMILY_NAME = "charge"
-
-
 CHARGE_FAMILY = {
     "name": CHARGE_FAMILY_NAME,
-    "sign": 0,
-    "parts": [1],
-    "phase": 2,
     "pair": [1, 1],
-    "quantum": 1,
-    "held": {"count": "sign", "factors": [1], "divisor": 40000},
-    "reads": [],
-    "self_source": {"unit": 0},
-}
-
-
-CHARGE_STRENGTH = 1
-
-
-# the family of clicks holds the content (ALGEBRA.md #the-counts-line) and the family of charge the signed
-# charge (ALGEBRA.md #the-paces); a reading family reads the content plainly and the charge by its sign at Lambda
+    "held": HELD_MOMENT,
+}  # the sign's holder, rank 2
+# the family of clicks holds the content (ALGEBRA.md #the-counts-line), the real field of rank 3 with the spin's
+# dipole, and the family of charge the signed count (ALGEBRA.md #the-paces); a family of quanta reads both
 CLOCK_FAMILY_NAME = "clicks"
-
-
-CLOCK_FAMILY = {
-    "name": CLOCK_FAMILY_NAME,
-    "sign": 0,
-    "parts": [1],
-    "phase": 2,
-    "pair": [1, 1],
-    "quantum": 1,
-    "held": {"count": "content", "factors": [1], "divisor": 40000},
-    "reads": [],
-    "self_source": {"unit": 0},
-}
+CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "pair": [1, 1], "held": HELD_SPIN, "spins_step": SPINS_STEP}
 
 
 # the Node clock Gamma of every test world (ALGEBRA.md #the-paces, #the-line)
 NODE_CLOCK = 10**4
-
-
-READS = [
-    {"family": CLOCK_FAMILY_NAME, "weight": 1, "twist": 0, "by": 1},
-    {"family": CHARGE_FAMILY_NAME, "weight": CHARGE_STRENGTH, "twist": 0, "by": "q"},
-]
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -115,6 +79,8 @@ def shipped() -> dict:
 
 
 FILE = "examples/events/universe.json"
+# the shipped twist table on every fixture: the derived reads twist by "own" (an inline world's world key)
+TWIST_TABLE = json.loads((ROOT / FILE).read_text(encoding="utf-8"))["integers"]["twist_table"]
 
 
 def chain_world(
@@ -131,9 +97,10 @@ def chain_world(
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
+        "twist_table": TWIST_TABLE,
         "universe": [
-            family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
-            family_entry("matter", list(EMITTER_KIND), reads()),
+            family_entry("light", [1, 1], clock=list(GIVEN_CLOCK)),
+            family_entry("matter", list(EMITTER_KIND)),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -208,9 +175,10 @@ def layer_world(receiver: object = None) -> dict:
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
+        "twist_table": TWIST_TABLE,
         "universe": [
-            family_entry("light", [1, 1], reads(), clock=list(GIVEN_CLOCK)),
-            family_entry("matter", [800, 809], reads()),
+            family_entry("light", [1, 1], clock=list(GIVEN_CLOCK)),
+            family_entry("matter", [800, 809]),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -260,9 +228,10 @@ def _emitter_world(
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
+        "twist_table": TWIST_TABLE,
         "universe": [
-            family_entry("light", [1, 1], reads(), clock=[512, 1]),
-            family_entry("matter", kind, reads()),
+            family_entry("light", [1, 1], clock=[512, 1]),
+            family_entry("matter", kind),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],
@@ -354,6 +323,10 @@ def _seed_key(document: dict) -> str:
         if isinstance(entry.get("held"), dict):
             for key in ("factors", "dipole", "dipole_div"):
                 entry["held"].pop(key, None)
+        if entry.get("sign") == 0:  # the rule's own values, written or not, are one key
+            del entry["sign"]
+        if entry.get("self_source") == {"unit": 0}:
+            del entry["self_source"]
     return input_digest(bare)
 
 
@@ -402,28 +375,13 @@ def mode_profile(document: dict, number: int, amplitude: int) -> list[int]:
     return row["profile"]
 
 
-def reads() -> list[dict]:
-    """A reading family's `reads`, a fresh copy."""
-    return [dict(read) for read in READS]
-
-
-def family_entry(
-    name: str, pair, reads: list[dict], clock=None, sign: int = 0, quantum: int = 1
-) -> dict:
-    """A family of records in the cards' form (the universe file's entry): one part, two levels, its pair, its reads, the self-source off, clicks at the quantum; its clock and sign where given."""
-    entry = {
-        "name": name,
-        "sign": sign,
-        "parts": [1],
-        "phase": 2,
-        "pair": pair,
-        "quantum": quantum,
-        "reads": reads,
-        "self_source": {"unit": 0},
-        "clicks": {"gives": True, "takes": True, "quantum": quantum},
-    }
+def family_entry(name: str, pair, clock=None, sign: int = 0) -> dict:
+    """A family of quanta in the rule's form (the universe file's row): its name and its pair, its clock where it gives; its sign where a test declares one (the sign stands declared until the owner's word on a body's charge)."""
+    entry: dict = {"name": name, "pair": pair}
     if clock is not None:
         entry["clock"] = list(clock)
+    if sign:
+        entry["sign"] = sign
     return entry
 
 
@@ -441,6 +399,7 @@ def on_the_file(document: dict) -> dict:
     moved["universe"] = FILE
     del moved["node_clock"]
     del moved["momentum_unit"]
+    del moved["twist_table"]  # the file's table, not the world's
     for entry in moved["measured"]:
         if entry["family"] == "light":
             entry["family"] = "charge"

@@ -13,7 +13,7 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.loader import derived, frame
 from event_universe.world_files import input_stamp, parse_nature_beam_world, read_repository_json
 from tests.running import refused
-from tests.worlds import FILE, HELD_MOMENT, HELD_SPIN, emitter_specimen, family_entry, on_the_file
+from tests.worlds import FILE, emitter_specimen, family_entry, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
 ATTRIBUTES = {"name", "m", "pair", "held", "clock", "spins_step"}  # the file's rows; the rest derives
@@ -52,8 +52,16 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     assert (
         gravity["pair"] == [1, 1] == charge["pair"]
     )  # THE MASS IS ONE INTEGER: [m, Gamma] in lowest terms
-    assert gravity["held"] == {**HELD_SPIN, "factors": [1, 1, 1]} and gravity["reads"] == []
-    assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == HELD_MOMENT
+    spin = {
+        "count": "content",
+        "divisor": 40000,
+        "factors": [1, 1, 1],
+        "dipole": "spin",
+        "dipole_div": 1,
+    }
+    moment = {"count": "sign", "divisor": 40000, "factors": [1, 1], "dipole": "moment", "dipole_div": 2}
+    assert gravity["held"] == spin and gravity["reads"] == []
+    assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == moment
     assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
     assert charge["clicks"] == {"gives": True, "takes": True, "quantum": 1} == matter["clicks"]
     assert matter["parts"] == [1] and matter["phase"] == 2 and "held" not in matter
@@ -206,10 +214,37 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         (tmp_path / "universe.json").write_text(json.dumps(broken), encoding="utf-8")
         refused(json.loads(json.dumps(document)), match)
 
+    C = {"gives": True, "takes": True, "quantum": 2}  # noqa: N806  # a clicks card at another quantum
+    H = lambda f: lambda d: f(d["families"][0]["held"])  # noqa: E731  # a change of the held row
+    R = lambda **k: lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", **k}])  # noqa: E731, N806
     refuses(lambda d: d["integers"].pop("node_clock"), "integers lacks keys: node_clock")
-    refuses(lambda d: d["integers"].__setitem__("Lambda", 0), r"Lambda is 0, below its least 1")
+    refuses(lambda d: d["integers"].__setitem__("Lambda", 1), r"integers has unknown keys: Lambda")
     refuses(lambda d: d["families"][2].pop("pair"), r"the family 'matter' lacks keys: m")
-    refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
+    # THE FAMILIES FROM THE RULE: a key the rule fixes, declared at another value, is refused by name
+    refuses(
+        lambda d: d["families"][0].__setitem__("parts", [1]),
+        r"families\[0\]\.parts \[1\] contradicts the rule",
+    )
+    refuses(
+        lambda d: d["families"][1].__setitem__("phase", 1),
+        r"families\[1\]\.phase 1 contradicts the rule",
+    )
+    refuses(
+        lambda d: d["families"][0].__setitem__("clicks", C),
+        r"families\[0\]\.clicks .* contradicts the rule",
+    )
+    refuses(R(weight=2), r"families\[2\]\.reads .* contradicts the rule, which fixes")
+    refuses(R(twist=0), r"families\[2\]\.reads .* contradicts the rule, which fixes")
+    refuses(
+        lambda d: d["families"][2].__setitem__("reads", []),
+        r"families\[2\]\.reads \[\] contradicts the rule",
+    )
+    refuses(
+        H(lambda h: h.update(factors=[1, 4, 2])), r"families\[0\]\.held\.factors \[1, 4, 2\] contradicts"
+    )
+    refuses(
+        H(lambda h: h.update(dipole_div=2)), r"families\[0\]\.held\.dipole_div 2 contradicts the rule"
+    )
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\], not 3")
     # the self-source's unit (ALGEBRA.md #the-interval; commit 6): 0, or at least 24 A
     refuses(lambda d: d["families"][0].__setitem__("self_source", {"unit": 24}), "is below 24 A")
@@ -220,17 +255,16 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     )
     refuses(lambda d: d["families"][0].pop("name"), r"families\[0\] lacks keys: name")
     refuses(lambda d: d["families"][0].__setitem__("quantum", 0), "quantum is 0, below its least 1")
-    C = {"gives": True, "takes": True, "quantum": 2}  # noqa: N806  # a clicks card at another quantum
-    refuses(lambda d: d["families"][2].__setitem__("clicks", C), "differs from the row's quantum 1")
-    H = lambda f: lambda d: f(d["families"][0]["held"])  # noqa: E731  # a change of the held row
+    refuses(
+        lambda d: d["families"][2].__setitem__("clicks", C),
+        r"families\[2\]\.clicks .* contradicts the rule",
+    )
     # no default written for the dipole's divisor: the universe file writes it (the hold's card)
     refuses(H(lambda h: h.update(dipole="spin", dipole_div=0)), r"dipole_div is 0, below its least 1")
     refuses(H(lambda h: h.pop("divisor")), r"held lacks (keys: )?divisor")  # the sum's divisor E_s
     refuses(lambda d: d["families"][2].update(pair="mine"), r"pair must be a list, not 'mine'")
-    R = lambda **k: lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", **k}])  # noqa: E731, N806
     refuses(R(weight="Mu"), "names 'Mu', no integer")
     refuses(R(by=2), r"by must be one of \[1, 'q'\], not 2")
-    refuses(H(lambda h: h.update(factors=[1, 4])), r"held\.factors must be 3")
     refuses(H(lambda h: h.update(dipole="twist")), r"dipole must be one of \['spin', 'moment'\]")
     refuses(lambda d: d["families"][0].pop("spins_step"), "holds the spin's dipole and lacks spins_step")
     refuses(lambda d: d["families"][0]["spins_step"].update(curl=3), r"spins_step\.curl must be a list")
@@ -274,7 +308,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     giving_matter = emitter_specimen(stock=1, ticks=10)
     names = {family["name"]: family for family in giving_matter["universe"]}
     names["matter"]["pair"] = "body"
-    giving_matter["universe"].append(family_entry("heavy", [1600, 1618], names["matter"]["reads"]))
+    giving_matter["universe"].append(family_entry("heavy", [1600, 1618]))
     body = giving_matter["measured"][0]
     body["family"] = "heavy"
     body["stocks"] = {"matter": 1}
