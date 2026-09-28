@@ -186,7 +186,6 @@ def block_world(
         "ticks": ticks,
         "N": 1024,
         "engine": "examples/events/engine_start.json",
-        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": families,
@@ -266,7 +265,6 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "ticks": 10,
         "N": 1024,
         "engine": "examples/events/engine_start.json",
-        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
@@ -326,7 +324,6 @@ def content_chain(
     divisor E_s `divisor`, 40000 as shipped (ALGEBRA.md #the-primitives, the row "the hold")."""
     document = massive_world([length, 1, 1], boundary, list(PAIR))
     document["node_clock"] = gamma
-    document["amplitude_bound"] = 1 << 26  # the rows at UNIT have room under the suite's Gamma = 1000
     for family in document["universe"]:
         if "held" in family:  # the shared row copied, never written in place
             family["held"] = {**family["held"], "divisor": divisor}

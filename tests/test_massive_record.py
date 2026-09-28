@@ -9,7 +9,8 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
-from event_universe.core.rule3 import coefficients
+from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.rule3 import ISOTROPIC, coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.features.send import send
 from event_universe.loader.world import MASSLESS_PAIR
@@ -136,9 +137,6 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
     for pair in ([128, 129], [1600, 1618]):
         document = massive_world([6, 6, 6], periodic, pair)
-        document["amplitude_bound"] = (
-            1 << 21
-        )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
         world = parse_nature_beam_world(document)
         simulation = DetectorLawSimulation(world)
         live = planted(simulation, 1, now, before, np.zeros((6, 6, 6), dtype=np.int64))
@@ -208,10 +206,6 @@ def run_chain_digests() -> dict[str, str]:
 def test_the_loaders_refusals_name_the_key():
     """BUILD.md (q): the step's keys refused one by one, each naming the key."""
     base = massive_world([4, 4, 4], "open", [2, 3])
-    without_key = json.loads(json.dumps(base))
-    del without_key["amplitude_bound"]
-    with pytest.raises(ValueError, match="a world with a massive family declares `amplitude_bound`"):
-        parse_nature_beam_world(without_key)
     reversed_pair = json.loads(json.dumps(base))
     reversed_pair["universe"][1]["pair"] = [3, 2]
     with pytest.raises(ValueError, match="den >= num"):
@@ -448,65 +442,43 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 # Reviewer 3's three MUSTs on step 2 (the Boss's 16:42Z) and his layer line (18:12Z)
 
 
-def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
-    """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, bounded by the width through the rule's total and the transport's room, and a seed or a row above it is refused naming it."""
-    big = 1 << 20
-    document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
+def derived_amplitude_of(pairs, gamma: int) -> int:
+    """The test's own derivation of A (ALGEBRA.md #the-rows-against-nature): the largest level whose rule total 6 A R + A |S| + w (A + 1) stays inside the width at the levels 0 and Gamma - 1, the tightest over the pairs."""
+    found = MAX_WORK_INT
+    for num, den in pairs:
+        for level in (0, gamma - 1):
+            (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, True)
+            found = min(found, (MAX_WORK_INT - wall) // (6 * abs(read) + abs(self_coefficient) + wall))
+    return found
+
+
+def test_the_amplitude_bound_is_derived_from_the_width_and_the_pairs_and_never_written():
+    """THE AMPLITUDE BOUND A IS DERIVED (ALGEBRA.md #a-familys-declaration, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the loader's A is the largest level whose rule total stays inside the width at the levels 0 and Gamma - 1, the tightest over every pair the files declare, the families' and the bodies' (a body's own pair enters it), the same derivation here from the rule's coefficients; a seed above A is refused naming A, a row stepped above A is refused at run; `amplitude_bound` written in a file is refused by name as an unknown key."""
+    document = massive_world([6, 6, 6], PERIODIC, [800, 809])
+    assert parse_nature_beam_world(document).amplitude_bound == derived_amplitude_of(
+        [tuple(f["pair"]) for f in document["universe"]], NODE_CLOCK
+    )
+    block = {"position": [10, 10, 10], "side": 3, "pair": [800, 800]}
+    deeper = block_world([24, 24, 24], PERIODIC, [800, 809], [block])
+    expected = derived_amplitude_of(
+        [tuple(f["pair"]) for f in deeper["universe"]] + [(800, 800)], NODE_CLOCK
+    )
+    assert parse_nature_beam_world(deeper).amplitude_bound == expected
+    huge_seed = block_world([24, 24, 24], PERIODIC, [800, 809], [{**block, "seed": 1 << 60}])
     with pytest.raises(
-        ValueError,
-        match=r"6 A R \+ A \|S\| \+ w \(A \+ 1\).*Gamma = 10000 and the content M = 0 .*not below 2\^63",
+        ValueError, match=f"above the world's amplitude bound A = {expected} on the pair"
     ):
-        parse_nature_beam_world(document)
-    with pytest.raises(ValueError, match=r"families\[1\]\.pair \[1048576, 1048577\]"):
-        parse_nature_beam_world(document)
-    for pair, amplitude in (([800, 809], 1 << 22), ([3200, 3236], 1 << 19)):
-        admitted_pair = massive_world([6, 6, 6], PERIODIC, pair)
-        admitted_pair["amplitude_bound"] = (
-            amplitude  # the integers of ALGEBRA.md #the-rows-against-nature per pair
-        )
-        parse_nature_beam_world(admitted_pair)
-    # the block's own pair under the bound with the world's content (one well of one
-    # quantum, M = 1): a well [big, big + 1] refused, [800, 800] admitted
-    for pair, admitted in (([big, big + 1], False), ([800, 800], True)):
-        world = block_world(
-            [24, 24, 24],
-            PERIODIC,
-            [800, 809],
-            [{"position": [10, 10, 10], "side": 3, "pair": pair}],
-        )
-        if admitted:
-            parse_nature_beam_world(world)
-        else:
-            with pytest.raises(
-                ValueError, match=r"measured\[0\]\.pair .*the content M = 2 .*not below 2\^63"
-            ):
-                parse_nature_beam_world(world)
-    unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    del unbounded["amplitude_bound"]
-    with pytest.raises(ValueError, match="a world with a massive family declares `amplitude_bound`"):
-        parse_nature_beam_world(unbounded)
-    ceiling = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    ceiling["amplitude_bound"] = 1 << 29
-    with pytest.raises(ValueError, match="A = 536870912.*not below 2\\^63"):
-        parse_nature_beam_world(ceiling)
-    huge_seed = block_world(
-        [24, 24, 24],
-        PERIODIC,
-        [800, 809],
-        [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "seed": 1 << 60}],
-    )
-    with pytest.raises(ValueError, match=r"above the world's amplitude bound A = 4194304 on the pair"):
         parse_nature_beam_world(huge_seed)
-    bounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    world = parse_nature_beam_world(bounded)
+    written = massive_world([6, 6, 6], PERIODIC, [800, 809])
+    written["amplitude_bound"] = 1 << 22
+    with pytest.raises(ValueError, match="the world has unknown keys: amplitude_bound"):
+        parse_nature_beam_world(written)
+    world = parse_nature_beam_world(document)
     simulation = DetectorLawSimulation(world)
-    planted_row = planted(
-        simulation,
-        1,
-        np.full((6, 6, 6), (1 << 22) + 1),  # just above A: the next level about twice it, inside int64
-        np.zeros((6, 6, 6)),
-        np.zeros((6, 6, 6)),
-    )
+    above = np.full(
+        (6, 6, 6), world.amplitude_bound + 1
+    )  # just above A: the next level inside the width
+    planted_row = planted(simulation, 1, above, np.zeros((6, 6, 6)), np.zeros((6, 6, 6)))
     with pytest.raises(RuntimeError, match="above the world's declared amplitude bound"):
         simulation._advance(planted_row)
 
@@ -551,7 +523,6 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         "seed": 1 << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
     }
     document = block_world([128, 128, 1], PERIODIC, [3200, 3236], [block], ticks=1500)
-    document["amplitude_bound"] = 1 << 19  # the pair's room under the weak field (ALGEBRA.md)
     world = parse_nature_beam_world(document)
     # the mode's period 2 pi / omega_b on this 128^2 layer (omega_b 0.14833, a COMPUTATION)
     period = 42.36
@@ -886,7 +857,6 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
 def test_a_wall_of_lights_kind_is_a_mirror_line():
     """A line of blocks of light's kind at the pair [1, 2], four Nodes deep, is a mirror: beyond it the largest level stays below four percent of the level before it over 200 intervals (COMPUTATION), the books balanced; a light-kind block with seed or margin, and any block with coupling, refused by name."""
     document = chain_world()  # the closed chain (BUILD.md section 26 item 14)
-    document["amplitude_bound"] = 1 << 22
     document["ticks"] = 200
     for x in (40, 41, 42, 43):
         document["measured"].append(

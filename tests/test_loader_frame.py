@@ -43,7 +43,7 @@ def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved
     assert any("sourced" in entry for entry in entries)
     assert entries[2]["reads"][1]["weight"] == integers["Lambda"] == 1
     assert entries[0]["held"]["dipole_div"] == 1 and entries[0]["parts"] == (1, 3, 6)
-    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+    for key in ("node_clock", "momentum_unit"):
         assert integers[key] == universe["integers"][key]
     table = integers["twist_table"]
     assert table["unit"] == universe["integers"]["twist_table"]["unit"]

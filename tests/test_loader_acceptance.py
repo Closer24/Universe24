@@ -146,7 +146,7 @@ def test_b2_a_giving_body_in_the_laws_form_takes_its_own_record_from_the_mode_fi
     profile = [0] * 5 + [1000, 1000] + [0] * 9
     entry = {"family": "matter", "pair": [800, 1200], "profile": profile, "clock": [1530, 1000]}
     mode = {"world_digest": placed["stamp"]["hash"], "bodies": [{**entry, "twist": 45875}]}
-    big = {"profile": [v << 11 for v in profile], "clock": [3 << 20, 1 << 21]}
+    big = {"profile": [v << 40 for v in profile], "clock": [3 << 49, 1 << 50]}  # above the derived A
 
     def loaded(change=None):
         broken = copy.deepcopy(mode)

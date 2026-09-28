@@ -25,9 +25,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     assert "law" not in document  # one engine, no name and no version (record 2128)
     table = document["integers"].pop("twist_table")
-    expected = dict(
-        node_clock=10000, amplitude_bound=1 << 20, Lambda=1, momentum_unit=64, most_steps=65536
-    )
+    expected = dict(node_clock=10000, Lambda=1, momentum_unit=64, most_steps=65536)
     expected.update(
         width=63, most_families=20, least_residues=500
     )  # the owner's two numbers, in the file
@@ -103,7 +101,6 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     # shipped file's 2^20), written as a families file of the test's root
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     document["integers"]["node_clock"] = inline["node_clock"]
-    document["integers"]["amplitude_bound"] = inline["amplitude_bound"]
     (tmp_path / "universe.json").write_text(json.dumps(document), encoding="utf-8")
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
