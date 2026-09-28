@@ -670,7 +670,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 if writes is None:
                     continue
                 m = self._momentum_now(block)
-                for part, value, before in writes.parts:
+                for part, at, value, before in writes.parts:
                     record = self.held_parts[family][part - 1]
                     degree = self.main_loop.function_of("the degree", "(i)")
                     group, axes = degree(self.families[family].parts, part)
@@ -681,9 +681,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     if value == 0 and before == 0 and record.silent:
                         continue
                     record.silent = False
-                    record.now[block.mask] = value
-                    record.before[block.mask] = before
-                    record.remainder[block.mask] = 0
+                    where = block.mask if at is None else cast(tuple[int, int, int], at[1:])
+                    record.now[where], record.remainder[where] = value, 0
+                    record.before[where] = before
                 centre = self._centre_node(block) if writes.dipoles else []
                 for (i, j, sigma), value, before in writes.dipoles if act != THE_REWRITE else ():
                     node = self._dipole_node(centre, family, j, sigma)
