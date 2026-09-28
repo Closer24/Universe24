@@ -1,7 +1,5 @@
 """The reviewer's recurring findings as gates: no new number, no family name and no unapproved core module in src/ (tools/engine_gates.py; issue #1198 item 4 (a))."""
 
-from __future__ import annotations
-
 import json
 import os
 from pathlib import Path

@@ -29,7 +29,7 @@ def verdict(where: Path, tallies: list, net: list[int], band: float | None) -> s
 
 
 def test_the_tallies_per_axis_on_made_up_outputs(tmp_path: Path):
-    """Six clicks of one quantum through the six Ports read the net 0 on every axis and the raw 2 : 2 : 2 (1 : 1 : 1): white, MATCH within the band 0 of 0 : 0 : 0; clicks leaning along x (4 and -2 at interval 1, 3 at interval 2 with 1 and -1 on y and z) read the net [5, 1, -1], the raw [9, 1, 1], the peak 3 at interval 2: MATCH within the band 1 of [3, 0, 0], not white; the puller's clicks are not counted; no band reads alone; no click reads so; the moves per axis from made-up counts at the Node and its six neighbours."""
+    """Six clicks of one quantum through the six Ports read the net 0 on every axis and the raw 2 : 2 : 2 (1 : 1 : 1): white, MATCH within the band 0 of 0 : 0 : 0; clicks leaning along x (4 and -2 at interval 1, 3 at interval 2 with 1 and -1 on y and z) read the net [5, 1, -1], the raw [9, 1, 1], the peak 3 at interval 2: MATCH within the band 1 of [3, 0, 0], not white; the puller's clicks are not counted; no band reads alone; no click reads so; the moves per axis from made-up counts at the Node and its six neighbours; the record's period, amplitude and count over the last period from made-up levels against Cheshbon's b and period."""
     ports = [(1, [1, 0, 0]), (1, [-1, 0, 0]), (2, [0, 1, 0])]
     ports += [(2, [0, -1, 0]), (3, [0, 0, 1]), (3, [0, 0, -1])]
     rows = axis_tallies.report(*made_up(tmp_path, ports, [0, 0, 0], 0))["axes"]
@@ -47,3 +47,12 @@ def test_the_tallies_per_axis_on_made_up_outputs(tmp_path: Path):
     moves = axis_tallies.moves_per_axis(series)
     assert moves["net"] == [3, 1, 0] and moves["raw"] == [3, 1, 0] and moves["peak_interval"] == 1
     assert moves["net_per_interval_at_peak"] == [2, 1, 0] and moves["pixel_count"]["least"] == 5
+    record = axis_tallies.record_reading(
+        [5, 3, -2, -5, -3, 2, 5, 3, -2, -5], [10] * 10, {"b": 5, "period": 6.5}
+    )
+    assert (
+        record["period_intervals"] == 6.0
+        and record["amplitude_b"] == 5
+        and record["b_verdict"] == "MATCH"
+    )
+    assert record["period_verdict"] == "MATCH" and record["count_over_the_last_period"] == 10
