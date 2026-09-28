@@ -208,11 +208,10 @@ def time_increments(
     carries: dict[Key, int],
     line: WriteLine,
 ) -> dict[Key, int]:
-    """The time part's increment per source under its key by one act of the write's line: (count + r) div E_s by the carried division at the advance, the one subtracted at the inverse (the store stepped back), 0 at the load (the store's first division, no increment written: the rest holds the sources) and at a rewrite."""
+    """The time part's increment per source under its key by one act of the write's line: (count + r) div E_s by the carried division at the advance, the one subtracted at the inverse (the store stepped back by the write's inverse act, then the level the advance wrote read again by the advance's act on a copy of the remainder stepped back: exact under a count that changes between intervals, where the stored value is the last interval's), 0 at the load (the store's first division, no increment written: the rest holds the sources) and at a rewrite."""
     if act == THE_INVERSE:
-        standing = {key: values.get(key, 0) for key, _ in counts}
         line(THE_INVERSE, divisor, 1, counts, values, carries)
-        return standing
+        return {key: now for key, now, _ in line(THE_ADVANCE, divisor, 1, counts, {}, dict(carries))}
     if act == THE_ADVANCE:
         return {key: now for key, now, _ in line(THE_ADVANCE, divisor, 1, counts, values, carries)}
     if act == THE_LOAD:

@@ -39,7 +39,7 @@
    "row": "the crystal's slab in place"
   },
   {
-   "reversible": 16000,
+   "reversible": 4000,
    "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)"
   }
  ],

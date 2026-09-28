@@ -139,8 +139,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
     assert [f.name for f in simulation.families] == [f["name"] for f in families]
     base = module.run_reading(simulation, lines)
     digest = module.digest_of(base)
-    # (c) no source, exactly zero: the run's leak test held at every interval (in `run`); and
-    # every clicking family without a record or a hold has no level anywhere
+    # (c) no source, exactly zero: the run's leak test held at every interval (in `run`); and every clicking family without a record or a hold has no level anywhere
     roles, holders = drawn["roles"], drawn["holders"]
     quiet = {f["name"] for f in families} - {roles["body"], roles.get("given")} - set(holders)
     for index, family in enumerate(simulation.families):

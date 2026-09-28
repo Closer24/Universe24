@@ -43,10 +43,8 @@ def test_the_file_names_every_built_primitive_at_its_declared_place_and_the_writ
     assert step.places["(iii)"] == () and step.places["any"] == ("the trace", "the start", "the write")
     assert step.acts[0][:2] == ("(iv)", "the hold")
     holds = [act for act in step.acts if act[1] == "the hold"]
-    assert holds == [
-        ("(iv)", "the hold", (("advance", False),)),
-        ("(iv)", "the hold", (("advance", True),)),
-    ]
+    hold = ("(iv)", "the hold")
+    assert holds == [(*hold, (("advance", False),)), (*hold, (("advance", True),))]
     for (place, value), expected in ORDERS.items():
         assert register.writers(value, place, step) == expected, (place, value)
     register.check_writers(step)
@@ -144,8 +142,7 @@ def test_each_defect_of_the_file_is_refused_by_name(tmp_path, monkeypatch):
         r"lists 'the giving' at \(v\), but it declares \(ii\)",
     )
     refused(lambda d: d[INTERVAL].pop(12), "leaves out the built primitive .the count's line.")
-    # the loop's refusals at construction, the file redirected: the record's chain reordered, an act
-    # with other words, a whole-board act inside the chain
+    # the loop's refusals at construction, the file redirected: the record's chain reordered, an act with other words, a whole-board act inside the chain
     monkeypatch.setattr(host, "LAW_ROOT", tmp_path)
     (tmp_path / "law").mkdir()
 

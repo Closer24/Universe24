@@ -146,11 +146,8 @@ def test_path_gate_rejects_spaces_and_non_ascii_names(tmp_path, filename):
 
 
 def test_identifier_gate_checks_names_attributes_arguments_and_import_aliases():
-    assert non_ascii_identifiers("def \u03b1(\u03b2): return obj.\u03b3") == [
-        "\u03b1",
-        "\u03b2",
-        "\u03b3",
-    ]
+    found = non_ascii_identifiers("def \u03b1(\u03b2): return obj.\u03b3")
+    assert found == ["\u03b1", "\u03b2", "\u03b3"]
     assert non_ascii_identifiers("import math as \u03b1") == ["\u03b1"]
     assert not non_ascii_identifiers("def momentum_delta(value): return value.px")
 

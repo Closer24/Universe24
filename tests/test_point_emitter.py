@@ -34,8 +34,7 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         if len(givings) > 1:
             assert givings[1]["opened"] > first["tick"]  # the next giving after the close
         windows[weight] = first["window"]
-        # the record's rows: a light record with rows spread from the body's Node, the body's Node's level
-        # written every interval of its window
+        # the record's rows: a light record with rows spread from the body's Node, the body's Node's level written every interval of its window
         live = simulation.records.get(first["record"])
         if live is not None:
             assert live.family == 0 and not live.window_open and live.window == first["window"]
