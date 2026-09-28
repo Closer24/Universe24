@@ -38,13 +38,8 @@ def rows_of(simulation: DetectorLawSimulation) -> dict[str, object]:
     content, sign = simulation.held_record("content"), simulation.held_record("sign")
     records = {identity: three(live) for identity, live in simulation.records.items()}
     held = copy.deepcopy(simulation.held)
-    return {
-        "records": records,
-        "clock": three(content),
-        "charge": three(sign),
-        "held": held,
-        "tick": simulation.tick,
-    }
+    rows = {"records": records, "clock": three(content), "charge": three(sign)}
+    return {**rows, "held": held, "tick": simulation.tick}
 
 
 def assert_same(now: dict, then: dict, lost: set[int] = frozenset()) -> None:

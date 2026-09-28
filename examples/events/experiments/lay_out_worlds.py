@@ -694,6 +694,124 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
     write("bending", name, document, expectation)
 
 
+PLANCK = "examples/events/experiments/planck.json"  # the rule's own universe beside the universe of record (Nature24's file; the folder rule/ the worlds' as in Bell's)
+RULE_GAMMA = 12000  # the rule's universe's node clock, cited for the expectations' formulas only
+EDGE = 2706  # 0.2255 Gamma, the count under which a one-Node body disperses (ALGEBRA.md, THE BOUND BODY IS ONE NODE)
+GIVER_EDGE = 4447  # the giving pixel's bound (Cheshbon, 2026-09-28, 13:22 Israel): its count with its bound charge keeps the pace positive
+
+
+def pixel(node: list[int], count: int, **keys: Any) -> dict[str, Any]:
+    """A bound body of one Node in the rule's universe (ALGEBRA.md, THE BOUND BODY IS ONE NODE): the count in [0.2255 Gamma, Gamma div 2), the well the count itself under the divisor 1."""
+    if not EDGE <= count < RULE_GAMMA // 2:
+        raise ValueError(
+            f"a pixel of {count} is no bound body: the count lies outside [{EDGE}, {RULE_GAMMA // 2})"
+        )
+    if "emitter" in keys and count > GIVER_EDGE:
+        raise ValueError(f"a giving pixel of {count} lies above the giver's bound {GIVER_EDGE}")
+    return body([node], count, **keys)
+
+
+def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int, stock: int) -> None:
+    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a chain along x, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
+    margin = 20
+    giver_x, taker_x = margin, margin + distance
+    length = taker_x + margin
+    window = max(8, distance // 4)
+    measured = [
+        pixel(
+            [giver_x, 0, 0],
+            deep,
+            moment=[0, 0, 1],
+            emitter={"family": "charge", "weight": 1},
+            stocks={"charge": stock},
+        ),
+        pixel([taker_x, 0, 0], shallow),
+    ]
+    detectors = [{"name": "taker", "positions": [[taker_x, 0, 0]]}]
+    last = (ticks - 1) - (ticks - 1) % 200
+    readings = [
+        reading("light_rows", "rows", 20, family="charge"),
+        reading("light_beside_the_giver", "level", 1, family="charge", node=[giver_x + 4, 0, 0]),
+        reading("light_beside_the_taker", "level", 1, family="charge", node=[taker_x - 4, 0, 0]),
+        reading("giver_clock", "cycle", 1, body=0),
+        reading("taker_clock", "cycle", 1, body=1),
+        reading("giver_centre", "centre", 200, body=0),
+        reading("taker_centre", "centre", 200, body=1),
+        reading(
+            "well_on_the_chain", "level", 100, family="gravity", node=[(giver_x + taker_x) // 2, 0, 0]
+        ),
+    ]
+    document = world(
+        [length, 1, 1],
+        {"x": "open", "y": "periodic", "z": "periodic"},
+        ticks,
+        measured,
+        detectors,
+        readings,
+        face_depth=4,
+        universe=PLANCK,
+    )
+    expectation = {
+        "row": (
+            f"THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of {deep} at x = {giver_x}, the taker a pixel of "
+            f"{shallow} at x = {taker_x} ({distance} Links on, the tails of three Links never touching), light of the "
+            f"charge family given by the deep one at the weight 1 with the stock {stock} over {ticks} intervals; "
+            "the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run"
+        ),
+        "DETECTOR": [
+            {
+                "detector": "taker",
+                "mean_interval": 2,
+                "band": 1,
+                "row": "Cheshbon's blind number (2026-09-28, 13:39 Israel): with E_s(charge) of the rule's universe derived from Gamma (0.86 (Gamma div 2)^(3/2), about 400,000, one quantum per window) the giving writes one level about every 1.6 intervals, so the taker's mean click interval is about 1.6 intervals, modulated at the period 9.55 x 1.125 = 10.7; the runner rounds the read to an integer: 2 within 1",
+            }
+        ],
+        "WELL": {
+            "rows": "light_rows",
+            "levels": ["light_beside_the_giver", "light_beside_the_taker"],
+            "clocks": ["giver_clock", "taker_clock"],
+            "axis_y": 0,
+            "windows": [[giver_x + 4, giver_x + 4 + window], [taker_x - 4 - window, taker_x - 4]],
+            "clock_ratio": 1.125,
+            "clock_ratio_with_the_term": 1.5,
+            "giver_period": 9.55,
+            "clock_ratio_row": "Cheshbon's blind number (2026-09-28, 13:17 and 13:39 Israel): the ratio of the two pixels' periods, the giver's cycle over the taker's as tools/well_clocks.py reads it (`clock_ratio`, the first clock over the second), 1.125 under the engine of today (the pace Gamma - c once: 9,000 / 8,000) and 1.5 with the conformal term (the level twice: 6,000 / 4,000); the same line read the other way is the taker's over the giver's, 0.889 and 0.667; the giver's period 9.55 intervals; the band Cheshbon's to write; in the twin 1",
+            "shift_ratio": None,
+            "shift_ratio_band": None,
+            "shift_ratio_row": "the light's relative shift of wave number over the pixel's relative shift of cycle (well_clocks' `shift_ratio`): Cheshbon's line to write; the 1.125 / 1.5 relayed under this name (the Closer, 13:22) are the clock ratio above",
+            "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles at the two depths and their ratio, the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written",
+        },
+        "GAMEBOARD": [
+            {
+                "body": 0,
+                "interval": last,
+                "centre": [giver_x, 0, 0],
+                "band": 0,
+                "row": "the giver's pixel on its Node",
+            },
+            {
+                "body": 1,
+                "interval": last,
+                "centre": [taker_x, 0, 0],
+                "band": 0,
+                "row": "the taker's pixel on its Node",
+            },
+            {
+                "reversible": ticks,
+                "row": "THE REVERSIBLE ROW: the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept",
+            },
+        ],
+        "GAMEBOARD_checks": [
+            "(i) `well_on_the_chain` between the pixels: the tails of both below one unit there (kappa 0.45 per Link at 3,000, 1.27 at 5,000; the tail ends within three Links), so the light crosses a flat chain and only the pixels' Nodes are deep",
+            "(ii) `giver_clock` against `taker_clock`: the bound rotation omega_b(c) of each pixel from the one-Node line, the deep one slower",
+            "(iii) `light_beside_the_giver` against `light_beside_the_taker`: the period the same at both (the rotation is conserved in flight), the wavelength from `light_rows` longer beside the shallow pixel",
+            "(iv) the twin (both pixels at the same depth): every ratio 1, the taker's clicks at the giver's rate",
+            "then the DETECTOR reading in kind: the taker's mean click interval, one click at a time",
+        ],
+    }
+    write("rule", name, document, expectation)
+
+
 def universe_of_record() -> None:
     """The universe file of record beside the worlds, the one universe every world reads: its held rows with `divisor` (the hold's write as a sum, the owner's word; the frame's `held` card takes the key since #1312, a key at the family's top level is refused); the numbers are the approvals'."""
     document = json.loads((ROOT / UNIVERSE).read_text(encoding="utf-8"))
@@ -732,6 +850,9 @@ def main() -> None:
     (HERE / "bending").mkdir(exist_ok=True)
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
+    (HERE / "rule").mkdir(exist_ok=True)
+    rule_redshift("rule_redshift", 4000, 3000, 60, 1500, 200)
+    rule_redshift("rule_redshift_twin", 4000, 4000, 60, 1500, 200)
 
 
 if __name__ == "__main__":

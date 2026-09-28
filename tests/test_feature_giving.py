@@ -76,11 +76,8 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
     written = apply(term, a_write(levels), own)
     assert rows(written) == ([[2, -1, 0], [0, 1, -2]], [[1, 1, 0], [1, 2, 2]])
     pending = apply(term, a_close(334, (5, 0, -1)), written.own)
-    assert (
-        not pending.closed
-        and pending.direction is None
-        and written.own.window == pending.own.window == 1
-    )
+    assert not pending.closed and pending.direction is None
+    assert written.own.window == pending.own.window == 1
     assert (pending.own.outward, pending.own.tally) == (334, (5, 0, -1))
     again = apply(term, a_write(levels), pending.own)
     assert rows(again) == ([[2, -1, 0], [0, 2, -1]], [[2, 2, 0], [2, 1, 1]])

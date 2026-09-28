@@ -331,9 +331,8 @@ def test_the_family_of_clicks_is_held_at_the_bodies_and_moves_by_its_own_step_el
     assert books["families"]["clicks"]["measured"]["current"] == 0
     state = dict(simulation.snapshot_stream())
     fields = {field["family"]: field for field in state["held_fields"]}
-    assert (
-        fields["clicks"]["held"] == "content" and fields["clicks"]["rows"] == clock.now.ravel().tolist()
-    )
+    assert fields["clicks"]["held"] == "content"
+    assert fields["clicks"]["rows"] == clock.now.ravel().tolist()
     empty = DetectorLawSimulation(parse_nature_beam_world(content_chain(60, PERIODIC, [], 1)))
     for _ in range(20):
         empty.step()

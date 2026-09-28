@@ -106,14 +106,11 @@ def test_the_hold_sources_the_well_where_the_lines_quanta_are_and_no_corner_foll
     simulation = DetectorLawSimulation(world)
     block = next(b for b in simulation.blocks if b.own is not None and b.definition.counts)
     declared = sorted(simulation.node_sources(block.number, "content"))
-    assert (
-        declared == sorted(zip(block.definition.nodes, block.definition.counts, strict=True))
-        and declared
-    )
+    assert declared == sorted(zip(block.definition.nodes, block.definition.counts, strict=True))
+    assert declared
     simulation.step()
-    assert (
-        block.counts is not None and sorted(simulation.node_sources(block.number, "content")) == declared
-    )
+    assert block.counts is not None
+    assert sorted(simulation.node_sources(block.number, "content")) == declared
     corner, mask = list(block.corner), block.mask.copy()
     block.counts = np.roll(
         block.counts, 1, axis=0
@@ -122,11 +119,9 @@ def test_the_hold_sources_the_well_where_the_lines_quanta_are_and_no_corner_foll
     width = simulation.shape[0]
     assert sorted(moved) == sorted((((x + 1) % width, y, z), c) for (x, y, z), c in declared)
     simulation.step()
-    assert (
-        list(block.corner) == corner
-        and np.array_equal(block.mask, mask)
-        and not hasattr(simulation, "_follow_count")
-    )
+    assert list(block.corner) == corner
+    assert np.array_equal(block.mask, mask)
+    assert not hasattr(simulation, "_follow_count")
 
 
 def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_group_velocity():

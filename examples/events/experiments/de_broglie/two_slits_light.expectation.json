@@ -605,6 +605,26 @@
    "row": "Cheshbon's blind exact share of the clicks on the screen (02:30Z), the paraxial cos^2 beside it; the count on the stock 400, the band two binomial sd"
   }
  ],
+ "blind": {
+  "row": "Cheshbon's table of the blind numbers (08:21Z and 08:24Z) on the universe of record as it stands, written before the run: the algebra's column; the engine's column and the difference are the report's",
+  "wavelength_links": 4,
+  "fringe_spacing_links": {
+   "value": 24.25,
+   "band": "half a strip on every maximum",
+   "formula": "lambda L / d with lambda 4, d 16, L 97; about six strips of four"
+  },
+  "envelope_links": {
+   "value": 97,
+   "formula": "lambda L / a, about four fringes in half the envelope"
+  },
+  "group_velocity_links_per_interval": 0.518,
+  "train_periods": {
+   "value": 29.5,
+   "band": 0.5,
+   "intervals": 236,
+   "row": "the train at E_s(charge) 300,000 on the core before the conformal term; the generator's `train` on the core of main is the algebra on the form (Cheshbon 07:12Z section 6); read in the loop after PR-1b and the giving's line"
+  }
+ },
  "GAMEBOARD": [
   {
    "reversible": 6000,
