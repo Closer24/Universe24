@@ -365,7 +365,7 @@ def _apply(document: dict, written: dict) -> None:
 
 
 def one_quantum_per_window(document: dict) -> None:
-    """THE FIXTURES' T (the Closer's ruling of 2026-09-28, 14:46 Israel, on Cheshbon's formula of 14:12, confirmed with the faces 15:04): a seeded giver's quantum action T = floor(0.745 (g M a_body)^2 N_face), the outward flux of one interval at the write's amplitude with E_s at its floor 1 through the giver's N_face outer Ports, so its window closes in one interval; a_body the body's own record's level as the seeding loads it, M its count at the Node as the write reads it (the quanta it holds), g the emitter's weight; written as the emitter's norm over 1 and stamped (T is the fixture's, not the engine's)."""
+    """THE FIXTURES' T (the Closer's ruling of 2026-09-28, 14:46 Israel, on Cheshbon's formula of 14:12, the faces of 15:04, the exact root of 15:35): a seeded giver's quantum action T = isqrt(5 (w^2 N_face)^2) div 3 with w = g M a_body, the outward flux of one interval at the write's amplitude with E_s at its floor 1 through the giver's N_face outer Ports at the threshold pixel's sine sqrt(5) / 3 (exact in integers, no rounded constant), so its window closes in one interval; a_body the body's own record's level as the seeding loads it, M its count at the Node as the write reads it (the quanta it holds), g the emitter's weight; written as the emitter's norm over 1 and stamped (T is the fixture's, not the engine's)."""
     from event_universe.events.detector_law import DetectorLawSimulation
     from event_universe.world_files import input_stamp, parse_nature_beam_world
 
@@ -388,7 +388,10 @@ def one_quantum_per_window(document: dict) -> None:
             int(np.count_nonzero(ports))
             for ports in simulation.ports.outward(block.mask, simulation.kind_wrap[given])
         )
-        body["emitter"]["norm"] = (745 * weight * weight * faces) // 1000
+        flux = (
+            weight * weight * faces
+        )  # one interval's outward flux at the write's amplitude, sin omega_0 = sqrt(5) / 3 exact
+        body["emitter"]["norm"] = math.isqrt(5 * flux * flux) // 3
         body["emitter"]["norm_denominator"] = 1
     document["stamp"] = input_stamp(document)
 
