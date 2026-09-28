@@ -88,11 +88,9 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     units = dict(node_clock=12000, quantum_action=1, momentum_unit=64, most_steps=65536, width=63)
     assert document["integers"] == {**units, "most_families": 20, "least_residues": 500}
     assert (table["unit"], len(table["fine"]), len(table["coarse"])) == (4 * 12000 * 65536, 1024, 32768)
-    rows = [("gravity", [12000, 12000], 1), ("charge", [12000, 12000], 400000)]
-    rows.append(("matter", [8000, 12000], None))
-    assert [
-        (f["name"], f["pair"], f.get("held", {}).get("divisor")) for f in document["families"]
-    ] == rows
+    assert [f["name"] for f in document["families"]] == ["gravity", "charge", "matter"]
+    assert [f["pair"] for f in document["families"]] == [[12000, 12000], [12000, 12000], [8000, 12000]]
+    assert [f.get("held", {}).get("divisor") for f in document["families"]] == [1, 400000, None]
     assert all(set(f) <= {"name", "pair", "held"} for f in document["families"])  # no spins_step
     world = {"shape": [40, 1, 1], "boundary": {"x": "closed", "y": "periodic", "z": "periodic"}, "N": 64}
     world |= {"ticks": 10, "face_depth": 1, "engine": "examples/events/engine_start.json"}
@@ -111,11 +109,13 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     assert signs == [[((10, 0, 0), 3000)], [((20, 0, 0), -300)], [((30, 0, 0), 0)]]
     assert [simulation._body_charge(number) for number in range(3)] == [3000, -300, 0]
     inline = {**world, "measured": bodies, "node_clock": 12000, "momentum_unit": 64}
-    inline["twist_table"], third = table, {"name": "third", "pair": [-6000, 12000]}
-    inline["universe"] = [*document["families"], third]
+    inline["twist_table"] = table
+    inline["universe"] = [*document["families"], third := {"name": "third", "pair": [-6000, 12000]}]
     assert parse_nature_beam_world(inline).families[3].pair == (-6000, 12000)
-    refusals = (([-12000, 12000], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1"))
-    for pair, match in refusals:
+    big = [1000014128, 63246, 1000014130]  # a triple of d near 10^9: the transport's total bounds A
+    wide = {**inline, "twist_table": {**table, "fine": [[1, 0, 1], big], "coarse": [[1, 0, 1], big]}}
+    assert parse_nature_beam_world(wide).amplitude_bound == derived.MAX_WORK_INT // (3 * big[2] ** 2) - 1
+    for pair, match in (([-12000, 12000], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1")):
         refused({**inline, "universe": [*document["families"], {**third, "pair": pair}]}, match)
 
 
