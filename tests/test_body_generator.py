@@ -189,7 +189,7 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
 
 
 def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name(tmp_path):
-    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly (a read by the sign skipped, a weight named in the integers); the held field is the start folder's rest over the row's divisor (the sum: at E_s = 40,000 a count of 3000 rests at 0 and the body has no well); the refusals by name, [800, 809]'s shallow well."""
+    """THE INPUT IS A FILE (the owner's word): a world file in the law's form (the GameBoard, the Node clock, the universe it names, one body by its Nodes and counts) gives the mode on the held fields the family reads plainly (a read by the sign skipped, a weight named in the integers); a giver (an emitter, a crystal) and a moving body carry an entry, a wall none (content alone); the held field is the start folder's rest over the row's divisor (the sum: at E_s = 40,000 a count of 3000 rests at 0 and the body has no well); the refusals by name, [800, 809]'s shallow well."""
 
     def row(name, pair, held, reads):
         return {"name": name, "pair": pair, "held": held, "reads": reads}
@@ -205,6 +205,13 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     body["phase_denominator"] = 64  # one form: every body carries the phase's m
+    body["emitter"] = {
+        "family": "light",
+        "weight": 1,
+        "norm": 1,
+        "norm_denominator": 1,
+        "receiver": "set",
+    }
     world = {"shape": [8, 8, 8], "boundary": dict.fromkeys("xyz", "periodic"), "node_clock": GAMMA}
     world |= {"measured": [body], "universe": str(tmp_path / "universe.json")}
     readings, box = generate(world), counted_cube(8, 2, 3000)
@@ -242,6 +249,9 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
         return generate({**world, "measured": [entry]})["bodies"][0]["refused"]
 
     assert "moves along one axis" in refused({**body, "momentum": [1, 1, 0]})
+    wall = {k: v for k, v in body.items() if k != "emitter"}  # no giving, no momentum: content alone
+    assert generate({**world, "measured": [wall]})["bodies"][0]["mode"].startswith("none: no giving")
+    assert "profile" in generate({**world, "measured": [{**wall, "crystal": {}}]})["bodies"][0]
     summed = [{**families[0], "held": {"count": "content", "divisor": 40000}}, *families[1:]]
     (tmp_path / "summed.json").write_text(json.dumps({"families": summed, "integers": integers}))
     no_well = generate({**world, "universe": str(tmp_path / "summed.json")})["bodies"][0]["refused"]

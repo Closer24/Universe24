@@ -560,6 +560,11 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             if len(axes) > 1:
                 raise ValueError(f"a moving body moves along one axis: the momentum {momentum} has two")
             plain = [read for read in row.get("reads", []) if read.get("by") in (1, "plain")]
+            if "emitter" not in body and "crystal" not in body and not axes:
+                # a wall, a screen, a polariser: no entry (the loader loads it as content alone, ENGINE.md);
+                # a giver (an emitter, a crystal) and a moving body carry theirs (Cheshbon's 03:35Z)
+                reading["mode"] = "none: no giving and no momentum, the body loads as content alone"
+                continue
             if not plain:
                 reading["mode"] = (
                     "none: the family reads no held field plainly, the body is content alone"
@@ -632,7 +637,8 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             clock = clock_pair(rotation, mode.amplitude)
             # the profile written at half the unit (ALGEBRA.md #the-generator (f): the final scale comes
             # from c T): the record's norm is the written levels' squares, the headroom under A the run's
-            (written,) = to_amplitude((mode.profile,), mode.amplitude // 2)
+            half = int(division(1, 2, np.array([mode.amplitude], dtype=np.int64))[0])
+            (written,) = to_amplitude((mode.profile,), half)
             moving = {
                 "axis": axis,
                 "momentum": momentum[axis],
