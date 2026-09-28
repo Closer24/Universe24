@@ -469,10 +469,7 @@ def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
     # quantum, M = 1): a well [big, big + 1] refused, [800, 800] admitted
     for pair, admitted in (([big, big + 1], False), ([800, 800], True)):
         world = block_world(
-            [24, 24, 24],
-            PERIODIC,
-            [800, 809],
-            [{"position": [10, 10, 10], "side": 3, "pair": pair}],
+            [24, 24, 24], PERIODIC, [800, 809], [{"position": [10, 10, 10], "side": 3, "pair": pair}]
         )
         if admitted:
             parse_nature_beam_world(world)

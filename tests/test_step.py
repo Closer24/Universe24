@@ -67,17 +67,14 @@ def test_the_host_reads_the_file_the_loader_carries_it_and_the_run_writes_its_di
     # the loop's calls through the register stand at the file's places; another place is refused
     assert simulation.register.at("the hold", "(iv)") is not None
     with pytest.raises(
-        ValueError,
-        match=r"the loop calls the primitive 'the hold' at the place \(ii\), but it declares",
+        ValueError, match=r"the loop calls the primitive 'the hold' at the place \(ii\), but it declares"
     ):
         simulation.register.at("the hold", "(ii)")
     listed_elsewhere = Register()
-    listed_elsewhere.add(
-        Declaration("the hold", "(iv)", (), ("a family's level at a Node",), lambda: 0, "")
-    )
-    listed_elsewhere.add(
-        Declaration("the source", "(iv)", (), ("a family's level at a Node",), lambda: 0, "")
-    )
+    for name in ("the hold", "the source"):
+        listed_elsewhere.add(
+            Declaration(name, "(iv)", (), ("a family's level at a Node",), lambda: 0, "")
+        )
     listed_elsewhere.check_step(Step({"(iv)": ("the hold", "the source")}, "d"))
     assert listed_elsewhere.at("the source", "(iv)")() == 0
     partial = Register()
@@ -94,11 +91,8 @@ def test_the_host_reads_the_file_the_loader_carries_it_and_the_run_writes_its_di
     source = tmp_path / "world.json"
     source.write_text(json.dumps(document), encoding="utf-8")
     module.run_input(str(source), str(tmp_path), [])
-    output = (
-        json.loads((tmp_path / "world.json").read_text(encoding="utf-8"))
-        if (tmp_path / "world.json").exists()
-        else None
-    )
+    world_file = tmp_path / "world.json"
+    output = json.loads(world_file.read_text(encoding="utf-8")) if world_file.exists() else None
     written = next(p for p in tmp_path.glob("*.json") if p.name != "world.json")
     output = json.loads(written.read_text(encoding="utf-8"))
     assert output["verdict"] == "LAWFUL" and output["step"] == {"hash": input_digest(shipped())}
