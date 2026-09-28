@@ -103,8 +103,8 @@ def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
     ):
         num, den = pair
         found = rest(counts, pair, faces, divisor)
-        if pair == (1, 2):
-            assert abs(int(found.levels[3, 3, 3]) - 50) <= 1  # the short-range well: the count inside
+        if pair == (1, 2):  # the short-range well: the count inside a thick body, the decay outside it
+            assert abs(int(found.levels[3, 3, 3]) - 50) <= 1 and 0 < int(found.levels[6, 3, 3]) < 25
         fine = found.fine.astype(object)
         neighbours = sum(arrivals(fine, faces))  # the six Ports' reads, 0 beyond an open face
         side = counts.astype(object) * (3 * den * found.unit) // divisor

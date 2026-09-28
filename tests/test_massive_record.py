@@ -865,6 +865,15 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
         ]
         document["detectors"] = [{"name": "B_nodes", "block": 1}]
         seed_source(document, 0)
+        # the held field's tent (THE START on the sum's sources) below a quarter of a level everywhere, so
+        # the record's path reads the pace Gamma as the claim assumes: the divisor from the world's own
+        # sources, 3 x their total x (the chain's extent + 1), twice the tent's bound 3 sigma (N + 1) / 4
+        probe = DetectorLawSimulation(parse_nature_beam_world(document))
+        total = sum(int(b.mask.sum()) * probe.body_source(b.number, "content") for b in probe.blocks)
+        for entry in document["universe"]:
+            if "held" in entry:
+                entry["held"] = {**entry["held"], "divisor": 3 * total * (document["shape"][0] + 1)}
+        document["stamp"] = input_stamp(document)
         world = parse_nature_beam_world(document)
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
