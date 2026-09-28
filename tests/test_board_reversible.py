@@ -22,9 +22,8 @@ def reversible_world(ticks: int = 400) -> dict:
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
-    document["universe"].insert(
-        POSITIVE, family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
-    )
+    positive = family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
+    document["universe"].insert(POSITIVE, positive)
     body = {"position": [55, 0, 0], "family": "positive", "amount": 1, "stocks": {}}
     document["measured"].append({**body, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]})
     seed_on_the_mode(document)
@@ -317,8 +316,7 @@ def bookings_of(simulation: DetectorLawSimulation) -> dict[str, object]:
 
 def test_the_bookings_and_the_bodys_clock_return_with_the_rows_across_a_close_with_stock_left():
     """Nature24's finding of 2026-09-28 (#1377, the REVERSIBLE row): the emitter world of stock 2 stepped 160 intervals, then back to 148 through the window's close at 150 (reopened by hand as the closes are): every row bit for bit, and the records' bookings (the pointers, the absorbed sum, the momentum tally, the ladder's total) and the bodies' clocks (the sum, the cycle's start) as the forward intervals had them; the record's box and the cycle's length are the host's readings and not compared."""
-    lines: list[dict] = []
-    world = parse_nature_beam_world(emitter_world(stock=2, ticks=600))
+    world, lines = parse_nature_beam_world(emitter_world(stock=2, ticks=600)), []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     forward = [(rows_of(simulation), bookings_of(simulation))]
     for _ in range(160):
