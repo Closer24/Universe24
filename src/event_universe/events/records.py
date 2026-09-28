@@ -217,10 +217,10 @@ class Block:
     # declared `spin` at both
     spin: list[int] = field(default_factory=lambda: [0, 0, 0])
     spin_before: list[int] = field(default_factory=lambda: [0, 0, 0])
-    # the momentum's level one interval before (the feed's and the induction's KEEP pair, ALGEBRA.md the row of the feed), the file's `momentum_before`
+    # the momentum's level one interval before (the spin's step's KEEP pair; the momentum a reading of the record's current, ALGEBRA.md #the-primitives), the file's `momentum_before`
     momentum_before: list[int] = field(default_factory=lambda: [0, 0, 0])
     # A TOOL HELD IN PLACE (ALGEBRA.md #the-primitives; the Boss's the record): the world's
-    # word `fixed`; the feed, when it lands, acts on a body without the word alone
+    # word `fixed`; a body's motion is its record's by Rule3 alone, the word names a tool held in place
     fixed: bool = False
     # THE COUNT AT A NODE (ALGEBRA.md #the-counts-line; the count's line bound): the body's
     # quanta per Node and the line's remainder, laid at the line's first act; the body's Nodes

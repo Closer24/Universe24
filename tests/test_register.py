@@ -58,8 +58,6 @@ ROWS_OF_9_117 = (
     "the giving",
     "the clicks",
     "the recoil",
-    "the feed",
-    "the induction",
     "the spin's step",
     "the trace",
 )
@@ -156,9 +154,9 @@ def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_ou
     # a remainder is the writer's own: two writers of it at one place need no order
     assert deferred.writers("a body's remainders", "(iv)", step) == ("the hold", "the recoil")
     own = Register()
-    own.add(Declaration("the feed", "(v)", (), ("a body's momentum n", "a body's remainders"), None, ""))
-    own.add(Declaration("the hop", "(v)", (), ("a body's position", "a body's remainders"), None, ""))
-    own.check_writers(Step({"(v)": ("the feed",)}, "d"))
+    own.add(Declaration("a push", "(v)", (), ("a body's momentum n", "a body's remainders"), None, ""))
+    own.add(Declaration("a shift", "(v)", (), ("a body's position", "a body's remainders"), None, ""))
+    own.check_writers(Step({"(v)": ("a push",)}, "d"))
 
 
 def test_a_term_naming_an_unknown_or_unbuilt_primitive_is_refused_by_name():

@@ -72,9 +72,9 @@ def test_a_body_gives_its_own_family_from_its_stock_and_its_quanta_fall_by_one_p
 
 
 def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_the_unit():
-    """ALGEBRA.md #the-interval: the held family with the unit P_2 = 24 A declared: at a slab where its level jumps by 20000 the six squared differences summed give (the count of Ports across the jump) x 4 x 10^8, and a_next is lower than the plain rule's by that div P_2 exactly, the remainder the plain rule's; the inverse restores the levels."""
+    """ALGEBRA.md #the-interval: the held family with the unit P_2 = 24 A declared (A the loader's derived amplitude bound, ALGEBRA.md #a-familys-declaration): at a slab where its level jumps by 20000 the six squared differences summed give (the count of Ports across the jump) x 4 x 10^8, and a_next is lower than the plain rule's by that div P_2 exactly (0 where 24 A stands above the sum, as it does under the derived A of this world), the remainder the plain rule's; the inverse restores the levels."""
     document = parts_world()
-    amplitude = document["amplitude_bound"]
+    amplitude = parse_nature_beam_world(document).amplitude_bound
     for family in document["universe"]:
         if family["name"] == "clicks":
             family["self_source"] = {"unit": 24 * amplitude}
@@ -111,7 +111,7 @@ def test_the_self_source_slot_lowers_the_step_by_the_squared_differences_over_th
 
 def test_the_loader_refuses_a_self_source_unit_below_24_a_and_admits_one_at_it():
     document = parts_world()
-    amplitude = document["amplitude_bound"]
+    amplitude = parse_nature_beam_world(document).amplitude_bound
     for family in document["universe"]:
         if family["name"] == "clicks":
             family["self_source"] = {"unit": 24 * amplitude}

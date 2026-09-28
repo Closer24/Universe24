@@ -132,14 +132,9 @@ def test_b_a_place_not_its_own_is_refused_and_a_bodys_value_at_ii_is_deferred_to
         original_fields(hold),
     )[1]  # type: ignore[method-assign]
     simulation.step()
-    body = simulation.blocks[
-        0
-    ]  # the write landed at (iv); the feed's leapfrog at (v) then steps the pair on
-    assert (
-        seen == [[0, 0, 0], [1, 0, 0]]
-        and body.momentum_before == [1, 0, 0]
-        and body.momentum == [0, 0, 0]
-    )
+    body = simulation.blocks[0]  # the write landed at (iv); nothing at (v) steps the pair on
+    assert seen == [[0, 0, 0], [1, 0, 0]] and body.momentum == [1, 0, 0]
+    assert body.momentum_before == [0, 0, 0]
 
 
 def test_c_a_write_into_the_intervals_start_is_refused(tmp_path, monkeypatch):
