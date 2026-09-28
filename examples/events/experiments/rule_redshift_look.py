@@ -1,4 +1,4 @@
-"""The one-click look at world (e) of the rule's own universe (ALGEBRA.md, THE RULE'S OWN UNIVERSE; the owner's decision of 2026-09-28, 13:02 Israel): the two worlds of `rule/` (`rule_redshift`, its twin) run headless by the runner (`tools/run_inputs.py`, the expectation files beside them compared by it), then five lines from the outputs, Cheshbon's number before each reading and its verdict after: (1) DETECTOR, the taker's mean click interval against the pin; (2) GAMEBOARD, the two pixels' clock ratio (`tools/well_clocks.py`) against Cheshbon's, with the twin's control; (3) GAMEBOARD, the light's periods beside each pixel (conserved in flight, the ratio 1) and its wavelengths (the stretch); (4) GAMEBOARD, the reversible row of both worlds; (5) GAMEBOARD, the pixels' centre pins and the books. Only the first line is a measurement. Run from the repository root: python examples/events/experiments/rule_redshift_look.py --out runs/rule_redshift; --look reads the outputs already there without running; --diagnostic labels every line GAMEBOARD (a run on an engine before the corrected giving)."""
+"""The one-click look at world (e) of the rule's own universe (ALGEBRA.md, THE RULE'S OWN UNIVERSE; the owner's decision of 2026-09-28, 13:02 Israel): the two worlds of `rule/` (`rule_redshift`, its twin) run headless by the runner (`tools/run_inputs.py`, the expectation files beside them compared by it), then five lines from the outputs, Cheshbon's number before each reading and its verdict after: (1) DETECTOR, the taker's mean click interval against the pin; (2) GAMEBOARD, the two pixels' clock ratio (`tools/well_clocks.py`) against Cheshbon's, with the twin's control; (3) GAMEBOARD, the light's periods beside each pixel (conserved in flight, the ratio 1) and its wavelengths (the stretch); (4) GAMEBOARD, the reversible row of both worlds; (5) GAMEBOARD, the pixels' centre pins and the books; (6) GAMEBOARD, the clocks' ratio along the run in ten spans and its drift per interval, the reading of the stepping Gamma's look (GAMMA IS NOT CONSTANT, under its own name: the ratio grows about 2.6e-4 per interval by Cheshbon's line of 2026-09-28, 15:50) against the expectation's `stepping_gamma_ratio_drift_per_interval`. Only the first line is a measurement. Run from the repository root: python examples/events/experiments/rule_redshift_look.py --out runs/rule_redshift; --look reads the outputs already there without running; --diagnostic labels every line GAMEBOARD (a run on an engine before the corrected giving)."""
 
 from __future__ import annotations
 
@@ -46,6 +46,35 @@ def verdict(read: list[int] | None, expected: float | None, band: float | None) 
     return "MATCH" if abs(Fraction(*read) - Fraction(str(expected))) <= Fraction(str(band)) else "MISS"
 
 
+def cycle_within(output: dict[str, Any], name: str, span: tuple[int, int]) -> Fraction | None:
+    """A body's mean cycle over the cycle starts inside the span [from, to): the distance from the first to the last over the cycles between; None below two."""
+    starts = sorted(
+        {
+            int(line["cycle_start"])
+            for line in well_clocks.lines_of(output, name)
+            if int(line["cycle_length"]) > 0 and span[0] <= int(line["cycle_start"]) < span[1]
+        }
+    )
+    return Fraction(starts[-1] - starts[0], len(starts) - 1) if len(starts) >= 2 else None
+
+
+def ratio_along(output: dict[str, Any], clocks: list[str], spans: int = 10) -> dict[str, Any]:
+    """The clocks' ratio (the first over the second, as `well_clocks` reads it) in `spans` equal spans of the run, and its drift per interval between the first and the last span that hold it: the stepping Gamma's reading."""
+    last = max(
+        (int(line["interval"]) for name in clocks for line in well_clocks.lines_of(output, name)),
+        default=0,
+    )
+    width = max(1, (last + 1 + spans - 1) // spans)
+    found = []
+    for start in range(0, last + 1, width):
+        cycles = [cycle_within(output, name, (start, start + width)) for name in clocks]
+        ratio = cycles[0] / cycles[1] if cycles[0] and cycles[1] else None
+        found.append({"from": start, "to": start + width, "ratio": well_clocks.pair(ratio)})
+    held = [(s["from"] + width / 2, Fraction(*s["ratio"])) for s in found if s["ratio"] is not None]
+    drift = (held[-1][1] - held[0][1]) / Fraction(held[-1][0] - held[0][0]) if len(held) >= 2 else None
+    return {"spans": found, "drift_per_interval": well_clocks.pair(drift)}
+
+
 def look(world_dir: Path, out_dir: Path, diagnostic: bool, names: tuple[str, str]) -> dict[str, Any]:
     """The five lines from the outputs beside the expectation files; the report returned with them."""
     paths = {name: (world_dir / f"{name}.json", out_dir / f"{name}.output.json") for name in names}
@@ -63,6 +92,7 @@ def look(world_dir: Path, out_dir: Path, diagnostic: bool, names: tuple[str, str
     centres = {name: [p["verdict"] for p in pins[name] if p.get("kind") == "centre"] for name in names}
     counts = {name: sum(int(c) for c in outputs[name].get("counts", {}).values()) for name in names}
     taker = clicks[names[0]][0] if clicks[names[0]] else None
+    along = ratio_along(outputs[names[0]], list(well["clocks"]))
     first = "GAMEBOARD " if diagnostic else "DETECTOR  "
     band = well.get("clock_ratio_band")
     lines = [
@@ -85,13 +115,23 @@ def look(world_dir: Path, out_dir: Path, diagnostic: bool, names: tuple[str, str
         f"5. GAMEBOARD  the pixels on their Nodes, the centre pins: {names[0]} {centres[names[0]]}, twin "
         f"{centres[names[1]]}; the books: {counts[names[0]]} clicks, {outputs[names[0]].get('records_alive')} "
         f"records alive; twin {counts[names[1]]} clicks, {outputs[names[1]].get('records_alive')} alive",
+        f"6. GAMEBOARD  the clocks' ratio along the run, {len(along['spans'])} spans: "
+        f"{[decimal(s['ratio']) for s in along['spans']]}; the drift per interval "
+        f"{decimal(along['drift_per_interval'], 6)} (the stepping Gamma's look, GAMMA IS NOT CONSTANT); before "
+        f"the run {well.get('stepping_gamma_ratio_drift_per_interval')}",
     ]
     if diagnostic:
         lines.insert(
             0,
             "DIAGNOSTIC (GAMEBOARD): a run on an engine before the corrected giving, no number against the expectation",
         )
-    return {"kind": "the one-click look", "diagnostic": diagnostic, "lines": lines, "wells": wells}
+    return {
+        "kind": "the one-click look",
+        "diagnostic": diagnostic,
+        "lines": lines,
+        "wells": wells,
+        "along": along,
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
