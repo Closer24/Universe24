@@ -199,7 +199,7 @@ def test_a_givers_levels_at_the_scale_c_t_and_its_train_do_not_depend_on_t(tmp_p
     still = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0], "phase_denominator": 64}
     body = {"family": "matter", "nodes": nodes, "emitter": {"family": "light"}, **still}
     world = {"shape": [8, 8, 8], "boundary": dict.fromkeys("xyz", "periodic"), "node_clock": GAMMA}
-    world.update(measured=[body], universe=str(tmp_path / "universe.json"))
+    world.update(measured=[body], universe=str(tmp_path / "universe.json"), ticks=4096)
     found = []
     for action in (10**9, 2 * 10**9):
         integers = {"momentum_unit": 64, "twist_table": table, "quantum_action": action}

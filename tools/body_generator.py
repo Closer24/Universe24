@@ -551,9 +551,9 @@ def train_of(
     action: int,
     period: int,
     wrap: Wrap,
-    most_periods: int = 128,
+    most_intervals: int,
 ) -> dict[str, Any]:
-    """THE TRAIN of one quantum, a reading by Rule3 alone (ALGEBRA.md #the-primitives, the giving's row): the body's record turning in its own rule from its two levels; the given family's record on the GameBoard in its rule at the paces of its reads; each interval the outer shell gains (M_pol x a_body) div E_s at both levels, the division act with the remainder carried at the Node (M_pol the bound charge the body holds there, E_s the given row's divisor); the outward flux through the outer Ports, wall x (now_j before_i - before_j now_i) summed where positive, accumulated until it reaches T (`quantum_action`): the intervals and the periods N_q of the giver's rotation until the close; refused by name past `most_periods` periods."""
+    """THE TRAIN of one quantum, a reading by Rule3 alone (ALGEBRA.md #the-primitives, the giving's row): the body's record turning in its own rule from its two levels; the given family's record on the GameBoard in its rule at the paces of its reads; each interval the outer shell gains (M_pol x a_body) div E_s at both levels, the division act with the remainder carried at the Node (M_pol the bound charge the body holds there, E_s the given row's divisor); the outward flux through the outer Ports, wall x (now_j before_i - before_j now_i) summed where positive, accumulated until it reaches T (`quantum_action`): the intervals and the periods N_q of the giver's rotation until the close; refused by name past `most_intervals` (the world's run) without a close."""
     now_b, before_b = body_levels[0].astype(np.int64), body_levels[1].astype(np.int64)
     read_b, self_b, wall_b = body_rule
     read_l, self_l, wall_l = light_rule
@@ -562,7 +562,7 @@ def train_of(
     rest_now, rest_before = np.zeros_like(now_b), np.zeros_like(now_b)
     ports = outward_ports(mask, wrap)
     outward, peak = 0, 0
-    for interval in range(1, most_periods * period + 1):
+    for interval in range(1, most_intervals + 1):
         next_b, carry_b = rule3(
             (read_b, read_b, read_b), arrivals(now_b, wrap), self_b, wall_b, now_b, before_b, carry_b
         )
@@ -572,9 +572,12 @@ def train_of(
         )
         now_l, before_l = np.asarray(next_l, dtype=np.int64), now_l
         for level, source, rest in ((now_l, now_b, rest_now), (before_l, before_b, rest_before)):
-            numerator = bound_charge[mask] * source[mask] + rest[mask]
-            level[mask] += numerator // divisor
-            rest[mask] = numerator % divisor
+            # the division act with the remainder carried at the Node (core.rule3, the line with no read)
+            value, carry = rule3(
+                NO_READ, NO_READ, bound_charge[mask] * source[mask], divisor, 1, 0, rest[mask]
+            )
+            level[mask] += np.asarray(value, dtype=np.int64)
+            rest[mask] = np.asarray(carry, dtype=np.int64)
         peak = max(peak, int(np.abs(now_l).max()))
         for axis, side, at in ports:
             now_j = np.asarray(arrival(now_l, axis, side, wrap[axis]))[at]
@@ -582,11 +585,12 @@ def train_of(
             flux = now_j * before_l[at] - before_j * now_l[at]
             # in the form's units: the flux over the pace squared at the Node (the form's Node term is over p^2)
             positive = np.where(flux > 0, flux, 0).astype(object)
-            outward += int((positive * wall_l // (paces[at].astype(object) ** 2)).sum())
+            squares = paces[at].astype(object) * paces[at].astype(object)
+            outward += int(np.asarray(rule3(NO_READ, NO_READ, wall_l, squares, positive, 0, 0)[0]).sum())
         if outward >= action:
             return {"intervals": interval, "periods": [interval, period], "flux": outward, "peak": peak}
     return {
-        "refused": f"the outward flux {outward} did not reach T = {action} in {most_periods} periods (the peak {peak})"
+        "refused": f"the outward flux {outward} did not reach T = {action} in {most_intervals} intervals (the peak {peak})"
     }
 
 
@@ -602,6 +606,7 @@ def given_train(
     gamma: int,
     wrap: Wrap,
     clock: tuple[int, int],
+    ticks: int | None,
 ) -> dict[str, Any]:
     """The reading `train` of a giving body (ALGEBRA.md #the-primitives, the giving's row, THE TRAIN): the given record's rule at the paces of the given row's plain reads on the world's rests, the bound charge the short-range held family the given row reads (den above num, the reach of a held family its pair), the given row's divisor E_s and the universe's quantum action T; no reading on a body that gives nothing, on a given row that holds nothing or reads no short-range family."""
     emitter = body.get("emitter")
@@ -616,7 +621,7 @@ def given_train(
         if pair_of(rows[read["family"]], read["family"])[1]
         > pair_of(rows[read["family"]], read["family"])[0]
     ]
-    if "divisor" not in held or len(short) != 1:
+    if "divisor" not in held or len(short) != 1 or ticks is None:
         return {}
     content = np.zeros(total.shape, dtype=np.int64)
     for read in plain:
@@ -645,6 +650,7 @@ def given_train(
         int(integers["quantum_action"]),
         period_by_the_rule(*clock),
         wrap,
+        int(ticks),
     )
     return {"train": found}
 
@@ -818,6 +824,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     gamma,
                     wrap,
                     clock,
+                    document.get("ticks"),
                 )
             moving = {
                 "axis": axis,
