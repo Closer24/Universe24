@@ -44,15 +44,9 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     lines, simulation, trace = run(document)
     givings = [line for line in lines if line["event"] == "giving"]
     assert len(givings) == 4
-    # the residue from the law (ALGEBRA.md #a-familys-declaration) under the Node clock (9.35
-    # (2), (3); BUILD.md section 26 item 31): u the clicking record's remainder
-    # at the giving Node in the remainder's step, W = 3 den f / gcd(Gamma num,
-    # 6 den M, 3 den f) at that Node with the body's content M (2403 on [800,
-    # 801] in the vacuum; here the stock 4, 3, 2, 1 at the four givings), read
-    # from the rule (`lawful_wheel`); read on the board below
+    # the residue from the law (ALGEBRA.md #a-familys-declaration) under the Node clock (9.35 (2), (3); BUILD.md section 26 item 31): u the clicking record's remainder at the giving Node in the remainder's step, W = 3 den f / gcd(Gamma num, 6 den M, 3 den f) at that Node with the body's content M (2403 on [800, 801] in the vacuum; here the stock 4, 3, 2, 1 at the four givings), read from the rule (`lawful_wheel`); read on the board below
     assert all(lawful_wheel(simulation.world, line) for line in givings)
-    # the level at the body: its one own quantum beside the stock held, 5, 4, 3, 2 (the
-    # stock as the given family's content, ALGEBRA.md #the-paces; item 47)
+    # the level at the body: its one own quantum beside the stock held, 5, 4, 3, 2 (the stock as the given family's content, ALGEBRA.md #the-paces; item 47)
     divisor = next(f.held_divisor for f in simulation.families if f.held == "content")
     assert [line["content"] for line in givings] == [c // divisor for c in (5, 4, 3, 2)]
     assert [line["node_clock"] for line in givings] == [
