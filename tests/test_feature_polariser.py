@@ -36,11 +36,8 @@ def along_axis(level: int, nodes: int = 5) -> PolariserStart:
 def test_the_card_is_built_at_ii_with_the_bodys_key():
     """The folder's card: "the polariser" at (ii) after the step, the function apply, the body's key `polariser` (the angle's pair and the two sets) through the cards; a body with no key polarises nothing."""
     declaration = discover().declarations["the polariser"]
-    assert (declaration.function, declaration.place, declaration.word) == (
-        apply,
-        "(ii)",
-        "after the step",
-    )
+    card = declaration
+    assert (card.function, card.place, card.word) == (apply, "(ii)", "after the step")
     assert declaration.schema is not None and "polariser" in declaration.schema.places["a body"].keys
     assert DECLARATION.writes == ("the level next, the remainder", "the second level")
     assert read_term({"family": "matter"}) is None
@@ -104,10 +101,8 @@ def test_the_bodys_own_set_books_the_fluxs_second_share_and_the_loop_admits_the_
     live = planted_record(simulation, 1, np.zeros(simulation.shape), np.zeros(simulation.shape))
     assert simulation._polarised(live, at_well, 100) == 0
     live.now[simulation.blocks[0].mask] = 5
-    assert (simulation._polarised(live, at_well, 100), simulation._polarised(live, at_well, 7)) == (
-        64,
-        4,
-    )
+    polarised = simulation._polarised
+    assert (polarised(live, at_well, 100), polarised(live, at_well, 7)) == (64, 4)
     assert simulation._polarised(live, face, 100) == 100
     simulation.polarisers = {0: PolariserTerm((2, 1), ("at_well", "face"))}
     with pytest.raises(ValueError, match="names 'face' as its second set"):
@@ -172,10 +167,8 @@ def test_the_switching_turns_by_each_angle_in_turn_by_the_bodys_own_count():
     assert [at(switching, count).angle for count in range(8)] == [(2, 1)] * 3 + [(1, 0)] * 3 + [
         (2, 1)
     ] * 2
-    assert at(read_term({"polariser": {"angle": [2, 1], "sets": ["face", "at_well"]}}), 7).angle == (
-        2,
-        1,
-    )
+    turned = at(read_term({"polariser": {"angle": [2, 1], "sets": ["face", "at_well"]}}), 7)
+    assert turned.angle == (2, 1)
     for entry in (
         {"angle": [2, 1], "every": 2, "sets": ["face", "at_well"]},
         {"angles": [[2, 1], [1, 0]], "sets": ["face", "at_well"]},

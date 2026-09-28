@@ -110,10 +110,8 @@ def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_ou
         Declaration("the internal representation", "(i)", ("n pairs",), ("the arrivals",), noop, "")
     )
     step = Step({"(i)": ("the receive", "the internal representation")}, "d")
-    assert register.writers("the arrivals", "(i)", step) == (
-        "the receive",
-        "the internal representation",
-    )
+    arrivals_writers = ("the receive", "the internal representation")
+    assert register.writers("the arrivals", "(i)", step) == arrivals_writers
     register.check_writers(step)
     with pytest.raises(
         ValueError,
