@@ -2242,21 +2242,19 @@ def parse_world_document(
     obj = dict(obj)
     del obj[word]
     if isinstance(universe, str):
-        # THE ONE UNIVERSE FILE (item 59; record 2128 (3)): the path in place of the
-        # list; the universe's integers from the file alone, the world's own refused
-        families_file = universe
+        # THE ONE UNIVERSE FILE (item 59): the integers from the file alone, the world's own refused
+        # but a stepping clock's pair [Gamma_0, step] at the file's Gamma_0 (`derived.clock_beside`)
+        families_file, stepping = universe, obj.pop("node_clock", None)
         _refuse_under_law(obj, "the world", set(frame.INTEGERS.keys))
         entries, integers = frame.universe(families_file, files, register)
         obj.update(integers)
+        if stepping is not None:
+            obj["node_clock"] = derived.clock_beside(stepping, obj["node_clock"], families_file)
     else:
         # the families' list inline (a unit test's world), checked against the cards with
         # the world's own integers
-        entries = frame.families(
-            universe,
-            {key: obj[key] for key in frame.INTEGERS.keys if key in obj},
-            register,
-            "the world.universe",
-        )
+        own = {key: obj[key] for key in frame.INTEGERS.keys if key in obj}
+        entries = frame.families(universe, own, register, "the world.universe")
     shape_value = cast(tuple[object, ...], obj["shape"])
     extents = tuple(_integer(item, "shape", 1) for item in shape_value)
     shape: Address3 = (extents[0], extents[1], extents[2])

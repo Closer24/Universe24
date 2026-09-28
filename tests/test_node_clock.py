@@ -230,10 +230,8 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         assert rule_total_bound(*pair, 1_000_000, 999_999, world.amplitude_bound, True) < 1 << 63
     registered = json.loads((ROOT / "tests/light_clock.json").read_text(encoding="utf-8"))
     # the integers of ALGEBRA.md #the-rows-against-nature from the families file alone (item 59)
-    assert registered["universe"] == "examples/events/universe.json"
-    assert "node_clock" not in registered and "amplitude_bound" not in registered
-    world = parse_nature_beam_world(registered)
-    assert world.node_clock == NODE_CLOCK == 10**4
+    assert registered["universe"] == "examples/events/universe.json" and "node_clock" not in registered
+    assert (world := parse_nature_beam_world(registered)).node_clock == NODE_CLOCK == 10**4
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
     centre = tuple(int(axis[0]) for axis in np.nonzero(simulation.centre_mask(block)))

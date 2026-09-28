@@ -51,6 +51,16 @@ def clock_of(value: object, entries: tuple[dict[str, Any], ...], bound: int) -> 
     return gamma, step
 
 
+def clock_beside(value: object, gamma: object, universe: str) -> list[int]:
+    """A stepping clock's pair beside a universe file: the world names the file and carries `node_clock` as [Gamma_0, step] alone, Gamma_0 the file's Gamma (the world's own integers stay the file's, its step its own); an integer, or a pair at another Gamma_0, is refused by name."""
+    if not isinstance(value, (list, tuple)) or len(value) != 2 or value[0] != gamma:
+        raise ValueError(
+            f"the world names the universe file {universe!r} and may carry node_clock only as the pair "
+            f"[Gamma_0, step] with Gamma_0 the file's {gamma}, got {value!r}"
+        )
+    return [int(value[0]), int(value[1])]
+
+
 def clock_at(
     pairs: Sequence[tuple[int, int]], gamma: int, step: int, interval: int
 ) -> tuple[int, list[tuple[int, int]]]:

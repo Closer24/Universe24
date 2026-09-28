@@ -123,6 +123,8 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     assert derived.clock_at(pairs, 24, 6, 1) == (30, [(30, 30), (30, 30), (20, 30), (-15, 30)])
     odd = [*document["families"], {**third, "pair": [23, 24]}]  # the electron's band at a stepping Gamma
     refused({**inline, "node_clock": [24, 6], "universe": odd}, "does not step with the clock")
+    assert parse_nature_beam_world({**world, "measured": bodies, "node_clock": [24, 6]}).clock_step == 6
+    refused({**world, "measured": bodies, "node_clock": [30, 6]}, "with Gamma_0 the file's 24")
     for clock in ([0, 6], [24, -1], [24, 6, 1], [24, 6.0]):
         refused({**inline, "node_clock": clock}, "node_clock")
     for pair, match in (([-24, 24], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1")):
@@ -220,7 +222,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
     document = on_the_file(emitter_specimen(stock=1, ticks=10))
     second = json.loads(json.dumps(document))
     second["node_clock"] = 10000
-    refused(second, "the world declares node_clock, which the engine never reads")
+    refused(second, "may carry node_clock only as the pair")  # an integer beside the universe file
     ray = json.loads(json.dumps(document))
     ray["detector_law"] = False  # the flag was the law's name, refused by name (#the-primitives)
     refused(ray, "the world has unknown keys: detector_law")
