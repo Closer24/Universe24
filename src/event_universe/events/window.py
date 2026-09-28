@@ -34,16 +34,21 @@ def giving_coupling(loop: DetectorLawSimulation, block: Block, emitter: Any) -> 
 
 
 def zero_mode(loop: DetectorLawSimulation, block: Block, live: LiveRecord) -> None:
-    """THE CLOSE RETURNS THE CURRENT (Cheshbon's lines of 2026-09-28, 12:23 and 13:16 Israel; the click the law's one non-local act, ALGEBRA.md #the-primitives): at the close the zero mode's velocity B = (SUM q_n (now_n - before_n) + r) div SUM q_n over the record's support, q_n = ((Gamma 2^8)^2 + r') div p_n^2 the weight of the Node's pace p_n = Gamma - c_n, both remainders carried at the giver; now -= B on the support, booked on the giving line and kept on the record for the inverse."""
+    """THE CLOSE RETURNS THE CURRENT (Cheshbon's lines of 2026-09-28, 12:23, 13:16 and 16:06 Israel; the click the law's one non-local act, ALGEBRA.md #the-primitives): at the close the zero mode's velocity B = (SUM q_n (now_n - before_n) + r) div SUM q_n over the record's support, q_n = ((Gamma 2^8)^2 + r') div p_n^2 the weight of the Node's Link pace under the conformal pace, p_n = Gamma - 2 c_n - (SUM over the six Ports of the axis content) div 6 (the level enters the Link twice; the mean axis content over the Ports, exact where the neighbours' counts are equal), both remainders carried at the giver; now -= B on the support, booked on the giving line and kept on the record for the inverse."""
     gamma = int(loop.node_clock)
     support = (live.now != 0) | (live.before != 0)
     content = loop._effective_content(live.family)
+    axis = loop._axis_contents(live.family)
     carries = block.close_carry
     unit = (gamma << 8) * (gamma << 8)
     weights = np.zeros(loop.shape, dtype=np.int64)
     weight_carry = carries[0]
     for node in zip(*np.nonzero(support), strict=True):
-        pace = gamma - int(content[node])
+        ports = (
+            0 if axis is None else 2 * sum(int(t[node]) for t in axis)
+        )  # each axis content on both Ports
+        mean, _ = division_forward(ports, 6, 0)
+        pace = gamma - 2 * int(content[node]) - mean
         weights[node], weight_carry = division_forward(unit, pace * pace, weight_carry)
     total = int(weights.sum())
     velocity, mode_carry = 0, carries[1]

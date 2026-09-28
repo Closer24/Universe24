@@ -34,14 +34,16 @@ def rest_world(tmp_path: Path) -> Path:
 
 
 def weighted_current(simulation: DetectorLawSimulation, live) -> tuple[int, int]:
-    """The zero mode's weighted current SUM q_n (now_n - before_n) and the weights' sum over the record's support, q_n = (Gamma 2^8)^2 div p_n^2 at the pace p_n = Gamma - c_n (the close's own weights, without the carried remainder)."""
+    """The zero mode's weighted current SUM q_n (now_n - before_n) and the weights' sum over the record's support, q_n = (Gamma 2^8)^2 div p_n^2 at the Node's Link pace under the conformal pace, p_n = Gamma - 2 c_n - (the axis contents over the six Ports) div 6 (Cheshbon's line of 16:06 Israel; the close's own weights, without the carried remainder)."""
     gamma = int(simulation.node_clock)
     content = simulation._effective_content(live.family)
+    axis = simulation._axis_contents(live.family)
     support = (live.now != 0) | (live.before != 0)
     unit = (gamma << 8) * (gamma << 8)
     current = total = 0
     for node in zip(*np.nonzero(support), strict=True):
-        weight = unit // (gamma - int(content[node])) ** 2
+        ports = 0 if axis is None else 2 * sum(int(t[node]) for t in axis)
+        weight = unit // (gamma - 2 * int(content[node]) - ports // 6) ** 2
         current += weight * (int(live.now[node]) - int(live.before[node]))
         total += weight
     return current, total
@@ -68,7 +70,14 @@ def test_the_rest_world_runs_its_first_window_and_the_close_leaves_no_current(tm
     given = simulation.records[int(givings[0]["record"])]
     assert given.zero_mode is not None and given.zero_mode[0] == givings[0]["zero_mode"]
     current, total = weighted_current(simulation, given)
-    assert total > 0 and abs(current) <= (simulation.tick - close + 1) * total
+    # the mean Link pace's weight is exact where the neighbours' counts are equal and leaves a remainder of the order (the spread of the contents) / (the Link pace) of the current taken off (Cheshbon's line of 16:06 Israel), beside one division remainder per Node per interval
+    content = simulation._effective_content(given.family)[given.zero_mode[1]]
+    spread, pace = (
+        int(content.max() - content.min()),
+        int(simulation.node_clock) - 2 * int(content.max()),
+    )
+    allowance = (simulation.tick - close + 1) * total + abs(given.zero_mode[0]) * total * spread // pace
+    assert total > 0 and abs(current) <= allowance
     steps = [abs(levels[t] - levels[t - 1]) for t in range(close, len(levels))]  # from the close on
     assert (
         len(steps) >= 3 and steps[-1] < steps[0]
