@@ -190,10 +190,8 @@ def test_the_age_wall_stretches_the_wall_by_the_crowd():
 
 def test_the_bounds_are_the_hosts_width_and_a_gameboard_extent_has_no_cap():
     """The working bound is the host's signed integer width (`sys.maxsize`, no literal), MAX_VALUE half the width less the six Ports' three bits so that a product of two summed over the six Ports fits the width, the gcd's divisions twice the width's bits; a GameBoard extent has no cap beyond 1 (the shape is the file's): an extent above the old cap of 4096 is adjacent and 0 is refused naming "from 1"."""
-    assert MAX_WORK_INT == sys.maxsize
-    assert MAX_VALUE == (1 << ((MAX_WORK_INT.bit_length() - 3) // 2)) - 1
-    assert 6 * MAX_VALUE * MAX_VALUE <= MAX_WORK_INT
-    assert bounded_gcd(MAX_WORK_INT, MAX_WORK_INT - 1) == 1
+    assert MAX_WORK_INT == sys.maxsize and MAX_VALUE == (1 << ((MAX_WORK_INT.bit_length() - 3) // 2)) - 1
+    assert 6 * MAX_VALUE * MAX_VALUE <= MAX_WORK_INT and bounded_gcd(MAX_WORK_INT, MAX_WORK_INT - 1) == 1
     assert adjacent_node((4998, 0, 0), 0, (5000, 1, 1)) == (4999, 0, 0)
     assert adjacent_node((4999, 0, 0), 0, (5000, 1, 1)) is None
     with pytest.raises(ValueError, match="extents from 1"):
