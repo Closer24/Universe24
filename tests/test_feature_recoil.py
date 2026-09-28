@@ -22,8 +22,7 @@ from event_universe.features.recoil import (
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
-# the moving row's body (issue #1156): Q = 64 (W = 12480 at M = 65), its period 21, the given
-# light's wavelength 4 Links; the universe's wall L = 252, the least common multiple of 4, 7 and 9
+# the moving row's body (issue #1156): Q = 64 (W = 12480 at M = 65), its period 21, the given light's wavelength 4 Links; the universe's wall L = 252, the least common multiple of 4, 7 and 9
 UNIT = 64
 WALL = 252
 TERM = RecoilTerm(period=21, wavelength=4, sense=TAKING, wall=WALL, unit=UNIT)

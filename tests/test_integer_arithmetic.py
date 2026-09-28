@@ -77,8 +77,7 @@ def test_signed_inner_is_the_sum_of_the_signed_products(left, right, signs, expe
 def test_signed_inner_at_the_bound():
     assert signed_inner((REGISTER,), (1,), (1,), REGISTER) == REGISTER
     assert signed_inner((REGISTER,), (1,), (-1,), REGISTER) == -REGISTER
-    # Two components at the bound with opposite signs: the partial sum
-    # reaches the bound and comes back to 0.
+    # Two components at the bound with opposite signs: the partial sum reaches the bound and comes back to 0.
     assert signed_inner((REGISTER, REGISTER), (1, 1), (1, -1), REGISTER) == 0
     root = 1 << 31
     within = (root - 1) * root + 1

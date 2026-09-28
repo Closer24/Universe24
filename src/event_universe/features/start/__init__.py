@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 import numpy as np
@@ -22,24 +22,24 @@ PERIODIC: Wrap = (True, True, True)
 
 @dataclass(frozen=True)
 class FieldAtRest:
-    """The held field at rest around the body under its family's pair: the levels (the nearest integers), the fine levels at the derived unit, the unit, the iterations to the repeat and the cycle's length, 1 at a fixed point (ALGEBRA.md #the-generator (g))."""
+    """The held field at rest around the body under its family's pair: the levels (the nearest integers), the fine levels at the derived unit, the unit, the iterations to the repeat and the cycle's length, 1 at a fixed point (ALGEBRA.md #the-generator (g)). THE REST OF THE REMAINDERS (`remainder`, `carries`): the level's remainder at the half wall (the division act's unbiased origin) and the hold's carries over the source Nodes, j E_s div N for the j-th of N: a steady source stream from the first interval (at 0 the first units arrive together after E_s div count intervals while the faces drain from the first, and the second-order rule keeps the deficit as a velocity of the whole field)"""
 
     levels: np.ndarray
     fine: np.ndarray
     unit: int
     iterations: int
     cycle: int
+    remainder: int = 0
+    carries: np.ndarray | None = None
 
 
 def check_counts(counts: np.ndarray, gamma: int) -> None:
     """The refusals by name: the counts an int64 array of nonnegative integers below Gamma, at least one nonzero (ALGEBRA.md #the-paces, the guard's lower side)."""
     if counts.dtype != np.int64 or counts.size == 0 or not counts.any():
         raise ValueError("the counts are an int64 array (integers only), not zero everywhere: no body")
-    low, high = int(counts.min()), int(counts.max())
-    if low < 0 or high >= gamma:
-        raise ValueError(
-            f"a count {low if low < 0 else high}: the counts stay in [0, Gamma) with Gamma = {gamma}"
-        )
+    edge = int(counts.min()) if int(counts.min()) < 0 else int(counts.max())
+    if edge < 0 or edge >= gamma:
+        raise ValueError(f"a count {edge}: the counts stay in [0, Gamma) with Gamma = {gamma}")
 
 
 def division(numerator_coefficient: Any, wall: Any, level: np.ndarray) -> np.ndarray:
@@ -147,10 +147,7 @@ def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     return FieldAtRest(levels, fine, unit, 1, 1)
 
 
-# THE FAST LANE'S SIZES, every one from the machine's width (the owner's rule: no number of its own): two
-# halves' product times the Nodes' partial sum, and a ratio's half times a vector's half shifted up by the
-# halves' excess over the fixed point, each below 2^ROOM (the sign bit out); the right side's scale, the
-# unit's growth and the margin's room come from the certificate and the GameBoard, inside `box_rest`.
+# THE FAST LANE'S SIZES, every one from the machine's width (the owner's rule: no number of its own): two halves' product times the Nodes' partial sum, and a ratio's half times a vector's half shifted up by the halves' excess over the fixed point, each below 2^ROOM (the sign bit out); the right side's scale, the unit's growth and the margin's room come from the certificate and the GameBoard, inside `box_rest`.
 WIDTH = MAX_WORK_INT.bit_length()  # the machine's integer width
 ROOM = WIDTH - 1  # the bits below the sign
 NODES_BITS = int(division(1, 3, np.array(WIDTH, dtype=object)))  # the lane's Nodes bound, a third
@@ -158,8 +155,7 @@ HALF_BITS = (ROOM - NODES_BITS) >> 1  # a vector's low half: two halves' product
 VECTOR_BITS = HALF_BITS << 1  # the lane's vectors below 2^VECTOR_BITS, their halves below 2^HALF_BITS
 RATIO_BITS = (WIDTH + 1) >> 1  # a ratio's fixed point: half the width
 RATIO_HALF_BITS = (ROOM + RATIO_BITS - VECTOR_BITS) >> 1  # a ratio's low half: the shifted product fits
-STOP = 1 << VECTOR_BITS  # a sweep stops once the residual is below the right side's 2^-VECTOR_BITS
-FLOORS = 3  # a scaled update takes three floors, so a sweep's residual drifts by at most three units
+STOP, FLOORS = 1 << VECTOR_BITS, 3  # a sweep stops below 2^-VECTOR_BITS; three floors an update
 
 
 def sizes(vector: np.ndarray) -> int:
@@ -310,8 +306,7 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int | None = N
     closed = divisor is not None and num == den and all(wrap[axis] for axis in long)
     if divisor is not None and (divisor < 1 or (closed and (int(counts.sum()) != 0 or counts.all()))):
         raise ValueError(
-            f"the sum's rest needs a divisor from 1 (got {divisor}) and a sink: a board periodic on every "
-            f"axis at [1, 1] rests only under the source total 0 (got {int(counts.sum())}), one Node free"
+            f"the sum's rest needs a divisor from 1 (got {divisor}) and a sink: a board periodic on every axis at [1, 1] rests only under the source total 0 (got {int(counts.sum())}), one Node free"
         )
     clamped = np.zeros(counts.shape, dtype=np.int64) if divisor is not None else counts
     if closed:  # the balanced rest up to a constant: a Node of no source the gauge, the mean taken off
@@ -384,7 +379,12 @@ def rest(
     """The start's rest of a held family: with a divisor the sum's rest on the weighted sources by the box's certified solve on any board; else on the counts clamped, the chain's one pass where the region is a chain, the box's certified rest elsewhere (ALGEBRA.md #the-generator, THE START)."""
     if divisor is None and chain_axis(counts) is not None:
         return chain_rest(counts, pair, wrap)
-    return box_rest(counts, pair, wrap, divisor)
+    field = box_rest(counts, pair, wrap, divisor)
+    if divisor is None:
+        return field
+    sources, carries = np.flatnonzero(counts.ravel()), np.zeros(counts.shape, dtype=np.int64)
+    carries.ravel()[sources] = division(divisor, len(sources), np.arange(len(sources), dtype=np.int64))
+    return replace(field, carries=carries, remainder=int(division(1, 2, np.array(3 * pair[1] - 1))))
 
 
 DECLARATION = Declaration(
