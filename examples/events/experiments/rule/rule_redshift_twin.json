@@ -5,8 +5,8 @@
   1
  ],
  "boundary": {
-  "x": "open",
-  "y": "open",
+  "x": "periodic",
+  "y": "periodic",
   "z": "periodic"
  },
  "ticks": 1500,
@@ -154,6 +154,5 @@
    ],
    "every": 100
   }
- ],
- "face_depth": 4
+ ]
 }
