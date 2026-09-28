@@ -127,9 +127,9 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
         apply(TERM, START, RecoilOwn((0, 0, 0), (0, WALL, 0)))
 
 
-def test_the_trace_hand_identity_on_the_emitters_run():
-    """The emitter's unit world (Q = 64 giving four quanta of light of wavelength 4 along +x, L = 4): fed every giving line's integers with the giver's sense, the folder moves n by the whole part and keeps the store, and after every giving n equals the exact floor of the sum of the fractions (ALGEBRA.md #the-interval, #the-primitives); that the run moves no momentum is tests/test_four_vector_click.py's check."""
-    document = emitter_world(stock=4, ticks=1200)
+def test_two_kicks_with_the_feed_running_sum_on_both_levels_of_the_momentum():
+    """The emitter's unit world under THE START (the feed running at (v), its KEEP pair exchanging the two levels of n every interval), Q = 64 giving two quanta of light of wavelength 4, L = 4: each giving kicks the giver by -sigma x 3 Q P_body (L div lambda_q) div L, and after both the body holds the exact floor of the sum on `momentum` and on `momentum_before` alike (ALGEBRA.md #the-primitives, the rows of the recoil and the feed); a kick written to one level alone shows on every second interval and two kicks never sum."""
+    document = emitter_world(stock=2, ticks=600)
     period = parse_nature_beam_world(document).measured[0].block.emitter.period
     wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4
     assert wavelength == 4 and period > 0
@@ -137,22 +137,16 @@ def test_the_trace_hand_identity_on_the_emitters_run():
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     for _ in range(document["ticks"]):
         simulation.step()
-    givings = [line for line in lines if line["event"] == "giving" and "momentum" in line]
-    assert (
-        len(givings) == document["measured"][0]["stocks"]["light"]
-    )  # the directions are the run's, read below
-    unit = document["momentum_unit"]
-    own = RecoilOwn((0, 0, 0), NONE)
-    total = Fraction(0)
-    for line in givings:
-        writes = apply(
-            RecoilTerm(period, wavelength, GIVING, wavelength, unit),
-            RecoilStart(tuple(line["momentum"])),
-            own,
-        )
-        own = RecoilOwn(writes.momentum, writes.remainders)
-        total -= line["momentum"][0] * Fraction(3 * unit * period, wavelength)
-        assert own.momentum[0] == total.numerator // total.denominator and own.momentum[1:] == (0, 0)
+    givings = [line["momentum"] for line in lines if line["event"] == "giving" and "momentum" in line]
+    # the two givings' direction labels as this fixture reads them under THE START: one way, so the kicks add
+    assert len(givings) == 2 and givings[0] == givings[1] and givings[0][0] != 0
+    total = -sum(sigma[0] for sigma in givings) * Fraction(
+        3 * document["momentum_unit"] * period, wavelength
+    )
+    expected = [total.numerator // total.denominator, 0, 0]
+    block = simulation.blocks[0]
+    assert simulation.recoil_wall == wavelength and expected[0] != 0
+    assert list(block.momentum) == expected and list(block.momentum_before) == expected
 
 
 def test_the_declaration_is_the_ledgers_row():

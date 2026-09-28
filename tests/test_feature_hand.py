@@ -52,21 +52,26 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_face():
-    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: A's momentum runs under the loader's period by the rule (item 3), the booking S . n at A's own set of the run's own sign; the hand whose sign is the booking's admits every click there (none at the face) and the opposite hand refuses them all, each record walking the ladder on to the face (none at `at_well`), the sign read from the run's own booking."""
+    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: the booking S . n is read from the run itself as each click is booked (S and n of A at the click, the row of the hand, ALGEBRA.md #the-primitives), and every click at A's own set is one the declared hand admits (sign(S . n) x hand never -1); a click the hand refuses walks the ladder on to the face, so every record ends at `at_well` or at the face, and the two hands part the run's clicks: the records clicking at `at_well` under -1 and under +1 are not the same set."""
     document = json.loads(LIGHT_CLOCK.read_bytes())
+    at_well: dict[int, set[int]] = {}
     for hand in (-1, 1):
         world = parse_nature_beam_world(copy.deepcopy(document))
         families = list(world.families)
         families[1] = replace(families[1], hand=hand)
         simulation = DetectorLawSimulation(replace(world, families=tuple(families)))
-        simulation.blocks[0].spin = [1, 0, 0]
-        simulation.blocks[0].spin_before = [1, 0, 0]
+        body = simulation.blocks[0]
+        body.spin, body.spin_before = [1, 0, 0], [1, 0, 0]
         lines: list[dict] = []
-        simulation.record = lines.append
+        simulation.record = lambda line, b=body, out=lines: out.append(
+            {**line, "booking": (tuple(b.spin), tuple(b.momentum))}
+        )
         for _ in range(700):
             simulation.step()
-        chosen = [line["chosen"][0][0] for line in lines if line["event"] == "gather"]
-        booking = simulation.blocks[0].momentum[0]  # S . n with S = (1, 0, 0), the run's own sign
-        assert booking != 0 and chosen and simulation.blocks[0].momentum[1:] == [0, 0]
-        admits = hand * booking > 0  # the hand against the sign of the booking (ALGEBRA.md, the hand)
-        assert (chosen.count("at_well") > 0, chosen.count("face") > 0) == (admits, not admits)
+        gathers = [line for line in lines if line["event"] == "gather"]
+        assert gathers and {line["chosen"][0][0] for line in gathers} <= {"at_well", "face"}
+        for line in gathers:
+            admitted = apply(HandTerm(hand), HandStart(*line["booking"])).admitted
+            assert line["chosen"][0][0] == "face" or admitted
+        at_well[hand] = {line["record"] for line in gathers if line["chosen"][0][0] == "at_well"}
+    assert at_well[-1] != at_well[1]
