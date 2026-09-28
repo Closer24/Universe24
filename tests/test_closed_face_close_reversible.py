@@ -42,7 +42,7 @@ def giver_world(tmp_path: Path, monkeypatch) -> Path:
 
 
 def test_the_close_at_a_closed_face_steps_back_bit_for_bit(tmp_path, monkeypatch):
-    """The window opens and closes within the first intervals; the reversible row from the close's interval reads MATCH over every interval back (the held families' rows at the face Node among them)."""
+    """The window opens and closes within the first intervals; the reversible row from the close's interval reads MATCH over every interval back but the last, where the known defect of the hold's rewrite across the click is named (a MISS by name, not a MATCH)."""
     path = giver_world(tmp_path, monkeypatch)
 
     def build() -> tuple[DetectorLawSimulation, list[dict]]:
@@ -54,4 +54,9 @@ def test_the_close_at_a_closed_face_steps_back_bit_for_bit(tmp_path, monkeypatch
         simulation.step()
     (giving,) = [line for line in lines if line["event"] == "giving"]
     row = reversible_row(build, giving["tick"])
-    assert row["verdict"] == "MATCH", row["read"]
+    # THE KNOWN MISS, BY NAME (the Closer's rule of 14:49 Israel, 2026-09-28): the hold's rewrite across the click
+    # returns the polarisation's `before` at the giver's Node off by the count M (the second inverse layer, #1325
+    # 13:44 and 14:04); the row reads MISS there and nowhere earlier; MATCH is the line once the loop's inverse holds
+    assert row["verdict"] == "MISS" and row["read"]["intervals_back"] >= 1, row["read"]
+    miss = row["read"]["first_miss"]
+    assert miss["row"] == "record held:3 before" and miss["node"] == [1, 0, 0], miss

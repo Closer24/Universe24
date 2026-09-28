@@ -1,0 +1,70 @@
+"""THE WINDOW WRITES BOTH LEVELS and THE CLOSE RETURNS THE CURRENT (Cheshbon's lines of 2026-09-28, 12:23, 13:16 and 13:27 Israel; the Clock's rest world of 12 x 2,000 handed on #1325): the given record is a wave, not a step, and after the close the zero mode's weighted current stays within the division's remainders, so the level at the body's Node no longer grows linearly and the run is not refused above A."""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+
+from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.world_files import input_stamp, load_world
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from body_generator import generate, input_digest, mode_document, split_levels  # noqa: E402
+
+REST = ROOT / "tests" / "rest_giver.json"
+BODY = (599, 0, 0)  # the giver's Node the Clock read (the 12 Nodes stand at x = 594..605)
+
+
+def rest_world(tmp_path: Path) -> Path:
+    """The Clock's rest world beside its mode file, both written by the generator into `tmp_path` (the universe of record by name)."""
+    document = json.loads(REST.read_text(encoding="utf-8"))
+    document.pop("stamp", None)
+    document["stamp"] = input_stamp(document)
+    reading = generate(document)
+    reading["world_digest"] = input_digest(document)
+    profiles, levels = split_levels(reading)
+    (tmp_path / "rest.json").write_text(json.dumps(document), encoding="utf-8")
+    (tmp_path / "rest.mode.json").write_text(json.dumps(mode_document(reading, profiles, levels)))
+    return tmp_path / "rest.json"
+
+
+def weighted_current(simulation: DetectorLawSimulation, live) -> tuple[int, int]:
+    """The zero mode's weighted current SUM q_n (now_n - before_n) and the weights' sum over the record's support, q_n = (Gamma 2^8)^2 div p_n^2 at the pace p_n = Gamma - c_n (the close's own weights, without the carried remainder)."""
+    gamma = int(simulation.node_clock)
+    content = simulation._effective_content(live.family)
+    support = (live.now != 0) | (live.before != 0)
+    unit = (gamma << 8) * (gamma << 8)
+    current = total = 0
+    for node in zip(*np.nonzero(support), strict=True):
+        weight = unit // (gamma - int(content[node])) ** 2
+        current += weight * (int(live.now[node]) - int(live.before[node]))
+        total += weight
+    return current, total
+
+
+def test_the_rest_world_runs_17_intervals_and_the_close_leaves_no_current(tmp_path):
+    """The window opens, writes and closes within the first intervals; the giving line books the zero mode's velocity B; after the close the weighted current stays within (t - t_close + 1) weight sums (one division remainder per Node per interval); the given record stands under A at every interval, and the level's step at the body's Node shrinks from the close to the last interval: a wave passing, not a linear growth."""
+    lines: list[dict] = []
+    simulation = DetectorLawSimulation(load_world(rest_world(tmp_path)), observer=lines.append)
+    light = [f.name for f in simulation.families].index("charge")
+    levels: list[int] = []
+    for _ in range(17):
+        simulation.step()  # a level above A ends the run: no refusal is the first assertion
+        records = [live for live in simulation.records.values() if live.family == light]
+        levels.append(int(records[0].now[BODY]) if records else 0)
+    givings = [line for line in lines if line["event"] == "giving"]
+    assert len(givings) == 1 and givings[0]["window"] >= 1 and "zero_mode" in givings[0]
+    close = int(givings[0]["tick"])
+    given = simulation.records[int(givings[0]["record"])]
+    assert given.zero_mode is not None and given.zero_mode[0] == givings[0]["zero_mode"]
+    current, total = weighted_current(simulation, given)
+    assert total > 0 and abs(current) <= (simulation.tick - close + 1) * total
+    steps = [abs(levels[t] - levels[t - 1]) for t in range(close, len(levels))]  # from the close on
+    assert (
+        len(steps) >= 3 and steps[-1] < steps[0]
+    )  # a wave passing the body's Node, not a linear growth
