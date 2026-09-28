@@ -30,8 +30,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         width=63, most_families=20, least_residues=500
     )  # the owner's two numbers, in the file
     assert document["integers"] == expected
-    # the twist table (ALGEBRA.md #the-primitives; commit 4): the unit 4 Gamma 2^16, 2^10 fine
-    # and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9
+    # the twist table (ALGEBRA.md #the-primitives; commit 4): the unit 4 Gamma 2^16, 2^10 fine and 2^15 coarse triples, every one c^2 + s^2 = d^2 with d at most 10^9
     assert table["unit"] == 4 * 10000 * 65536
     assert len(table["fine"]) == 1024 and len(table["coarse"]) == 32768
     assert all(c * c + s * s == d * d and d <= 10**9 for c, s, d in table["fine"] + table["coarse"])
@@ -43,18 +42,15 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         assert ATTRIBUTES <= set(entry) and entry["self_source"] == {"unit": 0}
         assert "held" in entry or "clicks" in entry
         assert "booked" not in entry and entry["quantum"] == 1 and "charge" not in entry
-    # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's
-    # dipole, no reads, no clicks (ALGEBRA.md #the-interval)
+    # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's dipole, no reads, no clicks (ALGEBRA.md #the-interval)
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
     assert gravity["held"] == HELD_SPIN and gravity["reads"] == [] and "clicks" not in gravity
-    # the charge: four components, two levels, held sign with the moment's dipole halved, reads
-    # gravity, and clicks: light is its wave
+    # the charge: four components, two levels, held sign with the moment's dipole halved, reads gravity, and clicks: light is its wave
     assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["pair"] == [1, 1]
     assert charge["held"] == {**HELD_MOMENT}
     assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
     assert charge["clicks"] == {"gives": True, "takes": True, "quantum": 1}
-    # matter: a scalar, two levels, the pair on every body, reads gravity and the charge at
-    # Lambda by its sign, clicks
+    # matter: a scalar, two levels, the pair on every body, reads gravity and the charge at Lambda by its sign, clicks
     assert matter["parts"] == [1] and matter["phase"] == 2 and matter["pair"] == "body"
     assert "held" not in matter and matter["clicks"] == {"gives": True, "takes": True, "quantum": 1}
     assert matter["reads"] == [
@@ -71,11 +67,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
         if path.name.endswith((".mode.json", ".expectation.json")):  # the tool's files beside a world
             continue
         text = json.loads(path.read_text(encoding="utf-8"))
-        # a world of the engine; the check-mode worlds (Nature24's generator, ahead of the
-        # audit of ALGEBRA.md #the-primitives) carry none of the keys the loader still requires
-        # the check-mode worlds and the source verb's run files (Nature24's generators, ahead of
-        # the loader's words: `readings`, `sourced`, the residue keys) carry keys the loader
-        # does not read yet; tests/test_source_worlds.py reads their structure
+        # a world of the engine; the check-mode worlds (Nature24's generator, ahead of the audit of ALGEBRA.md #the-primitives) carry none of the keys the loader still requires the check-mode worlds and the source verb's run files (Nature24's generators, ahead of the loader's words: `readings`, `sourced`, the residue keys) carry keys the loader does not read yet; tests/test_source_worlds.py reads their structure
         ahead = {"check_mode", "generated", "source"}
         if isinstance(text, dict) and "universe" in text and not ahead & set(path.parts):
             assert text["universe"] == FILE, path
@@ -97,8 +89,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
 
 def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     inline = emitter_specimen(stock=2, ticks=300)
-    # the shipped file's three entries with the test world's own integers (its A is 2^22, the
-    # shipped file's 2^20), written as a families file of the test's root
+    # the shipped file's three entries with the test world's own integers (its A is 2^22, the shipped file's 2^20), written as a families file of the test's root
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     document["integers"]["node_clock"] = inline["node_clock"]
     document["integers"]["amplitude_bound"] = inline["amplitude_bound"]
@@ -133,9 +124,7 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
         assert names_b[other.family] == rename.get(names_a[live.family], names_a[live.family])
     for source in ("content", "sign"):
         assert np.array_equal(a.level_of(source), b.level_of(source))
-    # every other part with no source stays exactly zero and silent (ALGEBRA.md #the-interval); the
-    # light emitter's moment [0, 0, 1] writes the charge's dipole on its neighbours (9.82
-    # (3) (d), ALGEBRA.md #the-interval; commit 4), which nothing reads at q = 0
+    # every other part with no source stays exactly zero and silent (ALGEBRA.md #the-interval); the light emitter's moment [0, 0, 1] writes the charge's dipole on its neighbours (9.82 (3) (d), ALGEBRA.md #the-interval; commit 4), which nothing reads at q = 0
     for family, parts in b.held_parts.items():
         for record in parts:
             if record.silent:
@@ -288,9 +277,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
     inline = emitter_specimen(stock=1, ticks=10)
     inline["measured"][0]["kind"] = [800, 809]
     refused(inline, r"measured\[0\]\.kind is refused: the family 'matter' declares its pair")
-    # an emitter giving a family whose pair is the body's declares the given record's pair: on
-    # an inline list, a body of a second massive kind giving matter (under the three entries a
-    # body of matter cannot give matter, its own family; ALGEBRA.md #the-primitives waits)
+    # an emitter giving a family whose pair is the body's declares the given record's pair: on an inline list, a body of a second massive kind giving matter (under the three entries a body of matter cannot give matter, its own family; ALGEBRA.md #the-primitives waits)
     giving_matter = emitter_specimen(stock=1, ticks=10)
     names = {family["name"]: family for family in giving_matter["universe"]}
     names["matter"]["pair"] = "body"
