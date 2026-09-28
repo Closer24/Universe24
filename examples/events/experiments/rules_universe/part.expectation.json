@@ -29,6 +29,47 @@
   "click_reach_links": 4,
   "first_click_interval": null,
   "dissolution_intervals": null,
+  "record": {
+   "row": "THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD (Cheshbon 15:41, the Closer 15:46): the file declares the record by its amplitude b, the count is (the sum of D over the period) div (P T), read once per period; the realisable pixels at 24 are b = 5 (the counts about 8 to 10) and b = 8 (about 12 to 15) under the law; the run's count at each Node over the last period and the period from the level's sign changes are read against this table",
+   "bodies": {
+    "small": {
+     "amplitude_b": 5,
+     "counts": [
+      9,
+      11
+     ],
+     "record_count": [
+      9.6,
+      9.9
+     ],
+     "period": [
+      6.9,
+      8.0
+     ]
+    },
+    "deep": {
+     "amplitude_b": 6,
+     "counts": [
+      12,
+      12
+     ],
+     "record_count": [
+      9.2,
+      9.2
+     ],
+     "period": [
+      9.2,
+      9.2
+     ]
+    }
+   },
+   "clock_ratio_deep_over_small": [
+    1.08,
+    1.23,
+    1.38
+   ],
+   "band": "one quantum on every count, 10 to 15 percent; the period to one interval"
+  },
   "clicks_expected": "no click: the bodies stand apart beyond the reach",
   "records_at_the_end": 2
  },

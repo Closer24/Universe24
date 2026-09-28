@@ -1,4 +1,4 @@
-"""WORLD (d) OF THE RULE'S OWN UNIVERSE: THE CLICK JOINS AND PARTS (ALGEBRA.md #the-rows-against-nature, THE RULE'S OWN UNIVERSE, THE BOUND BODY IS ONE NODE, THE CLICK JOINS AND PARTS, THE ALGEBRA OF CLUSTERS; the owner's decision of 2026-09-28, 13:02 Israel time, through the Closer: the rule's universe is the finish line, world (d) to the de Broglie Experimenter; the owner's word of 15:11: Gamma in the rule's universe file is 24, a whole universe in small). Two worlds on the rule's universe of record (`examples/events/planck.json`; Gamma read from the file): THE JOIN, two bound bodies of one Node each, the smaller and the deeper, so close that their tails overlap: the law's row is a run of clicks from the smaller to the deeper whose last ends the smaller's record, one record for the joined cluster (the one non-local act); THE PARTING (the world named `part`), the same two bodies beyond the click's reach ln(b_1 b_2 / T) / kappa (Cheshbon's line of 15:22 Israel time), so that no click passes and both records stand. The counts, the clock pairs, the tails, the edge, the reach and the distances are Cheshbon's per Gamma and per engine (the engine of today reads the level once; the corrected term reads it twice, the law's form): at Gamma = 24 (15:22) the pixels are the counts 6 to 11 under the law and 9 to 14 on the engine of today, the join at three Links and the parting at six (the reach about three to four Links); at Gamma = 12,000 (13:03, 13:18, 14:12, 14:47) the join at two Links and, the reach being about eighteen Links, the far world at five Links is the slow join and no parting. The mode files come from the generator of the rule's universe, `tools/pixel_mode.py` (the owner's word of 14:32: no seed, profile or mode written by hand; THE GENERATOR IS RULE3, the owner's word of 15:28: the mode files are regenerated when the tool derives the record by Rule3 alone). Every number is the law's; no number of a run enters here. Run from the repository root: python examples/events/experiments/rules_universe/lay_out_join.py [--out <folder>] [--engine today|term] [--universe <file>]; the six files are written under the folder and nothing else."""
+"""WORLD (d) OF THE RULE'S OWN UNIVERSE: THE CLICK JOINS AND PARTS (ALGEBRA.md #the-rows-against-nature, THE RULE'S OWN UNIVERSE, THE BOUND BODY IS ONE NODE, THE CLICK JOINS AND PARTS, THE ALGEBRA OF CLUSTERS; the owner's decision of 2026-09-28, 13:02 Israel time, through the Closer: the rule's universe is the finish line, world (d) to the de Broglie Experimenter; the owner's word of 15:11: Gamma in the rule's universe file is 24, a whole universe in small). Two worlds on the rule's universe of record (`examples/events/planck.json`; Gamma read from the file): THE JOIN, two bound bodies of one Node each, the smaller and the deeper, so close that their tails overlap: the law's row is a run of clicks from the smaller to the deeper whose last ends the smaller's record, one record for the joined cluster (the one non-local act); THE PARTING (the world named `part`), the same two bodies beyond the click's reach ln(b_1 b_2 / T) / kappa (Cheshbon's line of 15:22 Israel time), so that no click passes and both records stand. The counts, the clock pairs, the tails, the edge, the reach and the distances are Cheshbon's per Gamma and per engine (the engine of today reads the level once; the corrected term reads it twice, the law's form): at Gamma = 24 (15:22) the pixels are the counts 6 to 11 under the law and 9 to 14 on the engine of today, the join at three Links and the parting at six (the reach about three to four Links); at Gamma = 12,000 (13:03, 13:18, 14:12, 14:47) the join at two Links and, the reach being about eighteen Links, the far world at five Links is the slow join and no parting (the older run; the second run of record is Gamma = 6,000 by the owner's word of 15:44, laid out when Cheshbon gives its table). Cheshbon's table from the generator run as Rule3 in integers (15:43) enters the expectation as the record's amplitude b, its count D bar and its period P per body, the reading of the run (the Closer 15:47). The mode files come from the generator of the rule's universe, `tools/pixel_mode.py` (the owner's word of 14:32: no seed, profile or mode written by hand; THE GENERATOR IS RULE3, the owner's word of 15:28: the mode files are regenerated when the tool derives the record by Rule3 alone). Every number is the law's; no number of a run enters here. Run from the repository root: python examples/events/experiments/rules_universe/lay_out_join.py [--out <folder>] [--engine today|term] [--universe <file>]; the six files are written under the folder and nothing else."""
 
 from __future__ import annotations
 
@@ -59,6 +59,25 @@ PIXELS: dict[
         6_000: {"omega_b": 0.674, "period": 9.32, "kappa": 0.98, "a": 102_340, "t": 24_904},
     },
 }
+RECORDS: dict[
+    str, dict[int, dict[str, list[float]]]
+] = {  # Cheshbon's table from the generator run as Rule3 in integers at Gamma = 24 (15:43 Israel time; the Closer 15:47: the blind expectation of every look at 24): per engine and per amplitude b at the Node, the counts the record carries (D bar = the sum of D over the record's period div P T, THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD), the period P in intervals and the window of declared counts that seed it; the count of a run is read against D bar and P, not against the file's count
+    "term": {
+        5: {"counts": [8, 9], "record_count": [8.4, 10.0], "period": [9.2, 11.0]},
+        8: {"counts": [10, 11], "record_count": [12.4, 14.9], "period": [12.0, 13.3]},
+    },
+    "today": {
+        5: {"counts": [9, 11], "record_count": [9.6, 9.9], "period": [6.9, 8.0]},
+        6: {"counts": [12, 12], "record_count": [9.2, 9.2], "period": [9.2, 9.2]},
+    },
+}
+RECORD_PAIR = {  # the two bodies of (d) by their amplitude b (Cheshbon 15:43 item 3(d), the Closer 15:47): the smaller and the deeper
+    "term": (5, 8),
+    "today": (5, 6),
+}
+RECORD_RATIO_BAND = (
+    0.15  # the band on the clocks' ratio deep over small (Cheshbon 15:43: 1.2, 1.05 to 1.35)
+)
 CLOCK_UNIT = 1 << 16  # den of the clock pair [a, den], 2 cos omega_b = a / den (Cheshbon 13:51)
 DENOMINATOR = 1024  # every body's phase denominator
 FACE_DEPTH = 3
@@ -85,6 +104,9 @@ class Layout:
         self.horizon = self.gamma // 2
         self.distances = DISTANCES[self.gamma]
         self.dissolution = DISSOLUTION[self.gamma]
+        self.records = (
+            RECORDS[engine] if self.gamma == 24 else None
+        )  # the integer generator's table exists for 24 alone
 
     def numbers(self, count: int) -> dict[str, float | int]:
         """Cheshbon's numbers for one count on this engine; a count without them is refused by name."""
@@ -152,6 +174,26 @@ def write_mode(layout: Layout, world_path: Path, document: dict[str, Any]) -> No
     subprocess.run(command, check=True, cwd=ROOT, env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
 
 
+def record_expectation(layout: Layout) -> dict[str, Any] | None:
+    """Cheshbon's record table for the two bodies (15:43 Israel time): the amplitude b of each, the count the standing record carries (D bar) and its period P, and the clocks' ratio with its band; the run's counts and periods are read against these, not against the file's counts. None where the table is not given (Gamma other than 24)."""
+    if layout.records is None:
+        return None
+    small, deep = RECORD_PAIR[layout.engine]
+    rows = {str(b): {"amplitude_b": b, **layout.records[b]} for b in (small, deep)}
+    mid = [sum(layout.records[b]["period"]) / 2 for b in (small, deep)]
+    ratio = round(mid[1] / mid[0], 2)
+    return {
+        "row": "THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD (Cheshbon 15:41, the Closer 15:46): the file declares the record by its amplitude b, the count is (the sum of D over the period) div (P T), read once per period; the realisable pixels at 24 are b = 5 (the counts about 8 to 10) and b = 8 (about 12 to 15) under the law; the run's count at each Node over the last period and the period from the level's sign changes are read against this table",
+        "bodies": {"small": rows[str(small)], "deep": rows[str(deep)]},
+        "clock_ratio_deep_over_small": [
+            round(ratio - RECORD_RATIO_BAND, 2),
+            ratio,
+            round(ratio + RECORD_RATIO_BAND, 2),
+        ],
+        "band": "one quantum on every count, 10 to 15 percent; the period to one interval",
+    }
+
+
 def expectation(layout: Layout, name: str, distance: int) -> dict[str, Any]:
     """The blind expectation: the law's row in words (THE CLICK JOINS AND PARTS), the numbers Cheshbon gives before the run, the reversible row over the whole run; no number of a run."""
     parts = name == "part" and layout.dissolution["part"] is None
@@ -198,6 +240,7 @@ def expectation(layout: Layout, name: str, distance: int) -> dict[str, Any]:
             "click_reach_links": layout.distances["reach"],
             "first_click_interval": None if parts else 1,
             "dissolution_intervals": None if dissolution is None else list(dissolution),
+            "record": record_expectation(layout),
             "clicks_expected": "no click: the bodies stand apart beyond the reach"
             if parts
             else "a run of clicks from the smaller to the deeper until the smaller's record ends",
