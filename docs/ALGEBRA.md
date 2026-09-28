@@ -523,6 +523,7 @@ at its Nodes (the mode's share inside 0.79, 0.92 at 1000, 0.997 at 5000),
 of side 6 from 1000, of side 3 at 3000, one Node at 5000; omega_b / omega_0
 for side 12 is 0.832 at 500 and 0.771 at 2000. A body's clock is set by the
 level at its Nodes and its side, from the rule: a body's mass is its count.
+THE REACH OF A HELD FAMILY IS ITS PAIR: under the hold as a sum a held family's rest solves num Delta^2 a - 6 (den - num) a = -3 den sigma (its line a_next = num S_6(a_now) div (3 den) - a_before with the source once an interval, Delta^2 the six-neighbour second difference), so its reach is 1 / kappa with kappa^2 = 6 den / num - 6, the static limit of the source's row: [1, 1] has no gap (2 cos omega = 2 at k = 0) and its rest is Poisson's over the whole GameBoard, the pull between bodies (Newton's tent, (i)); a pair with den > num has the gap 2 cos omega = 2 num / den at k = 0, its rest decays as e^(-kappa r) and inside a thick body stands at 3 den sigma / (num kappa^2), so at [1, 2] with the divisor 1 the level inside a body is its count and falls as e^(-sqrt 6 r) outside: a body's well is the static field of every family it holds, read at its Nodes by the paces, so a body's binding, a mirror's line c > Gamma (1 - sin(k / 2)) and a window are the short-reach family's and the pull between bodies the massless one's, two held rows of the universe file, one pair each; generic (a row's pair and divisor, no name), vector (the line's own static limit, no root), local (the six reads and the source at the Node).
 
 ### The generator
 
