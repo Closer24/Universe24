@@ -219,6 +219,7 @@ def entry_kind(register: Register) -> ObjectOf:
     declared = cards.at(register, "a family's entry")
     keys = {
         "name": Word(),
+        "m": Integer(least=1),
         "quantum": Integer(least=1),
         "clock": CLOCK,
         "spins_step": SPINS_STEP,
@@ -230,7 +231,7 @@ def entry_kind(register: Register) -> ObjectOf:
     keys["held"] = ObjectOf(held.keys, held.optional | {"factors", "dipole", "dipole_div"})
     read = cast(ObjectOf, reads.of)
     keys["reads"] = ListOf(ObjectOf(read.keys, read.optional | {"weight", "twist", "by"}), reads.length)
-    derived = {"parts", "phase", "clicks", "reads", "sign", "self_source", "quantum"}
+    derived = {"parts", "phase", "clicks", "reads", "sign", "self_source", "quantum", "pair", "m"}
     return ObjectOf(keys, declared.optional | derived | {"clock", "spins_step", "lifetime", "hand"})
 
 

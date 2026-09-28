@@ -2,9 +2,40 @@
 
 from __future__ import annotations
 
+import math
 from typing import Any
 
 VACUUM_PAIR = (1, 1)  # the rule's own massless band, the band of the one real field of the highest rank
+
+
+def pair_of(entry: dict[str, Any], gamma: int, label: str) -> list[int] | str:
+    """THE MASS IS ONE INTEGER (the owner, 2026-09-28): a family's pair is written over the lattice's denominator Gamma, the file holding the numerator `m` alone, cos omega_0 = m / Gamma, and the loader derives the pair [m, Gamma] in lowest terms (light m = Gamma gives [1, 1], the exact band m = Gamma div 2 gives [1, 2]); a row declaring both `m` and `pair` is refused by name, and a row with neither lacks its pair."""
+    if "m" in entry and "pair" in entry:
+        raise ValueError(
+            f"{label} declares both m and pair: the pair is [m, Gamma] in lowest terms, one form"
+        )
+    if "m" not in entry:
+        if "pair" not in entry:
+            raise ValueError(
+                f"{label} lacks keys: m (the family's numerator over Gamma; THE MASS IS ONE INTEGER)"
+            )
+        pair = entry["pair"]
+        return "body" if pair == "body" else [int(pair[0]), int(pair[1])]
+    m = int(entry["m"])
+    if not 1 <= m <= gamma:
+        raise ValueError(
+            f"{label}.m {m} is not from 1 to Gamma = {gamma}: cos omega_0 = m / Gamma lies in (0, 1]"
+        )
+    divisor = math.gcd(m, gamma)
+    return [m // divisor, gamma // divisor]
+
+
+def paired(entries: tuple[dict[str, Any], ...], gamma: int) -> list[dict[str, Any]]:
+    """Every entry with its pair filled from `m` where the file wrote the numerator alone (the amplitude bound reads the pairs)."""
+    return [
+        {**entry, "pair": pair_of(entry, gamma, f"the family {entry.get('name')!r}")}
+        for entry in entries
+    ]
 
 
 def held_count(entry: dict[str, Any]) -> str | None:
@@ -28,13 +59,15 @@ def carries_quanta(entry: dict[str, Any]) -> bool:
     return held_count(entry) != "content"
 
 
-def filled(entry: dict[str, Any], entries: tuple[dict[str, Any], ...]) -> dict[str, Any]:
+def filled(entry: dict[str, Any], entries: tuple[dict[str, Any], ...], gamma: int) -> dict[str, Any]:
     """The entry with every absent key the rule fixes filled: the parts from the rank, the phase 2 where it carries quanta and 1 for a real field, the quantum 1, the sign 0, the self-source off, the held factors 1, and the reads: a family of quanta reads every real field (a holder of the content, at any rank, the bound band's well among them) and the clicking families of a higher rank (the holders of the sign), at the weight 1, by its own twist, by the sign where the read family holds the sign; in the rule's form (no `parts` declared) also the clicks on a family of quanta and the dipole (the spin on the content's real field, the moment on the sign's holder) with the divisor equal to the phase, where the older form's absence meant none; a declared key stands."""
     found = dict(entry)
+    found["pair"] = pair_of(entry, gamma, f"the family {entry.get('name', '?')!r}")
+    found.pop("m", None)
     rule_form = "parts" not in entry
-    parts = list(found.get("parts", rank_of(entry)))
+    parts = list(found.get("parts", rank_of(found)))
     found["parts"] = parts
-    quanta = carries_quanta(entry)
+    quanta = carries_quanta(found)
     found.setdefault("phase", 2 if quanta else 1)
     found.setdefault("quantum", 1)
     found.setdefault("sign", 0)
@@ -49,12 +82,13 @@ def filled(entry: dict[str, Any], entries: tuple[dict[str, Any], ...]) -> dict[s
             held.setdefault("dipole_div", found["phase"])
         found["held"] = held
     reads: list[dict[str, Any]] = []
+    with_pairs = paired(entries, gamma)
     if "reads" in found:
         reads = [dict(read) for read in found["reads"]]
     elif quanta:
         reads = [
             {"family": other["name"]}
-            for other in entries
+            for other in with_pairs
             if held_count(other) == "content"
             or (held_count(other) == "sign" and len(rank_of(other)) > len(parts))
         ]

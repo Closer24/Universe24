@@ -16,7 +16,7 @@ from tests.running import refused
 from tests.worlds import FILE, HELD_MOMENT, HELD_SPIN, emitter_specimen, family_entry, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
-ATTRIBUTES = {"name", "pair", "held", "clock", "spins_step"}  # the file's rows; the rest derives
+ATTRIBUTES = {"name", "m", "pair", "held", "clock", "spins_step"}  # the file's rows; the rest derives
 
 
 def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_names_it():
@@ -36,24 +36,22 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     names = [entry["name"] for entry in document["families"]]
     assert names == ["gravity", "charge", "matter"]
     gravity, charge, matter = document["families"]
-    # THE FAMILIES FROM THE RULE (ALGEBRA.md #a-familys-declaration): the file holds the rows of the five
-    # numbers (the pairs, the two divisors, the light clock and the spin's step until it leaves) and
-    # nothing the rule derives: parts, phase, clicks, reads, the dipoles and the weights (`loader/derived.py`)
+    # THE FAMILIES FROM THE RULE: the file holds the rows of the five numbers and nothing the rule derives
     assert all(set(entry) <= ATTRIBUTES for entry in document["families"])
     spins = {"curl": [1, 4], "tidal": [3, 4]}
     held, moment = {"count": "content", "divisor": 40000}, {"count": "sign", "divisor": 40000}
-    assert gravity == {"name": "gravity", "pair": [1, 1], "held": held, "spins_step": spins}
-    assert charge == {"name": "charge", "pair": [1, 1], "clock": [512, 1], "held": moment}
+    assert gravity == {"name": "gravity", "m": 10000, "held": held, "spins_step": spins}
+    assert charge == {"name": "charge", "m": 10000, "clock": [512, 1], "held": moment}
     assert matter == {"name": "matter", "pair": "body"}
     entries, integers = frame.universe(FILE, {FILE: read_repository_json(FILE)}, discover())
     # the frame reads the table's lists as tuples (core/schema.py); the same numbers
     assert json.loads(json.dumps(integers)) == document["integers"] and len(entries) == 3
-    gravity, charge, matter = (derived.filled(entry, entries) for entry in entries)
-    # gravity: ten components, one level, held content with the spin's dipole, no reads, no clicks;
-    # the charge: four components, two levels, held sign with the moment's dipole halved, reads
-    # gravity, and clicks (light is its wave); matter: a scalar, two levels, the pair on every body,
-    # reads gravity plainly and the charge by its sign, clicks; every weight 1, every twist own
+    gravity, charge, matter = (derived.filled(entry, entries, 10000) for entry in entries)
+    # gravity rank 3 and real; the charge rank 2 with clicks (light its wave); matter a scalar of quanta
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and "clicks" not in gravity
+    assert (
+        gravity["pair"] == [1, 1] == charge["pair"]
+    )  # THE MASS IS ONE INTEGER: [m, Gamma] in lowest terms
     assert gravity["held"] == {**HELD_SPIN, "factors": [1, 1, 1]} and gravity["reads"] == []
     assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == HELD_MOMENT
     assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
@@ -210,7 +208,7 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
 
     refuses(lambda d: d["integers"].pop("node_clock"), "integers lacks keys: node_clock")
     refuses(lambda d: d["integers"].__setitem__("Lambda", 0), r"Lambda is 0, below its least 1")
-    refuses(lambda d: d["families"][0].pop("pair"), r"families\[0\] lacks keys: pair")
+    refuses(lambda d: d["families"][2].pop("pair"), r"the family 'matter' lacks keys: m")
     refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\], not 3")
     # the self-source's unit (ALGEBRA.md #the-interval; commit 6): 0, or at least 24 A
@@ -291,7 +289,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
 def test_age_bound_fixed_sign_and_the_family_clock_are_refused_by_name_when_absent_or_wrong():
     """The keys #1236 made required, no default: each refused by the schema's or the loader's name."""
     for change, match in (
-        (lambda d: d["universe"][0].pop("pair"), r"universe\[0\] lacks keys: pair"),
+        (lambda d: d["universe"][0].pop("pair"), r"the family 'light' lacks keys: m"),
         (lambda d: d["universe"][0].__setitem__("clock", 3), r"clock must be a list, not 3"),
         (lambda d: d["universe"][0].__setitem__("clock", [1, 0]), r"has q from 1"),
     ):

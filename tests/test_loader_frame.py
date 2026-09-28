@@ -39,9 +39,14 @@ def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved
     entries, integers = read(universe)
     assert [entry["name"] for entry in entries] == [f["name"] for f in universe["families"]]
     assert any("sourced" in entry for entry in entries)
-    filled = derived.filled(entries[2], entries)  # THE FAMILIES FROM THE RULE: the reads from the ranks
+    filled = derived.filled(
+        entries[2], entries, 10000
+    )  # THE FAMILIES FROM THE RULE: the reads from the ranks
     assert filled["reads"][1] == {"family": "charge", "weight": 1, "twist": "own", "by": "q"}
-    assert derived.filled(entries[0], entries)["held"]["dipole_div"] == 1 and "Lambda" not in integers
+    assert (
+        derived.filled(entries[0], entries, 10000)["held"]["dipole_div"] == 1
+        and "Lambda" not in integers
+    )
     for key in ("node_clock", "momentum_unit"):
         assert integers[key] == universe["integers"][key]
     table = integers["twist_table"]
@@ -80,7 +85,13 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
     refuses(lambda d: d["integers"]["twist_table"]["fine"].__setitem__(3, [1, 0]), r"a list of 3")
     refuses(lambda d: d.__setitem__("families", []), r"\.families must be a nonempty list")
     refuses(lambda d: d["families"][0].__setitem__("name", 3), r"name must be a word, not 3")
-    refuses(lambda d: d["families"][0].pop("pair"), r"families\[0\] lacks keys: pair")
+    bare = copy.deepcopy(good)
+    bare["families"][2].pop("pair")  # the frame admits it; the rule asks the numerator by name
+    with pytest.raises(ValueError, match=r"the family 'matter' lacks keys: m"):
+        derived.paired(read(bare)[0], 10000)
+    bare["families"][0]["pair"] = [1, 1]
+    with pytest.raises(ValueError, match="declares both m and pair"):
+        derived.paired(read(bare)[0], 10000)
     refuses(lambda d: d["families"][0].__setitem__("mass", 1), r"families\[0\] has unknown keys: mass")
     refuses(lambda d: d["families"][0]["held"].pop("count"), r"families\[0\]\.held lacks keys: count")
     refuses(lambda d: d["families"][1].__setitem__("phase", True), r"phase must be one of \[1, 2\]")
