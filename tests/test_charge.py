@@ -75,14 +75,9 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
         for matter_charge in (-1, 1):
             document = charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, matter_charge, strength, 1)
             simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-            assert [simulation.families[f].held for f in simulation.held_families] == [
-                "content",
-                "sign",
-            ]
-            assert simulation.families[MATTER].reads == (
-                (CLICKS, 1, "plain", 0),
-                (CHARGE, strength, "sign", 0),
-            )
+            assert [simulation.families[f].held for f in simulation.held_families] == ["content", "sign"]
+            matter_reads = ((CLICKS, 1, "plain", 0), (CHARGE, strength, "sign", 0))
+            assert simulation.families[MATTER].reads == matter_reads
             assert simulation.family_charge == [1, matter_charge, 0, 0, 0]
             assert [int(v) for v in simulation.level_of("sign")[:, 0, 0]] == slab
             assert [int(v) for v in simulation.level_of("content")[:, 0, 0]] == slab
@@ -107,9 +102,9 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
                 assert [int(v) for v in live.now[:, 0, 0]] == levels, family
                 assert [int(v) for v in live.remainder[:, 0, 0]] == remainders, family
                 assert np.array_equal(live.before, now)
-    parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 98))
+    parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 98, 1))
     with pytest.raises(ValueError, match="measured\\[0\\]: the pace of 'light' could reach 0"):
-        parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 99))
+        parse_nature_beam_world(charged_chain(60, PERIODIC, range(20, 30), QUANTA, 1, -1, 99, 1))
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
@@ -239,9 +234,9 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     split = copy()
     split["universe"][LIGHT]["sign"] = [1, 2]
     refused(split, r"universe\[0\]\.sign must be one of \[-1, 0, 1\], not \[1, 2\]")
-    same = copy()
+    same = copy()  # several families may hold one source, each at its own pair and divisor
     same["universe"][CHARGE]["held"] = {"count": "content", "factors": [1], "divisor": 40000}
-    refused(same, "two families hold 'content'")
+    assert sum(f.held == "content" for f in parse_nature_beam_world(same).families) == 2
     quantum = copy()
     quantum["universe"][CHARGE]["quantum"] = 2
     quantum["universe"][CHARGE]["clicks"] = {"gives": True, "takes": True, "quantum": 2}
