@@ -59,10 +59,8 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
     assert charge["clicks"] == {"gives": True, "takes": True, "quantum": 1} == matter["clicks"]
     assert matter["parts"] == [1] and matter["phase"] == 2 and "held" not in matter
-    assert matter["reads"] == [
-        {"family": "gravity", "weight": 1, "twist": "own", "by": 1},
-        {"family": "charge", "weight": 1, "twist": "own", "by": "q"},
-    ]
+    charge_read = {"family": "charge", "weight": 1, "twist": "own", "by": "q"}
+    assert matter["reads"] == [charge["reads"][0], charge_read]
     for path in (ROOT / "examples/events").glob("*/*.json"):
         if path.name.endswith((".mode.json", ".expectation.json")):  # the tool's files beside a world
             continue
@@ -97,16 +95,14 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     moved = on_the_file(inline)
-    moved["universe"] = "universe.json"
-    moved["engine"] = "start.json"
+    moved["universe"], moved["engine"] = "universe.json", "start.json"
     moved["stamp"] = input_stamp(moved)
     b = DetectorLawSimulation(parse_nature_beam_world(moved))
     assert b.world.universe_file == "universe.json" and a.world.universe_file is None
     names_a = [family.name for family in a.families]
     names_b = [family.name for family in b.families]
     rename = {"light": "charge", "clicks": "gravity"}
-    lines_a: list[dict] = []
-    lines_b: list[dict] = []
+    lines_a, lines_b = list[dict](), list[dict]()
     a.record, b.record = lines_a.append, lines_b.append
     # 60 intervals: the two worlds are one until A's first kick at 61 (the recoil at its first giving's close); from there the file's held rows, the shipped file's gravity (1, 4, 2) and charge (1, 1) and not the specimen's, carry the momentum into the fields
     for _ in range(60):
@@ -160,8 +156,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
     renamed["stamp"] = input_stamp(renamed)
     b = DetectorLawSimulation(parse_nature_beam_world(renamed))
     assert [family.name for family in b.families] == [rename[f.name] for f in a.families]
-    lines_a: list[dict] = []
-    lines_b: list[dict] = []
+    lines_a, lines_b = list[dict](), list[dict]()
     a.record, b.record = lines_a.append, lines_b.append
     for _ in range(120):
         a.step()
