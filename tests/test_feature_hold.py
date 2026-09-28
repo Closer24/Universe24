@@ -47,16 +47,32 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
     term = HoldTerm("content", (1, 3, 6), (1, 4, 2), None, 1, 1)
     loaded = apply(term, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {}))
     assert loaded.time_level == 0 and dict(loaded.own.values)[(1,)] == 64 * 4 * 3120 // 12480 == 64
-    assert all(now == before for _part, now, before in loaded.parts)
+    assert all(now == before for _part, _node, now, before in loaded.parts)
     advanced = apply(term, HoldStart(THE_ADVANCE, 64, (3120, 0, 0), 12480, None), loaded.own)
     assert advanced.time_level == 64  # the count over the divisor 1, this interval's source
-    assert [(p, b) for p, _n, b in advanced.parts] == [(p, n) for p, n, _b in loaded.parts]
+    assert [(p, b) for p, _k, _n, b in advanced.parts] == [(p, n) for p, _k, n, _b in loaded.parts]
     rewritten = apply(term, HoldStart(THE_REWRITE, 64, (3120, 0, 0), 12480, None), advanced.own)
     assert rewritten.own == advanced.own
-    assert all(n == b == dict(advanced.own.values)[(p,)] for p, n, b in rewritten.parts)
+    assert all(n == b == dict(advanced.own.values)[(p,)] for p, _k, n, b in rewritten.parts)
     back = apply(term, HoldStart(THE_INVERSE, 64, (3120, 0, 0), 12480, None), advanced.own)
     assert dict(back.own.values) == dict(loaded.own.values)
     assert dict(back.own.carries) == dict(loaded.own.carries)
+    # the vector part over the row's divisor E_s as the time part, per Node at a body in the law's form
+    over, nodes = (
+        HoldTerm("content", (1, 3), (1, 4), None, 1, 7),
+        ((("n", 4, 0, 0), 50), (("n", 5, 0, 0), 14)),
+    )
+    whole = apply(over, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {}))
+    each = apply(over, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None, nodes), HoldOwn({}, {}))
+    assert [(k, n) for _p, k, n, _b in whole.parts] == [
+        (None, 4 * 64 * 3120 // (7 * 12480)),
+        (None, 0),
+        (None, 0),
+    ]
+    assert [(k, n) for p, k, n, _b in each.parts if p == 1] == [
+        (k, 4 * c * 3120 // (7 * 12480)) for k, c in nodes
+    ]
+    assert dict(each.own.carries)[(1, 4, 0, 0)] == 4 * 50 * 3120 % (7 * 12480)
 
 
 def test_the_dipoles_terms_are_the_table_of_9_91_3():
@@ -137,7 +153,7 @@ def test_the_vector_and_tensor_parts_enter_over_the_divisor_at_the_time_parts_sc
     own = apply(term, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {})).own
     for _ in range(50):
         writes = apply(term, HoldStart(THE_ADVANCE, 64, (3120, 0, 0), 12480, None), own)
-        own, time, vector, tensor = writes.own, writes.time_level, writes.parts[0][1], writes.parts[3][1]
+        own, time, vector, tensor = writes.own, writes.time_level, writes.parts[0][2], writes.parts[3][2]
         assert (
             abs(vector * 12480 - 4 * 3120 * time) <= 12480 + 4 * 3120
         )  # the x part against the increment
