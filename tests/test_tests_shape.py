@@ -37,10 +37,8 @@ def test_a_test_importing_a_test_and_a_copied_helper_fail():
 
 
 def test_history_long_docstrings_skips_and_uncalled_functions_fail_beyond_the_merge_base():
-    base = {
-        "src/event_universe/m.py": "def used():\n    return 1\n\n\nX = used()\n",
-        "tests/test_a.py": "A = 1\n",
-    }
+    module = "def used():\n    return 1\n\n\nX = used()\n"
+    base = {"src/event_universe/m.py": module, "tests/test_a.py": "A = 1\n"}
     head = {
         "src/event_universe/m.py": base["src/event_universe/m.py"] + "\n\ndef lonely():\n    return 2\n",
         "tests/test_a.py": '"""One\nTwo\nThree\nFour."""\n\n# SINCE COMMIT 7 the step moved\n'

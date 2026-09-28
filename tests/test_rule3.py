@@ -14,8 +14,7 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "src" / "event_universe"
-GAMMA = 10_000
+SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
 
 
 def old_isotropic(
@@ -92,11 +91,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         reads, self_coefficient, wall = coefficients(
             num, den, gamma, content, (rng.randint(-30, 30), rng.randint(-30, 30), rng.randint(-30, 30))
         )
-        arrivals = (
-            rng.randint(-(10**6), 10**6),
-            rng.randint(-(10**6), 10**6),
-            rng.randint(-(10**6), 10**6),
-        )
+        arrivals = tuple(rng.randint(-(10**6), 10**6) for _ in range(3))
         now, before = rng.randint(-(10**6), 10**6), rng.randint(-(10**6), 10**6)
         remainder = rng.randint(0, wall - 1)
         total = (

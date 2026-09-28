@@ -1,7 +1,5 @@
 """The support-only step, a host shortcut: a record's rows are zero outside its box, which grows one Link per interval; with and without the boxes the runs are the same bit for bit, forward and back, and outside the box the levels and the remainder stay zero. HOST cost only."""
 
-from __future__ import annotations
-
 import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
