@@ -1,6 +1,6 @@
 {
  "shape": [
-  24,
+  32,
   9,
   1
  ],
@@ -19,7 +19,7 @@
    "nodes": [
     {
      "node": [
-      9,
+      7,
       4,
       0
      ],
@@ -43,11 +43,11 @@
    "nodes": [
     {
      "node": [
-      11,
+      9,
       4,
       0
      ],
-     "count": 3000
+     "count": 4000
     }
    ],
    "momentum": [
@@ -66,22 +66,22 @@
  "detectors": [],
  "readings": [
   {
-   "name": "matter_x9",
+   "name": "matter_x7",
    "kind": "level",
    "family": "matter",
    "node": [
-    9,
+    7,
     4,
     0
    ],
    "every": 1
   },
   {
-   "name": "matter_x11",
+   "name": "matter_x9",
    "kind": "level",
    "family": "matter",
    "node": [
-    11,
+    9,
     4,
     0
    ],
