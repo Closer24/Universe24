@@ -23,8 +23,7 @@ def reversible_world(ticks: int = 400) -> dict:
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
     document["universe"].insert(
-        POSITIVE,
-        family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1),
+        POSITIVE, family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
     )
     document["measured"].append(
         {

@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Any, cast
 
 import numpy as np
 
+from event_universe.core.rule3 import THE_LOAD
 from event_universe.features import crystal, polariser
 from event_universe.features.receive import ReceiveTerm
 from event_universe.loader.world import NatureBeamWorld
@@ -233,8 +234,12 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
                 own_record.now[:] = profile
                 own_record.before[:] = profile
             else:
-                own_record.now[mask] = definition.seed
-                own_record.before[mask] = definition.seed
+                # THE SEED FALLBACK LEFT (the owner's word, 2026-09-28: a write without a row of the law
+                # leaves): a body's own record comes from its mode record's two levels or profile alone
+                raise ValueError(
+                    f"measured[{number}] needs its `seed` as its composed mode's profile (the generator's "
+                    "levels or profile in its mode file); a flat scalar seed is no mode record and no row of the law"
+                )
             own_record.standing = True  # a body's own record, read by no detector (item 51)
             block.own = own_record
             loop.records[own_record.identity] = own_record
@@ -339,7 +344,7 @@ def held_records(loop: DetectorLawSimulation) -> None:
 
 
 def start_at_rest(loop: DetectorLawSimulation) -> None:
-    """THE START (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): every held family's time part at the load at its rest, the solution of the family's line with the sum's sources on its right side, 6 den a - num S_6(a) = 3 den sigma, by the folder found by its name, once before the first interval and never in it; the sources the bodies' weighted counts at their Nodes (a body in the law's form the count declared at each Node, the hold's row; a body of the old form its one source at every Node of its mask), each over the row's divisor E_s inside the folder, 0 elsewhere and beyond an open face; its levels written at both levels with the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family: a board periodic on its every axis at [1, 1] has no sink (ALGEBRA.md #the-generator (g)), so under a source total other than 0 the world is refused at the load, and under the total 0 (a signed family balanced) the rest is written at the mean 0."""
+    """THE START (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): every held family's time part at the load at its rest, the solution of the family's line with the sum's sources on its right side, 6 den a - num S_6(a) = 3 den sigma, by the folder found by its name, once before the first interval and never in it; the sources the bodies' weighted counts at their Nodes (a body in the law's form the count declared at each Node, the hold's row; a body of the old form its one source at every Node of its mask), each over the row's divisor E_s inside the folder, 0 elsewhere and beyond an open face; its levels written at both levels through the write's line (features/write) at the load, each Node with a level its key at the wall 1 (the rest of the line the solver's), the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family: a board periodic on its every axis at [1, 1] has no sink (ALGEBRA.md #the-generator (g)), so under a source total other than 0 the world is refused at the load, and under the total 0 (a signed family balanced) the rest is written at the mean 0."""
     start = loop.register.at("the start", "any")
     for family, record in loop.held_records.items():
         source = cast(str, loop.families[family].held)
@@ -362,7 +367,11 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
             raise ValueError(
                 f"the start of the held family {loop.families[family].name!r}: {refusal}"
             ) from refusal
-        record.now[...] = levels
-        record.before[...] = levels
+        nodes = np.argwhere(levels)
+        sources = tuple(((int(x), int(y), int(z)), int(levels[x, y, z])) for x, y, z in nodes)
+        written = loop._write_line(THE_LOAD, 1, 1, sources, {}, {})
+        index = tuple(nodes.T)
+        record.now[index] = [now for _, now, _ in written]
+        record.before[index] = [before for _, _, before in written]
         record.remainder[...] = 0
         loop.node_level[family] = record.now

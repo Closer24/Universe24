@@ -246,8 +246,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         parse_nature_beam_world(zero)
     heavy = content_chain(400, CHAIN, range(150, 190), 250000, gamma=1_000_000)
     with pytest.raises(
-        ValueError,
-        match=r"\.pair \[.*Gamma = 1000000 and the content M = 20000000 .*not below 2\^63",
+        ValueError, match=r"\.pair \[.*Gamma = 1000000 and the content M = 20000000 .*not below 2\^63"
     ):
         parse_nature_beam_world(heavy)
     registered = json.loads((ROOT / "tests/light_clock.json").read_text(encoding="utf-8"))
