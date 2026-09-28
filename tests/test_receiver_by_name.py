@@ -210,8 +210,7 @@ def test_the_lines_time():
     assert line["chosen"] == [["A_face", 0, "0"]] and line["clock_source"] == "measured:0"
     given = next(b for b in lines if b["event"] == "giving" and b["record"] == first)
     assert 0 <= line["click"] - line["giving"] <= 300 and 0 <= line["u"] < given["W"]
-    assert lawful_wheel(simulation.world, given)
-    assert first not in simulation.records
+    assert lawful_wheel(simulation.world, given) and first not in simulation.records
     # two bodies a hundred Links apart, each naming the cube beside the first
     document = massive_world([400, 1, 1], CLOSED_CHAIN, [800, 809])
     document["ticks"] = 600

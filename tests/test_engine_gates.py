@@ -63,8 +63,7 @@ def test_a_new_core_module_needs_the_approval_line():
 def test_the_core_check_runs_on_a_pull_request_and_never_on_a_push_to_main():
     assert BASE.on_pull_request({"GITHUB_EVENT_NAME": "pull_request", "PR_BODY": ""})
     assert not BASE.on_pull_request({"GITHUB_EVENT_NAME": "push", "PR_BODY": ""})
-    assert BASE.on_pull_request({"PR_BODY": "local"})
-    assert not BASE.on_pull_request({})
+    assert BASE.on_pull_request({"PR_BODY": "local"}) and not BASE.on_pull_request({})
 
 
 def test_an_approval_counts_only_at_a_lines_start():

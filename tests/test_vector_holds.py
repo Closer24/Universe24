@@ -3,11 +3,15 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.hold import CROSS_TERMS, TENSOR_AXES
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import parts_of, parts_world
+
+# THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
+pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
 
 
 def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_carried():

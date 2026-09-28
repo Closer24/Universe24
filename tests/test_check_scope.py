@@ -22,16 +22,12 @@ def test_every_resource_consumer_row_names_an_existing_test():
 
 def test_tool_changes_select_the_scope_test():
     tests, typed = CHECK.select(["tools/check.py"], {})
-    assert "tests/test_check_scope.py" in tests
-    assert not typed
+    assert "tests/test_check_scope.py" in tests and not typed
 
 
 @pytest.mark.parametrize(
     "name,consumer",
-    [
-        ("run_inputs.py", "tests/test_run_inputs.py"),
-        ("twist_table.py", "tests/test_primitives.py"),
-    ],
+    [("run_inputs.py", "tests/test_run_inputs.py"), ("twist_table.py", "tests/test_primitives.py")],
 )
 def test_tool_changes_select_the_test_that_loads_the_tool_by_its_path(name, consumer):
     """A tool is loaded by its path, never imported: the test that
@@ -42,8 +38,7 @@ def test_tool_changes_select_the_test_that_loads_the_tool_by_its_path(name, cons
     }
     tests, typed = CHECK.select(["tools/" + name], sources)
     assert "tests/test_names_it.py" in tests and "tests/test_other.py" not in tests
-    assert "tests/test_check_scope.py" in tests
-    assert not typed
+    assert "tests/test_check_scope.py" in tests and not typed
     root = Path(__file__).resolve().parents[1]
     assert (root / consumer).exists()
     assert Path(name).name in (root / consumer).read_text(encoding="utf-8")
@@ -58,8 +53,7 @@ def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
         "tests/test_unrelated.py": "def test_other(): pass",
     }
     tests, typed = CHECK.select(["src/domain/math.py"], sources)
-    assert "tests/test_engine.py" in tests
-    assert "tests/test_unrelated.py" not in tests
+    assert "tests/test_engine.py" in tests and "tests/test_unrelated.py" not in tests
     assert typed == ["src/domain/engine.py", "src/domain/math.py"]
 
 
@@ -72,11 +66,9 @@ def test_named_lazy_exports_do_not_pull_in_unrelated_physics():
         "tests/test_history.py": "from event_universe import ResearchSimulation",
     }
     tests, _ = CHECK.select(["src/event_universe/generic.py"], sources)
-    assert "tests/test_generic.py" in tests
-    assert "tests/test_history.py" not in tests
+    assert "tests/test_generic.py" in tests and "tests/test_history.py" not in tests
     tests, _ = CHECK.select(["src/event_universe/historical.py"], sources)
-    assert "tests/test_history.py" in tests
-    assert "tests/test_generic.py" not in tests
+    assert "tests/test_history.py" in tests and "tests/test_generic.py" not in tests
 
 
 def test_deleted_module_retains_old_consumers_and_cycles_terminate():
@@ -93,8 +85,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
     tests, typed = CHECK.select(["AGENTS.md", "tools/check.py", ".github/workflows/check.yml"], {})
     own = {"tests/test_check_scope.py", "tests/test_repository_hygiene.py"}
     own |= {"tests/test_repository_language.py", "tests/test_repository_navigation.py"}
-    assert tests == sorted(own | set(CHECK.every_pull_request()))
-    assert not typed
+    assert tests == sorted(own | set(CHECK.every_pull_request())) and not typed
 
 
 @pytest.mark.parametrize(
@@ -107,8 +98,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
 def test_an_example_selects_the_test_that_names_it_and_no_other(path, named):
     sources = {"tests/test_names_it.py": named, "tests/test_historical.py": "def test_old(): pass"}
     tests, _ = CHECK.select([path], sources)
-    assert "tests/test_names_it.py" in tests
-    assert "tests/test_historical.py" not in tests
+    assert "tests/test_names_it.py" in tests and "tests/test_historical.py" not in tests
 
 
 def test_shared_fixture_includes_all_its_consumers():
@@ -194,8 +184,7 @@ def test_batched_prior_tree_preserves_exact_sources_and_deleted_consumers(monkey
 
     monkeypatch.setattr(CHECK.subprocess, "check_output", counted)
     previous = CHECK.previous_sources("HEAD")
-    assert previous == sources
-    assert len(calls) == 2
+    assert previous == sources and len(calls) == 2
     tests, _ = CHECK.select(["src/demo/old.py"], previous)
     assert "tests/test_old.py" in tests
 

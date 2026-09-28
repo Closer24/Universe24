@@ -43,8 +43,7 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
         value, carried = division_forward(numerator, wall, carry)
         assert (value, carried) == divmod(numerator + carry, wall)
         value_before, carry_before = division_back(numerator, wall, value, carried)
-        assert carry_before == carry
-        assert value_before == -((carry - numerator) // wall)
+        assert carry_before == carry and value_before == -((carry - numerator) // wall)
     term = HoldTerm("content", (1, 3, 6), (1, 4, 2), None, 1, 1)
     loaded = apply(term, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {}))
     assert loaded.time_level == 0 and dict(loaded.own.values)[(1,)] == 64 * 4 * 3120 // 12480 == 64
@@ -132,9 +131,21 @@ def test_the_source_adds_the_count_over_the_divisor_each_interval_and_steps_back
     )
 
 
+def test_the_vector_and_tensor_parts_enter_over_the_divisor_at_the_time_parts_scale():
+    """The three parts are one source at one scale (ALGEBRA.md the hold's row, #1340): the vector part factor x s x n_a div (E_s W) and the tensor part factor x s x n_a n_b div (E_s W^2), so each interval the vector part stands to the time part's increment as factor x n_a / W and the tensor part as factor x n_a^2 / W^2, each within one unit of its own carried division."""
+    term = HoldTerm("content", (1, 3, 6), (1, 4, 2), None, 1, 7)
+    own = apply(term, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {})).own
+    for _ in range(50):
+        writes = apply(term, HoldStart(THE_ADVANCE, 64, (3120, 0, 0), 12480, None), own)
+        own, time, vector, tensor = writes.own, writes.time_level, writes.parts[0][1], writes.parts[3][1]
+        assert (
+            abs(vector * 12480 - 4 * 3120 * time) <= 12480 + 4 * 3120
+        )  # the x part against the increment
+        assert abs(tensor * 12480**2 - 2 * 3120**2 * time) <= 12480**2 + 2 * 3120**2  # the xx part
+
+
 def test_the_declaration_is_the_ledgers_row():
-    """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a body's
-    remainders, its function `apply`; the register finds the folder bound: the loop calls `apply`."""
+    """ "the hold" at (iv), the word the right side, the writes a family's level at a Node and a body's remainders, its function `apply`; the register finds the folder bound: the loop calls `apply`."""
     assert DECLARATION.name == "the hold" and folder_of("the hold") == "hold"
     assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
     assert DECLARATION.writes == ("a family's level at a Node", "a body's remainders")
@@ -144,8 +155,9 @@ def test_the_declaration_is_the_ledgers_row():
     assert registered.binder is None and registered.function is apply
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_body_in_the_laws_form_sources_each_node_by_the_count_there(tmp_path):
-    """The hold's row on a body in the law's form (ALGEBRA.md #what-a-body-is; ENGINE.md the `nodes` row): a held family's time part at each of the body's Nodes gains (the count declared THERE + r) div E_s each interval by the carried division with a remainder of its own, never the body's whole count at every Node. Two runs from the same rest (the start on the same counts) at two divisors, one above the body's whole count and one twice its largest count and above, differ after the first interval by the increments alone: (2 c div E_s) - (c div E_s) at a Node of count c under the first and 0 under the second, so the difference is 1 at the one Node whose count is at least half the first divisor and 0 elsewhere, where the whole count would make the two runs agree at every Node."""
+    """The hold's row on a body in the law's form (ALGEBRA.md #what-a-body-is; ENGINE.md the `nodes` row): a held family's time part at each of the body's Nodes gains (the count declared THERE + r) div E_s each interval by the carried division with a remainder of its own, never the body's whole count at every Node. Two runs from the load's level 0 (THE START left out: its rest depends on the divisor) at two divisors, one above the body's whole count and one twice its largest count and above, differ after the first interval by the increments alone: (2 c div E_s) - (c div E_s) at a Node of count c under the first and 0 under the second, so the difference is 1 at the one Node whose count is at least half the first divisor and 0 elsewhere, where the whole count would make the two runs agree at every Node."""
     counts = {(4, 0, 0): 5, (5, 0, 0): 7, (6, 0, 0): 1}
     whole, largest = sum(counts.values()), max(counts.values())
     universe = json.loads((ROOT / "examples/events/generated/universe.json").read_text(encoding="utf-8"))

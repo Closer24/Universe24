@@ -240,8 +240,7 @@ def test_the_conserved_form_and_the_detectors_inflow_tally_are_the_engines_integ
             inward += max(g, Fraction(0))
         # the tally in the form's units: the wall times the plain current, unweighted
         # (ALGEBRA.md #the-direction; item 36; the pace at both ends, item 34, HISTORY)
-        assert offers.get(pair, 0) == inward * wall
-        assert offers.get(far, 0) == 0
+        assert offers.get(pair, 0) == inward * wall and offers.get(far, 0) == 0
 
 
 def test_the_tally_over_the_ports_is_the_board_wide_reading_and_costs_the_ports_alone(capsys):

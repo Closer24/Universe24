@@ -49,8 +49,7 @@ def test_the_emitter_chain_steps_the_same_with_the_boxes_and_without(monkeypatch
     assert sorted(boxed.records) == sorted(plain.records)
     for identity, live in boxed.records.items():
         other = plain.records[identity]
-        assert np.array_equal(live.now, other.now)
-        assert np.array_equal(live.before, other.before)
+        assert np.array_equal(live.now, other.now) and np.array_equal(live.before, other.before)
         assert np.array_equal(live.remainder, other.remainder)
         assert live.pointers == other.pointers and live.absorbed == other.absorbed
 

@@ -94,8 +94,7 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
         register.add(Declaration("the source", "(iv)", (), (), noop, "", word="before"))
     assert PLACES == ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
     assert WORDS == ("the right side", "the step", "after the step", "any")
-    assert folder_of("the spin's step") == "spins_step"
-    assert folder_of("the self-source") == "self_source"
+    assert folder_of("the spin's step") == "spins_step" and folder_of("the self-source") == "self_source"
     assert folder_of("the recoil's accumulator") == "recoils_accumulator"
     assert folder_of("the signed read") == "signed_read" and folder_of("hold") == "hold"
     assert DEFERRED_VALUES == {
@@ -309,15 +308,18 @@ def test_the_engine_registers_every_folder_on_disk_and_checks_every_term():
     assert register.step is step and step.digest
     terms = simulation.family_terms()
     names = {name for _label, name in terms}
-    assert names <= set(register.built_names())
-    assert {
-        "the pair",
-        "the send",
-        "the operation",
-        "the signed read",
-        "the hold",
-        "the giving",
-    } <= names
+    assert (
+        names <= set(register.built_names())
+        and {
+            "the pair",
+            "the send",
+            "the operation",
+            "the signed read",
+            "the hold",
+            "the giving",
+        }
+        <= names
+    )
     assert any(label.startswith("measured[") and name == "the giving" for label, name in terms)
     register.check_terms(terms)
     assert register.at("the wait", "(i)")() == 1

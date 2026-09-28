@@ -73,8 +73,7 @@ def test_the_table_form_saturates_and_keeps_no_remainder():
     own = SourceOwn(argument(5, 5, 5, 5, 5, 5))
     writes = apply(TABLE, start, own)
     assert writes.counts.ravel().tolist() == [37, 46, 0, 0, 59, 0]
-    assert writes.remainders.ravel().tolist() == [0] * 6
-    assert int(writes.counts.max()) < TABLE.cap
+    assert writes.remainders.ravel().tolist() == [0] * 6 and int(writes.counts.max()) < TABLE.cap
 
 
 def test_the_inverse_returns_the_start_bit_for_bit():
@@ -126,8 +125,7 @@ def test_the_refusals_by_name():
 def test_the_trace_hand_identity_at_a_node():
     assert hand_identity(PLAIN, PEAK, 0, 596, 696)
     assert hand_identity(PLAIN, PEAK, 18_900, 596, 697)  # the carried remainder tips one more
-    assert not hand_identity(PLAIN, PEAK, 0, 596, 697)
-    assert hand_identity(TABLE, PEAK, 0, 300, 337)
+    assert not hand_identity(PLAIN, PEAK, 0, 596, 697) and hand_identity(TABLE, PEAK, 0, 300, 337)
     assert hand_identity(SourceTerm(3, 2, -3, SCALE), PEAK, 72, 0, -300)
 
 

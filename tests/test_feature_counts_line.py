@@ -93,8 +93,7 @@ def test_the_shipped_resting_body_keeps_its_count_under_the_loops_own_record():
         writes = apply(term, CountStart(count, remainder, here, links_of(here, wrap), 1))
         count, remainder = writes.count, writes.remainder
         found = norm * count.astype(object) + remainder.astype(object)
-        assert int(found.sum()) == total
-        assert np.array_equal(count, block.mask.astype(np.int64))
+        assert int(found.sum()) == total and np.array_equal(count, block.mask.astype(np.int64))
         swing = max(swing, int(np.abs(found - origin).max()))
     assert 0 < swing < norm // 2
 
@@ -146,8 +145,7 @@ def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_gr
         centroid(live.now.astype(object) ** 2 + live.im_now.astype(object) ** 2) - record_start
     )
     count_moved = centroid(count) - count_start
-    assert abs(record_moved - group_velocity * intervals) < 1
-    assert abs(count_moved - record_moved) < 1
+    assert abs(record_moved - group_velocity * intervals) < 1 and abs(count_moved - record_moved) < 1
 
 
 def test_the_count_is_conserved_exactly_and_the_inverse_undoes_the_line():
