@@ -702,6 +702,24 @@ GIVER_EDGE_RATIO = (
 )  # the giving pixel's bound as a share of Gamma (Cheshbon, 2026-09-28, 13:22 Israel): its count with its bound charge keeps the pace positive
 
 
+GAMMA_24_NUMBERS = {
+    "giver_period": 9.55,
+    "taker_period": 7.75,
+    "clock_ratio": 1.232,
+    "clock_ratio_band": None,
+    "light_wavelength_at_the_giver": 5.29,
+    "light_wavelength_at_the_taker": 4.18,
+    "row": "Cheshbon's table of 2026-09-28, 15:22 Israel, Gamma 24 under the law's line (the level twice): the pixel 8 rotates at omega_b 0.6578 (the period 9.55, kappa 1.015, t 0.362, the level 4 at its Node), the pixel 6 at 0.8105 (7.75, kappa 0.446, t 0.640, the level 3); tools/well_clocks.py reads `clock_ratio` as the first clock over the second, the giver's cycle over the taker's, 9.55 / 7.75 = 1.232; the given light's wavelength 2 pi / acos(3 cos omega_b - 2): 5.29 at the giver; the bands and the taker's click interval his to write; in the twin every ratio 1; what breaks in integers so small is his line (5): the count breathes one quantum, the level 3 rotates coarsely",
+}
+GAMMA_12000_NUMBERS = {
+    "clock_ratio": 1.066,
+    "clock_ratio_band": [1.03, 1.10],
+    "giver_period": 7.58,
+    "giver_period_band": [7.4, 7.8],
+    "row": "Cheshbon's blind numbers of 14:39 Israel on the engine of today (the level once, the edge 4,136): the giver 4,400 and the taker 5,000, the giver's clock 7.58 intervals (7.4 to 7.8), the ratio of the two pixels' periods taker over giver 1.066 (1.03 to 1.10), which tools/well_clocks.py reads as `clock_ratio` = the first clock over the second (its inverse, 0.938); after the conformal term returns the pixels 4,000 and 3,000 (13:17 and 13:39): the giver's period 9.55 and the ratio 1.125 today / 1.5 with the term; in the twin 1",
+}
+
+
 def pixel(node: list[int], count: int, gamma: int = RULE_GAMMA, **keys: Any) -> dict[str, Any]:
     """A bound body of one Node in the rule's universe (ALGEBRA.md, THE BOUND BODY IS ONE NODE): the count in [0.2255 Gamma, Gamma div 2), the well the count itself under the divisor 1; a giving pixel under the giver's bound."""
     edge = round(EDGE_RATIO * gamma)
@@ -717,7 +735,14 @@ def pixel(node: list[int], count: int, gamma: int = RULE_GAMMA, **keys: Any) -> 
 
 
 def rule_redshift(
-    name: str, deep: int, shallow: int, distance: int, ticks: int, stock: int, gamma: int = RULE_GAMMA
+    name: str,
+    deep: int,
+    shallow: int,
+    distance: int,
+    ticks: int,
+    stock: int,
+    gamma: int = RULE_GAMMA,
+    numbers: dict[str, Any] | None = None,
 ) -> None:
     """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a board of 121 rows along x, open on x and closed on y and z, the pixels on the middle row twenty Links from the faces, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447, its charge q = 1: a body without q gives no light; the window's norm 1 over 1, T the unit of the rule's universe, until the emitter's norm leaves the file) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
     # a board of 121 rows with the pixels on the middle one, the y faces as far as the taker: on a chain of one row a pixel's one-dimensional well grows with the board's length (the pace negative at its Node), on a strip of nine rows the open y faces take the light within four Links, on the wide board the two-dimensional well stays near the count and the light reaches the taker
@@ -783,11 +808,7 @@ def rule_redshift(
             "clocks": ["giver_clock", "taker_clock"],
             "axis_y": mid,
             "windows": [[giver_x + 4, giver_x + 4 + window], [taker_x - 4 - window, taker_x - 4]],
-            "clock_ratio": 1.066 if deep == 4400 else 1.125,
-            "clock_ratio_band": [1.03, 1.10] if deep == 4400 else None,
-            "giver_period": 7.58 if deep == 4400 else 9.55,
-            "giver_period_band": [7.4, 7.8] if deep == 4400 else None,
-            "clock_ratio_row": "Cheshbon's blind numbers: on the engine of today (the level once, the edge 4,136; his line of 14:39 Israel) the giver 4,400 and the taker 5,000, the giver's clock 7.58 intervals (7.4 to 7.8), the ratio of the two pixels' periods taker over giver 1.066 (1.03 to 1.10), which tools/well_clocks.py reads as `clock_ratio` = the first clock over the second (the giver over the taker: its inverse, 0.938); after the conformal term returns the pixels 4,000 and 3,000 (13:17 and 13:39): the giver's period 9.55 and the ratio 1.125 today / 1.5 with the term (the giver's cycle over the taker's); in the twin 1",
+            **(numbers or {}),
             "shift_ratio": None,
             "shift_ratio_band": None,
             "shift_ratio_row": "the light's relative shift of wave number over the pixel's relative shift of cycle (well_clocks' `shift_ratio`): Cheshbon's line to write; the 1.125 / 1.5 relayed under this name (the Closer, 13:22) are the clock ratio above",
@@ -863,9 +884,10 @@ def main() -> None:
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
     (HERE / "rule").mkdir(exist_ok=True)
-    # Gamma 12,000 until Cheshbon's numbers for Gamma 24 (the owner, 15:11 Israel): the engine of today (the edge 4,136), the giver 4,400 and the taker 5,000 (14:39); after the term returns 4,000 and 3,000
-    rule_redshift("rule_redshift", 4400, 5000, 60, 1500, 200, gamma=12000)
-    rule_redshift("rule_redshift_twin", 4400, 4400, 60, 1500, 200, gamma=12000)
+    # Gamma 24, the rule's universe file of record (the owner, 15:11 Israel): under the law's line (the level twice, the edge 6) the giver 8 and the taker 6 from Cheshbon's table of 15:22, the twin 8 and 8; on the engine of today (the edge 9) no giving pixel fits under the giver's bound 8.9, so the run at 24 waits for the term
+    rule_redshift("rule_redshift", 8, 6, 60, 1500, 200, gamma=24, numbers=GAMMA_24_NUMBERS)
+    rule_redshift("rule_redshift_twin", 8, 8, 60, 1500, 200, gamma=24, numbers=GAMMA_24_NUMBERS)
+    # Gamma 12,000 stays the second run if 24 is too coarse (the Closer, 15:12 Israel), on its own universe file when named: rule_redshift("rule_redshift_12000", 4400, 5000, 60, 1500, 200, gamma=12000, numbers=GAMMA_12000_NUMBERS) and the twin at 4,400
 
 
 if __name__ == "__main__":
