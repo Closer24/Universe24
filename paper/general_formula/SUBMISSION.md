@@ -12,7 +12,7 @@ journal third.
   packages only (geometry, amsmath, amssymb, amsthm, booktabs, graphicx,
   hyperref, caption, microtype, float, enumitem, longtable, array); it
   compiles from a clean directory holding `main.tex` and `figures/` alone,
-  30 pages, no undefined reference.
+  29 pages, no undefined reference.
 - `main.pdf`, the compiled output at the same commit.
 - `figures/`: the two figures the paper includes (`lattice.pdf`,
   `octahedron.pdf`), both drawn by `octahedron.py` from the definitions,
@@ -20,8 +20,8 @@ journal third.
   every number of the paper's table from the law's formulas.
 - The title page: the title, the author's name, affiliation, email and
   ORCID.
-- The abstract: 246 words (the journal's template asks 150 to 250),
-  1488 characters (arXiv allows 1920).
+- The abstract: 248 words (the journal's template asks 150 to 250),
+  1452 characters (arXiv allows 1920).
 - Keywords after the abstract (six).
 - The declarations in the journal's list: funding, competing interests,
   ethics approval, consent to participate and for publication, data and
@@ -71,7 +71,7 @@ engine are a second part.
    (the paper's words, the macros written out); the author as on the
    title page; the licence CC BY 4.0, the author's choice (the usual
    choice for a paper whose code is MIT; irrevocable for each version);
-   the comment line: "30 pages, 2 figures; code and documents at
+   the comment line: "29 pages, 2 figures; code and documents at
    doi:10.5281/zenodo.22738746".
 5. After the posting, the arXiv identifier goes into the cover letter.
 
