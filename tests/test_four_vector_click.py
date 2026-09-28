@@ -63,9 +63,7 @@ def test_a_symmetric_emitters_tallies_cancel_and_the_inverse_undoes_the_windows_
         simulation.step()
     assert block.window is not None
     live = simulation.records[block.window]
-    for _ in range(3):
-        simulation.step()
-    kept, outward = list(live.outward_tally), live.outward
+    kept, outward = ([simulation.step() for _ in range(3)] and list(live.outward_tally)), live.outward
     for _ in range(10):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
