@@ -30,8 +30,7 @@ RATES = [
 
 
 def test_working_register_is_bounded():
-    assert checked_work(MAX_WORK_INT) == MAX_WORK_INT
-    assert checked_work(-MAX_WORK_INT) == -MAX_WORK_INT
+    assert checked_work(MAX_WORK_INT) == MAX_WORK_INT and checked_work(-MAX_WORK_INT) == -MAX_WORK_INT
     with pytest.raises(OverflowError):
         checked_work(MAX_WORK_INT + 1)
     with pytest.raises(OverflowError):
@@ -83,8 +82,7 @@ def test_signed_inner_at_the_bound():
     assert signed_inner((REGISTER, REGISTER), (1, 1), (1, -1), REGISTER) == 0
     root = 1 << 31
     within = (root - 1) * root + 1
-    assert within <= REGISTER
-    assert signed_inner((root - 1, 1), (root, 1), (1, 1), REGISTER) == within
+    assert within <= REGISTER and signed_inner((root - 1, 1), (root, 1), (1, 1), REGISTER) == within
     # 2^31 x 2^31 = 2^62, one beyond: refused before the product is formed.
     with pytest.raises(OverflowError, match="the product at component 0"):
         signed_inner((root,), (root,), (1,), REGISTER)
@@ -181,11 +179,9 @@ def test_the_age_wall_stretches_the_wall_by_the_crowd():
     """(c)."""
     assert age_wall(1, 1, 1, 11, (1, 4)) == (4, 15)
     rate, wall = age_wall(1, 1, 1, 11, (1, 4))
-    assert wall - rate == 11 * 1
-    assert age_wall(128, 192, 2, 11, (1, 4)) == (512, 192 * (4 + 2 * 11 * 1))
+    assert wall - rate == 11 * 1 and age_wall(128, 192, 2, 11, (1, 4)) == (512, 192 * (4 + 2 * 11 * 1))
     assert age_wall(128, 192, 2, 11, (1, 4)) == (512, 4992)
-    assert age_wall(128, 192, 2, 0, (1, 4)) == (512, 768)
-    assert age_wall(3, 5, 1, 0, (0, 7)) == (21, 35)
+    assert age_wall(128, 192, 2, 0, (1, 4)) == (512, 768) and age_wall(3, 5, 1, 0, (0, 7)) == (21, 35)
     fired, accumulator = 0, 0
     for _ in range(15):
         count, accumulator = by_drive(accumulator, 4, 15)

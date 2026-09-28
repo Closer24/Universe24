@@ -179,10 +179,7 @@ def test_the_stride_reads_interval_zero_and_every_multiple_up_to_the_ticks():
     ticks leaves the loaded state alone."""
     document = declared(
         emitter_world(stock=1, ticks=10),
-        [
-            {"name": "a", "kind": "alive", "every": 3},
-            {"name": "b", "kind": "alive", "every": 50},
-        ],
+        [{"name": "a", "kind": "alive", "every": 3}, {"name": "b", "kind": "alive", "every": 50}],
     )
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     readings = Readings(simulation.world.readings)

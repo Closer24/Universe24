@@ -80,5 +80,4 @@ def test_nested_example_readmes_are_included_in_navigation_audit(tmp_path):
     entry.parent.mkdir(parents=True)
     entry.write_text("# Example\n[Missing contract](missing.md)\n", encoding="utf-8")
     documents = [path for path in repository_files(tmp_path) if path.suffix == ".md"]
-    assert documents == [entry]
-    assert broken_links(entry, tmp_path) == [str(entry.parent / "missing.md")]
+    assert documents == [entry] and broken_links(entry, tmp_path) == [str(entry.parent / "missing.md")]

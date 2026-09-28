@@ -222,16 +222,14 @@ def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_
 
 def test_the_declaration_is_the_ledgers_row():
     """The folder declares the row of ALGEBRA.md #the-primitives: the name, the place (i), the four reads in the row's words, the paces as its one write with no order, its function `apply`, its section."""
-    assert DECLARATION.name == "the signed read"
-    assert DECLARATION.place == "(i)"
+    assert DECLARATION.name == "the signed read" and DECLARATION.place == "(i)"
     assert DECLARATION.reads == (
         "the read families' arguments at the interval's start (a level, or D_i for a pair)",
         "the signed weights",
         "by (plain, or q)",
         "the axis contents with their remainders",
     )
-    assert DECLARATION.writes == ("the paces",)
-    assert DECLARATION.function is apply and DECLARATION.built
+    assert DECLARATION.writes == ("the paces",) and DECLARATION.function is apply and DECLARATION.built
     assert DECLARATION.word == "the right side"
     assert DECLARATION.section.startswith(THE_WORD) and THE_WORD.startswith("from the rule")
     assert "#the-primitives" in DECLARATION.section and "#the-paces" in DECLARATION.section

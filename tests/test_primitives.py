@@ -183,8 +183,7 @@ def test_the_share_refuses_a_residue_off_the_wheel_and_no_product():
 
 
 def test_the_helicity_is_the_sign_of_the_spin_against_the_momentum():
-    assert P.helicity((0, 0, 5), (0, 0, 3)) == 1
-    assert P.helicity((0, 0, 5), (0, 0, -3)) == -1
+    assert P.helicity((0, 0, 5), (0, 0, 3)) == 1 and P.helicity((0, 0, 5), (0, 0, -3)) == -1
     assert P.helicity((0, 0, 5), (3, 0, 0)) == 0  # the spin across the motion
     assert P.helicity((0, 0, 0), (3, 0, 0)) == 0 and P.helicity((0, 0, 5), (0, 0, 0)) == 0
     assert P.helicity_admits(0, (0, 0, 5), (0, 0, -3))
@@ -205,7 +204,6 @@ def test_the_hosts_table_generator_writes_exact_triples_within_their_angles():
     assert tool.theta_unit() == 1.0 / (4 * 10_000 * 65536)
     # THE FINDING (the tool's docstring): the asked precision theta_unit / 2^10 cannot be met
     # with d at most 10^9; every fine angle lies below the floor and its triple is the identity's
-    assert 0 < largest <= tool.SMALLEST_ANGLE
-    assert all(triple == (1, 0, 1) for triple in table.fine)
+    assert 0 < largest <= tool.SMALLEST_ANGLE and all(triple == (1, 0, 1) for triple in table.fine)
     with pytest.raises(ValueError, match="misses its angle"):
         tool.check_angles(table, tolerance=tool.theta_unit() / TWIST_FINE_COUNT)
