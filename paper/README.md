@@ -1,11 +1,14 @@
 # Paper
 
 The project has one paper: `general_formula/main.tex`. There is no other
-manuscript (the model owner's decision of 2026-09-26: what came before is
-gone; only the new paper stands).
+manuscript.
 
-- `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
-  twice. It needs only its two figures.
+- `general_formula/main.tex`: the paper, written from the law alone. Every
+  formula is taken from `docs/ALGEBRA.md` and cited by the name of its
+  section; the engine is described from `docs/ENGINE.md`. No experiment is
+  run in the paper: its eighteen rows are the law's blind expectations,
+  each beside the form of nature it is compared with. Build it with
+  `pdflatex main.tex` twice. It needs only its two figures.
 - `general_formula/main.pdf`: the compiled paper.
 - `general_formula/figures/lattice.pdf` and `octahedron.pdf`: the two
   figures, drawn from the definitions with no run by
@@ -14,6 +17,5 @@ gone; only the new paper stands).
   the journal.
 - `general_formula/COVER_LETTER.md`: the cover letter for the journal.
 
-Every formula of the paper is taken from the algebra, `docs/ALGEBRA.md`,
-chapters 8 and 9, and every pin from the algebra's section 9.22 (8) or the
-lab tools' part B, each cited in the paper.
+The experiments' rows enter the paper after their runs on the engine with
+blind pins, one row per run, in the same file.
