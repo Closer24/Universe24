@@ -14,18 +14,23 @@ sys.path.insert(0, str(HERE))
 from lay_out_axes import edges, gamma_of, pixel_mode  # noqa: E402  (the pixels' modes through the tool)
 from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
-COUNT = 4_400  # the body's count on the engine of today: the bound window 4,133 <= c <= about 5,900 (Cheshbon 14:39 Israel), the Closer's word of 14:47; 3,000 again with the corrected term
-BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
+COUNT = 10  # the falling pixel's count at Gamma = 24 (Cheshbon's table of 15:22 Israel: the pixels 8 to 11 on the law; (a), (b), (c) at 10, b = 6); 4,400 on 12,000 was the second run
+BAND = 0.15  # the band on every blind number at Gamma = 24: one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22 Israel)
 CLUSTERS: dict[str, dict[str, int] | None] = {
     "control": None,
-}  # THE SCREEN IS A CLUSTER (Cheshbon 14:55 Israel, the Closer 14:59): the heavy body is a cluster of pixels, a sieve along +x beyond the falling pixel: `pixels` how many, `spacing` the sieve's period in Links, `count` per pixel, `distance` in Links from the falling pixel to the first; Cheshbon's numbers per cluster, asked at 15:05; None the control with no cluster
+    "sieve_1": {"pixels": 1, "spacing": 2, "count": 8, "distance": 2},
+    "sieve_2": {"pixels": 2, "spacing": 2, "count": 8, "distance": 2},
+    "sieve_4": {"pixels": 4, "spacing": 2, "count": 8, "distance": 2},
+}  # THE SCREEN IS A CLUSTER (Cheshbon 14:55 Israel, the Closer 14:59): the heavy body is a cluster of pixels, a sieve along +x beyond the falling pixel: `pixels` how many, `spacing` the sieve's period in Links, `count` per pixel, `distance` in Links from the falling pixel to the first; Cheshbon's sieve at Gamma = 24 (15:22 Israel, item 6: pixels of 8 at the period 2), one, two and four of them in place of the tents 50, 100 and 200, the first two Links from the falling pixel (the click's reach at 24 about 3 to 4 Links, item 5c); None the control with no cluster
 TAIL_RATIO: dict[
     str, float
-] = {}  # Cheshbon's blind number per cluster: the tail toward the cluster over the tail away
-BIAS: dict[
-    str, float
-] = {}  # Cheshbon's blind number per cluster: the share of the count's moves toward the cluster
-KAPPA_AWAY = 0.283  # the tail's decay per Link away from the cluster at 4,400 on the engine of today (0.446 at 3,000 under the term)
+] = {}  # the tail's ratio toward the cluster over away is under the rounding at Gamma = 24 (Cheshbon 15:22 Israel, item 5e: a shift of kappa about 0.05); read at 12,000, the second run (the Closer 15:30)
+BIAS = {
+    "sieve_1": 0.51,
+    "sieve_2": 0.51,
+    "sieve_4": 0.51,
+}  # the blind share of the count's moves toward the cluster at Gamma = 24 by Cheshbon's line of 13:09 (the moves' bias in the tails' ratio) from his shift of 15:22, item 5e: about 0.05, so 0.51 within one quantum
+KAPPA_AWAY = 1.269  # the tail's decay per Link away from the cluster at 10 on the law at Gamma = 24 (Cheshbon 15:22 Israel)
 PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 1000  # the run's length: the Experimenter's proposal until Cheshbon's number of moves
 WIDTH = 3  # the chain's y and z: three wide, periodic, six Ports with a neighbour each
@@ -162,7 +167,7 @@ def main() -> None:
             json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
         )
         (folder / f"{name}.expectation.json").write_text(
-            json.dumps(expectation(name, cluster), indent=1) + "\n", encoding="utf-8"
+            json.dumps(expectation(label, cluster), indent=1) + "\n", encoding="utf-8"
         )
 
 

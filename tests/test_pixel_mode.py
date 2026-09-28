@@ -14,7 +14,9 @@ from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 WORLD = ROOT / "examples" / "events" / "experiments" / "rules_universe" / "fall_control.json"
-UNIVERSE = "examples/events/experiments/rules_universe/rules_universe_over_gamma.json"  # Gamma 12,000
+UNIVERSE = (
+    "examples/events/experiments/rules_universe/rules_universe.json"  # Gamma 12,000, the form of #1403
+)
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 COUNT, A, DEN, TAIL = 5000, 93270, 65536, 34734  # the pixel of 5,000, its pair and tail: Cheshbon's line
 

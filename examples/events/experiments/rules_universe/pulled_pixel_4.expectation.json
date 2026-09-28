@@ -1,16 +1,16 @@
 {
  "format": "world-expectation-v1",
  "status": "BLIND: the row of THE COLOURS ARE THE THREE AXES; Cheshbon's numbers before the run; no number of a run here",
- "row": "ALGEBRA.md THE COLOURS ARE THE THREE AXES, THE BOUND BODY IS ONE NODE: a bound body of one Node of 4400 quanta on the matter pair [2, 3] of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1); the colours are the three tallies of the count's line, one per axis, and a second pixel of 4400 quanta 4 Links along +x pulls it: the transfer rate omega_b e^(-kappa d) falls with the distance (no constant tension, no linear potential), the clicks' tallies lean along x and balance on y and z: the pull is the clicks' bias along one axis",
+ "row": "ALGEBRA.md THE COLOURS ARE THE THREE AXES, THE BOUND BODY IS ONE NODE: a bound body of one Node of 10 quanta on the matter pair [2, 3] of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1); the colours are the three tallies of the count's line, one per axis, and a second pixel of 10 quanta 4 Links along +x pulls it: the transfer rate omega_b e^(-kappa d) falls with the distance (no constant tension, no linear potential), the clicks' tallies lean along x and balance on y and z: the pull is the clicks' bias along one axis",
  "DETECTOR": [],
  "blind": {
-  "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; the band plus or minus 30 percent (the Closer 14:16)",
-  "edge_quanta_per_node": 2706,
-  "edge_quanta_per_node_level_once": 4133,
-  "horizon_quanta_per_node": 6000,
+  "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes on a closed board and 2 : 1 : 1 with the faces open along x (Cheshbon 15:22, Gamma = 24); at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; at Gamma = 24 the pull M omega_b e^(-kappa d) at 10 is under one quantum per interval (0.41 at 2 Links), the band one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22)",
+  "edge_quanta_per_node": 5,
+  "edge_quanta_per_node_level_once": 8,
+  "horizon_quanta_per_node": 12,
   "raw_clicks_per_port_per_interval": 1000,
   "net_tally_per_interval": [
-   1176,
+   0.032,
    0,
    0
   ],
@@ -25,17 +25,17 @@
  "axes": {
   "detector": "at_pixel",
   "net_per_interval": [
-   1176,
+   0.032,
    0,
    0
   ],
   "raw_ratio": [
-   1,
+   2,
    1,
    1
   ],
   "first_click": 1,
-  "band": 0.3,
+  "band": 0.15,
   "row": "axis_tallies.py reads the clicks at the pixel's detector: per axis the net tally (the sum of the tallies' components) and the raw (the sum of their magnitudes), the net per interval at the peak interval, the net and the raw over the axes, the first click's interval; MATCH within `band` of `net_per_interval` on every axis once Cheshbon writes it, else the reading alone; the net 0 on every axis reads white (DETECTOR: the clicks; the tallies a reading of them)"
  }
 }

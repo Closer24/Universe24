@@ -19,7 +19,6 @@ from lay_out_join import (  # noqa: E402
     DENOMINATOR,
     ENGINE,
     PIXELS,
-    QUANTUM_ACTION,
     ROOT,
     STEPS,
 )
@@ -28,11 +27,15 @@ from pixel_mode import (  # noqa: E402  (the generator of the rule's universe, #
     pixel_entry,
 )
 
-COUNT = 4_400  # the pixel's count on the engine of today (the level once): the bound window is 4,133 <= c <= about 5,900 (Cheshbon 14:39 Israel), the Closer's word of 14:47: (a) and (c) on 4,400; 3,000 again with the corrected term
+COUNT = 10  # the pixel's count at Gamma = 24 (the owner's word of 15:11 Israel; Cheshbon's table of 15:22: the pixels 8 to 11 realisable on the law, 6 and 7 not; (a), (b), (c) at 10, b = 6); 4,400 on Gamma = 12,000 was the second run
 PIXEL_NUMBERS = {
     **PIXELS,
     4_400: {"omega_b": 0.8290, "kappa": 0.283, "a": 88_553},
-}  # Cheshbon's numbers per count on the engine of today (14:39 Israel: 4,400 gives omega_b 0.8290, the period 7.58, kappa 0.283, t 0.754) beside lay_out_join's table
+    8: {"omega_b": 0.6578, "kappa": 1.015, "a": 103_723},
+    9: {"omega_b": 0.5826, "kappa": 1.164, "a": 109_453},
+    10: {"omega_b": 0.5137, "kappa": 1.269, "a": 114_155},
+    11: {"omega_b": 0.4550, "kappa": 1.341, "a": 117_736},
+}  # Cheshbon's numbers per count: on Gamma = 12,000 (14:39 Israel, beside lay_out_join's table) and on Gamma = 24 under the law, the level twice (15:22 Israel: omega_b, kappa and the clock pair [a, 65536] for the counts 8 to 11)
 PULLS = (0, 2, 4, 6)  # the second pixel's distance in Links along x; 0 the white pixel alone
 TAIL = {
     3_000: 41_943,
@@ -61,7 +64,7 @@ def edges(gamma: int) -> dict[str, int]:
     }
 
 
-BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
+BAND = 0.15  # the band on every blind number at Gamma = 24: one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22 Israel); 0.3 on 12,000 (the Closer 14:16)
 RAW_PER_PORT = 1000  # Cheshbon's blind number of 13:46 Israel at 3,000: the raw clicks (both signs) per interval through each of the six Ports, about
 PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's number of intervals
@@ -71,10 +74,10 @@ AXIS = [1, 1]  # the row's y and z
 BODY_X = 4  # the white pixel's Node; the second pixel toward +x
 
 
-def net_along_x(count: int, distance: int) -> int:
+def net_along_x(count: int, distance: int) -> float:
     """Cheshbon's blind number of 13:46 Israel for the pull: the net tally along the axis about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 and 2, 4, 6 Links), with omega_b and kappa of the count on the engine of the day."""
     numbers = PIXEL_NUMBERS[count]
-    return round(count * numbers["omega_b"] * math.exp(-numbers["kappa"] * distance))
+    return round(count * numbers["omega_b"] * math.exp(-numbers["kappa"] * distance), 3)
 
 
 def one_node(x: int, count: int) -> dict[str, Any]:
@@ -102,6 +105,7 @@ def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
     universe = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))
     pairs = {family["name"]: list(family["pair"]) for family in universe["families"]}
     integers = universe["integers"]
+    action = int(integers["quantum_action"])  # T, the one unit of the universe file
     twist_scale = int(integers["twist_table"]["unit"]) // (4 * int(integers["node_clock"]))
     bodies = []
     for number, body in enumerate(document["measured"]):
@@ -121,9 +125,7 @@ def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
         a = numbers.get("a") or round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
         factor = TAIL.get(count) or round(math.exp(-numbers["kappa"]) * TAIL_UNIT) if tail else 0
         row = (a, CLOCK_UNIT, factor)
-        entry = pixel_entry(
-            number, body, document, pairs[body["family"]], QUANTUM_ACTION, row, twist_scale
-        )
+        entry = pixel_entry(number, body, document, pairs[body["family"]], action, row, twist_scale)
         bodies.append({**entry, "omega_b": numbers["omega_b"], "kappa": numbers["kappa"]})
     return {"world_digest": input_digest(document), "bodies": bodies}
 
@@ -180,7 +182,7 @@ def expectation(pull: int) -> dict[str, Any]:
         ),
         "DETECTOR": [],
         "blind": {
-            "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; the band plus or minus 30 percent (the Closer 14:16)",
+            "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes on a closed board and 2 : 1 : 1 with the faces open along x (Cheshbon 15:22, Gamma = 24); at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; at Gamma = 24 the pull M omega_b e^(-kappa d) at 10 is under one quantum per interval (0.41 at 2 Links), the band one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22)",
             **edges(gamma_of(PLANCK)),
             "raw_clicks_per_port_per_interval": RAW_PER_PORT,
             "net_tally_per_interval": net,
@@ -195,7 +197,7 @@ def expectation(pull: int) -> dict[str, Any]:
         "axes": {
             "detector": "at_pixel",
             "net_per_interval": net,
-            "raw_ratio": [1, 1, 1],
+            "raw_ratio": [2, 1, 1],
             "first_click": 1,
             "band": BAND,
             "row": "axis_tallies.py reads the clicks at the pixel's detector: per axis the net tally (the sum of the tallies' components) and the raw (the sum of their magnitudes), the net per interval at the peak interval, the net and the raw over the axes, the first click's interval; MATCH within `band` of `net_per_interval` on every axis once Cheshbon writes it, else the reading alone; the net 0 on every axis reads white (DETECTOR: the clicks; the tallies a reading of them)",
