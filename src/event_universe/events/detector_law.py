@@ -25,6 +25,7 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.events import after_step, assembly, body_language, guards, output, pair, record_well
+from event_universe.events import count_once as once
 from event_universe.events import live as live_records
 from event_universe.events import momentum_reading as momentum
 from event_universe.events import window as giving_window
@@ -82,7 +83,6 @@ HoldMap = dict[tuple[int, int], HoldWrites]  # the hold's writes by (family, bod
 class DetectorLawSimulation(GameBoardGeometry[Block]):
     """One world under the engine, stepped interval by interval."""
 
-    # the record's step, one fused call today, its click included: the names of the file's chain
     CHAIN: tuple[str, ...] = (
         "the pair",
         "the degree",
@@ -97,7 +97,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         "the clicks",
     )
 
-    # a body's records' identities: the body's number times the stride, its own record at giving 0
     next_identity = 1
     next_held = 0
 
@@ -296,13 +295,15 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return
         if block.counts is None or block.count_remainder is None:
             block.counts, block.count_remainder = self._lay_count(block, live)
-        wall = self.kind_wall(block.family, block.definition.pair)
+        if once.counts_are_the_well(self.families, block):
+            block.counts = once.counts_laid(block, self._centre_node(block))
+        wall, wrap = self.kind_wall(block.family, block.definition.pair), self.kind_wrap[block.family]
         term = CountTerm(block.count_norm, wall, self.world.amplitude_bound, int(block.counts.max()))
-        wrap = self.kind_wrap[block.family]
         levels = (live.now, live.before, live.im_now, live.im_before)
         arrived = [None if a is None else self.ports.arrivals(a, wrap) for a in levels]
         links = tuple(Levels(*(None if a is None else a[port] for a in arrived)) for port in range(6))
-        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction)
+        ports = lambda array: tuple(self.ports.arrivals(array, wrap))  # noqa: E731
+        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction, ports)
         writes = cast(CountWrites, line(term, start, None))
         block.counts, block.count_remainder = writes.count, writes.remainder
         if direction > 0:
@@ -579,7 +580,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     held[(family, number)] = w
                     sign = -1 if act == THE_INVERSE else 1
                     for key, level in w.node_levels:
-                        record.now[cast(tuple[int, int, int], key[1:])] += sign * level
+                        node = cast(tuple[int, int, int], key[1:])
+                        record.now[node] = once.written(block, definition, record.now[node], level, sign)
                     if not w.node_levels:
                         mask = block.mask if block is not None else self.span_masks[number]
                         record.now[mask] += sign * w.time_level
@@ -735,8 +737,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return declared + sum(
             sign * quanta for sign, quanta in zip(self.family_charge, self.held[number], strict=True)
         )
-
-    # The blocks (massive-record-v1)
 
     def stock_of(self, block: Block) -> int:
         """THE STOCK of the family a body gives (ALGEBRA.md #the-paces, #the-primitives): its held quanta of another family; of its own family, its declared `stock` less its givings (each giving lowered M by one, the held count of its own)."""

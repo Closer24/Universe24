@@ -1,4 +1,4 @@
-"""WORLD (d) OF THE RULE'S OWN UNIVERSE: THE CLICK JOINS AND PARTS (ALGEBRA.md #the-rows-against-nature, THE RULE'S OWN UNIVERSE, THE BOUND BODY IS ONE NODE, THE CLICK JOINS AND PARTS, THE ALGEBRA OF CLUSTERS; the owner's decision of 2026-09-28, 13:02 Israel time, through the Closer: the rule's universe is the finish line, world (d) to the de Broglie Experimenter; the owner's word of 15:11: Gamma in the rule's universe file is 24, a whole universe in small). Two worlds on the rule's universe of record (`examples/events/planck.json`; Gamma read from the file): THE JOIN, two bound bodies of one Node each, the smaller and the deeper, so close that their tails overlap: the law's row is a run of clicks from the smaller to the deeper whose last ends the smaller's record, one record for the joined cluster (the one non-local act); THE PARTING (the world named `part`), the same two bodies beyond the click's reach ln(b_1 b_2 / T) / kappa (Cheshbon's line of 15:22 Israel time), so that no click passes and both records stand. The counts, the clock pairs, the tails, the edge, the reach and the distances are Cheshbon's per Gamma and per engine (the engine of today reads the level once; the corrected term reads it twice, the law's form): at Gamma = 24 (15:22) the pixels are the counts 6 to 11 under the law and 9 to 14 on the engine of today, the join at three Links and the parting at six (the reach about three to four Links); at Gamma = 12,000 (13:03, 13:18, 14:12, 14:47) the join at two Links and, the reach being about eighteen Links, the far world at five Links is the slow join and no parting (the older run; the second run of record is Gamma = 6,000 by the owner's word of 15:44, laid out when Cheshbon gives its table). Cheshbon's table from the generator run as Rule3 in integers (15:43) enters the expectation as the record's amplitude b, its count D bar and its period P per body, the reading of the run (the Closer 15:47). The mode files come from the generator of the rule's universe, `tools/pixel_mode.py` (the owner's word of 14:32: no seed, profile or mode written by hand; THE GENERATOR IS RULE3, the owner's word of 15:28: the mode files are regenerated when the tool derives the record by Rule3 alone). Every number is the law's; no number of a run enters here. Run from the repository root: python examples/events/experiments/rules_universe/lay_out_join.py [--out <folder>] [--engine today|term] [--universe <file>]; the six files are written under the folder and nothing else."""
+"""WORLD (d) OF THE RULE'S OWN UNIVERSE: THE CLICK JOINS AND PARTS (ALGEBRA.md #the-rows-against-nature, THE RULE'S OWN UNIVERSE, THE BOUND BODY IS ONE NODE, THE CLICK JOINS AND PARTS, THE ALGEBRA OF CLUSTERS; the owner's decision of 2026-09-28, 13:02 Israel time, through the Closer: the rule's universe is the finish line, world (d) to the de Broglie Experimenter; the owner's word of 15:11: Gamma in the rule's universe file is 24, a whole universe in small). Two worlds on the rule's universe of record (`examples/events/planck.json`; Gamma read from the file): THE JOIN, two bound bodies of one Node each, the smaller and the deeper, so close that their tails overlap: the law's row is a run of clicks from the smaller to the deeper whose last ends the smaller's record, one record for the joined cluster (the one non-local act); THE PARTING (the world named `part`), the same two bodies beyond the click's reach ln(b_1 b_2 / T) / kappa (Cheshbon's line of 15:22 Israel time), so that no click passes and both records stand. The counts, the clock pairs, the tails, the edge, the reach and the distances are Cheshbon's per Gamma and per engine (the engine of today reads the level once; the corrected term reads it twice, the law's form): at Gamma = 24 (15:22) the pixels are the counts 6 to 11 under the law and 9 to 14 on the engine of today, the join at three Links and the parting at six (the reach about three to four Links); at Gamma = 12,000 (13:03, 13:18, 14:12, 14:47) the join at two Links and, the reach being about eighteen Links, the far world at five Links is the slow join and no parting (the older run; the second run of record is Gamma = 6,000 by the owner's word of 15:44, laid out when Cheshbon gives its table). Cheshbon's table from the generator run as Rule3 in integers (15:43) enters the expectation as the record's amplitude b, its count D bar and its period P per body, the reading of the run (the Closer 15:47). The mode files come from the generator of the rule's universe, `tools/pixel_mode.py` (the owner's word of 14:32: no seed, profile or mode written by hand; THE GENERATOR IS RULE3, the owner's word of 15:28: the mode files are regenerated when the tool derives the record by Rule3 alone). Every number is the law's; no number of a run enters here. THE HIERARCHY IS RECURSIVE (the world named `hierarchy`, where Cheshbon's number is given): two equal pixels two Links apart are a cluster one level up, and the breathing period of the pair's total count against the pixel's period is the ratio of the ticks between levels, about e^(kappa d) (Cheshbon 16:35: at 6,000, 2,000 and 2,000 at two Links, P_2 about 73 against P_1 9.55, the ratio 7.6 in 5 to 11). Run from the repository root: python examples/events/experiments/rules_universe/lay_out_join.py [--out <folder>] [--engine today|term] [--universe <file>] [--suffix _6000]; the files are written under the folder and nothing else."""
 
 from __future__ import annotations
 
@@ -19,23 +19,25 @@ EDGE_FRACTION = {  # the edge of the bound body as a fraction of Gamma (Cheshbon
     "today": 0.3444,
     "term": 0.2255,
 }
-COUNTS = {  # the smaller and the deeper body's counts per engine and Gamma (Cheshbon 15:22 for 24; 14:47 and 13:03 for 12,000)
-    "today": {24: (10, 12), 12_000: (4_400, 4_700)},
-    "term": {24: (8, 10), 12_000: (3_000, 4_000)},
+COUNTS = {  # the smaller and the deeper body's counts per engine and Gamma (Cheshbon 15:22 for 24; 15:50 for 6,000, the run of record after 24 by the owner's word of 15:44; 14:47 and 13:03 for 12,000, the older run)
+    "today": {24: (10, 12), 6_000: (2_200, 2_350), 12_000: (4_400, 4_700)},
+    "term": {24: (8, 10), 6_000: (1_500, 2_000), 12_000: (3_000, 4_000)},
 }
-DISTANCES = {  # Links between the two Nodes per Gamma: the join within the click's reach, the far world beyond it (24: the reach about three to four Links, Cheshbon 15:22, so six Links part; 12,000: the reach about eighteen Links, Cheshbon 13:18, so five Links is the slow join and no parting)
+DISTANCES = {  # Links between the two Nodes per Gamma: the join within the click's reach, the far world beyond it (24: the reach about three to four Links, Cheshbon 15:22, so six Links part; 6,000: the join at three Links, Cheshbon 15:50, the reach ln(b_1 b_2 / T) / kappa about eight to eighteen Links by the two tails, so twenty Links part; 12,000: the reach about eighteen Links, Cheshbon 13:18, so five Links is the slow join and no parting)
     24: {"join": 3, "part": 6, "reach": 4},
+    6_000: {"join": 3, "part": 20, "reach": 18},
     12_000: {"join": 2, "part": 5, "reach": 18},
 }
-DISSOLUTION = {  # the smaller dissolved within these intervals (blind): 24 about two bound periods (Cheshbon 15:22); 12,000 at two Links 3 to 10 and at five Links 30 to 70 (Cheshbon 13:18)
+DISSOLUTION = {  # the smaller dissolved within these intervals (blind): 24 about two bound periods (Cheshbon 15:22); 6,000 at three Links about two bound periods, 15 to 25 intervals (Cheshbon 16:37); 12,000 at two Links 3 to 10 and at five Links 30 to 70 (Cheshbon 13:18)
     24: {"join": (10, 20), "part": None},
+    6_000: {"join": (15, 25), "part": None},
     12_000: {"join": (3, 10), "part": (30, 70)},
 }
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's blind number of clicks
 STEPS = 1024  # N, the phase's steps
 PIXELS: dict[
     str, dict[int, dict[str, float | int]]
-] = {  # Cheshbon's numbers per engine and count: the bound rotation omega_b, its period in intervals, the tail's kappa per Link, the clock pair's numerator a over 2^16 and the tail's factor t over 2^16 (15:22 Israel time for Gamma = 24, the law's table and the level-once table; 14:12, 14:47 and 13:39 for 12,000)
+] = {  # Cheshbon's numbers per engine and count: the bound rotation omega_b, its period in intervals, the tail's kappa per Link, the clock pair's numerator a over 2^16 and the tail's factor t over 2^16 (15:22 Israel time for Gamma = 24, the law's table and the level-once table; 15:50 for 6,000 with the amplitude b of the form; 14:12, 14:47 and 13:39 for 12,000)
     "term": {
         6: {"omega_b": 0.8105, "period": 7.75, "kappa": 0.446, "a": 90_329, "t": 41_948},
         7: {"omega_b": 0.7358, "period": 8.54, "kappa": 0.798, "a": 97_161, "t": 29_503},
@@ -43,6 +45,10 @@ PIXELS: dict[
         9: {"omega_b": 0.5826, "period": 10.79, "kappa": 1.164, "a": 109_453, "t": 20_458},
         10: {"omega_b": 0.5137, "period": 12.23, "kappa": 1.269, "a": 114_155, "t": 18_423},
         11: {"omega_b": 0.4550, "period": 13.81, "kappa": 1.341, "a": 117_736, "t": 17_144},
+        1_500: {"omega_b": 0.8105, "period": 7.75, "kappa": 0.446, "a": 90_329, "t": 41_948, "b": 49},
+        2_000: {"omega_b": 0.6578, "period": 9.55, "kappa": 1.015, "a": 103_723, "t": 23_747, "b": 69},
+        2_200: {"omega_b": 0.5972, "period": 10.52, "kappa": 1.138, "a": 108_385, "t": 20_992, "b": 79},
+        2_500: {"omega_b": 0.5137, "period": 12.23, "kappa": 1.269, "a": 114_155, "t": 18_423, "b": 98},
         3_000: {"omega_b": 0.8105, "period": 7.75, "kappa": 0.446, "a": 90_326, "t": 41_943},
         4_000: {"omega_b": 0.6578, "period": 9.55, "kappa": 1.02, "a": 103_722, "t": 23_724},
     },
@@ -53,6 +59,10 @@ PIXELS: dict[
         12: {"omega_b": 0.6741, "period": 9.32, "kappa": 0.976, "a": 102_403, "t": 24_686},
         13: {"omega_b": 0.6193, "period": 10.15, "kappa": 1.097, "a": 106_729, "t": 21_885},
         14: {"omega_b": 0.5637, "period": 11.15, "kappa": 1.195, "a": 110_792, "t": 19_830},
+        2_200: {"omega_b": 0.8290, "period": 7.58, "kappa": 0.283, "a": 88_553, "t": 49_395, "b": 58},
+        2_350: {"omega_b": 0.8055, "period": 7.80, "kappa": 0.480, "a": 90_801, "t": 40_554, "b": 61},
+        2_500: {"omega_b": 0.7779, "period": 8.08, "kappa": 0.631, "a": 93_378, "t": 34_863, "b": 65},
+        3_000: {"omega_b": 0.6741, "period": 9.32, "kappa": 0.976, "a": 102_403, "t": 24_686, "b": 82},
         4_400: {"omega_b": 0.8290, "period": 7.58, "kappa": 0.283, "a": 88_553, "t": 49_395},
         4_700: {"omega_b": 0.8055, "period": 7.80, "kappa": 0.480, "a": 90_801, "t": 40_554},
         5_000: {"omega_b": 0.778, "period": 8.08, "kappa": 0.63, "a": 93_270, "t": 34_734},
@@ -74,6 +84,18 @@ RECORDS: dict[
 RECORD_PAIR = {  # the two bodies of (d) by their amplitude b (Cheshbon 15:43 item 3(d), the Closer 15:47): the smaller and the deeper
     "term": (5, 8),
     "today": (5, 6),
+}
+HIERARCHY = {  # THE HIERARCHY IS RECURSIVE (Cheshbon 16:35 Israel time, the Closer 16:42): two equal pixels close enough that their tails overlap are a cluster of one level up, and the cluster's own tick is the breathing period P_2 of the pair's total count; P_2 / P_1 is about e^(kappa d) with P_1 the pixel's period; per engine and Gamma the pair's count, the distance and the blind numbers (P_2 in intervals, the ratio and its band)
+    "term": {
+        6_000: {
+            "count": 2_000,
+            "distance": 2,
+            "pair_period": 73,
+            "ratio": 7.6,
+            "ratio_band": (5, 11),
+            "others": "at 3 Links P_2 about 201 (the ratio 21); 1,500 at 2 Links 19 (2.4); 2,500 at 2 Links 155 (12.7)",
+        },
+    },
 }
 RECORD_RATIO_BAND = (
     0.15  # the band on the clocks' ratio deep over small (Cheshbon 15:43: 1.2, 1.05 to 1.35)
@@ -104,6 +126,9 @@ class Layout:
         self.horizon = self.gamma // 2
         self.distances = DISTANCES[self.gamma]
         self.dissolution = DISSOLUTION[self.gamma]
+        self.hierarchy = HIERARCHY.get(engine, {}).get(
+            self.gamma
+        )  # the cluster's breathing where Cheshbon's number is given
         self.records = (
             RECORDS[engine] if self.gamma == 24 else None
         )  # the integer generator's table exists for 24 alone
@@ -130,8 +155,9 @@ def pixel(x: int, count: int) -> dict[str, Any]:
     }
 
 
-def world(layout: Layout, distance: int) -> dict[str, Any]:
-    """Two bound bodies of one Node on the row, the smaller at the left and the deeper `distance` Links to its right; the readings: the matter level at both Nodes every interval, its support and total, both bodies' momentum, the records alive."""
+def world(layout: Layout, distance: int, counts: tuple[int, int] | None = None) -> dict[str, Any]:
+    """Two bound bodies of one Node on the row, the smaller at the left and the deeper `distance` Links to its right (or the two counts given, the hierarchy's equal pair); the readings: the matter level at both Nodes every interval, its support and total, both bodies' momentum, the records alive."""
+    small, deep = counts or (layout.small, layout.deep)
     right = LEFT_X + distance
     readings: list[dict[str, Any]] = [
         {"name": f"matter_x{x}", "kind": "level", "family": "matter", "node": [x, AXIS_Y, 0], "every": 1}
@@ -150,7 +176,7 @@ def world(layout: Layout, distance: int) -> dict[str, Any]:
         "N": STEPS,
         "engine": ENGINE,
         "universe": layout.universe,
-        "measured": [pixel(LEFT_X, layout.small), pixel(right, layout.deep)],
+        "measured": [pixel(LEFT_X, small), pixel(right, deep)],
         "detectors": [],
         "readings": readings,
         "face_depth": FACE_DEPTH,
@@ -174,6 +200,12 @@ def write_mode(layout: Layout, world_path: Path, document: dict[str, Any]) -> No
     subprocess.run(command, check=True, cwd=ROOT, env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
 
 
+def amplitudes(layout: Layout, counts: tuple[int, int]) -> dict[str, Any]:
+    """The amplitude b of the form per count where Cheshbon's table gives it (6,000: b = isqrt(c T den div (2 den - a)) as the tool writes it); nothing where it does not."""
+    given = {str(c): layout.numbers(c)["b"] for c in counts if "b" in layout.numbers(c)}
+    return {"amplitude_b_of_the_form": given} if given else {}
+
+
 def record_expectation(layout: Layout) -> dict[str, Any] | None:
     """Cheshbon's record table for the two bodies (15:43 Israel time): the amplitude b of each, the count the standing record carries (D bar) and its period P, and the clocks' ratio with its band; the run's counts and periods are read against these, not against the file's counts. None where the table is not given (Gamma other than 24)."""
     if layout.records is None:
@@ -191,6 +223,54 @@ def record_expectation(layout: Layout) -> dict[str, Any] | None:
             round(ratio + RECORD_RATIO_BAND, 2),
         ],
         "band": "one quantum on every count, 10 to 15 percent; the period to one interval",
+    }
+
+
+def hierarchy_expectation(layout: Layout) -> dict[str, Any]:
+    """THE HIERARCHY IS RECURSIVE, the blind expectation of the equal pair (Cheshbon 16:35 Israel time): the breathing period of the pair's total count P_2 against the pixel's period P_1, the ratio about e^(kappa d) with its band; no number of a run."""
+    table = layout.hierarchy
+    assert table is not None
+    count, distance = int(table["count"]), int(table["distance"])
+    numbers = layout.numbers(count)
+    return {
+        "format": "world-expectation-v1",
+        "status": "BLIND: THE HIERARCHY IS RECURSIVE; Cheshbon's numbers before the run; no number of a run here",
+        "row": (
+            f"ALGEBRA.md THE HIERARCHY IS RECURSIVE (Cheshbon 16:35 Israel time): two equal bound bodies of one Node, the counts {count:,} and {count:,}, "
+            f"{distance} Links apart on the rule's own universe (Gamma = {layout.gamma:,}, T = {layout.action}): their tails overlap and the clicks run both ways, "
+            "so the pair is a cluster one level up whose own tick is the breathing period of its total count; the ratio of that period to the pixel's is the ratio of the ticks between two levels, about e^(kappa d)"
+        ),
+        "DETECTOR": [],
+        "faces": "a face is no body and a click at an open face is no click (Cheshbon 14:55, the Closer 15:02 Israel time)",
+        "blind": {
+            "row": (
+                "Cheshbon's numbers of 16:35 Israel time (2026-09-28): the pixel's period P_1 from its table, the pair's breathing period P_2 about e^(kappa d) times P_1; "
+                f"other pairs for the reading: {table['others']}; the band of the ratio is Cheshbon's, one quantum on every count"
+            ),
+            "name": "THE HIERARCHY IS RECURSIVE",
+            "gamma": layout.gamma,
+            "edge_quanta_per_node": round(layout.edge, 2),
+            "horizon_quanta_per_node": layout.horizon,
+            "counts": [count, count],
+            "distance_links": distance,
+            "tail_kappa_per_link": {str(count): numbers["kappa"]},
+            "bound_rotation": {str(count): numbers["omega_b"]},
+            "pixel_period_intervals": numbers["period"],
+            "pair_breathing_period_intervals": table["pair_period"],
+            "period_ratio_pair_over_pixel": table["ratio"],
+            "period_ratio_band": list(table["ratio_band"]),
+            **amplitudes(layout, (count, count)),
+            "first_click_interval": 1,
+            "dissolution_intervals": None,
+            "clicks_expected": "clicks both ways between two equal pixels; neither dissolves; the pair's total count breathes with the period P_2",
+            "records_at_the_end": 2,
+        },
+        "GAMEBOARD": [
+            {
+                "reversible": TICKS,
+                "row": "the whole run forward and back on a fresh copy, every row bit for bit, the clicks keep the clicks; a diagnostic, MATCH or MISS with the first interval and Node that deviate",
+            }
+        ],
     }
 
 
@@ -236,6 +316,7 @@ def expectation(layout: Layout, name: str, distance: int) -> dict[str, Any]:
             "tail_kappa_per_link": {str(c): layout.numbers(c)["kappa"] for c in counts},
             "bound_rotation": {str(c): layout.numbers(c)["omega_b"] for c in counts},
             "bound_period_intervals": {str(c): layout.numbers(c)["period"] for c in counts},
+            **amplitudes(layout, counts),
             "clock_ratio_deep_over_small": round(periods[1] / periods[0], 3),
             "click_reach_links": layout.distances["reach"],
             "first_click_interval": None if parts else 1,
@@ -265,6 +346,11 @@ def main() -> None:
         help="the counts and the edge: today (the level read once) or term (the corrected term, the law's form)",
     )
     parser.add_argument(
+        "--suffix",
+        default="",
+        help="a suffix on the world names (join, part, hierarchy), e.g. _6000, so that the files of another Gamma stand beside the files at 24",
+    )
+    parser.add_argument(
         "--universe",
         default=UNIVERSE_OF_RECORD,
         help="the universe file the worlds name, relative to the repository root; Gamma is read from it",
@@ -273,13 +359,23 @@ def main() -> None:
     layout = Layout(args.universe, args.engine)
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
+    worlds = []
     for name in ("join", "part"):
         distance = layout.distances[name]
-        document = world(layout, distance)
-        (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
-        write_mode(layout, folder / f"{name}.json", document)
-        (folder / f"{name}.expectation.json").write_text(
-            json.dumps(expectation(layout, name, distance), indent=1) + "\n", encoding="utf-8"
+        worlds.append(
+            (f"{name}{args.suffix}", world(layout, distance), expectation(layout, name, distance))
+        )
+    if layout.hierarchy is not None:
+        pair = (int(layout.hierarchy["count"]), int(layout.hierarchy["count"]))
+        document = world(layout, int(layout.hierarchy["distance"]), pair)
+        worlds.append((f"hierarchy{args.suffix}", document, hierarchy_expectation(layout)))
+    for file_name, document, blind in worlds:
+        (folder / f"{file_name}.json").write_text(
+            json.dumps(document, indent=1) + "\n", encoding="utf-8"
+        )
+        write_mode(layout, folder / f"{file_name}.json", document)
+        (folder / f"{file_name}.expectation.json").write_text(
+            json.dumps(blind, indent=1) + "\n", encoding="utf-8"
         )
     print(
         json.dumps(
@@ -287,7 +383,7 @@ def main() -> None:
                 "universe": layout.universe,
                 "gamma": layout.gamma,
                 "engine": layout.engine,
-                "worlds": ["join", "part"],
+                "worlds": [file_name for file_name, _document, _blind in worlds],
                 "counts": [layout.small, layout.deep],
                 "distances": [layout.distances["join"], layout.distances["part"]],
             }

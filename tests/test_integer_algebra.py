@@ -29,6 +29,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/after_step.py": "the acts after the step the engine hooks per record: the hand's check at a click, the lifetime's end, the polariser's turn and its set's share, the polariser bodies' terms; functions taking the engine, bound as its methods",
     "events/body_language.py": "the recoil written into the body's own record and told as one event line beside the click; integer turns and sums, no arithmetic of its own",
     "events/record_well.py": "the well of a body with a record: its record's one interval and its form laid after it, D_i div T by the source's act through the write's line; no arithmetic of its own beyond the count",
+    "events/count_once.py": "the count read once and the form over its period: the well summed over the period by Rule3's division act, the gate on a declared count by integer squares; no root",
     "events/one_node.py": "the bound body of one Node: derived from the files (one Node, a massive pair, the divisors 1) and its record made from its mode's two levels at its Node; no arithmetic",
     "events/window.py": "the window out of the loop's module: the write's pair g q M(n) over E_s, the close's zero mode B taken off the given record through the loop's write site, the windows' close walk",
     "events/inverse.py": "the inverse's returns: the interval's bookings at the detectors' Ports and the body's clock taken back; integer sums and differences, no arithmetic of its own",
@@ -89,8 +90,7 @@ NUMPY_FORBIDDEN = {
     "arctan2",
     "hypot",
 }
-BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int"}
-ROOT_NAMES = {"isqrt", "integer_root"}
+BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integer_root"}
 
 # Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
@@ -202,8 +202,7 @@ def numpy_violations(tree: ast.AST) -> list[str]:
                 found.append(f"np.{'.'.join(chain)} at line {node.lineno}")
         if not isinstance(node, ast.Call):
             continue
-        callee = node.func
-        keywords = {k.arg for k in node.keywords}
+        callee, keywords = node.func, {k.arg for k in node.keywords}
         if isinstance(callee, ast.Name) and callee.id == "float":
             found.append(f"float() at line {node.lineno}")
         if isinstance(callee, ast.Attribute):

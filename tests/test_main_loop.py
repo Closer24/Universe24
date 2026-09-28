@@ -162,8 +162,7 @@ def fake_loop(state):
     """A loop object of the main loop's duck type over one integer state, no arrays."""
 
     class Loop:
-        tick = 0
-        ports = Ports((False, False, False))
+        tick, ports = 0, Ports((False, False, False))
 
         def start_arrays(self):
             return ()

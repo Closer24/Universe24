@@ -175,8 +175,8 @@ def test_the_count_is_conserved_exactly_and_the_inverse_undoes_the_line():
     shape = (4, 3, 2)
     amplitude = 1 << 8
     norm, weight = 5000, 7
-    term = CountTerm(norm, weight, amplitude, 1 << 20)
-    count = generator.integers(0, 5, size=shape).astype(np.int64)
+    term = CountTerm(norm, weight, amplitude, 1 << 21)  # each Node holds what it gives:
+    count = generator.integers(1 << 20, 1 << 21, size=shape).astype(np.int64)
     remainder = generator.integers(0, norm, size=shape).astype(np.int64)
     for periodic in (True, False):
         for _ in range(50):
@@ -220,3 +220,19 @@ def test_the_declaration_is_the_registers_row():
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
     assert DECLARATION.function is apply and DECLARATION.built  # bound: the loop calls apply
     assert DECLARATION.writes == ("the count at a Node", "the count's remainder", "a body's position")
+
+
+def test_a_node_at_0_gives_nothing_and_a_node_giving_more_than_it_holds_is_refused_by_name():
+    """Two Nodes on a periodic axis of two, the record's levels (1, 0) now and (0, 1) before: the current into the first Node through each of its two x Ports is the weight, the second Node gives twice the weight. Holding exactly that it ends at 0 and the first holds it all; holding one less the line is refused by name with the quanta and the count where no arrivals are handed (the guard behind the block, never a clamp); with the Ports' arrivals handed a Node holding nothing or one less than it would give is starved, its Ports' currents are blocked at both ends and nothing moves."""
+    weight, now = 7, np.array([[[1]], [[0]]], dtype=np.int64)
+    here, term = Levels(now, 1 - now, None, None), CountTerm(1, weight, 1, 2 * weight)
+    count = np.array([[[0]], [[2 * weight]]], dtype=np.int64)
+    line = lambda p=None: apply(term, CountStart(count, count * 0, here, links_of(here), 1, p))  # noqa: E731
+    assert line().count.ravel().tolist() == [2 * weight, 0]
+    count[1] = 2 * weight - 1
+    with pytest.raises(ValueError, match=f"a Node holding {count[1, 0, 0]} < {2 * weight}"):
+        line()
+    ports = lambda a: tuple(across(a, x, s, True) for x in range(3) for s in (1, -1))  # noqa: E731
+    for count[1] in (0, 2 * weight - 1):  # holding nothing, or one less than it would give
+        moved = line(ports)
+        assert moved.count.ravel().tolist() == [0, int(count[1, 0, 0])] and not sum(moved.net).any()
