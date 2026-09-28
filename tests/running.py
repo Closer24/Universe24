@@ -17,7 +17,6 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.features.send import send
-from event_universe.loader.world import derived_amplitude
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.worlds import ROOT, emitter_world
 
@@ -321,9 +320,6 @@ PAIRS = (
 )  # the six depths of old at numerators the rule's walls admit under the template's amplitude bound 2^24
 
 
-PARTS = ([1], [1, 3], [1, 3, 6])
-
-
 def draw(seed: int) -> dict[str, Any]:
     """One draw: the families (the body's, the given, up to two holders, the rest clicking families of random shape) with random names, and the roles by name."""
     rng = random.Random(seed)
@@ -351,116 +347,34 @@ def draw(seed: int) -> dict[str, Any]:
     if sign_holder:
         holders.append(sign_holder)
 
-    def reads_of(exclude: str | None = None) -> list[dict[str, Any]]:
-        chosen = [h for h in holders if h != exclude and rng.random() < 0.6]
-        return [
-            {
-                "family": h,
-                "weight": rng.choice([1, 2, 3, "Lambda"]),
-                "twist": rng.choice(["own", "own", rng.randint(0, 200)]),
-                "by": rng.choice([1, "q"]),
-            }
-            for h in chosen
-        ]
-
-    def held(count_word: str, parts: list[int]) -> dict[str, Any]:
-        entry: dict[str, Any] = {
-            "count": count_word,
-            "divisor": 40000,
-            "factors": [rng.randint(1, 4) for _ in parts],
-            "dipole": "spin" if count_word == "content" else "moment",
-        }
-        # the divisor is written on every entry (no default in the loader); the draw of the random one keeps the stream of the seeds as it was
-        entry["dipole_div"] = rng.randint(1, 3) if rng.random() < 0.5 else 1
-        entry["divisor"] = 40000  # the sum's divisor, required on every held row
-        return entry
-
-    def clicks() -> dict[str, Any]:
-        return {"gives": True, "takes": True, "quantum": rng.randint(1, 4)}
-
+    # THE FAMILIES FROM THE RULE: every drawn row is in the rule's form (the name, the pair, the held count
+    # with the sum's divisor, the clock where it gives, the spin's step's row on the content's real field);
+    # the parts, phase, clicks, quantum, reads and the held factors and dipole derive in the loader
     if content_holder:
-        parts = rng.choice(([1, 3], [1, 3, 6]))
         families.append(
             {
                 "name": content_holder,
-                "parts": parts,
-                "sign": 0,
-                "phase": 1,
                 "pair": [1, 1],
-                "quantum": 1,
-                "held": held("content", parts),
+                "held": {"count": "content", "divisor": 40000},
                 "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
-                "reads": [],
-                "self_source": {"unit": 0},
             }
         )
     if sign_holder and sign_holder != given:
-        parts = rng.choice(([1, 3], [1, 3, 6]))
-        entry = {
-            "name": sign_holder,
-            "parts": parts,
-            "sign": 0,
-            "phase": rng.choice([1, 2]),
-            "pair": [1, 1],
-            "quantum": 1,
-            "held": held("sign", parts),
-            "reads": reads_of(exclude=sign_holder),
-            "self_source": {"unit": 0},
-        }
-        if entry["reads"] or rng.random() < 0.5:
-            # a held family that reads has waves (the loader's rule, ALGEBRA.md #the-counts-line)
-            entry["clicks"] = {"gives": True, "takes": True, "quantum": 1}
-        families.append(entry)
+        families.append(
+            {"name": sign_holder, "pair": [1, 1], "held": {"count": "sign", "divisor": 40000}}
+        )
     if given:
-        parts = rng.choice(([1, 3], [1, 3, 6])) if sign_holder == given else rng.choice(PARTS)
         entry = {
             "name": given,
-            "parts": parts,
-            "sign": 0,
-            "phase": 2,
             "pair": [1, 1],
-            "quantum": 1,
-            "clock": [512, 1],  # the given record's clock, the row's (L479)
-            "reads": [] if rng.random() < 0.5 else reads_of(exclude=given),
-            "self_source": {"unit": 0},
-            "clicks": {"gives": True, "takes": True, "quantum": 1},
-        }
+            "clock": [512, 1],
+        }  # the given record's clock, the row's (L479)
         if sign_holder == given:
-            entry["held"] = held("sign", parts)
+            entry["held"] = {"count": "sign", "divisor": 40000}
         families.append(entry)
-    families.append(
-        {
-            "name": body,
-            "parts": [1],
-            "sign": 0,
-            "phase": 2,
-            "pair": "body",
-            "quantum": 1,
-            "reads": reads_of(),
-            "self_source": {"unit": 0},
-            "clicks": {"gives": True, "takes": True, "quantum": 1},
-        }
-    )
+    families.append({"name": body, "pair": "body"})
     for name in rest:
-        families.append(
-            {
-                "name": name,
-                "parts": rng.choice(PARTS),
-                "sign": 0,
-                "phase": rng.choice([1, 2]),
-                "pair": rng.choice(PAIRS),
-                "quantum": 1,
-                "reads": reads_of(),
-                "self_source": {"unit": 0 if rng.random() < 0.7 else rng.randint(1, 3)},
-                "clicks": clicks(),
-            }
-        )
-    for entry in families:  # one quantum per family: the row's is the clicks card's
-        entry["quantum"] = entry["clicks"]["quantum"] if "clicks" in entry else 1
-    # a drawn self-source stands at a multiple of 24 A, A the loader's derived amplitude bound of this universe with the template's bodies (ALGEBRA.md #the-interval, #a-familys-declaration)
-    floor = 24 * derived_amplitude(families, TEMPLATE["measured"], TEMPLATE["node_clock"])
-    for entry in families:
-        entry["self_source"]["unit"] *= floor
+        families.append({"name": name, "pair": rng.choice(PAIRS)})
     rng.shuffle(families)
     return {"seed": seed, "families": families, "roles": roles, "holders": holders}
 

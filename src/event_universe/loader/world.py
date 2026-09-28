@@ -730,20 +730,21 @@ def _node_clock_bound(
 
 
 def _families_of(
-    entries: tuple[dict[str, object], ...], amplitude_bound: int | None, most_families: int | None
+    entries: tuple[dict[str, object], ...], amplitude_bound: int | None, most: int | None, gamma: int
 ) -> tuple[FamilyDefinition, ...]:
     """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step only on the family that holds the spin's dipole (optional there: the spin's step's line refuses a spinning body's read of a holder without it, by name), the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
-    if most_families is not None and len(entries) > most_families:
+    if most is not None and len(entries) > most:
         raise ValueError(
-            f"families declares {len(entries)}; at most {most_families} families on a "
+            f"families declares {len(entries)}; at most {most} families on a "
             "GameBoard (the universe's `most_families`, the owner's number in the file)"
         )
     names = [cast(str, obj["name"]) for obj in entries]
     if len(set(names)) != len(names):
         raise ValueError(f"two families named {next(n for n in names if names.count(n) > 1)!r}")
     found: list[FamilyDefinition] = []
-    for index, obj in enumerate(derived.filled(entry, entries) for entry in entries):
+    for index, row in enumerate(entries):
         label = f"families[{index}]"
+        obj = derived.filled(row, entries, gamma, label)
         parts_value = tuple(cast(tuple[object, ...], obj["parts"]))
         if parts_value not in PARTS_FORMS:
             raise ValueError(
@@ -2306,7 +2307,7 @@ def parse_world_document(
     # THE AMPLITUDE BOUND A, derived from the width and the rule's integers of every declared pair at the
     # pace's edge (`derived_amplitude`; ALGEBRA.md #a-familys-declaration: never written, a file's
     # `amplitude_bound` is refused by name as an unknown key)
-    amplitude_bound = derived_amplitude(entries, obj["measured"], node_clock)
+    amplitude_bound = derived_amplitude(derived.paired(entries, node_clock), obj["measured"], node_clock)
     # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's integer
     # `momentum_unit`, REQUIRED with no default (the wall W = 3 Q M of every body)
     if "momentum_unit" not in obj:
@@ -2334,8 +2335,6 @@ def parse_world_document(
     twist_table: TwistTable | None = None
     if "twist_table" in obj:
         twist_table = _twist_table(obj["twist_table"], "twist_table", amplitude_bound)
-    # THE FAMILY GENERICITY (record 2066; item 51): the families' roles are their own declarations (`held`,
-    # `reads`), read by `_families` below; the world keys clock_family, charge_family and charge_strength retired
     mode_axis: int | None = None
     if "mode_axis" in obj:
         mode_axis = AXES.index(str(obj["mode_axis"]))
@@ -2350,7 +2349,7 @@ def parse_world_document(
     least_residues = (
         _integer(obj["least_residues"], "least_residues", 1) if "least_residues" in obj else None
     )
-    families = _families_of(entries, amplitude_bound, most_families)
+    families = _families_of(entries, amplitude_bound, most_families, node_clock)
     bound = amplitude_bound
     # THE BODIES AND THE DETECTORS through the frame (loader/frame.py, `BODY`, `DETECTOR`):
     # every key checked with the families known, an unknown key refused by name
