@@ -1,0 +1,178 @@
+{
+ "shape": [
+  32,
+  9,
+  1
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "open",
+  "z": "periodic"
+ },
+ "ticks": 300,
+ "N": 1024,
+ "engine": "examples/events/engine_start.json",
+ "measured": [
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      7,
+      4,
+      0
+     ],
+     "count": 1500
+    }
+   ],
+   "q": 1,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      27,
+      4,
+      0
+     ],
+     "count": 2000
+    }
+   ],
+   "q": 1,
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  }
+ ],
+ "detectors": [],
+ "readings": [
+  {
+   "name": "matter_x7",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    7,
+    4,
+    0
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_x27",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    27,
+    4,
+    0
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_support",
+   "kind": "support",
+   "family": "matter",
+   "every": 5
+  },
+  {
+   "name": "matter_total",
+   "kind": "total",
+   "family": "matter",
+   "every": 5
+  },
+  {
+   "name": "left_momentum",
+   "kind": "momentum",
+   "body": 0,
+   "every": 10
+  },
+  {
+   "name": "right_momentum",
+   "kind": "momentum",
+   "body": 1,
+   "every": 10
+  },
+  {
+   "name": "records_alive",
+   "kind": "alive",
+   "every": 10
+  }
+ ],
+ "face_depth": 3,
+ "universe": [
+  {
+   "name": "gravity",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "count": "content",
+    "divisor": 1
+   }
+  },
+  {
+   "name": "charge",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "count": "sign",
+    "divisor": 141862
+   }
+  },
+  {
+   "name": "matter",
+   "pair": [
+    4000,
+    6000
+   ]
+  }
+ ],
+ "momentum_unit": 64,
+ "twist_table": {
+  "unit": 1572864000,
+  "fine": [
+   [
+    1,
+    0,
+    1
+   ]
+  ],
+  "coarse": [
+   [
+    1,
+    0,
+    1
+   ]
+  ]
+ },
+ "quantum_action": 1,
+ "least_residues": 1,
+ "most_families": 20,
+ "node_clock": [
+  6000,
+  6
+ ]
+}
