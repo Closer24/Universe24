@@ -93,9 +93,7 @@ def test_the_window_inverts_bit_for_bit():
 def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_action():
     document = point_world(2, ticks=10)
     parse_nature_beam_world(document)
-    # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too
-    # (the level at its centre Node), the key `point_emitter` is retired and refused by name,
-    # and so are the train's keys; the weight and the action are required on every emitter
+    # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too (the level at its centre Node), the key `point_emitter` is retired and refused by name, and so are the train's keys; the weight and the action are required on every emitter
     no_weight = json.loads(json.dumps(document))
     del no_weight["measured"][0]["emitter"]["weight"]
     no_weight["stamp"] = input_stamp(no_weight)
