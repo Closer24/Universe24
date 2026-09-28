@@ -18,7 +18,7 @@ from lay_out_two_slits import (
     STEPS,
     body,
     box,
-    universe_of_record,
+    universe_of_the_first_look,
 )
 
 HERE = Path(__file__).resolve().parent
@@ -39,7 +39,7 @@ STRIP = range(
 )  # the detector strip on the window's face, eight Nodes about the beam
 
 
-def one_click() -> dict[str, Any]:
+def one_click(folder: Path) -> dict[str, Any]:
     """The world: the giver in its tube, the window with its strip, the mirror, the readings along the beam."""
     interior = range(FACE_DEPTH, SHAPE[1] - FACE_DEPTH)
     y0 = BEAM_Y - 1
@@ -99,7 +99,7 @@ def one_click() -> dict[str, Any]:
         "ticks": TICKS,
         "N": STEPS,
         "engine": ENGINE,
-        "universe": universe_of_record(),
+        "universe": universe_of_the_first_look(folder),
         "measured": measured,
         "detectors": detectors,
         "readings": readings,
@@ -114,6 +114,11 @@ def expectation() -> dict[str, Any]:
         "status": "HEALTH LOOK: one click in kind at the strip; no number of a run here",
         "row": "the one-click health look before the two slits' first look (the owner's word of 07:06 Israel through the Closer): the strip's click is the one measurement, every other reading is GAMEBOARD",
         "DETECTOR": [],
+        "blind": {
+            "row": "Cheshbon's numbers (08:21Z) before the run: the record's wavelength 4 Links on the light band with the bound charge, its group velocity 0.518 Links per interval; the click's interval after the giving is the distance over the group velocity",
+            "wavelength_links": 4,
+            "group_velocity_links_per_interval": 0.518,
+        },
         "GAMEBOARD": [
             {
                 "reversible": TICKS,
@@ -129,7 +134,7 @@ def main() -> None:
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    document = one_click()
+    document = one_click(folder)
     (folder / f"{WORLD_NAME}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
     (folder / f"{WORLD_NAME}.expectation.json").write_text(
         json.dumps(expectation(), indent=1) + "\n", encoding="utf-8"
