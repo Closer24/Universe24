@@ -30,8 +30,7 @@ def test_tool_changes_select_the_scope_test():
     [("run_inputs.py", "tests/test_run_inputs.py"), ("twist_table.py", "tests/test_primitives.py")],
 )
 def test_tool_changes_select_the_test_that_loads_the_tool_by_its_path(name, consumer):
-    """A tool is loaded by its path, never imported: the test that
-    names the file is its consumer, the tests that do not are not."""
+    """A tool is loaded by its path, never imported: the test that names the file is its consumer, the tests that do not are not."""
     sources = {
         "tests/test_names_it.py": f'TOOL = ROOT / "tools" / "{Path(name).name}"',
         "tests/test_other.py": "def test_other(): pass",

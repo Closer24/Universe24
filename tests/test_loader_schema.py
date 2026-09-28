@@ -39,10 +39,7 @@ def refused(value, kind, message, context=CONTEXT):
 
 
 def test_every_kind_accepts_its_values_and_refuses_the_rest_by_name():
-    """An integer with its bounds, as written or by the universe's integer's name; a flag; one of
-    the listed values exactly (1 is not true); a family's name; an integer's name read as the
-    integer; a list of one kind with or without a length; an object with its keys; the first of
-    either kind; the checked value returned, a list as a tuple."""
+    """An integer with its bounds, as written or by the universe's integer's name; a flag; one of the listed values exactly (1 is not true); a family's name; an integer's name read as the integer; a list of one kind with or without a length; an object with its keys; the first of either kind; the checked value returned, a list as a tuple."""
     assert check(5, Integer(least=1, most=5), "the.label", CONTEXT) == 5
     refused(0, Integer(least=1), "the.label is 0, below its least 1")
     refused(6, Integer(least=1, most=5), "the.label is 6, above its most 5")
@@ -92,8 +89,7 @@ def test_every_kind_accepts_its_values_and_refuses_the_rest_by_name():
 
 
 def test_a_schema_lives_at_the_places_of_the_files_and_gives_its_keys():
-    """A schema names places of the files alone and optional keys it holds; iterated, it gives
-    every key at every place."""
+    """A schema names places of the files alone and optional keys it holds; iterated, it gives every key at every place."""
     schema = Schema(
         {
             FAMILY: ObjectOf({"pair": Integer()}, frozenset()),
@@ -116,9 +112,7 @@ def declaration(name: str, places: dict) -> Declaration:
 
 
 def test_the_cards_are_collected_by_place_and_two_folders_claiming_one_key_are_refused():
-    """The owners at every place, a folder without a schema skipped; the merged kind at a place with
-    the optional keys united; a key two folders declare at one place refused by name, the same
-    key at two places two keys."""
+    """The owners at every place, a folder without a schema skipped; the merged kind at a place with the optional keys united; a key two folders declare at one place refused by name, the same key at two places two keys."""
     register = Register()
     register.add(declaration("the hold", {FAMILY: ObjectOf({"held": Integer()}, frozenset({"held"}))}))
     register.add(
@@ -155,9 +149,7 @@ def context_of(entries: list[dict]) -> Context:
 
 
 def test_the_shipped_universe_and_a_sourced_entry_pass_the_folders_schemas():
-    """Every key of every shipped family entry beyond the frame's own (name, clock, spins_step) is
-    one folder's, the folder named by its card; every entry passes the merged check with the
-    integer's name read as the integer; an unknown attribute is refused by name."""
+    """Every key of every shipped family entry beyond the frame's own (name, clock, spins_step) is one folder's, the folder named by its card; every entry passes the merged check with the integer's name read as the integer; an unknown attribute is refused by name."""
     register = discover()
     owners = cards.owners(register)[FAMILY]
     entries = shipped_entries()
