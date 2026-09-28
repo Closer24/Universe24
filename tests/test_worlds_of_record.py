@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import math
 from pathlib import Path
 
 import numpy as np
@@ -14,22 +13,19 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import load_world
 
 BELL = Path(__file__).resolve().parents[1] / "examples" / "events" / "experiments" / "bell"
-WORLDS = sorted(path.stem for path in BELL.glob("*.json") if "." not in path.stem)
 
 
-@pytest.mark.parametrize("name", WORLDS)
+@pytest.mark.parametrize("name", sorted(p.stem for p in BELL.glob("*.json") if "." not in p.stem))
 def test_a_bell_world_of_record_loads_with_the_three_held_records(name: str):
     document = json.loads((BELL / f"{name}.json").read_text(encoding="utf-8"))
     simulation = DetectorLawSimulation(load_world(BELL / f"{name}.json"))
-    families = {simulation.families[f].name: f for f in simulation.held_families}
+    held = {simulation.families[f].name: simulation.held_records[f] for f in simulation.held_families}
     universe = json.loads((BELL.parents[0] / "universe.json").read_text(encoding="utf-8"))
     rows = {row["name"]: row for row in universe["families"] if row.get("held")}
-    records = {id(simulation.held_records[f]) for f in families.values()}
-    assert set(families) == set(rows) and len(records) == len(rows)
+    assert set(held) == set(rows) and len({id(record) for record in held.values()}) == len(rows)
     num, den = rows["polarisation"]["pair"]
-    kappa_squared = 6 * den / num - 6
-    decay = ((2 + kappa_squared) - math.sqrt((2 + kappa_squared) ** 2 - 4)) / 2
-    level = simulation.held_records[families["polarisation"]].now
+    edge = 2 + 6 * den / num - 6  # 2 + kappa^2: the decay per Link is the root of x + 1 / x = edge
+    decay, level = (edge - (edge**2 - 4) ** 0.5) / 2, held["polarisation"].now
     nodes = [node for entry in document["measured"] for node in entry["nodes"]]
     occupied, total, largest = np.zeros(level.shape, dtype=bool), 0, max(node["count"] for node in nodes)
     for node in nodes:

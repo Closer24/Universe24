@@ -635,10 +635,14 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             if momentum[axis]:
                 rotation = proper_rotation(rotation, moved.triple, moved.top)
             clock = clock_pair(rotation, mode.amplitude)
-            # the profile written at half the unit (ALGEBRA.md #the-generator (f): the final scale comes
-            # from c T): the record's norm is the written levels' squares, the headroom under A the run's
-            half = int(division(1, 2, np.array([mode.amplitude], dtype=np.int64))[0])
-            (written,) = to_amplitude((mode.profile,), half)
+            # the profile written at an eighth of the unit (ALGEBRA.md #the-generator (f): the final scale
+            # comes from c T; Cheshbon's 04:22Z: the given record's peak about the body's level, under A / 4)
+            eighth = int(division(1, 8, np.array([mode.amplitude], dtype=np.int64))[0])
+            (written,) = to_amplitude((mode.profile,), eighth)
+            # a resting body's two levels: before the read act once more, halved ((d): the mode rotates by
+            # 2 cos omega_b; now = before is no mode), written under `moving` as a moving body's are
+            read_w, self_w, wall_w = rule_integers(pair, gamma, content)
+            still = two_levels(written, read_w, self_w, wall_w, wrap)
             moving = {
                 "axis": axis,
                 "momentum": momentum[axis],
@@ -647,8 +651,8 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 "velocity_named": [moved.named.numerator, moved.named.denominator],
                 "velocity": [moved.velocity.numerator, moved.velocity.denominator],
                 "top_velocity": [moved.top.numerator, moved.top.denominator],
-                "now": np.moveaxis(moved.now, 0, axis),
-                "before": np.moveaxis(moved.before, 0, axis),
+                "now": np.moveaxis(moved.now, 0, axis) if momentum[axis] else still[0],
+                "before": np.moveaxis(moved.before, 0, axis) if momentum[axis] else still[1],
             }
             reading.update(
                 {
@@ -685,7 +689,7 @@ def split_levels(
             levels.append(None)
             continue
         now, before = moving.pop("now"), moving.pop("before")
-        levels.append((now, before) if moving["momentum"] else None)
+        levels.append((now, before))  # a resting body's two levels as well: its second is not its first
     return profiles, levels
 
 

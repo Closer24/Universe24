@@ -231,14 +231,29 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (2 * 24000 + 1 * 5)
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
     assert reading["period"] == period_by_the_rule(*reading["rotation"])
-    written = reading["profile"]  # half the unit by the division act: twice it is the mode's within two
-    assert np.abs(written).max() == mode.amplitude // 2 and np.abs(2 * written - mode.profile).max() <= 2
+    written = reading[
+        "profile"
+    ]  # an eighth of the unit by the division act: eight times it is the mode's within eight and the unit's remainder by eight
+    assert (
+        np.abs(written).max() == mode.amplitude // 8
+        and np.abs(8 * written - mode.profile).max() <= 8 + mode.amplitude % 8
+    )
     at_rest = {"pair": [1, 4], "cycle": 1, "at_bodies": int(rest.levels[box > 0].min()), "at_corner": 0}
     at_rest["iterations"] = rest.iterations
     assert readings["rest"]["gravity"] == at_rest and np.array_equal(reading["content"], rest.levels)
     still = reading["moving"]  # one path: at the momentum 0 the pair (m, 0) and the mode's levels
     assert still["phase_pair"] == [64, 0] and still["triple"] == [1, 0, 1]
-    assert still["velocity_named"] == [0, 1] and np.array_equal(still["now"], mode.profile)
+    read_w, self_w, wall_w = rule_integers(
+        KIND, GAMMA, reading["content"] if "content" in reading else rest.levels
+    )
+    before = two_levels(written, read_w, self_w, wall_w, PERIODIC)[
+        1
+    ]  # the second level the read act halved
+    assert (
+        still["velocity_named"] == [0, 1]
+        and np.array_equal(still["now"], written)
+        and np.array_equal(still["before"], before)
+    )
     moving = {**body, "momentum": [0, 3 * 64 * 24000 // 40, 0]}
     moved = generate({**world, "measured": [moving]})["bodies"][0]["moving"]
     assert moved["axis"] == 1 and moved["velocity_named"] == [1, 40] and moved["phase_pair"][0] == 64
