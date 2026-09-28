@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import random
 from pathlib import Path
 
@@ -25,6 +26,7 @@ from event_universe.features.hold import (
     apply,
 )
 from event_universe.world_files import parse_nature_beam_world
+from tests.running import stamped
 from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -150,3 +152,42 @@ def test_the_declaration_is_the_ledgers_row():
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the hold"]
     assert registered.binder is None and registered.function is apply
+
+
+def test_a_body_in_the_laws_form_sources_each_node_by_the_count_there(tmp_path):
+    """The hold's row on a body in the law's form (ALGEBRA.md #what-a-body-is; ENGINE.md the `nodes` row): a held family's time part at each of the body's Nodes gains (the count declared THERE + r) div E_s each interval by the carried division with a remainder of its own, never the body's whole count at every Node. Two runs from the same rest (the start on the same counts) at two divisors, one above the body's whole count and one twice its largest count and above, differ after the first interval by the increments alone: (2 c div E_s) - (c div E_s) at a Node of count c under the first and 0 under the second, so the difference is 1 at the one Node whose count is at least half the first divisor and 0 elsewhere, where the whole count would make the two runs agree at every Node."""
+    counts = {(4, 0, 0): 5, (5, 0, 0): 7, (6, 0, 0): 1}
+    whole, largest = sum(counts.values()), max(counts.values())
+    universe = json.loads((ROOT / "examples/events/generated/universe.json").read_text(encoding="utf-8"))
+    body = {"family": "matter", "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
+    body["nodes"] = [{"node": list(node), "count": count} for node, count in counts.items()]
+    levels = {}
+    for divisor in (whole + 1, 2 * largest + 1):
+        for row in universe["families"]:
+            if "held" in row:
+                row["held"]["divisor"] = divisor
+        (tmp_path / f"universe_{divisor}.json").write_text(json.dumps(universe), encoding="utf-8")
+        document = stamped(
+            {
+                "shape": [16, 1, 1],
+                "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
+                "ticks": 2,
+                "N": 64,
+                "universe": str(tmp_path / f"universe_{divisor}.json"),
+                "engine": "examples/events/engine_start.json",
+                "measured": [body],
+                "detectors": [{"name": "strip", "positions": [[6, 0, 0]]}],
+            }
+        )
+        simulation = DetectorLawSimulation(parse_nature_beam_world(document))
+        gravity = [family.name for family in simulation.families].index("gravity")
+        simulation.step()
+        levels[divisor] = simulation.held_records[gravity].now.copy()
+    difference = levels[whole + 1] - levels[2 * largest + 1]
+    expected = {node: 2 * c // (whole + 1) - c // (whole + 1) for node, c in counts.items()}
+    assert {node: int(difference[node]) for node in counts} == expected and sorted(
+        expected.values()
+    ) == [0, 0, 1]
+    for node in counts:
+        difference[node] = 0
+    assert not difference.any()  # the Nodes alone gain; the whole count would gain 1 at each under both

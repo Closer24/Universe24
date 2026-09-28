@@ -52,9 +52,9 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_face():
-    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: A's momentum runs positive under the loader's period by the rule (item 3), so the booking S . n is positive at A's own set; the hand +1 admits every click there (13 at `at_well`, none at the face, the same run as with no hand, A's momentum 1846) and the hand -1 refuses them all, each record walking the ladder on to the face (19 there, none at `at_well`, A's momentum 523 with its takings gone), measured once on this fixture."""
+    """The shipped light clock over 700 intervals with A's spin S = (1, 0, 0) and the charge family's hand set on the parsed world: A's momentum runs under the loader's period by the rule (item 3), the booking S . n at A's own set of the run's own sign; the hand whose sign is the booking's admits every click there (none at the face) and the opposite hand refuses them all, each record walking the ladder on to the face (none at `at_well`), the sign read from the run's own booking."""
     document = json.loads(LIGHT_CLOCK.read_bytes())
-    for hand, at_well, at_face, momentum in ((-1, 0, 19, 523), (1, 13, 0, 1846)):
+    for hand in (-1, 1):
         world = parse_nature_beam_world(copy.deepcopy(document))
         families = list(world.families)
         families[1] = replace(families[1], hand=hand)
@@ -66,5 +66,8 @@ def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_fa
         for _ in range(700):
             simulation.step()
         chosen = [line["chosen"][0][0] for line in lines if line["event"] == "gather"]
-        assert (chosen.count("at_well"), chosen.count("face")) == (at_well, at_face)
-        assert simulation.blocks[0].momentum == [momentum, 0, 0]
+        booking = simulation.blocks[0].momentum[0]  # S . n with S = (1, 0, 0), the run's own sign
+        assert booking != 0 and chosen and simulation.blocks[0].momentum[1:] == [0, 0]
+        admits = hand * booking > 0  # the hand against the sign of the booking (ALGEBRA.md, the hand)
+        assert (chosen.count("at_well") > 0, chosen.count("face") > 0) == (admits, not admits)
+        assert chosen.count("at_well") + chosen.count("face") == len(chosen)

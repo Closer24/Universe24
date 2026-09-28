@@ -309,7 +309,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             block.count_norm,
             self.kind_wall(block.family, block.definition.pair),
             self.world.amplitude_bound,
-            int(block.counts.sum()),
+            int(block.counts.max()),
         )
         wrap = self.kind_wrap[block.family]
         levels = (live.now, live.before, live.im_now, live.im_before)
@@ -618,8 +618,17 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return self._body_charge(number)
         return sum(self.held[number])
 
+    def node_sources(self, number: int, source: str) -> list[tuple[tuple[int, int, int], int]]:
+        """A body in the law's form: its source per Node, the count declared THERE ("content") or the family's charge times it ("sign"), ALGEBRA.md #what-a-body-is and the hold's row; empty for a body of the old form, whose one source stands at every Node of its mask."""
+        block = self.block_by_number.get(number)
+        if block is None or not block.definition.counts:
+            return []
+        weight = 1 if source == "content" else self.families[block.family].charge[0]
+        nodes, counts = block.definition.nodes or (), block.definition.counts
+        return [(node, weight * int(count)) for node, count in zip(nodes, counts, strict=True)]
+
     def _hold(self, line: Callable[..., object], act: str, held: HoldMap | None = None) -> HoldMap:
-        """The hold in two phases, both in the forward order and apart at the inverse (`step_inverse`). The first: at every body's Nodes a held family's level gains the body's count over the row's divisor each interval, the folder's carried division (the count a source into the field's line, ALGEBRA.md #the-primitives the row "the hold"), subtracted on the inverse; one call per body and held family with the act the loop names (the advance, the rewrite of a moved body's Nodes, the inverse), a body with a block by `_held_writes`, a span body (no block) its time part alone by the same line on its own remainders (`span_hold`); `node_level` is then each held family's level as every reading family's step reads it; the inverse returns here with the writes. The second, from the first's writes `held`: the vector and tensor parts at the bodies (ALGEBRA.md #the-interval), the body's numbers times the held factors over the wall, the remainder carried, at every Node of the body at both levels (the interval's start rewrites a moved body's Nodes alone), then the dipoles on the body's Node's six neighbours (forward with the division advanced, at the inverse with the values the unhold stepped back; none beyond an open face)."""
+        """The hold in two phases, both in the forward order and apart at the inverse (`step_inverse`). The first: at every body's Nodes a held family's level gains the body's count over the row's divisor each interval, the folder's carried division, and at a body in the law's form (ALGEBRA.md #what-a-body-is; ENGINE.md the `nodes` row) each Node gains the count declared THERE over the divisor with a remainder of its own, never the whole body's count at every Node (a wall of 460 Nodes at 8,000 would source 3.68 million at each), a signed source the family's charge times the Node's count (the count a source into the field's line, ALGEBRA.md #the-primitives the row "the hold"), subtracted on the inverse; one call per body and held family with the act the loop names (the advance, the rewrite of a moved body's Nodes, the inverse), a body with a block by `_held_writes`, a span body (no block) its time part alone by the same line on its own remainders (`span_hold`); `node_level` is then each held family's level as every reading family's step reads it; the inverse returns here with the writes. The second, from the first's writes `held`: the vector and tensor parts at the bodies (ALGEBRA.md #the-interval), the body's numbers times the held factors over the wall, the remainder carried, at every Node of the body at both levels (the interval's start rewrites a moved body's Nodes alone), then the dipoles on the body's Node's six neighbours (forward with the division advanced, at the inverse with the values the unhold stepped back; none beyond an open face)."""
         if held is None:
             self.ports.begin()
             held = {}
@@ -648,8 +657,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                         w = cast(HoldWrites, line(term, start, own))
                         self.span_hold[(family, number)] = w.own
                     held[(family, number)] = w
-                    mask = block.mask if block is not None else self.span_masks[number]
-                    record.now[mask] += -w.time_level if act == THE_INVERSE else w.time_level
+                    sign = -1 if act == THE_INVERSE else 1
+                    for key, level in w.node_levels:
+                        record.now[cast(tuple[int, int, int], key[1:])] += sign * level
+                    if not w.node_levels:
+                        mask = block.mask if block is not None else self.span_masks[number]
+                        record.now[mask] += sign * w.time_level
                 self.node_level[family] = record.now
             if act == THE_INVERSE:
                 return held
@@ -709,6 +722,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             dipole = block.spin if definition.held_dipole == "spin" else block.definition.moment
             vector = (int(dipole[0]), int(dipole[1]), int(dipole[2]))
         momentum = self._momentum_now(block)
+        per_node = tuple(
+            (("n", *node), value) for node, value in self.node_sources(block.number, source)
+        )
         term = HoldTerm(
             source,
             tuple(definition.parts),
@@ -723,6 +739,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             (int(momentum[0]), int(momentum[1]), int(momentum[2])),
             self.wall_of(block),
             vector,
+            per_node,
         )
         writes = cast(HoldWrites, line(term, start, HoldOwn(values, carries)))
         centre = self._centre_node(block) if any(key[0] == "d" for key in writes.own.values) else []

@@ -48,6 +48,7 @@ class HoldStart:
     momentum: Vector
     wall: int
     vector: Vector | None
+    nodes: tuple[tuple[Key, int], ...] = ()  # a body in the law's form: per Node its key and its count
 
 
 @dataclass(frozen=True)
@@ -66,6 +67,7 @@ class HoldWrites:
     parts: tuple[tuple[int, int, int], ...]
     dipoles: tuple[tuple[Vector, int, int], ...]
     own: HoldOwn
+    node_levels: tuple[tuple[Key, int], ...] = ()  # the time part's increment per Node of the law's form
 
 
 # (D x e_j)_i for the axis j, per (i, the component k of D, the sign): D x e_x = (0, D_z, -D_y),
@@ -107,16 +109,11 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
     """The primitive at (iv) for one body and one held family: the count a source at the time part (its carried division over E_s this interval's increment), every part beyond it by its carried division, the dipole's terms at the six neighbours (ALGEBRA.md #the-primitives the row "the hold")."""
     check(term, start)
     values, carries = dict(own.values), dict(own.carries)
-    time_level = 0
-    if (
-        start.act == THE_LOAD
-    ):  # the store's first division, no increment written: the rest holds the sources
-        carried(THE_LOAD, TIME_PART, start.count, term.divisor, values, carries)
-    elif start.act == THE_ADVANCE:
-        time_level, _ = carried(THE_ADVANCE, TIME_PART, start.count, term.divisor, values, carries)
-    elif start.act == THE_INVERSE:
-        time_level = values.get(TIME_PART, 0)
-        carried(THE_INVERSE, TIME_PART, start.count, term.divisor, values, carries)
+    time_level = time_increment(start.act, TIME_PART, start.count, term.divisor, values, carries)
+    node_levels = tuple(
+        (key, time_increment(start.act, key, count, term.divisor, values, carries))
+        for key, count in start.nodes
+    )
     parts: list[tuple[int, int, int]] = []
     index = 0
     for group, count in enumerate(term.parts):
@@ -166,7 +163,22 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
                     else:
                         continue
                     dipoles.append(((i, j, sigma), now, before))
-    return HoldWrites(time_level, tuple(parts), tuple(dipoles), HoldOwn(values, carries))
+    return HoldWrites(time_level, tuple(parts), tuple(dipoles), HoldOwn(values, carries), node_levels)
+
+
+def time_increment(
+    act: str, key: Key, count: int, divisor: int, values: dict[Key, int], carries: dict[Key, int]
+) -> int:
+    """The time part's increment of one source under `key`: (count + r) div E_s by the carried division at the advance, the one subtracted at the inverse (the store stepped back), 0 at the load (the store's first division, no increment written: the rest holds the sources) and at a rewrite."""
+    if act == THE_LOAD:
+        carried(THE_LOAD, key, count, divisor, values, carries)
+    elif act == THE_ADVANCE:
+        return carried(THE_ADVANCE, key, count, divisor, values, carries)[0]
+    elif act == THE_INVERSE:
+        level = values.get(key, 0)
+        carried(THE_INVERSE, key, count, divisor, values, carries)
+        return level
+    return 0
 
 
 DECLARATION = Declaration(

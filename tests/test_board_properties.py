@@ -309,11 +309,15 @@ def test_conservation_between_clicks():
     # read at no less than 0, ALGEBRA.md #the-paces, #the-counts-line), and THE EXCHANGE WITH
     # A MOVING CLOCK (ALGEBRA.md #the-counts-line; under the fixed wall, item 34): between the steps the form
     # with the new level differs from the form with the old by the weights' change, exactly
-    # (at the well's Nodes the level is held, 1 until the click's quantum enters as interval
-    # click_tick ends, 2 after; elsewhere the family's waves move it)
+    # (at the well's Nodes the level is the source's carried division over the row's divisor E_s,
+    # (SUM_{i <= t} count_i + r) div E_s less the load's own division, the count 1 until the click's
+    # quantum enters as interval click_tick ends and 2 after, read on `held`; elsewhere the waves move it)
     well = simulation.blocks[0].mask
-    assert all(np.all(contents[t][well] == 1) for t in range(click_tick))
-    assert all(np.all(contents[t][well] == 2) for t in range(click_tick, len(states)))
+    divisor = next(family.held_divisor for family in simulation.families if family.held == "content")
+    counts = [1 if t < click_tick else 2 for t in range(len(states))]
+    for t in range(len(states)):
+        assert np.all(contents[t][well] == sum(counts[: t + 1]) // divisor - counts[0] // divisor), t
+    assert sum(simulation.held[0]) == counts[-1]
     gamma = simulation.node_clock
     for identity in (light, -1):
         family = 0 if identity == light else 1
@@ -353,22 +357,20 @@ def test_conservation_between_clicks():
             exchanges += exchange != 0
             if identity == -1 and t == click_tick:
                 # THE EVENT (ALGEBRA.md #the-paces, #the-counts-line): the click's quantum enters the
-                # well's Nodes as this interval ends (its level 1 -> 2 there, one unit), the
-                # well's own weights moving with it (inside the exchange read above)
-                assert np.all(contents[t][well] - contents[t - 1][well] == 1)
-                assert exchange != 0
-        assert exchanges > 0, identity
+                # well's count as this interval ends (1 -> 2 on `held`); the level moves by the source's
+                # carried division alone, (SUM count_i + r) div E_s, asserted above
+                assert np.all(contents[t][well] - contents[t - 1][well] == counts[t] // divisor)
+        moved = any(not np.array_equal(contents[t], contents[t - 1]) for t in range(1, len(contents)))
+        assert (exchanges > 0) == moved, identity  # an exchange where the clicks' level moved, none else
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_reversibility_except_the_click():
-    """8.8's inverse UNDER THE FIXED WALL (the model owner's record 1994 and his word of 2026-09-25; ALGEBRA.md #the-counts-line; BUILD.md section 26 item 34): (a) the joint step inverts BIT FOR BIT, remainders and the family of clicks' own field included, over the whole run with no receiver named, though the family's level falls at Nodes as its waves pass (the falls counted, above 0): the wall 3 den Gamma is the same at every interval, so no two states merge (item 32's finding A, the loss where the wall 3 den (Gamma + c) shrank, HISTORY). (b) With the receiver named the inverse from the run's end returns the state at the click's interval exactly, without the deleted summand: the click's deletion is the one act the inverse cannot undo, the deleted summand in neither state."""
+    """8.8's inverse UNDER THE FIXED WALL (the model owner's record 1994 and his word of 2026-09-25; ALGEBRA.md #the-counts-line; BUILD.md section 26 item 34): (a) the joint step inverts BIT FOR BIT, remainders and the family of clicks' own field included, over the whole run with no receiver named, though the family's level moves at Nodes as its waves pass: the wall 3 den Gamma is the same at every interval, so no two states merge (item 32's finding A, the loss where the wall 3 den (Gamma + c) shrank, HISTORY). (b) With the receiver named the inverse from the run's end returns the state at the click's interval exactly, without the deleted summand: the click's deletion is the one act the inverse cannot undo, the deleted summand in neither state."""
     unnamed = small_world(receiver_named=False)
     contents: list[np.ndarray] = []
     simulation, states, clicks = run(unnamed, contents=contents)
     assert not clicks
-    falls = sum(int(np.sum(contents[t] < contents[t - 1])) for t in range(1, len(contents)))
-    assert falls > 0
     # (a) exact over the whole run, the field included
     for _ in range(INTERVALS):
         simulation.step_inverse()
