@@ -168985,16 +168985,6 @@
    "held": {
     "count": "content",
     "divisor": 1
-   },
-   "spins_step": {
-    "curl": [
-     1,
-     4
-    ],
-    "tidal": [
-     3,
-     4
-    ]
    }
   },
   {
