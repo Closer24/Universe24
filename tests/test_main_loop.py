@@ -95,7 +95,9 @@ def test_b_a_place_not_its_own_is_refused_and_a_bodys_value_at_ii_is_deferred_to
         return [Write(MOMENTUM, 0, None, (1, 0, 0))]
 
     with pytest.raises(ValueError, match=r"lists 'the cheat' at \(v\), but it declares \(i\)"):
-        cheated(tmp_path, monkeypatch, card("the cheat", "(i)", (SPIN), apply), "(v)", "the spin's step")
+        cheated(
+            tmp_path, monkeypatch, card("the cheat", "(i)", (SPIN,), apply), "(v)", "the spin's step"
+        )
     simulation = cheated(
         tmp_path,
         monkeypatch,

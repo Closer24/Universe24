@@ -187,7 +187,8 @@ def test_the_bodys_own_record_is_never_rewritten_and_the_residue_is_read_at_the_
     spent: list[np.ndarray] = []
     for _ in range(document["ticks"]):
         simulation.step()
-        assert simulation.books()["balanced"], simulation.tick and block.definition.emitter is not None
+        assert simulation.books()["balanced"], simulation.tick
+        assert block.definition.emitter is not None
         if simulation.held[0][block.definition.emitter.family] == 0:  # the stock (item 47)
             spent.append(own.now[block.mask].copy())
     givings = [line for line in lines if line["event"] == "giving"]
