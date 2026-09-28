@@ -636,14 +636,16 @@ def _pair_bound(
     # the weak-field rule's coefficients at the level 0 and at the level M
     # (the two levels a Node can read: the vacuum's and a body's), the larger;
     # the plain rule's at Gamma = 1 on the first pass over the pair alone
-    # the level a Node can read stays below Gamma (the pace positive: the load's guard per
-    # body, `_node_clock_bound`, and the run's, `_advance_fields`), so the reach is read there
+    # the level a Node can read stays below Gamma / 2 (the axis pace Gamma - 2 c positive: the load's guard
+    # per body, `_node_clock_bound`, and the run's, `_advance_fields`), so the reach is read there
     if (
         bound is None
     ):  # no amplitude declared: the total is not bounded at load (a massive family requires one)
         return
     weak_field = node_clock > 1
-    reach = min(content, node_clock - 1) if weak_field else content
+    reach = (
+        min(content, (node_clock - 1) // 2) if weak_field else content
+    )  # the axis pace Gamma - 2 c above 0
     total = max(
         rule_total_bound(numerator, denominator, node_clock, level, bound, weak_field)
         for level in (0, reach)

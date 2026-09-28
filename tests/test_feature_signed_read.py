@@ -78,18 +78,23 @@ def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
                 assert pace == simulation.node_clock_pair(node, family)[0]
 
 
+def last_admitted_pace(pair: tuple[int, int], gamma: int) -> int:
+    """The edge by the rule itself: the last pace p_0 from Gamma with (S - 6 R) + 2 w >= 0 on the rule's (R, S, w) at the level Gamma - p_0 (the mode at wave number pi stays bounded), pace by pace."""
+    integers = [coefficients(*pair, gamma, gamma - pace) for pace in range(gamma, 3 * gamma)]
+    factors = [s - 6 * r[0] + 2 * w for r, s, w in integers]
+    return gamma + next(
+        i for i, (now, after) in enumerate(zip(factors, factors[1:], strict=False)) if now >= 0 > after
+    )
+
+
 def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
-    """The guard's bound P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) is the last pace with (S - 6 R) + 2 w >= 0 on the rule's (R, S, w): 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
-    for pair, expected in (((800, 809), 1002), ((800, 850), 1015), ((1, 1), 1000)):
+    """The guard's bound P is the last pace with (S - 6 R) + 2 w >= 0 on the rule's (R, S, w) under the conformal line (the axis pace 2 p_0 - Gamma on a hill), the quadratic a p^2 - b p <= c of `stability_bound` holding at P and failing at P + 1; Gamma itself for [1, 1]."""
+    for pair in ((800, 809), (800, 850), (1, 1)):
         bound = pace_bound(pair, CHAIN_GAMMA)
-        assert bound == expected
-        left, right = stability_bound(pair, CHAIN_GAMMA)
-        assert bound * bound * left <= right < (bound + 1) * (bound + 1) * left
-        for pace, admitted in ((bound, True), (bound + 1, False)):
-            (read, _, _), self_coefficient, wall = coefficients(
-                pair[0], pair[1], CHAIN_GAMMA, CHAIN_GAMMA - pace
-            )
-            assert (self_coefficient - 6 * read + 2 * wall >= 0) is admitted
+        assert bound == last_admitted_pace(pair, CHAIN_GAMMA)
+        a, b, c = stability_bound(pair, CHAIN_GAMMA)
+        assert a * bound * bound - b * bound <= c < a * (bound + 1) ** 2 - b * (bound + 1)
+    assert pace_bound((1, 1), CHAIN_GAMMA) == CHAIN_GAMMA
 
 
 @pytest.mark.diagnostic
@@ -112,9 +117,9 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond
 
 
 def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edge():
-    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and the edge of [800, 850], p = 1.0152 Gamma, is the arithmetic's check on the axis contents alone."""
-    left, right = stability_bound((800, 850), GAMMA)
-    assert (left, right) == (19_500, GAMMA * GAMMA * 20_100) and pace_bound((800, 850), GAMMA) == 10_152
+    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and the edge of [800, 850] is the arithmetic's check on the axis contents alone."""
+    assert stability_bound((800, 850), GAMMA) == (850 + 7 * 800, 8 * 800 * GAMMA, 2 * 50 * GAMMA * GAMMA)
+    assert pace_bound((800, 850), GAMMA) == last_admitted_pace((800, 850), GAMMA)
     term = SignedReadTerm(((1, -1, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
     own = SignedReadOwn(0, "matter", 7)
 
