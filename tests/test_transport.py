@@ -93,15 +93,13 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
     """Gravity's x part set to 5 on a slab: a matter record with the twist "own" reads k = sigma x twist x (V_i + V_j) on its x Ports there, its arrivals are rotated by the table's triple to the nearest unit (T = (c re - s im) / d), its second level is written from the rotated arrivals, and one interval back restores the levels and the remainders exactly."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(twisted_world()))
     gravity = parts_of(simulation, "clicks")
-    matter = [family.name for family in simulation.families].index("matter")
-    x_part = gravity[1]
+    matter, x_part = [family.name for family in simulation.families].index("matter"), gravity[1]
     assert x_part.part == 1 and x_part.silent
     x_part.now[6:8, :, :] = 5
     x_part.before[6:8, :, :] = 5
     x_part.silent = False
     simulation._sourced_ever[(gravity[0].family, 1)] = True
-    twist = OWN_TWIST
-    rng = np.random.default_rng(7)
+    twist, rng = OWN_TWIST, np.random.default_rng(7)
     now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     live = simulation.planted_record(matter, now.copy(), before.copy(), twist=twist)

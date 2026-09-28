@@ -21,14 +21,12 @@ def write(directory: Path, name: str, document: dict) -> Path:
 
 def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
     """Two small worlds (the emitter world with a stock of 2 over 250 intervals, the chain world with a stock of 2) run together in two processes and each alone: the output files are byte for byte the same; each output carries the format, the input's stamp, the verdict LAWFUL, the ticks, the click lines (detector and interval) and the counts per detector, with at least one click at `screen` in each."""
-    emitter = emitter_world(stock=2, ticks=250)
-    chain = chain_world(stock=2)
+    emitter, chain = emitter_world(stock=2, ticks=250), chain_world(stock=2)
     chain["ticks"] = 250
     chain["stamp"] = input_stamp(chain)  # the stamp over the whole file (item 28)
     (inputs := tmp_path / "inputs").mkdir()
     a = write(inputs, "emitter_small", emitter)
-    b = write(inputs, "chain_small", chain)
-    together = tmp_path / "together"
+    b, together = write(inputs, "chain_small", chain), tmp_path / "together"
     assert main(["--out", str(together), "--jobs", "2", str(a), str(b)]) == 0
     alone_a, alone_b = tmp_path / "alone_a", tmp_path / "alone_b"
     assert main(["--out", str(alone_a), "--jobs", "1", str(a)]) == 0
@@ -56,8 +54,7 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     bad = {**emitter_world(stock=2, ticks=200), "engine": relative}
     del bad["measured"][0]["momentum"]  # refused by name at the frame (the old residual check is gone)
     bad["stamp"] = input_stamp(bad)
-    bad_path = write(inputs, "bad", bad)
-    good = {**emitter_world(stock=2, ticks=250), "engine": relative}
+    bad_path, good = write(inputs, "bad", bad), {**emitter_world(stock=2, ticks=250), "engine": relative}
     good["readings"] = [{"name": "n", "kind": "momentum", "body": 0, "every": 50}]
     good["stamp"] = input_stamp(good)
     good_path, twin_path = write(inputs, "good", good), write(inputs, "twin", good)
@@ -134,8 +131,7 @@ def test_a_refusal_inside_the_run_is_written_with_its_interval(tmp_path: Path, m
     """A guard's refusal inside the run (the amplitude bound, the twist table, the wall: an exception raised by the engine's step) ends the run with the verdict REFUSED, the reason naming the error and the interval, the output written as at a refusal at the load and no exception escaping; the edge case: a run without a refusal is LAWFUL."""
     from event_universe.events.detector_law import DetectorLawSimulation
 
-    path = write(tmp_path, "guarded", emitter_world(stock=1, ticks=20))
-    step = DetectorLawSimulation.step
+    path, step = write(tmp_path, "guarded", emitter_world(stock=1, ticks=20)), DetectorLawSimulation.step
 
     def guarded(self: DetectorLawSimulation) -> None:
         if self.tick == 2:

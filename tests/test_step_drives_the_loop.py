@@ -99,5 +99,4 @@ def test_a_loop_out_of_the_files_order_or_calling_a_primitive_outside_an_act_fai
 
     simulation.close_interval = close_and_cheat  # type: ignore[method-assign]
     simulation.step()
-    assert lookups != the_files_built_acts(simulation)
-    assert outside == ["the hold"]
+    assert lookups != the_files_built_acts(simulation) and outside == ["the hold"]
