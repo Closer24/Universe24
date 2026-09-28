@@ -41,10 +41,7 @@ PHASE_STEPS = 1024
 TRAIN_LENGTH = 32  # the train's Nodes along K: 8 periods of the wavelength 4
 
 
-# THE FAMILIES FROM THE RULE: every fixture's family is a row of the rule's form (its name, its pair, its held
-# count with the sum's divisor, its clock where it gives); the parts, phase, clicks, quantum, reads and the held
-# factors and dipole derive in the loader (loader/derived.py), a declared value against the rule refused by name
-# a sourced family's entry (the source verb's card), the loader tests' one copy
+# THE FAMILIES FROM THE RULE: every fixture's family is a row of the rule's form (its name, its pair, its held count with the sum's divisor, its clock where it gives); the parts, phase, clicks, quantum, reads and the held factors and dipole derive in the loader (loader/derived.py), a declared value against the rule refused by name a sourced family's entry (the source verb's card), the loader tests' one copy
 SOURCED = {
     "name": "field",
     "pair": [1000, 1019],
@@ -62,8 +59,7 @@ CHARGE_FAMILY = {
     "pair": [1, 1],
     "held": HELD_MOMENT,
 }  # the sign's holder, rank 2
-# the family of clicks holds the content (ALGEBRA.md #the-counts-line), the real field of rank 3 with the spin's
-# dipole, and the family of charge the signed count (ALGEBRA.md #the-paces); a family of quanta reads both
+# the family of clicks holds the content (ALGEBRA.md #the-counts-line), the real field of rank 3 with the spin's dipole, and the family of charge the signed count (ALGEBRA.md #the-paces); a family of quanta reads both
 CLOCK_FAMILY_NAME = "clicks"
 CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "pair": [1, 1], "held": HELD_SPIN, "spins_step": SPINS_STEP}
 
@@ -317,9 +313,7 @@ def _seed_key(document: dict) -> str:
         if isinstance(body.get("emitter"), dict):
             for key in ("weight", "norm", "norm_denominator"):
                 body["emitter"].pop(key, None)
-    # THE FAMILIES FROM THE RULE: the keys the rule derives are no part of the key, so a fixture in the
-    # rule's form and the same fixture in the older form share their recorded seeding (a family's sign, where a
-    # fixture still declares one, and the self-source stay in the key as recorded; THE SIGN IS THE BODY'S moves the sign to q)
+    # THE FAMILIES FROM THE RULE: the keys the rule derives are no part of the key, so a fixture in the rule's form and the same fixture in the older form share their recorded seeding (a family's sign, where a fixture still declares one, and the self-source stay in the key as recorded; THE SIGN IS THE BODY'S moves the sign to q)
     bare.pop("twist_table", None)
     bare.pop("Lambda", None)
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
