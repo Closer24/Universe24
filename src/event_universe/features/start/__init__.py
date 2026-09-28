@@ -29,6 +29,12 @@ class FieldAtRest:
     unit: int
     iterations: int
     cycle: int
+    # THE REST OF THE REMAINDERS: the level's remainder at the half wall (the division act's unbiased origin) and the
+    # hold's carries over the source Nodes, j E_s div N for the j-th of N, a steady source stream from the first
+    # interval (with the remainders at 0 the first units arrive together after E_s div count intervals while the
+    # faces drain from the first, and the second-order rule keeps the deficit as a velocity of the whole field)
+    remainder: int = 0
+    carries: np.ndarray | None = None
 
 
 def check_counts(counts: np.ndarray, gamma: int) -> None:
@@ -384,7 +390,21 @@ def rest(
     """The start's rest of a held family: with a divisor the sum's rest on the weighted sources by the box's certified solve on any board; else on the counts clamped, the chain's one pass where the region is a chain, the box's certified rest elsewhere (ALGEBRA.md #the-generator, THE START)."""
     if divisor is None and chain_axis(counts) is not None:
         return chain_rest(counts, pair, wrap)
-    return box_rest(counts, pair, wrap, divisor)
+    field = box_rest(counts, pair, wrap, divisor)
+    if divisor is None:
+        return field
+    sources = np.flatnonzero(counts.ravel())
+    carries = np.zeros(counts.shape, dtype=np.int64)
+    carries.ravel()[sources] = division(divisor, len(sources), np.arange(len(sources), dtype=np.int64))
+    return FieldAtRest(
+        field.levels,
+        field.fine,
+        field.unit,
+        field.iterations,
+        field.cycle,
+        int(division(1, 2, np.array(3 * pair[1] - 1, dtype=np.int64))),
+        carries,
+    )
 
 
 DECLARATION = Declaration(

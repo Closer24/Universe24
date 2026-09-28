@@ -23,18 +23,15 @@ def held_table(world: NatureBeamWorld) -> list[list[int]]:
 
 def detectors(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     """The detectors, index 0 .. K - 1: each measured event's, the sets' (a set bound to a body a receiver), the face receiver's slab on every open axis, and the map of the Node to its detector."""
-    # The detectors: index 0 .. K - 1 with a name, the Nodes of each, and the
-    # measured event (if any) that receives the content of a click there.
-    # A detector set is ONE detector over its whole cube: the flux into the
-    # cube through its Ports from outside is its increment, the click is the
-    # detector's, reported by its name, never by a Node.
+    # The detectors: index 0 .. K - 1 with a name, the Nodes of each, and the measured event (if any) that receives
+    # the content of a click there. A detector set is ONE detector over its whole cube: the flux into the cube
+    # through its Ports from outside is its increment, the click is the detector's, reported by its name, never by a Node.
     loop.detector_names = []
     loop.detector_measured = []
     loop.detector_face = []
-    # The gather's detector triple [set, channel, label]: a detector's set name
-    # (its own name but for a table body's two detectors, which carry their
-    # set's name) and its channel (0, the + channel; 1 the - channel of
-    # a table body); every detector as built is [name, 0, "0"].
+    # The gather's detector triple [set, channel, label]: a detector's set name (its own name but for a table body's
+    # two detectors, which carry their set's name) and its channel (0, the + channel; 1 the - channel of a table body);
+    # every detector as built is [name, 0, "0"].
     loop.detector_set = []
     loop.detector_channel = []
     loop.detector_at_node = np.full(loop.shape, -1, dtype=np.int64)
@@ -56,11 +53,9 @@ def detectors(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     # record that names no receiver (ALGEBRA.md #rule3)
     loop.set_detectors = []
     loop.set_nodes = {}
-    # THE TABLES ARE RETIRED (the cleanup order's step 3; ALGEBRA.md #the-postulates):
-    # a measured event with a table entry (a polariser's window, a
-    # splitter's rows) is refused here; the polariser returns as a body
-    # with an axis and two receivers named, a splitter as a region of the
-    # one operator
+    # THE TABLES ARE RETIRED (the cleanup order's step 3; ALGEBRA.md #the-postulates): a measured event with a table
+    # entry (a polariser's window, a splitter's rows) is refused here; the polariser returns as a body with an axis
+    # and two receivers named, a splitter as a region of the one operator
     for number, entry in enumerate(world.measured):
         if any(window is not None for window in entry.windows) or any(
             split is not None for split in entry.splits
@@ -373,17 +368,9 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
         index = tuple(nodes.T)
         record.now[index] = [now for _, now, _ in written]
         record.before[index] = [before for _, _, before in written]
-        # THE REST OF THE REMAINDERS (the fall's tent test of 2026-09-28): the level's remainder at the half wall, the
-        # division act's unbiased origin, and each body's hold carries spread over its Nodes, j E_s div N for the
-        # j-th Node, so the source stream is steady from the first interval; with the remainders at 0 the first
-        # units arrive together after E_s div count intervals while the faces drain from the first, and the
-        # second-order rule keeps the deficit as a velocity of the whole field (a defect, not a finding)
-        record.remainder[...] = (3 * den - 1) // 2
+        record.remainder[...] = field.remainder  # the folder's rest of the remainders (THE START)
         for number in range(len(loop.held)):
             block = loop.block_by_number.get(number)
-            nodes_of = [node for node, value in loop.node_sources(number, source) if value]
-            if block is None or not nodes_of:
-                continue
-            for j, node in enumerate(nodes_of):
-                block.hold_carry[(family, "n", *node)] = (j * divisor) // len(nodes_of)
+            for node, _value in loop.node_sources(number, source) if block is not None else ():
+                block.hold_carry[(family, "n", *node)] = int(field.carries[node])
         loop.node_level[family] = record.now
