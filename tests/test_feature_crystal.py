@@ -25,22 +25,14 @@ sys.path.insert(0, __file__.rsplit("/tests/", 1)[0] + "/tools")
 from body_generator import generate, mode_document, split_levels  # noqa: E402
 
 EMITTER, LEFT, CRYSTAL, RIGHT = 0, 1, 2, 3  # the bodies' numbers in the Bell world below
-RECORD = Path(
-    "examples/events/experiments/bell/bell_a_b.json"
-)  # Bell's world of record: its emitter's declaration
+RECORD = Path("examples/events/experiments/bell/bell_a_b.json")  # Bell's world of record
 
 
 def a_body(nodes: range | list[int], count: int, **keys: object) -> dict:
     """A body of matter in the law's form on the chain: its Nodes with one count, at rest, the phase's denominator of the worlds of record, and its keys."""
     at = [{"node": [x, 0, 0], "count": count} for x in nodes]
-    return {
-        "family": "matter",
-        "nodes": at,
-        "momentum": [0, 0, 0],
-        "momentum_before": [0, 0, 0],
-        "phase_denominator": 1024,
-        **keys,
-    }
+    rest = {"momentum": [0, 0, 0], "momentum_before": [0, 0, 0], "phase_denominator": 1024}
+    return {"family": "matter", "nodes": at, **rest, **keys}
 
 
 def bell_world(right: dict | None = None) -> dict:
@@ -48,10 +40,8 @@ def bell_world(right: dict | None = None) -> dict:
     record = json.loads(RECORD.read_text(encoding="utf-8"))
     emitter, window = record["measured"][EMITTER], record["measured"][1]["nodes"][0]["count"]
     giving, count = {**emitter["emitter"], "receiver": ["crystal_set"]}, emitter["nodes"][0]["count"]
-    sets = [
-        {"name": n, "positions": [[x, 0, 0]]}
-        for n, x in (("left_own", 44), ("right_own", 58), ("left_far", 40), ("right_far", 64))
-    ]
+    names = (("left_own", 44), ("right_own", 58), ("left_far", 40), ("right_far", 64))
+    sets = [{"name": n, "positions": [[x, 0, 0]]} for n, x in names]
     bodies = [
         a_body(
             range(5, 8), count, moment=emitter["moment"], emitter=giving, stocks={giving["family"]: 1}
@@ -62,17 +52,9 @@ def bell_world(right: dict | None = None) -> dict:
         a_body([40], window),
         a_body([64], window),
     ]
-    document = {
-        "shape": [80, 1, 1],
-        "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
-        "ticks": 400,
-    }
-    document |= {
-        "N": record["N"],
-        "engine": record["engine"],
-        "universe": record["universe"],
-        "measured": bodies,
-    }
+    boundary = {"x": "closed", "y": "periodic", "z": "periodic"}
+    document = {"shape": [80, 1, 1], "boundary": boundary, "ticks": 400, "N": record["N"]}
+    document |= {"engine": record["engine"], "universe": record["universe"], "measured": bodies}
     document["detectors"] = [sets[0], {"name": "crystal_set", "block": CRYSTAL}, *sets[1:]]
     document["stamp"] = input_stamp(document)
     return document
@@ -98,12 +80,8 @@ def test_the_card_is_built_at_ii_and_the_pair_is_declared_at_the_half_quantum():
     assert registered.built and registered.function is apply
     assert registered.schema is not None and "crystal" in registered.schema.places["a body"].keys
     writes = apply(CrystalTerm(), CrystalStart(7, 3, (0, 1), (512, 1)), CrystalOwn())
-    assert (writes.labels, writes.norm, writes.denominator, writes.clock) == (
-        ((0, 1), (0, 1)),
-        7,
-        6,
-        (512, 2),
-    )
+    expected = (((0, 1), (0, 1)), 7, 6, (512, 2))
+    assert (writes.labels, writes.norm, writes.denominator, writes.clock) == expected
     with pytest.raises(ValueError, match="clock is a pair of integers from 1"):
         apply(CrystalTerm(), CrystalStart(7, 3, (0, 1), (0, 1)), CrystalOwn())
     with pytest.raises(ValueError, match="norm is from 1"):
@@ -125,15 +103,12 @@ def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_
     assert labels == [(EMITTER, [[0, 1]]), (CRYSTAL, [[0, 1], [0, 1]])]
     assert (pair["norm"], pair["pace"]) == (arriving["norm"], 2 * arriving["pace"])
     assert pair["u"] != arriving["u"]  # the crystal's own residue, read at its Node
-    assert [(g["record"], g["chosen"][0][0], g["u"], g["content"]) for g in gathers] == [
-        (arriving["record"], "crystal_set", arriving["u"], 1),
-        (pair["record"], "left_own", pair["u"], 1),
-        (pair["record"] + 1, "right_own", arriving["u"], 0),
-    ]
+    chosen = [(g["record"], g["chosen"][0][0], g["u"], g["content"]) for g in gathers]
+    assert chosen[0] == (arriving["record"], "crystal_set", arriving["u"], 1) and len(chosen) == 3
+    assert chosen[1] == (pair["record"], "left_own", pair["u"], 1)
+    assert chosen[2] == (pair["record"] + 1, "right_own", arriving["u"], 0)
     ticks = [arriving["tick"], gathers[0]["tick"], pair["tick"], gathers[1]["tick"], gathers[2]["tick"]]
-    assert (
-        ticks == sorted(ticks) and ticks[0] < ticks[1] < ticks[2] < ticks[3]
-    )  # the order, not the run's numbers
+    assert ticks == sorted(ticks) and ticks[0] < ticks[1] < ticks[2] < ticks[3]  # the order alone
     assert not [live for live in simulation.records.values() if live.pair_record is not None]
     simulation.crystals = {EMITTER: CrystalTerm()}
     with pytest.raises(ValueError, match="declares nothing else"):

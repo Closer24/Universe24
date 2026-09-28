@@ -38,11 +38,9 @@ def test_the_mode_file_carries_the_moving_bodys_two_levels_and_its_proper_pair()
     """`now`, `before` and `top_velocity` under `moving` on a body with a momentum, at rest the two levels of the standing mode, the second not the first; the clock the proper pair on the rest's denominator, above the rest's numerator by 2 cos(Omega) - 2 cos(omega_0) from the file's rotation, triple and top velocity within the pair's rounding; the reader takes the levels and refuses a defect by name."""
     moving, rest = mode_entry(3 * 64 * 3000 // 20), mode_entry(0)  # v = n / (3 Q M) = 1 / 20
     m, clock, rest_clock = moving["moving"], tuple(moving["clock"]), rest["clock"]
-    assert (
-        clock[1] == rest_clock[1]
-        and clock[0] > rest_clock[0]
-        and rest["moving"]["before"] != rest["moving"]["now"]
-    )
+    assert clock[1] == rest_clock[1]
+    assert clock[0] > rest_clock[0]
+    assert rest["moving"]["before"] != rest["moving"]["now"]
     rot, tr, tv = rest["rotation"], m["triple"], m["top_velocity"]
     omega_0, k, delta = acos(rot[0] / rot[1] / 2), acos(tr[0] / tr[2]), tv[0] / tv[1]
     assert abs(2 * cos(omega_0 + delta * (1 - cos(k)) - k * delta * sin(k)) * clock[1] - clock[0]) <= 1
