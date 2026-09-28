@@ -44,6 +44,12 @@ TAIL = {
     5_000: 34_734,
     6_000: 24_904,
 }  # Cheshbon's tail factor t = e^(-kappa) over 2^16 per count (14:12 Israel; the Closer 14:16), stated in integers
+RECORD = {
+    8: {"b": 5, "period": 9.2},
+    9: {"b": 5, "period": 11.0},
+    10: {"b": 5, "period": 12.0},
+    11: {"b": 8, "period": 13.3},
+}  # Cheshbon's table from the generator as Rule3 in integers at Gamma = 24 (15:43 Israel): the standing record's amplitude b = max|now| and its period P in intervals per count on the law (the realisable pixels b = 5 at 8 to 10 and b = 8 at 12 to 15; (a), (b), (c) at b = 5), the blind reading of the record at its Node
 EDGE_RATIO = (
     0.2255,
     0.3444,

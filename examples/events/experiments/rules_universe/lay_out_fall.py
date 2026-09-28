@@ -11,7 +11,12 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from lay_out_axes import RECORD, edges, gamma_of, pixel_mode  # noqa: E402  (the pixels' modes through the tool)
+from lay_out_axes import (  # noqa: E402  (the pixels' modes through the tool)
+    RECORD,
+    edges,
+    gamma_of,
+    pixel_mode,
+)
 from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
 COUNT = 10  # the falling pixel's count at Gamma = 24 (Cheshbon's table of 15:22 Israel: the pixels 8 to 11 on the law; (a), (b), (c) at 10, b = 6); 4,400 on 12,000 was the second run

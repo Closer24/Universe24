@@ -8,6 +8,11 @@
   "edge_quanta_per_node": 5,
   "edge_quanta_per_node_level_once": 8,
   "horizon_quanta_per_node": 12,
+  "record": {
+   "count": 10,
+   "b": 5,
+   "period": 12.0
+  },
   "raw_clicks_per_port_per_interval": 1000,
   "net_tally_per_interval": [
    0.003,
