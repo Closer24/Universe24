@@ -41,8 +41,7 @@ def test_the_int64_bound_from_the_rules_own_total_at_the_integers_of_the_algebra
     assert rule_total_bound(1, 1, 1, 0, 1 << 20, False) == 6 * (1 << 20) + 3 * ((1 << 20) + 1)
     # the loader derives A as the largest level whose total fits at Gamma - 1 over the world's pairs (ALGEBRA.md #a-familys-declaration): every pair's total fits at A, and one pair's exceeds the room at A + 1
     document = content_chain(12, PERIODIC, range(12), 250, gamma=1_000_000)
-    world = parse_nature_beam_world(document)
-    pairs = [tuple(f["pair"]) for f in document["universe"]]
+    world, pairs = parse_nature_beam_world(document), [tuple(f["pair"]) for f in document["universe"]]
     totals = [rule_total_bound(*pair, 1_000_000, 999_999, world.amplitude_bound, True) for pair in pairs]
     assert all(total < room for total in totals)
     assert any(
