@@ -665,6 +665,10 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
                 "band": 1,
                 "row": "the clock in the well within a Link (its fall by the wave's law over the run below a Link)",
             },
+            {
+                "reversible": ticks,
+                "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)",
+            },
         ],
         "GAMEBOARD_checks": [
             f"(i) `gravity_on_the_axis_*` at interval 0: the plane's rest, c = 47 at x = {centre} beside the body under E_s = 100,000, falling as the logarithm away from it, 0 in the twin; no transient after the start",

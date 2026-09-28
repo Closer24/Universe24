@@ -72,6 +72,10 @@
    "row": "the clock in the well within a Link (its fall by the wave's law over the run below a Link)"
   },
   {
+   "reversible": 5800,
+   "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)"
+  },
+  {
    "body": 5,
    "interval": 5500,
    "centre": [
