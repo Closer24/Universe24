@@ -102,8 +102,7 @@ def test_a_feature_stub_grown_within_the_limits_passes_and_beyond_them_fails(tmp
     )
     path = root / PACKAGE / "features" / "stub" / "__init__.py"
     path.write_text(grown, encoding="utf-8")
-    assert len(grown.splitlines()) == 151
-    assert SHAPE.violations(root, baseline) == []
+    assert len(grown.splitlines()) == 151 and SHAPE.violations(root, baseline) == []
     path.write_text(grown.replace('"""One line."""', '"""Two\nlines."""', 1), encoding="utf-8")
     found = SHAPE.violations(root, baseline)
     assert any("has 1 docstring(s) beyond one line and is new" in line for line in found)
@@ -215,5 +214,4 @@ def test_a_moved_file_keeps_its_counts_from_the_merge_base(tmp_path):
     subprocess.run([*git, "mv", f"{PACKAGE}/core/a.py", f"{PACKAGE}/loader/a.py"], check=True)
     subprocess.run([*git, "commit", "-qm", "move"], check=True)
     base = SHAPE.record_at(root, "HEAD~1")
-    assert list(base["files"]) == [f"{PACKAGE}/loader/a.py"]
-    assert SHAPE.violations(root, base) == []
+    assert list(base["files"]) == [f"{PACKAGE}/loader/a.py"] and SHAPE.violations(root, base) == []

@@ -8,13 +8,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe.core.rule3 import (
-    ISOTROPIC,
-    coefficients,
-    form_term,
-    rule3,
-    rule_total_bound,
-)
+from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rule_total_bound
 from event_universe.events import detector_law
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
@@ -196,8 +190,7 @@ def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
     simulation.step()
     assert calls["forward"] >= len(simulation.held_component_records()) and calls["backward"] == 0
     simulation.step_inverse()
-    assert calls["backward"] >= 1
-    assert simulation.books()["balanced"]
+    assert calls["backward"] >= 1 and simulation.books()["balanced"]
 
 
 # A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a

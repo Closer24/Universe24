@@ -99,8 +99,7 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     # stock 6 down to 1 at the six givings), u below it
     assert len(givings) == 6 and all(lawful_wheel(world, line) for line in givings)
     assert len(gathers) + sum(1 for live in simulation.records.values() if live.family == 0) == 6
-    assert len(gathers) >= 3
-    assert all("clock" in g and "giving" in g and "click" in g for g in gathers)
+    assert len(gathers) >= 3 and all("clock" in g and "giving" in g and "click" in g for g in gathers)
     for gather in gathers:
         assert gather["chosen"] == [["screen", 0, "0"]] and gather["click_at"] == "rung"
         assert gather["tick"] == gather["click"] and gather["record"] not in simulation.records
@@ -141,8 +140,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
             continue
         at_node.append(int(live.now[2, 0, 0]))
         booked = live.absorbed
-    assert at_node and any(level != 0 for level in at_node[2:])
-    assert booked > 0
+    assert at_node and any(level != 0 for level in at_node[2:]) and booked > 0
     readings = dict(simulation.snapshot_stream())
     assert all("emitter_taking" not in record for record in readings.get("records", []))
     books = simulation.books()

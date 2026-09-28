@@ -66,5 +66,4 @@ def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the
     # the inverse reads the same paces (the tensor's before level, the remainder stepped back)
     simulation._advance_inverse(live)
     assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
-    assert not live.remainder.any()
-    assert simulation.leaks() == []
+    assert not live.remainder.any() and simulation.leaks() == []

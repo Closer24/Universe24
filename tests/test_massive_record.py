@@ -79,8 +79,7 @@ def test_the_rule_at_a_corner_of_an_open_board():
         r[0, 0, 0] = 5
         live = planted(simulation, 1, now, before, r)
         a_next, r_next = step_once(simulation, live)
-        assert int(a_next[0, 0, 0]) == expected
-        assert int(r_next[0, 0, 0]) == 5
+        assert int(a_next[0, 0, 0]) == expected and int(r_next[0, 0, 0]) == 5
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
@@ -103,8 +102,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     a_next, r_next = step_once(simulation, live)
     content = simulation.level_of("content")
     free = (content == 0) & (send(simulation.ports, content, simulation.kind_wrap[0]) == 0)
-    assert int(np.sum(free)) == 80
-    assert np.array_equal(a_next[free], expected_next[free])
+    assert int(np.sum(free)) == 80 and np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
     # the weak-field rule at every Node from its three integers (ALGEBRA.md #the-line; item 44)
     (read, _, _), self_coefficient, wall = coefficients(
@@ -154,8 +152,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
             projection = max(projection, abs(int(np.sum(live.now * checker)) // 216))
             # GAMEBOARD: the books' form, a diagnostic bound on the remainders' jitter, not a measurement
             assert abs(Fraction(*simulation.record_form(live)) - start) < start // 1000
-        assert peak < 2 * UNIT
-        assert projection < 40
+        assert peak < 2 * UNIT and projection < 40
         simulation.records[live.identity] = live
         assert simulation.books()["families"]["matter"]["form"] == form_json(
             simulation.record_form(live)
@@ -305,8 +302,7 @@ def test_the_blocks_cells_and_its_pair_on_them():
     )
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
-    assert int(block.mask.sum()) == 27
-    assert block.mask[2:5, 2:5, 2:5].all()
+    assert int(block.mask.sum()) == 27 and block.mask[2:5, 2:5, 2:5].all()
     den = simulation.kind_den[1]
     assert np.all(simulation.kind_num[1] == 800)
     assert np.all(den[block.mask] == 800) and np.all(den[~block.mask] == 809)
@@ -603,8 +599,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
     matter = [family.name for family in world.families].index("matter")
-    assert world.families[matter].massive_kind
-    assert world.families[matter].phase_per_age == (512, 1)
+    assert world.families[matter].massive_kind and world.families[matter].phase_per_age == (512, 1)
     simulation = DetectorLawSimulation(world)
     other = DetectorLawSimulation(beside)
     identity: int | None = None
@@ -710,8 +705,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         # the flight: the train's head over 53 Links at v_g = 0.442, then as
         # much of the passage as the residue asks (the residues spread from
         # the kept remainder, record 1962 (1))
-        assert 100 < gather["click"] - gather["giving"] < 400
-        assert identity not in simulation.records
+        assert 100 < gather["click"] - gather["giving"] < 400 and identity not in simulation.records
 
 
 def test_every_declared_wheel_is_refused_by_name():

@@ -43,8 +43,7 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
         value, carried = division_forward(numerator, wall, carry)
         assert (value, carried) == divmod(numerator + carry, wall)
         value_before, carry_before = division_back(numerator, wall, value, carried)
-        assert carry_before == carry
-        assert value_before == -((carry - numerator) // wall)
+        assert carry_before == carry and value_before == -((carry - numerator) // wall)
     term = HoldTerm("content", (1, 3, 6), (1, 4, 2), None, 1, 1)
     loaded = apply(term, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {}))
     assert loaded.time_level == 0 and dict(loaded.own.values)[(1,)] == 64 * 4 * 3120 // 12480 == 64
