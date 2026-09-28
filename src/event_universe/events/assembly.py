@@ -234,8 +234,12 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
                 own_record.now[:] = profile
                 own_record.before[:] = profile
             else:
-                own_record.now[mask] = definition.seed
-                own_record.before[mask] = definition.seed
+                # THE SEED FALLBACK LEFT (the owner's word, 2026-09-28: a write without a row of the law
+                # leaves): a body's own record comes from its mode record's two levels or profile alone
+                raise ValueError(
+                    f"measured[{number}] needs its `seed` as its composed mode's profile (the generator's "
+                    "levels or profile in its mode file); a flat scalar seed is no mode record and no row of the law"
+                )
             own_record.standing = True  # a body's own record, read by no detector (item 51)
             block.own = own_record
             loop.records[own_record.identity] = own_record

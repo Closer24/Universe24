@@ -80,36 +80,23 @@ def test_the_card_is_built_at_ii_and_the_pair_is_declared_at_the_half_quantum():
     assert read_term({"family": "matter"}) is None and read_term({"crystal": {}}) == CrystalTerm()
 
 
-def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_its_side():
-    """The loop on Bell's world, the main loop's audit admitting every act: the emitter's record clicks at the crystal's set and in the same interval the crystal gives the pair through the giving's open and window, named at the window's close (after the click, the intervals in this order and never the run's numbers) with the two identical labels, the arriving norm over twice its denominator and a residue of its own (the crystal's, read at its Node); the rows' label clicks alone at the left polariser's own set on the first row's line with the pair's one quantum, the columns' label alone at the right polariser's own set on the second row's line with the arriving record's residue (the second residue of the crystal's Node) and the content 0 (the half in the family's unit), whichever first; after the second click no row is alive. The refusals by name: a crystal on a body with an emitter, a world with one polariser body."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(bell_world()))
+def test_the_crystal_with_a_flat_seed_is_refused_by_name_and_the_terms_refusals_hold():
+    """Bell's world at the load: the crystal is a block of two Nodes whose seed is the flat scalar 2^12 and no mode record, refused by name (the old seed fallback left; a block gives from its own record, which comes from its mode record alone). Bell's run, the emitter's click at the crystal's set and the pair's two labels clicking alone at the polarisers' own sets, returns with the crystal's mode from the generator in the law's form. The term's refusals by name hold on a silent crystal (the seed 0, no own record): a crystal on a body with an emitter, a world with one polariser body."""
+    with pytest.raises(
+        ValueError, match=r"measured\[5\] needs its `seed` as its composed mode's profile"
+    ):
+        DetectorLawSimulation(parse_nature_beam_world(bell_world()))
+    silent = bell_world()
+    silent["measured"][CRYSTAL]["seed"] = 0
+    silent["stamp"] = input_stamp(silent)
+    simulation = DetectorLawSimulation(parse_nature_beam_world(silent))
     simulation.crystals = {CRYSTAL: CrystalTerm()}
     assert ("measured[5].crystal", "the crystal") in simulation.family_terms()
-    lines: list[dict] = []
-    simulation.record = lines.append
-    for _ in range(400):
-        simulation.step()
-    givings = [line for line in lines if line["event"] == "giving"]
-    gathers = [line for line in lines if line["event"] == "gather"]
-    arriving, pair = givings
-    labels = [(line["measured"], line["labels"]) for line in givings]
-    assert labels == [(EMITTER, [[0, 1]]), (CRYSTAL, [[0, 1], [0, 1]])]
-    assert (pair["norm"], pair["pace"]) == (arriving["norm"], 2 * arriving["pace"])
-    assert pair["u"] != arriving["u"]  # the crystal's own residue, read at its Node
-    assert [(g["record"], g["chosen"][0][0], g["u"], g["content"]) for g in gathers] == [
-        (arriving["record"], "crystal_set", arriving["u"], 1),
-        (pair["record"], "left_own", pair["u"], 1),
-        (pair["record"] + 1, "right_own", arriving["u"], 0),
-    ]
-    ticks = [arriving["tick"], gathers[0]["tick"], pair["tick"], gathers[1]["tick"], gathers[2]["tick"]]
-    assert (
-        ticks == sorted(ticks) and ticks[0] < ticks[1] < ticks[2] < ticks[3]
-    )  # the order, not the run's numbers
-    assert not [live for live in simulation.records.values() if live.pair_record is not None]
     simulation.crystals = {EMITTER: CrystalTerm()}
     with pytest.raises(ValueError, match="declares nothing else"):
         simulation.family_terms()
     one_sided = bell_world()
+    one_sided["measured"][CRYSTAL]["seed"] = 0
     del one_sided["measured"][RIGHT]["polariser"]
     one_sided["stamp"] = input_stamp(one_sided)
     simulation = DetectorLawSimulation(parse_nature_beam_world(one_sided))
