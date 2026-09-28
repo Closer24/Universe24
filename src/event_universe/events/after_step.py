@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, cast
 import numpy as np
 
 from event_universe.core.main_loop import ALIVE
-from event_universe.core.rule3 import NO_READ, rule3
+from event_universe.core.rule3 import NO_READ, Key, rule3
 from event_universe.events import pair
 from event_universe.events.records import Block, LiveRecord
 from event_universe.features.crystal import CrystalOwn, CrystalStart, CrystalWrites
@@ -18,6 +18,7 @@ from event_universe.features.hand import HandStart, HandTerm, HandWrites
 from event_universe.features.lifetime import LifetimeStart, LifetimeTerm, LifetimeWrites
 from event_universe.features.polariser import PolariserOwn, PolariserStart, PolariserWrites, at
 from event_universe.features.recoil import GIVING
+from event_universe.features.write import WriteOwn, WriteStart, WriteTerm, WriteWrites
 from event_universe.loader.world import EmitterDefinition
 
 if TYPE_CHECKING:
@@ -156,8 +157,25 @@ def emitter_of(block: Block) -> EmitterDefinition | None:
     return block.definition.emitter if block.crystal_giving is None else block.crystal_giving
 
 
+def write_line(
+    loop: DetectorLawSimulation,
+    act: str,
+    wall: int,
+    coefficient: int,
+    counts: tuple[tuple[Key, int], ...],
+    values: dict[Key, int],
+    carries: dict[Key, int],
+) -> tuple[tuple[Key, int, int], ...]:
+    """The write's line the loop hands the four callers (the hold, the giving, the recoil, THE START), its method `_write_line`: one act of the folder features/write, found by its name at load (`loop.write`), per key (coefficient x count + r) div wall by Rule3's carried division at both levels, the remainders written back into the caller's own (ALGEBRA.md #the-primitives, the row "the write")."""
+    term, start, own = WriteTerm(wall, coefficient), WriteStart(act, counts), WriteOwn(values, carries)
+    writes = cast(WriteWrites, loop.write(term, start, own))
+    values.update(writes.own.values)
+    carries.update(writes.own.carries)
+    return writes.levels
+
+
 def window_write(loop: DetectorLawSimulation, live: LiveRecord) -> None:
-    """One interval of an open window right after the record's own step (out of the loop's module, the loop's method of the same duty): the body's rotation written into the given row at the body's Nodes at both levels through the folder's write, (level + r) div k with the remainders kept on the record, now from the body's now and before from its before (a rotation is two levels, ALGEBRA.md #the-generator (d); one level alone is a kick the two-level rule doubles; the second row of a pair record at its second level, the quarter turn, the window's count and norm the first row's), the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in; the emitter the crystal's giving definition on a crystal body."""
+    """One interval of an open window right after the record's own step (out of the loop's module, the loop's method of the same duty): the body's rotation written into the given row at the body's Nodes at both levels through the folder's write, (level x num + r) div den by the write's line the loop hands (features/write) with the remainders kept on the record, now from the body's now and before from its before (a rotation is two levels, ALGEBRA.md #the-generator (d); one level alone is a kick the two-level rule doubles; the second row of a pair record at its second level, the quarter turn, the window's count and norm the first row's), the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in; the emitter the crystal's giving definition on a crystal body."""
     block = loop.block_by_number.get(live.emitter) if live.emitter is not None else None
     ledger = live.pair_record
     if block is None or block.window != (live.identity if ledger is None else ledger.rows[0]):
@@ -165,7 +183,8 @@ def window_write(loop: DetectorLawSimulation, live: LiveRecord) -> None:
     if emitter_of(block) is None:
         return
     levels = (loop._body_levels(block), loop._body_levels(block, before=True))
-    written = loop._giving_act(block, GivingStart(THE_WRITE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live)
+    start = GivingStart(THE_WRITE, 0, (0, 0, 0), levels, 0, (0, 0, 0), loop._write_line)
+    written = loop._giving_act(block, start, live)
     if ledger is not None and live.identity == ledger.rows[1]:
         # the second row of a pair record: the first row turned by a quarter, its second level written; the outward norm and the window's count are the first row's
         if written.level is not None:
