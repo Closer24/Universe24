@@ -51,14 +51,16 @@ def read(world_path: Path) -> dict[str, Any]:
         for i in range(1, len(counts))
         if counts[i] != counts[i - 1]
     ]
-    edge = int(blind["edge_quanta_per_node"])
+    edge = float(
+        blind["edge_quanta_per_node"]
+    )  # the fraction of Gamma as Cheshbon gives it; a count below it is dissolved
     first_move = moves[0]["interval"] if moves else None
     under_edge = next((i for i, c in enumerate(counts) if min(c) < edge), None)
     events: dict[str, int] = {}
     for line in lines:
         events[line.get("event", "?")] = events.get(line.get("event", "?"), 0) + 1
     face_clicks = sum(1 for g in simulation.layer.gathers if g["chosen"] and g["chosen"][0][0] == "face")
-    low, high = blind["dissolution_intervals"]
+    dissolution = blind["dissolution_intervals"]  # None where the bodies part: no dissolution expected
     report = {
         "world": world_path.name,
         "kind": "WORLD (d), THE CLICK JOINS AND PARTS: the counts, the moves and the records against the expectation",
@@ -72,10 +74,16 @@ def read(world_path: Path) -> dict[str, Any]:
             "every_10": [(i, c) for i, c in enumerate(counts) if i % 10 == 0],
             "edge": edge,
             "under_the_edge_at": under_edge,
-            "expected_dissolution_intervals": [low, high],
-            "verdict": "MISS"
-            if under_edge is None
-            else ("MATCH" if low <= under_edge <= high else "MISS"),
+            "expected_dissolution_intervals": dissolution,
+            "verdict": (
+                ("MATCH" if under_edge is None else "MISS")
+                if dissolution is None
+                else (
+                    "MISS"
+                    if under_edge is None
+                    else ("MATCH" if dissolution[0] <= under_edge <= dissolution[1] else "MISS")
+                )
+            ),
         },
         "2_the_moves": {
             "label": "GAMEBOARD",
