@@ -127,6 +127,7 @@ def expectation(name: str, distance: int) -> dict[str, Any]:
             )
         ),
         "DETECTOR": [],
+        "faces": "a face is no body and a click at an open face is no click (Cheshbon 14:55, the Closer 15:02 Israel time): a record that reaches a face ends and is not counted; the reading of (d) is the two Nodes' counts and the count's line's moves between them",
         "blind": {
             "row": "Cheshbon's numbers of 13:03 and 13:18 Israel time (2026-09-28) before the run: under T = 1 every remainder crosses, the first click at interval 1; the join at two Links (the overlap 0.41, the transfer about 0.33 radians per interval) dissolves the smaller within about 3 to 10 intervals; at five Links (the overlap 0.107, 0.087 radians per interval) within about 30 to 70; the click's reach is about 18 Links, so neither world parts",
             "edge_quanta_per_node": EDGE,
