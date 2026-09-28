@@ -23,10 +23,7 @@ def axis_sums(a: np.ndarray) -> list[np.ndarray]:
 
 
 def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the_same_paces():
-    """Gravity's xx part set to 40 at every Node of a slab (a sourced part, not silent): a
-    matter record's step is the rule with p_x = p_0 - 20 there and p_y = p_z = p_0, the
-    isotropic rule elsewhere, the remainder in [0, w); the wheel at a Node of the slab reads
-    the five coefficients; one interval back restores the rows exactly."""
+    """Gravity's xx part set to 40 at every Node of a slab (a sourced part, not silent): a matter record's step is the rule with p_x = p_0 - 20 there and p_y = p_z = p_0, the isotropic rule elsewhere, the remainder in [0, w); the wheel at a Node of the slab reads the five coefficients; one interval back restores the rows exactly."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(paces_world()))
     gravity = parts_of(simulation, "clicks")
     matter = [family.name for family in simulation.families].index("matter")

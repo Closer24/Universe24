@@ -1,5 +1,4 @@
-"""The point emitter, a hypothesis under its own identity (`point_emitter`, off by default): a one-Node
-well gives by the window, its Node's rotation added to the given row every interval."""
+"""The point emitter, a hypothesis under its own identity (`point_emitter`, off by default): a one-Node well gives by the window, its Node's rotation added to the given row every interval."""
 
 from __future__ import annotations
 

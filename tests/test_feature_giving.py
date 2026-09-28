@@ -1,6 +1,4 @@
-"""THE GIVING, its own folder (ALGEBRA.md #the-primitives, the row "the giving"; 9.107; ALGEBRA.md; issue
-#1156): the bulk share on the moving row's numbers, the three acts of a window on synthetic integers,
-the refusals by name, the declaration."""
+"""THE GIVING, its own folder (ALGEBRA.md #the-primitives, the row "the giving"; 9.107; ALGEBRA.md; issue #1156): the bulk share on the moving row's numbers, the three acts of a window on synthetic integers, the refusals by name, the declaration."""
 
 from __future__ import annotations
 

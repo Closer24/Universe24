@@ -169046,6 +169046,12 @@
      "weight": 1,
      "twist": "own",
      "by": 1
+    },
+    {
+     "family": "polarisation",
+     "weight": 1,
+     "twist": "own",
+     "by": 1
     }
    ],
    "self_source": {
@@ -169085,6 +169091,12 @@
      "weight": "Lambda",
      "twist": "own",
      "by": "q"
+    },
+    {
+     "family": "polarisation",
+     "weight": 1,
+     "twist": "own",
+     "by": 1
     }
    ],
    "self_source": {
@@ -169094,6 +169106,30 @@
     "gives": true,
     "takes": true,
     "quantum": 1
+   }
+  },
+  {
+   "name": "polarisation",
+   "sign": 0,
+   "parts": [
+    1
+   ],
+   "phase": 1,
+   "pair": [
+    1,
+    2
+   ],
+   "quantum": 1,
+   "held": {
+    "count": "content",
+    "factors": [
+     1
+    ],
+    "divisor": 1
+   },
+   "reads": [],
+   "self_source": {
+    "unit": 0
    }
   }
  ]

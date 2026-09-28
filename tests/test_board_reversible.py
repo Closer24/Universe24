@@ -1,5 +1,4 @@
-"""The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions:
-one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
+"""The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions: one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
 
 from __future__ import annotations
 
