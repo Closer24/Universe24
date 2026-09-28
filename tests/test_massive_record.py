@@ -438,17 +438,17 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 
 
 def derived_amplitude_of(pairs, gamma: int) -> int:
-    """The test's own derivation of A (ALGEBRA.md #the-rows-against-nature): the largest level whose rule total 6 A R + A |S| + w (A + 1) stays inside the width at the levels 0 and Gamma - 1, the tightest over the pairs."""
+    """The test's own derivation of A (ALGEBRA.md #the-rows-against-nature): the largest level whose rule total 6 A R + A |S| + w (A + 1) stays inside the width at the levels 0 and (Gamma - 1) div 2 (the guard's admitted axis pace), the tightest over the pairs."""
     found = MAX_WORK_INT
     for num, den in pairs:
-        for level in (0, gamma - 1):
+        for level in (0, (gamma - 1) // 2):  # the guard admits the axis pace Gamma - 2 c > 0
             (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, True)
             found = min(found, (MAX_WORK_INT - wall) // (6 * abs(read) + abs(self_coefficient) + wall))
     return found
 
 
 def test_the_amplitude_bound_is_derived_from_the_width_and_the_pairs_and_never_written():
-    """THE AMPLITUDE BOUND A IS DERIVED (ALGEBRA.md #a-familys-declaration, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the loader's A is the largest level whose rule total stays inside the width at the levels 0 and Gamma - 1, the tightest over every pair the files declare, the families' and the bodies' (a body's own pair enters it), the same derivation here from the rule's coefficients; a seed above A is refused naming A, a row stepped above A is refused at run; `amplitude_bound` written in a file is refused by name as an unknown key."""
+    """THE AMPLITUDE BOUND A IS DERIVED (ALGEBRA.md #a-familys-declaration, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the loader's A is the largest level whose rule total stays inside the width at the levels 0 and (Gamma - 1) div 2 (the guard's admitted axis pace), the tightest over every pair the files declare, the families' and the bodies' (a body's own pair enters it), the same derivation here from the rule's coefficients; a seed above A is refused naming A, a row stepped above A is refused at run; `amplitude_bound` written in a file is refused by name as an unknown key."""
     document = massive_world([6, 6, 6], PERIODIC, [800, 809])
     assert parse_nature_beam_world(document).amplitude_bound == derived_amplitude_of(
         [tuple(f["pair"]) for f in document["universe"]], NODE_CLOCK
@@ -638,10 +638,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         if len([line for line in lines if line["event"] == "gather"]) == 2:
             break
     gathers = [line for line in lines if line["event"] == "gather"]
-    # both records click, each once, in either order (under the click rule of
-    # ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's
-    # click and may reach its rung at the screen first when its residue is
-    # the smaller)
+    # both records click, each once, in either order (under the click rule of ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's click and may reach its rung at the screen first when its residue is the smaller)
     assert sorted(gather["record"] for gather in gathers) == sorted(identities) and len(identities) == 2
     for gather in gathers:
         identity = gather["record"]
@@ -653,9 +650,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         # the plain flux against the norm's rational norm / pace (item 36)
         assert 2 * wheel * pace * pointer >= (2 * u + 1) * norm
         assert below[identity] == gather["click"] - 1
-        # the flight: the train's head over 53 Links at v_g = 0.442, then as
-        # much of the passage as the residue asks (the residues spread from
-        # the kept remainder, record 1962 (1))
+        # the flight: the train's head over 53 Links at v_g = 0.442, then as much of the passage as the residue asks (the residues spread from the kept remainder, record 1962 (1))
         assert 100 < gather["click"] - gather["giving"] < 400 and identity not in simulation.records
 
 
@@ -740,8 +735,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
         line = gathers[0]
-        # the rung (2 u + 1) T / (2 W) on the record's own residue from the law
-        # decides how much of the record must pass the set before its click
+        # the rung (2 u + 1) T / (2 W) on the record's own residue from the law decides how much of the record must pass the set before its click
         assert 0 <= line["click"] - giving <= 600 and line["tick"] == line["click"]
         given = next(b for b in lines if b["event"] == "giving" and b["record"] == first)
         assert 0 <= line["u"] < given["W"] and lawful_wheel(world, given)
