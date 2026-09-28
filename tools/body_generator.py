@@ -8,7 +8,7 @@ import json
 import sys
 from dataclasses import dataclass
 from fractions import Fraction
-from math import acos, copysign, cos, isqrt
+from math import acos, cos, isqrt
 from pathlib import Path
 from typing import Any
 
@@ -71,6 +71,7 @@ class MovingBody:
     velocity: Fraction
     named: Fraction
     rest: BoundMode
+    top: Fraction
 
 
 def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int:
@@ -361,7 +362,9 @@ def moving_body(
 
     found = {0: at(0)}
     if momentum == 0:
-        return MovingBody(found[0][1], found[0][2], (denominator, 0), AT_REST, found[0][0], named, rest)
+        return MovingBody(
+            found[0][1], found[0][2], (denominator, 0), AT_REST, found[0][0], named, rest, Fraction(0)
+        )
     found[denominator] = at(denominator)
     if abs(found[denominator][0]) < abs(named):
         raise ValueError(
@@ -379,7 +382,8 @@ def moving_body(
     j = low if abs(named) - abs(found[low][0]) <= abs(found[high][0]) - abs(named) else high
     velocity, now, before = found[j]
     a, b, c = triple_of((denominator, j))
-    return MovingBody(now, before, (denominator, j), (a, sense * b, c), velocity, named, rest)
+    top = abs(found[denominator][0])
+    return MovingBody(now, before, (denominator, j), (a, sense * b, c), velocity, named, rest, top)
 
 
 def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
@@ -391,11 +395,12 @@ def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
     return int(nearest), denominator
 
 
-def proper_rotation(rotation: Fraction, triple: Triple, velocity: Fraction) -> Fraction:
-    """The packet's rotation at its centre, 2 cos(omega_b - k v): the phase the moving centre gains per interval, the rest rotation's angle less the phase k per Link (the triple's, signed by its sense) times the velocity v in Links per interval; the loader's proper pair of a moving body, the angles by the host's arc cosine as the twist's (ALGEBRA.md #the-generator (e), #the-velocity)."""
-    omega = acos(float(rotation) / 2)
-    phase = copysign(acos(triple[0] / triple[2]), triple[1])
-    return Fraction(2 * cos(omega - phase * float(velocity)))
+def proper_rotation(rotation: Fraction, triple: Triple, top: Fraction) -> Fraction:
+    """The packet's rotation at its moving centre, 2 cos(Omega(k)) with Omega(k) = omega(k) - k omega'(k) on the body's own bound band omega(k) = omega_0 + Delta (1 - cos k), omega_0 the rest rotation's angle and Delta the packet's top velocity at a quarter turn per Link, k the phase per Link of the triple; the loader's proper pair of a moving body, the angles by the host's arc cosine as the twist's (ALGEBRA.md #the-rows-against-nature (e), #the-generator (e), #the-velocity)."""
+    omega_0 = acos(float(rotation) / 2)
+    cos_k, sin_k = triple[0] / triple[2], abs(triple[1]) / triple[2]
+    k = acos(cos_k)
+    return Fraction(2 * cos(omega_0 + float(top) * (1 - cos_k) - k * float(top) * sin_k))
 
 
 def two_levels(
@@ -578,7 +583,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 in_world = {"refused": str(refusal)}
                 rotation = mode.rotation
             if momentum[axis]:
-                rotation = proper_rotation(rotation, moved.triple, moved.velocity)
+                rotation = proper_rotation(rotation, moved.triple, moved.top)
             clock = clock_pair(rotation, mode.amplitude)
             moving = {
                 "axis": axis,
@@ -587,6 +592,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 "triple": list(moved.triple),
                 "velocity_named": [moved.named.numerator, moved.named.denominator],
                 "velocity": [moved.velocity.numerator, moved.velocity.denominator],
+                "top_velocity": [moved.top.numerator, moved.top.denominator],
                 "now": np.moveaxis(moved.now, 0, axis),
                 "before": np.moveaxis(moved.before, 0, axis),
             }
