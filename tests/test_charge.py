@@ -30,8 +30,7 @@ from tests.bodies import (
 from tests.running import planted
 from tests.worlds import CHARGE_FAMILY_NAME, PERIODIC, emitter_world, seed_on_the_mode, wheel_of
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -88,8 +87,7 @@ def test_a_record_reads_the_content_with_its_own_sign_and_light_reads_it_alone()
             assert simulation.node_clock_pair((25, 0, 0), NEUTRAL) == (GAMMA - QUANTA, GAMMA)
             assert simulation.node_clock_pair((5, 0, 0), MATTER) == (GAMMA, GAMMA)
             assert simulation.wheel_at(MATTER, (25, 0, 0))[1] == wheel_of(PAIR, effective[25], GAMMA)
-            # one step of the rule on each family's record (the engine's `_advance`, the
-            # step's own on a record: a massive record in the register is a block's own)
+            # one step of the rule on each family's record (the engine's `_advance`, the step's own on a record: a massive record in the register is a block's own)
             lit = [max(c - strength * c, 0) for c in slab]
             for family, pair, reading in (
                 (MATTER, PAIR, effective),
@@ -224,8 +222,8 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     )
     refused(twice, "reads names 'charge' twice")
     unlabelled = copy()
-    del unlabelled["universe"][MATTER]["sign"]
-    refused(unlabelled, r"universe\[1\] lacks keys: sign")
+    del unlabelled["universe"][MATTER]["sign"]  # THE FAMILIES FROM THE RULE: the sign derives as 0
+    assert parse_nature_beam_world(unlabelled).families[MATTER].charge == (0, 1)
     strong = copy()
     strong["universe"][MATTER]["sign"] = 2
     refused(strong, r"universe\[1\]\.sign must be one of \[-1, 0, 1\], not 2")
@@ -293,13 +291,11 @@ def test_with_every_charge_zero_the_field_is_zero_and_the_rows_are_those_of_any_
             simulation.records[live.identity] = live
             lives.append(live)
         for _ in range(40):
-            # the matter record by the rule at the interval's start content (a massive record
-            # in the register is a block's own: the step advances it with its block)
+            # the matter record by the rule at the interval's start content (a massive record in the register is a block's own: the step advances it with its block)
             simulation._advance(lives[1])
             simulation.step()
             assert not held_record(simulation, "sign").now.any()
-            # THE LEAK TEST (record 2075 (3); item 55): the never-sourced sign family is not
-            # named; the planted matter record (no body of its family, the test's device) is
+            # THE LEAK TEST (record 2075 (3); item 55): the never-sourced sign family is not named; the planted matter record (no body of its family, the test's device) is
             assert simulation.leaks() == ["matter"]
         assert not held_record(simulation, "sign").remainder.any()
         # a row planted in the never-sourced family is a leak, named by the family's declared name

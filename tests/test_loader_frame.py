@@ -10,7 +10,7 @@ import pytest
 
 from event_universe.core.register import discover
 from event_universe.core.schema import Context
-from event_universe.loader import frame
+from event_universe.loader import derived, frame
 from event_universe.loader.world import parse_world_document
 from event_universe.world_files import input_digest, world_files
 from tests.running import family_names, string_constants, written_defaults
@@ -39,9 +39,10 @@ def test_the_shipped_file_and_a_sourced_entry_pass_with_the_weight_word_resolved
     entries, integers = read(universe)
     assert [entry["name"] for entry in entries] == [f["name"] for f in universe["families"]]
     assert any("sourced" in entry for entry in entries)
-    assert entries[2]["reads"][1]["weight"] == integers["Lambda"] == 1
-    assert entries[0]["held"]["dipole_div"] == 1 and entries[0]["parts"] == (1, 3, 6)
-    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+    filled = derived.filled(entries[2], entries)  # THE FAMILIES FROM THE RULE: the reads from the ranks
+    assert filled["reads"][1] == {"family": "charge", "weight": 1, "twist": "own", "by": "q"}
+    assert derived.filled(entries[0], entries)["held"]["dipole_div"] == 1 and "Lambda" not in integers
+    for key in ("node_clock", "momentum_unit"):
         assert integers[key] == universe["integers"][key]
     table = integers["twist_table"]
     assert table["unit"] == universe["integers"]["twist_table"]["unit"]
@@ -73,22 +74,20 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
     refuses(
         lambda d: d["families"][0].__setitem__("name", 3), r"families\[0\]\.name must be a word, not 3"
     )
-    refuses(lambda d: d["families"][0].pop("parts"), r"families\[0\] lacks keys: parts")
+    refuses(lambda d: d["families"][0].pop("pair"), r"families\[0\] lacks keys: pair")
     refuses(lambda d: d["families"][0].__setitem__("mass", 1), r"families\[0\] has unknown keys: mass")
-    refuses(
-        lambda d: d["families"][0]["held"].pop("factors"), r"families\[0\]\.held lacks keys: factors"
-    )
+    refuses(lambda d: d["families"][0]["held"].pop("count"), r"families\[0\]\.held lacks keys: count")
     refuses(
         lambda d: d["families"][1].__setitem__("phase", True),
         r"families\[1\]\.phase must be one of \[1, 2\], not True",
     )
     refuses(
-        lambda d: d["families"][2]["reads"][1].__setitem__("weight", "Mu"),
-        r"reads\[1\]\.weight names 'Mu', no integer of the universe",
+        lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", "weight": "Mu"}]),
+        r"reads\[0\]\.weight names 'Mu', no integer of the universe",
     )
     refuses(
-        lambda d: d["families"][2]["reads"][1].__setitem__("family", "ions"),
-        r"reads\[1\]\.family names 'ions', no family of the universe",
+        lambda d: d["families"][2].__setitem__("reads", [{"family": "ions"}]),
+        r"reads\[0\]\.family names 'ions', no family of the universe",
     )
     with pytest.raises(
         ValueError, match="universe names 'nowhere.json', no file at the repository's root"

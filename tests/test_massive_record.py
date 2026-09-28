@@ -9,7 +9,8 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
-from event_universe.core.rule3 import coefficients
+from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.rule3 import ISOTROPIC, coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.features.send import send
 from event_universe.loader.world import MASSLESS_PAIR
@@ -136,9 +137,6 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
     periodic = {"x": "periodic", "y": "periodic", "z": "periodic"}
     for pair in ([128, 129], [1600, 1618]):
         document = massive_world([6, 6, 6], periodic, pair)
-        document["amplitude_bound"] = (
-            1 << 21
-        )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
         world = parse_nature_beam_world(document)
         simulation = DetectorLawSimulation(world)
         live = planted(simulation, 1, now, before, np.zeros((6, 6, 6), dtype=np.int64))
@@ -208,10 +206,6 @@ def run_chain_digests() -> dict[str, str]:
 def test_the_loaders_refusals_name_the_key():
     """BUILD.md (q): the step's keys refused one by one, each naming the key."""
     base = massive_world([4, 4, 4], "open", [2, 3])
-    without_key = json.loads(json.dumps(base))
-    del without_key["amplitude_bound"]
-    with pytest.raises(ValueError, match="a world with a massive family declares `amplitude_bound`"):
-        parse_nature_beam_world(without_key)
     reversed_pair = json.loads(json.dumps(base))
     reversed_pair["universe"][1]["pair"] = [3, 2]
     with pytest.raises(ValueError, match="den >= num"):
@@ -344,11 +338,7 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
         assert simulation.books()["balanced"], simulation.tick
     givings = [line for line in lines if line["event"] == "giving"]
     assert len(givings) == 3
-    # the residues from the law (ALGEBRA.md #a-familys-declaration) on the body's own wheel (700
-    # on the source well in the vacuum; at its Node the wheel of its content under
-    # the Node clock, ALGEBRA.md #the-paces, read from the rule), spread from the remainder
-    # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
-    # the coupling's back-action HISTORY)
+    # the residues from the law (ALGEBRA.md #a-familys-declaration) on the body's own wheel (700 on the source well in the vacuum; at its Node the wheel of its content under the Node clock, ALGEBRA.md #the-paces, read from the rule), spread from the remainder kept at the Nodes (the model owner's decisions (1) and (2) of record 1962; the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in givings)
     # the line's content is the held level at the body's Node: the tent of 4 quanta over the divisor 40000, within 1
     assert all(abs(line["content"]) <= 1 for line in givings)
@@ -447,62 +437,43 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 # Reviewer 3's three MUSTs on step 2 (the Boss's 16:42Z) and his layer line (18:12Z)
 
 
-def test_the_load_bound_of_a_pair_names_the_bound_and_the_pair():
-    """A pair whose rule total at the declared amplitude bound, the clock and the content reaches 2^63 is refused at load naming them ([800, 809] and [3200, 3236] admitted); the amplitude bound is required, bounded by the width through the rule's total and the transport's room, and a seed or a row above it is refused naming it."""
-    big = 1 << 20
-    document = massive_world([6, 6, 6], PERIODIC, [big, big + 1])
+def derived_amplitude_of(pairs, gamma: int) -> int:
+    """The test's own derivation of A (ALGEBRA.md #the-rows-against-nature): the largest level whose rule total 6 A R + A |S| + w (A + 1) stays inside the width at the levels 0 and Gamma - 1, the tightest over the pairs."""
+    found = MAX_WORK_INT
+    for num, den in pairs:
+        for level in (0, gamma - 1):
+            (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, True)
+            found = min(found, (MAX_WORK_INT - wall) // (6 * abs(read) + abs(self_coefficient) + wall))
+    return found
+
+
+def test_the_amplitude_bound_is_derived_from_the_width_and_the_pairs_and_never_written():
+    """THE AMPLITUDE BOUND A IS DERIVED (ALGEBRA.md #a-familys-declaration, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the loader's A is the largest level whose rule total stays inside the width at the levels 0 and Gamma - 1, the tightest over every pair the files declare, the families' and the bodies' (a body's own pair enters it), the same derivation here from the rule's coefficients; a seed above A is refused naming A, a row stepped above A is refused at run; `amplitude_bound` written in a file is refused by name as an unknown key."""
+    document = massive_world([6, 6, 6], PERIODIC, [800, 809])
+    assert parse_nature_beam_world(document).amplitude_bound == derived_amplitude_of(
+        [tuple(f["pair"]) for f in document["universe"]], NODE_CLOCK
+    )
+    block = {"position": [10, 10, 10], "side": 3, "pair": [800, 800]}
+    deeper = block_world([24, 24, 24], PERIODIC, [800, 809], [block])
+    expected = derived_amplitude_of(
+        [tuple(f["pair"]) for f in deeper["universe"]] + [(800, 800)], NODE_CLOCK
+    )
+    assert parse_nature_beam_world(deeper).amplitude_bound == expected
+    huge_seed = block_world([24, 24, 24], PERIODIC, [800, 809], [{**block, "seed": 1 << 60}])
     with pytest.raises(
-        ValueError,
-        match=r"6 A R \+ A \|S\| \+ w \(A \+ 1\).*Gamma = 10000 and the content M = 0 .*not below 2\^63",
+        ValueError, match=f"above the world's amplitude bound A = {expected} on the pair"
     ):
-        parse_nature_beam_world(document)
-    with pytest.raises(ValueError, match=r"families\[1\]\.pair \[1048576, 1048577\]"):
-        parse_nature_beam_world(document)
-    for pair, amplitude in (([800, 809], 1 << 22), ([3200, 3236], 1 << 19)):
-        admitted_pair = massive_world([6, 6, 6], PERIODIC, pair)
-        admitted_pair["amplitude_bound"] = (
-            amplitude  # the integers of ALGEBRA.md #the-rows-against-nature per pair
-        )
-        parse_nature_beam_world(admitted_pair)
-    # the block's own pair under the bound with the world's content (one well of one
-    # quantum, M = 1): a well [big, big + 1] refused, [800, 800] admitted
-    for pair, admitted in (([big, big + 1], False), ([800, 800], True)):
-        world = block_world(
-            [24, 24, 24], PERIODIC, [800, 809], [{"position": [10, 10, 10], "side": 3, "pair": pair}]
-        )
-        if admitted:
-            parse_nature_beam_world(world)
-        else:
-            with pytest.raises(
-                ValueError, match=r"measured\[0\]\.pair .*the content M = 2 .*not below 2\^63"
-            ):
-                parse_nature_beam_world(world)
-    unbounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    del unbounded["amplitude_bound"]
-    with pytest.raises(ValueError, match="a world with a massive family declares `amplitude_bound`"):
-        parse_nature_beam_world(unbounded)
-    ceiling = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    ceiling["amplitude_bound"] = 1 << 29
-    with pytest.raises(ValueError, match="A = 536870912.*not below 2\\^63"):
-        parse_nature_beam_world(ceiling)
-    huge_seed = block_world(
-        [24, 24, 24],
-        PERIODIC,
-        [800, 809],
-        [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "seed": 1 << 60}],
-    )
-    with pytest.raises(ValueError, match=r"above the world's amplitude bound A = 4194304 on the pair"):
         parse_nature_beam_world(huge_seed)
-    bounded = massive_world([6, 6, 6], PERIODIC, [800, 809])
-    world = parse_nature_beam_world(bounded)
+    written = massive_world([6, 6, 6], PERIODIC, [800, 809])
+    written["amplitude_bound"] = 1 << 22
+    with pytest.raises(ValueError, match="the world has unknown keys: amplitude_bound"):
+        parse_nature_beam_world(written)
+    world = parse_nature_beam_world(document)
     simulation = DetectorLawSimulation(world)
-    planted_row = planted(
-        simulation,
-        1,
-        np.full((6, 6, 6), (1 << 22) + 1),  # just above A: the next level about twice it, inside int64
-        np.zeros((6, 6, 6)),
-        np.zeros((6, 6, 6)),
-    )
+    above = np.full(
+        (6, 6, 6), world.amplitude_bound + 1
+    )  # just above A: the next level inside the width
+    planted_row = planted(simulation, 1, above, np.zeros((6, 6, 6)), np.zeros((6, 6, 6)))
     with pytest.raises(RuntimeError, match="above the world's declared amplitude bound"):
         simulation._advance(planted_row)
 
@@ -547,12 +518,10 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         "seed": 1 << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
     }
     document = block_world([128, 128, 1], PERIODIC, [3200, 3236], [block], ticks=1500)
-    document["amplitude_bound"] = 1 << 19  # the pair's room under the weak field (ALGEBRA.md)
     world = parse_nature_beam_world(document)
     # the mode's period 2 pi / omega_b on this 128^2 layer (omega_b 0.14833, a COMPUTATION)
     period = 42.36
-    # the generator as the operator iterated with the stop (the owner's word of
-    # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md #a-familys-declaration)
+    # the generator as the operator iterated with the stop (the owner's word of 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md #a-familys-declaration)
     profile, clock = iterated_mode_row(document, 0, 1 << 18)  # the retired module's mode, recorded once
     seeded = dict(document)
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
@@ -600,9 +569,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         if live is not None:
             given = given if given is not None else tick
             assert live.family == matter and live.emitter == 1
-        # the clock field is 0 on both boards (the counts 7 and 2 over the divisor 40000): light's rows of
-        # one name match until light reaches the matter emitter's Nodes, which receive (a name given after
-        # the matter emitter's giving is another record's on the other board)
+        # the clock field is 0 on both boards (the counts 7 and 2 over the divisor 40000): light's rows of one name match until light reaches the matter emitter's Nodes, which receive (a name given after the matter emitter's giving is another record's on the other board)
         assert not simulation.level_of("content").any() and not other.level_of("content").any()
         for light_identity, light in other.records.items():
             mine = simulation.records.get(light_identity)
@@ -632,8 +599,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its pointer, and is deleted whole there; two gather lines, the books balanced every interval."""
     document = matter_emitter_world(True, [512, 1], stock=2)
     document["ticks"] = 3000
-    # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the
-    # emitter kept at measured[1] (its records' identities carry its number)
+    # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the emitter kept at measured[1] (its records' identities carry its number)
     positions = cube_positions(document["shape"], [184, 0, 0])
     document["measured"] = [
         receiver_body(positions[0], "matter"),
@@ -672,10 +638,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         if len([line for line in lines if line["event"] == "gather"]) == 2:
             break
     gathers = [line for line in lines if line["event"] == "gather"]
-    # both records click, each once, in either order (under the click rule of
-    # ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's
-    # click and may reach its rung at the screen first when its residue is
-    # the smaller)
+    # both records click, each once, in either order (under the click rule of ALGEBRA.md #the-click the second is given (2 u + 1) P / (2 W) after the first's click and may reach its rung at the screen first when its residue is the smaller)
     assert sorted(gather["record"] for gather in gathers) == sorted(identities) and len(identities) == 2
     for gather in gathers:
         identity = gather["record"]
@@ -687,9 +650,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         # the plain flux against the norm's rational norm / pace (item 36)
         assert 2 * wheel * pace * pointer >= (2 * u + 1) * norm
         assert below[identity] == gather["click"] - 1
-        # the flight: the train's head over 53 Links at v_g = 0.442, then as
-        # much of the passage as the residue asks (the residues spread from
-        # the kept remainder, record 1962 (1))
+        # the flight: the train's head over 53 Links at v_g = 0.442, then as much of the passage as the residue asks (the residues spread from the kept remainder, record 1962 (1))
         assert 100 < gather["click"] - gather["giving"] < 400 and identity not in simulation.records
 
 
@@ -774,8 +735,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
         line = gathers[0]
-        # the rung (2 u + 1) T / (2 W) on the record's own residue from the law
-        # decides how much of the record must pass the set before its click
+        # the rung (2 u + 1) T / (2 W) on the record's own residue from the law decides how much of the record must pass the set before its click
         assert 0 <= line["click"] - giving <= 600 and line["tick"] == line["click"]
         given = next(b for b in lines if b["event"] == "giving" and b["record"] == first)
         assert 0 <= line["u"] < given["W"] and lawful_wheel(world, given)
@@ -857,7 +817,6 @@ def test_a_set_at_a_blocks_cells_waits_for_the_blocks_mode_its_flat_seed_refused
 def test_a_wall_of_lights_kind_is_a_mirror_line():
     """A line of blocks of light's kind at the pair [1, 2], four Nodes deep, is a mirror: beyond it the largest level stays below four percent of the level before it over 200 intervals (COMPUTATION), the books balanced; a light-kind block with seed or margin, and any block with coupling, refused by name."""
     document = chain_world()  # the closed chain (BUILD.md section 26 item 14)
-    document["amplitude_bound"] = 1 << 22
     document["ticks"] = 200
     for x in (40, 41, 42, 43):
         document["measured"].append(

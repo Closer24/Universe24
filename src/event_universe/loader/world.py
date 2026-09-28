@@ -11,10 +11,10 @@ from event_universe.core.game_board import MAX_VALUE, Address3
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.readings import Reading, world_readings
 from event_universe.core.register import discover
-from event_universe.core.rule3 import division_forward, rule_total_bound
+from event_universe.core.rule3 import ISOTROPIC, coefficients, division_forward
 from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
-from event_universe.loader import frame
+from event_universe.loader import derived, frame
 from event_universe.loader.frame import EngineStart
 from event_universe.loader.mode import Levels, moving_levels, period_by_the_rule
 
@@ -446,6 +446,9 @@ class NatureBeamWorld:
     # its velocity n / W Links per interval; required under the detector law,
     # 0 on a world without it
     momentum_unit: int = 0
+    # THE QUANTUM'S ACTION T (ALGEBRA.md #a-familys-declaration; the owner's word of 2026-09-28): the
+    # universe's integer `quantum_action`, one T for every family; read where declared, 0 where it is not
+    quantum_action: int = 0
     # THE TWIST TABLE (ALGEBRA.md #the-transport, #the-primitives; commit 4): the exact
     # triples of the transport's angles, None on a world without one (no transport)
     twist_table: TwistTable | None = None
@@ -622,40 +625,36 @@ def load_level(
     return reach if node_clock is None else min(reach, node_clock - 1)
 
 
-def _pair_bound(
-    numerator: int,
-    denominator: int,
-    label: str,
-    bound: int | None,
-    node_clock: int = 1,
-    content: int = 0,
-) -> None:
-    """The load bound of a pair on the rule's integers (MUST 3; ALGEBRA.md #the-line, #the-rows-against-nature): 6 A R + A |S| + w (A + 1) with (R, S, w) the rule's coefficients at the two levels a Node can read, the larger, inside the width; refused by name above it."""
-    # THE BOUND FROM THE RULE'S OWN INTEGERS (ALGEBRA.md #the-line, #the-rows-against-nature;
-    # BUILD.md section 26 item 44): 6 A R + A |S| + w (A + 1) with (R, S, w)
-    # the weak-field rule's coefficients at the level 0 and at the level M
-    # (the two levels a Node can read: the vacuum's and a body's), the larger;
-    # the plain rule's at Gamma = 1 on the first pass over the pair alone
-    # the level a Node can read stays below Gamma (the pace positive: the load's guard per
-    # body, `_node_clock_bound`, and the run's, `_advance_fields`), so the reach is read there
-    if (
-        bound is None
-    ):  # no amplitude declared: the total is not bounded at load (a massive family requires one)
-        return
+def derived_amplitude(entries: Sequence[object], bodies: object, node_clock: int) -> int:
+    """THE AMPLITUDE BOUND A, DERIVED AND NEVER WRITTEN (ALGEBRA.md #a-familys-declaration, #the-line, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the largest level at which the rule's total 6 A R + A |S| + w (A + 1) stays inside the width, (R, S, w) the rule's coefficients at the two levels a Node can read (the vacuum's 0 and the pace's edge Gamma - 1, no body's number), the tightest over every pair the files declare (the families' `pair`, the frame's checked entries, not the word body; every body's `pair` and `kind` as written, a value that is no pair of two integers from 1 left to the frame's refusal); a world with no pair takes the width itself; refused by name where no level fits."""
+    pairs: list[tuple[int, int]] = []
+    for item, key in [(e, "pair") for e in entries] + [
+        (b, k) for b in (bodies if isinstance(bodies, list | tuple) else ()) for k in ("pair", "kind")
+    ]:
+        value = item.get(key) if isinstance(item, dict) else None
+        if (
+            isinstance(value, list | tuple)
+            and len(value) == 2
+            and all(type(v) is int and v >= 1 for v in value)
+        ):
+            pairs.append((int(value[0]), int(value[1])))
     weak_field = node_clock > 1
-    reach = min(content, node_clock - 1) if weak_field else content
-    total = max(
-        rule_total_bound(numerator, denominator, node_clock, level, bound, weak_field)
-        for level in (0, reach)
-    )
-    if total >= TOTAL_BOUND:
-        raise ValueError(
-            f"{label}.pair [{numerator}, {denominator}]"
-            + ": the rule's total 6 A R + A |S| + w (A + 1) at the amplitude bound A = "
-            f"{bound}, the Node clock Gamma = {node_clock} and the content M = {content} (read at "
-            f"the level {reach}) is {total}, not below 2^63 (the bound of the rows' int64; ALGEBRA.md #the-line and "
-            "ALGEBRA.md #the-rows-against-nature, BUILD.md section 26 item 44)"
-        )
+    found = MAX_WORK_INT
+    for numerator, denominator in pairs:
+        for level in (0, node_clock - 1 if weak_field else 0):
+            reads, self_coefficient, wall = coefficients(
+                numerator, denominator, node_clock, level, ISOTROPIC, weak_field
+            )
+            room = 6 * abs(reads[0]) + abs(self_coefficient) + wall
+            fits = division_forward(TOTAL_BOUND - 1 - wall, room, 0)[0]
+            if fits < 1:
+                raise ValueError(
+                    f"the pair [{numerator}, {denominator}] at the Node clock Gamma = {node_clock}: the rule's "
+                    f"total 6 A R + A |S| + w (A + 1) leaves no level inside the width of {TOTAL_BOUND.bit_length() - 1} "
+                    "bits (ALGEBRA.md #the-rows-against-nature)"
+                )
+            found = min(found, fits)
+    return found
 
 
 def _held_bodies_checks(
@@ -695,13 +694,12 @@ def _held_bodies_checks(
 def _node_clock_bound(
     families: tuple[FamilyDefinition, ...],
     measured: tuple[MeasuredDefinition, ...],
-    amplitude_bound: int,
     node_clock: int,
 ) -> None:
-    """THE LOAD BOUND UNDER THE NODE CLOCK (BUILD.md section 26 item 31), the second pass once the content
-    is known: every family's pair and every block's pair against the rule's int64 total at the amplitude
-    bound with the world's Gamma and M twice its whole content (the most any one Node can hold, the clicks
-    moving the quanta between the bodies; a wave off a zero face doubles, ALGEBRA.md #the-counts-line)."""
+    """THE PACE'S GUARD AT THE LOAD (BUILD.md section 26 item 31; ALGEBRA.md #the-paces), the second pass once
+    the content is known: every reading family's pace stays positive at every body's Nodes (the amplitude
+    bound A is derived from the pairs alone at the pace's edge, `derived_amplitude`, so no body's content
+    is read against the width here)."""
 
     # THE READS (ALGEBRA.md #the-counts-line, #the-paces): a family reads the pace Gamma - SUM weight x sign x
     # level over its reads; at a Node of a body in the law's form the held level is the body's source THERE (its
@@ -737,20 +735,6 @@ def _node_clock_bound(
                     f"{node_clock} (ALGEBRA.md #the-paces: the charge's hill hastens a clock at most to "
                     "the vacuum's; BUILD.md section 26 items 34, 35 and 51)"
                 )
-    sources = [[source_of(family, entry) for family in families] for entry in measured]
-    content = load_level([[(o, w) for o, w, _, _ in f.reads] for f in families], sources)
-    for index, family in enumerate(families):
-        if family.pair_on_body:
-            continue  # the bodies' kinds are read below (ALGEBRA.md #the-interval)
-        _pair_bound(
-            family.pair[0], family.pair[1], f"families[{index}]", amplitude_bound, node_clock, content
-        )
-    for number, entry in enumerate(measured):
-        if entry.block is not None:
-            _pair_bound(*entry.block.pair, f"measured[{number}]", amplitude_bound, node_clock, content)
-            if families[entry.family].pair_on_body:
-                kind = entry.block.kind
-                _pair_bound(*kind, f"measured[{number}].kind", amplitude_bound, node_clock, content)
 
 
 def _families_of(
@@ -762,16 +746,13 @@ def _families_of(
             f"families declares {len(entries)}; at most {most_families} families on a "
             "GameBoard (the universe's `most_families`, the owner's number in the file)"
         )
-    names: list[str] = []
-    for obj in entries:
-        name = cast(str, obj["name"])
-        if name in names:
-            raise ValueError(f"two families named {name!r}")
-        names.append(name)
+    names = [cast(str, obj["name"]) for obj in entries]
+    if len(set(names)) != len(names):
+        raise ValueError(f"two families named {next(n for n in names if names.count(n) > 1)!r}")
     found: list[FamilyDefinition] = []
-    for index, obj in enumerate(entries):
+    for index, obj in enumerate(derived.filled(entry, entries) for entry in entries):
         label = f"families[{index}]"
-        parts_value = cast(tuple[object, ...], obj["parts"])
+        parts_value = tuple(cast(tuple[object, ...], obj["parts"]))
         if parts_value not in PARTS_FORMS:
             raise ValueError(
                 f"{label}.parts must be one of {[list(form) for form in PARTS_FORMS]}: the "
@@ -787,7 +768,6 @@ def _families_of(
             numerator, denominator = int(pair_list[0]), int(pair_list[1])
             if numerator > MAX_VALUE or denominator > MAX_VALUE:
                 raise ValueError(f"{label}.pair must be [num, den], two integers up to {MAX_VALUE}")
-            _pair_bound(numerator, denominator, label, amplitude_bound)
             if denominator < numerator:
                 raise ValueError(
                     f"{label}.pair [{numerator}, {denominator}]: a kind's pair has den >= num "
@@ -1135,8 +1115,6 @@ def _block(
         # the mirror line of light's kind (DECLARATIONS.md section 15 L-1):
         # its Nodes carry the gap's pair and nothing else, no own record
         obj = dict(obj, seed=0)
-    # the load bound of MUST 3 on the block's own pair at its Nodes (decision (2) of record 1962)
-    _pair_bound(pair[0], pair[1], label, amplitude_bound)
     if "seed" not in obj:
         # NO IMPLICIT SEED (the model owner, 2026-09-25; BUILD.md section 26 item 28)
         raise ValueError(
@@ -2320,13 +2298,6 @@ def parse_world_document(
                 f"face_depth {face_depth} leaves no interior on the open axis {name} of "
                 f"extent {shape[axis]} (two slabs of the depth fill it)"
             )
-    # the amplitude bound A, the world's where it declares one (ALGEBRA.md #a-familys-declaration:
-    # A is the one number, the rule's integer total its bound; required with a massive family below)
-    amplitude_bound: int | None = (
-        None  # undeclared: no row's total is bounded at load, the width is the cap
-    )
-    if "amplitude_bound" in obj:
-        amplitude_bound = _integer(obj["amplitude_bound"], "amplitude_bound", 1, AMOUNT_BOUND)
     # THE NODE CLOCK (the model owner's decision (5) of record 1962; ALGEBRA.md
     # ALGEBRA.md #the-paces and (3); BUILD.md section 26 item 31): Gamma, one integer from
     # 1, the clock pair (e, f) = (Gamma, Gamma + M) at every Node under the
@@ -2339,6 +2310,10 @@ def parse_world_document(
             "ALGEBRA.md #the-paces; BUILD.md section 26 item 31)"
         )
     node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
+    # THE AMPLITUDE BOUND A, derived from the width and the rule's integers of every declared pair at the
+    # pace's edge (`derived_amplitude`; ALGEBRA.md #a-familys-declaration: never written, a file's
+    # `amplitude_bound` is refused by name as an unknown key)
+    amplitude_bound = derived_amplitude(entries, obj["measured"], node_clock)
     # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's integer
     # `momentum_unit`, REQUIRED with no default (the wall W = 3 Q M of every body)
     if "momentum_unit" not in obj:
@@ -2348,6 +2323,12 @@ def parse_world_document(
             "ALGEBRA.md #the-primitives, #the-well; the model owner's record 2089)"
         )
     momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
+    # THE QUANTUM'S ACTION T (ALGEBRA.md #a-familys-declaration; the owner's word of 2026-09-28): one T for
+    # every family, the universe's integer `quantum_action`, read where the files declare it and 0 where they
+    # do not; the giving's pull request, which retires the emitter's norm, requires it where a body gives
+    quantum_action = (
+        _integer(obj["quantum_action"], "quantum_action", 1) if "quantum_action" in obj else 0
+    )
     # THE WIDTH (Main Loop's ask, 2026-09-27): the universe's `width`, the working integer's bits, is this host's
     if "width" in obj and obj["width"] != MAX_WORK_INT.bit_length():
         raise ValueError(
@@ -2379,13 +2360,7 @@ def parse_world_document(
         _integer(obj["least_residues"], "least_residues", 1) if "least_residues" in obj else None
     )
     families = _families_of(entries, amplitude_bound, most_families)
-    # the bound is asked of a world with a massive family (a pair with den > num); a light world loads without it
-    if "amplitude_bound" not in obj and any(f.massive_kind for f in families):
-        raise ValueError(
-            "a world with a massive family declares `amplitude_bound`, the amplitude "
-            "A every row stays below (the load bound and the rows' run-time assertion use it; no default)"
-        )
-    bound = MAX_WORK_INT if amplitude_bound is None else amplitude_bound
+    bound = amplitude_bound
     # THE BODIES AND THE DETECTORS through the frame (loader/frame.py, `BODY`, `DETECTOR`):
     # every key checked with the families known, an unknown key refused by name
     bodies = frame.bodies(obj["measured"], Context(tuple(family.name for family in families)), register)
@@ -2404,7 +2379,7 @@ def parse_world_document(
         _mode_bodies(files, digest, len(bodies)),
     )
     _held_bodies_checks(families, measured)
-    _node_clock_bound(families, measured, bound, node_clock)
+    _node_clock_bound(families, measured, node_clock)
     # THE WINDOW IS THE ONE GIVING (ALGEBRA.md #the-primitives; record 2082 (4);
     # commit 7): every emitter declares its weight g and its rung's action; the world
     # key `point_emitter` and the train are retired (RETIRED_KEYS)
@@ -2446,6 +2421,7 @@ def parse_world_document(
         amplitude_bound=bound,
         node_clock=node_clock,
         momentum_unit=momentum_unit,
+        quantum_action=quantum_action,
         twist_table=twist_table,
         start=start,
         universe_file=families_file,

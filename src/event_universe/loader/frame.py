@@ -21,11 +21,11 @@ from event_universe.core.schema import (
 )
 from event_universe.loader import cards
 
-# the universe's integers (ALGEBRA.md #a-familys-declaration, #the-interval, #the-primitives): Gamma the Node clock, A the amplitude bound, Lambda the charge's read weight, Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and A where the transport is built
+# the universe's integers (ALGEBRA.md #a-familys-declaration, #the-interval, #the-primitives): Gamma the Node clock, T the quantum's action (`quantum_action`, one for every family), Lambda the charge's read weight, Q the momentum's unit, and the twist table of exact triples [c, s, d] read as written and checked with Gamma and the derived A where the transport is built; the amplitude bound is no key: A is derived from the integer width and the rule's integers (the loader's `derived_amplitude`), and `amplitude_bound` in a file is refused by name as any unknown key
 INTEGERS = ObjectOf(
     {
         "node_clock": Integer(least=1),
-        "amplitude_bound": Integer(least=1),
+        "quantum_action": Integer(least=1),
         "Lambda": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_steps": Integer(least=2),
@@ -39,7 +39,10 @@ INTEGERS = ObjectOf(
                 "coarse": ListOf(ListOf(Integer(), 3)),
             }
         ),
-    }
+    },
+    frozenset(
+        {"Lambda", "quantum_action"}
+    ),  # Lambda: the charge's weight is the one weight 1 (THE FAMILIES FROM THE RULE), named only by a read that declares it; T optional until the giving's pull request requires it
 )
 UNIVERSE_KEYS = ("integers", "families")
 # the start file (ALGEBRA.md #a-familys-declaration): the run's mode, check (every measured event read beside its blind expectation, no pin compared) or pin (the pins compared); no law's name, no version
@@ -57,8 +60,8 @@ WORLD = ObjectOf(
         "face_depth": Integer(least=1),
         "probes": ListOf(ListOf(Integer(least=0), 3)),
         "mode_axis": OneOf(("x", "y", "z")),
-        "amplitude_bound": Integer(least=1),
         "node_clock": Integer(least=1),
+        "quantum_action": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_families": Integer(least=1),
         "least_residues": Integer(least=1),
@@ -70,8 +73,8 @@ WORLD = ObjectOf(
             "face_depth",
             "probes",
             "mode_axis",
-            "amplitude_bound",
             "node_clock",
+            "quantum_action",
             "momentum_unit",
             "most_families",
             "least_residues",
@@ -212,7 +215,7 @@ def document_of(key: str, value: str, files: Mapping[str, object], label: str) -
 
 
 def entry_kind(register: Register) -> ObjectOf:
-    """A family's entry: the frame's keys, its name, its quantum (an integer from 1, the law's owner's row of 2026-09-27), its clock, its spins_step, its lifetime (L, an integer from 1; absent, for ever) and its hand (-1 or +1; absent, no check), the four optional (ALGEBRA.md #the-primitives, the lifetime's and the hand's rows), and every key the cards declare at a family's entry, optional where a card says so."""
+    """A family's entry: the frame's keys, its name, its quantum (an integer from 1, the law's owner's row of 2026-09-27), its clock, its spins_step, its lifetime (L, an integer from 1; absent, for ever) and its hand (-1 or +1; absent, no check), the four optional (ALGEBRA.md #the-primitives, the lifetime's and the hand's rows), and every key the cards declare at a family's entry, optional where a card says so; THE FAMILIES FROM THE RULE (ALGEBRA.md): the keys the rule derives from the rank and the pair (`loader/derived.py`) are optional here, the held factors, dipole and divisor of the dipole, and a read's weight, twist and by among them."""
     declared = cards.at(register, "a family's entry")
     keys = {
         "name": Word(),
@@ -223,7 +226,12 @@ def entry_kind(register: Register) -> ObjectOf:
         "hand": OneOf((-1, 1)),
         **declared.keys,
     }
-    return ObjectOf(keys, declared.optional | {"clock", "spins_step", "lifetime", "hand"})
+    held, reads = cast(ObjectOf, keys["held"]), cast(ListOf, keys["reads"])
+    keys["held"] = ObjectOf(held.keys, held.optional | {"factors", "dipole", "dipole_div"})
+    read = cast(ObjectOf, reads.of)
+    keys["reads"] = ListOf(ObjectOf(read.keys, read.optional | {"weight", "twist", "by"}), reads.length)
+    derived = {"parts", "phase", "clicks", "reads", "sign", "self_source", "quantum"}
+    return ObjectOf(keys, declared.optional | derived | {"clock", "spins_step", "lifetime", "hand"})
 
 
 def families(
