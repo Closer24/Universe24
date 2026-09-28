@@ -333,6 +333,10 @@ def bell(left: str, right: str) -> None:
                 "band": 1,
                 "row": "the right polariser at rest within a Link",
             },
+            {
+                "reversible": document["ticks"],
+                "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)",
+            },
         ],
         "convergence": convergence(),
         "runtime": RUNTIME,
@@ -431,6 +435,10 @@ def bell_switching(crystal_count: int = GIVING_COUNT, suffix: str = "") -> None:
                 "centre": list(CRYSTAL),
                 "band": 1,
                 "row": "the crystal's slab in place",
+            },
+            {
+                "reversible": document["ticks"],
+                "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)",
             },
         ],
         "runtime": RUNTIME,
