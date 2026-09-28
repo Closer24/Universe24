@@ -580,7 +580,7 @@ and the world is refused by name; between open faces the harmonic well of the so
 
 THE START. The loop writes every held family at the load at its rest, by
 one folder found by its name, once before the first interval and never in
-it, the level and its remainder together (the fixed point of the division act is a pair: with the rounded rest a and its line's residual rho = num SUM_6 a - 6 den a, the remainder r_0 = max(0, -rho) is the least from which the first step returns a, and the hold's carries stand spread over the body's Nodes so the source's current is even from the first interval; a remainder 0 by fiat is no rest, the first step kicks every Node whose rho is negative, Newton's reading of 2026-09-28): on a chain (one layer on two axes) in one pass in integers, the
+it, the level and its remainder together (the fixed point of the division act is a pair: with the rounded rest a and its line's residual rho = num SUM_6 a - 6 den a, the remainder r_0 is one from which the first step returns a, any r_0 with 0 <= rho + r_0 < w, the half wall the division's unbiased origin for every Node whose |rho| is below it, and the hold's carries stand spread over the body's Nodes so the source's current is even from the first interval; a remainder 0 by fiat is no rest, the first step kicks every Node whose rho is negative, Newton's reading of 2026-09-28): on a chain (one layer on two axes) in one pass in integers, the
 tridiagonal line with the sources on its right side; on a box a guess of the line's solver refined on the exact
 residual R and certified in whole integers: the exit-time field T of the
 same line, with its own exact residual rho, bounds the inverse, ||A^-1|| <=
