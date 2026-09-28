@@ -193,7 +193,7 @@ The **pace** of a Node for a family is what its reads make of the Node
 clock:
 
   p_0 = Gamma - SUM over the reads of (weight x by x the read family's time level at the Node),
-  p_a = p_0  - SUM over the reads of (weight x by x the read family's aa component div 2),  a = x, y, z,
+  p_a = p_0 - SUM over the reads of (weight x by x the read family's time level at the Node) - SUM over the reads of (weight x by x the read family's aa component div 2),  a = x, y, z,
 
 one division per read per axis with the remainder kept on the reading
 family's record. A positive weight is a hollow (the read family's level
@@ -201,7 +201,7 @@ slows the clock, an attraction); a negative weight is a hill. By "q" the
 weight is multiplied by the reading record's charge sign. A family with
 no reads steps at p_0 = p_a = Gamma, the plain rule. The clock's slowing
 is this pace: a record at a Node of pace p rotates and moves as a record
-at Gamma does, with its intervals p / Gamma as long.
+at Gamma does, with its intervals p / Gamma as long. THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the time level lowers the clock's pace p_0 once and each axis's pace p_a once more, so a wave's speed along a Link falls by the level twice (the Link as well as the clock, as nature's light past a body bends by twice the clock's share) while a mode's rest rotation, from S alone, falls by the level once (the owner's word, 2026-09-28, with Nature24's line of 08:55 Israel).
 
 THE GUARD, two-sided: 0 < p <= P at every Node, with the edge
 
