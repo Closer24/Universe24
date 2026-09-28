@@ -15,6 +15,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.ports import arrival
 from event_universe.core.rule3 import coefficients, form_term, rule3, rule_total_bound
 from event_universe.features.start import (
     NO_READ,
@@ -519,6 +520,71 @@ def pair_of(row: dict[str, Any], label: str) -> Pair:
             f"{label}: the row's pair is {pair!r}, not [num, den]; the generator takes the family's"
         )
     return int(pair[0]), int(pair[1])
+
+
+def outward_ports(mask: np.ndarray, wrap: Wrap) -> list[tuple[int, int, np.ndarray]]:
+    """Per axis and side, the body's Nodes whose Link through that Port leads to a Node outside the body (core/ports.py `outward`): none on an axis of one layer, none through an open face (no Node and no Port beyond it)."""
+    found = []
+    for axis in range(3):
+        if mask.shape[axis] == 1:
+            continue
+        for side in (1, -1):
+            beyond = np.asarray(arrival(mask.astype(np.int64), axis, side, wrap[axis])) == 0
+            if not wrap[axis]:
+                face = [slice(None)] * 3
+                face[axis] = slice(-1, None) if side == 1 else slice(0, 1)
+                beyond[tuple(face)] = False
+            ports = mask & beyond
+            if ports.any():
+                found.append((axis, side, ports))
+    return found
+
+
+def train_of(
+    body_levels: tuple[np.ndarray, np.ndarray],
+    body_rule: tuple[np.ndarray, np.ndarray, int],
+    mask: np.ndarray,
+    light_rule: tuple[np.ndarray, np.ndarray, int],
+    bound_charge: np.ndarray,
+    divisor: int,
+    action: int,
+    period: int,
+    wrap: Wrap,
+    most_periods: int = 128,
+) -> dict[str, Any]:
+    """THE TRAIN of one quantum, a reading by Rule3 alone (ALGEBRA.md #the-primitives, the giving's row): the body's record turning in its own rule from its two levels; the given family's record on the GameBoard in its rule at the paces of its reads; each interval the outer shell gains (M_pol x a_body) div E_s at both levels, the division act with the remainder carried at the Node (M_pol the bound charge the body holds there, E_s the given row's divisor); the outward flux through the outer Ports, wall x (now_j before_i - before_j now_i) summed where positive, accumulated until it reaches T (`quantum_action`): the intervals and the periods N_q of the giver's rotation until the close; refused by name past `most_periods` periods."""
+    now_b, before_b = body_levels[0].astype(np.int64), body_levels[1].astype(np.int64)
+    read_b, self_b, wall_b = body_rule
+    read_l, self_l, wall_l = light_rule
+    carry_b = np.zeros_like(now_b)
+    now_l, before_l, carry_l = np.zeros_like(now_b), np.zeros_like(now_b), np.zeros_like(now_b)
+    rest_now, rest_before = np.zeros_like(now_b), np.zeros_like(now_b)
+    ports = outward_ports(mask, wrap)
+    outward, peak = 0, 0
+    for interval in range(1, most_periods * period + 1):
+        next_b, carry_b = rule3(
+            (read_b, read_b, read_b), arrivals(now_b, wrap), self_b, wall_b, now_b, before_b, carry_b
+        )
+        now_b, before_b = np.asarray(next_b, dtype=np.int64), now_b
+        next_l, carry_l = rule3(
+            (read_l, read_l, read_l), arrivals(now_l, wrap), self_l, wall_l, now_l, before_l, carry_l
+        )
+        now_l, before_l = np.asarray(next_l, dtype=np.int64), now_l
+        for level, source, rest in ((now_l, now_b, rest_now), (before_l, before_b, rest_before)):
+            numerator = bound_charge[mask] * source[mask] + rest[mask]
+            level[mask] += numerator // divisor
+            rest[mask] = numerator % divisor
+        peak = max(peak, int(np.abs(now_l).max()))
+        for axis, side, at in ports:
+            now_j = np.asarray(arrival(now_l, axis, side, wrap[axis]))[at]
+            before_j = np.asarray(arrival(before_l, axis, side, wrap[axis]))[at]
+            flux = now_j * before_l[at] - before_j * now_l[at]
+            outward += int(flux[flux > 0].sum()) * wall_l
+        if outward >= action:
+            return {"intervals": interval, "periods": [interval, period], "flux": outward, "peak": peak}
+    return {
+        "refused": f"the outward flux {outward} did not reach T = {action} in {most_periods} periods (the peak {peak})"
+    }
 
 
 def given_wavelength(
