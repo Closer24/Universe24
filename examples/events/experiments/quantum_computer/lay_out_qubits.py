@@ -48,6 +48,7 @@ GATE_LOSS = (
     0.36,
 )  # the window returns 23 to 36 percent (Cheshbon, 17:10), a loss by name lowering the visibility
 TAKER = 1400  # the two sets' bodies at the exits, windows across the channel one Node deep below the mirror line (a set is a body's Nodes: the detector names its block)
+SIEVE_PERIOD = 1  # the optical bodies' form (the Closer's order of 17:33 Israel, Cheshbon's line of 17:23: a continuous wall does not exist, walls and mirrors are sieves of single pixels at the period 2): at 1 every optical body is one cluster of adjacent Nodes as laid today; above 1 every optical body is a list of single pixels, one body per Node, kept every SIEVE_PERIOD-th Node along the diagonal, the depth and the beam's width, with Cheshbon's counts per pixel when his numbers come; the worlds' files change only with his line
 CHANNEL = 3  # the beam's width in Nodes across which the diagonals and the sets stand
 HALF = 2  # the diagonals' half-length: a diagonal of 2 HALF + 1 Nodes across the beam's width and one Node beyond on each side
 CORNER = {
@@ -91,6 +92,24 @@ def gate_nodes(depth: int) -> list[list[int]]:
         for x in range(start, start + depth)
         for y in range(y0 - CHANNEL // 2, y0 + CHANNEL // 2 + 1)
     ]
+
+
+def sieve(nodes: list[list[int]], period: int) -> list[list[int]]:
+    """The sieve of a cluster: every Node whose coordinates along x and y are both multiples of the period away from the cluster's first Node (the period 1 keeps the cluster whole), so an optical body becomes single pixels a fixed spacing apart."""
+    first = nodes[0]
+    return [
+        node
+        for node in nodes
+        if (node[0] - first[0]) % period == 0 and (node[1] - first[1]) % period == 0
+    ]
+
+
+def optical(nodes: list[list[int]], count: int) -> list[dict[str, Any]]:
+    """An optical body in the form the period sets: at the period 1 one body of the whole cluster at the count per Node; above 1 one body per pixel of the sieve, each a bound pixel of its own."""
+    kept = sieve(nodes, SIEVE_PERIOD)
+    if SIEVE_PERIOD == 1:
+        return [body(kept, count)]
+    return [body([node], count) for node in kept]
 
 
 def share_at(count: int) -> float:
@@ -171,15 +190,17 @@ def one_qubit(name: str, gate: tuple[int, int, float] | None) -> None:
             emitter={"family": "charge", "weight": 1, "norm": 1, "norm_denominator": 1},
             stocks={"charge": STOCK},
         ),
-        body(diagonal(x0, y0, 1), splitter),
-        body(diagonal(x1, y1, 1), splitter),
-        body(diagonal(x0, y1, 3), MIRROR),
-        body(diagonal(x1, y0, 3), MIRROR),
-        body(exit_nodes("cross"), TAKER),
-        body(exit_nodes("straight"), TAKER),
+        *optical(diagonal(x0, y0, 1), splitter),
+        *optical(diagonal(x1, y1, 1), splitter),
+        *optical(diagonal(x0, y1, 3), MIRROR),
+        *optical(diagonal(x1, y0, 3), MIRROR),
     ]
+    cross_block = len(measured)
+    measured.extend(optical(exit_nodes("cross"), TAKER))
+    straight_block = len(measured)
+    measured.extend(optical(exit_nodes("straight"), TAKER))
     if gate is not None:
-        measured.append(body(gate_nodes(gate[1]), gate[0]))
+        measured.extend(optical(gate_nodes(gate[1]), gate[0]))
     occupied: set[tuple[int, int, int]] = set()
     for index, item in enumerate(measured):
         nodes = {(int(n[0]), int(n[1]), int(n[2])) for n in (line["node"] for line in item["nodes"])}
@@ -189,9 +210,9 @@ def one_qubit(name: str, gate: tuple[int, int, float] | None) -> None:
             )
         occupied |= nodes
     detectors = [
-        {"name": "cross_exit", "block": 5},
-        {"name": "straight_exit", "block": 6},
-    ]
+        {"name": "cross_exit", "block": cross_block},
+        {"name": "straight_exit", "block": straight_block},
+    ]  # at a period above 1 a set is the first pixel of its sieve alone until Cheshbon's line names the set's form
     readings = [
         reading("light_rows", "rows", 20, family="charge"),
         reading("at_first_splitter", "level", 1, family="charge", node=[x0, y0, 0]),
