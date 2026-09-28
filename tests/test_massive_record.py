@@ -521,8 +521,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
     world = parse_nature_beam_world(document)
     # the mode's period 2 pi / omega_b on this 128^2 layer (omega_b 0.14833, a COMPUTATION)
     period = 42.36
-    # the generator as the operator iterated with the stop (the owner's word of
-    # 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md #a-familys-declaration)
+    # the generator as the operator iterated with the stop (the owner's word of 2026-09-25): the profile with its clock beside it (record 1886; ALGEBRA.md #a-familys-declaration)
     profile, clock = iterated_mode_row(document, 0, 1 << 18)  # the retired module's mode, recorded once
     seeded = dict(document)
     seeded["measured"] = [dict(document["measured"][0], seed=profile, clock=list(clock))]
@@ -570,9 +569,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
         if live is not None:
             given = given if given is not None else tick
             assert live.family == matter and live.emitter == 1
-        # the clock field is 0 on both boards (the counts 7 and 2 over the divisor 40000): light's rows of
-        # one name match until light reaches the matter emitter's Nodes, which receive (a name given after
-        # the matter emitter's giving is another record's on the other board)
+        # the clock field is 0 on both boards (the counts 7 and 2 over the divisor 40000): light's rows of one name match until light reaches the matter emitter's Nodes, which receive (a name given after the matter emitter's giving is another record's on the other board)
         assert not simulation.level_of("content").any() and not other.level_of("content").any()
         for light_identity, light in other.records.items():
             mine = simulation.records.get(light_identity)
@@ -602,8 +599,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
     """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its pointer, and is deleted whole there; two gather lines, the books balanced every interval."""
     document = matter_emitter_world(True, [512, 1], stock=2)
     document["ticks"] = 3000
-    # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the
-    # emitter kept at measured[1] (its records' identities carry its number)
+    # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the emitter kept at measured[1] (its records' identities carry its number)
     positions = cube_positions(document["shape"], [184, 0, 0])
     document["measured"] = [
         receiver_body(positions[0], "matter"),
@@ -654,9 +650,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         # the plain flux against the norm's rational norm / pace (item 36)
         assert 2 * wheel * pace * pointer >= (2 * u + 1) * norm
         assert below[identity] == gather["click"] - 1
-        # the flight: the train's head over 53 Links at v_g = 0.442, then as
-        # much of the passage as the residue asks (the residues spread from
-        # the kept remainder, record 1962 (1))
+        # the flight: the train's head over 53 Links at v_g = 0.442, then as much of the passage as the residue asks (the residues spread from the kept remainder, record 1962 (1))
         assert 100 < gather["click"] - gather["giving"] < 400 and identity not in simulation.records
 
 
@@ -741,8 +735,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         gathers = [g for g in lines if g["event"] == "gather" and g["record"] == first]
         assert len(gathers) == 1 and gathers[0]["chosen"][0][0] == "A_face"
         line = gathers[0]
-        # the rung (2 u + 1) T / (2 W) on the record's own residue from the law
-        # decides how much of the record must pass the set before its click
+        # the rung (2 u + 1) T / (2 W) on the record's own residue from the law decides how much of the record must pass the set before its click
         assert 0 <= line["click"] - giving <= 600 and line["tick"] == line["click"]
         given = next(b for b in lines if b["event"] == "giving" and b["record"] == first)
         assert 0 <= line["u"] < given["W"] and lawful_wheel(world, given)

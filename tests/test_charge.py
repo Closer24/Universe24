@@ -222,8 +222,8 @@ def test_the_loader_names_the_family_of_charge_and_refuses_what_it_cannot_be():
     )
     refused(twice, "reads names 'charge' twice")
     unlabelled = copy()
-    del unlabelled["universe"][MATTER]["sign"]
-    refused(unlabelled, r"universe\[1\] lacks keys: sign")
+    del unlabelled["universe"][MATTER]["sign"]  # THE FAMILIES FROM THE RULE: the sign derives as 0
+    assert parse_nature_beam_world(unlabelled).families[MATTER].charge == (0, 1)
     strong = copy()
     strong["universe"][MATTER]["sign"] = 2
     refused(strong, r"universe\[1\]\.sign must be one of \[-1, 0, 1\], not 2")
