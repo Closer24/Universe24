@@ -70,11 +70,10 @@ class SignedReadWrites:
 
 def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int]:
     """The guard's upper side as one integer comparison, p^2 x left <= right with left = 18 num + 6 den and right = Gamma^2 (18 den + 6 num) (ALGEBRA.md #the-paces)."""
-    num, den = pair
-    edge = (
-        3 * 6
-    )  # the rule's own integer 18 = 3 x 6 (ALGEBRA.md #the-paces: 18 den + 6 num over 18 num + 6 den)
-    return edge * num + 6 * den, gamma * gamma * (edge * den + 6 * num)
+    num, den = (
+        pair  # the rule's own 18 = 6 x 3 (ALGEBRA.md #the-paces: 18 den + 6 num over 18 num + 6 den)
+    )
+    return 6 * (3 * num + den), 6 * gamma * gamma * (3 * den + num)
 
 
 def pace_bound(pair: tuple[int, int], gamma: int) -> int:

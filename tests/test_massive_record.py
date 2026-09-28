@@ -742,8 +742,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         assert line["clock_source"] == "measured:0" and line["clock"] == count_then
         assert first not in simulation.records
         assert all(g["chosen"][0][0] != "far" for g in lines if g["event"] == "gather")
-    # the loader's refusals
-    bad = light_clock_world("closed", False)
+    bad = light_clock_world("closed", False)  # the loader's refusals
     bad["detector_law"] = (
         False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
     )
