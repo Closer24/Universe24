@@ -44,9 +44,7 @@ STRIP = 4  # the height of one strip of the screen in Nodes
 STOCK = 400  # the giver's stock of quanta
 TICKS = 6000  # the run's length in intervals: the last giving within ~4,000, the flight of 124 Links at the group velocity 0.518 and the returns from the mirror screen (Cheshbon's yes, 02:27Z)
 FACE_DEPTH = 8
-GAP = (
-    3  # empty Nodes between the giver and the tube's mirrors (the bound charge's tail below two levels)
-)
+GAP = 5  # empty Nodes between a giver or a window and a wall (the owner's word: five, the bound charge's tail below two levels at four)
 
 WALL_X = 40  # the wall's near face; the wall is 4 Nodes thick
 WALL_THICKNESS = 4
