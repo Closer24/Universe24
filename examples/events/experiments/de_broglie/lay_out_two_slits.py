@@ -23,6 +23,7 @@ NORM = {
     "norm_denominator": 3948169,
 }  # the giver's norm, as Bell's files carry it
 GIVING_FAMILY = "charge"  # the light; the matter record of (j) names the lighter family here
+E_S_CHARGE = 300_000  # E_s of the charge, the free number alpha of the universe (Cheshbon 06:43Z; the Closer 11:43 Israel: in the world's universe until PR-1b)
 WORLD_NAME = "two_slits_light"
 
 # THE NUMBERS TO SET FROM CHESHBON'S LINE ON #1325 (asked 05:08 Israel time, 2026-09-28); until his
@@ -67,14 +68,25 @@ def body(nodes: list[list[int]], count: int, **keys: Any) -> dict[str, Any]:
 
 
 def universe_of_record() -> str:
-    """The repository path of the universe file of record the world names; no copy and no key of the wavelength (the generator's reading)."""
+    """The repository path of the universe file of record; no key of the wavelength (the generator's reading)."""
     source = next((path for path in UNIVERSE_OF_RECORD if (ROOT / path).exists()), None)
     if source is None:
         raise FileNotFoundError("no universe file of record in the tree")
     return source
 
 
-def two_slits() -> dict[str, Any]:
+def universe_of_the_first_look(folder: Path) -> str:
+    """The universe of the first look, written beside the world: the universe of record with the number the record does not carry yet (the Closer's word of 11:43 Israel, until PR-1b writes it in the record): the charge row's divisor E_s(charge) = 300,000 (the coupling alpha, agreed with Cheshbon 06:43Z: the train tens of periods). The quantum action T is not written: the loop of main reads the giving's coupling as the emitter's weight over 1 and the close at the emitter's norm until (M_pol, E_s) and T enter the loop (PR-1b and the giving's line), so a record at the generator's scale c T drives the given light above the amplitude bound within ten intervals (the refusal of 11:53 Israel); the first look runs at the file's norm, the train's length read after those lines. The repository path the world names."""
+    document = json.loads((ROOT / universe_of_record()).read_text(encoding="utf-8"))
+    for family in document["families"]:
+        if family["name"] == GIVING_FAMILY:
+            family["held"] = {**family["held"], "divisor": E_S_CHARGE}
+    path = folder / "universe_first_look.json"
+    path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+    return path.resolve().relative_to(ROOT).as_posix()
+
+
+def two_slits(folder: Path) -> dict[str, Any]:
     """The world: the giver in its tube, the wall with two openings, the screen with its strips, the readings of the GameBoard check plan."""
     interior = range(FACE_DEPTH, HEIGHT - FACE_DEPTH)
     middle = (HEIGHT - 1) / 2  # the axis of the apparatus, between two Nodes
@@ -165,7 +177,7 @@ def two_slits() -> dict[str, Any]:
         "ticks": TICKS,
         "N": STEPS,
         "engine": ENGINE,
-        "universe": universe_of_record(),
+        "universe": universe_of_the_first_look(folder),
         "measured": measured,
         "detectors": strips,
         "readings": readings,
@@ -353,6 +365,26 @@ def expectation(document: dict[str, Any]) -> dict[str, Any]:
         ),
         "DETECTOR": [],
         "strips": strips_expected(document),
+        "blind": {
+            "row": "Cheshbon's table of the blind numbers (08:21Z and 08:24Z) on the universe of record as it stands, written before the run: the algebra's column; the engine's column and the difference are the report's",
+            "wavelength_links": 4,
+            "fringe_spacing_links": {
+                "value": 24.25,
+                "band": "half a strip on every maximum",
+                "formula": "lambda L / d with lambda 4, d 16, L 97; about six strips of four",
+            },
+            "envelope_links": {
+                "value": 97,
+                "formula": "lambda L / a, about four fringes in half the envelope",
+            },
+            "group_velocity_links_per_interval": 0.518,
+            "train_periods": {
+                "value": 29.5,
+                "band": 0.5,
+                "intervals": 236,
+                "row": "the train at E_s(charge) 300,000 on the core before the conformal term; the generator's `train` on the core of main is the algebra on the form (Cheshbon 07:12Z section 6); read in the loop after PR-1b and the giving's line",
+            },
+        },
         "GAMEBOARD": [
             {
                 "reversible": TICKS,
@@ -380,7 +412,7 @@ def main() -> None:
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    document = two_slits()
+    document = two_slits(folder)
     expected = expectation(document)
     expected["GAMEBOARD"] += [
         {"body": number, "interval": TICKS // 2, "centre": centre, "band": 1, "row": row}
