@@ -14,8 +14,7 @@ def tool():  # type: ignore[no-untyped-def]
     return load_file("record_code_shape", ROOT / "tools" / "record_code_shape.py")
 
 
-SHAPE = tool()
-PACKAGE = "src/event_universe"
+SHAPE, PACKAGE = tool(), "src/event_universe"
 
 
 def test_the_tree_keeps_its_shape_against_the_merge_base_and_no_baseline_file_is_kept():

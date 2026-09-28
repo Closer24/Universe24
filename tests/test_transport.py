@@ -93,27 +93,23 @@ def test_a_planted_vector_part_rotates_the_arriving_pair_and_the_inverse_restore
     """Gravity's x part set to 5 on a slab: a matter record with the twist "own" reads k = sigma x twist x (V_i + V_j) on its x Ports there, its arrivals are rotated by the table's triple to the nearest unit (T = (c re - s im) / d), its second level is written from the rotated arrivals, and one interval back restores the levels and the remainders exactly."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(twisted_world()))
     gravity = parts_of(simulation, "clicks")
-    matter = [family.name for family in simulation.families].index("matter")
-    x_part = gravity[1]
+    matter, x_part = [family.name for family in simulation.families].index("matter"), gravity[1]
     assert x_part.part == 1 and x_part.silent
     x_part.now[6:8, :, :] = 5
     x_part.before[6:8, :, :] = 5
     x_part.silent = False
     simulation._sourced_ever[(gravity[0].family, 1)] = True
-    twist = OWN_TWIST
-    rng = np.random.default_rng(7)
+    twist, rng = OWN_TWIST, np.random.default_rng(7)
     now = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     before = rng.integers(-(1 << 16), 1 << 16, size=tuple(SHAPE), dtype=np.int64)
     live = simulation.planted_record(matter, now.copy(), before.copy(), twist=twist)
     # the angle per Port at the slab Node (6, 2, 2), k = sigma x twist x (V here + V arrived): toward +x, +twist x (5 + 5); toward -x at the slab's left edge, -twist x 5; no y or z twist (V_y = V_z = 0)
-    angles = (twist * 10, -twist * 5, 0, 0, 0, 0)
-    content = simulation._effective_content(matter).copy()
+    angles, content = (twist * 10, -twist * 5, 0, 0, 0, 0), simulation._effective_content(matter).copy()
     num_all, den_all = simulation.pair_arrays(matter)
     simulation._advance(live)
     assert live.im_now is not None and live.im_now.any()
     rows = table()
-    node = (6, 2, 2)
-    reads = 0
+    node, reads = (6, 2, 2), 0
     for axis in range(3):
         for side, sigma in enumerate((1, -1)):
             j = list(node)
@@ -172,14 +168,12 @@ def test_the_ports_along_a_records_own_component_book_nothing_of_it():
     # the record in z: the z Ports skipped; the sum over the x and y Ports by hand
     transverse = simulation.planted_record(charge, now.copy(), before.copy(), part=3)
     assert simulation.booked_axis(transverse) == 2
-    wall = simulation.kind_wall(charge)
-    expected = 0
+    wall, expected = simulation.kind_wall(charge), 0
     for axis in (0, 1):
         for side in (1, -1):
             outside = ~np.roll(mask, side, axis=axis)
             port = mask & outside
-            now_j = np.roll(now, side, axis=axis)
-            before_j = np.roll(before, side, axis=axis)
+            now_j, before_j = np.roll(now, side, axis=axis), np.roll(before, side, axis=axis)
             flux = now.astype(object) * before_j - before.astype(object) * now_j
             expected += int(np.sum(np.where(port & (flux > 0), flux, 0)))
     assert 0 < simulation.inward_flux(transverse, mask) == expected * wall <= whole
@@ -215,8 +209,7 @@ def test_the_loader_refuses_a_light_emitter_without_one_moment_axis_and_a_bad_ta
 def test_a_twist_beyond_the_coarse_table_is_refused_naming_the_port():
     simulation = DetectorLawSimulation(parse_nature_beam_world(twisted_world()))
     gravity = parts_of(simulation, "clicks")
-    matter = [family.name for family in simulation.families].index("matter")
-    x_part = gravity[1]
+    matter, x_part = [family.name for family in simulation.families].index("matter"), gravity[1]
     x_part.now[6:8, :, :] = 1 << 20
     x_part.before[6:8, :, :] = 1 << 20
     x_part.silent = False
