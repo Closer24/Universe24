@@ -75,23 +75,36 @@ def pair(value: Fraction | None) -> list[int] | None:
 
 
 def report(world_path: Path, output_path: Path) -> dict[str, Any]:
-    """The report: the wavelengths per window, the periods at the two Nodes with their ratio, the clocks' mean cycles with their ratio; every number GAMEBOARD."""
+    """The report: the wavelengths per window, the periods at the two Nodes with their ratio, the clocks' mean cycles with their ratio, and the light's relative shift of wave number over the clock's relative shift of cycle (the pace line's reading); every number GAMEBOARD."""
     world = json.loads(world_path.read_text(encoding="utf-8"))
     output = json.loads(output_path.read_text(encoding="utf-8"))
     well = json.loads(world_path.with_suffix(".expectation.json").read_text(encoding="utf-8"))["WELL"]
     periods = [period_at(output, name) for name in well["levels"]]
     cycles = [mean_cycle(output, name) for name in well["clocks"]]
+    found = wavelengths(output, world["shape"], well["rows"], int(well["axis_y"]), well["windows"])
+    light = mean_wavelength_shift(found, well["windows"])
+    clock = cycles[0] / cycles[1] - 1 if cycles[0] and cycles[1] else None
     return {
         "input": world_path.stem,
         "kind": "GAMEBOARD",
-        "wavelengths": wavelengths(
-            output, world["shape"], well["rows"], int(well["axis_y"]), well["windows"]
-        ),
+        "wavelengths": found,
         "light_periods": [pair(p) for p in periods],
         "light_period_ratio": pair(periods[0] / periods[1] if periods[0] and periods[1] else None),
         "clock_cycles": [pair(c) for c in cycles],
         "clock_ratio": pair(cycles[0] / cycles[1] if cycles[0] and cycles[1] else None),
+        "light_wave_number_shift": pair(light),
+        "clock_cycle_shift": pair(clock),
+        "shift_ratio": pair(light / clock if light is not None and clock else None),
     }
+
+
+def mean_wavelength_shift(found: list[dict[str, Any]], windows: list[list[int]]) -> Fraction | None:
+    """The light's relative shift of wave number in the well: the mean wavelength outside (the second window) over the mean inside (the first) minus one, k = 2 pi / lambda; None where a window read none."""
+    means = []
+    for window in windows[:2]:
+        read = [Fraction(*w["wavelength"]) for w in found if w["window"] == list(window)]
+        means.append(sum(read) / len(read) if read else None)
+    return means[1] / means[0] - 1 if means[0] and means[1] else None
 
 
 def main(argv: list[str]) -> int:

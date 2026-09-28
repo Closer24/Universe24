@@ -43,7 +43,7 @@ def test_the_centroid_is_the_click_weighted_mean_and_the_shift_is_read_against_t
 
 
 def test_the_wells_clocks_read_the_wavelength_the_period_and_the_cycle_from_sign_changes(tmp_path: Path):
-    """A level of period 8 (four positive, four negative) at one Node and of period 6 at the other gives the periods 8 and 6 and the ratio 4/3; along the axis a row of wavelength 4 inside the window and 6 in the other gives those wavelengths; the clocks' cycle starts 0, 9, 18 and 0, 8, 16 give the mean cycles 9 and 8; a zero between signs breaks no count and fewer than two changes give None."""
+    """A level of period 8 (four positive, four negative) at one Node and of period 6 at the other gives the periods 8 and 6 and the ratio 4/3; along the axis a row of wavelength 4 inside the window and 6 in the other gives those wavelengths; the clocks' cycle starts 0, 9, 18 and 0, 8, 16 give the mean cycles 9 and 8, so the light's relative shift 6 / 4 - 1 over the clock's 9 / 8 - 1 is 4; a zero between signs breaks no count and fewer than two changes give None."""
     changes = well_clocks.mean_between_sign_changes
     assert (
         changes([1, 1, 0, -1, -1, 1, 1, -1]) == Fraction(2 * (7 - 3), 2) and changes([1, 1, -1]) is None
@@ -71,3 +71,5 @@ def test_the_wells_clocks_read_the_wavelength_the_period_and_the_cycle_from_sign
     assert [w["wavelength"] for w in found["wavelengths"]] == [[4, 1], [6, 1]]
     assert found["light_periods"] == [[8, 1], [6, 1]] and found["light_period_ratio"] == [4, 3]
     assert found["clock_cycles"] == [[9, 1], [8, 1]] and found["clock_ratio"] == [9, 8]
+    shifts = (found["light_wave_number_shift"], found["clock_cycle_shift"], found["shift_ratio"])
+    assert shifts == ([1, 2], [1, 8], [4, 1])  # (6 / 4 - 1) over (9 / 8 - 1)

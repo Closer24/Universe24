@@ -603,12 +603,15 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
             f"of one Node on its face (L = {distance} Links from the body's centre); the centroid of the clicks over "
             f"the strips shifted toward the body against the twin; under the gravity divisor E_s = 100,000 "
             f"(Cheshbon's line and the fall's need; the Experimenters' number, #1352) the level on the axis beside "
-            f"the body c_b = 71 (GAMEBOARD, the plane's rest), U_b = c_b / (2 Gamma) = 3.5 x 10^-3; three numbers "
-            f"for one world (Cheshbon, 05:43Z): (a) the engine as it stands, the pace squared in the read "
-            f"coefficient, theta = (d2 omega / dk_perp2)(d omega / dc) INT (dc / db) dy / v_g^2: 10.9 Links; "
-            f"(b) the conformal pace: 3.9; (c) conformal with a locally Lorentzian band: 2.4, nature's 4 U_b "
-            f"(the row as written: 4 U_b L = 2.8, the plane's logarithm its uncertainty); the engine must show (a) "
-            f"on today's law, and the distance to (c) is the conformal pace's line; the band the rounding's 0.5 "
+            f"the body c_b = 71 (GAMEBOARD, the plane's rest), U_b = c_b / (2 Gamma) = 3.5 x 10^-3; the numbers "
+            f"for one world (Cheshbon, 05:53Z, after two corrections; Nature24, 05:55Z): (a) the engine as it "
+            f"stands, theta = (d2 omega / dk_perp2)(d omega / dc) INT (dc / db) dy / v_g^2 with S inside "
+            f"d omega / dc = 1.7 / Gamma: 4.1 Links, the first look's expectation; the conformal pace (the "
+            f"S line of #1356) leaves the light's bending as it is, 4.1, since light on [1, 1] is already "
+            f"conformal; the row as written 4 U_b L = 2.8 with U_b = c_b / (2 Gamma), 5.7 with U_b = c_b / Gamma "
+            f"(the conformal shift, what the clocks read); the pace once more in the space coefficient R_a "
+            f"(Nature24's time-and-space line, Eddington's factor two) about 8 Links, nature's expectation, "
+            f"Cheshbon's derivation pending; the band the rounding's 0.5 "
             f"Link plus the draw's (the beam's transverse spread at the screen over the root of the clicks, "
             f"Cheshbon's number pending); a beam that touches the body is reflected, not bent, so the record's "
             f"support stays off the body's Nodes; the tube and the body are mirrors for the light by the bound "
@@ -622,16 +625,19 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
             "clocks": ["clock_in_the_well", "clock_far_away"],
             "axis_y": axis,
             "windows": [[heavy_box[0], heavy_box[1]], [185, 214]],
-            "row": "tools/well_clocks.py reads these (GAMEBOARD): the light's wavelength along the axis beside the body and far from it, its period at the two Nodes (conserved: the ratio 1), the matter clocks' mean cycles in the well and far away; in the twin every ratio is 1",
+            "shift_ratio_today": 2.1,
+            "shift_ratio_conformal": 1.0,
+            "row": "tools/well_clocks.py reads these (GAMEBOARD): the light's wavelength along the axis beside the body and far from it, its period at the two Nodes (conserved: the ratio 1), the matter clocks' mean cycles in the well and far away, and the ratio of the light's relative shift of wave number to the matter clock's relative shift of cycle at the same level c = 71: the decisive reading of the pace's line (Cheshbon 05:53Z, Nature24 05:55Z; Pound-Rebka): 2.1 under the engine as it stands, 1.0 under the conformal pace; in the twin every ratio is 1",
         },
         "CENTROID": {
             "strips": "screen_",
             "twin": "bending_twin",
-            "shift": -10.9,
+            "shift": -4.1,
             "band": 0.5,
-            "nature": -2.4,
             "row_as_written": -2.8,
-            "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's; the body lies at y below the axis, so a shift toward it is negative: the engine's own (a) -10.9 within 0.5 Link, the rounding's band, the draw's band to be added; nature's (c) -2.4 and the row's -2.8 beside it, never tuned to",
+            "conformal_shift_row": -5.7,
+            "time_and_space": -8,
+            "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's; the body lies at y below the axis, so a shift toward it is negative: the engine's own (a) -4.1 within 0.5 Link, the rounding's band, the draw's band to be added (the beam's spread at the screen over the root of the clicks); the row's -2.8 (U_b = c_b / (2 Gamma)), -5.7 with U_b = c_b / Gamma, and about -8 under the pace once more in the space coefficient (Nature24, Eddington's factor two) beside it, never tuned to",
         },
         "GAMEBOARD": [
             {
