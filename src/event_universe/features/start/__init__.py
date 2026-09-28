@@ -57,9 +57,9 @@ def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
     return tuple(axis_arrivals(a, axis, wrap) for axis in range(3))
 
 
-def field_unit(counts: np.ndarray, num: int) -> int:
-    """The field's fine unit, derived and never written: the largest scale of the levels at which num S_6 stays inside the integer width with room, the width div (2 x 6 num x the largest count's size)."""
-    largest = int(np.abs(counts).max())
+def field_unit(counts: np.ndarray, num: int, reach: int = 0) -> int:
+    """The field's fine unit, derived and never written: the largest scale of the levels at which num S_6 stays inside the integer width with room, the width div (2 x 6 num x the largest level's size), the largest level the largest count or the rest's own bound `reach` where the rest rises above the counts (the sum's tent)."""
+    largest = max(int(np.abs(counts).max()), reach)
     return int(division(1, SIGNS * PORTS * num * largest, np.array(MAX_WORK_INT, dtype=object)))
 
 
@@ -304,7 +304,7 @@ def certified(
 
 
 def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int | None = None) -> FieldAtRest:
-    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's. With a divisor the rest is the sum's (the hold's row as a sum, 6 den a - num S_6(a) = 3 den sigma): no Node is clamped, the counts are the weighted sources at the bodies' Nodes, and the line's right side is 3 den x the source x the unit div the divisor at every Node, the residual read against it; a board periodic on its every axis at [1, 1] gives the source no sink and is refused by name."""
+    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's. With a divisor the rest is the sum's (the hold's row as a sum, 6 den a - num S_6(a) = 3 den sigma): no Node is clamped, the counts are the weighted sources at the bodies' Nodes, and the line's right side is 3 den x the source x the unit div the divisor at every Node, the residual read against it; the fine unit is derived from the rest's bound as well as the counts (the tent of the whole source over the longest extent, at most half the source total per side times the extent, rises above the counts on a long chain); a board periodic on its every axis at [1, 1] gives the source no sink and is refused by name."""
     check_counts(np.abs(counts), 1 + int(np.abs(counts).max()))  # a signed family's counts by size
     num, den = pair
     if num < 1 or den < num:
@@ -336,7 +336,9 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int | None = N
     bound_top = sizes(exit_time.ravel()[free])
     bound_bits = max(1, bound_top.bit_length() - bound_wall.bit_length() + 1)
     room = nodes * nodes  # the margin far below a half: no accidental near-half over the free Nodes
-    unit = field_unit(counts, num)
+    tent = 3 * int(np.abs(counts).sum()) * (max(counts.shape) + 1)  # the sum's rest above the counts
+    reach = 0 if divisor is None else int(division(tent, 2 * divisor, np.array(1, dtype=object))) + 1
+    unit = field_unit(counts, num, reach)
     fine = np.zeros(counts.shape, dtype=object)
     fine[...] = clamped.astype(object) * unit
     side = np.zeros(counts.shape, dtype=object)

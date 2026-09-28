@@ -88,18 +88,23 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
 
 
 def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
-    """THE START ON THE SUM'S SOURCES (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): the rest solves 6 den a - num S_6(a) = 3 den sigma, sigma the weighted count over the divisor at the bodies' Nodes, 0 beyond an open face, no Node clamped; the certified values' exact residual stays below one fine unit, on a chain and on a box alike; a board periodic on its every axis at [1, 1] has no rest and is refused by name; a divisor below 1 is refused."""
+    """THE START ON THE SUM'S SOURCES (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): the rest solves 6 den a - num S_6(a) = 3 den sigma, sigma the weighted count over the divisor at the bodies' Nodes, 0 beyond an open face, no Node clamped; the certified values' exact residual stays below one fine unit, on a chain and on a box alike, at [1, 1] and at the short-range pairs (at [1, 2] the line is (Delta^2 - 6) a = -6 sigma, the level inside a thick body its source: the divisor 1 gives the count at the body's centre); a board periodic on its every axis at [1, 1] has no rest and is refused by name; a divisor below 1 is refused."""
     numerators, divisor, wrap = chain(), 7, (False, True, True)
     box = np.zeros((6, 5, 4), dtype=np.int64)
     box[1:3, 1:3, 1] = 9
-    for counts, faces, pair in (
-        (numerators, wrap, (1, 1)),
-        (numerators, wrap, (1, 4)),
-        (box, (False, True, True), (1, 1)),
-        (box, (True, True, True), (3, 4)),
+    thick = np.zeros((7, 7, 7), dtype=np.int64)
+    thick[1:6, 1:6, 1:6] = 50
+    for counts, faces, pair, divisor in (
+        (numerators, wrap, (1, 1), 7),
+        (numerators, wrap, (1, 4), 7),
+        (box, (False, True, True), (1, 1), 7),
+        (box, (True, True, True), (3, 4), 7),
+        (thick, (True, True, True), (1, 2), 1),
     ):
         num, den = pair
         found = rest(counts, pair, faces, divisor)
+        if pair == (1, 2):
+            assert abs(int(found.levels[3, 3, 3]) - 50) <= 1  # the short-range well: the count inside
         fine = found.fine.astype(object)
         neighbours = sum(arrivals(fine, faces))  # the six Ports' reads, 0 beyond an open face
         side = counts.astype(object) * (3 * den * found.unit) // divisor
