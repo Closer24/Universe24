@@ -1,4 +1,4 @@
-"""THE GENERATOR IS RULE3 (ALGEBRA.md #the-primitives, THE GENERATOR IS RULE3, THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD; the owner's word of 2026-09-28, 15:28 Israel; Cheshbon's algorithm of 15:35, 15:41 and 15:43): the mode file of a world of one-Node bodies, each body's bound record what Rule3 makes of its count at its Node in the engine's own integers and nothing else. For every measured body of one declared Node with a count c: the record is seeded at the Node with a level b_0 at both levels and stepped by Rule3 with the count's well held (the matter pair as the universe file writes it over Gamma, the content c at the Node and 0 elsewhere, the isotropic rule, the world's own faces: what reaches an open face leaves) until the unbound part has left (twice the Links to the farthest open face, the group velocity under half a Link per interval) and then over two periods of the standing record (a period between two returns of the record's level at the Node to the same sign); the readings of the standing record over that window are the count it carries, D-bar = (SUM D) div (P T) with D = now^2 - next x before, its period P as the pair [window, 2], its amplitude b = max |now|, its clock pair [next + before, now] at the moment of the largest level and its tail, the levels one, two and three Links from the Node along the first axis at that moment; the seed b_0 is scanned upward from 1 until the record carries the count or more, and the seed whose D-bar is nearest c is the body's; the mode entry is the standing record itself at that moment, `moving` its two levels over the whole board, `profile` the level now, `clock` the pair read, `twist` 0 (a pixel does not twist), on a giver its `wavelength` from the pair in integers (cos k = 3 cos omega_b - 2, the Links per period of that rotation over the world's intervals); the remainders of the standing record are not carried by the file (no key of the loader's) and the record restarts at 0 there. Every arithmetic is Rule3's (`core/rule3`, `core/ports`): no clock pair, no tail and no float enters. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`."""
+"""THE GENERATOR IS RULE3 (ALGEBRA.md #the-primitives, THE GENERATOR IS RULE3, THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD, THE WELL IS THE COUNT AND NO FIELD; the owner's word of 2026-09-28, 15:28 Israel; Cheshbon's algorithm of 15:35, 15:41 and 15:43 and his line of 18:05): the mode file of a world of one-Node bodies, each body's bound record what Rule3 makes of its count at its Node in the engine's own integers and nothing else. For every measured body of one declared Node with a count c: the record is seeded at the Node with a level b_0 at both levels and stepped by Rule3 with the count held (the matter pair as the universe file writes it over Gamma, the content c at the Node and 0 elsewhere, the isotropic rule, the world's own board with its faces walls as in the engine: nothing leaves, Rule3 is reversible) and read whole period by whole period at the Node (a period from one upward return of the level through 0 to the next) until two consecutive periods agree within the rounding with the record's peak at its Node: the reading stands; between passes the purge re-seeds the record from itself within three Links of the Node at the peak phase, 0 elsewhere, integers only, the waste of the reflecting board dropped. The readings over the two periods are the count it carries, D-bar = (SUM D) div (P T) with D = now^2 - next x before at the Node, its period as the pair [window, 2], its amplitude b = max |now|, its clock pair [next + before, now] at the moment of the largest level and its tail, the levels one, two and three Links from the Node along the first axis at that moment; the seed b_0 is bracketed from isqrt(c T) and bisected to the seed whose D-bar is nearest c; the pair must read a bound rotation of the kind (above the band's top, below 2), else the reading is a mode of the board's walls and refused by name; the mode entry is the standing record itself at the peak, `moving` its two levels over the whole board, `profile` the level now, `clock` the pair read, `twist` 0 (a pixel does not twist), on a giver its `wavelength` from the pair in integers (cos k = 3 cos omega_b - 2, the Links per return of that rotation over the world's intervals); the remainders of the standing record are not carried by the file (no key of the loader's) and the record restarts at 0 there. Every arithmetic is Rule3's (`core/rule3`, `core/ports`): no clock pair, no tail and no float enters. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`."""
 
 from __future__ import annotations
 
@@ -27,9 +27,6 @@ class Board:
     gamma: int
     action: int
     pair: tuple[int, int]
-    depth: int = (
-        1  # the face slab: what reaches an open face leaves (ALGEBRA.md #the-ladder, THE FACE SLAB)
-    )
 
 
 @dataclass(frozen=True)
@@ -48,7 +45,7 @@ class Standing:
 def step(
     board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray, remainder: np.ndarray
 ) -> np.ndarray:
-    """One interval of Rule3 on the whole board, the loop's own isotropic form: the arrivals per axis the two neighbours' levels (0 beyond an open or closed face, the wrap on a periodic one), the coefficients from the pace Gamma - content at every Node, the division by the wall with the remainder kept at the Node."""
+    """One interval of Rule3 on the whole board, the loop's own isotropic form: the arrivals per axis the two neighbours' levels (0 beyond an open or closed face, a wall as in the engine, the wrap on a periodic one), the coefficients from the pace Gamma - content at every Node, the division by the wall with the remainder kept at the Node; nothing leaves the board (Rule3 is reversible), a quantum leaves only at a click."""
     arrivals = tuple(
         arrival(now, axis, 1, board.wrap[axis], 0) + arrival(now, axis, -1, board.wrap[axis], 0)
         for axis in range(3)
@@ -57,29 +54,12 @@ def step(
         board.pair[0], board.pair[1], board.gamma, content, ISOTROPIC, True
     )
     nxt, remainder[...] = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
-    found = np.asarray(nxt, dtype=np.int64)
-    for axis in range(3):  # the face slab is the receiver: a level reaching it leaves the board
-        if not board.wrap[axis] and board.shape[axis] > 1:
-            view = np.moveaxis(found, axis, 0)
-            view[: board.depth] = 0
-            view[board.shape[axis] - board.depth :] = 0
-            np.moveaxis(remainder, axis, 0)[: board.depth] = 0
-            np.moveaxis(remainder, axis, 0)[board.shape[axis] - board.depth :] = 0
-    return found
+    return np.asarray(nxt, dtype=np.int64)
 
 
-def leaving_time(board: Board, node: Axis) -> int:
-    """The intervals the unbound part needs to leave through the faces: twice the Links from the Node to the farthest open face (the group velocity is under half a Link per interval), twice the board's longest extent where no face is open (nothing leaves; the record is read as it stands)."""
-    farthest = (
-        max(
-            max(node[axis], board.shape[axis] - 1 - node[axis])
-            for axis in range(3)
-            if not board.wrap[axis]
-        )
-        if not all(board.wrap)
-        else max(board.shape)
-    )
-    return 2 * farthest
+PURGE_LINKS = 3  # the purge keeps the record within three Links of the Node (Cheshbon's line of 18:05)
+PERIODS_PER_PASS = 8  # the periods read at the Node before a purge
+PASSES = 8  # the purges tried before the record is refused as never standing
 
 
 def period_reading(
@@ -117,17 +97,28 @@ def agree(first: int, second: int) -> bool:
     return (off - (off & 1)) ** 2 <= 4 * max(first, second)
 
 
+def purged(board: Board, node: Axis, now: np.ndarray, before: np.ndarray) -> list[np.ndarray]:
+    """THE PURGE: the record re-seeded from itself at the peak phase, its two levels kept within PURGE_LINKS of the Node (the wrap on a periodic axis) and 0 elsewhere, the remainders 0, integers only: the waste of a reflecting board left behind (Cheshbon's line of 18:05, THE GENERATOR IS RULE3)."""
+    keep = np.ones(board.shape, dtype=bool)
+    for axis in range(3):
+        along = np.arange(board.shape[axis]) - node[axis]
+        if board.wrap[axis]:
+            along = np.minimum(np.abs(along), board.shape[axis] - np.abs(along))
+        shape = [1, 1, 1]
+        shape[axis] = board.shape[axis]
+        keep &= np.abs(along).reshape(shape) <= PURGE_LINKS
+    return [np.where(keep, now, 0), np.where(keep, before, 0), np.zeros(board.shape, dtype=np.int64)]
+
+
 def standing(board: Board, node: Axis, count: int, seed: int) -> Standing | None:
-    """Rule3 from the seed until the record stands, then the readings over two periods: the count held at the Node (the content c there, 0 elsewhere), the levels now and before seeded at b_0, the record stepped through the leaving time, then read period by period until two consecutive whole periods agree (the same length within one interval, the count carried within the rounding, the amplitude within one level): the record stands, and those two periods are its window; None when no two periods agree within the bound (twice the leaving time in periods, at least sixteen)."""
+    """Rule3 from the seed until the reading at the Node stands: the content c held at the Node (0 elsewhere), the levels seeded at b_0, the record read whole period by whole period at the Node until two consecutive periods agree (the same length within one interval, the count carried within the rounding, the amplitude within one level) with the record's peak at its Node; between passes of PERIODS_PER_PASS periods the purge re-seeds the record from itself within PURGE_LINKS of the Node, the waste of the reflecting board dropped; None when no reading stands within PASSES purges (no bound record at this count on this board, or a seed too coarse for the integers)."""
     content = np.zeros(board.shape, dtype=np.int64)
     content[node] = count
     now, before = np.zeros(board.shape, dtype=np.int64), np.zeros(board.shape, dtype=np.int64)
     now[node] = before[node] = seed
     state = [now, before, np.zeros(board.shape, dtype=np.int64)]
-    for _ in range(leaving_time(board, node)):
-        state[0], state[1] = step(board, content, state[0], state[1], state[2]), state[0]
     previous = None
-    for _ in range(max(16, 2 * leaving_time(board, node))):
+    for turn in range(PASSES * PERIODS_PER_PASS):
         reading = period_reading(board, content, node, state)
         if reading is None:
             return None
@@ -154,10 +145,10 @@ def standing(board: Board, node: Axis, count: int, seed: int) -> Standing | None
                 now_at, before_at = (
                     (now_at, before_at) if largest >= largest_before else (now_before, before_before)
                 )
-                if level < 0:  # the pair [next + before, now] with now positive
-                    a, level = -a, -level
-                scale = division_forward(int(np.max(np.abs(now_at))) + level - 1, level, 0)[0]
-                a, level = a * scale, level * scale  # den at least the amplitude
+                if (
+                    level < 0
+                ):  # the pair [next + before, now] with now positive: the sign is not the record's
+                    a, level, now_at, before_at = -a, -level, -now_at, -before_at
                 tail = tuple(
                     int(now_at[(node[0] + d) % board.shape[0], node[1], node[2]]) for d in (1, 2, 3)
                 )
@@ -165,6 +156,9 @@ def standing(board: Board, node: Axis, count: int, seed: int) -> Standing | None
                     both, window, max(largest, largest_before), (a, level), tail, now_at, before_at
                 )
         previous = (length, carried, largest, pair, now_at, before_at)
+        if (turn + 1) % PERIODS_PER_PASS == 0:
+            state[:] = purged(board, node, now_at, before_at)
+            previous = None
     return None
 
 
@@ -182,9 +176,9 @@ def bound_record(board: Board, node: Axis, count: int) -> tuple[int, Standing]:
                 return readings[attempt]
         raise ValueError(
             f"the record of the count {count} at the Node {list(node)} seeded at {seed} to {seed + 7} does not "
-            f"stand on this board {list(board.shape)}: no two consecutive whole periods of its level at the Node "
-            "agree with the peak at the Node (a well too shallow for its board, a board too small for its "
-            "record, or no bound record at this count; THE GENERATOR IS RULE3)"
+            f"stand on this board {list(board.shape)}: no two consecutive whole periods of its reading at the Node "
+            "agree with the peak at the Node within the purges (no bound record at this count on this board, or "
+            "a seed too coarse for the integers; THE GENERATOR IS RULE3)"
         )
 
     low = high = max(1, isqrt(count * board.action))
@@ -227,6 +221,13 @@ def pixel_entry(
     node = (int(nodes[0]["node"][0]), int(nodes[0]["node"][1]), int(nodes[0]["node"][2]))
     count = int(nodes[0]["count"])
     seed, record = bound_record(board, node, count)
+    a, den = record.clock
+    if not (2 * board.pair[0] * den < a * board.pair[1] < 2 * den * board.pair[1]):
+        raise ValueError(
+            f"measured[{number}]: the standing reading at the Node {list(node)} rotates at [{a}, {den}], not "
+            f"above the band's top 2 x {board.pair[0]} / {board.pair[1]} and below 2: a mode of the board's walls, "
+            "no bound pixel at this count on this board"
+        )
     entry: dict[str, Any] = {
         "family": body["family"],
         "pair": list(board.pair),
@@ -268,7 +269,6 @@ def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
             int(document.get("node_clock", integers["node_clock"])),
             int(integers["quantum_action"]),
             pairs[body["family"]],
-            int(document.get("face_depth", 1)),
         )
         bodies.append(pixel_entry(number, body, document, board))
     return {"world_digest": input_digest(document), "bodies": bodies}
