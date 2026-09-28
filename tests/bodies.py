@@ -155,15 +155,7 @@ def block_world(
             "moment": block.get("moment", [0, 0, 0]),
             "twist": block.get("twist", 0),  # the generator's number; 0 where no read by "own" (item 73)
         }
-        for key in (
-            "seed",
-            "ramp",
-            "start",
-            "margin",
-            "stocks",
-            "receiver",
-            "emitter",
-        ):
+        for key in ("seed", "ramp", "start", "margin", "stocks", "receiver", "emitter"):
             if key in block:
                 entry[key] = block[key]
         if block["pair"][0] * kind[1] > block["pair"][1] * kind[0]:

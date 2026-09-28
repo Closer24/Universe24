@@ -14,8 +14,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import planted
 from tests.worlds import emitter_world, layer_world, seed_on_the_mode
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -41,8 +40,7 @@ def wall(position, family="light", **keys):
         **keys,
     }
     if "extents" in entry or "side" in entry:
-        # a block declares its drive's ramp and start (no default, item 57) and its
-        # numbers, q, spin and moment (ALGEBRA.md #the-interval; item 61; the word q, item 68)
+        # a block declares its drive's ramp and start (no default, item 57) and its numbers, q, spin and moment (ALGEBRA.md #the-interval; item 61; the word q, item 68)
         entry.setdefault("ramp", 0)
         entry.setdefault("start", 0)
         entry.setdefault("q", 0)
@@ -100,8 +98,7 @@ def test_the_extents_refusals_and_the_fit_per_axis():
     parse_nature_beam_world(document)
     document["measured"][-1]["extents"] = [2, 1, 1]
     document["stamp"] = input_stamp(document)
-    # SINCE COMMIT 7 a body is its own detector whatever its support (ALGEBRA.md #the-rows-against-nature, record
-    # 2109): the slab of two Nodes bound as its own set is admitted
+    # SINCE COMMIT 7 a body is its own detector whatever its support (ALGEBRA.md #the-rows-against-nature, record 2109): the slab of two Nodes bound as its own set is admitted
     parse_nature_beam_world(document)
 
 
@@ -165,8 +162,7 @@ def test_the_face_slab_is_one_cell_of_the_depth_at_every_open_border():
     document["stamp"] = input_stamp(document)
     with pytest.raises(ValueError, match="face_depth 40 leaves no interior on the open axis x"):
         parse_nature_beam_world(document)
-    # a periodic chain (no body: the emitter's mode is the closed chain's, one border for
-    # every family, and would not fit the periodic operator) has no face whatever the depth
+    # a periodic chain (no body: the emitter's mode is the closed chain's, one border for every family, and would not fit the periodic operator) has no face whatever the depth
     from tests.bodies import massive_world
 
     periodic = massive_world([80, 1, 1], {"x": "periodic", "y": "periodic", "z": "periodic"}, [800, 809])

@@ -19,8 +19,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import exchange_of, form_I
 from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, mode_profile, reads
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 SIDE = 12
@@ -80,8 +79,7 @@ def small_world(
                 "margin": "control",
             }
         ],
-        # the receiver: the detector cube of side 3 from `receiver` (record 1899; a set
-        # on free Nodes is bound to a body, the light clock's form)
+        # the receiver: the detector cube of side 3 from `receiver` (record 1899; a set on free Nodes is bound to a body, the light clock's form)
         "detectors": [
             {
                 "name": "screen",
@@ -299,20 +297,13 @@ def test_conservation_between_clicks():
     assert len(clicks) == 1
     click_tick = clicks[0][0]
     light = 1 << 40
-    # (a) the content: the light record's quantum until the click, none after (the record
-    # deleted at its click); the well's own record carries no quantum of light
+    # (a) the content: the light record's quantum until the click, none after (the record deleted at its click); the well's own record carries no quantum of light
     for t, state in enumerate(states):
         if t < click_tick:
             assert light in state
         else:
             assert light not in state
-    # (b) the form I with the remainder identity, per record, exact, step by step with the
-    # family of clicks' level in force for the step (`paced[t - 1]`, the level as interval t began
-    # read at no less than 0, ALGEBRA.md #the-paces, #the-counts-line), and THE EXCHANGE WITH
-    # A MOVING CLOCK (ALGEBRA.md #the-counts-line; under the fixed wall, item 34): between the steps the form
-    # with the new level differs from the form with the old by the weights' change, exactly
-    # (at the well's Nodes the level is the source's carried division over E_s, (SUM_{i <= t} count_i + r)
-    # div E_s less the load's own, the count 1 until the click's quantum enters and 2 after, on `held`)
+    # (b) the form I with the remainder identity, per record, exact, step by step with the family of clicks' level in force for the step (`paced[t - 1]`, the level as interval t began read at no less than 0, ALGEBRA.md #the-paces, #the-counts-line), and THE EXCHANGE WITH A MOVING CLOCK (ALGEBRA.md #the-counts-line; under the fixed wall, item 34): between the steps the form with the new level differs from the form with the old by the weights' change, exactly (at the well's Nodes the level is the source's carried division over E_s, (SUM_{i <= t} count_i + r) div E_s less the load's own, the count 1 until the click's quantum enters and 2 after, on `held`)
     well = simulation.blocks[0].mask
     divisor = next(family.held_divisor for family in simulation.families if family.held == "content")
     counts = [1 if t < click_tick else 2 for t in range(len(states))]
@@ -331,9 +322,7 @@ def test_conservation_between_clicks():
             prev_now, prev_before, prev_remainder = states[t - 1][identity]
             value = form_I(simulation, family, now, before, paced[t - 1])
             previous = form_I(simulation, family, prev_now, prev_before, paced[t - 1])
-            # the remainder term of 8.2 over the step t - 1 -> t under the weak-field rule
-            # (ALGEBRA.md #the-line; item 44): (a_next - a_before) (r - r') / (3 R_i) per Node, R_i the
-            # rule's coefficient on the six reads at the Node's level in force for the step
+            # the remainder term of 8.2 over the step t - 1 -> t under the weak-field rule (ALGEBRA.md #the-line; item 44): (a_next - a_before) (r - r') / (3 R_i) per Node, R_i the rule's coefficient on the six reads at the Node's level in force for the step
             (read_coefficient, _, _), _self, _wall = coefficients(
                 num.astype(object),
                 simulation.kind_den[family].astype(object),
@@ -357,9 +346,7 @@ def test_conservation_between_clicks():
             assert moved - value == exchange, (identity, t)
             exchanges += exchange != 0
             if identity == -1 and t == click_tick:
-                # THE EVENT (ALGEBRA.md #the-paces, #the-counts-line): the click's quantum enters the
-                # well's count as this interval ends (1 -> 2 on `held`); the level moves by the source's
-                # carried division alone, (SUM count_i + r) div E_s, asserted above
+                # THE EVENT (ALGEBRA.md #the-paces, #the-counts-line): the click's quantum enters the well's count as this interval ends (1 -> 2 on `held`); the level moves by the source's carried division alone, (SUM count_i + r) div E_s, asserted above
                 assert np.all(contents[t][well] - contents[t - 1][well] == counts[t] // divisor)
         moved = any(not np.array_equal(contents[t], contents[t - 1]) for t in range(1, len(contents)))
         assert (exchanges > 0) == moved, identity  # an exchange where the clicks' level moved, none else
@@ -381,8 +368,7 @@ def test_reversibility_except_the_click():
     for identity in final:
         for x, y in zip(final[identity], states[0][identity], strict=True):
             assert np.array_equal(x, y), identity
-    # (b) the click's deletion is the one act the inverse cannot undo: the deleted summand
-    # was on the board before its click and is in neither state after it
+    # (b) the click's deletion is the one act the inverse cannot undo: the deleted summand was on the board before its click and is in neither state after it
     document = small_world()
     simulation, states, clicks = run(document)
     (click_tick, clicked) = clicks[0]
