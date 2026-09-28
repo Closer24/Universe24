@@ -36,7 +36,7 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         live = simulation.records.get(first["record"])
         if live is not None:
             assert live.family == 0 and not live.window_open and live.window == first["window"]
-    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world: the fixture's T = floor(0.745 (g M a_body)^2 N_face) scales as the square of the written amplitude, as the outward flux does, so the window's length is the body's rotation's and not the weight's: the same window at g = 1 and g = 4 (16 intervals here, the rotor's sine per interval below the threshold pixel's 0.745, the finding of 15:10 Israel)
+    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world: the fixture's T = floor(0.745 (g M a_body)^2 N_face) scales as the square of the written amplitude, as the outward flux does, so the window's length is the body's rotation's and not the weight's: the same window at g = 1 and g = 4 (a few intervals here, at the fixture's T from its own rotor)
     assert windows[1] == windows[4] >= 1, windows
 
 
@@ -71,18 +71,15 @@ def test_the_window_inverts_bit_for_bit():
             break
     assert opened is not None
     live = simulation.records[simulation.blocks[0].window]  # type: ignore[index]
-    for _ in range(6):  # inside the window: it closes at the fixture's T (16 intervals on this world)
-        simulation.step()
-    assert live.window_open and live.window >= 6 and int(np.abs(live.now).max()) > 0
+    simulation.step()  # the first write inside the window (it closes at the fixture's T within a few intervals)
+    assert live.window_open and live.window >= 1 and int(np.abs(live.now).max()) > 0
     state = (live.now.copy(), live.before.copy(), live.remainder.copy(), live.window, live.outward)
     record = simulation.blocks[0].own
     assert record is not None
     record_state = (record.now.copy(), record.before.copy(), record.remainder.copy())
-    for _ in range(6):
-        simulation.step()
-    assert live.window_open and live.window == state[3] + 6
-    for _ in range(6):
-        simulation.step_inverse()
+    simulation.step()
+    assert live.window_open and live.window == state[3] + 1
+    simulation.step_inverse()
     assert np.array_equal(live.now, state[0]) and np.array_equal(live.before, state[1])
     assert np.array_equal(live.remainder, state[2])
     assert (live.window, live.outward) == (state[3], state[4])

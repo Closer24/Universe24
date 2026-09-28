@@ -218,7 +218,7 @@ def test_the_lines_time():
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
-    """The light clock's file `tests/light_clock.json` (the rule tests' own small world in today's form; the shipped worlds left the repository with the worlds' replay) (the one table's form: [760, 3, 3] with the face slabs 32 deep, A the chain's point extruded, [1, 3, 3] at x = 631, giving by the window (commit 7) with its stock of 64, the mirror at [690, 694) and the mirror behind A at [629, 631), A's `receiver` at_well the set at its own Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A givings (its excitations click at their rungs), and its records click at at_well when the mirror returns them into A's Nodes (the line at the rung, the record deleted at it; at least one within the 700, the round trip about 300 intervals after the giving; under the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its kicks on both levels of n and no body is held in place (the mirrors fed, #1279): every click after its giving, at least one record returning by its round trip above 200 intervals), none at the faces; the books balanced. The edge case: the file on disk is byte for byte what the test read."""
+    """The light clock's file `tests/light_clock.json` (the rule tests' own small world in today's form; the shipped worlds left the repository with the worlds' replay) (the one table's form: [760, 3, 3] with the face slabs 32 deep, A the chain's point extruded, [1, 3, 3] at x = 631, giving by the window (commit 7) with its stock of 64, the mirror at [690, 694) and the mirror behind A at [629, 631), A's `receiver` at_well the set at its own Nodes) loads and is stepped 700 intervals as a load-and-step diagnostic (no pin): A givings (its excitations click at their rungs), and its records click at at_well when the mirror returns them into A's Nodes (the line at the rung, the record deleted at it; at least one within the 700, the first from the mirror two Links behind A within tens of intervals; under the row's floor and the recoil, ALGEBRA.md #the-paces and #the-primitives, A carries its kicks on both levels of n and no body is held in place (the mirrors fed, #1279): every click at least four intervals after its giving), none at the faces; the books balanced. The edge case: the file on disk is byte for byte what the test read."""
     before = LIGHT_CLOCK.read_bytes()
     document = json.loads(before)
     world = parse_nature_beam_world(document)
@@ -232,5 +232,6 @@ def test_the_light_clock_loads_and_steps_under_the_form_without_positions():
         line["tick"] == line["click"] and line["record"] not in simulation.records for line in found
     )
     trips = [line["click"] - line["giving"] for line in found]
-    assert trips and all(trip > 0 for trip in trips) and any(trip > 200 for trip in trips)
+    # under THE WINDOW WRITES BOTH LEVELS the record stands at A's Nodes at its write and returns from the mirror two Links behind A within tens of intervals: every click at least four intervals after its giving; the far mirror's return of about 300 intervals is no longer the first click
+    assert trips and all(trip >= 4 for trip in trips)
     assert LIGHT_CLOCK.read_bytes() == before

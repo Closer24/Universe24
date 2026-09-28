@@ -636,8 +636,9 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         # the plain flux against the norm's rational norm / pace (item 36)
         assert 2 * wheel * pace * pointer >= (2 * u + 1) * norm
         assert below[identity] == gather["click"] - 1
-        # the flight: the train's head over 53 Links at v_g = 0.442, then as much of the passage as the residue asks (the residues spread from the kept remainder, record 1962 (1))
-        assert 100 < gather["click"] - gather["giving"] < 400 and identity not in simulation.records
+        # the flight: nothing reaches the screen before the light's crossing of the Links from the body's head at one Link per interval (under the write of both levels the record's front carries the rung's flux), then as much of the passage as the residue asks (the residues spread from the kept remainder, record 1962 (1))
+        links = positions[0][0] - int(np.nonzero(simulation.block_by_number[1].mask)[0].max())
+        assert links <= gather["click"] - gather["giving"] < 400 and identity not in simulation.records
 
 
 def test_every_declared_wheel_is_refused_by_name():

@@ -99,12 +99,14 @@ def test_3a_a_sourced_family_is_written_where_its_records_are_and_nowhere_else()
 def test_4_the_bodys_momentum_is_the_reading_of_its_records_current_through_the_givings():
     """No click writes a body's momentum (the law's row "the recoil": the momentum a reading, no level): the emitter of the older form keeps its declared 0 at every interval through two windows' closes, both levels alike, and a giver whose mode carries no wave number (the fixture off the mode) takes no turn, its recoil book empty (ALGEBRA.md #the-interval, #the-primitives)."""
     lines: list[dict] = []
-    document = stamped(emitter_world(stock=2, ticks=STEPS))
+    document = stamped(emitter_world(stock=2))  # two windows within the world's own run
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     while len(lines_of(lines, "giving")) < 2:
         simulation.step()
         block = simulation.blocks[0]
-        assert block.momentum == [0, 0, 0] == block.momentum_before and simulation.tick <= 2 * STEPS
+        assert (
+            block.momentum == [0, 0, 0] == block.momentum_before and simulation.tick <= document["ticks"]
+        )
     givings = [line["momentum"] for line in lines if line.get("event") == "giving"]
     assert all(momentum[1:] == [0, 0] for momentum in givings) and lines_of(lines, "recoil") == []
     assert simulation.recoil_turns == {} and not hasattr(simulation, "recoil_wall")

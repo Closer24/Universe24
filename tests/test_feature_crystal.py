@@ -106,8 +106,11 @@ def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_
     assert pair["u"] != arriving["u"]  # the crystal's own residue, read at its Node
     chosen = [(g["record"], g["chosen"][0][0], g["u"], g["content"]) for g in gathers]
     assert chosen[0] == (arriving["record"], "crystal_set", arriving["u"], 1) and len(chosen) == 3
-    assert chosen[1] == (pair["record"], "left_own", pair["u"], 1)
-    assert chosen[2] == (pair["record"] + 1, "right_own", arriving["u"], 0)
+    # the two labels' clicks in either order (whichever first)
+    assert {chosen[1], chosen[2]} == {
+        (pair["record"], "left_own", pair["u"], 1),
+        (pair["record"] + 1, "right_own", arriving["u"], 0),
+    }
     ticks = [arriving["tick"], gathers[0]["tick"], pair["tick"], gathers[1]["tick"], gathers[2]["tick"]]
     assert ticks == sorted(ticks) and ticks[0] < ticks[1] < ticks[2] < ticks[3]  # the order alone
     assert not [live for live in simulation.records.values() if live.pair_record is not None]

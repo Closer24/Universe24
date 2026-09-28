@@ -87,6 +87,16 @@ def inverse_close_interval(simulation: DetectorLawSimulation, lines: list[dict],
         block = simulation.block_by_number[line["measured"]]
         live.window_open = True
         block.window = live.identity
+        if live.zero_mode is not None:  # THE CLOSE RETURNS THE CURRENT undone by hand, as the tool does
+            velocity, support, carries = live.zero_mode
+            count = int(np.count_nonzero(support))
+            simulation._write_at_mask(
+                live,
+                support,
+                (np.full(count, velocity, dtype=np.int64), np.zeros(count, dtype=np.int64)),
+                1,
+            )
+            block.close_carry, live.zero_mode = carries, None
     simulation.step_inverse()
 
 
@@ -116,8 +126,10 @@ def test_between_clicks_the_board_returns_bit_for_bit_where_the_field_rises_and_
 def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
     """1. Across the first giving click and the first taking click. (a) NO RULE UNDOES A CLICK (the owner's word of record 2011): stepping back across the taking click leaves the deleted record deleted and the taken quantum with its taker (the screen's first body's held content stays the click's; its Nodes' level is the source's sum over the divisor 40000, which one quantum does not move). (b) THE CLICK'S ONE LOSS: with the click's ledger undone by hand (the held quanta of the interval before restored, the fields held again), the backward run across the taking click returns every row bit for bit but the deleted record's, and across the giving click, with the given record removed (its rows at its write the file's given rows on the body's Nodes) and the stock restored, returns every row bit for bit with nothing lost; then down to the load exactly."""
     document = reversible_world()
-    probe, _, lines, _ = run_states(document, 200)
-    giving_ticks, taking_ticks = click_ticks(lines)
+    probe, _, long_lines, _ = run_states(
+        document, 200
+    )  # the lines of the longer run name every window's open, a close beyond `end` included
+    giving_ticks, taking_ticks = click_ticks(long_lines)
     t_giving, t_taking = giving_ticks[0], taking_ticks[0]
     assert t_giving < t_taking and (t_giving > 10)
     if len(giving_ticks) > 1:
@@ -148,13 +160,13 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
     lost = {deleted}
     for t in range(t_taking - 1, t_giving, -1):
         if t in giving_ticks:
-            inverse_giving_interval(simulation, lines, states, t)
+            inverse_giving_interval(simulation, long_lines, states, t)
         elif t in closes:
             inverse_close_interval(simulation, lines, t)
         else:
             simulation.step_inverse()
         assert_same(rows_of(simulation), states[t - 1], lost=lost & set(states[t - 1]["records"]))
-    inverse_giving_interval(simulation, lines, states, t_giving)
+    inverse_giving_interval(simulation, long_lines, states, t_giving)
     assert_same(rows_of(simulation), states[t_giving - 1])
     for t in range(t_giving - 1, 0, -1):
         simulation.step_inverse()
@@ -316,15 +328,27 @@ def bookings_of(simulation: DetectorLawSimulation) -> dict[str, object]:
 
 
 def test_the_bookings_and_the_bodys_clock_return_with_the_rows_across_a_close_with_stock_left():
-    """Nature24's finding of 2026-09-28 (#1377, the REVERSIBLE row): the emitter world of stock 2 stepped 160 intervals, then back to 148 through the window's close at 150 (reopened by hand as the closes are): every row bit for bit, and the records' bookings (the pointers, the absorbed sum, the momentum tally, the ladder's total) and the bodies' clocks (the sum, the cycle's start) as the forward intervals had them; the record's box and the cycle's length are the host's readings and not compared."""
-    world, lines = parse_nature_beam_world(emitter_world(stock=2, ticks=600)), []
+    """Nature24's finding of 2026-09-28 (#1377, the REVERSIBLE row): the emitter world of stock 2 stepped until a window closes after the first taking click and four intervals more, then back through that close (reopened by hand as the closes are) to the last click before it, a taking or the body's own clock's: every row bit for bit, and the records' bookings (the pointers, the absorbed sum, the momentum tally, the ladder's total) and the bodies' clocks (the sum, the cycle's start) as the forward intervals had them; the record's box and the cycle's length are the host's readings and not compared."""
+    document = emitter_world(stock=2, ticks=600)
+    world, lines = parse_nature_beam_world(document), []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     forward = [(rows_of(simulation), bookings_of(simulation))]
-    for _ in range(160):
+    after: list[int] = []
+    while not (takings := click_ticks(lines)[1]) or not after or simulation.tick < after[0] + 4:
         simulation.step()
         forward.append((rows_of(simulation), bookings_of(simulation)))
-    assert 150 in (closes := set(close_ticks(lines))) and click_ticks(lines)[1] == [148]
-    for t in range(160, 148, -1):
+        after = [c for c in close_ticks(lines) if takings and c > takings[0]]
+        assert simulation.tick <= document["ticks"]  # within the world's own run
+    closes, close = set(close_ticks(lines)), after[0]  # the first close after the first taking click
+    # the body's own clock clicks (its record's sum crossing 0): one cycle back is undone by its length, a second is not (the length before it is no state of the body), so the span holds at most the close's own
+    marks = takings + [line["tick"] for line in lines if line["event"] == "click"]
+    back_to = max(
+        t for t in marks if t < close
+    )  # the last click before the close, a taking or the body's own
+    end = min(
+        [t - 1 for t in marks if t > close] + [simulation.tick]
+    )  # before the next click: nothing lost between
+    for t in range(end, back_to, -1):
         inverse_close_interval(simulation, lines, t) if t in closes else simulation.step_inverse()
         assert_same(rows_of(simulation), forward[t - 1][0])
         assert bookings_of(simulation) == forward[t - 1][1], t - 1
