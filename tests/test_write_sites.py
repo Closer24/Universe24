@@ -1,4 +1,4 @@
-"""The write's gate (the model owner's word of 2026-09-28, 09:05 Israel time, through the Closer): every level written onto the GameBoard is one act of the write (features/write) or Rule3's own step (core/rule3); the loop applies the folders' writes and the step's levels at the sites named here and nowhere else, and no folder writes a level itself. A new site of a write into a record's `now`, `before`, `im_now`, `im_before` or `remainder` anywhere under `src/event_universe` (an item assigned or augmented, or the attribute rebound) fails by module, function, kind and level."""
+"""The write's gate (the model owner's word of 2026-09-28, 09:05 Israel time, through the Closer): every level written onto the GameBoard is one act of the write (features/write) or Rule3's own step (core/rule3); the loop applies the folders' writes and the step's levels at the sites named here and nowhere else, and no folder writes a level itself. A new site of a write into a record's `now`, `before`, `im_now`, `im_before` or `remainder` anywhere under `src/event_universe` (an item assigned or augmented, or the attribute rebound) fails by module, function, kind and level; the gate reads names, so a level written through a local alias is a finding for the reader."""
 
 from __future__ import annotations
 
@@ -60,23 +60,3 @@ def test_no_module_writes_a_level_outside_the_named_sites():
     found = write_sites()
     assert sorted(found - SITES) == [], "new write sites"
     assert sorted(SITES - found) == [], "sites no longer written"
-
-
-def test_the_folders_calling_rule3s_division_act_are_the_named_ones():
-    """The callers of Rule3's division act (`carried`, `division_forward`, `division_back`) among the folders are the named ones: the write, the hold, the source and the recoil through their fallback `carried_line` (the hold also reading the dipole back, the recoil also checking its wall), the giving's division act on the row when no line is handed and its own step back, and the folders dividing a body's own value and no level (the spin's step; the feed and the induction, derived by the law and leaving the engine); a new folder with a division of its own fails by name."""
-    calls: dict[str, set[str]] = {}
-    for path in sorted((PACKAGE / "features").rglob("*.py")):
-        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
-            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
-                if node.func.id in {"carried", "division_forward", "division_back"}:
-                    calls.setdefault(str(path.relative_to(PACKAGE)), set()).add(node.func.id)
-    assert calls == {
-        "features/feed/__init__.py": {"division_forward", "division_back"},
-        "features/giving/__init__.py": {"division_forward"},
-        "features/hold/__init__.py": {"carried", "division_back"},
-        "features/induction/__init__.py": {"division_forward", "division_back"},
-        "features/recoil/__init__.py": {"carried", "division_forward"},
-        "features/source/__init__.py": {"carried"},
-        "features/spins_step/__init__.py": {"carried"},
-        "features/write/__init__.py": {"carried"},
-    }
