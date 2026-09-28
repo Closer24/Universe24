@@ -6,13 +6,17 @@ import numpy as np
 
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.hold import CROSS_TERMS, TENSOR_AXES
-from event_universe.world_files import parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import parts_of, parts_world
 
 
 def test_a_moving_body_writes_the_vector_and_tensor_parts_with_the_remainders_carried():
     """The body at momentum n = (64, 0, 0) on its wall W and content s: gravity's x part at its Nodes (4 s n_x + r) div W, xx (2 s n_x^2 + r) div W^2, the other components 0 (n_y = n_z = 0); the remainders carried, so over intervals the written value steps between the two integers around 4 s n_x / W with the mean the exact fraction; the charge Q = 2 gives its time part 2 and its current (2 n_x) div W; every unsourced part exactly zero and silent."""
     document = parts_world(momentum=[64, 0, 0], q=2)
+    for entry in document["universe"]:
+        if "held" in entry:
+            entry["held"] = {**entry["held"], "divisor": 1}  # a copy: the time part at the load is s
+    document["stamp"] = input_stamp(document)
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     block = simulation.blocks[0]
     s = sum(simulation.held[0])
