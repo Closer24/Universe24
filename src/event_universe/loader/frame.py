@@ -178,9 +178,8 @@ COUNTED = ObjectOf(
         "phase_denominator": Integer(least=1),
         "stocks": MapOf(Name(), Integer(least=1)),
         "emitter": GIVER,
-        "q": Integer(),  # THE SIGN IS THE BODY'S: the giver's sign, +1 or -1; a body with no sign gives no light
     },
-    frozenset({"spin", "spin_before", "moment", "phase_denominator", "stocks", "emitter", "q"}),
+    frozenset({"spin", "spin_before", "moment", "phase_denominator", "stocks", "emitter"}),
 )
 # a detector of the world file: its name, its Nodes, or the body it belongs to
 DETECTOR = ObjectOf(
