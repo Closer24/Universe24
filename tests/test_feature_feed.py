@@ -139,8 +139,8 @@ def test_the_refusals_by_name_and_the_declarations_the_loop_does_not_call_yet():
         assert card.writes == ("a body's momentum n", "a body's remainders")
 
 
-def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_returns_it():
-    """The binding (the owner's word of 09:37Z): on a board closed on x a big body held in place (`fixed`) and a small free body 5 Links ahead on x; the feed reads the content's time part at the small body's faces once the field reaches them, so its momentum turns toward the big body (the field at its rest from the load, THE START, so the pull acts from the first interval and n on x falls over eight intervals, the second level one interval behind, before the body's first hop), the held body is not fed; eight steps back return both levels, the drive and every remainder of the feed to the load's, bit for bit."""
+def test_bound_at_v_waits_for_the_bodies_modes_two_flat_seeded_wells_refused_by_name():
+    """The binding (the owner's word of 09:37Z): on a board closed on x a big body held in place (`fixed`) and a small free body 5 Links ahead on x, both wells at the suite's flat scalar seed, which is no mode record: the loop refuses the first by name at the load (the old seed fallback left; a body's own record comes from its mode record alone). The fall of the free body toward the held one and the step back returning both levels return with the bodies' modes from the generator in the law's form, or leave with the feed."""
     periodic = {"x": "closed", "y": "periodic", "z": "periodic"}  # the sum's sink: a face on x
     big = {
         "position": [2, 3, 3],
@@ -152,23 +152,8 @@ def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_retur
     }
     small = {"position": [9, 3, 3], "side": 2, "pair": WELL, "margin": "control", "amount": 3}
     document = block_world([16, 8, 8], periodic, KIND, [big, small], ticks=12)
-    for entry in document["universe"]:
-        if "held" in entry:
-            entry["held"] = {
-                **entry["held"],
-                "divisor": 1,
-            }  # a copy: the field is the counts, the feed reads it
     document["stamp"] = input_stamp(document)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    held, free = simulation.blocks
-    for _ in range(8):  # before the free body's first hop under the rest's pull
-        simulation.step()
-    # under the hold as a sum the two bodies' fields add ("a body stands in another's well"): THE START writes
-    # the rest of both sources on the board closed on x, so each falls toward the other's content at once
-    assert free.momentum[0] < 0 and free.momentum[1:] == [0, 0] and free.momentum_before[1:] == [0, 0]
-    assert abs(free.momentum_before[0]) <= abs(free.momentum[0]) and free.hold_carry[("feed", 0)] > 0
-    assert held.momentum[0] > 0 and held.momentum[1:] == [0, 0]
-    for _ in range(8):
-        simulation.step_inverse()
-    assert free.momentum == [0, 0, 0] == free.momentum_before
-    assert all(value == 0 for key, value in free.hold_carry.items() if key[0] == "feed")
+    with pytest.raises(
+        ValueError, match=r"measured\[0\] needs its `seed` as its composed mode's profile"
+    ):
+        DetectorLawSimulation(parse_nature_beam_world(document))
