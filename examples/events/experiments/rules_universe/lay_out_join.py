@@ -19,23 +19,25 @@ EDGE_FRACTION = {  # the edge of the bound body as a fraction of Gamma (Cheshbon
     "today": 0.3444,
     "term": 0.2255,
 }
-COUNTS = {  # the smaller and the deeper body's counts per engine and Gamma (Cheshbon 15:22 for 24; 14:47 and 13:03 for 12,000)
-    "today": {24: (10, 12), 12_000: (4_400, 4_700)},
-    "term": {24: (8, 10), 12_000: (3_000, 4_000)},
+COUNTS = {  # the smaller and the deeper body's counts per engine and Gamma (Cheshbon 15:22 for 24; 15:50 for 6,000, the run of record after 24 by the owner's word of 15:44; 14:47 and 13:03 for 12,000, the older run)
+    "today": {24: (10, 12), 6_000: (2_200, 2_350), 12_000: (4_400, 4_700)},
+    "term": {24: (8, 10), 6_000: (1_500, 2_000), 12_000: (3_000, 4_000)},
 }
-DISTANCES = {  # Links between the two Nodes per Gamma: the join within the click's reach, the far world beyond it (24: the reach about three to four Links, Cheshbon 15:22, so six Links part; 12,000: the reach about eighteen Links, Cheshbon 13:18, so five Links is the slow join and no parting)
+DISTANCES = {  # Links between the two Nodes per Gamma: the join within the click's reach, the far world beyond it (24: the reach about three to four Links, Cheshbon 15:22, so six Links part; 6,000: the join at three Links, Cheshbon 15:50, the reach ln(b_1 b_2 / T) / kappa about eight to eighteen Links by the two tails, so twenty Links part; 12,000: the reach about eighteen Links, Cheshbon 13:18, so five Links is the slow join and no parting)
     24: {"join": 3, "part": 6, "reach": 4},
+    6_000: {"join": 3, "part": 20, "reach": 18},
     12_000: {"join": 2, "part": 5, "reach": 18},
 }
-DISSOLUTION = {  # the smaller dissolved within these intervals (blind): 24 about two bound periods (Cheshbon 15:22); 12,000 at two Links 3 to 10 and at five Links 30 to 70 (Cheshbon 13:18)
+DISSOLUTION = {  # the smaller dissolved within these intervals (blind): 24 about two bound periods (Cheshbon 15:22); 6,000 at three Links about two bound periods as at 24 (the Experimenter's reading of Cheshbon's 15:50 until his number); 12,000 at two Links 3 to 10 and at five Links 30 to 70 (Cheshbon 13:18)
     24: {"join": (10, 20), "part": None},
+    6_000: {"join": (10, 25), "part": None},
     12_000: {"join": (3, 10), "part": (30, 70)},
 }
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's blind number of clicks
 STEPS = 1024  # N, the phase's steps
 PIXELS: dict[
     str, dict[int, dict[str, float | int]]
-] = {  # Cheshbon's numbers per engine and count: the bound rotation omega_b, its period in intervals, the tail's kappa per Link, the clock pair's numerator a over 2^16 and the tail's factor t over 2^16 (15:22 Israel time for Gamma = 24, the law's table and the level-once table; 14:12, 14:47 and 13:39 for 12,000)
+] = {  # Cheshbon's numbers per engine and count: the bound rotation omega_b, its period in intervals, the tail's kappa per Link, the clock pair's numerator a over 2^16 and the tail's factor t over 2^16 (15:22 Israel time for Gamma = 24, the law's table and the level-once table; 15:50 for 6,000 with the amplitude b of the form; 14:12, 14:47 and 13:39 for 12,000)
     "term": {
         6: {"omega_b": 0.8105, "period": 7.75, "kappa": 0.446, "a": 90_329, "t": 41_948},
         7: {"omega_b": 0.7358, "period": 8.54, "kappa": 0.798, "a": 97_161, "t": 29_503},
@@ -43,6 +45,10 @@ PIXELS: dict[
         9: {"omega_b": 0.5826, "period": 10.79, "kappa": 1.164, "a": 109_453, "t": 20_458},
         10: {"omega_b": 0.5137, "period": 12.23, "kappa": 1.269, "a": 114_155, "t": 18_423},
         11: {"omega_b": 0.4550, "period": 13.81, "kappa": 1.341, "a": 117_736, "t": 17_144},
+        1_500: {"omega_b": 0.8105, "period": 7.75, "kappa": 0.446, "a": 90_329, "t": 41_948, "b": 49},
+        2_000: {"omega_b": 0.6578, "period": 9.55, "kappa": 1.015, "a": 103_723, "t": 23_747, "b": 69},
+        2_200: {"omega_b": 0.5972, "period": 10.52, "kappa": 1.138, "a": 108_385, "t": 20_992, "b": 79},
+        2_500: {"omega_b": 0.5137, "period": 12.23, "kappa": 1.269, "a": 114_155, "t": 18_423, "b": 98},
         3_000: {"omega_b": 0.8105, "period": 7.75, "kappa": 0.446, "a": 90_326, "t": 41_943},
         4_000: {"omega_b": 0.6578, "period": 9.55, "kappa": 1.02, "a": 103_722, "t": 23_724},
     },
@@ -53,6 +59,10 @@ PIXELS: dict[
         12: {"omega_b": 0.6741, "period": 9.32, "kappa": 0.976, "a": 102_403, "t": 24_686},
         13: {"omega_b": 0.6193, "period": 10.15, "kappa": 1.097, "a": 106_729, "t": 21_885},
         14: {"omega_b": 0.5637, "period": 11.15, "kappa": 1.195, "a": 110_792, "t": 19_830},
+        2_200: {"omega_b": 0.8290, "period": 7.58, "kappa": 0.283, "a": 88_553, "t": 49_395, "b": 58},
+        2_350: {"omega_b": 0.8055, "period": 7.80, "kappa": 0.480, "a": 90_801, "t": 40_554, "b": 61},
+        2_500: {"omega_b": 0.7779, "period": 8.08, "kappa": 0.631, "a": 93_378, "t": 34_863, "b": 65},
+        3_000: {"omega_b": 0.6741, "period": 9.32, "kappa": 0.976, "a": 102_403, "t": 24_686, "b": 82},
         4_400: {"omega_b": 0.8290, "period": 7.58, "kappa": 0.283, "a": 88_553, "t": 49_395},
         4_700: {"omega_b": 0.8055, "period": 7.80, "kappa": 0.480, "a": 90_801, "t": 40_554},
         5_000: {"omega_b": 0.778, "period": 8.08, "kappa": 0.63, "a": 93_270, "t": 34_734},
@@ -174,6 +184,12 @@ def write_mode(layout: Layout, world_path: Path, document: dict[str, Any]) -> No
     subprocess.run(command, check=True, cwd=ROOT, env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
 
 
+def amplitudes(layout: Layout, counts: tuple[int, int]) -> dict[str, Any]:
+    """The amplitude b of the form per count where Cheshbon's table gives it (6,000: b = isqrt(c T den div (2 den - a)) as the tool writes it); nothing where it does not."""
+    given = {str(c): layout.numbers(c)["b"] for c in counts if "b" in layout.numbers(c)}
+    return {"amplitude_b_of_the_form": given} if given else {}
+
+
 def record_expectation(layout: Layout) -> dict[str, Any] | None:
     """Cheshbon's record table for the two bodies (15:43 Israel time): the amplitude b of each, the count the standing record carries (D bar) and its period P, and the clocks' ratio with its band; the run's counts and periods are read against these, not against the file's counts. None where the table is not given (Gamma other than 24)."""
     if layout.records is None:
@@ -236,6 +252,7 @@ def expectation(layout: Layout, name: str, distance: int) -> dict[str, Any]:
             "tail_kappa_per_link": {str(c): layout.numbers(c)["kappa"] for c in counts},
             "bound_rotation": {str(c): layout.numbers(c)["omega_b"] for c in counts},
             "bound_period_intervals": {str(c): layout.numbers(c)["period"] for c in counts},
+            **amplitudes(layout, counts),
             "clock_ratio_deep_over_small": round(periods[1] / periods[0], 3),
             "click_reach_links": layout.distances["reach"],
             "first_click_interval": None if parts else 1,
