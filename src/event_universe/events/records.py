@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from dataclasses import dataclass, field
+from typing import Any
 
 import numpy as np
 
@@ -201,6 +202,32 @@ class NodeRecord:
     norm: int = 0
 
 
+class StampedMap(dict[tuple[object, ...], int]):
+    """A body's remainders as the audit stamps them: a dict whose `version` rises at every write, so the main loop's guard takes the map by its identity and version and never walks its entries (the hold writes one entry per Node and part; the audit stamps every body before and after every act)."""
+
+    version: int = 0
+
+    def __setitem__(self, key: tuple[object, ...], value: int) -> None:
+        self.version += 1
+        super().__setitem__(key, value)
+
+    def __delitem__(self, key: tuple[object, ...]) -> None:
+        self.version += 1
+        super().__delitem__(key)
+
+    def update(self, *args: Any, **kwargs: Any) -> None:
+        self.version += 1
+        super().update(*args, **kwargs)
+
+    def pop(self, *args: Any) -> Any:
+        self.version += 1
+        return super().pop(*args)
+
+    def clear(self) -> None:
+        self.version += 1
+        super().clear()
+
+
 @dataclass
 class Block:
     """A block on the board (massive-record-v1, MASSIVE_RECORD.md sections 4 to 7; BUILD.md section 2): its Nodes R (the mask over the board, the cube of `side` at `corner`), its own massive record (the seed on its Nodes), the light records it emitted, its clock (its record's cycles across R), its momentum per axis with the drive's accumulators against its wall W = 3 Q M (`wall_of`, live with its quanta; ALGEBRA.md #the-primitives), and its detector among the simulation's detectors."""
@@ -270,8 +297,8 @@ class Block:
     # and the value written, (family, part) for the support's writes and ("d",
     # family, i, j, sigma) for the dipole's on the Node + sigma e_j; exact and
     # inverted with the body
-    hold_carry: dict[tuple[object, ...], int] = field(default_factory=dict)
-    hold_value: dict[tuple[object, ...], int] = field(default_factory=dict)
+    hold_carry: StampedMap = field(default_factory=StampedMap)
+    hold_value: StampedMap = field(default_factory=StampedMap)
     # THE CRYSTAL'S GIVING (features/crystal): the pair's emitter definition set at the crystal's click from the arriving record's giver and the crystal's clock; None on every other body
     crystal_giving: EmitterDefinition | None = None
 
