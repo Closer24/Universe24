@@ -38,7 +38,7 @@ One run writes one file, `runs/first/<world>.output.json` (the verdict, the
 clicks, the readings). A run carries no time, so the same input gives the same
 file again. The worlds recorded on the earlier engine left the repository with
 the worlds' replay (the owner's decision); the worlds of record of the 24
-experiments come under `examples/events/experiments/`, Bell first.
+experiments come in their own folder under `examples/events/`, Bell first.
 
 On Windows use `py -3.14 -m venv .venv` and `.\.venv\Scripts\python.exe` in place
 of `python`. For development, install `python -m pip install -e '.[dev]'`.
