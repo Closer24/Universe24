@@ -5,7 +5,7 @@
   1
  ],
  "boundary": {
-  "x": "periodic",
+  "x": "open",
   "y": "periodic",
   "z": "periodic"
  },
@@ -154,5 +154,6 @@
    ],
    "every": 100
   }
- ]
+ ],
+ "face_depth": 4
 }
