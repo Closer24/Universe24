@@ -5,7 +5,7 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 
 # Simulator execution
 
-The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). Every agent may run the engine locally and debug it with the trace; only the coder, Coder 3, changes it.
+The team and the way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow. The Experimenter runs the engine, headless, from the run's files alone; Cheshbon never runs it; the engine's code changes only by a pull request the Closer hands out and merges.
 
 > **One engine (2026-09-19).** The runner takes `--init`, `--output` and `--ticks`
 > only and runs a world of the Beam Law headless; `--visualize`,
@@ -130,7 +130,7 @@ inspect the existing standalone HTML and relevant frames. Test-run rendering is
 opt-in with `pytest --visualize-runs`; normal test runs remain headless and keep
 their physical assertions. A successful process does not prove the candidate is
 physically accepted. Route runtime errors to the component owner, visual ambiguity to visualization-check, and a reproducible
-behavior difference to regression-check/physics-rule-validation. Do not edit
+behavior difference to physics-rule-validation. Do not edit
 laws or use diagnostic results to repair the world while running an experiment.
 
 For speed investigations, follow the shared workflow's
