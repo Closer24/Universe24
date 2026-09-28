@@ -154,8 +154,7 @@ def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_gr
     numerator, denominator = simulation.conserved_form(live)
     quanta = 9000
     norm = numerator // denominator // quanta
-    # the count and its remainder from the record's norm at the Node: T c + r is the Node's
-    # share of the conserved form plus the origin's T / 2 (the nine Nodes of a slab alike)
+    # the count and its remainder from the record's norm at the Node: T c + r is the Node's share of the conserved form plus the origin's T / 2 (the nine Nodes of a slab alike)
     laid = np.full(simulation.shape, norm // 2, dtype=np.int64)
     for slab in range(750, 1051):
         mask = np.zeros(simulation.shape, dtype=bool)
