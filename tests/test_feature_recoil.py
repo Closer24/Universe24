@@ -1,11 +1,16 @@
-"""The recoil's folder: the line's integers on the moving row, the store one remainder on the universe's wall L so the sum over clicks is the exact floor, the direction of travel, the refusals and the declaration."""
+"""The recoil's folder: the turn of the body's record's phase per Link by delta k = sigma_a x (k_q div M) on the record's two time levels, the angle's remainder carried at the body so the turns over clicks sum to the exact floor, the direction of travel, the refusals and the declaration; in the loop, a giver's record turned at its window's close opposite to the given light and its momentum read from the record's current."""
 
 from __future__ import annotations
 
-from fractions import Fraction
+import json
+import sys
+from math import atan, cos, pi, tan
+from pathlib import Path
 
+import numpy as np
 import pytest
 
+import event_universe.world_files as world_files
 from event_universe.core.register import folder_of
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.recoil import (
@@ -16,144 +21,196 @@ from event_universe.features.recoil import (
     RecoilOwn,
     RecoilStart,
     RecoilTerm,
+    RecoilWrites,
     apply,
     sign_of,
 )
-from event_universe.world_files import parse_nature_beam_world
+from event_universe.world_files import input_stamp, load_world, parse_nature_beam_world
+from tests.running import lines_of
 from tests.worlds import emitter_world
 
-# the moving row's body (issue #1156): Q = 64 (W = 12480 at M = 65), its period 21, the given light's wavelength 4 Links; the universe's wall L = 252, the least common multiple of 4, 7 and 9
-UNIT = 64
-WALL = 252
-TERM = RecoilTerm(period=21, wavelength=4, sense=TAKING, wall=WALL, unit=UNIT)
-START = RecoilStart(tally=(+9, 0, -4))
-NONE = (0, 0, 0)
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from reversible import forward, reversible_row, step_back  # noqa: E402
+
+GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # the universe of record
+START = ROOT / "examples" / "events" / "engine_start.json"
+UNIT, CLOCK = (
+    1 << 20,
+    (153 * 10**6, 10**8),
+)  # the test's twist unit: theta_unit = 1 / UNIT radians; 2 cos omega_b = 1.53 at a fine unit (the mode's clock is at the amplitude unit)
+AMPLITUDE, NODES = 1_000_000, 9
+WAVE, K_Q = (
+    0.3,
+    round(0.05 * UNIT),
+)  # the phase per Link before the click (radians); the wave number in the twist's unit
 
 
-def exact_floor(clicks: list[tuple[int, int, int, int]]) -> int:
-    """The hand check: the floor of the sum over the clicks of sense x sigma x 3 Q P / lambda."""
-    kicks = (
-        Fraction(sense * sigma * 3 * UNIT * period, wavelength)
-        for sense, sigma, period, wavelength in clicks
-    )
-    total = sum(kicks)
-    return total.numerator // total.denominator
+def triple_of(angle: int, _axis: int) -> tuple[int, int, int]:  # the exact triple nearest the angle
+    m = 1_000_000
+    j = round(m * tan(abs(angle) / UNIT / 2))
+    return (m * m - j * j, (1 if angle >= 0 else -1) * 2 * m * j, m * m + j * j)
 
 
-def run_clicks(clicks: list[tuple[int, int, int, int]], wall: int = WALL) -> RecoilOwn:
-    own = RecoilOwn((0, 0, 0), NONE)
-    for sense, sigma, period, wavelength in clicks:
-        writes = apply(
-            RecoilTerm(period, wavelength, sense, wall, UNIT), RecoilStart((sigma, 0, 0)), own
-        )
-        own = RecoilOwn(writes.momentum, writes.remainders)
-    return own
+def plane_wave(k: float, phase: float) -> tuple[tuple[int, ...], tuple[int, ...]]:
+    """The two time levels of A cos(k x - phase) about the centre Node, before one rotation omega_b earlier."""
+    omega = 2 * atan(((4 * CLOCK[1] ** 2 - CLOCK[0] ** 2) ** 0.5) / (CLOCK[0] + 2 * CLOCK[1]))
+    now = tuple(round(AMPLITUDE * cos(k * (x - NODES // 2) - phase)) for x in range(NODES))
+    before = tuple(round(AMPLITUDE * cos(k * (x - NODES // 2) - phase + omega)) for x in range(NODES))
+    return now, before
 
 
-def test_the_line_on_the_moving_rows_numbers():
-    """n_a += sigma_a x 3 Q P_body (L div lambda_q) div L: 3 x 64 x 21 x 63 = 254016 over 252 gives 1008 exactly on x (the tally positive, toward +x) and -1008 on z (the tally negative), nothing on y (no tally); the stores empty; the same as W x P_body div (M x lambda_q) = 262080 div 260."""
-    writes = apply(TERM, START, RecoilOwn((100, 200, 300), NONE))
-    assert writes.momentum == (1108, 200, -708) and writes.remainders == NONE
-    assert 3 * UNIT * 21 * (WALL // 4) // WALL == 12_480 * 21 // (65 * 4) == 1008
+OFFSETS = (tuple(x - NODES // 2 for x in range(NODES)), (0,) * NODES, (0,) * NODES)
 
 
-def test_the_store_on_the_wall_makes_the_sum_over_clicks_the_exact_floor():
-    """The store stays on the body between clicks as one remainder on L, so the sum of the whole parts over k clicks of any wavelengths is the exact floor of the sum of the fractions: 52 exact clicks at wavelength 4; at wavelength 7 the fraction 4032 / 7 = 576 exactly; at wavelength 9 (448 per click) 3 / 9 per click adds a unit every three; the reviewer's case, a click of lambda 7 then one of lambda 4 at P = 20, gives 1508, the exact floor of 1508.571; a mixed run of wavelengths, takings and givings, the momentum after every click the exact floor."""
-    assert run_clicks([(TAKING, 1, 21, 4)] * 52) == RecoilOwn((52 * 1008, 0, 0), NONE)
-    assert run_clicks([(TAKING, 1, 21, 7)] * 3).momentum == (3 * 576, 0, 0)
-    for count in range(1, 10):
-        own = run_clicks([(TAKING, 1, 21, 9)] * count)
-        assert own.momentum[0] == exact_floor([(TAKING, 1, 21, 9)] * count) == (count * 4032) // 9
-        assert own.remainders[0] == (count * 4032 * (WALL // 9)) % WALL
-    reviewer = [(TAKING, 1, 20, 7), (TAKING, 1, 20, 4)]
-    assert run_clicks(reviewer[:1]).momentum == (548, 0, 0)
-    assert run_clicks(reviewer).momentum == (1508, 0, 0) and exact_floor(reviewer) == 1508
-    six = [
-        (TAKING, 1, 7),
-        (TAKING, -1, 4),
-        (GIVING, 1, 9),
-        (TAKING, 1, 7),
-        (TAKING, 1, 9),
-        (GIVING, -1, 4),
-    ]
-    mixed = [
-        (sense, sigma, 20 + step % 3, wavelength)
-        for step, (sense, sigma, wavelength) in enumerate(six * 4)
-    ]
-    for count in range(1, len(mixed) + 1):
-        own = run_clicks(mixed[:count])
-        assert own.momentum[0] == exact_floor(mixed[:count]) and 0 <= own.remainders[0] < WALL
+def current(
+    levels: tuple[tuple[int, ...], tuple[int, ...]],
+) -> int:  # the count's line's current along +x
+    now, before = levels
+    return sum(now[i + 1] * before[i] - before[i + 1] * now[i] for i in range(NODES - 1))
 
 
-def test_a_taking_and_a_giving_of_the_same_quantum_cancel_and_the_direction_of_travel():
-    """A giving is the same line with the opposite sign: a taking of 3840 / 7 (548, the store 4 / 7 on L) then a giving of the same undo each other exactly; a giving first floors to -549 (the exact floor of -548.571) and the taking after it returns n to 0; sigma is the tally's sign, never its size (a tally of 1 and of 10^6 recoil the same); a symmetric emitter (the tallies 0) recoils by nothing and keeps its stores (ALGEBRA.md #the-primitives)."""
-    take, give = (TAKING, 1, 20, 7), (GIVING, 1, 20, 7)
-    assert run_clicks([take, give]) == RecoilOwn((0, 0, 0), NONE)
-    given = run_clicks([give])
-    assert given.momentum == (-549, 0, 0) and given.remainders[0] == WALL - 4 * (WALL // 7)
-    assert exact_floor([give]) == -549 and run_clicks([give, take]) == RecoilOwn((0, 0, 0), NONE)
-    small = apply(TERM, RecoilStart((1, 0, 0)), RecoilOwn((0, 0, 0), NONE))
-    large = apply(TERM, RecoilStart((10**6, 0, 0)), RecoilOwn((0, 0, 0), NONE))
-    assert small.momentum == large.momentum == (1008, 0, 0)
-    giving = apply(
-        RecoilTerm(21, 4, GIVING, WALL, UNIT), RecoilStart((1, 0, 0)), RecoilOwn((0, 0, 0), NONE)
-    )
-    assert giving.momentum == (-1008, 0, 0) and giving.remainders == NONE
-    symmetric = apply(TERM, RecoilStart((0, 0, 0)), RecoilOwn((7, 8, 9), (1, 2, 3)))
-    assert symmetric.momentum == (7, 8, 9) and symmetric.remainders == (1, 2, 3)
-    assert [sign_of(v) for v in (-3, 0, 5)] == [-1, 0, 1] and TAKING == 1
+TERM = RecoilTerm(K_Q, 1, CLOCK, TAKING, triple_of)
+GIVER = {"family": "charge", "weight": 1, "norm": 100, "norm_denominator": 1, "receiver": ["strip"]}
+NODES_OF_THE_GIVER = [{"node": [1, 0, 0], "count": 1}, {"node": [2, 0, 0], "count": 1}]
+FACES = {"x": "closed", "y": "periodic", "z": "periodic"}
+STRIP = {"name": "strip", "positions": [[2, 0, 0]]}  # the set on the body's own Node
+
+
+def test_the_turn_moves_the_records_phase_per_link_by_delta_k_on_both_time_levels():
+    """A record A cos(k x - phase) with before one rotation earlier, turned at M = 1 by k_q along +x: every Node's two levels are those of the same wave at k + delta k, delta k = k_q theta_unit, to the rounding of the table's triple and the nearest unit (the quad level from the two time levels and the clock, the determinant one); a taking at sigma_x = +1 turns by +delta k, a giving by -delta k, the centre Node (the offset 0) untouched."""
+    now, before = plane_wave(WAVE, 0.7)
+    for sense, sign in ((TAKING, 1), (GIVING, -1)):
+        term = RecoilTerm(K_Q, 1, CLOCK, sense, triple_of)
+        writes = apply(term, RecoilStart((5, 0, 0), (now, before), OFFSETS), RecoilOwn({}, {}))
+        expected_now, expected_before = plane_wave(WAVE + sign * K_Q / UNIT, 0.7)
+        assert writes.turn == (sign * K_Q, 0, 0)
+        assert all(abs(a - b) <= 3 for a, b in zip(writes.levels[0], expected_now, strict=True))
+        assert all(abs(a - b) <= 3 for a, b in zip(writes.levels[1], expected_before, strict=True))
+        centre = NODES // 2
+        assert writes.levels[0][centre] == now[centre] and writes.levels[1][centre] == before[centre]
+        # the record's current along +x (the count's line's booking) grows with the phase per Link and shrinks against it: the velocity moves with the turn
+        assert sign * (current(writes.levels) - current((now, before))) > 0
+
+
+def test_the_angles_remainder_carried_at_the_body_makes_the_turns_the_exact_floor():
+    """delta k = (sense sigma k_q + r) div M with r carried at the body under the axis's key: at k_q = 7 and M = 3 three takings turn by 2, 2 and 3 (the exact floors of 7 / 3, 14 / 3 and 21 / 3); a giving after a taking returns the remainder to 0 and the turns cancel; sigma is the tally's sign and never its size; an axis without a tally turns by nothing."""
+    now, before = plane_wave(WAVE, 0.0)
+
+    def turn(sense: int, tally: tuple[int, int, int], own: RecoilOwn) -> RecoilWrites:
+        term = RecoilTerm(7, 3, CLOCK, sense, triple_of)
+        return apply(term, RecoilStart(tally, (now, before), OFFSETS), own)
+
+    own, turns = RecoilOwn({}, {}), []
+    for _ in range(3):
+        writes = turn(TAKING, (1, 0, 0), own)
+        own, turns = writes.own, [*turns, writes.turn[0]]
+    assert turns == [2, 2, 3] and own.carries[(0,)] == 0 and own.values[(0,)] == 3
+    take = turn(TAKING, (10**6, 0, 0), RecoilOwn({}, {}))
+    give = turn(GIVING, (1, 0, 0), take.own)
+    assert take.turn == (2, 0, 0) and give.turn == (-2, 0, 0) and give.own.carries[(0,)] == 0
+    still = apply(TERM, RecoilStart((0, 0, 0), (now, before), OFFSETS), RecoilOwn({}, {}))
+    assert still.turn == (0, 0, 0) and still.levels == (now, before)
+    assert [sign_of(v) for v in (-3, 0, 5)] == [-1, 0, 1] and TAKING == 1 and GIVING == -1
 
 
 def test_the_bounds_and_the_terms_are_refused_by_name():
-    """The period, the wavelength, the wall and the unit from 1; a wall at or beyond 2^63 (the row's refusal by name; 2^63 - 1 admitted as a wall, its click's amount then refused at the width); the sense +1 or -1; a wall that is no multiple of the wavelength; a store at or beyond the wall."""
-    with pytest.raises(ValueError, match="from 1, got P_body = 0"):
-        apply(RecoilTerm(0, 4, TAKING, WALL, UNIT), START, RecoilOwn((0, 0, 0), NONE))
-    with pytest.raises(ValueError, match="L = 0, Q = 64"):
-        apply(RecoilTerm(21, 4, TAKING, 0, UNIT), START, RecoilOwn((0, 0, 0), NONE))
-    for wall in (1 << 63, (1 << 63) + 1, 1 << 64):
-        with pytest.raises(ValueError, match=f"wall L = {wall} reaches the width"):
-            apply(RecoilTerm(1, 1, TAKING, wall, 1), START, RecoilOwn((0, 0, 0), NONE))
-    with pytest.raises(ValueError, match="amount 3 Q P_body .* reaches the width"):
-        apply(RecoilTerm(1, 1, TAKING, (1 << 63) - 1, 1), START, RecoilOwn((0, 0, 0), NONE))
+    """The wave number from 0 and the count from 1; the sense +1 or -1; a clock that is no rotation (the sine from 1 on one); the levels and the offsets over the same Nodes."""
+    now, before = plane_wave(WAVE, 0.0)
+    start = RecoilStart((1, 0, 0), (now, before), OFFSETS)
+    with pytest.raises(ValueError, match="got k_q = -1, M = 1"):
+        apply(RecoilTerm(-1, 1, CLOCK, TAKING, triple_of), start, RecoilOwn({}, {}))
+    with pytest.raises(ValueError, match="count from 1, got k_q = 7, M = 0"):
+        apply(RecoilTerm(7, 0, CLOCK, TAKING, triple_of), start, RecoilOwn({}, {}))
     with pytest.raises(ValueError, match=r"sense is \+1 \(a taking\) or -1 \(a giving\), got 2"):
-        apply(RecoilTerm(21, 4, 2, WALL, UNIT), START, RecoilOwn((0, 0, 0), NONE))
-    with pytest.raises(ValueError, match="L = 252 is not a multiple of the wavelength lambda_q = 5"):
-        apply(RecoilTerm(21, 5, TAKING, WALL, UNIT), START, RecoilOwn((0, 0, 0), NONE))
-    with pytest.raises(ValueError, match="reaches the width"):
-        apply(RecoilTerm(10**12, 1, TAKING, 10**8, 10**5), START, RecoilOwn((0, 0, 0), NONE))
-    with pytest.raises(ValueError, match="store on axis 1 is 252: a remainder below the wall L = 252"):
-        apply(TERM, START, RecoilOwn((0, 0, 0), (0, WALL, 0)))
+        apply(RecoilTerm(7, 1, CLOCK, 2, triple_of), start, RecoilOwn({}, {}))
+    with pytest.raises(ValueError, match=r"clock \[2000, 1000\] is no rotation"):
+        apply(RecoilTerm(7, 1, (2000, 1000), TAKING, triple_of), start, RecoilOwn({}, {}))
+    with pytest.raises(ValueError, match="over the body's Nodes alike, got 9, 8"):
+        apply(TERM, RecoilStart((1, 0, 0), (now, before[:-1]), OFFSETS), RecoilOwn({}, {}))
 
 
-def test_two_kicks_sum_on_both_levels_of_the_momentum():
-    """The emitter's unit world under THE START (no feed: the momentum's two levels move by the recoil alone), Q = 64 giving two quanta of light of wavelength 4, L = 4: each giving kicks the giver by -sigma x 3 Q P_body (L div lambda_q) div L, and after both the body holds the exact floor of the sum on `momentum` and on `momentum_before` alike (ALGEBRA.md #the-primitives, the rows of the recoil and the feed); a kick written to one level alone shows on every second interval and two kicks never sum."""
-    document = emitter_world(stock=2, ticks=600)
-    period = parse_nature_beam_world(document).measured[0].block.emitter.period
-    wavelength = 2 * document["N"] // document["universe"][0]["clock"][0]  # k = pi / 2: 4
-    assert wavelength == 4 and period > 0
-    lines: list[dict] = []
-    simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    for _ in range(document["ticks"]):
+def giver_world(tmp_path: Path, monkeypatch, wave_number: int) -> Path:
+    """A giving body of two Nodes one Node off the closed -x face (its light's tally one way along x within the window) in the law's form on the generated universe (its twist table), its mode file beside it with the quantum's `wave_number`, the strip on its own Node."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    (tmp_path / "universe.json").write_text(GENERATED.read_text(encoding="utf-8"), encoding="utf-8")
+    (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
+    body = {"family": "matter", "moment": [0, 0, 1], "stocks": {"charge": 4}, "emitter": GIVER}
+    body.update(nodes=NODES_OF_THE_GIVER, momentum=[0, 0, 0], momentum_before=[0, 0, 0])
+    world = {"shape": [16, 1, 1], "boundary": FACES, "ticks": 400, "N": 1024, "measured": [body]}
+    world.update(universe="universe.json", engine="start.json", detectors=[STRIP])
+    world["stamp"] = input_stamp(world)
+    (tmp_path / "giver.json").write_text(json.dumps(world), encoding="utf-8")
+    entry = {"family": "matter", "pair": [800, 1200], "profile": [0, 1000, 1000] + [0] * 13}
+    entry.update(clock=list(CLOCK), twist=45875, wavelength=7, wave_number=wave_number)
+    mode = {"world_digest": world["stamp"]["hash"], "bodies": [entry]}
+    (tmp_path / "giver.mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    return tmp_path / "giver.json"
+
+
+def test_in_the_loop_the_givers_record_turns_at_the_close_opposite_to_the_light_and_n_is_a_reading(
+    tmp_path, monkeypatch
+):
+    """The loop: the giver's mode carries `wave_number`; at its window's close the `recoil` line names the body at the sense -1, the giving's tally along x and the turn (-sigma_x k_q) div M along the light's axis (opposite to the given light), the books summing the turns per body and the angle's remainder on the body under the recoil's key; the body's momentum is the reading of its record's current at every interval, W x the current over the form to the nearest unit (recomputed here from the record's levels), both levels one reading; across the close the host undoes the turn from the copy on the recoil's line (the click keeps the click): the body's own record returns bit for bit, and the reversible row's reading is the same with the turn and without it."""
+    unit = json.loads(GENERATED.read_text(encoding="utf-8"))["integers"]["twist_table"]["unit"]
+    wave_number = round(unit * 2 * pi / 7) // 100  # a slow quantum: the turn inside the table's angles
+    world = load_world(path := giver_world(tmp_path, monkeypatch, wave_number))
+    simulation = DetectorLawSimulation(world, observer=(lines := []).append)
+    block, quanta = simulation.blocks[0], sum(world.measured[0].block.counts)  # M the body's count
+    while not lines_of(lines, "recoil") and simulation.tick < world.ticks:
+        wall = simulation.wall_of(block)  # W as the interval starts, before the giving's open
         simulation.step()
-    givings = [line["momentum"] for line in lines if line["event"] == "giving" and "momentum" in line]
-    # the two givings' direction labels as this fixture reads them under THE START: one way, so the kicks add
-    assert len(givings) == 2 and givings[0] == givings[1] and givings[0][0] != 0
-    kick = Fraction(3 * document["momentum_unit"] * period, wavelength)
-    total = -sum(sigma[0] for sigma in givings) * kick
-    expected = [total.numerator // total.denominator, 0, 0]
-    block = simulation.blocks[0]
-    assert simulation.recoil_wall == wavelength and expected[0] != 0
-    assert list(block.momentum) == expected and list(block.momentum_before) == expected
+        live, weight = block.own, simulation.kind_wall(block.family, block.definition.pair)
+        flow = sum(
+            int(live.now[x + 1, 0, 0]) * int(live.before[x, 0, 0])
+            - int(live.before[x + 1, 0, 0]) * int(live.now[x, 0, 0])
+            for x in range(world.shape[0] - 1)
+        )
+        reading = round(wall * weight * flow / (block.count_norm * quanta))
+        assert abs(block.momentum[0] - reading) <= 1 and block.momentum[1:] == [0, 0]
+        assert block.momentum_before == block.momentum
+    (recoil,), (giving,) = lines_of(lines, "recoil"), lines_of(lines, "giving")
+    assert (recoil["sense"], recoil["measured"], recoil["tick"]) == (GIVING, 0, giving["tick"])
+    sigma = giving["momentum"][0]  # the light's direction along x, the tally's sign
+    assert sigma != 0 and recoil["turn"] == [(-sigma * wave_number) // quanta, 0, 0]
+    assert simulation.recoil_turns == {0: recoil["turn"]} and recoil["tally"][0] * sigma > 0
+    assert block.hold_carry[("recoil", 0)] == (-sigma * wave_number) % quanta
+
+    def build() -> tuple[DetectorLawSimulation, list[dict]]:
+        found: list[dict] = []
+        return DetectorLawSimulation(load_world(path), observer=found.append), found
+
+    row = reversible_row(build, recoil["tick"])
+    back, lines = build()
+    step_back(back, lines, *forward(back, lines, recoil["tick"])[1:], recoil["tick"])
+    fresh, _ = build()
+    for _ in range(recoil["tick"] - 1):
+        fresh.step()
+    own, then = back.blocks[0].own, fresh.blocks[0].own
+    assert all(np.array_equal(getattr(own, k), getattr(then, k)) for k in ("now", "before", "remainder"))
+    mode = json.loads((tmp_path / "giver.mode.json").read_text(encoding="utf-8"))
+    mode["bodies"][0].pop("wave_number")  # the same world without the turn
+    (tmp_path / "giver.mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    assert reversible_row(build, recoil["tick"])["read"] == row["read"]
 
 
 def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md #the-primitives: "the recoil" at (iv), writing a body's momentum n and its remainders, its function `apply`, its section; the engine's register finds it."""
+    """The folder declares the row of ALGEBRA.md #the-primitives: "the recoil" at (iv), writing a family's level at a Node (the body's own record) and a body's remainders, its function `apply`, its section; the engine's register finds it; a giver off the mode (no wave number) takes no recoil."""
     assert DECLARATION.name == "the recoil" and DECLARATION.place == "(iv)"
-    assert DECLARATION.writes == ("a body's momentum n", "a body's remainders")
-    assert DECLARATION.function is apply and DECLARATION.built
-    assert DECLARATION.word == "after the step" and folder_of(DECLARATION.name) == "recoil"
-    assert DECLARATION.section.startswith(THE_WORD) and "the universe's wall L" in DECLARATION.reads
+    assert DECLARATION.writes == ("a family's level at a Node", "a body's remainders")
+    assert (
+        DECLARATION.function is apply and DECLARATION.built and folder_of(DECLARATION.name) == "recoil"
+    )
+    assert DECLARATION.section.startswith(THE_WORD) and DECLARATION.word == "after the step"
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
     registered = simulation.register.declarations["the recoil"]
     assert registered.reads == DECLARATION.reads and registered.function is apply
-    assert registered.place_of("a body's momentum n") == "(iv)"
+    assert (
+        registered.place_of("a family's level at a Node") == "(iv)"
+        and "the twist table" in DECLARATION.reads
+    )
+    # a giver whose mode carries no wave number takes no recoil (the fixture off the mode, tests/worlds.py)
+    off_mode = simulation.world.measured[0].block
+    assert off_mode is not None and off_mode.emitter is not None and off_mode.emitter.wave_number is None
+    assert simulation.recoil_turns == {}

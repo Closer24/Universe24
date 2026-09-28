@@ -33,15 +33,11 @@ def test_the_click_line_carries_the_taken_quantums_direction_and_the_giver_recoi
         # the four-vector: the count and the direction of travel toward the screen, along x
         assert all(line["content"] == 1 and line["momentum"] == [sign, 0, 0] for line in gathers)
         assert all(line["momentum"][1:] == [0, 0] for line in givings)
-        # the body's language: the giver (the body 0) and a taker that is not it (the screen's measured entry), the norm, the exact tally under the sign, the giver's count as the window opened (its quanta); one recoil line per giving, the giver's kicks summed in the books
+        # the body's language: the giver (the body 0), a taker that is not it (the screen's entry), the norm, the exact tally under the sign, the giver's count as the window opened; no recoil line on a giver off the mode (no wave number)
         assert all(line["giver"] == 0 and line["taker"] not in (0, None) for line in gathers)
         assert all(simulation.direction_of(line["tally"]) == line["momentum"] for line in gathers)
         assert all(isinstance(line["giver_clock"], int) and line["giver_clock"] > 0 for line in gathers)
-        recoils = lines_of(lines, "recoil")
-        assert [line["sense"] for line in recoils] == [-1, -1]
-        assert {line["record"] for line in recoils} == {line["record"] for line in givings}
-        kicks = [sum(line["kick"][0] for line in recoils), 0, 0]
-        assert simulation.books()["momentum"]["recoil"]["0"] == kicks and kicks[0] != 0
+        assert lines_of(lines, "recoil") == [] and simulation.books()["momentum"]["recoil"] == {}
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
