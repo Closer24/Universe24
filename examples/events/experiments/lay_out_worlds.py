@@ -694,7 +694,7 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
     write("bending", name, document, expectation)
 
 
-PLANCK = "examples/events/planck.json"  # the rule's own universe beside the universe of record (Nature24's file)
+PLANCK = "examples/events/experiments/planck.json"  # the rule's own universe beside the universe of record (Nature24's file; the folder rule/ the worlds' as in Bell's)
 RULE_GAMMA = 12000  # the rule's universe's node clock, cited for the expectations' formulas only
 EDGE = 2706  # 0.2255 Gamma, the count under which a one-Node body disperses (ALGEBRA.md, THE BOUND BODY IS ONE NODE)
 GIVER_EDGE = 4447  # the giving pixel's bound (Cheshbon, 2026-09-28, 13:22 Israel): its count with its bound charge keeps the pace positive
@@ -802,7 +802,7 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
             "then the DETECTOR reading in kind: the taker's mean click interval, one click at a time",
         ],
     }
-    write("rule_redshift", name, document, expectation)
+    write("rule", name, document, expectation)
 
 
 def universe_of_record() -> None:
@@ -843,7 +843,7 @@ def main() -> None:
     (HERE / "bending").mkdir(exist_ok=True)
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
-    (HERE / "rule_redshift").mkdir(exist_ok=True)
+    (HERE / "rule").mkdir(exist_ok=True)
     rule_redshift("rule_redshift", 4000, 3000, 60, 1500, 200)
     rule_redshift("rule_redshift_twin", 4000, 4000, 60, 1500, 200)
 
