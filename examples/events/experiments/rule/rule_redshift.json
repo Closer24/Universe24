@@ -1,8 +1,8 @@
 {
  "shape": [
-  100,
-  121,
-  1
+  24,
+  9,
+  9
  ],
  "boundary": {
   "x": "open",
@@ -19,8 +19,8 @@
    "nodes": [
     {
      "node": [
-      20,
-      60,
+      6,
+      4,
       0
      ],
      "count": 8
@@ -50,7 +50,7 @@
     "norm_denominator": 1
    },
    "stocks": {
-    "charge": 200
+    "charge": 12
    }
   },
   {
@@ -58,11 +58,11 @@
    "nodes": [
     {
      "node": [
-      80,
-      60,
+      18,
+      4,
       0
      ],
-     "count": 6
+     "count": 10
     }
    ],
    "momentum": [
@@ -83,8 +83,8 @@
    "name": "taker",
    "positions": [
     [
-     80,
-     60,
+     18,
+     4,
      0
     ]
    ]
@@ -102,8 +102,8 @@
    "kind": "level",
    "family": "charge",
    "node": [
-    24,
-    60,
+    9,
+    4,
     0
    ],
    "every": 1
@@ -113,8 +113,8 @@
    "kind": "level",
    "family": "charge",
    "node": [
-    76,
-    60,
+    15,
+    4,
     0
    ],
    "every": 1
@@ -148,8 +148,8 @@
    "kind": "level",
    "family": "gravity",
    "node": [
-    50,
-    60,
+    12,
+    4,
     0
    ],
    "every": 100
