@@ -9,7 +9,6 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-SHARED_UNIVERSE = "examples/events/generated/universe.json"  # the shipped families' rows, no divisor
 UNIVERSE = (
     "examples/events/experiments/universe.json"  # the rows of record: the held rows with `divisor`
 )
@@ -531,8 +530,8 @@ def two_slits(name: str, universe: str, wavelength: int, wall: int, stock: int) 
 
 
 def universe_of_record() -> None:
-    """The universe file of record beside the worlds: the shipped rows with `divisor` inside every held row (the hold's write as a sum, the owner's word; the frame's `held` card takes the key since #1312, a key at the family's top level is refused); the numbers are the approvals'."""
-    document = json.loads((ROOT / SHARED_UNIVERSE).read_text(encoding="utf-8"))
+    """The universe file of record beside the worlds, the one universe every world reads: its held rows with `divisor` (the hold's write as a sum, the owner's word; the frame's `held` card takes the key since #1312, a key at the family's top level is refused); the numbers are the approvals'."""
+    document = json.loads((ROOT / UNIVERSE).read_text(encoding="utf-8"))
     for family in document["families"]:
         if "held" in family:
             family["held"]["divisor"] = DIVISOR[family["name"]]

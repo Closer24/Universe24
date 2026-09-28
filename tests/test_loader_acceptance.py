@@ -20,7 +20,7 @@ from tests.worlds import SOURCED, emitter_world
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "src" / "event_universe"
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
-GENERATED = ROOT / "examples" / "events" / "generated" / "universe.json"  # matter's pair declared
+GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # matter's pair declared
 START = ROOT / "examples" / "events" / "engine_start.json"
 VERSION_STRING = re.compile(r"-v[0-9]+$")
 VERSION_WORDS = {"version", "schema_version"}
