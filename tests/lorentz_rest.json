@@ -51,7 +51,7 @@
     800,
     1200
    ],
-   "q": 0,
+   "q": 1,
    "spin": [
     0,
     0,
@@ -13687,6 +13687,6 @@
  ],
  "face_depth": 32,
  "stamp": {
-  "hash": "1805359dd6bd65f6bbaae56a64d4280cd3b482b86fe4c2a2239939c58d02837f"
+  "hash": "a25be35485e0af93c099e4c381bc06080af0df9272a4fc7f9ab4cfdbdac1a3b2"
  }
 }

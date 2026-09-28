@@ -21,13 +21,13 @@ from event_universe.core.rule3 import (
     THE_REWRITE,
     THE_UNHOLD,
     coefficients,
-    division_forward,
     form_term,
     rule3,
 )
 from event_universe.events import after_step, assembly, body_language, guards, output, pair, record_well
 from event_universe.events import live as live_records
 from event_universe.events import momentum_reading as momentum
+from event_universe.events import window as giving_window
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.inverse import block_clock_inverse, booking_inverse
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -37,7 +37,7 @@ from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.crystal import CrystalTerm
-from event_universe.features.giving import THE_OPEN, GivingOwn, GivingStart, GivingTerm, GivingWrites
+from event_universe.features.giving import THE_OPEN, GivingOwn, GivingStart, GivingWrites
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
@@ -279,7 +279,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _block_clock_inverse = block_clock_inverse
     _write_line = after_step.write_line
     _record_form = record_well.record_form
-    _point_windows = after_step.point_windows
+    _point_windows = giving_window.point_windows
     _close_window = after_step.close_window
     _read_momentum = momentum.read_momentum
     _pair_click = pair.pair_click
@@ -1214,16 +1214,15 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
         # the interval's dipole writes taken back first (ALGEBRA.md #the-interval; commit 2): they were the last writes of the forward interval, after the fields' step; then the hold's first phase back at the count the forward hold read (the store stepped back, the time part's increment off the end level) before the count's line returns the quanta
         hold = self.register.at("the hold", "(iv)")
-        held = self._hold(hold, THE_INVERSE)
+        held = None if getattr(self, "hold_restored", False) else self._hold(hold, THE_INVERSE)
         # the count's line back (its own inverse, the current reversed; ALGEBRA.md #the-counts-line): the quanta return to their Nodes before the records step back
         counts_line = self.register.at("the count's line", "(ii)")
         for block in self.blocks:
             self._counts_act(counts_line, block, -1)
             if block.moved:
                 raise ValueError(
-                    f"the inverse map is defined for a body whose Nodes stood through the interval (block "
-                    f"{block.number} moved at interval {self.tick}; the field moved back through the body, "
-                    "ALGEBRA.md #the-primitives, is not built)"
+                    f"the inverse map is defined for a body whose Nodes stood through the interval (block {block.number} "
+                    f"moved at interval {self.tick}; the field moved back through the body, ALGEBRA.md #the-primitives, is not built)"
                 )
         # the joint inverse (ALGEBRA.md #the-counts-line; item 51): every family backward at the held levels of the interval's start (their `before` level: the held families stepped last), then the held families backward and their hold
         for family, record in self.held_records.items():
@@ -1240,11 +1239,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         for block in self.blocks:
             self._record_form(block, -1)
             self._block_clock_inverse(block)
-            if block.well is not None:
+            if block.well is not None and held is not None:
                 self._hold(hold, THE_INVERSE, held, block.number)
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
-        self._hold(hold, THE_INVERSE, held)
+        if held is not None:
+            self._hold(hold, THE_INVERSE, held)
         self.tick -= 1
 
     # The rule
@@ -1807,10 +1807,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         emitter = after_step.emitter_of(block)
         if emitter is None:
             raise ValueError(f"the body {block.number} gives with no emitter declared")
-        norm = emitter.norm if emitter.norm is not None else 1
-        denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
-        weight = emitter.weight if emitter.weight is not None else 1
-        term = GivingTerm((weight, 1), division_forward(norm, denominator, 0)[0], emitter.family)
+        term = giving_window.giving_term(self, block, emitter)
         own = (
             GivingOwn(None, 0, (0, 0, 0))
             if live is None
@@ -1870,7 +1867,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         writes = self._giving_act(
             block, GivingStart(THE_INVERSE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live
         )
-        self._write_at_mask(live, block.mask, cast(tuple[np.ndarray, np.ndarray], writes.level), -1)
+        self._write_at_mask(live, block.mask, live.giving_books.pop(), -1)
         live.giving_remainders, live.window = writes.own.remainders, live.window - 1
         self.ports.begin()
 

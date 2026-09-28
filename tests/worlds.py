@@ -337,6 +337,7 @@ def _seed_key(document: dict) -> str:
         entry.pop("clock", None)
     for body in bare.get("measured", ()):
         if isinstance(body.get("emitter"), dict):
+            body["q"] = 0  # the giver's sign, a key the recorded seeding never read (recorded at 0)
             for key in ("weight", "norm", "norm_denominator"):
                 body["emitter"].pop(key, None)
     return input_digest(bare)

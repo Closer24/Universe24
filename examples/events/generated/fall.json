@@ -282,7 +282,8 @@
       "stocks": {
         "charge": 64
       },
-      "phase_denominator": 1024
+      "phase_denominator": 1024,
+      "q": 1
     },
     {
       "family": "matter",

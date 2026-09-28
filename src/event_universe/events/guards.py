@@ -56,6 +56,12 @@ def grants(loop: DetectorLawSimulation, name: str) -> Iterator[np.ndarray]:
             if block.own is not None:
                 yield block.own.now
                 yield block.own.before
+    elif (
+        name == "the giving"
+    ):  # THE CLOSE RETURNS THE CURRENT: the closing window's record, its level now on the record's support
+        for block in loop.blocks:
+            if block.window is not None and block.window in loop.records:
+                yield from (loop.records[block.window].now, loop.records[block.window].before)
     elif name == "the operation":
         for live in loop.records.values():
             yield live.remainder

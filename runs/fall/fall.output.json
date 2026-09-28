@@ -1,0 +1,8 @@
+{
+ "format": "one-command-output-v1",
+ "input": "fall.json",
+ "name": "fall",
+ "reason": "ValueError: measured[0].emitter on a body in the law's form needs the body's own record from the mode file beside the world (`<world>.mode.json`, the generator's): its profile, its clock and its twist; the mode file has no entry for it",
+ "stamp": null,
+ "verdict": "REFUSED"
+}

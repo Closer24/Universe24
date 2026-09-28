@@ -12,6 +12,7 @@ from event_universe.core.main_loop import ALIVE
 from event_universe.core.rule3 import NO_READ, Key, rule3
 from event_universe.events import pair
 from event_universe.events.records import Block, LiveRecord
+from event_universe.events.window import zero_mode
 from event_universe.features.crystal import CrystalOwn, CrystalStart, CrystalWrites
 from event_universe.features.giving import THE_CLOSE, THE_WRITE, GivingStart
 from event_universe.features.hand import HandStart, HandTerm, HandWrites
@@ -191,8 +192,9 @@ def window_write(loop: DetectorLawSimulation, live: LiveRecord) -> None:
             cast(np.ndarray, live.im_now)[block.mask] += written.level[0]
         return
     if written.level is not None:
-        live.now[block.mask] += written.level[0]
-        live.before[block.mask] += written.level[1]
+        delta = written.level[0] - live.now[block.mask], written.level[1] - live.before[block.mask]
+        loop._write_at_mask(live, block.mask, delta, 1)
+        live.giving_books.append(delta)
         live.giving_remainders = written.own.remainders
     flux_tally = [0, 0, 0]
     flux = loop.body_outward_flux(live, block, flux_tally)
@@ -211,33 +213,13 @@ def window_write(loop: DetectorLawSimulation, live: LiveRecord) -> None:
         )
 
 
-def point_windows(loop: DetectorLawSimulation) -> None:
-    """The point emitters' windows closed after the interval's bookings: the given record's norm, residue and wheel fixed from what left the body, the window's count and the record's box settled, the giving line written."""
-    for block in loop.blocks:
-        if block.window is None:
-            continue
-        live = loop.records.get(block.window)
-        emitter = emitter_of(block)
-        if live is None or emitter is None or emitter.weight is None or emitter.norm is None:
-            block.window = None
-            continue
-        if live.clicked:
-            # taken while its window was open (its own body's Node's set reading the returning light, the light clock): the window closes at the click, the record named
-            loop._close_window(block, live)
-            continue
-        # (d) the close: the folder's close act on the outward norm summed over the window
-        if loop._giving_act(
-            block, GivingStart(THE_CLOSE, 0, (0, 0, 0), None, 0, (0, 0, 0)), live
-        ).closed:
-            loop._close_window(block, live)
-
-
 def close_window(loop: DetectorLawSimulation, block: Block, live: LiveRecord) -> None:
     """The window's close (ALGEBRA.md; item 50): the writing ends, the record is named on its giving line with the window's length and the open's interval, the next excitation's count starts (the quantum moved at the open: the stock, the content and the ledger's rows as the train emitter's; the norm T from the open)."""
     emitter = emitter_of(block)
     if emitter is None:
         raise ValueError(f"the body {block.number} closes a window with no emitter declared")
     live.window_open = False  # the write's remainders stay on the record: a close stepped back by hand reopens the window on them
+    zero_mode(loop, block, live)
     for identity in live.pair_record.rows if live.pair_record is not None else ():
         loop.records[identity].window_open = False
     block.window = None
@@ -249,6 +231,7 @@ def close_window(loop: DetectorLawSimulation, block: Block, live: LiveRecord) ->
         line["window"] = live.window
         line["outward"] = live.outward
         line["opened"] = loop.tick - live.window  # the open's interval (HOST)
+        line["zero_mode"] = live.zero_mode[0] if live.zero_mode is not None else 0
         # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md #the-primitives, #the-interval): the count 1, the space part the sign per axis of the outward flux over the window (DETECTOR)
         line["momentum"] = loop.direction_of(live.outward_tally)
         loop.record(line)

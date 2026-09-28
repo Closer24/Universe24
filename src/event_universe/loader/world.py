@@ -155,8 +155,7 @@ BLOCK_KEYS = {
     "seed",
     # the bound mode's clock [a, b] beside a profile (ALGEBRA.md #a-familys-declaration)
     "clock",
-    # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md
-    # ALGEBRA.md #the-velocity; BUILD.md section 26 item 46), beside `clock` on a moving block
+    # the moving body's Node's proper pairs by the momentum's whole part (ALGEBRA.md ALGEBRA.md #the-velocity; BUILD.md section 26 item 46), beside `clock` on a moving block
     "proper_clock",
     "ramp",
     "start",
@@ -1713,6 +1712,7 @@ def _counted(
         clock=clock,
         levels=levels,
         twist=twist if twist is not None else 0,
+        q=_integer(obj["q"], f"{label}.q", -AMOUNT_BOUND, AMOUNT_BOUND) if "q" in obj else 0,
         emitter=emitter,
         nodes=nodes,
         counts=counts,

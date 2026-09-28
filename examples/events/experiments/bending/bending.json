@@ -114,7 +114,8 @@
    },
    "stocks": {
     "charge": 640
-   }
+   },
+   "q": 1
   },
   {
    "family": "matter",
