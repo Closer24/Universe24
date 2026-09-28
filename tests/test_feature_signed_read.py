@@ -1,6 +1,4 @@
-"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md #the-primitives, the first row;
-ALGEBRA.md #the-paces; record 2224): the folder's read equals the engine's bit for bit on the emitter's world,
-the hand identity holds, the guard's edge (the checkerboard factor at -2) admits and refuses by name."""
+"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md #the-primitives, the first row; ALGEBRA.md #the-paces; record 2224): the folder's read equals the engine's bit for bit on the emitter's world, the hand identity holds, the guard's edge (the checkerboard factor at -2) admits and refuses by name."""
 
 from __future__ import annotations
 

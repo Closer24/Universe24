@@ -1,5 +1,4 @@
-"""The four-vector click without the recoil (ALGEBRA.md #the-primitives): a click moves a quantum's count and
-its momentum, and every click line reads the momentum its quantum travelled with."""
+"""The four-vector click without the recoil (ALGEBRA.md #the-primitives): a click moves a quantum's count and its momentum, and every click line reads the momentum its quantum travelled with."""
 
 from __future__ import annotations
 
