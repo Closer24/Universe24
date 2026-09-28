@@ -217,7 +217,10 @@ def main() -> None:
             text = json.dumps({"world": world.name, **read}, indent=1)
             print(text)
             print(table(world, read, blind))
-            world.with_name(f"{world.stem}.moves.json").write_text(text + "\n", encoding="utf-8")
+            # the reading is a GAMEBOARD diagnostic, so its file carries the label in its name
+            world.with_name(f"{world.stem}.gameboard_moves.json").write_text(
+                text + "\n", encoding="utf-8"
+            )
         return
     arguments = [Path(a).resolve() for a in sys.argv[1:]]
     worlds, outputs = arguments[0::2], arguments[1::2]
