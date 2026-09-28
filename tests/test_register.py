@@ -38,13 +38,11 @@ def declared_folders() -> list[tuple[str, str, bool]]:
     return found
 
 
-# the values named once in ALGEBRA.md #the-primitives (and the source row's own word for its
-# remainder): the rows of 9.117 write these and no other
+# the values named once in ALGEBRA.md #the-primitives (and the source row's own word for its remainder): the rows of 9.117 write these and no other
 NAMED_VALUES = {
     "a family's level at a Node",
     "the level next, the remainder",
     "the paces",
-    "a Port's accumulator",
     "a body's content M_k",
     "a body's momentum n",
     "a body's spin S",
@@ -58,7 +56,7 @@ ROWS_OF_9_117 = (
     "the source",
     "the giving",
     "the clicks",
-    "the recoil's accumulator",
+    "the recoil",
     "the spin's step",
     "the trace",
 )
@@ -92,7 +90,6 @@ def test_a_name_registered_twice_or_an_unknown_place_or_word_is_refused_by_name(
     assert PLACES == ("(i)", "(ii)", "(iii)", "(iv)", "(v)", "any")
     assert WORDS == ("the right side", "the step", "after the step", "any")
     assert folder_of("the spin's step") == "spins_step" and folder_of("the self-source") == "self_source"
-    assert folder_of("the recoil's accumulator") == "recoils_accumulator"
     assert folder_of("the signed read") == "signed_read" and folder_of("hold") == "hold"
     assert DEFERRED_VALUES == {
         "a body's content M_k",
@@ -112,10 +109,8 @@ def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_ou
         Declaration("the internal representation", "(i)", ("n pairs",), ("the arrivals",), noop, "")
     )
     step = Step({"(i)": ("the receive", "the internal representation")}, "d")
-    assert register.writers("the arrivals", "(i)", step) == (
-        "the receive",
-        "the internal representation",
-    )
+    arrivals_writers = ("the receive", "the internal representation")
+    assert register.writers("the arrivals", "(i)", step) == arrivals_writers
     register.check_writers(step)
     with pytest.raises(
         ValueError,

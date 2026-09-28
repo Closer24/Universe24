@@ -15,6 +15,7 @@ from event_universe.core.primitive import Write
 from event_universe.core.register import Declaration, Register, discover
 from event_universe.core.step import INTERVAL, STEP_FILE, Step
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.events.records import StampedMap
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world, shipped
 
@@ -296,3 +297,27 @@ def test_g_the_walk_is_the_files_and_the_plan_refuses_by_name(tmp_path, monkeypa
         match="whose writes of a body's value enter at \\(iv\\), and no \\(iv\\) act after \\(ii\\)",
     ):
         MainLoop.plan(register, step, {}, (), ())
+
+
+def test_a_bodys_remainders_are_stamped_by_identity_and_version_and_every_write_moves_the_stamp():
+    """THE STAMP OF A BODY'S REMAINDERS (ENGINE.md, the main loop's guards): the audit takes each body's hold remainders by the map's identity and write counter, never by walking its entries (one per Node and part, stamped before and after every act), the counter rises at every kind of write and at no read, and an act writing a remainder outside its card is refused by name as before."""
+    remainders = StampedMap({("g", 0): 1})
+    seen = [remainders.version]
+    for write in (
+        lambda: remainders.__setitem__(("g", 1), 2),
+        lambda: remainders.update({("g", 2): 3}),
+        lambda: remainders.pop(("g", 2)),
+        lambda: remainders.__delitem__(("g", 1)),
+        remainders.clear,
+    ):
+        write()
+        seen.append(remainders.version)
+    assert seen == sorted(set(seen)) and len(seen) == 6
+    remainders[("g", 0)] = 1
+    version = remainders.version
+    assert remainders.get(("g", 0)) == 1 and list(remainders.items()) and remainders.version == version
+    loop = MainLoop.plan(Register(), Step({}, "d", ()), {}, (), ())
+    stamp = (id(remainders), version, id(remainders), version)
+    moved = {"a body's remainders": {0: stamp[:1] + (version + 1,) + stamp[2:]}}
+    with pytest.raises(ValueError, match=r"changed \"a body's remainders\" of \['0'\]"):
+        loop.audit("the cheat", "(v)", frozenset(), {"a body's remainders": {0: stamp}}, moved, set())

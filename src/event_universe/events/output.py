@@ -284,8 +284,8 @@ def books(simulation: detector_law.DetectorLawSimulation, recount: bool = False)
         # are designed (ALGEBRA.md 8.11, the physicist's), and `balanced` counts content alone.
         "momentum": {
             "held": [sum(int(block.momentum[axis]) for block in simulation.blocks) for axis in range(3)],
-            # THE RECOIL'S BOOK (the body's language): per body, the kicks its clicks wrote, summed per axis
-            "recoil": {str(n): list(k) for n, k in sorted(simulation.recoil_kicks.items())},
+            # THE RECOIL'S BOOK (the body's language): per body, the turns of its record's phase per Link its clicks wrote, in the twist's unit, summed per axis
+            "recoil": {str(n): list(k) for n, k in sorted(simulation.recoil_turns.items())},
             "transit": None,
             "escaped": None,
             "note": "transit and escaped not accounted (the massive kind's momentum books "

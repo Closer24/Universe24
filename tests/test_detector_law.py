@@ -371,15 +371,13 @@ def test_detector_is_one_connected_cube_of_side_three():
                 parse_nature_beam_world(document)
 
 
-def test_the_wall_l_is_over_the_clocks_of_the_families_a_body_gives_and_the_emitters():
-    """The law's row "the recoil": L is the least common multiple of the givers' wavelengths, each the mode's `wavelength` on the emitter's clock [2 N, lambda_q] (the row's clock for a mode file without one); a family's row's clock enters nothing and is not checked, on the given family and on any other (light or matter at [7, 1] on N = 1024, 2048 / 7 no whole number of Links), so L stands as without it. The edge case: the same clock on the given family (light) is refused at load by name."""
-    world = parse_nature_beam_world(stamped(emitter_world(stock=2, ticks=120)))
-    families = list(world.families)
-    light, matter = (next(i for i, f in enumerate(families) if f.name == n) for n in ("light", "matter"))
-    wall = DetectorLawSimulation(world).recoil_wall
-    families[matter] = replace(families[matter], phase_per_age=(7, 1))
-    assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
-    families[light] = replace(families[light], phase_per_age=(7, 1))
-    clock = world.measured[0].block.emitter.clock  # type: ignore[union-attr]
-    assert DetectorLawSimulation(replace(world, families=tuple(families))).recoil_wall == wall
-    assert wall == 2 * world.phase_steps * clock[1] // clock[0]
+def test_a_familys_rows_clock_enters_no_wall_of_the_loop():
+    """The law's row "the recoil": no wall L and no store; a family's row's clock enters nothing of the loop and is not checked, on the given family and on any other (light or matter at [7, 1] on N = 1024, 2048 / 7 no whole number of Links): the loop builds and steps as without it."""
+    families = list(
+        (world := parse_nature_beam_world(stamped(emitter_world(stock=2, ticks=120)))).families
+    )
+    for name in ("light", "matter"):
+        index = next(i for i, f in enumerate(families) if f.name == name)
+        families[index] = replace(families[index], phase_per_age=(7, 1))
+        simulation = DetectorLawSimulation(replace(world, families=tuple(families)))
+        assert simulation.step() is None and not hasattr(simulation, "recoil_wall")

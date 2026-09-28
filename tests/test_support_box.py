@@ -10,8 +10,7 @@ from tests.bodies import block_world
 from tests.running import planted
 from tests.worlds import PERIODIC, emitter_world
 
-# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line;
-# the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
+# A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
 
 
@@ -75,8 +74,7 @@ def test_a_record_wrapping_a_periodic_board_steps_and_returns_the_same(monkeypat
         plain.step()
         outside_is_zero(boxed)
         assert np.array_equal(live.now, other.now) and np.array_equal(live.remainder, other.remainder)
-    # the box wrapped every axis: the whole board, the step then the plain one
-    assert live.box is None
+    assert live.box is None  # the box wrapped every axis: the whole board, the step then the plain one
     for _ in range(40):
         boxed.step_inverse()
         plain.step_inverse()

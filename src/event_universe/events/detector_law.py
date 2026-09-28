@@ -9,7 +9,6 @@ from typing import cast
 import numpy as np
 
 from event_universe.core.game_board import box_centre
-from event_universe.core.integer import bounded_lcm
 from event_universe.core.main_loop import MainLoop, Stage, read_only
 from event_universe.core.ports import Ports, port_of
 from event_universe.core.register import Register, discover
@@ -26,8 +25,9 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, body_language, guards, output, pair
+from event_universe.events import after_step, assembly, body_language, guards, output, pair, record_well
 from event_universe.events import live as live_records
+from event_universe.events import momentum_reading as momentum
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.inverse import block_clock_inverse, booking_inverse
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -37,16 +37,11 @@ from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.crystal import CrystalTerm
-from event_universe.features.giving import (
-    THE_OPEN,
-    GivingOwn,
-    GivingStart,
-    GivingTerm,
-    GivingWrites,
-)
+from event_universe.features.giving import THE_OPEN, GivingOwn, GivingStart, GivingTerm, GivingWrites
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
+from event_universe.features.receive import triple as receive_triple
 from event_universe.features.recoil import TAKING, RecoilOwn, RecoilStart, RecoilTerm, RecoilWrites
 from event_universe.features.source import SourceOwn, SourceStart, SourceTerm, SourceWrites
 from event_universe.features.spins_step import (
@@ -186,16 +181,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             else None
         )
         assembly.universe_values(self, world)
-        # THE UNIVERSE'S WALL L (the law's row "the recoil"): the least common multiple of the givers' wavelengths, each the mode's `wavelength` on the emitter's clock [2 N, lambda_q] (a family's row's clock is not read here)
-        self.recoil_wall = 1
-        for number, entry in enumerate(world.measured):
-            if entry.block is not None and entry.block.emitter is not None:
-                self.recoil_wall = bounded_lcm(
-                    self.recoil_wall, self._wavelength(entry.block.emitter.clock, f"measured[{number}]")
-                )
-        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock, the record
-        self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int], int]] = []
-        self.recoil_kicks: dict[int, list[int]] = {}
+        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record
+        self._recoils: list[tuple[int, int, tuple[int, int, int], int]] = []
+        self.recoil_turns: dict[int, list[int]] = {}
         self._crystal_clicks: list[tuple[int, LiveRecord]] = []
         assembly.state_arrays(self, world)
         self.kind_num = PairView(self, 0)
@@ -290,8 +278,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _booking_inverse = booking_inverse
     _block_clock_inverse = block_clock_inverse
     _write_line = after_step.write_line
+    _record_form = record_well.record_form
     _point_windows = after_step.point_windows
     _close_window = after_step.close_window
+    _read_momentum = momentum.read_momentum
     _pair_click = pair.pair_click
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
@@ -315,6 +305,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction)
         writes = cast(CountWrites, line(term, start, None))
         block.counts, block.count_remainder = writes.count, writes.remainder
+        if direction > 0:
+            self._read_momentum(block, arrived, wall)
 
     def _body_count(self, block: Block) -> int:
         """The count at the body, its quanta: the declared count per Node over its Nodes (the record's norm in quanta, ALGEBRA.md #what-a-body-is; the count's line moves them between the Nodes and loses none)."""
@@ -380,49 +372,50 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         for argument in self._source_argument.values():
             argument[...] = 0
 
-    def _wavelength(self, clock: tuple[int, int], label: str) -> int:
-        """The wavelength 2 N q / p of a clock [p, q] on the world's N steps (the law's row "the recoil"); a clock whose wavelength is no whole number of Links is refused by name."""
-        numerator, denominator = clock
-        whole, rest = division_forward(2 * self.world.phase_steps * denominator, numerator, 0)
-        if rest:
-            raise ValueError(
-                f"{label} declares the clock {list(clock)} on N = {self.world.phase_steps} steps: its "
-                f"wavelength 2 N q / p is no whole number of Links, so the universe's wall L has no value"
-            )
-        return whole
+    def _write_at_mask(
+        self, live: LiveRecord, mask: np.ndarray, levels: tuple[np.ndarray, np.ndarray], sign: int
+    ) -> None:
+        """The loop's one site for levels written at a body's Nodes into a record's two levels, added (+1) or taken back (-1): the window's inverse and the recoil's turn (the write's gate)."""
+        live.now[mask] += sign * levels[0]
+        live.before[mask] += sign * levels[1]
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
-        """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1, the kick written to both levels of n; a body with no period declares no term."""
-        for number, sense, tally, clock, identity in self._recoils:
+        """The recoil's act (features/recoil): per click of the interval on a body with a record of its own, a mode clock and a mode reading of the quantum's wave number on a world with a twist table, the folder's turn of the record's two levels at the body's Nodes by delta k = sigma_a (k_q div M) per Link along each axis with a tally (the Node's offset from the body's centre; the triple the receive's reading of the table), the angle's remainder carried at the body through the write's line, the taker at +1 and the giver at -1, the turned levels written at the loop's one site (`_write_at_mask`); a body without them takes no recoil; the momentum n is a reading of the record's current (`_read_momentum`), no level of the click's."""
+        for number, sense, tally, identity in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
-            if block is None or emitter is None or emitter.period is None:
+            live, clock = (block.own, block.definition.clock) if block is not None else (None, None)
+            if block is None or emitter is None or emitter.wave_number is None or live is None:
                 continue
-            term = RecoilTerm(
-                emitter.period,
-                self._wavelength(clock, f"measured[{number}]"),
-                sense,
-                self.recoil_wall,
-                self.momentum_unit,
+            if clock is None or self._receive_term is None:
+                continue
+            nodes, centre = np.argwhere(block.mask), self._window_centre(block)
+            offsets = tuple(tuple(int(v) for v in nodes[:, axis] - centre[axis]) for axis in range(3))
+            before = (live.now[block.mask].copy(), live.before[block.mask].copy())
+            levels = tuple(tuple(int(v) for v in level) for level in before)
+
+            def triple_of(k: int, axis: int) -> tuple[int, int, int]:
+                c, sine, d = receive_triple(self._receive_term, k, port_of(axis, 1))
+                return int(c), int(sine), int(d)
+
+            term = RecoilTerm(emitter.wave_number, self._body_count(block), clock, sense, triple_of)
+            values = {k[1:]: v for k, v in block.hold_value.items() if k[0] == "recoil"}
+            carries = {k[1:]: v for k, v in block.hold_carry.items() if k[0] == "recoil"}
+            start = RecoilStart(
+                tally, (levels[0], levels[1]), (offsets[0], offsets[1], offsets[2]), self._write_line
             )
-            stores = [block.hold_value.get(("recoil", axis), 0) for axis in range(3)]
-            own = RecoilOwn(
-                (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
-                (stores[0], stores[1], stores[2]),
-            )
-            writes = cast(RecoilWrites, function(term, RecoilStart(tally, self._write_line), own))
-            body_language.recoil(self, block, number, sense, identity, tally, own.momentum, writes)
+            writes = cast(RecoilWrites, function(term, start, RecoilOwn(values, carries)))
+            turned = tuple(np.asarray(level, dtype=np.int64) for level in writes.levels)
+            self._write_at_mask(live, block.mask, (turned[0] - before[0], turned[1] - before[1]), 1)
+            body_language.recoil(self, block, number, sense, identity, tally, before, writes)
         self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
         """The records' act: the bodies' own records first, each by the rule alone, then every live record's fused step (its click included); `function` is the rule the steps apply."""
         for block in self.blocks:
-            if block.node_record is not None:
-                self._advance_node_record(block)
-            elif block.own is not None:
-                self._advance(block.own)
-            else:
+            if block.node_record is None and block.own is None:
                 continue
+            self._record_form(block)
             if block.definition.emitter is not None:
                 self._excitation_rung(block)
         for identity in list(self.records):
@@ -537,30 +530,34 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return self._body_charge(number) if source == "sign" else sum(self.held[number])
 
     def node_sources(self, number: int, source: str) -> list[tuple[tuple[int, int, int], int]]:
-        """A body in the law's form: its source per Node, the count declared THERE ("content") or the family's charge times it ("sign"), ALGEBRA.md #what-a-body-is and the hold's row; empty for a body of the old form, whose one source stands at every Node of its mask."""
+        """A body in the law's form: its source per Node, the count declared THERE ("content") or the family's charge times it ("sign"), ALGEBRA.md #what-a-body-is and the hold's row, the quanta where the count's line moved them; a body with a record under a declared T its well's form, D_i div T at every Node of its record (`_record_form`), its declared count a reading; empty for a body of the old form with no well, whose one source stands at every Node of its mask."""
         block = self.block_by_number.get(number)
-        if block is None or not block.definition.counts:
+        if block is None or (block.well is None and not block.definition.counts):
             return []
         weight = 1 if source == "content" else self.families[block.family].charge[0]
-        if block.counts is not None and block.definition.counts:
-            # the count's line has laid the quanta: the well is written where they are now
-            moved = zip(*np.nonzero(block.counts), strict=True)
-            return [((int(x), int(y), int(z)), weight * int(block.counts[x, y, z])) for x, y, z in moved]
-        nodes, counts = block.definition.nodes or (), block.definition.counts
+        laid = block.well if block.well is not None else block.counts
+        if laid is not None:
+            moved = zip(*np.nonzero(laid), strict=True)
+            return [((int(x), int(y), int(z)), weight * int(laid[x, y, z])) for x, y, z in moved]
+        nodes, counts = block.definition.nodes or (), block.definition.counts or ()
         return [(node, weight * int(count)) for node, count in zip(nodes, counts, strict=True)]
 
-    def _hold(self, line: Callable[..., object], act: str, held: HoldMap | None = None) -> HoldMap:
-        """The hold in two phases, both in the forward order and apart at the inverse (`step_inverse`). The first: at every body's Nodes a held family's level gains the body's count over the row's divisor each interval, the folder's carried division, and at a body in the law's form (ALGEBRA.md #what-a-body-is; ENGINE.md the `nodes` row) each Node gains the count declared THERE over the divisor with a remainder of its own, never the whole body's count at every Node (a wall of 460 Nodes at 8,000 would source 3.68 million at each), a signed source the family's charge times the Node's count (the count a source into the field's line, ALGEBRA.md #the-primitives the row "the hold"), subtracted on the inverse; one call per body and held family with the act the loop names (the advance, the rewrite of a moved body's Nodes, the inverse), a body with a block by `_held_writes`, a span body (no block) its time part alone by the same line on its own remainders (`span_hold`); `node_level` is then each held family's level as every reading family's step reads it; the inverse returns here with the writes. The second, from the first's writes `held`: the vector and tensor parts at the bodies (ALGEBRA.md #the-interval), the body's numbers times the held factors over the wall, the remainder carried, at every Node of the body at both levels (the interval's start rewrites a moved body's Nodes alone), then the dipoles on the body's Node's six neighbours (forward with the division advanced, at the inverse with the values the unhold stepped back; none beyond an open face)."""
-        if held is None:
+    def _hold(
+        self, line: Callable[..., object], act: str, held: HoldMap | None = None, body: int | None = None
+    ) -> HoldMap:
+        """The hold in two phases, both in the forward order and apart at the inverse (`step_inverse`). The first: at every body's Nodes a held family's level gains the body's count over the row's divisor each interval, the folder's carried division, and at a body in the law's form (ALGEBRA.md #what-a-body-is; ENGINE.md the `nodes` row) each Node gains the count declared THERE over the divisor with a remainder of its own, never the whole body's count at every Node (a wall of 460 Nodes at 8,000 would source 3.68 million at each), a signed source the family's charge times the Node's count (the count a source into the field's line, ALGEBRA.md #the-primitives the row "the hold"), subtracted on the inverse; one call per body and held family with the act the loop names (the advance, the rewrite of a moved body's Nodes, the inverse), a body with a block by `_held_writes`, a span body (no block) its time part alone by the same line on its own remainders (`span_hold`); `node_level` is then each held family's level as every reading family's step reads it; the inverse returns here with the writes. The second, from the first's writes `held`: the vector and tensor parts at the bodies (ALGEBRA.md #the-interval), the body's numbers times the held factors over the wall, the remainder carried, at every Node of the body at both levels (the interval's start rewrites a moved body's Nodes alone), then the dipoles on the body's Node's six neighbours (forward with the division advanced, at the inverse with the values the unhold stepped back; none beyond an open face). A body whose well is its record's form steps its first phase back apart, `body`, after its record stepped back and laid the counts the forward hold read (`step_inverse`)."""
+        if held is None or body is not None:
             self.ports.begin()
-            held = {}
-            for family, record in self.held_records.items():
-                definition = self.families[family]
-                source = cast(str, definition.held)
-                for number in range(len(self.held)):
+            held = {} if held is None else held
+            for number in range(len(self.held)) if body is None else (body,):
+                block = self.block_by_number.get(number)
+                if body is None and act == THE_INVERSE and block is not None and block.well is not None:
+                    continue
+                for family, record in self.held_records.items():
+                    definition = self.families[family]
+                    source = cast(str, definition.held)
                     if self.body_source(number, source):
                         self._sourced_ever[(family, 0)] = True
-                    block = self.block_by_number.get(number)
                     if act == THE_REWRITE and not (block is not None and block.moved):
                         continue
                     if block is not None:
@@ -586,6 +583,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     if not w.node_levels:
                         mask = block.mask if block is not None else self.span_masks[number]
                         record.now[mask] += sign * w.time_level
+            for family, record in self.held_records.items() if body is None else ():
                 self.node_level[family] = record.now
             if act == THE_INVERSE:
                 return held
@@ -879,10 +877,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         assert node_record is not None
         num, den, gamma, content = self.node_record_rule(block)
         reads, self_coefficient, wall = coefficients(num, den, gamma, content)
+        forward = direction == 1
         now, other = (
-            (node_record.now, node_record.before)
-            if direction == 1
-            else (node_record.before, node_record.now)
+            (node_record.now, node_record.before) if forward else (node_record.before, node_record.now)
         )
         result, remainder = rule3(
             reads,
@@ -1241,11 +1238,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 continue
             self._advance_inverse(live)
         for block in self.blocks:
-            if block.node_record is not None:
-                self._advance_node_record(block, -1)
-            elif block.own is not None:
-                self._advance_inverse(block.own)
+            self._record_form(block, -1)
             self._block_clock_inverse(block)
+            if block.well is not None:
+                self._hold(hold, THE_INVERSE, held, block.number)
         for record in reversed(self.held_component_records()):
             self._advance_inverse(record)
         self._hold(hold, THE_INVERSE, held)
@@ -1874,9 +1870,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         writes = self._giving_act(
             block, GivingStart(THE_INVERSE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live
         )
-        undone_levels = cast(tuple[np.ndarray, np.ndarray], writes.level)
-        live.now[block.mask] -= undone_levels[0]
-        live.before[block.mask] -= undone_levels[1]
+        self._write_at_mask(live, block.mask, cast(tuple[np.ndarray, np.ndarray], writes.level), -1)
         live.giving_remainders, live.window = writes.own.remainders, live.window - 1
         self.ports.begin()
 
@@ -1940,8 +1934,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if measured is None or self.detector_face[detector]:
             return
         t = live.momentum_tally.get(detector, [0, 0, 0])
-        clock = (live.period_numerator, live.period_denominator)
-        self._recoils.append((measured, TAKING, (int(t[0]), int(t[1]), int(t[2])), clock, live.identity))
+        self._recoils.append((measured, TAKING, (int(t[0]), int(t[1]), int(t[2])), live.identity))
 
     def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
         """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""

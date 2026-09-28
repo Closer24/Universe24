@@ -55,8 +55,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
             assert int(live.now[x, 0, 0]) == expected, (family, x)
             assert int(live.remainder[x, 0, 0]) == total - wall * expected
             assert 0 <= int(live.remainder[x, 0, 0]) < wall
-        # the inverse returns the rows and the remainders bit for bit
-        slowed._advance_inverse(live)
+        slowed._advance_inverse(live)  # the inverse returns the rows and the remainders bit for bit
         for a, b in zip((live.now, live.before, live.remainder), state, strict=True):
             assert np.array_equal(a, b)
         # the plain limit: no content, r = 0
@@ -70,8 +69,7 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
             assert int(live.remainder[x, 0, 0]) == 2 * GAMMA * GAMMA * (
                 plain - 3 * den * (plain // (3 * den))
             )
-    # (ii) the rotation at k = 0
-    amplitude = 1 << 20
+    amplitude = 1 << 20  # (ii) the rotation at k = 0
     num, den = PAIR
     for quanta, expected in ((QUANTA, 1.982617), (0, 1.977750), (GAMMA // 2, 1.986094)):
         nodes = range(12) if quanta else []
@@ -181,8 +179,7 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
         a_next, r_new = live.now.copy(), live.remainder.copy()
         new = [Fraction(*simulation.form_share(live, one_node(60, i))) for i in range(60)]
         for i in range(60):
-            # the plain currents through the Node's two Links (unweighted, item 36)
-            flux = 0
+            flux = 0  # the plain currents through the Node's two Links (unweighted, item 36)
             for j in ((i - 1) % 60, (i + 1) % 60):
                 flux += int(a_now[i, 0, 0]) * int(a_before[j, 0, 0]) - int(a_before[i, 0, 0]) * int(
                     a_now[j, 0, 0]

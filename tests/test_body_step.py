@@ -117,5 +117,4 @@ def test_the_loader_refuses_a_self_source_unit_below_24_a_and_admits_one_at_it()
             family["self_source"] = {"unit": 24 * amplitude}
     document["stamp"] = input_stamp(document)
     parse_nature_beam_world(document)
-    # the inline list checks the unit's form; the file's entries check the bound 24 A too
-    # (tests/test_families_file.py)
+    # the inline list checks the unit's form; the file's entries check the bound 24 A too (tests/test_families_file.py)

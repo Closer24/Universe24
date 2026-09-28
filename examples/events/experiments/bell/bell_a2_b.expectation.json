@@ -56,6 +56,10 @@
    ],
    "band": 1,
    "row": "the right polariser at rest within a Link"
+  },
+  {
+   "reversible": 4000,
+   "row": "THE REVERSIBLE ROW (HIGHLIGHTS, clicks go only forward; the backward run is exact): the whole run forward and back to its start on a fresh copy, every row of the GameBoard bit for bit, the clicks kept; MATCH or the first interval and Node that deviate (tools/reversible.py, GAMEBOARD)"
   }
  ],
  "convergence": "the runs in order, no pin before the GAMEBOARD section is read: (1) one chain at the stock 64, the GAMEBOARD checks alone (the emitter's one arm up the tube, the crystal's two clicks and the pair leaving its Ports along -x and +x, the pair turned at the polarisers, the own set before the far one, the centres); (2) the four chains at 64, 256 and 1024 PAIRS (the crystal's giving clicks; the emitter's stock is the pairs over the crystal's share of the arriving record, the approver's number, read on the first run and set in the files), S with its two-sigma band from the draw's binomial band on each E: 64 pairs: S within 0.35, 256 pairs: S within 0.18, 1024 pairs: S within 0.09; the row's 2.83 read at 64 pairs against the bound 2, E within 0.02 at 1024; (3) the pair's rotation read from the crystal's giving line (rule 5) before any S is compared; the switching chain (`bell_switching`, the angles switched in flight) in the same series, its pairs four times a chain's for the same band since each pair lands in one of the four cells, and its control at the crystal's other count with S identical; S counted twice on every run, by the pair record and within the window; the runtime per chain: the load of one chain measured in `runtime` below, the intervals the probes' 0.01 s each on this board (EXPLORATORY)",

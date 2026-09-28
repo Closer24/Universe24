@@ -47,8 +47,7 @@ def test_a_missing_key_of_the_world_or_the_start_file_is_refused_by_name(tmp_pat
         broken["engine"] = START
         del broken[key]
         refused(broken, f"the world lacks keys: .*{key}")
-    # the start file: a missing key, an unknown key, a law's name (refused as an unknown
-    # key: no law's name and no version, ALGEBRA.md #the-primitives), a wrong mode
+    # the start file: a missing key, an unknown key, a law's name (refused as an unknown key: no law's name and no version, ALGEBRA.md #the-primitives), a wrong mode
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     start = tmp_path / "start.json"
     document["engine"] = "start.json"

@@ -434,12 +434,12 @@ def moving_body(
     return MovingBody(now, before, (denominator, j), (a, sense * b, c), velocity, named, rest, top)
 
 
-def wavelength_of(clock: tuple[int, int], given_pair: Pair) -> int | None:
-    """The given record's wavelength lambda_q of a giver's mode on the given family's band (ALGEBRA.md #the-primitives, the recoil's row; #the-rows-against-nature (g)): cos k = 3 cos omega_b den / num - 2 along one axis with 2 cos omega_b = a / b the mode's clock and [num, den] the given record's pair, k by the host's arc cosine as the twist's, 2 pi / k to the nearest whole Link; None where the band does not hold the rotation (no wave of that band at the giver's rotation)."""
+def wave_number_of(clock: tuple[int, int], given_pair: Pair) -> float | None:
+    """The given record's wave number k_q of a giver's mode on the given family's band, in radians per Link (ALGEBRA.md #the-primitives, the recoil's row; #the-rows-against-nature (g)): cos k = 3 cos omega_b den / num - 2 along one axis with 2 cos omega_b = a / b the mode's clock and [num, den] the given record's pair, k by the host's arc cosine as the twist's; None where the band does not hold the rotation (no wave of that band at the giver's rotation)."""
     cosine = 3 * clock[0] * given_pair[1] / (2 * clock[1] * given_pair[0]) - 2
     if not -1 < cosine < 1:
         return None
-    return max(1, round(2 * pi / acos(cosine)))
+    return acos(cosine)
 
 
 def clock_pair(rotation: Fraction, denominator: int) -> tuple[int, int]:
@@ -668,17 +668,19 @@ def given_train(
 
 
 def given_wavelength(
-    body: dict[str, Any], rows: dict[str, Any], clock: tuple[int, int]
+    body: dict[str, Any], rows: dict[str, Any], clock: tuple[int, int], unit: int
 ) -> dict[str, int]:
-    """The reading `wavelength` of a giving body: lambda_q of its mode on the given record's band (the given family's row's pair, or the emitter's own `pair` where the row declares none); no reading on a body that gives nothing or whose rotation the band does not hold."""
+    """The readings `wavelength` and `wave_number` of a giving body: lambda_q of its mode on the given record's band (the given family's row's pair, or the emitter's own `pair` where the row declares none) to the nearest whole Link, and k_q in the twist's unit (theta_unit = 1 / unit radians, the universe's twist table), the recoil's angle per Link before the division by the body's count; no reading on a body that gives nothing or whose rotation the band does not hold."""
     emitter = body.get("emitter")
     if not isinstance(emitter, dict):
         return {}
     pair = emitter.get("pair", rows[emitter["family"]].get("pair"))
     if not (isinstance(pair, list) and len(pair) == 2):
         return {}  # the record's pair is the body's word and the emitter declares none: no band to read
-    found = wavelength_of(clock, (int(pair[0]), int(pair[1])))
-    return {} if found is None else {"wavelength": found}
+    found = wave_number_of(clock, (int(pair[0]), int(pair[1])))
+    if found is None:
+        return {}
+    return {"wavelength": max(1, round(2 * pi / found)), "wave_number": round(unit * found)}
 
 
 def generate(document: dict[str, Any]) -> dict[str, Any]:
@@ -858,7 +860,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                     "clock": list(clock),
                     "period": period_by_the_rule(*clock),
                     "twist": round(twist_scale * acos(clock[0] / (2 * clock[1]))),
-                    **given_wavelength(body, rows, clock),
+                    **given_wavelength(body, rows, clock, int(integers["twist_table"]["unit"])),
                     **train,
                     "share_inside": bounded(mode.share_inside, mode.amplitude),
                     "in_the_worlds_well": in_world,
