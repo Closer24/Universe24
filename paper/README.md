@@ -18,6 +18,9 @@ manuscript.
   every number of the paper's table computed from the law's formulas on
   declared worlds, by no run of the engine:
   `python paper/general_formula/algebraic_runs.py`.
+- `general_formula/shape_check.py`: the check of the proposition on the
+  bound record's shape (the symmetry under the 48 and the decay rates),
+  a computation of the algebra on a lattice, by no run of the engine.
 - `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
   the journal.
 - `general_formula/COVER_LETTER.md`: the cover letter for the journal.
