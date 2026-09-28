@@ -92,3 +92,10 @@ def point_windows(loop: DetectorLawSimulation) -> None:
             block, GivingStart(THE_CLOSE, 0, (0, 0, 0), None, 0, (0, 0, 0)), live
         ).closed:
             loop._close_window(block, live)
+
+
+def pair_rows(loop: DetectorLawSimulation, live: LiveRecord) -> tuple[LiveRecord, ...]:
+    """The rows one act answers for at a record's step: a pair record's two rows are one tally, a lone record itself."""
+    if live.pair_record is None:
+        return (live,)
+    return tuple(loop.records[row] for row in live.pair_record.rows if row in loop.records)

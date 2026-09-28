@@ -39,6 +39,9 @@ def a_body(nodes: range | list[int], count: int, **keys: object) -> dict:
         "momentum": [0, 0, 0],
         "momentum_before": [0, 0, 0],
         "phase_denominator": 1024,
+        **(
+            {"q": 1} if "emitter" in keys or "crystal" in keys else {}
+        ),  # a giver's sign: a neutral body gives no light
         **keys,
     }
 
