@@ -579,20 +579,19 @@ not depend on A beyond its resolution: at A / 2 the profile agrees with the
 one at A, rescaled, within 12 units of the coarser, and the rotation to
 10^-6; the final scale comes from c T.
 
-(g) THE FIELD AT REST, THE START OF A WORLD. The generator iterates the held
-family's own line to rest first, at the pair of the family's row, as the
-hold's source makes it: the count over the divisor E_s added at the body's
-Nodes each pass, the homogeneous line outside. From nothing the level at every
-Node is num S_6(a) div (6 den), plus the source at the body's Nodes, by the
-division act on a fine unit derived from the width; the map is monotone, so
-the levels rise to a fixed point, the stop its first repeat; the levels are
-Poisson's rest with the sources within one unit, and the mode is solved on
-that content: generic (one primitive, the row's pair and divisor, no family
-name), vector (the division act alone, no root, no float) and local (the six
-reads and the source's load). A world starts from the field at rest, never
-from zeros, whose transient rings. Under [1, 1] between periodic faces the
-sources have no rest (the periodic Poisson problem at kappa = 0), and the
-world is refused by name; between open faces the harmonic well of the sources.
+(g) THE FIELD AT REST, THE START OF A WORLD. The generator iterates the held family's own
+line to rest first, at the pair of the family's row, as the hold's source makes it: the
+count over the divisor E_s added at the body's Nodes each pass, the homogeneous line
+outside. From nothing the level at every Node is num S_6(a) div (6 den), plus half the
+source at the body's Nodes (6 den a = num S_6(a) + 3 den sigma, sigma = w M div E_s: the
+source enters once an interval at one level), by the division act on a fine unit derived
+from the width; the map is monotone, so the levels rise to a fixed point, its first repeat;
+the levels are Poisson's rest with the sources within one unit, and the mode is solved on
+that content: generic (one primitive, the row's pair and divisor, no family name), vector
+(the division act alone, no root, no float) and local (the six reads and the source's load).
+A world starts from the field at rest, never from zeros, whose transient rings. Under [1, 1]
+between periodic faces the sources have no rest (the periodic Poisson problem at kappa = 0),
+and the world is refused by name; between open faces the harmonic well of the sources.
 
 THE START. The loop writes every held family at the load at its rest, by
 one folder found by its name, once before the first interval and never in
