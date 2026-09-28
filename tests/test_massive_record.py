@@ -581,7 +581,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_matter_emitters_record_clicks_once_at_the_rung():
-    """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its pointer, and is deleted whole there; two gather lines, the books balanced every interval."""
+    """A massive record clicks once at the screen, at the first interval 2 W C >= (2 u + 1) T on its pointer, and is deleted whole there; two gather lines, the books balanced every interval. The flight: nothing reaches the screen before the light's crossing of the Links from the body's head at one Link per interval (under the write of both levels the record's front carries the rung's flux), then as much of the passage as the residue asks (the residues spread from the kept remainder, record 1962 (1))."""
     document = matter_emitter_world(True, [512, 1], stock=2)
     document["ticks"] = 3000
     # the cube of matter bodies at [184, 186] read as `screen` (record 1899), the emitter kept at measured[1] (its records' identities carry its number)
@@ -635,7 +635,6 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         # the plain flux against the norm's rational norm / pace (item 36)
         assert 2 * wheel * pace * pointer >= (2 * u + 1) * norm
         assert below[identity] == gather["click"] - 1
-        # the flight: nothing reaches the screen before the light's crossing of the Links from the body's head at one Link per interval (under the write of both levels the record's front carries the rung's flux), then as much of the passage as the residue asks (the residues spread from the kept remainder, record 1962 (1))
         links = positions[0][0] - int(np.nonzero(simulation.block_by_number[1].mask)[0].max())
         assert links <= gather["click"] - gather["giving"] < 400 and identity not in simulation.records
 
@@ -728,8 +727,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
         assert line["clock_source"] == "measured:0" and line["clock"] == count_then
         assert first not in simulation.records
         assert all(g["chosen"][0][0] != "far" for g in lines if g["event"] == "gather")
-    # the loader's refusals
-    bad = light_clock_world("closed", False)
+    bad = light_clock_world("closed", False)  # the loader's refusals
     bad["detector_law"] = (
         False  # the flag was the law's name: refused by name (ALGEBRA.md #the-primitives)
     )
