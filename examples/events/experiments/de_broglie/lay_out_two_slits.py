@@ -180,44 +180,166 @@ def two_slits(folder: Path) -> dict[str, Any]:
     }
 
 
-# CHESHBON'S BLIND EXPECTATION OF THE STRIPS (#1325, 02:18Z, 2026-09-28; lambda = 5.785, d = 16, L = 97, the
-# stock 400; the exact two-arm phases k . r on the surface's wavevector with Huygens' sum over each opening's
-# four Nodes): his strips are numbered 0..63 over y = 0..255 (the centre 31.5); the strips here start at the
-# face slab's edge (y = FACE_DEPTH), so his strip j is the strip j - FACE_DEPTH // STRIP here. The share per strip
-# and its binomial sd on the stock; the band read as two sd (the draw's, "The rows against nature").
-CHESHBON_STRIPS = {
-    31: (0.049, 4.3),
-    32: (0.049, 4.3),
-    21: (0.037, 3.8),
-    42: (0.037, 3.8),
-    6: (0.015, 2.4),
-    56: (0.015, 2.4),
-    14: (0.0005, 0.5),
-    26: (0.0005, 0.5),
-    37: (0.0005, 0.5),
-    49: (0.0005, 0.5),
-}
+# CHESHBON'S BLIND EXPECTATION OF THE STRIPS (#1325, 02:18Z and 02:30Z, 2026-09-28; lambda = 5.785, d = 16,
+# L = 97; the exact shares of (g): the two arms' phases k . r on the band's surface with Huygens' sum over each
+# opening's four Nodes; the paraxial cos^2 (pi d y / (lambda L)) under the envelope beside them for the
+# comparison): his strips are numbered 0..63 over y = 0..255 (the centre 31.5); the strips here start at the
+# face slab's edge (y = FACE_DEPTH), so his strip j is the strip j - FACE_DEPTH // STRIP here. The count per
+# strip is the share of the stock and its band two binomial sd (the draw's, "The rows against nature").
+CHESHBON_EXACT = [
+    0.0078,
+    0.0092,
+    0.0107,
+    0.0121,
+    0.0135,
+    0.0145,
+    0.0152,
+    0.0151,
+    0.0143,
+    0.0126,
+    0.0100,
+    0.0068,
+    0.0036,
+    0.0011,
+    0.0002,
+    0.0018,
+    0.0064,
+    0.0136,
+    0.0224,
+    0.0307,
+    0.0363,
+    0.0370,
+    0.0323,
+    0.0231,
+    0.0123,
+    0.0036,
+    0.0003,
+    0.0044,
+    0.0150,
+    0.0290,
+    0.0417,
+    0.0487,
+    0.0477,
+    0.0389,
+    0.0254,
+    0.0119,
+    0.0027,
+    0.0005,
+    0.0053,
+    0.0150,
+    0.0257,
+    0.0340,
+    0.0373,
+    0.0353,
+    0.0288,
+    0.0202,
+    0.0116,
+    0.0050,
+    0.0012,
+    0.0002,
+    0.0016,
+    0.0044,
+    0.0077,
+    0.0107,
+    0.0131,
+    0.0146,
+    0.0152,
+    0.0151,
+    0.0143,
+    0.0131,
+    0.0118,
+    0.0103,
+    0.0088,
+    0.0074,
+]
+CHESHBON_PARAXIAL = [
+    0.0001,
+    0.0000,
+    0.0005,
+    0.0017,
+    0.0037,
+    0.0055,
+    0.0063,
+    0.0052,
+    0.0027,
+    0.0004,
+    0.0007,
+    0.0051,
+    0.0128,
+    0.0210,
+    0.0257,
+    0.0241,
+    0.0163,
+    0.0065,
+    0.0006,
+    0.0035,
+    0.0158,
+    0.0329,
+    0.0469,
+    0.0506,
+    0.0417,
+    0.0243,
+    0.0075,
+    0.0006,
+    0.0081,
+    0.0271,
+    0.0485,
+    0.0614,
+    0.0594,
+    0.0435,
+    0.0218,
+    0.0049,
+    0.0010,
+    0.0111,
+    0.0290,
+    0.0450,
+    0.0509,
+    0.0442,
+    0.0286,
+    0.0120,
+    0.0018,
+    0.0014,
+    0.0088,
+    0.0187,
+    0.0251,
+    0.0251,
+    0.0191,
+    0.0107,
+    0.0036,
+    0.0003,
+    0.0009,
+    0.0034,
+    0.0057,
+    0.0063,
+    0.0051,
+    0.0031,
+    0.0013,
+    0.0003,
+    0.0000,
+    0.0001,
+]
 
 
 def strips_expected(document: dict[str, Any]) -> list[dict[str, Any]]:
-    """The expectation's `strips`: Cheshbon's share per named strip, the count on the stock and the band of two sd."""
+    """The expectation's `strips`: per named strip Cheshbon's exact share and the paraxial one, the count on the stock and the band of two binomial sd."""
     offset = FACE_DEPTH // STRIP
-    names = {k: strip["name"] for k, strip in enumerate(document["detectors"])}
     found = []
-    for his, (share, sd) in sorted(CHESHBON_STRIPS.items()):
-        mine = his - offset
-        if mine in names:
-            found.append(
-                {
-                    "detector": names[mine],
-                    "cheshbon_strip": his,
-                    "share": share,
-                    "count": round(STOCK * share),
-                    "sd": sd,
-                    "band": round(2 * sd),
-                    "row": "Cheshbon's blind share (02:18Z) of the clicks on the screen at the stock 400; the band two binomial sd",
-                }
-            )
+    for mine, strip in enumerate(document["detectors"]):
+        his = mine + offset
+        exact = CHESHBON_EXACT[his]
+        sd = (STOCK * exact * (1 - exact)) ** 0.5
+        found.append(
+            {
+                "detector": strip["name"],
+                "cheshbon_strip": his,
+                "share": exact,
+                "paraxial_share": CHESHBON_PARAXIAL[his],
+                "count": round(STOCK * exact),
+                "sd": round(sd, 2),
+                "band": max(1, round(2 * sd)),
+                "row": "Cheshbon's blind exact share of the clicks on the screen (02:30Z), the paraxial cos^2 beside it; the count on the stock 400, the band two binomial sd",
+            }
+        )
     return found
 
 
