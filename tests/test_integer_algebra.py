@@ -28,7 +28,6 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/after_step.py": "the acts after the step the engine hooks per record: the hand's check at a click, the lifetime's end, the polariser's turn and its set's share, the polariser bodies' terms; functions taking the engine, bound as its methods",
     "events/body_language.py": "the recoil written into the body and told as one event line beside the click; integer kicks and sums, no arithmetic of its own",
     "events/pair.py": "the pair record of rank 2 in the loop: the two rows of one giving, the labels' clicks by their own ladders on the rows' bookings summed, the collapse to rank 1 at the first click; functions taking the engine",
-    "events/feeding.py": "the feed's and the induction's loop interface at (v): the reads' factors, a held family's parts summed, the body's faces through the Ports, the two acts on the folders' lines; functions taking the engine, bound as its methods",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
     "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
