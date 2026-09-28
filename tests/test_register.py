@@ -1,5 +1,4 @@
-"""The register of primitives found by their folders: one register, name to function, read by the loop
-alone; each folder declares its name, place, word, reads and writes, and the register refuses the rest."""
+"""The register of primitives found by their folders: one register, name to function, read by the loop alone; each folder declares its name, place, word, reads and writes, and the register refuses the rest."""
 
 from __future__ import annotations
 
