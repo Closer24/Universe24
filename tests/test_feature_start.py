@@ -78,9 +78,7 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
         divisor = definition.held_divisor
         expected = rest(counts, definition.pair, simulation.kind_wrap[family], divisor).levels
         assert np.array_equal(record.now, expected) and np.array_equal(record.before, expected)
-        assert (
-            record.remainder == (3 * definition.pair[1] - 1) // 2
-        ).all()  # the remainder's origin, the half wall
+        assert (record.remainder == (3 * definition.pair[1] - 1) // 2).all()  # the half wall
         assert simulation.node_level[family] is record.now
         assert (expected != 0).sum() > (counts != 0).sum()  # the field reaches beyond the bodies
         started += 1
