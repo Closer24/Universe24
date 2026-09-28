@@ -41,7 +41,26 @@ TAIL = {
     5_000: 34_734,
     6_000: 24_904,
 }  # Cheshbon's tail factor t = e^(-kappa) over 2^16 per count (14:12 Israel; the Closer 14:16), stated in integers
-EDGE_OF_THE_TERM = 2_706  # the edge of the bound body under the corrected term, 0.2255 Gamma (ALGEBRA.md THE BOUND BODY IS ONE NODE); on the engine of today lay_out_join's EDGE, 4,136
+EDGE_RATIO = (
+    0.2255,
+    0.3444,
+)  # the edge of the bound body over Gamma: under the corrected term (ALGEBRA.md THE BOUND BODY IS ONE NODE) and on the engine of today, the level once (Cheshbon 14:12 and 14:39 Israel)
+
+
+def gamma_of(universe: str) -> int:
+    """The Node clock Gamma of the universe file the worlds name (12,000 today; 24 by the owner's word of 15:11 Israel)."""
+    return int(json.loads((ROOT / universe).read_text(encoding="utf-8"))["integers"]["node_clock"])
+
+
+def edges(gamma: int) -> dict[str, int]:
+    """The blind section's numbers from Gamma alone: the edge under the term, the edge on the engine of today and the horizon Gamma div 2."""
+    return {
+        "edge_quanta_per_node": round(EDGE_RATIO[0] * gamma),
+        "edge_quanta_per_node_level_once": round(EDGE_RATIO[1] * gamma),
+        "horizon_quanta_per_node": gamma // 2,
+    }
+
+
 BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
 RAW_PER_PORT = 1000  # Cheshbon's blind number of 13:46 Israel at 3,000: the raw clicks (both signs) per interval through each of the six Ports, about
 PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
@@ -162,8 +181,7 @@ def expectation(pull: int) -> dict[str, Any]:
         "DETECTOR": [],
         "blind": {
             "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; the band plus or minus 30 percent (the Closer 14:16)",
-            "edge_quanta_per_node": EDGE_OF_THE_TERM,
-            "horizon_quanta_per_node": 6000,
+            **edges(gamma_of(PLANCK)),
             "raw_clicks_per_port_per_interval": RAW_PER_PORT,
             "net_tally_per_interval": net,
             "first_click": 1,
