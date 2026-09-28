@@ -39,11 +39,10 @@ def fingerprints(loop: DetectorLawSimulation) -> dict[str, dict[object, object]]
     stamps["a body's position"] = {b.number: (tuple(b.corner), id(b.mask)) for b in loop.blocks}
     stamps["the count at a Node"] = {b.number: id(b.counts) for b in loop.blocks}
     stamps["the count's remainder"] = {b.number: id(b.count_remainder) for b in loop.blocks}
-    remainders: dict[object, object] = {}
-    for b in loop.blocks:
-        for key, value in b.hold_value.items():
-            remainders[(b.number, key)] = (value, b.hold_carry.get(key))
-    stamps["a body's remainders"] = remainders
+    stamps["a body's remainders"] = {
+        b.number: (id(b.hold_value), b.hold_value.version, id(b.hold_carry), b.hold_carry.version)
+        for b in loop.blocks
+    }
     stamps["the paces"] = {key: id(array) for key, array in loop._pace_carry.items()}
     stamps["the records alive"] = dict.fromkeys(loop.records, True)
     return stamps

@@ -457,8 +457,7 @@ def draw(seed: int) -> dict[str, Any]:
         )
     for entry in families:  # one quantum per family: the row's is the clicks card's
         entry["quantum"] = entry["clicks"]["quantum"] if "clicks" in entry else 1
-    # a drawn self-source stands at a multiple of 24 A, A the loader's derived amplitude bound of this
-    # universe with the template's bodies (ALGEBRA.md #the-interval, #a-familys-declaration)
+    # a drawn self-source stands at a multiple of 24 A, A the loader's derived amplitude bound of this universe with the template's bodies (ALGEBRA.md #the-interval, #a-familys-declaration)
     floor = 24 * derived_amplitude(families, TEMPLATE["measured"], TEMPLATE["node_clock"])
     for entry in families:
         entry["self_source"]["unit"] *= floor
