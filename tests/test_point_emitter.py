@@ -24,11 +24,8 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         givings = [line for line in lines if line["event"] == "giving"]
         assert givings, weight
         first = givings[0]
-        assert (
-            first["train"] == 0
-            and first["window"] >= 1
-            and first["opened"] + first["window"] == first["tick"]
-        )
+        assert first["train"] == 0 and first["window"] >= 1
+        assert first["opened"] + first["window"] == first["tick"]
         # the close: the outward sum reached T, the record's norm its rows'; the stock fell at each open (the quantum moves at the open), a window still open counted
         assert first["outward"] * emitter["norm_denominator"] >= emitter["norm"]
         assert first["norm"] > 0 and first["pace"] >= 1
@@ -37,13 +34,30 @@ def test_the_window_writes_the_bodys_rotation_and_closes_at_the_excitations_acti
         if len(givings) > 1:
             assert givings[1]["opened"] > first["tick"]  # the next giving after the close
         windows[weight] = first["window"]
-        # the record's rows: a light record with rows spread from the body's Node, the body's Node's level written every interval of its window
+        # the record's rows: a light record with rows spread from the body's Node, the body's Node's level
+        # written every interval of its window
         live = simulation.records.get(first["record"])
         if live is not None:
             assert live.family == 0 and not live.window_open and live.window == first["window"]
     ratio = windows[1] / windows[4]
-    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world: g = 1 1124 intervals, g = 4 64, the ratio 17.6 beside g^2 = 16 (the outward norm as the square of the written amplitude); the band is a diagnostic check that the weight enters the window, not a measurement pinned against nature; it admits the build-up
+    # a GameBoard reading (COMPUTATION) from the engine's giving line, no detector in this world:
+    # g = 1 1124 intervals, g = 4 64, the ratio 17.6 beside g^2 = 16 (the outward norm as the
+    # square of the written amplitude); the band is a diagnostic check that the weight enters the
+    # window, not a measurement pinned against nature; it admits the build-up
     assert 8 < ratio < 64, windows
+
+
+def test_the_window_writes_the_bodys_rotation_at_both_levels():
+    """The giving's write is the body's rotation, two levels (ALGEBRA.md #the-primitives the giving's row; #the-generator (d)): at the first write of a window the given record's `now` at the body's Nodes is the weight times the body's level now and its `before` the weight times the body's level before, so the record starts as the body's mode turning and not as a kick of one level; the inverse takes both back (the bit-for-bit test below)."""
+    simulation = DetectorLawSimulation(parse_nature_beam_world(point_world(4, ticks=400)))
+    block, mask = simulation.blocks[0], simulation.blocks[0].mask
+    while block.window is None:
+        simulation.step()
+    simulation.step()  # the window's first write, right after the record's own step
+    live, now = simulation.records[block.window], simulation._body_levels(block)  # type: ignore[index]
+    before = simulation._body_levels(block, before=True)
+    assert live.window == 1 and not np.array_equal(now, before) and np.abs(before).max() > 0
+    assert np.array_equal(live.now[mask], 4 * now) and np.array_equal(live.before[mask], 4 * before)
 
 
 def test_the_window_inverts_bit_for_bit():
@@ -82,7 +96,9 @@ def test_the_window_inverts_bit_for_bit():
 def test_the_loader_pairs_the_key_with_the_one_node_body_the_weight_and_the_action():
     document = point_world(2, ticks=10)
     parse_nature_beam_world(document)
-    # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too (the level at its centre Node), the key `point_emitter` is retired and refused by name, and so are the train's keys; the weight and the action are required on every emitter
+    # SINCE COMMIT 7 the window is the law's one giving: the lattice body gives by it too
+    # (the level at its centre Node), the key `point_emitter` is retired and refused by name,
+    # and so are the train's keys; the weight and the action are required on every emitter
     no_weight = json.loads(json.dumps(document))
     del no_weight["measured"][0]["emitter"]["weight"]
     no_weight["stamp"] = input_stamp(no_weight)
