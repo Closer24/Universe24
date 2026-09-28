@@ -85,9 +85,7 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
         assert (expected != 0).sum() > (counts != 0).sum()  # the field reaches beyond the bodies
         started += 1
     assert started >= 1
-    # THE REST OF THE HOLD'S CARRIES: over the file's divisor the body's Nodes carry j E_s div N, so the source stream is
-    # steady from the first interval and the held total moves only by the loads less the faces' flux, within the
-    # rounding's reservoir (two per Node) and one unit per interval; with carries at 0 the whole field sinks
+    # THE REST OF THE HOLD'S CARRIES: over the file's divisor the body's Nodes carry j E_s div N, so the source stream is steady from the first interval and the held total moves only by the loads less the faces' flux, within the rounding's reservoir (two per Node) and one unit per interval; with carries at 0 the whole field sinks
     steady = DetectorLawSimulation(parse_nature_beam_world(stamped(emitter_world(stock=1, ticks=2))))
     block = steady.block_by_number[0]
     for family in steady.held_records:
