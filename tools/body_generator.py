@@ -572,8 +572,11 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 if isinstance(weight, str):
                     weight = integers[weight]
                 held = rows[read["family"]]
+                divisor = (held.get("held") or {}).get("divisor")  # the sum's rest over the row's E_s
                 if read["family"] not in fields:
-                    rest = start_rest(total, pair_of(held, f"the held family {read['family']!r}"), wrap)
+                    rest = start_rest(
+                        total, pair_of(held, f"the held family {read['family']!r}"), wrap, divisor
+                    )
                     fields[read["family"]] = rest
                     rests[read["family"]] = {
                         "pair": list(held["pair"]),
@@ -586,7 +589,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 own_key = (id(body), read["family"])
                 if own_key not in own_fields:
                     own_fields[own_key] = start_rest(
-                        counts, pair_of(held, f"the held family {read['family']!r}"), wrap
+                        counts, pair_of(held, f"the held family {read['family']!r}"), wrap, divisor
                     )
                 own_content = own_content + int(weight) * own_fields[own_key].levels
             if "phase_denominator" not in body:
