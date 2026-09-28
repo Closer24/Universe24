@@ -23,6 +23,10 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.bodies import parts_of, parts_world
 from tests.worlds import emitter_world
 
+# THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
+pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
+
+
 GAMMA = 10_000
 # the row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit (ALGEBRA.md #a-familys-declaration)
 TURN = ((1, 4), (3, 4))
@@ -94,8 +98,7 @@ def test_the_torque_turns_the_spin_by_the_moment_and_the_charge_curl_at_the_read
     assert b_x != 0 and step_z != 0, (curl_x, b_x, step_z)
     assert block.spin == [0, 0, step_z] and block.spin_before == [0, 0, 0]
     simulation.step_inverse()
-    assert block.spin == [0, 0, 0] and block.spin_before == [0, 0, 0]
-    assert simulation.leaks() == []
+    assert block.spin == [0, 0, 0] and block.spin_before == [0, 0, 0] and simulation.leaks() == []
 
 
 def test_the_curl_and_the_gradient_are_the_read_acts_on_the_six_neighbours():
@@ -129,8 +132,7 @@ def test_the_inverse_undoes_the_advance_exactly():
     own = SpinStepOwn({}, {})
     spin, before = (10, -20, 30), (11, -19, 29)
     forward = apply(term, SpinStepStart(THE_ADVANCE, reads, (64, 0, 8), 12_480, spin, before), own)
-    assert forward.spin_before == spin
-    assert forward.omega != (0, 0, 0) and forward.torque != (0, 0, 0)
+    assert forward.spin_before == spin and forward.omega != (0, 0, 0) and forward.torque != (0, 0, 0)
     backward = apply(
         term,
         SpinStepStart(THE_INVERSE, reads, (64, 0, 8), 12_480, forward.spin, forward.spin_before),

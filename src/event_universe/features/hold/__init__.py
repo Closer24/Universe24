@@ -98,7 +98,7 @@ def check(term: HoldTerm, start: HoldStart) -> None:
 
 
 def booking(factor: int, count: int, momentum: Vector, axes: tuple[int, ...]) -> int:
-    """The part's numerator, the booking of the count's level and the momentum's level per axis with the declared held factor, a reading with declared coefficients (ALGEBRA.md #the-four-acts); its wall the declared W to the power of the momentum factors."""
+    """The part's numerator, the booking of the count's level and the momentum's level per axis with the declared held factor, a reading with declared coefficients (ALGEBRA.md #the-four-acts); its wall the row's divisor E_s times the declared W to the power of the momentum factors."""
     found = factor * count
     for axis in axes:
         found *= momentum[axis]

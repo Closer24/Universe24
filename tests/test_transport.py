@@ -17,6 +17,10 @@ from tests.bodies import paces_world, parts_of
 from tests.running import refused
 from tests.worlds import FILE, HELD_MOMENT, emitter_world, on_the_file
 
+# THE START left out (the fixture): a periodic board has no rest under a source; tests/seeds.json binds it
+pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
+
+
 ROOT = Path(__file__).resolve().parents[1]
 OWN_TWIST = 9785  # round(2^16 acos(800 / 809)), the retired generator's rounding of the pair's rest rotation, measured once
 GAMMA = 10_000
@@ -56,8 +60,7 @@ def test_the_twist_tables_triples_are_exact_and_the_nearest_of_their_angles():
     assert rows["unit"] == UNIT
     for name, step in (("fine", 1), ("coarse", 1 << 10)):
         for k, (c, s, d) in list(enumerate(rows[name]))[:: max(1, len(rows[name]) // 64)]:
-            assert c * c + s * s == d * d and 1 <= d <= 10**9
-            assert math.gcd(math.gcd(c, s), d) == 1
+            assert c * c + s * s == d * d and 1 <= d <= 10**9 and math.gcd(math.gcd(c, s), d) == 1
             # the angle within the triples' own resolution of its target (the nearest n / m with
             # m at most 31622: no triple below 2 / m, the fine angles all read 0)
             assert abs(math.atan2(s, c) - k * step / UNIT) <= 2 / 31622

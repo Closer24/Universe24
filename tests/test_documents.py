@@ -144,8 +144,7 @@ def test_each_gate_fails_on_a_small_tree(tmp_path):
     assert unexpected_documents(root) == []
     assert lines_over_the_cap(root, {"docs/ENGINE.md": 11, "docs/ABSENT.md": 5}) == []
     assert lines_over_the_cap(root, {"docs/ENGINE.md": 10}) == ["docs/ENGINE.md: 11 lines, the cap 10"]
-    assert history_markers(root, ("docs/ENGINE.md",)) == []
-    assert missing_paths(root) == []
+    assert history_markers(root, ("docs/ENGINE.md",)) == [] and missing_paths(root) == []
     assert cited_paths("`x.py:3-4`, `word`, `a/b`, `python a/b`, `core/...`") == ["x.py", "a/b"]
     tree(
         root,

@@ -45,12 +45,10 @@ def test_two_inputs_together_give_the_files_of_each_alone(tmp_path: Path):
         assert output["format"] == OUTPUT_FORMAT and output["verdict"] == "LAWFUL"
         assert output["ticks"] == 250 and output["stamp"]["hash"]
         assert output["counts"]["screen"] >= 1 and output["pins"] == []
-        assert all(
-            set(click) == {"detector", "interval", "giving", "record"} for click in output["clicks"]
-        )
-        assert sum(output["counts"].values()) == len(
-            [click for click in output["clicks"] if click["detector"] is not None]
-        )
+        keys = {"detector", "interval", "giving", "record"}
+        assert all(set(click) == keys for click in output["clicks"])
+        clicked = [c for c in output["clicks"] if c["detector"] is not None]
+        assert sum(output["counts"].values()) == len(clicked)
 
 
 def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path: Path):
@@ -78,57 +76,37 @@ def test_a_refused_input_writes_its_reason_and_the_pins_verdict_is_read(tmp_path
     expectation["GAMEBOARD"] = [{"body": 0, "interval": 50, "momentum": [0, 0, 0], "band": 0}]
     good_path.with_suffix(".expectation.json").write_text(json.dumps(expectation), encoding="utf-8")
     pins = tmp_path / "pins.json"
-    pins.write_text(
-        json.dumps(
-            {
-                "good": [
-                    {"detector": "screen", "count": 2, "band": 1},
-                    {"detector": "screen", "count": 40, "band": 1},
-                    {"detector": "screen", "first_click": 1, "band": 0},
-                    {"detector": "nowhere", "first_click": 1, "band": 1000},
-                    {"detector": "screen", "mean_interval": 100, "band": 60},
-                    {"detector": "nowhere", "mean_interval": 100, "band": 1000},
-                ]
-            }
-        ),
-        encoding="utf-8",
-    )
+    good_pins = [
+        {"detector": "screen", "count": 2, "band": 1},
+        {"detector": "screen", "count": 40, "band": 1},
+        {"detector": "screen", "first_click": 1, "band": 0},
+        {"detector": "nowhere", "first_click": 1, "band": 1000},
+        {"detector": "screen", "mean_interval": 100, "band": 60},
+        {"detector": "nowhere", "mean_interval": 100, "band": 1000},
+    ]
+    pins.write_text(json.dumps({"good": good_pins}), encoding="utf-8")
     out = tmp_path / "out"
-    assert (
-        main(["--out", str(out), "--jobs", "2", "--pins", str(pins), str(bad_path), str(good_path)]) == 1
-    )
+    inputs = [str(bad_path), str(good_path)]
+    assert main(["--out", str(out), "--jobs", "2", "--pins", str(pins), *inputs]) == 1
     refused = json.loads((out / "bad.output.json").read_text(encoding="utf-8"))
     assert refused["verdict"] == "REFUSED" and "lacks keys: momentum" in refused["reason"]
     assert "clicks" not in refused
     good = json.loads((out / "good.output.json").read_text(encoding="utf-8"))
     assert good["verdict"] == "LAWFUL"
     read = good["counts"]["screen"]
-    waits = [
-        click["interval"] - click["giving"] for click in good["clicks"] if click["detector"] == "screen"
-    ]
+    waits = [c["interval"] - c["giving"] for c in good["clicks"] if c["detector"] == "screen"]
     first = min(waits)
     mean = (2 * sum(waits) + len(waits)) // (2 * len(waits))
     assert good["pins"][6]["verdict"] == good["pins"][0]["verdict"] and len(good["pins"]) == 8
     momentum = [line for line in good["readings"] if line["name"] == "n"][0]["lines"][1]["momentum"]
     assert good["pins"][7]["read"] == momentum and good["pins"][7]["kind"] == "momentum"
     assert good["pins"][7]["verdict"] == ("MATCH" if momentum == [0, 0, 0] else "MISS")
-    assert [pin["verdict"] for pin in good["pins"][:6]] == [
-        "MATCH" if abs(read - 2) <= 1 else "MISS",
-        "MISS",
-        "MATCH" if first == 1 else "MISS",
-        "MISS",
-        "MATCH" if abs(mean - 100) <= 60 else "MISS",
-        "MISS",
-    ]
+    hits = [abs(read - 2) <= 1, first == 1, abs(mean - 100) <= 60]
+    expected = [verdict for hit in hits for verdict in ("MATCH" if hit else "MISS", "MISS")]
+    assert [pin["verdict"] for pin in good["pins"][:6]] == expected
     assert [pin["read"] for pin in good["pins"][:6]] == [read, read, first, None, mean, None]
-    assert [pin["kind"] for pin in good["pins"][:6]] == [
-        "count",
-        "count",
-        "first_click",
-        "first_click",
-        "mean_interval",
-        "mean_interval",
-    ]
+    kinds = ["count", "first_click", "mean_interval"]
+    assert [pin["kind"] for pin in good["pins"][:6]] == [kind for kind in kinds for _ in range(2)]
 
 
 def test_a_leak_refuses_the_run_naming_the_family(tmp_path: Path, monkeypatch):
@@ -154,4 +132,25 @@ def test_a_leak_refuses_the_run_naming_the_family(tmp_path: Path, monkeypatch):
     )
     assert "clicks" not in output
     monkeypatch.setattr(DetectorLawSimulation, "leaks", lambda self: [])
+    assert run_input(str(path), str(tmp_path), [])["verdict"] == "LAWFUL"
+
+
+def test_a_refusal_inside_the_run_is_written_with_its_interval(tmp_path: Path, monkeypatch):
+    """A guard's refusal inside the run (the amplitude bound, the twist table, the wall: an exception raised by the engine's step) ends the run with the verdict REFUSED, the reason naming the error and the interval, the output written as at a refusal at the load and no exception escaping; the edge case: a run without a refusal is LAWFUL."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+
+    path = write(tmp_path, "guarded", emitter_world(stock=1, ticks=20))
+    step = DetectorLawSimulation.step
+
+    def guarded(self: DetectorLawSimulation) -> None:
+        if self.tick == 2:
+            raise ValueError("the twist on the Port toward +x reaches beyond the twist table")
+        step(self)
+
+    monkeypatch.setattr(DetectorLawSimulation, "step", guarded)
+    assert run_input(str(path), str(tmp_path), [])["verdict"] == "REFUSED"
+    output = json.loads((tmp_path / "guarded.output.json").read_text(encoding="utf-8"))
+    assert output["verdict"] == "REFUSED" and "ValueError at interval 2" in output["reason"]
+    assert "twist table" in output["reason"] and "clicks" not in output
+    monkeypatch.setattr(DetectorLawSimulation, "step", step)
     assert run_input(str(path), str(tmp_path), [])["verdict"] == "LAWFUL"

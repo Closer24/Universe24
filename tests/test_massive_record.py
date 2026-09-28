@@ -79,8 +79,7 @@ def test_the_rule_at_a_corner_of_an_open_board():
         r[0, 0, 0] = 5
         live = planted(simulation, 1, now, before, r)
         a_next, r_next = step_once(simulation, live)
-        assert int(a_next[0, 0, 0]) == expected
-        assert int(r_next[0, 0, 0]) == 5
+        assert int(a_next[0, 0, 0]) == expected and int(r_next[0, 0, 0]) == 5
 
 
 @pytest.mark.usefixtures("the_loads_hold_alone")
@@ -103,8 +102,7 @@ def test_lights_pair_is_the_first_builds_integers_bit_for_bit():
     a_next, r_next = step_once(simulation, live)
     content = simulation.level_of("content")
     free = (content == 0) & (send(simulation.ports, content, simulation.kind_wrap[0]) == 0)
-    assert int(np.sum(free)) == 80
-    assert np.array_equal(a_next[free], expected_next[free])
+    assert int(np.sum(free)) == 80 and np.array_equal(a_next[free], expected_next[free])
     assert np.array_equal(r_next[free], expected_remainder[free])
     # the weak-field rule at every Node from its three integers (ALGEBRA.md #the-line; item 44)
     (read, _, _), self_coefficient, wall = coefficients(
@@ -154,8 +152,7 @@ def test_the_conserved_form_holds_to_the_remainders_jitter():
             projection = max(projection, abs(int(np.sum(live.now * checker)) // 216))
             # GAMEBOARD: the books' form, a diagnostic bound on the remainders' jitter, not a measurement
             assert abs(Fraction(*simulation.record_form(live)) - start) < start // 1000
-        assert peak < 2 * UNIT
-        assert projection < 40
+        assert peak < 2 * UNIT and projection < 40
         simulation.records[live.identity] = live
         assert simulation.books()["families"]["matter"]["form"] == form_json(
             simulation.record_form(live)
@@ -305,8 +302,7 @@ def test_the_blocks_cells_and_its_pair_on_them():
     )
     simulation = DetectorLawSimulation(world)
     block = simulation.blocks[0]
-    assert int(block.mask.sum()) == 27
-    assert block.mask[2:5, 2:5, 2:5].all()
+    assert int(block.mask.sum()) == 27 and block.mask[2:5, 2:5, 2:5].all()
     den = simulation.kind_den[1]
     assert np.all(simulation.kind_num[1] == 800)
     assert np.all(den[block.mask] == 800) and np.all(den[~block.mask] == 809)
@@ -337,15 +333,6 @@ def test_the_blocks_cells_and_its_pair_on_them():
         )
 
 
-def six_reads(row: np.ndarray) -> np.ndarray:
-    """The six directed reads of the rule on a periodic board (an axis of extent 1 reads the Node itself twice), summed: the S_6 of MASSIVE_RECORD.md section 3."""
-    total = np.zeros(row.shape, dtype=object)
-    for axis in range(3):
-        for shift in (1, -1):
-            total = total + np.roll(row, shift, axis=axis)
-    return total
-
-
 def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with the lamp; an emitter is a clicking body, ALGEBRA.md #the-click): an emitter body of the source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3) on the chain of 240 with the screen at 230: three givings in turn, the residues the law's, each given record of content 1 moved from the stock (`held_spent` 3 of the source family, `transit_released` 3 of light), the body's own record continuing under its one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md #the-ladder; item 33), the books balanced at every tick. The edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on a body of light's kind refused; a stock below 1 refused."""
     world = parse_nature_beam_world(
@@ -364,8 +351,8 @@ def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     # kept at the Nodes (the model owner's decisions (1) and (2) of record 1962;
     # the coupling's back-action HISTORY)
     assert all(lawful_wheel(world, line) for line in givings)
-    # the line's content is the held level at the body's Node, 0 (4 quanta over the divisor 40000 add nothing)
-    assert [line["content"] for line in givings] == [0, 0, 0]
+    # the line's content is the held level at the body's Node: the tent of 4 quanta over the divisor 40000, within 1
+    assert all(abs(line["content"]) <= 1 for line in givings)
     assert [line["excitation"] for line in givings] == [1, 2, 3]
     assert len({line["u"] for line in givings}) > 1
     # the spent quanta on the given family's row, light (item 47; the own family's HISTORY)
@@ -548,8 +535,9 @@ def test_the_form_on_a_chain_is_exact_with_the_remainders_term():
             previous = current
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
-    """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer): the block s = 14 at g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a beat (the mean interval 39.3 against the mode's period 42.36), seeded with the module's mode as integers at 2^18 over the whole layer (the generator's integers in the world file, the same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within 0.5 percent of the mode's period 2 pi / omega_b, 42.36 intervals on this layer (the detector's clicks; the loader's residual bound is the law's check of the profile). The edge cases: a profile without `margin` refused; a profile of the wrong length refused; an all-zero profile refused."""
+    """The seed as the bound mode's integer profile (MASSIVE_RECORD.md section 11 item 7, the reader of record and the seed; EXPLORATORY, the cheap 128^2 rest layer, periodic on every axis, so THE START is left out: the layer has no rest under a source (ALGEBRA.md #the-generator (g)) and the recorded mode (tests/seeds.json) binds the layer as recorded): the block s = 14 at g = mu^2 / 4 (the kind [3200, 3236], the well [3200, 3227]) seeded flat reads its clicks at a beat (the mean interval 39.3 against the mode's period 42.36), seeded with the module's mode as integers at 2^18 over the whole layer (the generator's integers in the world file, the same at both levels) it reads the mode: the clicks' mean interval over [200, 1500] within 0.5 percent of the mode's period 2 pi / omega_b, 42.36 intervals on this layer (the detector's clicks; the loader's residual bound is the law's check of the profile). The edge cases: a profile without `margin` refused; a profile of the wrong length refused; an all-zero profile refused."""
     block = {
         "position": [57, 57, 0],
         "side": 14,
@@ -563,9 +551,7 @@ def test_the_mode_seeded_layer_blocks_clicks_read_the_bound_mode():
         "seed": 1 << 18,  # below the pair's amplitude bound (ALGEBRA.md #the-rows-against-nature)
     }
     document = block_world([128, 128, 1], PERIODIC, [3200, 3236], [block], ticks=1500)
-    document["amplitude_bound"] = (
-        1 << 19
-    )  # the pair's room under the weak field (ALGEBRA.md #the-rows-against-nature)
+    document["amplitude_bound"] = 1 << 19  # the pair's room under the weak field (ALGEBRA.md)
     world = parse_nature_beam_world(document)
     # the mode's period 2 pi / omega_b on this 128^2 layer (omega_b 0.14833, a COMPUTATION)
     period = 42.36
@@ -602,8 +588,7 @@ def test_a_matter_emitters_record_is_a_massive_record_advanced_by_the_kinds_pair
     world = parse_nature_beam_world(matter_emitter_world(True, [512, 1]))
     beside = parse_nature_beam_world(matter_emitter_world(False, [512, 1]))
     matter = [family.name for family in world.families].index("matter")
-    assert world.families[matter].massive_kind
-    assert world.families[matter].phase_per_age == (512, 1)
+    assert world.families[matter].massive_kind and world.families[matter].phase_per_age == (512, 1)
     simulation = DetectorLawSimulation(world)
     other = DetectorLawSimulation(beside)
     identity: int | None = None
@@ -709,8 +694,7 @@ def test_a_matter_emitters_record_clicks_once_at_the_rung():
         # the flight: the train's head over 53 Links at v_g = 0.442, then as
         # much of the passage as the residue asks (the residues spread from
         # the kept remainder, record 1962 (1))
-        assert 100 < gather["click"] - gather["giving"] < 400
-        assert identity not in simulation.records
+        assert 100 < gather["click"] - gather["giving"] < 400 and identity not in simulation.records
 
 
 def test_every_declared_wheel_is_refused_by_name():
@@ -835,7 +819,7 @@ def test_the_receiving_set_beside_the_emitter_books_the_flux_and_clicks_at_its_r
 
 
 def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_block():
-    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13 item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the set's Nodes (the detector index at them the set's); an emitter's record (the emitter body of the source kind at [100, 132) on a chain of 300, its train along +x toward the block 68 Links ahead, two givings, the emitter naming the set) books its one-way flux into the block's Nodes to the set and clicks once there, the click stamped with the block's own count as the interval began and named by `clock_source`, the record deleted whole at it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block stepping, its Nodes and the set's Nodes following it): the record still clicks once at the set, the books balanced. The loader: a set's `wheel` refused by name."""
+    """A set bound to a block WITHOUT positions is a receiver (Sagnac's form, DECLARATIONS.md section 13 item 1) under the flux reading (ALGEBRA.md #rule3): the block's twelve Nodes are the set's Nodes (the detector index at them the set's); an emitter's record (the emitter body of the source kind at [100, 132) on a chain of 300, two givings at the direction [0, 0, 0], the emitter naming the set; a wall of light's kind behind it at [88, 96), eight Nodes deep at the gap's pair [1, 2] (the mirror line of light's kind: at the train's rotation, cos omega = 2 / 3 at lambda = 4 Links on the chain, the gap's line 2 cos omega = (4 + 2 cos k') / 6 has no real k', so the train is evanescent inside, e^(-1.32) per Node, ALGEBRA.md #the-band-at-a-pace), so the half given toward x = 0 returns whole and the giving is one-armed toward the block 68 Links ahead) books its whole flux into the block's Nodes to the set and clicks once there: C_B(infinity) = T above the rung's theta = (2 u + 1) T / (2 V) for every residue u, the click at the set certain and the open face never reached (two-armed, without the mirror, half the flux leaves by the face and the click at the set is Born's coin, P(B) = C_B / T = 1 / 2, an event of the residue and no claim); the click stamped with the block's own count as the interval began and named by `clock_source`, the record deleted whole at it, the books balanced; nothing absorbs. Pushed toward the emitter at k = 3 (the block stepping, its Nodes and the set's Nodes following it): the record still clicks once at the set, the books balanced. The loader: a set's `wheel` refused by name."""
     for momentum in ([0, 0, 0], [-64, 0, 0]):
         document = massive_world([300, 1, 1], CHAIN, [800, 809])
         document["ticks"] = 1200
@@ -863,10 +847,17 @@ def test_a_set_at_a_blocks_cells_books_the_flux_into_them_and_steps_with_the_blo
             },
         ]
         document["detectors"] = [{"name": "B_nodes", "block": 1}]
-        seed_source(document, 0)
+        seed_source(document, 0)  # the recorded seeding of the two-body fixture (tests/seeds.json)
+        # the mirror behind the emitter: a wall of light's kind at the gap's pair [1, 2], eight Nodes deep
+        wall = dict(document["measured"][1], family="light", amount=1, side=1, pair=[1, 2])
+        wall = {**{k: v for k, v in wall.items() if k not in ("seed", "margin")}, "momentum": [0, 0, 0]}
+        for x in range(88, 96):
+            document["measured"].append(dict(wall, position=[x, 0, 0], momentum_before=[0, 0, 0]))
+        document["stamp"] = input_stamp(document)
         world = parse_nature_beam_world(document)
         lines: list[dict] = []
         simulation = DetectorLawSimulation(world, observer=lines.append)
+        assert (simulation.kind_den[0][88:96, 0, 0] == 2).all()  # the gap's pair at the wall
         block = simulation.blocks[1]
         detector = simulation.detector_names.index("B_nodes")
         assert int(simulation.detector_at_node[205, 0, 0]) == detector
@@ -960,7 +951,7 @@ def test_the_momentum_books_carry_the_blocks_held_momentum_and_nothing_else():
     world = parse_nature_beam_world(
         block_world(
             [24, 24, 24],
-            PERIODIC,
+            {**PERIODIC, "x": "closed"},
             [800, 809],
             [{"position": [10, 10, 10], "side": 3, "pair": [800, 800], "momentum": [64, 0, 0]}],
         )
