@@ -29,10 +29,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from event_universe.events.primitives import Triple, TwistTable, is_triple  # noqa: E402
-from event_universe.loader.world import TWIST_FINE_COUNT  # noqa: E402
 
 GAMMA = 10_000
 UNIT_SCALE = 1 << 16
+TWIST_FINE_COUNT = 1 << 10  # the fine table this tool writes; the loader takes the file's own count
 DENOMINATOR_BOUND = 10**9
 COARSE_DEFAULT = 1 << 15  # at most 2^15 coarse entries (ALGEBRA.md #the-primitives)
 SMALLEST_ANGLE = 2.0 * math.atan(

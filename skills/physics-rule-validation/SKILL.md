@@ -5,7 +5,7 @@ description: Independently validate every changed Universe24 physics-engine rule
 
 # Physics-rule validation
 
-The team of 2026-09-26 and the generic engine's way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-26-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow (records 2186 to 2190). The physicist, Nature24, runs the engine, writes the run's files and the tests, and checks each ledger item; it never changes the engine's code.
+The team and the way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow. Since 2026-09-28 the physicist's session (Nature24) is archived: the expectation against nature and the physical reading of a row are the Experimenter's, the algebraic approval Cheshbon's, and this review is done by whichever of the two the Closer names for the change.
 
 Read [the shared workflow](../workflow.md), postulates,
 definitions and the

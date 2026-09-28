@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.features.polariser import read_term
+from event_universe.features import crystal, polariser
 from event_universe.features.receive import ReceiveTerm
 from event_universe.loader.world import NatureBeamWorld
 
@@ -242,7 +242,14 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
         loop.blocks.append(block)
         loop.block_by_number[number] = block
     loop.polarisers = {
-        b.number: t for b in loop.blocks if (t := read_term(dict(b.definition.declared))) is not None
+        b.number: t
+        for b in loop.blocks
+        if (t := polariser.read_term(dict(b.definition.declared))) is not None
+    }
+    loop.crystals = {
+        b.number: c
+        for b in loop.blocks
+        if (c := crystal.read_term(dict(b.definition.declared))) is not None
     }
     # The blocks' Nodes: a block's Nodes carry its detector's index (the flux
     # into them booked to it, never chosen: the detector is on no ladder); a

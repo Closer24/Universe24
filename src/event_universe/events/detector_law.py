@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, feeding, guards, output
+from event_universe.events import after_step, assembly, feeding, guards, output, pair
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
@@ -35,10 +35,9 @@ from event_universe.events.records import Block, DetectorLawLayer, Ledger, LiveR
 from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
+from event_universe.features.crystal import CrystalTerm
 from event_universe.features.giving import (
-    THE_CLOSE,
     THE_OPEN,
-    THE_WRITE,
     GivingOwn,
     GivingStart,
     GivingTerm,
@@ -48,7 +47,6 @@ from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrite
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.recoil import (
-    GIVING,
     TAKING,
     RecoilOwn,
     RecoilStart,
@@ -147,6 +145,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     has_receiver: bool
     held_records: dict[int, LiveRecord]
     polarisers: dict[int, PolariserTerm]
+    crystals: dict[int, CrystalTerm]
     held_parts: dict[int, list[LiveRecord]]
     sourced_records: dict[int, LiveRecord]
     _source_argument: dict[int, np.ndarray]
@@ -198,6 +197,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 )
         # the interval's clicks for the recoil's act: the body, the sense, the tally, the record's clock
         self._recoils: list[tuple[int, int, tuple[int, int, int], tuple[int, int]]] = []
+        self._crystal_clicks: list[tuple[int, LiveRecord]] = []
         assembly.state_arrays(self, world)
         self.kind_num = PairView(self, 0)
         self.kind_den = PairView(self, 1)
@@ -236,10 +236,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.momentum_before = [int(component) for component in entry.momentum_before]
         return block
 
-    def _node_record(self, identity: int, level: int) -> NodeRecord:
-        # a body's record at its centre Node: the profile's level at both levels, the remainder 0
-        return NodeRecord(identity, level, level)
-
     # The register of primitives: one register, name to function, read by the loop alone
 
     def _engine_register(self) -> Register:
@@ -259,11 +255,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the source": Stage(self._source_stage, (), ("the source",)),
             "the recoil": Stage(self._recoil_stage, (), ("the recoil",)),
             "the lifetime": Stage(self._lifetime_stage, (), ("the lifetime",)),
-            "the hand": Stage(self._hand_stage, (), ("the hand",)),
+            "the hand": Stage(lambda function: None, (), ("the hand",)),
             "the feed": Stage(self._feed_stage, (), ("the feed",)),
             "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
             "the polariser": Stage(self._polariser_stage, (), ("the polariser",)),
+            "the crystal": Stage(self._crystal_stage, (), ("the crystal",), creates=True),
         }
 
     _card_writes = guards.card_writes
@@ -289,6 +286,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     _lifetime_stage = after_step.lifetime_stage
     _polariser_stage = after_step.polariser_stage
     _polarised = after_step.polarised
+    _crystal_click = after_step.crystal_click
+    _crystal_stage = after_step.crystal_stage
+    _window_write = after_step.window_write
+    _point_windows = after_step.point_windows
+    _close_window = after_step.close_window
+    _pair_click = pair.pair_click
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
         """The count's line's act: each body's quanta moved by its record's current through its Nodes' Ports."""
@@ -445,9 +448,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             )
         return whole
 
-    def _hand_stage(self, function: Callable[..., object]) -> None:
-        """The hand's whole-board act carries nothing of its own: the check is nested in each record's click (`_hand_admits`, inside the clicks' act), where the taking body is known."""
-
     def _recoil_stage(self, function: Callable[..., object]) -> None:
         """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
         for number, sense, tally, clock in self._recoils:
@@ -570,6 +570,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             if family.hand is not None:
                 terms.append((f"{label}.hand", "the hand"))
         terms.extend(after_step.polariser_terms(self))
+        terms.extend(after_step.crystal_terms(self))
         for number, entry in enumerate(self.world.measured):
             if entry.block is not None and entry.block.emitter is not None:
                 terms.append((f"measured[{number}].emitter", "the giving"))
@@ -1024,9 +1025,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             block.emit_now = True
 
     def _emit(self, block: Block) -> None:
-        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here."""
+        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here; for a crystal (features/crystal) the emitter is the pair's giving definition on the block; the component along the body's moment and the twist are the loader's integers (ALGEBRA.md #the-second-level)."""
         world = self.world
-        emitter = block.definition.emitter
+        emitter = after_step.emitter_of(block)
         own: LiveRecord | NodeRecord | None = (
             block.node_record if block.node_record is not None else block.own
         )
@@ -1034,7 +1035,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         number = block.number
         family = emitter.family
         definition = self.families[family]
-        numerator, denominator = emitter.clock  # the given clock, the emitter's (item 59)
+        numerator, denominator = emitter.clock
         steps = world.phase_steps
         period = (steps * denominator + numerator - 1) // numerator
         cost = definition.quantum
@@ -1066,6 +1067,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         # the body's own record is not ended and never rewritten (ALGEBRA.md #the-ladder)
         block.givings += 1
         identity, self.next_identity = self.next_identity, self.next_identity + 1
+        rows = tuple(np.zeros(self.shape, dtype=np.int64) for _ in range(3))
         live = LiveRecord(
             identity,
             number,
@@ -1078,16 +1080,15 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             denominator,
             0,
             period,
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
-            np.zeros(self.shape, dtype=np.int64),
+            rows[0],
+            rows[1],
+            rows[2],
             pointers=[0] * len(self.detector_names),
             first_rung=[None] * len(self.detector_names),
             wheel=wheel,
             labels=tuple(emitter.branches),
             emitter=number,
             pair=(int(emitter.pair[0]), int(emitter.pair[1])),
-            # the component along the body's moment and the twist "own" (ALGEBRA.md ALGEBRA.md #the-second-level, #the-primitives; commit 4), the loader's integers
             part=emitter.part,
             twist=emitter.twist,
         )
@@ -1207,11 +1208,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     "centre": at_centre,
                 }
             )
-
-    @staticmethod
-    def _phase(age: int, numerator: int, denominator: int, steps: int) -> int:
-        """The record's clock at its age: the zero (3 N / 4) advanced by the whole part of age x n / d on the circle of N steps."""
-        return (3 * steps // 4 + age * numerator // denominator) % steps
 
     # The inverse map (ALGEBRA.md 8.8): the step is a bijection but for the click; the property test of 9.20 (B) 4 runs it backwards
 
@@ -1899,7 +1895,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
 
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
         """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
-        emitter = block.definition.emitter
+        emitter = after_step.emitter_of(block)
         if emitter is None:
             raise ValueError(f"the body {block.number} gives with no emitter declared")
         norm = emitter.norm if emitter.norm is not None else 1
@@ -1917,37 +1913,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         )
         function = self.main_loop.function_of("the giving", "(ii)")
         return cast(GivingWrites, function(term, start, own))
-
-    def _window_write(self, live: LiveRecord) -> None:
-        """One interval of an open window right after the record's own step: the body's rotation written into the given row at the body's Nodes, the norm that left the body read as the outward flux through its outer Ports, the window's count grown and the box taking the body in."""
-        block = self.block_by_number.get(live.emitter) if live.emitter is not None else None
-        if block is None or block.window != live.identity:
-            return
-        emitter = block.definition.emitter
-        if emitter is None or emitter.weight is None:
-            return
-        written = self._giving_act(
-            block, GivingStart(THE_WRITE, 0, (0, 0, 0), self._body_levels(block), 0, (0, 0, 0)), live
-        )
-        if written.level is not None:
-            live.now[block.mask] += written.level
-        flux_tally = [0, 0, 0]
-        flux = self.body_outward_flux(live, block, flux_tally)
-        closing = self._giving_act(
-            block,
-            GivingStart(
-                THE_CLOSE, 0, (0, 0, 0), None, flux, (flux_tally[0], flux_tally[1], flux_tally[2])
-            ),
-            live,
-        )
-        live.outward = closing.own.outward
-        live.outward_tally = list(closing.own.tally)
-        live.window += 1
-        if live.box is not None:
-            live.box = tuple(
-                (min(lo, low), max(hi, high))
-                for (lo, hi), (low, high) in zip(live.box, self.mask_box(block.mask), strict=True)
-            )
 
     def _body_levels(self, block: Block) -> np.ndarray:
         """The body's rotation's level now at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
@@ -1984,57 +1949,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 if tally is not None:
                     tally[axis] += side * outward
         return total
-
-    def _point_windows(self) -> None:
-        """The point emitters' windows closed after the interval's bookings: the given record's norm, residue and wheel fixed from what left the body, the window's count and the record's box settled, the giving line written."""
-        for block in self.blocks:
-            if block.window is None:
-                continue
-            live = self.records.get(block.window)
-            emitter = block.definition.emitter
-            if live is None or emitter is None or emitter.weight is None or emitter.norm is None:
-                block.window = None
-                continue
-            if live.clicked:
-                # taken while its window was open (its own body's Node's set reading the returning light, the light clock): the window closes at the click, the record named
-                self._close_window(block, live)
-                continue
-            # (d) the close: the folder's close act on the outward norm summed over the window
-            if self._giving_act(
-                block, GivingStart(THE_CLOSE, 0, (0, 0, 0), None, 0, (0, 0, 0)), live
-            ).closed:
-                self._close_window(block, live)
-
-    def _close_window(self, block: Block, live: LiveRecord) -> None:
-        """The window's close (ALGEBRA.md; item 50): the writing ends, the record is named on its giving line with the window's length and the open's interval, the next excitation's count starts (the quantum moved at the open: the stock, the content and the ledger's rows as the train emitter's; the norm T from the open)."""
-        emitter = block.definition.emitter
-        assert emitter is not None
-        live.window_open = False
-        block.window = None
-        if live.giving_line is not None and self.record is not None:
-            line = dict(live.giving_line)
-            line["tick"] = self.tick
-            line["norm"] = live.norm
-            line["pace"] = live.pace
-            line["window"] = live.window
-            line["outward"] = live.outward
-            line["opened"] = self.tick - live.window  # the open's interval (HOST)
-            # THE GIVEN QUANTUM'S FOUR-VECTOR (ALGEBRA.md #the-primitives, #the-interval): the count 1, the space part the sign per axis of the outward flux over the window (DETECTOR)
-            line["momentum"] = self.direction_of(live.outward_tally)
-            self.record(line)
-        outward = live.outward_tally
-        self._recoils.append(
-            (
-                block.number,
-                GIVING,
-                (int(outward[0]), int(outward[1]), int(outward[2])),
-                (live.period_numerator, live.period_denominator),
-            )
-        )
-        live.giving_line = None
-        block.wait = 0
-        if self.stock_of(block) > 0:
-            block.excitations += 1
 
     def _point_window_inverse(self, block: Block) -> None:
         """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write subtracted (an addition inverts), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
@@ -2115,6 +2029,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""
         if live.clicked:
             return
+        if live.pair_record is not None:
+            return self._pair_click(live, increments)
         click = self.main_loop.function_of("the clicks", "(ii)")
         ladder = self._ladder_of(live)
         while True:
@@ -2132,6 +2048,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self.rung_counts[(live.identity, detector)] = self._body_count(block)
         self._gather_line(live, detector)
         self._recoil_at_taking(live, detector)
+        self._crystal_click(live, detector)
         live.clicked = True
         self.dead.append(live.identity)
 
