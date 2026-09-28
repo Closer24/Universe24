@@ -46,8 +46,7 @@ def test_repository_documents_and_skill_routes_are_navigable():
     for document in documents:
         assert not broken_links(document, root), (document, broken_links(document, root))
     boss = root / "skills/boss-orchestrator/SKILL.md"
-    routes = {path for path, _ in local_links(boss)}
-    shared = root / "skills/workflow.md"
+    routes, shared = {path for path, _ in local_links(boss)}, root / "skills/workflow.md"
     for skill in (root / "skills").glob("*/SKILL.md"):
         assert skill == boss or skill in routes, f"Unrouted Skill: {skill}"
         assert shared in {path for path, _ in local_links(skill)}, skill

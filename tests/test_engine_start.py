@@ -112,8 +112,7 @@ def test_a_key_the_law_reads_is_required_and_a_key_it_never_reads_is_refused():
 
 
 def test_the_runner_requires_jobs_and_refuses_pins_under_the_mode_check(tmp_path):
-    document = emitter_world(stock=1, ticks=10)
-    source = tmp_path / "small.json"
+    document, source = emitter_world(stock=1, ticks=10), tmp_path / "small.json"
     source.write_text(json.dumps(document) + "\n", encoding="utf-8")
     with pytest.raises(SystemExit):
         main(["--out", str(tmp_path / "out"), str(source)])  # no --jobs

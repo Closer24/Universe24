@@ -140,8 +140,7 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     b = DetectorLawSimulation(parse_nature_beam_world(moved))
     assert b.world.universe_file == "universe.json" and a.world.universe_file is None
     names_a = [family.name for family in a.families]
-    names_b = [family.name for family in b.families]
-    rename = {"light": "charge", "clicks": "gravity"}
+    names_b, rename = [family.name for family in b.families], {"light": "charge", "clicks": "gravity"}
     lines_a, lines_b = list[dict](), list[dict]()
     a.record, b.record = lines_a.append, lines_b.append
     # 60 intervals: the two worlds are one until A's first kick at 61 (the recoil at its first giving's close); from there the file's held rows, the shipped file's gravity (1, 4, 2) and charge (1, 1) and not the specimen's, carry the momentum into the fields
@@ -180,8 +179,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     clock = json.loads((ROOT / "tests/light_clock.json").read_text())
-    a = DetectorLawSimulation(parse_nature_beam_world(clock))
-    renamed = json.loads(json.dumps(clock))
+    a, renamed = DetectorLawSimulation(parse_nature_beam_world(clock)), json.loads(json.dumps(clock))
     for entry in renamed["measured"]:
         entry["family"] = rename[entry["family"]]
         if "stocks" in entry:
@@ -200,8 +198,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
         a.step()
         b.step()
     back = [{**line, "family": rename[line["family"]]} if "family" in line else line for line in lines_a]
-    assert lines_a and back == lines_b
-    assert set(a.records) == set(b.records)
+    assert lines_a and back == lines_b and set(a.records) == set(b.records)
     for identity, live in a.records.items():
         other = b.records[identity]
         assert np.array_equal(live.now, other.now) and np.array_equal(live.before, other.before)

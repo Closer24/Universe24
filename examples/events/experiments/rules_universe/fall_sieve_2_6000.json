@@ -1,0 +1,195 @@
+{
+ "shape": [
+  13,
+  3,
+  3
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 1000,
+ "N": 1024,
+ "engine": "examples/events/engine_start.json",
+ "universe": "examples/events/planck_6000.json",
+ "measured": [
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      4,
+      1,
+      1
+     ],
+     "count": 2000
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      6,
+      1,
+      1
+     ],
+     "count": 2000
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      8,
+      1,
+      1
+     ],
+     "count": 2000
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  }
+ ],
+ "detectors": [],
+ "readings": [
+  {
+   "name": "matter_x3",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    3,
+    1,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_x4",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    4,
+    1,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_x5",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    5,
+    1,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "gravity_x3",
+   "kind": "level",
+   "family": "gravity",
+   "node": [
+    3,
+    1,
+    1
+   ],
+   "every": 100
+  },
+  {
+   "name": "gravity_x4",
+   "kind": "level",
+   "family": "gravity",
+   "node": [
+    4,
+    1,
+    1
+   ],
+   "every": 100
+  },
+  {
+   "name": "gravity_x5",
+   "kind": "level",
+   "family": "gravity",
+   "node": [
+    5,
+    1,
+    1
+   ],
+   "every": 100
+  },
+  {
+   "name": "matter_rows",
+   "kind": "rows",
+   "family": "matter",
+   "every": 10
+  },
+  {
+   "name": "body_centre",
+   "kind": "centre",
+   "body": 0,
+   "every": 1
+  },
+  {
+   "name": "body_momentum",
+   "kind": "momentum",
+   "body": 0,
+   "every": 10
+  },
+  {
+   "name": "matter_support",
+   "kind": "support",
+   "family": "matter",
+   "every": 5
+  },
+  {
+   "name": "matter_total",
+   "kind": "total",
+   "family": "matter",
+   "every": 5
+  },
+  {
+   "name": "records_alive",
+   "kind": "alive",
+   "every": 10
+  }
+ ],
+ "face_depth": 1
+}
