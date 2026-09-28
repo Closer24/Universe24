@@ -1,4 +1,4 @@
-"""THE READER OF WORLD (d), THE JOIN AND THE PARTING: the world of `lay_out_join.py` run headless through the engine's own functions with the event lines observed, and the reading of THE CLICK JOINS AND PARTS against the expectation file beside the world: THE COUNTS (GAMEBOARD), each body's held count at its Node every interval, read from the loop's block after the count's line, the first interval a count changes and the interval a count falls under the edge (the smaller dissolved) against `dissolution_intervals`; THE MOVES (GAMEBOARD), the quanta the count's line moved between the two bodies, interval by interval, from the counts' differences (a quantum leaving one and arriving at the other), and the first move's interval against `first_click_interval`; THE RECORDS (HOST), the records alive at the end against `records_at_the_end`; THE LEVELS (GAMEBOARD), the matter level at both Nodes and the support along the run from the declared readings; THE RECORD (GAMEBOARD), each body's count over the last period of the run and its period from the level's sign changes at its Node, against Cheshbon's table from the generator run as Rule3 in integers (the amplitude b, the count D bar and the period P per body, the clocks' ratio; 15:43 Israel time, the Closer 15:47). Nothing here replays a rule; no number of a run enters a test. The run of (d): `PYTHONPATH=src python tools/run_inputs.py --out runs/join --jobs 2 <join.json> <part.json>` (the reversible rows of the expectation files), then `PYTHONPATH=src python examples/events/experiments/rules_universe/join_clicks.py --table <join.json> <part.json>`; the reading is written beside the world as `<name>.clicks.json` and `--table` prints the algebra / engine / difference table for #1325."""
+"""THE READER OF WORLD (d), THE JOIN AND THE PARTING: the world of `lay_out_join.py` run headless through the engine's own functions with the event lines observed, and the reading of THE CLICK JOINS AND PARTS against the expectation file beside the world: THE COUNTS (GAMEBOARD), each body's held count at its Node every interval, read from the loop's block after the count's line, the first interval a count changes and the interval a count falls under the edge (the smaller dissolved) against `dissolution_intervals`; THE MOVES (GAMEBOARD), the quanta the count's line moved between the two bodies, interval by interval, from the counts' differences: a transfer is one count down and the other up by the same quanta (the total kept), a click between the bodies; a relay is the count's line laying a count anew from the record's form (THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD; the total not kept) and is no click; the first transfer's interval against `first_click_interval`, the relays counted apart; THE RECORDS (HOST), the records alive at the end against `records_at_the_end`; THE LEVELS (GAMEBOARD), the matter level at both Nodes and the support along the run from the declared readings; THE RECORD (GAMEBOARD), each body's count over the last period of the run and its period from the level's sign changes at its Node, against Cheshbon's table from the generator run as Rule3 in integers (the amplitude b, the count D bar and the period P per body, the clocks' ratio; 15:43 Israel time, the Closer 15:47). Nothing here replays a rule; no number of a run enters a test. The run of (d): `PYTHONPATH=src python tools/run_inputs.py --out runs/join --jobs 2 <join.json> <part.json>` (the reversible rows of the expectation files), then `PYTHONPATH=src python examples/events/experiments/rules_universe/join_clicks.py --table <join.json> <part.json>`; the reading is written beside the world as `<name>.clicks.json` and `--table` prints the algebra / engine / difference table for #1325."""
 
 from __future__ import annotations
 
@@ -150,10 +150,18 @@ def table(report: dict[str, Any]) -> str:
     counts, moves, records = report["1_the_counts"], report["2_the_moves"], report["3_the_records"]
     rows.append(
         (
-            "first click (interval)",
+            "first click (interval; the first transfer between the bodies)",
             str(moves["expected_first_click_interval"]),
             str(moves["first_move_interval"]),
             moves["verdict"],
+        )
+    )
+    rows.append(
+        (
+            "transfers / relays of the count (the relays are no clicks)",
+            "",
+            f"{moves['count_of_transfers']} / {moves['count_of_relays']} (the first relay at {moves['first_relay_interval']})",
+            "",
         )
     )
     rows.append(
@@ -205,10 +213,15 @@ def read(world_path: Path) -> dict[str, Any]:
         for i in range(1, len(counts))
         if counts[i] != counts[i - 1]
     ]
+    for move in moves:  # THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD: a count changes either by a transfer between the two bodies (one down, the other up by the same quanta, the total kept) or by the count's line laying the count anew from the record's form (the total not kept); only a transfer is a click between the bodies
+        transfer = move["left"] + move["right"] == 0 and move["left"] != 0
+        move["kind"] = "transfer" if transfer else "relay"
+    transfers = [m for m in moves if m["kind"] == "transfer"]
+    relays = [m for m in moves if m["kind"] == "relay"]
     edge = float(
         blind["edge_quanta_per_node"]
     )  # the fraction of Gamma as Cheshbon gives it; a count below it is dissolved
-    first_move = moves[0]["interval"] if moves else None
+    first_move = transfers[0]["interval"] if transfers else None
     under_edge = next((i for i, c in enumerate(counts) if min(c) < edge), None)
     events: dict[str, int] = {}
     for line in lines:
@@ -247,8 +260,10 @@ def read(world_path: Path) -> dict[str, Any]:
         "2_the_moves": {
             "label": "GAMEBOARD",
             "moves": moves[:40],
-            "count_of_moves": len(moves),
-            "quanta_moved": sum(abs(m["left"]) for m in moves),
+            "count_of_transfers": len(transfers),
+            "quanta_transferred": sum(abs(m["left"]) for m in transfers),
+            "count_of_relays": len(relays),
+            "first_relay_interval": relays[0]["interval"] if relays else None,
             "first_move_interval": first_move,
             "expected_first_click_interval": blind["first_click_interval"],
             "verdict": "MATCH" if first_move == blind["first_click_interval"] else "MISS",
