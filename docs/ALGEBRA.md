@@ -439,6 +439,8 @@ THE PAIR RECORD, rank 2 (the decisions, "Where a tensor enters"): one record wit
 THE HALF QUANTUM, the count in integers: the crystal's taking click takes the arriving quantum whole into its count (the universe's T), and its giving click lowers its count by one and gives the pair record at T div 2 by the division act, each label one quantum of the record's own unit, the half; the count's line and the ladder run per label at that norm in integers alone, so the theorem "one quantum, one click" holds per label in the label's unit and the pair's two clicks are the arriving quantum, a half and a half, as nature's down-conversion (each photon at half the energy and half the rotation, the crystal's row); a detector's content counts the labels it took, in the label's unit. THE COINCIDENCE READING is the host's, not law: the pairs are counted after the run from the clicks' intervals within a window the expectations file declares, as Aspect's, one label's click at each side; the law has no coincidence set and no joint click (the owner's word: no uniform time of events exists on the GameBoard, the delays and the bounds rule, and the correlation travels in the record alone, by Rule3).
 
 ## The primitives
+A BODY'S WRITE IS ONE ACT: every write of a body to the GameBoard is (kappa x M(Node) x u + r) div E at a Node of the body each interval, at both levels of the body's rotation (the second the read act once more, halved), the division act with the remainder r carried at that Node: M(Node) the count declared THERE, u the body's tensor (1, n_a / W, n_a n_b / W^2: the source sigma u_a u_b), kappa the row's factor, E the row's divisor; the hold (E = E_s at the body's Nodes), the giving (E = k at the shell), THE START (the rest of the same line, its fixed point) and the recoil (the same act into the body's momentum, the wall L) are its four instances, and no number is the act's own; generic (the row's keys), vector (one carried division), local (the Node).
+
 
 Every primitive of the engine is one folder under
 `src/event_universe/features/` with its declaration (its name, its
@@ -712,7 +714,5 @@ defect, and no body's numbers are patched to meet it.
 ## What is open
 
 1. Whether a body at rest jitters when its current's swing reaches T / 2: on sixteen Nodes the swing over 400 intervals is one percent of T / 2.
-2. The loop does not carry the recoil yet: no click moves a body's
-momentum in any shipped world (the folder stands, its store on L).
-3. The self-source's cubic term: not in the engine, the line is the squares' sum alone.
-4. The twist table's small angles: a triple with d at most 10^9 reaches no angle below 6.3 x 10^-5 radians.
+2. The self-source's cubic term: not in the engine, the line is the squares' sum alone.
+3. The twist table's small angles: a triple with d at most 10^9 reaches no angle below 6.3 x 10^-5 radians.
