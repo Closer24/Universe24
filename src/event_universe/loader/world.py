@@ -16,7 +16,7 @@ from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import frame
 from event_universe.loader.frame import EngineStart
-from event_universe.loader.mode import period_by_the_rule
+from event_universe.loader.mode import Levels, moving_levels, period_by_the_rule
 
 # the ray law's table rules, read by the loop's fixed values alone (DEAD, the paper writer's)
 TABLES = ("read", "measure", "rerelease", "pass", "become")
@@ -322,12 +322,10 @@ class BlockDefinition:
     # body's bound mode as the rational [a, b] the generator wrote, b at
     # least the profile's amplitude; the loader's integer check of the profile against the eigen-equation reads it; None for a flat seed
     clock: tuple[int, int] | None = None
-    # THE PROPER PAIR OF A MOVING BODY ON ONE NODE (ALGEBRA.md #the-velocity; BUILD.md section 26
-    # item 46): the pairs [num_m, b] the body's Node rotates at while the drive's
-    # momentum is m, indexed by m from 0 (the clock itself) to |P| along the
-    # one axis of the declared momentum, the generator's reading of the moving
-    # mode at its moving centre, 2 cos(omega_K - K v) at v = m / (3 Q M); None on a body at rest
+    # the proper pairs of a moving body on one Node by the momentum's whole part, today's form (ALGEBRA.md #the-velocity)
     proper_clock: tuple[tuple[int, int], ...] | None = None
+    # a moving body's two levels from the mode file, now and before (ALGEBRA.md #the-generator (e)); None on a body at rest
+    levels: Levels | None = None
     ramp: int = 0
     start: int = 0
     # THE BODY'S NUMBERS (ALGEBRA.md #the-interval; the one stroke, commit 2): the
@@ -340,11 +338,7 @@ class BlockDefinition:
     twist: int = 0
     # a well's margin kind (required on a well, record 2089); None on a body that is no well
     margin: str | None = None
-    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
-    # 7, the click line): the name of the detector set whose one detector is the
-    # ladder of every record this block emits (the click line at that detector's
-    # first rung after the record's train; the faces and every other set
-    # sinks for it); None where the world names none, the ladder then every detector and the line at the close, as before the key.
+    # the receiver by name: the detector set whose one detector is the ladder of every record this block emits; None where the world names none
     receiver: str | None = None
     # the emitter as a clicking body (ALGEBRA.md #the-click): None on a body that emits nothing by the click
     emitter: EmitterDefinition | None = None
@@ -1687,12 +1681,12 @@ def _counted(
             f"{label}.momentum {list(momentum)}: the pace bound 3 (P . P) < (3 Q M)^2 = {wall * wall} "
             "fails (the body's velocity below c, ALGEBRA.md #the-primitives)"
         )
-    # THE BODY'S OWN RECORD FROM THE MODE FILE (ALGEBRA.md #what-a-body-is: the record is the generator's;
-    # #the-primitives, the recoil's row): its profile with its clock, its twist "own"; a giving body needs all three
+    # THE BODY'S OWN RECORD FROM THE MODE FILE (ALGEBRA.md #what-a-body-is): its profile with its clock, its twist "own", a moving body's two levels; a giving body needs the first three
     zero = (0, 0, 0)
     moment = _axes_vector(obj["moment"], f"{label}.moment") if "moment" in obj else zero
     profile: tuple[int, ...] | None = None
     clock: tuple[int, int] | None = None
+    levels: Levels | None = None
     amplitude, twist = 0, None
     if mode is not None:
         mode_label = f"the mode file's bodies[{label[len('measured[') : -1]}]"
@@ -1715,6 +1709,9 @@ def _counted(
                 )
         if "twist" in mode:
             twist = _integer(mode["twist"], f"{mode_label}.twist", 0)
+        levels = moving_levels(
+            mode.get("moving"), clock, shape[0] * shape[1] * shape[2], mode_label, bounds[0]
+        )
     emitter = None
     if "emitter" in obj:
         if profile is None or twist is None:
@@ -1757,6 +1754,7 @@ def _counted(
         moment=moment,
         profile=profile,
         clock=clock,
+        levels=levels,
         twist=twist if twist is not None else 0,
         emitter=emitter,
         nodes=nodes,
