@@ -1,0 +1,59 @@
+{
+ "format": "world-expectation-v1",
+ "status": "BLIND: the row of THE UNIVERSE IS BOUND, the fall as the clicks' bias toward a cluster of pixels; Cheshbon's numbers before the run; no number of a run here",
+ "row": "ALGEBRA.md THE UNIVERSE IS BOUND, THE BOUND BODY IS ONE NODE, THE SCREEN IS A CLUSTER: a bound body of one Node of 2000 quanta on the matter pair of the rule's own universe (Gamma = 12,000, the divisors 1, T = 1), its tail evanescent, beside a cluster of 4 pixels of 2000 quanta every 2 Links along +x, the first 2 Links away: the wells of the cluster's pixels lower the pace on that side, the local band nearer the record's rotation, the tail longer there, and the tail's remainder crosses T earlier on that side: the fall is the clicks' bias toward the cluster, no force",
+ "DETECTOR": [],
+ "blind": {
+  "row": "Cheshbon's numbers before the run (THE SCREEN IS A CLUSTER, 14:55 Israel time, 2026-09-28; the cluster's numbers asked at 15:05): the tail's ratio toward the cluster over away and the count's moves biased toward the cluster in the same ratio; the control 1 and 50 percent; the band plus or minus 30 percent (the Closer 14:16)",
+  "edge_quanta_per_node": 1353,
+  "edge_quanta_per_node_level_once": 2066,
+  "horizon_quanta_per_node": 3000,
+  "record": {
+   "count": 2000,
+   "b": 69,
+   "period": 9.55
+  },
+  "sieve_record": {
+   "count": 2000,
+   "b": 69,
+   "period": 9.55
+  },
+  "tail_kappa_per_link_away": 1.269,
+  "tail_ratio_well_over_away": null,
+  "moves_toward_well_share": 0.51,
+  "cluster": {
+   "pixels": 4,
+   "spacing": 2,
+   "count": 2000,
+   "distance": 2
+  }
+ },
+ "GAMEBOARD": [
+  {
+   "reversible": 1000,
+   "row": "the whole run forward and back on a fresh copy, every row bit for bit, the clicks keep the clicks; a diagnostic, MATCH or MISS with the first interval and Node that deviate"
+  }
+ ],
+ "fall": {
+  "body": [
+   4,
+   1,
+   1
+  ],
+  "well_side": [
+   5,
+   1,
+   1
+  ],
+  "far_side": [
+   3,
+   1,
+   1
+  ],
+  "axis": 0,
+  "tail_ratio": null,
+  "bias": 0.51,
+  "band": 0.15,
+  "row": "fall_bias.py reads the tail's ratio from the matter levels at the two neighbours (the largest level on the cluster's side over the largest on the far side, GAMEBOARD) and the moves' bias from the body's centre along the axis (the moves toward the cluster over all moves, the count's line's clicks as the centre shows them); MATCH within `band` of Cheshbon's numbers once written, else the reading alone"
+ }
+}
