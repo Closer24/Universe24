@@ -18,15 +18,7 @@ from event_universe.core.integer import (
 
 # The coupling's register, `world.MOMENTUM_BOUND`, as its caller passes it.
 REGISTER = (1 << 62) - 1
-RATES = [
-    (1, 3),
-    (3, 10),
-    (7, 3),
-    (32, 55),
-    (100, 82),
-    (1024, 8193),
-    (9_736_000_000_000, 290_000_000_000_000),
-]
+RATES = [(1, 3), (3, 10), (7, 3), (32, 55), (100, 82), (1024, 8193), (9736000000000, 290000000000000)]
 
 
 def test_working_register_is_bounded():
