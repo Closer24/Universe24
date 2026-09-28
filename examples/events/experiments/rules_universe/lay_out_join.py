@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Any
+
+from event_universe.world_files import input_digest  # the mode file names the world by its digest
 
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
@@ -18,7 +21,13 @@ UNIVERSE_NAME = "rules_universe.json"
 ENGINE = "examples/events/engine_start.json"
 GAMMA = 12_000  # the Node clock, a multiple of 6: every pair exact over it
 QUANTUM_ACTION = 1  # T, the one unit
-MATTER_PAIR = [2, 3]  # cos omega_0 = 2 / 3, the first pair past the exact bands
+PAIRS_OVER_GAMMA = {
+    "gravity": [12_000, 12_000],
+    "charge": [12_000, 12_000],
+    "polarisation": [6_000, 12_000],
+    "matter": [8_000, 12_000],
+}  # the rule's pairs written over Gamma (Cheshbon's text of 13:09 Israel time): [1, 1], [1, 1], [1, 2], [2, 3] in the walls' own terms; reduced to lowest terms the walls w = 6 den Gamma^2 shrink, A grows to 1,334,399,890 and the count's line's int64 bound refuses the world at interval 1 (the finding of 13:58)
+MATTER_PAIR = PAIRS_OVER_GAMMA["matter"]  # cos omega_0 = 2 / 3, the first pair past the exact bands
 DIVISOR = 1  # the well is the count
 COUNT_SMALL = 3_000  # the smaller body's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000)
 COUNT_DEEP = 4_000  # the deeper body's count: the tail biased toward it
@@ -26,6 +35,11 @@ JOIN_DISTANCE = 2  # Links between the two Nodes: the tails overlap (the tail en
 PART_DISTANCE = 5  # Links between the two Nodes: the tails still overlap (the click's reach is about 18), the slow join
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's blind number of clicks
 STEPS = 1024  # N, the phase's steps
+BOUND_ROTATION = {
+    3_000: 0.8105,
+    4_000: 2 * math.pi / 9.55,
+}  # omega_b(c), Cheshbon's numbers (13:41 and 13:39 Israel time): the periods 7.75 and 9.55
+CLOCK_UNIT = 1 << 20  # b of the clock pair [a, b], 2 cos omega_b = a / b, b above the pixel's amplitude
 DENOMINATOR = 1024  # every body's phase denominator
 FACE_DEPTH = 3
 SHAPE = [32, 9, 1]
@@ -43,8 +57,7 @@ def rules_universe(folder: Path) -> str:
     for family in document["families"]:
         if "held" in family:
             family["held"] = {**family["held"], "divisor": DIVISOR}
-        if family["name"] == "matter":
-            family["pair"] = list(MATTER_PAIR)
+        family["pair"] = list(PAIRS_OVER_GAMMA[family["name"]])
     path = folder / UNIVERSE_NAME
     path.write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
     return path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path)
@@ -86,6 +99,30 @@ def world(universe: str, distance: int) -> dict[str, Any]:
         "readings": readings,
         "face_depth": FACE_DEPTH,
     }
+
+
+def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
+    """The mode file of the two pixels by the recipe of the Closer's word of 13:54 Israel time (the Moving Clock's tool `tools/pixel_mode.py` writes the same when it lands): each body's record is the integer root of its count at its Node and 0 elsewhere, both time levels equal, the clock pair 2 cos omega_b = a / b from Cheshbon's bound rotation; the world's digest names the world."""
+    shape = document["shape"]
+    count = shape[0] * shape[1] * shape[2]
+    bodies = []
+    for body in document["measured"]:
+        node = body["nodes"][0]
+        x, y, z = node["node"]
+        profile = [0] * count
+        profile[(x * shape[1] + y) * shape[2] + z] = math.isqrt(node["count"])
+        omega = BOUND_ROTATION[node["count"]]
+        bodies.append(
+            {
+                "family": body["family"],
+                "pair": list(MATTER_PAIR),
+                "profile": profile,
+                "clock": [round(2 * math.cos(omega) * CLOCK_UNIT), CLOCK_UNIT],
+                "moving": {"now": profile, "before": list(profile)},
+                "recipe": "the pixel's record isqrt(c) at its Node, both levels equal, omega_b from Cheshbon",
+            }
+        )
+    return {"rest": {}, "bodies": bodies, "world_digest": input_digest(document)}
 
 
 def expectation(name: str, distance: int) -> dict[str, Any]:
@@ -135,8 +172,10 @@ def main() -> None:
     folder.mkdir(parents=True, exist_ok=True)
     universe = rules_universe(folder)
     for name, distance in (("join", JOIN_DISTANCE), ("part", PART_DISTANCE)):
-        (folder / f"{name}.json").write_text(
-            json.dumps(world(universe, distance), indent=1) + "\n", encoding="utf-8"
+        document = world(universe, distance)
+        (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        (folder / f"{name}.mode.json").write_text(
+            json.dumps(pixel_mode(document)) + "\n", encoding="utf-8"
         )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(name, distance), indent=1) + "\n", encoding="utf-8"
