@@ -24,7 +24,9 @@ from event_universe.features.receive import (
 from event_universe.world_files import parse_nature_beam_world
 
 ROOT = Path(__file__).resolve().parents[1]
-TOWARD = ROOT / "examples" / "events" / "toward_nature"
+TOWARD = (
+    ROOT / "tests"
+)  # the rule tests' own small worlds (the shipped worlds left with the worlds' replay)
 
 
 def test_the_angle_zero_is_the_identity_and_the_composed_triple_is_the_tables():

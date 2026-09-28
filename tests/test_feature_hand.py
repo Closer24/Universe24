@@ -14,7 +14,7 @@ from event_universe.features.hand import DECLARATION, THE_WORD, HandStart, HandT
 from event_universe.world_files import parse_nature_beam_world
 from tests.running import ROOT
 
-LIGHT_CLOCK = ROOT / "examples" / "events" / "massive_record" / "light_clock.json"
+LIGHT_CLOCK = ROOT / "tests" / "light_clock.json"
 
 
 def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_built():

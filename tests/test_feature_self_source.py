@@ -22,7 +22,9 @@ from event_universe.features.self_source import (
 from event_universe.world_files import input_digest, parse_world_document, world_files
 
 ROOT = Path(__file__).resolve().parents[1]
-TOWARD = ROOT / "examples" / "events" / "toward_nature"
+TOWARD = (
+    ROOT / "tests"
+)  # the rule tests' own small worlds (the shipped worlds left with the worlds' replay)
 
 
 def moving_world_with_the_self_source(family_name: str) -> tuple[DetectorLawSimulation, int, int]:

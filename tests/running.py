@@ -18,7 +18,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.features.send import send
 from event_universe.world_files import input_stamp, parse_nature_beam_world
-from tests.worlds import ROOT, emitter_world, load_file
+from tests.worlds import ROOT, emitter_world
 
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -27,9 +27,6 @@ from run_inputs import main as run_main  # noqa: E402
 UNIVERSE = ROOT / "examples" / "events" / "universe.json"
 
 Seen = dict[int, tuple[int, list[int], list[int], int, int, int, int]]
-
-
-FOLDER = ROOT / "examples" / "events" / "toward_nature"
 
 
 def exchange_of(
@@ -222,14 +219,6 @@ def run_point_world(document: dict, ticks: int) -> tuple[DetectorLawSimulation, 
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
     return simulation, lines
-
-
-def document(name: str) -> dict:
-    return json.loads((FOLDER / f"{name}.json").read_text(encoding="utf-8"))
-
-
-def load_module(name: str):
-    return load_file(f"toward_nature_{name}", FOLDER / f"{name}.py")
 
 
 GENERATED_DIRECTORIES = {

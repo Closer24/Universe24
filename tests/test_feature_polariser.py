@@ -24,7 +24,7 @@ from event_universe.features.polariser import (
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.worlds import ROOT
 
-LIGHT_CLOCK = ROOT / "examples" / "events" / "massive_record" / "light_clock.json"
+LIGHT_CLOCK = ROOT / "tests" / "light_clock.json"
 
 SETS = ("plus", "minus")
 

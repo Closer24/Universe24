@@ -31,14 +31,14 @@ A run needs numpy, which the package installs:
 python3.14 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
-PYTHONPATH=src python tools/run_inputs.py --out runs/first --jobs 1 examples/events/massive_record/light_clock.json
+PYTHONPATH=src python tools/run_inputs.py --out runs/first --jobs 1 <world>.json
 ```
 
-The first run is the light clock: 4,800 intervals, about a minute, one file
-`runs/first/light_clock.output.json`. It is byte for byte the shipped
-[light_clock.output.json](examples/events/massive_record/light_clock.output.json)
-(the verdict `LAWFUL`, 167 clicks at the detector `at_well`); a run carries no
-time, so the same input gives the same file again.
+One run writes one file, `runs/first/<world>.output.json` (the verdict, the
+clicks, the readings). A run carries no time, so the same input gives the same
+file again. The worlds recorded on the earlier engine left the repository with
+the worlds' replay (the owner's decision); the worlds of record of the 24
+experiments come in their own folder under `examples/events/`, Bell first.
 
 On Windows use `py -3.14 -m venv .venv` and `.\.venv\Scripts\python.exe` in place
 of `python`. For development, install `python -m pip install -e '.[dev]'`.
