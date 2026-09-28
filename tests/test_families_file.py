@@ -117,12 +117,14 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     f, least = [[1, 0, 1], [1999, 1998000, 1998001]], derived.MAX_WORK_INT // (3 * 1998001**2) - 1
     w = parse_nature_beam_world({**inline, "twist_table": {**table, "fine": f, "coarse": f}})
     assert (w.families[3].pair, w.amplitude_bound) == ((-12, 24), least)  # a wide table: the transport's
-    six = parse_nature_beam_world({**inline, "node_clock": [24, 6]})  # GAMMA IS NOT CONSTANT: a pair
-    assert (six.node_clock, six.clock_step, six.families[3].pair) == (24, 6, (-12, 24))
+    assert (six := parse_nature_beam_world({**inline, "node_clock": [24, 6]})).node_clock == 24
     pairs = [f.pair for f in six.families]  # light and the sign +6, matter +4, the third -3 per interval
     assert derived.clock_at(pairs, 24, 6, 1) == (30, [(30, 30), (30, 30), (20, 30), (-15, 30)])
     odd = [*document["families"], {**third, "pair": [23, 24]}]  # the electron's band at a stepping Gamma
     refused({**inline, "node_clock": [24, 6], "universe": odd}, "does not step with the clock")
+    odd[-1]["steps"] = "distance"  # THE ELECTRON's band keeps its distance from Gamma: [29, 30] at 30
+    assert parse_nature_beam_world({**inline, "node_clock": [24, 6], "universe": odd}).clock_step == 6
+    assert derived.clock_at([(23, 24)], 24, 6, 1, ("distance",)) == (30, [(29, 30)])
     for clock in ([0, 6], [24, -1], [24, 6, 1], [24, 6.0]):
         refused({**inline, "node_clock": clock}, "node_clock")
     for pair, match in (([-24, 24], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1")):

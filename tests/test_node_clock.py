@@ -221,8 +221,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     """(v) `node_clock` is REQUIRED under `detector_law` (refused without it by name, an integer from 1); the load bound names the clock and the content (the slab of (iii) at Gamma = 10^6 refused naming Gamma and M); the registered light clock loads under the families file's Gamma = 10^4, A's clock pair (10^4, 10^4) at its Nodes as in the vacuum (its count 65 over the divisor 40000 adds nothing at the start, the first increment at the 615th interval, 616 x 65 = 40040), its wheel (4 x 10^8, 1203) on its own pair [800, 802] at the level 0 and the kind [800, 1200]'s (8 x 10^10, 9) in the vacuum."""
     document = {k: v for k, v in content_chain(12, PERIODIC, [], 1).items() if k != "node_clock"}
     refused(document, "node_clock is required: Gamma")
-    flag = {**content_chain(12, PERIODIC, [], 1), "detector_law": False}  # the flag was the law's name
-    refused(flag, "the world has unknown keys: detector_law")
+    refused({**content_chain(12, PERIODIC, [], 1), "detector_law": False}, "unknown keys: detector_law")
     refused({**content_chain(12, PERIODIC, [], 1), "node_clock": 0}, "node_clock")
     heavy = content_chain(400, CHAIN, range(150, 190), 250000, gamma=1_000_000)
     world = parse_nature_beam_world(heavy)  # A derived at this Gamma: every pair's total fits the width
@@ -243,8 +242,7 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
     assert kind == (800, 1200) and world.families[matter].pair_on_body
     # A's count 65 (its one own quantum beside its stock of 64 light quanta, item 47) is the source over the divisor 40000: the level 0 at the start and for 614 intervals (616 x 65 = 40040 at the 615th)
     assert sum(simulation.held[0]) == 65 and not simulation.level_of("content").any()
-    assert simulation.node_clock_pair(centre, matter) == (NODE_CLOCK, NODE_CLOCK)
-    assert simulation.node_clock_pair((100, 0, 0), matter) == (NODE_CLOCK, NODE_CLOCK)
+    assert {simulation.node_clock_pair(n, matter) for n in (centre, (100, 0, 0))} == {(NODE_CLOCK,) * 2}
     # the wheel from the weak-field rule's integers (item 44) at the level 0: on the body's own pair [800, 802] at its Nodes W = 3 x 802 / gcd(800, 2406) = 1203 and g = 2 Gamma^2 x 2; the kind [800, 1200]'s own (80000000000, 9) in the vacuum
     assert simulation.wheel_at(matter, centre, kind) == (400000000, 1203)
     assert simulation.wheel_at(matter, (100, 0, 0), kind) == (80000000000, 9)

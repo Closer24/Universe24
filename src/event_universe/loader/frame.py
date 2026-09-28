@@ -223,6 +223,7 @@ def entry_kind(register: Register) -> ObjectOf:
         "spins_step": SPINS_STEP,
         "lifetime": Integer(least=1),
         "hand": OneOf((-1, 1)),
+        "steps": OneOf(("ratio", "distance")),
         **declared.keys,
     }
     held, reads = cast(ObjectOf, keys["held"]), cast(ListOf, keys["reads"])
@@ -230,7 +231,8 @@ def entry_kind(register: Register) -> ObjectOf:
     read = cast(ObjectOf, reads.of)
     keys["reads"] = ListOf(ObjectOf(read.keys, read.optional | {"weight", "twist", "by"}), reads.length)
     derived = {"parts", "phase", "clicks", "reads", "sign", "self_source", "quantum", "pair", "m"}
-    return ObjectOf(keys, declared.optional | derived | {"clock", "spins_step", "lifetime", "hand"})
+    optional = {"clock", "spins_step", "lifetime", "hand", "steps"}
+    return ObjectOf(keys, declared.optional | derived | optional)
 
 
 def families(

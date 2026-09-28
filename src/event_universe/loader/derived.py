@@ -34,6 +34,9 @@ def pair_of(entry: dict[str, Any], gamma: int, label: str) -> list[int] | str:
     return [m, gamma]
 
 
+RATIO = "ratio"  # a pair's default way of stepping with Gamma; the other is "distance"
+
+
 def clock_of(value: object, entries: tuple[dict[str, Any], ...], bound: int) -> tuple[int, int]:
     """THE NODE CLOCK, an integer or a pair (GAMMA IS NOT CONSTANT, the owner's word of 2026-09-28, 15:44 Israel, a hypothesis under its own name; the Closer's order of 15:55): `node_clock` is Gamma, an integer from 1 (a constant clock, as before, bit for bit), or [Gamma_0, step], the clock at the start and its growth per interval (the step 0 a constant clock); with a step every family's pair must step with Gamma in integers (`clock_at` at the first interval), refused by name otherwise."""
     pair = [value, 0] if type(value) is int else value
@@ -46,24 +49,26 @@ def clock_of(value: object, entries: tuple[dict[str, Any], ...], bound: int) -> 
             f"from 1 and the step from 0, each through {bound}"
         )
     if step:
-        pairs = [e["pair"] for e in paired(entries, gamma) if isinstance(e["pair"], list)]
-        clock_at([(int(m), int(den)) for m, den in pairs], gamma, step, 1)
+        rows = [e for e in paired(entries, gamma) if isinstance(e["pair"], list)]
+        pairs = [(int(e["pair"][0]), int(e["pair"][1])) for e in rows]
+        clock_at(pairs, gamma, step, 1, [str(e.get("steps", RATIO)) for e in rows])
     return gamma, step
 
 
 def clock_at(
-    pairs: Sequence[tuple[int, int]], gamma: int, step: int, interval: int
+    pairs: Sequence[tuple[int, int]], gamma: int, step: int, interval: int, rules: Sequence[str] = ()
 ) -> tuple[int, list[tuple[int, int]]]:
-    """Gamma at an interval and every pair over it (GAMMA IS NOT CONSTANT): Gamma_t = Gamma_0 + step t, and a pair [m, Gamma_0] becomes [m Gamma_t div Gamma_0, Gamma_t], exact (at the rule's universe light steps by the step, matter by two thirds of it, the third band by minus half of it); a pair not over Gamma_0, or one whose m x step is not a multiple of Gamma_0, is refused by name. The loop's use of the clock at every interval is its own line; the constant clock (the step 0) returns the pairs as written."""
+    """Gamma at an interval and every pair over it (GAMMA IS NOT CONSTANT; Cheshbon's line of 2026-09-28, 18:15 Israel: the rule's pairs step in ratio, the electron's band in distance): Gamma_t = Gamma_0 + step t, and a pair [m, Gamma_0] steps by its row's `steps` — "ratio", the default where absent, [m Gamma_t div Gamma_0, Gamma_t], exact (at the rule's universe light steps by the step, matter by two thirds of it, the third band by minus half of it) and refused by name where m x step is not a multiple of Gamma_0; "distance", [Gamma_t - (Gamma_0 - m), Gamma_t], the numerator's distance from Gamma kept (the electron's band [Gamma - 1, Gamma]); a pair not over Gamma_0 is refused by name either way. The loop's use of the clock at every interval is its own line; the constant clock (the step 0) returns the pairs as written."""
     now = gamma + step * interval
     stepped = []
-    for m, den in pairs:
-        if den != gamma or (m * step) % gamma:
+    for (m, den), rule in zip(pairs, [*rules, *([RATIO] * len(pairs))], strict=False):
+        if den != gamma or (rule == RATIO and (m * step) % gamma):
             raise ValueError(
-                f"the pair [{m}, {den}] does not step with the clock [{gamma}, {step}]: a stepping Gamma "
-                "needs every pair over Gamma_0 with m x step a multiple of Gamma_0 (GAMMA IS NOT CONSTANT)"
+                f"the pair [{m}, {den}] does not step with the clock [{gamma}, {step}] in {rule}: a stepping "
+                "Gamma needs every pair over Gamma_0, and in ratio m x step a multiple of Gamma_0 (GAMMA IS "
+                "NOT CONSTANT; the row's `steps` names ratio or distance)"
             )
-        stepped.append((m * now // gamma, now))
+        stepped.append((m * now // gamma if rule == RATIO else now - (gamma - m), now))
     return now, stepped
 
 
