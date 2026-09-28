@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import replace
 from fractions import Fraction
 
@@ -157,7 +156,7 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     block = simulation.block_by_number[0]
-    emitter = document["measured"][0]["emitter"]
+    document["measured"][0]["emitter"]
     given = None
     closed = None
     extent: list[tuple[int, int, int]] = []
