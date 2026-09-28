@@ -29,10 +29,8 @@ WORLD_NAME = "two_slits_light"
 # THE NUMBERS TO SET FROM CHESHBON'S LINE ON #1325 (asked 05:08 Israel time, 2026-09-28); until his
 # line these are the Experimenter's proposal, and a run on them is a first look and says so.
 GIVER_COUNT = 2001  # the giver's count per Node (`least_residues`: the shell wheel above 500 at 2001)
-MIRROR = (
-    9000  # the tube's and the wall's count per Node, above the mirror's line at the record's wavelength
-)
-SCREEN = 9000  # the screen's count per Node: the mirror's, the strips booking the one-way inward flux at their Ports (the owner's word through the Closer; Cheshbon's yes, 02:27Z)
+MIRROR = 4000  # the tube's and the wall's count per Node, four Nodes thick: above the mirror's line Gamma (1 - sin(pi / lambda)) = 2,929 at the record's wavelength 4 (Bell's walls, #1371), and below the pace's guard under the conformal line, where the level enters the Link twice (a wall of 9000 drove the charge's pace below 0 at interval 108 of the health look, 11:58 Israel)
+SCREEN = 4000  # the screen's count per Node: the mirror's, the strips booking the one-way inward flux at their Ports (the owner's word through the Closer; Cheshbon's yes, 02:27Z)
 OPENING = 4  # the width of each opening in Nodes
 SLIT_DISTANCE = 16  # d, the distance between the two openings' centres in Links
 SCREEN_DISTANCE = 97  # L, from the wall's far face to the screen's face in Links
