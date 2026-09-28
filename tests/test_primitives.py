@@ -82,8 +82,7 @@ def test_the_transport_composes_the_generators_and_inverts_per_node():
     )
     representation.check()
     assert representation.levels == 6 and representation.remainder_count == 6 + 4 + 4
-    arrived = (120, -45, 300, 7, -88, 61)
-    angles, remainders = (2, -1, 1), tuple(range(14))
+    arrived, angles, remainders = (120, -45, 300, 7, -88, 61), (2, -1, 1), tuple(range(14))
     remainders = tuple(r % 5 for r in remainders)
     levels, after = representation.transport(arrived, angles, remainders)
     assert len(levels) == 6 and len(after) == 14 and all(0 <= rho < 13 for rho in after)

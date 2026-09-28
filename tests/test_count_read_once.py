@@ -65,3 +65,17 @@ def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(
     off = SimpleNamespace(number=0, own=block.own, definition=half)
     with pytest.raises(ValueError, match="a declared count is D div T of its mode within 2 isqrt"):
         count_once.declared_within_gate(off)
+
+
+def test_the_first_lay_is_the_declared_count_and_the_average_after_a_whole_period(tmp_path, monkeypatch):
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
+    node, block = tuple(simulation.world.measured[0].block.nodes[0]), simulation.blocks[0]
+    signs, lays = [], []  # the sign of the level at the Node and the sum of the lay, per interval
+    for _ in range(20):
+        simulation.step()
+        signs.append(int(block.own.now[node]) > 0)
+        lays.append(int(block.period_counts.sum()))
+    changes = [index for index in range(1, 20) if signs[index] != signs[index - 1]]  # the sign changes
+    assert lays[0] == int(COUNT) and len(changes) >= 3  # the declared count at its Node alone
+    assert all(lay == int(COUNT) for lay in lays[: changes[2]]) and lays[changes[2]] != int(COUNT)
