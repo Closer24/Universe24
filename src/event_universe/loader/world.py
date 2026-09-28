@@ -2305,9 +2305,9 @@ def parse_world_document(
         )
     node_clock = _integer(obj["node_clock"], "node_clock", 1, AMOUNT_BOUND)
     # THE AMPLITUDE BOUND A, derived from the width and the rule's integers of every declared pair at the
-    # pace's edge (`derived_amplitude`; ALGEBRA.md #a-familys-declaration: never written, a file's
-    # `amplitude_bound` is refused by name as an unknown key)
+    # pace's edge and bounded by the least of the three totals (`derived.width_bound`); never written
     amplitude_bound = derived_amplitude(derived.paired(entries, node_clock), obj["measured"], node_clock)
+    amplitude_bound = min(amplitude_bound, derived.width_bound(obj, derived.paired(entries, node_clock)))
     # THE MOMENTUM'S UNIT Q (ALGEBRA.md #the-primitives, #the-well): the universe's integer
     # `momentum_unit`, REQUIRED with no default (the wall W = 3 Q M of every body)
     if "momentum_unit" not in obj:
