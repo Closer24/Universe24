@@ -83,16 +83,16 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
                     assert entry.block.kind[1] > entry.block.kind[0]
 
 
-def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_world_on_it():
-    """THE RULE'S OWN UNIVERSE (ALGEBRA.md; the owner's word of 2026-09-28, 15:11 Israel: Gamma = 24, a whole universe in small): examples/events/planck.json holds Gamma = 24 (a multiple of 6; the horizon 12, the pixels 6 to 11), T = 1, and three rows in pairs over Gamma: gravity [24, 24] content at the divisor 1, charge [24, 24] sign at the divisor 36 (0.86 (Gamma / 2)^(3 / 2), one quantum per window, derived from Gamma), matter [16, 24]; the least residues 1 (light's pair leaves one remainder value at Gamma = 24); nothing else. THE TABLE AT 24 (the Closer's order of 18:25 Israel; THE WIDTH BOUNDS A BY THE LEAST OF THE THREE): the tool's table with a fine count of 8 (`tools/twist_table.py --gamma 24 --fine 8`): every fine angle lies under the representable floor, so the fine part is the identity, as the universe of record's is, and its d is 1; the coarse part at the step 8 theta_unit, 2^15 rows, |k| to 262,143, d up to 1.0 x 10^9; the transport's bound is then 1.5 x 10^9 and A stays the count's line's 1.55 x 10^8 (the tool's table at the fine count 2^10 has d near 10^9 in both parts and gives A = 0 in the width: refused). A world of three pixels (one Node each) on it loads with the ranks derived and THE SIGN IS THE BODY'S: the sign's source at a pixel's Node is its q times its count. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-12, 24] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name."""
+def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_world_of_bodies_on_it():
+    """THE RULE'S OWN UNIVERSE (ALGEBRA.md; the owner's word of 2026-09-28, 22:05 Israel: a body is never one Node): examples/events/planck.json holds Gamma = 24, T = 64 (the quantum that lets the integers resolve a body's rotation), and four rows in pairs over Gamma: binding [23, 24] content at the divisor 2 (a gapped pair, the reach 1 / kappa two Links: a body's own well, with a floor), gravity [24, 24] content at the divisor 10 (the massless field, Poisson's rest over the board: the pull between bodies), charge [24, 24] sign at the divisor 36, matter [16, 24]; no row at the divisor 1 (a well that is the count collapses every wide body to one Node); the least residues 1. THE TABLE AT 24: the tool's table with a fine count of 8. A world of three bodies on their Nodes loads with the ranks derived and THE SIGN IS THE BODY'S. A PAIR'S NUMERATOR MAY BE NEGATIVE: the third [-12, 24] on an inline list loads as the mirror band; den at or below |num| and den 0 are refused by name. GAMMA IS NOT CONSTANT: a clock pair steps every pair in ratio, the step a multiple of Gamma over the pairs' common measure (24 here, the binding pair's 23 leaving no smaller step)."""
     planck = "examples/events/planck.json"
     table = (document := json.loads((ROOT / planck).read_bytes()))["integers"].pop("twist_table")
-    units = dict(node_clock=24, quantum_action=1, momentum_unit=64, most_steps=65536, width=63)
+    units = dict(node_clock=24, quantum_action=64, momentum_unit=64, most_steps=65536, width=63)
     assert document["integers"] == {**units, "most_families": 20, "least_residues": 1}
     assert (table["unit"], len(table["coarse"]), table["fine"]) == (6291456, 32768, [[1, 0, 1]] * 8)
-    assert [f["name"] for f in document["families"]] == ["gravity", "charge", "matter"]
-    assert [f["pair"] for f in document["families"]] == [[24, 24], [24, 24], [16, 24]]
-    assert [f.get("held", {}).get("divisor") for f in document["families"]] == [1, 36, None]
+    assert [f["name"] for f in document["families"]] == ["binding", "gravity", "charge", "matter"]
+    assert [f["pair"] for f in document["families"]] == [[23, 24], [24, 24], [24, 24], [16, 24]]
+    assert [f.get("held", {}).get("divisor") for f in document["families"]] == [2, 10, 36, None]
     assert all(set(f) <= {"name", "pair", "held"} for f in document["families"])  # no spins_step
     world = {"shape": [40, 1, 1], "boundary": {"x": "closed", "y": "periodic", "z": "periodic"}, "N": 64}
     world |= {"ticks": 10, "face_depth": 1, "engine": "examples/events/engine_start.json"}
@@ -100,29 +100,30 @@ def test_the_rules_own_universe_loads_beside_the_universe_of_record_and_a_pixel_
     n, at = {"momentum": [0] * 3, "momentum_before": [0] * 3}, ((10, 8, 1), (20, 6, -1), (30, 8, 0))
     node = lambda x, c: [{"node": [x, 0, 0], "count": c}]  # noqa: E731
     bodies = [{"family": "matter", "nodes": node(x, c), "q": q, **n} for x, c, q in at]
-    loaded = parse_nature_beam_world({**world, "measured": bodies})  # three pixels, count in [6, 12)
-    ranks = [("gravity", (1, 3, 6), "content"), ("charge", (1, 3), "sign"), ("matter", (1,), None)]
-    assert [(f.name, f.parts, f.held) for f in loaded.families] == ranks
-    assert loaded.families[2].pair == (16, 24) and (A := loaded.amplitude_bound) > 0
-    assert 384 * A * A <= derived.MAX_WORK_INT - 10 < 384 * (A + 1) ** 2  # the count's line's, w 16
+    loaded = parse_nature_beam_world({**world, "measured": bodies})  # three bodies of one Node each
+    ranks = [("binding", (1,), "content"), ("gravity", (1, 3, 6), "content"), ("charge", (1, 3), "sign")]
+    assert [(f.name, f.parts, f.held) for f in loaded.families] == [*ranks, ("matter", (1,), None)]
+    assert loaded.families[3].pair == (16, 24) and (A := loaded.amplitude_bound) > 0
+    assert 384 * A * A <= derived.MAX_WORK_INT - 64 * 3 < 384 * (A + 1) ** 2  # the count's line's, w 16
     assert [entry.block.q for entry in loaded.measured if entry.block is not None] == [1, -1, 0]
     simulation = DetectorLawSimulation(loaded)
     signs = [simulation.node_sources(number, "sign") for number in range(3)]
     assert signs == [[((10, 0, 0), 8)], [((20, 0, 0), -6)], [((30, 0, 0), 0)]]
     assert [simulation._body_charge(number) for number in range(3)] == [8, -6, 0]
     six = {**world, "universe": "examples/events/planck_6000.json", "measured": bodies}  # after 24
-    assert parse_nature_beam_world(six).families[2].pair == (4000, 6000)  # Gamma 6,000, the record's
+    assert parse_nature_beam_world(six).families[3].pair == (4000, 6000)  # Gamma 6,000, the record's
     inline = {**world, "measured": bodies, "node_clock": 24, "momentum_unit": 64, "twist_table": table}
+    inline |= {"quantum_action": 64}
     inline["universe"] = [*document["families"], third := {"name": "third", "pair": [-12, 24]}]
     f, least = [[1, 0, 1], [1999, 1998000, 1998001]], derived.MAX_WORK_INT // (3 * 1998001**2) - 1
     w = parse_nature_beam_world({**inline, "twist_table": {**table, "fine": f, "coarse": f}})
-    assert (w.families[3].pair, w.amplitude_bound) == ((-12, 24), least)  # a wide table: the transport's
-    six = parse_nature_beam_world({**inline, "node_clock": [24, 6]})  # GAMMA IS NOT CONSTANT: a pair
-    assert (six.node_clock, six.clock_step, six.families[3].pair) == (24, 6, (-12, 24))
-    pairs = [f.pair for f in six.families]  # light and the sign +6, matter +4, the third -3 per interval
-    assert derived.clock_at(pairs, 24, 6, 1) == (30, [(30, 30), (30, 30), (20, 30), (-15, 30)])
-    odd = [*document["families"], {**third, "pair": [23, 24]}]  # the electron's band at a stepping Gamma
-    refused({**inline, "node_clock": [24, 6], "universe": odd}, "does not step with the clock")
+    assert (w.families[4].pair, w.amplitude_bound) == ((-12, 24), least)  # a wide table: the transport's
+    six = parse_nature_beam_world({**inline, "node_clock": [24, 24]})  # GAMMA IS NOT CONSTANT: a pair
+    assert (six.node_clock, six.clock_step, six.families[4].pair) == (24, 24, (-12, 24))
+    pairs = [f.pair for f in six.families]  # the binding +23, light and the sign +24, matter +16, -12
+    stepped = [(46, 48), (48, 48), (48, 48), (32, 48), (-24, 48)]
+    assert derived.clock_at(pairs, 24, 24, 1) == (48, stepped)
+    refused({**inline, "node_clock": [24, 6]}, "does not step with the clock")  # 23 x 6 is no multiple
     for clock in ([0, 6], [24, -1], [24, 6, 1], [24, 6.0]):
         refused({**inline, "node_clock": clock}, "node_clock")
     for pair, match in (([-24, 24], r"den from 1, and den > \|num\|"), ([1, 0], "den from 1")):
