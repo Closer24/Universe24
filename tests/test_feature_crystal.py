@@ -92,10 +92,8 @@ def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_
     givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
     arriving, pair = givings
-    assert [(line["measured"], line["labels"]) for line in givings] == [
-        (EMITTER, [[0, 1]]),
-        (CRYSTAL, [[0, 1], [0, 1]]),
-    ]
+    labels = [(line["measured"], line["labels"]) for line in givings]
+    assert labels == [(EMITTER, [[0, 1]]), (CRYSTAL, [[0, 1], [0, 1]])]
     assert (pair["norm"], pair["pace"]) == (arriving["norm"], 2 * arriving["pace"])
     assert pair["u"] != arriving["u"]  # the crystal's own residue, read at its Node
     assert [(g["record"], g["chosen"][0][0], g["u"], g["content"]) for g in gathers] == [

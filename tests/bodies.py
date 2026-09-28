@@ -105,10 +105,7 @@ def charged_chain(
     document = content_chain(length, boundary, nodes, amount, divisor=divisor)
     document["universe"][LIGHT]["sign"] = light_charge
     document["universe"][MATTER]["sign"] = matter_charge
-    document["universe"].insert(
-        NEUTRAL,
-        family_entry("neutral", [1, 1], reads(), clock=[512, 1]),
-    )
+    document["universe"].insert(NEUTRAL, family_entry("neutral", [1, 1], reads(), clock=[512, 1]))
     set_strength(document, strength)
     return document
 
@@ -136,10 +133,7 @@ def block_world(
     every well seeded on its mode (a real body under the count's line: a flat seed sloshes and its quanta move)."""
     matter: dict = family_entry("matter", kind, reads())
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md #the-click)
-    families = [
-        family_entry("light", [1, 1], reads(), clock=[512, 1]),
-        matter,
-    ]
+    families = [family_entry("light", [1, 1], reads(), clock=[512, 1]), matter]
     measured: list[dict] = []
     wells: list[int] = []
     if source is not None:

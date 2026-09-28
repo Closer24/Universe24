@@ -309,9 +309,8 @@ def test_conservation_between_clicks():
     # read at no less than 0, ALGEBRA.md #the-paces, #the-counts-line), and THE EXCHANGE WITH
     # A MOVING CLOCK (ALGEBRA.md #the-counts-line; under the fixed wall, item 34): between the steps the form
     # with the new level differs from the form with the old by the weights' change, exactly
-    # (at the well's Nodes the level is the source's carried division over the row's divisor E_s,
-    # (SUM_{i <= t} count_i + r) div E_s less the load's own division, the count 1 until the click's
-    # quantum enters as interval click_tick ends and 2 after, read on `held`; elsewhere the waves move it)
+    # (at the well's Nodes the level is the source's carried division over E_s, (SUM_{i <= t} count_i + r)
+    # div E_s less the load's own, the count 1 until the click's quantum enters and 2 after, on `held`)
     well = simulation.blocks[0].mask
     divisor = next(family.held_divisor for family in simulation.families if family.held == "content")
     counts = [1 if t < click_tick else 2 for t in range(len(states))]

@@ -12,9 +12,7 @@ import pytest
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord, form_json
 from event_universe.features.send import send
-from event_universe.loader.world import (
-    MASSLESS_PAIR,
-)
+from event_universe.loader.world import MASSLESS_PAIR
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import (
     block_world,
@@ -351,10 +349,7 @@ def six_reads(row: np.ndarray) -> np.ndarray:
 def test_an_emitter_body_givings_in_turn_each_giving_one_quantum_of_its_stock():
     """BUILD.md (h) SINCE section 26 (the emission by the coupling's source term retired with the lamp; an emitter is a clicking body, ALGEBRA.md #the-click): an emitter body of the source kind (the one-Node well SOURCE_WELL at x = 100 seeded on its mode, the stock 3) on the chain of 240 with the screen at 230: three givings in turn, the residues the law's, each given record of content 1 moved from the stock (`held_spent` 3 of the source family, `transit_released` 3 of light), the body's own record continuing under its one identity after every giving and after the stock is spent, never rewritten (ALGEBRA.md #the-ladder; item 33), the books balanced at every tick. The edge cases: `emits` and `own_grace` beside `emitter` refused naming the key; `emitter` on a body of light's kind refused; a stock below 1 refused."""
     world = parse_nature_beam_world(
-        with_screen(
-            block_world([240, 1, 1], CHAIN, [156, 157], [], emitter_at(100, 3), ticks=600),
-            230,
-        )
+        with_screen(block_world([240, 1, 1], CHAIN, [156, 157], [], emitter_at(100, 3), ticks=600), 230)
     )
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)

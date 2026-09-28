@@ -198,8 +198,9 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
     kicked = list(simulation.blocks[0].momentum)
     (first,) = [line for line in lines if line.get("event") == "giving"]
     unit, wall = document["momentum_unit"], simulation.recoil_wall
-    clock = document["universe"][0]["clock"]
-    wavelength = 2 * document["N"] * clock[1] // clock[0]  # lambda_q = 2 N q / p
+    wavelength = (
+        2 * document["N"] * document["universe"][0]["clock"][1] // document["universe"][0]["clock"][0]
+    )
     period = simulation.world.measured[0].block.emitter.period
     kick = 3 * unit * period * (wall // wavelength) // wall  # 3 Q P_body (L div lambda_q) div L
     assert kicked == [-first["momentum"][0] * kick, 0, 0] and kick > 0  # opposite to the given light

@@ -58,9 +58,7 @@ def test_a_records_of_a_family_with_a_lifetime_end_on_the_border_at_age_l_throug
     for _ in range(120):
         simulation.step()
     gathers = [line for line in lines if line["event"] == "gather"]
-    assert len(gathers) == 2  # the two givings, each ending at its age L on the border
-    assert [(line["tick"] - line["giving"], line["chosen"]) for line in gathers] == [
-        (lifetime, [["lifetime", 0, "0"]])
-    ] * 2
+    ages = [(line["tick"] - line["giving"], line["chosen"]) for line in gathers]  # each at its age L
+    assert ages == [(lifetime, [["lifetime", 0, "0"]])] * 2
     assert all(line["record"] not in simulation.records for line in gathers)
     assert DetectorLawSimulation(parse_nature_beam_world(document)).lifetime_detector is None

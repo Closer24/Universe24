@@ -169,8 +169,7 @@ def test_bound_at_v_a_free_body_falls_toward_a_held_body_and_the_step_back_retur
     # too and moves away from the hole the small body's count makes in its field (the hold's write at a
     # body's Nodes is its count: a finding on #1198 for the owner, the law as written); -95 under the
     # certified rest (the levels at a half round up where the clamp's fixed point rounded down)
-    # the free body's momentum toward the held body (negative x), |before| <= |now|; the held body fed too
-    # (negative, from the hole the small body makes in its field); the numbers are the run's, not asserted
+    # the free body falls toward the held body (negative x), |before| <= |now|; the held body is fed too
     assert free.momentum[0] < 0 and free.momentum[1:] == [0, 0] and free.momentum_before[1:] == [0, 0]
     assert abs(free.momentum_before[0]) <= abs(free.momentum[0]) and free.hold_carry[("feed", 0)] > 0
     assert held.momentum[0] < 0 and held.momentum[1:] == [0, 0]

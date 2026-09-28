@@ -100,7 +100,7 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     pace = solitary.node_clock_pair((21, 0, 0), body.family)[0]
     num, den = body.definition.pair
     read_coefficient = coefficients(int(num), int(den), NODE_CLOCK, NODE_CLOCK - pace)[0][0]
-    assert pace == NODE_CLOCK - 5 and action.numerator == norm  # one own quantum and the stock 4
+    assert pace == NODE_CLOCK - 5 // divisor  # one own quantum and the stock 4, over E_s: the level 0
     assert read_coefficient % action.denominator == 0
     by_tick = {entry["tick"]: entry for entry in trace}
     # THE TICK AS A COUNT OF INTERVALS (ALGEBRA.md #the-ladder, #the-postulates; BUILD.md

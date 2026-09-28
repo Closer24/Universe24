@@ -74,6 +74,15 @@ Record = Callable[[dict[str, object]], None]
 
 # ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md #the-primitives): the constant that named the law and its version is CANCELLED; the books and the state carry no law entry
 FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
+FAMILY_TERMS = (
+    "the pair",
+    "the degree",
+    "the phase",
+    "the send",
+    "the receive",
+    "the wait",
+    "the operation",
+)
 # The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does not send the wave back (a mirror is a receiver body that re-emits, never a wall). The record's row at a receiver holds one amplitude per Port that faces a free Node (the NodeState's Ports), the wave entering by that Port, following it one way: g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with a_f the free neighbour's amplitude and k = (c - 1) / (c + 1) at c = 1 / sqrt 3, the declared pair [-15, 56] (-0.2679 against sqrt 3 - 2 = -0.2679), a rounding declared at load, not a root at run time; the free neighbour reads g as the receiver's amplitude on that Link, and the receiver books g^2 as the offer arriving by that Port.
 
 
@@ -305,12 +314,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return
         if block.counts is None or block.count_remainder is None:
             block.counts, block.count_remainder = self._lay_count(block, live)
-        term = CountTerm(
-            block.count_norm,
-            self.kind_wall(block.family, block.definition.pair),
-            self.world.amplitude_bound,
-            int(block.counts.max()),
-        )
+        wall = self.kind_wall(block.family, block.definition.pair)
+        term = CountTerm(block.count_norm, wall, self.world.amplitude_bound, int(block.counts.max()))
         wrap = self.kind_wrap[block.family]
         levels = (live.now, live.before, live.im_now, live.im_before)
         arrived = [None if a is None else self.ports.arrivals(a, wrap) for a in levels]
@@ -547,16 +552,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         terms: list[tuple[str, str]] = []
         for index, family in enumerate(self.families):
             label = f"universe.families[{index}]"
-            for name in (
-                "the pair",
-                "the degree",
-                "the phase",
-                "the send",
-                "the receive",
-                "the wait",
-                "the operation",
-            ):
-                terms.append((label, name))
+            terms.extend((label, name) for name in FAMILY_TERMS)
             if family.reads:
                 terms.append((f"{label}.reads", "the signed read"))
             if family.held is not None:
@@ -607,16 +603,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """Every held family's component records in the declared order, the time part first, then the other parts (the interval's field step)."""
         found: list[LiveRecord] = []
         for family, record in self.held_records.items():
-            found.append(record)
-            found.extend(self.held_parts[family])
-        found.extend(self.sourced_records.values())
-        return found
+            found += [record, *self.held_parts[family]]
+        return found + list(self.sourced_records.values())
 
     def body_source(self, number: int, source: str) -> int:
         """A body's declared source for a held family (item 51): its content, the quanta it holds of every family ("content", ALGEBRA.md #the-counts-line), or its signed charge Q ("sign", ALGEBRA.md #the-paces)."""
-        if source == "sign":
-            return self._body_charge(number)
-        return sum(self.held[number])
+        return self._body_charge(number) if source == "sign" else sum(self.held[number])
 
     def node_sources(self, number: int, source: str) -> list[tuple[tuple[int, int, int], int]]:
         """A body in the law's form: its source per Node, the count declared THERE ("content") or the family's charge times it ("sign"), ALGEBRA.md #what-a-body-is and the hold's row; empty for a body of the old form, whose one source stands at every Node of its mask."""
@@ -650,8 +642,11 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                                     self.held_parts[family][i].now[node] -= value
                         w = self._held_writes(line, block, family, act)
                     else:
-                        divisor = cast(int, definition.held_divisor)
-                        term = HoldTerm(source, (1,), (definition.held_factors[0],), None, 1, divisor)
+                        factors, divisor = (
+                            (definition.held_factors[0],),
+                            cast(int, definition.held_divisor),
+                        )
+                        term = HoldTerm(source, (1,), factors, None, 1, divisor)
                         start = HoldStart(act, self.body_source(number, source), (0, 0, 0), 1, None)
                         own = self.span_hold.get((family, number), HoldOwn({}, {}))
                         w = cast(HoldWrites, line(term, start, own))
@@ -708,8 +703,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self, line: Callable[..., object], block: Block, family: int, act: str
     ) -> HoldWrites:
         """One body's hold into one held family by the hold's line, the act named by the loop: the family's row, the body's count, its momentum now, its wall and its dipole's vector, and its remainders of the family under the line's keys (a part's index, ("d", i, j, sigma) a dipole's term), written back after the call; a dipole's term beyond an open face is dropped with its Node (ALGEBRA.md #the-interval)."""
-        definition = self.families[family]
-        source = definition.held
+        row = self.families[family]
+        source = row.held
         assert source is not None
         values: dict[tuple[object, ...], int] = {}
         carries: dict[tuple[object, ...], int] = {}
@@ -717,34 +712,22 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             for key, value in stored.items():
                 if key[0] == family or (key[0] == "d" and key[1] == family):
                     found[key[1:] if key[0] == family else ("d", *key[2:])] = value
-        vector: tuple[int, int, int] | None = None
-        if definition.held_dipole is not None:
-            dipole = block.spin if definition.held_dipole == "spin" else block.definition.moment
-            vector = (int(dipole[0]), int(dipole[1]), int(dipole[2]))
+        dipole = block.spin if row.held_dipole == "spin" else block.definition.moment
+        vector = None if row.held_dipole is None else (int(dipole[0]), int(dipole[1]), int(dipole[2]))
         momentum = self._momentum_now(block)
-        per_node = tuple(
-            (("n", *node), value) for node, value in self.node_sources(block.number, source)
-        )
-        term = HoldTerm(
-            source,
-            tuple(definition.parts),
-            tuple(definition.held_factors),
-            definition.held_dipole,
-            definition.held_dipole_div,
-            cast(int, definition.held_divisor),
-        )
-        start = HoldStart(
-            act,
-            self.body_source(block.number, source),
-            (int(momentum[0]), int(momentum[1]), int(momentum[2])),
-            self.wall_of(block),
-            vector,
-            per_node,
-        )
+        sources = self.node_sources(block.number, source)
+        per_node = tuple((("n", *node), value) for node, value in sources)
+        parts, factors, divisor = tuple(row.parts), tuple(row.held_factors), cast(int, row.held_divisor)
+        term = HoldTerm(source, parts, factors, row.held_dipole, row.held_dipole_div, divisor)
+        count = self.body_source(block.number, source)
+        n = (int(momentum[0]), int(momentum[1]), int(momentum[2]))
+        start = HoldStart(act, count, n, self.wall_of(block), vector, per_node)
         writes = cast(HoldWrites, line(term, start, HoldOwn(values, carries)))
         centre = self._centre_node(block) if any(key[0] == "d" for key in writes.own.values) else []
-        stores = ((block.hold_value, writes.own.values), (block.hold_carry, writes.own.carries))
-        for stored, written in stores:
+        for stored, written in (
+            (block.hold_value, writes.own.values),
+            (block.hold_carry, writes.own.carries),
+        ):
             for key, value in written.items():
                 if key[0] != "d":
                     stored[(family, *key)] = value
@@ -1426,8 +1409,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             if all(record.silent for record in vector):
                 continue
             factor = weight * live.twist if twist == "own" else int(twist)
-            if by != "plain":
-                factor *= sign
+            factor = factor if by == "plain" else factor * sign
             if factor == 0:
                 continue
             x, y, z = (part.before if inverse else part.now for part in vector)

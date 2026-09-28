@@ -30,6 +30,7 @@ from tests.running import stamped
 from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
+ENGINE_START = "examples/events/engine_start.json"
 
 
 def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_first_value_twice():
@@ -52,13 +53,11 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
     assert advanced.time_level == 64  # the count over the divisor 1, this interval's source
     assert [(p, b) for p, _n, b in advanced.parts] == [(p, n) for p, n, _b in loaded.parts]
     rewritten = apply(term, HoldStart(THE_REWRITE, 64, (3120, 0, 0), 12480, None), advanced.own)
-    assert rewritten.own == advanced.own and all(
-        n == b == dict(advanced.own.values)[(p,)] for p, n, b in rewritten.parts
-    )
+    assert rewritten.own == advanced.own
+    assert all(n == b == dict(advanced.own.values)[(p,)] for p, n, b in rewritten.parts)
     back = apply(term, HoldStart(THE_INVERSE, 64, (3120, 0, 0), 12480, None), advanced.own)
-    assert dict(back.own.values) == dict(loaded.own.values) and dict(back.own.carries) == dict(
-        loaded.own.carries
-    )
+    assert dict(back.own.values) == dict(loaded.own.values)
+    assert dict(back.own.carries) == dict(loaded.own.carries)
 
 
 def test_the_dipoles_terms_are_the_table_of_9_91_3():
@@ -83,20 +82,11 @@ def test_the_dipoles_terms_are_the_table_of_9_91_3():
     assert keyed(second.dipoles) == {((1, 0, 1), 1), ((1, 0, -1), 0), ((0, 1, 1), 0), ((0, 1, -1), 1)}
     unheld = apply(charge, HoldStart(THE_UNHOLD, 1, (0, 0, 0), 3, (0, 0, 1)), second.own)
     assert keyed(unheld.dipoles) == {(key, now) for key, now, _b in second.dipoles}
-    assert dict(unheld.own.carries) == dict(first.own.carries) and dict(unheld.own.values) == dict(
-        first.own.values
-    )
-    assert (
-        apply(gravity, HoldStart(THE_LOAD, 5, (0, 0, 0), 15, (0, 0, 0)), HoldOwn({}, {})).dipoles == ()
-    )
-    assert (
-        apply(
-            HoldTerm("content", (1,), (1,), "spin", 1, 1),
-            HoldStart(THE_LOAD, 5, (0, 0, 0), 15, (0, 0, 1)),
-            HoldOwn({}, {}),
-        ).dipoles
-        == ()
-    )
+    assert dict(unheld.own.carries) == dict(first.own.carries)
+    assert dict(unheld.own.values) == dict(first.own.values)
+    assert act(gravity, HoldStart(THE_LOAD, 5, (0, 0, 0), 15, (0, 0, 0))).dipoles == ()
+    no_dipole = HoldTerm("content", (1,), (1,), "spin", 1, 1)
+    assert act(no_dipole, HoldStart(THE_LOAD, 5, (0, 0, 0), 15, (0, 0, 1))).dipoles == ()
 
 
 def keyed(dipoles):
@@ -161,33 +151,23 @@ def test_a_body_in_the_laws_form_sources_each_node_by_the_count_there(tmp_path):
     universe = json.loads((ROOT / "examples/events/generated/universe.json").read_text(encoding="utf-8"))
     body = {"family": "matter", "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
     body["nodes"] = [{"node": list(node), "count": count} for node, count in counts.items()]
-    levels = {}
+    levels, strip = {}, {"name": "strip", "positions": [[6, 0, 0]]}
     for divisor in (whole + 1, 2 * largest + 1):
         for row in universe["families"]:
-            if "held" in row:
-                row["held"]["divisor"] = divisor
+            row.get("held", {}).update(divisor=divisor)
         (tmp_path / f"universe_{divisor}.json").write_text(json.dumps(universe), encoding="utf-8")
-        document = stamped(
-            {
-                "shape": [16, 1, 1],
-                "boundary": {"x": "closed", "y": "periodic", "z": "periodic"},
-                "ticks": 2,
-                "N": 64,
-                "universe": str(tmp_path / f"universe_{divisor}.json"),
-                "engine": "examples/events/engine_start.json",
-                "measured": [body],
-                "detectors": [{"name": "strip", "positions": [[6, 0, 0]]}],
-            }
-        )
+        board = {
+            "shape": [16, 1, 1],
+            "boundary": {**dict.fromkeys("xyz", "periodic"), "x": "closed"},
+            "N": 64,
+        }
+        files = {"universe": str(tmp_path / f"universe_{divisor}.json"), "engine": ENGINE_START}
+        document = stamped({**board, **files, "ticks": 2, "measured": [body], "detectors": [strip]})
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
         gravity = [family.name for family in simulation.families].index("gravity")
         simulation.step()
         levels[divisor] = simulation.held_records[gravity].now.copy()
     difference = levels[whole + 1] - levels[2 * largest + 1]
     expected = {node: 2 * c // (whole + 1) - c // (whole + 1) for node, c in counts.items()}
-    assert {node: int(difference[node]) for node in counts} == expected and sorted(
-        expected.values()
-    ) == [0, 0, 1]
-    for node in counts:
-        difference[node] = 0
-    assert not difference.any()  # the Nodes alone gain; the whole count would gain 1 at each under both
+    assert {node: int(difference[node]) for node in counts} == expected and sum(expected.values()) == 1
+    assert int(abs(difference).sum()) == 1  # that Node alone; the whole count would gain 1 at each

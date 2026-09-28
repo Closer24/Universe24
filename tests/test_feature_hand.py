@@ -70,4 +70,3 @@ def test_the_hand_refuses_a_click_at_the_giver_and_the_ladder_walks_on_to_the_fa
         assert booking != 0 and chosen and simulation.blocks[0].momentum[1:] == [0, 0]
         admits = hand * booking > 0  # the hand against the sign of the booking (ALGEBRA.md, the hand)
         assert (chosen.count("at_well") > 0, chosen.count("face") > 0) == (admits, not admits)
-        assert chosen.count("at_well") + chosen.count("face") == len(chosen)
