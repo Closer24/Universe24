@@ -189,14 +189,14 @@ at Gamma does, with its intervals p / Gamma as long. THE LEVEL ENTERS THE LINK T
 
 THE GUARD, two-sided: 0 < p <= P at every Node, with the edge
 
-  P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)),
+  P = isqrt(2 den Gamma^2 div (den + num)),
 
-above Gamma where num < den. Below 0 the pace is no clock; beyond P the step
-is unstable: the mode at wave number pi has the factor (S - 6 R) / w, which
-is -2 num / den at p = Gamma and falls below -2 once p^2 / Gamma^2 exceeds
-(18 den + 6 num) / (18 num + 6 den), so the record grows without bound; P is
-the largest pace at which p^2 (18 num + 6 den) <= Gamma^2 (18 den + 6 num)
-holds exactly. A hill lessens a hollow and never exceeds it; a pace outside
+Gamma for light and above Gamma where num < den (the conformal line, 2026-09-28: the old edge isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) was the half-fixed mass term's). Below 0 the pace is no clock; beyond P the step
+is unstable: the mode at wave number pi has the factor (S - 6 R) / w = 2 - 2 (1 + num / den) (p / Gamma)^2, which
+is -2 num / den at p = Gamma and falls below -2 once p^2 (den + num) exceeds
+2 den Gamma^2, so the record grows without bound; P is
+the largest pace at which p^2 (den + num) <= 2 den Gamma^2
+holds exactly, and every pace at or below Gamma is inside it. A hill lessens a hollow and never exceeds it; a pace outside
 the guard refuses the run naming the Node.
 
 THE BAND AT A PACE, a reading of the line and no new rule: at a Node of pace p on every axis a record's rotation at wave number k along an axis is cos omega = 1 - (p / Gamma)^2 (1 - (num / (3 den)) (2 + cos k)), with cos k_x + cos k_y + cos k_z in place of 2 + cos k off an axis, so the band of rotations a body's Nodes carry narrows with p^2: a record whose rotation lies outside the band there is evanescent inside (for [1, 1], cosh kappa = (Gamma / p)^2 (1 - cos k) - 1 per Node) and is reflected whole, and one whose rotation lies inside is slowed to the band's group velocity (num / (3 den)) (p / Gamma)^2 sin k_in / sin omega with 1 - cos k_in = (Gamma / p)^2 (1 - cos k) for [1, 1]; light ([1, 1]) meets a total mirror exactly where p < Gamma sin(k / 2), that is where the count c exceeds Gamma (1 - sin(k / 2)) (2,929 at lambda = 4 Links, 3,891 at 4.78), and a window otherwise, with the step's partial share at each face.
