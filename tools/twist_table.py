@@ -14,7 +14,12 @@ factor of about 60). `check_angles` reports the largest miss against the represe
 `SMALLEST_ANGLE`; the table's form waits for the mathematician's line (a coarser unit, a
 larger d, or the fine part folded into the coarse).
 
-    PYTHONPATH=src python tools/twist_table.py OUT.json [--coarse N] [--gamma G]
+    PYTHONPATH=src python tools/twist_table.py OUT.json [--coarse N] [--gamma G] [--fine F]
+
+THE FINE COUNT IS THE FILE'S (ALGEBRA.md #the-transport: F the fine table's length, a power of two):
+`--fine F` writes F fine triples; at a small Gamma every fine angle lies under the representable
+floor and the fine part is the identity (as the universe of record's is), and a small F keeps the
+transport's total 3 d_1 d_0 (A + 1) inside the width with the coarse part at the step F theta_unit.
 """
 
 from __future__ import annotations
@@ -59,11 +64,11 @@ def angle_of(triple: Triple) -> float:
     return math.atan2(s, c)
 
 
-def build(coarse: int = COARSE_DEFAULT, gamma: int = GAMMA) -> TwistTable:
+def build(coarse: int = COARSE_DEFAULT, gamma: int = GAMMA, fine: int = TWIST_FINE_COUNT) -> TwistTable:
     unit = theta_unit(gamma)
-    fine = tuple(triple_for(k * unit) for k in range(TWIST_FINE_COUNT))
-    coarse_entries = tuple(triple_for(k * TWIST_FINE_COUNT * unit) for k in range(coarse))
-    return TwistTable(fine, coarse_entries)
+    fine_entries = tuple(triple_for(k * unit) for k in range(fine))
+    coarse_entries = tuple(triple_for(k * fine * unit) for k in range(coarse))
+    return TwistTable(fine_entries, coarse_entries)
 
 
 def check_angles(table: TwistTable, gamma: int = GAMMA, tolerance: float | None = None) -> float:
@@ -75,7 +80,7 @@ def check_angles(table: TwistTable, gamma: int = GAMMA, tolerance: float | None 
     largest = 0.0
     for name, entries, step in (
         ("fine", table.fine, unit),
-        ("coarse", table.coarse, TWIST_FINE_COUNT * unit),
+        ("coarse", table.coarse, len(table.fine) * unit),
     ):
         for index, triple in enumerate(entries):
             if not is_triple(triple):
@@ -94,8 +99,9 @@ def main() -> None:
     parser.add_argument("out", type=Path)
     parser.add_argument("--coarse", type=int, default=COARSE_DEFAULT)
     parser.add_argument("--gamma", type=int, default=GAMMA)
+    parser.add_argument("--fine", type=int, default=TWIST_FINE_COUNT)
     args = parser.parse_args()
-    table = build(args.coarse, args.gamma)
+    table = build(args.coarse, args.gamma, args.fine)
     table.check()
     miss = check_angles(table, args.gamma)
     print(
