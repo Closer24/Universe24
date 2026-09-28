@@ -445,7 +445,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return whole
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
-        """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1; a body with no period declares no term."""
+        """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1, the kick written to both levels of n (the feed's KEEP pair exchanges them every interval); a body with no period declares no term."""
         for number, sense, tally, clock in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
@@ -464,9 +464,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 (stores[0], stores[1], stores[2]),
             )
             writes = cast(RecoilWrites, function(term, RecoilStart(tally), own))
-            block.momentum[:] = list(writes.momentum)
-            for axis in range(3):
-                block.hold_value[("recoil", axis)] = writes.remainders[axis]
+            for axis, (kicked, rest) in enumerate(zip(writes.momentum, writes.remainders, strict=True)):
+                block.momentum_before[axis] += kicked - own.momentum[axis]
+                block.momentum[axis], block.hold_value[("recoil", axis)] = kicked, rest
         self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
