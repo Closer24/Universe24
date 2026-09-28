@@ -169005,18 +169005,7 @@
    ],
    "held": {
     "count": "sign",
-    "divisor": 1
-   }
-  },
-  {
-   "name": "polarisation",
-   "pair": [
-    1,
-    2
-   ],
-   "held": {
-    "count": "content",
-    "divisor": 1
+    "divisor": 400000
    }
   },
   {
@@ -169024,13 +169013,6 @@
    "pair": [
     2,
     3
-   ]
-  },
-  {
-   "name": "third",
-   "pair": [
-    -1,
-    2
    ]
   }
  ]

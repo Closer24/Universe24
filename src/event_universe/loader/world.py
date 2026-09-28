@@ -701,7 +701,7 @@ def _node_clock_bound(
     ) -> int:
         quanta, counts = sum(entry.held), counts or (sum(entry.held),)
         if family.held == "sign":
-            declared = entry.block.q if entry.block is not None else 0
+            declared = entry.block.q * quanta if entry.block is not None else 0
             quanta = abs(
                 declared
                 + sum(other.charge[0] * held for other, held in zip(families, entry.held, strict=True))
