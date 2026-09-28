@@ -139,10 +139,8 @@ def test_the_step_file_orders_the_writers_of_one_value_and_a_writer_it_leaves_ou
         deferred.add(declaration)
     step = Step({"(ii)": ("the clicks", "the giving"), "(iv)": ("the hold", "the recoil")}, "d")
     deferred.check_writers(step)
-    assert (
-        clicks.place_of("a body's content M_k") == "(iv)"
-        and clicks.place_of("the record's tally") == "(ii)"
-    )
+    assert clicks.place_of("a body's content M_k") == "(iv)"
+    assert clicks.place_of("the record's tally") == "(ii)"
     assert recoil.place_of("a body's momentum n") == "(iv)"
     assert deferred.writers("a body's content M_k", "(iv)", step) == ("the clicks", "the giving")
     assert deferred.writers("a body's momentum n", "(iv)", step) == ("the giving", "the recoil")
