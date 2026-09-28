@@ -34,7 +34,7 @@ def moving_world_with_the_self_source(family_name: str) -> tuple[DetectorLawSimu
     universe = copy.deepcopy(files[document["universe"]])
     unit = 24 * parse_world_document(document, files, input_digest(document)).amplitude_bound
     index = next(i for i, entry in enumerate(universe["families"]) if entry["name"] == family_name)
-    universe["families"][index]["self_source"]["unit"] = unit
+    universe["families"][index]["self_source"] = {"unit": unit}  # the file derives it as 0; set here
     files[document["universe"]] = universe
     world = parse_world_document(document, files, input_digest(document))
     return DetectorLawSimulation(world), index, unit

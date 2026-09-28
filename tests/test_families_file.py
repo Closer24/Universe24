@@ -10,20 +10,20 @@ import numpy as np
 from event_universe import world_files
 from event_universe.core.register import discover
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.loader import frame
+from event_universe.loader import derived, frame
 from event_universe.world_files import input_stamp, parse_nature_beam_world, read_repository_json
 from tests.running import refused
 from tests.worlds import FILE, HELD_MOMENT, HELD_SPIN, emitter_specimen, family_entry, on_the_file
 
 ROOT = Path(__file__).resolve().parents[1]
-ATTRIBUTES = {"name", "parts", "phase", "pair", "reads", "self_source"}
+ATTRIBUTES = {"name", "pair", "held", "clock", "spins_step"}  # the file's rows; the rest derives
 
 
 def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_names_it():
     document = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     assert "law" not in document  # one engine, no name and no version (record 2128)
     table = document["integers"].pop("twist_table")
-    expected = dict(node_clock=10000, Lambda=1, momentum_unit=64, most_steps=65536)
+    expected = dict(node_clock=10000, momentum_unit=64, most_steps=65536)
     expected.update(
         width=63, most_families=20, least_residues=500
     )  # the owner's two numbers, in the file
@@ -36,31 +36,31 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     names = [entry["name"] for entry in document["families"]]
     assert names == ["gravity", "charge", "matter"]
     gravity, charge, matter = document["families"]
-    for entry in document["families"]:
-        assert ATTRIBUTES <= set(entry) and entry["self_source"] == {"unit": 0}
-        assert "held" in entry or "clicks" in entry
-        assert "booked" not in entry and entry["quantum"] == 1 and "charge" not in entry
-    # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's dipole, no reads, no clicks (ALGEBRA.md #the-interval)
-    assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
-    assert gravity["held"] == HELD_SPIN and gravity["reads"] == [] and "clicks" not in gravity
-    # the charge: four components, two levels, held sign with the moment's dipole halved, reads gravity, and clicks: light is its wave
-    assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["pair"] == [1, 1]
-    assert charge["held"] == {**HELD_MOMENT}
-    assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
-    assert charge["clicks"] == {"gives": True, "takes": True, "quantum": 1}
-    # matter: a scalar, two levels, the pair on every body, reads gravity and the charge at Lambda by its sign, clicks
-    assert matter["parts"] == [1] and matter["phase"] == 2 and matter["pair"] == "body"
-    assert "held" not in matter and matter["clicks"] == {"gives": True, "takes": True, "quantum": 1}
-    assert matter["reads"] == [
-        {"family": "gravity", "weight": 1, "twist": "own", "by": 1},
-        {"family": "charge", "weight": "Lambda", "twist": "own", "by": "q"},
-    ]
+    # THE FAMILIES FROM THE RULE (ALGEBRA.md #a-familys-declaration): the file holds the rows of the five
+    # numbers (the pairs, the two divisors, the light clock and the spin's step until it leaves) and
+    # nothing the rule derives: parts, phase, clicks, reads, the dipoles and the weights (`loader/derived.py`)
+    assert all(set(entry) <= ATTRIBUTES for entry in document["families"])
+    spins = {"curl": [1, 4], "tidal": [3, 4]}
+    held, moment = {"count": "content", "divisor": 40000}, {"count": "sign", "divisor": 40000}
+    assert gravity == {"name": "gravity", "pair": [1, 1], "held": held, "spins_step": spins}
+    assert charge == {"name": "charge", "pair": [1, 1], "clock": [512, 1], "held": moment}
+    assert matter == {"name": "matter", "pair": "body"}
     entries, integers = frame.universe(FILE, {FILE: read_repository_json(FILE)}, discover())
     # the frame reads the table's lists as tuples (core/schema.py); the same numbers
     assert json.loads(json.dumps(integers)) == document["integers"] and len(entries) == 3
-    assert entries[0]["held"]["count"] == "content" and entries[1]["held"]["count"] == "sign"
-    assert "held" not in entries[2]
-    assert entries[2]["reads"][1] == {"family": "charge", "weight": 1, "by": "q", "twist": "own"}
+    gravity, charge, matter = (derived.filled(entry, entries) for entry in entries)
+    # gravity: ten components, one level, held content with the spin's dipole, no reads, no clicks;
+    # the charge: four components, two levels, held sign with the moment's dipole halved, reads
+    # gravity, and clicks (light is its wave); matter: a scalar, two levels, the pair on every body,
+    # reads gravity plainly and the charge by its sign, clicks; every weight 1, every twist own
+    assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and "clicks" not in gravity
+    assert gravity["held"] == {**HELD_SPIN, "factors": [1, 1, 1]} and gravity["reads"] == []
+    assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == HELD_MOMENT
+    assert charge["reads"] == [{"family": "gravity", "weight": 1, "twist": "own", "by": 1}]
+    assert charge["clicks"] == {"gives": True, "takes": True, "quantum": 1} == matter["clicks"]
+    assert matter["parts"] == [1] and matter["phase"] == 2 and "held" not in matter
+    charge_read = {"family": "charge", "weight": 1, "twist": "own", "by": "q"}
+    assert matter["reads"] == [charge["reads"][0], charge_read]
     for path in (ROOT / "examples/events").glob("*/*.json"):
         if path.name.endswith((".mode.json", ".expectation.json")):  # the tool's files beside a world
             continue
@@ -76,7 +76,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
             gravity_family, charge_family, matter_family = world.families
             assert gravity_family.parts == (1, 3, 6) and gravity_family.components == 10
             assert gravity_family.held == "content" and gravity_family.clicks is None
-            assert not gravity_family.booked and gravity_family.held_factors == (1, 4, 2)
+            assert not gravity_family.booked and gravity_family.held_factors == (1, 1, 1)
             assert charge_family.parts == (1, 3) and charge_family.held == "sign"
             assert charge_family.clicks == (True, True) and charge_family.booked
             assert matter_family.pair_on_body and matter_family.massive_kind and matter_family.booked
@@ -95,16 +95,14 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     a = DetectorLawSimulation(parse_nature_beam_world(inline))
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     moved = on_the_file(inline)
-    moved["universe"] = "universe.json"
-    moved["engine"] = "start.json"
+    moved["universe"], moved["engine"] = "universe.json", "start.json"
     moved["stamp"] = input_stamp(moved)
     b = DetectorLawSimulation(parse_nature_beam_world(moved))
     assert b.world.universe_file == "universe.json" and a.world.universe_file is None
     names_a = [family.name for family in a.families]
     names_b = [family.name for family in b.families]
     rename = {"light": "charge", "clicks": "gravity"}
-    lines_a: list[dict] = []
-    lines_b: list[dict] = []
+    lines_a, lines_b = list[dict](), list[dict]()
     a.record, b.record = lines_a.append, lines_b.append
     # 60 intervals: the two worlds are one until A's first kick at 61 (the recoil at its first giving's close); from there the file's held rows, the shipped file's gravity (1, 4, 2) and charge (1, 1) and not the specimen's, carry the momentum into the fields
     for _ in range(60):
@@ -139,7 +137,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
     universe = json.loads((ROOT / FILE).read_text(encoding="utf-8"))
     for entry in universe["families"]:
         entry["name"] = rename[entry["name"]]
-        for read in entry["reads"]:
+        for read in entry.get("reads", []):
             read["family"] = rename[read["family"]]
     (tmp_path / "universe.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
@@ -158,8 +156,7 @@ def test_every_family_renamed_adversarially_in_the_whole_universe_file_runs_bit_
     renamed["stamp"] = input_stamp(renamed)
     b = DetectorLawSimulation(parse_nature_beam_world(renamed))
     assert [family.name for family in b.families] == [rename[f.name] for f in a.families]
-    lines_a: list[dict] = []
-    lines_b: list[dict] = []
+    lines_a, lines_b = list[dict](), list[dict]()
     a.record, b.record = lines_a.append, lines_b.append
     for _ in range(120):
         a.step()
@@ -212,28 +209,29 @@ def test_the_loader_refuses_the_files_defects_and_the_worlds_second_copy(tmp_pat
         refused(json.loads(json.dumps(document)), match)
 
     refuses(lambda d: d["integers"].pop("node_clock"), "integers lacks keys: node_clock")
-    refuses(lambda d: d["integers"].pop("Lambda"), "integers lacks keys: Lambda")
-    refuses(lambda d: d["families"][0].pop("parts"), r"families\[0\] lacks keys: parts")
+    refuses(lambda d: d["integers"].__setitem__("Lambda", 0), r"Lambda is 0, below its least 1")
+    refuses(lambda d: d["families"][0].pop("pair"), r"families\[0\] lacks keys: pair")
     refuses(lambda d: d["families"][0].__setitem__("parts", [3]), "parts must be one of")
     refuses(lambda d: d["families"][0].__setitem__("phase", 3), r"phase must be one of \[1, 2\], not 3")
     # the self-source's unit (ALGEBRA.md #the-interval; commit 6): 0, or at least 24 A
-    refuses(lambda d: d["families"][0]["self_source"].__setitem__("unit", 24), "is below 24 A")
-    refuses(lambda d: [d["families"][0].pop(k) for k in ("held", "spins_step")], "declares neither held")
+    refuses(lambda d: d["families"][0].__setitem__("self_source", {"unit": 24}), "is below 24 A")
+    refuses(lambda d: d["families"][0]["held"].__setitem__("count", "mass"), "count must be one of")
     refuses(
         lambda d: d["families"][2].__setitem__("spins_step", d["families"][0]["spins_step"]),
         "holds no spin's dipole",
     )
-    refuses(lambda d: d["families"][0].pop("quantum"), r"families\[0\] lacks keys: quantum")
+    refuses(lambda d: d["families"][0].pop("name"), r"families\[0\] lacks keys: name")
     refuses(lambda d: d["families"][0].__setitem__("quantum", 0), "quantum is 0, below its least 1")
-    refuses(lambda d: d["families"][2]["clicks"].update(quantum=2), "differs from the row's quantum 1")
+    C = {"gives": True, "takes": True, "quantum": 2}  # noqa: N806  # a clicks card at another quantum
+    refuses(lambda d: d["families"][2].__setitem__("clicks", C), "differs from the row's quantum 1")
     H = lambda f: lambda d: f(d["families"][0]["held"])  # noqa: E731  # a change of the held row
     # no default written for the dipole's divisor: the universe file writes it (the hold's card)
-    refuses(H(lambda h: h.pop("dipole_div")), "declares a dipole and lacks dipole_div")
-    refuses(H(lambda h: h.pop("factors")), "held lacks keys: factors")
+    refuses(H(lambda h: h.update(dipole="spin", dipole_div=0)), r"dipole_div is 0, below its least 1")
     refuses(H(lambda h: h.pop("divisor")), r"held lacks (keys: )?divisor")  # the sum's divisor E_s
     refuses(lambda d: d["families"][2].update(pair="mine"), r"pair must be a list, not 'mine'")
-    refuses(lambda d: d["families"][2]["reads"][1].update(weight="Mu"), "names 'Mu', no integer")
-    refuses(lambda d: d["families"][2]["reads"][1].update(by=2), r"by must be one of \[1, 'q'\], not 2")
+    R = lambda **k: lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", **k}])  # noqa: E731, N806
+    refuses(R(weight="Mu"), "names 'Mu', no integer")
+    refuses(R(by=2), r"by must be one of \[1, 'q'\], not 2")
     refuses(H(lambda h: h.update(factors=[1, 4])), r"held\.factors must be 3")
     refuses(H(lambda h: h.update(dipole="twist")), r"dipole must be one of \['spin', 'moment'\]")
     refuses(lambda d: d["families"][0].pop("spins_step"), "holds the spin's dipole and lacks spins_step")
@@ -293,7 +291,7 @@ def test_the_bodys_kind_and_the_emitters_pair_stand_where_the_family_declares_no
 def test_age_bound_fixed_sign_and_the_family_clock_are_refused_by_name_when_absent_or_wrong():
     """The keys #1236 made required, no default: each refused by the schema's or the loader's name."""
     for change, match in (
-        (lambda d: d["universe"][0].pop("sign"), r"universe\[0\] lacks keys: sign"),
+        (lambda d: d["universe"][0].pop("pair"), r"universe\[0\] lacks keys: pair"),
         (lambda d: d["universe"][0].__setitem__("clock", 3), r"clock must be a list, not 3"),
         (lambda d: d["universe"][0].__setitem__("clock", [1, 0]), r"has q from 1"),
     ):
