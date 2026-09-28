@@ -14,7 +14,7 @@ sys.path.insert(0, str(HERE))
 from lay_out_axes import pixel_mode  # noqa: E402  (the pixels' mode files by the recipe)
 from lay_out_join import DENOMINATOR, ENGINE, ROOT, STEPS, UNIVERSE_NAME  # noqa: E402
 
-COUNT = 5_000  # the body's count: on the engine of today (the level once) the edge is 0.345 Gamma = 4,136 (Cheshbon 14:12 Israel), so 3,000 disperses and 5,000 binds; 3,000 again with the corrected term (the Closer 14:21)
+COUNT = 3_000  # the body's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000) under the corrected term (the Closer 14:30 Israel: the files ready for 3,000 for the moment the term returns; on the engine of today the edge is 4,136 and the run at 5,000 refuses, the reading in #1422)
 BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
 TENTS = (
     0,
@@ -110,7 +110,7 @@ def expectation(tent: int) -> dict[str, Any]:
         ),
         "DETECTOR": [],
         "blind": {
-            "row": "Cheshbon's numbers of 13:09 Israel time (2026-09-28) before the run, at 3,000 under the corrected term: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200 (kappa_minus = 0.446); the count's moves biased toward the well in the same ratio: 51.2, 51.3 and 52.9 percent; the control 1 and 50 percent; the body at 5,000 on the engine of today (the edge 4,136, Cheshbon 14:12) until the corrected term returns, its numbers Cheshbon's line to come, the band plus or minus 30 percent (the Closer 14:16)",
+            "row": "Cheshbon's numbers of 13:09 Israel time (2026-09-28) before the run, at 3,000 under the corrected term: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200 (kappa_minus = 0.446); the count's moves biased toward the well in the same ratio: 51.2, 51.3 and 52.9 percent; the control 1 and 50 percent; the band plus or minus 30 percent (the Closer 14:16)",
             "edge_quanta_per_node": 2706,
             "horizon_quanta_per_node": 6000,
             "tail_kappa_per_link_away": KAPPA_AWAY,

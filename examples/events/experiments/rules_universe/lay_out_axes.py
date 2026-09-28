@@ -13,22 +13,31 @@ from event_universe.world_files import input_digest  # the mode file names the w
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-
+sys.path.insert(0, str(HERE.parents[3] / "tools"))
 from lay_out_join import (  # noqa: E402
     CLOCK_UNIT,
     DENOMINATOR,
-    EDGE,
     ENGINE,
     PIXELS,
     QUANTUM_ACTION,
     ROOT,
     STEPS,
-    TAIL_UNIT,
     UNIVERSE_NAME,
 )
+from pixel_mode import (  # noqa: E402  (the generator of the rule's universe, #1417)
+    TAIL_UNIT,
+    pixel_entry,
+)
 
-COUNT = 5_000  # the pixel's count: on the engine of today (the level once) the edge is 0.345 Gamma = 4,136 (Cheshbon 14:12 Israel), so 3,000 disperses and 5,000 binds; 3,000 again with the corrected term (the Closer 14:21)
+COUNT = 3_000  # the pixel's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000) under the corrected term (the Closer 14:30 Israel: the files ready for 3,000 for the moment the term returns; on the engine of today the edge is 0.345 Gamma = 4,136 and the run at 5,000 refuses, the reading in #1422)
 PULLS = (0, 2, 4, 6)  # the second pixel's distance in Links along x; 0 the white pixel alone
+TAIL = {
+    3_000: 41_943,
+    4_000: 23_724,
+    5_000: 34_734,
+    6_000: 24_904,
+}  # Cheshbon's tail factor t = e^(-kappa) over 2^16 per count (14:12 Israel; the Closer 14:16), stated in integers
+EDGE_OF_THE_TERM = 2_706  # the edge of the bound body under the corrected term, 0.2255 Gamma (ALGEBRA.md THE BOUND BODY IS ONE NODE); on the engine of today lay_out_join's EDGE, 4,136
 BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
 RAW_PER_PORT = 1000  # Cheshbon's blind number of 13:46 Israel at 3,000: the raw clicks (both signs) per interval through each of the six Ports, about
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's number of intervals
@@ -65,15 +74,17 @@ def neighbours(x: int) -> list[list[int]]:
 
 
 def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
-    """The mode file of the pixels by Cheshbon's line of 14:12 Israel (the clock's tool `tools/pixel_mode.py`, #1417, writes the same): the bound state's profile in integers, the amplitude at the Node b = isqrt(c T den div (2 den - a)) from the clock pair [a, den] (the form D = now^2 - next before at rest with now = before = b gives the count c = D div T; isqrt(c) loaded a count of 1,812 at 3,000), with `tail` the level b t^n rounded at every Node n Links away (the Link distance along the axes), t = e^(-kappa) as a pair over 2^16, while it is 1 or more; both time levels equal (the standing phase); the family's pair from the universe file; a body under the edge is content alone; the world's digest names the world."""
-    shape = document["shape"]
+    """The mode file of the pixels by the generator of the rule's universe, `tools/pixel_mode.py` (#1417; Cheshbon's line of 14:12 Israel, the owner's word of 14:32: a body is its count at its Node and its record is the bound state from the count alone): each pixel's entry from the tool's `pixel_entry` with the clock pair [a, den] and the tail's factor t over 2^16 of its count from Cheshbon's table `PIXELS` (b = isqrt(c T den div (2 den - a)) at the Node, round(b t^d) at the Manhattan distance d, the twist as the generator's); without `tail` the factor is 0 (the Node alone, a diagnostic); a body under the edge binds no record and stays content alone; the world's digest names the world."""
     universe = json.loads((ROOT / document["universe"]).read_text(encoding="utf-8"))
     pairs = {family["name"]: list(family["pair"]) for family in universe["families"]}
+    integers = universe["integers"]
+    twist_scale = int(integers["twist_table"]["unit"]) // (4 * int(integers["node_clock"]))
     bodies = []
-    for body in document["measured"]:
-        node = body["nodes"][0]
-        count = int(node["count"])
-        if count < EDGE:  # a body under the edge binds no record: content alone
+    for number, body in enumerate(document["measured"]):
+        count = int(body["nodes"][0]["count"])
+        if (
+            count not in PIXELS
+        ):  # a body under the edge (no bound rotation of its own) binds no record: content alone
             bodies.append(
                 {
                     "family": body["family"],
@@ -84,44 +95,13 @@ def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
             continue
         numbers = PIXELS[count]
         a = numbers.get("a") or round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
-        amplitude = math.isqrt(count * QUANTUM_ACTION * CLOCK_UNIT // (2 * CLOCK_UNIT - a))
-        ratio = round(math.exp(-numbers["kappa"]) * TAIL_UNIT)
-        profile = [0] * (shape[0] * shape[1] * shape[2])
-        for x in range(shape[0]):
-            for y in range(shape[1]):
-                for z in range(shape[2]):
-                    distance = sum(abs(p - q) for p, q in zip((x, y, z), node["node"], strict=True))
-                    level = (
-                        amplitude * ratio**distance // TAIL_UNIT**distance
-                        if tail or distance == 0
-                        else 0
-                    )
-                    if level >= 1:
-                        profile[(x * shape[1] + y) * shape[2] + z] = level
-        bodies.append(
-            {
-                "family": body["family"],
-                "pair": pairs[body["family"]],
-                "profile": profile,
-                "clock": [a, CLOCK_UNIT],
-                "moving": {"now": profile, "before": list(profile)},
-                "recipe": {
-                    "row": "Cheshbon 14:12 Israel: b = isqrt(c T den div (2 den - a)) at the Node"
-                    + (
-                        ", b t^n on the Nodes n Links away, t = e^(-kappa) over 2^16"
-                        if tail
-                        else ", no tail"
-                    )
-                    + ", both levels equal",
-                    "count": count,
-                    "amplitude": amplitude,
-                    "tail_over_2_16": ratio if tail else None,
-                    "omega_b": numbers["omega_b"],
-                    "kappa": numbers["kappa"],
-                },
-            }
+        factor = TAIL.get(count) or round(math.exp(-numbers["kappa"]) * TAIL_UNIT) if tail else 0
+        row = (a, CLOCK_UNIT, factor)
+        entry = pixel_entry(
+            number, body, document, pairs[body["family"]], QUANTUM_ACTION, row, twist_scale
         )
-    return {"rest": {}, "bodies": bodies, "world_digest": input_digest(document)}
+        bodies.append({**entry, "omega_b": numbers["omega_b"], "kappa": numbers["kappa"]})
+    return {"world_digest": input_digest(document), "bodies": bodies}
 
 
 def world(universe: str, pull: int) -> dict[str, Any]:
@@ -177,7 +157,7 @@ def expectation(pull: int) -> dict[str, Any]:
         "DETECTOR": [],
         "blind": {
             "row": "Cheshbon's numbers of 13:46 Israel time (2026-09-28) before the run: the raw clicks about 10^3 per interval through each of the six Ports, 1 : 1 : 1 over the axes; at rest the net 0 : 0 : 0; pulled at 2, 4 and 6 Links the net tally along x about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 under the corrected term; at 5,000 on the engine of today with omega_b 0.778 and kappa 0.63 by the same line), y and z 0, the net 1 : 0 : 0; the first click at interval 1 under T = 1; a puller under the edge disperses within about ten intervals; the band plus or minus 30 percent (the Closer 14:16)",
-            "edge_quanta_per_node": EDGE,
+            "edge_quanta_per_node": EDGE_OF_THE_TERM,
             "horizon_quanta_per_node": 6000,
             "raw_clicks_per_port_per_interval": RAW_PER_PORT,
             "net_tally_per_interval": net,
