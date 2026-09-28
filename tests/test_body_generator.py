@@ -36,9 +36,7 @@ from tools.body_generator import (
     two_levels,
 )
 
-GAMMA = 10_000
-KIND = (800, 1200)
-OPEN = (False, False, False)
+GAMMA, KIND, OPEN = 10_000, (800, 1200), (False, False, False)
 
 
 def counted_cube(box: int, side: int, count: int) -> np.ndarray:

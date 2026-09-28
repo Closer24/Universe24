@@ -14,8 +14,7 @@ from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "src" / "event_universe"
-GAMMA = 10_000
+SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
 
 
 def old_isotropic(

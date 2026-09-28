@@ -14,10 +14,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import run_world
 from tests.worlds import emitter_world
 
-SHAPE = (80, 1, 1)
-DETECTORS = ["screen"]
-FAMILIES = ["gravity", "charge", "matter"]
-BODIES = [0]
+SHAPE, DETECTORS, FAMILIES, BODIES = (80, 1, 1), ["screen"], ["gravity", "charge", "matter"], [0]
 SIX = [
     {"name": "screen_clicks", "kind": "clicks", "detector": "screen"},
     {"name": "matter_at_40", "kind": "level", "family": "matter", "node": [40, 0, 0], "every": 1},

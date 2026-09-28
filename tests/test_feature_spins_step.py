@@ -29,9 +29,7 @@ pytestmark = pytest.mark.usefixtures("the_loads_hold_alone")
 
 GAMMA = 10_000
 # the row's weights of the spin's turn, Schiff's 1 / 2 and 3 / 2 in the levels' unit (ALGEBRA.md #a-familys-declaration)
-TURN = ((1, 4), (3, 4))
-NONE = (None,) * 6
-ZERO = (0,) * 6
+TURN, NONE, ZERO = ((1, 4), (3, 4)), (None,) * 6, (0,) * 6
 
 
 def planted(simulation: DetectorLawSimulation, parts, block) -> tuple[int, int]:

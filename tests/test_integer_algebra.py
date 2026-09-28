@@ -47,8 +47,7 @@ PHYSICAL_MODULES: dict[str, str] = {
 }
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
-MATH_ALLOWED = {"gcd", "isqrt"}
-NUMPY_DTYPES_ALLOWED = {"int64"}
+MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
 NUMPY_DTYPES_FORBIDDEN = {
     "int8",
     "int16",
