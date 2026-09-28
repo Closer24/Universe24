@@ -19,11 +19,26 @@ from lay_out_axes import (  # noqa: E402
     gamma_of,
     pixel_mode,
 )
-from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
+from lay_out_join import DENOMINATOR, ENGINE, ROOT, STEPS  # noqa: E402
 
+GAMMA = gamma_of(
+    PLANCK
+)  # the Gamma the layout lays for: the file of record's, or --gamma (6,000 names planck_6000.json until Nature24 writes it)
 COUNT = COUNT_BY_GAMMA[
-    gamma_of(PLANCK)
-]  # the falling pixel's count at the file's Gamma: 10 at 24 (Cheshbon 15:22), 2,000 at 6,000 (Cheshbon 15:50), 4,400 at 12,000
+    GAMMA
+]  # the falling pixel's count at that Gamma: 10 at 24, 2,000 at 6,000 (Cheshbon 15:22 and 15:50)
+UNIVERSE = PLANCK  # the universe file the worlds name
+
+
+def choose(gamma: int | None) -> str:
+    """The layout's Gamma as lay_out_axes's: the file of record's when None, else the given one with planck_<gamma>.json; the counts follow; the worlds' names carry _<gamma> where it is not the file of record's."""
+    global GAMMA, COUNT, UNIVERSE
+    GAMMA = gamma_of(PLANCK) if gamma is None else int(gamma)
+    COUNT = COUNT_BY_GAMMA[GAMMA]
+    UNIVERSE = PLANCK if GAMMA == gamma_of(PLANCK) else f"examples/events/planck_{GAMMA}.json"
+    return "" if UNIVERSE == PLANCK else f"_{GAMMA}"
+
+
 BAND = 0.15  # the band on every blind number at Gamma = 24: one quantum, plus or minus 10 to 15 percent (Cheshbon 15:22 Israel)
 CLUSTERS: dict[str, dict[str, int] | None] = {
     "control": None,
@@ -63,7 +78,7 @@ def one_node(x: int, count: int) -> dict[str, Any]:
 def sieve_count(cluster: dict[str, Any]) -> int:
     """The count of the sieve's pixels at the file's Gamma (8 at 24, 2,000 at 6,000: Cheshbon 15:22 and 15:50)."""
     count = cluster["count"]
-    return int(count[gamma_of(PLANCK)] if isinstance(count, dict) else count)
+    return int(count[GAMMA] if isinstance(count, dict) else count)
 
 
 def cluster_nodes(cluster: dict[str, Any] | None) -> list[int]:
@@ -141,7 +156,7 @@ def expectation(name: str, cluster: dict[str, int] | None) -> dict[str, Any]:
         "DETECTOR": [],
         "blind": {
             "row": "Cheshbon's numbers before the run (THE SCREEN IS A CLUSTER, 14:55 Israel time, 2026-09-28; the cluster's numbers asked at 15:05): the tail's ratio toward the cluster over away and the count's moves biased toward the cluster in the same ratio; the control 1 and 50 percent; the band plus or minus 30 percent (the Closer 14:16)",
-            **edges(gamma_of(PLANCK)),
+            **edges(GAMMA),
             "record": {"count": COUNT, **RECORD.get(COUNT, {})},
             "sieve_record": None
             if cluster is None
@@ -174,20 +189,29 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
     parser.add_argument("--no-tail", action="store_true", help="the mode files without the tail")
+    parser.add_argument(
+        "--gamma",
+        type=int,
+        default=None,
+        help="the Gamma to lay for (the file of record's when omitted; 6,000 names planck_6000.json)",
+    )
     args = parser.parse_args()
+    suffix = choose(args.gamma)
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    universe = PLANCK
     for label, cluster in CLUSTERS.items():
-        name = f"fall_{label}"
-        document = world(universe, cluster)
+        name = f"fall_{label}{suffix}"
+        document = world(UNIVERSE, cluster)
         (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
-        (folder / f"{name}.mode.json").write_text(
-            json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
-        )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(label, cluster), indent=1) + "\n", encoding="utf-8"
         )
+        if (ROOT / UNIVERSE).exists():
+            (folder / f"{name}.mode.json").write_text(
+                json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
+            )
+        else:
+            print(f"{name}: the mode file waits for {UNIVERSE}")
 
 
 if __name__ == "__main__":
