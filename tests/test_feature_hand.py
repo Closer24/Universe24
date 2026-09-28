@@ -35,14 +35,10 @@ def test_the_booking_is_s_dot_n_and_the_opposite_sign_alone_refuses():
     assert not apply(right, HandStart(spin, momentum)).admitted
     assert apply(left, HandStart(spin, momentum)).admitted
     assert apply(right, HandStart(spin, momentum)).booking == -1
-    assert (
-        apply(right, HandStart((0, 0, 0), momentum)).admitted
-        and apply(left, HandStart(spin, (0, 0, 0))).admitted
-    )
-    assert (
-        apply(right, HandStart((1, 0, 0), (7, 0, 0))).admitted
-        and not apply(left, HandStart((1, 0, 0), (7, 0, 0))).admitted
-    )
+    assert apply(right, HandStart((0, 0, 0), momentum)).admitted
+    assert apply(left, HandStart(spin, (0, 0, 0))).admitted
+    assert apply(right, HandStart((1, 0, 0), (7, 0, 0))).admitted
+    assert not apply(left, HandStart((1, 0, 0), (7, 0, 0))).admitted
     for hand in (0, 2):
         with pytest.raises(ValueError, match=f"declared hand {hand} is refused"):
             apply(HandTerm(hand), HandStart(spin, momentum))

@@ -46,9 +46,8 @@ def test_the_shipped_universe_has_the_line_off_and_the_difference_is_the_read_ac
         parse_world_document(document, world_files(document), input_digest(document))
     )
     live = next(iter(simulation.records.values()))
-    assert (
-        simulation.families[live.family].self_unit == 0 and simulation._self_source(live, False) is None
-    )
+    assert simulation.families[live.family].self_unit == 0
+    assert simulation._self_source(live, False) is None
     here, arrived = np.array([5, -3, 0]), np.array([-2, 7, 4])
     assert np.array_equal(difference(here, arrived), arrived - here)
 

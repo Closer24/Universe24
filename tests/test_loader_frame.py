@@ -108,9 +108,8 @@ def test_every_world_file_passes_the_frames_world_schema():
             continue
         count += 1
         checked = frame.world(document)
-        assert (
-            checked["measured"] is document["measured"] and checked["universe"] == document["universe"]
-        )
+        assert checked["measured"] is document["measured"]
+        assert checked["universe"] == document["universe"]
         assert checked["shape"] == tuple(document["shape"]) and checked["engine"] == document["engine"]
         assert set(checked) == set(document)
     assert count >= 1
