@@ -730,15 +730,12 @@ def _node_clock_bound(
 
 
 def _families_of(
-    entries: tuple[dict[str, object], ...],
-    amplitude_bound: int | None,
-    most_families: int | None,
-    gamma: int,
+    entries: tuple[dict[str, object], ...], amplitude_bound: int | None, most: int | None, gamma: int
 ) -> tuple[FamilyDefinition, ...]:
     """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step on the family that holds the spin's dipole and no other, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
-    if most_families is not None and len(entries) > most_families:
+    if most is not None and len(entries) > most:
         raise ValueError(
-            f"families declares {len(entries)}; at most {most_families} families on a "
+            f"families declares {len(entries)}; at most {most} families on a "
             "GameBoard (the universe's `most_families`, the owner's number in the file)"
         )
     names = [cast(str, obj["name"]) for obj in entries]

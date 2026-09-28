@@ -87,7 +87,7 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
     bare["families"][2].pop("pair")  # the frame admits it; the rule asks the numerator by name
     with pytest.raises(ValueError, match=r"the family 'matter' lacks keys: m"):
         derived.paired(read(bare)[0], 10000)
-    bare["families"][0]["pair"] = [1, 1]
+    bare["families"][0]["m"] = 10000  # gravity's row has its pair: both, refused by name
     with pytest.raises(ValueError, match="declares both m and pair"):
         derived.paired(read(bare)[0], 10000)
     refuses(lambda d: d["families"][0].__setitem__("mass", 1), r"families\[0\] has unknown keys: mass")
