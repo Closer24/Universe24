@@ -31,10 +31,6 @@ DECLARATION = Declaration(
     "ALGEBRA.md #the-line, #the-primitives row 1",
     word="the step",
     schema=Schema(
-        {
-            "a family's entry": ObjectOf(
-                {"pair": Either((ListOf(Integer(least=1), length=2), OneOf(("body",))))}
-            )
-        }
+        {"a family's entry": ObjectOf({"pair": Either((ListOf(Integer(), length=2), OneOf(("body",))))})}
     ),
 )
