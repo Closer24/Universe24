@@ -63,11 +63,9 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
     for entry in document["universe"]:
         if "held" in entry:
             entry["held"] = {**entry["held"], "divisor": 1}  # a copy: the sources are the counts
-    simulation = DetectorLawSimulation(parse_nature_beam_world(stamped(document)))
-    started = 0
+    simulation, started = DetectorLawSimulation(parse_nature_beam_world(stamped(document))), 0
     for family, record in simulation.held_records.items():
-        definition = simulation.families[family]
-        counts = np.zeros(simulation.shape, dtype=np.int64)
+        definition, counts = simulation.families[family], np.zeros(simulation.shape, dtype=np.int64)
         for number in range(len(simulation.held)):  # every body's Nodes, a block's or a span's
             block = simulation.block_by_number.get(number)
             mask = block.mask if block is not None else simulation.span_masks[number]
@@ -141,8 +139,7 @@ def test_the_falls_tent_is_the_sums_rest_on_the_open_chain():
     numerators = np.zeros((400, 1, 1), dtype=np.int64)
     numerators[185:215, 0, 0] = 3600
     divisor = 40000
-    found = rest(numerators, (1, 1), (False, True, True), divisor)
-    sigma = Fraction(3600, divisor)
+    found, sigma = rest(numerators, (1, 1), (False, True, True), divisor), Fraction(3600, divisor)
     slope = 3 * 30 * sigma / 2
 
     def exact(i: int) -> Fraction:

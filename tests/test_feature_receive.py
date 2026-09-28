@@ -30,8 +30,7 @@ TOWARD = (
 def test_the_angle_zero_is_the_identity_and_the_composed_triple_is_the_tables():
     document = json.loads((TOWARD / "lorentz_moving.json").read_text(encoding="utf-8"))
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    term = simulation._receive_term
-    table = simulation.twist_table
+    term, table = simulation._receive_term, simulation.twist_table
     assert table is not None
     generator = np.random.default_rng(7)
     for k in (0, 1, -1, 1023, 1024, -1025, 5703478, -5703478):

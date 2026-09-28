@@ -48,8 +48,7 @@ def test_a_records_of_a_family_with_a_lifetime_end_on_the_border_at_age_l_throug
     """The emitter's unit world with the light family's lifetime L = 10 (set on the parsed world until the loader reads the key): the two records given end on the border `lifetime` at their giving's interval + L, each a click line there with its giving named, the record deleted whole; no record reaches the screen; without a lifetime the border is not made."""
     document = emitter_world(stock=2, ticks=120)
     stamped(document)
-    world = parse_nature_beam_world(document)
-    lifetime = 10
+    world, lifetime = parse_nature_beam_world(document), 10
     world = replace(world, families=(replace(world.families[0], lifetime=lifetime), *world.families[1:]))
     simulation = DetectorLawSimulation(world)
     assert simulation.detector_names[simulation.lifetime_detector] == "lifetime"

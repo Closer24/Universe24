@@ -212,8 +212,7 @@ def test_a_bodys_own_cycle_is_a_gameboard_reading_a_clock_world_with_no_detector
             emitter_world(stock=2, ticks=160), [{"name": "tick", "kind": "cycle", "body": 0, "every": 1}]
         )
     )
-    simulation = DetectorLawSimulation(world)
-    readings = Readings(world.readings)
+    simulation, readings = DetectorLawSimulation(world), Readings(world.readings)
     readings.read(simulation)
     for _ in range(160):
         simulation.step()
