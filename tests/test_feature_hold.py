@@ -58,10 +58,8 @@ def test_forward_then_back_returns_the_state_exactly_and_the_load_writes_the_fir
     assert dict(back.own.values) == dict(loaded.own.values)
     assert dict(back.own.carries) == dict(loaded.own.carries)
     # the vector part over the row's divisor E_s as the time part, per Node at a body in the law's form
-    over, nodes = (
-        HoldTerm("content", (1, 3), (1, 4), None, 1, 7),
-        ((("n", 4, 0, 0), 50), (("n", 5, 0, 0), 14)),
-    )
+    over = HoldTerm("content", (1, 3), (1, 4), None, 1, 7)
+    nodes = ((("n", 4, 0, 0), 50), (("n", 5, 0, 0), 14))
     whole = apply(over, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None), HoldOwn({}, {}))
     each = apply(over, HoldStart(THE_LOAD, 64, (3120, 0, 0), 12480, None, nodes), HoldOwn({}, {}))
     assert [(k, n) for _p, k, n, _b in whole.parts] == [
@@ -142,9 +140,7 @@ def test_the_source_adds_the_count_over_the_divisor_each_interval_and_steps_back
         own, increments = writes.own, increments + [writes.time_level]
     assert increments == [1, 2, 1, 2, 1, 2, 1] and sum(increments) == 10  # exact over seven intervals
     back = apply(term, HoldStart(THE_INVERSE, 10, (0, 0, 0), 1, None), own)
-    assert (
-        back.time_level == 1 and dict(back.own.carries)[(0,)] == 0 and dict(back.own.values)[(0,)] == 2
-    )
+    assert (back.time_level, dict(back.own.carries)[(0,)], dict(back.own.values)[(0,)]) == (1, 0, 2)
 
 
 def test_the_vector_and_tensor_parts_enter_over_the_divisor_at_the_time_parts_scale():
@@ -184,11 +180,8 @@ def test_a_body_in_the_laws_form_sources_each_node_by_the_count_there(tmp_path):
         for row in universe["families"]:
             row.get("held", {}).update(divisor=divisor)
         (tmp_path / f"universe_{divisor}.json").write_text(json.dumps(universe), encoding="utf-8")
-        board = {
-            "shape": [16, 1, 1],
-            "boundary": {**dict.fromkeys("xyz", "periodic"), "x": "closed"},
-            "N": 64,
-        }
+        boundary = {**dict.fromkeys("xyz", "periodic"), "x": "closed"}
+        board = {"shape": [16, 1, 1], "boundary": boundary, "N": 64}
         files = {"universe": str(tmp_path / f"universe_{divisor}.json"), "engine": ENGINE_START}
         document = stamped({**board, **files, "ticks": 2, "measured": [body], "detectors": [strip]})
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
