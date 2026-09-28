@@ -105,7 +105,7 @@ At the vacuum's pace p_0 = p_a = Gamma the line is the plain second-order
 wave rule of the pair: a_next + a_before = 2 cos omega a_now with the
 six-neighbour coupling, the rotation omega_0 with cos omega_0 = num /
 den at wave number zero. A held family's field steps at its row's pair with the pace 1 and the wall 3 den, at first order.
-THE PACE IS CONFORMAL: below the vacuum's pace every family's rotation at every wave number obeys sin^2 (omega / 2) = (p / Gamma)^2 sin^2 (omega_vac(k) / 2), the pace multiplying the clock of every wave and every bound mode alike (the isotropic S is 12 den (Gamma^2 - p^2); the light's line was so already, the matter's mass term stood half at the vacuum's pace), so two clocks at one level shift alike, d ln omega / d c = 2 tan (omega / 2) / (omega p), and a packet's fall in a pace gradient, Delta x 2 tan (omega_0 / 2) x (c_+ - c_-) / (p D), does not depend on its family or its shape beyond the band's own (the owner's word, 2026-09-28).
+THE PACE IS CONFORMAL: below the vacuum's pace every family's rotation at every wave number obeys sin^2 (omega / 2) = (p / Gamma)^2 sin^2 (omega_vac(k) / 2), the pace multiplying the clock of every wave and every bound mode alike (the isotropic S is 12 den (Gamma^2 - p^2); the light's line was so already, the matter's mass term stood half at the vacuum's pace), so two clocks at one level shift alike, d ln omega / d c = 2 tan (omega / 2) / (omega p), and a packet's fall in a pace gradient, Delta x 2 tan (omega_0 / 2) x (c_+ - c_-) / (p D), does not depend on its family or its shape beyond the band's own (the owner's word, 2026-09-28, 09:01 Israel: the line enters the engine now, as one term of the self coefficient, not after a run; the light experiment's redshift reading, a light record against a matter clock at one level, the ratio 1.0, is the engine's check of the line).
 
 ### The direction
 
@@ -185,7 +185,7 @@ slows the clock, an attraction); a negative weight is a hill. By "q" the
 weight is multiplied by the reading record's charge sign. A family with
 no reads steps at p_0 = p_a = Gamma, the plain rule. The clock's slowing
 is this pace: a record at a Node of pace p rotates and moves as a record
-at Gamma does, with its intervals p / Gamma as long. THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the time level lowers the clock's pace p_0 once and each axis's pace p_a once more, so a wave's speed along a Link falls by the level twice (the Link as well as the clock, as nature's light past a body bends by twice the clock's share) while a mode's rest rotation, from S alone, falls by the level once (the owner's word, 2026-09-28, with Nature24's line of 08:55 Israel).
+at Gamma does, with its intervals p / Gamma as long. THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the time level lowers the clock's pace p_0 once and each axis's pace p_a once more, so a wave's speed along a Link falls by the level twice (the Link as well as the clock, as nature's light past a body bends by twice the clock's share) while a mode's rest rotation, from S alone, falls by the level once (the owner's word, 2026-09-28, 08:40 Israel: the light experiment settles the symmetries inside the engine, with Nature24's line of 08:55 Israel; the bending's centroid against the twin reads it, twice the clock's share).
 
 THE GUARD, two-sided: 0 < p <= P at every Node, with the edge
 
