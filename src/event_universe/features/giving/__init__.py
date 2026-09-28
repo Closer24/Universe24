@@ -1,4 +1,4 @@
-"""The giving, the three acts of one window: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += g x a_body at both levels of the body's rotation, one act of the write's line per Node at the wall 1, features/write; before the bookings), the close (at outward x den >= norm the record named, its direction the tally's sign per axis) (ALGEBRA.md #the-primitives the row "the giving" and item 5, 9.107, ALGEBRA.md); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
+"""The giving, the three acts of one window: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += g x a_body at both levels of the body's rotation, one act of the write's line per Node and level at the wall 1, a load, features/write; before the bookings), the close (at outward x den >= norm the record named, its direction the tally's sign per axis) (ALGEBRA.md #the-primitives the row "the giving" and item 5, 9.107, ALGEBRA.md); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from event_universe.core.register import Declaration
-from event_universe.core.rule3 import THE_ADVANCE, THE_LOAD, Key, carried
+from event_universe.core.rule3 import LEVELS, THE_LOAD, Key, carried
 
 # the three acts of one window, the words the loop names in `start`
 THE_OPEN = "the open"
@@ -101,34 +101,21 @@ def carried_line(
 
 
 def shell_write(term: GivingTerm, start: GivingStart) -> tuple[np.ndarray, np.ndarray]:
-    """The write at the body's shell as two intervals of one act of the write's line per Node at the wall 1: the body's level before loaded, then its level now advanced, the line's (now, before) the record's two levels, g the coefficient (ALGEBRA.md #the-primitives the rows "the giving" and "the write")."""
+    """The write at the body's shell, one act of the write's line per Node and level at the wall 1, a load (ALGEBRA.md #the-primitives the rows "the giving" and "the write"): the body's level now under the Node's key at the level "now" and its level before at "before", g the coefficient; the two arrays the record's two levels."""
     assert start.body_levels is not None
     now = np.asarray(start.body_levels, dtype=np.int64)
     before = (
         now if start.body_levels_before is None else np.asarray(start.body_levels_before, dtype=np.int64)
     )
     line = start.write if start.write is not None else carried_line
-    values: dict[Key, int] = {}
-    carries: dict[Key, int] = {}
-    line(
-        THE_LOAD,
-        1,
-        term.weight,
-        tuple(((i,), int(level)) for i, level in enumerate(before)),
-        values,
-        carries,
+    counts = tuple(
+        ((level, i), int(value))
+        for level, row in zip(LEVELS, (now, before), strict=True)
+        for i, value in enumerate(row)
     )
-    written = line(
-        THE_ADVANCE,
-        1,
-        term.weight,
-        tuple(((i,), int(level)) for i, level in enumerate(now)),
-        values,
-        carries,
-    )
-    return (
-        np.array([level for _, level, _ in written], dtype=np.int64).reshape(now.shape),
-        np.array([level for _, _, level in written], dtype=np.int64).reshape(now.shape),
+    written = dict((key, level) for key, level, _ in line(THE_LOAD, 1, term.weight, counts, {}, {}))
+    return tuple(
+        np.array([written[(level, i)] for i in range(now.shape[0])], dtype=np.int64) for level in LEVELS
     )
 
 

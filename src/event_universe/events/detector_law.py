@@ -207,6 +207,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self.main_loop = MainLoop.plan(
             self.register, world.step, self._stages(), self.CHAIN, self.family_terms()
         )
+        self.write = self.register.at("the write", "any")
         self._hold(self.register.at("the hold", "(iv)"), THE_ADVANCE)
         assembly.start_at_rest(self)
 

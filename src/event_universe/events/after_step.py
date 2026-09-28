@@ -166,10 +166,9 @@ def write_line(
     values: dict[Key, int],
     carries: dict[Key, int],
 ) -> tuple[tuple[Key, int, int], ...]:
-    """The write's line the loop hands the four callers (the hold, the giving, the recoil, THE START), its method `_write_line`: one act of the folder features/write found by its name through the register, per key (coefficient x count + r) div wall by Rule3's carried division at both levels, the remainders written back into the caller's own (ALGEBRA.md #the-primitives, the row "the write")."""
-    function = loop.main_loop.function_of("the write", "any")
+    """The write's line the loop hands the four callers (the hold, the giving, the recoil, THE START), its method `_write_line`: one act of the folder features/write, found by its name at load (`loop.write`), per key (coefficient x count + r) div wall by Rule3's carried division at both levels, the remainders written back into the caller's own (ALGEBRA.md #the-primitives, the row "the write")."""
     term, start, own = WriteTerm(wall, coefficient), WriteStart(act, counts), WriteOwn(values, carries)
-    writes = cast(WriteWrites, function(term, start, own))
+    writes = cast(WriteWrites, loop.write(term, start, own))
     values.update(writes.own.values)
     carries.update(writes.own.carries)
     return writes.levels
@@ -180,7 +179,8 @@ def shell_write(loop: DetectorLawSimulation, block: Block, live: LiveRecord, sig
     levels, before = loop._body_levels(block), loop._body_levels(block, before=True)
     start = GivingStart(THE_WRITE, 0, (0, 0, 0), levels, 0, (0, 0, 0), before, loop._write_line)
     written = loop._giving_act(block, start, live)
-    assert written.level is not None and written.level_before is not None
+    if written.level is None or written.level_before is None:
+        raise ValueError(f"the giving's write on the body {block.number} returned no level")
     ledger = live.pair_record
     if ledger is not None and live.identity == ledger.rows[1]:
         cast(np.ndarray, live.im_now)[block.mask] += sign * written.level
