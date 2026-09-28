@@ -22,7 +22,7 @@ from event_universe.features.counts_line import (
     bound,
     current,
 )
-from event_universe.world_files import input_digest, parse_world_document, world_files
+from event_universe.world_files import input_digest, load_world, parse_world_document, world_files
 
 TOWARD = Path(__file__).resolve().parents[1] / "tests"  # the rule tests' own small worlds
 
@@ -96,6 +96,40 @@ def test_the_shipped_resting_body_keeps_its_count_under_the_loops_own_record():
         assert int(found.sum()) == total and np.array_equal(count, block.mask.astype(np.int64))
         swing = max(swing, int(np.abs(found - origin).max()))
     assert 0 < swing < norm // 2
+
+
+def test_the_hold_sources_the_well_where_the_lines_quanta_are_and_no_corner_follows():
+    """A body has no law of motion of its own (ALGEBRA.md #the-primitives, #the-counts-line): the hold's sources are the count's line's quanta at their Nodes once laid (the well follows the record's current), the declared counts before; the corner and the mask never move."""
+    world = load_world(
+        TOWARD.parent / "examples" / "events" / "experiments" / "bell" / "bell_a_b.json"
+    )  # bodies by their Nodes
+    simulation = DetectorLawSimulation(world)
+    block = next(
+        block for block in simulation.blocks if block.own is not None and block.definition.counts
+    )
+    declared = sorted(simulation.node_sources(block.number, "content"))
+    assert (
+        declared == sorted(zip(block.definition.nodes, block.definition.counts, strict=True))
+        and declared
+    )
+    simulation.step()
+    assert (
+        block.counts is not None and sorted(simulation.node_sources(block.number, "content")) == declared
+    )
+    corner, mask = list(block.corner), block.mask.copy()
+    block.counts = np.roll(
+        block.counts, 1, axis=0
+    )  # the quanta one Link along x, as the line would move them
+    moved = simulation.node_sources(block.number, "content")
+    assert sorted(moved) == sorted(
+        (((x + 1) % simulation.shape[0], y, z), c) for (x, y, z), c in declared
+    )
+    simulation.step()
+    assert (
+        list(block.corner) == corner
+        and np.array_equal(block.mask, mask)
+        and not hasattr(simulation, "_follow_count")
+    )
 
 
 def test_a_moving_record_on_the_shipped_moving_world_carries_its_count_at_the_group_velocity():
