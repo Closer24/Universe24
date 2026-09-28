@@ -1,6 +1,6 @@
 {
  "world": "fall_sieve_1.json",
- "refusal": "at interval 5: the pace of 'charge' (family 1, axis 0) is -1 at the Node (4, 1, 1) at interval 4: the pace stays above 0 (the content 25 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "refusal": "at interval 5: the twist on the Port toward +x reaches |k| = 33666, beyond the twist table (1 coarse triples; ALGEBRA.md #the-primitives)",
  "ticks_run": 4,
  "expected": null,
  "records_alive": 2,
@@ -13,19 +13,19 @@
   [
    2,
    7,
-   -4
+   -2
   ],
   [
    3,
-   19,
-   -5
+   7,
+   -6
   ]
  ],
  "record": {
   "label": "GAMEBOARD",
   "period_intervals": null,
-  "amplitude_b": 5,
-  "count_over_the_last_period": 18.0,
+  "amplitude_b": 6,
+  "count_over_the_last_period": 10.0,
   "expected": {
    "count": 10,
    "b": 5,
@@ -84,9 +84,9 @@
  "first_move": null,
  "share_toward_plus_x": null,
  "pixel_count": {
-  "start": 18,
-  "end": 18,
-  "least": 18
+  "start": 10,
+  "end": 10,
+  "least": 10
  },
  "white": true
 }
