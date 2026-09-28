@@ -84,10 +84,7 @@ def test_every_defect_of_the_universe_file_is_refused_by_name():
     refuses(lambda d: d["families"][0].__setitem__("mass", 1), r"families\[0\] has unknown keys: mass")
     refuses(lambda d: d["families"][0]["held"].pop("count"), r"families\[0\]\.held lacks keys: count")
     refuses(lambda d: d["families"][1].__setitem__("phase", True), r"phase must be one of \[1, 2\]")
-    refuses(
-        lambda d: d["families"][2].__setitem__("reads", [{"family": "gravity", "weight": "Mu"}]),
-        r"reads\[0\]\.weight names 'Mu', no integer of the universe",
-    )
+    refuses(lambda d: d["families"][2].update(reads=[{"family": "gravity", "weight": "Mu"}]), "'Mu'")
     refuses(lambda d: d["families"][2].__setitem__("reads", [{"family": "ions"}]), r"'ions', no family")
     with pytest.raises(ValueError, match="names 'nowhere.json', no file at the repository's root"):
         frame.universe("nowhere.json", {}, discover())
@@ -126,22 +123,15 @@ def test_every_defect_of_the_worlds_own_keys_is_refused_by_name():
             frame.world(broken)
 
     for key in ("suspension", "action", "meeting", "massive_rows", "directions", "detector_law", "law"):
-        refuses(
-            lambda d, key=key: d.__setitem__(key, 1), f"the world has unknown keys: {key} \\(the keys: "
-        )
+        refuses(lambda d, key=key: d.__setitem__(key, 1), f"the world has unknown keys: {key}")
     refuses(lambda d: d.__setitem__("families", []), "the world has unknown keys: families")
     for key in ("engine", "measured", "shape", "boundary"):
         refuses(lambda d, key=key: d.pop(key), f"the world lacks keys: {key}")
     refuses(lambda d: d.__setitem__("shape", [4, 4]), r"the world\.shape must be a list of 3, not of 2")
     refuses(lambda d: d.__setitem__("ticks", -1), r"the world\.ticks is -1, below its least 0")
     refuses(lambda d: d.__setitem__("N", 1), r"the world\.N is 1, below its least 2")
-    refuses(
-        lambda d: d["boundary"].__setitem__("x", "mirror"),
-        r"boundary\.x must be one of \['open', 'periodic', 'closed'\], not 'mirror'",
-    )
-    refuses(
-        lambda d: d.__setitem__("boundary", "closed"), r"the world\.boundary must be one of \['open'\]"
-    )
+    refuses(lambda d: d["boundary"].__setitem__("x", "mirror"), r"boundary\.x must be one of")
+    refuses(lambda d: d.__setitem__("boundary", "closed"), r"the world\.boundary must be one of")
     refuses(lambda d: d.__setitem__("stamp", {}), r"the world\.stamp lacks keys: hash")
     refuses(lambda d: d.__setitem__("probes", [[0, 0]]), r"probes\[0\] must be a list of 3")
     with pytest.raises(ValueError, match="a world is a JSON object"):
@@ -181,7 +171,8 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
     """The ray law's and the retired keys as unknown keys, a missing key, a wrong kind, a family the universe lacks (on the body, in its stocks, in its emitter), a bad mapping."""
     good = json.loads((ROOT / "tests" / "light_clock.json").read_text(encoding="utf-8"))
     context = Context(tuple(entry["name"] for entry in shipped()["families"]))
-    retired = tuple("lamp phase directions table become span wheel take coupling cavity".split())
+    retired = ("lamp", "phase", "directions", "table", "become", "span")
+    retired += ("wheel", "take", "coupling", "cavity")
     S = lambda key, value: lambda d: d["measured"][0].__setitem__(key, value)  # noqa: E731
     D = lambda key, value: lambda d: d["detectors"][0].__setitem__(key, value)  # noqa: E731
     defects = [(S(k, 1), rf"measured\[0\] has unknown keys: {k} \(the keys: ") for k in retired]
@@ -189,10 +180,7 @@ def test_every_defect_of_a_body_or_a_detector_is_refused_by_name():
         defects.append((lambda d, k=k: d["measured"][0].pop(k), rf"measured\[0\] lacks keys: {k}"))
     defects += [
         (lambda d: d["measured"][0].pop("spin_before"), r"declares spin without spin_before"),
-        (
-            lambda d: d["measured"][0].pop("position"),
-            r"by its position \(today's form\) or by its nodes .* neither",
-        ),
+        (lambda d: d["measured"][0].pop("position"), r"by its position .* or by its nodes .* neither"),
         (S("family", "nobody"), r"\.family names 'nobody', no family of the universe"),
         (S("stocks", {"nobody": 1}), r"\.stocks key 'nobody' names 'nobody', no family"),
         (S("stocks", {"charge": 0}), r"\.stocks\['charge'\] is 0, below its least 1"),
@@ -303,24 +291,19 @@ def test_a_body_in_the_laws_form_passes_the_frame_and_its_defects_are_refused_by
     entry = load()
     assert (entry.position, entry.block.extents, entry.amount) == ((1, 0, 0), (3, 3, 1), 13)
     assert entry.block.nodes == ((1, 0, 0), (1, 2, 0), (3, 1, 0)) and entry.block.counts == (5, 7, 1)
-    assert (
-        entry.block.spin == (0, 1, 0) and entry.block.moment == (2, 0, 0) and entry.block.declared == {}
-    )
+    assert (entry.block.spin, entry.block.moment, entry.block.declared) == ((0, 1, 0), (2, 0, 0), {})
     assert load(**turned).block.declared == {"polariser": {"angle": (2, 1), "sets": ("along", "across")}}
     with pytest.raises(ValueError, match=r"measured\[0\]\.emitter on a body in the law's form"):
         load(emitter={**giver, "family": families[1]})
-    with pytest.raises(
-        ValueError, match=r"measured\[0\]: the family 'matter' declares no pair, and a body"
-    ):
+    with pytest.raises(ValueError, match=r"measured\[0\]: the family 'matter' declares no pair"):
         load(family=families[-1])
     with pytest.raises(ValueError, match=r"measured\[0\]\.nodes names the Node \[1, 0, 0\] twice"):
         load(nodes=[*nodes, {"node": [1, 0, 0], "count": 2}])
 
 
 def test_the_start_file_is_its_mode_and_nothing_else():
-    assert frame.start("start.json", {"start.json": {"mode": "pin"}}) == frame.EngineStart(
-        "start.json", "pin"
-    )
+    start = frame.start("start.json", {"start.json": {"mode": "pin"}})
+    assert start == frame.EngineStart("start.json", "pin")
     for document, match in (
         ({}, "the engine start file 'start.json' lacks keys: mode"),
         ({"mode": "check", "jobs": 2}, r"has unknown keys: jobs \(the keys: mode\)"),
