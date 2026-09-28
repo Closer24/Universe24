@@ -29,9 +29,9 @@ WORLD_NAME = "two_slits_light"
 # THE NUMBERS TO SET FROM CHESHBON'S LINE ON #1325 (asked 05:08 Israel time, 2026-09-28); until his
 # line these are the Experimenter's proposal, and a run on them is a first look and says so.
 WAVELENGTH_CLOCK = [
-    354,
+    346,
     1,
-]  # the given family's clock [p, q]: lambda_q = 2 N q / p = 5.785 Links, the giver's own wavelength on the light band (Cheshbon's line of 02:18Z, 2026-09-28), rule 6
+]  # the given family's clock [p, q]: lambda_q = 2 N q / p = 5.92 Links, the giver's own wavelength on the light band in this world's well (the generator's reading; Cheshbon's yes of 02:44Z, 2026-09-28), rule 6
 GIVER_COUNT = 2001  # the giver's count per Node (`least_residues`: the shell wheel above 500 at 2001)
 MIRROR = (
     9000  # the tube's and the wall's count per Node, above the mirror's line at the record's wavelength
