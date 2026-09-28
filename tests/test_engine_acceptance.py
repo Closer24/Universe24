@@ -106,8 +106,7 @@ def test_a_the_adversarial_universe_runs_bit_for_bit_under_random_family_names()
         {**line, "family": mapping.get(line["family"], line["family"])} if "family" in line else line
         for line in lines_a
     ]
-    assert expected == lines_b
-    assert set(a.records) == set(b.records)
+    assert expected == lines_b and set(a.records) == set(b.records)
     for identity, live in a.records.items():
         other = b.records[identity]
         assert np.array_equal(live.now, other.now) and np.array_equal(live.remainder, other.remainder)

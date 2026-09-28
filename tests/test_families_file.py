@@ -48,8 +48,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     # gravity: ten components, one level, held content with the factors (1, 4, 2) and the spin's
     # dipole, no reads, no clicks (ALGEBRA.md #the-interval)
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and gravity["pair"] == [1, 1]
-    assert gravity["held"] == HELD_SPIN
-    assert gravity["reads"] == [] and "clicks" not in gravity
+    assert gravity["held"] == HELD_SPIN and gravity["reads"] == [] and "clicks" not in gravity
     # the charge: four components, two levels, held sign with the moment's dipole halved, reads
     # gravity, and clicks: light is its wave
     assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["pair"] == [1, 1]

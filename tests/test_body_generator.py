@@ -79,8 +79,7 @@ def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
     """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 198, the float mode's rotation and profile to 10^-6, 0.76 inside the cube, the clock's period 8."""
     counts = counted_cube(12, 4, 3000)
     mode = bound_mode(counts, KIND, GAMMA)
-    assert (mode.iterations, mode.cycle) == (198, 1)
-    assert mode.rotation > Fraction(2 * KIND[0], KIND[1])
+    assert (mode.iterations, mode.cycle) == (198, 1) and mode.rotation > Fraction(2 * KIND[0], KIND[1])
     value, level = float_top_mode(counts, KIND)
     assert abs(float(mode.rotation) - value) < 1e-6
     profile = mode.profile.astype(float)
@@ -120,8 +119,7 @@ def test_the_amplitude_unit_is_derived_from_the_width_and_the_fixed_point_stands
 
 def test_the_period_is_the_nearest_integer_to_two_pi_over_omega_with_no_pi():
     """The period is round(2 pi / acos(a / 2 b)) in integers: 9 for the light clock, 45 for the dark body; the slowest rotation on b, [2 b - 1, b], returns within the pair's own horizon (four quarter turns of its first)."""
-    assert period_by_the_rule(1651150, 1048576) == 9
-    assert period_by_the_rule(2076636, 1048576) == 45
+    assert period_by_the_rule(1651150, 1048576) == 9 and period_by_the_rule(2076636, 1048576) == 45
     b = 1 << 20
     for a in range(-2 * b + 1, 2 * b, 20_101):
         assert period_by_the_rule(a, b) == round(2 * math.pi / math.acos(a / (2 * b))), (a, b)
@@ -232,8 +230,7 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
     at_rest = {"pair": [1, 4], "cycle": 1, "at_bodies": 3000, "at_corner": 0}
     at_rest["iterations"] = rest.iterations
-    assert readings["rest"]["gravity"] == at_rest
-    assert np.array_equal(reading["content"], rest.levels)
+    assert readings["rest"]["gravity"] == at_rest and np.array_equal(reading["content"], rest.levels)
     still = reading["moving"]  # one path: at the momentum 0 the pair (m, 0) and the mode's levels
     assert still["phase_pair"] == [64, 0] and still["triple"] == [1, 0, 1]
     assert still["velocity_named"] == [0, 1] and np.array_equal(still["now"], mode.profile)

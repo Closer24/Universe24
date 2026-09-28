@@ -222,8 +222,7 @@ def test_the_form_under_the_clock_the_shares_identity_and_the_inverse_with_conte
             simulation._advance(live)
         for _ in range(30):
             simulation._advance_inverse(live)
-        assert np.array_equal(live.now, state[0])
-        assert np.array_equal(live.before, state[1])
+        assert np.array_equal(live.now, state[0]) and np.array_equal(live.before, state[1])
         assert np.array_equal(live.remainder, state[2])
 
 

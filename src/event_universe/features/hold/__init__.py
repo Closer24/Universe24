@@ -1,4 +1,4 @@
-"""The hold: a body's writes into a held family at its Nodes, the count a source into the field's line ((count + r) div the row's divisor E_s added at the time part each interval, the remainder carried), the vector and tensor parts factor x count x n_a (x n_b) div W (div W^2) with the remainder carried, the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md #the-primitives the row "the hold", ALGEBRA.md #the-interval, #the-four-acts)."""
+"""The hold: a body's writes into a held family at its Nodes, the count a source into the field's line ((count + r) div the row's divisor E_s added at the time part each interval, the remainder carried), the vector and tensor parts factor x count x n_a (x n_b) div (E_s W) (div (E_s W^2)) with the remainder carried, the three parts one source at one scale (Cheshbon's line of 04:07Z, #1340), the dipole sigma (D x e_j)_i div its divisor at the six neighbours, every division Rule3's division act (ALGEBRA.md #the-primitives the row "the hold", ALGEBRA.md #the-interval, #the-four-acts)."""
 
 from __future__ import annotations
 
@@ -98,7 +98,7 @@ def check(term: HoldTerm, start: HoldStart) -> None:
 
 
 def booking(factor: int, count: int, momentum: Vector, axes: tuple[int, ...]) -> int:
-    """The part's numerator, the booking of the count's level and the momentum's level per axis with the declared held factor, a reading with declared coefficients (ALGEBRA.md #the-four-acts); its wall the declared W to the power of the momentum factors."""
+    """The part's numerator, the booking of the count's level and the momentum's level per axis with the declared held factor, a reading with declared coefficients (ALGEBRA.md #the-four-acts); its wall the row's divisor E_s times the declared W to the power of the momentum factors."""
     found = factor * count
     for axis in axes:
         found *= momentum[axis]
@@ -127,7 +127,7 @@ def apply(term: HoldTerm, start: HoldStart, own: HoldOwn) -> HoldWrites:
                     start.act,
                     (part,),
                     booking(term.factors[group], start.count, start.momentum, axes),
-                    start.wall ** len(axes),
+                    term.divisor * start.wall ** len(axes),
                     values,
                     carries,
                 )

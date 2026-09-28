@@ -76,8 +76,7 @@ def test_the_contraction_books_the_momentum_with_the_vector_and_tensor_parts_and
     )
     push = WALL * 60 // (2 * GAMMA)
     assert fed.momentum == (2 * WALL * 60 // (2 * GAMMA), 0, 0) and rising.momentum == (push, 0, 0)
-    assert rising.changes == (60, 0, 0)
-    assert rising.momentum_before == (push + 1, 1, 1)
+    assert rising.changes == (60, 0, 0) and rising.momentum_before == (push + 1, 1, 1)
     block = induction.apply(
         induced(THE_ADVANCE, ZERO3, ZERO3, 27, InductionRead(1, (27 * 60, 0, 0), ZERO3)),
         InductionOwn({}),
