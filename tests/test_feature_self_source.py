@@ -28,14 +28,11 @@ TOWARD = (
 
 
 def moving_world_with_the_self_source(family_name: str) -> tuple[DetectorLawSimulation, int, int]:
-    """The moving Lorentz world with the named family's self-source unit set to 24 A in its universe file, A lowered to 2^16 so that the well's edge reaches the unit; the loop's simulation, the family's index and the unit."""
+    """The moving Lorentz world with the named family's self-source unit set to 24 A in its universe file, A the loader's derived amplitude bound (ALGEBRA.md #a-familys-declaration; never written); the loop's simulation, the family's index and the unit."""
     document = json.loads((TOWARD / "lorentz_moving.json").read_text(encoding="utf-8"))
     files = world_files(document)
     universe = copy.deepcopy(files[document["universe"]])
-    universe["integers"]["amplitude_bound"] = (
-        1 << 16
-    )  # the records stay within it over the test; the unit then reachable
-    unit = 24 * int(universe["integers"]["amplitude_bound"])
+    unit = 24 * parse_world_document(document, files, input_digest(document)).amplitude_bound
     index = next(i for i, entry in enumerate(universe["families"]) if entry["name"] == family_name)
     universe["families"][index]["self_source"]["unit"] = unit
     files[document["universe"]] = universe

@@ -129,7 +129,6 @@ def chain_world(
         "ticks": 600,
         "N": PHASE_STEPS,
         "engine": "examples/events/engine_start.json",
-        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
@@ -207,7 +206,6 @@ def layer_world(receiver: object = None) -> dict:
         "ticks": 400,
         "N": PHASE_STEPS,
         "engine": "examples/events/engine_start.json",
-        "amplitude_bound": 1 << 22,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
@@ -260,7 +258,6 @@ def _emitter_world(
         "ticks": ticks,
         "N": 1024,
         "engine": "examples/events/engine_start.json",
-        "amplitude_bound": bound,
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
@@ -335,6 +332,17 @@ def _seed_key(document: dict) -> str:
     bare = json.loads(json.dumps({k: v for k, v in document.items() if k != "stamp"}))
     for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
         entry.get("held", {}).pop("divisor", None)  # a key the recorded seeding never read
+    # the keys the law retired and the keys it added on 2026-09-28 (one quantum action, the derived
+    # amplitude, the giving's coupling, the wavelength from the giver's rotation) are no part of the key:
+    # the seedings were recorded once and stand under either form of the files
+    for key in ("amplitude_bound", "quantum_action", "giving_coupling"):
+        bare.pop(key, None)
+    for entry in bare["universe"] if isinstance(bare.get("universe"), list) else ():
+        entry.pop("clock", None)
+    for body in bare.get("measured", ()):
+        if isinstance(body.get("emitter"), dict):
+            for key in ("weight", "norm", "norm_denominator"):
+                body["emitter"].pop(key, None)
     return input_digest(bare)
 
 
@@ -421,7 +429,6 @@ def on_the_file(document: dict) -> dict:
     names = {family["name"]: family for family in moved["universe"]}
     moved["universe"] = FILE
     del moved["node_clock"]
-    del moved["amplitude_bound"]
     del moved["momentum_unit"]
     for entry in moved["measured"]:
         if entry["family"] == "light":
