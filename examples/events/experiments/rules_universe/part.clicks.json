@@ -2,8 +2,8 @@
  "world": "part.json",
  "kind": "WORLD (d), THE CLICK JOINS AND PARTS: the counts, the moves and the records against the expectation",
  "verdict": "REFUSED IN THE RUN",
- "refusal": "at interval 5: the twist on the Port toward +x reaches |k| = 50978, beyond the twist table (1 coarse triples; ALGEBRA.md #the-primitives)",
- "ticks_run": 4,
+ "refusal": "at interval 25: the twist on the Port toward +x reaches |k| = 356846, beyond the twist table (32768 coarse triples; ALGEBRA.md #the-primitives)",
+ "ticks_run": 24,
  "1_the_counts": {
   "label": "GAMEBOARD",
   "start": [
@@ -11,8 +11,8 @@
    12
   ],
   "end": [
-   10,
-   12
+   183,
+   178
   ],
   "every_10": [
    [
@@ -20,6 +20,20 @@
     [
      10,
      12
+    ]
+   ],
+   [
+    10,
+    [
+     30,
+     23
+    ]
+   ],
+   [
+    20,
+    [
+     183,
+     178
     ]
    ]
   ],
@@ -30,11 +44,72 @@
  },
  "2_the_moves": {
   "label": "GAMEBOARD",
-  "moves": [],
+  "moves": [
+   {
+    "interval": 5,
+    "left": 1,
+    "right": 0,
+    "kind": "relay"
+   },
+   {
+    "interval": 6,
+    "left": -1,
+    "right": 0,
+    "kind": "relay"
+   },
+   {
+    "interval": 9,
+    "left": -1,
+    "right": 0,
+    "kind": "relay"
+   },
+   {
+    "interval": 10,
+    "left": 21,
+    "right": 11,
+    "kind": "relay"
+   },
+   {
+    "interval": 15,
+    "left": -1,
+    "right": 0,
+    "kind": "relay"
+   },
+   {
+    "interval": 16,
+    "left": 1,
+    "right": 0,
+    "kind": "relay"
+   },
+   {
+    "interval": 19,
+    "left": 154,
+    "right": 0,
+    "kind": "relay"
+   },
+   {
+    "interval": 20,
+    "left": -1,
+    "right": 155,
+    "kind": "relay"
+   },
+   {
+    "interval": 21,
+    "left": 3,
+    "right": 0,
+    "kind": "relay"
+   },
+   {
+    "interval": 22,
+    "left": -3,
+    "right": 0,
+    "kind": "relay"
+   }
+  ],
   "count_of_transfers": 0,
   "quanta_transferred": 0,
-  "count_of_relays": 0,
-  "first_relay_interval": null,
+  "count_of_relays": 10,
+  "first_relay_interval": 5,
   "first_move_interval": null,
   "expected_first_click_interval": null,
   "verdict": "MATCH"
@@ -45,7 +120,8 @@
   "expected": 2,
   "verdict": "MATCH",
   "event_lines": {
-   "block": 6
+   "block": 46,
+   "click": 4
   },
   "clicks_at_the_faces": 0,
   "faces": "a click at an open face is no click and is not counted (Cheshbon 14:55, the Closer 15:02)"
@@ -53,9 +129,9 @@
  "5_the_record": {
   "label": "GAMEBOARD",
   "small": {
-   "count_over_the_last_period": 10.0,
-   "period_intervals": null,
-   "count_at_the_end": 10,
+   "count_over_the_last_period": 115.33,
+   "period_intervals": 9.2,
+   "count_at_the_end": 183,
    "expected": {
     "amplitude_b": 5,
     "record_count": [
@@ -67,13 +143,13 @@
      8.0
     ]
    },
-   "count_verdict": "MATCH",
+   "count_verdict": "MISS",
    "period_verdict": "MISS"
   },
   "deep": {
-   "count_over_the_last_period": 12.0,
-   "period_intervals": null,
-   "count_at_the_end": 12,
+   "count_over_the_last_period": 91.89,
+   "period_intervals": 9.2,
+   "count_at_the_end": 178,
    "expected": {
     "amplitude_b": 6,
     "record_count": [
@@ -86,9 +162,9 @@
     ]
    },
    "count_verdict": "MISS",
-   "period_verdict": "MISS"
+   "period_verdict": "MATCH"
   },
-  "clock_ratio_deep_over_small": null,
+  "clock_ratio_deep_over_small": 1.0,
   "expected_clock_ratio": [
    1.08,
    1.23,
@@ -116,6 +192,38 @@
     [
      3,
      -4
+    ],
+    [
+     4,
+     -5
+    ],
+    [
+     5,
+     -3
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     5
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     9,
+     1
+    ],
+    [
+     10,
+     -2
+    ],
+    [
+     11,
+     -5
     ]
    ],
    "matter_x13": [
@@ -134,18 +242,82 @@
     [
      3,
      -5
+    ],
+    [
+     4,
+     -6
+    ],
+    [
+     5,
+     -3
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     7,
+     4
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     9,
+     3
+    ],
+    [
+     10,
+     -1
+    ],
+    [
+     11,
+     -4
     ]
    ],
    "matter_support": [
     [
      0,
      38
+    ],
+    [
+     5,
+     83
+    ],
+    [
+     10,
+     141
+    ],
+    [
+     15,
+     179
+    ],
+    [
+     20,
+     218
     ]
    ],
    "matter_total": [
     [
      0,
      53
+    ],
+    [
+     5,
+     94
+    ],
+    [
+     10,
+     164
+    ],
+    [
+     15,
+     253
+    ],
+    [
+     20,
+     345
     ]
    ]
   }
