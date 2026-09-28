@@ -94,16 +94,14 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
     for line in givings:
         u, wheel = previous
         expected = max(1, -(-(2 * u + 1) * period // (2 * wheel)))
-        # SINCE COMMIT 7 the line is named at the window's close: the open (`opened`, the
-        # click's interval) falls the count after the read, the next count starts at the close
+        # SINCE COMMIT 7 the line is named at the window's close: the open (`opened`, the click's interval) falls the count after the read, the next count starts at the close
         assert line["opened"] - read_at == expected == line["wait"], (line["opened"], u, wheel)
         assert 2 * wheel * (line["wait"] - 1) < (2 * u + 1) * period <= 2 * wheel * line["wait"]
         read_at = line["tick"]
         previous = (line["u"], line["W"])
         # the residue read at the first shell Node, the body's corner at x = 5
         assert line["read_node"] == [5, 0, 0]
-        # THE BODY'S OWN RECORD CONTINUES (ALGEBRA.md #the-ladder): the same record, the body's
-        # identity, before and after every giving; the line's residue on it after the click
+        # THE BODY'S OWN RECORD CONTINUES (ALGEBRA.md #the-ladder): the same record, the body's identity, before and after every giving; the line's residue on it after the click
         entry = by_tick[line["tick"]]
         assert entry["excited_before"] is not None
         assert entry["excited_after"] == entry["excited_before"][0] == -1
@@ -111,22 +109,16 @@ def test_m_excitations_give_m_givings_at_their_rungs_and_the_quanta_are_conserve
         assert after is None or after["excited_before"][1:3] == (line["u"], line["W"])
     assert simulation.block_by_number[0].own is not None  # the standing record continues
     assert set(simulation.records) == {-1}  # the body's own standing record alone remains
-    # the four gathers at `screen`, each a given record's one click of content 1, are the four
-    # quanta of the stock given and clicked (the books' balance is asserted at every interval
-    # in `run`; the held stock is read at each giving by the contents 5, 4, 3, 2 above)
+    # the four gathers at `screen`, each a given record's one click of content 1, are the four quanta of the stock given and clicked (the books' balance is asserted at every interval in `run`; the held stock is read at each giving by the contents 5, 4, 3, 2 above)
     gathers = [line for line in lines if line["event"] == "gather"]
     assert len(gathers) == 4 and all(gather["chosen"] == [["screen", 0, "0"]] for gather in gathers)
     assert sorted(gather["u"] for gather in gathers) == sorted(line["u"] for line in givings)
     for gather in gathers:
         assert gather["content"] == 1 and gather["click_at"] == "rung"
-        # the train's head over the 33 Links from the body's head at 36 to the
-        # screen at 70 at v_g = 0.447 (about 74 intervals), the tapers' precursor
-        # a little before it; the rung crossed on the passage
+        # the train's head over the 33 Links from the body's head at 36 to the screen at 70 at v_g = 0.447 (about 74 intervals), the tapers' precursor a little before it; the rung crossed on the passage
         assert gather["click"] >= gather["giving"] + 50
         assert gather["click"] == gather["tick"] and gather["record"] not in simulation.records
-    # THE RESIDUES SPREAD: the body's own record continues (ALGEBRA.md #the-ladder) and its
-    # remainder at the first shell Node moves between givings with no coupling, no draw
-    # and no reseed (the kept remainder through a reseed, item 29, HISTORY)
+    # THE RESIDUES SPREAD: the body's own record continues (ALGEBRA.md #the-ladder) and its remainder at the first shell Node moves between givings with no coupling, no draw and no reseed (the kept remainder through a reseed, item 29, HISTORY)
     assert len({line["u"] for line in givings}) > 1
     # a smaller stock: as many givings
     lines, _, _ = run(emitter_world(stock=2))
@@ -225,8 +217,7 @@ def test_the_given_record_is_written_once_and_the_law_advances_it():
     for age, low, high in extent:
         # nothing reaches Manhattan distance m before age m (the causal bound)
         assert low >= 5 - age and high <= 36 + age
-    # no drive and no take after the write (the take retired, ALGEBRA.md
-    # ALGEBRA.md #rule3): the ledger's retired row stays 0
+    # no drive and no take after the write (the take retired, ALGEBRA.md ALGEBRA.md #rule3): the ledger's retired row stays 0
     assert simulation.books()["families"]["light"]["transit"]["taken_by_emitter"] == 0
 
 
@@ -234,8 +225,7 @@ def test_the_loaders_refusals_name_their_keys():
     def refused(mutate, message: str, on_mode: bool = False) -> None:
         document = emitter_world(stock=2, on_mode=on_mode)
         mutate(document)
-        # the stamp of the changed integers (record 1886): the named refusal,
-        # not the hash's, is the one read here
+        # the stamp of the changed integers (record 1886): the named refusal, not the hash's, is the one read here
         document["stamp"] = input_stamp(document)
         with pytest.raises(ValueError, match=message):
             DetectorLawSimulation(parse_nature_beam_world(document))
@@ -246,23 +236,20 @@ def test_the_loaders_refusals_name_their_keys():
 
         return mutate
 
-    # a body gives its own family from its `stock` (ALGEBRA.md #the-primitives; commit 6): the
-    # emitter of the body's own family without one is refused naming the stock
+    # a body gives its own family from its `stock` (ALGEBRA.md #the-primitives; commit 6): the emitter of the body's own family without one is refused naming the stock
     def own_family(document):
         document["measured"][0]["emitter"]["family"] = "matter"
         next(f for f in document["universe"] if f["name"] == "matter")["clock"] = [512, 1]
 
     refused(own_family, "stock is required")
     refused(emitter("family", "nobody"), "no family of the universe")
-    # the retired keys of the declared residue (ALGEBRA.md #a-familys-declaration), each
-    # refused by name with its successor
+    # the retired keys of the declared residue (ALGEBRA.md #a-familys-declaration), each refused by name with its successor
     refused(emitter("wheel", [1, 4]), "emitter has unknown keys: wheel")
     refused(emitter("residue_order", "ordinal"), "emitter has unknown keys: residue_order")
     refused(emitter("residue_seed", 3), "emitter has unknown keys: residue_seed")
     refused(emitter("rate", [1, 1]), "unknown keys|rate")
 
-    # the coupling of MASSIVE_RECORD.md section 7 retired: refused by name with its
-    # successor (the click alone, the model owner's decision (2) of record 1962)
+    # the coupling of MASSIVE_RECORD.md section 7 retired: refused by name with its successor (the click alone, the model owner's decision (2) of record 1962)
     def coupled(document):
         document["measured"][0]["coupling"] = {"G": [1, 50], "g": [1, 1000]}
 
@@ -299,21 +286,15 @@ def test_the_loaders_refusals_name_their_keys():
 
     refused(no_held_stock, "lacks keys: stocks")  # item 57: no default
 
-    # the generator's integers (ALGEBRA.md #the-click): a norm the
-    # emitter does not declare refuses the simulation at its first
-    # excitation; a `given` profile of the wrong count, or one that writes no
-    # motion, refuses the loader (ALGEBRA.md #the-click)
+    # the generator's integers (ALGEBRA.md #the-click): a norm the emitter does not declare refuses the simulation at its first excitation; a `given` profile of the wrong count, or one that writes no motion, refuses the loader (ALGEBRA.md #the-click)
     def no_norm(document):
         document["measured"][0]["emitter"]["norm"] = 1000
         del document["measured"][0]["emitter"]["norm"]
 
     refused(no_norm, "declares no `norm`", on_mode=True)
-    # the mathematician's gate item 8: a body that givings declares its seed
-    # as its composed mode's profile; a flat scalar seed is refused
+    # the mathematician's gate item 8: a body that givings declares its seed as its composed mode's profile; a flat scalar seed is refused
     refused(lambda document: None, "seed. as its composed mode's profile")
-    # THE GIVEN TRAIN RETIRED (commit 7; ALGEBRA.md #the-primitives): its keys `train` and
-    # `given` are refused by name with their successor, the window; the window's integers
-    # are required on every emitter: the weight g from 1, the action's denominator
+    # THE GIVEN TRAIN RETIRED (commit 7; ALGEBRA.md #the-primitives): its keys `train` and `given` are refused by name with their successor, the window; the window's integers are required on every emitter: the weight g from 1, the action's denominator
     refused(
         emitter("given", {"now": [1] * 32, "before": [-1] * 32, "norm": 1}),
         "emitter has unknown keys: given",
