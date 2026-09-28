@@ -14,7 +14,7 @@ from event_universe.core.register import discover
 from event_universe.core.rule3 import division_forward, rule_total_bound
 from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
-from event_universe.loader import frame
+from event_universe.loader import derived, frame
 from event_universe.loader.frame import EngineStart
 from event_universe.loader.mode import Levels, moving_levels, period_by_the_rule
 
@@ -762,16 +762,13 @@ def _families_of(
             f"families declares {len(entries)}; at most {most_families} families on a "
             "GameBoard (the universe's `most_families`, the owner's number in the file)"
         )
-    names: list[str] = []
-    for obj in entries:
-        name = cast(str, obj["name"])
-        if name in names:
-            raise ValueError(f"two families named {name!r}")
-        names.append(name)
+    names = [cast(str, obj["name"]) for obj in entries]
+    if len(set(names)) != len(names):
+        raise ValueError(f"two families named {next(n for n in names if names.count(n) > 1)!r}")
     found: list[FamilyDefinition] = []
-    for index, obj in enumerate(entries):
+    for index, obj in enumerate(derived.filled(entry, entries) for entry in entries):
         label = f"families[{index}]"
-        parts_value = cast(tuple[object, ...], obj["parts"])
+        parts_value = tuple(cast(tuple[object, ...], obj["parts"]))
         if parts_value not in PARTS_FORMS:
             raise ValueError(
                 f"{label}.parts must be one of {[list(form) for form in PARTS_FORMS]}: the "

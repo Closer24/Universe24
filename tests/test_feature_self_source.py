@@ -37,7 +37,7 @@ def moving_world_with_the_self_source(family_name: str) -> tuple[DetectorLawSimu
     )  # the records stay within it over the test; the unit then reachable
     unit = 24 * int(universe["integers"]["amplitude_bound"])
     index = next(i for i, entry in enumerate(universe["families"]) if entry["name"] == family_name)
-    universe["families"][index]["self_source"]["unit"] = unit
+    universe["families"][index]["self_source"] = {"unit": unit}  # the file derives it as 0; set here
     files[document["universe"]] = universe
     world = parse_world_document(document, files, input_digest(document))
     return DetectorLawSimulation(world), index, unit
