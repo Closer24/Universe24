@@ -4,7 +4,11 @@ from __future__ import annotations
 
 import json
 import math
+from collections.abc import Sequence
 from typing import Any
+
+from event_universe.core.integer import MAX_WORK_INT
+from event_universe.features.counts_line import PAIRS, PORTS, PRODUCTS
 
 VACUUM_PAIR = (1, 1)  # the rule's own massless band, the band of the one real field of the highest rank
 
@@ -150,4 +154,47 @@ def filled(
             if key in entry["held"] and entry["held"][key] != held.get(key):
                 raise contradiction(f"{label}.held", key, entry["held"][key], held.get(key))
         found["held"] = held
+    return found
+
+
+def width_bound(obj: dict[str, Any], entries: Sequence[dict[str, Any]]) -> int:
+    """THE WIDTH BOUNDS A BY THE LEAST OF THE THREE (Cheshbon's line, 2026-09-28, 15:27 Israel; the Closer's ruling of 15:26): beside Rule3's total (`world.derived_amplitude`) the count's line's total, 6 Ports x 2 products x 2 pairs x w A^2 + T (most + 2) with w the common wall of a body's family (the least common multiple of the numerators of its pair and its bodies' pairs, the loop's `kind_wall`) and most the largest count declared on its bodies, and the transport's total 3 d_1 d_0 (A + 1) with the largest d of the fine and the coarse table of the file, each inside the width, as the loop checks them at the step (`features/counts_line`, `loader/world._twist_table`); the least of the two here, the least of the three at the caller; the width itself where no body and no table bounds it."""
+    bodies = [b for b in obj.get("measured", ()) if isinstance(b, dict)]
+    numerators: dict[str, list[int]] = {}
+    for entry in entries:
+        pair = entry.get("pair")
+        if isinstance(pair, (list, tuple)) and len(pair) == 2 and type(pair[0]) is int and pair[0] >= 1:
+            numerators[str(entry.get("name"))] = [int(pair[0])]
+    found = MAX_WORK_INT
+    norm = max(int(obj.get("quantum_action", 1) or 1), 1)
+    for body in bodies:
+        name = str(body.get("family"))
+        for key in ("pair", "kind"):
+            pair = body.get(key)
+            if (
+                isinstance(pair, (list, tuple))
+                and len(pair) == 2
+                and type(pair[0]) is int
+                and pair[0] >= 1
+            ):
+                numerators.setdefault(name, []).append(int(pair[0]))
+        wall = 1
+        for value in numerators.get(name, [1]):
+            wall = wall * value // math.gcd(wall, value)
+        nodes = body.get("nodes")
+        counts = (
+            [int(n["count"]) for n in nodes if isinstance(n, dict)] if isinstance(nodes, list) else []
+        )
+        most = max([*counts, int(body.get("amount", 0) or 0), 0])
+        found = min(
+            found,
+            math.isqrt(max(MAX_WORK_INT - norm * (most + 2), 0) // (PORTS * PRODUCTS * PAIRS * wall)),
+        )
+    table = obj.get("twist_table")
+    if isinstance(table, dict):
+        largest = [
+            max((int(row[2]) for row in table.get(part, ()) if len(row) == 3), default=1)
+            for part in ("fine", "coarse")
+        ]
+        found = min(found, MAX_WORK_INT // (3 * largest[0] * largest[1]) - 1)
     return found
