@@ -23,6 +23,7 @@ from tools.body_generator import (
     clock_pair,
     conserved_form,
     generate,
+    loader_level,
     moving_body,
     moving_mode,
     packet_current,
@@ -195,21 +196,13 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     def row(name, pair, held, reads):
         return {"name": name, "pair": pair, "held": held, "reads": reads}
 
-    reads = [
-        {"family": "gravity", "weight": "one", "by": 1},
-        {"family": "charge", "weight": 1, "by": "q"},
-    ]
-    families = [
-        row("gravity", [1, 4], {"count": "content"}, []),
-        row("charge", [1, 1], {"count": "sign"}, []),
-    ]
+    reads = [{"family": "gravity", "weight": "one", "by": 1}]
+    reads.append({"family": "charge", "weight": 1, "by": "q"})
+    families = [row("gravity", [1, 4], {"count": "content"}, [])]
+    families += [row("charge", [1, 1], {"count": "sign"}, [])]
     families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
-    table = {
-        "unit": 4 * GAMMA * 65536,
-        "fine": [[1, 0, 1]],
-        "coarse": [[1, 0, 1]],
-    }  # the own twist's scale
-    integers = {"one": 1, "momentum_unit": 64, "twist_table": table}
+    table = {"unit": 4 * GAMMA * 65536, "fine": [[1, 0, 1]], "coarse": [[1, 0, 1]]}
+    integers = {"one": 1, "momentum_unit": 64, "twist_table": table}  # the table: the own twist's scale
     (tmp_path / "universe.json").write_text(json.dumps({"families": families, "integers": integers}))
     nodes = [{"node": [x, y, z], "count": 3000} for x in (3, 4) for y in (3, 4) for z in (3, 4)]
     body = {"family": "matter", "nodes": nodes, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]}
@@ -220,16 +213,21 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     readings, box = generate(world), counted_cube(8, 2, 3000)
     reading = readings["bodies"][0]
     rest = start_rest(box, (1, 4))
-    mode = bound_mode(box, KIND, GAMMA, content=rest.levels)
+    level = loader_level(world, GAMMA)  # twice the largest count at a Node, at most Gamma - 1
+    mode = bound_mode(box, KIND, GAMMA, content=rest.levels, bound_level=level)
+    at_level = amplitude_unit(KIND, GAMMA, np.array([level]))
+    assert level == min(2 * 3000, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude == at_level
+    assert at_level < amplitude_unit(KIND, GAMMA, rest.levels)  # the unit falls with the content
     assert reading["rotation"] == [mode.rotation.numerator, mode.rotation.denominator]
     assert reading["period"] == 8 and np.array_equal(reading["profile"], mode.profile)
-    assert readings["rest"]["gravity"] == {
+    at_rest = {
         "pair": [1, 4],
         "iterations": rest.iterations,
         "cycle": 1,
         "at_bodies": 3000,
         "at_corner": 0,
     }
+    assert readings["rest"]["gravity"] == at_rest
     assert np.array_equal(reading["content"], rest.levels)
     still = reading["moving"]  # one path: at the momentum 0 the pair (m, 0) and the mode's levels
     assert still["phase_pair"] == [64, 0] and still["triple"] == [1, 0, 1]

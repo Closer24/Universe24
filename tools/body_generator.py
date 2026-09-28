@@ -73,11 +73,15 @@ class MovingBody:
     rest: BoundMode
 
 
-def amplitude_unit(pair: tuple[int, int], gamma: int, counts: np.ndarray) -> int:
-    """The amplitude unit A, derived and never written: the largest amplitude at which Rule3's total stays inside the integer width at every content of the region, (M - w) div (6 R + |S| + w) at the content whose coefficients are largest, M the width, checked against rule_total_bound (ALGEBRA.md #the-stable-body, #the-line)."""
+def amplitude_unit(
+    pair: tuple[int, int], gamma: int, counts: np.ndarray, bound_level: int | None = None
+) -> int:
+    """The amplitude unit A, derived and never written: the largest amplitude at which Rule3's total stays inside the integer width at every content of the region, (M - w) div (6 R + |S| + w) at the content whose coefficients are largest, M the width, checked against rule_total_bound (ALGEBRA.md #the-stable-body, #the-line); `bound_level` is the loader's level of the world (`loader_level`), one more content the unit is derived at, so that the written profile stands inside the universe's amplitude bound."""
     num, den = pair
     found = None
-    for content in sorted({int(c) for c in counts.ravel()}):
+    for content in sorted(
+        {int(c) for c in counts.ravel()} | ({bound_level} if bound_level is not None else set())
+    ):
         reads, self_coefficient, wall = coefficients(num, den, gamma, content)
         amplitude = (MAX_WORK_INT - wall) // (6 * abs(reads[0]) + abs(self_coefficient) + wall)
         inside = rule_total_bound(num, den, gamma, content, amplitude, True) <= MAX_WORK_INT
@@ -190,8 +194,19 @@ def rotation_and_share(
     return rotation, share
 
 
+def loader_level(document: dict[str, Any], gamma: int) -> int:
+    """The loader's level of a world in the law's form, the content its amplitude bound is read at (ALGEBRA.md "The bound": the count's wall at the Node's count c; the loader doubles the content, a wave off a zero face doubles, ALGEBRA.md #the-counts-line, and reads at most Gamma - 1): twice the largest count at a Node of any body, at most Gamma - 1."""
+    counts = [int(node["count"]) for body in document["measured"] for node in body.get("nodes", [])]
+    return min(2 * max(counts, default=0), gamma - 1)
+
+
 def bound_mode(
-    counts: np.ndarray, pair: Pair, gamma: int, wrap: Wrap = PERIODIC, content: np.ndarray | None = None
+    counts: np.ndarray,
+    pair: Pair,
+    gamma: int,
+    wrap: Wrap = PERIODIC,
+    content: np.ndarray | None = None,
+    bound_level: int | None = None,
 ) -> BoundMode:
     """The bound mode of the well at the derived amplitude unit: from a flat start the read act and the division act iterated until the integer profile repeats, the map on a finite set needing no limit; the well is the content at every Node, the held field at rest where given (ALGEBRA.md #the-generator (c), (g)), the counts alone otherwise."""
     check_counts(counts, gamma)
@@ -199,7 +214,7 @@ def bound_mode(
         content = counts
     else:
         check_counts(content, gamma)
-    amplitude = amplitude_unit(pair, gamma, content)
+    amplitude = amplitude_unit(pair, gamma, content, bound_level)
     read, self_coefficient, wall = rule_integers(pair, gamma, content)
     a = np.full(counts.shape, amplitude, dtype=np.int64)
     seen: dict[bytes, int] = {}  # the iterates by their digest: the repeat found, the memory bounded
@@ -225,6 +240,7 @@ def moving_mode(
     triple: Triple,
     wrap: Wrap = PERIODIC,
     content: np.ndarray | None = None,
+    bound_level: int | None = None,
 ) -> MovingMode:
     """The bound mode of the well moving along x at the rotation k per Link, at the derived amplitude unit: the same iteration as at rest with the twisted read act, from a flat start, each iterate mirrored (the real part even and the imaginary part odd about the centre, the envelope's one gauge, two division acts), the stop at the first repeat of the two parts; at the triple (1, 0, 1) it is the resting mode; the well the content at every Node, the field at rest where given; a diagnostic: the twisted read is a gauge of the plain one, so this fixed point is the rest mode times a phase (ALGEBRA.md #the-generator (e): the moving body is moving_body)."""
     check_counts(counts, gamma)
@@ -240,7 +256,7 @@ def moving_mode(
         raise ValueError(
             "the moving body's well is mirrored along x about the box's centre (the gauge of its envelope)"
         )
-    amplitude = amplitude_unit(pair, gamma, content)
+    amplitude = amplitude_unit(pair, gamma, content, bound_level)
     read, self_coefficient, wall = rule_integers(pair, gamma, content)
     re = np.full(counts.shape, amplitude, dtype=np.int64)
     im = np.zeros(counts.shape, dtype=np.int64)
@@ -341,6 +357,7 @@ def moving_body(
     wrap: Wrap = PERIODIC,
     content: np.ndarray | None = None,
     rest: BoundMode | None = None,
+    bound_level: int | None = None,
 ) -> MovingBody:
     """The body along x, at rest and in motion one primitive (ALGEBRA.md #the-generator (e); the owner's word): the momentum n names the velocity v = n / (3 Q M), Q the universe's momentum unit and M the body's quanta (the counts' sum); the phase's pair (m, j), m the body's declared denominator, j by bisection from 0 to m on the packet's velocity, which rises with k, to the j whose velocity is nearest the named one, the phase's sense the momentum's sign; at the momentum 0 the pair is (m, 0), the phase's triple (1, 0, 1) and the two levels the resting mode's, no bisection; refused by name where the named velocity is beyond the packet's at j = m (a quarter turn per Link)."""
     if momentum_unit < 1 or denominator < 1:
@@ -348,7 +365,7 @@ def moving_body(
             f"the momentum unit Q = {momentum_unit} and the phase's denominator m = {denominator} are from 1"
         )
     if rest is None:
-        rest = bound_mode(counts, pair, gamma, wrap, content)
+        rest = bound_mode(counts, pair, gamma, wrap, content, bound_level)
     well = counts if content is None else content
     named = Fraction(momentum, 3 * momentum_unit * int(counts.sum()))
     read, self_coefficient, wall = rule_integers(pair, gamma, well)
@@ -473,6 +490,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
     rows = {row["name"]: row for row in universe["families"]}
     integers = universe.get("integers", {})
     gamma = int(document.get("node_clock", integers.get("node_clock", 0)))
+    bound_level = loader_level(document, gamma)
     # the own twist's scale from the file: theta_unit = 1 / unit, "own" = round(unit omega_0 / (4 Gamma)) (ALGEBRA.md #the-primitives)
     twist_scale = int(
         division(1, 4 * gamma, np.array(int(integers["twist_table"]["unit"]), dtype=object))
@@ -551,6 +569,7 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
                 int(body["phase_denominator"]),
                 tuple(wrap[other] for other in order),
                 np.moveaxis(own_content, axis, 0),
+                bound_level=bound_level,
             )
             mode = moved.rest
             # the body's clock in the world's well: the rotation of its own profile with every body's
