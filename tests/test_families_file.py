@@ -36,9 +36,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     names = [entry["name"] for entry in document["families"]]
     assert names == ["gravity", "charge", "matter"]
     gravity, charge, matter = document["families"]
-    # THE FAMILIES FROM THE RULE (ALGEBRA.md #a-familys-declaration): the file holds the rows of the five
-    # numbers (the pairs, the two divisors, the light clock and the spin's step until it leaves) and
-    # nothing the rule derives: parts, phase, clicks, reads, the dipoles and the weights (`loader/derived.py`)
+    # THE FAMILIES FROM THE RULE (ALGEBRA.md #a-familys-declaration): the file holds the rows of the five numbers (the pairs, the two divisors, the light clock and the spin's step until it leaves) and nothing the rule derives: parts, phase, clicks, reads, the dipoles and the weights (`loader/derived.py`)
     assert all(set(entry) <= ATTRIBUTES for entry in document["families"])
     spins = {"curl": [1, 4], "tidal": [3, 4]}
     held, moment = {"count": "content", "divisor": 40000}, {"count": "sign", "divisor": 40000}
@@ -49,10 +47,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     # the frame reads the table's lists as tuples (core/schema.py); the same numbers
     assert json.loads(json.dumps(integers)) == document["integers"] and len(entries) == 3
     gravity, charge, matter = (derived.filled(entry, entries) for entry in entries)
-    # gravity: ten components, one level, held content with the spin's dipole, no reads, no clicks;
-    # the charge: four components, two levels, held sign with the moment's dipole halved, reads
-    # gravity, and clicks (light is its wave); matter: a scalar, two levels, the pair on every body,
-    # reads gravity plainly and the charge by its sign, clicks; every weight 1, every twist own
+    # gravity: ten components, one level, held content with the spin's dipole, no reads, no clicks; the charge: four components, two levels, held sign with the moment's dipole halved, reads gravity, and clicks (light is its wave); matter: a scalar, two levels, the pair on every body, reads gravity plainly and the charge by its sign, clicks; every weight 1, every twist own
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and "clicks" not in gravity
     assert gravity["held"] == {**HELD_SPIN, "factors": [1, 1, 1]} and gravity["reads"] == []
     assert charge["parts"] == [1, 3] and charge["phase"] == 2 and charge["held"] == HELD_MOMENT
