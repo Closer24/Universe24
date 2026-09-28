@@ -6,7 +6,7 @@ import numpy as np
 
 from event_universe.core.register import discover
 from event_universe.events.detector_law import DetectorLawSimulation
-from event_universe.features.start import chain_rest, field_at_rest, rest
+from event_universe.features.start import arrivals, chain_rest, field_at_rest, rest
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
 
@@ -79,3 +79,61 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
         assert (expected != 0).sum() > (counts != 0).sum()  # the field reaches beyond the bodies
         started += 1
     assert started >= 1
+
+
+def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
+    """THE START ON THE SUM'S SOURCES (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): the rest solves 6 den a - num S_6(a) = 3 den sigma, sigma the weighted count over the divisor at the bodies' Nodes, 0 beyond an open face, no Node clamped; the certified values' exact residual stays below one fine unit, on a chain and on a box alike; a board periodic on its every axis at [1, 1] has no rest and is refused by name; a divisor below 1 is refused."""
+    numerators, divisor, wrap = chain(), 7, (False, True, True)
+    box = np.zeros((6, 5, 4), dtype=np.int64)
+    box[1:3, 1:3, 1] = 9
+    for counts, faces, pair in (
+        (numerators, wrap, (1, 1)),
+        (numerators, wrap, (1, 4)),
+        (box, (False, True, True), (1, 1)),
+        (box, (True, True, True), (3, 4)),
+    ):
+        num, den = pair
+        found = rest(counts, pair, faces, divisor)
+        fine = found.fine.astype(object)
+        neighbours = sum(arrivals(fine, faces))  # the six Ports' reads, 0 beyond an open face
+        side = counts.astype(object) * (3 * den * found.unit) // divisor
+        left = 6 * den * fine - num * neighbours - side
+        assert (np.abs(left) < found.unit).all(), (pair, faces)
+        assert (found.levels[counts > 0] > 0).all() and (found.levels >= 0).all()
+    for bad, message in (
+        ((numerators, (True, True, True), 7), "no sink"),
+        ((numerators, wrap, 0), "divisor from 1"),
+    ):
+        try:
+            rest(bad[0], (1, 1), bad[1], bad[2])
+        except ValueError as refusal:
+            assert message in str(refusal)
+        else:
+            raise AssertionError(f"not refused: {message}")
+
+
+def test_the_falls_tent_is_the_sums_rest_on_the_open_chain():
+    """The fall's chain (400 open on x) with the heavy body alone, 30 Nodes of 3,600 at x = 185..214 over the divisor 40,000 at [1, 1]: the rest is a tent, linear outside the body with the slope half the source total 3 sigma x 30 / 2 (the body centred, the two sides equal), the second difference -3 sigma inside; the closed form a_i = (i + 1) s up to the body's edge and a_i = a_185 + s m - (3 sigma / 2) m (m + 1) inside (m = i - 185) gives 753.3 at the edge and 781.65 at the centre, and the levels are its nearest integers (the certificate's claim); the tent is symmetric about the body."""
+    from fractions import Fraction
+
+    numerators = np.zeros((400, 1, 1), dtype=np.int64)
+    numerators[185:215, 0, 0] = 3600
+    divisor = 40000
+    found = rest(numerators, (1, 1), (False, True, True), divisor)
+    sigma = Fraction(3600, divisor)
+    slope = 3 * 30 * sigma / 2
+
+    def exact(i: int) -> Fraction:
+        if i <= 185:
+            return (i + 1) * slope
+        if i >= 214:
+            return (400 - i) * slope
+        m = i - 185
+        return 186 * slope + slope * m - (3 * sigma / 2) * m * (m + 1)
+
+    assert exact(185) == Fraction(7533, 10) and exact(199) == Fraction(78165, 100)
+    levels = found.levels[:, 0, 0]
+    for i in (0, 100, 184, 185, 186, 199, 200, 214, 215, 286, 399):
+        assert exact(i) - int(exact(i)) != Fraction(1, 2) and int(levels[i]) == round(exact(i)), i
+    assert int(levels[185]) == 753 and int(levels[199]) == 782 and int(levels[199]) == int(levels[200])
+    assert (levels == levels[::-1]).all() and int(levels[0]) == 4

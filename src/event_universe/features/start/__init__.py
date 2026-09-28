@@ -14,11 +14,7 @@ from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
 
 NO_READ = (0, 0, 0)  # the line with no read
-PORTS, SIGNS, TERMS = (
-    6,
-    2,
-    2,
-)  # a Node's six Ports (the six arrivals); a level's two signs; the line's two terms
+PORTS, SIGNS, TERMS = 6, 2, 2  # a Node's six Ports; a level's two signs; the line's two terms
 Wrap = tuple[bool, bool, bool]
 Pair = tuple[int, int]
 PERIODIC: Wrap = (True, True, True)
@@ -160,13 +156,9 @@ def chain_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
 # unit's growth and the margin's room come from the certificate and the GameBoard, inside `box_rest`.
 WIDTH = MAX_WORK_INT.bit_length()  # the machine's integer width
 ROOM = WIDTH - 1  # the bits below the sign
-NODES_BITS = int(
-    division(1, 3, np.array(WIDTH, dtype=object))
-)  # the lane's Nodes bound: a third of the width
+NODES_BITS = int(division(1, 3, np.array(WIDTH, dtype=object)))  # the lane's Nodes bound, a third
 HALF_BITS = (ROOM - NODES_BITS) >> 1  # a vector's low half: two halves' product times the Nodes fits
-VECTOR_BITS = (
-    HALF_BITS << 1
-)  # the lane's vectors stay below 2^VECTOR_BITS, their halves below 2^HALF_BITS
+VECTOR_BITS = HALF_BITS << 1  # the lane's vectors below 2^VECTOR_BITS, their halves below 2^HALF_BITS
 RATIO_BITS = (WIDTH + 1) >> 1  # a ratio's fixed point: half the width
 RATIO_HALF_BITS = (ROOM + RATIO_BITS - VECTOR_BITS) >> 1  # a ratio's low half: the shifted product fits
 STOP = 1 << VECTOR_BITS  # a sweep stops once the residual is below the right side's 2^-VECTOR_BITS
@@ -214,9 +206,7 @@ def line_solver(counts: np.ndarray, pair: Pair, wrap: Wrap) -> tuple[Any, np.nda
     num, den = pair
     free = counts == 0
     held = ~free
-    cap = (
-        int(np.count_nonzero(free)) + 1
-    )  # the gradients end within the free Nodes' count in exact arithmetic; the floors' stops end them far sooner
+    cap = int(np.count_nonzero(free)) + 1  # the gradients end within the free Nodes' count, exactly
     bound = 1 << VECTOR_BITS
     # |A v| <= 2 x 6 den |v| (the two terms, the six Ports), a sign's room for a sum of two
     room = int(division(1, SIGNS * TERMS * PORTS * den, np.array(MAX_WORK_INT, dtype=object)))
@@ -313,13 +303,20 @@ def certified(
     return levels, closed
 
 
-def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
-    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's."""
+def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int | None = None) -> FieldAtRest:
+    """The rest on a box (ALGEBRA.md #the-generator, THE START): the line's exact rest to the nearest integer, certified in integers. The guess is the solver's; each round the exact residual R of the whole-integer field is solved back and taken off; the certificate is the exit-time bound: T solves the same line with 6 den x the lift on the right side, its own exact residual rho makes ||A^-1|| <= ||T|| / (6 den x lift - ||rho||), so the field stands within margin = ||A^-1|| ||R|| of the exact rest; where every free Node is farther than the margin from a half, the levels are the exact rest's nearest integers. Where the certificate does not close, the unit grows once and the rounds repeat; a value still within the margin of a half then rounds up, the half's own side under the division act (the margin added before the act). The cost is the load's. With a divisor the rest is the sum's (the hold's row as a sum, 6 den a - num S_6(a) = 3 den sigma): no Node is clamped, the counts are the weighted sources at the bodies' Nodes, and the line's right side is 3 den x the source x the unit div the divisor at every Node, the residual read against it; a board periodic on its every axis at [1, 1] gives the source no sink and is refused by name."""
     check_counts(np.abs(counts), 1 + int(np.abs(counts).max()))  # a signed family's counts by size
     num, den = pair
     if num < 1 or den < num:
         raise ValueError(f"the field's pair [{num}, {den}] has num from 1 and den from num")
-    solver, free = line_solver(counts, pair, wrap)
+    long = [axis for axis in range(len(wrap)) if counts.shape[axis] > 1]
+    if divisor is not None and (divisor < 1 or (num == den and all(wrap[axis] for axis in long))):
+        raise ValueError(
+            f"the sum's rest needs a divisor from 1 (got {divisor}) and an open face: a board periodic "
+            "on every axis at [1, 1] gives the source no sink (ALGEBRA.md #the-generator (g))"
+        )
+    clamped = np.zeros(counts.shape, dtype=np.int64) if divisor is not None else counts
+    solver, free = line_solver(clamped, pair, wrap)
     nodes = int(np.count_nonzero(free))
     ones = np.zeros(counts.shape, dtype=object)
     ones[...] = 6 * den
@@ -338,13 +335,15 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
         )
     bound_top = sizes(exit_time.ravel()[free])
     bound_bits = max(1, bound_top.bit_length() - bound_wall.bit_length() + 1)
-    room = (
-        nodes * nodes
-    )  # the margin far below a half: over all the free Nodes no accidental near-half is expected
+    room = nodes * nodes  # the margin far below a half: no accidental near-half over the free Nodes
     unit = field_unit(counts, num)
     fine = np.zeros(counts.shape, dtype=object)
-    fine[...] = counts.astype(object) * unit
-    fine = fine + solved(counts, solver, free, -residual(fine, pair, wrap, free), bound_bits)
+    fine[...] = clamped.astype(object) * unit
+    side = np.zeros(counts.shape, dtype=object)
+    if divisor is not None:
+        side[...] = division(3 * den * unit, divisor, counts.astype(object))
+    side = side.ravel()[free]
+    fine = fine + solved(counts, solver, free, side - residual(fine, pair, wrap, free), bound_bits)
     rounds = 0
     grown = False
     while True:
@@ -352,7 +351,7 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
         floor = None
         while True:  # the rounds end by the certificate: it closes, the margin is far below a half, or the residual stops falling
             rounds += 1
-            worst = residual(fine, pair, wrap, free)
+            worst = residual(fine, pair, wrap, free) - side
             size = sizes(worst)
             if floor is not None and 2 * size >= floor:
                 break  # the residual at the solver's floor: the rest of the way is the unit's
@@ -376,13 +375,13 @@ def box_rest(counts: np.ndarray, pair: Pair, wrap: Wrap) -> FieldAtRest:
     return FieldAtRest(levels.astype(np.int64), fine, unit, rounds, 1)
 
 
-def rest(counts: np.ndarray, pair: Pair, wrap: Wrap = PERIODIC) -> FieldAtRest:
-    """The start's rest of a held family on the counts: the chain's one pass where the region is a chain, the box's certified rest elsewhere (ALGEBRA.md #the-generator, THE START)."""
-    return (
-        chain_rest(counts, pair, wrap)
-        if chain_axis(counts) is not None
-        else box_rest(counts, pair, wrap)
-    )
+def rest(
+    counts: np.ndarray, pair: Pair, wrap: Wrap = PERIODIC, divisor: int | None = None
+) -> FieldAtRest:
+    """The start's rest of a held family: with a divisor the sum's rest on the weighted sources by the box's certified solve on any board; else on the counts clamped, the chain's one pass where the region is a chain, the box's certified rest elsewhere (ALGEBRA.md #the-generator, THE START)."""
+    if divisor is None and chain_axis(counts) is not None:
+        return chain_rest(counts, pair, wrap)
+    return box_rest(counts, pair, wrap, divisor)
 
 
 DECLARATION = Declaration(
