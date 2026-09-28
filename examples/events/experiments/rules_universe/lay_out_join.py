@@ -5,6 +5,9 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -40,10 +43,10 @@ PART_DISTANCE = 5  # Links between the two Nodes: the tails still overlap (the c
 TICKS = 300  # the run's length in intervals: the Experimenter's proposal until Cheshbon's blind number of clicks
 STEPS = 1024  # N, the phase's steps
 PIXELS = {  # Cheshbon's numbers per count (14:12 Israel time): the bound rotation omega_b and the tail's kappa per Link on the engine of today (the level once); 3,000 and 4,000 under the corrected term (13:39, 13:41)
-    3_000: {"omega_b": 0.8105, "kappa": 0.446, "a": 90_326},
-    4_000: {"omega_b": 0.6578, "kappa": 1.02, "a": 103_722},
-    5_000: {"omega_b": 0.778, "kappa": 0.63, "a": 93_270},
-    6_000: {"omega_b": 0.674, "kappa": 0.98, "a": 102_340},
+    3_000: {"omega_b": 0.8105, "kappa": 0.446, "a": 90_326, "t": 41_943},
+    4_000: {"omega_b": 0.6578, "kappa": 1.02, "a": 103_722, "t": 23_724},
+    5_000: {"omega_b": 0.778, "kappa": 0.63, "a": 93_270, "t": 34_734},
+    6_000: {"omega_b": 0.674, "kappa": 0.98, "a": 102_340, "t": 24_904},
     7_000: {"omega_b": 0.564, "kappa": 1.20},
 }
 CLOCK_UNIT = 1 << 16  # den of the clock pair [a, den], 2 cos omega_b = a / den (Cheshbon 13:51)
@@ -123,7 +126,9 @@ def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
             2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT
         )  # the stated pair over 2^16 where given (Cheshbon 13:51, the Closer 14:17)
         amplitude = math.isqrt(c * QUANTUM_ACTION * CLOCK_UNIT // (2 * CLOCK_UNIT - a))
-        tail = round(math.exp(-numbers["kappa"]) * TAIL_UNIT)
+        tail = numbers.get("t") or round(
+            math.exp(-numbers["kappa"]) * TAIL_UNIT
+        )  # the stated pair over 2^16 where given (Cheshbon 14:12, the Closer 14:16)
         x0, y0, z0 = node["node"]
         profile = [0] * count
         for x in range(shape[0]):
@@ -151,6 +156,31 @@ def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
             }
         )
     return {"rest": {}, "bodies": bodies, "world_digest": input_digest(document)}
+
+
+def write_mode(world_path: Path, document: dict[str, Any]) -> None:
+    """The mode file beside the world: by the Moving Clock's tool `tools/pixel_mode.py` (the generator of the rule's universe, the owner's word of 14:32 Israel time: the input a count at a Node with the clock pair and the tail's ratio, the output the bound state) where the tool is in the tree, else by the recipe here until it lands."""
+    tool = ROOT / "tools" / "pixel_mode.py"
+    if not tool.exists():
+        world_path.with_suffix(".mode.json").write_text(
+            json.dumps(pixel_mode(document)) + "\n", encoding="utf-8"
+        )
+        return
+    command = [
+        sys.executable,
+        str(tool),
+        "--input",
+        str(world_path),
+        "--out",
+        str(world_path.with_suffix(".mode.json")),
+    ]
+    for body in document["measured"]:
+        c = body["nodes"][0]["count"]
+        numbers = PIXELS[c]
+        a = numbers.get("a") or round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
+        t = numbers.get("t") or round(math.exp(-numbers["kappa"]) * TAIL_UNIT)
+        command += ["--clock", str(c), str(a), str(CLOCK_UNIT), "--tail", str(c), str(t)]
+    subprocess.run(command, check=True, cwd=ROOT, env={**os.environ, "PYTHONPATH": str(ROOT / "src")})
 
 
 def expectation(name: str, distance: int) -> dict[str, Any]:
@@ -211,9 +241,7 @@ def main() -> None:
     for name, distance in (("join", JOIN_DISTANCE), ("part", PART_DISTANCE)):
         document = world(universe, distance)
         (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
-        (folder / f"{name}.mode.json").write_text(
-            json.dumps(pixel_mode(document)) + "\n", encoding="utf-8"
-        )
+        write_mode(folder / f"{name}.json", document)
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(name, distance), indent=1) + "\n", encoding="utf-8"
         )
