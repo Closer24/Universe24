@@ -1,7 +1,7 @@
 {
  "integers": {
   "node_clock": 24,
-  "quantum_action": 1,
+  "quantum_action": 64,
   "momentum_unit": 64,
   "most_steps": 65536,
   "width": 63,
@@ -163897,6 +163897,17 @@
  },
  "families": [
   {
+   "name": "binding",
+   "pair": [
+    23,
+    24
+   ],
+   "held": {
+    "count": "content",
+    "divisor": 2
+   }
+  },
+  {
    "name": "gravity",
    "pair": [
     24,
@@ -163904,7 +163915,7 @@
    ],
    "held": {
     "count": "content",
-    "divisor": 1
+    "divisor": 10
    }
   },
   {
