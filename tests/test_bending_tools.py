@@ -1,7 +1,5 @@
 """The bending's reading tools: the beam's centroid at a screen (tools/beam_centroid.py), the click-weighted mean of the strips' coordinate from the engine's counts per detector, exact, with the shift against a twin and its verdict within the band; the well's clocks (tools/well_clocks.py), the wavelength, the period and the cycle from the GameBoard readings' sign changes, exact; and the one-click look (examples/events/experiments/bending_look.py), five lines from the outputs read without the runner. COMPUTATION on made-up outputs; no pin of nature."""
 
-from __future__ import annotations
-
 import json
 import sys
 from fractions import Fraction

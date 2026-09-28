@@ -13,7 +13,7 @@ from event_universe.world_files import input_digest, load_world
 from tests.worlds import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
-WORLD = ROOT / "examples" / "events" / "experiments" / "rules_universe" / "fall_tent_0.json"
+WORLD = ROOT / "examples" / "events" / "experiments" / "rules_universe" / "fall_control.json"
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 COUNT, A, DEN, TAIL = (
     8,
