@@ -1,7 +1,5 @@
 """The reader of world (c) of the rule's universe (examples/events/experiments/rules_universe/fall_bias.py) on made-up outputs: the tail's ratio from the two neighbours' levels and the moves' bias from the body's centre against the blind numbers."""
 
-from __future__ import annotations
-
 import json
 import sys
 from pathlib import Path

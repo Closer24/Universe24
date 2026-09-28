@@ -1,7 +1,5 @@
 """The step file law/step.json: the loop walks its acts through the register, the register and the loop refuse a file that names, places or orders an act wrongly, the writers of one value follow the file, and every run writes its digest. HOST; no pin."""
 
-from __future__ import annotations
-
 import dataclasses
 import importlib.util
 import json
