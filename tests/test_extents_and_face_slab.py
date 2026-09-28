@@ -1,7 +1,5 @@
 """Bodies with extents and the face slab: a block is the box of its extents per axis, and the face receiver at every open border is one detector of the world's face depth, last on every ladder. COMPUTATION on small worlds; no pin."""
 
-from __future__ import annotations
-
 import math
 from fractions import Fraction
 
