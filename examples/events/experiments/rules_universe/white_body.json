@@ -12,7 +12,7 @@
  "ticks": 3000,
  "N": 1024,
  "engine": "examples/events/engine_start.json",
- "universe": "examples/events/experiments/planck.json",
+ "universe": "examples/events/experiments/rules_universe/rules_universe.json",
  "measured": [
   {
    "family": "third",
