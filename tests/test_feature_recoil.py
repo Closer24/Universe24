@@ -1,7 +1,5 @@
 """The recoil's folder: the turn of the body's record's phase per Link by delta k = sigma_a x (k_q div M) on the record's two time levels, the angle's remainder carried at the body so the turns over clicks sum to the exact floor, the direction of travel, the refusals and the declaration; in the loop, a giver's record turned at its window's close opposite to the given light and its momentum read from the record's current."""
 
-from __future__ import annotations
-
 import json
 import sys
 from math import atan, cos, pi, tan

@@ -223,7 +223,7 @@ class FamilyDefinition:
     # THE SUM'S DIVISOR E_s (the owner's word of 21:35Z): the body's count enters the held line over it; the row's key
     held_divisor: int | None = None
     # THE SPIN'S STEP'S ROW (ALGEBRA.md #a-familys-declaration): the curl and tidal pairs, read by the spin's step's
-    # folder; required on a family that holds the spin's dipole, None on every other
+    # folder; optional on the family that holds the spin's dipole, None where absent and on every other
     spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
     # THE SOURCE (9.117 row "the source"): the target family by index, the signed weight, the
     # scale and the cap or None; the loop builds the source's term from it (Main Loop, #1236)
@@ -732,7 +732,7 @@ def _node_clock_bound(
 def _families_of(
     entries: tuple[dict[str, object], ...], amplitude_bound: int | None, most_families: int | None
 ) -> tuple[FamilyDefinition, ...]:
-    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step on the family that holds the spin's dipole and no other, the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
+    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step only on the family that holds the spin's dipole (optional there: the spin's step's line refuses a spinning body's read of a holder without it, by name), the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
     if most_families is not None and len(entries) > most_families:
         raise ValueError(
             f"families declares {len(entries)}; at most {most_families} families on a "
@@ -816,11 +816,6 @@ def _families_of(
             curl = cast(tuple[int, int], weights["curl"])
             tidal = cast(tuple[int, int], weights["tidal"])
             spin_weights = ((curl[0], curl[1]), (tidal[0], tidal[1]))
-        elif held_dipole == "spin":
-            raise ValueError(
-                f"{label} holds the spin's dipole and lacks spins_step: the spin's step's two "
-                "weights, curl and tidal, are the row's (ALGEBRA.md #a-familys-declaration), no default"
-            )
         sourced: tuple[int, int, int, int | None] | None = None
         if "sourced" in obj:
             term = cast(dict[str, object], obj["sourced"])

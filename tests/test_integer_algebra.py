@@ -29,6 +29,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/after_step.py": "the acts after the step the engine hooks per record: the hand's check at a click, the lifetime's end, the polariser's turn and its set's share, the polariser bodies' terms; functions taking the engine, bound as its methods",
     "events/body_language.py": "the recoil written into the body's own record and told as one event line beside the click; integer turns and sums, no arithmetic of its own",
     "events/record_well.py": "the well of a body with a record: its record's one interval and its form laid after it, D_i div T by the source's act through the write's line; no arithmetic of its own beyond the count",
+    "events/one_node.py": "the bound body of one Node: derived from the files (one Node, a massive pair, the divisors 1) and its record made from its mode's two levels at its Node; no arithmetic",
     "events/window.py": "the window out of the loop's module: the write's pair g q M(n) over E_s, the close's zero mode B taken off the given record through the loop's write site, the windows' close walk",
     "events/inverse.py": "the inverse's returns: the interval's bookings at the detectors' Ports and the body's clock taken back; integer sums and differences, no arithmetic of its own",
     "events/momentum_reading.py": "the momentum as a reading of the record's current: the count's line's booking products summed in whole integers, the division act to the nearest unit",
@@ -47,8 +48,7 @@ PHYSICAL_MODULES: dict[str, str] = {
 }
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
-MATH_ALLOWED = {"gcd", "isqrt"}
-NUMPY_DTYPES_ALLOWED = {"int64"}
+MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
 NUMPY_DTYPES_FORBIDDEN = {
     "int8",
     "int16",

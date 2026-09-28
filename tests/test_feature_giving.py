@@ -1,7 +1,5 @@
 """THE GIVING, its own folder (ALGEBRA.md #the-primitives, the row "the giving" and "A BODY'S WRITE IS ONE ACT"; 9.107; issue #1156): the bulk share on the moving row's numbers, the three acts of a window and the write's inverse on synthetic integers (the write (level + r) div k at both levels with the remainder carried at the Node, the close at outward >= T), the refusals by name, the declaration."""
 
-from __future__ import annotations
-
 import numpy as np
 import pytest
 
@@ -116,11 +114,8 @@ def test_the_declaration_is_the_ledgers_row():
     """The folder declares the row of ALGEBRA.md #the-primitives in the register's form: "the giving" at (ii), the word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function is `apply`, the act the loop calls."""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
-    assert DECLARATION.writes == (
-        "a family's level at a Node",
-        "a body's content M_k",
-        "a body's momentum n",
-    )
+    assert DECLARATION.writes[0] == "a family's level at a Node"
+    assert DECLARATION.writes[1:] == ("a body's content M_k", "a body's momentum n")
     assert DECLARATION.place_of("a body's momentum n") == "(iv)"
     assert DECLARATION.place_of("a family's level at a Node") == "(ii)" and DECLARATION.function is apply
     assert DECLARATION.section.startswith(THE_WORD)

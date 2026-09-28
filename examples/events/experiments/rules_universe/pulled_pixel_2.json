@@ -1,0 +1,203 @@
+{
+ "shape": [
+  15,
+  3,
+  3
+ ],
+ "boundary": {
+  "x": "open",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 300,
+ "N": 1024,
+ "engine": "examples/events/engine_start.json",
+ "universe": "examples/events/planck.json",
+ "measured": [
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      4,
+      1,
+      1
+     ],
+     "count": 4400
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  },
+  {
+   "family": "matter",
+   "nodes": [
+    {
+     "node": [
+      6,
+      1,
+      1
+     ],
+     "count": 4400
+    }
+   ],
+   "momentum": [
+    0,
+    0,
+    0
+   ],
+   "momentum_before": [
+    0,
+    0,
+    0
+   ],
+   "phase_denominator": 1024
+  }
+ ],
+ "detectors": [
+  {
+   "name": "at_pixel",
+   "block": 0
+  },
+  {
+   "name": "at_puller",
+   "block": 1
+  }
+ ],
+ "readings": [
+  {
+   "name": "matter_0",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    4,
+    1,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_1",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    5,
+    1,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_2",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    3,
+    1,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_3",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    4,
+    2,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_4",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    4,
+    0,
+    1
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_5",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    4,
+    1,
+    2
+   ],
+   "every": 1
+  },
+  {
+   "name": "matter_6",
+   "kind": "level",
+   "family": "matter",
+   "node": [
+    4,
+    1,
+    0
+   ],
+   "every": 1
+  },
+  {
+   "name": "centre_0",
+   "kind": "centre",
+   "body": 0,
+   "every": 1
+  },
+  {
+   "name": "momentum_0",
+   "kind": "momentum",
+   "body": 0,
+   "every": 1
+  },
+  {
+   "name": "centre_1",
+   "kind": "centre",
+   "body": 1,
+   "every": 1
+  },
+  {
+   "name": "momentum_1",
+   "kind": "momentum",
+   "body": 1,
+   "every": 1
+  },
+  {
+   "name": "matter_rows",
+   "kind": "rows",
+   "family": "matter",
+   "every": 10
+  },
+  {
+   "name": "matter_support",
+   "kind": "support",
+   "family": "matter",
+   "every": 5
+  },
+  {
+   "name": "matter_total",
+   "kind": "total",
+   "family": "matter",
+   "every": 5
+  },
+  {
+   "name": "records_alive",
+   "kind": "alive",
+   "every": 10
+  }
+ ],
+ "face_depth": 1
+}

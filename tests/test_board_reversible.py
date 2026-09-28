@@ -1,7 +1,5 @@
 """The GameBoard is reversible in time between clicks, and the clicks keep the physical definitions: one small world with every piece, stepped forward and back bit for bit (ALGEBRA.md #the-direction)."""
 
-from __future__ import annotations
-
 import copy
 from fractions import Fraction
 
@@ -106,8 +104,7 @@ def test_between_clicks_the_board_returns_bit_for_bit_where_the_field_rises_and_
     assert not [line for line in lines if line["event"] in ("giving", "gather")]
     levels = np.stack([state["charge"][0] for state in states])  # (interval, x, y, z)
     assert (levels[0] <= 0).all() and (levels[0][:73] < 0).all()  # the tent, 0 only beyond the faces
-    falls = int(np.sum(levels[1:] < levels[:-1]))
-    rises = int(np.sum(levels[1:] > levels[:-1]))
+    falls, rises = int(np.sum(levels[1:] < levels[:-1])), int(np.sum(levels[1:] > levels[:-1]))
     assert falls > 0 and rises > 0 and int(levels.max()) <= 0
     assert (np.stack([state["clock"][0] for state in states]) >= -1).all()  # within one of its tent
     for t in range(first_giving - 1, 0, -1):
@@ -127,8 +124,7 @@ def test_across_a_click_no_rule_undoes_it_and_only_the_deleted_rows_are_lost():
         assert t_taking < giving_ticks[1] or True  # a second giving may precede the taking
     end = t_taking + 5
     blind, states, lines, _ = run_states(document, end)
-    closes = close_ticks(lines)
-    taking_line = next(line for line in lines if line["event"] == "gather")
+    closes, taking_line = close_ticks(lines), next(line for line in lines if line["event"] == "gather")
     deleted = taking_line["record"]
     assert deleted not in states[t_taking]["records"] and deleted in states[t_taking - 1]["records"]
     # (a) five intervals back with no click between (a window's close among them stepped back by hand, as in (b)): exact
@@ -209,21 +205,17 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
     seen: Seen = {}
     spy_on(simulation, seen)
-    charge = simulation.family_charge
-    total_quanta = sum(sum(h) for h in simulation.held)
+    charge, total_quanta = simulation.family_charge, sum(sum(h) for h in simulation.held)
     total_charge = sum(simulation._body_charge(n) for n in range(len(simulation.held)))
     # the emitter's own quantum and its stock of STOCK light quanta, all of charge -1, the screen's three light bodies and the positive body (ALGEBRA.md #the-paces; item 47)
     assert total_charge == -(STOCK + 1) - 3 + 1
     block = simulation.blocks[0]
-    previous_residue = None
-    residue_at_open = (0, 1)
-    read_at = 0
-    held_before = copy.deepcopy(simulation.held)
+    previous_residue, residue_at_open = None, (0, 1)
+    read_at, held_before = 0, copy.deepcopy(simulation.held)
     for _ in range(400):
         own = block.own
         assert own is not None
-        residue_before = (own.u, own.wheel)
-        opens_before = block.givings
+        residue_before, opens_before = (own.u, own.wheel), block.givings
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
         flights = list(simulation.records.values())
@@ -251,8 +243,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
                     u, wheel = residue_at_open
                     wait = line["wait"]
                     assert 2 * wheel * (wait - 1) < (2 * u + 1) * period <= 2 * wheel * wait
-                previous_residue = (line["u"], line["W"])
-                read_at = line["tick"]
+                previous_residue, read_at = (line["u"], line["W"]), line["tick"]
             if line["event"] == "gather":
                 taker = next(n for n, held in enumerate(simulation.held) if held != held_before[n])
                 assert sum(simulation.held[taker]) == sum(held_before[taker]) + 1

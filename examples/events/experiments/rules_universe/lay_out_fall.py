@@ -11,9 +11,11 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from lay_out_join import DENOMINATOR, ENGINE, ROOT, STEPS, UNIVERSE_NAME  # noqa: E402
+from lay_out_axes import pixel_mode  # noqa: E402  (the pixels' mode files by the recipe)
+from lay_out_join import DENOMINATOR, ENGINE, STEPS  # noqa: E402
 
-COUNT = 3_000  # the body's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000): it binds itself
+COUNT = 4_400  # the body's count on the engine of today: the bound window 4,133 <= c <= about 5,900 (Cheshbon 14:39 Israel), the Closer's word of 14:47; 3,000 again with the corrected term
+BAND = 0.3  # the band on every blind number, the Closer's word of 14:16 Israel: plus or minus 30 percent
 TENTS = (
     0,
     50,
@@ -31,6 +33,7 @@ BIAS = {
     200: 0.529,
 }  # Cheshbon's blind number: the share of the count's moves toward the well
 KAPPA_AWAY = 0.446  # the tail's decay per Link away from the well at 3,000
+PLANCK = "examples/events/planck.json"  # the rule's own universe of record (#1411, #1419): three rows over Gamma, gravity [12000, 12000] at the divisor 1, charge [12000, 12000] at 400,000, matter [8000, 12000], T = 1; the polarisation and the third are messages and not in the file (the Closer 13:52, 14:29)
 TICKS = 1000  # the run's length: the Experimenter's proposal until Cheshbon's number of moves
 SHAPE = [9, 3, 3]  # Cheshbon's board: the chain of 9 along x, open at both ends, three wide
 FACE_DEPTH = 1
@@ -108,7 +111,7 @@ def expectation(tent: int) -> dict[str, Any]:
         ),
         "DETECTOR": [],
         "blind": {
-            "row": "Cheshbon's numbers of 13:09 Israel time (2026-09-28) before the run: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200 (kappa_minus = 0.446); the count's moves biased toward the well in the same ratio: 51.2, 51.3 and 52.9 percent; the control 1 and 50 percent",
+            "row": "Cheshbon's numbers of 13:09 Israel time (2026-09-28) before the run, at 3,000 under the corrected term: the tail's ratio toward the well over away e^(-kappa_plus) / e^(-kappa_minus) = 1.025, 1.053 and 1.122 for the tents 50, 100 and 200 (kappa_minus = 0.446); the count's moves biased toward the well in the same ratio: 51.2, 51.3 and 52.9 percent; the control 1 and 50 percent; the band plus or minus 30 percent (the Closer 14:16)",
             "edge_quanta_per_node": 2706,
             "horizon_quanta_per_node": 6000,
             "tail_kappa_per_link_away": KAPPA_AWAY,
@@ -128,7 +131,7 @@ def expectation(tent: int) -> dict[str, Any]:
             "axis": 0,
             "tail_ratio": ratio if tent else 1.0,
             "bias": bias if tent else 0.5,
-            "band": None,
+            "band": BAND,
             "row": "fall_bias.py reads the tail's ratio from the matter levels at the two neighbours (the largest level on the well's side over the largest on the far side, GAMEBOARD) and the moves' bias from the body's centre along the axis (the moves toward the well over all moves, the count's line's clicks as the centre shows them); MATCH within `band` once Cheshbon writes it, else the reading alone",
         },
     }
@@ -137,14 +140,17 @@ def expectation(tent: int) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
+    parser.add_argument("--no-tail", action="store_true", help="the mode files without the tail")
     args = parser.parse_args()
     folder = args.out.resolve()
     folder.mkdir(parents=True, exist_ok=True)
-    universe = (folder / UNIVERSE_NAME).relative_to(ROOT).as_posix()
+    universe = PLANCK
     for tent in TENTS:
         name = f"fall_tent_{tent}"
-        (folder / f"{name}.json").write_text(
-            json.dumps(world(universe, tent), indent=1) + "\n", encoding="utf-8"
+        document = world(universe, tent)
+        (folder / f"{name}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+        (folder / f"{name}.mode.json").write_text(
+            json.dumps(pixel_mode(document, not args.no_tail)) + "\n", encoding="utf-8"
         )
         (folder / f"{name}.expectation.json").write_text(
             json.dumps(expectation(tent), indent=1) + "\n", encoding="utf-8"

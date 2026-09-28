@@ -1,11 +1,11 @@
 {
- "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 4000 at x = 20, the taker a pixel of 3000 at x = 80 (60 Links on, the tails of three Links never touching), light of the charge family given by the deep one at the weight 1 with the stock 200 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
+ "row": "THE RULE'S OWN UNIVERSE, world (e): the giver a pixel of 8 at x = 20, the taker a pixel of 6 at x = 80 (60 Links on, the tails of three Links never touching), light of the charge family given by the deep one at the weight 1 with the stock 200 over 1500 intervals; the redshift read in the clocks, the periods, the wavelengths and the clicks; Cheshbon's numbers before the run",
  "DETECTOR": [
   {
    "detector": "taker",
    "mean_interval": 2,
    "band": 1,
-   "row": "Cheshbon's blind number (2026-09-28, 13:39 Israel): with E_s(charge) of the rule's universe derived from Gamma (0.86 (Gamma div 2)^(3/2), about 400,000, one quantum per window) the giving writes one level about every 1.6 intervals, so the taker's mean click interval is about 1.6 intervals, modulated at the period 9.55 x 1.125 = 10.7; the runner rounds the read to an integer: 2 within 1"
+   "row": "Cheshbon's blind number (2026-09-28, 13:39 and 14:39 Israel): with E_s(charge) of the rule's universe derived from Gamma (about 400,000, one quantum per window) the giving writes one level about every 1.6 intervals, so the taker's mean click interval is about 1.6 intervals on a strip where the light cannot spread, modulated at the giver's period times the clock ratio; on the wide board the taker reads a 1 / r share of the light and the interval grows by about 377 over the taker's face (Cheshbon 14:39); the runner rounds the read to an integer: 2 within 1 on the strip, the wide board's number his to write"
   }
  ],
  "WELL": {
@@ -18,7 +18,7 @@
    "giver_clock",
    "taker_clock"
   ],
-  "axis_y": 0,
+  "axis_y": 60,
   "windows": [
    [
     24,
@@ -29,14 +29,16 @@
     76
    ]
   ],
-  "clock_ratio": 1.125,
-  "clock_ratio_with_the_term": 1.5,
   "giver_period": 9.55,
-  "clock_ratio_row": "Cheshbon's blind number (2026-09-28, 13:17 and 13:39 Israel): the ratio of the two pixels' periods, the giver's cycle over the taker's as tools/well_clocks.py reads it (`clock_ratio`, the first clock over the second), 1.125 under the engine of today (the pace Gamma - c once: 9,000 / 8,000) and 1.5 with the conformal term (the level twice: 6,000 / 4,000); the same line read the other way is the taker's over the giver's, 0.889 and 0.667; the giver's period 9.55 intervals; the band Cheshbon's to write; in the twin 1",
+  "taker_period": 7.75,
+  "clock_ratio": 1.232,
+  "clock_ratio_band": null,
+  "light_wavelength_at_the_giver": 5.29,
+  "light_wavelength_at_the_taker": 4.18,
+  "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles at the two depths and their ratio, the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written",
   "shift_ratio": null,
   "shift_ratio_band": null,
-  "shift_ratio_row": "the light's relative shift of wave number over the pixel's relative shift of cycle (well_clocks' `shift_ratio`): Cheshbon's line to write; the 1.125 / 1.5 relayed under this name (the Closer, 13:22) are the clock ratio above",
-  "row": "tools/well_clocks.py on the pixels (GAMEBOARD): the clocks' cycles at the two depths and their ratio, the light's period beside each (conserved: 1), its wavelength beside each (the stretch in flight); the ratio of the light's relative shift of wave number to the pixel's relative shift of cycle: Cheshbon's number before the run, None until written"
+  "shift_ratio_row": "the light's relative shift of wave number over the pixel's relative shift of cycle (well_clocks' `shift_ratio`): Cheshbon's line to write; the 1.125 / 1.5 relayed under this name (the Closer, 13:22) are the clock ratio above"
  },
  "GAMEBOARD": [
   {
@@ -44,7 +46,7 @@
    "interval": 1400,
    "centre": [
     20,
-    0,
+    60,
     0
    ],
    "band": 0,
@@ -55,7 +57,7 @@
    "interval": 1400,
    "centre": [
     80,
-    0,
+    60,
     0
    ],
    "band": 0,

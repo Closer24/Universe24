@@ -174,8 +174,7 @@ def test_batched_prior_tree_preserves_exact_sources_and_deleted_consumers(monkey
     )
     (tmp_path / "src/demo/old.py").unlink()
     (tmp_path / "tests/test_old.py").write_text("def test_replacement(): pass", encoding="utf-8")
-    actual = CHECK.subprocess.check_output
-    calls = []
+    actual, calls = CHECK.subprocess.check_output, []
 
     def counted(command, **kwargs):
         calls.append(command)
@@ -200,8 +199,7 @@ def test_a_change_to_the_law_selects_its_words_and_links_gate():
 
 def test_the_every_pull_request_list_is_one_sorted_file_of_existing_tests():
     """The gates every pull request runs live in tools/every_pull_request.txt, one existing test per line, sorted (#1198, gate 7)."""
-    listed = CHECK.every_pull_request()
-    root = Path(__file__).resolve().parents[1]
+    listed, root = CHECK.every_pull_request(), Path(__file__).resolve().parents[1]
     assert listed == sorted(listed) and len(listed) == len(set(listed))
     assert all((root / test).is_file() for test in listed)
     assert set(listed) <= set(CHECK.select(["docs/GLOSSARY.md"], {})[0])

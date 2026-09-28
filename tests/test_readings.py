@@ -14,10 +14,7 @@ from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import run_world
 from tests.worlds import emitter_world
 
-SHAPE = (80, 1, 1)
-DETECTORS = ["screen"]
-FAMILIES = ["gravity", "charge", "matter"]
-BODIES = [0]
+SHAPE, DETECTORS, FAMILIES, BODIES = (80, 1, 1), ["screen"], ["gravity", "charge", "matter"], [0]
 SIX = [
     {"name": "screen_clicks", "kind": "clicks", "detector": "screen"},
     {"name": "matter_at_40", "kind": "level", "family": "matter", "node": [40, 0, 0], "every": 1},
@@ -36,17 +33,7 @@ def declared(document: dict, readings: list[dict]) -> dict:
 
 def test_the_schema_holds_nine_kinds_with_their_labels_and_keys():
     """Nine kinds, each with a label of the three and its own keys beside name and kind; a body's momentum, its cycle and a family's rows GAMEBOARD."""
-    assert set(SCHEMA) == {
-        "clicks",
-        "level",
-        "support",
-        "total",
-        "rows",
-        "centre",
-        "momentum",
-        "cycle",
-        "alive",
-    }
+    assert set(SCHEMA) == set("clicks level support total rows centre momentum cycle alive".split())
     assert SCHEMA["cycle"] == ("GAMEBOARD", ("body", "every"))
     assert SCHEMA["momentum"] == ("GAMEBOARD", ("body", "every")) and SCHEMA["rows"][1] == (
         "family",
@@ -235,11 +222,6 @@ def test_a_bodys_own_cycle_is_a_gameboard_reading_a_clock_world_with_no_detector
     assert out["label"] == "GAMEBOARD" and out["body"] == 0 and len(out["lines"]) == 161
     starts = sorted({(line["cycle_start"], line["cycle_length"]) for line in out["lines"]})
     assert starts == [(0, 0), (42, 42), (97, 55), (152, 55)]
+    tick = {"name": "tick", "kind": "cycle", "body": 3, "every": 1}
     with pytest.raises(ValueError, match="names no measured entry with a block"):
-        declarations(
-            [{"name": "tick", "kind": "cycle", "body": 3, "every": 1}],
-            SHAPE,
-            DETECTORS,
-            FAMILIES,
-            BODIES,
-        )
+        declarations([tick], SHAPE, DETECTORS, FAMILIES, BODIES)

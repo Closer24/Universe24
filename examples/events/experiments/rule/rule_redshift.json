@@ -1,7 +1,7 @@
 {
  "shape": [
   100,
-  1,
+  121,
   1
  ],
  "boundary": {
@@ -12,7 +12,7 @@
  "ticks": 1500,
  "N": 1024,
  "engine": "examples/events/engine_start.json",
- "universe": "examples/events/experiments/planck.json",
+ "universe": "examples/events/planck.json",
  "measured": [
   {
    "family": "matter",
@@ -20,10 +20,10 @@
     {
      "node": [
       20,
-      0,
+      60,
       0
      ],
-     "count": 4000
+     "count": 8
     }
    ],
    "momentum": [
@@ -37,6 +37,7 @@
     0
    ],
    "phase_denominator": 1024,
+   "q": 1,
    "moment": [
     0,
     0,
@@ -44,7 +45,9 @@
    ],
    "emitter": {
     "family": "charge",
-    "weight": 1
+    "weight": 1,
+    "norm": 1,
+    "norm_denominator": 1
    },
    "stocks": {
     "charge": 200
@@ -56,10 +59,10 @@
     {
      "node": [
       80,
-      0,
+      60,
       0
      ],
-     "count": 3000
+     "count": 6
     }
    ],
    "momentum": [
@@ -81,7 +84,7 @@
    "positions": [
     [
      80,
-     0,
+     60,
      0
     ]
    ]
@@ -100,7 +103,7 @@
    "family": "charge",
    "node": [
     24,
-    0,
+    60,
     0
    ],
    "every": 1
@@ -111,7 +114,7 @@
    "family": "charge",
    "node": [
     76,
-    0,
+    60,
     0
    ],
    "every": 1
@@ -146,7 +149,7 @@
    "family": "gravity",
    "node": [
     50,
-    0,
+    60,
     0
    ],
    "every": 100
