@@ -1,7 +1,5 @@
 """The source's folder (ALGEBRA.md #the-primitives row "the source"; ALGEBRA.md #the-paces): the line's integers on the run files' numbers, the carried remainder's exact floor, the table form, the write's locality, the inverse bit for bit, the refusals by name, the hand identity, the run file's record against the README's counts, the declaration the ledger's row."""
 
-from __future__ import annotations
-
 from fractions import Fraction
 from pathlib import Path
 

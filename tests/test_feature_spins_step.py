@@ -19,7 +19,7 @@ from event_universe.features.spins_step import (
     curl,
     gradient,
 )
-from event_universe.world_files import parse_nature_beam_world
+from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import parts_of, parts_world
 from tests.worlds import emitter_world
 
@@ -135,11 +135,11 @@ def test_the_refusals_by_name():
         apply(term, SpinStepStart("the hop", (), (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)
     with pytest.raises(ValueError, match="from 1"):
         apply(term, SpinStepStart(THE_ADVANCE, (), (0, 0, 0), 0, (0, 0, 0), (0, 0, 0)), own)
-    # no silent default: the loader refuses by name a family holding the spin's dipole without its row
-    document = parts_world(spin=[0, 0, 5], side=1)
-    next(f for f in document["universe"] if f["name"] == "clicks").pop("spins_step")
-    with pytest.raises(ValueError, match="holds the spin's dipole and lacks spins_step"):
-        parse_nature_beam_world(document)
+    # no silent default: the row is optional on the holder (it loads); a spinning read of it is refused
+    doc = parts_world(spin=[0, 0, 5], side=1)
+    next(f for f in doc["universe"] if f["name"] == "clicks").pop("spins_step")
+    with pytest.raises(ValueError, match="needs the time part at the six neighbours and its row"):
+        DetectorLawSimulation(parse_nature_beam_world({**doc, "stamp": input_stamp(doc)})).step()
     with pytest.raises(ValueError, match="spin or moment"):
         reads = (SpinRead(0, "charge", 1, 1, zeros, None, None),)
         apply(term, SpinStepStart(THE_ADVANCE, reads, (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)
