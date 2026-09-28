@@ -514,9 +514,9 @@ def family_names() -> set[str]:
 
 # the orders of ALGEBRA.md #the-primitives as the step file law/step.json gives them: the writers of one value at one place in the file's order, a write deferred from (ii) first
 ORDERS = {
-    ("(iv)", "a family's level at a Node"): ("the hold", "the source"),
+    ("(iv)", "a family's level at a Node"): ("the hold", "the source", "the recoil"),
     ("(iv)", "a body's content M_k"): ("the clicks", "the giving", "the clicks list"),
-    ("(iv)", "a body's momentum n"): ("the giving", "the recoil"),
+    ("(iv)", "a body's momentum n"): ("the giving",),
     ("(i)", "the arrivals"): ("the receive", "the internal representation"),
     ("(ii)", "the record's tally"): ("the clicks", "the lifetime"),
 }

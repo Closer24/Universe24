@@ -319,5 +319,5 @@ def test_a_bodys_remainders_are_stamped_by_identity_and_version_and_every_write_
     loop = MainLoop.plan(Register(), Step({}, "d", ()), {}, (), ())
     stamp = (id(remainders), version, id(remainders), version)
     moved = {"a body's remainders": {0: stamp[:1] + (version + 1,) + stamp[2:]}}
-    with pytest.raises(ValueError, match="changed \"a body's remainders\" of \['0'\]"):
+    with pytest.raises(ValueError, match=r"changed \"a body's remainders\" of \['0'\]"):
         loop.audit("the cheat", "(v)", frozenset(), {"a body's remainders": {0: stamp}}, moved, set())
