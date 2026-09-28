@@ -254,13 +254,7 @@ def close_window(loop: DetectorLawSimulation, block: Block, live: LiveRecord) ->
         loop.record(line)
     outward = live.outward_tally
     loop._recoils.append(
-        (
-            block.number,
-            GIVING,
-            (int(outward[0]), int(outward[1]), int(outward[2])),
-            (live.period_numerator, live.period_denominator),
-            live.identity,
-        )
+        (block.number, GIVING, (int(outward[0]), int(outward[1]), int(outward[2])), live.identity)
     )
     live.giving_line = None
     block.wait = 0
