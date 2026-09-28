@@ -73,13 +73,13 @@ def test_the_rule_at_a_node_with_content_in_integers_and_the_rotation_slowed_by_
     # (ii) the rotation at k = 0
     amplitude = 1 << 20
     num, den = PAIR
-    for quanta, expected in ((QUANTA, 1.982617), (0, 1.977750), (GAMMA // 2, 1.986094)):
+    for quanta, expected in ((QUANTA, 1.987485), (0, 1.977750), (GAMMA // 5, 1.985760)):
         nodes = range(12) if quanta else []
         simulation = DetectorLawSimulation(
             parse_nature_beam_world(content_chain(12, PERIODIC, nodes, max(quanta, 1), divisor=1))
         )
         f = ((GAMMA - quanta) / GAMMA) ** 2
-        assert 2 - (1 + f) * (1 - num / den) == pytest.approx(expected, abs=5e-7)
+        assert 2 - 2 * f * (1 - num / den) == pytest.approx(expected, abs=5e-7)  # the pace is conformal
         # the same from the rule's integers: (6 R + S) / w at S_6 = 6 a
         (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, quanta)
         assert (6 * read + self_coefficient) / wall == pytest.approx(expected, abs=5e-7)
@@ -137,12 +137,16 @@ def test_light_through_a_slab_of_content_is_delayed_by_the_slowed_dispersion():
         energy = live.now[:, 0, 0].astype(np.float64) ** 2 + live.before[:, 0, 0].astype(np.float64) ** 2
         beyond[slab] = float(energy[190:].sum() / energy.sum())
     pace = group_pace_light(k, 1.0)
-    # the dispersion's factor under the weak field, f = (p / Gamma)^2 (ALGEBRA.md #the-rows-against-nature)
-    slowed = group_pace_light(k, ((GAMMA - QUANTA) / GAMMA) ** 2)
+    # the dispersion's factor under the weak field, f = (p_a / Gamma)^2 with p_a = Gamma - 2 c (ALGEBRA.md #the-direction)
+    slowed = group_pace_light(k, ((GAMMA - 2 * QUANTA) / GAMMA) ** 2)  # the level enters the Link twice
     delay = 40.0 * (1.0 / slowed - 1.0 / pace)
     lag = centroids[False] - centroids[True]
-    # the slab's faces reflect more under the weak field (the index at f = (p / Gamma)^2, 0.5625 here, against 0.75 under the first-order rule): 0.946 beyond against 0.956 (COMPUTATION); the floors are read values of a GameBoard reading, not measurements compared with nature
-    assert beyond[False] > 0.97 and beyond[True] > 0.94, ("GameBoard reading, diagnostic", beyond)
+    # the slab's faces reflect at most 2 ((1 - n) / (1 + n))^2 of the energy, n = Gamma / p_a the Link's index (COMPUTATION)
+    index = GAMMA / (GAMMA - 2 * QUANTA)
+    assert beyond[False] > 0.97 and beyond[True] > 1 - 2 * ((1 - index) / (1 + index)) ** 2, (
+        "GameBoard reading, diagnostic",
+        beyond,
+    )
     assert 0.85 * delay * pace < lag < 1.15 * delay * pace, (
         "GameBoard reading, diagnostic",
         centroids,
@@ -249,7 +253,9 @@ def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it
         heavy
     )  # A derived at this Gamma: every pair's total fits inside the width
     for pair in (tuple(f["pair"]) for f in heavy["universe"]):
-        assert rule_total_bound(*pair, 1_000_000, 999_999, world.amplitude_bound, True) < 1 << 63
+        assert (
+            rule_total_bound(*pair, 1_000_000, 499_999, world.amplitude_bound, True) < 1 << 63
+        )  # the admitted level
     registered = json.loads((ROOT / "tests/light_clock.json").read_text(encoding="utf-8"))
     # the integers of ALGEBRA.md #the-rows-against-nature from the families file alone (item 59)
     assert registered["universe"] == "examples/events/universe.json"
