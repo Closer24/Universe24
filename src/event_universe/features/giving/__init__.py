@@ -114,9 +114,10 @@ def shell_write(term: GivingTerm, start: GivingStart) -> tuple[np.ndarray, np.nd
         for i, value in enumerate(row)
     )
     written = dict((key, level) for key, level, _ in line(THE_LOAD, 1, term.weight, counts, {}, {}))
-    return tuple(
+    levels = [
         np.array([written[(level, i)] for i in range(now.shape[0])], dtype=np.int64) for level in LEVELS
-    )
+    ]
+    return levels[0], levels[1]
 
 
 def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:

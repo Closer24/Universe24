@@ -364,8 +364,8 @@ def start_at_rest(loop: DetectorLawSimulation) -> None:
                 f"the start of the held family {loop.families[family].name!r}: {refusal}"
             ) from refusal
         nodes = np.argwhere(levels)
-        counts = tuple(((int(x), int(y), int(z)), int(levels[x, y, z])) for x, y, z in nodes)
-        written = loop._write_line(THE_LOAD, 1, 1, counts, {}, {})
+        sources = tuple(((int(x), int(y), int(z)), int(levels[x, y, z])) for x, y, z in nodes)
+        written = loop._write_line(THE_LOAD, 1, 1, sources, {}, {})
         index = tuple(nodes.T)
         record.now[index] = [now for _, now, _ in written]
         record.before[index] = [before for _, _, before in written]

@@ -117,12 +117,11 @@ def apply(term: RecoilTerm, start: RecoilStart, own: RecoilOwn) -> RecoilWrites:
     stores = list(own.remainders)
     line = start.write if start.write is not None else carried_line
     carries: dict[Key, int] = {(axis,): store for axis, store in enumerate(stores)}
-    counts = tuple(
-        ((axis,), term.sense * sign_of(start.tally[axis]) * amount)
-        for axis in range(len(momentum))
-        if sign_of(start.tally[axis]) != 0
-    )
-    for (axis, *_), whole, _ in line(THE_ADVANCE, term.wall, 1, counts, {}, carries):
+    axes = [axis for axis in range(len(momentum)) if sign_of(start.tally[axis]) != 0]
+    counts = tuple(((axis,), term.sense * sign_of(start.tally[axis]) * amount) for axis in axes)
+    for axis, (_, whole, _) in zip(
+        axes, line(THE_ADVANCE, term.wall, 1, counts, {}, carries), strict=True
+    ):
         momentum[axis] += whole
         stores[axis] = carries[(axis,)]
     return RecoilWrites((momentum[0], momentum[1], momentum[2]), (stores[0], stores[1], stores[2]))
