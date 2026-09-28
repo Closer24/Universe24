@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from event_universe.core.rule3 import rule_total_bound
 from event_universe.world_files import parse_nature_beam_world
 from tests.bodies import content_chain
