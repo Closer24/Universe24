@@ -1,14 +1,15 @@
-"""The giving, the three acts of one window and their inverse: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += (a_body x num + r) div den at both levels of the body's rotation, the division act with the remainder r carried at the Node, [num, den] the giving's coupling: the universe's pair [1, k], or the file's weight g as [g, 1] until the loader reads the universe's, before the bookings), the close (at outward >= T, the universe's quantum action, the record named, its direction the tally's sign per axis), and the inverse of a write (the levels written that interval and the remainders before them, from the same body levels and the remainders after) (ALGEBRA.md #the-primitives the row "the giving" and "A BODY'S WRITE IS ONE ACT"; 9.107); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
+"""The giving, the three acts of one window and their inverse: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += (a_body x num + r) div den at both levels of the body's rotation, one act of the write per Node and level (features/write, the line the loop hands in the start; Rule3's division act on the row when none is handed) with the remainder r carried at the Node, [num, den] the giving's coupling: the universe's pair [1, k], or the file's weight g as [g, 1] until the loader reads the universe's, before the bookings), the close (at outward >= T, the universe's quantum action, the record named, its direction the tally's sign per axis), and the inverse of a write (the levels written that interval and the remainders before them, from the same body levels and the remainders after) (ALGEBRA.md #the-primitives the row "the giving" and "A BODY'S WRITE IS ONE ACT"; 9.107); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import cast
 
 import numpy as np
 
 from event_universe.core.register import Declaration
-from event_universe.core.rule3 import THE_INVERSE, division_forward
+from event_universe.core.rule3 import THE_ADVANCE, THE_INVERSE, Key, division_forward
 
 # the three acts of one window, the words the loop names in `start`
 THE_OPEN = "the open"
@@ -25,6 +26,11 @@ THE_WORD = (
     "the close of the count the click's inverse, the bulk share from the rule ALGEBRA.md #the-line, "
     "the window's write beyond (H)"
 )
+Counts = tuple[tuple[Key, int], ...]
+Levels = tuple[tuple[Key, int, int], ...]
+# the write's line (features/write): (act, wall, coefficient, the counts per key, values, carries) ->
+# per key (key, now, before), the remainders written back into the two dicts
+WriteLine = Callable[[str, int, int, Counts, dict[Key, int], dict[Key, int]], Levels]
 
 
 @dataclass(frozen=True)
@@ -38,7 +44,7 @@ class GivingTerm:
 
 @dataclass(frozen=True)
 class GivingStart:
-    """The interval's reading for one act, every field named by the loop: the act's word; at the open the body's quanta M and momentum n; at the write and at the inverse the body's two levels (now, before) at its shell (None at the other acts); at the close this interval's outward flux and its tally."""
+    """The interval's reading for one act, every field named by the loop: the act's word; at the open the body's quanta M and momentum n; at the write and at the inverse the body's two levels (now, before) at its shell (None at the other acts); at the close this interval's outward flux and its tally; the write's line the loop hands (features/write; None: the folder's division act on the row)."""
 
     act: str
     quanta: int
@@ -46,6 +52,7 @@ class GivingStart:
     body_levels: tuple[np.ndarray, np.ndarray] | None
     outward_flux: int
     outward_tally: tuple[int, int, int]
+    write: WriteLine | None = None
 
 
 @dataclass(frozen=True)
@@ -117,7 +124,7 @@ def apply(term: GivingTerm, start: GivingStart, own: GivingOwn) -> GivingWrites:
         carries: tuple[np.ndarray | int, ...] = own.remainders if own.remainders is not None else (0, 0)
         written, remainders = zip(
             *(
-                divided(term.coupling, np.asarray(level, dtype=np.int64), carry)
+                divided(term.coupling, np.asarray(level, dtype=np.int64), carry, start.write)
                 for level, carry in zip(start.body_levels, carries, strict=True)
             ),
             strict=True,
@@ -159,12 +166,26 @@ def apply(term: GivingTerm, start: GivingStart, own: GivingOwn) -> GivingWrites:
 
 
 def divided(
-    coupling: tuple[int | np.ndarray, int], levels: np.ndarray, carry: np.ndarray | int
+    coupling: tuple[int | np.ndarray, int],
+    levels: np.ndarray,
+    carry: np.ndarray | int,
+    line: WriteLine | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The division act at every Node of the shell: (level x numerator + r) div denominator written and the remainder r' in [0, denominator) kept at the Node, the numerator one integer or one per Node (ALGEBRA.md #the-interval, Rule3's division act on a row)."""
-    return cast(
-        tuple[np.ndarray, np.ndarray],
-        division_forward(levels * coupling[0], coupling[1], carry),  # type: ignore[arg-type]
+    """The write at every Node of the shell: (level x numerator + r) div denominator written and the remainder r' in [0, denominator) kept at the Node, the numerator one integer or one per Node, one act of the write's line per Node at the advance (the Node its key) when the loop hands it, else Rule3's division act on the row (ALGEBRA.md #the-interval, #the-primitives the row "the write")."""
+    scaled = levels * coupling[0]
+    if line is None:
+        return cast(
+            tuple[np.ndarray, np.ndarray],
+            division_forward(scaled, coupling[1], carry),  # type: ignore[arg-type]
+        )
+    keys: list[Key] = [(index,) for index in range(levels.shape[0])]
+    carried_in = np.broadcast_to(np.asarray(carry, dtype=np.int64), levels.shape)
+    carries: dict[Key, int] = {key: int(rest) for key, rest in zip(keys, carried_in, strict=True)}
+    counts = tuple((key, int(numerator)) for key, numerator in zip(keys, scaled, strict=True))
+    written = line(THE_ADVANCE, coupling[1], 1, counts, {}, carries)
+    return (
+        np.array([now for _, now, _ in written], dtype=np.int64),
+        np.array([carries[key] for key in keys], dtype=np.int64),
     )
 
 
