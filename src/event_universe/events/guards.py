@@ -39,7 +39,7 @@ def start_arrays(loop: DetectorLawSimulation) -> Iterator[np.ndarray]:
 
 
 def grants(loop: DetectorLawSimulation, name: str) -> Iterator[np.ndarray]:
-    """The arrays of the start an act may write in place, as its card names them: the count's line a body's position (the pair arrays and the detector map, the hop's writes it carries), the hold a family's level at a Node (the held families' arrays), the operation the remainders."""
+    """The arrays of the start an act may write in place, as its card names them: the count's line a body's position (the pair arrays and the detector map, the hop's writes it carries), the hold a family's level at a Node (the held families' arrays), the operation the remainders and the two levels of an open window's record (the giving's write of the body's rotation at both levels)."""
     if name == "the count's line":
         for num, den in loop._pairs.values():
             yield num
@@ -54,6 +54,13 @@ def grants(loop: DetectorLawSimulation, name: str) -> Iterator[np.ndarray]:
     elif name == "the operation":
         for live in loop.records.values():
             yield live.remainder
+        for block in (
+            loop.blocks
+        ):  # an open window's record: the giving writes the body's rotation at both levels
+            if block.window is not None and block.window in loop.records:
+                yield loop.records[
+                    block.window
+                ].now  # the record's `before` once its own step rebinds `now`
         for block in loop.blocks:
             if block.own is not None:
                 yield block.own.remainder
