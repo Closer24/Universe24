@@ -350,7 +350,7 @@ def _apply(document: dict, written: dict) -> None:
 
 
 def one_quantum_per_window(document: dict) -> None:
-    """THE FIXTURES' T (the Closer's ruling of 2026-09-28, 14:46 Israel, on Cheshbon's formula of 14:12, the faces of 15:04, the exact root of 15:35): a seeded giver's quantum action T = isqrt(5 (w^2 N_face)^2) div 3 with w = g M a_body, the outward flux of one interval at the write's amplitude with E_s at its floor 1 through the giver's N_face outer Ports at the threshold pixel's sine sqrt(5) / 3 (exact in integers, no rounded constant), so its window closes in one interval; a_body the body's own record's level as the seeding loads it, M its count at the Node as the write reads it (the quanta it holds), g the emitter's weight; written as the emitter's norm over 1 and stamped (T is the fixture's, not the engine's)."""
+    """THE FIXTURES' T (the Closer's ruling of 2026-09-28, 14:46 Israel, on Cheshbon's formula of 14:12, the faces of 15:04, the giver's own rotor of 16:23): a seeded giver's quantum action is one window's flux in its own rotation, T = isqrt((w^2 N_face)^2 (den^2 - num^2) (den^2 - (3 num - 2 den)^2)) div den^2 with w = g M a_body and [num, den] the body's rest pair (cos omega_b = num / den, the light's cos k = 3 cos omega_b - 2), the outward flux of one interval at the write's amplitude with E_s at its floor 1 through the giver's N_face outer Ports, so its window closes in about one interval; a_body the body's own record's level as the seeding loads it, M its count at the Node as the write reads it (the quanta it holds), g the emitter's weight; written as the emitter's norm over 1 and stamped (T is the fixture's, not the engine's; the rule's universe declares T = 1 and is untouched)."""
     from event_universe.events.detector_law import DetectorLawSimulation
     from event_universe.world_files import input_stamp, parse_nature_beam_world
 
@@ -360,7 +360,10 @@ def one_quantum_per_window(document: dict) -> None:
     document["stamp"] = input_stamp(
         document
     )  # over the document as it stands (a key set after the seeding)
-    simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(json.dumps(document))))
+    try:
+        simulation = DetectorLawSimulation(parse_nature_beam_world(json.loads(json.dumps(document))))
+    except ValueError:
+        return  # a document the loader refuses takes no T here: the refusal is named at the run's own load
     for body in givers:
         block = simulation.blocks[document["measured"].index(body)]
         level = int(np.abs(block.own.now).max()) if block.own is not None else 0
@@ -373,10 +376,11 @@ def one_quantum_per_window(document: dict) -> None:
             int(np.count_nonzero(ports))
             for ports in simulation.ports.outward(block.mask, simulation.kind_wrap[given])
         )
-        flux = (
-            weight * weight * faces
-        )  # one interval's outward flux at the write's amplitude, sin omega_0 = sqrt(5) / 3 exact
-        body["emitter"]["norm"] = math.isqrt(5 * flux * flux) // 3
+        # one interval's outward flux at the write's amplitude in the giver's own rotation (Cheshbon's line of 16:23 Israel): a^2 N sin omega_b sin k, cos omega_b = num / den the body's rest pair, cos k = 3 cos omega_b - 2 the light's; sqrt(5) / 3 is its value at the threshold pixel alone
+        num, den = (int(value) for value in body["pair"])
+        flux = weight * weight * faces
+        turning = (den * den - num * num) * (den * den - (3 * num - 2 * den) ** 2)
+        body["emitter"]["norm"] = math.isqrt(flux * flux * turning) // (den * den)
         body["emitter"]["norm_denominator"] = 1
     document["stamp"] = input_stamp(document)
 

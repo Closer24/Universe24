@@ -134,7 +134,7 @@ def giver_world(tmp_path: Path, monkeypatch, wave_number: int) -> Path:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "universe.json").write_text(GENERATED.read_text(encoding="utf-8"), encoding="utf-8")
     (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
-    body = {"family": "matter", "moment": [0, 0, 1], "stocks": {"charge": 4}, "emitter": GIVER}
+    body = {"family": "matter", "moment": [0, 0, 1], "stocks": {"charge": 4}, "emitter": GIVER, "q": 1}
     body.update(nodes=NODES_OF_THE_GIVER, momentum=[0, 0, 0], momentum_before=[0, 0, 0])
     world = {"shape": [16, 1, 1], "boundary": FACES, "ticks": 400, "N": 1024, "measured": [body]}
     world.update(universe="universe.json", engine="start.json", detectors=[STRIP])

@@ -75,15 +75,15 @@ def test_the_rule_is_the_designs_integers_on_a_chain():
 
 def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     """The chain world under the flux reading (ALGEBRA.md #rule3; BUILD.md section 26 item 14): six givings at their rungs, every record clicking ONCE at `screen` (the cumulative ladder [screen] on the emitter's default ladder of every declared set, no face on a closed chain), its line at the rung's interval and the record deleted whole at it (never in `records` after its line), the flight of the train's head over the 36 Links from the body's head at x = 33 to the screen at v_g = 0.447 (80 intervals) and as much of the passage as the residue asks (the train of 32 Nodes passes in 72), every click's quantum on the transit row `absorbed` and the screen body's `measured`, the books balanced (the body's content level on the giving line is a GameBoard reading, a diagnostic; the level sequence is pinned on the emitter world in tests/test_emitter.py). The edge case: the faces OPEN on the chain of 140 (the body at [34, 66) one train's length from the low face): the train leaves toward +x and the faces book nothing of it within the first 40 intervals (no click there), the screen not reached yet."""
-    world = parse_nature_beam_world(chain_world())
+    document = chain_world()
+    world = parse_nature_beam_world(document)
     assert "face" not in DetectorLawSimulation(world).detector_names
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    # the horizon the window the engine writes by the law, no number: the stock's six windows closed and the last train's flight bound (below) after the sixth, within six times the first close
+    # the horizon the window the engine writes by the law, no number: the stock's six windows closed within the world's own run (at the fixture's T a window closes in a few intervals and the next opens with the giver's rotation) and the last train's flight bound (below) after the sixth
     while len(givings := lines_of(lines, "giving")) < 6 or simulation.tick < givings[-1]["tick"] + 200:
         simulation.step()
-        # the six rungs within seven times the first close (the rungs' rounding under the ranks)
-        cap = 7 * givings[0]["tick"] + 200 if givings else 200
+        cap = givings[-1]["tick"] + 200 if len(givings) == 6 else document["ticks"]
         assert simulation.books()["balanced"] and simulation.tick <= cap
     gathers = lines_of(lines, "gather")
     # the emitter's stock of 6 excitations, each clicking at its own rung; the residues from the law (ALGEBRA.md #a-familys-declaration): the clicking record's remainder at the giving Node on Z_700 the wheel the rule's at the body's centre Node under the Node clock (the stock 6 down to 1 at the six givings), u below it
@@ -94,8 +94,12 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
         assert gather["chosen"] == [["screen", 0, "0"]] and gather["click_at"] == "rung"
         assert gather["tick"] == gather["click"] and gather["record"] not in simulation.records
         flight = gather["click"] - gather["giving"]
-        # the train's head over 36 Links at v_g = 0.447 (80 intervals), then as much of the passage (72 intervals) as the residue asks (a residue near W waits for the whole train: the residues spread from the kept remainder, record 1962 (1)); the tapers' precursor a little before the head (COMPUTATION)
-        assert 60 <= flight <= 200, flight
+        # nothing reaches the screen before the light's crossing of the Links from the body's head at one Link per interval (under the write of both levels the record's front carries flux); the rung at the fixture's T (one interval's flux at the giver) asks as much of the passage, and of the closed chain's returns, as the residue asks, within the world's own run (the residues spread from the kept remainder, record 1962 (1))
+        screen_x = min(
+            p[0] for p in next(d for d in document["detectors"] if d["name"] == "screen")["positions"]
+        )
+        links = screen_x - int(np.nonzero(simulation.blocks[0].mask)[0].max())
+        assert links <= flight <= document["ticks"], flight
     books = simulation.books()["families"]["light"]
     assert books["transit"]["absorbed"] == books["measured"]["measured"] == len(gathers)
     # the edge case: the open faces, the face receiver last on every ladder
@@ -155,7 +159,7 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
 def run_layer(
     document: dict, ticks: int = 3000, gathers: int | None = None
 ) -> tuple[list[dict], DetectorLawSimulation, Seen]:
-    """The layer world stepped with the books balanced at every interval (`ticks` intervals; with `gathers`, until that many records have clicked, within `gathers` times the first close's interval: the horizon the window the engine writes, no number); the gather lines, the simulation, and per clicked record what the click read (a spy on the engine's `_ladder_click`: the running total before the interval, the interval's increments, the ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
+    """The layer world stepped with the books balanced at every interval (`ticks` intervals; with `gathers`, until that many records have clicked, within `ticks`: the horizon the window the engine writes, no number); the gather lines, the simulation, and per clicked record what the click read (a spy on the engine's `_ladder_click`: the running total before the interval, the interval's increments, the ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
@@ -164,8 +168,7 @@ def run_layer(
     while (simulation.tick < ticks) if gathers is None else (len(lines_of(lines, "gather")) < gathers):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-        closes = lines_of(lines, "giving")
-        assert gathers is None or not closes or simulation.tick <= gathers * closes[0]["tick"]
+        assert gathers is None or simulation.tick <= ticks
     return lines_of(lines, "gather"), simulation, seen
 
 

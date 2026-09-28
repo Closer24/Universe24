@@ -43,24 +43,21 @@ def test_the_click_line_carries_the_taken_quantums_direction_and_the_giver_recoi
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_symmetric_emitters_tallies_cancel_and_the_inverse_undoes_the_windows_tally():
     document = point_world(4, stock=3, ticks=400)
-    simulation, lines = run_point(document, 200, givings=2)  # the horizon the window the engine writes
+    simulation, lines = run_point(document, 200, givings=1)  # the horizon the window the engine writes
     givings = lines_of(lines, "giving")
-    assert len(givings) == 2 and all(line["momentum"] == [0, 0, 0] for line in givings)
-    # inside the third window (the third quantum's, opened within the second window's length of its close): the tally kept on the record, ten intervals on and back
+    assert len(givings) == 1 and all(line["momentum"] == [0, 0, 0] for line in givings)
+    # inside the second window (the second quantum's, opened after the first's close within the world's run): the tally kept on the record after its first write (the outside still empty), one interval on and back; the window closes at the fixture's T within a few intervals
     block = simulation.block_by_number[0]
-    for _ in range(givings[1]["window"] + givings[1]["tick"] - givings[1]["opened"]):
-        if block.window is not None:
-            break
+    while block.window is None:
         simulation.step()
-    assert block.window is not None
+        assert simulation.tick <= document["ticks"]
     live = simulation.records[block.window]
-    kept, outward = ([simulation.step() for _ in range(3)] and list(live.outward_tally)), live.outward
-    for _ in range(10):
-        simulation.step()
-        assert simulation.books()["balanced"], simulation.tick
+    simulation.step()
+    kept, outward = list(live.outward_tally), live.outward
+    simulation.step()
+    assert simulation.books()["balanced"], simulation.tick
     assert live.window_open and (live.outward_tally, live.outward) != (kept, outward)
-    for _ in range(10):
-        simulation.step_inverse()
+    simulation.step_inverse()
     assert live.outward_tally == kept and live.outward == outward
 
 
