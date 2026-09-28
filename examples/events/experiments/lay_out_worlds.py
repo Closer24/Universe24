@@ -695,24 +695,31 @@ def bending(name: str, heavy: int | None, gap: int, ticks: int, stock: int) -> N
 
 
 PLANCK = "examples/events/planck.json"  # the rule's own universe beside the shipped universe (Nature24's file, #1411: gravity over 1, charge over 400,000, matter [2, 3]); the folder rule/ the worlds' as in Bell's
-RULE_GAMMA = 12000  # the rule's universe's node clock, cited for the expectations' formulas only
-EDGE = 2706  # 0.2255 Gamma, the count under which a one-Node body disperses (ALGEBRA.md, THE BOUND BODY IS ONE NODE)
-GIVER_EDGE = 4447  # the giving pixel's bound (Cheshbon, 2026-09-28, 13:22 Israel): its count with its bound charge keeps the pace positive
+RULE_GAMMA = 24  # the rule's universe's node clock (the owner's word, 2026-09-28, 15:11 Israel: a whole universe in small; 12,000 the second run), cited for the expectations' formulas only
+EDGE_RATIO = 0.2255  # the count under which a one-Node body disperses, as a share of Gamma (ALGEBRA.md, THE BOUND BODY IS ONE NODE); 0.345 on an engine with the level once
+GIVER_EDGE_RATIO = (
+    4447 / 12000
+)  # the giving pixel's bound as a share of Gamma (Cheshbon, 2026-09-28, 13:22 Israel): its count with its bound charge keeps the pace positive
 
 
-def pixel(node: list[int], count: int, **keys: Any) -> dict[str, Any]:
-    """A bound body of one Node in the rule's universe (ALGEBRA.md, THE BOUND BODY IS ONE NODE): the count in [0.2255 Gamma, Gamma div 2), the well the count itself under the divisor 1."""
-    if not EDGE <= count < RULE_GAMMA // 2:
+def pixel(node: list[int], count: int, gamma: int = RULE_GAMMA, **keys: Any) -> dict[str, Any]:
+    """A bound body of one Node in the rule's universe (ALGEBRA.md, THE BOUND BODY IS ONE NODE): the count in [0.2255 Gamma, Gamma div 2), the well the count itself under the divisor 1; a giving pixel under the giver's bound."""
+    edge = round(EDGE_RATIO * gamma)
+    if not edge <= count < gamma // 2:
         raise ValueError(
-            f"a pixel of {count} is no bound body: the count lies outside [{EDGE}, {RULE_GAMMA // 2})"
+            f"a pixel of {count} is no bound body: the count lies outside [{edge}, {gamma // 2})"
         )
-    if "emitter" in keys and count > GIVER_EDGE:
-        raise ValueError(f"a giving pixel of {count} lies above the giver's bound {GIVER_EDGE}")
+    if "emitter" in keys and count > GIVER_EDGE_RATIO * gamma:
+        raise ValueError(
+            f"a giving pixel of {count} lies above the giver's bound {GIVER_EDGE_RATIO * gamma:.0f}"
+        )
     return body([node], count, **keys)
 
 
-def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int, stock: int) -> None:
-    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a board of 121 rows along x closed on itself (every axis periodic, no face), the pixels on the middle row, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447, its charge q = 1: a body without q gives no light; the window's norm 1 over 1, T the unit of the rule's universe, until the emitter's norm leaves the file) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
+def rule_redshift(
+    name: str, deep: int, shallow: int, distance: int, ticks: int, stock: int, gamma: int = RULE_GAMMA
+) -> None:
+    """World (e) of the rule's universe (the owner's decision of 2026-09-28, 13:02 Israel; the Closer's line of 13:03): light ([1, 1], the divisor 1) between two pixels [2, 3] at different depths on a board of 121 rows along x, open on x and closed on y and z, the pixels on the middle row twenty Links from the faces, the giver the deep pixel (`deep`, 4,000 of 12,000, under the giver's bound 4,447, its charge q = 1: a body without q gives no light; the window's norm 1 over 1, T the unit of the rule's universe, until the emitter's norm leaves the file) and the taker the shallow one (`shallow`, 3,000) `distance` Links on, its Node a detector; the redshift of the rule's universe read three ways, every number Cheshbon's before the run: the two pixels' clocks (`cycle`, the ratio omega_b(shallow) / omega_b(deep)), the light's period at a Node beside each pixel (`level` every interval, conserved in flight), the light's wavelength beside each pixel (`rows`: the stretch in flight), and the taker's clicks (DETECTOR: the mean click interval, the giver's rotation received at the taker against the taker's own). `shallow` equal to `deep` lays the twin (the control: every ratio 1). The universe file is Nature24's `planck.json`, the mode file Newton's generator's; nothing here is run."""
     # a board of 121 rows with the pixels on the middle one, the y faces as far as the taker: on a chain of one row a pixel's one-dimensional well grows with the board's length (the pace negative at its Node), on a strip of nine rows the open y faces take the light within four Links, on the wide board the two-dimensional well stays near the count and the light reaches the taker
     margin, rows, mid = 20, 121, 60
     giver_x, taker_x = margin, margin + distance
@@ -722,12 +729,13 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
         pixel(
             [giver_x, mid, 0],
             deep,
+            gamma,
             q=1,
             moment=[0, 0, 1],
             emitter={"family": "charge", "weight": 1, "norm": 1, "norm_denominator": 1},
             stocks={"charge": stock},
         ),
-        pixel([taker_x, mid, 0], shallow),
+        pixel([taker_x, mid, 0], shallow, gamma),
     ]
     detectors = [{"name": "taker", "positions": [[taker_x, mid, 0]]}]
     last = (ticks - 1) - (ticks - 1) % 200
@@ -745,15 +753,13 @@ def rule_redshift(name: str, deep: int, shallow: int, distance: int, ticks: int,
     ]
     document = world(
         [length, rows, 1],
-        {
-            "x": "periodic",
-            "y": "periodic",
-            "z": "periodic",
-        },  # the board closed on itself: no face, no face click (Cheshbon, 14:55 Israel: everything on the board is a bound body or a cluster)
+        # x open, y and z closed (Cheshbon, 15:04 Israel): a board closed on every axis rests under the held gravity only with the source total 0; what reaches a face ends and is not counted (the Closer, 14:59)
+        {"x": "open", "y": "periodic", "z": "periodic"},
         ticks,
         measured,
         detectors,
         readings,
+        face_depth=4,
         universe=PLANCK,
     )
     expectation = {
@@ -857,10 +863,9 @@ def main() -> None:
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
     (HERE / "rule").mkdir(exist_ok=True)
-    rule_redshift(
-        "rule_redshift", 4400, 5000, 60, 1500, 200
-    )  # the engine of today (the edge 4,136): the giver 4,400, the taker 5,000 (Cheshbon, 14:39 Israel); after the term returns 4,000 and 3,000
-    rule_redshift("rule_redshift_twin", 4400, 4400, 60, 1500, 200)
+    # Gamma 12,000 until Cheshbon's numbers for Gamma 24 (the owner, 15:11 Israel): the engine of today (the edge 4,136), the giver 4,400 and the taker 5,000 (14:39); after the term returns 4,000 and 3,000
+    rule_redshift("rule_redshift", 4400, 5000, 60, 1500, 200, gamma=12000)
+    rule_redshift("rule_redshift_twin", 4400, 4400, 60, 1500, 200, gamma=12000)
 
 
 if __name__ == "__main__":

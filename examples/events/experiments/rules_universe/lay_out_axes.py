@@ -28,11 +28,16 @@ from pixel_mode import (  # noqa: E402  (the generator of the rule's universe, #
     pixel_entry,
 )
 
-COUNT = 3_000  # the pixel's count, in [0.2255 Gamma, Gamma div 2) = [2,706, 6,000) under the corrected term (the Closer 14:30 Israel: the files ready for 3,000 for the moment the term returns; on the engine of today the edge is 0.345 Gamma = 4,136 and the run at 5,000 refuses, the reading in #1422)
+COUNT = 4_400  # the pixel's count on the engine of today (the level once): the bound window is 4,133 <= c <= about 5,900 (Cheshbon 14:39 Israel), the Closer's word of 14:47: (a) and (c) on 4,400; 3,000 again with the corrected term
+PIXEL_NUMBERS = {
+    **PIXELS,
+    4_400: {"omega_b": 0.8290, "kappa": 0.283, "a": 88_553},
+}  # Cheshbon's numbers per count on the engine of today (14:39 Israel: 4,400 gives omega_b 0.8290, the period 7.58, kappa 0.283, t 0.754) beside lay_out_join's table
 PULLS = (0, 2, 4, 6)  # the second pixel's distance in Links along x; 0 the white pixel alone
 TAIL = {
     3_000: 41_943,
     4_000: 23_724,
+    4_400: 49_395,
     5_000: 34_734,
     6_000: 24_904,
 }  # Cheshbon's tail factor t = e^(-kappa) over 2^16 per count (14:12 Israel; the Closer 14:16), stated in integers
@@ -49,7 +54,7 @@ BODY_X = 4  # the white pixel's Node; the second pixel toward +x
 
 def net_along_x(count: int, distance: int) -> int:
     """Cheshbon's blind number of 13:46 Israel for the pull: the net tally along the axis about M omega_b e^(-kappa d) quanta per interval at the pulse's peak (1,000, 410 and 170 at 3,000 and 2, 4, 6 Links), with omega_b and kappa of the count on the engine of the day."""
-    numbers = PIXELS[count]
+    numbers = PIXEL_NUMBERS[count]
     return round(count * numbers["omega_b"] * math.exp(-numbers["kappa"] * distance))
 
 
@@ -83,7 +88,7 @@ def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
     for number, body in enumerate(document["measured"]):
         count = int(body["nodes"][0]["count"])
         if (
-            count not in PIXELS
+            count not in PIXEL_NUMBERS
         ):  # a body under the edge (no bound rotation of its own) binds no record: content alone
             bodies.append(
                 {
@@ -93,7 +98,7 @@ def pixel_mode(document: dict[str, Any], tail: bool) -> dict[str, Any]:
                 }
             )
             continue
-        numbers = PIXELS[count]
+        numbers = PIXEL_NUMBERS[count]
         a = numbers.get("a") or round(2 * math.cos(numbers["omega_b"]) * CLOCK_UNIT)
         factor = TAIL.get(count) or round(math.exp(-numbers["kappa"]) * TAIL_UNIT) if tail else 0
         row = (a, CLOCK_UNIT, factor)

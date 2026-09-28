@@ -1,7 +1,5 @@
 """The receive's folder: the Port's angle, the table's triple and the rotation of the Link's pair are Rule3's read acts; the identity at angle zero, the refusals and the declaration, bound to the loop."""
 
-from __future__ import annotations
-
 import json
 from pathlib import Path
 
