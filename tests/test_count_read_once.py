@@ -52,7 +52,8 @@ def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(
         carried = None if block.count_remainder is None else int(block.count_remainder.sum())
         simulation.step()  # no refusal: the pace stays above 0 and no count falls below 0
         well, level = block.well, simulation.held_records[by["gravity"]].now
-        assert well is not None and block.counts is not None and level[node] == well[node] > 0
+        laid = block.period_counts  # the held level at the Node is the count laid there, not the well
+        assert well is not None and laid is not None and level[node] == laid[node] > 0
         contents = [simulation._effective_content(by[name])[node] for name in ("charge", "matter")]
         assert contents[0] == contents[1] == level[node]  # the count read once, down the ranks at 1
         assert simulation.node_clock_pair(node, by["charge"]) == (GAMMA - level[node], GAMMA)
@@ -65,3 +66,18 @@ def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(
     off = SimpleNamespace(number=0, own=block.own, definition=half)
     with pytest.raises(ValueError, match="a declared count is D div T of its mode within 2 isqrt"):
         count_once.declared_within_gate(off)
+
+
+def test_the_first_lay_is_the_declared_count_and_the_average_after_a_whole_period(tmp_path, monkeypatch):
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
+    node, block = tuple(simulation.world.measured[0].block.nodes[0]), simulation.blocks[0]
+    signs, lays = [], []  # the sign of the level at the Node and the sum of the lay, per interval
+    for _ in range(20):
+        simulation.step()
+        signs.append(int(block.own.now[node]) > 0)
+        lays.append(int(block.period_counts.sum()))
+        assert simulation.held_records[0].now[node] == block.period_counts[node]  # gravity holds the lay
+    changes = [index for index in range(1, 20) if signs[index] != signs[index - 1]]  # the sign changes
+    assert lays[0] == int(COUNT) and len(changes) >= 3  # the declared count at its Node alone
+    assert all(lay == int(COUNT) for lay in lays[: changes[2]]) and lays[changes[2]] != int(COUNT)

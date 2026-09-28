@@ -49,8 +49,7 @@ def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np
     shape = counts.shape
     idx, p = np.arange(counts.size).reshape(shape), (GAMMA - counts).astype(float)
     u = (p / GAMMA) ** 2
-    on_site = 2 - (1 + u) * (den - num) / den - 2 * num * u / den
-    rows, cols, vals = [], [], []
+    on_site, rows, cols, vals = 2 - (1 + u) * (den - num) / den - 2 * num * u / den, [], [], []
     for axis in range(3):
         j, bond = np.roll(idx, -1, axis=axis), num * p * np.roll(p, -1, axis=axis) / (3 * den * GAMMA**2)
         rows += [idx.ravel(), j.ravel()]

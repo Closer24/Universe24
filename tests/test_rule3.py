@@ -49,8 +49,7 @@ def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_ze
     """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
     rng = random.Random(3)
     for _ in range(500):
-        num, den = rng.randint(1, 1000), rng.randint(1, 1000)
-        gamma = rng.choice([1, 100, GAMMA])
+        num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, 100, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
         axis_contents = (rng.randint(-50, 50), rng.randint(-50, 50), rng.randint(-50, 50))
         for weak_field in (True, False):
@@ -83,8 +82,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, the inverse exact; on int64 arrays the sum over the axes equals R times the six-sum bit for bit, the dtype kept."""
     rng = random.Random(5)
     for _ in range(500):
-        num, den = rng.randint(1, 1000), rng.randint(1, 1000)
-        gamma = rng.choice([1, GAMMA])
+        num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
         reads, self_coefficient, wall = coefficients(
             num, den, gamma, content, (rng.randint(-30, 30), rng.randint(-30, 30), rng.randint(-30, 30))

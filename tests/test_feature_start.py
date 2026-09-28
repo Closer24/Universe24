@@ -99,8 +99,7 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
 
 def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():
     """THE START ON THE SUM'S SOURCES (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): the rest solves 6 den a - num S_6(a) = 3 den sigma, sigma the weighted count over the divisor at the bodies' Nodes, 0 beyond an open face, no Node clamped; the certified values' exact residual stays below one fine unit, on a chain and on a box alike, at [1, 1] and at the short-range pairs (at [1, 2] the line is (Delta^2 - 6) a = -6 sigma, the level inside a thick body its source: the divisor 1 gives the count at the body's centre); a board periodic on its every axis at [1, 1] has no rest under a source total other than 0 and is refused by name, and under the total 0 (a signed family balanced) its rest stands up to a constant and is written at the mean 0 (the ring of 16 with the sources +2 and -2: the tent's slopes -3 and +3, its peak and trough +12 and -12); a divisor below 1 is refused."""
-    numerators, divisor, wrap = chain(), 7, (False, True, True)
-    box = np.zeros((6, 5, 4), dtype=np.int64)
+    numerators, divisor, wrap, box = chain(), 7, (False, True, True), np.zeros((6, 5, 4), dtype=np.int64)
     box[1:3, 1:3, 1] = 9
     thick = np.zeros((7, 7, 7), dtype=np.int64)
     thick[1:6, 1:6, 1:6] = 50

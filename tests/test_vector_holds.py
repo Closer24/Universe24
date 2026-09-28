@@ -55,8 +55,7 @@ def test_a_body_at_rest_with_spin_and_moment_writes_the_dipoles_and_inverts_exac
     """At rest with S = (0, 0, 5) and mu = (4, 0, 0): gravity's vector part at the Node + sigma e_j gains sigma (S x e_j)_i, the charge's (sigma (mu x e_j)_i) div 2 with the remainder carried (so 0 and 1 alternate where mu x e_j is odd); the support's vector and tensor parts stay 0 (n = 0); the backward run restores the start exactly, the dipoles taken back and the carried divisions stepped back."""
     document = parts_world(spin=[0, 0, 5], moment=[4, 0, 0])
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
-    gravity = parts_of(simulation, "clicks")
-    charge, centre = parts_of(simulation, "charge"), (4, 3, 3)
+    gravity, charge, centre = parts_of(simulation, "clicks"), parts_of(simulation, "charge"), (4, 3, 3)
     # S x e_x = (0, S_z, -S_y) = (0, 5, 0): the y component at the Node +- e_x gains +-5
     assert int(gravity[2].now[5, 3, 3]) == 5 and int(gravity[2].now[3, 3, 3]) == -5
     # S x e_y = (-S_z, 0, S_x) = (-5, 0, 0): the x component at the Node +- e_y gains -+5

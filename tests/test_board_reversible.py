@@ -209,8 +209,7 @@ def test_the_clicks_keep_the_count_the_charge_the_residue_and_borns_rule():
     total_charge = sum(simulation._body_charge(n) for n in range(len(simulation.held)))
     # the emitter's own quantum and its stock of STOCK light quanta, all of charge -1, the screen's three light bodies and the positive body (ALGEBRA.md #the-paces; item 47)
     assert total_charge == -(STOCK + 1) - 3 + 1
-    block = simulation.blocks[0]
-    previous_residue, residue_at_open = None, (0, 1)
+    block, previous_residue, residue_at_open = simulation.blocks[0], None, (0, 1)
     read_at, held_before = 0, copy.deepcopy(simulation.held)
     for _ in range(400):
         own = block.own
