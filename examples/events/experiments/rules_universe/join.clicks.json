@@ -1,0 +1,130 @@
+{
+ "world": "join.json",
+ "kind": "WORLD (d), THE CLICK JOINS AND PARTS: the counts, the moves and the records against the expectation",
+ "verdict": "REFUSED IN THE RUN",
+ "refusal": "at interval 2: the pace of 'matter' (family 2, axis 0) is 0 at the Node (10, 4, 0) at interval 1: the pace stays above 0 (the content 24 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "ticks_run": 1,
+ "1_the_counts": {
+  "label": "GAMEBOARD",
+  "start": [
+   10,
+   12
+  ],
+  "end": [
+   10,
+   12
+  ],
+  "every_10": [
+   [
+    0,
+    [
+     10,
+     12
+    ]
+   ]
+  ],
+  "edge": 8.27,
+  "under_the_edge_at": null,
+  "expected_dissolution_intervals": [
+   10,
+   20
+  ],
+  "verdict": "MISS"
+ },
+ "2_the_moves": {
+  "label": "GAMEBOARD",
+  "moves": [],
+  "count_of_transfers": 0,
+  "quanta_transferred": 0,
+  "count_of_relays": 0,
+  "first_relay_interval": null,
+  "first_move_interval": null,
+  "expected_first_click_interval": 1,
+  "verdict": "MISS"
+ },
+ "3_the_records": {
+  "label": "HOST",
+  "alive_at_the_end": 2,
+  "expected": 1,
+  "verdict": "MISS",
+  "event_lines": {},
+  "clicks_at_the_faces": 0,
+  "faces": "a click at an open face is no click and is not counted (Cheshbon 14:55, the Closer 15:02)"
+ },
+ "5_the_record": {
+  "label": "GAMEBOARD",
+  "small": {
+   "count_over_the_last_period": 10.0,
+   "period_intervals": null,
+   "count_at_the_end": 10,
+   "expected": {
+    "amplitude_b": 5,
+    "record_count": [
+     9.6,
+     9.9
+    ],
+    "period": [
+     6.9,
+     8.0
+    ]
+   },
+   "count_verdict": "MATCH",
+   "period_verdict": "MISS"
+  },
+  "deep": {
+   "count_over_the_last_period": 12.0,
+   "period_intervals": null,
+   "count_at_the_end": 12,
+   "expected": {
+    "amplitude_b": 6,
+    "record_count": [
+     9.2,
+     9.2
+    ],
+    "period": [
+     9.2,
+     9.2
+    ]
+   },
+   "count_verdict": "MISS",
+   "period_verdict": "MISS"
+  },
+  "clock_ratio_deep_over_small": null,
+  "expected_clock_ratio": [
+   1.08,
+   1.23,
+   1.38
+  ],
+  "ratio_verdict": "MISS"
+ },
+ "6_the_hierarchy": null,
+ "4_the_levels": {
+  "label": "GAMEBOARD",
+  "readings": {
+   "matter_x7": [
+    [
+     0,
+     4
+    ]
+   ],
+   "matter_x10": [
+    [
+     0,
+     6
+    ]
+   ],
+   "matter_support": [
+    [
+     0,
+     33
+    ]
+   ],
+   "matter_total": [
+    [
+     0,
+     53
+    ]
+   ]
+  }
+ }
+}
