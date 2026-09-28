@@ -18,21 +18,38 @@ def level_lines(output: dict[str, Any], node: list[int]) -> list[tuple[int, int]
 
 
 def white_rows(output: dict[str, Any], white: dict[str, Any]) -> dict[str, Any]:
-    """(a) THE THREE COLOURS ARE THREE INTERVAL STATES: over consecutive readings at the pixel's Node, the sum a_before + a_now + a_next at every interval and the quantum a_now^2 - a_next a_before; the count of intervals whose sum departs from the expected one and the quantum's least and largest value; MATCH when no sum departs and the quantum stands."""
+    """(a) THE THREE COLOURS ARE THREE INTERVAL STATES: over consecutive readings at the body's Node the sum a_before + a_now + a_next at every interval (0 exactly where the band is exact), its amplitude over the level's amplitude as an exact rational and as a decimal (`sum_ratio`, Cheshbon's blind number), the rotation's period in intervals from the level's sign changes, and the quantum a_now^2 - a_next a_before least and largest; MATCH when the ratio lies within `band` of the expected one, else MISS, or the reading alone while no band is written."""
     levels = level_lines(output, list(white["node"]))
-    sums = [b + n + a for (_, b), (_, n), (_, a) in zip(levels, levels[1:], levels[2:], strict=False)]
-    quanta = [
-        n * n - a * b for (_, b), (_, n), (_, a) in zip(levels, levels[1:], levels[2:], strict=False)
+    values = [v for _, v in levels]
+    sums = [b + n + a for b, n, a in zip(values, values[1:], values[2:], strict=False)]
+    quanta = [n * n - a * b for b, n, a in zip(values, values[1:], values[2:], strict=False)]
+    amplitude, sum_amplitude = (
+        max((abs(v) for v in values), default=0),
+        max((abs(s) for s in sums), default=0),
+    )
+    ratio = Fraction(sum_amplitude, amplitude) if amplitude else None
+    crossings = [
+        t for (t, x), (_, y) in zip(levels, levels[1:], strict=False) if (x < 0 <= y) or (y < 0 <= x)
     ]
-    departing = sum(1 for s in sums if s != int(white["levels_sum"]))
-    verdict = "MATCH" if sums and departing == 0 and min(quanta) == max(quanta) else "MISS"
+    period = 2 * (crossings[-1] - crossings[0]) / (len(crossings) - 1) if len(crossings) > 1 else None
+    expected, band = white.get("sum_ratio"), white.get("band")
+    if not levels:
+        verdict = "no level reading at the Node"
+    elif expected is None or band is None or ratio is None:
+        verdict = "no band yet"
+    else:
+        verdict = "MATCH" if abs(float(ratio) - float(expected)) <= float(band) else "MISS"
     return {
         "kind": "white",
         "node": list(white["node"]),
         "intervals": len(sums),
-        "sums_departing": departing,
+        "sums_nonzero": sum(1 for s in sums if s != 0),
+        "sum_ratio": None if ratio is None else [ratio.numerator, ratio.denominator],
+        "sum_ratio_decimal": None if ratio is None else round(float(ratio), 6),
+        "period": None if period is None else round(period, 4),
         "quantum": [min(quanta), max(quanta)] if quanta else None,
-        "verdict": verdict if levels else "no level reading at the Node",
+        "expected": {"sum_ratio": expected, "period": white.get("period"), "band": band},
+        "verdict": verdict,
     }
 
 

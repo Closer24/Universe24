@@ -24,12 +24,19 @@ MOMENTUM_UNIT = 64  # Q, the universe's momentum unit (W = 3 Q M)
 MIRROR = 8000  # a mirror or a wall: above B's line c > Gamma (1 - sin(k / 2)) at lambda 4 (2,929) and 16 (8,050)
 WINDOW = 2000  # a window: the giver where its arm passes, a screen, a polariser, the falling body
 NORM = {"norm": 180255439696889394, "norm_denominator": 3948169}  # carried from generated/fall.json
-RULE_UNIVERSE = "examples/events/experiments/planck.json"  # THE RULE'S OWN UNIVERSE (ALGEBRA.md; Cheshbon's table of 13:03 Israel, 2026-09-28): Gamma 12,000, the pairs [1, 1], [1, 2], [2, 3] and [-1, 2], the divisors 1, T the unit; Nature24 writes the file beside the universe of record
+RULE_UNIVERSE = "examples/events/experiments/planck.json"  # THE RULE'S OWN UNIVERSE (ALGEBRA.md; Cheshbon's table of 13:03 Israel, 2026-09-28): Gamma 12,000, the pairs [1, 1], [1, 2], [2, 3] and [-1, 2] as m over Gamma, the divisors 1, T the unit; Nature24 writes the file beside the universe of record
 THIRD = "third"  # the family on the band [-1, 2] (ALGEBRA.md THE EXACT BANDS, THE THIRD): the name its row carries in the rule's universe file
-PIXEL = 3000  # a white pixel's count, one Node: above the self-binding edge 0.2255 Gamma = 2,706, below the horizon Gamma div 2 = 6,000 and the giver's bound 4,447 (Cheshbon, 13:03 Israel)
-THIRD_COUNT = 1000  # the third pulled off the pixel, one of its three interval states: a third of the count (an assumption stated on #1325 at 13:09 Israel; Cheshbon's line decides)
-TUBE = 6  # Links from the pixel to the pulled third: twice the tail's reach of three Links, so the tails no longer overlap and the tube between them carries the pull (the same assumption)
-RULE_TICKS = 3000  # the intervals of the rule's universe's first looks: a thousand periods of the third's rotation (the period 3)
+PIXEL = 300  # the white body's count at one Node, Cheshbon's layout of 13:09 Israel: the three colours at about 300 each; under the divisor 1 the exact band is exact only in the vacuum, so the sum of the three interval states is not 0 but 0.148 of the level's amplitude at this count (1.20 at the edge 2,706), against at most 10^-5 on the universe of record (E_s = 40,000): the look decides between the two
+WHITE_SUM_RATIO = (
+    0.148,
+    3.125,
+)  # Cheshbon's blind number for the rule's universe at c = 300: the amplitude of the three-level sum over the level's amplitude, and the rotation's period in intervals (3 in the vacuum)
+WHITE_SUM_RATIO_OF_RECORD = 1e-5  # the same world on the universe of record: the well 40,000 times shallower, the sum at most this share of the amplitude, white
+THIRD_COUNT = 100  # the third pulled off the body: one of its three colours, a third of the count (an assumption stated on #1325 at 13:09 Israel; Cheshbon's line decides)
+TUBE = 4  # Links from the body to the pulled third (Cheshbon's layout of 13:09 Israel: a third shifted four Links, the levels between the Nodes not cancelling, the remainders crossing T along the axis)
+RULE_TICKS = (
+    3000  # the intervals of the rule's universe's first looks: near a thousand rotations of the third
+)
 VELOCITY = Fraction(
     1, 5
 )  # the moving bodies' v in Links per interval, below matter's 0.25 and light's 0.447
@@ -720,66 +727,63 @@ def universe_at(wavelength: int, path: Path) -> str:
 
 
 def rule_pixel(x: int, count: int, shape: list[int]) -> dict[str, Any]:
-    """A body of one Node on the third's band at the chain's axis, the count its whole content (the well is the count under the divisor 1)."""
+    """A body of one Node on the third's band at the board's axis, the count its whole content (the well is the count under the divisor 1)."""
     return body([[x, shape[1] // 2, shape[2] // 2]], count, family=THIRD)
 
 
-def white_pixel(name: str, third: bool) -> None:
-    """THE RULE'S OWN UNIVERSE, the first looks (a) and (b) (the owner's word of 13:01 Israel, 2026-09-28; ALGEBRA.md THE THREE COLOURS ARE THREE INTERVAL STATES, THE BOUND BODY IS ONE NODE): (a) a white pixel of PIXEL quanta on [-1, 2] at one Node of a chain stands RULE_TICKS intervals, its three consecutive levels summing to 0 at every interval and its quantum constant, giving and taking nothing; (b) a third pulled TUBE Links off it along the chain, with a detector on each body: the tube between them clicks along its axis, the interval between the clicks the tension, the third's count per Node (Cheshbon's blind number in the expectation before the run); the reader tube_clicks.py reads both."""
-    shape = [61, 5, 5]
-    pixel_x, third_x = shape[0] // 2, shape[0] // 2 + TUBE
-    axis = [pixel_x, shape[1] // 2, shape[2] // 2]
-    measured = [rule_pixel(pixel_x, PIXEL, shape)]
-    detectors = [{"name": "at_pixel", "block": 0}]
+def white_body(name: str, universe: str, third: bool) -> None:
+    """THE RULE'S OWN UNIVERSE, the first look (a), and (b) after it (the owner's word of 13:01 Israel, 2026-09-28; the Closer's 13:16; Cheshbon's layout and blind numbers of 13:09; ALGEBRA.md THE EXACT BANDS, THE THREE COLOURS ARE THREE INTERVAL STATES, THE THIRD): (a) a body of PIXEL quanta on [-1, 2] at the centre Node of a periodic board of 5 x 5 x 5 stands RULE_TICKS intervals; its three consecutive levels are its three colours, and their sum's amplitude over the level's is the blind number: 0.148 under the divisor 1 (the exact band exact only in the vacuum), at most 10^-5 on the universe of record, the look deciding between the two; (b) on a chain, a third pulled TUBE Links off the body with a detector on each: the tube's clicks along the axis, the interval between them the tension, the third's count per Node, only where (a) reads white; the reader tube_clicks.py reads both."""
+    shape = [61, 5, 5] if third else [5, 5, 5]
+    boundary = CHAIN if third else {"x": "periodic", "y": "periodic", "z": "periodic"}
+    body_x = shape[0] // 2
+    axis = [body_x, shape[1] // 2, shape[2] // 2]
+    measured = [rule_pixel(body_x, PIXEL, shape)]
+    detectors = [{"name": "at_body", "block": 0}]
     readings = [
-        reading("pixel_level", "level", 1, family=THIRD, node=axis),
-        reading("pixel_centre", "centre", 10, body=0),
+        reading("body_level", "level", 1, family=THIRD, node=axis),
+        reading("body_centre", "centre", 10, body=0),
+        reading("third_total", "total", 10, family=THIRD),
         reading("third_rows", "rows", 10, family=THIRD),
     ]
     if third:
-        measured.append(rule_pixel(third_x, THIRD_COUNT, shape))
+        measured.append(rule_pixel(body_x + TUBE, THIRD_COUNT, shape))
         detectors.append({"name": "at_third", "block": 1})
         readings += [
-            reading("third_level", "level", 1, family=THIRD, node=[third_x, axis[1], axis[2]]),
-            reading(
-                "tube_level", "level", 1, family=THIRD, node=[pixel_x + TUBE // 2, axis[1], axis[2]]
-            ),
+            reading("third_level", "level", 1, family=THIRD, node=[body_x + TUBE, axis[1], axis[2]]),
+            reading("tube_level", "level", 1, family=THIRD, node=[body_x + TUBE // 2, axis[1], axis[2]]),
             reading("third_centre", "centre", 10, body=1),
         ]
-    document = world(shape, CHAIN, RULE_TICKS, measured, detectors, readings, universe=RULE_UNIVERSE)
+    document = world(shape, boundary, RULE_TICKS, measured, detectors, readings, universe=universe)
+    of_record = universe == UNIVERSE
+    ratio, period = (WHITE_SUM_RATIO_OF_RECORD, 3.0) if of_record else WHITE_SUM_RATIO
     white = {
         "node": axis,
-        "levels_sum": 0,
-        "row": "THE THREE COLOURS ARE THREE INTERVAL STATES (ALGEBRA.md): at the pixel's Node the three consecutive levels a_before, a_now, a_next sum to 0 at every interval and the quantum a_now^2 - a_next a_before is constant; read from `pixel_level` by tube_clicks.py (GAMEBOARD)",
+        "sum_ratio": ratio,
+        "period": period,
+        "band": None,
+        "row": "THE THREE COLOURS ARE THREE INTERVAL STATES (ALGEBRA.md): at the body's Node the three consecutive levels a_before, a_now, a_next are the colours; `sum_ratio` is the amplitude of their sum over the level's amplitude and `period` the rotation's period in intervals (Cheshbon's blind numbers of 13:09 Israel: 0.148 and 3.125 under the divisor 1 at this count, at most 10^-5 and 3 on the universe of record); read from `body_level` by tube_clicks.py within `band` once Cheshbon writes it (GAMEBOARD)",
     }
+    where = (
+        "the universe of record (E_s = 40,000, the well shallow)"
+        if of_record
+        else "the rule's own universe (the divisors 1, the well the count)"
+    )
     expectation: dict[str, Any] = {
         "format": "world-expectation-v1",
-        "lacks": "the rule's universe file (Nature24's planck.json), the loader's negative numerator (the band [-1, 2]) and the generator's mode of a pixel on that band (Newton); until they land the world lays out and does not load",
+        "lacks": "the rule's universe file (Nature24's planck.json), the loader's negative numerator (the band [-1, 2]), the third's row in the universe file the world names, and the generator's mode of a body on that band (Newton); until they land the world lays out and does not load",
         "row": (
-            f"THE RULE'S OWN UNIVERSE, the first look (a): a white pixel of {PIXEL} quanta on the third's band at one Node stands {RULE_TICKS} intervals: the exact rotation of period 3 leaves no remainder at rest, so it gives nothing and takes nothing, its three interval states sum to 0 and its quantum stands (THE EXACT BANDS)"
+            f"THE RULE'S OWN UNIVERSE, the first look (a) on {where}: a body of {PIXEL} quanta on the third's band at the centre Node of a periodic board stands {RULE_TICKS} intervals; the exact band is exact only in the vacuum (Cheshbon, 13:09 Israel), so the sum of its three interval states has the amplitude {ratio} of the level's and the rotation the period {period}: white or not is the reading"
             if not third
-            else f"THE RULE'S OWN UNIVERSE, the first look (b): a third of {THIRD_COUNT} quanta pulled {TUBE} Links off the white pixel of {PIXEL} along the chain: the tube between them carries the third's count per Node, its remainders cross T and click along the tube's axis, the interval between the clicks the tension, the count itself (ALGEBRA.md THE THIRD; Cheshbon's line of 12:26 Israel)"
+            else f"THE RULE'S OWN UNIVERSE, the first look (b), only where (a) reads white: a third of {THIRD_COUNT} quanta pulled {TUBE} Links off the body of {PIXEL} along the chain: the levels between the Nodes do not cancel, the remainders cross T along the axis and click, the interval between the clicks the tension, the third's count per Node (ALGEBRA.md THE THIRD; Cheshbon's line of 13:09 Israel)"
         ),
-        "DETECTOR": (
-            [
-                {
-                    "detector": "at_pixel",
-                    "count": 0,
-                    "band": 0,
-                    "row": "a white pixel at rest gives nothing and takes nothing: no click over the run (THE EXACT BANDS, the rest rotation exact)",
-                }
-            ]
-            if not third
-            else []
-        ),
+        "DETECTOR": [],
         "GAMEBOARD": [
             {
                 "body": 0,
                 "interval": RULE_TICKS,
                 "centre": axis,
-                "band": 0 if not third else 1,
-                "row": "the pixel stands at its Node"
-                + ("" if not third else " within a Link: a bound body moves by clicks alone"),
+                "band": 1,
+                "row": "the body stands at its Node within a Link: a bound body moves by clicks alone",
             },
             {
                 "reversible": RULE_TICKS,
@@ -819,8 +823,9 @@ def main() -> None:
     bending("bending", 6000, 8, 5800, 640)
     bending("bending_twin", None, 8, 5800, 640)
     (HERE / "rule").mkdir(exist_ok=True)
-    white_pixel("white_pixel", False)
-    white_pixel("white_pixel_third", True)
+    white_body("white_body", RULE_UNIVERSE, False)
+    white_body("white_body_of_record", UNIVERSE, False)
+    white_body("white_body_third", RULE_UNIVERSE, True)
 
 
 if __name__ == "__main__":

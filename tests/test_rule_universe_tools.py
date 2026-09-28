@@ -20,7 +20,7 @@ def made_up(
     """A world's expectation with the `white` and `tube` sections and a runner output with the level lines at the pixel's Node and the clicks at the third, written to the directory."""
     world, output = directory / "made_up.json", directory / "made_up.output.json"
     world.write_text("{}\n", encoding="utf-8")
-    white = {"node": NODE, "levels_sum": 0, "row": "the three states"}
+    white = {"node": NODE, "sum_ratio": 0, "period": 3, "band": 0, "row": "the three states"}
     tube = {"detector": "at_third", "axis": 0, "tension": tension, "band": 1, "row": "the tension"}
     world.with_suffix(".expectation.json").write_text(
         json.dumps({"white": white, "tube": tube}), encoding="utf-8"
@@ -35,12 +35,13 @@ def made_up(
 
 
 def test_the_white_states_and_the_tubes_spacing_on_made_up_outputs(tmp_path: Path):
-    """The period-3 rotation 6, -3, -3 sums to 0 at every interval with the quantum 27 constant (MATCH); clicks every 10 intervals read the spacing 10 against the blind number 10 (MATCH) and no number reads the spacing alone; a broken rotation is a MISS."""
+    """The period-3 rotation 6, -3, -3 sums to 0 at every interval (the ratio 0, the period 3, the quantum 27 constant: MATCH against the blind ratio 0 within the band 0); clicks every 10 intervals read the spacing 10 against the blind number 10 (MATCH) and no number reads the spacing alone; a rotation whose sum does not vanish reads its ratio and misses."""
     rows = tube_clicks.report(*made_up(tmp_path, [6, -3, -3] * 4, [10, 20, 30, 40], 10))
     assert rows["white"]["verdict"] == "MATCH" and rows["white"]["quantum"] == [27, 27]
+    assert rows["white"]["sum_ratio"] == [0, 1] and rows["white"]["period"] == 3.0
     assert rows["tube"]["spacings"] == [10, 10, 10] and rows["tube"]["mean_spacing"] == [10, 1]
     assert rows["tube"]["sense_along_axis"] == {"forward": 4, "backward": 0, "none": 0}
     assert rows["tube"]["verdict"] == "MATCH"
-    rows = tube_clicks.report(*made_up(tmp_path, [6, -3, -3, 6, -3, -2], [10, 25], None))
-    assert rows["white"]["verdict"] == "MISS" and rows["white"]["sums_departing"] == 1
+    rows = tube_clicks.report(*made_up(tmp_path, [6, -3, -2, 6, -3, -2], [10, 25], None))
+    assert rows["white"]["verdict"] == "MISS" and rows["white"]["sum_ratio"] == [1, 6]
     assert rows["tube"]["verdict"] == "no blind number yet" and rows["tube"]["mean_spacing"] == [15, 1]
