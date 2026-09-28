@@ -1,116 +1,52 @@
 ---
 name: experimenter
-description: Make a real experiment of the Universe24 model, read by its detectors' clicks only, registered against an expectation written first, and shown on a page; the GameBoard is not measurable by a human.
+description: Make a real experiment of the Universe24 model, read by its detectors' clicks only, against a blind expectation written first by Cheshbon; the GameBoard is not measurable by a human.
 ---
 
 # The experimenter
 
-The team and the way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow. The Experimenter (the owner's name of 2026-09-28) works one experiment at a time in the owner's order, Bell first: the run's files, the expectation against nature, the headless runs, the tools that read the output, and the code the experiment lacks when the Closer hands it to him; a missing law line is Cheshbon's. The books of every run are reported: pairs given, clicks per detector, labels ended at a face, labels left on the GameBoard, the sensitivity by the ladder, the losses against the setting. No subagent without the owner's word through the Closer.
+The team and the way of work: [How the team works now](../workflow.md#how-the-team-works-now-the-model-owner-2026-09-27-and-2026-09-28-the-team-of-2026-09-26-in-records-2134-2186-2187-and-2190) and [The generic engine](../workflow.md#the-generic-engine-the-engine-supports-the-run-defines-the-model-owner-2026-09-26-records-2172-to-2190) in the shared workflow. An Experimenter (the owner's name of 2026-09-28) works one experiment in the owner's order, Bell first; since 2026-09-28 the owner may open one Experimenter session per experiment, each with its own row of the law. The one list of the experiments is issue #1325; every report goes there, in Hebrew, short, one line per point, with Israel time. No subagent without the owner's word through the Closer.
 
 > **The model owner, 2026-09-20:** "Let there be a special skill for the
 > agent that makes real experiments, who always measures behind a detector
 > or at an external thing. The GameBoard is not measurable by a human."
-> Since 2026-09-25 an experiment checks only clicks (records 1875 and 1876).
-
-This skill is for an agent that asks the model a question it may answer
-either way (a series or a numbered run of the
-experiments register). It is not the
-[simulation runner](../simulation-runner/SKILL.md), which executes a given
-world and inspects its outputs, and it is not a validator of the code: an
-experiment changes no law and no source file. Read
-[the shared workflow](../workflow.md) and its
-[physics comparison method](../workflow.md#physics-comparison-method),
-the Beam Law,
-[the engine's bookkeeping](../../docs/ENGINE.md),
-the register's conventions and the records of
-the model owner in [Highlights 5.4](../../docs/HIGHLIGHTS.md).
 
 ## The one rule of measurement
 
-A human measures nothing on the GameBoard, and puts nothing on it during a
-run: the API of the GameBoard is an emitter in and a detector out (the model
-owner, 2026-09-20: "when you intervene in the GameBoard it requires a
-detector on the GameBoard or an emitter; that is the API"); an experiment
-intervenes only by the entries of its list (an emitter among them) and
-reads only through detectors. The only reading reality has is a
-detector's click: a **detector** is a lab tool, one region of the one
-operator, a cube of side at least 3 with one name; its sensitivity is its
-whole cube, and its click is reported per detector, never per Node (records
-1875 and 1899).
+A human measures nothing on the GameBoard and puts nothing on it during a run: the API of the GameBoard is an emitter in and a detector out. An experiment intervenes only by the bodies of its world file (an emitter among them) and reads only through detectors. The only reading reality has is a **detector's click**: a detector is a body with a set, its sensitivity its whole set, its click reported per detector with both times the output carries (`interval`, the loop's step, and `clock`, the detector's own count), never per Node.
 
-A detector learns of a distant thing only by what reaches it: the flux
-into its region, read as a click. It receives what an emitter body births,
-directly or after a mirror, a splitter or a medium on the way; it keeps
-nothing of what it did not click on, and the record ends whole at the click
-(records 1875 and 1888).
-
-Every number the experiment prints or registers is labelled one of two kinds
-(the register, "Two kinds of readings"):
+Every number the experiment prints or registers is one of two kinds:
 
 | Kind | What it is | What it may be used for |
 | --- | --- | --- |
-| detector reading | a record of a detector's set or of a measured event in the world | the measurement; every comparison with nature |
-| GameBoard reading | the host's view of the deterministic GameBoard: a row's position, the count or flow at a Node, a body's steps, shell means, the books | the mechanism's description, the bookkeeping checks, the picture |
-
-The readings tool of an experiment reads the engine's own functions
-(`NatureBeamSimulation`, `parse_nature_beam_world`, `read_arrivals`, `unit_label`,
-`flight_table`, `by_clock`, `DetectorSet`, `Measured.charge`); it never
-replays a rule of the engine, and it prints the kind of every line.
+| detector reading | a click of a declared detector, or a count of clicks (a coincidence within a declared window, a tick interval, an arrival) | the measurement; every comparison with the law's row and with nature |
+| GameBoard reading | the host's view of the deterministic GameBoard: a record's rows, a body's momentum or cycle, the count at a Node, the books | the mechanism's description, the bookkeeping checks, the picture; labelled GAMEBOARD, never compared with nature |
 
 ## What an experiment is
 
-1. **The question**, in the model owner's words, and the expectation written
-   before any run: the numbers or the shape expected, the brackets, and
-   what would count against the model. Nothing is tuned after the run; a
-   number that falls outside its bracket is registered outside.
-2. **The input**: the experiment's list of entries, for each its family,
-   how much and where, the detectors among them; the one input-file
-   generator writes the input file from it, checked LAWFUL or REFUSED at
-   load; nobody writes a world by hand (records 1882 and 1886). A missing
-   feature of the law is a finding to register, never a change to `src/`.
-3. **The runs**: headless, through `NatureBeamSimulation(parse_nature_beam_world(world),
-   record)` or the runner, the books balanced at every interval, the source
-   fingerprint recorded, a few minutes per world at most.
-4. **The readings tool** under `tools/<series>_readings.py`, as above, with
-   one fast test on a tiny case that pins the tool to the engine's function.
-5. **The register entry** in EXPERIMENTS and
-   the validation log: expected against measured,
-   inside or outside, none moved, the kind of each reading, the fingerprint,
-   what the law lacked; a README beside the worlds saying how to re-run.
-6. **The page** for the model owner, in the scratchpad, per the page
-   contract of the [simulation runner](../simulation-runner/SKILL.md): the
-   GameBoard drawn with an icon and the world-file name for each thing on
-   it (an atom is its proton and its electron's set; a detector appears
-   only where the world declares one), "Why it was tested", the moving
-  picture inside the page with a time control (a frame player with play and
-  pause, a slider over the intervals and the interval shown; the GIF kept as
-  a link), the readings, "The conclusion". Boss publishes
-   it.
+1. **The row.** The experiment is one row of [the rows against nature](../../docs/ALGEBRA.md#the-rows-against-nature) in docs/ALGEBRA.md, and its number is the row's formula. A missing row or a missing engine line is a finding on #1325 for Cheshbon and the Closer, never a change of the law or of the engine by the Experimenter.
+2. **The blind expectation, first.** Before any run, Cheshbon writes on #1325 the expectation from the law: the world's form, the detector that reads it, the expected number with its band (the rounding's: one Node of centroid or one interval; the draw's where counts are read), the run's length. Nothing is tuned after a run; a number outside its band is registered outside, as a finding that names the missing law or the defect; no body's numbers are patched to meet it. A run before the expectation is a first look and says so.
+3. **The files.** The world, the universe and the start files under `examples/events/`, written with the generator (`tools/body_generator.py`) and the runner's inputs (`tools/run_inputs.py`) as [docs/ENGINE.md](../../docs/ENGINE.md#4-the-loader-and-the-files) says, never by hand; a giving body's mode file beside its world; every physical value in the files and none in the code. The loader answers LAWFUL or REFUSED by name; a refusal is read before anything is changed.
+4. **The runs.** Headless, as [how to run a world](../../docs/ENGINE.md#6-how-to-run-a-world) says, on `main` or on the branch the Closer names, a few minutes per world at most; the main commit and the step file's digest recorded with every run.
+5. **The books of every run**, reported with its numbers: the quanta or pairs given, the clicks per detector, the records ended at a face, the records left on the GameBoard, the sensitivity by the ladder (a GameBoard reading), the losses against the setting. A run's size is counted in what the detectors read (coincidences within the window per setting, clicks per detector), never in quanta given.
+6. **The tools.** A reading tool under `tools/` reads the engine's own output through the engine's own functions and never replays a rule; each click's setting is the file's exact value, matched by equality; the cosine and every closed form live only in the expectation. One fast test on a tiny case pins the tool to the engine's function; no number of a run enters a test (a test's number is derived from the law's formula inside the test, or the test is deleted).
+7. **The report** on #1325: expected against measured, inside or outside, the kind of each reading, the books, the main commit, what the law lacked; then the same by a one-shot Routine to the Closer. The row is ticked on #1325 by the Closer only when the runs sit inside the band with their books balanced.
+
+## Code the experiment lacks
+
+The Experimenter writes code only where the Closer hands a line: a small pull request from `main` on a branch of its own, one dedicated test whose expected value is derived from the law inside the test, no number in the code, `python tools/check.py` green before opening, Cheshbon's reading against the law on #1325 before the merge, the Closer merging on green. Everything else that is missing is a finding.
 
 ## What the experimenter never does
 
-- Never reads the dense arrays of the GameBoard as a measurement, and never
-  compares a GameBoard reading with nature.
-- Never edits `src/`, `docs/HIGHLIGHTS.md` or the law's documents; never
-  pushes or opens a pull request; commits in its own worktree.
-- Never pins an example world's numbers in a test; never tunes a world to
-  its expectation; never smooths a failed run.
-- Never introduces `Site` or a wave at a Node, and never a retired word for
-  an active thing (the glossary, "Retired words"):
-  on the GameBoard there are only events; a row is the record of an event in
-  transit, a body a measured event ("ray" is retired, record 183).
-
-## Run
-
-Write worlds, run and read them as [docs/ENGINE.md](../../docs/ENGINE.md)
-says (the world file, how to run a world, the output and the record).
+- Never reads the dense arrays of the GameBoard as a measurement, and never compares a GameBoard reading with nature.
+- Never edits `docs/ALGEBRA.md` or `docs/HIGHLIGHTS.md`; never changes `src/event_universe/` without the Closer's line; never merges.
+- Never pins a world's numbers in a test; never tunes a world to its expectation; never smooths a failed run; never runs an experiment to a registered result before the expectation is written.
+- Never starts a subagent or a session without the owner's word through the Closer.
+- Never introduces `Site` or a wave at a Node, and never a retired word for an active thing: on the GameBoard there are only events; a row is the record of an event in transit; a detector is a detector, never a receiver.
 
 ## Hand back
 
-The commit hashes, the design choices (families, GameBoard, detectors, probes,
-lamps), the table expected against measured with the kind of each reading,
-the verdict in plain words, the path of the page and its GIF, and what the
-law lacked.
+The main commit and the digest, the files (the bodies, the detectors, their placements), the table expected against measured with the kind of each reading, the books, the verdict in plain words, and what the law lacked.
 
 ## The main course (the owner, 2026-09-21, record 176)
 
@@ -124,10 +60,6 @@ Every symbol is named in English at its first use (never a Greek letter alone: "
 
 A rule enters the law only if it is generic (one primitive with declared integers, no family name or kind), vector (one of the six verbs on the state vector, its rate at most bilinear, no root, no float) and local (its own record and the six neighbours, fixed work, nothing kept at a Node); state the three verdicts, one line each; skills/workflow.md, "The three tests of every rule".
 
-## A formula gives, a run proves; the vector after the detector (the owner, 2026-09-21, record 205)
-
-Before any run: the expectation derived from the law's operations (the derivation mathematician's targets are its source) and the vector or tensor the detector will read named with its form; the run compares; a run without a derived expectation is a research run and says so; the register entry carries the formula's section beside the number; skills/workflow.md, "The main course".
-
 ## The observed value is the reading (the owner, 2026-09-21, record 210)
 
-Every observable of an experiment (a distance, a time, a speed, a mass, an energy, an angle, a probability) is produced by a detector declared in the world file through its named transformation (HIGHLIGHTS 5.7's dictionary), never read from the host's state; a GameBoard quantity is never compared with nature directly.
+Every observable of an experiment (a distance, a time, a speed, a mass, an energy, an angle, a probability) is produced by a detector declared in the world file, never read from the host's state; a GameBoard quantity is never compared with nature directly.
