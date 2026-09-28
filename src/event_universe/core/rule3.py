@@ -13,11 +13,6 @@ Reads = tuple[Any, Any, Any]
 ISOTROPIC: tuple[int, int, int] = (0, 0, 0)
 
 
-def vacuum_read(num: Any, pace: Any) -> Any:
-    """The vacuum's read coefficient evaluated at a pace, R = 2 num p^2: the one line every coefficient of Rule3 is (ALGEBRA.md #the-line; the pace is conformal, Cheshbon's line of 2026-09-28)."""
-    return 2 * num * pace * pace
-
-
 def coefficients(
     num: Any,
     den: Any,
@@ -26,20 +21,23 @@ def coefficients(
     axis_contents: tuple[Any, ...] = ISOTROPIC,
     weak_field: bool = True,
 ) -> tuple[Reads, Any, Any]:
-    """The rule's integers at a Node, ((R_x, R_y, R_z), S, w), as the vacuum's line evaluated at the Node's paces (ALGEBRA.md #the-line, #the-direction): the clock's pace p_0 = Gamma - c, each axis's pace p_a = p_0 - c - c_a (the level enters the Link twice and the clock once), R_a the vacuum's read at p_a, the rest term the vacuum's 2 w (den - num) / den at (p_0 / Gamma)^2, and S the rest of 2 w, so that sin^2 (omega / 2) = (p / Gamma)^2 sin^2 (omega_vac(k) / 2) for every wave; the isotropic rule at the axis contents zero, the plain first-order rule with weak_field False."""
+    """The rule's integers at a Node from the paces, ((R_x, R_y, R_z), S, w); the isotropic rule at the axis contents zero, the plain first-order rule with weak_field False (ALGEBRA.md #the-line, #the-interval, #the-direction)."""
     pace = gamma - content
     if not weak_field:
         read = pace * num
         return (read, read, read), 6 * den * content, 3 * den * gamma
-    wall = 6 * den * gamma * gamma
+    paces = (pace - axis_contents[0], pace - axis_contents[1], pace - axis_contents[2])
+    gamma_squared = gamma * gamma
     reads = (
-        vacuum_read(num, pace - content - axis_contents[0]),
-        vacuum_read(num, pace - content - axis_contents[1]),
-        vacuum_read(num, pace - content - axis_contents[2]),
+        2 * paces[0] * paces[0] * num,
+        2 * paces[1] * paces[1] * num,
+        2 * paces[2] * paces[2] * num,
     )
-    rest = 12 * (den - num) * pace * pace
-    self_coefficient = 2 * wall - rest - 2 * (reads[0] + reads[1] + reads[2])
-    return reads, self_coefficient, wall
+    squares = paces[0] * paces[0] + paces[1] * paces[1] + paces[2] * paces[2]
+    self_coefficient = (
+        12 * den * gamma_squared - 6 * (pace * pace + gamma_squared) * (den - num) - 4 * num * squares
+    )
+    return reads, self_coefficient, 6 * den * gamma_squared
 
 
 def rule3(
