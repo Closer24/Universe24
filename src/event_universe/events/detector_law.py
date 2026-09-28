@@ -180,7 +180,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             else None
         )
         assembly.universe_values(self, world)
-        # the interval's clicks for the recoil's act: the body, the sense, the tally, the record
         self._recoils: list[tuple[int, int, tuple[int, int, int], int]] = []
         self.recoil_turns: dict[int, list[int]] = {}
         self._crystal_clicks: list[tuple[int, LiveRecord]] = []
@@ -531,12 +530,13 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return self._body_charge(number) if source == "sign" else sum(self.held[number])
 
     def node_sources(self, number: int, source: str) -> list[tuple[tuple[int, int, int], int]]:
-        """A body in the law's form: its source per Node, the count declared THERE ("content") or the family's charge times it ("sign"), ALGEBRA.md #what-a-body-is and the hold's row, the quanta where the count's line moved them; a body with a record under a declared T its well's form, D_i div T at every Node of its record (`_record_form`), its declared count a reading; empty for a body of the old form with no well, whose one source stands at every Node of its mask."""
+        """A body in the law's form: its source per Node, the count laid THERE by the count's line (the declared count at the first act, then the record's form over its whole period, THE COUNT IS THE RECORD'S FORM OVER ITS PERIOD; never the well of one interval) or the count declared there before any lay ("content"), or the family's charge times it ("sign"), ALGEBRA.md #what-a-body-is and the hold's row, the quanta where the count's line moved them; a body with a record under a declared T its well's form, D_i div T at every Node of its record (`_record_form`), its declared count a reading; empty for a body of the old form with no well, whose one source stands at every Node of its mask."""
         block = self.block_by_number.get(number)
         if block is None or (block.well is None and not block.definition.counts):
             return []
         weight = 1 if source == "content" else block.definition.q + self.families[block.family].charge[0]
-        laid = block.well if block.well is not None else block.counts
+        laid = block.period_counts if once.counts_are_the_well(self.families, block) else block.well
+        laid = laid if laid is not None else block.counts
         if laid is not None:
             moved = zip(*np.nonzero(laid), strict=True)
             return [((int(x), int(y), int(z)), weight * int(laid[x, y, z])) for x, y, z in moved]
