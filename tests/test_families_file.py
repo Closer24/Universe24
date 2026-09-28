@@ -138,6 +138,8 @@ def test_the_file_and_the_inline_list_step_bit_for_bit(tmp_path, monkeypatch):
     ]:  # the inline light holds the sign as the file's charge does: one E_s for the window's write on both sides
         if row["name"] == "light":
             row["held"] = dict(charge["held"])
+    # the sign's holder is a vector family (THE FAMILIES FROM THE RULE): the giver's moment names the component
+    inline["measured"][0]["moment"] = [1, 0, 0]
     inline["stamp"] = input_stamp(inline)
     (tmp_path / "universe.json").write_text(json.dumps(document), encoding="utf-8")
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
