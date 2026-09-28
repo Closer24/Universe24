@@ -144,15 +144,15 @@ def test_the_refusals_by_name():
     next(f for f in doc["universe"] if f["name"] == "clicks").pop("spins_step")
     with pytest.raises(ValueError, match="needs the time part at the six neighbours and its row"):
         DetectorLawSimulation(parse_nature_beam_world({**doc, "stamp": input_stamp(doc)})).step()
+    doc["measured"][0].update(spin=[0, 0, 0], spin_before=[0, 0, 0])  # no spin, no moment: no spin read
+    DetectorLawSimulation(parse_nature_beam_world({**doc, "stamp": input_stamp(doc)})).step()
+    start = lambda *reads: SpinStepStart(THE_ADVANCE, reads, (0, 0, 0), 1, (0, 0, 0), (0, 0, 0))  # noqa: E731
     with pytest.raises(ValueError, match="spin or moment"):
-        reads = (SpinRead(0, "charge", 1, 1, zeros, None, None),)
-        apply(term, SpinStepStart(THE_ADVANCE, reads, (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)
+        apply(term, start(SpinRead(0, "charge", 1, 1, zeros, None, None)), own)
     with pytest.raises(ValueError, match="needs the time part at the six neighbours and its row"):
-        reads = (SpinRead(0, "spin", 1, 1, zeros, None, TURN),)
-        apply(term, SpinStepStart(THE_ADVANCE, reads, (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)
+        apply(term, start(SpinRead(0, "spin", 1, 1, zeros, None, TURN)), own)
     with pytest.raises(ValueError, match=r"\(1, 2\) and \(3, 4\) stand over one denominator"):
-        reads = (SpinRead(0, "spin", 1, 1, zeros, ZERO, ((1, 2), (3, 4))),)
-        apply(term, SpinStepStart(THE_ADVANCE, reads, (0, 0, 0), 1, (0, 0, 0), (0, 0, 0)), own)
+        apply(term, start(SpinRead(0, "spin", 1, 1, zeros, ZERO, ((1, 2), (3, 4)))), own)
 
 
 def test_the_declaration_is_the_ledgers_row():
