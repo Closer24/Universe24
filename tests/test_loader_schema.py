@@ -23,7 +23,7 @@ from event_universe.core.schema import (
     check,
     check_keys,
 )
-from event_universe.loader import cards
+from event_universe.loader import cards, derived
 from tests.worlds import SOURCED
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -159,14 +159,14 @@ def test_the_shipped_universe_and_a_sourced_entry_pass_the_folders_schemas():
     assert owners["sourced"] == "the source" and owners["reads"] == "the signed read"
     merged = cards.at(register, FAMILY)
     context = context_of(entries)
-    for entry in entries:
-        body = {key: value for key, value in entry.items() if key not in frame_keys}
+    for entry in entries:  # THE FAMILIES FROM THE RULE: the rows filled by the rule pass the cards
+        body = {k: v for k, v in derived.filled(entry, entries).items() if k not in frame_keys}
         checked = check_keys(body, merged.keys, merged.optional, entry["name"], context)
         for read in checked["reads"]:
             assert type(read["weight"]) is int and read["weight"] >= 1
     with pytest.raises(ValueError, match=r"matter has unknown keys: nonsense_attribute"):
         check_keys(
-            {key: value for key, value in entries[2].items() if key not in frame_keys}
+            {k: v for k, v in derived.filled(entries[2], entries).items() if k not in frame_keys}
             | {"nonsense_attribute": 1},
             merged.keys,
             merged.optional,

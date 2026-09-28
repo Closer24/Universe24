@@ -388,9 +388,9 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(ray)
     unread = json.loads(json.dumps(good))
-    del unread["universe"][0]["reads"]
-    with pytest.raises(ValueError, match=r"universe\[0\] lacks keys: reads"):
-        parse_nature_beam_world(unread)
+    del unread["universe"][0]["reads"]  # THE FAMILIES FROM THE RULE: the reads derive from the ranks
+    derived = parse_nature_beam_world(unread).families[0].reads
+    assert [read[1:] for read in derived] == [(1, "plain", "own"), (1, "sign", "own")]
     unknown = json.loads(json.dumps(good))
     unknown["universe"][0]["reads"][0]["family"] = "ticks"
     with pytest.raises(ValueError, match=r"reads\[0\]\.family names 'ticks', no family of the universe"):
