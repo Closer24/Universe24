@@ -126,6 +126,21 @@ def gather_line(
         "node": [],
         "windows": [],
         "content": live.content,
+        # THE BODY'S LANGUAGE (the model owner, 2026-09-28; HIGHLIGHTS lines 7 and 28): the click read
+        # from the bodies alone, so that one place tells the body is one: the giver (the body whose
+        # giving wrote the record; None for a planted one), the taker (the body of the chosen detector;
+        # None at a face or a set without a body), the quantum (the record's norm T), the click's exact
+        # tally per axis (its sign is `momentum`) and the giver's count as the giving opened (the
+        # taker's count is `clock` where the detector is a body's)
+        "giver": live.emitter,
+        "taker": (
+            simulation.detector_measured[chosen]
+            if chosen is not None and not simulation.detector_face[chosen]
+            else None
+        ),
+        "norm": live.norm,
+        "tally": list(live.momentum_tally.get(chosen, [0, 0, 0])) if chosen is not None else [0, 0, 0],
+        "giver_clock": live.giver_clock,
         # THE FOUR-VECTOR (ALGEBRA.md #the-primitives; commit 5 without the recoil): the count is
         # `content`, the space part the sign per axis of the chosen detector's tally, the taken quantum's
         # direction of travel (DETECTOR); [0, 0, 0] with no detector chosen. No body's momentum moves
@@ -269,6 +284,8 @@ def books(simulation: detector_law.DetectorLawSimulation, recount: bool = False)
         # are designed (ALGEBRA.md 8.11, the physicist's), and `balanced` counts content alone.
         "momentum": {
             "held": [sum(int(block.momentum[axis]) for block in simulation.blocks) for axis in range(3)],
+            # THE RECOIL'S BOOK (the body's language): per body, the kicks its clicks wrote, summed per axis
+            "recoil": {str(n): list(k) for n, k in sorted(simulation.recoil_kicks.items())},
             "transit": None,
             "escaped": None,
             "note": "transit and escaped not accounted (the massive kind's momentum books "

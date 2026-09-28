@@ -125,6 +125,9 @@ class LiveRecord:
     standing: bool = False
     outward: int = 0
     giving_line: dict[str, object] | None = None
+    # THE BODY'S LANGUAGE (the model owner, 2026-09-28, HIGHLIGHTS line 7): the giver's count as
+    # the giving opened, on the click line beside the taker's (`clock`); None on a planted record
+    giver_clock: int | None = None
     # The sinks' take of a record under the receiver by name (HOST, the
     # pointer's unit): what the faces and every set but the receiver took,
     # inside `absorbed` (the completion's measure) and on no pointer.
