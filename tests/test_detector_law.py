@@ -87,10 +87,13 @@ def test_chain_world_clicks_once_per_record_with_the_books_balanced():
     assert "face" not in DetectorLawSimulation(world).detector_names
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
-    for _ in range(600):
+    givings: list[dict] = []
+    # the horizon the window the engine writes by the law, no number: the stock's six windows closed and the last train's flight bound (below) after the sixth, within six times the first close
+    while len(givings) < 6 or simulation.tick < givings[-1]["tick"] + 200:
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    givings = [line for line in lines if line["event"] == "giving"]
+        givings = [line for line in lines if line["event"] == "giving"]
+        assert not givings or simulation.tick <= 6 * givings[0]["tick"] + 200
     gathers = [line for line in lines if line["event"] == "gather"]
     # the emitter's stock of 6 excitations, each clicking at its own rung; the
     # residues from the law (ALGEBRA.md #a-familys-declaration): the clicking record's
@@ -166,17 +169,25 @@ def test_the_emitters_cells_are_cells_like_every_other_and_take_nothing_of_its_r
         parse_nature_beam_world(on_light)
 
 
-def run_layer(document: dict, ticks: int = 3000) -> tuple[list[dict], DetectorLawSimulation, Seen]:
-    """The layer world stepped with the books balanced at every interval; the gather lines, the simulation, and per clicked record what the click read (a spy on the engine's `_ladder_click`: the running total before the interval, the interval's increments, the ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
+def run_layer(
+    document: dict, ticks: int = 3000, gathers: int | None = None
+) -> tuple[list[dict], DetectorLawSimulation, Seen]:
+    """The layer world stepped with the books balanced at every interval (`ticks` intervals; with `gathers`, until that many records have clicked, within `gathers` times the first close's interval: the horizon the window the engine writes, no number); the gather lines, the simulation, and per clicked record what the click read (a spy on the engine's `_ladder_click`: the running total before the interval, the interval's increments, the ladder of `_ladder_of`, u, the norm and the record's own wheel W)."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
     seen: Seen = {}
     spy_on(simulation, seen)
-    for _ in range(ticks):
+    while (simulation.tick < ticks) if gathers is None else (len(lines_of(lines, "gather")) < gathers):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
-    return [line for line in lines if line["event"] == "gather"], simulation, seen
+        closes = lines_of(lines, "giving")
+        assert gathers is None or not closes or simulation.tick <= gathers * closes[0]["tick"]
+    return lines_of(lines, "gather"), simulation, seen
+
+
+def lines_of(lines: list[dict], event: str) -> list[dict]:
+    return [line for line in lines if line["event"] == event]
 
 
 RESIDUES = 128  # the planted records' wheel: every residue once
@@ -272,7 +283,7 @@ def test_the_increment_ladder_over_the_named_sets():
     assert all(abs(forward[name] - backward[name]) <= 12 for name in forward), counts
     assert abs(forward["s0"] - forward["s2"]) <= 12 and min(forward.values()) > 0, counts
     # the emitter's own givings: the residues spread from the kept remainder
-    gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]))
+    gathers, simulation, seen = run_layer(layer_world(["s0", "s1", "s2"]), gathers=8)
     assert len(gathers) == 8 and len({g["u"] for g in gathers}) > 1
     names = [simulation.detector_names.index(name) for name in ("s0", "s1", "s2")]
     for gather in gathers:
@@ -319,7 +330,7 @@ def test_the_increment_ladder_over_the_named_sets():
     )  # every residue agrees: the clock field is 0 at the bodies
     # one set on the emitter's row alone books a third of the flux: the last click at 1014
     # under the one border (the well two Links from the closed face; item 28), COMPUTATION
-    one, _, _ = run_layer(layer_world("s1"))  # every giving a window and a rung (commit 7)
+    one, _, _ = run_layer(layer_world("s1"), gathers=8)  # every giving a window and a rung (commit 7)
     assert len(one) == 8 and all(gather["chosen"][0][0] == "s1" for gather in one)
     with pytest.raises(ValueError, match="names 'screen', which no detector set declares"):
         parse_nature_beam_world(layer_world(["s0", "screen"]))

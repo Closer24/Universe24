@@ -37,8 +37,7 @@ def exchange_of(
     old: np.ndarray,
     new: np.ndarray,
 ) -> Fraction:
-    """The change of the form I of `form_I` when the family of clicks' levels move from `old` to `new`
-    (ALGEBRA.md #the-counts-line, #the-line)."""
+    """The change of the form I of `form_I` when the family of clicks' levels move from `old` to `new` (ALGEBRA.md #the-counts-line, #the-line)."""
     gamma = simulation.node_clock
     num = simulation.kind_num[family].astype(object)
     den = simulation.kind_den[family].astype(object)
@@ -106,8 +105,7 @@ def chosen_by_the_rule(
     wheel: int,
     pace: int,
 ) -> str:
-    """The increment ladder of ALGEBRA.md #the-ladder on the click's own numbers: the first detector k
-    at which 2 W p (C + f_1 + ... + f_k) >= (2 u + 1) T."""
+    """The increment ladder of ALGEBRA.md #the-ladder on the click's own numbers: the first detector k at which 2 W p (C + f_1 + ... + f_k) >= (2 u + 1) T."""
     threshold = (2 * u + 1) * norm
     running = 2 * wheel * pace * total
     assert running < threshold
@@ -139,9 +137,7 @@ def spy_on(simulation: DetectorLawSimulation, seen: Seen) -> None:
 
 
 def run(document: dict) -> tuple[list[dict], DetectorLawSimulation, list[dict]]:
-    """The world stepped over its ticks, the books balanced at every interval; the lines,
-    the simulation, and per interval the emitter body's own record before the interval's
-    emission (its identity, residue, wheel and norm) and its count of intervals after it."""
+    """The world stepped over its ticks, the books balanced at every interval; the lines, the simulation, and per interval the emitter body's own record before the interval's emission (its identity, residue, wheel and norm) and its count of intervals after it."""
     world = parse_nature_beam_world(document)
     lines: list[dict] = []
     simulation = DetectorLawSimulation(world, observer=lines.append)
@@ -212,13 +208,21 @@ def stamped(document: dict) -> dict:
     return document
 
 
-def run_point_world(document: dict, ticks: int) -> tuple[DetectorLawSimulation, list[dict]]:
+def run_point_world(
+    document: dict, ticks: int, givings: int | None = None
+) -> tuple[DetectorLawSimulation, list[dict]]:
+    """The world stepped `ticks` intervals with the books balanced; with `givings`, stepped instead until that many windows have closed (the giving line named at the close, the horizon the window the engine writes by the law and no number), within the world's own `ticks`."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(parse_nature_beam_world(document), observer=lines.append)
-    for _ in range(ticks):
+    while (simulation.tick < ticks) if givings is None else (closed(lines) < givings):
         simulation.step()
         assert simulation.books()["balanced"], simulation.tick
+        assert givings is None or simulation.tick <= document["ticks"]  # within the world's own run
     return simulation, lines
+
+
+def closed(lines: list[dict]) -> int:
+    return sum(1 for line in lines if line["event"] == "giving")
 
 
 GENERATED_DIRECTORIES = {
@@ -324,8 +328,7 @@ PARTS = ([1], [1, 3], [1, 3, 6])
 
 
 def draw(seed: int) -> dict[str, Any]:
-    """One draw: the families (the body's, the given, up to two holders, the rest clicking
-    families of random shape) with random names, and the roles by name."""
+    """One draw: the families (the body's, the given, up to two holders, the rest clicking families of random shape) with random names, and the roles by name."""
     rng = random.Random(seed)
     count = rng.randint(1, 20)
     names = rng.sample(WORDS, count)
@@ -485,8 +488,7 @@ def string_constants(path: Path) -> list[tuple[int, str]]:
 
 
 def written_defaults(path: Path) -> list[str]:
-    """Every `<obj>.get("<key>", <default>)` of the module with a default that is not None: a
-    key of the files with a default written in the code (record 2089)."""
+    """Every `<obj>.get("<key>", <default>)` of the module with a default that is not None: a key of the files with a default written in the code (record 2089)."""
     tree = ast.parse(path.read_text(encoding="utf-8"))
     found = []
     for node in ast.walk(tree):

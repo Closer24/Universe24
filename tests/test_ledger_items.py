@@ -104,7 +104,9 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
     simulation = DetectorLawSimulation(parse_nature_beam_world(document))
     lines: list[dict] = []
     simulation.record = lines.append
-    for _ in range(90):  # the first giving at 69 (its light toward +x) with its window of 15 closed
+    while not [
+        line for line in lines if line.get("event") == "giving"
+    ]:  # the first window closed (its light toward +x), the horizon the window the engine writes
         simulation.step()
     kicked = list(simulation.blocks[0].momentum)
     (first,) = [line for line in lines if line.get("event") == "giving"]
@@ -115,8 +117,11 @@ def test_4_a_giving_click_moves_the_bodys_held_momentum_by_the_algebras_integer(
     period = simulation.world.measured[0].block.emitter.period
     kick = 3 * unit * period * (wall // wavelength) // wall  # 3 Q P_body (L div lambda_q) div L
     assert kicked == [-first["momentum"][0] * kick, 0, 0] and kick > 0  # opposite to the given light
-    for _ in range(90, STEPS):  # the second giving at 97, its light toward -x: the kicks cancel
+    while (
+        len([line for line in lines if line.get("event") == "giving"]) < 2
+    ):  # the second window closed, its light toward -x: the kicks cancel
         simulation.step()
+        assert simulation.tick <= 2 * first["tick"] + STEPS
     givings = [line["momentum"] for line in lines if line.get("event") == "giving"]
     assert len(givings) == 2 and all(
         momentum[1:] == [0, 0] for momentum in givings

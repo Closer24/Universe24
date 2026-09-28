@@ -45,8 +45,7 @@ class LiveRecord:
     # content-dependent at a body's Nodes, read from the rule and never
     # declared.
     wheel: int = 1
-    # massive-record-v1: the emitter's number for a record a body emitted
-    # (None for a planted record and for a block's own record); the
+    # massive-record-v1: the emitter's number for a record a body emitted (None for a planted record and for a block's own record); the
     # coupling's folded denominator (`scale`) is HISTORY since the model
     # owner's decision (2) of the record (the wall 3 den alone, one D per
     # row per interval, the remainder in [0, wall)).
@@ -118,6 +117,7 @@ class LiveRecord:
     # summed; the giving line held until the close names the record
     window_open: bool = False
     window: int = 0
+    giving_remainders: tuple[np.ndarray, np.ndarray] | None = None
     # THE FAMILY GENERICITY (the record; item 51): a body's own standing
     # record (the lattice body's, held by the law at the body and read by no
     # detector, its inverse with the body's), marked on the record and not

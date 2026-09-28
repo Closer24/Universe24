@@ -49,13 +49,13 @@ def test_the_click_line_carries_the_taken_quantums_direction_and_the_giver_recoi
 @pytest.mark.usefixtures("the_loads_hold_alone")
 def test_a_symmetric_emitters_tallies_cancel_and_the_inverse_undoes_the_windows_tally():
     document = point_world(4, stock=3, ticks=400)
-    simulation, lines = run_point(document, 200)
+    simulation, lines = run_point(document, 200, givings=2)  # the horizon the window the engine writes
     givings = lines_of(lines, "giving")
     assert len(givings) == 2 and all(line["momentum"] == [0, 0, 0] for line in givings)
-    # inside the third window (the third quantum's, within 150 intervals of the second's
-    # close): the tally kept on the record, ten intervals on and back
+    # inside the third window (the third quantum's, opened within the second window's length of
+    # its close): the tally kept on the record, ten intervals on and back
     block = simulation.block_by_number[0]
-    for _ in range(150):
+    for _ in range(givings[1]["window"] + givings[1]["tick"] - givings[1]["opened"]):
         if block.window is not None:
             break
         simulation.step()

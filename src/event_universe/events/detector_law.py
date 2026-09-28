@@ -36,7 +36,13 @@ from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
 from event_universe.features.crystal import CrystalTerm
-from event_universe.features.giving import THE_OPEN, GivingOwn, GivingStart, GivingTerm, GivingWrites
+from event_universe.features.giving import (
+    THE_OPEN,
+    GivingOwn,
+    GivingStart,
+    GivingTerm,
+    GivingWrites,
+)
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
 from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
@@ -1080,7 +1086,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             part=emitter.part,
             twist=emitter.twist,
         )
-        live.window_open = True
+        live.window_open, live.giving_remainders = True, None
         live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
         block.window = identity
         if emitter.receiver is not None:
@@ -1881,14 +1887,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._ladder_click(live, increments)
 
     def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
-        """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term from the emitter's declaration, the own record from the window's record (`live`), none at the open."""
+        """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term the giving's coupling as a pair and the quantum action T (until the loader reads the universe's [1, k] and T, the file's emitter declaration: the weight g as the pair [g, 1], T = norm div norm_denominator), the own record from the window's record (`live`), none at the open."""
         emitter = after_step.emitter_of(block)
         if emitter is None:
             raise ValueError(f"the body {block.number} gives with no emitter declared")
         norm = emitter.norm if emitter.norm is not None else 1
         denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
         weight = emitter.weight if emitter.weight is not None else 1
-        term = GivingTerm(weight, norm, denominator, emitter.family)
+        term = GivingTerm((weight, 1), division_forward(norm, denominator, 0)[0], emitter.family)
         own = (
             GivingOwn(None, 0, (0, 0, 0))
             if live is None
@@ -1896,6 +1902,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 live.window,
                 live.outward,
                 (live.outward_tally[0], live.outward_tally[1], live.outward_tally[2]),
+                live.giving_remainders,
             )
         )
         function = self.main_loop.function_of("the giving", "(ii)")
@@ -1935,7 +1942,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return total
 
     def _point_window_inverse(self, block: Block) -> None:
-        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write at both levels subtracted (an addition inverts), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
+        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write at both levels subtracted through the folder's inverse (the levels written that interval from the same body levels and the remainders after, the remainders before kept), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after."""
         live = self.records.get(block.window) if block.window is not None else None
         emitter = block.definition.emitter
         if live is None or emitter is None or emitter.weight is None or live.window <= 0:
@@ -1943,9 +1950,14 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         undone = [0, 0, 0]
         live.outward -= self.body_outward_flux(live, block, undone)
         live.outward_tally = [kept - gone for kept, gone in zip(live.outward_tally, undone, strict=True)]
-        live.now[block.mask] -= emitter.weight * self._body_levels(block)
-        live.before[block.mask] -= emitter.weight * self._body_levels(block, before=True)
-        live.window -= 1
+        levels = (self._body_levels(block), self._body_levels(block, before=True))
+        writes = self._giving_act(
+            block, GivingStart(THE_INVERSE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live
+        )
+        undone_levels = cast(tuple[np.ndarray, np.ndarray], writes.level)
+        live.now[block.mask] -= undone_levels[0]
+        live.before[block.mask] -= undone_levels[1]
+        live.giving_remainders, live.window = writes.own.remainders, live.window - 1
 
     def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
         """The sum of the six neighbours' amplitudes at the Nodes (flat indices) alone, as the send reads them over the board (the wrap on a periodic axis, 0 beyond a zero face, the row itself on an axis of one layer); HOST: the cost is the Nodes asked, not the board."""
