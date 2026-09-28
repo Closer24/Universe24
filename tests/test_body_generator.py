@@ -275,6 +275,9 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     assert "declares its phase_denominator" in refused(without)
     assert "the row's pair is 'body', not [num, den]" in refused({**body, "family": "light"})
     two = generate({**world, "measured": [body, {**body, "family": "light"}]})["bodies"]
+    g = generate({**world, "measured": [{**body, "emitter": {"family": "light", "pair": [1, 1]}}]})
+    (a, b), w = g["bodies"][0]["clock"], g["bodies"][0]["wavelength"]  # lambda_q on light's band
+    assert w == round(2 * math.pi / math.acos(3 * a / (2 * b) - 2)) and "wavelength" not in reading
     deeper = Fraction(*two[0]["in_the_worlds_well"]["rotation"])  # a second body deepens the well
     assert deeper != Fraction(*two[0]["rotation"]) and "refused" in two[1]  # the clock's rotation moves
     with pytest.raises(ValueError, match=r"the count binds no mode of the family \[800, 809\]"):
