@@ -60,7 +60,9 @@ def run(world_path: Path) -> tuple[dict[str, Any], list[dict[str, Any]], list[di
     output["readings"] = readings.output()
     output["records_alive"] = len(simulation.records)
     alive = [
-        {"record": live.identity, "giving": live.giving_tick} for live in simulation.records.values()
+        {"record": live.identity, "giving": live.giving_tick}
+        for live in simulation.records.values()
+        if live.identity in giver_of  # the given records alone; a body's own record is no quantum given
     ]
     return output, lines, alive
 
