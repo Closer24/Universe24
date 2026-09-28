@@ -9,7 +9,7 @@ from event_universe.core.rule3 import THE_REWRITE, coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import Seen, chosen_by_the_rule, exchange_of, form_I, spy_on
-from tests.worlds import emitter_world, family_entry, reads, seed_on_the_mode
+from tests.worlds import emitter_world, family_entry, seed_on_the_mode
 
 LIGHT, MATTER, POSITIVE = 0, 1, 2
 STOCK = 3
@@ -21,7 +21,7 @@ def reversible_world(ticks: int = 400) -> dict:
     document = emitter_world(stock=STOCK, ticks=ticks, on_mode=False)
     document["universe"][LIGHT]["sign"] = -1
     document["universe"][MATTER]["sign"] = -1
-    positive = family_entry("positive", [1, 1], reads(), clock=[512, 1], sign=1)
+    positive = family_entry("positive", [1, 1], clock=[512, 1], sign=1)
     document["universe"].insert(POSITIVE, positive)
     body = {"position": [55, 0, 0], "family": "positive", "amount": 1, "stocks": {}}
     document["measured"].append({**body, "momentum": [0, 0, 0], "momentum_before": [0, 0, 0]})

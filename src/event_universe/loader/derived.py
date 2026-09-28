@@ -2,10 +2,40 @@
 
 from __future__ import annotations
 
+import json
 import math
 from typing import Any
 
 VACUUM_PAIR = (1, 1)  # the rule's own massless band, the band of the one real field of the highest rank
+
+
+def pair_of(entry: dict[str, Any], gamma: int, label: str) -> list[int] | str:
+    """THE MASS IS ONE INTEGER (the owner, 2026-09-28): a family's pair is written over the lattice's denominator Gamma, the file holding the numerator `m` alone, cos omega_0 = m / Gamma, and the loader writes the pair [m, Gamma] as it stands (THE WALL IS ONE: the wall 6 Gamma^3 for every family, the pair in the coefficients as written; light m = Gamma, the exact band m = Gamma div 2, the band read by `reduced`); a row declaring both `m` and `pair` is refused by name, and a row with neither lacks its pair."""
+    if "m" in entry and "pair" in entry:
+        raise ValueError(
+            f"{label} declares both m and pair: the pair is [m, Gamma] as it stands, one form"
+        )
+    if "m" not in entry:
+        if "pair" not in entry:
+            raise ValueError(
+                f"{label} lacks keys: m (the family's numerator over Gamma; THE MASS IS ONE INTEGER)"
+            )
+        pair = entry["pair"]
+        return "body" if pair == "body" else [int(pair[0]), int(pair[1])]
+    m = int(entry["m"])
+    if not 1 <= m <= gamma:
+        raise ValueError(
+            f"{label}.m {m} is not from 1 to Gamma = {gamma}: cos omega_0 = m / Gamma lies in (0, 1]"
+        )
+    return [m, gamma]
+
+
+def paired(entries: tuple[dict[str, Any], ...], gamma: int) -> list[dict[str, Any]]:
+    """Every entry with its pair filled from `m` where the file wrote the numerator alone (the amplitude bound reads the pairs)."""
+    return [
+        {**entry, "pair": pair_of(entry, gamma, f"the family {entry.get('name')!r}")}
+        for entry in entries
+    ]
 
 
 def held_count(entry: dict[str, Any]) -> str | None:
@@ -38,40 +68,86 @@ def carries_quanta(entry: dict[str, Any]) -> bool:
     return held_count(entry) != "content"
 
 
-def filled(entry: dict[str, Any], entries: tuple[dict[str, Any], ...]) -> dict[str, Any]:
-    """The entry with every absent key the rule fixes filled: the parts from the rank, the phase 2 where it carries quanta and 1 for a real field, the quantum 1, the sign 0, the self-source off, the held factors 1, and the reads: a family of quanta reads every real field (a holder of the content, at any rank, the bound band's well among them) and the clicking families of a higher rank (the holders of the sign), at the weight 1, by its own twist, by the sign where the read family holds the sign; in the rule's form (no `parts` declared) also the clicks on a family of quanta and the dipole (the spin on the content's real field, the moment on the sign's holder) with the divisor equal to the phase, where the older form's absence meant none; a declared key stands."""
-    found = dict(entry)
-    rule_form = "parts" not in entry
-    parts = list(found.get("parts", rank_of(entry)))
-    found["parts"] = parts
-    quanta = carries_quanta(entry)
-    found.setdefault("phase", 2 if quanta else 1)
-    found.setdefault("quantum", 1)
+RULED = (
+    "parts",
+    "phase",
+    "quantum",
+    "clicks",
+    "reads",
+)  # the keys the rule fixes; declared against it, refused
+HELD_RULED = ("factors", "dipole", "dipole_div")  # the held row's keys the rule fixes
+CLICKS = {"gives": True, "takes": True, "quantum": 1}  # a family of quanta gives and takes one quantum
+
+
+def contradiction(label: str, key: str, declared: object, fixed: object) -> ValueError:
+    """The refusal by name of a key declared against the rule (THE FAMILIES FROM THE RULE): the key leaves the files, the rule fixes it."""
+    shown = (
+        json.loads(json.dumps(declared)),
+        json.loads(json.dumps(fixed)),
+    )  # the frame's tuples as lists
+    return ValueError(
+        f"{label}.{key} {shown[0]!r} contradicts the rule, which fixes {shown[1]!r} from the rank and "
+        "the pair (THE FAMILIES FROM THE RULE: the key leaves the files)"
+    )
+
+
+def reads_of(parts: list[int], entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """The reads of a family of quanta of rank `parts`: every real field (a holder of the content, at any rank) and the clicking families of a higher rank (the holders of the sign, by q), at the weight 1, by its own twist, in the file's order."""
+    return [
+        {
+            "family": other["name"],
+            "weight": 1,
+            "twist": "own",
+            "by": "q" if held_count(other) == "sign" else 1,
+        }
+        for other in entries
+        if held_count(other) == "content"
+        or (held_count(other) == "sign" and len(rank_of(other)) > len(parts))
+    ]
+
+
+def filled(
+    entry: dict[str, Any], entries: tuple[dict[str, Any], ...], gamma: int, label: str = "the family"
+) -> dict[str, Any]:
+    """The entry with every key the rule fixes filled from its rank and its pair: the parts from the rank, the phase 2 where it carries quanta and 1 for a real field, the quantum 1, the clicks on a family of quanta and none on a real field, the reads (`reads_of`), the held factors 1 and the dipole (the spin on the content's real field, the moment on the sign's holder) with the divisor equal to the phase; a key declared at another value is refused by name (`contradiction`), a key declared at the rule's value stands; the sign (0) and the self-source (off) are filled where absent and stand where declared until the owner's word on a body's charge and on the slot."""
+    found = {k: v for k, v in entry.items() if k not in RULED}
+    found["pair"] = pair_of(entry, gamma, label)
+    found.pop("m", None)
+    with_pairs = paired(entries, gamma)
+    parts = list(rank_of(found))
+    quanta = carries_quanta(found)
+    rule: dict[str, Any] = {"parts": parts, "phase": 2 if quanta else 1, "quantum": 1}
+    rule["reads"] = reads_of(parts, with_pairs) if quanta else []
+    if quanta:
+        rule["clicks"] = CLICKS
+    elif "clicks" in entry:
+        raise contradiction(label, "clicks", entry["clicks"], None)
+    declared = dict(entry)
+    if "reads" in declared:
+        by_name = {str(other["name"]): other for other in with_pairs}
+        declared["reads"] = [
+            {
+                "weight": 1,
+                "twist": "own",
+                "by": "q" if held_count(by_name.get(str(r["family"]), {})) == "sign" else 1,
+                **r,
+            }
+            for r in declared["reads"]
+        ]
+    for key, value in rule.items():
+        if key in declared and declared[key] != value:
+            raise contradiction(label, key, entry[key], value)
+    found.update(rule)
     found.setdefault("sign", 0)
     found.setdefault("self_source", {"unit": 0})
-    if rule_form and quanta and "clicks" not in found:
-        found["clicks"] = {"gives": True, "takes": True, "quantum": found["quantum"]}
     if isinstance(found.get("held"), dict):
-        held = dict(found["held"])
-        held.setdefault("factors", [1] * len(parts))
-        if rule_form and len(parts) > 1:
-            held.setdefault("dipole", "spin" if held["count"] == "content" else "moment")
-            held.setdefault("dipole_div", found["phase"])
+        held = {k: v for k, v in found["held"].items() if k not in HELD_RULED}
+        held["factors"] = [1] * len(parts)
+        if len(parts) > 1:
+            held["dipole"] = "spin" if held["count"] == "content" else "moment"
+            held["dipole_div"] = rule["phase"]
+        for key in HELD_RULED:
+            if key in entry["held"] and entry["held"][key] != held.get(key):
+                raise contradiction(f"{label}.held", key, entry["held"][key], held.get(key))
         found["held"] = held
-    reads: list[dict[str, Any]] = []
-    if "reads" in found:
-        reads = [dict(read) for read in found["reads"]]
-    elif quanta:
-        reads = [
-            {"family": other["name"]}
-            for other in entries
-            if held_count(other) == "content"
-            or (held_count(other) == "sign" and len(rank_of(other)) > len(parts))
-        ]
-    by_name = {str(other["name"]): other for other in entries}
-    for read in reads:
-        read.setdefault("weight", 1)
-        read.setdefault("twist", "own")
-        read.setdefault("by", "q" if held_count(by_name[str(read["family"])]) == "sign" else 1)
-    found["reads"] = reads
     return found

@@ -15,7 +15,7 @@ from event_universe.events import assembly
 from event_universe.events.detector_law import DetectorLawSimulation, LiveRecord
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import exchange_of, form_I
-from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, mode_profile, reads
+from tests.worlds import CHARGE_FAMILY, CLOCK_FAMILY, NODE_CLOCK, family_entry, mode_profile
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
@@ -47,8 +47,8 @@ def small_world(
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
         "universe": [
-            family_entry("light", [1, 1], reads(), clock=[80, 25]),
-            family_entry("matter", [800, 809], reads()),
+            family_entry("light", [1, 1], clock=[80, 25]),
+            family_entry("matter", [800, 809]),
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
         ],

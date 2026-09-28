@@ -15,6 +15,7 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.loader import derived
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.running import INTERVALS, SEEDS, TEMPLATE, WORDS, draw, reads_of
 from tests.worlds import load_file
@@ -59,7 +60,7 @@ def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
 
 
 def alone(drawn: dict[str, Any], families: list[dict[str, Any]]) -> tuple[list, dict]:
-    """The world and the universe of property (d): the body alone on the GameBoard, no emitter, no stock, no detector, no moment (no click and no load acts on its record); the body's reads kept where they are at the plain pace (an integer weight, by 1, the twist "own")."""
+    """The world and the universe of property (d): the body alone on the GameBoard, no emitter, no stock, no detector, no moment (no click and no load acts on its record); the body's derived reads by q weigh nothing at its sign 0, so its level in force is the content's holders' at the plain pace."""
     document = world_of(drawn)
     body = document["measured"][0]
     body["stocks"] = {}
@@ -67,15 +68,7 @@ def alone(drawn: dict[str, Any], families: list[dict[str, Any]]) -> tuple[list, 
     body["moment"] = [0, 0, 0]
     document["measured"] = [body]
     document["detectors"] = []
-    plain = copy.deepcopy(families)
-    for family in plain:
-        if family["name"] == drawn["roles"]["body"]:
-            family["reads"] = [
-                read
-                for read in family["reads"]
-                if isinstance(read["weight"], int) and read["by"] == 1 and read["twist"] == "own"
-            ]
-    return plain, document
+    return copy.deepcopy(families), document
 
 
 def place(
@@ -83,10 +76,11 @@ def place(
 ) -> dict[str, Any]:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "universe.json").write_text(
-        json.dumps({"integers": {**INTEGERS, "Lambda": 1}, "families": families}), encoding="utf-8"
+        json.dumps({"integers": INTEGERS, "families": families}), encoding="utf-8"
     )
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     placed = copy.deepcopy(document)
+    placed.pop("twist_table", None)  # the file's table, not the world's
     placed["stamp"] = input_stamp(placed)
     return placed
 
@@ -168,11 +162,11 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
     body_family = live.family
     num, den = simulation_d.pair_arrays(body_family, live.pair)
     counts = {f["name"]: f["held"]["count"] for f in plain if "held" in f}
+    body_entry = next(f for f in plain if f["name"] == roles["body"])
     weights = {
         counts[read["family"]]: read["weight"]
-        for f in plain
-        if f["name"] == roles["body"]
-        for read in f["reads"]
+        for read in derived.filled(body_entry, tuple(plain), TEMPLATE["node_clock"])["reads"]
+        if read["by"] == 1
     }
 
     def level_in_force() -> np.ndarray:
@@ -231,7 +225,7 @@ def test_a_drawn_universe_loads_runs_and_keeps_the_five_properties(seed: int, tm
 
 
 def test_the_draw_is_fixed_by_its_seed_and_spans_the_admitted_attributes():
-    """The same seed draws the same universe; over the seeds the draw reaches one to twenty families, every parts form, both phases, several pairs, holds of both counts, reads by plain and by sign with an integer or the universe's word for the weight, a self-source on and off, quanta above one."""
+    """The same seed draws the same universe; over the seeds the draw reaches one to twenty families, several pairs and holds of both counts, and the rule derives every parts form, both phases, reads by plain and by sign at the one weight 1, no self-source and the one quantum (THE FAMILIES FROM THE RULE)."""
     assert draw(3) == draw(3)
     seen: dict[str, set] = {
         k: set() for k in ("count", "parts", "phase", "pair", "held", "by", "weight", "self", "quantum")
@@ -239,20 +233,22 @@ def test_the_draw_is_fixed_by_its_seed_and_spans_the_admitted_attributes():
     for seed in range(200):
         drawn = draw(seed)
         seen["count"].add(len(drawn["families"]))
-        for f in drawn["families"]:
-            seen["parts"].add(tuple(f["parts"]))
-            seen["phase"].add(f["phase"])
+        families = tuple(drawn["families"])
+        for f in families:
+            filled = derived.filled(f, families, TEMPLATE["node_clock"])
+            seen["parts"].add(tuple(filled["parts"]))
+            seen["phase"].add(filled["phase"])
             seen["pair"].add(str(f["pair"]))
             if "held" in f:
                 seen["held"].add(f["held"]["count"])
-            for r in f["reads"]:
+            for r in filled["reads"]:
                 seen["by"].add(r["by"])
                 seen["weight"].add(str(r["weight"]))
-            seen["self"].add(f["self_source"]["unit"] > 0)
-            if "clicks" in f:
-                seen["quantum"].add(f["clicks"]["quantum"])
+            seen["self"].add(filled["self_source"]["unit"] > 0)
+            if "clicks" in filled:
+                seen["quantum"].add(filled["clicks"]["quantum"])
     assert seen["count"] >= {1, 2, 20} and min(seen["count"]) == 1 and max(seen["count"]) == 20
     assert seen["parts"] == {(1,), (1, 3), (1, 3, 6)} and seen["phase"] == {1, 2}
     assert len(seen["pair"]) >= 5 and seen["held"] == {"content", "sign"}
-    assert seen["by"] == {1, "q"} and "Lambda" in seen["weight"] and "1" in seen["weight"]
-    assert seen["self"] == {True, False} and seen["quantum"] >= {1, 2, 3, 4}
+    assert seen["by"] == {1, "q"} and seen["weight"] == {"1"}
+    assert seen["self"] == {False} and seen["quantum"] == {1}
