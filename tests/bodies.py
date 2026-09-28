@@ -371,7 +371,7 @@ def point_world(weight: int, stock: int = 2, ticks: int = 4000, length: int = 40
     document["detectors"] = []
     seed_on_the_mode(document)
     document["measured"][0]["emitter"]["weight"] = weight
-    document["stamp"] = input_stamp(document)
+    one_quantum_per_window(document)  # T at the weight set after the seeding (the stamp renewed there)
     return document
 
 
