@@ -65,11 +65,7 @@ def form_I(
     before: np.ndarray,
     content: np.ndarray | None = None,
 ) -> Fraction:
-    # the form from the rule's own integers (ALGEBRA.md #the-line)
-    # at the scale of the plain form (the engine's rational over 3 L): with (R_i, S_i, w_i) the
-    # weak-field rule's coefficients at the Node, [w_i (a^2 + b^2) - S_i a b] / (3 R_i) at the
-    # Nodes and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the vacuum, where R = 2
-    # Gamma^2 num, S = 0, w = 6 den Gamma^2)
+    # the form from the rule's own integers (ALGEBRA.md #the-line) at the scale of the plain form (the engine's rational over 3 L): with (R_i, S_i, w_i) the weak-field rule's coefficients at the Node, [w_i (a^2 + b^2) - S_i a b] / (3 R_i) at the Nodes and 1 / 3 on every Link, plain (den / num, 0 and 1 / 3 in the vacuum, where R = 2 Gamma^2 num, S = 0, w = 6 den Gamma^2)
     gamma = simulation.node_clock
     if content is None:
         content = simulation.level_of("content")
@@ -374,8 +370,7 @@ def draw(seed: int) -> dict[str, Any]:
             "factors": [rng.randint(1, 4) for _ in parts],
             "dipole": "spin" if count_word == "content" else "moment",
         }
-        # the divisor is written on every entry (no default in the loader); the draw of the
-        # random one keeps the stream of the seeds as it was
+        # the divisor is written on every entry (no default in the loader); the draw of the random one keeps the stream of the seeds as it was
         entry["dipole_div"] = rng.randint(1, 3) if rng.random() < 0.5 else 1
         entry["divisor"] = 40000  # the sum's divisor, required on every held row
         return entry
@@ -518,8 +513,7 @@ def family_names() -> set[str]:
     return {family["name"] for family in universe["families"]}
 
 
-# the orders of ALGEBRA.md #the-primitives as the step file law/step.json gives them: the writers
-# of one value at one place in the file's order, a write deferred from (ii) first
+# the orders of ALGEBRA.md #the-primitives as the step file law/step.json gives them: the writers of one value at one place in the file's order, a write deferred from (ii) first
 ORDERS = {
     ("(iv)", "a family's level at a Node"): ("the hold", "the source"),
     ("(iv)", "a body's content M_k"): ("the clicks", "the giving", "the clicks list"),
