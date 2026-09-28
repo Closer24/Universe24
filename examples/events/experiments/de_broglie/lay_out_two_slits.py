@@ -44,6 +44,9 @@ STRIP = 4  # the height of one strip of the screen in Nodes
 STOCK = 400  # the giver's stock of quanta
 TICKS = 6000  # the run's length in intervals: the last giving within ~4,000, the flight of 124 Links at the group velocity 0.518 and the returns from the mirror screen (Cheshbon's yes, 02:27Z)
 FACE_DEPTH = 8
+GAP = (
+    3  # empty Nodes between the giver and the tube's mirrors (the bound charge's tail below two levels)
+)
 
 WALL_X = 40  # the wall's near face; the wall is 4 Nodes thick
 WALL_THICKNESS = 4
@@ -95,10 +98,13 @@ def two_slits(folder: Path) -> dict[str, Any]:
         raise ValueError("the openings do not fall on whole Nodes; choose d and the width together")
     giver_y0 = int(middle + 0.5) - 1
     giver_nodes = box(14, 16, giver_y0, giver_y0 + 2)
+    # the tube's mirrors GAP Nodes away from the giver on its three closed sides (Cheshbon's geometric line
+    # of 04:07Z: the bound charge's tail at a wall of 9000 falls to under two levels four Links out, so a
+    # window body stands three empty Nodes from every wall); the mouth open toward +x
     tube = (
-        box(10, 13, giver_y0, giver_y0 + 2)
-        + box(10, 16, giver_y0 - 3, giver_y0 - 1)
-        + box(10, 16, giver_y0 + 3, giver_y0 + 5)
+        box(14 - GAP - 4, 14 - GAP - 1, giver_y0 - GAP - 3, giver_y0 + GAP + 5)
+        + box(14 - GAP, 16, giver_y0 - GAP - 3, giver_y0 - GAP - 1)
+        + box(14 - GAP, 16, giver_y0 + GAP + 3, giver_y0 + GAP + 5)
     )
     wall_x1 = WALL_X + WALL_THICKNESS - 1
     wall_nodes = [
