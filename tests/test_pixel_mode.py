@@ -35,8 +35,7 @@ def test_the_pixels_record_is_what_rule3_makes_of_its_count_and_loads_lawful(tmp
     own = DetectorLawSimulation(load_world(world)).blocks[0].own  # LAWFUL, the record's two levels
     assert own is not None and own.now[20, 20, 0] == peak
     assert own.before.ravel().tolist() == entry["moving"]["before"]
-    assert TOOL.wavelength((100, 100), 300) == 3  # 2 cos omega = 1: cos k = 3/2 - 2 = -1/2, k = 2 pi / 3
-    assert TOOL.wavelength((200, 100), 300) == 300  # cos k = 1: no rotation within the Links
+    assert TOOL.wavelength((100, 100), 300) == 3 and TOOL.wavelength((200, 100), 300) == 300
 
 
 def test_a_mode_of_the_walls_and_a_body_of_two_nodes_are_refused_by_name(tmp_path, monkeypatch):

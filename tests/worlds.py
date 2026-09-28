@@ -412,9 +412,8 @@ def on_the_file(document: dict) -> dict:
     return moved
 
 
-GAMMA_12000 = 12000  # the rule's universe file in its form at 12,000 (#1419), the tree's file is at 24
+GAMMA_12000, PIXEL_12000 = 12000, 4400  # the rule's file in its form at 12,000 (#1419), Cheshbon's pixel
 ROWS_12000 = ([12000, 12000, 1], [12000, 12000, 400000], [8000, 12000, None])  # #1419's rows over Gamma
-PIXEL_12000 = 4400  # Cheshbon's pixel at 12,000
 
 
 def pixel_at_12000(tmp_path: Path, tool, shape=(41, 41, 1), node=(20, 20, 0), mode: bool = True) -> Path:

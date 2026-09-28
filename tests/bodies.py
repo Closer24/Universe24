@@ -307,7 +307,8 @@ def light_body(x: int, amount: int) -> dict:
 def six_reads(levels: np.ndarray, wrap_x: bool) -> list[int]:
     """S_6 on a chain (y and z of extent 1 read the Node itself twice each): a_W + a_E + 4 a, the ends reading 0 beyond an open x."""
     values = [int(v) for v in levels[:, 0, 0]]
-    length, out = len(values), []
+    length = len(values)
+    out = []
     for x in range(length):
         west = values[(x - 1) % length] if wrap_x or x > 0 else 0
         east = values[(x + 1) % length] if wrap_x or x < length - 1 else 0

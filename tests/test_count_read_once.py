@@ -14,19 +14,13 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import load_world
 from tests.worlds import GAMMA_12000, PIXEL_12000, load_file, pixel_at_12000
 
-ROOT = Path(__file__).resolve().parents[1]
-TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
+TOOL = load_file("pixel_mode", Path(__file__).resolve().parents[1] / "tools" / "pixel_mode.py")
 COUNT, GAMMA = PIXEL_12000, GAMMA_12000
-
-
-def pixel_world(tmp_path: Path, shape=(41, 41, 1), node=(20, 20, 0), mode: bool = True) -> Path:
-    """The pixel of 12,000 on its board with its mode by the tool (tests/worlds.py)."""
-    return pixel_at_12000(tmp_path, TOOL, shape, node, mode)
 
 
 def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(tmp_path, monkeypatch):
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
+    simulation = DetectorLawSimulation(load_world(pixel_at_12000(tmp_path, TOOL)))
     node = tuple(simulation.world.measured[0].block.nodes[0])
     by = {family.name: number for number, family in enumerate(simulation.families)}
     block, lays = simulation.blocks[0], []
@@ -52,7 +46,7 @@ def test_the_pixels_count_enters_every_pace_once_and_every_node_holds_its_count(
 
 def test_the_first_lay_is_the_declared_count_and_the_average_after_a_whole_period(tmp_path, monkeypatch):
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
+    simulation = DetectorLawSimulation(load_world(pixel_at_12000(tmp_path, TOOL)))
     node, block = tuple(simulation.world.measured[0].block.nodes[0]), simulation.blocks[0]
     signs, lays = [], []  # the sign of the level at the Node and the sum of the lay, per interval
     for _ in range(20):
@@ -69,7 +63,7 @@ def test_a_held_family_has_no_stepped_record_and_no_solved_rest_in_the_rules_uni
     tmp_path, monkeypatch
 ):
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    simulation = DetectorLawSimulation(load_world(pixel_world(tmp_path)))
+    simulation = DetectorLawSimulation(load_world(pixel_at_12000(tmp_path, TOOL)))
     node, block = tuple(simulation.world.measured[0].block.nodes[0]), simulation.blocks[0]
     gravity, charge = simulation.held_records[0].now, simulation.held_records[1].now
     beside = (node[0] + 1, node[1], node[2])  # a neighbour of the pixel: the pace there reads its lay
