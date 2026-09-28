@@ -124,8 +124,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
     assert simulation.level_of("sign") is charge.now and not charge.remainder.any()
     assert simulation._body_charge(0) == -5 and simulation._body_charge(1) == -1
     carried = emitter.hold_carry[key]
-    assert carried == 39995
-    assert np.all(charge.now[70:73] == -1)
+    assert carried == 39995 and np.all(charge.now[70:73] == -1)
     givings = 0
     clicks = 0
     for _ in range(document["ticks"]):
@@ -133,8 +132,7 @@ def test_the_charge_is_held_signed_at_the_bodies_and_moves_with_the_labels():
         assert simulation.books()["balanced"], simulation.tick
         givings = emitter.givings  # the quantum moves at the window's open (commit 7)
         clicks = sum(1 for line in lines if line["event"] == "gather")
-        assert simulation._body_charge(0) == -5 + givings
-        assert simulation._body_charge(1) == -1 - clicks
+        assert simulation._body_charge(0) == -5 + givings and simulation._body_charge(1) == -1 - clicks
         carried += simulation._body_charge(0)
         assert emitter.hold_carry[key] == carried and carried > 0
         bodies = sum(simulation._body_charge(number) for number in range(len(simulation.held)))

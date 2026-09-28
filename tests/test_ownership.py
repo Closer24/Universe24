@@ -39,8 +39,7 @@ def test_the_longest_area_names_the_owner_and_the_last_session_link_the_author()
     assert GATE.owner_of("src/core/rule3.py", OWNERS) == "Main Loop"
     assert GATE.owner_of("src/core_notes.md", OWNERS) is None
     assert GATE.owner_of("tests/test_a.py", OWNERS) is None
-    assert GATE.author(BY_PAPER, OWNERS) == "Paper Writer"
-    assert GATE.author("no link", OWNERS) is None
+    assert GATE.author(BY_PAPER, OWNERS) == "Paper Writer" and GATE.author("no link", OWNERS) is None
     assert GATE.author("https://claude.ai/code/session_other", OWNERS) is None
 
 

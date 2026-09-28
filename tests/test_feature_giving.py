@@ -108,8 +108,7 @@ def test_the_declaration_is_the_ledgers_row():
         "a body's momentum n",
     )
     assert DECLARATION.place_of("a body's momentum n") == "(iv)"
-    assert DECLARATION.place_of("a family's level at a Node") == "(ii)"
-    assert DECLARATION.function is apply
+    assert DECLARATION.place_of("a family's level at a Node") == "(ii)" and DECLARATION.function is apply
     assert DECLARATION.section.startswith(THE_WORD)
     assert "from the rule" in THE_WORD and "beyond (H)" in THE_WORD and "click's inverse" in THE_WORD
     simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
