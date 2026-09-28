@@ -1,7 +1,7 @@
 {
  "world": "pulled_pixel_6.json",
- "refusal": "at interval 3: the twist on the Port toward +x reaches |k| = 33666, beyond the twist table (1 coarse triples; ALGEBRA.md #the-primitives)",
- "ticks_run": 2,
+ "refusal": "at interval 30: the pace of 'charge' (family 1, axis 0) is -11 at the Node (11, 1, 1) at interval 29: the pace stays above 0 (the content 35 at or beyond Gamma = 24; ALGEBRA.md ALGEBRA.md #the-paces, the guard's lower side); the run ends",
+ "ticks_run": 29,
  "expected": [
   0.003,
   0,
@@ -13,13 +13,63 @@
    1,
    6,
    3
+  ],
+  [
+   2,
+   7,
+   -2
+  ],
+  [
+   3,
+   7,
+   -6
+  ],
+  [
+   4,
+   21,
+   -5
+  ],
+  [
+   5,
+   37,
+   0
+  ],
+  [
+   6,
+   45,
+   4
+  ],
+  [
+   7,
+   51,
+   5
+  ],
+  [
+   8,
+   58,
+   2
+  ],
+  [
+   9,
+   70,
+   -2
+  ],
+  [
+   10,
+   68,
+   -6
+  ],
+  [
+   20,
+   90,
+   -6
   ]
  ],
  "record": {
   "label": "GAMEBOARD",
-  "period_intervals": null,
-  "amplitude_b": 3,
-  "count_over_the_last_period": 10.0,
+  "period_intervals": 9.0,
+  "amplitude_b": 8,
+  "count_over_the_last_period": 19.11,
   "expected": {
    "count": 10,
    "b": 5,
@@ -29,5 +79,58 @@
   "period_verdict": "MISS"
  },
  "kind": "moves",
- "intervals": 1
+ "label": "GAMEBOARD",
+ "intervals": 27,
+ "net": [
+  0,
+  0,
+  0
+ ],
+ "raw": [
+  8,
+  4,
+  4
+ ],
+ "net_over_axes": [
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   1
+  ]
+ ],
+ "raw_over_axes": [
+  [
+   1,
+   1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   1,
+   2
+  ]
+ ],
+ "peak_interval": 8,
+ "net_per_interval_at_peak": [
+  1,
+  0,
+  0
+ ],
+ "first_move": 8,
+ "share_toward_plus_x": 0.5,
+ "pixel_count": {
+  "start": 10,
+  "end": 19,
+  "least": 10
+ },
+ "white": true
 }
