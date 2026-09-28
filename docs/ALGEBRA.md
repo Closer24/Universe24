@@ -470,7 +470,7 @@ on the record of the primitive that divided.
 | the polariser | (ii) | the record's pair at a polariser body's Nodes, the body's moment D (its axis and its angle a, [the transport](#the-transport)) | the record's pair; the two sets' shares | a hypothesis under its own name: at the body's Nodes the record's pair is turned back by the angle a through the transport once, at its passage, the turn read in the click's booking and never written into the levels (a turn written at the Nodes every interval the record stands on them is the angle applied many times, a scatterer, not a polariser), and its second level is taken by the body's second set, the first level passing to its first set, so the shares of the click are cos^2 and sin^2 of the angle between the record's pair and the axis, the ladder then as written; a body with no moment polarises nothing; THE SWITCHING (the decision, as Aspect's of 1982): a polariser whose card declares two angles (`angles`, two exact pairs) and a period (`every`, an integer of intervals from 1) turns by the first angle for `every` intervals and by the second for the next `every`, by its own clock (the count act (b) on the body, periodic and local), the angle read at the interval the record's level passes its Nodes and never at the giving; a card with one angle stands as today |
 | the giving | (ii) | the body's own levels, the weight g, the outward current through its outer Ports, T, M, **n** | the given family's level at the body's outer Ports; at the open M_k -= 1 and **n** at t + 1 | the three acts of one window in this order: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) (|n_a| div M), the division act with the wall M, both written at t + 1), the write (the given level at the body's outer shell += g x a_body each interval, a load, before the bookings; the outer shell is the body's Nodes with a Port to a Node outside the body, and no inner Node is written), the close (at outward x den >= norm the record named, its direction the tally's sign per axis); the open is the click's count move with the opposite sign, and a close is never an open: the count moves once per window |
 | the crystal | (ii) | the record arriving at a crystal body's one Node (an ordinary body of matter with the key `crystal`, which declares nothing else), the click's residue u, the family's norm T | the arriving record's click at the Node; the giving click of one pair record of rank 2 from the Node's Ports | a hypothesis under its own name (the decisions, "Where a tensor enters"): the arriving record's taking click at the crystal's Node by the ladder as at any set, its quantum into the crystal's count, and in the same interval the crystal's giving click of one record of rank 2 from that count (its count down by one; the record at the arriving norm over twice its denominator, two labels of a half quantum each, the quantum conserved as a half and a half, THE HALF QUANTUM under the ladder), its rotation the crystal's own from its count in the file (the giving's row, the body's mode rotation; the decision, as nature's phase matching in a crystal: the conservation fixes the sum of the labels' rotations to the arriving record's, the crystal fixes the division, and in the symmetric case each label rotates at half the arriving rotation) and its wave number the dispersion's at that rotation, no key for the wavelength; the record's two labels are identical on its two sides (the decision, as Aspect's pairs), so its channel is the identity and nothing is declared; Rule3 spreads its events from the crystal's Node through the Ports as any record's, the record created only during the run and never written at interval 0; the crystal is one Node by default (the decisions, "A detector as nature's instrument"), a cube only where the one-Node equivalence fails, stated with its test; generic (a body's one key, no integer, no family's name), vector (the two clicks' division acts, the giving's load), local (the one Node and its Ports) |
-| the hold | (iv) | a body's content M_k, the quantum's weight w_k of each family's row (its key `quantum`, an integer from 1, required), W, **n**, the held factors, the dipole | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k w_k M_k, a load into the time part; the vector part (factor x s x n_a) div W, the tensor part (factor x s x n_a n_b) div W^2, each with its remainder carried; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
+| the hold | (iv) | a body's content M_k, the quantum's weight w_k of each family's row (its key `quantum`, an integer from 1, required), the row's divisor E_s (its key `divisor`, an integer from 1, required), W, **n**, the held factors, the dipole | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k w_k M_k enters the field's line as a source: the time part at the body's Nodes gains (s + r) div E_s each interval, the division act as a load with the remainder r carried on the body, and at a body in the law's form ([what a body is](#what-a-body-is), its Nodes with their counts) each Node gains (w_k M_k(Node) + r) div E_s of the count declared THERE with a remainder of its own, never the whole s at every Node, a signed source the family's charge times the Node's count; so that two bodies' wells add, a body stands in another's well, and the field's rest is Poisson's with the sources (nature's form: potentials add; a level clamped to the count would make a body's Nodes carry its own count alone); the vector part (factor x s x n_a) div W, the tensor part (factor x s x n_a n_b) div W^2, each with its remainder carried; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
 | the source | (iv) | the record's D_i = now^2 - next x before at its Nodes, E_s (the source's scale) | the sourced family's level at the record's Nodes; the record's remainder | D_i is the booking of the record's own two levels (the form); the level gains weight x ((D_i + r_i) div E_s) each interval, the division act as a load; with a table weight x (s_cap D_i div (s_cap E_s + D_i)), s_cap the table's cap, no remainder, the denominator refused at or below 0; the field's shape is the static limit of Rule3, (Delta - kappa^2) a = -sigma / q with kappa^2 = 6 den / num - 6 (kappa the inverse reach, sigma the source, q the charge's weight) |
 | the recoil | (iv) | the click's tally sigma_a, Q_unit, P_body (the rotation of the body's own mode, its period by the one-Node rule from its clock pair, never declared), lambda_q (the quantum's wavelength, 2 N q / p from its family's clock [p, q] on the world's N steps), L | a body's momentum **n**; the body's remainders | n_a += sigma_a x 3 Q_unit P_body (L div lambda_q) div L at the close, the giver and the taker with opposite signs: the quantum's momentum over the body's energy on the momentum's wall, W P_body / (M lambda_q) with W = 3 Q_unit M (the body's quanta cancel), so the velocity moves by P_body / (lambda_q M) and a heavy body's recoil is small by its quanta; a taker with no mode of its own has no period and takes no recoil; a kick that would carry 3 (**n** . **n**) to W^2 or beyond is refused naming the body (no speed at the wall, [the paces](#the-paces)); the store one remainder per axis on the one declared wall of the universe, L = the least common multiple of the wavelengths 2 N q / p over the families with a clock that a body of the world gives (a world with no giver has L = 1), each whole or the clock refused at load by name, which every lambda_q divides, so that clicks of every wavelength add exactly (the sum's exact floor); L divides the wavelengths' product and is refused by name at or beyond 2^63; a world whose families carry no clock has L = 1, nothing declared |
 | the feed | (v) | the reads' levels at the two faces of each axis of the body (the Nodes read across its Ports), the body's two levels of momentum **n** (now and before, as the spin's), W, Gamma | a body's two levels of momentum **n**; the body's remainders | the contraction at a face, C = SUM over the reads of f x [the time level - (n_b V_b) div W + (n_b n_c h_bc) div W^2] over the face's Nodes with **n** now, f the read's factor (the weight, or minus the body's charge times the weight by q), V and h the read family's vector and tensor parts; the leapfrog n_next = n_before + 2 W x (C_+ - C_-) div (2 Gamma D_a F_a), the two levels then (n_next, n now), D_a the faces' distance in Links and F_a a face's Nodes; the potential per unit of mass is -C / (2 Gamma), so a body falls toward content the same for every family |
@@ -500,7 +500,7 @@ universe file's numbers; and the dipoles at its Node's six neighbours, gravity's
 
 A body is its count and its record. The count c_i is the family of clicks'
 level at the body's Nodes, in quanta; it enters Rule3 through the pace
-alone, p_i = Gamma - c_i, and it never splits: a quantum moves whole, by the
+alone, p_i = Gamma - the held level at the Node (the source's rest: the body's own count and its neighbours' over the divisor), and it never splits: a quantum moves whole, by the
 count's line. The record (now, before) of the body's family splits by the
 send and is bound by the count. The world file names the body's family, its
 Nodes, its count per Node, its momentum **n** at its two levels (now and
@@ -512,17 +512,17 @@ profile, no closed Port, no period (P_body is its mode's rotation).
 
 ### The well
 
-At a Node with count c Rule3's one-Node rotation rises from cos omega_0 =
+At a Node whose held level is c Rule3's one-Node rotation rises from cos omega_0 =
 num / den by (1 - p^2 / Gamma^2)(den - num) / den, and its bonds fall from
 num / (3 den) to num p_i p_j / (3 den Gamma^2): the symmetric form of the
 line with the weights 1 / p_i. The depth is bounded by the family's own 1 -
 cos omega_0, so a family whose pair lies close to 1 binds nothing: on [800,
 809] (1 - cos omega_0 = 0.011) no cube of any side at any count is bound; on
-[800, 1200] (1 / 3) at Gamma = 10^4 a cube of side 12 is bound from 500
-quanta per Node (the mode's share inside 0.79, 0.92 at 1000, 0.997 at 5000),
+[800, 1200] (1 / 3) at Gamma = 10^4 a cube of side 12 is bound from the level 500
+at its Nodes (the mode's share inside 0.79, 0.92 at 1000, 0.997 at 5000),
 of side 6 from 1000, of side 3 at 3000, one Node at 5000; omega_b / omega_0
-for side 12 is 0.832 at 500 and 0.771 at 2000. A body's clock is set by its
-count and its side, from the rule: a body's mass is its count.
+for side 12 is 0.832 at 500 and 0.771 at 2000. A body's clock is set by the
+level at its Nodes and its side, from the rule: a body's mass is its count.
 
 ### The generator
 
@@ -579,35 +579,33 @@ not depend on A beyond its resolution: at A / 2 the profile agrees with the
 one at A, rescaled, within 12 units of the coarser, and the rotation to
 10^-6; the final scale comes from c T.
 
-(g) THE FIELD AT REST, THE START OF A WORLD. A held family's rest is its own
-line's solution at the pair of the family's row under the rewriting hold,
-the body's Nodes clamped to the count and the homogeneous line outside (a
-source row's static limit, (Delta - kappa^2) a = -sigma, is the other case,
-not this one): 6 den a = num S_6(a) between the bodies' Nodes, the counts at
-them, 0 beyond an open face, to the nearest integer on a fine unit derived
-from the width, a value at a half rounded up by the division act. The clamp
-iterated from nothing by the division act rises monotonely to the same rest
-(its fixed point lies below the line by the floors' deficit, far below half
-a count: the reference on a small GameBoard, the side squared per bit of
-the unit on a large one, and below at a half); the mode is solved on that
-content. A world starts from the rest, never from zeros, whose transient
-rings. Under [1, 1] the rest between periodic faces is the uniform level,
-the count itself, no well and no mode there (the source row's periodic
-problem at kappa = 0 has no rest at all); between open faces the harmonic well.
+(g) THE FIELD AT REST, THE START OF A WORLD. The generator iterates the held family's own
+line to rest first, at the pair of the family's row, as the hold's source makes it: the
+count over the divisor E_s added at the body's Nodes each pass, the homogeneous line
+outside. From nothing the level at every Node is num S_6(a) div (6 den), plus half the
+source at the body's Nodes (6 den a = num S_6(a) + 3 den sigma, sigma = w M div E_s: the
+source enters once an interval at one level), by the division act on a fine unit derived
+from the width; the map is monotone, so the levels rise to a fixed point, its first repeat;
+the levels are Poisson's rest with the sources within one unit, and the mode is solved on
+that content: generic (one primitive, the row's pair and divisor, no family name), vector
+(the division act alone, no root, no float) and local (the six reads and the source's load).
+A world starts from the field at rest, never from zeros, whose transient rings. Under [1, 1]
+between periodic faces the sources have no rest (the periodic Poisson problem at kappa = 0),
+and the world is refused by name; between open faces the harmonic well of the sources.
 
 THE START. The loop writes every held family at the load at its rest, by
 one folder found by its name, once before the first interval and never in
 it: on a chain (one layer on two axes) in one pass in integers, the
-tridiagonal line; on a box a guess of the line's solver refined on the exact
+tridiagonal line with the sources on its right side; on a box a guess of the line's solver refined on the exact
 residual R and certified in whole integers: the exit-time field T of the
 same line, with its own exact residual rho, bounds the inverse, ||A^-1|| <=
 ||T|| / (6 den x scale - ||rho||), so the field stands within ||A^-1|| ||R||
 of the exact rest, and where every free Node is farther than that from a
 half the levels are the rest's nearest integers; a Node nearer takes a
 finer unit once, then rounds up, the half's own side. Generic (the
-row's pair), vector (the levels by the division act, the certificate in
+row's pair and divisor), vector (the levels by the division act, the certificate in
 integers; the guess is no value of the law), local (the six reads and the
-rewrite); the cost is the load's.
+source); the cost is the load's.
 
 ### The velocity
 
@@ -667,13 +665,14 @@ detectors and their clicks, the only thing claimed to represent nature.
 The speed of light is one Link per interval. The quantum of action is
 one click, its energy the quantum's norm T of its family. Newton's
 constant is not declared: a body of energy count s makes the level c(r)
-= s times the reference flux over the distance r in Links, and the
-level slows the clock by the potential Phi = -c / (2 Gamma), so
+= s times the reference flux over E_s over the distance r in Links (the
+hold's row: the count enters the field's line over the row's divisor E_s),
+and the level slows the clock by the potential Phi = -c / (2 Gamma), so
 
-  G = (the reference flux) / (2 Gamma) per unit of energy count,
+  G = (the reference flux) / (2 Gamma E_s) per unit of energy count,
 
 with the reference flux a number of the GameBoard's geometry (about 1.4 for
-a cube of side 3) and the energy unit setting the mass of one unit of level.
+a cube of side 3) and the divisor E_s the energy unit setting the mass of one unit of level.
 A world at a smaller Gamma has stronger gravity per unit of content; the
 ratios between rows carry G once and cancel it. The quantum of distance is
 the Link, of time the interval; nothing between two Nodes or two intervals

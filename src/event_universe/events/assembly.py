@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import numpy as np
 
+from event_universe.core.rule3 import division_forward
 from event_universe.features import crystal, polariser
 from event_universe.features.receive import ReceiveTerm
 from event_universe.loader.world import NatureBeamWorld
@@ -173,7 +174,7 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
         for family in loop.held_families
         for part in range(loop.families[family].components)
     }
-    loop.span_masks = {}
+    loop.span_masks, loop.span_hold = {}, {}
     for number, entry in enumerate(world.measured):
         if entry.block is None:
             span = np.zeros(loop.shape, dtype=bool)
@@ -339,13 +340,24 @@ def held_records(loop: DetectorLawSimulation) -> None:
 
 
 def start_at_rest(loop: DetectorLawSimulation) -> None:
-    """THE START (ALGEBRA.md #the-generator, THE START): every held family's time part at the load at its rest, the fixed point of the family's line under the hold's rewrite, by the folder found by its name, once before the first interval and never in it; the rest on the counts the load's hold wrote at the bodies' Nodes (0 elsewhere), its levels written at both levels with the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family."""
+    """THE START (ALGEBRA.md #the-generator, THE START): every held family's time part at the load at its rest, the fixed point of the family's line under the hold's rewrite, by the folder found by its name, once before the first interval and never in it; the rest on the sources' loads at the bodies' Nodes, each source over the row's divisor E_s (0 elsewhere; a body in the law's form the count declared at each Node, the hold's row; 0 at every Node where the source is below E_s, as the load's hold writes no increment: Cheshbon's reading of 2026-09-28), its levels written at both levels with the remainder 0, `node_level` the same array; a family no body holds stays at 0, and the folder's refusal names the family."""
     start = loop.register.at("the start", "any")
     for family, record in loop.held_records.items():
-        if not record.now.any():
+        source = cast(str, loop.families[family].held)
+        divisor = cast(int, loop.families[family].held_divisor)
+        counts = np.zeros(
+            loop.shape, dtype=np.int64
+        )  # the sources' loads: each body's over E_s at its Nodes
+        for number in range(len(loop.held)):
+            block = loop.block_by_number.get(number)
+            mask = block.mask if block is not None else loop.span_masks[number]
+            counts[mask] = division_forward(loop.body_source(number, source), divisor, 0)[0]
+            for node, value in loop.node_sources(number, source):
+                counts[node] = division_forward(value, divisor, 0)[0]
+        if not counts.any():
             continue
         try:
-            field: Any = start(record.now, loop.families[family].pair, loop.kind_wrap[family])
+            field: Any = start(counts, loop.families[family].pair, loop.kind_wrap[family])
             levels = field.levels
         except ValueError as refusal:
             raise ValueError(

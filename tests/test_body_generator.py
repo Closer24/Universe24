@@ -200,8 +200,8 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
         {"family": "charge", "weight": 1, "by": "q"},
     ]
     families = [
-        row("gravity", [1, 4], {"count": "content"}, []),
-        row("charge", [1, 1], {"count": "sign"}, []),
+        row("gravity", [1, 4], {"count": "content", "divisor": 40000}, []),
+        row("charge", [1, 1], {"count": "sign", "divisor": 40000}, []),
     ]
     families += [row("matter", list(KIND), None, reads), row("light", "body", None, [])]
     table = {

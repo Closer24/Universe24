@@ -8,6 +8,7 @@ from event_universe.core.register import discover
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.start import arrivals, chain_rest, field_at_rest, rest
 from event_universe.world_files import parse_nature_beam_world
+from tests.running import stamped
 from tests.worlds import emitter_world
 
 
@@ -61,7 +62,11 @@ def test_a_box_takes_the_certified_rest_the_clamps_levels_and_a_half_rounded_up_
 
 def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
     """THE START in the loop (ALGEBRA.md #the-generator, THE START): at the load, after the held records and the hold's first write, every held family's time part is the folder's rest on the counts the hold wrote at the bodies' Nodes, at both levels with the remainder 0, before the first interval; a family no body holds stays at 0."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
+    document = emitter_world(stock=1, ticks=2)
+    for entry in document["universe"]:
+        if "held" in entry:
+            entry["held"] = {**entry["held"], "divisor": 1}  # a copy: the sources' loads are the counts
+    simulation = DetectorLawSimulation(parse_nature_beam_world(stamped(document)))
     started = 0
     for family, record in simulation.held_records.items():
         definition = simulation.families[family]
@@ -69,7 +74,7 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
         for number in range(len(simulation.held)):  # every body's Nodes, a block's or a span's
             block = simulation.block_by_number.get(number)
             mask = block.mask if block is not None else simulation.span_masks[number]
-            counts[mask] = simulation.body_source(number, definition.held)
+            counts[mask] = simulation.body_source(number, definition.held) // definition.held_divisor
         if not counts.any():
             assert not record.now.any() and not record.before.any()
             continue

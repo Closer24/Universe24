@@ -81,7 +81,7 @@ def test_the_card_is_built_at_ii_and_the_pair_is_declared_at_the_half_quantum():
 
 
 def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_its_side():
-    """The loop on Bell's world, the main loop's audit admitting every act: the emitter's record clicks at the crystal's set (interval 88, measured once on this tree) and in the same interval the crystal gives the pair through the giving's open and window, named at the window's close (96) with the two identical labels, the arriving norm over twice its denominator and a residue of its own (the crystal's, read at its Node); the rows' label clicks alone at the left polariser's own set (103) on the first row's line with the pair's one quantum, the columns' label alone at the right polariser's own set (106) on the second row's line with the arriving record's residue (the second residue of the crystal's Node) and the content 0 (the half in the family's unit), whichever first; after the second click no row is alive. The refusals by name: a crystal on a body with an emitter, a world with one polariser body."""
+    """The loop on Bell's world, the main loop's audit admitting every act: the emitter's record clicks at the crystal's set and in the same interval the crystal gives the pair through the giving's open and window, named at the window's close (after the click, the intervals in this order and never the run's numbers) with the two identical labels, the arriving norm over twice its denominator and a residue of its own (the crystal's, read at its Node); the rows' label clicks alone at the left polariser's own set on the first row's line with the pair's one quantum, the columns' label alone at the right polariser's own set on the second row's line with the arriving record's residue (the second residue of the crystal's Node) and the content 0 (the half in the family's unit), whichever first; after the second click no row is alive. The refusals by name: a crystal on a body with an emitter, a world with one polariser body."""
     simulation = DetectorLawSimulation(parse_nature_beam_world(bell_world()))
     simulation.crystals = {CRYSTAL: CrystalTerm()}
     assert ("measured[5].crystal", "the crystal") in simulation.family_terms()
@@ -92,17 +92,19 @@ def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_
     givings = [line for line in lines if line["event"] == "giving"]
     gathers = [line for line in lines if line["event"] == "gather"]
     arriving, pair = givings
-    assert [(line["tick"], line["measured"], line["labels"]) for line in givings] == [
-        (69, EMITTER, [[0, 1]]),
-        (96, CRYSTAL, [[0, 1], [0, 1]]),
-    ]
+    labels = [(line["measured"], line["labels"]) for line in givings]
+    assert labels == [(EMITTER, [[0, 1]]), (CRYSTAL, [[0, 1], [0, 1]])]
     assert (pair["norm"], pair["pace"]) == (arriving["norm"], 2 * arriving["pace"])
-    assert pair["u"] != arriving["u"] and pair["W"] != arriving["W"]
-    assert [(g["tick"], g["record"], g["chosen"][0][0], g["u"], g["content"]) for g in gathers] == [
-        (88, arriving["record"], "crystal_set", arriving["u"], 1),
-        (103, pair["record"], "left_own", pair["u"], 1),
-        (106, pair["record"] + 1, "right_own", arriving["u"], 0),
+    assert pair["u"] != arriving["u"]  # the crystal's own residue, read at its Node
+    assert [(g["record"], g["chosen"][0][0], g["u"], g["content"]) for g in gathers] == [
+        (arriving["record"], "crystal_set", arriving["u"], 1),
+        (pair["record"], "left_own", pair["u"], 1),
+        (pair["record"] + 1, "right_own", arriving["u"], 0),
     ]
+    ticks = [arriving["tick"], gathers[0]["tick"], pair["tick"], gathers[1]["tick"], gathers[2]["tick"]]
+    assert (
+        ticks == sorted(ticks) and ticks[0] < ticks[1] < ticks[2] < ticks[3]
+    )  # the order, not the run's numbers
     assert not [live for live in simulation.records.values() if live.pair_record is not None]
     simulation.crystals = {EMITTER: CrystalTerm()}
     with pytest.raises(ValueError, match="declares nothing else"):

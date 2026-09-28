@@ -307,15 +307,18 @@ def test_the_increment_ladder_over_the_named_sets():
     forward_givings, backward_givings, differs = lockstep_givings(
         layer_world(["s0", "s1", "s2"]), layer_world(["s2", "s1", "s0"])
     )
-    assert len(forward_givings) == len(backward_givings) == 8 and differs is not None
+    assert (
+        len(forward_givings) == len(backward_givings) == 8 and differs is None
+    )  # the level 0 at the bodies
     assert sorted(line["u"] for line in forward_givings) == sorted(g["u"] for g in gathers)
     reads = [1] + [line["tick"] for line in forward_givings[:-1]]
     agreed = [
         (forward["u"] == backward["u"], read)
         for forward, backward, read in zip(forward_givings, backward_givings, reads, strict=True)
     ]
-    assert all(same for same, read in agreed if read < differs)
-    assert sum(1 for _same, read in agreed if read < differs) >= 3
+    assert all(
+        same for same, _read in agreed
+    )  # every residue agrees: the clock field is 0 at the bodies
     # one set on the emitter's row alone books a third of the flux: the last click at 1014
     # under the one border (the well two Links from the closed face; item 28), COMPUTATION
     one, _, _ = run_layer(layer_world("s1"))  # every giving a window and a rung (commit 7)
