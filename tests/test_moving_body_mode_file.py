@@ -40,3 +40,9 @@ def test_the_mode_file_carries_the_moving_bodys_two_levels_and_its_proper_pair()
     assert read is not None and len(read[0]) == 120 and read[0] != read[1]
     with pytest.raises(ValueError, match="above the amplitude bound"):
         moving_levels(m, clock, 120, "b", 1)
+
+
+def test_a_mode_files_exact_fraction_beyond_the_hosts_digit_cap_round_trips_through_json() -> None:
+    """The rotation of a mode on a large board is an exact fraction of thousands of digits (the well's, not the host's to cap): with the world files' reader imported, a fraction of 5,000 digits is written and read back exactly, so the loader and every reader of a mode file take it."""
+    rotation = [10**5000 + 7, 10**5000]
+    assert json.loads(json.dumps({"rotation": rotation}))["rotation"] == rotation
