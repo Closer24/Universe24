@@ -232,6 +232,7 @@ def one_node(length: int, i: int) -> np.ndarray:
     return mask
 
 
+@pytest.mark.usefixtures("the_loads_hold_alone")
 def test_the_loader_requires_the_node_clock_under_the_detector_law_and_bounds_it():
     """(v) `node_clock` is REQUIRED under `detector_law` (refused without it by name, an integer from 1); the load bound names the clock and the content (the slab of (iii) at Gamma = 10^6 refused naming Gamma and M); the registered light clock loads under the families file's Gamma = 10^4, A's clock pair (10^4, 10^4) at its Nodes as in the vacuum (its count 65 over the divisor 40000 adds nothing at the start, the first increment at the 615th interval, 616 x 65 = 40040), its wheel (4 x 10^8, 1203) on its own pair [800, 802] at the level 0 and the kind [800, 1200]'s (8 x 10^10, 9) in the vacuum."""
     document = content_chain(12, PERIODIC, [], 1)
