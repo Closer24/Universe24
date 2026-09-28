@@ -4,14 +4,11 @@ from __future__ import annotations
 
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 from event_universe.core.step import STEP_FILE, read_step
 from event_universe.loader.world import NatureBeamWorld, parse_world_document
 
-# the mode file's exact fractions carry the well's digits, not the host's cap on an integer's string
-sys.set_int_max_str_digits(0)
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 LAW_ROOT = Path(__file__).resolve().parents[2]
 
@@ -26,7 +23,9 @@ def read_repository_json(value: str) -> object | None:
 
 
 def input_digest(document: dict[str, object]) -> str:
-    """THE FILE'S DIGEST (ALGEBRA.md #a-familys-declaration; the stamp over the whole file): SHA-256 of the canonical JSON (the keys sorted, no spaces, ASCII) of the document without its `stamp` key, the same from the raw document (`input_stamp`) and at load, so that a file changed by hand is refused."""
+    """THE FILE'S DIGEST (ALGEBRA.md #a-familys-declaration; the stamp over the whole file): SHA-256 of the
+    canonical JSON (the keys sorted, no spaces, ASCII) of the document without its `stamp` key, the same
+    from the raw document (`input_stamp`) and at load, so that a file changed by hand is refused."""
     canonical = json.dumps(
         {key: value for key, value in document.items() if key != "stamp"},
         sort_keys=True,
@@ -37,7 +36,8 @@ def input_digest(document: dict[str, object]) -> str:
 
 
 def input_stamp(document: dict[str, object]) -> dict[str, str]:
-    """THE STAMP the generator writes into a world file under `stamp` (ALGEBRA.md #a-familys-declaration): the digest of the whole document and nothing else; the loader compares it with the digest computed at load."""
+    """THE STAMP the generator writes into a world file under `stamp` (ALGEBRA.md #a-familys-declaration): the
+    digest of the whole document and nothing else; the loader compares it with the digest computed at load."""
     return {"hash": input_digest(document)}
 
 
@@ -59,7 +59,8 @@ def world_files(document: object) -> dict[str, object]:
 
 
 def parse_nature_beam_world(document: object) -> NatureBeamWorld:
-    """The world parsed from its document: the files it names read here, the stamp's digest computed here, every check the loader's."""
+    """The world parsed from its document: the files it names read here, the
+    stamp's digest computed here, every check the loader's."""
     digest = input_digest(document) if isinstance(document, dict) else None
     return parse_world_document(document, world_files(document), digest)
 

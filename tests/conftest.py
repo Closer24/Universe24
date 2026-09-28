@@ -1,12 +1,8 @@
 """Test session options: the explicit visualization opt-in; every test file is collected and a living test is never skipped; the fixture of the load's hold alone for the tests of the mechanics on a chosen GameBoard state."""
 
-import sys
-
 import pytest
 
 from event_universe.events import assembly
-
-sys.set_int_max_str_digits(0)  # the suite reads every mode file of the tree, the well's digits uncapped
 
 
 @pytest.fixture
