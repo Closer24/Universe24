@@ -50,17 +50,23 @@ def weighted_current(simulation: DetectorLawSimulation, live) -> tuple[int, int]
 
 
 def test_the_rest_world_runs_its_first_window_and_the_close_leaves_no_current(tmp_path):
-    """The window opens, writes and closes within the first intervals (6 on the corrected giving alone, 16 under the conformal term: the light's pace at the giver is slower there, the outward flux per interval smaller); the giving line books the zero mode's velocity B; three intervals after the close the weighted current stays within (t - t_close + 1) weight sums (one division remainder per Node per interval); the given record stands under A at every interval, and the level's step at the body's Node shrinks from the close to the last interval: a wave passing, not a linear growth."""
+    """The window opens, writes and closes within the world's own run (114 intervals on this tree, where the count at the giver's Nodes is the record's form; under the conformal term the light's pace at the giver is slower and the outward flux per interval smaller); the giving line books the zero mode's velocity B; three intervals after the close the weighted current at the Link pace stays within one division remainder per Node per interval beside the mean weight's remainder; the given record stands under A at every interval, and the level's step at the body's Node shrinks from the close to the last interval: a wave passing, not a linear growth."""
     lines: list[dict] = []
     simulation = DetectorLawSimulation(load_world(rest_world(tmp_path)), observer=lines.append)
     light = [f.name for f in simulation.families].index("charge")
     levels: list[int] = []
-    horizon = 40  # the first close within it, then three intervals more; a level above A ends the run: no refusal is the first assertion
+    horizon = json.loads((tmp_path / "rest.json").read_text(encoding="utf-8"))[
+        "ticks"
+    ]  # the world's own run
     while simulation.tick < horizon and not [line for line in lines if line["event"] == "giving"]:
-        simulation.step()
+        simulation.step()  # a level above A ends the run: no refusal is the first assertion
         records = [live for live in simulation.records.values() if live.family == light]
         levels.append(int(records[0].now[BODY]) if records else 0)
     for _ in range(3):
+        simulation.step()
+        records = [live for live in simulation.records.values() if live.family == light]
+        levels.append(int(records[0].now[BODY]) if records else 0)
+    for _ in range(3):  # three intervals after the first close
         simulation.step()
         records = [live for live in simulation.records.values() if live.family == light]
         levels.append(int(records[0].now[BODY]) if records else 0)
