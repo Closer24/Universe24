@@ -26,7 +26,7 @@ from event_universe.core.rule3 import (
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, body_language, feeding, guards, output, pair
+from event_universe.events import after_step, assembly, body_language, guards, output, pair
 from event_universe.events import live as live_records
 from event_universe.events.geometry import GameBoardGeometry, PairView
 from event_universe.events.inverse import block_clock_inverse, booking_inverse
@@ -256,8 +256,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the recoil": Stage(self._recoil_stage, (), ("the recoil",)),
             "the lifetime": Stage(self._lifetime_stage, (), ("the lifetime",)),
             "the hand": Stage(lambda function: None, (), ("the hand",)),
-            "the feed": Stage(self._feed_stage, (), ("the feed",)),
-            "the induction": Stage(self._induction_stage, (), ("the induction",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
             "the polariser": Stage(self._polariser_stage, (), ("the polariser",)),
             "the crystal": Stage(self._crystal_stage, (), ("the crystal",), creates=True),
@@ -317,7 +315,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction)
         writes = cast(CountWrites, line(term, start, None))
         block.counts, block.count_remainder = writes.count, writes.remainder
-        self._follow_count(block)
 
     def _body_count(self, block: Block) -> int:
         """The count at the body, its quanta: the declared count per Node over its Nodes (the record's norm in quanta, ALGEBRA.md #what-a-body-is; the count's line moves them between the Nodes and loses none)."""
@@ -346,59 +343,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             counts[node] = int(count)
             remainder[node] = int(rule3(NO_READ, NO_READ, 1, share[1], 0, 0, rest)[0])
         return counts, remainder
-
-    def _follow_count(self, block: Block) -> None:
-        """The body's Nodes follow the count's centroid by whole Links (ALGEBRA.md #the-counts-line, the velocity: the centroid moves at the current's velocity; #the-velocity: the well moves with the count): along an axis where the centroid of the quanta shown (the counts above 0; a hole nature does not show) lies a whole Link beyond the body's centre, the mask, the corner, the family's pair region and the detector map shift one Link that way (the hop's HOST bookkeeping, now the count's); a resting body's quanta jitter within its Nodes (the open point 1) and move nothing."""
-        shown = np.maximum(cast(np.ndarray, block.counts), 0)
-        total = int(shown.sum())
-        wrap = self.kind_wrap[block.family]
-        shift = [0, 0, 0]
-        for axis in range(3):
-            extent, span = int(block.definition.extents[axis]), int(self.shape[axis])
-            offsets = np.arange(span) - block.corner[axis]
-            if wrap[
-                axis
-            ]:  # every Node at its nearest image to the corner (the halves compared, no division)
-                offsets = np.where(2 * offsets > span, offsets - span, offsets)
-                offsets = np.where(2 * offsets <= -span, offsets + span, offsets)
-            along = shown.sum(axis=tuple(other for other in range(3) if other != axis))
-            moment = 2 * int((along * offsets).sum())
-            if moment >= total * (extent + 1):
-                shift[axis] = 1
-            elif moment <= total * (extent - 3):
-                shift[axis] = -1
-        block.moved = total > 0 and any(shift)
-        if not block.moved:
-            return
-        old_mask = block.mask
-        for axis in range(3):
-            corner, span = block.corner[axis] + shift[axis], int(self.shape[axis])
-            if wrap[axis]:
-                corner = corner - span if corner >= span else corner + span if corner < 0 else corner
-            elif corner < 0 or corner + int(block.definition.extents[axis]) > span:
-                raise ValueError(
-                    f"block {block.number}'s Nodes would leave the board through the face on axis "
-                    f"{axis} at interval {self.tick}: its count's centroid crossed a whole Link toward a "
-                    "face with no Port (ALGEBRA.md #the-counts-line)"
-                )
-            block.corner[axis] = corner
-        block.mask = self._box(block.corner, block.definition.extents, block.family)
-        self._inflow_port_pairs.clear()
-        self._inflow_port_faces.clear()
-        self._write_pair(block)
-        for node in zip(*np.nonzero(old_mask & ~block.mask), strict=True):
-            self.detector_at_node[(int(node[0]), int(node[1]), int(node[2]))] = -1
-        set_detector = next(
-            (
-                detector
-                for detector, number in self.set_block.items()
-                if number == block.number and self.set_nodes[detector] is None
-            ),
-            None,
-        )
-        for node in zip(*np.nonzero(block.mask), strict=True):
-            address = (int(node[0]), int(node[1]), int(node[2]))
-            self.detector_at_node[address] = block.detector if set_detector is None else set_detector
 
     def _hold_stage(self, function: Callable[..., None], advance: bool) -> None:
         """The hold's two acts: at the interval's start the moved bodies' Nodes rewritten; after the records, the held families' own step, the hold and the pace guard."""
@@ -448,7 +392,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return whole
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
-        """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1, the kick written to both levels of n (the feed's KEEP pair exchanges them every interval); a body with no period declares no term."""
+        """The recoil's act (features/recoil): per click of the interval on a body that declares a period, the folder's line on the click's tally with the body's momentum and its stores on the universe's wall L, the taker at the sense +1 and the giver at -1, the kick written to both levels of n; a body with no period declares no term."""
         for number, sense, tally, clock, identity in self._recoils:
             block = self.block_by_number.get(number)
             emitter = block.definition.emitter if block is not None else None
@@ -493,16 +437,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         for block in self.blocks:
             if block.emit_now:
                 self._emit(block)
-
-    def _feed_stage(self, function: Callable[..., None]) -> None:
-        """The feed's act: each body's two levels of momentum from the reads at its faces as the interval leaves them."""
-        for block in self.blocks:
-            self._feed_act(function, block, False)
-
-    def _induction_stage(self, function: Callable[..., None]) -> None:
-        """The induction's act: each body's two levels of momentum from the change of the reads' vector parts over its Nodes."""
-        for block in self.blocks:
-            self._induction_act(function, block, False)
 
     def _spins_stage(self, function: Callable[..., None]) -> None:
         """The spin's step's act: each body's spin from the fields as the interval leaves them."""
@@ -608,6 +542,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if block is None or not block.definition.counts:
             return []
         weight = 1 if source == "content" else self.families[block.family].charge[0]
+        if block.counts is not None and block.definition.counts:
+            # the count's line has laid the quanta: the well is written where they are now
+            moved = zip(*np.nonzero(block.counts), strict=True)
+            return [((int(x), int(y), int(z)), weight * int(block.counts[x, y, z])) for x, y, z in moved]
         nodes, counts = block.definition.nodes or (), block.definition.counts
         return [(node, weight * int(count)) for node, count in zip(nodes, counts, strict=True)]
 
@@ -820,7 +758,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             return list(block.momentum)
         return [component * elapsed // ramp for component in block.momentum]
 
-    # THE BODIES ON ONE NODE (ALGEBRA.md #the-interval, #a-familys-declaration, #the-primitives; the one stroke, commit 6): the contraction, the feed, the induction, the spin's step, written once for any body and any read
+    # THE BODIES ON ONE NODE (ALGEBRA.md #the-interval, #a-familys-declaration, #the-primitives; the one stroke, commit 6): the spin's step, written once for any body and any read (the feed and the induction left: derived, ALGEBRA.md #the-primitives)
 
     def _spins_act(self, line: Callable[..., object], block: Block, inverse: bool) -> None:
         """THE BODY'S STEP AT (v): the spin's step's line (features/spins_step) on the body from the fields as the interval leaves them (per read with a dipole the read family's vector part and, for the spin's dipole, its time part at the body's Node's six neighbours with the row's two weights), the body's momentum, wall, spin and spin before and its remainders under the line's keys; the writes the spin, the spin before and the remainders back."""
@@ -860,12 +798,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.spin, block.spin_before = list(writes.spin), list(writes.spin_before)
         block.hold_value.update(writes.own.values)
         block.hold_carry.update(writes.own.carries)
-
-    _read_factors = feeding.read_factors
-    _parts_summed = feeding.parts_summed
-    _faces_of = feeding.faces_of
-    _feed_act = feeding.feed_act
-    _induction_act = feeding.induction_act
 
     def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
         """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
@@ -1283,10 +1215,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         # the bodies' step back first (ALGEBRA.md #the-interval; commit 6): the momentum and the spin as the interval began, from the fields as it left them
         for block in self.blocks:
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
-        for block in self.blocks:
-            self._induction_act(self.register.at("the induction", "(v)"), block, True)
-        for block in self.blocks:
-            self._feed_act(self.register.at("the feed", "(v)"), block, True)
         # the interval's dipole writes taken back first (ALGEBRA.md #the-interval; commit 2): they were the last writes of the forward interval, after the fields' step; then the hold's first phase back at the count the forward hold read (the store stepped back, the time part's increment off the end level) before the count's line returns the quanta
         hold = self.register.at("the hold", "(iv)")
         held = self._hold(hold, THE_INVERSE)
