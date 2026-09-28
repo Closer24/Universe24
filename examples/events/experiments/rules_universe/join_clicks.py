@@ -57,6 +57,7 @@ def read(world_path: Path) -> dict[str, Any]:
     events: dict[str, int] = {}
     for line in lines:
         events[line.get("event", "?")] = events.get(line.get("event", "?"), 0) + 1
+    face_clicks = sum(1 for g in simulation.layer.gathers if g["chosen"] and g["chosen"][0][0] == "face")
     low, high = blind["dissolution_intervals"]
     report = {
         "world": world_path.name,
@@ -91,6 +92,8 @@ def read(world_path: Path) -> dict[str, Any]:
             "expected": blind["records_at_the_end"],
             "verdict": "MATCH" if len(simulation.records) == blind["records_at_the_end"] else "MISS",
             "event_lines": events,
+            "clicks_at_the_faces": face_clicks,
+            "faces": "a click at an open face is no click and is not counted (Cheshbon 14:55, the Closer 15:02)",
         },
         "4_the_levels": {
             "label": "GAMEBOARD",

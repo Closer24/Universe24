@@ -51,6 +51,7 @@ def test_the_pixels_record_is_the_forms_amplitude_at_its_node_with_the_tail_at_b
 
 def test_a_body_of_two_nodes_a_count_without_its_rows_and_a_row_given_twice_are_refused_by_name():
     document = json.loads(WORLD.read_text(encoding="utf-8"))
+    document["measured"][0]["nodes"][0]["count"] = 3000  # the world's count is the day's
     with pytest.raises(
         ValueError, match="measured\\[0\\] has the count 3000 and no --clock and --tail rows"
     ):
