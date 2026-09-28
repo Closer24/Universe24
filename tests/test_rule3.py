@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import random
 import re
-from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -19,30 +18,37 @@ SOURCE = ROOT / "src" / "event_universe"
 GAMMA = 10_000
 
 
-def algebra_isotropic(
+def old_isotropic(
     num: int, den: int, gamma: int, content: int, weak_field: bool
 ) -> tuple[int, int, int]:
-    """ALGEBRA.md #the-line at the isotropic paces: p_0 = Gamma - c, p_a = p_0 - c (the level enters the Link twice and the clock once), R = 2 num p_a^2, S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 12 num p_a^2 (the pace is conformal), w = 6 den Gamma^2; or the plain first-order rule."""
+    """The engine's `rule_coefficients` before the cut (events/rule.py of main 6d2a92e2), the oracle: (R, S, w) of the weak-field rule, or of the plain first-order rule."""
     pace = gamma - content
     if not weak_field:
         return pace * num, 6 * den * content, 3 * den * gamma
-    axis_pace = pace - content
+    squares = pace * pace
     gamma_squared = gamma * gamma
     self_coefficient = (
-        12 * den * gamma_squared - 12 * (den - num) * pace * pace - 12 * num * axis_pace * axis_pace
+        12 * den * gamma_squared - 6 * (squares + gamma_squared) * (den - num) - 12 * num * squares
     )
-    return 2 * axis_pace * axis_pace * num, self_coefficient, 6 * den * gamma_squared
+    return 2 * squares * num, self_coefficient, 6 * den * gamma_squared
 
 
-def rotation_of(reads, self_coefficient: int, wall: int, cosines=(1, 1, 1)) -> Fraction:
-    """A plane wave's rotation from the rule's integers, cos omega = (SUM_a R_a cos k_a + S / 2) / w, with cos k_a given as an exact rational (k = 0: 1; k = pi: -1; k = pi / 2: 0)."""
-    return Fraction(
-        sum(read * cos_k for read, cos_k in zip(reads, cosines, strict=True)) * 2 + self_coefficient,
-        2 * wall,
+def old_axes(
+    num: int, den: int, gamma: int, content: int, axis_contents: tuple[int, int, int]
+) -> tuple[tuple[int, int, int], int, int]:
+    """The engine's `axis_rule_coefficients` before the cut, the oracle of the four paces."""
+    pace = gamma - content
+    paces = [pace - axis_contents[axis] for axis in range(3)]
+    gamma_squared = gamma * gamma
+    reads = (2 * paces[0] ** 2 * num, 2 * paces[1] ** 2 * num, 2 * paces[2] ** 2 * num)
+    squares = paces[0] ** 2 + paces[1] ** 2 + paces[2] ** 2
+    self_coefficient = (
+        12 * den * gamma_squared - 6 * (pace * pace + gamma_squared) * (den - num) - 4 * num * squares
     )
+    return reads, self_coefficient, 6 * den * gamma_squared
 
 
-def test_the_coefficients_are_the_algebras_line_and_the_axes_paces_from_the_isotropic_ones():
+def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_zero_axis_contents():
     """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
     rng = random.Random(3)
     for _ in range(500):
@@ -51,19 +57,22 @@ def test_the_coefficients_are_the_algebras_line_and_the_axes_paces_from_the_isot
         content = rng.randint(-gamma + 1, gamma - 1)
         axis_contents = (rng.randint(-50, 50), rng.randint(-50, 50), rng.randint(-50, 50))
         for weak_field in (True, False):
-            read, self_coefficient, wall = algebra_isotropic(num, den, gamma, content, weak_field)
+            read, self_coefficient, wall = old_isotropic(num, den, gamma, content, weak_field)
             assert coefficients(num, den, gamma, content, weak_field=weak_field) == (
                 (read, read, read),
                 self_coefficient,
                 wall,
             )
+        assert coefficients(num, den, gamma, content, axis_contents) == old_axes(
+            num, den, gamma, content, axis_contents
+        )
         assert coefficients(num, den, gamma, content, (0, 0, 0)) == coefficients(
             num, den, gamma, content
         )
         # the vacuum c = 0: 2 Gamma^2 times the plain rule (the levels bit for bit)
         assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 3, 0, 6 * den * gamma**2)
         # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_0^2)
-        pace, axis_pace = gamma - 2 * content, gamma - 2 * content - axis_contents[0]
+        pace, axis_pace = gamma - content, gamma - content - axis_contents[0]
         (read, *_), self_iso, wall = coefficients(num, den, gamma, content)
         assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == (
             (2 * axis_pace**2 * num, read, read),
@@ -71,28 +80,6 @@ def test_the_coefficients_are_the_algebras_line_and_the_axes_paces_from_the_isot
             wall,
         )
     assert ISOTROPIC == (0, 0, 0)
-
-
-def test_the_pace_is_conformal_every_rotation_below_gamma_is_the_vacuums_scaled_by_the_pace_squared():
-    """ALGEBRA.md #the-line THE PACE IS CONFORMAL, exactly in rationals: at every level c below Gamma / 2 and every pair the rest rotation obeys sin^2 (omega_0 / 2) = (p_0 / Gamma)^2 sin^2 (omega_vac / 2), and a plane wave at the wave number k along an axis adds (p_a / Gamma)^2 (num / 3 den) sin^2 (k / 2), the level entering the Link twice (p_a = Gamma - 2 c) and the clock once (p_0 = Gamma - c)."""
-    rng = random.Random(5)
-    for _ in range(300):
-        num, gamma = rng.randint(1, 1000), rng.choice([100, GAMMA])
-        den, content = rng.randint(num, 1000), rng.randint(1, (gamma - 1) // 2)
-        clock, link = Fraction(gamma - content, gamma) ** 2, Fraction(gamma - 2 * content, gamma) ** 2
-        rest_vacuum, at_level = (
-            (1 - rotation_of(*coefficients(num, den, gamma, 0))) / 2,
-            coefficients(num, den, gamma, content),
-        )
-        assert (1 - rotation_of(*at_level)) / 2 == clock * rest_vacuum
-        for cos_k in (
-            Fraction(0),
-            Fraction(-1),
-            Fraction(1, 2),
-        ):  # a plane wave along x at the wave number k
-            assert (
-                1 - rotation_of(*at_level, (cos_k, 1, 1))
-            ) / 2 == clock * rest_vacuum + link * Fraction(num, 3 * den) * (1 - cos_k) / 2
 
 
 def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays():

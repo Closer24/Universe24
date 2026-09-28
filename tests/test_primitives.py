@@ -60,8 +60,7 @@ def test_a_plane_rotation_keeps_the_norm_before_the_division_and_inverts_exactly
         assert all(0 <= rho < 5 for rho in after)
         back, before = P.rotate_quaternion_inverse(block, quadruple, after)
         assert back == rotated and before == remainders
-    # the unit quaternion keeps the norm times e^2 before the division
-    a, b, c, d, e = quadruple
+    a, b, c, d, e = quadruple  # the unit quaternion keeps the norm times e^2 before the division
     w, x, y, z = block
     products = (
         a * w - b * x - c * y - d * z,
