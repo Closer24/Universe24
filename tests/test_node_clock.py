@@ -15,7 +15,7 @@ from event_universe.events.detector_law import DetectorLawSimulation, form_json
 from event_universe.world_files import input_stamp, parse_nature_beam_world
 from tests.bodies import CHAIN, GAMMA, PAIR, content_chain, light_body, six_reads
 from tests.running import planted
-from tests.worlds import NODE_CLOCK, PERIODIC, emitter_world, family_entry, lawful_wheel, reads
+from tests.worlds import NODE_CLOCK, PERIODIC, emitter_world, family_entry, lawful_wheel
 
 # A, the amplitude unit of the planted rows: the worlds' amplitude_bound (ALGEBRA.md #the-line; the engine's constant UNIT retired by the model owner's record 2089, BUILD.md section 26 item 57)
 UNIT = 1 << 20
@@ -374,22 +374,21 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     )
     with pytest.raises(ValueError, match="the world has unknown keys: detector_law"):
         parse_nature_beam_world(ray)
-    unread = json.loads(json.dumps(good))
-    del unread["universe"][0]["reads"]  # THE FAMILIES FROM THE RULE: the reads derive from the ranks
-    derived = parse_nature_beam_world(unread).families[0].reads
+    derived = (
+        parse_nature_beam_world(good).families[0].reads
+    )  # THE FAMILIES FROM THE RULE: from the ranks
     assert [read[1:] for read in derived] == [(1, "plain", "own"), (1, "sign", "own")]
     unknown = json.loads(json.dumps(good))
-    unknown["universe"][0]["reads"][0]["family"] = "ticks"
+    unknown["universe"][0]["reads"] = [{"family": "ticks"}]
     with pytest.raises(ValueError, match=r"reads\[0\]\.family names 'ticks', no family of the universe"):
         parse_nature_beam_world(unknown)
     unheld = json.loads(json.dumps(good))
-    unheld["universe"][0]["reads"][0]["family"] = "matter"
-    with pytest.raises(ValueError, match="reads names 'matter', which is not held"):
+    unheld["universe"][0]["reads"] = [{"family": "matter"}]
+    with pytest.raises(ValueError, match=r"families\[0\]\.reads .* contradicts the rule"):
         parse_nature_beam_world(unheld)
     quantum = json.loads(json.dumps(good))
     quantum["universe"][2]["quantum"] = 2
-    quantum["universe"][2]["clicks"] = {"gives": True, "takes": True, "quantum": 2}
-    with pytest.raises(ValueError, match="counted in quanta, one click one unit"):
+    with pytest.raises(ValueError, match=r"families\[2\]\.quantum 2 contradicts the rule"):
         parse_nature_beam_world(quantum)
     clocked = json.loads(json.dumps(good))
     clocked["universe"][2]["clock"] = [512, 1]
@@ -402,15 +401,17 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     ):
         parse_nature_beam_world(charged)
     reading = json.loads(json.dumps(good))
-    reading["universe"][2]["reads"] = [{"family": "charge", "weight": 1, "twist": 0, "by": 1}]
-    with pytest.raises(ValueError, match="is held and reads"):
+    reading["universe"][2]["reads"] = [{"family": "charge"}]  # a real field reads none
+    with pytest.raises(ValueError, match=r"families\[2\]\.reads .* contradicts the rule"):
         parse_nature_beam_world(reading)
     booked = json.loads(json.dumps(good))
     booked["universe"][2]["booked"] = True  # HISTORY (item 53): derived, not declared
     with pytest.raises(ValueError, match="unknown keys: booked"):
         parse_nature_beam_world(booked)
     twice = json.loads(json.dumps(good))  # two holders of the content: the second at its own divisor
-    twice["universe"][3]["held"] = {"count": "content", "factors": [1], "divisor": 1}
+    twice["universe"][3].update(
+        pair=[1, 2], held={"count": "content", "divisor": 1}
+    )  # the bound band's well
     twice["stamp"] = input_stamp(twice)
     simulation = DetectorLawSimulation(parse_nature_beam_world(twice))
     held = [f for f, family in enumerate(simulation.families) if family.held == "content"]
@@ -441,7 +442,7 @@ def test_the_loader_reads_the_held_family_by_attribute_and_refuses_what_it_canno
     many = json.loads(json.dumps(good))
     many["most_families"] = 20  # the universe's key
     many["universe"] += [
-        family_entry(f"family_{n}", [800, 809], reads()) for n in range(len(many["universe"]), 21)
+        family_entry(f"family_{n}", [800, 809]) for n in range(len(many["universe"]), 21)
     ]
     with pytest.raises(ValueError, match="families declares 21; at most 20 families"):
         parse_nature_beam_world(many)
@@ -456,6 +457,11 @@ def test_a_held_family_steps_at_the_pair_its_row_declares():
     for num, den in ((1, 1), (1, 2), (3, 5), (800, 809)):
         document = content_chain(12, PERIODIC, [3], 5)
         document["universe"][2]["pair"] = [num, den]
+        if (num, den) != (
+            1,
+            1,
+        ):  # off the vacuum's band the content's holder is the count alone: no spin
+            del document["universe"][2]["spins_step"]
         simulation = DetectorLawSimulation(parse_nature_beam_world(document))
         family = next(f for f in simulation.held_records if simulation.families[f].held == "content")
         record = simulation.held_records[family]

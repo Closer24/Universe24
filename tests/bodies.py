@@ -8,18 +8,15 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp
 from tests.worlds import (
     CHARGE_FAMILY,
-    CHARGE_FAMILY_NAME,
     CLOCK_FAMILY,
-    HELD_MOMENT,
-    HELD_SPIN,
     NODE_CLOCK,
+    TWIST_TABLE,
     chain_world,
     emitter_body,
     emitter_rung,
     family_entry,
     mode_profile,
     one_quantum_per_window,
-    reads,
     receiver_cube,
     seed_on_the_mode,
 )
@@ -73,19 +70,10 @@ WELL = [800, 801]
 
 
 def paces_world() -> dict:
-    """A periodic board with a body of matter at rest and the families with parts (gravity [1, 3, 6] holding the content); the matter family reads gravity's time part at 1. Its tests leave THE START out (the fixture): a board periodic on every axis has no rest under a source (ALGEBRA.md #the-generator (g)), and the recorded seedings (tests/seeds.json) bind the board as recorded."""
+    """A periodic board with a body of matter at rest; the content's holder `clicks` is the real field of rank 3 (the spin's dipole, its row), the matter family reads its time part at 1 (THE FAMILIES FROM THE RULE). Its tests leave THE START out (the fixture): a board periodic on every axis has no rest under a source (ALGEBRA.md #the-generator (g)), and the recorded seedings (tests/seeds.json) bind the board as recorded."""
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control"}
     periodic = dict.fromkeys("xyz", "periodic")
     document = block_world(PACES_SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
-    for family in document["universe"]:
-        if family["name"] == "clicks":
-            family.update(
-                {
-                    "parts": [1, 3, 6],
-                    "held": dict(HELD_SPIN),
-                    "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
-                }
-            )
     document["stamp"] = input_stamp(document)
     return document
 
@@ -97,24 +85,14 @@ def charged_chain(
     amount: int,
     light_charge: int,
     matter_charge: int,
-    strength: int = 1,
     divisor: int = 40000,
 ) -> dict:
-    """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes`, light and matter charged, a neutral fifth family, Lambda = `strength` and the held rows' divisor E_s `divisor`."""
+    """A chain of `length` under GAMMA: light bodies of `amount` quanta at `nodes`, light and matter charged (the sign declared on the family until the owner's word on a body's charge), a neutral fifth family, every read at the one weight 1 (Lambda left the files) and the held rows' divisor E_s `divisor`."""
     document = content_chain(length, boundary, nodes, amount, divisor=divisor)
     document["universe"][LIGHT]["sign"] = light_charge
     document["universe"][MATTER]["sign"] = matter_charge
-    document["universe"].insert(NEUTRAL, family_entry("neutral", [1, 1], reads(), clock=[512, 1]))
-    set_strength(document, strength)
+    document["universe"].insert(NEUTRAL, family_entry("neutral", [1, 1], clock=[512, 1]))
     return document
-
-
-def set_strength(document: dict, strength: int) -> None:
-    """Lambda on every reading family: the weight of its read on the family of charge (the family genericity, BUILD.md section 26 item 51)."""
-    for family in document["universe"]:
-        for read in family.get("reads", []):
-            if read["family"] == CHARGE_FAMILY_NAME:
-                read["weight"] = strength
 
 
 def block_world(
@@ -127,9 +105,9 @@ def block_world(
     on_mode: bool = False,
 ) -> dict:
     """A world of the massive kind `matter` with blocks, a light family on the clock [77, 25], and optionally an emitter body of light (`emitter_at`) as the first measured event, seeded on its mode; with `on_mode` every well seeded on its mode (a real body under the count's line: a flat seed sloshes and its quanta move)."""
-    matter: dict = family_entry("matter", kind, reads())
+    matter: dict = family_entry("matter", kind)
     # light on the given clock [512, 1] of N = 1024 (the given train, ALGEBRA.md #the-click)
-    families = [family_entry("light", [1, 1], reads(), clock=[512, 1]), matter]
+    families = [family_entry("light", [1, 1], clock=[512, 1]), matter]
     measured: list[dict] = []
     wells: list[int] = []
     if source is not None:
@@ -178,6 +156,7 @@ def block_world(
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
+        "twist_table": TWIST_TABLE,
         "universe": families,
         "measured": measured,
         "detectors": [],
@@ -244,7 +223,7 @@ def light_clock_world(faces: str, far_body: bool) -> dict:
 
 def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
     """A world of the massive kind `matter` beside light, with no emitter and no block; the face slab one Node deep where the board is open."""
-    matter: dict = family_entry("matter", pair, reads())
+    matter: dict = family_entry("matter", pair)
     return {
         "shape": shape,
         "boundary": boundary,
@@ -254,8 +233,9 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
         "momentum_unit": 64,
+        "twist_table": TWIST_TABLE,
         "universe": [
-            family_entry("light", [1, 1], reads(), clock=[512, 1]),
+            family_entry("light", [1, 1], clock=[512, 1]),
             matter,
             dict(CLOCK_FAMILY),
             dict(CHARGE_FAMILY),
@@ -272,7 +252,7 @@ def matter_emitter_world(matter_emitter: bool, clock: list[int] | None = None, s
     document["ticks"] = 160
     document["universe"][1]["name"] = "source"
     document["measured"][0]["family"] = "source"
-    matter: dict = family_entry("matter", [156, 157], reads())
+    matter: dict = family_entry("matter", [156, 157])
     matter["clock"] = [512, 1] if clock is None else clock  # seeded as recorded; None deletes it after
     document["universe"].append(matter)
     document["measured"] = document["measured"][:1]
@@ -302,7 +282,7 @@ def seed_source(document: dict, number: int) -> None:
 
 def source_family() -> dict:
     """The emitter bodies' massive family `source` (the kind SOURCE_KIND, no clock)."""
-    return family_entry("source", list(SOURCE_KIND), reads())
+    return family_entry("source", list(SOURCE_KIND))
 
 
 def content_chain(
@@ -418,22 +398,9 @@ def parts_of(simulation: DetectorLawSimulation, name: str) -> list:
 
 
 def parts_world(**body: object) -> dict:
-    """A periodic board with one body of matter at [3, 2, 2] of side 3 and the families with parts (gravity [1, 3, 6] and charge [1, 3]); its tests leave THE START out (the fixture), as `paces_world`."""
+    """A periodic board with one body of matter at [3, 2, 2] of side 3 and the shipped ranks derived (gravity [1, 3, 6] and charge [1, 3]); its tests leave THE START out (the fixture), as `paces_world`."""
     block = {"position": [3, 2, 2], "side": 3, "pair": WELL, "margin": "control", **body}
     periodic = dict.fromkeys("xyz", "periodic")
     document = block_world(SHAPE, periodic, KIND, [block], ticks=20, on_mode=True)
-    for family in document["universe"]:
-        if family["name"] == "clicks":
-            family.update(
-                {
-                    "parts": [1, 3, 6],
-                    "phase": 1,
-                    "held": dict(HELD_SPIN),
-                    "spins_step": {"curl": [1, 4], "tidal": [3, 4]},
-                }
-            )
-            family["spins_step"] = {"curl": [1, 4], "tidal": [3, 4]}
-        if family["name"] == "charge":
-            family.update({"parts": [1, 3], "held": dict(HELD_MOMENT)})
     document["stamp"] = input_stamp(document)
     return document
