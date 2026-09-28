@@ -107,6 +107,22 @@ def one_click() -> dict[str, Any]:
     }
 
 
+def expectation() -> dict[str, Any]:
+    """The expectation file of the health look: no DETECTOR share (one click, in kind), the GAMEBOARD row `reversible` over the whole run (HIGHLIGHTS line 33, the runner's row of #1377); the five lines are read from the output by one_click.py."""
+    return {
+        "format": "world-expectation-v1",
+        "status": "HEALTH LOOK: one click in kind at the strip; no number of a run here",
+        "row": "the one-click health look before the two slits' first look (the owner's word of 07:06 Israel through the Closer): the strip's click is the one measurement, every other reading is GAMEBOARD",
+        "DETECTOR": [],
+        "GAMEBOARD": [
+            {
+                "reversible": TICKS,
+                "row": "the whole run forward and back on a fresh copy, every row bit for bit, the click keeps the click; a diagnostic, MATCH or MISS with the first interval and Node that deviate",
+            }
+        ],
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=HERE, help="the folder the files are written into")
@@ -115,6 +131,9 @@ def main() -> None:
     folder.mkdir(parents=True, exist_ok=True)
     document = one_click()
     (folder / f"{WORLD_NAME}.json").write_text(json.dumps(document, indent=1) + "\n", encoding="utf-8")
+    (folder / f"{WORLD_NAME}.expectation.json").write_text(
+        json.dumps(expectation(), indent=1) + "\n", encoding="utf-8"
+    )
     print(
         json.dumps(
             {

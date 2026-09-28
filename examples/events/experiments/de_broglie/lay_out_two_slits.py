@@ -353,8 +353,14 @@ def expectation(document: dict[str, Any]) -> dict[str, Any]:
         ),
         "DETECTOR": [],
         "strips": strips_expected(document),
-        "GAMEBOARD": [],
+        "GAMEBOARD": [
+            {
+                "reversible": TICKS,
+                "row": "HIGHLIGHTS line 33 (the owner, 09:31 Israel): the whole run forward and back on a fresh copy of the world, every row of the GameBoard bit for bit, the click keeps the click (the runner's row, #1377); a diagnostic, MATCH or MISS with the first interval and Node that deviate",
+            }
+        ],
         "GAMEBOARD_checks": [
+            "(0) `reversible`: the run returns to its start bit for bit; a MISS names the engine's defect before any reading of the strips is believed",
             "(i) `behind_the_wall` (away from the openings) stays 0 behind the opaque wall; `at_left_opening` and `at_right_opening` carry the record's level in the openings",
             "(ii) `light_rows` every 100 intervals: one record leaves the tube along +x, two parts pass the openings, spread and meet on the screen",
             "(iii) `giver_centre`, `wall_centre`, `screen_centre`: within a Link over the run; `giver_cycle`: the giver's own period, the generator's",
@@ -376,7 +382,7 @@ def main() -> None:
     folder.mkdir(parents=True, exist_ok=True)
     document = two_slits()
     expected = expectation(document)
-    expected["GAMEBOARD"] = [
+    expected["GAMEBOARD"] += [
         {"body": number, "interval": TICKS // 2, "centre": centre, "band": 1, "row": row}
         for number, centre, row in (
             (1, [WALL_X + WALL_THICKNESS // 2, HEIGHT // 2, 0], "the wall at rest within a Link"),
