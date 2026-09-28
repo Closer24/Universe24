@@ -29,7 +29,7 @@ def carries_quanta(entry: dict[str, Any]) -> bool:
 
 
 def filled(entry: dict[str, Any], entries: tuple[dict[str, Any], ...]) -> dict[str, Any]:
-    """The entry with every absent key the rule fixes filled: the parts from the rank, the phase 2 where it carries quanta and 1 for a real field, the quantum 1, the sign 0, the self-source off, the held factors 1, and the reads: a family of quanta reads every held family of a higher rank, at the weight 1, by its own twist, by the sign where the read family holds the sign; in the rule's form (no `parts` declared) also the clicks on a family of quanta and the dipole (the spin on the content's real field, the moment on the sign's holder) with the divisor equal to the phase, where the older form's absence meant none; a declared key stands."""
+    """The entry with every absent key the rule fixes filled: the parts from the rank, the phase 2 where it carries quanta and 1 for a real field, the quantum 1, the sign 0, the self-source off, the held factors 1, and the reads: a family of quanta reads every real field (a holder of the content, at any rank, the bound band's well among them) and the clicking families of a higher rank (the holders of the sign), at the weight 1, by its own twist, by the sign where the read family holds the sign; in the rule's form (no `parts` declared) also the clicks on a family of quanta and the dipole (the spin on the content's real field, the moment on the sign's holder) with the divisor equal to the phase, where the older form's absence meant none; a declared key stands."""
     found = dict(entry)
     rule_form = "parts" not in entry
     parts = list(found.get("parts", rank_of(entry)))
@@ -55,7 +55,8 @@ def filled(entry: dict[str, Any], entries: tuple[dict[str, Any], ...]) -> dict[s
         reads = [
             {"family": other["name"]}
             for other in entries
-            if held_count(other) is not None and len(rank_of(other)) > len(parts)
+            if held_count(other) == "content"
+            or (held_count(other) == "sign" and len(rank_of(other)) > len(parts))
         ]
     by_name = {str(other["name"]): other for other in entries}
     for read in reads:
