@@ -33809,7 +33809,10 @@
  "families": [
   {
    "name": "gravity",
-   "m": 10000,
+   "pair": [
+    1,
+    1
+   ],
    "held": {
     "count": "content",
     "divisor": 40000
@@ -33827,7 +33830,10 @@
   },
   {
    "name": "charge",
-   "m": 10000,
+   "pair": [
+    1,
+    1
+   ],
    "clock": [
     512,
     1

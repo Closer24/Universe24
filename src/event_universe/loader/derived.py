@@ -10,10 +10,10 @@ VACUUM_PAIR = (1, 1)  # the rule's own massless band, the band of the one real f
 
 
 def pair_of(entry: dict[str, Any], gamma: int, label: str) -> list[int] | str:
-    """THE MASS IS ONE INTEGER (the owner, 2026-09-28): a family's pair is written over the lattice's denominator Gamma, the file holding the numerator `m` alone, cos omega_0 = m / Gamma, and the loader derives the pair [m, Gamma] in lowest terms (light m = Gamma gives [1, 1], the exact band m = Gamma div 2 gives [1, 2]); a row declaring both `m` and `pair` is refused by name, and a row with neither lacks its pair."""
+    """THE MASS IS ONE INTEGER (the owner, 2026-09-28): a family's pair is written over the lattice's denominator Gamma, the file holding the numerator `m` alone, cos omega_0 = m / Gamma, and the loader writes the pair [m, Gamma] as it stands (THE WALL IS ONE: the wall 6 Gamma^3 for every family, the pair in the coefficients as written; light m = Gamma, the exact band m = Gamma div 2, the band read by `reduced`); a row declaring both `m` and `pair` is refused by name, and a row with neither lacks its pair."""
     if "m" in entry and "pair" in entry:
         raise ValueError(
-            f"{label} declares both m and pair: the pair is [m, Gamma] in lowest terms, one form"
+            f"{label} declares both m and pair: the pair is [m, Gamma] as it stands, one form"
         )
     if "m" not in entry:
         if "pair" not in entry:
@@ -27,8 +27,7 @@ def pair_of(entry: dict[str, Any], gamma: int, label: str) -> list[int] | str:
         raise ValueError(
             f"{label}.m {m} is not from 1 to Gamma = {gamma}: cos omega_0 = m / Gamma lies in (0, 1]"
         )
-    divisor = math.gcd(m, gamma)
-    return [m // divisor, gamma // divisor]
+    return [m, gamma]
 
 
 def paired(entries: tuple[dict[str, Any], ...], gamma: int) -> list[dict[str, Any]]:
@@ -50,9 +49,18 @@ def rank_of(entry: dict[str, Any]) -> tuple[int, ...]:
     count = held_count(entry)
     if count == "sign":
         return (1, 3)
-    if count == "content" and tuple(entry["pair"]) == VACUUM_PAIR:
+    if count == "content" and reduced(entry["pair"]) == VACUUM_PAIR:
         return (1, 3, 6)
     return (1,)
+
+
+def reduced(pair: object) -> tuple[int, ...]:
+    """A pair in lowest terms, the band it names (THE MASS IS ONE INTEGER: [m, Gamma] is the band [m div g, Gamma div g]); the word "body" as it is; the coefficients stay on the pair as written, whose wall sets the amplitude unit."""
+    if not isinstance(pair, (list, tuple)):
+        return (0,)
+    num, den = int(pair[0]), int(pair[1])
+    divisor = math.gcd(num, den) or 1
+    return (num // divisor, den // divisor)
 
 
 def carries_quanta(entry: dict[str, Any]) -> bool:

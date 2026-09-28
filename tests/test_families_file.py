@@ -40,8 +40,8 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     assert all(set(entry) <= ATTRIBUTES for entry in document["families"])
     spins = {"curl": [1, 4], "tidal": [3, 4]}
     held, moment = {"count": "content", "divisor": 40000}, {"count": "sign", "divisor": 40000}
-    assert gravity == {"name": "gravity", "m": 10000, "held": held, "spins_step": spins}
-    assert charge == {"name": "charge", "m": 10000, "clock": [512, 1], "held": moment}
+    assert gravity == {"name": "gravity", "pair": [1, 1], "held": held, "spins_step": spins}
+    assert charge == {"name": "charge", "pair": [1, 1], "clock": [512, 1], "held": moment}
     assert matter == {"name": "matter", "pair": "body"}
     entries, integers = frame.universe(FILE, {FILE: read_repository_json(FILE)}, discover())
     # the frame reads the table's lists as tuples (core/schema.py); the same numbers
@@ -49,9 +49,7 @@ def test_the_file_holds_the_integers_and_three_families_as_laws_and_every_world_
     gravity, charge, matter = (derived.filled(entry, entries, 10000) for entry in entries)
     # gravity rank 3 and real; the charge rank 2 with clicks (light its wave); matter a scalar of quanta
     assert gravity["parts"] == [1, 3, 6] and gravity["phase"] == 1 and "clicks" not in gravity
-    assert (
-        gravity["pair"] == [1, 1] == charge["pair"]
-    )  # THE MASS IS ONE INTEGER: [m, Gamma] in lowest terms
+    assert gravity["pair"] == [1, 1] == charge["pair"]  # the pair as written (THE WALL IS ONE)
     spin = {
         "count": "content",
         "divisor": 40000,
