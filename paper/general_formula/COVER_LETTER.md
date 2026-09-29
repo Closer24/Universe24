@@ -2,34 +2,37 @@
 
 Dear Editors,
 
-I submit the manuscript "Universe24: the group of order 24 behind the
-clicks, one local integer rule on the cube's lattice, and the quantum and
-relativistic experiments it confronts" for consideration as a regular
-article. A preprint is posted on arXiv (identifier to be added on
-posting); the manuscript is not under consideration elsewhere.
+I submit the manuscript "Universe24: one local integer rule on the cube's
+lattice, the click as its one non-local act, and the universe it builds
+without a free number" for consideration as a regular article. A preprint
+is posted on arXiv (identifier to be added on posting); the manuscript is
+not under consideration elsewhere.
 
-**What the paper is.** One algebraic object, the integer group ring of a
-cyclic group on a cubic lattice whose symmetries are the 48 signed
-permutations and their rotations the group of order 24, and six bounded
-integer operations on it, applied at every Node of the lattice at every
-interval. The paper states the algebra first and derives its identities
-before any run: the group of the six Ports, the books, Gauss's law, the
-pace of every direction, the click's weight as a positive quadratic form
-under one axiom of the apparatus, the exact count marginals of a pair
-and the CHSH sum as an exact rational of the phase grain; then the
-massive record kind, one declared pair of integers per kind, its band,
-its cone and the block that stands for an external body. Outside the
-lattice there are detectors and their clicks only; everything compared
-with nature is a count between clicks or a ratio of such counts. The
-method is a world file per experiment, a pin written before the run and
-three checks per row (the algebra, the lattice without pins, the pins);
-the paper's list of experiments is printed with its blanks where a run
-has not yet been read, and a miss is written as a miss. Lorentz's factors
-and Einstein's step are reached under two named hypotheses on the click,
-and the paper says which the law as built meets; the bending's
-coefficient and the atom's ladder are labelled conjectures; the law as
-built has no relativistic dynamics, and its sequential wheel signals in
-a pair's order, which the paper states.
+**What the paper is.** One line of integer arithmetic, applied at every
+Node of a cubic lattice at every interval: a second-order step of a
+family's level from its two levels and its six neighbours' arrivals, with
+integer coefficients from the family's pair and the Node's paces, and one
+Euclidean division whose remainder stays at the Node. The paper states the
+line first and proves what is exact on the lattice before any run: the
+step's reversibility bit for bit, a conserved quadratic form, the
+conservation of the count, one quantum per click, Born's rule, no
+signalling through the click, and for a pair record the correlation
+cos 2(a - b) with the CHSH sum 2 sqrt 2. It then derives the families
+as bands of the rule, the three exact rotations and the three tensor ranks
+with one free number per rank, and states as a hypothesis under its own
+name a universe whose every number is the rule's, with zero free numbers,
+in which every bound body is one Node between an edge and a horizon and
+the observer is a cluster of such Nodes. Outside the lattice there are
+detectors and their clicks only; everything compared with nature is a
+click or a count of clicks. The paper is algebra alone: it holds no run,
+no code and no experiment. The forms of nature (Einstein's, Lorentz's,
+de Broglie's, Born's, Malus's, Bell's) are derived from the line as
+predictions, each beside the form it is compared with, and the paper says
+plainly that nothing is run in it and that no agreement with nature is
+claimed; the forms of nature are on the comparison side only, never an
+input. Every claim carries its mark (theorem, derived, computed,
+assumption, hypothesis), and the paper's last section lists what is open
+by name.
 
 **Why this journal.** The paper belongs to the family of deterministic
 lattice and cellular-automaton models of physics whose foundational
@@ -37,26 +40,25 @@ discussion this journal has carried ('t Hooft's cellular-automaton
 duality, Found. Phys. 43, 597 (2013); the ontological-models framework
 of Harrigan and Spekkens, Found. Phys. 40, 125 (2010), which the paper
 cites), and its method, a stated rule, exact identities of a declared
-algebra, and a comparison with experiment by kind with the misses
-printed, is the conceptual and methodological work the journal's scope
+algebra, and expectations written before any run with the comparison by
+kind, is the conceptual and methodological work the journal's scope
 names.
 
 **Declarations.** No funding; no competing interests; no human
-participants. The simulator, every world file, every registered run's
-record, the check scripts, the figures' scripts and the derivation
-records are archived at Zenodo (concept DOI 10.5281/zenodo.22738746) with
-the commit named in the reproduction appendix; the code is under the MIT
-licence. I used a large language model (Claude, Anthropic, through Claude Code,
-2026) extensively as a tool, under my direction and instructions, for the
-software, the computations, the mathematical derivations and their checks,
-the physics of the design pages and the drafting of the text, as the
-manuscript's declaration states; the model is not an author; I reviewed
-and edited every statement and take full responsibility for the content. I laid down every
-postulate and hypothesis of the model myself and brought in nothing
-external; the forms of Newton, Kepler, Einstein, Lorentz, Bohr and Balmer
-that the paper cites are the things compared with, not inputs to the
-model. No figure was made by a generative tool; every figure is drawn by
-a script from the definitions.
+participants. The simulator, the law's document, the engine's document,
+the check scripts and the figures' scripts are archived at Zenodo (concept
+DOI 10.5281/zenodo.22738746) under the MIT licence. I used a large
+language model (Claude, Anthropic, through Claude Code, 2026) extensively
+as a tool, under my direction and instructions, for the software, the
+computations, the mathematical derivations and their checks, the physics
+of the law's document and the drafting of the text, as the manuscript's
+declaration states; the model is not an author; I reviewed and edited
+every statement and take full responsibility for the content. I laid down
+every postulate and hypothesis of the model myself and brought in nothing
+external; the forms of Newton, Einstein, Lorentz, de Broglie, Born, Malus
+and Bell that the paper cites are the things compared with, not inputs to
+the model. No figure was made by a generative tool; every figure is drawn
+by a script from the definitions.
 
 Sincerely,
 
