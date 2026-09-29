@@ -8,6 +8,7 @@ from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.giving import (
     ACTS,
     DECLARATION,
+    THE_BIRTH,
     THE_CLOSE,
     THE_INVERSE,
     THE_OPEN,
@@ -36,6 +37,10 @@ def a_write(levels: tuple[np.ndarray, np.ndarray] | None, act: str = THE_WRITE) 
 
 def a_close(flux: int, tally: tuple[int, int, int]) -> GivingStart:
     return GivingStart(THE_CLOSE, 0, NO_TALLY, None, flux, tally)
+
+
+def a_birth(count: int, levels: tuple[np.ndarray, np.ndarray] | None) -> GivingStart:
+    return GivingStart(THE_BIRTH, count, NO_TALLY, levels, 0, NO_TALLY)
 
 
 def rows(writes) -> tuple[list[list[int]], list[list[int]]]:
@@ -86,6 +91,16 @@ def test_the_three_acts_of_a_window_on_synthetic_integers():
     assert closed.level is None and closed.count == 0 and closed.momentum is None
 
 
+def test_the_birth_moves_the_bodys_levels_whole_and_takes_the_one_quantum():
+    """The photon channel's act (ALGEBRA.md #the-functional-and-the-dilation (e)): at a Node beyond the body's set holding one quantum of the count's line, the body's two levels there move whole into the born record, no division and no remainder; the count there falls by one; the window, open or closed, is untouched."""
+    levels = (np.array([7], dtype=np.int64), np.array([-2], dtype=np.int64))
+    born = apply(TERM, a_birth(1, levels), CLOSED)
+    assert [level.tolist() for level in born.level] == [[7], [-2]] and born.count == -1
+    assert born.own == CLOSED and born.momentum is None and not born.closed and born.direction is None
+    open_window = GivingOwn(3, 500, (1, 0, 0))
+    assert apply(TERM, a_birth(1, levels), open_window).own == open_window
+
+
 def test_the_refusals_by_name():
     """The coupling and the action from 1; the act one of the four; an open on an open one, a write or a close on none, an inverse with nothing written; the quanta from 1 at the open; every field named, no default"""
     with pytest.raises(ValueError, match="needs the coupling's pair and the quantum action T from 1"):
@@ -93,7 +108,11 @@ def test_the_refusals_by_name():
     with pytest.raises(ValueError, match="inverse steps back a write, and none is written"):
         apply(TERM, a_write((np.zeros(1), np.zeros(1)), THE_INVERSE), GivingOwn(0, 0, NO_TALLY))
     with pytest.raises(ValueError, match="act is one of"):
-        apply(TERM, GivingStart("the birth", 1, NO_TALLY, None, 0, NO_TALLY), CLOSED)
+        apply(TERM, GivingStart("the dance", 1, NO_TALLY, None, 0, NO_TALLY), CLOSED)
+    with pytest.raises(ValueError, match="bears one quantum per Node per interval.*the Node holds 2"):
+        apply(TERM, a_birth(2, (np.array([7]), np.array([-2]))), CLOSED)
+    with pytest.raises(ValueError, match="birth needs the body's two levels at the Node"):
+        apply(TERM, a_birth(1, None), CLOSED)
     with pytest.raises(ValueError, match="opens a window while one is open"):
         apply(TERM, an_open(1, NO_TALLY), GivingOwn(3, 0, NO_TALLY))
     with pytest.raises(ValueError, match="act 'the close' on a body with no open window"):
@@ -106,15 +125,15 @@ def test_the_refusals_by_name():
         GivingStart(THE_OPEN, 1)  # type: ignore[call-arg]
     with pytest.raises(TypeError):
         GivingOwn()  # type: ignore[call-arg]
-    assert ACTS == (THE_OPEN, THE_WRITE, THE_CLOSE, THE_INVERSE)
+    assert ACTS == (THE_OPEN, THE_WRITE, THE_CLOSE, THE_INVERSE, THE_BIRTH)
 
 
 def test_the_declaration_is_the_ledgers_row():
     """The folder declares the row of ALGEBRA.md #the-primitives in the register's form: "the giving" at (ii), the word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function is `apply`, the act the loop calls."""
     assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
     assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
-    assert DECLARATION.writes[0] == "a family's level at a Node"
-    assert DECLARATION.writes[1:] == ("a body's content M_k", "a body's momentum n")
+    assert DECLARATION.writes[:2] == ("a family's level at a Node", "a body's content M_k")
+    assert DECLARATION.writes[2:] == ("a body's momentum n", "the count at a Node")
     assert DECLARATION.place_of("a body's momentum n") == "(iv)"
     assert DECLARATION.place_of("a family's level at a Node") == "(ii)" and DECLARATION.function is apply
     assert DECLARATION.section.startswith(THE_WORD)

@@ -1,4 +1,4 @@
-"""The giving, the three acts of one window and their inverse: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += (a_body x num + r) div den at both levels of the body's rotation, one act of the write per Node and level (features/write, the line the loop hands in the start; Rule3's division act on the row when none is handed) with the remainder r carried at the Node, [num, den] the giving's coupling: the universe's pair [1, k], or the file's weight g as [g, 1] until the loader reads the universe's, before the bookings), the close (at outward >= T, the universe's quantum action, the record named, its direction the tally's sign per axis), and the inverse of a write (the levels written that interval and the remainders before them, from the same body levels and the remainders after) (ALGEBRA.md #the-primitives the row "the giving" and "A BODY'S WRITE IS ONE ACT"; 9.107); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H)."""
+"""The giving, the three acts of one window and their inverse: the open (M_k -= 1 of the given family and the bulk share n_a -= sgn(n_a) x (|n_a| div M), at t + 1), the write (a_given at the shell += (a_body x num + r) div den at both levels of the body's rotation, one act of the write per Node and level (features/write, the line the loop hands in the start; Rule3's division act on the row when none is handed) with the remainder r carried at the Node, [num, den] the giving's coupling: the universe's pair [1, k], or the file's weight g as [g, 1] until the loader reads the universe's, before the bookings), the close (at outward >= T, the universe's quantum action, the record named, its direction the tally's sign per axis), and the inverse of a write (the levels written that interval and the remainders before them, from the same body levels and the remainders after) (ALGEBRA.md #the-primitives the row "the giving" and "A BODY'S WRITE IS ONE ACT"; 9.107); the count's close the click's inverse, the bulk share from the rule, the window's write beyond (H); and the birth, the photon channel (ALGEBRA.md #the-functional-and-the-dilation (e)): at a Node beyond the body's set whose count the count's line raised to one, the body's record's two levels there move whole into a born record of the given family (the body's levels at that Node 0, the born record's norm its form as written: one quantum, one click) and the count at that Node falls by one, the remainder kept; one birth per Node per interval, no division and no remainder of its own."""
 
 from __future__ import annotations
 
@@ -15,12 +15,14 @@ from event_universe.core.rule3 import THE_ADVANCE, THE_INVERSE, Key, division_fo
 THE_OPEN = "the open"
 THE_WRITE = "the write"
 THE_CLOSE = "the close"
+THE_BIRTH = "the birth"
 ACTS = (
     THE_OPEN,
     THE_WRITE,
     THE_CLOSE,
     THE_INVERSE,
-)  # the inverse: a write stepped back, Rule3's own word
+    THE_BIRTH,
+)  # the inverse: a write stepped back, Rule3's own word; the birth: the photon channel's one act
 
 THE_WORD = (
     "the close of the count the click's inverse, the bulk share from the rule ALGEBRA.md #the-line, "
@@ -44,7 +46,7 @@ class GivingTerm:
 
 @dataclass(frozen=True)
 class GivingStart:
-    """The interval's reading for one act, every field named by the loop: the act's word; at the open the body's quanta M and momentum n; at the write and at the inverse the body's two levels (now, before) at its shell (None at the other acts); at the close this interval's outward flux and its tally; the write's line the loop hands (features/write; None: the folder's division act on the row)."""
+    """The interval's reading for one act, every field named by the loop: the act's word; at the open the body's quanta M and momentum n; at the write and at the inverse the body's two levels (now, before) at its shell (None at the other acts); at the close this interval's outward flux and its tally; the write's line the loop hands (features/write; None: the folder's division act on the row).; at the birth the count at the Node beyond the body's set (quanta) and the body's two levels there (body_levels)"""
 
     act: str
     quanta: int
@@ -91,7 +93,7 @@ def bulk_share(momentum: tuple[int, int, int], quanta: int) -> tuple[int, int, i
 
 
 def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:
-    """The refusals by name: the coupling and the action from 1; the act one of the four; an open on an open window, a write, a close or an inverse on none; the quanta from 1 at the open; the write or the inverse without the body's levels; the inverse without a write to step back."""
+    """The refusals by name: the coupling and the action from 1; the act one of the five; an open on an open window, a write, a close or an inverse on none; the quanta from 1 at the open; at the birth one quantum at the Node and the body's levels there; the write or the inverse without the body's levels; the inverse without a write to step back."""
     if np.min(term.coupling[0]) < 1 or term.coupling[1] < 1 or term.action < 1:
         raise ValueError(
             f"the giving needs the coupling's pair and the quantum action T from 1, got the coupling "
@@ -101,6 +103,15 @@ def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:
         raise ValueError(f"the giving's act is one of {list(ACTS)}, got {start.act!r}")
     if start.act == THE_OPEN and own.window is not None:
         raise ValueError("the giving opens a window while one is open: one window per body")
+    if start.act == THE_BIRTH:
+        if start.quanta != 1:
+            raise ValueError(
+                "the birth bears one quantum per Node per interval, the count's line's whole quantum "
+                f"beyond the body's set; the Node holds {start.quanta}"
+            )
+        if start.body_levels is None:
+            raise ValueError("the birth needs the body's two levels at the Node beyond its set")
+        return
     if start.act != THE_OPEN and own.window is None:
         raise ValueError(f"the giving's act {start.act!r} on a body with no open window")
     if start.act == THE_OPEN and start.quanta < 1:
@@ -112,8 +123,11 @@ def check(term: GivingTerm, start: GivingStart, own: GivingOwn) -> None:
 
 
 def apply(term: GivingTerm, start: GivingStart, own: GivingOwn) -> GivingWrites:
-    """The primitive, one act per call: the open, the write or the close (ALGEBRA.md #the-primitives the row "the giving")."""
+    """The primitive, one act per call: the birth, the open, the write, the inverse or the close (ALGEBRA.md #the-primitives the row "the giving"; #the-functional-and-the-dilation (e))."""
     check(term, start, own)
+    if start.act == THE_BIRTH:
+        moved = cast(tuple[np.ndarray, np.ndarray], start.body_levels)
+        return GivingWrites(own, (np.asarray(moved[0]), np.asarray(moved[1])), -1, None, False, None)
     if start.act == THE_OPEN:
         return GivingWrites(
             GivingOwn(0, 0, (0, 0, 0)), None, -1, bulk_share(start.momentum, start.quanta), False, None
@@ -208,8 +222,9 @@ DECLARATION = Declaration(
         "the outward flux through the body's outer Ports over the window, and its tally per axis",
         "the universe's quantum action T",
         "a body's content M_k and its momentum n",
+        "the count at a Node beyond the body's set as the count's line left it, and the body's levels there",
     ),
-    ("a family's level at a Node", "a body's content M_k", "a body's momentum n"),
+    ("a family's level at a Node", "a body's content M_k", "a body's momentum n", "the count at a Node"),
     apply,
     THE_WORD
     + " (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the row 'the giving'; 9.107; ALGEBRA.md #the-primitives",

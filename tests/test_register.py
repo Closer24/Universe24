@@ -47,6 +47,7 @@ NAMED_VALUES = {
     "a body's spin S",
     "a body's position",
     "a body's remainders",
+    "the count at a Node",
     "the record's tally",
     "the record's remainder",
 }
