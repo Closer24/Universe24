@@ -18,7 +18,6 @@ from event_universe.features.source import (
 ROOT, SHAPE = Path(__file__).resolve().parents[1], (2, 3, 1)
 SCALE = 18_910  # E_s of the run files (D_peak 1,891,072 div 100)
 PEAK, PLAIN = 1_891_072, SourceTerm(target=3, of=2, weight=1, scale=SCALE)
-TABLE = SourceTerm(target=4, of=2, weight=1, scale=SCALE, cap=60)
 
 
 def argument(*values: int) -> np.ndarray:
@@ -57,22 +56,11 @@ def test_the_remainder_is_carried_so_the_sum_of_the_counts_is_the_exact_floor():
     assert int(total.ravel()[0]) == 300_000 + 11 and int(total.ravel()[1]) == 1
 
 
-def test_the_table_form_saturates_and_keeps_no_remainder():
-    """s_i = s_cap D_i div (s_cap E_s + D_i): 60 x 1,891,072 div (60 x 18,910 + 1,891,072) = 37 (the README's number); the count never reaches the cap; twice the argument gives 46, not 74; the remainder stays zero whatever the start's remainder says."""
-    start = SourceStart(SHAPE, argument(PEAK, 2 * PEAK, 18_910, 0, 10**12, 1))
-    own = SourceOwn(argument(5, 5, 5, 5, 5, 5))
-    writes = apply(TABLE, start, own)
-    assert writes.counts.ravel().tolist() == [37, 46, 0, 0, 59, 0]
-    assert writes.remainders.ravel().tolist() == [0] * 6 and int(writes.counts.max()) < TABLE.cap
-
-
 def test_the_inverse_returns_the_start_bit_for_bit():
-    """The same integers subtracted and the remainder before restored, for both forms and for a carried remainder."""
+    """The same integers subtracted and the remainder before restored, for a carried remainder."""
     start = SourceStart(SHAPE, argument(PEAK, 7, 0, 37_820, 18_909, 1))
-    for term in (PLAIN, TABLE, SourceTerm(3, 2, -2, 977)):
-        own = SourceOwn(
-            argument(72, 3, 0, 500, 0, 976) if term.cap is None else argument(0, 0, 0, 0, 0, 0)
-        )
+    for term in (PLAIN, SourceTerm(3, 2, -2, 977)):
+        own = SourceOwn(argument(72, 3, 0, 500, 0, 976))
         level = argument(10, -20, 30, 0, 5, 6)
         writes, after = apply(term, start, own), level.copy()
         after[writes.at] += writes.integers[writes.at]
@@ -88,8 +76,6 @@ def test_the_refusals_by_name():
         apply(SourceTerm(3, 2, 1, 0), start, zeros())
     with pytest.raises(ValueError, match="weight is 0"):
         apply(SourceTerm(3, 2, 0, SCALE), start, zeros())
-    with pytest.raises(ValueError, match="cap s_cap is 0"):
-        apply(SourceTerm(3, 2, 1, SCALE, cap=0), start, zeros())
     # a negative D_i is admitted (no refusal beyond the ledger's row): the plain form floors it
     negative = apply(PLAIN, SourceStart(SHAPE, argument(1, -1, 0, 0, 0, 0)), zeros())
     assert int(negative.counts.ravel()[1]) == -1 and int(negative.remainders.ravel()[1]) == SCALE - 1
@@ -101,13 +87,10 @@ def test_the_refusals_by_name():
         apply(PLAIN, SourceStart((3, 2, 1), argument(1, 2, 3, 4, 5, 6)), zeros())
     with pytest.raises(ValueError, match="int64"):
         apply(PLAIN, SourceStart(SHAPE, np.zeros(SHAPE, dtype=np.int32)), zeros())
-    with pytest.raises(ValueError, match="leave the bound"):
-        capped = SourceTerm(3, 2, 1, SCALE, cap=1 << 40)
-        apply(capped, SourceStart(SHAPE, argument(1 << 30, 0, 0, 0, 0, 0)), zeros())
 
 
 def test_the_trace_hand_identity_at_a_node():
     assert hand_identity(PLAIN, PEAK, 0, 596, 696)
     assert hand_identity(PLAIN, PEAK, 18_900, 596, 697)  # the carried remainder tips one more
-    assert not hand_identity(PLAIN, PEAK, 0, 596, 697) and hand_identity(TABLE, PEAK, 0, 300, 337)
+    assert not hand_identity(PLAIN, PEAK, 0, 596, 697)
     assert hand_identity(SourceTerm(3, 2, -3, SCALE), PEAK, 72, 0, -300)
