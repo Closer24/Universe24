@@ -54,7 +54,7 @@ def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_ar
         body_at_24(tmp_path, TOOL, quanta=2 * QUANTA)  # above it
     document = json.loads(body_at_24(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     document["measured"].append(
-        {**document["measured"][0], "nodes": [{"node": [10, 6, 6], "count": QUANTA}]}
+        {**document["measured"][0], "nodes": [{"node": [8, 6, 6], "count": QUANTA}]}
     )
     with pytest.raises(
         ValueError, match="measured\\[1\\] and measured\\[0\\] share a Node in their regions"

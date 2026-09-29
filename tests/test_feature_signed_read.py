@@ -6,7 +6,6 @@ import numpy as np
 import pytest
 
 from event_universe.core.register import folder_of
-from event_universe.core.rule3 import coefficients
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features import signed_read
 from event_universe.features.signed_read import (
@@ -77,17 +76,14 @@ def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
 
 
 def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
-    """The guard's bound P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) is the last pace with (S - 6 R) + 2 w >= 0 on the rule's (R, S, w): 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
+    """The guard's bound P = isqrt(2 den Gamma^2 div (den + num)) is the last pace at which the mode at wave number pi, (S - 6 R) / w = 2 - 2 (1 + num / den) (p / Gamma)^2, stays at or above -2 (ALGEBRA.md #the-paces): 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
     for pair, expected in (((800, 809), 1002), ((800, 850), 1015), ((1, 1), 1000)):
         bound = pace_bound(pair, CHAIN_GAMMA)
         assert bound == expected
         left, right = stability_bound(pair, CHAIN_GAMMA)
         assert bound * bound * left <= right < (bound + 1) * (bound + 1) * left
         for pace, admitted in ((bound, True), (bound + 1, False)):
-            (read, _, _), self_coefficient, wall = coefficients(
-                pair[0], pair[1], CHAIN_GAMMA, CHAIN_GAMMA - pace
-            )
-            assert (self_coefficient - 6 * read + 2 * wall >= 0) is admitted
+            assert (2 * pair[1] * CHAIN_GAMMA**2 - (pair[0] + pair[1]) * pace * pace >= 0) is admitted
 
 
 @pytest.mark.diagnostic
@@ -106,9 +102,9 @@ def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond
 
 
 def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edge():
-    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and the edge of [800, 850], p = 1.0152 Gamma, is the arithmetic's check on the axis contents alone."""
+    """A hill would raise the pace above Gamma; the floor reads it as 0 at any depth (152, 153, 10^8), and the edge of [800, 850], p = 1.0150 Gamma, is the arithmetic's check on the axis contents alone."""
     left, right = stability_bound((800, 850), GAMMA)
-    assert (left, right) == (19_500, GAMMA * GAMMA * 20_100) and pace_bound((800, 850), GAMMA) == 10_152
+    assert (left, right) == (1_650, GAMMA * GAMMA * 1_700) and pace_bound((800, 850), GAMMA) == 10_150
     term = SignedReadTerm(((1, -1, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
     own = SignedReadOwn(0, "matter", 7)
 
@@ -132,20 +128,19 @@ def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edg
 
 
 def test_a_massless_family_reads_a_hill_as_the_floor_and_every_family_needs_a_pace_above_zero():
-    """For den = num the edge is p <= Gamma exactly, and the floor keeps every hill at it (read as 0); a content at Gamma (the pace 0) ends the run on the lower side; Gamma - 1 passes."""
+    """For den = num the edge is p <= Gamma exactly, and the floor keeps every hill at it (read as 0); a content at Gamma div 2 (the Link's pace Gamma - 2 c at 0) ends the run on the lower side; Gamma div 2 - 1 passes."""
     massless = SignedReadTerm(((1, 1, signed_read.BY_PLAIN),), 0, (1, 1), GAMMA)
     own, shape = SignedReadOwn(2, "light", 3), (2, 2, 2)
     hollow = np.zeros(shape, dtype=np.int64)
     hollow[0, 1, 0] = -1
     assert int(apply(massless, SignedReadStart(shape, {1: hollow}, None), own).content[0, 1, 0]) == 0
     deep = np.zeros(shape, dtype=np.int64)
-    deep[1, 1, 1] = GAMMA
+    deep[1, 1, 1] = GAMMA // 2
     with pytest.raises(RuntimeError, match=r"is 0 at the Node \(1, 1, 1\) at interval 3: the pace"):
         apply(massless, SignedReadStart(shape, {1: deep}, None), own)
-    deep[1, 1, 1] = GAMMA - 1
-    assert (
-        int(apply(massless, SignedReadStart(shape, {1: deep}, None), own).content[1, 1, 1]) == GAMMA - 1
-    )
+    deep[1, 1, 1] = GAMMA // 2 - 1
+    writes = apply(massless, SignedReadStart(shape, {1: deep}, None), own)
+    assert int(writes.content[1, 1, 1]) == GAMMA // 2 - 1
 
 
 def test_a_multi_read_sum_by_sign_and_the_argument_of_a_pair_as_d_i():

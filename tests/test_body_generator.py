@@ -44,12 +44,12 @@ def counted_cube(box: int, side: int, count: int) -> np.ndarray:
 
 
 def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np.ndarray]:
-    """The check's oracle in floats: the top eigenvector of the symmetric form on the periodic box, as the level a_i = phi_i p_i."""
+    """The check's oracle in floats: the top eigenvector of the symmetric form on the periodic box, as the level a_i = phi_i p_i with p_i the Link's pace Gamma - 2 c_i (the read's, R = 2 num p^2) and the own term from the clock's square (ALGEBRA.md #the-paces)."""
     num, den = pair
     shape = counts.shape
-    idx, p = np.arange(counts.size).reshape(shape), (GAMMA - counts).astype(float)
-    u = (p / GAMMA) ** 2
-    on_site, rows, cols, vals = 2 - (1 + u) * (den - num) / den - 2 * num * u / den, [], [], []
+    idx, p = np.arange(counts.size).reshape(shape), (GAMMA - 2 * counts).astype(float)
+    u, u_0 = (p / GAMMA) ** 2, ((GAMMA - counts) ** 2 + counts**2) / GAMMA**2
+    on_site, rows, cols, vals = 2 - 2 * u_0 * (den - num) / den - 2 * num * u / den, [], [], []
     for axis in range(3):
         j, bond = np.roll(idx, -1, axis=axis), num * p * np.roll(p, -1, axis=axis) / (3 * den * GAMMA**2)
         rows += [idx.ravel(), j.ravel()]
@@ -68,16 +68,16 @@ def float_top_mode(counts: np.ndarray, pair: tuple[int, int]) -> tuple[float, np
 
 
 def test_the_iteration_stops_at_the_first_repeat_and_gives_the_bound_mode():
-    """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 198, the float mode's rotation and profile to 10^-6, 0.76 inside the cube, the clock's period 8."""
+    """A cube of side 4 at 3000 per Node on [800, 1200]: a fixed point at iteration 244, the float mode's rotation and profile to 10^-6, 0.90 inside the cube (the Link's pace deepens the well), the clock's period 8."""
     counts = counted_cube(12, 4, 3000)
     mode = bound_mode(counts, KIND, GAMMA)
-    assert (mode.iterations, mode.cycle) == (198, 1) and mode.rotation > Fraction(2 * KIND[0], KIND[1])
+    assert (mode.iterations, mode.cycle) == (244, 1) and mode.rotation > Fraction(2 * KIND[0], KIND[1])
     value, level = float_top_mode(counts, KIND)
     assert abs(float(mode.rotation) - value) < 1e-6
     profile = mode.profile.astype(float)
     profile /= np.linalg.norm(profile)
     assert abs(float(np.sum(profile * level)) - 1) < 1e-6
-    assert Fraction(75, 100) < mode.share_inside < Fraction(77, 100)
+    assert Fraction(89, 100) < mode.share_inside < Fraction(91, 100)
     assert int(np.abs(mode.profile).max()) == mode.amplitude
     clock = clock_pair(mode.rotation, mode.amplitude)
     assert clock[1] == mode.amplitude and period_by_the_rule(*clock) == round(
@@ -156,13 +156,13 @@ def test_the_moving_body_is_the_same_iteration_with_the_rotation_per_link():
     assert moving.cycle == 2
     # (e): the moving body is the rest mode with the phase k per Link; its velocity (the current over the form) rises with j, the bisection finds the named one within the pair's resolution, the sense the momentum's sign
     quanta, unit = int(long_counts.sum()), 64
-    moved = moving_body(long_counts, KIND, GAMMA, 3 * unit * quanta // 20, unit, 1024, rest=long_rest)
-    assert moved.named == Fraction(1, 20) and moved.pair[0] == 1024 and 0 < moved.pair[1] < 1024
+    moved = moving_body(long_counts, KIND, GAMMA, 3 * unit * quanta // 50, unit, 1024, rest=long_rest)
+    assert moved.named == Fraction(1, 50) and moved.pair[0] == 1024 and 0 < moved.pair[1] < 1024
     assert abs(moved.velocity - moved.named) < Fraction(1, 1000) and moved.triple == triple_of(
         moved.pair
     )
     assert packet_current(moved.now, moved.before, KIND[0], PERIODIC) > 0
-    back = moving_body(long_counts, KIND, GAMMA, -3 * unit * quanta // 20, unit, 1024, rest=long_rest)
+    back = moving_body(long_counts, KIND, GAMMA, -3 * unit * quanta // 50, unit, 1024, rest=long_rest)
     assert back.triple[1] < 0 and abs(back.velocity + moved.named) < Fraction(1, 1000)
     still_body = moving_body(long_counts, KIND, GAMMA, 0, unit, 1024, rest=long_rest)
     assert still_body.pair == (1024, 0) and np.array_equal(still_body.now, long_rest.profile)
@@ -197,7 +197,9 @@ def test_a_givers_levels_at_the_scale_c_t_and_its_train_do_not_depend_on_t(tmp_p
         now, before = (np.asarray(reading["moving"][k]) for k in ("now", "before"))
         content = np.asarray(reading["content"])
         _, self_coefficient, wall = rule_integers(KIND, GAMMA, content)
-        form = conserved_form(now, before, self_coefficient, wall, KIND[0], GAMMA - content, PERIODIC)
+        form = conserved_form(
+            now, before, self_coefficient, wall, KIND[0], GAMMA - 2 * content, PERIODIC
+        )
         assert abs(form / (8 * 3000 * action) - 1) < Fraction(1, 1000) and reading["profile"] is not None
         train = reading["train"]
         assert train["flux"] >= action > train["flux"] - train["peak"] ** 2 * wall
@@ -235,8 +237,9 @@ def test_the_generator_reads_its_input_file_in_the_laws_form_and_refuses_by_name
     mode = bound_mode(box, KIND, GAMMA, content=rest.levels, bound_level=level)
     at_level = amplitude_unit(KIND, GAMMA, np.array([level]))
     reach = 2 * (1 * sum(node["count"] for node in nodes) + 1 * 0)  # the content, and the charge 0
-    assert level == min(reach, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude == at_level
-    assert at_level < amplitude_unit(KIND, GAMMA, rest.levels)  # the unit falls with the content
+    assert level == min(reach, GAMMA - 1) and reading["amplitude_unit"] == mode.amplitude < at_level
+    least = amplitude_unit(KIND, GAMMA, rest.levels)
+    assert mode.amplitude == least < at_level < amplitude_unit(KIND, GAMMA, np.array([0]))
     charged = {**world, "measured": [{**body, "q": 5}]}  # a charge moves it at the one weight 1
     assert loader_level({**charged, "node_clock": 10**9}, 10**9) == 2 * (1 * 24000 + 1 * 5)
     assert reading["rotation"] == list(clock_pair(mode.rotation, mode.amplitude))  # on A, bounded

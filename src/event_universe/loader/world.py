@@ -619,7 +619,7 @@ def load_level(
 
 
 def derived_amplitude(entries: Sequence[object], bodies: object, node_clock: int) -> int:
-    """THE AMPLITUDE BOUND A, DERIVED AND NEVER WRITTEN (ALGEBRA.md #a-familys-declaration, #the-line, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the largest level at which the rule's total 6 A R + A |S| + w (A + 1) stays inside the width, (R, S, w) the rule's coefficients at the two levels a Node can read (the vacuum's 0 and the pace's edge Gamma - 1, no body's number), the tightest over every pair the files declare (the families' `pair`, the frame's checked entries, not the word body; every body's `pair` and `kind` as written, a value that is no pair of two integers from 1 left to the frame's refusal); a world with no pair takes the width itself; refused by name where no level fits."""
+    """THE AMPLITUDE BOUND A, DERIVED AND NEVER WRITTEN (ALGEBRA.md #a-familys-declaration, #the-line, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the largest level at which the rule's total 6 A R + A |S| + w (A + 1) stays inside the width, (R, S, w) the rule's coefficients at the three levels where the total is largest (the vacuum's 0, the Link's pace's floor Gamma div 2 where S = 24 (den + num) c (Gamma - c) peaks, and the edge Gamma - 1, no body's number), the tightest over every pair the files declare (the families' `pair`, the frame's checked entries, not the word body; every body's `pair` and `kind` as written, a value that is no pair of two integers from 1 left to the frame's refusal); a world with no pair takes the width itself; refused by name where no level fits."""
     pairs: list[tuple[int, int]] = []
     for item, key in [(e, "pair") for e in entries] + [
         (b, k) for b in (bodies if isinstance(bodies, list | tuple) else ()) for k in ("pair", "kind")
@@ -634,7 +634,7 @@ def derived_amplitude(entries: Sequence[object], bodies: object, node_clock: int
     weak_field = node_clock > 1
     found = MAX_WORK_INT
     for numerator, denominator in pairs:
-        for level in (0, node_clock - 1 if weak_field else 0):
+        for level in (0, node_clock // 2, node_clock - 1) if weak_field else (0,):
             reads, self_coefficient, wall = coefficients(
                 numerator, denominator, node_clock, level, ISOTROPIC, weak_field
             )
