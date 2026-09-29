@@ -1,0 +1,6 @@
+the outer's Nodes x 114..126, the inner's x 118..128, shared 9 Nodes
+(i) Rule3 is linear: max |step(a + b) - step(a) - step(b)| = 1 level unit(s) (the rounding of two divisions against one), the levels up to 2217
+(ii) the current is bilinear: the interference current F(a + b) - F(a) - F(b) reaches 3.80 quanta per interval on one Link (F(a) up to 0.44, F(b) up to 0.42); over the shared Nodes it sums to -11.18 quanta per interval: each body's own current moves its own quanta, the interference moves quanta neither owns
+(iii) the form is quadratic: E(a + b) = E(a) + E(b) + 2 B(a, b) with 2 B = +634.4 quanta against E(a) / 2 = 713.3 and E(b) / 2 = 345.1: the union's count is not the sum of the counts; at the shared Nodes alone 2 B = +636.0
+(iv) the band at a pace: at the outer's centre p_0 / Gamma = 0.9129, p_a / Gamma = 0.8167; the band's top cos omega rises from 0.6667 in the vacuum to 0.7222 there; the inner body's own rotation cos omega_b = 0.6831 (the outer's 0.7076): a rotation below the local top lies inside the local band, so the inner body laid alone is no bound mode inside the outer's well; it is bound there only with cos omega_b above 0.7222
+EXIT 0
