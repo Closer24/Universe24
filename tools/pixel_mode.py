@@ -46,7 +46,7 @@ class Standing:
 def step(
     board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray, remainder: np.ndarray
 ) -> np.ndarray:
-    """One interval of Rule3 on the whole board, the loop's own isotropic form: the arrivals per axis the two neighbours' levels (0 beyond a face, the wrap on a periodic one), the coefficients from the pace Gamma - content at every Node, the division by the wall with the remainder kept at the Node."""
+    """One interval of Rule3 on the whole board, the loop's own isotropic form: the arrivals per axis the two neighbours' levels (0 beyond a face, the wrap on a periodic one), the coefficients from the paces at every Node (core.rule3, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
     arrivals = tuple(
         arrival(now, axis, 1, board.wrap[axis], 0) + arrival(now, axis, -1, board.wrap[axis], 0)
         for axis in range(3)
@@ -271,7 +271,9 @@ def spread(
         content, _well = rests(
             rows, counts, board.wrap
         )  # the body alone: the others are spread in their turn
-        if int(content.max()) < board.gamma:
+        if (
+            2 * int(content.max()) < board.gamma
+        ):  # the Link's pace Gamma - 2 c above 0 (ALGEBRA.md #the-paces)
             return counts
     raise ValueError(
         f"the body of {quanta} quanta about the Node {list(centre)} fits no cube on this board with a positive pace"
@@ -353,10 +355,11 @@ def body_fixed_point(
         _content, well = rests(
             rows, counts, board.wrap
         )  # the region from the body's own well, the others' wells aside
-        if int(content.max()) >= board.gamma:
+        if 2 * int(content.max()) >= board.gamma:
             raise ValueError(
                 f"the body of {quanta} quanta about the Node {list(centre)} collapses: its wells reach the pace 0 "
-                f"(the content {int(content.max())} at or beyond Gamma = {board.gamma}); its quanta are above its "
+                f"(the content {int(content.max())} at or beyond Gamma div 2 = {board.gamma // 2}, the Link's pace "
+                f"Gamma - 2 c; ALGEBRA.md #the-paces); its quanta are above its "
                 "binding row's window of mass (ALGEBRA.md #the-generator)"
             )
         region = region_of(counts, well, centre, board.wrap)

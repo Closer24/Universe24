@@ -93,6 +93,10 @@ BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integ
 # Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
     ("loader/derived.py", "width_bound"): "at load, the width's bound on A from the count's line",
+    (
+        "core/rule3.py",
+        "clock_pace",
+    ): "the integer square root of p_0^2 where a guard or a clock pair reads the pace",
 }
 
 

@@ -412,7 +412,7 @@ def on_the_file(document: dict) -> dict:
     return moved
 
 
-BODY_24 = 76  # a body of the generator at Gamma 24: bound above the band's top, below its collapse (tests/test_pixel_mode.py)
+BODY_24 = 24  # a body of the generator at Gamma 24: bound above the band's top, below its collapse at 48 where the Link's pace Gamma - 2 c reaches 0 (tests/test_pixel_mode.py)
 
 
 def body_at_24(tmp_path: Path, tool, quanta: int = BODY_24, centre=(6, 6, 6), mode: bool = True) -> Path:

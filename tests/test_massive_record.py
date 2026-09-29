@@ -426,17 +426,17 @@ def test_the_mode_line_sums_lights_field_by_residue_class():
 
 
 def derived_amplitude_of(pairs, gamma: int) -> int:
-    """The test's own derivation of A (ALGEBRA.md #the-rows-against-nature): the largest level whose rule total 6 A R + A |S| + w (A + 1) stays inside the width at the levels 0 and Gamma - 1, the tightest over the pairs."""
+    """The test's own derivation of A (ALGEBRA.md #the-rows-against-nature): the largest level whose rule total 6 A R + A |S| + w (A + 1) stays inside the width at the levels 0, Gamma div 2 and Gamma - 1, the tightest over the pairs."""
     found = MAX_WORK_INT
     for num, den in pairs:
-        for level in (0, gamma - 1):
+        for level in (0, gamma // 2, gamma - 1):
             (read, _, _), self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, True)
             found = min(found, (MAX_WORK_INT - wall) // (6 * abs(read) + abs(self_coefficient) + wall))
     return found
 
 
 def test_the_amplitude_bound_is_derived_from_the_width_and_the_pairs_and_never_written():
-    """THE AMPLITUDE BOUND A IS DERIVED (ALGEBRA.md #a-familys-declaration, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the loader's A is the largest level whose rule total stays inside the width at the levels 0 and Gamma - 1, the tightest over every pair the files declare, the families' and the bodies' (a body's own pair enters it), the same derivation here from the rule's coefficients; a seed above A is refused naming A, a row stepped above A is refused at run; `amplitude_bound` written in a file is refused by name as an unknown key."""
+    """THE AMPLITUDE BOUND A IS DERIVED (ALGEBRA.md #a-familys-declaration, #the-rows-against-nature; the owner's word of 2026-09-28: a level beyond the integer width is the engine's refusal): the loader's A is the largest level whose rule total stays inside the width at the levels 0, Gamma div 2 and Gamma - 1, the tightest over every pair the files declare, the families' and the bodies' (a body's own pair enters it), the same derivation here from the rule's coefficients; a seed above A is refused naming A, a row stepped above A is refused at run; `amplitude_bound` written in a file is refused by name as an unknown key."""
     document = massive_world([6, 6, 6], PERIODIC, [800, 809])
     assert parse_nature_beam_world(document).amplitude_bound == derived_amplitude_of(
         [tuple(f["pair"]) for f in document["universe"]], NODE_CLOCK

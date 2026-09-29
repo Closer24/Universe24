@@ -17,35 +17,31 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
 
 
-def old_isotropic(
-    num: int, den: int, gamma: int, content: int, weak_field: bool
-) -> tuple[int, int, int]:
-    """The engine's `rule_coefficients` before the cut (events/rule.py of main 6d2a92e2), the oracle: (R, S, w) of the weak-field rule, or of the plain first-order rule."""
-    pace = gamma - content
+def law_isotropic(num: int, den: int, gamma: int, c: int, weak_field: bool) -> tuple[int, int, int]:
+    """The law's line at a Node with the axis contents zero, the oracle (ALGEBRA.md #the-line, #the-paces): p_0^2 = (Gamma - c)^2 + c^2, p_a = Gamma - 2 c, R = 2 num p_a^2, S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 12 num p_a^2, w = 6 den Gamma^2; or the plain first-order rule."""
     if not weak_field:
-        return pace * num, 6 * den * content, 3 * den * gamma
-    squares, gamma_squared = pace * pace, gamma * gamma
+        return (gamma - c) * num, 6 * den * c, 3 * den * gamma
+    clock_squared, link_squared, gamma_squared = (gamma - c) ** 2 + c * c, (gamma - 2 * c) ** 2, gamma**2
     self_coefficient = (
-        12 * den * gamma_squared - 6 * (squares + gamma_squared) * (den - num) - 12 * num * squares
+        12 * den * gamma_squared - 12 * (den - num) * clock_squared - 12 * num * link_squared
     )
-    return 2 * squares * num, self_coefficient, 6 * den * gamma_squared
+    return 2 * link_squared * num, self_coefficient, 6 * den * gamma_squared
 
 
-def old_axes(
+def law_axes(
     num: int, den: int, gamma: int, content: int, axis_contents: tuple[int, int, int]
 ) -> tuple[tuple[int, int, int], int, int]:
-    """The engine's `axis_rule_coefficients` before the cut, the oracle of the four paces."""
+    """The law's line with the four paces, the oracle: p_a = Gamma - 2 c - t_a on each axis, the clock's square as above."""
     pace = gamma - content
-    paces, gamma_squared = [pace - axis_contents[axis] for axis in range(3)], gamma * gamma
+    paces, gamma_squared = [gamma - 2 * content - t for t in axis_contents], gamma * gamma
     reads = (2 * paces[0] ** 2 * num, 2 * paces[1] ** 2 * num, 2 * paces[2] ** 2 * num)
     squares = paces[0] ** 2 + paces[1] ** 2 + paces[2] ** 2
-    self_coefficient = (
-        12 * den * gamma_squared - 6 * (pace * pace + gamma_squared) * (den - num) - 4 * num * squares
-    )
+    clock_squared = pace * pace + content * content
+    self_coefficient = 12 * den * gamma_squared - 12 * (den - num) * clock_squared - 4 * num * squares
     return reads, self_coefficient, 6 * den * gamma_squared
 
 
-def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_zero_axis_contents():
+def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_contents():
     """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
     rng = random.Random(3)
     for _ in range(500):
@@ -53,13 +49,13 @@ def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_ze
         content = rng.randint(-gamma + 1, gamma - 1)
         axis_contents = (rng.randint(-50, 50), rng.randint(-50, 50), rng.randint(-50, 50))
         for weak_field in (True, False):
-            read, self_coefficient, wall = old_isotropic(num, den, gamma, content, weak_field)
+            read, self_coefficient, wall = law_isotropic(num, den, gamma, content, weak_field)
             assert coefficients(num, den, gamma, content, weak_field=weak_field) == (
                 (read, read, read),
                 self_coefficient,
                 wall,
             )
-        assert coefficients(num, den, gamma, content, axis_contents) == old_axes(
+        assert coefficients(num, den, gamma, content, axis_contents) == law_axes(
             num, den, gamma, content, axis_contents
         )
         assert coefficients(num, den, gamma, content, (0, 0, 0)) == coefficients(
@@ -67,8 +63,8 @@ def test_the_coefficients_are_the_two_old_functions_and_the_isotropic_ones_at_ze
         )
         # the vacuum c = 0: 2 Gamma^2 times the plain rule (the levels bit for bit)
         assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 3, 0, 6 * den * gamma**2)
-        # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_0^2)
-        pace, axis_pace = gamma - content, gamma - content - axis_contents[0]
+        # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_link^2), the Link's pace Gamma - 2 c
+        pace, axis_pace = gamma - 2 * content, gamma - 2 * content - axis_contents[0]
         (read, *_), self_iso, wall = coefficients(num, den, gamma, content)
         assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == (
             (2 * axis_pace**2 * num, read, read),

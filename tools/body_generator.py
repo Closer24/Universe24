@@ -77,6 +77,11 @@ class MovingBody:
     top: Fraction
 
 
+def link_pace(gamma: int, content: np.ndarray) -> np.ndarray:
+    """The Link's pace p_a = Gamma - 2 c at every Node, the pace of the rule's read R = 2 num p_a^2 and so of the form's weights 1 / p_a^2 (ALGEBRA.md #the-paces, #the-line)."""
+    return gamma - 2 * content
+
+
 def amplitude_unit(
     pair: tuple[int, int], gamma: int, counts: np.ndarray, bound_level: int | None = None
 ) -> int:
@@ -178,7 +183,7 @@ def rotation_and_share(
     content: np.ndarray | None = None,
 ) -> tuple[Fraction, Fraction]:
     """2 cos omega_b of a profile as the exact quotient of the symmetric form, SUM a (R S_6(a) + S a) / p^2 over w SUM a^2 / p^2, a reading of the levels and their read acts with the weights 1 / p_i^2, and the share of the profile's weight inside the counted Nodes; refused by name where the rotation does not rise above the band's top 2 num / den or the share is not twice the counted Nodes' fraction of the box, the band's uniform wave (ALGEBRA.md #the-line, #the-stable-body)."""
-    paces = gamma - (counts if content is None else content)
+    paces = link_pace(gamma, counts if content is None else content)
     numerator, denominator = Fraction(0), Fraction(0)
     for pace in {int(p) for p in paces.ravel()}:
         at = paces == pace
@@ -401,7 +406,7 @@ def moving_body(
     well = counts if content is None else content
     named = Fraction(momentum, 3 * momentum_unit * int(counts.sum()))
     read, self_coefficient, wall = rule_integers(pair, gamma, well)
-    paces = gamma - well
+    paces = link_pace(gamma, well)
     sense = 1 if momentum >= 0 else -1
 
     def at(j: int) -> tuple[Fraction, np.ndarray, np.ndarray]:
@@ -657,7 +662,7 @@ def given_train(
         mask,
         light_rule,
         fields[short[0]["family"]].levels.astype(np.int64),
-        (gamma - content).astype(np.int64),
+        link_pace(gamma, content).astype(np.int64),
         int(held["divisor"]),
         int(integers["quantum_action"]),
         period_by_the_rule(*clock),
@@ -817,7 +822,9 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             if "quantum_action" in integers and not momentum[axis]:
                 # THE SCALE c T (ALGEBRA.md #the-generator (f), the universe's quantum action): the two levels
                 # scaled together so that the record's form is its quanta's action, c T with c the body's quanta
-                form = conserved_form(still[0], still[1], self_w, wall_w, pair[0], gamma - content, wrap)
+                form = conserved_form(
+                    still[0], still[1], self_w, wall_w, pair[0], link_pace(gamma, content), wrap
+                )
                 still = scaled_to_norm(
                     still[0],
                     still[1],

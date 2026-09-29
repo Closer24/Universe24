@@ -116,15 +116,17 @@ def guard_paces(loop: DetectorLawSimulation) -> None:
     for family, definition in enumerate(loop.families):
         if not definition.reads:
             continue
-        most = int(np.max(np.abs(loop._effective_content(family))))
+        content = loop._effective_content(family)
+        most = int(
+            np.max(np.abs(2 * content))
+        )  # the Link's pace Gamma - 2 c - t_a reaches 0 first (ALGEBRA.md #the-paces)
         axis_contents = loop._axis_contents(family)
         if axis_contents is not None:
-            content = loop._effective_content(family)
-            most = max(most, *(int(np.max(np.abs(content + t))) for t in axis_contents))
+            most = max(most, *(int(np.max(np.abs(2 * content + t))) for t in axis_contents))
         if most >= loop.node_clock:
             raise RuntimeError(
-                f"the effective content {definition.name!r} reads reached {most} "
-                f"in size at interval {loop.tick}, at or beyond Gamma = {loop.node_clock}: "
-                "the pace Gamma minus the weighted held levels of every read stays positive "
-                "under the fixed wall (ALGEBRA.md #the-counts-line, #the-paces); the run is refused"
+                f"twice the effective content {definition.name!r} reads, with the axis contents, reached "
+                f"{most} in size at interval {loop.tick}, at or beyond Gamma = {loop.node_clock}: "
+                "the Link's pace Gamma - 2 c - t_a from the weighted held levels of every read stays "
+                "positive under the fixed wall (ALGEBRA.md #the-counts-line, #the-paces); the run is refused"
             )
