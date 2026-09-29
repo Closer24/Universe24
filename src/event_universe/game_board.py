@@ -11,7 +11,6 @@ from event_universe import node
 from event_universe.core.ports import arrival
 from event_universe.features.start import rest
 from event_universe.features.write import carried
-from event_universe.loader.derived import CONTENT
 from event_universe.loader.world import FACE_NAME, Node, World
 
 Observer = Callable[[dict[str, object]], None]
@@ -73,21 +72,18 @@ class GameBoard:
             self.bodies.append(Body(number, row.family, self.mask(row.nodes), sum(row.counts), 0))
         for body in self.bodies:
             body.total = self.clock_total(body)
-        self.sources = sorted({row.family for row in world.bodies})
         self.start()
         self.detectors = [
             Detector(row.name, self.mask(row.positions) if row.body is None else None, row.body)
             for row in world.detectors
         ]
-        self.face = np.zeros(self.shape, dtype=bool)
+        face = np.zeros(self.shape, dtype=bool)
         for axis in range(3):
-            if world.open_axes[axis] and self.shape[axis] > 1:
-                depth = min(world.face_depth, self.shape[axis])
-                layer = np.moveaxis(self.face, axis, 0)
-                layer[:depth], layer[self.shape[axis] - depth :] = True, True
-        for detector in self.detectors:
-            if detector.nodes is not None:
-                self.face &= ~detector.nodes
+            if world.open_axes[axis]:
+                layer = np.moveaxis(face, axis, 0)
+                layer[: world.face_depth], layer[self.shape[axis] - world.face_depth :] = True, True
+        if bool(face.any()):
+            self.detectors.append(Detector(FACE_NAME, face, None))
 
     def mask(self, nodes: tuple[Node, ...]) -> np.ndarray:
         """The mask of a set of Nodes."""
@@ -96,27 +92,25 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """THE START (ALGEBRA.md #the-generator, THE START): every held family's time part at the rest of its line under the bodies' declared counts over its divisor (features/start), both levels, the remainder the rest's; the hold's carry E_s div 2 at the sources' Nodes."""
+        """THE START (ALGEBRA.md #the-generator (g), the start): every held family's time part at the rest of its line under the bodies' declared counts at the weight with which the body's family reads it, over its divisor (features/start), both levels, the remainder at the half wall and the hold's carry E_s div 2 at the sources' Nodes."""
         for index, family in enumerate(self.families):
-            if family.held is None:
+            if family.held is None or family.divisor is None:
                 continue
             counts = node.zeros(self.shape)
             for row in self.world.bodies:
-                weight = 1 if family.held == CONTENT else self.families[row.family].sign
+                weight = node.weight_of(index, self.families[row.family])
                 for at, value in zip(row.nodes, row.counts, strict=True):
-                    counts[at] = weight * value
+                    counts[at] += weight * value
             if not counts.any():
                 continue
             try:
-                field = rest(counts, family.pair, self.wrap, family.divisor)
+                field = rest(counts, family.pair, self.wrap, family.divisor, self.world.width)
             except ValueError as refusal:
                 raise ValueError(f"the start of the held family {family.name!r}: {refusal}") from refusal
             state = self.states[index]
-            levels = np.asarray(field.levels, dtype=np.int64)
             remainder = np.full(self.shape, field.remainder, dtype=np.int64)
-            state.parts[0] = node.Record(levels.copy(), levels.copy(), remainder)
-            assert field.carries is not None
-            state.carry = np.asarray(field.carries, dtype=np.int64)
+            state.parts[0] = node.Record(field.levels.copy(), field.levels.copy(), remainder)
+            state.carry = field.carries
 
     def clock_total(self, body: Body) -> int:
         """The body's clock: its family's level now summed over its Nodes."""
@@ -171,7 +165,7 @@ class GameBoard:
         }
 
     def step(self) -> None:
-        """One interval forward (ALGEBRA.md #the-interval)."""
+        """One interval forward, the five acts each one loop over the families or the bodies and detectors (ALGEBRA.md #the-interval): the signed read, Rule3 on the levels with the wells, the count's line (laid at the first act) with the bodies' Nodes and the reports, the held families' parts and hold, the clocks and the givings."""
         self.tick += 1
         action, wrap = self.world.quantum_action, self.wrap
         read = self.reads("now")
@@ -179,17 +173,14 @@ class GameBoard:
         for index, (content, axis) in read.items():
             family, state = self.families[index], self.states[index]
             assert state.levels is not None and state.well_remainder is not None
-            after = node.step(
-                state.levels, node.quanta_rule(family, self.world.node_clock, content, axis), wrap
-            )
+            rule = node.quanta_rule(family, self.world.node_clock, content, axis)
+            after = node.step(state.levels, rule, wrap)
             self.bounded(family.name, after)
-            if index in self.sources:
-                wells[index], state.well_remainder = node.well(
-                    state.levels, after, state.well_remainder, action
-                )
+            wells[index], state.well_remainder = node.well(
+                state.levels, after, state.well_remainder, action
+            )
             state.levels = after
-        first = all(state.count is None for state in self.states if state.levels is not None)
-        if first:
+        if all(self.states[index].count is None for index in read):
             self.lay()
         rises = {}
         for index in read:
@@ -203,8 +194,8 @@ class GameBoard:
         self.report(rises)
         for index, family in enumerate(self.families):
             if family.held is not None:
-                source = node.source(family, self.families, wells, self.shape)
                 state = self.states[index]
+                source = node.source(index, self.families, wells, self.shape)
                 state.parts, state.carry = node.held_step(family, state, source, wrap)
                 for part in state.parts:
                     self.bounded(family.name, part)
@@ -272,16 +263,12 @@ class GameBoard:
 
     def report(self, rises: dict[int, np.ndarray]) -> None:
         """THE REPORT, a reading of the count's line (ALGEBRA.md #the-counts-line: the count that arrives at a detector's Node is the detector's click): per family and per detector (a detector's Nodes, the Nodes of the body it names, the open faces' layer) the rise of the family's count summed over the detector's Nodes by the line this interval, the net inflow across its boundary (a move between its own Nodes cancels), one `gather` line per unit of rise with the detector's count after; nothing is handed over."""
-        told: list[tuple[str, np.ndarray, int | None]] = [(FACE_NAME, self.face, None)]
-        for detector in self.detectors:
-            if detector.body is not None:
-                told.append((detector.name, self.bodies[detector.body].nodes, detector.body))
-            elif detector.nodes is not None:
-                told.append((detector.name, detector.nodes, None))
         for index, rise in rises.items():
             count = self.states[index].count
             assert count is not None
-            for name, nodes, taker in told:
+            for detector in self.detectors:
+                nodes = self.bodies[detector.body].nodes if detector.body is not None else detector.nodes
+                assert nodes is not None
                 arrived, held = int(rise[nodes].sum()), int(count[nodes].sum())
                 for _ in range(max(arrived, 0)):
                     self.reports[index] += 1
@@ -290,9 +277,9 @@ class GameBoard:
                             "event": "gather",
                             "tick": self.tick,
                             "family": self.families[index].name,
-                            "detector": name,
+                            "detector": detector.name,
                             "count": held,
-                            "taker": taker,
+                            "taker": detector.body,
                         }
                     )
 
@@ -363,7 +350,7 @@ class GameBoard:
         )
 
     def step_inverse(self) -> None:
-        """One interval back, the acts in reverse order with the direction -1 (ALGEBRA.md #the-direction, #the-counts-line): the hold back, the count's line back, the levels back; the givings and the bodies' Nodes are not undone (a giving is the click's one act the inverse does not take back)."""
+        """One interval back, the same loops in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction, #the-counts-line): the held families' hold and parts back (the wells recomputed from the levels stepped back), the count's line back, the levels back; the givings, the bodies' Nodes and the lay are not taken back."""
         action, wrap = self.world.quantum_action, self.wrap
         backs, wells, starts = {}, {}, {}
         for index, (content, axis) in self.reads("before").items():
@@ -371,14 +358,13 @@ class GameBoard:
             assert state.levels is not None and state.well_remainder is not None
             rule = node.quanta_rule(family, self.world.node_clock, content, axis)
             backs[index] = node.step(state.levels, rule, wrap, -1)
-            if index in self.sources:
-                wells[index], starts[index] = node.well(
-                    backs[index], state.levels, state.well_remainder, action, -1
-                )
+            wells[index], starts[index] = node.well(
+                backs[index], state.levels, state.well_remainder, action, -1
+            )
         for index, family in enumerate(self.families):
             if family.held is not None:
-                source = node.source(family, self.families, wells, self.shape)
                 state = self.states[index]
+                source = node.source(index, self.families, wells, self.shape)
                 state.parts, state.carry = node.held_step(family, state, source, wrap, -1)
         for index, back in backs.items():
             family, state = self.families[index], self.states[index]
@@ -388,9 +374,7 @@ class GameBoard:
                     np.asarray(writes.count),
                     np.asarray(writes.remainder),
                 )
-            state.levels = back
-            if index in starts:
-                state.well_remainder = starts[index]
+            state.levels, state.well_remainder = back, starts[index]
         for body in self.bodies:
             body.total = self.clock_total(body)
         self.tick -= 1

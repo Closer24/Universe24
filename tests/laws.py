@@ -46,14 +46,13 @@ def chain_body_world(
     holds: dict[str, int] | None = None,
     charge: list[int] | None = None,
 ) -> Path:
-    """The universe of Gamma 6000 (examples/events/planck_6000.json, T = 32768, gravity's divisor raised to 10,000 so the binding row alone binds the chain) copied beside a chain of `length` Nodes (x open) with one body of matter declared on its middle Node with `quanta`, and where `taker_at` names a Node a second body of `quanta` there (holding `holds` of other families) read by the detector `taker` (the charge's pair `charge` in place of the file's where given), laid by the pixel tool: the bodies' Nodes with their counts and the mode file beside them."""
+    """The universe of Gamma 6000 (examples/events/planck_6000.json, T = 32768, without its massless row gravity: the binding row alone binds the chain) copied beside a chain of `length` Nodes (x open) with one body of matter declared on its middle Node with `quanta`, and where `taker_at` names a Node a second body of `quanta` there (holding `holds` of other families) read by the detector `taker` (the charge's pair `charge` in place of the file's where given), laid by the pixel tool: the bodies' Nodes with their counts and the mode file beside them."""
     events = ROOT / "examples" / "events"
     universe = json.loads((events / "planck_6000.json").read_text(encoding="utf-8"))
-    for family in universe[
-        "families"
-    ]:  # the chain's body is bound by its binding row alone: gravity's divisor far up
-        if family.get("name") == "gravity":
-            family["held"]["divisor"] = 10_000
+    # the chain's body is bound by its binding row alone, and the massless row's rest on an open chain of
+    # 240 is the start's slowest (the iteration from nothing about 760,000 acts): the chain's universe leaves it out
+    universe["families"] = [row for row in universe["families"] if row.get("name") != "gravity"]
+    for family in universe["families"]:
         if family.get("name") == "charge" and charge is not None:
             family["pair"] = charge
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")

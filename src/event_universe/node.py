@@ -13,7 +13,7 @@ from event_universe.features import counts_line
 from event_universe.features import signed_read as signed
 from event_universe.features.hold import components, diagonal, hold
 from event_universe.features.write import carried
-from event_universe.loader.derived import BY_PLAIN, CONTENT, FamilyRule
+from event_universe.loader.derived import BY_PLAIN, FamilyRule
 
 Rule = tuple[tuple[Any, Any, Any], Any, Any]  # Rule3's integers at every Node: (R_x, R_y, R_z), S, w
 
@@ -174,17 +174,25 @@ def well(
     return np.asarray(quanta), np.asarray(carried_out)
 
 
+def weight_of(held: int, reader: FamilyRule) -> int:
+    """The weight with which a family sources a held family, the one weight of the pair (ALGEBRA.md #the-primitives, a family's write: whoever reads with w sources with w): its read's weight by plain, its sign q times it by sign, 0 where it does not read the held family."""
+    return sum(
+        read.weight if read.by == BY_PLAIN else reader.sign * read.weight
+        for read in reader.reads
+        if read.family == held
+    )
+
+
 def source(
-    held: FamilyRule,
+    held: int,
     families: tuple[FamilyRule, ...],
     wells: dict[int, np.ndarray],
     shape: tuple[int, int, int],
 ) -> np.ndarray:
-    """The hold's source at every Node for a held family: SUM over the families whose bodies source it of their well, at the weight 1 for a holder of the content and by the sourcing family's sign q for a holder of the sign (ALGEBRA.md #the-primitives, the row "the hold")."""
+    """The hold's source at every Node for a held family: SUM over the families of quanta of their well at the weight with which each reads it (ALGEBRA.md #the-primitives, the row "the hold")."""
     total = zeros(shape)
     for index, quanta in wells.items():
-        weight = 1 if held.held == CONTENT else families[index].sign
-        total = total + weight * quanta
+        total = total + weight_of(held, families[index]) * quanta
     return total
 
 

@@ -18,8 +18,7 @@ FACE_NAME = "face"  # the one detector of the open faces' layer
 WORLD_KEYS = ("shape", "boundary", "face_depth", "ticks", "universe", "engine", "measured", "detectors")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 UNIVERSE_KEYS = ("integers", "families")
-INTEGER_KEYS = ("node_clock", "quantum_action", "width", "most_families")
-INTEGER_REQUIRED = ("node_clock", "quantum_action")
+INTEGER_KEYS = ("node_clock", "quantum_action", "width")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS = (
     ("name", "pair", "held"),
     ("name", "pair"),
@@ -70,7 +69,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the intervals, Gamma, T, the amplitude bound A derived, the families, the bodies and the detectors."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the intervals, Gamma, T, the largest integer of the file's width, the amplitude bound A derived, the families, the bodies and the detectors."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -79,6 +78,7 @@ class World:
     ticks: int
     node_clock: int
     quantum_action: int
+    width: int
     amplitude_bound: int
     families: tuple[FamilyRule, ...]
     bodies: tuple[BodyRow, ...]
@@ -125,17 +125,12 @@ def document_at(files: Mapping[str, object], path: object, label: str) -> object
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
     """The universe file: its integers and its families, each row its name, its pair and what it holds, the rest derived by the rule."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
-    raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_REQUIRED)
+    raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
-    if "width" in integers and integers["width"] != MAX_WORK_INT.bit_length():
-        raise ValueError(
-            f"integers.width {integers['width']} is not this host's working width {MAX_WORK_INT.bit_length()} bits"
-        )
+    integer(integers["width"], "integers.width", 1, MAX_WORK_INT.bit_length())
     entries = universe["families"]
     if not isinstance(entries, list) or not entries:
         raise ValueError("families must be a list of the families' rows")
-    if len(entries) > integers.get("most_families", len(entries)):
-        raise ValueError(f"the universe holds {len(entries)} families, above most_families")
     rows: list[tuple[str, tuple[int, int], str | None, int | None]] = []
     for index, entry in enumerate(entries):
         label = f"families[{index}]"
@@ -147,7 +142,11 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         if not isinstance(pair, list) or len(pair) != 2:
             raise ValueError(f"{label}.pair must be [num, den]")
         den = integer(pair[1], f"{label}.pair's den", 1)
-        num = integer(pair[0], f"{label}.pair's num", 1, den)
+        num = integer(pair[0], f"{label}.pair's num", -den, den)
+        if abs(num) == den and num != den:
+            raise ValueError(
+                f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
+            )
         held, divisor = None, None
         if "held" in row:
             holds = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_KEYS)
@@ -172,19 +171,17 @@ def spread(total: int, counts: tuple[int, ...]) -> tuple[int, ...]:
 def levels_of(
     entry: object, label: str, family: FamilyRule, size: int, bound: int
 ) -> tuple[tuple[int, ...], ...]:
-    """A body's two levels from its mode entry: `moving`'s now and before where written, else the profile at both levels, each one integer per Node in x-major order, not all zero and within the amplitude bound A."""
-    mode = keyed(entry, label, MODE_BODY_KEYS, ("family", "pair", "profile"))
+    """A body's two levels from its mode entry, `moving`'s now and before, each one integer per Node in x-major order within the amplitude bound A; the generator's readings beside them are read and not used."""
+    mode = keyed(entry, label, MODE_BODY_KEYS, ("family", "pair", "moving"))
     if mode["family"] != family.name or mode["pair"] != list(family.pair):
         raise ValueError(
             f"{label} is of the family {mode['family']!r} with the pair {mode['pair']}, the body of "
             f"{family.name!r} with {list(family.pair)}"
         )
-    words = (
-        keyed(mode["moving"], f"{label}.moving", MOVING_KEYS, MOVING_KEYS) if "moving" in mode else {}
-    )
+    words = keyed(mode["moving"], f"{label}.moving", MOVING_KEYS, MOVING_KEYS)
     found = []
     for word in MOVING_KEYS:
-        values = words.get(word, mode["profile"])
+        values = words[word]
         if (
             not isinstance(values, list)
             or len(values) != size
@@ -193,11 +190,8 @@ def levels_of(
             raise ValueError(
                 f"{label}'s {word} level must be {size} integers, one per Node in x-major order"
             )
-        largest = max(abs(v) for v in values)
-        if largest == 0 or largest > bound:
-            raise ValueError(
-                f"{label}'s {word} level reaches {largest}: not all zero and at most A = {bound}"
-            )
+        if max(abs(v) for v in values) > bound:
+            raise ValueError(f"{label}'s {word} level is above the amplitude bound A = {bound}")
         found.append(tuple(values))
     return found[0], found[1]
 
@@ -314,7 +308,8 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     depth = integer(world["face_depth"], "face_depth", 1) if "face_depth" in world else 0
     most = largest_count(world["measured"])
     gamma, action = integers["node_clock"], integers["quantum_action"]
-    bound = derived.amplitude_bound(families, gamma, action, most)
+    width = integers["width"]
+    bound = derived.amplitude_bound(families, gamma, action, most, width)
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound)
     detectors = detectors_of(world["detectors"], shape, len(bodies))
@@ -326,6 +321,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         integer(world["ticks"], "ticks", 0),
         gamma,
         action,
+        derived.largest_of(width),
         bound,
         families,
         bodies,

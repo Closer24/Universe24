@@ -5,7 +5,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import gcd, isqrt
 
-from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import ISOTROPIC, coefficients, division_forward
 from event_universe.features.counts_line import PORTS, PRODUCTS
 
@@ -84,24 +83,30 @@ def family_rules(
     return tuple(found)
 
 
-def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, most: int) -> int:
-    """THE AMPLITUDE BOUND A, DERIVED AND NEVER WRITTEN: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound), and at which the count's line's total 6 x 2 num A^2 + W_c (most + 2) of every family of quanta does too (ALGEBRA.md #the-counts-line, the bound), W_c = 3 den T and most the largest count a body declares at a Node; refused by name where no level fits."""
-    weak_field = gamma > 1
-    found = MAX_WORK_INT
+def largest_of(width: int) -> int:
+    """The largest integer of the file's width in bits, 2^width - 1, the bound every total of the law stays inside (ALGEBRA.md #the-bound)."""
+    return int(2**width - 1)
+
+
+def amplitude_bound(
+    families: tuple[FamilyRule, ...], gamma: int, action: int, most: int, width: int
+) -> int:
+    """THE AMPLITUDE BOUND A, DERIVED AND NEVER WRITTEN: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound), and at which the count's line's total 6 x 2 |num| A^2 + W_c (most + 2) of every family of quanta does too (ALGEBRA.md #the-counts-line, the bound), W_c = 3 den T and most the largest count a body declares at a Node; refused by name where no level fits."""
+    largest = largest_of(width)
+    found = largest
     for family in families:
         num, den = family.pair
-        for level in (0, gamma // 2, gamma - 1) if weak_field else (0,):
-            reads, self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, weak_field)
+        for level in (0, int(division_forward(gamma, 2, 0)[0]), gamma - 1):
+            reads, self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, True)
             room = 6 * abs(reads[0]) + abs(self_coefficient) + wall
-            found = min(found, int(division_forward(MAX_WORK_INT - wall, room, 0)[0]))
-        if family.quanta:
-            count_wall = 3 * den * action
-            spare = max(MAX_WORK_INT - count_wall * (most + 2), 0)
-            found = min(found, isqrt(int(division_forward(spare, PORTS * PRODUCTS * num, 0)[0])))
+            found = min(found, int(division_forward(largest - wall, room, 0)[0]))
+        if family.quanta and num:
+            spare = max(largest - 3 * den * action * (most + 2), 0)
+            found = min(found, isqrt(int(division_forward(spare, PORTS * PRODUCTS * abs(num), 0)[0])))
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "
-                f"Rule3 and of the count's line leave no level inside the width of {MAX_WORK_INT.bit_length()} "
-                "bits (ALGEBRA.md #the-bound)"
+                f"Rule3 and of the count's line leave no level inside the width of {width} bits "
+                "(ALGEBRA.md #the-bound)"
             )
     return found
