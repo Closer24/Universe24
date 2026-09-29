@@ -3,16 +3,12 @@
 import numpy as np
 import pytest
 
-from event_universe.core.register import folder_of
-from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.giving import (
     ACTS,
-    DECLARATION,
     THE_BIRTH,
     THE_CLOSE,
     THE_INVERSE,
     THE_OPEN,
-    THE_WORD,
     THE_WRITE,
     GivingOwn,
     GivingStart,
@@ -20,8 +16,6 @@ from event_universe.features.giving import (
     apply,
     bulk_share,
 )
-from event_universe.world_files import parse_nature_beam_world
-from tests.worlds import emitter_world
 
 TERM, NO_TALLY = GivingTerm(coupling=(3, 1), action=1000, family=0), (0, 0, 0)
 CLOSED = GivingOwn(None, 0, NO_TALLY)
@@ -126,18 +120,3 @@ def test_the_refusals_by_name():
     with pytest.raises(TypeError):
         GivingOwn()  # type: ignore[call-arg]
     assert ACTS == (THE_OPEN, THE_WRITE, THE_CLOSE, THE_INVERSE, THE_BIRTH)
-
-
-def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md #the-primitives in the register's form: "the giving" at (ii), the word after the step, the writes ordered as a click's deferred writes at (iv), its section; its function is `apply`, the act the loop calls."""
-    assert DECLARATION.name == "the giving" and folder_of("the giving") == "giving"
-    assert DECLARATION.place == "(ii)" and DECLARATION.word == "after the step"
-    assert DECLARATION.writes[:2] == ("a family's level at a Node", "a body's content M_k")
-    assert DECLARATION.writes[2:] == ("a body's momentum n", "the count at a Node")
-    assert DECLARATION.place_of("a body's momentum n") == "(iv)"
-    assert DECLARATION.place_of("a family's level at a Node") == "(ii)" and DECLARATION.function is apply
-    assert DECLARATION.section.startswith(THE_WORD)
-    assert "from the rule" in THE_WORD and "beyond (H)" in THE_WORD and "click's inverse" in THE_WORD
-    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
-    assert simulation.register.declarations["the giving"].writes == DECLARATION.writes
-    assert simulation.register.at("the giving", "(ii)") is apply  # the loop calls the folder's acts

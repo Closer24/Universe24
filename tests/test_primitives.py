@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.events import primitives as P
-from tests.worlds import load_file
+from tests.laws import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 TWIST_FINE_COUNT = (

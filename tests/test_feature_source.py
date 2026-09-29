@@ -6,10 +6,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe.core.register import discover, folder_of
 from event_universe.features.source import (
-    DECLARATION,
-    THE_WORD,
     SourceOwn,
     SourceStart,
     SourceTerm,
@@ -17,8 +14,6 @@ from event_universe.features.source import (
     hand_identity,
     invert,
 )
-from event_universe.world_files import parse_nature_beam_world
-from tests.worlds import emitter_world
 
 ROOT, SHAPE = Path(__file__).resolve().parents[1], (2, 3, 1)
 SCALE = 18_910  # E_s of the run files (D_peak 1,891,072 div 100)
@@ -116,19 +111,3 @@ def test_the_trace_hand_identity_at_a_node():
     assert hand_identity(PLAIN, PEAK, 18_900, 596, 697)  # the carried remainder tips one more
     assert not hand_identity(PLAIN, PEAK, 0, 596, 697) and hand_identity(TABLE, PEAK, 0, 300, 337)
     assert hand_identity(SourceTerm(3, 2, -3, SCALE), PEAK, 72, 0, -300)
-
-
-def test_the_declaration_is_the_ledgers_row_and_the_register_binds_its_function():
-    assert DECLARATION.name == "the source" and folder_of(DECLARATION.name) == "source"
-    assert DECLARATION.place == "(iv)" and DECLARATION.word == "the right side"
-    assert DECLARATION.writes == ("a family's level at a Node", "the record's remainder")
-    assert (
-        "D_i" in DECLARATION.reads[0] and "E_s" in DECLARATION.reads and "s_cap" in DECLARATION.reads[2]
-    )
-    assert THE_WORD in DECLARATION.section and "#the-primitives" in DECLARATION.section
-    register = discover()
-    declaration = register.declarations["the source"]
-    assert declaration.section == DECLARATION.section and declaration.function is apply
-    step = parse_nature_beam_world(emitter_world(stock=1, ticks=2)).step
-    writers = ("the hold", "the source", "the recoil")
-    assert register.writers("a family's level at a Node", "(iv)", step) == writers

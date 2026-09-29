@@ -1,3 +1,5 @@
+"""THE GENERATOR IS RULE3 (ALGEBRA.md #the-generator): the pixel tool lays a body as the fixed point of its binding row, refusing a cloud, a collapse, a universe without T and two bodies sharing a region by name."""
+
 from __future__ import annotations
 
 import json
@@ -8,8 +10,8 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_digest, load_world
-from tests.worlds import BODY_24 as QUANTA
-from tests.worlds import body_at_24, load_file
+from tests.laws import BODY_24 as QUANTA
+from tests.laws import body_at_24, load_file
 
 TOOL = load_file("pixel_mode", Path(__file__).resolve().parents[1] / "tools" / "pixel_mode.py")
 

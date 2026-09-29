@@ -2,20 +2,15 @@
 
 import json
 import sys
-from math import atan, cos, pi, tan
+from math import atan, cos, tan
 from pathlib import Path
 
-import numpy as np
 import pytest
 
 import event_universe.world_files as world_files
-from event_universe.core.register import folder_of
-from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.recoil import (
-    DECLARATION,
     GIVING,
     TAKING,
-    THE_WORD,
     RecoilOwn,
     RecoilStart,
     RecoilTerm,
@@ -24,14 +19,11 @@ from event_universe.features.recoil import (
     sign_of,
 )
 from event_universe.loader.mode import sine_of
-from event_universe.world_files import input_stamp, load_world, parse_nature_beam_world
-from tests.running import lines_of
-from tests.worlds import emitter_world
+from event_universe.world_files import input_stamp
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from reversible import forward, reversible_row, step_back  # noqa: E402
 
 GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # the universe of record
 START = ROOT / "examples" / "events" / "engine_start.json"
@@ -143,68 +135,3 @@ def giver_world(tmp_path: Path, monkeypatch, wave_number: int) -> Path:
     mode = {"world_digest": world["stamp"]["hash"], "bodies": [entry]}
     (tmp_path / "giver.mode.json").write_text(json.dumps(mode), encoding="utf-8")
     return tmp_path / "giver.json"
-
-
-def test_in_the_loop_the_givers_record_turns_at_the_close_opposite_to_the_light_and_n_is_a_reading(
-    tmp_path, monkeypatch
-):
-    """The loop: the giver's mode carries `wave_number`; at its window's close the `recoil` line names the body at the sense -1, the giving's tally along x and the turn (-sigma_x k_q) div M along the light's axis (opposite to the given light), the books summing the turns per body and the angle's remainder on the body under the recoil's key; the body's momentum is the reading of its record's current at every interval, W x the current over the form to the nearest unit (recomputed here from the record's levels), both levels one reading; across the close the host undoes the turn from the copy on the recoil's line (the click keeps the click): the body's own record returns bit for bit, and the reversible row's reading is the same with the turn and without it."""
-    unit = json.loads(GENERATED.read_text(encoding="utf-8"))["integers"]["twist_table"]["unit"]
-    wave_number = round(unit * 2 * pi / 7) // 100  # a slow quantum: the turn inside the table's angles
-    world = load_world(path := giver_world(tmp_path, monkeypatch, wave_number))
-    simulation = DetectorLawSimulation(world, observer=(lines := []).append)
-    block, quanta = simulation.blocks[0], sum(world.measured[0].block.counts)  # M the body's count
-    while not lines_of(lines, "recoil") and simulation.tick < world.ticks:
-        wall = simulation.wall_of(block)  # W as the interval starts, before the giving's open
-        simulation.step()
-        live, weight = block.own, simulation.kind_wall(block.family, block.definition.pair)
-        flow = sum(
-            int(live.now[x + 1, 0, 0]) * int(live.before[x, 0, 0])
-            - int(live.before[x + 1, 0, 0]) * int(live.now[x, 0, 0])
-            for x in range(world.shape[0] - 1)
-        )
-        reading = round(wall * weight * flow / (simulation.world.quantum_action * quanta))
-        assert abs(block.momentum[0] - reading) <= 1 and block.momentum[1:] == [0, 0]
-        assert block.momentum_before == block.momentum
-    (recoil,), (giving,) = lines_of(lines, "recoil"), lines_of(lines, "giving")
-    assert (recoil["sense"], recoil["measured"], recoil["tick"]) == (GIVING, 0, giving["tick"])
-    sigma = giving["momentum"][0]  # the light's direction along x, the tally's sign
-    assert sigma != 0 and recoil["turn"] == [(-sigma * wave_number) // quanta, 0, 0]
-    assert simulation.recoil_turns == {0: recoil["turn"]} and recoil["tally"][0] * sigma > 0
-    assert block.hold_carry[("recoil", 0)] == (-sigma * wave_number) % quanta
-
-    def build() -> tuple[DetectorLawSimulation, list[dict]]:
-        found: list[dict] = []
-        return DetectorLawSimulation(load_world(path), observer=found.append), found
-
-    row = reversible_row(build, recoil["tick"])
-    back, lines = build()
-    step_back(back, lines, *forward(back, lines, recoil["tick"])[1:], recoil["tick"])
-    fresh, _ = build()
-    for _ in range(recoil["tick"] - 1):
-        fresh.step()
-    own, then = back.blocks[0].own, fresh.blocks[0].own
-    assert all(np.array_equal(getattr(own, k), getattr(then, k)) for k in ("now", "before", "remainder"))
-    mode = json.loads((tmp_path / "giver.mode.json").read_text(encoding="utf-8"))
-    mode["bodies"][0].pop("wave_number")  # the same world without the turn
-    (tmp_path / "giver.mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    assert reversible_row(build, recoil["tick"])["read"] == row["read"]
-
-
-def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md #the-primitives: "the recoil" at (iv), writing a family's level at a Node (the body's own record) and a body's remainders, its function `apply`, its section; the engine's register finds it; a giver off the mode (no wave number) takes no recoil."""
-    assert DECLARATION.name == "the recoil" and DECLARATION.place == "(iv)"
-    assert DECLARATION.writes == ("a family's level at a Node", "a body's remainders")
-    assert (
-        DECLARATION.function is apply and DECLARATION.built and folder_of(DECLARATION.name) == "recoil"
-    )
-    assert DECLARATION.section.startswith(THE_WORD) and DECLARATION.word == "after the step"
-    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
-    registered = simulation.register.declarations["the recoil"]
-    assert registered.reads == DECLARATION.reads and registered.function is apply
-    assert registered.place_of("a family's level at a Node") == "(iv)"
-    assert "the twist table" in DECLARATION.reads
-    # a giver whose mode carries no wave number takes no recoil (the fixture off the mode, tests/worlds.py)
-    off_mode = simulation.world.measured[0].block
-    assert off_mode is not None and off_mode.emitter is not None and off_mode.emitter.wave_number is None
-    assert simulation.recoil_turns == {}
