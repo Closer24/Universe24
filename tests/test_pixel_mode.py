@@ -1,3 +1,5 @@
+"""THE GENERATOR IS RULE3 (ALGEBRA.md #the-generator): the pixel tool lays a body as the fixed point of its binding row, refusing a cloud, a collapse, a universe without T and two bodies sharing a region by name."""
+
 from __future__ import annotations
 
 import json
@@ -8,8 +10,8 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_digest, load_world
-from tests.worlds import BODY_24 as QUANTA
-from tests.worlds import body_at_24, load_file
+from tests.laws import BODY_24 as QUANTA
+from tests.laws import body_at_24, load_file
 
 TOOL = load_file("pixel_mode", Path(__file__).resolve().parents[1] / "tools" / "pixel_mode.py")
 
@@ -49,9 +51,9 @@ def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_ar
 ):
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     with pytest.raises(ValueError, match="is a cloud: its standing reading rotates"):
-        body_at_24(tmp_path, TOOL, quanta=QUANTA // 2)  # below the window of mass
+        body_at_24(tmp_path, TOOL, quanta=12)  # below the window of mass
     with pytest.raises(ValueError, match="collapses: its wells reach the pace 0"):
-        body_at_24(tmp_path, TOOL, quanta=2 * QUANTA)  # above it
+        body_at_24(tmp_path, TOOL, quanta=48)  # above it: the Link's pace reaches 0
     document = json.loads(body_at_24(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     document["measured"].append(
         {**document["measured"][0], "nodes": [{"node": [8, 6, 6], "count": QUANTA}]}

@@ -1,4 +1,4 @@
-"""The primitives: the internal representation's tables are exact Pythagorean identities and the transport turns, composes and inverts exactly per Node; the clicks list balances every declared conserved integer or refuses; the helicity is the sign of the spin against the momentum. HOST computations."""
+"""The primitives: the tables are exact Pythagorean identities; the clicks list balances every declared conserved integer or refuses; the helicity is the sign of the spin against the momentum. HOST computations."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from event_universe.events import primitives as P
-from tests.worlds import load_file
+from tests.laws import load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 TWIST_FINE_COUNT = (
@@ -39,92 +39,6 @@ def test_the_identities_and_the_exact_product_of_rotations():
     with pytest.raises(ValueError, match="not the identity"):
         P.TwistTable(((3, 4, 5),) + FINE[1:], COARSE).check()
     assert P.link_angle(-1, 1, 3, 5, 7) == -36 and P.link_angle(1, -1, 3, 5, 7) == -36
-
-
-def test_a_plane_rotation_keeps_the_norm_before_the_division_and_inverts_exactly():
-    levels, triple = (1000, -300), (3, 4, 5)
-    exact_re, exact_im = 3 * 1000 - 4 * -300, 4 * 1000 + 3 * -300
-    assert exact_re**2 + exact_im**2 == (1000**2 + 300**2) * 25  # the norm times d^2, exact
-    for remainders in ((0, 0), (2, 4), (4, 1)):
-        rotated, after = P.rotate_plane(levels, triple, remainders)
-        assert all(0 <= rho < 5 for rho in after)
-        assert rotated[0] * 5 + after[0] == exact_re + remainders[0]
-        assert rotated[1] * 5 + after[1] == exact_im + remainders[1]
-        back, before = P.rotate_plane_inverse(levels, triple, after)
-        assert back == rotated and before == remainders  # ALGEBRA.md #the-transport
-    # the quaternion's block, the same identities with four remainders
-    quadruple, block = (1, 2, 2, 4, 5), (11, -7, 5, 3)
-    for remainders in ((0, 0, 0, 0), (1, 2, 3, 4)):
-        rotated, after = P.rotate_quaternion(block, quadruple, remainders)
-        assert all(0 <= rho < 5 for rho in after)
-        back, before = P.rotate_quaternion_inverse(block, quadruple, after)
-        assert back == rotated and before == remainders
-    a, b, c, d, e = quadruple  # the unit quaternion keeps the norm times e^2 before the division
-    w, x, y, z = block
-    products = (
-        a * w - b * x - c * y - d * z,
-        a * x + b * w + c * z - d * y,
-        a * y - b * z + c * w + d * x,
-        a * z + b * y - c * x + d * w,
-    )
-    assert sum(p * p for p in products) == (w * w + x * x + y * y + z * z) * e * e
-
-
-def test_the_transport_composes_the_generators_and_inverts_per_node():
-    quadruples = P.QuadrupleTable(((1, 0, 0, 0, 1), (1, 2, 2, 4, 5), (2, 3, 6, 0, 7)))
-    representation = P.InternalRepresentation(
-        3,
-        (
-            P.PlaneGenerator(((0, 1), (2, 3), (4, 5)), TABLE),  # the common phase of the three pairs
-            P.PlaneGenerator(((0, 2), (1, 3)), TABLE),  # a rotation between pairs 0 and 1
-            P.QuaternionGenerator((2, 3, 4, 5), quadruples),  # pairs 1 and 2 as a quaternion
-        ),
-    )
-    representation.check()
-    assert representation.levels == 6 and representation.remainder_count == 6 + 4 + 4
-    arrived, angles, remainders = (120, -45, 300, 7, -88, 61), (2, -1, 1), tuple(range(14))
-    remainders = tuple(r % 5 for r in remainders)
-    levels, after = representation.transport(arrived, angles, remainders)
-    assert len(levels) == 6 and len(after) == 14 and all(0 <= rho < 13 for rho in after)
-    back, before = representation.transport_inverse(arrived, angles, after)
-    assert back == levels and before == remainders
-    # the angle 0 with zero remainders is the identity
-    identity, zeros = representation.transport(arrived, (0, 0, 0), (0,) * 14)
-    assert identity == arrived and zeros == (0,) * 14
-    with pytest.raises(ValueError, match="levels arrived"):
-        representation.transport(arrived[:4], angles, remainders)
-    with pytest.raises(ValueError, match="angles for"):
-        representation.transport(arrived, angles[:2], remainders)
-    with pytest.raises(ValueError, match="not distinct indices"):
-        P.InternalRepresentation(2, (P.PlaneGenerator(((0, 0),), TABLE),)).check()
-    with pytest.raises(ValueError, match="not distinct indices"):
-        P.InternalRepresentation(1, (P.PlaneGenerator(((0, 2),), TABLE),)).check()
-
-
-def test_the_loaders_hook_reads_the_internal_object_and_refuses_the_rest():
-    obj = {
-        "pairs": 2,
-        "generators": [
-            {"planes": [[0, 1], [2, 3]]},
-            {"quaternion": [0, 1, 2, 3], "table": [[1, 0, 0, 0, 1], [1, 2, 2, 4, 5]]},
-        ],
-    }
-    representation = P.internal(obj, TABLE)
-    assert representation.pairs == 2 and len(representation.generators) == 2
-    with pytest.raises(ValueError, match="pairs"):
-        P.internal({"pairs": 0, "generators": []}, TABLE)
-    with pytest.raises(ValueError, match='"planes", or "quaternion"'):
-        P.internal({"pairs": 1, "generators": [{"twist": 1}]}, TABLE)
-    with pytest.raises(ValueError, match="no Pythagorean quadruple"):
-        P.internal(
-            {
-                "pairs": 2,
-                "generators": [
-                    {"quaternion": [0, 1, 2, 3], "table": [[1, 0, 0, 0, 1], [1, 1, 1, 1, 3]]}
-                ],
-            },
-            TABLE,
-        )
 
 
 def test_the_clicks_list_balances_the_conserved_integers_or_refuses():

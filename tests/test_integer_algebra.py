@@ -34,7 +34,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "events/momentum_reading.py": "the momentum as a reading of the record's current: the count's line's booking products summed in whole integers, the division act to the nearest unit",
     "events/pair.py": "the pair record of rank 2 in the loop: the two rows of one giving, the labels' clicks by their own ladders on the rows' bookings summed, the collapse to rank 1 at the first click; functions taking the engine",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval), and the ladder's rungs (ALGEBRA.md #the-ladder)",
-    "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the internal representation's exact tables and the transport with its remainders, the clicks list and the momenta's share, the helicity sign",
+    "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the twist table's exact triples, the clicks list and the momenta's share, the helicity sign",
     "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
     "core/readings.py": "the run's readings declared in the world file and written in one format: a detector's clicks, a family's level, support and total, a body's centre, the records alive (record 2199 item 1); reads state, writes nothing into the run",
     "core/main_loop.py": "the main loop: the walk of the step file's acts through the register, the interval's frame (the clock, the deferred writes, the closing) and the run-time guards of the views, the writers and the Ports; the stages the engine's, handed in",

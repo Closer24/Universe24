@@ -12,7 +12,14 @@ from typing import Any, cast
 import numpy as np
 
 from event_universe.core.ports import arrival
-from event_universe.core.rule3 import ISOTROPIC, coefficients, division_forward, rule3
+from event_universe.core.rule3 import (
+    ISOTROPIC,
+    NO_READ,
+    coefficients,
+    division_forward,
+    form_term,
+    rule3,
+)
 from event_universe.features.start import rest
 from event_universe.world_files import input_digest, world_files
 
@@ -63,9 +70,23 @@ PASSES = 8  # the purges tried before the record is refused as never standing
 ROUNDS = 4 * 8  # the rounds of the fixed point (counts, rests, record, half step) before a refusal
 
 
-def form_of(now: np.ndarray, before: np.ndarray, nxt: np.ndarray) -> np.ndarray:
-    """The record's form at every Node, D = now^2 - next x before (ALGEBRA.md THE COUNT IS THE FORM), the same at every phase of one rotation."""
-    return now.astype(np.int64) * now.astype(np.int64) - nxt.astype(np.int64) * before.astype(np.int64)
+def share_of(board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray) -> np.ndarray:
+    """The record's form's share at every Node in the current's units, the engine's `count_share` (ALGEBRA.md #the-counts-line; issue #1495 finding 6): 3 den (now^2 + before^2) - num now S_6(before), the form's Node term at the plain wall less the Link term by the read act."""
+    num, den = board.pair
+    arrivals = tuple(
+        arrival(before, axis, 1, board.wrap[axis], 0) + arrival(before, axis, -1, board.wrap[axis], 0)
+        for axis in range(3)
+    )
+    node_term = np.asarray(
+        form_term(0, 3 * den, now.astype(np.int64), before.astype(np.int64)), dtype=np.int64
+    )
+    return node_term - np.asarray(rule3((num * now,) * 3, arrivals, 0, 1, 0, 0, 0)[0], dtype=np.int64)
+
+
+def share_counts(share: np.ndarray, den: int, action: int) -> np.ndarray:
+    """The counts the share lays, the engine's lay: W_c c + r = share + W_c div 2 at every Node with W_c = 3 den T by Rule3's division act (no quantum carried from Node to Node: a hole at the record's edge the line conserves, ALGEBRA.md #the-counts-line)."""
+    wall = 3 * den * action
+    return np.asarray(rule3(NO_READ, NO_READ, 1, wall, 0, 0, share + wall // 2)[0], dtype=np.int64)
 
 
 def period_reading(
@@ -167,9 +188,11 @@ def standing(
             return None
         length, largest, pair, now_at, before_at, next_at = reading
         carried = int(
-            division_forward(
-                int(np.where(region, form_of(now_at, before_at, next_at), 0).sum()), board.action, 0
-            )[0]
+            np.where(
+                region,
+                share_counts(share_of(board, content, now_at, before_at), board.pair[1], board.action),
+                0,
+            ).sum()
         )
         if previous is not None:
             length_before, carried_before, largest_before, pair_before, now_b, before_b, next_b = (
@@ -280,15 +303,6 @@ def spread(
     )
 
 
-def laid_counts(form: np.ndarray, action: int) -> np.ndarray:
-    """The counts the form lays: D div T at every Node with the remainder carried from Node to Node in the board's order (Rule3's division), so the body's quanta are its form's whole quanta and no Node's rounding is lost."""
-    laid, carry = np.zeros(form.size, dtype=np.int64), 0
-    for index, value in enumerate(np.maximum(form, 0).ravel().tolist()):
-        if value:
-            laid[index], carry = division_forward(value, action, carry)
-    return laid.reshape(form.shape)
-
-
 def scaled_record(
     board: Board,
     content: np.ndarray,
@@ -372,8 +386,13 @@ def body_fixed_point(
                 f"[{a}, {level}], not above the band's top 2 x {num} / {den} and below 2; its quanta are below its "
                 "binding row's window of mass (ALGEBRA.md #the-generator)"
             )
-        form = np.where(region, form_of(record.now, record.before, record.next), 0)
-        laid = laid_counts(form, board.action)
+        laid = np.where(
+            region,
+            share_counts(
+                share_of(board, content, record.now, record.before), board.pair[1], board.action
+            ),
+            0,
+        )
         off = np.abs(laid - counts)
         if bool(np.all((off - (off & 1)) ** 2 <= 4 * np.maximum(laid, counts))):
             return laid, record, region
