@@ -89,6 +89,11 @@ def test_the_card_is_built_at_ii_and_the_pair_is_declared_at_the_half_quantum():
     assert read_term({"family": "matter"}) is None and read_term({"crystal": {}}) == CrystalTerm()
 
 
+@pytest.mark.xfail(
+    strict=True,
+    raises=RuntimeError,
+    reason="issue #1495: on Bell's world under the law's paces the given light record's zero mode (its total level growing linearly, the form conserved) reaches the derived A at interval 95; the owner's word of 2026-09-29: the Node's line first, Bell's world aside",
+)
 def test_the_crystal_gives_the_pair_at_the_click_and_each_label_clicks_alone_at_its_side(tmp_path):
     """The loop on Bell's world in the law's form (the givers' modes from the generator, the crystal a giver with the key `crystal`), the main loop's audit admitting every act: the emitter's record clicks at the crystal's set and in the same interval the crystal gives the pair through the giving's open and window, named at the window's close (after the click, the intervals in this order and never the run's numbers) with the two identical labels, the arriving norm over twice its denominator and a residue of its own (the crystal's, read at its Node); the rows' label clicks alone at the left polariser's own set on the first row's line with the pair's one quantum, the columns' label alone at the right polariser's own set on the second row's line with the arriving record's residue (the second residue of the crystal's Node) and the content 0 (the half in the family's unit), whichever first; after the second click no row is alive. The refusals by name: a crystal on a body with an emitter, a world with one polariser body."""
     lines: list[dict] = []
