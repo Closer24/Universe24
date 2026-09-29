@@ -668,6 +668,18 @@ drifts, names a missing law; the body's own numbers are never patched.
 
 ## What the law says of nature
 
+### The reading
+
+**One sentence** (the owner's word, 2026-09-29): the universe is counts of clicks at Nodes, moved by Rule3 through the records' currents, and a body is a place where the record's form lowers the pace until its clicks cannot leave.
+
+**One thing, two faces.** Outside, the count; inside, the form. The count at a Node is the number of clicks that came to rest there, and it is all the Outside sees. The form D div T of the record is what slows the clock inside, and nobody measures it. The count's line ties the two: its sum is the flux of the form, so the two agree on average and differ by a remainder. Matter and light are one thing in two states: matter is clicks at rest, light is clicks on their way; the band with a gap (m under Gamma) is where rest is allowed, and [1, 1] without a gap is not, and that is all the families say. A body, an atom, a star are readings: a world file holds counts and records, and who is bound to whom is read from the nesting of the levels at the Nodes, never declared.
+
+**What a body does, in the words of the clicks.** Under the edge the wave does not hold its clicks and they scatter as messages. In the window it holds them: a discrete breathing of Rule3's focusing non-linearity. In the lower half the body is a blot of a few Links moving as a soliton and the count follows it; "the fall is the bias of the clicks" describes it exactly. Near the horizon the hop to the neighbours vanishes as (1 - 2 c / Gamma)^2: the clicks are locked and the Node indifferent. Two bodies within tail range: the smaller's wave is nearer the band, more coupled to the messages, and its clicks migrate to the larger; the universe flows toward frozen bodies at the horizon. All of it consequences of the rule, with no correction in them.
+
+**The fork, sharper than it was** (the owner's decision, open item 12). "Matter is a click" asks one question of the universe: is there anything in it that is not a click? In the universe of record there is: gravity on [1, 1] never clicks, a real field that steps, and from it 1 / r and orbits. The rule's own universe erased it with the words "the well is the count and no field", and so has no attraction beyond three Links. If matter is only clicks, gravity too must be clicks, messages between clusters; the only way known here for clicks alone to give 1 / r^2 is Le Sage's shadow, an isotropic bath of light that opaque bodies absorb, which is not in the documents and carries the known drag. The hierarchy of clusters does not help: it gives a short binding at every level, never 1 / r. One field that is not a click, or a universe without a sun.
+
+**What is checked first.** Two looks already named: a body in a tent (the fall, (i)) and two bodies within tail range (the join of clusters); before them one computation, the edge 0.2255 recomputed for a smeared well, since the tail's Nodes have a well of their own. If both looks come out, the algebra of clusters is a right reading of Rule3, and what it lacks is one line that does not click.
+
 ### The postulates
 
 1. The world is Nodes and Events. Space is the GameBoard; an Event is a wall
@@ -681,15 +693,15 @@ neighbours with fixed work and storage for a fixed set of families
 forbidden, whatever the size of its final answer. 3. Consistency is local
 and causal: an Event first changes its own Node and travels Link by Link,
 one Link per interval, each Node updating on receipt under the same rule.
-The one exception is the click: a record ends at once, whole, at the
-detector. 4. The causal speed is one Link per interval, built in; every
+The one exception is the giving: a body's quantum changes family at
+once, whole, at its shell. 4. The causal speed is one Link per interval, built in; every
 other speed is a rational, a count of Links over a count of intervals. 5.
 Every physical calculation is on bounded integers; there is no float, no
 root and no draw in the law; a Node keeps only the law's own numbers: each
 record's two levels and its remainder, the family's pair and the Node clock
 from the content there. 6. A measurement is a detector's click, an action of
-the law on the state: the record ends at the detector and the detector's own
-record changes. Only a click is compared with nature or pinned as an
+the law on the state: a count arrives at the detector's Node and the
+detector's count changes. Only a click is compared with nature or pinned as an
 expectation; displays and the host's readings read state and write nothing.
 7. The Inside is the GameBoard, where no one measures; the Outside is the
 detectors and their clicks, the only thing claimed to represent nature.
@@ -754,4 +766,7 @@ defect, and no body's numbers are patched to meet it.
 6. The exact band [0, 1] of the period 4: a family that never clicks and carries no colour, unnamed in nature here.
 7. The stable body theorem's Hessian beyond the dilation for a set of held rows, and the functional beyond first order in the well over Gamma ([the functional and the dilation](#the-functional-and-the-dilation)); whether the hill holds the body and whether the cooling brings a body to it ((e)) are a run's findings.
 8. **The count is read once** against the graph of the reads: with gravity's [1, 1] and the bound charge's [1, 2] both holding the content at the divisor 1, a matter record's pace reads the count twice and the horizon falls to Gamma div 4; which row is the count's one reader in the rule's own universe.
-9. **The mass is the count** against a quantum weighing its rotation: whether nature's m_p / m_e is the counts' ratio c_p / 1 or the energies' ratio c_p omega_b / omega_e.
+9. **The two masses** are two readings of clicks from outside, how many (the inertia, the count) and at what rotation (the energy, the rotation): whether nature's m_p / m_e is the counts' ratio c_p / 1 or the energies' ratio c_p omega_b / omega_e.
+10. **The first lay** is the only source of matter that is not a click: the count laid once from the wave; in the rule's own universe the generator declares it, and that closes it.
+11. **The holes**, a count of -1, are debts of clicks inside; the Outside sees only closed accounts.
+12. **The fork on gravity**: one field that is not a click (gravity on [1, 1], the universe of record, 1 / r and orbits) or none (the rule's own universe, no attraction beyond three Links); the owner's decision (**The fork, sharper than it was**).
