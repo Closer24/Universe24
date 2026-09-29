@@ -24,9 +24,7 @@
   "tests/test_feature_recoil.py": 1.8,
   "tests/test_feature_signed_read.py": 0.8,
   "tests/test_feature_source.py": 0.4,
-  "tests/test_flux_reading.py": 1.3,
   "tests/test_folder_cards.py": 0.1,
-  "tests/test_four_vector_click.py": 4.5,
   "tests/test_genericity.py": 26.2,
   "tests/test_hop_taking.py": 12.9,
   "tests/test_initial_state.py": 8.0,
@@ -56,6 +54,7 @@
   "tests/test_step_drives_the_loop.py": 0.5,
   "tests/test_support_box.py": 1.8,
   "tests/test_tests_shape.py": 5.7,
+  "tests/test_the_click.py": 23.0,
   "tests/test_transport.py": 1.7,
   "tests/test_vector_holds.py": 0.1,
   "tests/test_weak_field_rule.py": 0.0

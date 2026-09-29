@@ -14,7 +14,6 @@ from lay_out_two_slits import (
     GIVER_COUNT,
     GIVING_FAMILY,
     MIRROR,
-    NORM,
     STEPS,
     body,
     box,
@@ -51,7 +50,7 @@ def one_click(folder: Path) -> dict[str, Any]:
     )
     window = box(WINDOW_X, WINDOW_X + 3, interior.start, interior.stop - 1)
     mirror = box(MIRROR_X, MIRROR_X + 3, interior.start, interior.stop - 1)
-    emitter = {"family": GIVING_FAMILY, "weight": 1, **NORM}
+    emitter = {"family": GIVING_FAMILY, "weight": 1}
     measured = [
         body(giver_nodes, GIVER_COUNT, moment=[0, 0, 1], emitter=emitter, stocks={GIVING_FAMILY: STOCK}),
         body(tube, MIRROR),

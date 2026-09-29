@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING, Any, cast
 import numpy as np
 
 from event_universe.core.rule3 import THE_LOAD
-from event_universe.features import crystal, polariser
 from event_universe.features.receive import ReceiveTerm
 from event_universe.loader.world import NatureBeamWorld
 
@@ -22,10 +21,10 @@ def held_table(world: NatureBeamWorld) -> list[list[int]]:
 
 
 def detectors(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
-    """The detectors, index 0 .. K - 1: each measured event's, the sets' (a set bound to a body a receiver), the face receiver's slab on every open axis, and the map of the Node to its detector."""
+    """The detectors, index 0 .. K - 1: each measured event's, the sets' (a set bound to a body reports to it), the face's slab on every open axis, and the map of the Node to its detector."""
     # The detectors: index 0 .. K - 1 with a name, the Nodes of each, and the measured event (if any) that receives
-    # the content of a click there. A detector set is ONE detector over its whole cube: the flux into the cube
-    # through its Ports from outside is its increment, the click is the detector's, reported by its name, never by a Node.
+    # the content of a report there. A detector set is ONE detector over its Nodes: a quantum of a free record
+    # standing on one of them is reported by the set's name (ALGEBRA.md #the-counts-line, the free record).
     loop.detector_names = []
     loop.detector_measured = []
     loop.detector_face = []
@@ -35,38 +34,17 @@ def detectors(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     loop.detector_set = []
     loop.detector_channel = []
     loop.detector_at_node = np.full(loop.shape, -1, dtype=np.int64)
-    # the Port pairs per family for the detectors' inflow, listed once on first use
-    loop._inflow_port_pairs = {}
-    # the Ports' faces beside the pairs (axis, side), item 56
-    loop._inflow_port_faces = {}
     for number, entry in enumerate(world.measured):
         nodes = loop._span_nodes(entry.position, entry.span)
         own = loop._detector(f"measured:{number}", number, False)
         for node in nodes:
             loop.detector_at_node[node] = own
-    # The sets bound to a block are receivers (DECLARATIONS.md section 10 item 9, section 13 item 1): their
-    # Nodes take (the one-way Port take, the row held at 0, the offer booked to the set's detector, the click
-    # at the first rung stamped with the block's own count); a set with one declared position is the Node
-    # beside the block, one without positions takes at the block's current Nodes (`set_block`, `set_nodes`).
+    # The sets bound to a block report to it: a set with declared positions reports at those Nodes, one
+    # without positions at the block's current Nodes (`set_block`, `set_nodes`).
     loop.set_block = {}
-    # the detector sets in their declared order: the ladder of a
-    # record that names no receiver (ALGEBRA.md #rule3)
+    # the detector sets in their declared order
     loop.set_detectors = []
     loop.set_nodes = {}
-    # THE TABLES ARE RETIRED (the cleanup order's step 3; ALGEBRA.md #the-postulates): a measured event with a table
-    # entry (a polariser's window, a splitter's rows) is refused here; the polariser returns as a body with an axis
-    # and two receivers named, a splitter as a region of the one operator
-    for number, entry in enumerate(world.measured):
-        if any(window is not None for window in entry.windows) or any(
-            split is not None for split in entry.splits
-        ):
-            raise ValueError(
-                f"measured[{number}].table is refused: the "
-                "tables (the polariser's two detectors at one Node, the splitter's linear form) "
-                "retired with the flux reading (the given pair on the circle; BUILD.md section 26 item 17); a polariser is "
-                "a body with an axis and two receivers named, a splitter a region of the one "
-                "operator (ALGEBRA.md #the-postulates)"
-            )
     for detector in world.detectors:
         set_detector: int | None = None
         if detector.block is not None:
@@ -93,10 +71,10 @@ def detectors(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
             elif measured is not None and loop.detector_measured[set_detector] is None:
                 loop.detector_measured[set_detector] = measured
             loop.detector_at_node[node] = set_detector
-    # THE FACE RECEIVER (ALGEBRA.md #rule3): an open axis carries the receiver `face` at its border,
-    # last on every ladder, so what leaves the board clicks there; a periodic axis has none; a `closed` face
-    # is a zero row with no receiver. THE FACE SLAB (ALGEBRA.md #the-ladder): the receiver is the slab of `face_depth`
-    # free Nodes nearest every open border, one detector, its Ports toward the interior alone.
+    # THE FACE (ALGEBRA.md #the-counts-line, the free record): an open axis carries the detector `face` at its
+    # border, so a quantum that reaches the border is reported there; a periodic axis has none; a `closed` face
+    # is a zero row with no detector. THE FACE SLAB: the detector is the slab of `face_depth` free Nodes
+    # nearest every open border, one detector.
     loop.face_detector = None
     for axis in range(3):
         if world.periodic[axis] or world.closed[axis] or loop.shape[axis] < 2:
@@ -181,9 +159,6 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     loop.dead = []
     loop.blocks = []
     loop.block_by_number = {}
-    # The block's count at a light record's first rung at its detector
-    # (the click's `clock`, the body's event in the body's own clock).
-    loop.rung_counts = {}
     # THE PAIR ARRAYS BY (FAMILY, PAIR) (ALGEBRA.md #the-primitives, #the-interval): per family the pair on the
     # six-neighbour term as two dense int64 arrays over the board, a record's rows stepping with their own
     # rest pair everywhere but at the bodies of the family, whose wells (the lowered pair) are written into
@@ -194,7 +169,7 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
 
 
 def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
-    """The bodies' blocks: every measured event with a block, its Nodes written into its family's pair arrays, its own record seeded on its Nodes, the blocks' Nodes on the detector map and the receiver by name."""
+    """The bodies' blocks: every measured event with a block, its Nodes written into its family's pair arrays, its own record seeded on its Nodes, and the blocks' Nodes on the detector map."""
     # The blocks (massive-record-v1): every measured event with a block,
     # its Nodes written into its kind's pair arrays, its own record
     # seeded on its Nodes and its momentum on its wall W = 3 Q M (`wall_of`).
@@ -236,28 +211,11 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
             block.own = own_record
             loop.records[own_record.identity] = own_record
             block.previous_sum = int(np.sum(own_record.now[mask]))
-            if definition.emitter is not None:
-                # the first excited record (ALGEBRA.md #the-click): the
-                # seed at both levels, its residue the first of the wheel,
-                # its norm the seed's squares over the body's Nodes
-                loop._excite(block, own_record)
         loop.blocks.append(block)
         loop.block_by_number[number] = block
-    loop.polarisers = {
-        b.number: t
-        for b in loop.blocks
-        if (t := polariser.read_term(dict(b.definition.declared))) is not None
-    }
-    loop.crystals = {
-        b.number: c
-        for b in loop.blocks
-        if (c := crystal.read_term(dict(b.definition.declared))) is not None
-    }
-    # The blocks' Nodes: a block's Nodes carry its detector's index (the flux
-    # into them booked to it, never chosen: the detector is on no ladder); a
-    # set bound to a block without positions owns the block's Nodes
-    # instead (the flux into them booked to the set; a set bound to a block is a receiver). Nothing
-    # takes (ALGEBRA.md #rule3): the rows evolve at every detector.
+    # The blocks' Nodes: a block's Nodes carry its own detector's index (no report there: a body's
+    # count at its Nodes is the family's level, nothing is handed over); a set bound to a block
+    # without positions reports at the block's current Nodes instead (`reporting_nodes`).
     if loop.blocks:
         for block in loop.blocks:
             for node in zip(*np.nonzero(block.mask), strict=True):
@@ -267,25 +225,6 @@ def bodies(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
             if loop.set_nodes[set_detector] is None:
                 block = loop.block_by_number[number]
                 loop.detector_at_node[block.mask] = set_detector
-    # The receiver by name (DECLARATIONS.md section 13 item 7): an
-    # emitting block's `receiver` names the detector set whose one detector
-    # is the ladder of every record it emits (the click line at that
-    # detector's first rung after the train; the faces and every other set
-    # sinks for it, their take into `absorbed` alone and onto no pointer).
-    # A block without the key keeps the ladder of every detector and the line
-    # at the close, as before the key (the registered worlds byte for byte).
-    loop.receiver_detector = {}
-    for block in loop.blocks:
-        name = block.definition.receiver
-        if name is None:
-            continue
-        if name not in loop.detector_names:
-            raise ValueError(
-                f"measured[{block.number}].receiver {name!r} names no detector of the "
-                f"simulation (the detectors: {loop.detector_names})"
-            )
-        loop.receiver_detector[block.number] = loop.detector_names.index(name)
-    loop.has_receiver = bool(loop.receiver_detector)
 
 
 def held_records(loop: DetectorLawSimulation) -> None:

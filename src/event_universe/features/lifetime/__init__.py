@@ -1,4 +1,4 @@
-"""The lifetime (ALGEBRA.md #the-primitives, the row "the lifetime"): the age is the count on the record, one per interval; at age L the record ends on its tally, the ladder's click first and the end second at (ii); a comparison of two integers, no division."""
+"""The lifetime (ALGEBRA.md #the-primitives, the row "the lifetime"): the age is the count on the record, one per interval; at age L the record ends on its tally, the report of its last quantum first and the end second at (ii); a comparison of two integers, no division."""
 
 from __future__ import annotations
 
@@ -20,10 +20,10 @@ class LifetimeTerm:
 
 @dataclass(frozen=True)
 class LifetimeStart:
-    """What the interval left on the record: its age after its step, and whether the ladder clicked it this interval (the click first, the end second)."""
+    """What the interval left on the record: its age after its step, and whether its last quantum was reported (the report first, the end second)."""
 
     age: int
-    clicked: bool
+    reported: bool
 
 
 @dataclass(frozen=True)
@@ -46,9 +46,9 @@ def check(term: LifetimeTerm, start: LifetimeStart) -> None:
 
 
 def apply(term: LifetimeTerm, start: LifetimeStart, own: None = None) -> LifetimeWrites:
-    """The primitive at (ii): the record ends where its age has reached L and the ladder did not click it this interval (ALGEBRA.md #the-primitives, the row "the lifetime")."""
+    """The primitive at (ii): the record ends where its age has reached L and its last quantum was not reported (ALGEBRA.md #the-primitives, the row "the lifetime")."""
     check(term, start)
-    return LifetimeWrites(not start.clicked and start.age >= term.lifetime)
+    return LifetimeWrites(not start.reported and start.age >= term.lifetime)
 
 
 DECLARATION = Declaration(

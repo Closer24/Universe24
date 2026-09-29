@@ -1,4 +1,4 @@
-"""The count's line: T c_next + r' = T c_now + SUM over the six Ports of F_ij + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, F_ij = weight (now_i before_j - before_i now_j) the current into Node i from its neighbour j, the booking of the record's levels at the Link's two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md #the-counts-line.119 item 1, ALGEBRA.md #the-line); a count is never negative: a Node gives at most what it holds: a Node whose outward currents this interval exceed T c + r gives nothing through any Port, the Link's current blocked at both ends (a Node at 0 among them), the quanta staying where they are, and a count below 0 after that is refused by name, the guard behind the block that never fires on a lawful line (Cheshbon's word of 2026-09-28, 15:46 Israel: a clamp at 0 would create quanta; the owner's word of 14:32 that the rule's universe holds counts alone)."""
+"""The count's line: T c_next + r' = T c_now + SUM over the six Ports of F_ij + r, Rule3 for the family of clicks at every Node with the record's current as its read and the quantum's norm T as its wall, F_ij = weight (now_i before_j - before_i now_j) the current into Node i from its neighbour j, the booking of the record's levels at the Link's two ends (the pair's second level added), the click the division's carry of one whole quantum, the inverse the same line with the current reversed (ALGEBRA.md #the-counts-line, #the-line). THE CLICK IS THE COUNT'S LINE FOR EVERY RECORD (the model owner's word of 2026-09-29 on #1495, finding 10): the same line steps a body's own record and every free record a body gave; the quantum that arrives whole at a detector's Node is the detector's click, reported by the loop from the count this line leaves there. A count may stand below 0 at a Node (a hole the line conserves, ALGEBRA.md #the-counts-line); the line keeps no block and no clamp (a clamp at 0 would create quanta)."""
 
 from __future__ import annotations
 
@@ -48,15 +48,16 @@ class CountStart:
 
 @dataclass(frozen=True)
 class CountWrites:
-    """The line's writes: the count and its remainder after the act, and the inflow per axis it read, the current into the Node through the axis's two Ports."""
+    """The line's writes: the count and its remainder after the act; the inflow per axis it read, the current into the Node through the axis's two Ports; and the travel per axis, the current into the Node through its Port toward -a less the current through its Port toward +a (a quantum entering from the -a side travels toward +a), the direction a report reads."""
 
     count: Any
     remainder: Any
     net: Vector
+    travel: Vector
 
 
 def current(weight: int, here: Levels, there: Levels) -> Any:
-    """The current into the Node here from the Node there through their Link, the booking weight (now_i before_j - before_i now_j), positive inward as the ladder reads it, the second level's term added on a pair (ALGEBRA.md #the-counts-line, #the-direction)."""
+    """The current into the Node here from the Node there through their Link, the booking weight (now_i before_j - before_i now_j), positive inward, the second level's term added on a pair (ALGEBRA.md #the-counts-line, #the-direction)."""
     found = here.now * there.before - here.before * there.now
     if here.im_now is not None and there.im_now is not None:
         found = found + here.im_now * there.im_before - here.im_before * there.im_now
@@ -85,10 +86,11 @@ def check(term: CountTerm, start: CountStart) -> None:
 
 
 def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
-    """The primitive at (ii), bound to the loop (the line keeps no own record, `own` is None): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md #the-counts-line)."""
+    """The primitive at (ii), bound to the loop (the line keeps no own record, `own` is None): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md #the-counts-line); the travel per axis beside it, the current through the -a Port less the current through the +a Port (the Ports in the order +a, -a)."""
     check(term, start)
     through = [current(term.weight, start.here, start.links[port]) for port in range(PORTS)]
     net = [through[2 * axis] + through[2 * axis + 1] for axis in range(3)]
+    travel = [through[2 * axis + 1] - through[2 * axis] for axis in range(3)]
     sigma = start.direction
     count, remainder = rule3(
         (sigma, sigma, sigma),
@@ -99,14 +101,25 @@ def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
         0,
         start.remainder,
     )
-    return CountWrites(count, remainder, (net[0], net[1], net[2]))
+    return CountWrites(count, remainder, (net[0], net[1], net[2]), (travel[0], travel[1], travel[2]))
 
 
 DECLARATION = Declaration(
     name="the count's line",
     place="(ii)",
-    reads=("the record's levels at the Node and across its six Ports", "T", "the current's weight"),
-    writes=("the count at a Node", "the count's remainder", "a body's position"),
+    reads=(
+        "the record's levels at the Node and across its six Ports",
+        "T",
+        "the current's weight",
+        "the reporting Nodes: a detector set's Nodes and an open face's layer",
+    ),
+    writes=(
+        "the count at a Node",
+        "the count's remainder",
+        "a body's position",
+        "the record's tally",
+        "a body's content M_k",
+    ),
     function=apply,
     section="ALGEBRA.md #the-counts-line, #the-four-acts, #the-line",
     word="after the step",

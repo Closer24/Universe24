@@ -1,4 +1,4 @@
-"""The engine (one engine, no law's name and no version, ALGEBRA.md #the-primitives; the model owner's words of 2026-09-23): the record splits at every free Node inside the board and holds its amplitudes; outside there is no board, only clicks, and nothing passes from Node to Node except through a detector, at rest or moving. Every world is the engine's: no world key selects it (the ray law is cancelled, docs/CANCELLED_WORLDS.md). The Inside (DESIGN.md sections 1 and 2): a record's row at a Node holds its amplitude now `a_now`, its amplitude one interval ago `a_before` (integers on the record's wheel, the amplitude unit 2^20) and a remainder `r`; every interval, at every Node with a row of the record, 3 a_next + r' = (a_E + a_W + a_N + a_S + a_U + a_D) - 3 a_before + r, 0 <= r' < 3 (the group-ring addition over the six neighbours, verb G, and the Euclidean division by 3 with the remainder kept on the record's row, verb D; the pair [1, 3] of the exact square its only constant; a periodic axis wraps, an open face is a declared wall that is not read). A record is kept as dense arrays over the board (the first build; the record's rows are the Nodes it has reached, the rest zero), one record per giving. The Outside (DESIGN.md sections 1 and 5): two things only on the board, the free Node and the receiver-inserter. A measured event with a lamp INSERTS: each giving is a record driven at the lamp's Nodes by the family's clock (the pair `phase_per_link` [n, d] on the circle of N steps) for the lamp's train (the key `train`, in periods); the lamp pays the family's quantum h at the giving. Every measured event's Nodes, every detector set's Nodes and every open face's layer RECEIVE: the offer `a_next^2` arriving at such a Node is added to the record's pointer for that detector (a measured event's own detector `measured:<number>`, a set's detector by the set's name, a face's `face:<axis>`), and the Node's amplitude is taken (0 re-emitted). The record completes when its train has ended and its offer on the board has been exhausted into the detectors (below one rung of the wheel of what the detectors hold); the click's detector is chosen by `cell_of` over the pointers on the record's wheel (the counting form, record 1288; `amplitude.cell_of`), one click per record; the click line (`gather`, the amplitude law's keys, with `clock` the detector's own count and `giving` the record's giving stamp) is written, the record's content h handed to the measured event at the chosen Node (or booked as escaped at a face or a set without a body), and the record's rows removed. The books balance as today: held content initial + measured == current + spent + escaped; transit released == current + absorbed + escaped. The massive record kind (`massive-record-v1`, MASSIVE_RECORD.md section 1, the world key `massive_record`, off by default): the same step with a declared pair `[num, den]` on the six-neighbour term per record KIND (the family's `pair`; light's kind the value `[1, 1]`), 3 den a_next + r' = num (a_E + .. + a_D) - 3 den a_before + r, 0 <= r' < 3 den (verb G, then D by 3 den with the remainder kept, then T), the pair two dense arrays over the board per family (`kind_num`, `kind_den`; a block's Nodes carry a lowered pair there, the build's step 3), the world's border read by every family (one border, `boundary`; a zero face beyond an open or a closed one, BUILD.md section 26 item 28) and the conserved form I of section 3 read by the books as a GAMEBOARD diagnostic (`record_form`). Without the key every world reads as it did, byte for byte (`tests/test_massive_record.py`)."""
+"""The engine (one engine, no law's name and no version, ALGEBRA.md #the-primitives): the GameBoard of Nodes, every family's record stepped by Rule3 at every Node from its two levels and the six arrivals through its Ports (core/rule3.py), a remainder kept per division; every primitive one folder found by its name, walked in the step file's order by the main loop (law/step.json, core/main_loop.py). A body is its record and its count (ALGEBRA.md #what-a-body-is); THE CLICK IS THE COUNT'S LINE FOR EVERY RECORD (the model owner's word of 2026-09-29 on #1495, finding 10; ALGEBRA.md #the-counts-line): every bound body gives at its click, the given record laid with one quantum from its form; the count's line moves every record's quanta, a body's and a free record's alike, and a Node told to report (a detector set's Node, an open face's layer) reports each quantum standing on it to its body (the `gather` line); the record ends where its last quantum left it. The books balance: held content initial + measured == current + spent + escaped; transit released == current + absorbed + escaped."""
 
 from __future__ import annotations
 
@@ -19,27 +19,31 @@ from event_universe.core.rule3 import (
     THE_INVERSE,
     THE_REWRITE,
     THE_UNHOLD,
-    clock_pace,
     coefficients,
-    division_forward,
     form_term,
     rule3,
 )
-from event_universe.events import after_step, assembly, body_language, guards, output, pair, record_well
+from event_universe.events import after_step, assembly, body_language, guards, output, record_well
 from event_universe.events import live as live_records
 from event_universe.events import momentum_reading as momentum
+from event_universe.events.free_record import scaled_to_one_quantum
 from event_universe.events.geometry import GameBoardGeometry, PairView
-from event_universe.events.inverse import block_clock_inverse, booking_inverse
-from event_universe.events.output import ZERO, Ratio, ratio, ratio_sum
+from event_universe.events.inverse import block_clock_inverse
+from event_universe.events.output import ZERO, Ratio, ratio_sum
 from event_universe.events.output import form_json as form_json
-from event_universe.events.records import Block, DetectorLawLayer, Ledger, LiveRecord, NodeRecord
+from event_universe.events.records import Block, DetectorLawLayer, Ledger, LiveRecord
 from event_universe.features import self_source
 from event_universe.features import signed_read as sr
 from event_universe.features.counts_line import CountStart, CountTerm, CountWrites, Levels
-from event_universe.features.crystal import CrystalTerm
-from event_universe.features.giving import THE_OPEN, GivingOwn, GivingStart, GivingTerm, GivingWrites
+from event_universe.features.giving import (
+    THE_BIRTH,
+    THE_WRITE,
+    GivingOwn,
+    GivingStart,
+    GivingTerm,
+    GivingWrites,
+)
 from event_universe.features.hold import HoldOwn, HoldStart, HoldTerm, HoldWrites, booking
-from event_universe.features.polariser import PolariserTerm
 from event_universe.features.receive import Link, ReceiveStart, ReceiveTerm, ReceiveWrites, TwistRead
 from event_universe.features.receive import triple as receive_triple
 from event_universe.features.recoil import TAKING, RecoilOwn, RecoilStart, RecoilTerm, RecoilWrites
@@ -63,7 +67,6 @@ from event_universe.loader.world import (
 Record = Callable[[dict[str, object]], None]
 
 # ONE ENGINE, NO LAW'S NAME AND NO VERSION (ALGEBRA.md #the-primitives): the constant that named the law and its version is CANCELLED; the books and the state carry no law entry
-FACE_NAMES = ("face:-x", "face:+x", "face:-y", "face:+y", "face:-z", "face:+z")
 FAMILY_TERMS = (
     "the pair",
     "the degree",
@@ -73,7 +76,6 @@ FAMILY_TERMS = (
     "the wait",
     "the operation",
 )
-# The receiver's take (DESIGN.md sections 1 and 5): a Node that receives does not send the wave back (a mirror is a receiver body that re-emits, never a wall). The record's row at a receiver holds one amplitude per Port that faces a free Node (the NodeState's Ports), the wave entering by that Port, following it one way: g(t + 1) = a_f(t) + k (a_f(t + 1) - g(t)) with a_f the free neighbour's amplitude and k = (c - 1) / (c + 1) at c = 1 / sqrt 3, the declared pair [-15, 56] (-0.2679 against sqrt 3 - 2 = -0.2679), a rounding declared at load, not a root at run time; the free neighbour reads g as the receiver's amplitude on that Link, and the receiver books g^2 as the offer arriving by that Port.
 
 
 HoldMap = dict[tuple[int, int], HoldWrites]  # the hold's writes by (family, body) between its two phases
@@ -93,7 +95,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         "the self-source",
         "the phase",
         "the operation",
-        "the clicks",
     )
 
     next_identity = 1
@@ -107,8 +108,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     detector_set: list[str]
     detector_channel: list[int]
     detector_at_node: np.ndarray
-    _inflow_port_pairs: dict[int, tuple[np.ndarray, np.ndarray, np.ndarray]]
-    _inflow_port_faces: dict[int, tuple[np.ndarray, np.ndarray]]
     set_block: dict[int, int]
     set_detectors: list[int]
     set_nodes: dict[int, np.ndarray | None]
@@ -134,14 +133,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     dead: list[int]
     blocks: list[Block]
     block_by_number: dict[int, Block]
-    rung_counts: dict[tuple[int, int], int]
     _pairs: dict[tuple[int, int, int], tuple[np.ndarray, np.ndarray]]
     kind_wrap: list[tuple[bool, bool, bool]]
-    receiver_detector: dict[int, int]
-    has_receiver: bool
     held_records: dict[int, LiveRecord]
-    polarisers: dict[int, PolariserTerm]
-    crystals: dict[int, CrystalTerm]
     held_parts: dict[int, list[LiveRecord]]
     sourced_records: dict[int, LiveRecord]
     _source_argument: dict[int, np.ndarray]
@@ -167,8 +161,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             [0] * count,
             [0] * count,
             [0] * count,
-            [0] * count,
-            [0] * count,
         )
         assembly.detectors(self, world)
         self.lifetime_detector = (
@@ -179,7 +171,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         assembly.universe_values(self, world)
         self._recoils: list[tuple[int, int, tuple[int, int, int], int]] = []
         self.recoil_turns: dict[int, list[int]] = {}
-        self._crystal_clicks: list[tuple[int, LiveRecord]] = []
         assembly.state_arrays(self, world)
         self.kind_num = PairView(self, 0)
         self.kind_den = PairView(self, 1)
@@ -225,20 +216,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return register
 
     def _stages(self) -> dict[str, Stage]:
-        """The loop's whole-board stages by the file's names, each with the words it takes and the cards whose writes it carries (the records' pass carries the chain's cards but the clicks, whose act is nested in it)."""
-        chain = tuple(name for name in self.CHAIN if name != "the clicks")
+        """The loop's whole-board stages by the file's names, each with the words it takes and the cards whose writes it carries (the records' pass carries the chain's cards)."""
         return {
             "the count's line": Stage(self._counts_stage, (), ("the count's line",)),
             "the hold": Stage(self._hold_stage, ("advance",), ("the hold",)),
-            "the operation": Stage(self._records_stage, (), chain),
+            "the operation": Stage(self._records_stage, (), self.CHAIN),
             "the giving": Stage(self._giving_stage, (), ("the giving",), creates=True),
             "the source": Stage(self._source_stage, (), ("the source",)),
             "the recoil": Stage(self._recoil_stage, (), ("the recoil",)),
             "the lifetime": Stage(self._lifetime_stage, (), ("the lifetime",)),
-            "the hand": Stage(lambda function: None, (), ("the hand",)),
             "the spin's step": Stage(self._spins_stage, (), ("the spin's step",)),
-            "the polariser": Stage(self._polariser_stage, (), ("the polariser",)),
-            "the crystal": Stage(self._crystal_stage, (), ("the crystal",), creates=True),
         }
 
     _card_writes = guards.card_writes
@@ -256,51 +243,118 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     level_of = live_records.level_of
     _massive_record = live_records.massive_record
     planted_record = live_records.planted_record
-    _receiver_of = live_records.receiver_of
     _detector = live_records.add_detector
-    _ladder_of = live_records.ladder_of
     _release = live_records.release
-    _hand_admits = after_step.hand_admits
     _lifetime_stage = after_step.lifetime_stage
-    _polariser_stage = after_step.polariser_stage
-    _polarised = after_step.polarised
-    _crystal_click = after_step.crystal_click
-    _crystal_stage = after_step.crystal_stage
-    _window_write = after_step.window_write
-    _booking_inverse = booking_inverse
     _block_clock_inverse = block_clock_inverse
     _write_line = after_step.write_line
     _record_form = record_well.record_form
-    _point_windows = after_step.point_windows
-    _close_window = after_step.close_window
     _read_momentum = momentum.read_momentum
-    _pair_click = pair.pair_click
 
     def _counts_stage(self, function: Callable[..., None]) -> None:
-        """The count's line's act: each body's quanta moved by its record's current through its Nodes' Ports."""
+        """THE COUNT'S LINE FOR EVERY RECORD (the model owner's word of 2026-09-29 on #1495, finding 10; ALGEBRA.md #the-counts-line): each body's quanta moved by its record's current through its Nodes' Ports, then every free record's count by its own current, each followed by the reports at the Nodes told to report (`_report`)."""
         for block in self.blocks:
             self._counts_act(function, block, 1)
+        reporting = self.reporting_nodes()
+        for identity in list(self.records):
+            live = self.records[identity]
+            if live.counts is None or live.reported:
+                continue
+            self._report(live, reporting, self._free_counts_act(function, live, 1))
+
+    def _line_act(
+        self,
+        line: Callable[..., object],
+        family: int,
+        pair: tuple[int, int],
+        live: LiveRecord,
+        counts: tuple[np.ndarray, np.ndarray],
+        direction: int,
+    ) -> tuple[CountWrites, list[tuple[np.ndarray, ...] | None], int]:
+        """One act of the count's line on one record's count (ALGEBRA.md #the-counts-line): the line's term (the count's wall of the family at the rest pair, the current's weight the family's common wall, the amplitude bound, the largest count), the record's levels here and across the six Ports (the Ports' arrivals), the count and its remainder stepped forward or back (the direction +1 or -1); the writes, the arrivals read and the weight."""
+        wall, wrap = self.kind_wall(family, pair), self.kind_wrap[family]
+        term = CountTerm(
+            self.pair_count_wall(pair, f"a record of {self.families[family].name!r}"),
+            wall,
+            self.world.amplitude_bound,
+            int(counts[0].max()),
+        )
+        levels = (live.now, live.before, live.im_now, live.im_before)
+        arrived = [None if a is None else self.ports.arrivals(a, wrap) for a in levels]
+        links = tuple(Levels(*(None if a is None else a[port] for a in arrived)) for port in range(6))
+        start = CountStart(counts[0], counts[1], Levels(*levels), links, direction)
+        return cast(CountWrites, line(term, start, None)), arrived, wall
 
     def _counts_act(self, line: Callable[..., object], block: Block, direction: int) -> None:
-        """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its first act (`_lay_count`: at every Node T c + r the Node's share of the record's form plus the origin T / 2), then per interval the record's levels here and across the six Ports (the Ports' arrivals), the count and its remainder stepped by the line forward or back (the direction +1 or -1), the body's Nodes then the Nodes where its count stands (`_follow_count`)."""
+        """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its first act (`_lay_count`: at every Node T c + r the Node's share of the record's form plus the origin T / 2), then per interval the line's act on the body's own record (`_line_act`), the body's Nodes then the Nodes where its count stands (`_follow_count`)."""
         live = block.own
         if live is None:
             return
         if block.counts is None or block.count_remainder is None:
             block.counts, block.count_remainder = self._lay_count(block, live)
-        wall, wrap = self.kind_wall(block.family, block.definition.pair), self.kind_wrap[block.family]
-        term = CountTerm(
-            self.count_wall(block), wall, self.world.amplitude_bound, int(block.counts.max())
-        )
-        levels = (live.now, live.before, live.im_now, live.im_before)
-        arrived = [None if a is None else self.ports.arrivals(a, wrap) for a in levels]
-        links = tuple(Levels(*(None if a is None else a[port] for a in arrived)) for port in range(6))
-        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction)
-        writes = cast(CountWrites, line(term, start, None))
+        pair = block.definition.pair
+        found = (block.counts, block.count_remainder)
+        writes, arrived, wall = self._line_act(line, block.family, pair, live, found, direction)
         block.counts, block.count_remainder = writes.count, writes.remainder
         self._follow_count(block)
         if direction > 0:
             self._read_momentum(block, arrived, wall)
+
+    def _free_counts_act(
+        self, line: Callable[..., object], live: LiveRecord, direction: int
+    ) -> CountWrites:
+        """THE COUNT'S LINE ON A FREE RECORD (the model owner's word of 2026-09-29 on #1495, finding 10): the same act as a body's (`_line_act`) on the record's own count, laid at its birth (`_emit`), the count and its remainder written back."""
+        assert live.counts is not None and live.count_remainder is not None
+        pair = self.record_pair(live)
+        found = (live.counts, live.count_remainder)
+        writes, _, _ = self._line_act(line, live.family, pair, live, found, direction)
+        live.counts, live.count_remainder = writes.count, writes.remainder
+        return writes
+
+    def record_pair(self, live: LiveRecord) -> tuple[int, int]:
+        """The rest pair a free record steps with: its own, or its family's declared pair."""
+        pair = live.pair if live.pair is not None else self.families[live.family].pair
+        return int(pair[0]), int(pair[1])
+
+    def reporting_nodes(self) -> np.ndarray:
+        """THE NODES TOLD TO REPORT (ALGEBRA.md #the-counts-line, the free record): per Node the detector that reports there, -1 elsewhere: every detector set's Nodes (a set bound to a body without positions at the body's current Nodes) and the open faces' slab; a body's own Nodes report nothing (its count there is its family's level, nothing is handed over)."""
+        reporting = np.full(self.shape, -1, dtype=np.int64)
+        for detector in self.set_detectors:
+            nodes = self.set_nodes.get(detector)
+            if nodes is None and detector in self.set_block:
+                nodes = self.block_by_number[self.set_block[detector]].mask
+            elif nodes is None:
+                nodes = self.detector_at_node == detector
+            reporting[nodes] = detector
+        if self.face_detector is not None:
+            reporting[self.detector_at_node == self.face_detector] = self.face_detector
+        return reporting
+
+    def _report(self, live: LiveRecord, reporting: np.ndarray, writes: CountWrites) -> None:
+        """A REPORTING NODE REPORTS (the model owner's word of 2026-09-29 on #1495, finding 10: a detector is a Node told to report the count arriving; ALGEBRA.md #the-counts-line, the free record): at every Node told to report where the record's count stands at 1 or more, each quantum standing there is handed to the detector's body on its `gather` line, the taker's recoil queued with the line's travel into that Node this interval, and the count there lowered by one per quantum, the remainder kept; a record that reported this interval and whose count stands below 1 at every Node after the reports ends, the quanta it still carries booked as escaped (none where its count summed to its quanta)."""
+        assert live.counts is not None
+        standing = np.argwhere((reporting >= 0) & (live.counts >= 1))
+        if not len(standing):
+            return
+        counts, reported = live.counts.copy(), False
+        for found in standing:
+            node = (int(found[0]), int(found[1]), int(found[2]))
+            detector = int(reporting[node])
+            travel = (
+                int(writes.travel[0][node]),
+                int(writes.travel[1][node]),
+                int(writes.travel[2][node]),
+            )
+            for _ in range(int(counts[node])):
+                self._gather_line(live, detector, node)
+                self._recoil_at_taking(live, detector, travel)
+                counts[node] -= 1
+                reported = True
+        live.counts = counts
+        if reported and not bool((counts >= 1).any()):
+            self.ledger.transit_escaped[live.family] += live.content
+            live.content, live.reported = 0, True
+            self.dead.append(live.identity)
 
     def _follow_count(self, block: Block) -> None:
         """THE BODY'S NODES ARE WHERE ITS COUNT STANDS (ALGEBRA.md #what-a-body-is (c), the surface rule): after the line the body's set is the Nodes whose count is not 0, its corner the set's lower corner, so the shell that reads its clicks moves with its quanta; the line alone moves it."""
@@ -317,46 +371,53 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return self.body_quanta(block, self.world.measured[block.number].amount)
 
     def count_wall(self, block: Block) -> int:
-        """THE COUNT'S WALL W_c = 3 den T (issue #1495 finding 6): the family's plain wall at the body's rest pair times the universe's one T, refused by name where the files declare no T."""
+        """THE COUNT'S WALL of a body (`pair_count_wall` at the body's rest pair)."""
+        return self.pair_count_wall(block.definition.pair, f"the body {block.number}")
+
+    def pair_count_wall(self, pair: tuple[int, int], who: str) -> int:
+        """THE COUNT'S WALL W_c = 3 den T (issue #1495 finding 6): the family's plain wall at the rest pair times the universe's one T, refused by name where the files declare no T."""
         action = self.world.quantum_action
         if action < 1:
             raise ValueError(
-                f"the body {block.number} carries a record and the universe declares no quantum_action T: "
+                f"{who} carries a record and the universe declares no quantum_action T: "
                 "the count's wall is 3 den T (ALGEBRA.md #the-counts-line, #a-familys-declaration)"
             )
-        rest = (
-            block.definition.pair
-            if block.definition.pair is not None
-            else self.families[block.family].pair
-        )
-        return 3 * int(rest[1]) * action
+        return 3 * int(pair[1]) * action
 
-    def count_share(self, block: Block, live: LiveRecord) -> np.ndarray:
+    def count_share(
+        self, family: int, pair: tuple[int, int], levels: list[tuple[np.ndarray, np.ndarray]]
+    ) -> np.ndarray:
         """The record's form's share at every Node in the current's units, E_i / 2 = 3 den (now^2 + before^2) - num now S_6(before) over the record's level pairs (ALGEBRA.md #the-counts-line; issue #1495 finding 6): the form's Node term at the plain wall 3 den less the Link term by the read act with the level as the coefficient, core.rule3 alone; its change over one interval is the six Ports' currents exactly in the vacuum, and a body laid by it stands (the pace-weighted share, exact at every Node, lays a body that flows out: the Paper Writer's measurement of 2026-09-29)."""
-        weight = self.kind_wall(block.family, block.definition.pair)
-        rest = (
-            block.definition.pair
-            if block.definition.pair is not None
-            else self.families[block.family].pair
-        )
-        wrap = self.kind_wrap[block.family]
-        pairs = [(live.now, live.before)]
-        if live.im_now is not None and live.im_before is not None:
-            pairs.append((live.im_now, live.im_before))
+        weight = self.kind_wall(family, pair)
+        wrap = self.kind_wrap[family]
         share = np.zeros(self.shape, dtype=np.int64)
-        for now, before in pairs:
-            share += form_term(0, 3 * int(rest[1]), now, before)
+        for now, before in levels:
+            share += form_term(0, 3 * int(pair[1]), now, before)
             arrived = self.ports.arrivals(before, wrap)
             sums = (arrived[0] + arrived[1], arrived[2] + arrived[3], arrived[4] + arrived[5])
             share -= rule3((weight * now,) * 3, sums, 0, 1, 0, 0, 0)[0]
         return share
 
+    @staticmethod
+    def level_pairs(live: LiveRecord) -> list[tuple[np.ndarray, np.ndarray]]:
+        """A record's level pairs, (now, before) and the second level's where it has one."""
+        pairs = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            pairs.append((live.im_now, live.im_before))
+        return pairs
+
+    def lay_count(
+        self, family: int, pair: tuple[int, int], levels: list[tuple[np.ndarray, np.ndarray]]
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """THE COUNT'S LAY (ALGEBRA.md #the-counts-line, THE COUNT IS THE RECORD'S FORM; issue #1495 finding 6): at every Node W_c c_i + r_i = E_i / 2 + W_c div 2 by Rule3's division act, W_c div 2 the remainder's origin; a body's lay and a free record's alike, no gate here."""
+        wall = self.pair_count_wall(pair, f"a record of {self.families[family].name!r}")
+        share = self.count_share(family, pair, levels)
+        counts, remainder = rule3(NO_READ, NO_READ, 1, wall, 0, 0, share + wall // 2)
+        return counts.astype(np.int64), remainder.astype(np.int64)
+
     def _lay_count(self, block: Block, live: LiveRecord) -> tuple[np.ndarray, np.ndarray]:
-        """THE COUNT'S LAY (ALGEBRA.md #the-counts-line, THE COUNT IS THE RECORD'S FORM; issue #1495 finding 6): at every Node W_c c_i + r_i = E_i / 2 + W_c div 2 by Rule3's division act, W_c div 2 the remainder's origin; the declared count is a reading, refused by name where it is off the laid total by more than 2 isqrt(c) + 1 ((|c - laid| - 1) div 2 squared above c, no root)."""
-        wall = self.count_wall(block)
-        counts, remainder = rule3(
-            NO_READ, NO_READ, 1, wall, 0, 0, self.count_share(block, live) + wall // 2
-        )
+        """A BODY'S LAY (`lay_count` at the body's rest pair): the declared count is a reading, refused by name where it is off the laid total by more than 2 isqrt(c) + 1 ((|c - laid| - 1) div 2 squared above c, no root)."""
+        counts, remainder = self.lay_count(block.family, block.definition.pair, self.level_pairs(live))
         declared, laid = self._body_count(block), int(counts[block.mask].sum())
         off = abs(declared - laid)
         if off > 1 and ((off - 1) // 2) ** 2 > declared:
@@ -365,7 +426,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 f"{laid} quanta at its Nodes at T = {self.world.quantum_action}: a declared count is within "
                 "2 isqrt(c) + 1 of SUM D_i div T (ALGEBRA.md #the-counts-line, THE COUNT IS THE RECORD'S FORM)"
             )
-        return counts.astype(np.int64), remainder.astype(np.int64)
+        return counts, remainder
 
     def _hold_stage(self, function: Callable[..., None], advance: bool) -> None:
         """The hold's two acts: at the interval's start the moved bodies' Nodes rewritten; after the records, the held families' own step, the hold and the pace guard."""
@@ -406,12 +467,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def _write_at_mask(
         self, live: LiveRecord, mask: np.ndarray, levels: tuple[np.ndarray, np.ndarray], sign: int
     ) -> None:
-        """The loop's one site for levels written at a body's Nodes into a record's two levels, added (+1) or taken back (-1): the window's inverse and the recoil's turn (the write's gate)."""
+        """The loop's one site for levels written at a body's Nodes into a record's two levels, added (+1) or taken back (-1): the recoil's turn (the write's gate)."""
         live.now[mask] += sign * levels[0]
         live.before[mask] += sign * levels[1]
 
     def _recoil_stage(self, function: Callable[..., object]) -> None:
-        """The recoil's act (features/recoil): per click of the interval on a body with a record of its own, a mode clock and a mode reading of the quantum's wave number on a world with a twist table, the folder's turn of the record's two levels at the body's Nodes by delta k = sigma_a (k_q div M) per Link along each axis with a tally (the Node's offset from the body's centre; the triple the receive's reading of the table), the angle's remainder carried at the body through the write's line, the taker at +1 and the giver at -1, the turned levels written at the loop's one site (`_write_at_mask`); a body without them takes no recoil; the momentum n is a reading of the record's current (`_read_momentum`), no level of the click's."""
+        """The recoil's act (features/recoil): per click of the interval on a body with a record of its own, a mode clock and a mode reading of the quantum's wave number on a world with a twist table, the folder's turn of the record's two levels at the body's Nodes by delta k = sigma_a (k_q div M) per Link along each axis with a tally (the Node's offset from the body's centre; the triple the receive's reading of the table), the angle's remainder carried at the body through the write's line, the taker at +1 (a report's recoil), the turned levels written at the loop's one site (`_write_at_mask`); a body without them takes no recoil; the momentum n is a reading of the record's current (`_read_momentum`), no level of the click's."""
         for number, sense, tally, identity in self._recoils:
             block = self.block_by_number.get(number)
             if block is None or block.own is None or block.definition.emitter is None:
@@ -449,25 +510,23 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self._recoils.clear()
 
     def _records_stage(self, function: Callable[..., None]) -> None:
-        """The records' act: the bodies' own records first, each by the rule alone, then every live record's fused step (its click included); `function` is the rule the steps apply."""
+        """The records' act: the bodies' own records first, each by the rule alone, then every other live record's step; `function` is the rule the steps apply."""
         for block in self.blocks:
             if block.node_record is None and block.own is None:
                 continue
             self._record_form(block)
-            if block.definition.emitter is not None:
-                self._excitation_rung(block)
         for identity in list(self.records):
             live = self.records[identity]
-            if live.arm_done or live.standing:
+            if live.standing:
                 continue
             self._advance(live)
 
     def _giving_stage(self, function: Callable[..., None]) -> None:
-        """The giving's act: the point emitters' windows close after the interval's bookings, then each body due gives; `function` is the folder's `apply`, reached through `_giving_act` at the three acts."""
-        self._point_windows()
+        """THE GIVING FIRES AT THE BODY'S CLICK (the model owner's word of 2026-09-29 on #1495, finding 10: every bound body gives at its click): a body with an emitter and a stock of the given family from 1 gives once when its clock clicked at the last interval's close (`new_cycle`, `_block_clock`), the click then spent; `function` is the folder's `apply`."""
         for block in self.blocks:
-            if block.emit_now:
-                self._emit(block)
+            if block.new_cycle and block.definition.emitter is not None and self.stock_of(block) >= 1:
+                self._emit(block, function)
+                block.new_cycle = False
 
     def _spins_stage(self, function: Callable[..., None]) -> None:
         """The spin's step's act: each body's spin from the fields as the interval leaves them."""
@@ -475,7 +534,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._spins_act(function, block, False)
 
     def close_interval(self) -> None:
-        """The interval's closing: each body's clock, the clicked records deleted whole, then the host's probe and mode readings."""
+        """The interval's closing: each body's clock, the ended records deleted whole, then the host's probe and mode readings."""
         for block in self.blocks:
             self._block_clock(block)
         for identity in self.dead:
@@ -505,7 +564,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self.record({"event": "mode", "tick": self.tick, "axis": AXES[axis], "sums": sums})
 
     def family_terms(self) -> list[tuple[str, str]]:
-        """The primitives each family of the run declares, as (label, name) pairs read from its attributes (the loader's words of today; the term form [name, target, of, degree, weight, table] of ALGEBRA.md #the-primitives is the loader's next cut): every family the shape and the step's four words; `reads` the signed read; `held` the hold; `self_source.unit` the self-source; `clicks` the clicks; `lifetime` the lifetime."""
+        """The primitives each family of the run declares, as (label, name) pairs read from its attributes (the loader's words of today; the term form [name, target, of, degree, weight, table] of ALGEBRA.md #the-primitives is the loader's next cut): every family the shape and the step's four words; `reads` the signed read; `held` the hold; `self_source.unit` the self-source; `lifetime` the lifetime."""
         terms: list[tuple[str, str]] = []
         for index, family in enumerate(self.families):
             label = f"universe.families[{index}]"
@@ -516,14 +575,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 terms.append((f"{label}.held", "the hold"))
             if family.self_unit > 0:
                 terms.append((f"{label}.self_source", "the self-source"))
-            if family.clicks is not None:
-                terms.append((f"{label}.clicks", "the clicks"))
             if family.lifetime is not None:
                 terms.append((f"{label}.lifetime", "the lifetime"))
-            if family.hand is not None:
-                terms.append((f"{label}.hand", "the hand"))
-        terms.extend(after_step.polariser_terms(self))
-        terms.extend(after_step.crystal_terms(self))
         for number, entry in enumerate(self.world.measured):
             if entry.block is not None and entry.block.emitter is not None:
                 terms.append((f"measured[{number}].emitter", "the giving"))
@@ -536,22 +589,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     def _held_part(self, position: int, family: int, part: int) -> LiveRecord:
         """A held family's component record over the board (item 51; ALGEBRA.md #the-interval): its identity the next name below the bodies' own (-1 - number), one per held family and part; its pair the one its family's row declares (`pair` None reads it), no shortcut."""
         self.next_held += 1
+        del position  # the held families' order names the identity alone
         return LiveRecord(
             -len(self.world.measured) - self.next_held,
-            -1 - position,
             family,
-            0,
             0,
             self.tick,
             0,
-            *self.families[family].pair,
-            0,
-            1,
             np.zeros(self.shape, dtype=np.int64),
             np.zeros(self.shape, dtype=np.int64),
             np.zeros(self.shape, dtype=np.int64),
-            pointers=[0] * len(self.detector_names),
-            first_rung=[None] * len(self.detector_names),
             part=part,
             held_part=True,
         )
@@ -721,32 +768,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         ):
             self._guard()
 
-    def wheel_at(
-        self, family: int, node: tuple[int, ...], pair: tuple[int, int] | None = None
-    ) -> tuple[int, int]:
-        """The remainder's step g and the wheel W of the family's rule at a Node under the fixed wall (ALGEBRA.md #a-familys-declaration, #the-direction and (13); BUILD.md section 26 items 34 and 36): the wall 3 den Gamma, the step g the gcd of the total's coefficients (p_i num on the six reads, 6 den c_i at the Node and the wall itself: the remainder moves on the multiples of g), W = wall / g values; the pair's own 3 den / gcd(num, 3 den) in the vacuum (2403 on [800, 801]), content-dependent at and beside a body; read from the rule, never declared."""
-        num_all, den_all = self.pair_arrays(family, pair)
-        num = int(num_all[node])
-        den = int(den_all[node])
-        gamma = self.node_clock
-        effective = self._effective_content(family)
-        content = int(effective[node])
-        axis_contents = self._axis_contents(family)
-        reads, self_coefficient, wall = coefficients(
-            num,
-            den,
-            gamma,
-            content,
-            ISOTROPIC if axis_contents is None else tuple(int(t[node]) for t in axis_contents),
-        )
-        step = gcd(wall, self_coefficient, *reads)
-        return step, wall // step
-
-    def node_clock_pair(self, node: tuple[int, ...], family: int) -> tuple[int, int]:
-        """The clock pair a record of `family` reads at a Node under the fixed wall (items 34 and 35): (e, f) = (p_0, Gamma), the clock's pace isqrt((Gamma - c)^2 + c^2) at the effective content c there over the wall's Gamma (ALGEBRA.md #the-paces)."""
-        content = int(self._effective_content(family)[node])
-        return int(clock_pace(self.node_clock, content)), self.node_clock
-
     def _effective_content(self, family: int) -> np.ndarray:
         """The content a record of `family` reads at every Node, the folder's `apply` (features/signed_read, the function the main loop looked up at (i); ALGEBRA.md #the-primitives row 1, #the-paces) with its floor and guard, one array per family per interval; zeros for a family with no read."""
         cached = self._effective.get(family)
@@ -834,56 +855,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         block.hold_value.update(writes.own.values)
         block.hold_carry.update(writes.own.carries)
 
-    def residue_of(self, live: LiveRecord | NodeRecord, block: Block) -> tuple[int, int]:
-        """The residue from the law under the Node clock, read at the first shell Node: the record's rule remainder r at the body's first shell Node in the declared order, read now, in units of the remainder's step g = gcd(Gamma num, 6 den M, 3 den f) at that Node, and the wheel W = 3 den f / g (`wheel_at`); no declaration, no draw; which Node is read is a convention."""
-        if isinstance(live, NodeRecord):
-            # THE BODY'S NODE'S RECORD (ALGEBRA.md #what-a-body-is): its residue its own remainder on its own wheel, read at the body's Node
-            step, wheel = self.node_record_wheel(block)
-            return live.remainder // step, wheel
-        node = self.first_shell_node(block)
-        step, wheel = self.wheel_at(live.family, node, live.pair)
-        return int(live.remainder[node]) // step, wheel
-
-    def _excite(self, block: Block, own_record: LiveRecord | NodeRecord) -> None:
-        """The body's own record at the load, the one write of a body's record: its norm T one period's action of its own mode (the emitter's declared integer `norm`, the generator's, under the input stamp); its first residue and wheel from the law (`residue_of`) are read after its first advance (the load's seed has the remainders 0); every later residue is read at the click (`_emit`); called at the load alone."""
-        emitter = block.definition.emitter
-        assert emitter is not None
-        if block.definition.profile is None:
-            raise ValueError(
-                f"measured[{block.number}].emitter needs the body's `seed` as its "
-                "composed mode's profile (one integer per Node, the generator's "
-                "`seed_on_the_mode`; a flat scalar seed is no mode and givings nothing lawful, "
-                "ALGEBRA.md #the-click)"
-            )
-        # THE GIVING IS THE WINDOW'S (ALGEBRA.md #the-primitives; record 2082 (4); commit 7): every emitter gives by the window at its centre Node at its declared weight; the given train is CANCELLED (`_write_given_train_cancelled`, disconnected)
-        if emitter.weight is None or emitter.norm_denominator is None:
-            raise ValueError(
-                f"measured[{block.number}].emitter declares no `weight` or no "
-                "`norm_denominator`: the giving is the window's, the body's rotation written into "
-                "the given row at its Node at the weight g until the outward norm reaches the "
-                "excitation's action norm / norm_denominator (ALGEBRA.md #the-primitives; the "
-                "generator's integers; the given train is retired, commit 7)"
-            )
-        if emitter.norm is None:
-            raise ValueError(
-                f"measured[{block.number}].emitter declares no `norm`: one period's "
-                "action of the body's mode, its conserved form's share at the centre Node summed "
-                "over the period, the generator's integer (ALGEBRA.md #the-click and (f), 9.19 "
-                "(3); `excite_on_the_mode` of the massive record generator)"
-            )
-        if emitter.period is None:
-            raise ValueError(
-                f"measured[{block.number}].emitter declares no `period`: P, the "
-                "nearest integer to 2 pi / omega_b of the body's mode, the generator's integer "
-                "(ALGEBRA.md #the-click, #the-ladder: the tick counts intervals against "
-                "(2 u + 1) P / (2 W))"
-            )
-        block.excitations += 1
-        block.residue_pending = True
-        own_record.norm = emitter.norm
-        block.wait = 0
-        block.emit_now = False
-
     def node_record_clock(self, block: Block) -> tuple[int, int]:
         """The body's Node's pair this interval: the declared clock pair [num_c, den_c] of the body's mode at rest, and on a moving body the proper pair of the drive's momentum now (the world's `proper_clock` at the momentum's whole part along its one axis, the same m the drive hops with), the moving mode's rotation at its moving centre per interval; the rest pair at m = 0."""
         clock = block.definition.clock
@@ -942,12 +913,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         else:
             node_record.now, node_record.before = node_record.before, result
 
-    def node_record_wheel(self, block: Block) -> tuple[int, int]:
-        """The remainder's step g and the wheel W of the one rule at the body's Node (ALGEBRA.md #what-a-body-is, #a-familys-declaration; `wheel_at`'s reading with the six reads the body's Node): g the gcd of the rule's coefficients (on a and the wall), W = wall / g; ALGEBRA.md #what-a-body-is's wheel of the body record, the remainder six times its (the coefficients and the wall six times)."""
-        coefficient, wall = self.node_record_coefficients(block)
-        step = gcd(wall, coefficient)
-        return step, wall // step
-
     def node_record_form(self, block: Block) -> int:
         """The body's Node's record's invariant (ALGEBRA.md #what-a-body-is): e = wall (a^2 + b^2) - coefficient a b, the one rule's own at the body's Node (a' = (coefficient / wall) a - b leaves it fixed); constant between the remainders' jitter (GAMEBOARD)."""
         node_record = block.node_record
@@ -958,168 +923,71 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             - coefficient * node_record.now * node_record.before
         )
 
-    def _excitation_rung(self, block: Block) -> None:
-        """The count of intervals to the body's next click, started at a click and lowered every interval; the body gives when it reaches zero."""
-        own: LiveRecord | NodeRecord | None = (
-            block.node_record if block.node_record is not None else block.own
-        )
+    def _emit(self, block: Block, function: Callable[..., object]) -> None:
+        """THE GIVING AT THE BODY'S CLICK (the model owner's word of 2026-09-29 on #1495, finding 10; ALGEBRA.md #the-counts-line, the free record): the given record's two levels written once at the body's Nodes by the giving's write at the emitter's weight g (the body's rotation now and before), scaled by the generator's act so that the count its form lays over the board is exactly one quantum (`scaled_to_one_quantum`), its count laid by the same act a body's is (`lay_count`), and the birth: the given family's content at the body falls by one, the books with it; the giving line names the record."""
         emitter = block.definition.emitter
-        if own is None or emitter is None or block.emit_now or block.window is not None:
-            return
-        # the stock is the given family's content held at the body (ALGEBRA.md ALGEBRA.md #the-paces; item 47), or the body's own quanta set aside (ALGEBRA.md #the-primitives; commit 6): nothing fires once it is spent
-        if self.stock_of(block) <= 0:
-            return
-        if block.residue_pending:
-            own.u, own.wheel = self.residue_of(own, block)
-            block.residue_pending = False
-            block.wait = 0
-            return
-        assert emitter.period is not None
-        block.wait += 1
-        if 2 * own.wheel * block.wait >= (2 * own.u + 1) * emitter.period:
-            block.emit_now = True
+        assert emitter is not None
+        family, number = emitter.family, block.number
+        pair = self.families[family].pair
+        term = GivingTerm((emitter.weight, 1), family)
+        levels = (self._body_levels(block), self._body_levels(block, before=True))
+        written = cast(
+            GivingWrites,
+            function(term, GivingStart(THE_WRITE, 0, levels, self._write_line), GivingOwn()),
+        )
+        assert written.level is not None
+        now, before = np.zeros(self.shape, dtype=np.int64), np.zeros(self.shape, dtype=np.int64)
+        now[block.mask], before[block.mask] = written.level[0], written.level[1]
 
-    def _emit(self, block: Block) -> None:
-        """The click of the body's own record and the giving: the given record written once at both levels at the body, its norm and residue from the law, one quantum of the given family moved from the body's stock, the body's own levels, phase and remainders as they are, the count to the next click started here; for a crystal (features/crystal) the emitter is the pair's giving definition on the block; the component along the body's moment and the twist are the loader's integers (ALGEBRA.md #the-second-level)."""
-        world = self.world
-        emitter = after_step.emitter_of(block)
-        own: LiveRecord | NodeRecord | None = (
-            block.node_record if block.node_record is not None else block.own
+        def laid(a: np.ndarray, b: np.ndarray) -> int:
+            return int(self.lay_count(family, pair, [(a, b)])[0].sum())
+
+        label = f"measured[{number}].emitter"
+        now, before = scaled_to_one_quantum(now, before, laid, self.world.amplitude_bound, label)
+        counts, remainder = self.lay_count(family, pair, [(now, before)])
+        born = cast(
+            GivingWrites, function(term, GivingStart(THE_BIRTH, int(counts.sum()), None), GivingOwn())
         )
-        assert emitter is not None and own is not None
-        number = block.number
-        family = emitter.family
-        definition = self.families[family]
-        numerator, denominator = emitter.clock
-        steps = world.phase_steps
-        period = (steps * denominator + numerator - 1) // numerator
-        cost = definition.quantum
-        excitation = block.excitations
-        # the given record's residue and wheel from the law (ALGEBRA.md #a-familys-declaration, #the-ladder (c)): the body's own remainder at its first shell Node in the declared order, read at the click on the body's wheel there
-        residue, wheel = self.residue_of(own, block)
-        wait = block.wait
-        # the read Node: the first shell Node of the lattice body (item 33), the body's Node (the centre Node) of a body on one Node (ALGEBRA.md #what-a-body-is; item 42)
-        read_node = (
-            tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
-            if block.node_record is not None
-            else self.first_shell_node(block)
-        )
-        # the held content's level at the read Node and at its reads as the wheel was read, before the giving lowers the content (item 34; GAMEBOARD; the family holding "content", item 51)
-        content_level = self.level_of("content")
-        read_clocks = [
-            int(content_level[read_node]),
-            [
-                int(content_level[j])
-                for j in self._neighbour_nodes(read_node, self.kind_wrap[block.family])
-            ],
-        ]
-        # the body's clock pair as the clicking record was advanced (the content at its centre Node; GAMEBOARD, on the giving line)
-        centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
-        clock_pair = self.node_clock_pair(centre, block.family)
-        # the content and the charge the clicking record was advanced under (before this giving lowers them; item 35's line reads them here, the pair no longer the content alone for a charged family)
-        centre_content = int(content_level[centre])
-        body_charge = self._body_charge(number)
-        # the body's own record is not ended and never rewritten (ALGEBRA.md #the-ladder)
-        block.givings += 1
         identity, self.next_identity = self.next_identity, self.next_identity + 1
-        rows = tuple(np.zeros(self.shape, dtype=np.int64) for _ in range(3))
+        block.givings += 1
         live = LiveRecord(
             identity,
-            number,
             family,
-            residue,
             block.givings,
             self.tick,
-            cost,
-            numerator,
-            denominator,
-            0,
-            period,
-            rows[0],
-            rows[1],
-            rows[2],
-            pointers=[0] * len(self.detector_names),
-            first_rung=[None] * len(self.detector_names),
-            wheel=wheel,
-            labels=tuple(emitter.branches),
+            -born.count,
+            now,
+            before,
+            np.zeros(self.shape, dtype=np.int64),
             emitter=number,
-            pair=(int(emitter.pair[0]), int(emitter.pair[1])),
+            box=self.mask_box(block.mask),
+            counts=counts,
+            count_remainder=remainder,
+            pair=pair,
             part=emitter.part,
             twist=emitter.twist,
         )
-        live.window_open, live.giving_remainders = True, None
-        live.giver_clock = self._body_count(block)
-        live.box = self.mask_box(block.mask)  # HOST (item 43): the body's own Nodes
-        block.window = identity
-        if emitter.receiver is not None:
-            # the named sets in the NAMED order (ALGEBRA.md #rule3: the ladder cumulative in its declared order), a set's detectors in the detectors' order within it
-            live.ladder = [
-                detector
-                for name in emitter.receiver
-                for detector, set_name in enumerate(self.detector_set)
-                if set_name == name
-            ]
-        opened = self._giving_act(
-            block,
-            GivingStart(
-                THE_OPEN,
-                self.held[number][family],
-                (int(block.momentum[0]), int(block.momentum[1]), int(block.momentum[2])),
-                None,
-                0,
-                (0, 0, 0),
-            ),
-            None,
-        )
-        self.held[number][family] += opened.count
-        self.ledger.held_spent[family] += 1
-        # THE NORM UNDER THE NODE CLOCK (BUILD.md section 26 items 31 and 36; ALGEBRA.md #the-direction): the given record's T is p times its conserved form as written on the board, the engine's own integer with the content at the body's Nodes AS IT STANDS this interval: ONE ORDER FOR BOTH CLICKS (ALGEBRA.md #the-primitives; BUILD.md section 26 item 58): a click's writes enter at the next interval (ALGEBRA.md #the-line), so the giving's lowered quanta are held after the held families' step with the takings' (`_advance_fields`), no hold here (the hold at once, item 47, HISTORY: a defect against ALGEBRA.md #the-line) THE POINT EMITTER (item 50): the record's norm is T from the open, the excitation's action the window will reach (ALGEBRA.md), as the exact rational norm / norm_denominator, so the ladder reads its bookings from the first interval (Born's rule's walk as now)
-        assert emitter.norm is not None and emitter.norm_denominator is not None
-        live.norm, live.pace = emitter.norm, emitter.norm_denominator
-        self.ledger.transit_released[family] += cost
+        self.held[number][family] += born.count
+        self.ledger.held_spent[family] -= born.count
+        self.ledger.transit_released[family] += live.content
         block.emitted.append(identity)
         self.records[identity] = live
         self.layer.given += 1
         if self.record is not None:
-            giving_line: dict[str, object] = {
-                "event": "giving",
-                "tick": self.tick,
-                "node": list(block.corner),
-                "measured": number,
-                "family": definition.name,
-                "record": identity,
-                "u": residue,
-                "W": wheel,
-                "labels": [list(label) for label in emitter.branches],
-                "arms": 1,
-                "units": 1,
-                "multiplicity": 1,
-                "train": 0,
-                "excitation": excitation,
-                "excitation_norm": own.norm,
-                # the tick's count (ALGEBRA.md #the-ladder): the intervals from the residue's read to this click, the period P counted against, and the first shell Node that read u
-                "wait": wait,
-                "period": emitter.period,
-                "read_node": list(read_node),
-                # the wheel's ingredients, read with it (item 34; GAMEBOARD)
-                "read_clocks": read_clocks,
-                "norm": live.norm,
-                "pace": live.pace,
-                # the file's vacuum norm (p times it the given record's T in the vacuum) and the body's content and clock pair as the clicking record was advanced (GAMEBOARD; item 31)
-                "given_norm": emitter.given.norm if emitter.given is not None else 0,
-                "content": centre_content,
-                "charge": body_charge,
-                "node_clock": list(clock_pair),
-                "nodes": int(np.sum(block.mask)),
-            }
-            live.giving_line = giving_line  # named at the close (item 50)
-        # the next excitation and the count wait for the window's close
-        block.emit_now = False
-        block.wait = 0
-        own.u, own.wheel = residue, wheel
+            self.record(
+                {
+                    "event": "giving",
+                    "tick": self.tick,
+                    "measured": number,
+                    "family": self.families[family].name,
+                    "record": identity,
+                    "node": list(block.corner),
+                    "content": live.content,
+                }
+            )
 
     def _block_clock(self, block: Block) -> None:
-        """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total record summed across its Nodes (G over R: its own record), one count per cycle (the sum's crossing from at most 0 to above 0, verb D's comparison), a `click` line per count with its own count (the self-click of row (g)); a new cycle givings its emission at the next interval."""
+        """The block's clock (MASSIVE_RECORD.md sections 4 and 6): its total record summed across its Nodes (G over R: its own record), one count per cycle (the sum's crossing from at most 0 to above 0, verb D's comparison), a `click` line per count; the body's click, read by the giving of the next interval (`new_cycle`)."""
         total = 0
         # the co-moving centre Node (the design's reading of the clock in motion, MASSIVE_RECORD.md section 8: "the clock read at the co-moving centre"): the total record's value there, on the line
         centre = box_centre(block.corner, block.definition.extents, self.shape)
@@ -1241,10 +1109,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         live.age -= 1
 
     def step_inverse(self) -> None:
-        """One interval backward in the joint inverse's fixed order (the bodies' step back, every family at the interval's start levels, the held families and their hold last); no hop, click or giving in the interval."""
+        """One interval backward in the joint inverse's fixed order (the bodies' step back, every family at the interval's start levels, the held families and their hold last); no hop, report or giving in the interval (a report breaks the bijection: the click is the one act the inverse does not undo)."""
         self.ports.begin()
-        for live in self.records.values():
-            self._booking_inverse(live)
         # the bodies' step back first (ALGEBRA.md #the-interval; commit 6): the momentum and the spin as the interval began, from the fields as it left them
         for block in self.blocks:
             self._spins_act(self.register.at("the spin's step", "(v)"), block, True)
@@ -1261,13 +1127,13 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                     f"{block.number} moved at interval {self.tick}; the field moved back through the body, "
                     "ALGEBRA.md #the-primitives, is not built)"
                 )
+        for live in self.records.values():
+            if live.counts is not None and not live.reported:
+                self._free_counts_act(counts_line, live, -1)
         # the joint inverse (ALGEBRA.md #the-counts-line; item 51): every family backward at the held levels of the interval's start (their `before` level: the held families stepped last), then the held families backward and their hold
         for family, record in self.held_records.items():
             self.node_level[family] = record.before
         self._effective.clear()
-        for block in self.blocks:
-            if block.window is not None:
-                self._point_window_inverse(block)
         for identity in list(self.records):
             live = self.records[identity]
             if live.standing:
@@ -1406,14 +1272,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         self._sources[key] = (self.tick, sigma_self)
         return sigma_self
 
-    def booked_axis(self, live: LiveRecord) -> int | None:
-        """THE TRANSVERSE BOOKING (ALGEBRA.md #the-second-level): the axis of a record's own vector component, whose Ports book nothing of it (the longitudinal component along the Port's axis carries the near field and no count); None for a scalar family's record or a time part (booked through every Port)."""
-        if len(self.families[live.family].parts) > 1 and 1 <= live.part <= 3:
-            return live.part - 1
-        return None
-
-    # The flux reading (ALGEBRA.md #rule3, the mathematician's derivation of 2026-09-24 from 8.2; BUILD.md section 26 item 13): the flux into a Node i from a read j of it, 3 G_ij = A_ij (now_i before_j - before_i now_j), a bilinear form of the record's own two levels at the two ends of a Link, pair-free and antisymmetric; a receiver's offer the one-way inward flux through its Ports, summed over intervals; the record's norm its conserved form I. Both in the integers 3 G x wall and 3 I x wall, wall the family's common wall (the least common multiple of its pairs' numerators over the board).
-
     def kind_wall(self, family: int, pair: tuple[int, int] | None = None) -> int:
         """The family's common wall: the least common multiple of the numerators of its pair over the board (the vacuum's and every body's), so that wall x den_i / num_i is an integer at every Node; HOST: read once per family from the board's pair array and kept until a pair is written (`_write_pair`, the load and a hop), the same integer at every call."""
         num_all, _ = self.pair_arrays(family, pair)
@@ -1427,183 +1285,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 wall = wall * value // gcd(wall, value)
             self._kind_walls[key] = wall
         return wall
-
-    def _flux_ports(self, family: int) -> list[tuple[int, int, np.ndarray]]:
-        """The Ports of every detector for the flux reading: per axis of extent above one and per side, the Nodes of a detector whose neighbour across the Link (on the family's faces) is a Node of no set or of another set; a Link inside one set is no Port, a folded axis carries none, beyond an open face there is no Link."""
-        wrap = self.kind_wrap[family]
-        set_names = sorted(set(self.detector_set))
-        set_of_detector = [set_names.index(name) for name in self.detector_set]
-        set_index = np.full(self.shape, -1, dtype=np.int64)
-        occupied = self.detector_at_node >= 0
-        set_index[occupied] = np.array(set_of_detector, dtype=np.int64)[self.detector_at_node[occupied]]
-        ports: list[tuple[int, int, np.ndarray]] = []
-        for axis in range(3):
-            if self.shape[axis] == 1:
-                continue
-            for side in (1, -1):
-                neighbour = self.ports.arrivals(set_index, wrap, -2)[port_of(axis, side)]
-                mask = occupied & (neighbour != -2) & (neighbour != set_index)
-                ports.append((axis, side, mask))
-        return ports
-
-    def _inflow_ports(self, family: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """The Port pairs of the family's detectors, listed ONCE (the click's cost, the model owner's record 1934: the click never counts the board's shapes; it reads the Ports alone): the flat index of every Port Node i, of its neighbour j across the Link (on the family's faces), and the detector of i, from `_flux_ports`."""
-        cached = self._inflow_port_pairs.get(family)
-        if cached is not None:
-            return cached
-        wrap = self.kind_wrap[family]
-        count = int(np.prod(self.shape))
-        flat = np.arange(count, dtype=np.int64).reshape(self.shape)
-        nodes: list[np.ndarray] = []
-        neighbours: list[np.ndarray] = []
-        axes: list[np.ndarray] = []
-        sides: list[np.ndarray] = []
-        for axis, side, mask in self._flux_ports(family):
-            across = self.ports.arrivals(flat, wrap, -1)[port_of(axis, side)]
-            where = mask & (across >= 0)
-            nodes.append(flat[where])
-            neighbours.append(across[where])
-            axes.append(np.full(int(np.count_nonzero(where)), axis, dtype=np.int64))
-            sides.append(np.full(int(np.count_nonzero(where)), side, dtype=np.int64))
-        port_i = np.concatenate(nodes) if nodes else np.zeros(0, dtype=np.int64)
-        port_j = np.concatenate(neighbours) if neighbours else np.zeros(0, dtype=np.int64)
-        port_detector = self.detector_at_node.ravel()[port_i]
-        pairs = (port_i, port_j, port_detector)
-        self._inflow_port_pairs[family] = pairs
-        # the face of every Port, (axis, side): the outward normal of the Node i's face toward j is side along the axis (ALGEBRA.md #the-ladder)
-        self._inflow_port_faces[family] = (
-            np.concatenate(axes) if axes else np.zeros(0, dtype=np.int64),
-            np.concatenate(sides) if sides else np.zeros(0, dtype=np.int64),
-        )
-        return pairs
-
-    def detector_inflow_tally(self, live: LiveRecord) -> dict[int, int]:
-        """The detectors' inflow per record over the Ports alone: this interval's one-way inward flux into every detector, 3 G_ij = now_i before_j - before_i now_j where positive per Port, times the family's wall (the form's units), from the record's two levels after the interval's step, by the detector's index; read at the Port pairs only (one gather per pair, exact Python integers), never over the board."""
-        port_i, port_j, port_detector = self._inflow_ports(live.family)
-        port_axis, port_side = self._inflow_port_faces[live.family]
-        # THE TRANSVERSE BOOKING (ALGEBRA.md #the-second-level; commit 4): the Ports along the record's own vector component book nothing of it
-        own_axis = self.booked_axis(live)
-        if own_axis is not None:
-            keep = port_axis != own_axis
-            port_i, port_j, port_detector = port_i[keep], port_j[keep], port_detector[keep]
-            port_axis, port_side = port_axis[keep], port_side[keep]
-        if port_i.size == 0:
-            return {}
-        # THE CURRENT IS UNWEIGHTED (ALGEBRA.md #the-direction and (13); BUILD.md section 26 item 36): wall (now_i before_j - before_i now_j) through the Port ij, the plain current of the form's units (the pace at both ends, form (B) of item 34, HISTORY); Born's rule at the taking end unchanged by one bit
-        wall = self.kind_wall(live.family)
-        now = live.now.ravel()
-        before = live.before.ravel()
-        now_i = now[port_i].astype(object)
-        before_i = before[port_i].astype(object)
-        now_j = now[port_j].astype(object)
-        before_j = before[port_j].astype(object)
-        flux = now_i * before_j - before_i * now_j
-        if live.im_now is not None and live.im_before is not None:
-            # the pair's norm (ALGEBRA.md #the-second-level): the second level's current added
-            im_now, im_before = live.im_now.ravel(), live.im_before.ravel()
-            flux += im_now[port_i].astype(object) * im_before[port_j].astype(object)
-            flux -= im_before[port_i].astype(object) * im_now[port_j].astype(object)
-        moving = self._moving_sets() if self.set_block else {}
-        offers: dict[int, int] = {}
-        if not moving:
-            for value, detector, axis, side in zip(
-                flux.tolist(),
-                port_detector.tolist(),
-                port_axis.tolist(),
-                port_side.tolist(),
-                strict=True,
-            ):
-                if value > 0:
-                    offers[detector] = offers.get(detector, 0) + int(value) * wall
-                    self._tally_direction(live, detector, axis, side, int(value) * wall)
-            return offers
-        # THE BOOKING IN THE BODY'S FRAME (ALGEBRA.md #the-ladder; BUILD.md section 26 item 56): a face of a body moving at v with outward normal n books per interval (G_in + (v . n) e_out) cut at zero AFTER the sum: G_in the board's inward current through the face's Link (the Port booking above), e_out the record's density on the Node outside the face (`node_density`, the same units), v . n = side x momentum / wall along the face's axis, positive at a face advancing into the outside (the front) and negative at a face receding from it (the back). One rule for every face of every moving set, per interval, not per hop: at the front an oncoming record books G_in + v e_out, a standing or transverse one v e_out, a record outrunning the body nothing; at the back a record overtaking from behind books G_in - v e_out, the norm once, with no negative booking. The whole part is booked, the fraction carried on the record per detector (`carry`, exact). The three tests: the face's Link, the outside Node's density and the body's own pace, fixed work; sums and products; no name. At v = 0 the rule is the Port booking above, bit for bit.
-        outside = sorted(
-            set(
-                int(node)
-                for node, detector in zip(port_j.tolist(), port_detector.tolist(), strict=True)
-                if detector in moving
-            )
-        )
-        density = dict(
-            zip(outside, self.node_density(live, np.array(outside, dtype=np.int64)), strict=True)
-        )
-        frame: dict[int, Ratio] = {}
-        for value, detector, node, axis, side in zip(
-            flux.tolist(),
-            port_detector.tolist(),
-            port_j.tolist(),
-            port_axis.tolist(),
-            port_side.tolist(),
-            strict=True,
-        ):
-            bound = moving.get(detector)
-            if value > 0:
-                # the direction from the Port booking in the board's frame, for a set at rest and for a moving one alike (the body-frame correction below moves the booked share, not the Port it entered by)
-                self._tally_direction(live, detector, axis, side, int(value) * wall)
-            if bound is None:
-                if value > 0:
-                    offers[detector] = offers.get(detector, 0) + int(value) * wall
-                continue
-            block, momentum = bound
-            # G_in + (v . n) e_out as one pair: the Port booking whole, the frame term side x momentum x e_out over the body's wall (exact integers)
-            body_wall = self.wall_of(block)
-            density_numerator, density_denominator = density[node]
-            term = ratio(
-                int(value) * wall * body_wall * density_denominator
-                + side * momentum[axis] * density_numerator,
-                body_wall * density_denominator,
-            )
-            if term[0] > 0:
-                frame[detector] = ratio_sum([frame.get(detector, ZERO), term])
-        for detector, share in frame.items():
-            numerator, denominator = ratio_sum([share, live.carry.get(detector, ZERO)])
-            whole = numerator // denominator
-            live.carry[detector] = ratio(numerator - whole * denominator, denominator)
-            if whole > 0:
-                offers[detector] = offers.get(detector, 0) + whole
-        return offers
-
-    @staticmethod
-    def _tally_direction(live: LiveRecord, detector: int, axis: int, side: int, booked: int) -> None:
-        """THE FOUR-VECTOR CLICK'S TALLY (ALGEBRA.md #the-interval, #the-ladder; commit 5 without the recoil): the flux booked through a Port of the detector whose outward normal is `side` along `axis` counts toward -side on that axis (a quantum that enters through the -a face travels toward +a); kept per detector on the record, in the flux's units."""
-        tally = live.momentum_tally.get(detector)
-        if tally is None:
-            tally = live.momentum_tally[detector] = [0, 0, 0]
-        tally[axis] -= side * booked
-
-    @staticmethod
-    def direction_of(tally: list[int]) -> list[int]:
-        """The sign per axis of a tally, sigma_a of ALGEBRA.md #the-primitives, #the-interval: -1, 0 or 1 (DETECTOR: the quantum's direction of travel, not its size)."""
-        return [(value > 0) - (value < 0) for value in tally]
-
-    def inward_flux(self, live: LiveRecord, mask: np.ndarray) -> int:
-        """The one-way inward flux into the Nodes of `mask` through the Links from outside: wall times (now_i before_j - before_i now_j) where positive from the record's two levels after the step, the second level added, the Ports along the record's own component skipped."""
-        wrap = self.kind_wrap[live.family]
-        wall = self.kind_wall(live.family)
-        own_axis = self.booked_axis(live)
-        levels = [(live.now, live.before)]
-        if live.im_now is not None and live.im_before is not None:
-            levels.append((live.im_now, live.im_before))
-        total = 0
-        for axis in range(3):
-            if self.shape[axis] == 1 or axis == own_axis:
-                continue
-            for side in (1, -1):
-                port = self.ports.outward(mask, wrap)[port_of(axis, side)]
-                if not port.any():
-                    continue
-                flux = np.zeros(self.shape, dtype=object)
-                for level_now, level_before in levels:
-                    now_j = self.ports.arrivals(level_now, wrap)[port_of(axis, side)].astype(object)
-                    before_j = self.ports.arrivals(level_before, wrap)[port_of(axis, side)].astype(
-                        object
-                    )
-                    flux = (
-                        flux + level_now.astype(object) * before_j - level_before.astype(object) * now_j
-                    )
-                total += int(np.sum(np.where(port & (flux > 0), flux, 0)))
-        return total * wall
 
     def conserved_form(self, live: LiveRecord) -> Ratio:
         """The record's conserved form I in the form's units, 3 I x wall in the vacuum: over the Nodes [3 wall (den_i / num_i) Gamma (now_i^2 + before_i^2) - 6 wall (den_i / num_i) c_i now_i before_i] / p_i - wall now_i SUM_j before_j, p_i = Gamma - c_i (+ q Lambda d_i) the pace at the Node, the six reads with the family's faces; the sum of every Node's share (`form_share`), an exact rational (each Node's share read in the world's time by its own pace)."""
@@ -1661,10 +1342,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             ]
         )
 
-    def given_norm(self, live: LiveRecord) -> tuple[int, int]:
-        """The norm as the exact rational: the given record's conserved form Q, the Node's terms weighted by 1 / p_i, as the pair (numerator, denominator) in lowest terms, the record's `norm` and `pace`; the ladder reads the plain flux C against Q in integers; for a record written at one level p Q is whole (the integer T in the body's own units) and the pair reduces from (p Q, p); a record written across levels has a rational Q, its world energy, and the same reading."""
-        return self.conserved_form(live)
-
     def _window(
         self, box: tuple[tuple[int, int], ...] | None, wrap: tuple[bool, bool, bool]
     ) -> tuple[tuple[slice, ...], tuple[bool, bool, bool], tuple[tuple[int, int], ...]] | None:
@@ -1700,11 +1377,10 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return tuple(slices), (wraps[0], wraps[1], wraps[2]), tuple(grown)
 
     def _advance(self, live: LiveRecord) -> None:
-        # THE EMITTER'S NODES ARE NODES LIKE EVERY OTHER (ALGEBRA.md #the-click; the Boss's line of 2026-09-24 on the knot): no grace, no exemption, no own take, no fresh Port; the given record is written once and the law advances it (the retired forms in BUILD.md section 26). Every given record, light's kind or a massive kind alike, books its flux at the Nodes and clicks on its ladder (the click is the law's one action on any record, POSTULATES 10); a BLOCK'S own record (a massive kind, given of no emitter) books nothing and is on no ladder (massive-record-v1, MUST 2). THE BOOKING BY ATTRIBUTE (item 51; item 53): a held family's record and a body's own standing record are read by no detector; every other record is booked at the Ports (nothing declared: derived from `held`)
+        """One interval of Rule3 on a record (ALGEBRA.md #the-line): every record, a body's own, a free one or a held part, steps by the rule alone; its count moves after, by the count's line (`_counts_stage`)."""
         if live.silent:
             return  # a zero held part steps to zero exactly
         field = live.held_part
-        booked = not field and not live.standing
         # The rule with the record's pair on the six-neighbour term (massive-record-v1, MASSIVE_RECORD.md section 1): G over the six neighbours, then D by 3 den with the remainder kept, then T; at light's pair [1, 1] the first build's integers bit for bit.
         num, den = self.pair_arrays(live.family, live.pair)
         # THE COUPLING IS THE CLICK ALONE (the model owner's decision (2) of record 1962; ALGEBRA.md #the-line (B); BUILD.md section 26 item 30): no coupling's term and no folded denominator (MASSIVE_RECORD.md section 7 HISTORY); the wall 3 den, one division per row per interval, the remainder kept in [0, wall) THE NODE CLOCK UNDER THE FIXED WALL (the model owner's decision (5) of record 1962 and his word of 2026-09-25 in Nature24's session, record 1994: the backward run exact everywhere; ALGEBRA.md #the-paces amended, the mathematician's section asked; BUILD.md section 26 item 34): the wall is 3 den Gamma at every Node, a constant of the declared region, and the clock enters the numerator as the pace Gamma - c_j of each of the six reads: 3 den Gamma a_next + r' = num SUM_j (Gamma - c_j) a_j + 6 den c a_now - 3 den Gamma a_before + r, c the family of clicks' level at a Node, the remainder in [0, 3 den Gamma). The remainder's range never changes, so the step is one to one at every Node for every clock history (the wall 3 den (Gamma + c) of item 31, which shrank where the level fell and merged two states into one, HISTORY). In the vacuum (c = 0) the levels are the plain rule's bit for bit and the remainder Gamma times its; at uniform content 1 - cos omega' = (1 - cos omega)(Gamma - c) / Gamma. One division per row per interval, the int64 total under the load bound of `_pair_bound`. THE FAMILY OF CLICKS ITSELF steps plain (the pace 1, the wall 3 den): it reads no other family and not its own level (ALGEBRA.md #the-counts-line)
@@ -1790,61 +1466,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 "MUST 3's bound holds only below A): the run is refused"
             )
         if im_next is not None:
-            if live.mask is not None:
-                im_next[~live.mask] = 0
             live.im_before = live.im_now
             live.im_now = im_next
         self._count_source(live, nxt)
-        if not booked:
-            live.before = live.now
-            live.now = nxt
-            live.age += 1
-            return
-        if live.mask is not None:
-            # the arm's row lives on its own side of the lamp (component 2)
-            nxt[~live.mask] = 0
         live.before = live.now
         live.now = nxt
         live.age += 1
-        if live.window_open:
-            # the window's write right after the record's own step, before any booking reads the rows
-            with self.main_loop.act(
-                "the giving", "(ii)", self._card_writes("the giving"), lambda: self.fingerprints_of(live)
-            ):
-                self._window_write(live)
-        # the flux reading: the one-way inward flux into every detector, booked to its pointer, then the click
-        with self.main_loop.act(
-            "the clicks", "(ii)", self._card_writes("the clicks"), lambda: self.fingerprints_of(live)
-        ):
-            before_booking = list(live.pointers)
-            for detector, value in self.detector_inflow_tally(live).items():
-                taken = self._polarised(live, detector, value)
-                live.pointers[detector] += taken
-                live.absorbed += taken
-            increments = [now - then for now, then in zip(live.pointers, before_booking, strict=True)]
-            self._ladder_click(live, increments)
-
-    def _giving_act(self, block: Block, start: GivingStart, live: LiveRecord | None) -> GivingWrites:
-        """One act of the giving through the folder's `apply` (the function the main loop looked up at (ii)): the term the giving's coupling as a pair and the quantum action T (until the loader reads the universe's [1, k] and T, the file's emitter declaration: the weight g as the pair [g, 1], T = norm div norm_denominator), the own record from the window's record (`live`), none at the open."""
-        emitter = after_step.emitter_of(block)
-        if emitter is None:
-            raise ValueError(f"the body {block.number} gives with no emitter declared")
-        norm = emitter.norm if emitter.norm is not None else 1
-        denominator = emitter.norm_denominator if emitter.norm_denominator is not None else 1
-        weight = emitter.weight if emitter.weight is not None else 1
-        term = GivingTerm((weight, 1), division_forward(norm, denominator, 0)[0], emitter.family)
-        own = (
-            GivingOwn(None, 0, (0, 0, 0))
-            if live is None
-            else GivingOwn(
-                live.window,
-                live.outward,
-                (live.outward_tally[0], live.outward_tally[1], live.outward_tally[2]),
-                live.giving_remainders,
-            )
-        )
-        function = self.main_loop.function_of("the giving", "(ii)")
-        return cast(GivingWrites, function(term, start, own))
 
     def _body_levels(self, block: Block, before: bool = False) -> np.ndarray:
         """The body's rotation's level now (or before) at each of its Nodes, in the mask's order: the standing record at its one Node (the body's Node, item 42) or its own rows there (the lattice body)."""
@@ -1854,136 +1481,12 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         assert block.own is not None
         return np.asarray((block.own.before if before else block.own.now)[block.mask], dtype=np.int64)
 
-    def body_outward_flux(self, live: LiveRecord, block: Block, tally: list[int] | None = None) -> int:
-        """The outward flux through the body's outer Ports this interval, wall times (now_j before_i - before_j now_i) where positive over every Port to a Node outside the body on every axis (the record's own axis and an axis of one layer among them: the giving's row reads the outward current through the body's outer Ports, Cheshbon's 04:25Z (5c); none beyond an open face), the second level added; with `tally` the flux per axis signed by the side."""
-        wall = self.kind_wall(live.family)
-        wrap = self.kind_wrap[live.family]
-        mask = block.mask
-        levels = [(live.now, live.before)]
-        if live.im_now is not None and live.im_before is not None:
-            levels.append((live.im_now, live.im_before))
-        total = 0
-        for axis in range(3):
-            for side in (1, -1):
-                ports = self.ports.outward(mask, wrap)[port_of(axis, side)]
-                if not ports.any():
-                    continue
-                flux = np.zeros(int(np.count_nonzero(ports)), dtype=np.int64)
-                for now, before in levels:
-                    now_j = self.ports.arrivals(now, wrap)[port_of(axis, side)][ports]
-                    before_j = self.ports.arrivals(before, wrap)[port_of(axis, side)][ports]
-                    flux += now_j * before[ports] - before_j * now[ports]
-                outward = int(flux[flux > 0].sum()) * wall
-                total += outward
-                if tally is not None:
-                    tally[axis] += side * outward
-        return total
-
-    def _point_window_inverse(self, block: Block) -> None:
-        """One interval of an open window backwards (ALGEBRA.md): the interval's outward reading taken off the sum on the rows as the interval left them, then the write at both levels subtracted through the folder's inverse (the levels written that interval from the same body levels and the remainders after, the remainders before kept), before the record's own inverse step; the body's Node's level is the one written, its own inverse coming after; the write is in place, so the Ports' cache of arrivals taken before it is emptied (a third in-place writer beside the hold and the pair region)."""
-        live = self.records.get(block.window) if block.window is not None else None
-        emitter = block.definition.emitter
-        if live is None or emitter is None or emitter.weight is None or live.window <= 0:
-            return
-        undone = [0, 0, 0]
-        live.outward -= self.body_outward_flux(live, block, undone)
-        live.outward_tally = [kept - gone for kept, gone in zip(live.outward_tally, undone, strict=True)]
-        levels = (self._body_levels(block), self._body_levels(block, before=True))
-        writes = self._giving_act(
-            block, GivingStart(THE_INVERSE, 0, (0, 0, 0), levels, 0, (0, 0, 0)), live
-        )
-        self._write_at_mask(live, block.mask, cast(tuple[np.ndarray, np.ndarray], writes.level), -1)
-        live.giving_remainders, live.window = writes.own.remainders, live.window - 1
-        self.ports.begin()
-
-    def _reads_at(self, a: np.ndarray, nodes: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
-        """The sum of the six neighbours' amplitudes at the Nodes (flat indices) alone, as the send reads them over the board (the wrap on a periodic axis, 0 beyond a zero face, the row itself on an axis of one layer); HOST: the cost is the Nodes asked, not the board."""
-        coordinates = np.stack(np.unravel_index(nodes, self.shape), axis=0)
-        total = np.zeros(nodes.shape[0], dtype=object)
-        for axis in range(3):
-            if self.shape[axis] == 1:
-                total += 2 * a.ravel()[nodes].astype(object)
-                continue
-            for sign in (1, -1):
-                shifted = coordinates.copy()
-                shifted[axis] = shifted[axis] - sign
-                if wrap[axis]:
-                    shifted[axis] %= self.shape[axis]
-                    inside = np.ones(nodes.shape[0], dtype=bool)
-                else:
-                    inside = (shifted[axis] >= 0) & (shifted[axis] < self.shape[axis])
-                    shifted[axis] = np.clip(shifted[axis], 0, self.shape[axis] - 1)
-                values = a[tuple(shifted)].astype(object)
-                total += np.where(inside, values, 0)
-        return total
-
-    def node_density(self, live: LiveRecord, nodes: np.ndarray) -> list[Ratio]:
-        """The record's density e at each of the Nodes (flat indices), the per-Node terms of `form_share` (the Node's term over the rule's read coefficient there, less its Link term), exact rationals in the form's units; read on the Nodes outside a moving set's faces (ALGEBRA.md #the-ladder; item 56; the hop's reading of item 48 HISTORY)."""
-        family = live.family
-        wall = self.kind_wall(family, live.pair)
-        field = live.held_part
-        gamma = 1 if field else self.node_clock
-        content = self._effective_content(family) if not field else np.zeros(self.shape, dtype=np.int64)
-        num_all, den_all = self.pair_arrays(family, live.pair)
-        num = num_all.ravel()[nodes]
-        den = den_all.ravel()[nodes]
-        level = content.ravel()[nodes]
-        levels = [(live.now, live.before)]
-        if live.im_now is not None and live.im_before is not None:
-            levels.append((live.im_now, live.im_before))  # the pair's second level (commit 4)
-        out: list[Ratio] = [ZERO for _ in range(len(nodes))]
-        for level_now, level_before in levels:
-            now = level_now.ravel()[nodes]
-            before = level_before.ravel()[nodes]
-            reads = self._reads_at(level_before, nodes, self.kind_wrap[family])
-            for index in range(len(nodes)):
-                (read_coefficient, _, _), self_coefficient, wall_at = coefficients(
-                    int(num[index]), int(den[index]), gamma, int(level[index]), ISOTROPIC, not field
-                )
-                a, b = int(now[index]), int(before[index])
-                node = wall * form_term(self_coefficient, wall_at, a, b)
-                out[index] = ratio_sum(
-                    [
-                        out[index],
-                        (node - wall * a * int(reads[index]) * read_coefficient, read_coefficient),
-                    ]
-                )
-        return out
-
-    def _recoil_at_taking(self, live: LiveRecord, detector: int) -> None:
-        """The taker's recoil term at a click on a set with a body: the body's number, the sense +1, the click's tally per axis and the record's clock, for the (iv) act."""
+    def _recoil_at_taking(self, live: LiveRecord, detector: int, tally: tuple[int, int, int]) -> None:
+        """The taker's recoil term at a report on a set with a body: the body's number, the sense +1, the tally per axis (the count's line's travel into the reporting Node this interval) and the record, for the (iv) act."""
         measured = self.detector_measured[detector]
         if measured is None or self.detector_face[detector]:
             return
-        t = live.momentum_tally.get(detector, [0, 0, 0])
-        self._recoils.append((measured, TAKING, (int(t[0]), int(t[1]), int(t[2])), live.identity))
-
-    def _ladder_click(self, live: LiveRecord, increments: list[int]) -> None:
-        """The click through the folder's ladder (features/clicks, the function the main loop looked up at (ii)): the record's total and the chosen detector from its residue, norm, wheel, pace, ladder and the interval's increments; at a click the first rung, the rung's count at a set with a body, the click line, the record deleted whole after the interval's advances."""
-        if live.clicked:
-            return
-        if live.pair_record is not None:
-            return self._pair_click(live, increments)
-        click = self.main_loop.function_of("the clicks", "(ii)")
-        ladder = self._ladder_of(live)
-        while True:
-            detector, live.total = click(
-                live.u, live.norm, live.wheel, live.pace, live.total, ladder, increments
-            )
-            if detector is None:
-                return
-            if self._hand_admits(live, detector):
-                break
-            ladder = ladder[ladder.index(detector) + 1 :]
-        live.first_rung[detector] = self.tick
-        if detector in self.set_block:
-            block = self.block_by_number[self.set_block[detector]]
-            self.rung_counts[(live.identity, detector)] = self._body_count(block)
-        self._gather_line(live, detector)
-        self._recoil_at_taking(live, detector)
-        self._crystal_click(live, detector)
-        live.clicked = True
-        self.dead.append(live.identity)
+        self._recoils.append((measured, TAKING, tally, live.identity))
 
     def record_form(self, live: LiveRecord) -> Ratio:
         """The conserved form I of the record, a GAMEBOARD diagnostic read by the books: the one form of the rule, `conserved_form`, from the rule's own integers, L [w (a^2 + b^2) - S a b] / R at the Nodes and L now_i SUM_j before_j on the Links, L the least common multiple of the distinct numerators, an exact rational, conserved by the rule up to the remainders' bounded jitter."""

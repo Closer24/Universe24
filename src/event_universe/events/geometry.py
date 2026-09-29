@@ -117,19 +117,6 @@ class GameBoardGeometry[B: Body]:
         faces = self._faces(self.kind_wrap[family], True)
         return adjacent_node(position, port_of(j, sigma), self._extents(), faces)
 
-    def _neighbour_nodes(
-        self, node: tuple[int, ...], wrap: tuple[bool, bool, bool]
-    ) -> list[tuple[int, int, int]]:
-        """The six reads of a Node as the send makes them: the wrap on a periodic axis, the Node itself twice on a folded axis of extent 1, none beyond an open face."""
-        position = (int(node[0]), int(node[1]), int(node[2]))
-        shape, faces = self._extents(), self._faces(wrap, True)
-        reads = [
-            adjacent_node(position, port_of(axis, side), shape, faces)
-            for axis in range(3)
-            for side in (1, -1)
-        ]
-        return [read for read in reads if read is not None]
-
     def _ports_of(
         self,
         level_now: np.ndarray,
@@ -149,36 +136,8 @@ class GameBoardGeometry[B: Body]:
                 found.append(None if node is None else int(level_now[node]))
         return cast(Neighbours, tuple(found))
 
-    def shell_mask(self, block: B) -> np.ndarray:
-        """The shell of a body: its Nodes with a Port, a Link to a Node outside the body (the wrap on a periodic axis; no Port beyond an open face; a folded axis carries none)."""
-        outward = self.ports.outward(block.mask, self.kind_wrap[block.family])
-        shell = np.zeros(self.shape, dtype=bool)
-        for port in outward:
-            shell |= port
-        return shell
-
-    def first_shell_node(self, block: B) -> tuple[int, int, int]:
-        """THE FIRST SHELL NODE IN THE DECLARED ORDER (ALGEBRA.md #the-ladder, #the-postulates: which Node is read is a convention): the first Node of the body in the engine's x-major order (`body_node_indices`, the loader's and the generator's one convention) that has a Port; it follows the body's steps. A body with no shell (every Link inside it) is refused: nothing reads its residue."""
-        where = np.nonzero(self.shell_mask(block))
-        if len(where[0]) == 0:
-            raise ValueError(
-                f"measured[{block.number}] has no shell (no Node of it has a Port to "
-                "a Node outside it), so no Node reads its residue (ALGEBRA.md #the-ladder)"
-            )
-        return int(where[0][0]), int(where[1][0]), int(where[2][0])
-
-    def _moving_sets(self) -> dict[int, tuple[B, list[int]]]:
-        """The detectors bound to a block whose momentum is not zero at this interval, each with its block and the momentum (ALGEBRA.md #the-ladder): the faces of these sets book in the body's frame; empty on a board at rest, where the rule is the Port booking alone."""
-        moving: dict[int, tuple[B, list[int]]] = {}
-        for detector, number in self.set_block.items():
-            block = self.block_by_number[number]
-            momentum = self._momentum_now(block)
-            if any(momentum):
-                moving[detector] = (block, momentum)
-        return moving
-
     def _window_centre(self, block: B) -> tuple[int, int, int]:
-        """The body's Node of a block with a window (its centre Node)."""
+        """The body's Node of a block (its centre Node)."""
         axes = np.nonzero(self.centre_mask(block))
         return (int(axes[0][0]), int(axes[1][0]), int(axes[2][0]))
 

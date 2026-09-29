@@ -1,4 +1,4 @@
-"""The readings and the output lines of the engine: the exact rationals of the books, the leak test, the record's click line (`gather`), the books, the bodies' contents and the state stream; each function reads the simulation it is given, and the loop binds them as its methods."""
+"""The readings and the output lines of the engine: the exact rationals of the books, the leak test, a report's line (`gather`), the books, the bodies' contents and the state stream; each function reads the simulation it is given, and the loop binds them as its methods."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from collections.abc import Iterator
 from math import gcd
 from typing import TYPE_CHECKING
 
-from event_universe.core.rule3 import division_forward, rungs
+from event_universe.core.rule3 import division_forward
 from event_universe.events import one_node
 
 if TYPE_CHECKING:
@@ -76,138 +76,33 @@ def leaks(simulation: detector_law.DetectorLawSimulation) -> list[str]:
 
 
 def gather_line(
-    simulation: detector_law.DetectorLawSimulation, live: records.LiveRecord, chosen: int | None
+    simulation: detector_law.DetectorLawSimulation,
+    live: records.LiveRecord,
+    chosen: int,
+    node: tuple[int, int, int] | None,
+    content: int = 1,
 ) -> None:
-    """The record's one click line (`gather`): the content handed to the measured event at the chosen detector (or booked as escaped at a face or a set without a body; with no detector chosen, to the escaped row or, where the record's own emitter took it wholly, to `taken_by_emitter`), with `click` the chosen detector's first rung (or the completion where no rung was crossed) and `clock` the detector's own count; called once per record, at the close (`_click`) or at the receiver's rung (`_line_at_rung`)."""
-    # the ladder's weights: the record's ladder of `_ladder_of` (the emitter's named sets, or the
-    # block's receiver, or every declared set, the face receiver last on every ladder; ALGEBRA.md
-    # #rule3 (b)), every detector off it at 0, so that the detector of u is over the ladder's own
-    # sum and a detector off the ladder is never chosen
-    ladder_detectors = set(simulation._ladder_of(live))
-    on_ladder = [detector in ladder_detectors for detector in range(len(live.pointers))]
-    weights = [(p if here else 0, 1) for p, here in zip(live.pointers, on_ladder, strict=True)]
+    """A report's line (`gather`; ALGEBRA.md #the-counts-line, the free record; the model owner's word of 2026-09-29 on #1495, finding 10): `content` quanta of the record handed at the detector `chosen` at its `node` (None at the lifetime's border), to the body the detector's set belongs to (`taker`) or, at a face or a set without a body, consumed there; the books move with it and the record carries that many quanta fewer."""
     family = live.family
-    ladder, total = rungs(weights, live.wheel)
-    sunk = sum(p for p, here in zip(live.pointers, on_ladder, strict=True) if not here)
-    if chosen is None:
-        simulation.ledger.transit_escaped[family] += live.content
-        simulation.ledger.held_escaped[family] += 0
-    else:
-        measured = simulation.detector_measured[chosen]
-        if measured is not None and not simulation.detector_face[chosen]:
-            simulation.held[measured][family] += live.content
-            simulation.ledger.held_measured[family] += live.content
-            simulation.ledger.transit_absorbed[family] += live.content
-        else:
-            # a set without a body (the face receiver, a set on free Nodes): the click consumes the
-            # quantum as any click does
-            simulation.ledger.transit_absorbed[family] += live.content
+    measured = simulation.detector_measured[chosen]
+    taker = measured if not simulation.detector_face[chosen] else None
+    if taker is not None:
+        simulation.held[taker][family] += content
+        simulation.ledger.held_measured[family] += content
+    simulation.ledger.transit_absorbed[family] += content
+    live.content -= content
     simulation.layer.gathered += 1
     gather: dict[str, object] = {
         "event": "gather",
         "tick": simulation.tick,
-        "arrived": simulation.tick,
         "family": simulation.families[family].name,
         "record": live.identity,
-        # HOST: the giving residue, the input of the diagnostic E_N and never a reader-of-record
-        # field (the reader reads `click`, `giving` and `chosen`; DECLARATIONS.md section 2 item 8)
-        "u": live.u,
-        # HOST: the ledger's row `taken_by_emitter` is 0 since the emitter's own take retired
-        # (ALGEBRA.md #the-click); kept for the readers' form
-        "taken_by_emitter": 0,
-        # HOST (the receiver by name): the sinks' take of the record by this line, in the pointer's
-        # unit (the faces and every set but the receiver; on no pointer); on a record with a
-        # receiver alone
-        "given": live.given,
-        "chosen": (
-            [[simulation.detector_set[chosen], simulation.detector_channel[chosen], "0"]]
-            if chosen is not None
-            else None
-        ),
-        "node": [],
-        "windows": [],
-        "content": live.content,
-        # THE BODY'S LANGUAGE (the model owner, 2026-09-28; HIGHLIGHTS lines 7 and 28): the click read
-        # from the bodies alone, so that one place tells the body is one: the giver (the body whose
-        # giving wrote the record; None for a planted one), the taker (the body of the chosen detector;
-        # None at a face or a set without a body), the quantum (the record's norm T), the click's exact
-        # tally per axis (its sign is `momentum`) and the giver's count as the giving opened (the
-        # taker's count is `clock` where the detector is a body's)
-        "giver": live.emitter,
-        "taker": (
-            simulation.detector_measured[chosen]
-            if chosen is not None and not simulation.detector_face[chosen]
-            else None
-        ),
-        "norm": live.norm,
-        "tally": list(live.momentum_tally.get(chosen, [0, 0, 0])) if chosen is not None else [0, 0, 0],
-        "giver_clock": live.giver_clock,
-        # THE FOUR-VECTOR (ALGEBRA.md #the-primitives; commit 5 without the recoil): the count is
-        # `content`, the space part the sign per axis of the chosen detector's tally, the taken quantum's
-        # direction of travel (DETECTOR); [0, 0, 0] with no detector chosen. No body's momentum moves
-        "momentum": (
-            simulation.direction_of(live.momentum_tally.get(chosen, [0, 0, 0]))
-            if chosen is not None
-            else [0, 0, 0]
-        ),
-        "weight": [live.pointers[chosen] if chosen is not None else 0, 1],
-        "total": list(total),
-        "T": live.absorbed,
-        "before": sum(1 for p in live.pointers if p),
-        "after": 1 if chosen is not None else 0,
-        "detectors": [
-            [[[set_name, channel, "0"]], rung]
-            for set_name, channel, rung, pointer in zip(
-                simulation.detector_set, simulation.detector_channel, ladder, live.pointers, strict=True
-            )
-            if pointer
-        ],
-        # the ladder by name (the lamp's `receiver`): the sets on it, and HOST the pointers' sum at
-        # the sinks (the detectors off the ladder, taken and booked, never chosen); None and 0 for
-        # every detector
-        **(
-            {
-                "ladder": sorted({simulation.detector_set[detector] for detector in live.ladder}),
-                "sunk": sunk,
-            }
-            if live.ladder is not None
-            else {}
-        ),
         "giving": live.giving_tick,
-        # The click's time: the interval at which the chosen detector's pointer crossed its first
-        # rung (the counting form, s_D = 1 / W), the detector's own count on the click line; the
-        # record completed at `tick`, when its offer was exhausted.
-        "click": (
-            live.first_rung[chosen]
-            if chosen is not None and live.first_rung[chosen] is not None
-            else simulation.tick
-        ),
-        # which the click's time is: the chosen detector's first rung or, where no rung was crossed
-        # (a screen row's Node at 1e-4 of the norm), the completion interval; a reader never reads
-        # a completion as a rung
-        "click_at": (
-            "rung" if chosen is not None and live.first_rung[chosen] is not None else "completion"
-        ),
-        # whose count the `clock` stamp is: a block's own count where the chosen detector is a
-        # block's detector or a set bound to a block (keys (i) and (ii)), else the interval
-        "clock_source": (
-            f"measured:{simulation.detector_measured[chosen]}"
-            if chosen is not None and (live.identity, chosen) in simulation.rung_counts
-            else "interval"
-        ),
-        **(
-            {
-                "clock": (
-                    # A block's detector: the block's own count at the first rung (the body's
-                    # event in the body's own clock); a receiver as built: its count is the interval.
-                    simulation.rung_counts[(live.identity, chosen)]
-                    if chosen is not None and (live.identity, chosen) in simulation.rung_counts
-                    else live.first_rung[chosen]
-                    if chosen is not None and live.first_rung[chosen] is not None
-                    else simulation.tick
-                )
-            }
-        ),
+        "giver": live.emitter,
+        "chosen": simulation.detector_names[chosen],
+        "node": None if node is None else list(node),
+        "content": content,
+        "taker": taker,
     }
     simulation.layer.gathers.append(gather)
     if simulation.record is not None:
@@ -240,18 +135,9 @@ def books(simulation: detector_law.DetectorLawSimulation, recount: bool = False)
             "current": transit_current,
             "absorbed": ledger.transit_absorbed[index],
             "escaped": ledger.transit_escaped[index],
-            # HOST (item 10): the content the records' own emitters took
-            "taken_by_emitter": ledger.taken_by_emitter[index],
-            # HOST (the receiver by name): the count of records closed after their line at the
-            # receiver's rung; on a world with a receiver alone (a lamp world's books byte for byte)
-            **(
-                {"closed_after_click": ledger.closed_after_click[index]}
-                if simulation.has_receiver
-                else {}
-            ),
         }
         transit["balanced"] = transit["released"] == (
-            transit["current"] + transit["absorbed"] + transit["escaped"] + transit["taken_by_emitter"]
+            transit["current"] + transit["absorbed"] + transit["escaped"]
         )
         balanced = balanced and bool(measured["balanced"]) and bool(transit["balanced"])
         lines: dict[str, object] = {"measured": measured, "transit": transit}
@@ -311,7 +197,7 @@ def contents(simulation: detector_law.DetectorLawSimulation) -> list[dict[str, o
 
 
 def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[tuple[str, object]]:
-    """The state's (key, value) pairs for state.json: the tick, the held content per measured event and the live records (their identity, age, train and the detectors' pointers), not their rows."""
+    """The state's (key, value) pairs for state.json: the tick, the held content per measured event and the live records (their identity, age, content and count), not their rows."""
     yield "tick", simulation.tick
     yield "measured", simulation.contents()
     # the held families' levels over the board (GAMEBOARD; ALGEBRA.md #the-counts-line, 9.48; item
@@ -375,21 +261,13 @@ def snapshot_stream(simulation: detector_law.DetectorLawSimulation) -> Iterator[
         [
             {
                 "record": live.identity,
-                "lamp": live.lamp,
                 "family": simulation.families[live.family].name,
-                "u": live.u,
-                # HOST (the receiver by name): whether the record's line was written at its
-                # receiver's rung (it lives on with content 0); on a world with a receiver alone
-                **(
-                    {"clicked": live.clicked, "escaped": live.escaped} if simulation.has_receiver else {}
-                ),
+                "giver": live.emitter,
                 "given": live.given,
                 "giving": live.giving_tick,
                 "age": live.age,
-                "train": live.train,
-                "norm": live.norm,
-                "absorbed": live.absorbed,
-                "pointers": dict(zip(simulation.detector_names, live.pointers, strict=True)),
+                "content": live.content,
+                "counts": None if live.counts is None else int(live.counts.sum()),
                 "form": form_json(simulation.record_form(live)),
             }
             for live in simulation.records.values()

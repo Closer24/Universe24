@@ -27,7 +27,7 @@ def run(world_path: Path) -> tuple[dict[str, Any], list[dict[str, Any]], str | N
             refusal = f"at interval {simulation.tick + 1}: {stop}"
             break
         readings.read(simulation)
-    readings.clicks(simulation.layer.gathers, world.detectors)
+    readings.clicks(simulation.layer.gathers)
     output = {
         "verdict": "LAWFUL" if refusal is None else "REFUSED IN THE RUN",
         "ticks_run": simulation.tick,
@@ -35,8 +35,8 @@ def run(world_path: Path) -> tuple[dict[str, Any], list[dict[str, Any]], str | N
         "amplitude_bound": int(world.amplitude_bound) if hasattr(world, "amplitude_bound") else None,
         "clicks": [
             {
-                "detector": g["chosen"][0][0] if g["chosen"] else None,
-                "interval": g["click"],
+                "detector": g["chosen"],
+                "interval": g["tick"],
                 "giving": g["giving"],
             }
             for g in simulation.layer.gathers

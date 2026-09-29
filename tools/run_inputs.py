@@ -15,7 +15,7 @@ blind pin for the input (`{"<name>": [{"detector": ..., "count": ..., "band":
 ...}` on the detector's first click (the least interval since the record's giving
 among its clicks), or `{"detector": ...,
 "mean_interval": ..., "band": ...}` on the mean over the detector's clicks of the
-interval since the record's giving (the passage rows, ALGEBRA.md #the-ladder),
+interval since the record's giving (the passage rows, ALGEBRA.md #the-counts-line),
 written before the run), the comparison per pin: MATCH within the band or MISS, with the
 value read; a row of the expectation file naming a `twin` input compares the RATIO of this
 input's mean click interval at the detector to the twin's, both exact fractions, against
@@ -123,24 +123,20 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
             write_output(Path(out_dir), name, output)
             return {"name": name, "verdict": "LEAK", "seconds": time.monotonic() - started}
         readings.read(simulation)
-    readings.clicks(simulation.layer.gathers, world.detectors)
+    readings.clicks(simulation.layer.gathers)
     for gather in simulation.layer.gathers:
-        chosen = gather["chosen"]
-        detector = chosen[0][0] if isinstance(chosen, list) and chosen else None
         clicks.append(
             {
-                "detector": detector,
-                "interval": gather["click"],
+                "detector": gather["chosen"],
+                "interval": gather["tick"],
                 "giving": gather["giving"],
                 "record": gather["record"],
-                # THE BODY'S LANGUAGE (HIGHLIGHTS line 7): the giver, the taker, the quantum T, the
-                # exact tally and the two bodies' counts, read from the click line as the engine wrote it
+                # THE BODY'S LANGUAGE (HIGHLIGHTS line 7): the giver, the taker, the reporting Node and the
+                # quanta reported, read from the report's line as the engine wrote it
                 "giver": gather["giver"],
                 "taker": gather["taker"],
-                "norm": gather["norm"],
-                "tally": gather["tally"],
-                "giver_clock": gather["giver_clock"],
-                "clock": gather.get("clock"),
+                "node": gather["node"],
+                "content": gather["content"],
             }
         )
     counts: dict[str, int] = {detector.name: 0 for detector in world.detectors}
@@ -166,7 +162,7 @@ def run_input(path: str, out_dir: str, pins: list[dict[str, Any]]) -> dict[str, 
         # least interval since the record's giving among its clicks: the stock's
         # fastest passage; for one record given at interval 0 the interval of the
         # click itself), or on the MEAN INTERVAL over its clicks since the
-        # record's giving (the passage rows, ALGEBRA.md #the-ladder: the pin the
+        # record's giving (the passage rows, ALGEBRA.md #the-counts-line: the pin the
         # mean click interval over the stock), rounded to the nearest integer
         detector, band = str(pin["detector"]), int(pin["band"])
         at_detector = [c for c in clicks if c["detector"] == detector]

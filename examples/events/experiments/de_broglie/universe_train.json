@@ -5,7 +5,6 @@
   "most_steps": 65536,
   "width": 63,
   "most_families": 20,
-  "least_residues": 500,
   "twist_table": {
    "unit": 2621440000,
    "fine": [

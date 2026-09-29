@@ -1,4 +1,4 @@
-"""The records' making and release, out of the loop's module: the ledger's stamps for the main loop's audit, the held families' records and levels, a body's own record, a planted record for the generator's checks and the tests, a detector added by name, a record's receiver and ladder, and its rows' release; each function takes the engine (`DetectorLawSimulation` of `detector_law.py`) and is bound as its method of the same duty, so every caller, test and spy works unchanged."""
+"""The records' making and release, out of the loop's module: the ledger's stamps for the main loop's audit, the held families' records and levels, a body's own record, a planted record for the generator's checks and the tests, a detector added by name, and a record's rows' release; each function takes the engine (`DetectorLawSimulation` of `detector_law.py`) and is bound as its method of the same duty, so every caller, test and spy works unchanged."""
 
 from __future__ import annotations
 
@@ -18,10 +18,7 @@ def fingerprints_of(
     """The ledger's words of the named records and the bodies' counts, stamped for the audit: a rebound array by its identity, an integer by its value."""
     return {
         "a body's content M_k": {number: tuple(row) for number, row in enumerate(loop.held)},
-        "the record's tally": {
-            live.identity: (live.total, tuple(live.pointers), live.absorbed, tuple(live.first_rung))
-            for live in records
-        },
+        "the record's tally": {live.identity: (live.content, live.reported) for live in records},
         "the level next, the remainder": {
             live.identity: (id(live.now), id(live.before), id(live.remainder)) for live in records
         },
@@ -37,8 +34,12 @@ def fingerprints(loop: DetectorLawSimulation) -> dict[str, dict[object, object]]
     stamps = fingerprints_of(loop, *loop.records.values(), *loop.held_component_records())
     stamps["a body's spin S"] = {b.number: (tuple(b.spin), tuple(b.spin_before)) for b in loop.blocks}
     stamps["a body's position"] = {b.number: (tuple(b.corner), id(b.mask)) for b in loop.blocks}
-    stamps["the count at a Node"] = {b.number: id(b.counts) for b in loop.blocks}
-    stamps["the count's remainder"] = {b.number: id(b.count_remainder) for b in loop.blocks}
+    stamps["the count at a Node"] = {b.number: id(b.counts) for b in loop.blocks} | {
+        ("record", live.identity): id(live.counts) for live in loop.records.values()
+    }
+    stamps["the count's remainder"] = {b.number: id(b.count_remainder) for b in loop.blocks} | {
+        ("record", live.identity): id(live.count_remainder) for live in loop.records.values()
+    }
     stamps["a body's remainders"] = {
         b.number: (id(b.hold_value), b.hold_value.version, id(b.hold_carry), b.hold_carry.version)
         for b in loop.blocks
@@ -74,21 +75,13 @@ def massive_record(
     """A record of the massive kind on the board: a block's own record at the body's kind (its rest pair) with its twist "own" (ALGEBRA.md #the-primitives); no train, no clock, no Ports."""
     return LiveRecord(
         identity,
-        number,
         family,
-        0,
         0,
         loop.tick,
         0,
-        1,
-        1,
-        0,
-        1,
         np.zeros(loop.shape, dtype=np.int64),
         np.zeros(loop.shape, dtype=np.int64),
         np.zeros(loop.shape, dtype=np.int64),
-        pointers=[0] * len(loop.detector_names),
-        first_rung=[None] * len(loop.detector_names),
         pair=(int(pair[0]), int(pair[1])),
         twist=twist,
     )
@@ -99,41 +92,24 @@ def planted_record(
     family: int,
     now: np.ndarray,
     before: np.ndarray,
-    norm: int = 0,
     pair: tuple[int, int] | None = None,
     part: int = 0,
     twist: int = 0,
 ) -> LiveRecord:
-    """A record of the family given to the rule directly, its two levels as given and its remainder 0 (the generator's checks of the given train, ALGEBRA.md #the-click, #a-familys-declaration, and the tests' device): registered in no ledger, advanced by `_advance` and read by `inward_flux` and `conserved_form` alone; `norm` its T where given, `part` its component and `twist` its own rotation (commit 4)."""
+    """A record of the family given to the rule directly, its two levels as given and its remainder 0 (the tests' device): registered in no ledger, advanced by `_advance` and read by `conserved_form` alone; `part` its component and `twist` its own rotation (commit 4)."""
     return LiveRecord(
-        0,
         0,
         family,
         0,
-        0,
         loop.tick,
         0,
-        1,
-        1,
-        0,
-        1,
         np.array(now, dtype=np.int64).reshape(loop.shape),
         np.array(before, dtype=np.int64).reshape(loop.shape),
         np.zeros(loop.shape, dtype=np.int64),
-        pointers=[0] * len(loop.detector_names),
-        first_rung=[None] * len(loop.detector_names),
-        norm=norm,
         pair=loop.families[family].pair if pair is None else (int(pair[0]), int(pair[1])),
         part=part,
         twist=twist,
     )
-
-
-def receiver_of(loop: DetectorLawSimulation, live: LiveRecord) -> int | None:
-    """The one detector of the record's ladder under the receiver by name (its emitting block's `receiver`); None for a record without one (a lamp's record, or a block's without the key: the ladder every detector, the line at the close)."""
-    if live.emitter is None:
-        return None
-    return loop.receiver_detector.get(live.emitter)
 
 
 def add_detector(
@@ -153,22 +129,8 @@ def add_detector(
     return len(loop.detector_names) - 1
 
 
-def ladder_of(loop: DetectorLawSimulation, live: LiveRecord) -> list[int]:
-    """The record's ladder in its declared order (ALGEBRA.md #rule3): the emitter's named sets (`receiver`, a list), or the block's one receiver, or every detector set as declared; the face receiver last on every ladder."""
-    if live.ladder is not None:
-        ladder = list(live.ladder)
-    else:
-        receiver = receiver_of(loop, live)
-        ladder = [receiver] if receiver is not None else list(loop.set_detectors)
-    if loop.face_detector is not None and loop.face_detector not in ladder:
-        ladder.append(loop.face_detector)
-    return ladder
-
-
 def release(loop: DetectorLawSimulation, live: LiveRecord) -> None:
-    """The record's rows leave the board: the emitters' lists and the rung counts of the record are dropped."""
+    """The record's rows leave the board: the emitters' lists drop the record."""
     for block in loop.blocks:
         if live.identity in block.emitted:
             block.emitted.remove(live.identity)
-    for key in [key for key in loop.rung_counts if key[0] == live.identity]:
-        del loop.rung_counts[key]

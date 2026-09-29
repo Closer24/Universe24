@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import cast
@@ -16,7 +15,7 @@ from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import derived, frame
 from event_universe.loader.frame import EngineStart
-from event_universe.loader.mode import Levels, moving_levels, period_by_the_rule, sine_of
+from event_universe.loader.mode import Levels, moving_levels, sine_of
 
 # the ray law's table rules, read by the loop's fixed values alone (DEAD, the paper writer's)
 TABLES = ("read", "measure", "rerelease", "pass", "become")
@@ -24,9 +23,8 @@ TABLES = ("read", "measure", "rerelease", "pass", "become")
 AGE_READS = "age"
 PRESENCE_WORD = "presence"
 READS = ("scalar", "outside", "here", "vector", "tensor", AGE_READS, PRESENCE_WORD)
-# the bounds of an amount, a norm and a momentum component, from the one width of the work register
+# the bounds of an amount and a momentum component, from the one width of the work register
 AMOUNT_BOUND = MAX_WORK_INT // 2
-NORM_BOUND = (MAX_WORK_INT + 1) ** 2 - 1
 MOMENTUM_BOUND = MAX_WORK_INT // 2
 Vector = tuple[int, int, int]
 
@@ -161,12 +159,8 @@ BLOCK_KEYS = {
     "ramp",
     "start",
     "margin",
-    # the emitter as a clicking body (ALGEBRA.md #the-click; LAB_TOOLS.md A.1):
-    # the excited records in turn on the body's Nodes, each clicking at its own rung, the given record written once by E^T at that interval
+    # the emitter (ALGEBRA.md #the-counts-line, the free record): the body gives at its click
     "emitter",
-    # detector-law-v1, the receiver by name (DECLARATIONS.md section 13 item
-    # 7): an emitting block names the detector set whose one detector is its record's ladder; admitted on an emitting block alone
-    "receiver",
     # the stock of the body's own family where its emitter gives it (ALGEBRA.md #the-primitives; commit 6)
     "stock",
 }
@@ -185,15 +179,11 @@ CLOSED_FACE = "closed"
 
 @dataclass(frozen=True)
 class FamilyDefinition:
-    """One family of the world as the universe file declares it: its name, its quantum (the content of one unit
-    per phase step of a giving), its charge sign, its lifetime L (None for ever) and its hand (the click's sign
-    check, None for none), its clock, its pair and what it is (`held`, `reads`, `parts`), read as attributes alone."""
+    """One family of the world as the universe file declares it: its name, its charge sign, its lifetime L (None for ever), its clock, its pair and what it is (`held`, `reads`, `parts`), read as attributes alone."""
 
     name: str
-    quantum: int
     charge: tuple[int, int] = NO_CHARGE
     lifetime: int | None = None
-    hand: int | None = None
     phase_per_age: tuple[int, int] | None = None
     # The record kind's pair [num, den] on the six-neighbour term of the local detector law's rule
     # (`massive-record-v1`, MASSIVE_RECORD.md section 1): light's kind is the value (1, 1) (every family without the key `pair`); a massive kind declares den > num, its rest
@@ -230,19 +220,16 @@ class FamilyDefinition:
     sourced: tuple[int, int, int] | None = None
     # the self-source's unit P_2 (ALGEBRA.md #a-familys-declaration, #the-interval): 0, off
     self_unit: int = 0
-    # THE CLICKS (ALGEBRA.md #a-familys-declaration, #the-interval): (gives, takes) for a family of records,
-    # None for a field family that is never given or taken
-    clicks: tuple[bool, bool] | None = None
     # THE PAIR ON THE BODY (ALGEBRA.md #the-primitives, #the-interval): the family declares no pair
     # of its own; every body and every given record of it declares its own
     # (`kind` on the body, `pair` on the emitter); `pair` then a placeholder
     pair_on_body: bool = False
 
     @property
-    def booked(self) -> bool:
-        """The detectors book the family's records at their Ports: exactly a
-        family with clicks (derived, item 53; ALGEBRA.md #the-interval)."""
-        return self.clicks is not None
+    def carries_quanta(self) -> bool:
+        """The family carries quanta (its records are given, counted and reported): every family but a
+        holder of the content, the real fields (derived, ALGEBRA.md #a-familys-declaration)."""
+        return self.held != "content"
 
     @property
     def components(self) -> int:
@@ -259,28 +246,16 @@ class FamilyDefinition:
 
 @dataclass(frozen=True)
 class EmitterDefinition:
-    """The giving of a clicking body (ALGEBRA.md #the-click, #the-primitives): the given family (its row's
-    `clock` [p, q] the given record's clock), the given record's pair, the period P_body by the one-Node
-    rule from the body's own mode's clock pair, the norm T (the generator's integer), the ladder by name,
-    the weight g of the window and the twist "own" the body's; none of them a key of the emitter but the
-    given family, the weight, the norm and its denominator, the receiver and (where the family has none) the pair."""
+    """The giving of a body at its click (ALGEBRA.md #the-counts-line, the free record; the model owner's word of
+    2026-09-29 on #1495, finding 10): the given family, the weight g of the one write, the given record's clock
+    from the mode's `wavelength` and, from the body, the component and the twist "own"; none of them a key of
+    the emitter but the given family and the weight."""
 
     family: int
-    branches: tuple[tuple[int, int], ...]
-    label_hands: tuple[int, int] | None
-    receiver: tuple[str, ...] | None
     # THE GIVEN CLOCK: the given record's clock [p, q], [2 N, lambda_q] of the mode's `wavelength`, or the row's for a mode file without one
     clock: tuple[int, int]
-    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives; commit 1): the given family's, or the emitter's own `pair` on a family whose pair is the body's
-    pair: tuple[int, int] = MASSLESS_PAIR
-    period: int | None = None
-    norm: int | None = None
-    given: None = None  # the ray law's given train, read by the loop as None (its cancelled branch)
-    # THE POINT EMITTER'S NORM DENOMINATOR (ALGEBRA.md; item 50): T the exact rational norm / norm_denominator in the form's units, the window's outward norm read against it; required on every emitter (commit 7)
-    norm_denominator: int | None = None
-    # THE POINT EMITTER'S WEIGHT g (ALGEBRA.md; item 50): the body's coupling to the given family, one integer, the body's Node's
-    # rotation copied at that weight into the given row at the body's Node every interval of the window; required on every emitter (commit 7)
-    weight: int | None = None
+    # THE WEIGHT g: the body's coupling to the given family, one integer, the body's rotation written once at that weight at its Nodes
+    weight: int
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md #the-second-level, #the-interval; commit 4): the
     # index in the given family's parts, 0 on a scalar family, 1 + the axis of the
     # body's moment on a vector family (the component along mu)
@@ -297,7 +272,7 @@ class BlockDefinition:
     with their `counts` in the law's form), its pair and its kind (its rest pair), the `seed` of its own
     record at interval 0 (an amplitude, or the amplitude of its mode's `profile` over the whole board with
     the mode's `clock`), its momentum's drive (`ramp`, `start`), its charge, spin and moment, its twist, its
-    margin kind, its receiver, its emitter, its stock and the keys the cards declare (`declared`)."""
+    margin kind, its emitter, its stock and the keys the cards declare (`declared`)."""
 
     side: int
     pair: tuple[int, int]
@@ -331,9 +306,7 @@ class BlockDefinition:
     twist: int = 0
     # a well's margin kind (required on a well, record 2089); None on a body that is no well
     margin: str | None = None
-    # the receiver by name: the detector set whose one detector is the ladder of every record this block emits; None where the world names none
-    receiver: str | None = None
-    # the emitter as a clicking body (ALGEBRA.md #the-click): None on a body that emits nothing by the click
+    # the emitter (ALGEBRA.md #the-counts-line, the free record): None on a body that gives nothing
     emitter: EmitterDefinition | None = None
     # THE STOCK OF THE BODY'S OWN FAMILY (ALGEBRA.md #the-primitives; commit 6): the count of
     # its own quanta set aside for giving where its emitter gives its own family, 0 elsewhere (another family's stock is the body's `held` quanta of it)
@@ -377,15 +350,13 @@ class MeasuredDefinition:
 
 @dataclass(frozen=True)
 class DetectorDefinition:
-    """A named set of measured events, its threshold and its reading
+    """A named set of Nodes told to report, its threshold and its reading
     (`beam` or `wave`): ONE DETECTOR, one cube of side DETECTOR_SIDE or
     more (record 1899), whose click is the detector's and never a Node's;
-    under the local detector law a set may instead be BOUND TO A BLOCK
-    (`block`, the measured event's number): its Nodes are the block's Nodes
-    at every interval (a stepping block's follow it) or a cube of free
-    Nodes beside it, its pointer the one-way flux into them; the click
-    stamps the block's own count. The rung's wheel is the record's own
-    (ALGEBRA.md #a-familys-declaration): a set declares none."""
+    a set may instead be BOUND TO A BLOCK (`block`, the measured event's
+    number): its Nodes are the block's Nodes at every interval (a stepping
+    block's follow it) or free Nodes beside it, and a quantum reported there
+    is handed to the block (ALGEBRA.md #the-counts-line, the free record)."""
 
     name: str
     positions: tuple[Address3, ...]
@@ -413,7 +384,7 @@ class NatureBeamWorld:
     detectors: tuple[DetectorDefinition, ...]
     readings: tuple[Reading, ...]
     step: Step
-    # the face receiver's depth at every open border (ALGEBRA.md #the-ladder),
+    # the face's depth at every open border (ALGEBRA.md #the-counts-line, the free record),
     # declared in the file under the detector law (no default, BUILD.md
     # section 26 item 28); 0 on a GameBoard with no open face (no slab)
     face_depth: int = 0
@@ -659,10 +630,10 @@ def _held_bodies_checks(
     emitter givings into it; its level is written by the engine alone, the
     declared source at every body's Nodes."""
     for index, family in enumerate(families):
-        if family.held is None or family.clicks is not None:
-            # a family that is held and has clicks (the charge with light as its
-            # wave, ALGEBRA.md #the-primitives) has bodies of light's kind, a stock
-            # and givings; its held part is the engine's write as any held family's
+        if family.carries_quanta:
+            # a family that carries quanta, held or not (the charge with light as its
+            # wave, ALGEBRA.md #the-primitives), has bodies, a stock and givings; its
+            # held part is the engine's write as any held family's
             continue
         name = family.name
         for number, entry in enumerate(measured):
@@ -734,7 +705,7 @@ def _node_clock_bound(
 def _families_of(
     entries: tuple[dict[str, object], ...], amplitude_bound: int | None, most: int | None, gamma: int
 ) -> tuple[FamilyDefinition, ...]:
-    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the quantum on every row and the clicks card's copy equal to it, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step only on the family that holds the spin's dipole (optional there: the spin's step's line refuses a spinning body's read of a holder without it, by name), the self-source's unit 0 or at least 24 A, a family held, clicking or sourced, a read naming a held family once, and a held family's shape."""
+    """The loop's families from the frame's checked entries (the cards' keys, the frame's name and clock), with the rules between keys the cards do not state: at most twenty families, no name twice, the three forms of parts, the pair with its bound and den >= num, the clock's pair [p, q] with q from 1, the held source's factors one per part, its dipole on a vector family with its divisor, spins_step only on the family that holds the spin's dipole (optional there: the spin's step's line refuses a spinning body's read of a holder without it, by name), the self-source's unit 0 or at least 24 A, a read naming a held family once, and a held family's shape."""
     if most is not None and len(entries) > most:
         raise ValueError(
             f"families declares {len(entries)}; at most {most} families on a "
@@ -834,33 +805,7 @@ def _families_of(
                 f"{label}.self_source.unit {self_unit} is below 24 A = {24 * amplitude_bound}: the "
                 "self-source's unit P_2 is 0 (off) or at least 24 A (ALGEBRA.md #the-interval)"
             )
-        clicks: tuple[bool, bool] | None = None
-        # THE FAMILY'S QUANTUM (the law's owner's row of 2026-09-27; the Boss's word of
-        # 09:27Z): one integer from 1 on every row, required; the clicks card's copy agrees
-        quantum = cast(int, obj["quantum"])
         lifetime = None if "lifetime" not in obj else cast(int, obj["lifetime"])
-        hand = None if "hand" not in obj else cast(int, obj["hand"])
-        if quantum > MAX_VALUE:
-            raise ValueError(f"{label}.quantum must be an integer up to {MAX_VALUE}")
-        if "clicks" in obj:
-            value = cast(dict[str, object], obj["clicks"])
-            if value["gives"] is not True or value["takes"] is not True:
-                raise ValueError(
-                    f"{label}.clicks.gives and .takes must be true: a family of records is "
-                    "given and taken at clicks (ALGEBRA.md #a-familys-declaration)"
-                )
-            clicks = (True, True)
-            if cast(int, value["quantum"]) != quantum:
-                raise ValueError(
-                    f"{label}.clicks.quantum {value['quantum']} differs from the row's quantum "
-                    f"{quantum}: one quantum per family (the law's owner's row, 2026-09-27)"
-                )
-        elif held is None and sourced is None:
-            raise ValueError(
-                f"{label} declares neither held (a field family), clicks (a family of records) "
-                "nor sourced (a field written from a record family's count): a family does one "
-                "or more (ALGEBRA.md #the-primitives row 'the source')"
-            )
         raw_reads = cast(tuple[object, ...], obj["reads"])
         reads: list[tuple[int, int, str, int | str]] = []
         for entry in raw_reads:
@@ -871,7 +816,7 @@ def _families_of(
             weight = cast(int, read["weight"])
             twist = cast(int | str, read["twist"])
             reads.append((names.index(other), weight, READ_BY[read["by"]], twist))
-        if held is not None and reads and clicks is None:
+        if held == "content" and reads:
             raise ValueError(
                 f"{label} is held and reads {[names[i] for i, _, _, _ in reads]}: a field "
                 "family with no waves steps by the plain rule at the pace 1 of its own and reads no "
@@ -880,11 +825,9 @@ def _families_of(
         found.append(
             FamilyDefinition(
                 names[index],
-                quantum,
                 (sign, 1),
                 phase_per_age=clock,
                 lifetime=lifetime,
-                hand=hand,
                 pair=pair,
                 held=held,
                 reads=tuple(reads),
@@ -897,7 +840,6 @@ def _families_of(
                 spin_weights=spin_weights,
                 sourced=sourced,
                 self_unit=self_unit,
-                clicks=clicks,
                 pair_on_body=pair_on_body,
             )
         )
@@ -913,20 +855,14 @@ READ_BY: dict[object, str] = {1: "plain", "q": "sign"}
 def _held_family_shapes(families: tuple[FamilyDefinition, ...]) -> None:
     """A held family's shape by attribute (ALGEBRA.md #a-familys-declaration; item 51):
     its field steps at the pair its row declares, [1, 1] or any other (no
-    shortcut: the model owner, 2026-09-27), the quantum 1 (one click writes
-    one unit), a clock only where it gives (the given record's), its own charge 0 (its
+    shortcut: the model owner, 2026-09-27), a clock only where it gives (the given record's), its own charge 0 (its
     level is the source it holds, it carries none); a read names a held family, and
     several families may hold one source, each at its own pair and divisor (the
     short-range well beside gravity: the owner's word of 2026-09-28)."""
     for index, family in enumerate(families):
         label = f"families[{index}] ({family.name!r})"
         if family.held is not None:
-            if family.quantum != 1:
-                raise ValueError(
-                    f"{label} is held with the quantum {family.quantum}: a held family "
-                    "is counted in quanta, one click one unit (`quantum` 1; ALGEBRA.md #the-counts-line)"
-                )
-            if family.phase_per_age is not None and family.clicks is None:
+            if family.phase_per_age is not None and not family.carries_quanta:
                 raise ValueError(
                     f"{label} is held, gives nothing and declares a clock: the clock [p, q] is the given "
                     "record's, lambda_q = 2 N q / p (ALGEBRA.md #the-primitives the recoil's row)"
@@ -950,27 +886,6 @@ def _window(value: object, label: str, phase_steps: int) -> int:
     return _integer(value, label, 0, phase_steps - 1)
 
 
-def _receiver_names(obj: dict[str, object], label: str) -> tuple[str, ...] | None:
-    """The lamp's `receiver`, its records' ladder by name: a set's name or a
-    list of distinct names; None without the key."""
-    if "receiver" not in obj:
-        return None
-    value = obj["receiver"]
-    names = [value] if isinstance(value, str) else list(value) if isinstance(value, tuple) else value
-    if (
-        not isinstance(names, list)
-        or not names
-        or any(not isinstance(name, str) or not name for name in names)
-    ):
-        raise ValueError(
-            f"{label}.receiver must be a detector set's name or a nonempty list of "
-            "names (the lamp record's ladder, SIZING.md)"
-        )
-    if len(set(names)) != len(names):
-        raise ValueError(f"{label}.receiver names a set twice")
-    return tuple(names)
-
-
 def _block(
     obj: dict[str, object],
     label: str,
@@ -988,12 +903,10 @@ def _block(
     phase_steps: int,
     most_steps: int | None,
     periodic: tuple[bool, bool, bool] = (True, True, True),
-    least_residues: int | None = None,
 ) -> BlockDefinition | None:
     """The block's keys on a measured event, each named in its refusal: `side` or `extents` makes a block and
     every other block key without them is refused; its `pair` a well on the massive kind or a gap on light's;
-    a giving body's pair rich (at least the universe's `least_residues` remainder values at its Node, ALGEBRA.md
-    #a-familys-declaration); the momentum bounded by the pace, 3 (P . P) < (3 Q M)^2 (ALGEBRA.md #the-primitives)."""
+    the momentum bounded by the pace, 3 (P . P) < (3 Q M)^2 (ALGEBRA.md #the-primitives)."""
     declared = [key for key in BLOCK_KEYS if key in obj]
     if "side" not in obj and "extents" not in obj:
         if declared:
@@ -1198,44 +1111,26 @@ def _block(
             f"= {wall * wall} fails (the body's velocity v = P / (3 Q M) below c, ALGEBRA.md "
             "ALGEBRA.md #the-primitives; DESIGN.md 5.1 (a))"
         )
-    receiver: str | None = None
-    if "receiver" in obj:
-        if "emitter" not in obj:
-            raise ValueError(
-                f"{label}.receiver is refused on a block that emits nothing (the "
-                "receiver by name is the ladder of the block's emitted records, DECLARATIONS.md "
-                "section 13 item 7)"
-            )
-        value = obj["receiver"]
-        if not isinstance(value, str) or not value:
-            raise ValueError(
-                f"{label}.receiver must be the name of a declared detector set (a nonempty string)"
-            )
-        receiver = value
     emitter: EmitterDefinition | None = None
     stock = 0
     if "emitter" in obj:
-        # the emitter as a clicking body (ALGEBRA.md #the-click): a body of a
-        # massive kind with its seed (the excited record) and its stock
+        # the emitter (ALGEBRA.md #the-counts-line, the free record): a body of a
+        # massive kind with its seed (its bound record, whose click is the giving's) and its stock
         if not family.massive_kind:
             raise ValueError(
                 f"{label}.emitter is refused on a body of light's kind: the emitter "
-                "is a body of a massive kind whose excited record (its seed, the bound mode) "
-                "clicks at its own rung (ALGEBRA.md #the-click)"
+                "is a body of a massive kind whose bound record (its seed) clicks (ALGEBRA.md #the-click)"
             )
         if seed <= 0:
             raise ValueError(
-                f"{label}.emitter needs the body's `seed` (its excited record is the "
-                "seed at both levels; a silent body excites nothing)"
+                f"{label}.emitter needs the body's `seed` (its bound record, whose rotation "
+                "the giving writes; a silent body gives nothing)"
             )
         if amount < 1:
             raise ValueError(
                 f"{label}.emitter needs `amount` from 1, the body's own quanta (its "
                 "stock is the given family's content under `held`, ALGEBRA.md #the-paces)"
             )
-        # THE RESIDUES OF AN EMITTING BODY spread from the remainder kept at
-        # its Nodes (the model owner's decisions (1) and (2) of record 1962;
-        # ALGEBRA.md #the-line (A) and (B)): the coupling of ALGEBRA.md #rule3 is HISTORY
         emitter = _emitter(
             obj["emitter"],
             f"{label}.emitter",
@@ -1245,11 +1140,7 @@ def _block(
             shape,
             phase_steps,
             most_steps,
-            extents=extents,
-            periodic=periodic,
-            momentum=momentum,
             moment=moment,
-            clock_pair=clock,
             twist=_integer(obj["twist"], f"{label}.twist", 0),
         )
         # THE STOCK IS GIVEN-FAMILY CONTENT (ALGEBRA.md #the-paces; BUILD.md
@@ -1281,21 +1172,6 @@ def _block(
                 "needs W givings holds W; ALGEBRA.md #the-paces: a giving lowers the given family's "
                 "content, the body's own quanta `amount` and its charge stay)"
             )
-        # THE RICHNESS OF THE GIVING NODE (ALGEBRA.md #a-familys-declaration): 3 den / gcd(num, 3 den) residues
-        residues = 3 * pair[1] // math.gcd(pair[0], 3 * pair[1])
-        if least_residues is not None and residues < least_residues:
-            raise ValueError(
-                f"{label}.emitter: the body's pair [{pair[0]}, {pair[1]}] gives "
-                f"{residues} remainder values at the giving Node (3 den / gcd(num, 3 den)), below "
-                f"the universe's least_residues {least_residues}: the residue from the law needs a rich pair "
-                "(ALGEBRA.md #a-familys-declaration; [801, 700] on the kind [7, 8] gives 700)"
-            )
-        if receiver is not None and emitter.receiver is not None:
-            raise ValueError(
-                f"{label}: one ladder for the given records: the block's `receiver` "
-                "(one name, the line at the rung) or the emitter's `receiver` (a list, the "
-                "ladder by name), not both"
-            )
     return BlockDefinition(
         side,
         pair,
@@ -1317,7 +1193,6 @@ def _block(
         # rotation, or its kind's rest rotation on a body without a mode), no default
         twist=_integer(obj["twist"], f"{label}.twist", 0),
         margin=margin,
-        receiver=receiver,
         emitter=emitter,
         stock=stock,
     )
@@ -1344,51 +1219,29 @@ def _emitter(
     shape: Address3,
     phase_steps: int,
     most_steps: int | None,
-    extents: tuple[int, int, int] = (1, 1, 1),
-    periodic: tuple[bool, bool, bool] = (True, True, True),
-    momentum: tuple[int, ...] = (0, 0, 0),
     moment: tuple[int, int, int] = (0, 0, 0),
-    clock_pair: tuple[int, int] | None = None,
     twist: int = 0,
     wavelength: int | None = None,
     wave_number: int | None = None,
 ) -> EmitterDefinition:
-    """The `emitter` object of a clicking body (ALGEBRA.md #the-click to (6), #a-familys-declaration): the given family (a paid family), the given record's clock [2 N, lambda_q] with lambda_q the mode's reading `wavelength` (the giver's rotation on the given band; the recoil's row) or, for a giver whose mode file carries none, the row's `clock` [p, q]; the given labels, the ladder by name, the norm (the generator's integer), the period P_body by the one-Node rule from the mode's clock pair, the twist "own" the body's; no wheel, residue order, seed, period, clock or twist of its own: each is the law's, the keys refused by name."""
+    """The `emitter` object of a giving body (ALGEBRA.md #the-counts-line, the free record; the model owner's word of 2026-09-29 on #1495, finding 10): the given family (a family that carries quanta and declares its pair) and the weight g; the given record's clock [2 N, lambda_q] with lambda_q the mode's reading `wavelength` (the giver's rotation on the given band; the recoil's row) or, for a giver whose mode file carries none, the row's `clock` [p, q]; the component along the body's moment and the twist "own" the body's; no other key."""
     obj = cast(dict[str, object], value)  # the frame's checked emitter (loader/frame.py, `EMITTER`)
     name = obj["family"]
     if not isinstance(name, str) or name not in names:
         raise ValueError(f"{label}.family names an unknown family")
     given_family = families[names[name]]
-    # THE GIVEN RECORD'S PAIR (ALGEBRA.md #the-primitives, #the-interval): the emitter's `pair` [num, den], required when the
-    # given family's pair is the body's (a body giving its own family, its stock its own quanta) and refused when the family declares one
-    given_pair: tuple[int, int]
     if given_family.pair_on_body:
-        if "pair" not in obj:
-            raise ValueError(
-                f"{label}.pair is required: the given family {name!r} declares no pair, "
-                "so the emitter declares the given record's pair [num, den] (ALGEBRA.md #the-primitives, "
-                "ALGEBRA.md #the-interval)"
-            )
-        given_pair = _ratio(obj["pair"], f"{label}.pair", zero=False)
-        if given_pair[1] <= given_pair[0]:
-            raise ValueError(
-                f"{label}.pair [{given_pair[0]}, {given_pair[1]}] is no massive kind: den "
-                "> num (ALGEBRA.md #a-familys-declaration)"
-            )
-    elif "pair" in obj:
         raise ValueError(
-            f"{label}.pair is refused: the given family {name!r} declares its pair "
-            f"{list(given_family.pair)}; one copy (ALGEBRA.md #the-primitives)"
+            f"{label}.family {name!r} declares no pair of its own: a given record steps at its family's "
+            "pair (ALGEBRA.md #the-primitives)"
         )
-    else:
-        given_pair = given_family.pair
-    if given_family.held is not None and given_family.clicks is None:
+    if not given_family.carries_quanta:
         raise ValueError(
-            f"{label} givings into the held family {name!r}: it takes and gives "
+            f"{label} gives into the held family {name!r}: it takes and gives "
             "nothing (ALGEBRA.md #the-counts-line)"
         )
     # THE GIVEN CLOCK: [2 N, lambda_q] from the mode's `wavelength` (the giver's rotation on the given band, no key: ALGEBRA.md
-    # #the-primitives, the crystal's and the recoil's rows); the family's row's `clock` [p, q] where the mode file carries none
+    # #the-primitives, the recoil's row); the family's row's `clock` [p, q] where the mode file carries none
     if wavelength is not None:
         clock = (2 * phase_steps, wavelength)
     elif given_family.phase_per_age is None:
@@ -1405,19 +1258,7 @@ def _emitter(
             f"odd and the write's circle of 2 N = {2 * phase_steps} steps exceeds the universe's "
             f"most_steps {most_steps} (ALGEBRA.md #the-click); declare an even step or a smaller N"
         )
-    branches: tuple[tuple[int, int], ...] = ((0, 1),)
-    label_hands: tuple[int, int] | None = None
-    receiver = _receiver_names(obj, label)
-    # THE PERIOD FROM THE BODY'S OWN MODE (the recoil's row: P_body by the one-Node rule from its clock pair, never declared; none off the mode)
-    period = None if clock_pair is None else period_by_the_rule(clock_pair[0], clock_pair[1])
-    # THE POINT EMITTER'S WEIGHT (ALGEBRA.md; item 50): an integer from 1; `point_emitter` pairs it with no train
-    weight = None if "weight" not in obj else _integer(obj["weight"], f"{label}.weight", 1)
-    norm_denominator = (
-        None
-        if "norm_denominator" not in obj
-        else _integer(obj["norm_denominator"], f"{label}.norm_denominator", 1)
-    )
-    norm = None if "norm" not in obj else _integer(obj["norm"], f"{label}.norm", 1, NORM_BOUND)
+    weight = _integer(obj["weight"], f"{label}.weight", 1)
     # THE GIVEN RECORD'S COMPONENT (ALGEBRA.md #the-second-level): on a vector family the
     # component along the body's moment mu, one axis; a scalar family's one component
     part = 0
@@ -1433,15 +1274,8 @@ def _emitter(
         part = 1 + axes[0]
     return EmitterDefinition(
         names[name],
-        branches,
-        label_hands,
-        receiver,
         clock,
-        given_pair,
-        period,
-        norm,
-        weight=weight,
-        norm_denominator=norm_denominator,
+        weight,
         part=part,
         twist=twist,  # the given record's twist "own" is its giver's (ALGEBRA.md #the-primitives; the files' emitters agree)
         wave_number=wave_number,
@@ -1459,7 +1293,6 @@ def _measured(
     action: int | None,
     amplitude_bound: int = AMPLITUDE_BOUND,
     momentum_unit: int = 0,
-    least_residues: int | None = None,
     mode_bodies: tuple[dict[str, object] | None, ...] = (),
 ) -> tuple[MeasuredDefinition, ...]:
     bodies = cast(
@@ -1551,7 +1384,6 @@ def _measured(
             phase_steps,
             most_steps,
             periodic,
-            least_residues,
         )
         found.append(
             MeasuredDefinition(
@@ -1684,11 +1516,7 @@ def _counted(
             shape,
             bounds[1],
             bounds[2],
-            extents=(extents[0], extents[1], extents[2]),
-            periodic=periodic,
-            momentum=momentum,
             moment=moment,
-            clock_pair=clock,
             twist=twist,
             wavelength=wavelength,
             wave_number=wave_number,
@@ -1989,10 +1817,8 @@ def _connected_pieces(
 
 
 # THE DETECTOR CUBE (the model owner's word of 2026-09-25, record 1899;
-# ALGEBRA.md #the-ladder): a detector is one region, a cube of side 3 or more; its
-# sensitivity is its whole cube, read by the flux into it through its Ports
-# from outside; the click is the detector's, reported by its name and never
-# by a Node. The cube is cut by the GameBoard on an axis whose extent is
+# ALGEBRA.md #the-counts-line): a detector is one region, a cube of side 3 or more; a
+# quantum standing on any Node of it is reported by the detector's name. The cube is cut by the GameBoard on an axis whose extent is
 # below the side (a chain's or a layer's thin axis), as a block's cube is.
 DETECTOR_SIDE = 3
 
@@ -2026,7 +1852,7 @@ def _detector_region(
     periodic: tuple[bool, bool, bool],
     one_node: bool = False,
 ) -> None:
-    """The three refusals on a detector's Nodes: disconnected pieces (ALGEBRA.md #the-ladder), no box, a side below DETECTOR_SIDE where the GameBoard's extent
+    """The three refusals on a detector's Nodes: disconnected pieces (ALGEBRA.md #the-counts-line), no box, a side below DETECTOR_SIDE where the GameBoard's extent
     allows it (record 1899). THE ONE-NODE DETECTOR (ALGEBRA.md #what-a-body-is;
     the model owner's word of 2026-09-25 in Nature24's session, "start";
     BUILD.md section 26 item 40; SINCE COMMIT 7 on every world, ALGEBRA.md #the-rows-against-nature, record 2109: several bodies on one Node each are several detectors):
@@ -2040,7 +1866,7 @@ def _detector_region(
         raise ValueError(
             f"the receiver {name!r} lies on {pieces} disconnected pieces; a detector "
             "is one connected region, and separate places are separate names (ALGEBRA.md "
-            "ALGEBRA.md #the-ladder)"
+            "ALGEBRA.md #the-counts-line)"
         )
     sides = _box_sides(positions, shape, periodic)
     if sides is None:
@@ -2130,7 +1956,7 @@ def _detectors(
                 raise ValueError(f"a Node in two detectors {list(position)}")
             taken.add(position)
             positions.append(position)
-        # THE SET'S NODES (ALGEBRA.md #the-ladder): with `block`, free Nodes beside the block (the
+        # THE SET'S NODES (ALGEBRA.md #the-counts-line): with `block`, free Nodes beside the block (the
         # receiving cube, DECLARATIONS.md section 10 item 9; record 1899) or the block's own Nodes;
         # without it, a body's centre (a body named by its centre) or the Nodes of one body in the
         # law's form, whose set it then is (the strip of a screen)
@@ -2162,7 +1988,7 @@ def _detectors(
             if _connected_pieces(positions, shape, periodic) > 1:
                 raise ValueError(f"the receiver {name!r} lies on disconnected Nodes of its body")
         else:
-            # THE DETECTOR IS ONE CONNECTED REGION, A CUBE (ALGEBRA.md #the-ladder; record 1899): its
+            # THE DETECTOR IS ONE CONNECTED REGION, A CUBE (ALGEBRA.md #the-counts-line; record 1899): its
             # Nodes connected by Links (across a periodic seam too), one box, its sides DETECTOR_SIDE
             # or more where the GameBoard's extent allows; separate places are separate names
             _detector_region(name, positions, shape, periodic, one_node=True)
@@ -2269,12 +2095,9 @@ def parse_world_document(
         raise ValueError(
             f"N {phase_steps} must be a power of two from 2 (through the universe's most_steps)"
         )
-    # THE FACE SLAB (ALGEBRA.md #the-ladder, the mathematician's reading: a face
-    # one Node deep books 0.15 of a packet and reflects the rest, the slab as
-    # deep as the packet books 0.96): the receiver `face` at every open
-    # border is the slab of this depth, one detector, last on every ladder;
-    # REQUIRED on a GameBoard with an open face under the detector law and
-    # refused without that law (the slab is its receiver), NO DEFAULT (the
+    # THE FACE SLAB (ALGEBRA.md #the-counts-line, the free record): the detector `face` at every open
+    # border is the slab of this depth, one detector, a quantum reaching it reported there;
+    # REQUIRED on a GameBoard with an open face, NO DEFAULT (the
     # model owner's rule through the Boss, 2026-09-25; BUILD.md section 26
     # item 28); 0 on a GameBoard with no open face (no slab)
     open_axes = [name for axis, name in enumerate(AXES) if not periodic[axis] and not closed[axis]]
@@ -2282,7 +2105,7 @@ def parse_world_document(
         raise ValueError(
             f"face_depth is required on a GameBoard open on {', '.join(open_axes)} "
             "under `detector_law`: the depth of the receiver slab at every open border, no "
-            "default (ALGEBRA.md #the-ladder; BUILD.md section 26 item 28)"
+            "default (ALGEBRA.md #the-counts-line; BUILD.md section 26 item 28)"
         )
     face_depth = _integer(obj["face_depth"], "face_depth", 1) if "face_depth" in obj else 0
     for axis, name in enumerate(AXES):
@@ -2316,7 +2139,7 @@ def parse_world_document(
     momentum_unit = _integer(obj["momentum_unit"], "momentum_unit", 1, AMOUNT_BOUND)
     # THE QUANTUM'S ACTION T (ALGEBRA.md #a-familys-declaration; the owner's word of 2026-09-28): one T for
     # every family, the universe's integer `quantum_action`, read where the files declare it and 0 where they
-    # do not; the giving's pull request, which retires the emitter's norm, requires it where a body gives
+    # do not; a body that carries a record, and a record a body gives, needs it (the count's wall 3 den T)
     quantum_action = (
         _integer(obj["quantum_action"], "quantum_action", 1) if "quantum_action" in obj else 0
     )
@@ -2343,9 +2166,6 @@ def parse_world_document(
     most_families = (
         _integer(obj["most_families"], "most_families", 1) if "most_families" in obj else None
     )
-    least_residues = (
-        _integer(obj["least_residues"], "least_residues", 1) if "least_residues" in obj else None
-    )
     families = _families_of(entries, amplitude_bound, most_families, node_clock)
     bound = amplitude_bound
     # THE BODIES AND THE DETECTORS through the frame (loader/frame.py, `BODY`, `DETECTOR`):
@@ -2362,30 +2182,10 @@ def parse_world_document(
         action,
         bound,
         momentum_unit,
-        least_residues,
         _mode_bodies(files, digest, len(bodies)),
     )
     _held_bodies_checks(families, measured)
     _node_clock_bound(families, measured, node_clock)
-    # THE WINDOW IS THE ONE GIVING (ALGEBRA.md #the-primitives; record 2082 (4);
-    # commit 7): every emitter declares its weight g and its rung's action; the world
-    # key `point_emitter` and the train are retired (RETIRED_KEYS)
-    for number, entry in enumerate(measured):
-        block = entry.block
-        if block is None or block.emitter is None:
-            continue
-        if block.emitter.weight is None:
-            raise ValueError(
-                f"measured[{number}].emitter declares no `weight`: the body's rotation is "
-                "copied into the given row at its Node at a declared weight g, one integer from 1 "
-                "(ALGEBRA.md #the-primitives; commit 7)"
-            )
-        if block.emitter.norm is not None and block.emitter.norm_denominator is None:
-            raise ValueError(
-                f"measured[{number}].emitter declares no `norm_denominator`: the window "
-                "closes when the outward norm reaches the excitation's action norm / "
-                "norm_denominator, the generator's exact rational (ALGEBRA.md)"
-            )
     _input_stamp_check(as_written, measured, digest)
     _initial_state_checks(shape, periodic, families, measured)
     detectors = _detectors(frame.detectors(obj["detectors"]), shape, periodic, measured)
@@ -2414,28 +2214,6 @@ def parse_world_document(
         start=start,
         universe_file=families_file,
     )
-    set_names = {detector.name for detector in detectors}
-    for number, entry in enumerate(measured):
-        # the emitter body's ladder by name (ALGEBRA.md #the-click): every name a
-        # declared set's
-        if entry.block is not None and entry.block.emitter is not None:
-            for name in entry.block.emitter.receiver or ():
-                if name not in set_names:
-                    raise ValueError(
-                        f"measured[{number}].emitter.receiver names {name!r}, which no "
-                        "detector set declares (the record's ladder is made of declared sets; "
-                        "a face is never on it)"
-                    )
-        # the receiver by name (DECLARATIONS.md section 13 item 7): the
-        # set named must be declared; the names are listed in the refusal
-        if entry.block is not None and entry.block.receiver is not None:
-            names_declared = [detector.name for detector in detectors]
-            if entry.block.receiver not in names_declared:
-                raise ValueError(
-                    f"measured[{number}].receiver {entry.block.receiver!r} names no "
-                    f"declared detector set (the sets declared: {names_declared}); the receiver "
-                    "by name is a set's name (DECLARATIONS.md section 13 item 7)"
-                )
     _body_fit_check(world)
     # The push's denominator per column, Lambda_c^2 (`measured.counts_table`),
     # tested where Lambda_c is formed (`column_scales`): a world whose column

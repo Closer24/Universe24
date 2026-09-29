@@ -108,9 +108,7 @@
    ],
    "emitter": {
     "family": "charge",
-    "weight": 3,
-    "norm": 180255439696889394,
-    "norm_denominator": 3948169
+    "weight": 3
    },
    "stocks": {
     "charge": 640
