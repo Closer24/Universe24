@@ -1,0 +1,23 @@
+the standing pair's ratio before/now at the peak 0.94472 (omega_b 0.3341); ratios across the body [0.8065, 0.8182, 0.8886, 0.9084]...[0.9447, 0.9522]
+=== AT REST
+t=   1 ledger-ledger0   0 quanta  556 in the set  554 beyond    2 min   0 | SUM E/2   326869640000 | momentum [0, 0, 0] | centroid   120.00 | clicks out    0 in    0 | set shifts   0
+t=  50 ledger-ledger0   0 quanta  555 in the set  533 beyond   22 min   0 | SUM E/2   319299688000 | momentum [-49148, 0, 0] | centroid   120.00 | clicks out   24 in    4 | set shifts   0
+t= 100 ledger-ledger0   0 quanta  550 in the set  531 beyond   19 min   0 | SUM E/2   312342262000 | momentum [108656, 0, 0] | centroid   119.98 | clicks out   45 in   28 | set shifts   0
+t= 150 ledger-ledger0   0 quanta  549 in the set  547 beyond    2 min   0 | SUM E/2   345884660000 | momentum [107508, 0, 0] | centroid   120.00 | clicks out   48 in   48 | set shifts   0
+t= 200 ledger-ledger0   0 quanta  549 in the set  539 beyond   10 min   0 | SUM E/2   330937746000 | momentum [-140250, 0, 0] | centroid   120.01 | clicks out   56 in   48 | set shifts   0
+t= 250 ledger-ledger0   0 quanta  548 in the set  528 beyond   20 min   0 | SUM E/2   309430324000 | momentum [-359062, 0, 0] | centroid   120.01 | clicks out   66 in   48 | set shifts   0
+t= 300 ledger-ledger0   0 quanta  550 in the set  544 beyond    6 min   0 | SUM E/2   332867058000 | momentum [284203, 0, 0] | centroid   120.01 | clicks out   66 in   62 | set shifts   0
+t= 350 ledger-ledger0   0 quanta  545 in the set  543 beyond    2 min   0 | SUM E/2   344427202000 | momentum [-195328, 0, 0] | centroid   120.00 | clicks out   66 in   66 | set shifts   0
+t= 400 ledger-ledger0   0 quanta  548 in the set  530 beyond   18 min   0 | SUM E/2   313434998000 | momentum [121711, 0, 0] | centroid   120.01 | clicks out   82 in   66 | set shifts   0
+=== MOVING, k = 2 pi 6 / 240
+the gate: declared 599, laid 524; the moving levels scaled by 1.0692 (attempt 1)
+t=   1 ledger-ledger0   0 quanta  601 in the set  600 beyond    1 min   0 | SUM E/2   355364780000 | momentum [39461906, 0, 0] | centroid   119.93 | clicks out    0 in    0 | set shifts   0
+t=  50 ledger-ledger0   0 quanta  601 in the set  591 beyond   10 min   0 | SUM E/2   333143326000 | momentum [37730813, 0, 0] | centroid   120.84 | clicks out   12 in    3 | set shifts   0
+t= 100 ledger-ledger0   0 quanta  600 in the set  591 beyond    9 min   0 | SUM E/2   385299632000 | momentum [39139383, 0, 0] | centroid   121.79 | clicks out   16 in    8 | set shifts   0
+t= 150 ledger-ledger0   0 quanta  602 in the set  589 beyond   13 min -24 | SUM E/2   321763962000 | momentum [35986617, 0, 0] | centroid   122.70 | clicks out   23 in   11 | set shifts   0
+t= 200 ledger-ledger0   0 quanta  600 in the set  552 beyond   48 min -33 | SUM E/2   379314294000 | momentum [40305727, 0, 0] | centroid   123.62 | clicks out   58 in   11 | set shifts   0
+t= 250 ledger-ledger0   0 quanta  601 in the set  536 beyond   65 min -61 | SUM E/2   332713728000 | momentum [36839953, 0, 0] | centroid   124.55 | clicks out   76 in   12 | set shifts   0
+t= 300 ledger-ledger0   0 quanta  599 in the set  465 beyond  134 min -69 | SUM E/2   355320616000 | momentum [37260188, 0, 0] | centroid   125.43 | clicks out  145 in   12 | set shifts   0
+t= 350 ledger-ledger0   0 quanta  602 in the set  338 beyond  264 min -71 | SUM E/2   358653380000 | momentum [39184266, 0, 0] | centroid   126.37 | clicks out  275 in   12 | set shifts   0
+t= 400 ledger-ledger0   0 quanta  601 in the set  203 beyond  398 min -77 | SUM E/2   325328022000 | momentum [35706047, 0, 0] | centroid   127.27 | clicks out  409 in   12 | set shifts   0
+EXIT 0

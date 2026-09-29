@@ -1,0 +1,13 @@
+the set 11 Nodes: interior 9, shell 2
+the count's wall T (derived by the engine from the record's form per quantum) 32768 (the universe's T)
+t=    1 total    556 beyond    2 holes   0 | quanta moved so far: interior      0 shell      0 beyond      0 | Nodes touched: interior 0 shell 0 beyond 0 | peak 1318
+t=    2 total    554 beyond    2 holes   0 | quanta moved so far: interior      2 shell      0 beyond      0 | Nodes touched: interior 2 shell 0 beyond 0 | peak 990
+t=   50 total    555 beyond   22 holes   0 | quanta moved so far: interior    325 shell     24 beyond     28 | Nodes touched: interior 9 shell 2 beyond 8 | peak 2009
+t=  100 total    550 beyond   19 holes   0 | quanta moved so far: interior    493 shell     44 beyond     87 | Nodes touched: interior 9 shell 2 beyond 14 | peak 191
+t=  150 total    549 beyond    2 holes   0 | quanta moved so far: interior    601 shell     56 beyond    110 | Nodes touched: interior 9 shell 2 beyond 14 | peak 2207
+t=  200 total    549 beyond   10 holes   0 | quanta moved so far: interior    681 shell     62 beyond    118 | Nodes touched: interior 9 shell 2 beyond 14 | peak 2540
+t=  250 total    548 beyond   20 holes   0 | quanta moved so far: interior    754 shell     70 beyond    130 | Nodes touched: interior 9 shell 2 beyond 14 | peak 914
+t=  300 total    550 beyond    6 holes   0 | quanta moved so far: interior    846 shell     80 beyond    144 | Nodes touched: interior 9 shell 2 beyond 14 | peak 1413
+t=  350 total    545 beyond    2 holes   0 | quanta moved so far: interior    915 shell     86 beyond    148 | Nodes touched: interior 9 shell 2 beyond 14 | peak 2742
+t=  400 total    548 beyond   18 holes   0 | quanta moved so far: interior   1022 shell     98 beyond    164 | Nodes touched: interior 9 shell 2 beyond 14 | peak 1682
+DONE

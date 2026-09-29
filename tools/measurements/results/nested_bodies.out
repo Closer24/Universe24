@@ -1,0 +1,4 @@
+the outer body laid alone: x 115..125, 599 quanta, clock [4019, 2840], amplitude 2840
+the inner body laid alone: x 119..127, 299 quanta, clock [2671, 1955], amplitude 1955
+REFUSED at the load: two measured events share the Node [119, 0, 0] (measured[1])
+EXIT 0
