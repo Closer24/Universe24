@@ -51,9 +51,9 @@ def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_ar
 ):
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     with pytest.raises(ValueError, match="is a cloud: its standing reading rotates"):
-        body_at_24(tmp_path, TOOL, quanta=QUANTA // 2)  # below the window of mass
+        body_at_24(tmp_path, TOOL, quanta=12)  # below the window of mass
     with pytest.raises(ValueError, match="collapses: its wells reach the pace 0"):
-        body_at_24(tmp_path, TOOL, quanta=2 * QUANTA)  # above it
+        body_at_24(tmp_path, TOOL, quanta=48)  # above it: the Link's pace reaches 0
     document = json.loads(body_at_24(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     document["measured"].append(
         {**document["measured"][0], "nodes": [{"node": [8, 6, 6], "count": QUANTA}]}

@@ -90,7 +90,7 @@ def test_the_exact_bands_turn_with_no_remainder(pair, period):
     num, den = pair
     (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
     before, now = 0, 1_000
-    for step in range(1, period + 1):
+    for _ in range(1, period + 1):
         nxt, carry = rule3(
             (read, read, read), (2 * now, 2 * now, 2 * now), self_coefficient, wall, now, before, 0
         )

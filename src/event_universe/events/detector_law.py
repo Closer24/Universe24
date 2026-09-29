@@ -321,12 +321,23 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return 3 * int(rest[1]) * action
 
     def count_share(self, block: Block, live: LiveRecord) -> np.ndarray:
-        """The record's conserved form's share at every Node in the current's units (ALGEBRA.md #the-counts-line, THE COUNT IS THE RECORD'S FORM; issue #1495 finding 6): L [w_i (now^2 + before^2) - S_i now before] div R_i - L now S_6(before) over the record's level pairs, the Node term over the read coefficient by Rule3's division act and the plain Link term, L the current's weight (`form_terms`); its change over one interval is the six Ports' currents exactly at every Node, in a well as in the vacuum, where it is 3 den (now^2 + before^2) - num now S_6(before)."""
-        terms, read_coefficient = self.form_terms(live)
+        """The record's form's share at every Node in the current's units, E_i / 2 = 3 den (now^2 + before^2) - num now S_6(before) over the record's level pairs (ALGEBRA.md #the-counts-line; issue #1495 finding 6): the form's Node term at the plain wall 3 den less the Link term by the read act with the level as the coefficient, core.rule3 alone; its change over one interval is the six Ports' currents exactly in the vacuum, and a body laid by it stands (the pace-weighted share, exact at every Node, lays a body that flows out: the Paper Writer's measurement of 2026-09-29)."""
+        weight = self.kind_wall(block.family, block.definition.pair)
+        rest = (
+            block.definition.pair
+            if block.definition.pair is not None
+            else self.families[block.family].pair
+        )
+        wrap = self.kind_wrap[block.family]
+        pairs = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            pairs.append((live.im_now, live.im_before))
         share = np.zeros(self.shape, dtype=np.int64)
-        for node_term, link_term in terms:
-            whole = rule3(NO_READ, NO_READ, 1, read_coefficient, 0, 0, node_term)[0]
-            share += np.asarray(whole, dtype=np.int64) - np.asarray(link_term, dtype=np.int64)
+        for now, before in pairs:
+            share += form_term(0, 3 * int(rest[1]), now, before)
+            arrived = self.ports.arrivals(before, wrap)
+            sums = (arrived[0] + arrived[1], arrived[2] + arrived[3], arrived[4] + arrived[5])
+            share -= rule3((weight * now,) * 3, sums, 0, 1, 0, 0, 0)[0]
         return share
 
     def _lay_count(self, block: Block, live: LiveRecord) -> tuple[np.ndarray, np.ndarray]:

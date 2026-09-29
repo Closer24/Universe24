@@ -71,18 +71,16 @@ ROUNDS = 4 * 8  # the rounds of the fixed point (counts, rests, record, half ste
 
 
 def share_of(board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray) -> np.ndarray:
-    """The record's conserved form's share at every Node in the current's units, the engine's `count_share` (ALGEBRA.md #the-counts-line; issue #1495 finding 6): num [w (now^2 + before^2) - S now before] div R less num now S_6(before), the coefficients at the Node's content."""
-    num = board.pair[0]
-    reads, self_coefficient, wall = coefficients(
-        num, board.pair[1], board.gamma, content, ISOTROPIC, True
-    )
-    node_term = num * form_term(self_coefficient, wall, now.astype(object), before.astype(object))
-    whole = np.asarray(rule3(NO_READ, NO_READ, 1, reads[0], 0, 0, node_term)[0], dtype=np.int64)
+    """The record's form's share at every Node in the current's units, the engine's `count_share` (ALGEBRA.md #the-counts-line; issue #1495 finding 6): 3 den (now^2 + before^2) - num now S_6(before), the form's Node term at the plain wall less the Link term by the read act."""
+    num, den = board.pair
     arrivals = tuple(
         arrival(before, axis, 1, board.wrap[axis], 0) + arrival(before, axis, -1, board.wrap[axis], 0)
         for axis in range(3)
     )
-    return whole - np.asarray(rule3((num * now,) * 3, arrivals, 0, 1, 0, 0, 0)[0], dtype=np.int64)
+    node_term = np.asarray(
+        form_term(0, 3 * den, now.astype(np.int64), before.astype(np.int64)), dtype=np.int64
+    )
+    return node_term - np.asarray(rule3((num * now,) * 3, arrivals, 0, 1, 0, 0, 0)[0], dtype=np.int64)
 
 
 def share_counts(share: np.ndarray, den: int, action: int) -> np.ndarray:

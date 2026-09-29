@@ -5,8 +5,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-import numpy as np
-
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
