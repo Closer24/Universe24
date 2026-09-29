@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from math import isqrt
 from typing import Any
+
+import numpy as np
 
 from event_universe.core.integer import bounded_gcd
 
@@ -21,12 +24,17 @@ def coefficients(
     axis_contents: tuple[Any, ...] = ISOTROPIC,
     weak_field: bool = True,
 ) -> tuple[Reads, Any, Any]:
-    """The rule's integers at a Node from the paces, ((R_x, R_y, R_z), S, w); the isotropic rule at the axis contents zero, the plain first-order rule with weak_field False (ALGEBRA.md #the-line, #the-interval, #the-direction)."""
+    """The rule's integers at a Node from the paces, ((R_x, R_y, R_z), S, w): the clock's square p_0^2 = (Gamma - c)^2 + c^2 and the Link's pace p_a = Gamma - 2 c - t_a (the level entering the clock once with its square over twice the clock and the Link twice, ALGEBRA.md #the-paces), R_a = 2 num p_a^2, S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2, w = 6 den Gamma^2 (#the-line); the plain first-order rule with weak_field False."""
     pace = gamma - content
     if not weak_field:
         read = pace * num
         return (read, read, read), 6 * den * content, 3 * den * gamma
-    paces = (pace - axis_contents[0], pace - axis_contents[1], pace - axis_contents[2])
+    clock_squared = pace * pace + content * content
+    paces = (
+        pace - content - axis_contents[0],
+        pace - content - axis_contents[1],
+        pace - content - axis_contents[2],
+    )
     gamma_squared = gamma * gamma
     reads = (
         2 * paces[0] * paces[0] * num,
@@ -34,10 +42,21 @@ def coefficients(
         2 * paces[2] * paces[2] * num,
     )
     squares = paces[0] * paces[0] + paces[1] * paces[1] + paces[2] * paces[2]
-    self_coefficient = (
-        12 * den * gamma_squared - 6 * (pace * pace + gamma_squared) * (den - num) - 4 * num * squares
-    )
+    self_coefficient = 12 * (den * gamma_squared - (den - num) * clock_squared) - 4 * num * squares
     return reads, self_coefficient, 6 * den * gamma_squared
+
+
+def clock_pace(gamma: Any, content: Any) -> Any:
+    """The clock's pace as an integer where a guard or a clock pair reads it: the integer square root of p_0^2 = (Gamma - c)^2 + c^2 (ALGEBRA.md #the-paces), Gamma - c + c^2 div 2 Gamma to the unit; on an array by Newton's integer iteration from above (Gamma + |c| is at or above the root), the descent stopping where it turns."""
+    squared = (gamma - content) * (gamma - content) + content * content
+    if not isinstance(squared, np.ndarray):
+        return isqrt(int(squared))
+    root = gamma + np.abs(content) + 1
+    while True:
+        lower = np.minimum(root, (root + squared // root) // 2)
+        if np.array_equal(lower, root):
+            return root
+        root = lower
 
 
 def rule3(

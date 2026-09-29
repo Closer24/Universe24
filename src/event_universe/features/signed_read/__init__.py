@@ -1,4 +1,4 @@
-"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(Gamma^2 (18 den + 6 num) div (18 num + 6 den)) at every Node (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
+"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(2 den Gamma^2 div (den + num)) at every Node (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
+from event_universe.core.rule3 import clock_pace
 from event_universe.core.schema import (
     Either,
     Integer,
@@ -62,18 +63,16 @@ class SignedReadOwn:
 
 @dataclass(frozen=True)
 class SignedReadWrites:
-    """The paces in the loop's form: the content c with p_0 = Gamma - c, and the axis contents or None."""
+    """The paces in the loop's form: the content c with p_0^2 = (Gamma - c)^2 + c^2 and p_a = Gamma - 2 c - t_a, and the axis contents t_a or None."""
 
     content: np.ndarray
     axis_contents: tuple[np.ndarray, ...] | None
 
 
 def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int]:
-    """The guard's upper side as one integer comparison, p^2 x left <= right with left = 18 num + 6 den and right = Gamma^2 (18 den + 6 num) (ALGEBRA.md #the-paces)."""
-    num, den = (
-        pair  # the rule's own 18 = 6 x 3 (ALGEBRA.md #the-paces: 18 den + 6 num over 18 num + 6 den)
-    )
-    return 6 * (3 * num + den), 6 * gamma * gamma * (3 * den + num)
+    """The guard's upper side as one integer comparison, p^2 x left <= right with left = den + num and right = 2 den Gamma^2: the mode at wave number pi, (S - 6 R) / w = 2 - 2 (1 + num / den) (p / Gamma)^2, stays at or above -2 (ALGEBRA.md #the-paces)."""
+    num, den = pair
+    return den + num, 2 * den * gamma * gamma
 
 
 def pace_bound(pair: tuple[int, int], gamma: int) -> int:
@@ -113,9 +112,11 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
     gamma = term.gamma
     left, right = stability_bound(term.pair, gamma)
     bound = pace_bound(term.pair, gamma)
-    paces = [gamma - writes.content]
+    paces = [clock_pace(gamma, writes.content)]
     if writes.axis_contents is not None:
-        paces.extend(gamma - writes.content - t for t in writes.axis_contents)
+        paces.extend(gamma - 2 * writes.content - t for t in writes.axis_contents)
+    else:
+        paces.append(gamma - 2 * writes.content)
     for axis, pace in enumerate(paces):
         low = int(np.min(pace))
         if low <= 0:
@@ -123,8 +124,8 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
             raise RuntimeError(
                 f"the pace of {own.name!r} (family {own.family}, axis {axis}) is {low} at the Node "
                 f"{tuple(int(i) for i in node)} at interval {own.interval}: the pace stays above 0 "
-                f"(the content {int(writes.content[node])} at or beyond Gamma = {gamma}; ALGEBRA.md "
-                "ALGEBRA.md #the-paces, the guard's lower side); the run ends"
+                f"(the content {int(writes.content[node])} at the Node: the Link's pace Gamma - 2 c - t_a "
+                f"at or below 0 at Gamma = {gamma}; ALGEBRA.md #the-paces, the guard's lower side); the run ends"
             )
         high = int(np.max(pace))
         if high > bound:

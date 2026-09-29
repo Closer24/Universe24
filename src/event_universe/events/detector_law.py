@@ -20,6 +20,7 @@ from event_universe.core.rule3 import (
     THE_INVERSE,
     THE_REWRITE,
     THE_UNHOLD,
+    clock_pace,
     coefficients,
     division_forward,
     form_term,
@@ -704,8 +705,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return step, wall // step
 
     def node_clock_pair(self, node: tuple[int, ...], family: int) -> tuple[int, int]:
-        """The clock pair a record of `family` reads at a Node under the fixed wall (items 34 and 35): (e, f) = (Gamma - c + q Lambda d, Gamma), the pace over the wall's Gamma; f - e the effective content there."""
-        return self.node_clock - int(self._effective_content(family)[node]), self.node_clock
+        """The clock pair a record of `family` reads at a Node under the fixed wall (items 34 and 35): (e, f) = (p_0, Gamma), the clock's pace isqrt((Gamma - c)^2 + c^2) at the effective content c there over the wall's Gamma (ALGEBRA.md #the-paces)."""
+        content = int(self._effective_content(family)[node])
+        return int(clock_pace(self.node_clock, content)), self.node_clock
 
     def _effective_content(self, family: int) -> np.ndarray:
         """The content a record of `family` reads at every Node, the folder's `apply` (features/signed_read, the function the main loop looked up at (i); ALGEBRA.md #the-primitives row 1, #the-paces) with its floor and guard, one array per family per interval; zeros for a family with no read."""
@@ -859,8 +861,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """THE ONE RULE AT THE BODY'S NODE (ALGEBRA.md #what-a-body-is; item 42): the integers the body's Node's record is stepped with, (num, den, Gamma, c): the body's Node's pair this interval as [num_c, 2 den_c] (`node_record_clock`: the body's clock pair in the rule's convention, 2 cos omega = num_c / den_c, the proper pair of its momentum on a moving body), the world's Gamma and the body's Node's own effective content c (Gamma - p at the body's centre Node, the family of clicks' level less the charge's read, uniform over its Nodes); the wall 3 den Gamma = 6 den_c Gamma."""
         num_c, den_c = self.node_record_clock(block)
         centre = tuple(int(axis[0]) for axis in np.nonzero(self.centre_mask(block)))
-        pace, gamma = self.node_clock_pair(centre, block.family)
-        return num_c, 2 * den_c, gamma, gamma - pace
+        return num_c, 2 * den_c, self.node_clock, int(self._effective_content(block.family)[centre])
 
     def node_record_coefficients(self, block: Block) -> tuple[int, int]:
         """The one rule's coefficients at the body's Node with the six reads returning the body's Node (S_6 = 6 a): (the coefficient on a, the wall) = (6 num (Gamma - c) + 6 den c, 3 den Gamma) = (6 num_c p + 12 den_c c, 6 den_c Gamma), six times ALGEBRA.md #what-a-body-is's (K, den_c Gamma): the same rotation as rationals (ALGEBRA.md #what-a-body-is)."""
@@ -1746,10 +1747,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             largest = max(largest, int(np.max(np.abs(im_next))))
         if largest > self.world.amplitude_bound:
             raise RuntimeError(
-                f"the record {live.identity} reached the level "
-                f"{largest} at interval {self.tick}, above the world's declared "
-                f"amplitude bound A = {self.world.amplitude_bound} (issue #1085; MUST 3's bound "
-                "holds only below A): the run is refused"
+                f"the record {live.identity} reached the level {largest} at interval {self.tick}, above "
+                f"the world's declared amplitude bound A = {self.world.amplitude_bound} (issue #1085; "
+                "MUST 3's bound holds only below A): the run is refused"
             )
         if im_next is not None:
             if live.mask is not None:
