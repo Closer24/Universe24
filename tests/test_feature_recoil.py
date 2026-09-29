@@ -1,13 +1,11 @@
-"""The recoil's folder: the turn of the body's record's phase per Link by delta k = sigma_a x (k_q div M) on the record's two time levels, the angle's remainder carried at the body so the turns over clicks sum to the exact floor, the direction of travel, the refusals and the declaration; in the loop, a giver's record turned at its window's close opposite to the given light and its momentum read from the record's current."""
+"""The recoil's folder: the turn of the body's record's phase per Link by delta k = sigma_a x (k_q div M) on the record's two time levels, the angle's remainder carried at the body so the turns over clicks sum to the exact floor, the direction of travel, the refusals and the declaration."""
 
-import json
 import sys
 from math import atan, cos, tan
 from pathlib import Path
 
 import pytest
 
-import event_universe.world_files as world_files
 from event_universe.features.recoil import (
     GIVING,
     TAKING,
@@ -19,14 +17,10 @@ from event_universe.features.recoil import (
     sign_of,
 )
 from event_universe.loader.mode import sine_of
-from event_universe.world_files import input_stamp
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-
-GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # the universe of record
-START = ROOT / "examples" / "events" / "engine_start.json"
 # the test's twist unit: theta_unit = 1 / UNIT radians; 2 cos omega_b = 1.53 at a fine unit (the mode's clock is at the amplitude unit)
 UNIT, CLOCK = 1 << 20, (153 * 10**6, 10**8)
 AMPLITUDE, NODES = 1_000_000, 9
@@ -58,10 +52,6 @@ def current(levels: tuple[tuple[int, ...], tuple[int, ...]]) -> int:  # the curr
 
 SINE = sine_of(CLOCK)  # the recoil's sine, taken at the load
 TERM = RecoilTerm(K_Q, 1, CLOCK, SINE, TAKING, triple_of)
-GIVER = {"family": "charge", "weight": 1, "norm": 100, "norm_denominator": 1, "receiver": ["strip"]}
-NODES_OF_THE_GIVER = [{"node": [1, 0, 0], "count": 1}, {"node": [2, 0, 0], "count": 1}]
-FACES = {"x": "closed", "y": "periodic", "z": "periodic"}
-STRIP = {"name": "strip", "positions": [[2, 0, 0]]}  # the set on the body's own Node
 
 
 def test_the_turn_moves_the_records_phase_per_link_by_delta_k_on_both_time_levels():
@@ -117,21 +107,3 @@ def test_the_bounds_and_the_terms_are_refused_by_name():
         apply(RecoilTerm(7, 1, CLOCK, 0, TAKING, triple_of), start, RecoilOwn({}, {}))
     with pytest.raises(ValueError, match="over the body's Nodes alike, got 9, 8"):
         apply(TERM, RecoilStart((1, 0, 0), (now, before[:-1]), OFFSETS), RecoilOwn({}, {}))
-
-
-def giver_world(tmp_path: Path, monkeypatch, wave_number: int) -> Path:
-    """A giving body of two Nodes one Node off the closed -x face (its light's tally one way along x within the window) in the law's form on the generated universe (its twist table), its mode file beside it with the quantum's `wave_number`, the strip on its own Node."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    (tmp_path / "universe.json").write_text(GENERATED.read_text(encoding="utf-8"), encoding="utf-8")
-    (tmp_path / "start.json").write_text(START.read_text(encoding="utf-8"), encoding="utf-8")
-    body = {"family": "matter", "moment": [0, 0, 1], "stocks": {"charge": 4}, "emitter": GIVER}
-    body.update(nodes=NODES_OF_THE_GIVER, momentum=[0, 0, 0], momentum_before=[0, 0, 0])
-    world = {"shape": [16, 1, 1], "boundary": FACES, "ticks": 400, "N": 1024, "measured": [body]}
-    world.update(universe="universe.json", engine="start.json", detectors=[STRIP])
-    world["stamp"] = input_stamp(world)
-    (tmp_path / "giver.json").write_text(json.dumps(world), encoding="utf-8")
-    entry = {"family": "matter", "pair": [800, 1200], "profile": [0, 1000, 1000] + [0] * 13}
-    entry.update(clock=list(CLOCK), twist=45875, wavelength=7, wave_number=wave_number)
-    mode = {"world_digest": world["stamp"]["hash"], "bodies": [entry]}
-    (tmp_path / "giver.mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    return tmp_path / "giver.json"

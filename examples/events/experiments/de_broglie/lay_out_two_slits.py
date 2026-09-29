@@ -18,17 +18,13 @@ UNIVERSE_OF_RECORD = (
 )
 STEPS = 1024  # N, the phase's steps of every world of record
 DENOMINATOR = 1024  # every body's phase denominator, the pair (m, j) the generator fills
-NORM = {
-    "norm": 180255439696889394,
-    "norm_denominator": 3948169,
-}  # the giver's norm, as Bell's files carry it
 GIVING_FAMILY = "charge"  # the light; the matter record of (j) names the lighter family here
 E_S_CHARGE = 300_000  # E_s of the charge, the free number alpha of the universe (Cheshbon 06:43Z; the Closer 11:43 Israel: in the world's universe until PR-1b)
 WORLD_NAME = "two_slits_light"
 
 # THE NUMBERS TO SET FROM CHESHBON'S LINE ON #1325 (asked 05:08 Israel time, 2026-09-28); until his
 # line these are the Experimenter's proposal, and a run on them is a first look and says so.
-GIVER_COUNT = 2001  # the giver's count per Node (`least_residues`: the shell wheel above 500 at 2001)
+GIVER_COUNT = 2001  # the giver's count per Node
 MIRROR = 9000  # the tube's and the wall's count per Node, four Nodes thick: the form of record (Cheshbon's line of 04:07Z), above the mirror's line Gamma (1 - sin(pi / lambda)) = 2,929 at the record's wavelength 4 (Bell's walls, #1371); the thinning to 4,000 under the conformal term of #1375 (the level entered the Link twice at 9,000) left with its revert (#1399)
 SCREEN = 9000  # the screen's count per Node: the mirror's, the strips booking the one-way inward flux at their Ports (the owner's word through the Closer; Cheshbon's yes, 02:27Z)
 OPENING = 4  # the width of each opening in Nodes
@@ -119,7 +115,7 @@ def two_slits(folder: Path) -> dict[str, Any]:
         }
         for k, y0 in enumerate(range(interior.start, interior.stop, STRIP))
     ]
-    emitter = {"family": GIVING_FAMILY, "weight": 1, **NORM}
+    emitter = {"family": GIVING_FAMILY, "weight": 1}
     measured = [
         body(giver_nodes, GIVER_COUNT, moment=[0, 0, 1], emitter=emitter, stocks={GIVING_FAMILY: STOCK}),
         body(wall_nodes, MIRROR),

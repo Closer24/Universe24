@@ -735,9 +735,9 @@ def generate(document: dict[str, Any]) -> dict[str, Any]:
             if len(axes) > 1:
                 raise ValueError(f"a moving body moves along one axis: the momentum {momentum} has two")
             plain = [read for read in row.get("reads", []) if read.get("by") in (1, "plain")]
-            if "emitter" not in body and "crystal" not in body and not axes:
-                # a wall, a screen, a polariser: no entry (the loader loads it as content alone, ENGINE.md);
-                # a giver (an emitter, a crystal) and a moving body carry theirs (Cheshbon's 03:35Z)
+            if "emitter" not in body and not axes:
+                # a wall, a screen: no entry (the loader loads it as content alone, ENGINE.md);
+                # a giver and a moving body carry theirs (Cheshbon's 03:35Z)
                 reading["mode"] = "none: no giving and no momentum, the body loads as content alone"
                 continue
             if not plain:

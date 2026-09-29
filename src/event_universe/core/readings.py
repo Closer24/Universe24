@@ -135,26 +135,21 @@ class Readings:
                     {"interval": int(simulation.tick), **_read(reading, simulation)}
                 )
 
-    def clicks(self, gathers: Sequence[Mapping[str, Any]], detectors: Sequence[Any]) -> None:
-        """A declared detector's clicks as its DETECTOR lines: the interval, the record, its giving, content, momentum and the detector's Nodes."""
-        positions = {
-            detector.name: [list(node) for node in detector.positions] for detector in detectors
-        }
+    def clicks(self, gathers: Sequence[Mapping[str, Any]]) -> None:
+        """A declared detector's clicks as its DETECTOR lines, one per report's line (`gather`) at the detector: the interval, the record, its giving, the quanta reported and the reporting Node."""
         for reading in self.declared:
             if reading.kind != "clicks":
                 continue
             for gather in gathers:
-                chosen = gather["chosen"]
-                if not (isinstance(chosen, list) and chosen and chosen[0][0] == reading.detector):
+                if gather["chosen"] != reading.detector:
                     continue
                 self.lines[reading.name].append(
                     {
-                        "interval": int(gather["click"]),
+                        "interval": int(gather["tick"]),
                         "record": gather["record"],
                         "giving": gather["giving"],
                         "content": gather["content"],
-                        "momentum": [int(part) for part in gather["momentum"]],
-                        "node": positions[reading.detector],
+                        "node": gather["node"],
                     }
                 )
 

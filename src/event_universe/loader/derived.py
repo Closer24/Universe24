@@ -101,19 +101,12 @@ def reduced(pair: object) -> tuple[int, ...]:
 
 
 def carries_quanta(entry: dict[str, Any]) -> bool:
-    """Whether the family carries quanta (a pair of levels, the clicks): every family but the real fields, the holders of the content."""
+    """Whether the family carries quanta (a pair of levels, a count its records carry): every family but the real fields, the holders of the content."""
     return held_count(entry) != "content"
 
 
-RULED = (
-    "parts",
-    "phase",
-    "quantum",
-    "clicks",
-    "reads",
-)  # the keys the rule fixes; declared against it, refused
+RULED = ("parts", "phase", "reads")  # the keys the rule fixes; declared against it, refused
 HELD_RULED = ("factors", "dipole", "dipole_div")  # the held row's keys the rule fixes
-CLICKS = {"gives": True, "takes": True, "quantum": 1}  # a family of quanta gives and takes one quantum
 
 
 def contradiction(label: str, key: str, declared: object, fixed: object) -> ValueError:
@@ -146,19 +139,15 @@ def reads_of(parts: list[int], entries: list[dict[str, Any]]) -> list[dict[str, 
 def filled(
     entry: dict[str, Any], entries: tuple[dict[str, Any], ...], gamma: int, label: str = "the family"
 ) -> dict[str, Any]:
-    """The entry with every key the rule fixes filled from its rank and its pair: the parts from the rank, the phase 2 where it carries quanta and 1 for a real field, the quantum 1, the clicks on a family of quanta and none on a real field, the reads (`reads_of`), the held factors 1 and the dipole (the spin on the content's real field, the moment on the sign's holder) with the divisor equal to the phase; a key declared at another value is refused by name (`contradiction`), a key declared at the rule's value stands; the sign (0) and the self-source (off) are filled where absent and stand where declared until the owner's word on a body's charge and on the slot."""
+    """The entry with every key the rule fixes filled from its rank and its pair: the parts from the rank, the phase 2 where it carries quanta and 1 for a real field, the reads (`reads_of`), the held factors 1 and the dipole (the spin on the content's real field, the moment on the sign's holder) with the divisor equal to the phase; a key declared at another value is refused by name (`contradiction`), a key declared at the rule's value stands; the sign (0) and the self-source (off) are filled where absent and stand where declared until the owner's word on a body's charge and on the slot."""
     found = {k: v for k, v in entry.items() if k not in RULED}
     found["pair"] = pair_of(entry, gamma, label)
     found.pop("m", None)
     with_pairs = paired(entries, gamma)
     parts = list(rank_of(found))
     quanta = carries_quanta(found)
-    rule: dict[str, Any] = {"parts": parts, "phase": 2 if quanta else 1, "quantum": 1}
+    rule: dict[str, Any] = {"parts": parts, "phase": 2 if quanta else 1}
     rule["reads"] = reads_of(parts, with_pairs) if quanta else []
-    if quanta:
-        rule["clicks"] = CLICKS
-    elif "clicks" in entry:
-        raise contradiction(label, "clicks", entry["clicks"], None)
     declared = dict(entry)
     if "reads" in declared:
         by_name = {str(other["name"]): other for other in with_pairs}

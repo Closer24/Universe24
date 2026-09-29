@@ -1,4 +1,4 @@
-"""THE READING OF THE TWO SLITS (g) and of de Broglie's fringes (j): one world run headless through the engine's own functions (`load_world` hands the mode file beside the world, `DetectorLawSimulation` steps it, the event lines observed), the runner's output written beside the world as `tools/run_inputs.py` writes it (`<name>.output.json`), and the reading: THE STRIPS' SHARES, a DETECTOR reading, the clicks per strip in the strips' order along the screen and each strip's share of the clicks that fell on the screen, compared with the expectation file's `strips` section where it carries one (inside or outside its band; the cosine and every closed form live only in the expectation, never here); THE BOOKS: the quanta given (the giver's giving lines), the clicks per detector, the records ended at a face, the records left on the GameBoard at the end (HOST); THE SENSITIVITY per strip by the ladder (GAMEBOARD: clicks over the click lines whose ladder reached the strip's Nodes); THE RECORD'S PATH from every `rows` reading (GAMEBOARD: the Nodes with a row, their box and centroid). Nothing here replays a rule and no number of a run enters a test. Run from the repository root: PYTHONPATH=src python examples/events/experiments/de_broglie/two_slits_strips.py <world.json> [--first-look]; a run before the blind expectation is a first look and is labelled so."""
+"""THE READING OF THE TWO SLITS (g) and of de Broglie's fringes (j): one world run headless through the engine's own functions (`load_world` hands the mode file beside the world, `DetectorLawSimulation` steps it, the event lines observed), the runner's output written beside the world as `tools/run_inputs.py` writes it (`<name>.output.json`), and the reading: THE STRIPS' SHARES, a DETECTOR reading, the clicks per strip in the strips' order along the screen and each strip's share of the clicks that fell on the screen, compared with the expectation file's `strips` section where it carries one (inside or outside its band; the cosine and every closed form live only in the expectation, never here); THE BOOKS: the quanta given (the giver's giving lines), the clicks per detector, the records ended at a face, the records left on the GameBoard at the end (HOST); THE RECORD'S PATH from every `rows` reading (GAMEBOARD: the Nodes with a row, their box and centroid). Nothing here replays a rule and no number of a run enters a test. Run from the repository root: PYTHONPATH=src python examples/events/experiments/de_broglie/two_slits_strips.py <world.json> [--first-look]; a run before the blind expectation is a first look and is labelled so."""
 
 from __future__ import annotations
 
@@ -40,13 +40,13 @@ def run(world_path: Path) -> tuple[dict[str, Any], list[dict[str, Any]], list[di
             )
             break
         readings.read(simulation)
-    readings.clicks(simulation.layer.gathers, world.detectors)
+    readings.clicks(simulation.layer.gathers)
     giver_of = {line["record"]: line["measured"] for line in lines if line["event"] == "giving"}
     output["clicks"] = [
         {
-            "detector": g["chosen"][0][0] if isinstance(g["chosen"], list) and g["chosen"] else None,
-            "interval": g["click"],
-            "clock": g.get("clock"),
+            "detector": g["chosen"],
+            "interval": g["tick"],
+            "node": g["node"],
             "giving": g["giving"],
             "record": g["record"],
             "giver": giver_of.get(g["record"]),
@@ -115,34 +115,21 @@ def books(
     alive: list[dict[str, Any]],
     output: dict[str, Any],
 ) -> dict[str, Any]:
-    """THE BOOKS: the quanta given, the clicks per detector, the records ended at a face, the records left on the GameBoard (HOST); the sensitivity per strip by the ladder and the record's path (GAMEBOARD)."""
+    """THE BOOKS: the quanta given, the clicks per detector, the records ended at a face, the records left on the GameBoard (HOST); the record's path (GAMEBOARD)."""
     givings = [line for line in lines if line["event"] == "giving"]
     clicks = [line for line in lines if line["event"] == "gather"]
     by_detector: dict[str, int] = {}
-    reached: dict[str, int] = {}
     faces: dict[str, int] = {}
     escaped = 0
     for click in clicks:
-        chosen = click["chosen"]
-        name = chosen[0][0] if isinstance(chosen, list) and chosen else None
+        name = click["chosen"]
         if name is None:
             escaped += 1
         elif name.startswith(FACE_PREFIX):
             faces[name] = faces.get(name, 0) + 1
         else:
             by_detector[name] = by_detector.get(name, 0) + 1
-        for entry in click.get("detectors", []):
-            set_name = entry[0][0][0]
-            reached[set_name] = reached.get(set_name, 0) + 1
     strips = [s["name"] for s in strips_of(document)]
-    sensitivity = {
-        name: {
-            "clicks": by_detector.get(name, 0),
-            "reached": reached.get(name, 0),
-            "share": round(by_detector.get(name, 0) / reached[name], 4) if reached.get(name) else None,
-        }
-        for name in strips
-    }
     givers: dict[int, int] = {}
     for giving in givings:
         givers[giving["measured"]] = givers.get(giving["measured"], 0) + 1
@@ -158,11 +145,6 @@ def books(
             "row": "the quanta given = the clicks at the strips + at the faces + escaped + the records on the GameBoard at the end",
             "given": len(givings),
             "accounted": sum(by_detector.values()) + sum(faces.values()) + escaped + len(alive),
-        },
-        "sensitivity": {
-            "label": "GAMEBOARD",
-            "row": "per strip: clicks over the click lines whose ladder reached the strip's Nodes",
-            "by_strip": sensitivity,
         },
         "path": {"label": "GAMEBOARD", "rows": path(document, output)},
     }

@@ -71,7 +71,7 @@ def restore_ledger(simulation: DetectorLawSimulation, ledger: dict[str, Any]) ->
 def forward(
     simulation: DetectorLawSimulation, lines: list[dict[str, Any]], intervals: int
 ) -> tuple[list[str], list[dict[str, Any]], dict[int, Any], dict[int, list[tuple[int, int]]]]:
-    """The run forward: the digest of the rows and the ledger after every interval (the load's at index 0), every record a taking click deleted as it stood the interval before (the host's copy), and the records made at each interval (a giving's open, named at its close alone) with the body whose window made them."""
+    """The run forward: the digest of the rows and the ledger after every interval (the load's at index 0), every record a report changed as it stood the interval before (the host's copy), and the records made at each interval (a giving at a body's click) with the body that gave them."""
     digests, ledgers = [digest_of(rows_of(simulation))], [ledger_of(simulation)]
     previous = {identity: copy.deepcopy(live) for identity, live in simulation.records.items()}
     lost: dict[int, Any] = {}
@@ -82,8 +82,8 @@ def forward(
             if line["event"] == "gather" and line["tick"] == simulation.tick:
                 lost[int(line["record"])] = previous[int(line["record"])]
         for identity in set(simulation.records) - set(previous):
-            makers = [b.number for b in simulation.blocks if b.window == identity]
-            opened.setdefault(simulation.tick, []).append((identity, makers[0] if makers else -1))
+            maker = simulation.records[identity].emitter
+            opened.setdefault(simulation.tick, []).append((identity, -1 if maker is None else maker))
         previous = {identity: copy.deepcopy(live) for identity, live in simulation.records.items()}
         digests.append(digest_of(rows_of(simulation)))
         ledgers.append(ledger_of(simulation))
@@ -98,23 +98,13 @@ def step_back(
     opened: dict[int, list[tuple[int, int]]],
     t: int,
 ) -> None:
-    """The interval t stepped back: across a click (a giving's open, a window's close with its recoil, a taking) the click's ledger undone by hand first (NO RULE UNDOES A CLICK), the record made at an open removed, a window's close reopened on its record, the recoil's turn of the body's record undone from the copy on its line, then the engine's inverse, then the record a taking deleted restored from the host's copy."""
-    givings = [line for line in lines if line["event"] == "giving"]
+    """The interval t stepped back: across a click (a giving, a report with its recoil) the click's ledger undone by hand first (NO RULE UNDOES A CLICK), the record a giving made removed, the recoil's turn of the body's record undone from the copy on its line, then the engine's inverse, the giver's click given back, then the record a report changed restored from the host's copy."""
     opens = opened.get(t, [])
-    closes = [line for line in givings if line["tick"] == t]
     takings = [line for line in lines if line["event"] == "gather" and line["tick"] == t]
-    if opens or closes or takings:
+    if opens or takings:
         restore_ledger(simulation, ledgers[t - 1])
-    for identity, number in opens:
+    for identity, _number in opens:
         simulation.records.pop(identity, None)
-        block = simulation.block_by_number.get(number)
-        if block is not None and block.window == identity:
-            block.window = None
-    for line in closes:
-        live = simulation.records.get(int(line["record"]))
-        if live is not None:
-            block = simulation.block_by_number[int(line["measured"])]
-            live.window_open, block.window = True, live.identity
     for line in lines:
         # the recoil's turn of the body's own record undone from the host's copy on the line (the click keeps the click)
         block = (
@@ -129,6 +119,10 @@ def step_back(
             block.own.now[block.mask] = np.array(line["levels_before"][0], dtype=np.int64)
             block.own.before[block.mask] = np.array(line["levels_before"][1], dtype=np.int64)
     simulation.step_inverse()
+    for _identity, number in opens:
+        block = simulation.block_by_number.get(number)
+        if block is not None:
+            block.new_cycle = True  # the click the giving spent
     for line in takings:
         simulation.records[int(line["record"])] = lost[int(line["record"])]
 

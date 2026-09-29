@@ -7,8 +7,6 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.integer import bounded_gcd
-
 # the rule's three reads, one per axis of the Node (R_x, R_y, R_z); the three arrival
 # sums (arr_a+ + arr_a-) of the same axes; integers or the loop's integer arrays
 Reads = tuple[Any, Any, Any]
@@ -139,21 +137,3 @@ def rule_total_bound(
     return int(
         6 * amplitude * abs(reads[0]) + amplitude * abs(self_coefficient) + wall * (amplitude + 1)
     )
-
-
-def rungs(weights: list[tuple[int, int]], steps: int) -> tuple[list[int], tuple[int, int]]:
-    """The ladder's rungs b_k = (2 W C_k + Total) div (2 Total) from the cells' weights as pairs, and the total as the reduced pair (ALGEBRA.md #the-ladder)."""
-    denominator = 1
-    for _, m in weights:
-        denominator = denominator * m // bounded_gcd(denominator, m)  # the least common multiple
-    scaled = [n * (denominator // m) for n, m in weights]
-    total = sum(scaled)
-    if total == 0:
-        return [0] * len(weights), (0, 1)
-    found = []
-    cumulative = 0
-    for value in scaled:
-        cumulative += value
-        found.append((2 * steps * cumulative + total) // (2 * total))
-    common = bounded_gcd(total, denominator) or 1
-    return found, (total // common, denominator // common)

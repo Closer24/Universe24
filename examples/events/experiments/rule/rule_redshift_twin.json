@@ -45,9 +45,7 @@
    ],
    "emitter": {
     "family": "charge",
-    "weight": 1,
-    "norm": 1,
-    "norm_denominator": 1
+    "weight": 1
    },
    "stocks": {
     "charge": 12

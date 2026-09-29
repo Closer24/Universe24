@@ -29,7 +29,6 @@ INTEGERS = ObjectOf(
         "momentum_unit": Integer(least=1),
         "most_steps": Integer(least=2),
         "most_families": Integer(least=1),
-        "least_residues": Integer(least=1),
         "width": Integer(least=1),
         "twist_table": ObjectOf(
             {
@@ -61,7 +60,6 @@ WORLD = ObjectOf(
         "quantum_action": Integer(least=1),
         "momentum_unit": Integer(least=1),
         "most_families": Integer(least=1),
-        "least_residues": Integer(least=1),
         "N": Integer(least=2),
     },
     frozenset(
@@ -74,7 +72,6 @@ WORLD = ObjectOf(
             "quantum_action",
             "momentum_unit",
             "most_families",
-            "least_residues",
         }
     ),
 )
@@ -86,30 +83,11 @@ CLOCK = ListOf(Integer(least=0), 2)
 SPINS_STEP = ObjectOf({"curl": PAIR, "tidal": PAIR})
 # three integers on the axes
 AXES = ListOf(Integer(), 3)
-# a body's emitter, the giving of a clicking body (ALGEBRA.md #the-click to (6), ALGEBRA.md #the-primitives): the given family, the ladder by name, the given record's clock and pair where the family declares none, the period, the norm with its denominator, the weight, the window's read, the twist
-EMITTER = ObjectOf(
-    {
-        "family": Name(),
-        "receiver": Either((Word(), ListOf(Word()))),
-        "norm": Integer(least=1),
-        "weight": Integer(least=1),
-        "norm_denominator": Integer(least=1),
-        "pair": Either((Integer(least=1), PAIR)),
-    },
-    frozenset({"receiver", "norm", "weight", "norm_denominator", "pair"}),
-)
-# an emitting body in the law's form (the mathematician's words of 2026-09-27 on #1198, what the giving's row reads): the given family, the giving's weight g, the window's norm T with its denominator, the ladder's receiver where named; no period (P_body is the mode's rotation), no clock, no pair, no twist
-GIVER = ObjectOf(
-    {
-        "family": Name(),
-        "weight": Integer(least=1),
-        "norm": Integer(least=1),
-        "norm_denominator": Integer(least=1),
-        "receiver": Either((Word(), ListOf(Word()))),
-    },
-    frozenset({"receiver"}),
-)
-# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum at its two levels (now and before) and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin at its two levels, moment and twist, its emitter with receiver and stock
+# a body's emitter, the giving at the body's click (ALGEBRA.md #the-counts-line, the free record; the model owner's word of 2026-09-29 on #1495, finding 10): the given family and the giving's weight g, nothing else; the given record's clock is the mode's `wavelength`, its quantum the one its form lays
+EMITTER = ObjectOf({"family": Name(), "weight": Integer(least=1)})
+# an emitting body in the law's form: the same two keys
+GIVER = EMITTER
+# a body of the world file in today's form (ALGEBRA.md #the-stable-body names the form to come: its family, its Nodes, its count per Node and its momentum n): its Node, its family, its quanta, its momentum at its two levels (now and before) and its stocks of other families; a block's side or extents, pair and kind, seed with its clock and proper clock, ramp and start, margin, the body's numbers q, spin at its two levels, moment and twist, its emitter and stock
 BODY = ObjectOf(
     {
         "position": ListOf(Integer(least=0), 3),
@@ -134,7 +112,6 @@ BODY = ObjectOf(
         "start": Integer(least=0),
         "margin": Word(),  # a well's margin kind, the loader's words (the gate counts a family named like one)
         "emitter": EMITTER,
-        "receiver": Word(),
         "stock": Integer(least=1),
     },
     frozenset(
@@ -155,7 +132,6 @@ BODY = ObjectOf(
             "start",
             "margin",
             "emitter",
-            "receiver",
             "stock",
         }
     ),
@@ -213,24 +189,22 @@ def document_of(key: str, value: str, files: Mapping[str, object], label: str) -
 
 
 def entry_kind(register: Register) -> ObjectOf:
-    """A family's entry: the frame's keys, its name, its quantum (an integer from 1, the law's owner's row of 2026-09-27), its clock, its spins_step, its lifetime (L, an integer from 1; absent, for ever) and its hand (-1 or +1; absent, no check), the four optional (ALGEBRA.md #the-primitives, the lifetime's and the hand's rows), and every key the cards declare at a family's entry, optional where a card says so; THE FAMILIES FROM THE RULE (ALGEBRA.md): the keys the rule derives from the rank and the pair (`loader/derived.py`) are optional here, the held factors, dipole and divisor of the dipole, and a read's weight, twist and by among them."""
+    """A family's entry: the frame's keys, its name, its clock, its spins_step, and its lifetime (L, an integer from 1; absent, for ever), the three optional (ALGEBRA.md #the-primitives, the lifetime's row), and every key the cards declare at a family's entry, optional where a card says so; THE FAMILIES FROM THE RULE (ALGEBRA.md): the keys the rule derives from the rank and the pair (`loader/derived.py`) are optional here, the held factors, dipole and divisor of the dipole, and a read's weight, twist and by among them."""
     declared = cards.at(register, "a family's entry")
     keys = {
         "name": Word(),
         "m": Integer(least=1),
-        "quantum": Integer(least=1),
         "clock": CLOCK,
         "spins_step": SPINS_STEP,
         "lifetime": Integer(least=1),
-        "hand": OneOf((-1, 1)),
         **declared.keys,
     }
     held, reads = cast(ObjectOf, keys["held"]), cast(ListOf, keys["reads"])
     keys["held"] = ObjectOf(held.keys, held.optional | {"factors", "dipole", "dipole_div"})
     read = cast(ObjectOf, reads.of)
     keys["reads"] = ListOf(ObjectOf(read.keys, read.optional | {"weight", "twist", "by"}), reads.length)
-    derived = {"parts", "phase", "clicks", "reads", "sign", "self_source", "quantum", "pair", "m"}
-    return ObjectOf(keys, declared.optional | derived | {"clock", "spins_step", "lifetime", "hand"})
+    derived = {"parts", "phase", "reads", "sign", "self_source", "pair", "m"}
+    return ObjectOf(keys, declared.optional | derived | {"clock", "spins_step", "lifetime"})
 
 
 def families(

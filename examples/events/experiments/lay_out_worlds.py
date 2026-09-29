@@ -28,8 +28,7 @@ DENOMINATOR = 1024  # every body's phase denominator, the pair (m, j) the genera
 GAMMA = 10000  # the universe's node clock, cited for the expectations' formulas only
 MOMENTUM_UNIT = 64  # Q, the universe's momentum unit (W = 3 Q M)
 MIRROR = 8000  # a mirror or a wall: above B's line c > Gamma (1 - sin(k / 2)) at lambda 4 (2,929) and 16 (8,050)
-WINDOW = 2000  # a window: the giver where its arm passes, a screen, a polariser, the falling body
-NORM = {"norm": 180255439696889394, "norm_denominator": 3948169}  # carried from generated/fall.json
+WINDOW = 2000  # a window: the giver where its arm passes, a screen, the falling body
 VELOCITY = Fraction(
     1, 5
 )  # the moving bodies' v in Links per interval, below matter's 0.25 and light's 0.447
@@ -59,7 +58,7 @@ def giver(
     nodes: list[list[int]], count: int, stock: int, weight: int = 1, **keys: Any
 ) -> dict[str, Any]:
     """A giving body: the emitter of light (the charge family) with its stock and its moment."""
-    emitter = {"family": "charge", "weight": weight, **NORM}
+    emitter = {"family": "charge", "weight": weight}
     return body(nodes, count, moment=[0, 0, 1], emitter=emitter, stocks={"charge": stock}, **keys)
 
 
@@ -813,7 +812,7 @@ def rule_redshift(
             gamma,
             q=1,
             moment=[0, 0, 1],
-            emitter={"family": "charge", "weight": 1, "norm": 1, "norm_denominator": 1},
+            emitter={"family": "charge", "weight": 1},
             stocks={"charge": stock},
         ),
         pixel([taker_x, mid, 0], taker, gamma),

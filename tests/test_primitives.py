@@ -1,4 +1,4 @@
-"""The primitives: the tables are exact Pythagorean identities; the clicks list balances every declared conserved integer or refuses; the helicity is the sign of the spin against the momentum. HOST computations."""
+"""The primitives: the tables are exact Pythagorean identities; the helicity is the sign of the spin against the momentum. HOST computations."""
 
 from __future__ import annotations
 
@@ -39,56 +39,6 @@ def test_the_identities_and_the_exact_product_of_rotations():
     with pytest.raises(ValueError, match="not the identity"):
         P.TwistTable(((3, 4, 5),) + FINE[1:], COARSE).check()
     assert P.link_angle(-1, 1, 3, 5, 7) == -36 and P.link_angle(1, -1, 3, 5, 7) == -36
-
-
-def test_the_clicks_list_balances_the_conserved_integers_or_refuses():
-    obj = {
-        "takes": {"family": "a", "labels": {"q": 0, "colour": 0}},
-        "gives": [
-            {"family": "b", "count": 1, "labels": {"q": -1, "colour": 0}},
-            {"family": "c", "count": 1, "labels": {"q": 1, "colour": 0}},
-        ],
-        "helicity": -1,
-    }
-    clicks = P.clicks_list(obj)
-    assert clicks.products == 2 and clicks.helicity == -1 and clicks.takes == "a"
-    bad = dict(obj)
-    bad["gives"] = [{"family": "b", "count": 2, "labels": {"q": -1}}]
-    with pytest.raises(ValueError, match="'q' is 0 taken and -2 given"):
-        P.clicks_list(bad)
-    bad["gives"] = [{"family": "b", "count": 1, "labels": {"q": 0, "spin": 1}}]
-    with pytest.raises(ValueError, match="names 'spin'"):
-        P.clicks_list(bad)
-    bad["gives"] = obj["gives"]
-    bad["helicity"] = 2
-    with pytest.raises(ValueError, match="helicity"):
-        P.clicks_list(bad)
-    with pytest.raises(ValueError, match="at least 1"):
-        P.ClicksList("a", {}, (P.Giving("b", 0, {}),)).check()
-
-
-@pytest.mark.parametrize("products", [1, 2, 3, 5])
-@pytest.mark.parametrize("residue", [0, 1, 17, 63])
-def test_the_momenta_are_shared_whole_with_the_sum_exact(products, residue):
-    total = (100, -37, 0)
-    shares = P.share_momenta(total, products, residue, 64)
-    assert len(shares) == products
-    assert tuple(sum(share[axis] for share in shares) for axis in range(3)) == total
-    assert all(share[0] >= 0 and share[1] <= 0 and share[2] == 0 for share in shares)
-    assert shares == P.share_momenta(total, products, residue, 64)  # the same residue, the same shares
-    if products == 1:
-        assert shares == (total,)
-
-
-def test_the_share_refuses_a_residue_off_the_wheel_and_no_product():
-    with pytest.raises(ValueError, match="not on the wheel"):
-        P.share_momenta((1, 0, 0), 2, 64, 64)
-    with pytest.raises(ValueError, match="at least one product"):
-        P.share_momenta((1, 0, 0), 0, 0, 64)
-    # two products: the one cut is the rung (residue + W / 2) mod W scaled to the whole
-    assert P.share_momenta((10, 0, 0), 2, 0, 64) == ((5, 0, 0), (5, 0, 0))
-    assert P.share_momenta((10, 0, 0), 2, 32, 64) == ((0, 0, 0), (10, 0, 0))
-    assert P.share_momenta((10, 0, 0), 2, 16, 64) == ((7, 0, 0), (3, 0, 0))
 
 
 def test_the_helicity_is_the_sign_of_the_spin_against_the_momentum():

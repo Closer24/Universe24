@@ -1,4 +1,4 @@
-"""The lifetime's folder (ALGEBRA.md #the-primitives, the row "the lifetime"): the record's age against L, the click first, the refusals by name."""
+"""The lifetime's folder (ALGEBRA.md #the-primitives, the row "the lifetime"): the record's age against L, the report first, the refusals by name."""
 
 from __future__ import annotations
 
@@ -19,8 +19,8 @@ def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_built():
     assert registered.built and registered.function is apply
 
 
-def test_a_record_ends_at_age_l_unless_the_ladder_clicked_it_first():
-    """Below L the record lives; at L (and beyond, should a step be missed) it ends; a record the ladder clicked this interval is the click's, not the lifetime's; L = 0 and a negative age are refused by name."""
+def test_a_record_ends_at_age_l_unless_its_last_quantum_was_reported_first():
+    """Below L the record lives; at L (and beyond, should a step be missed) it ends; a record whose last quantum was reported is the report's, not the lifetime's; L = 0 and a negative age are refused by name."""
     term = LifetimeTerm(lifetime=3)
     assert [apply(term, LifetimeStart(age, False)).ends for age in (0, 1, 2, 3, 4)] == [
         False,
