@@ -31,14 +31,15 @@
  "CENTROID": {
   "strips": "screen_",
   "twin": "bending_twin",
-  "shift": -5.5,
-  "band": 1.4,
-  "before_the_axis_pace_term": -2.7,
+  "shift": -6.4,
+  "band": 1.5,
+  "before_the_axis_pace_term": -3.2,
   "row_as_written": -3.8,
   "screen_distance": 200,
   "level_twice_over_once": 2,
   "level_twice_over_once_row": "the owner's line (10:40 Israel): the bending reads the level twice (THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the axis pace Gamma - 2c) and the redshift once (the clock Gamma - c), so the shift with the level twice over the shift with it once is 2 by the law's line alone, independent of G (E_s), the count, Gamma and L: 5.5 / 2.7 before the run (2.0 within the rounding; the row's form 4 U_b L / 2 U_b L = 3.8 / 1.9), nature's 4GM / b c^2 over Newton's 2GM / b c^2",
-  "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's; the body lies at y below the axis, so a shift toward it is negative: the algebra's -5.5 (the conformal pace and the level once more in the axis pace, both in the law) within 1.4 Links (the rounding's 0.5 and the draw's 0.9 at the stock over a tube 40 wide), the engine's expectation once both terms are in core, a difference an engine defect; -2.7 before the axis-pace term; the row's -3.8 (4 U_b L, U_b = c_b / Gamma, nature's form) beside it, never tuned to"
+  "row": "the centroid of the strips' clicks (y in Nodes, exact fraction) minus the twin's; the body lies at y below the axis, so a shift toward it is negative. THE BLIND EXPECTATION UNDER THE PACES' LINE (the mathematician, 2026-09-29, COMPUTED by the band's geometric optics on the world's own rest field, no run: the charge family's packet at wavelength 5, k = 2 pi / 5 along +x, x' = d omega / d k, k' = - d omega / d x with 2 cos omega = 2 - (2/3) SUM_a P_a^2 (1 - cos k_a), P_0 = 1 - U + U^2 / 2 and P_a = 1 - 2U, U = c(x, y) / Gamma over the plane's rest of the bodies): the shift is -0.137 Links per level of gravity read at (60, 83) (`gravity_on_the_axis_60`, GAMEBOARD), that is -1.71 x 4 U_b L with U_b = c_60 / Gamma and L = 200, the band's part of the factor 1.52 at k = 2 pi / 5 (1.125 at k -> 0 for this field, the plane's logarithm against the row's 1 / r); at c_60 = 47 the shift is -6.4 Links, at the mathematician's own solution of the plane's rest (c_60 = 29.5 under E_s = 100,000, 73.7 under 40,000) -4.0 and -10.1, so the reading of c_60 decides the number and the ratio per level is the expectation; the band 1.5 Links (the rounding's 0.5, the draw's 0.9 at 640 clicks, the optics' 0.1). THE RATIO TO THE ENGINE BEFORE THE PACES' FIX IS EXACTLY 2: the Link once gives -0.0685 per level (-3.2 at c_60 = 47), the Link twice doubles it at every wavelength and every field, and the clock's second order changes the bending by less than 10^-4 (U^2 ~ 10^-5). The row's -3.8 (4 U_b L, U_b = c_b / Gamma, nature's form) beside it, never tuned to.",
+  "shift_per_level_at_60": -0.137
  },
  "GAMEBOARD": [
   {
