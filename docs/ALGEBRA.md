@@ -533,15 +533,12 @@ iteration runs on the body's Nodes and their surroundings, out to where
 the mode's tail falls below one unit; the count stays on the body's Nodes.
 
 (b) THE ITERATION. Rule3's read act with the before-coefficient 0, a <-
-(SUM_a R_a arr_a + S a) div w on the region, then the division act to
-the amplitude unit A (the level times A over its largest size): the
-power iteration of the symmetric form's top mode (the bound mode, above
-the band, the eigenvalue largest in size), at cos omega_0 / cos omega_b per step.
+(SUM_a R_a arr_a + S a) div w on the region, run at the amplitude 2^16 and
+scaled to the amplitude unit A by the division act at the end alone (the
+level times A over its largest size): the power iteration of the symmetric
+form's top mode (the bound mode, above the band, the eigenvalue largest in size), at cos omega_0 / cos omega_b per step; the read act at a small amplitude zeroes the tail's levels of 1 and 2 and stops on a mode half as wide (COMPUTED, 600 quanta on a chain: [106, 91, 63, 35, 14, 2, 0] against the mode's [106, 105, 85, 62, 44, 30, 20, 13, 9, 6, 4, 2.5, 1.6]), so the region grows until its outer envelope is 0 and nothing inside it is purged.
 
-(c) THE STOP FROM THE INTEGERS. The profile is an integer vector bounded by
-A, so the iteration is a map on a finite set and enters a cycle; the stop is
-the first repeat, exact, no tolerance and no declared count, the profile
-there the mode within one unit of A.
+(c) THE STOP FROM THE INTEGERS, THE STANDING READ. The profile is an integer vector bounded by A, so the iteration is a map on a finite set and enters a cycle; the stop is the first repeat, exact, no tolerance and no declared count, the profile there the mode within one unit of A. A record stands when between two whole cycles of its rotation (P_body intervals) the form D_i = now_i^2 - next_i before_i returns to itself at every Node of its region within one quantum, |D_i(t + P_body) - D_i(t)| < T (the form is the count's shadow: a form that drifts by T over a cycle moves a quantum, and a standing record moves none); the region is every Node whose form is at least a hundredth of a quantum, T div 100, the mode's tail falling by e^(-2 kappa) per Link in the form with cosh kappa = (3 den / num) cos omega_b - 2 on a chain and by the support function of [the shape] in a box, and nothing inside the region is purged; a reading of the centre alone is a reading and no stop, and a record whose form drifts by T or more at any Node of its region is a packet and no mode. THE QUANTUM'S ACTION SETS THE RESOLUTION: one rounding of a level at the amplitude A moves 2 A / T of a quantum of form, so at T = 64 no record of 600 quanta stands at any amplitude (the rounding a third of a quantum in the tail per interval; the reader refuses and the engine spreads the count from the width 4 to 26), while from T = 4,096 the same record stands (599 of 600 quanta carried on 19 Nodes, held 1,000 intervals by the engine, the count's width 2.7 to 3.2 as laid, 0 to 6 quanta beyond the set): the universe's T for worlds of bodies is the owner's, the shipped worlds keep 64 bit for bit.
 
 (d) THE TWO LEVELS AND THE AMPLITUDE FROM THE COUNT. The mode's second
 level is the read act once more, halved (**M** phi = 2 cos omega_b
