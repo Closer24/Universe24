@@ -180,7 +180,7 @@ its own name, outside the law.
 The **pace** of a Node for a family is what its reads make of the Node
 clock:
 
-  p_0 = Gamma - SUM over the reads of (weight x by x the read family's time level at the Node),
+  p_0 = Gamma - c + (c x c) div (2 Gamma),  c = SUM over the reads of (weight x by x the read family's time level at the Node),
   p_a = p_0 - SUM over the reads of (weight x by x the read family's time level at the Node) - SUM over the reads of (weight x by x the read family's aa component div 2),  a = x, y, z,
 
 one division per read per axis, rounded at the read: the pace is a coefficient of the interval and no level, so no remainder is kept for it (nothing at a Node but the law's numbers). A positive weight is a hollow (the read family's level
@@ -188,7 +188,7 @@ slows the clock, an attraction); a negative weight is a hill. By "q" the
 weight is multiplied by the reading record's charge sign. A family with
 no reads steps at p_0 = p_a = Gamma, the plain rule. The clock's slowing
 is this pace: a record at a Node of pace p rotates and moves as a record
-at Gamma does, with its intervals p / Gamma as long. THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the time level lowers the clock's pace p_0 once and each axis's pace p_a once more, so a wave's speed along a Link falls by the level twice (the Link as well as the clock, as nature's light past a body bends by twice the clock's share) while a mode's rest rotation, from S alone, falls by the level once (the owner's word, 2026-09-28, 08:40 Israel: the light experiment settles the symmetries inside the engine, with Nature24's line of 08:55 Israel; the bending's centroid against the twin reads it, twice the clock's share).
+at Gamma does, with its intervals p / Gamma as long. THE LEVEL ENTERS THE LINK TWICE AND THE CLOCK ONCE: the time level lowers the clock's pace p_0 once and each axis's pace p_a once more, so a wave's speed along a Link falls by the level twice (the Link as well as the clock, as nature's light past a body bends by twice the clock's share) while a mode's rest rotation, from S alone, falls by the level once (the owner's word, 2026-09-28, 08:40 Israel: the light experiment settles the symmetries inside the engine, with Nature24's line of 08:55 Israel; the bending's centroid against the twin reads it, twice the clock's share). THE CLOCK'S SECOND ORDER: the level enters the clock once and its square over twice the clock, p_0 = Gamma - c + (c x c) div (2 Gamma), one more division act rounded at the read like the others, while the Link's pace stays p_a = Gamma - 2 c - (the aa components div 2), so that p_0 x p_0 = Gamma^2 (1 - 2 Phi + 2 Phi^2) to the second order in the level's share Phi = c / Gamma. COMPUTED by the geometric optics of the band beside the paper (einstein_check.py, both forms of S): the light's bending 4 U_1 / b (2.02 x Newton's) with the clock to the first order or the second, the periapsis advance of the matter pair 7 pi U_1 / (a (1 - e^2)) (1.17 x Einstein's) with the clock to the first order and 6 pi U_1 / (a (1 - e^2)) (1.00 x Einstein's) with the second order; the second order of the clock is the line and the engine follows it (the owner's word, 2026-09-29, with the Link twice).
 
 THE GUARD, two-sided: 0 < p <= P at every Node, with the edge
 
