@@ -629,17 +629,7 @@ and the world is refused by name; between open faces the harmonic well of the so
 
 **The start**. The loop writes every held family at the load at its rest, by
 one folder found by its name, once before the first interval and never in
-it, the level and its remainder together (the fixed point of the division act is a pair: with the rounded rest a and its line's residual rho = num SUM_6 a - 6 den a, the remainder r_0 is one from which the first step returns a, any r_0 with 0 <= rho + r_0 < w, the half wall the division's unbiased origin for every Node whose |rho| is below it, and the hold's carries stand spread over the body's Nodes so the source's current is even from the first interval; a remainder 0 by fiat is no rest, the first step kicks every Node whose rho is negative, Newton's reading of 2026-09-28): on a chain (one layer on two axes) in one pass in integers, the
-tridiagonal line with the sources on its right side; on a box a guess of the line's solver refined on the exact
-residual R and certified in whole integers: the exit-time field T of the
-same line, with its own exact residual rho, bounds the inverse, ||A^-1|| <=
-||T|| / (6 den x scale - ||rho||), so the field stands within ||A^-1|| ||R||
-of the exact rest, and where every free Node is farther than that from a
-half the levels are the rest's nearest integers; a Node nearer takes a
-finer unit once, then rounds up, the half's own side. Generic (the
-row's pair and divisor), vector (the levels by the division act, the certificate in
-integers; the guess is no value of the law), local (the six reads and the
-source); the cost is the load's.
+it, the level and its remainder together (the fixed point of the division act is a pair: with the rounded rest a and its line's residual rho = num SUM_6 a - 6 den a, the remainder r_0 is one from which the first step returns a, any r_0 with 0 <= rho + r_0 < w, the half wall the division's unbiased origin for every Node whose |rho| is below it, and the hold's carries E_s div 2 at the sources' Nodes so the source's current is even from the first interval; a remainder 0 by fiat is no rest, the first step kicks every Node whose rho is negative, Newton's reading of 2026-09-28). The rest is (g)'s iteration and nothing else, on a chain and a box alike and in the generator as in the engine: the division act from nothing until the levels repeat, the levels the fine levels' nearest integers by the division act. Generic (the row's pair and divisor), vector (the division act alone), local (the six reads and the source); the cost is the iteration's, about the square of the board's extent for the massless row.
 
 ### The velocity
 

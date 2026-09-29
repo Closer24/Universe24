@@ -186,3 +186,22 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             if isinstance(node, ast.FunctionDef):
                 assert "split" not in node.name.lower(), f"{path.name}: {node.name}"
+
+
+# The integers the law writes and the engine may hold: 0 and 1 (the identity and the direction, -1 the inverse and the hole), 2 (the halves: W_c div 2, the half wall, the axis contents' rounding, two levels), 3 (the three axes, 3 den) and 6 (the six Ports, 6 den); in Rule3's own line (core/rule3.py) also 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2.
+LAW_INTEGERS = frozenset({0, 1, 2, 3, 6})
+RULE_LINE_INTEGERS = frozenset({4, 12})
+
+
+def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_generator():
+    """No integer literal in src/event_universe or tools/pixel_mode.py beyond the law's own (LAW_INTEGERS; Rule3's line's 4 and 12 in core/rule3.py alone): every other number is a file's key or the rule's own act, so a number cannot enter the engine again."""
+    import ast
+
+    found = []
+    for path in [*sorted(SOURCE.rglob("*.py")), ROOT / "tools" / "pixel_mode.py"]:
+        allowed = LAW_INTEGERS | (RULE_LINE_INTEGERS if path.name == "rule3.py" else frozenset())
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(node, ast.Constant) and type(node.value) in (int, float, complex):
+                if node.value not in allowed or type(node.value) is not int:
+                    found.append(f"{path.relative_to(ROOT)}:{node.lineno} {node.value!r}")
+    assert not found, found

@@ -58,14 +58,14 @@ def current(weight: int, here: Levels, there: Levels) -> Any:
 
 def bound(term: CountTerm) -> int:
     """The largest total the line reaches at a Node whose levels stand at A: one current per Port, the weight times the two products of two levels at A, W_c (most + 1) and the remainder below W_c (ALGEBRA.md #the-counts-line, the bound)."""
-    current_bound = term.weight * PRODUCTS * term.amplitude * term.amplitude
+    current_bound = abs(term.weight) * PRODUCTS * term.amplitude * term.amplitude
     return PORTS * current_bound + term.norm * (term.most + 1) + term.norm
 
 
 def check(term: CountTerm, start: CountStart) -> None:
-    """The refusals by name: W_c and the weight from 1, the direction +1 or -1, six Links, the total within int64."""
-    if term.norm < 1 or term.weight < 1:
-        raise ValueError(f"the count's line needs W_c = {term.norm} and the weight {term.weight} from 1")
+    """The refusals by name: W_c from 1, the direction +1 or -1, six Links, the total within int64."""
+    if term.norm < 1:
+        raise ValueError(f"the count's line needs W_c = {term.norm} from 1")
     if start.direction not in (1, -1):
         raise ValueError(f"the count's line runs in the direction +1 or -1, got {start.direction}")
     if len(start.links) != PORTS:

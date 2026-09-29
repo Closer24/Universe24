@@ -2,8 +2,7 @@
  "integers": {
   "node_clock": 24,
   "quantum_action": 128,
-  "width": 63,
-  "most_families": 20
+  "width": 63
  },
  "families": [
   {

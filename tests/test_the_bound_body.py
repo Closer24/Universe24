@@ -52,12 +52,12 @@ def test_a_chain_body_at_gamma_6000_keeps_its_quanta_over_a_hundred_intervals(tm
     universe["families"] = [row for row in universe["families"] if row["name"] != "charge"]
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     board = GameBoard(load_world(world))
-    body, matter = board.bodies[0], board.states[2]
+    body, matter = board.bodies[0], board.states[-1]
     inset = body.nodes.copy()
     near = inset | np.roll(inset, 1, axis=0) | np.roll(inset, -1, axis=0)
     board.step()
     assert matter.count is not None and matter.count_remainder is not None
-    wall, laid = node.count_wall(board.families[2], 32768), int(matter.count.sum())
+    wall, laid = node.count_wall(board.families[-1], 32768), int(matter.count.sum())
     total = int((wall * matter.count.astype(object) + matter.count_remainder).sum())
     assert abs(laid - 600) <= 2 * 24 + 1
     for _ in range(99):
