@@ -90,3 +90,6 @@ def test_a_chain_body_at_gamma_6000_keeps_its_quanta_over_a_hundred_intervals(tm
         form = wall * int(simulation._body_count(block))
         assert abs(block.momentum[0] * form - momentum_wall * current) <= form
         assert abs(block.momentum[0]) <= 3 * simulation.momentum_unit and block.momentum[1:] == [0, 0]
+        # THE BODY'S NODES ARE WHERE ITS COUNT STANDS: the set follows the quanta by the line alone, the shell with it
+        assert np.array_equal(block.mask, block.counts != 0)
+        assert block.corner == [int(np.argwhere(block.mask)[:, 0].min()), 0, 0]

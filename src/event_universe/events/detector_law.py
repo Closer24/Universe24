@@ -282,7 +282,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             self._counts_act(function, block, 1)
 
     def _counts_act(self, line: Callable[..., object], block: Block, direction: int) -> None:
-        """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its first act (`_lay_count`: at every Node T c + r the Node's share of the record's form plus the origin T / 2), then per interval the record's levels here and across the six Ports (the Ports' arrivals), the count and its remainder stepped by the line forward or back (the direction +1 or -1), the body's Nodes following the count's centroid."""
+        """THE COUNT'S LINE ON A BODY (ALGEBRA.md #the-counts-line): the line's levels laid at its first act (`_lay_count`: at every Node T c + r the Node's share of the record's form plus the origin T / 2), then per interval the record's levels here and across the six Ports (the Ports' arrivals), the count and its remainder stepped by the line forward or back (the direction +1 or -1), the body's Nodes then the Nodes where its count stands (`_follow_count`)."""
         live = block.own
         if live is None:
             return
@@ -298,8 +298,19 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction)
         writes = cast(CountWrites, line(term, start, None))
         block.counts, block.count_remainder = writes.count, writes.remainder
+        self._follow_count(block)
         if direction > 0:
             self._read_momentum(block, arrived, wall)
+
+    def _follow_count(self, block: Block) -> None:
+        """THE BODY'S NODES ARE WHERE ITS COUNT STANDS (ALGEBRA.md #what-a-body-is (c), the surface rule): after the line the body's set is the Nodes whose count is not 0, its corner the set's lower corner, so the shell that reads its clicks moves with its quanta; the line alone moves it."""
+        if block.counts is None:
+            return
+        standing = block.counts != 0
+        if not bool(standing.any()) or np.array_equal(standing, block.mask):
+            return
+        block.mask = standing
+        block.corner = [int(low) for low in np.argwhere(standing).min(axis=0)]
 
     def _body_count(self, block: Block) -> int:
         """The count at the body, its quanta: the declared count per Node over its Nodes (the record's norm in quanta, ALGEBRA.md #what-a-body-is; the count's line moves them between the Nodes and loses none)."""
