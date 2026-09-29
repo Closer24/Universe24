@@ -24,6 +24,10 @@ manuscript.
 - `general_formula/dimension_check.py`: the check of the scaling of one
   hollow on a chain, a plane and a box, the bodies it allows by mass, a
   computation of the algebra on a lattice, by no run of the engine.
+- `general_formula/stable_body_check.py`: the stable body theorem in
+  closed form, the two critical points of a body under the binding hollow
+  and gravity, the largest mass with a minimum, and the lattice check of
+  the two kernels' constants, by no run of the engine.
 - `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
   the journal.
 - `general_formula/COVER_LETTER.md`: the cover letter for the journal.
