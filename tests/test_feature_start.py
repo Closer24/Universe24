@@ -87,9 +87,8 @@ def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
     for family in steady.held_records:
         divisor = steady.families[family].held_divisor
         nodes = [node for node, value in steady.node_sources(0, steady.families[family].held) if value]
-        assert [block.hold_carry[(family, "n", *node)] for node in nodes] == [
-            j * divisor // len(nodes) for j in range(len(nodes))
-        ]
+        # THE CARRY'S ORIGIN IS ONE FOR EVERY NODE, E_s div 2: a ramp over the Nodes in memory order tilted a resting body's well along the first axis and the body pushed itself (2026-09-29)
+        assert [block.hold_carry[(family, "n", *node)] for node in nodes] == [divisor // 2] * len(nodes)
     totals = [sum(int(record.now.sum()) for record in steady.held_records.values())]
     for _ in range(40):
         steady.step()
