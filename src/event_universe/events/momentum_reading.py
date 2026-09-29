@@ -19,12 +19,15 @@ def read_momentum(
 ) -> None:
     """THE MOMENTUM AS A READING (the loop's method `_read_momentum`; ALGEBRA.md #the-generator (e), the recoil's row): n = W x the record's velocity, W = 3 Q M the body's wall and the velocity the record's current over its form: per axis the count's line's booking weight x (now_j before_i - before_j now_i) from Node i to its neighbour j through the +a Port, summed over the Links from the arrivals the count's line read (the second level's term added on a pair), over the count's wall T (the form per quantum) times M, to the nearest unit by the division act; no level, no remainder: both levels of the body's momentum are the reading, forward and back alike (the feed's pair one number); the products in the width, the sum in whole integers; a GAMEBOARD reading."""
     live, quanta = block.own, loop._body_count(block)
-    if live is None or block.count_norm < 1 or quanta < 1 or block.definition.nodes is None:
+    if live is None or loop.world.quantum_action < 1 or quanta < 1 or block.definition.nodes is None:
         return  # a body of the older form (by its position) keeps its declared momentum, the pushing agent's
     levels = [(live.now, live.before, arrived[0], arrived[1])]
     if live.im_now is not None and live.im_before is not None:
         levels.append((live.im_now, live.im_before, arrived[2], arrived[3]))
-    denominator, reading = block.count_norm * quanta, []
+    denominator, reading = (
+        loop.world.quantum_action * quanta,
+        [],
+    )  # the record's form c T (THE COUNT IS THE RECORD'S FORM)
     for axis in range(3):
         total = 0
         for now, before, now_arrived, before_arrived in levels:

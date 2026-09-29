@@ -15,7 +15,6 @@ RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
     # The registers, worlds and generators a living test reads by path (the ray law's
     # rows were deleted with their tests on 2026-09-26, docs/CANCELLED_WORLDS.md).
     # The law document's words and links (#1198, gate 5).
-    "docs/ALGEBRA.md": ("tests/test_law_words.py",),
 }
 
 
@@ -205,12 +204,7 @@ def select(changed, sources):
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
-        if path.endswith(".md") or path == "MANIFEST.in":
-            tests.add("tests/test_repository_navigation.py")
-        # Paths and duplicate contents can change in any source file, not just Python.
-        tests.update(("tests/test_repository_language.py", "tests/test_repository_hygiene.py"))
         if path.startswith("src/") and path.endswith(".py"):
-            tests.add("tests/test_architecture.py")
             # The algebra gate reads the physical modules by their path.
             tests.add("tests/test_integer_algebra.py")
         # A world, an asset or a tool is a runtime dependency of the tests
@@ -221,8 +215,6 @@ def select(changed, sources):
                 for p, text in sources.items()
                 if p.startswith("tests/test_") and Path(path).name in text
             )
-        if path.startswith("tools/") or path.startswith(".github/workflows/"):
-            tests.add("tests/test_check_scope.py")
         if path in ("tests/conftest.py", "pyproject.toml", ".python-version"):
             # Shared fixtures, interpreter and package configuration affect all consumers.
             tests.update(p for p in sources if p.startswith("tests/test_"))

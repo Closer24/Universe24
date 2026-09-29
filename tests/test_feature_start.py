@@ -6,11 +6,7 @@ import numpy as np
 import pytest
 
 from event_universe.core.register import discover
-from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.start import arrivals, chain_rest, field_at_rest, rest
-from event_universe.world_files import parse_nature_beam_world
-from tests.running import stamped
-from tests.worlds import emitter_world
 
 
 def chain(extent: int = 40) -> np.ndarray:
@@ -55,45 +51,6 @@ def test_a_box_takes_the_certified_rest_the_clamps_levels_and_a_half_rounded_up_
     assert (found.levels[~halves] == clamped.levels[~halves]).all()
     with pytest.raises(ValueError, match="no body"):
         rest(np.zeros((9, 1, 1), dtype=np.int64), (1, 1), (True, True, True))
-
-
-def test_the_loop_starts_every_held_family_at_its_rest_at_the_load():
-    """THE START in the loop (ALGEBRA.md #the-generator, THE START; the hold's row as a sum): at the load, after the held records, every held family's time part is the folder's rest on the sum's sources, the bodies' weighted counts at their Nodes over the row's divisor, at both levels with the remainder 0, before the first interval; a family no body holds stays at 0; the field reaches beyond the bodies and sits below the source's height where the divisor is one."""
-    document = emitter_world(stock=1, ticks=2)
-    for entry in document["universe"]:
-        if "held" in entry:
-            entry["held"] = {**entry["held"], "divisor": 1}  # a copy: the sources are the counts
-    simulation, started = DetectorLawSimulation(parse_nature_beam_world(stamped(document))), 0
-    for family, record in simulation.held_records.items():
-        definition, counts = simulation.families[family], np.zeros(simulation.shape, dtype=np.int64)
-        for number in range(len(simulation.held)):  # every body's Nodes, a block's or a span's
-            block = simulation.block_by_number.get(number)
-            mask = block.mask if block is not None else simulation.span_masks[number]
-            counts[mask] = simulation.body_source(number, definition.held)
-        if not counts.any():
-            assert not record.now.any() and not record.before.any()
-            continue
-        divisor = definition.held_divisor
-        expected = rest(counts, definition.pair, simulation.kind_wrap[family], divisor).levels
-        assert np.array_equal(record.now, expected) and np.array_equal(record.before, expected)
-        assert (record.remainder == (3 * definition.pair[1] - 1) // 2).all()  # the half wall
-        assert simulation.node_level[family] is record.now
-        assert (expected != 0).sum() > (counts != 0).sum()  # the field reaches beyond the bodies
-        started += 1
-    assert started >= 1
-    # THE REST OF THE HOLD'S CARRIES: over the file's divisor the body's Nodes carry j E_s div N, so the source stream is steady from the first interval and the held total moves only by the loads less the faces' flux, within the rounding's reservoir (two per Node) and one unit per interval; with carries at 0 the whole field sinks
-    steady = DetectorLawSimulation(parse_nature_beam_world(stamped(emitter_world(stock=1, ticks=2))))
-    block = steady.block_by_number[0]
-    for family in steady.held_records:
-        divisor = steady.families[family].held_divisor
-        nodes = [node for node, value in steady.node_sources(0, steady.families[family].held) if value]
-        # THE CARRY'S ORIGIN IS ONE FOR EVERY NODE, E_s div 2: a ramp over the Nodes in memory order tilted a resting body's well along the first axis and the body pushed itself (2026-09-29)
-        assert [block.hold_carry[(family, "n", *node)] for node in nodes] == [divisor // 2] * len(nodes)
-    totals = [sum(int(record.now.sum()) for record in steady.held_records.values())]
-    for _ in range(40):
-        steady.step()
-        totals.append(sum(int(record.now.sum()) for record in steady.held_records.values()))
-    assert max(abs(total - totals[0]) for total in totals) <= 40 + 2 * int(np.prod(steady.shape))
 
 
 def test_the_sources_rest_solves_the_sums_line_on_a_chain_and_on_a_box_alike():

@@ -227,7 +227,7 @@ class FamilyDefinition:
     spin_weights: tuple[tuple[int, int], tuple[int, int]] | None = None
     # THE SOURCE (9.117 row "the source"): the target family by index, the signed weight, the
     # scale and the cap or None; the loop builds the source's term from it (Main Loop, #1236)
-    sourced: tuple[int, int, int, int | None] | None = None
+    sourced: tuple[int, int, int] | None = None
     # the self-source's unit P_2 (ALGEBRA.md #a-familys-declaration, #the-interval): 0, off
     self_unit: int = 0
     # THE CLICKS (ALGEBRA.md #a-familys-declaration, #the-interval): (gives, takes) for a family of records,
@@ -819,15 +819,13 @@ def _families_of(
             curl = cast(tuple[int, int], weights["curl"])
             tidal = cast(tuple[int, int], weights["tidal"])
             spin_weights = ((curl[0], curl[1]), (tidal[0], tidal[1]))
-        sourced: tuple[int, int, int, int | None] | None = None
+        sourced: tuple[int, int, int] | None = None
         if "sourced" in obj:
             term = cast(dict[str, object], obj["sourced"])
-            cap = cast(int, term["cap"]) if "cap" in term else None
             sourced = (
                 names.index(cast(str, term["of"])),
                 cast(int, term["weight"]),
                 cast(int, term["scale"]),
-                cap,
             )
         self_source = cast(dict[str, object], obj["self_source"])
         self_unit = cast(int, self_source["unit"])

@@ -254,7 +254,6 @@ class Block:
     # follow the count's centroid by whole Links, `moved` where they shifted in the last act
     counts: np.ndarray | None = None
     count_remainder: np.ndarray | None = None
-    count_norm: int = 0
     moved: bool = False
     previous_sum: int = 0
     own: LiveRecord | None = None

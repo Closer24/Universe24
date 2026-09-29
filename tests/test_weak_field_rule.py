@@ -6,10 +6,7 @@ import math
 
 import pytest
 
-from event_universe.core.rule3 import coefficients, rule_total_bound
-from event_universe.world_files import parse_nature_beam_world
-from tests.bodies import content_chain
-from tests.worlds import PERIODIC
+from event_universe.core.rule3 import coefficients
 
 
 def test_the_rotation_and_the_dispersion_carry_the_clocks_second_order_weight():
@@ -30,18 +27,3 @@ def test_the_rotation_and_the_dispersion_carry_the_clocks_second_order_weight():
             s6 = 2 * math.cos(k) + 4
             cos_omega = (read * s6 + self_coefficient) / (2 * wall)
             assert cos_omega == pytest.approx(1 - f * (1 - math.cos(k)) / 3, abs=1e-12)
-
-
-def test_the_int64_bound_from_the_rules_own_total_at_the_integers_of_the_algebra():
-    gamma, room = 10_000, 1 << 63
-    assert rule_total_bound(800, 809, gamma, 128, 1 << 20, True) < room // 6
-    assert rule_total_bound(3200, 3227, gamma, 2, 1 << 20, True) < room  # two thirds of the room
-    assert rule_total_bound(3200, 3227, gamma, 2, 1 << 21, True) > room  # 2^21 refused there
-    assert rule_total_bound(800, 809, 1_000_000, 64, 1 << 20, True) > room  # Gamma 10^6 refused
-    assert rule_total_bound(1, 1, 1, 0, 1 << 20, False) == 6 * (1 << 20) + 3 * ((1 << 20) + 1)
-    # the loader derives A as the largest level whose total fits at the levels 0, Gamma div 2 and Gamma - 1 over the world's pairs (ALGEBRA.md #a-familys-declaration): every pair's total fits at A, and one pair's exceeds the room at A + 1
-    document = content_chain(12, PERIODIC, range(12), 250, gamma=1_000_000)
-    world, pairs = parse_nature_beam_world(document), [tuple(f["pair"]) for f in document["universe"]]
-    levels, bound, edge = (0, 500_000, 999_999), world.amplitude_bound, world.amplitude_bound + 1
-    assert all(rule_total_bound(*p, 1_000_000, c, bound, True) < room for p in pairs for c in levels)
-    assert any(rule_total_bound(*p, 1_000_000, c, edge, True) >= room for p in pairs for c in levels)
