@@ -28,6 +28,11 @@ manuscript.
   closed form, the two critical points of a body under the binding hollow
   and gravity, the largest mass with a minimum, and the lattice check of
   the two kernels' constants, by no run of the engine.
+- `general_formula/surplus_check.py`: the check of the law's line THE
+  SURPLUS LEAVES on a chain: the form's exact fall under a deepening well
+  at a kept count (the mass defect), the free part, a cloud breathing in a
+  static well with open and with closed faces, and the swing of the form
+  at the shell, by no run of the engine.
 - `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
   the journal.
 - `general_formula/COVER_LETTER.md`: the cover letter for the journal.
