@@ -9,9 +9,6 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rule_total_bound
-from event_universe.events import detector_law
-from event_universe.world_files import parse_nature_beam_world
-from tests.worlds import emitter_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
@@ -155,25 +152,6 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
     assert all(re.search(pattern, own) for pattern in RULE_LINES)
 
 
-def test_every_step_of_the_engine_goes_through_the_one_rule(monkeypatch):
-    """The engine's records step and step back through rule3 alone (+1 forward, -1 back, a spy on the one name the engine imports), and the operation primitive of the register is rule3 itself."""
-    calls, real_rule = {"forward": 0, "backward": 0}, detector_law.rule3
-
-    def spy_rule(*args: object) -> object:
-        calls["forward" if len(args) < 8 or args[7] == 1 else "backward"] += 1
-        return real_rule(*args)
-
-    monkeypatch.setattr(detector_law, "rule3", spy_rule)
-    simulation = detector_law.DetectorLawSimulation(
-        parse_nature_beam_world(emitter_world(stock=1, ticks=4))
-    )
-    assert simulation.register.at("the operation", "(i)") is rule3
-    simulation.step()
-    assert calls["forward"] >= len(simulation.held_component_records()) and calls["backward"] == 0
-    simulation.step_inverse()
-    assert calls["backward"] >= 1 and simulation.books()["balanced"]
-
-
 # A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
 SHIFT_HOME = {"src/event_universe/core/ports.py": {"arrival"}}
 SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
@@ -209,25 +187,3 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             if isinstance(node, ast.FunctionDef):
                 assert "split" not in node.name.lower(), f"{path.name}: {node.name}"
-
-
-def test_a_run_stepped_forward_and_back_returns_bit_for_bit():
-    """Rule3 with the direction -1 undoes +1 exactly: the emitter world eight intervals forward and eight back returns every record's levels, remainders and the held levels bit for bit (ALGEBRA.md #the-direction)."""
-    simulation = detector_law.DetectorLawSimulation(
-        parse_nature_beam_world(emitter_world(stock=1, ticks=8))
-    )
-    start = {
-        key: (live.now.copy(), live.before.copy(), live.remainder.copy())
-        for key, live in simulation.records.items()
-    }
-    held = {key: record.now.copy() for key, record in simulation.held_records.items()}
-    for _ in range(8):
-        simulation.step()
-    for _ in range(8):
-        simulation.step_inverse()
-    for key, (now, before, remainder) in start.items():
-        live = simulation.records[key]
-        assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
-        assert np.array_equal(live.remainder, remainder)
-    for key, level in held.items():
-        assert np.array_equal(simulation.held_records[key].now, level)

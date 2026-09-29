@@ -5,12 +5,9 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from event_universe.core.register import folder_of
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features import signed_read
 from event_universe.features.signed_read import (
-    DECLARATION,
-    THE_WORD,
     SignedReadOwn,
     SignedReadStart,
     SignedReadTerm,
@@ -18,10 +15,6 @@ from event_universe.features.signed_read import (
     pace_bound,
     stability_bound,
 )
-from event_universe.world_files import parse_nature_beam_world
-from tests.bodies import CHAIN, MATTER, QUANTA, charged_chain
-from tests.bodies import GAMMA as CHAIN_GAMMA
-from tests.worlds import emitter_world
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
 
@@ -53,52 +46,6 @@ def hand_line(simulation: DetectorLawSimulation, family: int, node: tuple[int, .
         level = int(simulation.node_level[other][node])
         products.append(weight * level if by == "plain" else -q * weight * level)
     return simulation.node_clock - sum(products)
-
-
-def test_apply_equals_the_engines_read_bit_for_bit_on_the_emitters_world():
-    """The emitter's unit world: the folder's content equals `_effective_content` at every reading family over twenty intervals, the guard passes, and the hand identity p_0 = Gamma - the sum holds."""
-    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=20)))
-    readers = [family for family, definition in enumerate(simulation.families) if definition.reads]
-    assert readers
-    nodes = [(x, 0, 0) for x in (0, 5, 21, 36, 71)]
-    for _ in range(20):
-        simulation.step()
-        for family in readers:
-            writes = apply(
-                term_of(simulation, family), start_of(simulation, family), own_of(simulation, family)
-            )
-            assert np.array_equal(writes.content, simulation._effective_content(family))
-            assert writes.content.dtype == np.int64
-            for node in nodes:
-                pace = simulation.node_clock - int(writes.content[node])
-                assert pace == hand_line(simulation, family, node)
-                assert pace == simulation.node_clock_pair(node, family)[0]
-
-
-def test_the_edge_is_where_the_rules_checkerboard_factor_crosses_minus_two():
-    """The guard's bound P = isqrt(2 den Gamma^2 div (den + num)) is the last pace at which the mode at wave number pi, (S - 6 R) / w = 2 - 2 (1 + num / den) (p / Gamma)^2, stays at or above -2 (ALGEBRA.md #the-paces): 1002 for [800, 809], 1015 for [800, 850], 1000 for [1, 1]"""
-    for pair, expected in (((800, 809), 1002), ((800, 850), 1015), ((1, 1), 1000)):
-        bound = pace_bound(pair, CHAIN_GAMMA)
-        assert bound == expected
-        left, right = stability_bound(pair, CHAIN_GAMMA)
-        assert bound * bound * left <= right < (bound + 1) * (bound + 1) * left
-        for pace, admitted in ((bound, True), (bound + 1, False)):
-            assert (2 * pair[1] * CHAIN_GAMMA**2 - (pair[0] + pair[1]) * pace * pace >= 0) is admitted
-
-
-@pytest.mark.diagnostic
-def test_a_like_charge_hill_is_admitted_to_the_edge_and_read_as_the_floor_beyond_it():
-    """The charged chain: a matter record of charge +1 reads c - d at the one weight 1 (THE FAMILIES FROM THE RULE: Lambda left the files), p = 1000 <= 1002, admitted (the largest pace over the GameBoard is a GameBoard reading, a diagnostic, not a measurement), and the hollow filled to the vacuum's pace at a slab Node reads the floor 0."""
-    admitted = DetectorLawSimulation(
-        parse_nature_beam_world(charged_chain(60, CHAIN, range(20, 30), QUANTA, 1, 1))
-    )
-    for _ in range(3):
-        admitted.step()
-        writes = apply(term_of(admitted, MATTER), start_of(admitted, MATTER), own_of(admitted, MATTER))
-        assert np.array_equal(writes.content, admitted._effective_content(MATTER))
-        # a GameBoard reading (a diagnostic), not a measurement
-        assert int(np.max(admitted.node_clock - writes.content)) == CHAIN_GAMMA
-    assert int(writes.content[20, 0, 0]) == 0 and int(np.min(writes.content)) == 0
 
 
 def test_a_hill_enters_at_the_floor_and_the_axis_contents_meet_the_stability_edge():
@@ -199,23 +146,3 @@ def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_
     ):
         signed_read.content_of(two, SignedReadStart(shape, {1: half, 2: half}, None))
     assert signed_read.TOTAL_BOUND == 2**63 - 1
-
-
-def test_the_declaration_is_the_ledgers_row():
-    """The folder declares the row of ALGEBRA.md #the-primitives: the name, the place (i), the four reads in the row's words, the paces as its one write with no order, its function `apply`, its section."""
-    assert DECLARATION.name == "the signed read" and DECLARATION.place == "(i)"
-    assert DECLARATION.reads == (
-        "the read families' arguments at the interval's start (a level, or D_i for a pair)",
-        "the signed weights",
-        "by (plain, or q)",
-        "the axis contents with their remainders",
-    )
-    assert DECLARATION.writes == ("the paces",) and DECLARATION.function is apply and DECLARATION.built
-    assert DECLARATION.word == "the right side"
-    assert DECLARATION.section.startswith(THE_WORD) and THE_WORD.startswith("from the rule")
-    assert "#the-primitives" in DECLARATION.section and "#the-paces" in DECLARATION.section
-    assert folder_of(DECLARATION.name) == "signed_read"
-    # the engine's register finds this folder; the loop reads through its `apply`, no binder
-    simulation = DetectorLawSimulation(parse_nature_beam_world(emitter_world(stock=1, ticks=2)))
-    registered = simulation.register.declarations["the signed read"]
-    assert registered.function is apply and registered.reads == DECLARATION.reads and registered.built

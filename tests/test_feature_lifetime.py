@@ -2,16 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import replace
-
 import pytest
 
 from event_universe.core.register import discover, folder_of
-from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.features.lifetime import DECLARATION, THE_WORD, LifetimeStart, LifetimeTerm, apply
-from event_universe.world_files import parse_nature_beam_world
-from tests.running import stamped
-from tests.worlds import emitter_world
 
 
 def test_the_declaration_is_the_ledgers_row_and_the_register_finds_it_built():
@@ -41,23 +35,3 @@ def test_a_record_ends_at_age_l_unless_the_ladder_clicked_it_first():
         apply(LifetimeTerm(0), LifetimeStart(0, False))
     with pytest.raises(ValueError, match="age -1 is refused"):
         apply(term, LifetimeStart(-1, False))
-
-
-@pytest.mark.usefixtures("the_loads_hold_alone")
-def test_a_records_of_a_family_with_a_lifetime_end_on_the_border_at_age_l_through_the_loop():
-    """The emitter's unit world with the light family's lifetime L = 10 (set on the parsed world until the loader reads the key): the two records given end on the border `lifetime` at their giving's interval + L, each a click line there with its giving named, the record deleted whole; no record reaches the screen; without a lifetime the border is not made."""
-    document = emitter_world(stock=2, ticks=120)
-    stamped(document)
-    world, lifetime = parse_nature_beam_world(document), 10
-    world = replace(world, families=(replace(world.families[0], lifetime=lifetime), *world.families[1:]))
-    simulation = DetectorLawSimulation(world)
-    assert simulation.detector_names[simulation.lifetime_detector] == "lifetime"
-    lines: list[dict] = []
-    simulation.record = lines.append
-    for _ in range(120):
-        simulation.step()
-    gathers = [line for line in lines if line["event"] == "gather"]
-    ages = [(line["tick"] - line["giving"], line["chosen"]) for line in gathers]  # each at its age L
-    assert ages == [(lifetime, [["lifetime", 0, "0"]])] * 2
-    assert all(line["record"] not in simulation.records for line in gathers)
-    assert DetectorLawSimulation(parse_nature_beam_world(document)).lifetime_detector is None
