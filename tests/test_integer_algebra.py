@@ -15,7 +15,7 @@ SRC = ROOT / "src" / "event_universe"
 # The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "loader/world.py": "the loop's classes built from the checked files and the load-time constants (the flight table, the labels)",
-    "loader/mode.py": "the body's mode as the loader reads it: the period by the one-Node rule from the clock pair, no root",
+    "loader/mode.py": "the body's mode as the loader reads it: the period by the one-Node rule from the clock pair, the recoil's sine as a root at the load",
     "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
     "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
     "loader/derived.py": "the families from the rule: a family's keys derived from its rank and its pair; no arithmetic",
@@ -97,6 +97,7 @@ ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
         "core/rule3.py",
         "clock_pace",
     ): "the integer square root of p_0^2 where a guard or a clock pair reads the pace",
+    ("loader/mode.py", "sine_of"): "at load, the recoil's sine 2 b sin omega_b from the mode clock",
 }
 
 

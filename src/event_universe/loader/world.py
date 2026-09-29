@@ -16,7 +16,7 @@ from event_universe.core.schema import Context
 from event_universe.core.step import STEP_FILE, Step
 from event_universe.loader import derived, frame
 from event_universe.loader.frame import EngineStart
-from event_universe.loader.mode import Levels, moving_levels, period_by_the_rule
+from event_universe.loader.mode import Levels, moving_levels, period_by_the_rule, sine_of
 
 # the ray law's table rules, read by the loop's fixed values alone (DEAD, the paper writer's)
 TABLES = ("read", "measure", "rerelease", "pass", "become")
@@ -312,8 +312,9 @@ class BlockDefinition:
     profile: tuple[int, ...] | None = None
     # THE MODE'S CLOCK (ALGEBRA.md #a-familys-declaration; record 1886): 2 cos omega of the
     # body's bound mode as the rational [a, b] the generator wrote, b at
-    # least the profile's amplitude; the loader's integer check of the profile against the eigen-equation reads it; None for a flat seed
+    # least the profile's amplitude; the loader's integer check of the profile against the eigen-equation reads it; None for a flat seed; `clock_sine` its 2 b sin omega_b, the recoil's sine taken once at the load (`mode.sine_of`)
     clock: tuple[int, int] | None = None
+    clock_sine: int | None = None
     # the proper pairs of a moving body on one Node by the momentum's whole part, today's form (ALGEBRA.md #the-velocity)
     proper_clock: tuple[tuple[int, int], ...] | None = None
     # a moving body's two levels from the mode file, now and before (ALGEBRA.md #the-generator (e)); None on a body at rest
@@ -1091,9 +1092,8 @@ def _block(
     else:
         if pair[1] <= pair[0]:
             raise ValueError(
-                f"{label}.pair [{pair[0]}, {pair[1]}] on light's kind is no gap: the "
-                "(M) wall declares den > num (a lump in the massless surround, "
-                "MASSIVE_RECORD.md section 4)"
+                f"{label}.pair [{pair[0]}, {pair[1]}] on light's kind is no gap: the (M) wall "
+                "declares den > num (a lump in the massless surround, MASSIVE_RECORD.md section 4)"
             )
         clock_keys = [key for key in ("seed", "margin") if key in obj]
         if clock_keys:
@@ -1166,10 +1166,9 @@ def _block(
         proper_clock = tuple((int(item[0]), int(item[1])) for item in value)
     if seed > amplitude_bound:
         raise ValueError(
-            f"{label}.seed {seed} (the scalar seed, or a profile's largest magnitude) "
-            f"is above the world's amplitude bound A = {amplitude_bound} on the pair "
-            f"[{pair[0]}, {pair[1]}]: every admitted amplitude enters the one declared bound "
-            "(issue #1085; MUST 3)"
+            f"{label}.seed {seed} (the scalar seed, or a profile's largest magnitude) is above the "
+            f"world's amplitude bound A = {amplitude_bound} on the pair [{pair[0]}, {pair[1]}]: every "
+            "admitted amplitude enters the one declared bound (issue #1085; MUST 3)"
         )
     ramp = 0 if "ramp" not in obj else _integer(obj["ramp"], f"{label}.ramp", 0)
     start = 0 if "start" not in obj else _integer(obj["start"], f"{label}.start", 0)
@@ -1307,6 +1306,7 @@ def _block(
         extents=extents,
         profile=profile,
         clock=clock,
+        clock_sine=None if clock is None else sine_of(clock),
         proper_clock=proper_clock,
         ramp=ramp,
         start=start,
@@ -1708,6 +1708,7 @@ def _counted(
         moment=moment,
         profile=profile,
         clock=clock,
+        clock_sine=None if clock is None else sine_of(clock),
         levels=levels,
         twist=twist if twist is not None else 0,
         emitter=emitter,
@@ -2149,9 +2150,8 @@ def _detectors(
             for position in positions:
                 if position in inside and position not in at:
                     raise ValueError(
-                        f"{label}.positions names a Node of a body on a set "
-                        f"{list(position)} that is not its position (a body is one record, "
-                        "named by its centre)"
+                        f"{label}.positions names a Node of a body on a set {list(position)} "
+                        "that is not its position (a body is one record, named by its centre)"
                     )
                 if position not in at:
                     raise ValueError(

@@ -20,7 +20,7 @@ def card_writes(loop: DetectorLawSimulation, name: str) -> frozenset[str]:
 
 
 def start_arrays(loop: DetectorLawSimulation) -> Iterator[np.ndarray]:
-    """Every array of the interval's start the main loop freezes for the walk: the records', the bodies' own records' and masks, the held families', the pair arrays, the detector map, the spans, the paces' carries and the held levels."""
+    """Every array of the interval's start the main loop freezes for the walk: the records', the bodies' own records' and masks, the held families', the pair arrays, the detector map, the spans and the held levels."""
     for live in loop.records.values():
         yield from live.arrays()
     for block in loop.blocks:
@@ -34,7 +34,6 @@ def start_arrays(loop: DetectorLawSimulation) -> Iterator[np.ndarray]:
         yield den
     yield loop.detector_at_node
     yield from loop.span_masks.values()
-    yield from loop._pace_carry.values()
     yield from loop.node_level.values()
 
 

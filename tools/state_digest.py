@@ -82,9 +82,9 @@ def canonical(value: Any, out: list[bytes], seen: dict[int, int] | None = None) 
 
 def run_reading(simulation: DetectorLawSimulation, lines: list[dict[str, object]]) -> dict[str, Any]:
     """What the run is, under stable names: the output lines, the engine's state stream, the
-    records' and the held families' levels and remainders, the reads' remainders, the clicks
+    records' and the held families' levels and remainders, the clicks
     and the books, every family by its name. The engine's containers are read by their present names (`records`,
-    `held_records`, `_pace_carry`, `layer.gathers`): a cut that renames one breaks this reader
+    `held_records`, `layer.gathers`): a cut that renames one breaks this reader
     aloud, and the reader follows; the digest never moves on its own."""
     names = [family.name for family in simulation.families]
     records = {
@@ -99,10 +99,6 @@ def run_reading(simulation: DetectorLawSimulation, lines: list[dict[str, object]
     held = {
         names[family]: {"before": record.before, "remainder": record.remainder}
         for family, record in simulation.held_records.items()
-    }
-    reads = {
-        f"{names[reading]} reads {names[read]} on axis {axis}": carry
-        for (reading, read, axis), carry in simulation._pace_carry.items()
     }
     state = dict(simulation.snapshot_stream())
     # the engine lists a body's held stocks and the held families by the family's position in
@@ -119,7 +115,6 @@ def run_reading(simulation: DetectorLawSimulation, lines: list[dict[str, object]
         "state": state,
         "records": records,
         "held families": held,
-        "read remainders": reads,
         "clicks": simulation.layer.gathers,
         "books": simulation.books(),
     }

@@ -153,12 +153,10 @@ def state_arrays(loop: DetectorLawSimulation, world: NatureBeamWorld) -> None:
     loop.family_charge = [int(family.charge[0]) for family in world.families]
     loop.node_level = {family: np.zeros(loop.shape, dtype=np.int64) for family in loop.held_families}
     loop._effective = {}  # HOST: per interval, cleared by the hold
-    # THE FOUR PACES (ALGEBRA.md #the-interval; commit 3): per reading family the
-    # three axis contents t_a (the reads' aa components halved, the division's
-    # remainder carried per Node, `_pace_carry` keyed (family, read, axis)),
-    # computed once per interval (HOST cache by tick); None where every read's
-    # tensor part is silent (the isotropic rule, bit for bit)
-    loop._pace_carry = {}
+    # THE FOUR PACES (ALGEBRA.md #the-interval, #the-paces; commit 3): per reading family the
+    # three axis contents t_a (the reads' aa components halved, rounded at the read, no
+    # remainder kept), computed once per interval (HOST cache by tick); None where every
+    # read's tensor part is silent (the isotropic rule, bit for bit)
     loop._axis_effective = {}
     # THE LEAK TEST (BUILD.md section 26 item 55): a held family no body has ever
     # sourced must be exactly zero everywhere; the hold marks the first nonzero

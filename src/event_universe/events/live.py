@@ -43,7 +43,6 @@ def fingerprints(loop: DetectorLawSimulation) -> dict[str, dict[object, object]]
         b.number: (id(b.hold_value), b.hold_value.version, id(b.hold_carry), b.hold_carry.version)
         for b in loop.blocks
     }
-    stamps["the paces"] = {key: id(array) for key, array in loop._pace_carry.items()}
     stamps["the records alive"] = dict.fromkeys(loop.records, True)
     return stamps
 

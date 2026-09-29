@@ -126,7 +126,6 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
     family_charge: list[int]
     node_level: dict[int, np.ndarray]
     _effective: dict[int, np.ndarray]
-    _pace_carry: dict[tuple[int, int, int], np.ndarray]
     _axis_effective: dict[int, tuple[int, bool, tuple[np.ndarray, ...] | None]]
     _sourced_ever: dict[tuple[int, int], bool]
     span_masks: dict[int, np.ndarray]
@@ -377,11 +376,16 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """The recoil's act (features/recoil): per click of the interval on a body with a record of its own, a mode clock and a mode reading of the quantum's wave number on a world with a twist table, the folder's turn of the record's two levels at the body's Nodes by delta k = sigma_a (k_q div M) per Link along each axis with a tally (the Node's offset from the body's centre; the triple the receive's reading of the table), the angle's remainder carried at the body through the write's line, the taker at +1 and the giver at -1, the turned levels written at the loop's one site (`_write_at_mask`); a body without them takes no recoil; the momentum n is a reading of the record's current (`_read_momentum`), no level of the click's."""
         for number, sense, tally, identity in self._recoils:
             block = self.block_by_number.get(number)
-            emitter = block.definition.emitter if block is not None else None
-            live, clock = (block.own, block.definition.clock) if block is not None else (None, None)
-            if block is None or emitter is None or emitter.wave_number is None or live is None:
+            if block is None or block.own is None or block.definition.emitter is None:
                 continue
-            if clock is None or self._receive_term is None:
+            emitter, live = block.definition.emitter, block.own
+            clock, sine = block.definition.clock, block.definition.clock_sine
+            if (
+                emitter.wave_number is None
+                or clock is None
+                or sine is None
+                or self._receive_term is None
+            ):
                 continue
             nodes, centre = np.argwhere(block.mask), self._window_centre(block)
             offsets = tuple(tuple(int(v) for v in nodes[:, axis] - centre[axis]) for axis in range(3))
@@ -392,7 +396,9 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
                 c, sine, d = receive_triple(self._receive_term, k, port_of(axis, 1))
                 return int(c), int(sine), int(d)
 
-            term = RecoilTerm(emitter.wave_number, self._body_count(block), clock, sense, triple_of)
+            term = RecoilTerm(
+                emitter.wave_number, self._body_count(block), clock, sine, sense, triple_of
+            )
             values = {k[1:]: v for k, v in block.hold_value.items() if k[0] == "recoil"}
             carries = {k[1:]: v for k, v in block.hold_carry.items() if k[0] == "recoil"}
             start = RecoilStart(
@@ -673,7 +679,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             "the signed read",
             "(i)",
             paces,
-            lambda: {"the paces": {key: id(a) for key, a in self._pace_carry.items()}},
+            lambda: {},
         ):
             self._guard()
 
@@ -1250,7 +1256,7 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         return sums[0], sums[1], sums[2]
 
     def _axis_contents(self, family: int, inverse: bool = False) -> tuple[np.ndarray, ...] | None:
-        """THE AXIS CONTENTS t_a of a reading family (ALGEBRA.md #the-interval): SUM over its reads of weight x by x (the read family's aa component div 2), one division per read per axis with the remainder kept at the Node (`_pace_carry`), advanced once per interval, backward the same values with the remainder stepped back (r_(t-1) = (r_t - S) mod 2); None where no read's tensor part was ever sourced, the isotropic rule bit for bit."""
+        """THE AXIS CONTENTS t_a of a reading family (ALGEBRA.md #the-interval, #the-paces): SUM over its reads of weight x by x (the read family's aa component div 2), one division per read per axis rounded at the read and no remainder kept (the pace is a coefficient of the interval and no level; issue #1495 finding 3), backward the same read on the tensor's before level; None where no read's tensor part was ever sourced, the isotropic rule bit for bit."""
         cached = self._axis_effective.get(family)
         if cached is not None and cached[0] == self.tick and cached[1] == inverse:
             return cached[2]
@@ -1269,21 +1275,8 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
             if found is None:
                 found = [np.zeros(self.shape, dtype=np.int64) for _ in range(3)]
             for axis, record in enumerate(diagonal):
-                key = (family, other, axis)
-                carry = self._pace_carry.get(key)
-                if carry is None:
-                    carry = np.zeros(self.shape, dtype=np.int64)
                 level = record.before if inverse else record.now
-                numerator = factor * level
-                if inverse:
-                    carry = np.mod(carry - numerator, 2)
-                    value = np.floor_divide(numerator + carry, 2)
-                else:
-                    total = numerator + carry
-                    value = np.floor_divide(total, 2)
-                    carry = total - 2 * value
-                self._pace_carry[key] = carry
-                found[axis] += value
+                found[axis] += rule3(NO_READ, NO_READ, factor * level, 2, 1, 0, 1)[0]
         result = None if found is None else (found[0], found[1], found[2])
         self._axis_effective[family] = (self.tick, inverse, result)
         return result

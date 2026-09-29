@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from math import isqrt
 
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import THE_ADVANCE, Key, carried, rule3
@@ -26,11 +25,12 @@ WriteLine = Callable[[str, int, int, Counts, dict[Key, int], dict[Key, int]], Le
 
 @dataclass(frozen=True)
 class RecoilTerm:
-    """The click's declaration: the quantum's wave number k_q in the twist's unit, the body's count M, the body's mode clock [a, b] (2 cos omega_b = a / b), the sense (a taking +1, a giving -1) and the twist table's reading, the triple of an angle in the twist's unit along an axis (refused by name beyond the table)."""
+    """The click's declaration: the quantum's wave number k_q in the twist's unit, the body's count M, the body's mode clock [a, b] (2 cos omega_b = a / b) with its sine 2 b sin omega_b taken once at the load (`loader.mode.sine_of`, no root at run time), the sense (a taking +1, a giving -1) and the twist table's reading, the triple of an angle in the twist's unit along an axis (refused by name beyond the table)."""
 
     wave_number: int
     quanta: int
     clock: tuple[int, int]
+    sine: int
     sense: int
     triple_of: Callable[[int, int], Triple]
 
@@ -81,14 +81,6 @@ def carried_line(
     )
 
 
-def sine_of(clock: tuple[int, int]) -> int:
-    """2 b sin omega_b as the integer square root of 4 b^2 - a^2 from the mode's clock [a, b] (2 cos omega_b = a / b), from 1 on a rotation; refused by name where the clock is no rotation (b from 1, |a| below 2 b)."""
-    a, b = clock
-    if b < 1 or not -2 * b < a < 2 * b:
-        raise ValueError(f"the recoil's clock [{a}, {b}] is no rotation: b from 1 and |a| below 2 b")
-    return isqrt(4 * b * b - a * a)
-
-
 def turned(
     levels: tuple[int, int], triple: Triple, clock: tuple[int, int], sine: int
 ) -> tuple[int, int]:
@@ -107,7 +99,9 @@ def turned(
 
 
 def check(term: RecoilTerm, start: RecoilStart) -> None:
-    """The refusals by name: the wave number from 0, the count from 1, the sense +1 or -1, the two levels and the three offsets over the same Nodes."""
+    """The refusals by name: the wave number from 0, the count from 1, the sine from 1 (a rotation), the sense +1 or -1, the two levels and the three offsets over the same Nodes."""
+    if term.sine < 1:
+        raise ValueError(f"the recoil's sine 2 b sin omega_b is from 1 on a rotation, got {term.sine}")
     if term.wave_number < 0 or term.quanta < 1:
         raise ValueError(
             f"the recoil needs a wave number from 0 and a count from 1, got k_q = {term.wave_number}, M = {term.quanta}"
@@ -124,7 +118,6 @@ def check(term: RecoilTerm, start: RecoilStart) -> None:
 def apply(term: RecoilTerm, start: RecoilStart, own: RecoilOwn) -> RecoilWrites:
     """The primitive: per axis with a tally, delta k = (sense x sigma_a x k_q + r) div M by one act of the write's line at the advance (the axis its key, the angle's remainder carried), then at every Node of the body the two levels turned by the table's triple of delta k x the Node's offset along that axis; nothing on an axis without a tally, nothing at the centre (the angle 0, the identity) (ALGEBRA.md #the-primitives, the rows "the recoil" and "the write", #the-transport)."""
     check(term, start)
-    sine = sine_of(term.clock)
     values, carries = dict(own.values), dict(own.carries)
     line = start.write if start.write is not None else carried_line
     now, before = list(start.levels[0]), list(start.levels[1])
@@ -142,7 +135,9 @@ def apply(term: RecoilTerm, start: RecoilStart, own: RecoilOwn) -> RecoilWrites:
             if offset == 0:
                 continue
             triple = term.triple_of(delta * offset, axis)
-            now[index], before[index] = turned((now[index], before[index]), triple, term.clock, sine)
+            now[index], before[index] = turned(
+                (now[index], before[index]), triple, term.clock, term.sine
+            )
     return RecoilWrites(
         (tuple(now), tuple(before)), (turn[0], turn[1], turn[2]), RecoilOwn(values, carries)
     )
