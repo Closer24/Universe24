@@ -383,7 +383,9 @@ def rest(
     if divisor is None:
         return field
     sources, carries = np.flatnonzero(counts.ravel()), np.zeros(counts.shape, dtype=np.int64)
-    carries.ravel()[sources] = division(divisor, len(sources), np.arange(len(sources), dtype=np.int64))
+    # THE CARRY'S ORIGIN IS ONE FOR EVERY NODE, E_s div 2 (ALGEBRA.md #the-counts-line, the remainder's origin): a ramp of
+    # carries over the Nodes in memory order tilted the well along the first axis and a resting body pushed itself (2026-09-29)
+    carries.ravel()[sources] = int(division(1, 2, np.array(divisor, dtype=np.int64)))
     return replace(field, carries=carries, remainder=int(division(1, 2, np.array(3 * pair[1] - 1))))
 
 
