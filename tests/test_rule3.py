@@ -152,13 +152,13 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
     assert all(re.search(pattern, own) for pattern in RULE_LINES)
 
 
-# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a Link is core/ports.py's `arrival`, the send and the receive; every reading of a neighbour's level (the transport's arrival sums, the flux at a Port, the shell of a body) takes it from there.
+# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a Link is core/ports.py's `arrival`; every reading of a neighbour's level (Rule3's arrival sums, the currents at a Port, a body's shell and region) takes it from there.
 SHIFT_HOME = {"src/event_universe/core/ports.py": {"arrival"}}
 SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 
 
 def test_no_other_code_moves_a_level_from_one_node_to_another():
-    """Every shift of an array across Nodes in src/ is core/ports.py's `arrival` (no np.roll, no take, no shift elsewhere: the loop reads its neighbours through the Ports), and no function of src/ is a split of its own."""
+    """Every shift of an array across Nodes in src/ is core/ports.py's `arrival` (no np.roll, no take, no shift elsewhere: the Node reads its neighbours through the Ports), and no function of src/ is a split of its own."""
     import ast
 
     found: dict[str, set[str]] = {}
@@ -176,12 +176,11 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
             line = text.count("\n", 0, match.start()) + 1
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
             found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
-    assert "src/event_universe/events/detector_law.py" not in found
     for home, functions in SHIFT_HOME.items():
         assert found.pop(home) == functions
     assert found == {}, found
-    # the engine, core and the folders hold no split of their own (the loader's parse of the refused key `splits` in world.py is a refusal, not a step, and goes with world.py)
-    stepping = [SOURCE / "events" / "detector_law.py", *sorted((SOURCE / "core").glob("*.py"))]
+    # the Node, the GameBoard, core and the folders hold no split of their own
+    stepping = [SOURCE / "node.py", SOURCE / "game_board.py", *sorted((SOURCE / "core").glob("*.py"))]
     stepping += sorted((SOURCE / "features").rglob("*.py"))
     for path in stepping:
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):

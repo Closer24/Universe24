@@ -8,10 +8,9 @@
    ],
    "areas": [
     "src/event_universe/core/",
-    "src/event_universe/events/detector_law.py",
-    "law/step.json",
-    "tools/run_inputs.py",
-    "tools/state_digest.py"
+    "src/event_universe/node.py",
+    "src/event_universe/game_board.py",
+    "tools/run_inputs.py"
    ]
   },
   "Mathematician": {
@@ -19,9 +18,7 @@
     "session_014v7wQ91WVmN2s1hfrr8Gvz"
    ],
    "areas": [
-    "docs/ALGEBRA.md",
-    "tools/body_generator.py",
-    "src/event_universe/features/recoil/"
+    "docs/ALGEBRA.md"
    ]
   },
   "Mathematician 2": {
@@ -30,10 +27,7 @@
    ],
    "areas": [
     "src/event_universe/features/counts_line/",
-    "src/event_universe/features/hold/",
-    "src/event_universe/features/spins_step/",
-    "src/event_universe/features/receive/",
-    "src/event_universe/features/self_source/"
+    "src/event_universe/features/hold/"
    ]
   },
   "Paper Writer": {

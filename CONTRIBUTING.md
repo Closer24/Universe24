@@ -14,15 +14,15 @@ the short procedure of [the shared workflow](skills/workflow.md).
    merge. Check `git status`, fetch `origin` and record the base commit; never
    overwrite local work of the user or another conversation; use a separate
    worktree for concurrent work.
-2. Only Main Loop touches `src/event_universe/core/`. A new primitive is one folder
-   under `src/event_universe/features/`, acting only when the run's files declare
-   it, approved by the mathematician with `APPROVED-MATH` on its pull request; with
-   it undeclared, every old run comes out identical to the bit. A new module of
-   `core/` needs `APPROVED-CORE` in the pull request's body.
+2. Only Main Loop touches `src/event_universe/core/`, `src/event_universe/node.py`
+   and `src/event_universe/game_board.py`. A new act of the law is a pure function
+   of arrays that calls Rule3 alone, approved by the mathematician with
+   `APPROVED-MATH` on its pull request. A new module of `core/` needs
+   `APPROVED-CORE` in the pull request's body.
 3. A physics change starts from the law's line in `docs/ALGEBRA.md`; a bug (the
    code differs from the law) is fixed by whoever finds it with a test that fails
-   before and passes after; a change to the step file is a change of the law and
-   needs the owner's decision.
+   before and passes after; a change of the interval's acts or their order is a
+   change of the law and needs the owner's decision.
 4. Keep the task focused and the commits small; commit code, tests and documents
    together; never commit secrets, installed environments, caches or generated
    outputs. Before pushing, inspect `git diff --check` and the changed-file list.

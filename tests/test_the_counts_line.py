@@ -1,4 +1,4 @@
-"""THE COUNT'S LINE (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is refused by name; THE EXACT BANDS (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""THE COUNT'S LINE (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is conserved and filled; THE EXACT BANDS (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
 from __future__ import annotations
 
@@ -39,17 +39,13 @@ def test_the_forms_share_changes_by_the_currents_exactly(pair):
     assert [share(nxt, now)[i] - share(now, before)[i] for i in range(NODES)] == flux
 
 
-def periodic_start(
-    draw: random.Random, count: np.ndarray, remainder: np.ndarray, direction: int, levels
-):
+def periodic_start(count: np.ndarray, remainder: np.ndarray, direction: int, levels):
     now, before = levels
     links = []
     for axis in range(3):
         for sign in (1, -1):
-            links.append(
-                Levels(np.roll(now, sign, axis=axis), np.roll(before, sign, axis=axis), None, None)
-            )
-    return CountStart(count, remainder, Levels(now, before, None, None), tuple(links), direction)
+            links.append(Levels(np.roll(now, -sign, axis=axis), np.roll(before, -sign, axis=axis)))
+    return CountStart(count, remainder, Levels(now, before), tuple(links), direction)
 
 
 def test_the_count_is_conserved_to_the_bit_and_the_inverse_returns_the_start():
@@ -61,10 +57,10 @@ def test_the_count_is_conserved_to_the_bit_and_the_inverse_returns_the_start():
     count = draw.integers(100_000, 200_000, shape).astype(np.int64)
     remainder = draw.integers(0, wall, shape).astype(np.int64)
     term = CountTerm(wall, weight, 1 << 20, int(count.max()))
-    forward = apply(term, periodic_start(draw, count, remainder, 1, (now, before)))
+    forward = apply(term, periodic_start(count, remainder, 1, (now, before)))
     assert int((wall * forward.count + forward.remainder).sum()) == int((wall * count + remainder).sum())
     assert bool(np.all((0 <= forward.remainder) & (forward.remainder < wall)))
-    back = apply(term, periodic_start(draw, forward.count, forward.remainder, -1, (now, before)))
+    back = apply(term, periodic_start(forward.count, forward.remainder, -1, (now, before)))
     assert np.array_equal(back.count, count) and np.array_equal(back.remainder, remainder)
 
 
@@ -75,12 +71,11 @@ def test_a_hole_is_conserved_by_the_line_and_the_inverse_fills_it():
     now[1, 1, 1], before[0, 1, 1] = 100_000, 100_000  # a current out of the centre through one Port
     count, remainder = np.zeros(shape, dtype=np.int64), np.zeros(shape, dtype=np.int64)
     term = CountTerm(wall, 16, 1 << 20, 0)
-    draw = np.random.default_rng(1)
-    forward = apply(term, periodic_start(draw, count, remainder, 1, (now, before)))
+    forward = apply(term, periodic_start(count, remainder, 1, (now, before)))
     assert int(forward.count.min()) < 0
     assert bool(np.all((0 <= forward.remainder) & (forward.remainder < wall)))
     assert int((wall * forward.count + forward.remainder).sum()) == 0
-    back = apply(term, periodic_start(draw, forward.count, forward.remainder, -1, (now, before)))
+    back = apply(term, periodic_start(forward.count, forward.remainder, -1, (now, before)))
     assert np.array_equal(back.count, count) and np.array_equal(back.remainder, remainder)
 
 

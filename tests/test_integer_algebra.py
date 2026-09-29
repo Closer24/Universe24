@@ -14,36 +14,14 @@ SRC = ROOT / "src" / "event_universe"
 
 # The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
-    "loader/world.py": "the loop's classes built from the checked files and the load-time constants (the flight table, the labels)",
-    "loader/mode.py": "the body's mode as the loader reads it: the period by the one-Node rule from the clock pair, the recoil's sine as a root at the load",
-    "loader/frame.py": "the frame of the files: the schemas the loader reads them through; no arithmetic",
-    "loader/cards.py": "the cards' schemas collected from the register; no arithmetic",
-    "loader/derived.py": "the families from the rule: a family's keys derived from its rank and its pair; no arithmetic",
-    "events/detector_law.py": "the engine: the record's rows at Nodes, the six-neighbour rule, the count's line on every record, the reports, the giving at a body's click (no law's name, ALGEBRA.md #the-primitives)",
-    "events/free_record.py": "the free record's one quantum: the written record's levels scaled by Rule3's division act until its form lays exactly one quantum; integer bisection alone",
-    "events/records.py": "the records' bookkeeping the loop steps: the live record, a body's Node record, the block, the books, the runner's layer; no arithmetic",
-    "events/assembly.py": "the assembly of the engine's state from the loaded world before the first interval: the detectors' map, the arrays and caches, the bodies' blocks and own records, the held families' records; integer arrays alone",
-    "events/geometry.py": "the engine's geometry: the Node sets, boxes, masks and Ports of a body or a detector from the GameBoard's shape through the core's and the loader's one copy of each rule, and the pair arrays' cache",
-    "events/output.py": "the engine's readings and output lines: the exact rationals of the books, the leak test, a report's line, the books, the contents and the state stream; reads the simulation, writes the lines",
-    "events/guards.py": "the engine's run-time guards bound as its methods: the start's arrays to freeze, an act's grants, a card's writes, a write applied by name, the generic act's term, start view and own record, the pace guard",
-    "events/live.py": "the records' making and release: the ledger's stamps, the held records and levels, a body's own record, a planted record, a detector by name and a record's release; functions taking the engine, bound as its methods",
-    "events/after_step.py": "the acts after the step the engine hooks per record: the lifetime's end, the write's line; functions taking the engine, bound as its methods",
-    "events/body_language.py": "the recoil written into the body's own record and told as one event line beside the click; integer turns and sums, no arithmetic of its own",
-    "events/record_well.py": "the well of a body with a record: its record's one interval and its form laid after it, D_i div T by the source's act through the write's line; no arithmetic of its own beyond the count",
-    "events/one_node.py": "the bound body of one Node: derived from the files (one Node, a massive pair, the divisors 1) and its record made from its mode's two levels at its Node; no arithmetic",
-    "events/inverse.py": "the inverse's returns: the body's clock taken back; integer sums and differences, no arithmetic of its own",
-    "events/momentum_reading.py": "the momentum as a reading of the record's current: the count's line's booking products summed in whole integers, the division act to the nearest unit",
-    "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step, its inverse and the form's term (ALGEBRA.md #the-line, #the-direction, #the-interval)",
-    "events/primitives.py": "the primitives of the freeze (ALGEBRA.md #what-is-open): the twist table's exact triples, the helicity sign",
-    "core/integer.py": "the bounded integer primitives: the carry, the apportioning, the roots at load",
-    "core/readings.py": "the run's readings declared in the world file and written in one format: a detector's clicks, a family's level, support and total, a body's centre, the records alive (record 2199 item 1); reads state, writes nothing into the run",
-    "core/main_loop.py": "the main loop: the walk of the step file's acts through the register, the interval's frame (the clock, the deferred writes, the closing) and the run-time guards of the views, the writers and the Ports; the stages the engine's, handed in",
-    "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port and the six arrivals once per array per interval, the outward Ports of a mask; the one shift across Nodes of the package",
-    "core/step.py": "the step file: the interval's places and the ordered names of the primitives the loop calls, one shared file with its digest ",
-    "core/register.py": "the register of primitives: one name to one function, found by the features' folders, each with its place, word, reads, writes and order (records 2212 and 2221; issue #1154)",
-    "core/primitive.py": "the interface of a primitive: the term of the files, the interval's start, the primitive's own record, its writes; apply(term, start, own) -> writes (records 2212 and 2221; issue #1154)",
-    "core/schema.py": "the kinds of a value of the files and one generic check that refuses by name; a folder's schema on its card in the register (record 2226; ALGEBRA.md #the-primitives)",
-    "core/game_board.py": "the GameBoard's addresses, the six headings, the cube's group of 48",
+    "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
+    "game_board.py": "the GameBoard: the NodeStates, the bodies' ledgers, the detectors, the interval forward and back, the output lines and the books",
+    "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
+    "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies' held quanta laid by the carried division",
+    "loader/derived.py": "the families from the rule and the amplitude bound A derived from the width",
+    "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act and the form's term (ALGEBRA.md #the-line, #the-direction)",
+    "core/integer.py": "the working bound, the host's signed integer range",
+    "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port, the one shift across Nodes of the package",
 }
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
@@ -92,12 +70,11 @@ BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integ
 
 # Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set.
 ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
-    ("loader/derived.py", "width_bound"): "at load, the width's bound on A from the count's line",
+    ("loader/derived.py", "amplitude_bound"): "at load, the width's bound on A from the count's line",
     (
         "core/rule3.py",
         "clock_pace",
     ): "the integer square root of p_0^2 where a guard or a clock pair reads the pace",
-    ("loader/mode.py", "sine_of"): "at load, the recoil's sine 2 b sin omega_b from the mode clock",
 }
 
 
@@ -323,12 +300,12 @@ def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
 
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
-    """Every module of `events/`, `core/` and `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed."""
+    """Every module of the package, of `core/` and of `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed."""
     modules = {
         path.relative_to(SRC).as_posix()
-        for folder in ("events", "core", "loader")
-        for path in (SRC / folder).glob("*.py")
-        if path.name not in ("__init__.py", "run.py")
+        for folder in (SRC, SRC / "core", SRC / "loader")
+        for path in folder.glob("*.py")
+        if path.name != "__init__.py"
     }
     assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
 
