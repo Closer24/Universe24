@@ -1,7 +1,5 @@
 """The bodies one hollow allows, by dimension: the energy of a body of M quanta of the matter pair [4000, 6000] at the width R under the binding row [5760, 6000] at the divisor 2, Gamma 6,000, on a chain, a plane and a box, from Rule3's band (the pressure), the row's static kernel (the well) and the conformal line (the well's effect on the rotation, the level once in the clock and twice on the Link); a body where the energy has its minimum at a width of one Link or more with the well under the horizon Gamma / 2, a cloud where the minimum lies at the largest width, a collapse where the well at the minimum passes the horizon."""
 
-import math
-
 import numpy as np
 
 NUM, DEN = 4000, 6000

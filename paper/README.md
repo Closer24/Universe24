@@ -21,6 +21,9 @@ manuscript.
 - `general_formula/shape_check.py`: the check of the proposition on the
   bound record's shape (the symmetry under the 48 and the decay rates),
   a computation of the algebra on a lattice, by no run of the engine.
+- `general_formula/dimension_check.py`: the check of the scaling of one
+  hollow on a chain, a plane and a box, the bodies it allows by mass, a
+  computation of the algebra on a lattice, by no run of the engine.
 - `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
   the journal.
 - `general_formula/COVER_LETTER.md`: the cover letter for the journal.
