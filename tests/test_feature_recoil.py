@@ -23,6 +23,7 @@ from event_universe.features.recoil import (
     apply,
     sign_of,
 )
+from event_universe.loader.mode import sine_of
 from event_universe.world_files import input_stamp, load_world, parse_nature_beam_world
 from tests.running import lines_of
 from tests.worlds import emitter_world
@@ -34,15 +35,11 @@ from reversible import forward, reversible_row, step_back  # noqa: E402
 
 GENERATED = ROOT / "examples" / "events" / "experiments" / "universe.json"  # the universe of record
 START = ROOT / "examples" / "events" / "engine_start.json"
-UNIT, CLOCK = (
-    1 << 20,
-    (153 * 10**6, 10**8),
-)  # the test's twist unit: theta_unit = 1 / UNIT radians; 2 cos omega_b = 1.53 at a fine unit (the mode's clock is at the amplitude unit)
+# the test's twist unit: theta_unit = 1 / UNIT radians; 2 cos omega_b = 1.53 at a fine unit (the mode's clock is at the amplitude unit)
+UNIT, CLOCK = 1 << 20, (153 * 10**6, 10**8)
 AMPLITUDE, NODES = 1_000_000, 9
-WAVE, K_Q = (
-    0.3,
-    round(0.05 * UNIT),
-)  # the phase per Link before the click (radians); the wave number in the twist's unit
+# the phase per Link before the click (radians); the wave number in the twist's unit
+WAVE, K_Q = 0.3, round(0.05 * UNIT)
 
 
 def triple_of(angle: int, _axis: int) -> tuple[int, int, int]:  # the exact triple nearest the angle
@@ -62,14 +59,13 @@ def plane_wave(k: float, phase: float) -> tuple[tuple[int, ...], tuple[int, ...]
 OFFSETS = (tuple(x - NODES // 2 for x in range(NODES)), (0,) * NODES, (0,) * NODES)
 
 
-def current(
-    levels: tuple[tuple[int, ...], tuple[int, ...]],
-) -> int:  # the count's line's current along +x
+def current(levels: tuple[tuple[int, ...], tuple[int, ...]]) -> int:  # the current along +x
     now, before = levels
     return sum(now[i + 1] * before[i] - before[i + 1] * now[i] for i in range(NODES - 1))
 
 
-TERM = RecoilTerm(K_Q, 1, CLOCK, TAKING, triple_of)
+SINE = sine_of(CLOCK)  # the recoil's sine, taken at the load
+TERM = RecoilTerm(K_Q, 1, CLOCK, SINE, TAKING, triple_of)
 GIVER = {"family": "charge", "weight": 1, "norm": 100, "norm_denominator": 1, "receiver": ["strip"]}
 NODES_OF_THE_GIVER = [{"node": [1, 0, 0], "count": 1}, {"node": [2, 0, 0], "count": 1}]
 FACES = {"x": "closed", "y": "periodic", "z": "periodic"}
@@ -80,7 +76,7 @@ def test_the_turn_moves_the_records_phase_per_link_by_delta_k_on_both_time_level
     """A record A cos(k x - phase) with before one rotation earlier, turned at M = 1 by k_q along +x: every Node's two levels are those of the same wave at k + delta k, delta k = k_q theta_unit, to the rounding of the table's triple and the nearest unit (the quad level from the two time levels and the clock, the determinant one); a taking at sigma_x = +1 turns by +delta k, a giving by -delta k, the centre Node (the offset 0) untouched."""
     now, before = plane_wave(WAVE, 0.7)
     for sense, sign in ((TAKING, 1), (GIVING, -1)):
-        term = RecoilTerm(K_Q, 1, CLOCK, sense, triple_of)
+        term = RecoilTerm(K_Q, 1, CLOCK, SINE, sense, triple_of)
         writes = apply(term, RecoilStart((5, 0, 0), (now, before), OFFSETS), RecoilOwn({}, {}))
         expected_now, expected_before = plane_wave(WAVE + sign * K_Q / UNIT, 0.7)
         assert writes.turn == (sign * K_Q, 0, 0)
@@ -97,7 +93,7 @@ def test_the_angles_remainder_carried_at_the_body_makes_the_turns_the_exact_floo
     now, before = plane_wave(WAVE, 0.0)
 
     def turn(sense: int, tally: tuple[int, int, int], own: RecoilOwn) -> RecoilWrites:
-        term = RecoilTerm(7, 3, CLOCK, sense, triple_of)
+        term = RecoilTerm(7, 3, CLOCK, SINE, sense, triple_of)
         return apply(term, RecoilStart(tally, (now, before), OFFSETS), own)
 
     own, turns = RecoilOwn({}, {}), []
@@ -114,17 +110,19 @@ def test_the_angles_remainder_carried_at_the_body_makes_the_turns_the_exact_floo
 
 
 def test_the_bounds_and_the_terms_are_refused_by_name():
-    """The wave number from 0 and the count from 1; the sense +1 or -1; a clock that is no rotation (the sine from 1 on one); the levels and the offsets over the same Nodes."""
+    """The wave number from 0 and the count from 1; the sense +1 or -1; a clock that is no rotation at the load and a sine below 1 at the act; the levels and the offsets over the same Nodes."""
     now, before = plane_wave(WAVE, 0.0)
     start = RecoilStart((1, 0, 0), (now, before), OFFSETS)
     with pytest.raises(ValueError, match="got k_q = -1, M = 1"):
-        apply(RecoilTerm(-1, 1, CLOCK, TAKING, triple_of), start, RecoilOwn({}, {}))
+        apply(RecoilTerm(-1, 1, CLOCK, SINE, TAKING, triple_of), start, RecoilOwn({}, {}))
     with pytest.raises(ValueError, match="count from 1, got k_q = 7, M = 0"):
-        apply(RecoilTerm(7, 0, CLOCK, TAKING, triple_of), start, RecoilOwn({}, {}))
+        apply(RecoilTerm(7, 0, CLOCK, SINE, TAKING, triple_of), start, RecoilOwn({}, {}))
     with pytest.raises(ValueError, match=r"sense is \+1 \(a taking\) or -1 \(a giving\), got 2"):
-        apply(RecoilTerm(7, 1, CLOCK, 2, triple_of), start, RecoilOwn({}, {}))
+        apply(RecoilTerm(7, 1, CLOCK, SINE, 2, triple_of), start, RecoilOwn({}, {}))
     with pytest.raises(ValueError, match=r"clock \[2000, 1000\] is no rotation"):
-        apply(RecoilTerm(7, 1, (2000, 1000), TAKING, triple_of), start, RecoilOwn({}, {}))
+        sine_of((2000, 1000))
+    with pytest.raises(ValueError, match="sine 2 b sin omega_b is from 1 on a rotation, got 0"):
+        apply(RecoilTerm(7, 1, CLOCK, 0, TAKING, triple_of), start, RecoilOwn({}, {}))
     with pytest.raises(ValueError, match="over the body's Nodes alike, got 9, 8"):
         apply(TERM, RecoilStart((1, 0, 0), (now, before[:-1]), OFFSETS), RecoilOwn({}, {}))
 

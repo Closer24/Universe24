@@ -116,7 +116,7 @@ def rename_everything(
 
 def state_reading(module, simulation: DetectorLawSimulation) -> dict[str, Any]:  # type: ignore[no-untyped-def]
     reading = module.run_reading(simulation, [])
-    return {k: v for k, v in reading.items() if k in ("records", "held families", "read remainders")}
+    return {k: v for k, v in reading.items() if k in ("records", "held families")}
 
 
 @pytest.mark.parametrize("seed", SEEDS)

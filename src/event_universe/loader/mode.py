@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from math import isqrt
 
 from event_universe.core.rule3 import NO_READ, rule3
 
@@ -27,6 +28,14 @@ def period_by_the_rule(a: int, b: int) -> int:
     raise ValueError(
         f"the clock [{a}, {b}] is not back within {t} intervals, four quarter turns of its first ({quarter} intervals) and one interval each"
     )
+
+
+def sine_of(clock: tuple[int, int]) -> int:
+    """2 b sin omega_b as the integer square root of 4 b^2 - a^2 from the mode's clock [a, b] (2 cos omega_b = a / b), from 1 on a rotation, taken once at the load for the recoil (issue #1495 finding 4: no root at run time); refused by name where the clock is no rotation (b from 1, |a| below 2 b)."""
+    a, b = clock
+    if b < 1 or not -2 * b < a < 2 * b:
+        raise ValueError(f"the recoil's clock [{a}, {b}] is no rotation: b from 1 and |a| below 2 b")
+    return isqrt(4 * b * b - a * a)
 
 
 def moving_levels(

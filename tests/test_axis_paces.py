@@ -1,4 +1,6 @@
-"""The four paces: a reading family's pace on the axis a is p_a = p_0 - t_a (the reads' aa parts halved, the remainder kept at the Node), the rule's reads along a weigh 2 p_a^2 num, and the inverse reads the same paces. HOST; no pin."""
+"""The four paces: a reading family's pace on the axis a is p_a = p_0 - t_a (the reads' aa parts halved, rounded at the read, no remainder kept at the Node), the rule's reads along a weigh 2 p_a^2 num, and the inverse reads the same paces. HOST; no pin."""
+
+from math import gcd
 
 import numpy as np
 import pytest
@@ -54,15 +56,11 @@ def test_a_planted_tensor_part_bends_the_rule_per_axis_and_the_inverse_reads_the
         expected = total // wall
         assert int(live.now[node]) == expected, node
         assert 0 <= int(live.remainder[node]) == total - wall * expected < wall, node
-    # the wheel at a slab Node reads the five coefficients' gcd
+    # the wheel at a slab Node reads the five coefficients' gcd (the cube fixture's kind)
     step, wheel = simulation.wheel_at(matter, (7, 2, 2))
-    reads, self_coefficient, wall = coefficients(
-        *KIND, GAMMA, int(content[7, 2, 2]), (20, 0, 0)
-    )  # the cube fixture's kind
-    from math import gcd
-
+    reads, self_coefficient, wall = coefficients(*KIND, GAMMA, int(content[7, 2, 2]), (20, 0, 0))
     assert step == gcd(wall, self_coefficient, *reads) and wheel == wall // step
-    # the inverse reads the same paces (the tensor's before level, the remainder stepped back)
+    # the inverse reads the same paces (the tensor's before level)
     simulation._advance_inverse(live)
     assert np.array_equal(live.now, now) and np.array_equal(live.before, before)
     assert not live.remainder.any() and simulation.leaks() == []
