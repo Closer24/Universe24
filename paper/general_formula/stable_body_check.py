@@ -16,8 +16,10 @@ CONTACT = (
 A = NUM / (
     2 * DEN
 )  # the pressure per quantum of a Gaussian of width R in three dimensions, times 1 / R^2
-B_UNIT = (G / GAMMA) * CONTACT / (2 * np.pi) ** 1.5  # times M / E_b: the contact well, 1 / R^3
-C_UNIT = (G / GAMMA) * (3 / (4 * np.pi)) * np.sqrt(2 / np.pi)  # times M / E_g: Poisson's well, 1 / R
+B_UNIT = (
+    (2 * G / GAMMA) * CONTACT / (2 * np.pi) ** 1.5
+)  # times M / E_b: the contact well, 1 / R^3; the gain of 2 cos omega is 4 g Phi / Gamma, halved for the self-source
+C_UNIT = (2 * G / GAMMA) * (3 / (4 * np.pi)) * np.sqrt(2 / np.pi)  # times M / E_g: Poisson's well, 1 / R
 print(
     f"kappa {KAPPA:.3f} (reach {1 / KAPPA:.2f} Links), a = {A:.4f}, b = {B_UNIT:.3e} M / E_b, c = {C_UNIT:.3e} M / E_g"
 )
@@ -42,8 +44,8 @@ for R in (3.0, 4.0, 6.0):
     rho = phi**2
     fr = np.fft.fftn(rho)
     K = sum(float(np.sum((phi - np.roll(phi, 1, ax)) ** 2)) for ax in range(D)) * NUM / (3 * DEN)
-    Wb = (G / GAMMA) * float(np.sum(rho * np.real(np.fft.ifftn(kb * fr))))
-    Wg = (G / GAMMA) * float(np.sum(rho * np.real(np.fft.ifftn(kg * fr))))
+    Wb = (2 * G / GAMMA) * float(np.sum(rho * np.real(np.fft.ifftn(kb * fr))))
+    Wg = (2 * G / GAMMA) * float(np.sum(rho * np.real(np.fft.ifftn(kg * fr))))
     print(f"   R {R:3.0f}: {K * R**2 / A:6.3f}  {Wb * R**3 / B_UNIT:6.3f}  {Wg * R / C_UNIT:6.3f}")
 
 print(
