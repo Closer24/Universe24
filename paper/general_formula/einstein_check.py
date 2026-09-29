@@ -4,7 +4,8 @@ at the paces of a static well U(r) = U_1 / r (the held level over the Node clock
 past the well against Newton's 2 U_1 / b and Einstein's 4 U_1 / b, and a massive orbit's periapsis advance against
 Einstein's 6 pi U_1 / (a (1 - e^2)). Two forms of the self coefficient: the law's line (S = 12 den G^2 - 12 (den - num) p_0^2
 - 4 num SUM p_a^2, the conformal pace) and the engine on main (S = 12 den G^2 - 6 (den - num)(p_0^2 + G^2) - 4 num SUM p_a^2);
-two readings of the Link's pace: once (p_a = p_0) and twice (p_a = Gamma - 2 c). The band taken isotropic at small k
+two readings of the Link's pace: once (p_a = p_0) and twice (p_a = Gamma - 2 c); two readings of the clock: the first
+order (p_0 = Gamma - c) and its second order (p_0 = Gamma - c + c^2 / (2 Gamma), the law's line). The band taken isotropic at small k
 (SUM cos k_a = 3 - k^2 / 2) so that the lattice's cubic anisotropy adds no precession of its own."""
 
 import numpy as np
@@ -14,11 +15,11 @@ MATTER = (4000, 6000)
 LIGHT = (6000, 6000)
 
 
-def make(pair, variant, link_twice):
+def make(pair, variant, link_twice, second_order=False):
     num, den = pair
 
     def AB(U):
-        P0 = 1 - U
+        P0 = 1 - U + U * U / 2 if second_order else 1 - U
         Pa = 1 - 2 * U if link_twice else P0
         if variant == "law":
             S = 2 - 2 * (den - num) / den * P0**2 - (2 * num / (3 * den)) * 3 * Pa**2
@@ -51,8 +52,8 @@ def make(pair, variant, link_twice):
     return rhs, AB
 
 
-def bending(variant, link_twice, U1=0.05, b=20.0, L=4000.0):
-    rhs, AB = make(LIGHT, variant, link_twice)
+def bending(variant, link_twice, second_order=False, U1=0.05, b=20.0, L=4000.0):
+    rhs, AB = make(LIGHT, variant, link_twice, second_order)
     k0 = 0.05
     sol = solve_ivp(
         rhs, (0, 2 * L / 0.55), [-L, b, k0, 0.0], args=(U1,), rtol=1e-11, atol=1e-13, method="DOP853"
@@ -61,8 +62,8 @@ def bending(variant, link_twice, U1=0.05, b=20.0, L=4000.0):
     return -np.arctan2(ky, kx)
 
 
-def perihelion(variant, link_twice, U1=0.05, r0=120.0, k_tangential=None, orbits=6):
-    rhs, AB = make(MATTER, variant, link_twice)
+def perihelion(variant, link_twice, second_order=False, U1=0.05, r0=120.0, k_tangential=None, orbits=6):
+    rhs, AB = make(MATTER, variant, link_twice, second_order)
     # a first orbit to read the circular wave number at r0, then the tangential k lowered for an eccentric orbit
     if k_tangential is None:
         # v_circ from the force at rest: k' = -dw/dx; choose k so that centripetal balance holds by bisection on r_min
@@ -120,19 +121,28 @@ def perihelion(variant, link_twice, U1=0.05, r0=120.0, k_tangential=None, orbits
 print(
     "LIGHT'S BENDING at U_1 = 0.05, the impact parameter b = 20: Newton's 2 U_1 / b = 0.0050, Einstein's 4 U_1 / b = 0.0100"
 )
+READINGS = ((False, False), (True, False), (True, True))  # (the Link twice, the clock's second order)
+
+
+def name(twice, second):
+    return (
+        f"the Link {'twice' if twice else 'once '}, the clock's {'second' if second else 'first '} order"
+    )
+
+
 for variant in ("law", "main"):
-    for twice in (False, True):
-        d = bending(variant, twice)
+    for twice, second in READINGS:
+        d = bending(variant, twice, second)
         print(
-            f"   S of {variant:4}, the Link {'twice' if twice else 'once '}: deflection {d:.5f} rad = {d / 0.005:.2f} x Newton's"
+            f"   S of {variant:4}, {name(twice, second)}: deflection {d:.5f} rad = {d / 0.005:.2f} x Newton's"
         )
 print(
     "A MASSIVE ORBIT (the matter pair): the periapsis advance per orbit against Einstein's 6 pi U_1 / (a (1 - e^2))"
 )
 for variant in ("law", "main"):
-    for twice in (False, True):
-        a, e, adv, n = perihelion(variant, twice)
+    for twice, second in READINGS:
+        a, e, adv, n = perihelion(variant, twice, second)
         gr = 6 * np.pi * 0.05 / (a * (1 - e * e))
         print(
-            f"   S of {variant:4}, the Link {'twice' if twice else 'once '}: a {a:6.1f}, e {e:.3f}, the advance {adv:+.5f} rad per orbit over {n} orbits = {adv / gr:+.2f} x Einstein's ({gr:.5f})"
+            f"   S of {variant:4}, {name(twice, second)}: a {a:6.1f}, e {e:.3f}, the advance {adv:+.5f} rad per orbit over {n} orbits = {adv / gr:+.3f} x Einstein's ({gr:.5f})"
         )
