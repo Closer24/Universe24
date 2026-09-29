@@ -18,7 +18,6 @@ from event_universe.features.giving import (
     GivingStart,
     GivingTerm,
     apply,
-    bulk_share,
 )
 from event_universe.world_files import parse_nature_beam_world
 from tests.worlds import emitter_world
@@ -46,23 +45,6 @@ def a_birth(count: int, levels: tuple[np.ndarray, np.ndarray] | None) -> GivingS
 def rows(writes) -> tuple[list[list[int]], list[list[int]]]:
     """The act's two levels written and the two remainders after it, as lists."""
     return [level.tolist() for level in writes.level], [r.tolist() for r in writes.own.remainders]
-
-
-def test_the_bulk_share_keeps_the_velocity_on_the_moving_row_and_is_symmetric():
-    """The moving rows: a body of M = 65 on W = 3 Q M at v = 1 / 4 has n = 3120; a giving takes the share 48 and leaves n = 3072, the new wall's quarter (issue #1156); with n not divisible by M the velocity stays within one unit of n on the new wall; a negative n gives the mirror image."""
-    wall, momentum = 3 * 64 * 65, 3 * 64 * 65 // 4  # the drive wall 3 Q M, a hop every 4 intervals
-    assert (wall, momentum) == (12480, 3120)
-    shared = bulk_share((momentum, 0, 0), 65)
-    assert shared == (3072, 0, 0) and shared[0] == 3 * 64 * 64 // 4
-    assert bulk_share((-momentum, 0, 0), 65) == (-3072, 0, 0)
-    assert bulk_share((100, -100, 64), 65) == (99, -99, 64)
-    # the velocity after, on the new wall, against before: within one unit of n on the new wall
-    before, after = 100 * 64, 99 * 65  # v = 100 / (3 Q 65) against 99 / (3 Q 64), scaled by 3 Q 65 x 64
-    assert 0 <= after - before < 65
-    open_writes = apply(TERM, an_open(65, (momentum, 5, -5)), CLOSED)
-    assert open_writes.count == -1 and open_writes.momentum == (3072, 5, -5)
-    assert open_writes.own == GivingOwn(0, 0, NO_TALLY) and not open_writes.closed
-    assert open_writes.level is None and open_writes.direction is None
 
 
 def test_the_three_acts_of_a_window_on_synthetic_integers():

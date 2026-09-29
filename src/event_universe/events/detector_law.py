@@ -351,11 +351,11 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         for family, definition in enumerate(self.families):
             if definition.sourced is None:
                 continue
-            of, weight, scale, cap = definition.sourced
+            of, weight, scale = definition.sourced
             writes = cast(
                 SourceWrites,
                 function(
-                    SourceTerm(family, of, weight, scale, cap),
+                    SourceTerm(family, of, weight, scale),
                     SourceStart(self.shape, self._source_argument[of], self._write_line),
                     SourceOwn(self._source_remainders[family]),
                 ),
