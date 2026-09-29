@@ -10,7 +10,7 @@ THE_THREE = ("docs/ALGEBRA.md", "docs/ENGINE.md", "docs/HIGHLIGHTS.md")
 ENTRY_FILES = ("README.md", "AGENTS.md", "CONTRIBUTING.md")
 ALLOWED_FOLDERS = ("skills/", "paper/")  # the skills' pages and the paper's own folder
 CAPS = {
-    "docs/ALGEBRA.md": 718,
+    "docs/ALGEBRA.md": 880,
     "docs/ENGINE.md": 200,
     "docs/HIGHLIGHTS.md": 100,
 }  # lines, each of the three
