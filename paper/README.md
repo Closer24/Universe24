@@ -33,6 +33,10 @@ manuscript.
   at a kept count (the mass defect), the free part, a cloud breathing in a
   static well with open and with closed faces, and the swing of the form
   at the shell, by no run of the engine.
+- `general_formula/einstein_check.py`: the Einstein rows from Rule3's
+  coefficients by the geometric optics of a band: light's bending and a
+  massive orbit's periapsis advance with the Link's pace lowered once or
+  twice and with the clock's second order, by no run of the engine.
 - `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
   the journal.
 - `general_formula/COVER_LETTER.md`: the cover letter for the journal.

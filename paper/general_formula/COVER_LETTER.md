@@ -2,9 +2,7 @@
 
 Dear Editors,
 
-I submit the manuscript "Universe24: one local integer rule on the cube's
-lattice, the click as its one non-local act, and the universe it builds
-without a free number" for consideration as a regular article. A preprint
+I submit the manuscript "Universe24: one integer rule at every Node of a lattice, whose bound bodies alone click, and from which Born's rule, Bell's correlation and the forms of Lorentz and Einstein are derived" for consideration as a regular article. A preprint
 is posted on arXiv (identifier to be added on posting); the manuscript is
 not under consideration elsewhere.
 
