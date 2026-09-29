@@ -72,7 +72,21 @@ def test_a_chain_body_at_gamma_6000_keeps_its_quanta_over_a_hundred_intervals(tm
     wall, laid = simulation.count_wall(block), int(block.counts.sum())
     total = int((wall * block.counts + block.count_remainder).sum())
     assert abs(laid - 600) <= 2 * 24 + 1
+    momentum_wall = simulation.wall_of(block)  # W = 3 Q M
     for _ in range(99):
         simulation.step()
         assert int(block.counts[inset].min()) >= 0 and 20 * int(block.counts[near].sum()) >= 19 * laid
         assert int((wall * block.counts + block.count_remainder).sum()) == total
+        # THE MOMENTUM AS A READING (the recoil's row): n = W x the current over the form c W_c, the current
+        # num x SUM (now_j before_i - before_j now_i) through the +x Ports, so n = W v within W; at rest within 3 Q
+        live = block.own
+        assert live is not None
+        wrap = simulation.kind_wrap[block.family]
+        now_in, before_in = (
+            simulation.ports.arrivals(live.now, wrap)[0],
+            simulation.ports.arrivals(live.before, wrap)[0],
+        )
+        current = 4000 * int((now_in * live.before - before_in * live.now).sum(dtype=object))
+        form = wall * int(simulation._body_count(block))
+        assert abs(block.momentum[0] * form - momentum_wall * current) <= form
+        assert abs(block.momentum[0]) <= 3 * simulation.momentum_unit and block.momentum[1:] == [0, 0]
