@@ -1,4 +1,4 @@
-"""The signed read with the two-sided guard: p_0 = Gamma - SUM over the reads of (weight x by x argument), the axes' paces with the tensor's parts, and 0 < p <= P with P = isqrt(2 den Gamma^2 div (den + num)) at every Node (ALGEBRA.md #the-primitives row 1 and item 5, ALGEBRA.md #a-familys-declaration, #the-paces); from the rule. `content_of` is this read's one place: the loop's `_effective_content` calls it."""
+"""The signed read with the two-sided guard: the content c = SUM over the reads of (weight x by x the read family's time part), p_0^2 = (Gamma - c)^2 + c^2, the axes' paces with the tensor's parts, no floor and no clamp, and 0 < p <= P with P = isqrt(2 den Gamma^2 div (den + num)) at every Node, a pace outside ending the run by name (ALGEBRA.md #the-paces)."""
 
 from __future__ import annotations
 
@@ -9,18 +9,7 @@ from math import isqrt
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.register import Declaration
 from event_universe.core.rule3 import clock_pace
-from event_universe.core.schema import (
-    Either,
-    Integer,
-    IntegerName,
-    ListOf,
-    Name,
-    ObjectOf,
-    OneOf,
-    Schema,
-)
 
 # by "plain" reads the level as it is; by "sign" reads it with the reading family's own sign q
 BY_PLAIN = "plain"
@@ -29,13 +18,10 @@ BY_SIGN = "sign"
 # the sum of the reads stays within int64: the reach of the products is bounded before any is formed
 TOTAL_BOUND = MAX_WORK_INT  # the reads' sum within the work integer's width, the one place of the width
 
-# the two words of ALGEBRA.md #the-primitives.117 item 5: this primitive is the rule's own
-THE_WORD = "from the rule ALGEBRA.md #the-line and the click"
-
 
 @dataclass(frozen=True)
 class SignedReadTerm:
-    """The reading family's declaration: its reads (family, signed weight, by), its sign q, its pair and the Node clock Gamma."""
+    """The reading family's declaration: its reads (family, weight, by), its sign q, its pair and the Node clock Gamma."""
 
     reads: tuple[tuple[int, int, str], ...]
     q: int
@@ -45,7 +31,7 @@ class SignedReadTerm:
 
 @dataclass(frozen=True)
 class SignedReadStart:
-    """The interval's start: the GameBoard's shape, each read family's argument at every Node (a level, or D_i for a pair), the axis contents or None."""
+    """The interval's start: the GameBoard's shape, each read family's time part at every Node, the axis contents or None."""
 
     shape: tuple[int, ...]
     arguments: Mapping[int, np.ndarray]
@@ -63,7 +49,7 @@ class SignedReadOwn:
 
 @dataclass(frozen=True)
 class SignedReadWrites:
-    """The paces in the loop's form: the content c with p_0^2 = (Gamma - c)^2 + c^2 and p_a = Gamma - 2 c - t_a, and the axis contents t_a or None."""
+    """The paces as the rule reads them: the content c with p_0^2 = (Gamma - c)^2 + c^2 and p_a = Gamma - 2 c - t_a, and the axis contents t_a or None."""
 
     content: np.ndarray
     axis_contents: tuple[np.ndarray, ...] | None
@@ -140,44 +126,8 @@ def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) ->
 
 
 def apply(term: SignedReadTerm, start: SignedReadStart, own: SignedReadOwn) -> SignedReadWrites:
-    """The primitive: the paces from the reads with the row's floor, a hill lessens a hollow and never exceeds it (the reads' sum enters the pace at no less than 0), then the guard (ALGEBRA.md #the-primitives row 1, #the-paces)."""
+    """The read: the content as it is, no floor and no clamp (a hill that would take a pace above the edge ends the run by the guard), then the guard (ALGEBRA.md #the-paces)."""
     content = content_of(term, start) if term.reads else np.zeros(start.shape, dtype=np.int64)
-    writes = SignedReadWrites(np.maximum(content, 0), start.axis_contents)
+    writes = SignedReadWrites(content, start.axis_contents)
     guard(term, writes, own)
     return writes
-
-
-DECLARATION = Declaration(
-    "the signed read",
-    "(i)",
-    (
-        "the read families' arguments at the interval's start (a level, or D_i for a pair)",
-        "the signed weights",
-        "by (plain, or q)",
-        "the axis contents with their remainders",
-    ),
-    ("the paces",),
-    apply,
-    THE_WORD
-    + " (ALGEBRA.md #the-primitives); ALGEBRA.md #the-primitives, the first row; ALGEBRA.md #a-familys-declaration, #the-paces",
-    word="the right side",
-    schema=Schema(
-        {
-            "a family's entry": ObjectOf(
-                {
-                    "sign": OneOf((-1, 0, 1)),
-                    "reads": ListOf(
-                        ObjectOf(
-                            {
-                                "family": Name(),
-                                "weight": Either((Integer(least=1), IntegerName())),
-                                "twist": Either((Integer(least=0), OneOf(("own",)))),
-                                "by": OneOf((1, "q")),
-                            }
-                        )
-                    ),
-                }
-            )
-        }
-    ),
-)

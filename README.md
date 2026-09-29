@@ -17,7 +17,7 @@ branch `main`. The Python package is `event_universe`.
 
 **Start here:** [AGENTS.md](AGENTS.md) (the shared instructions and the language
 rule), then the three documents: [the law](docs/ALGEBRA.md),
-[the engine](docs/ENGINE.md) (with [its drawing](docs/ENGINE.svg)) and
+[the engine](docs/ENGINE.md) and
 [the decisions](docs/HIGHLIGHTS.md).
 [Boss orchestration](skills/boss-orchestrator/SKILL.md) and
 [the shared workflow](skills/workflow.md) define coordinated work.
@@ -35,17 +35,15 @@ PYTHONPATH=src python tools/run_inputs.py --out runs/first --jobs 1 <world>.json
 ```
 
 One run writes one file, `runs/first/<world>.output.json` (the verdict, the
-clicks, the readings). A run carries no time, so the same input gives the same
-file again. The worlds recorded on the earlier engine left the repository with
-the worlds' replay (the owner's decision); the worlds of record of the 24
-experiments come in their own folder under `examples/events/`, Bell first.
+clicks, the givings, the reports and the books). A run carries no time, so the
+same input gives the same file again. A world's bodies are laid first by
+`tools/pixel_mode.py`, which writes the mode file beside it.
 
 On Windows use `py -3.14 -m venv .venv` and `.\.venv\Scripts\python.exe` in place
 of `python`. For development, install `python -m pip install -e '.[dev]'`.
 
 Runs are headless: `--out` names the directory of the output files and `--jobs`
-the processes at once, both required; a pins file (`--pins`) is compared only
-under the start file's mode `pin`.
+the processes at once.
 [docs/ENGINE.md](docs/ENGINE.md#4-the-loader-and-the-files) defines the files,
 their keys and the refusals, and [docs/ENGINE.md](docs/ENGINE.md#6-how-to-run-a-world)
 how to run a world.
@@ -57,23 +55,22 @@ python tools/check.py
 ```
 
 This runs lint, formatting, strict types and the tests of the changed files and
-their consumers; `--full` runs everything. Every test is headless. Every path
-a document or a skill cites in backticks exists in the tree; `tests/test_documents.py`
-holds it on every pull request.
+their consumers; `--full` runs everything. Every test is headless.
 
 ## Project map
 
 | Path | Responsibility |
 | --- | --- |
-| `src/event_universe/core/` | The main loop, the step file's reader, the register, the six Ports, Rule3 and the bounded integers; only Main Loop writes here |
-| `src/event_universe/features/` | One folder per primitive, found by the register from its name |
-| `src/event_universe/loader/` | The three files checked against the frame's schemas and the folders' cards, and the loop's classes built from the checked values |
-| `law/step.json` | The interval's order, one data file shared by every world; a change is a change of the law |
-| `examples/events/` | The universe file, the start file and the worlds, with the shipped output of the first run |
-| `tests/` | One module per generic rule on a minimal GameBoard, the regression of every shipped world and the repository gates |
-| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `state_digest.py` (a run's state digest, a HOST reading) |
+| `src/event_universe/node.py` | The Node: every family's NodeState and the interval's acts, each a call of Rule3 |
+| `src/event_universe/game_board.py` | The GameBoard: the NodeStates, the bodies' ledgers, the detectors, the interval forward and back, the output lines and the books |
+| `src/event_universe/core/` | Rule3, the six Ports and the working bound; only Main Loop writes here |
+| `src/event_universe/features/` | The count's line, the hold, the write, the signed read and the start, each a pure function of arrays |
+| `src/event_universe/loader/` | The world's files checked into the GameBoard's world, and the families from the rule |
+| `examples/events/` | The universe files and the engine start file |
+| `tests/` | One module per generic rule on a minimal GameBoard and the repository gates |
+| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `pixel_mode.py` (the generator's lay of the bodies) |
 | `docs/ALGEBRA.md` | The law |
-| `docs/ENGINE.md` | The engine as the code holds it, with its drawing `docs/ENGINE.svg` |
+| `docs/ENGINE.md` | The engine as the code holds it |
 | `docs/HIGHLIGHTS.md` | The decisions in force |
 | `skills/` | The shared workflow and one short role card per skill |
 

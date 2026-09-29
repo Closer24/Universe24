@@ -402,19 +402,6 @@ def body_fixed_point(
     )
 
 
-def wavelength(clock: tuple[int, int], links: int) -> int:
-    """The given light's wavelength from the giver's clock pair in integers: cos k = 3 cos omega_b - 2, so 2 cos k = (3 a - 4 den) div den for the pair [a, den]; the rotation x_(n+1) = 2 cos k x_n - x_(n-1) run over `links` Links by Rule3's division with the remainder carried, its Links per period the Links per upward return of x through 0, rounded to the whole Link; the Links themselves when it never returns."""
-    a, den = clock
-    numerator = 3 * a - 4 * den
-    x_before, x_now, carry, returns = 0, den, 0, 0
-    for _ in range(links):
-        x_next, carry = division_forward(numerator * x_now - den * x_before, den, carry)
-        if x_next > 0 and x_now <= 0:
-            returns += 1
-        x_before, x_now = x_now, x_next
-    return int(division_forward(2 * links + returns, 2 * returns, 0)[0]) if returns else links
-
-
 def declared(body: dict[str, Any], shape: Axis) -> tuple[np.ndarray, Axis, int]:
     """A body's first lay from the world: its counts at its declared Nodes, its centre (the Node of its largest count) and its quanta (the sum)."""
     counts = np.zeros(shape, dtype=np.int64)
@@ -430,11 +417,10 @@ def body_entry(
     board: Board,
     region: np.ndarray,
     body: dict[str, Any],
-    world: dict[str, Any],
     quanta: int,
     scale: int,
 ) -> dict[str, Any]:
-    """One body's mode entry: its standing record within its region and a Link around it, its clock pair, amplitude and period, its twist 0 (a body of the generator does not twist), and on a giver its `wavelength` from the pair."""
+    """One body's mode entry: its standing record within its region and a Link around it, its clock pair, amplitude and period."""
     keep = dilated(region, board.wrap)
     now, before = np.where(keep, record.now, 0), np.where(keep, record.before, 0)
     entry: dict[str, Any] = {
@@ -446,12 +432,9 @@ def body_entry(
         "period": [record.window, 2],
         "amplitude": int(np.abs(now).max()),
         "clock": list(record.clock),
-        "twist": 0,
         "profile": now.ravel().tolist(),
         "moving": {"now": now.ravel().tolist(), "before": before.ravel().tolist()},
     }
-    if "emitter" in body or body.get("q"):
-        entry["wavelength"] = wavelength(record.clock, int(world.get("ticks", 1)))
     return entry
 
 
@@ -508,7 +491,7 @@ def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
             {"node": [int(x), int(y), int(z)], "count": int(laid[x, y, z])}
             for x, y, z in zip(*np.nonzero(laid), strict=True)
         ]
-        entries.append(body_entry(record, board, region, body, document, quanta, int(record.clock[1])))
+        entries.append(body_entry(record, board, region, body, quanta, int(record.clock[1])))
     return {"world_digest": input_digest(document), "bodies": entries}
 
 

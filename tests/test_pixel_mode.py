@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 import event_universe.world_files as world_files
-from event_universe.events.detector_law import DetectorLawSimulation
+from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BODY_24 as QUANTA
 from tests.laws import body_at_24, load_file
@@ -36,14 +36,13 @@ def test_a_body_is_laid_over_its_nodes_as_the_fixed_point_of_its_row_and_loads_l
     assert (
         max(map(abs, profile)) == abs(profile[(6 * 13 + 6) * 13 + 6]) == peak > 0
     )  # the peak at the centre
-    assert entry["period"][1] == 2 and entry["period"][0] >= 4 and entry["twist"] == 0
+    assert entry["period"][1] == 2 and entry["period"][0] >= 4 and "twist" not in entry
     assert entry["moving"]["now"] == profile and len(entry["moving"]["before"]) == len(profile) == 13**3
     assert entry["pair"] == [16, 24] and entry["family"] == "matter" and "wavelength" not in entry
     assert mode["world_digest"] == input_digest(document)
-    own = DetectorLawSimulation(load_world(world)).blocks[0].own  # LAWFUL, the record's two levels
-    assert own is not None and own.now[6, 6, 6] == peak
-    assert own.before.ravel().tolist() == entry["moving"]["before"]
-    assert TOOL.wavelength((100, 100), 300) == 3 and TOOL.wavelength((200, 100), 300) == 300
+    matter = GameBoard(load_world(world)).states[3].levels  # LAWFUL, the family's two levels
+    assert matter is not None and matter.now[6, 6, 6] == peak
+    assert matter.before.ravel().tolist() == entry["moving"]["before"]
 
 
 def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_are_refused_by_name(

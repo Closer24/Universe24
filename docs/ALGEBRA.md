@@ -24,8 +24,8 @@ A change of a NodeState is an **Event**; the rule that makes it is a
 
 A **family** is one kind of physical value with its own declarations
 ([a family's declaration](#a-familys-declaration)). A family's **record** is a set of levels over the
-GameBoard, one integer per Node per level, with a remainder per Node; a
-family with two levels per Node holds a **pair** (re, im) at each Node.
+GameBoard, two levels per Node (now and before) with a remainder per Node;
+the family's level at a Node is one number.
 A **body** is a set of Nodes on which a family's **count** stands, with
 the values the body's writer declares (its content, its momentum, its
 spin, its moment); a body is one connected region.
@@ -40,25 +40,25 @@ product bound) is derived from the integer width, never written.
 
 The universe's integers: the Node clock Gamma (the pace of an empty
 Node, every family's clock unit); the quantum's action T (`quantum_action`),
-the action of one quantum of any family, a unit as Gamma is; the momentum unit Q_unit; the twist table ([the transport](#the-transport)).
+the action of one quantum of any family, a unit as Gamma is; the momentum unit Q_unit.
 
 **The families from the rule** (the owner's question, 2026-09-28, 09:13 Israel: how are the families derived from Rule3): a family is a band of the one rule and not a declaration, and its row holds nothing the rule and the geometry fix. Its pair [num, den], cos omega_0 = num / den: the vacuum's band [1, 1] (the rule's own massless line) and the exact band [1, 2] (2 cos omega_0 = 1, the period 6, one of the three exact rotations the rule allows, which never click) are the rule's; the matter pair (the word "body", every body its own) is the one free physical pair.
 
 The families as the rule derives them from the two keys of a row, its pair and what it holds, with the graph of the reads down the ranks (**The families from the rule** above; the universe of record's rows, the bound charge beside them, and the third as a hypothesis under its own name):
 
-| Family, its rank | Pair | Holds, at the divisor | Parts | Phase | Clicks | Reads | Its free number |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| gravity, the tensor | [1, 1] | the content, E_s = G | 1, 3, 6 | 1 | never | none | G |
-| charge, the vector | [1, 1] | the sign, E_s = alpha | 1, 3 | 2 | gives and takes one quantum | gravity, the bound charge | alpha |
-| the bound charge (polarisation), the exact band | [1, 2] | the content, E_s = 1 | 1 | 1 | never | none | none, both keys fixed |
-| matter, the scalar | [m, Gamma] | nothing | 1 | 2 | gives and takes one quantum | gravity, the bound charge; charge by q | m, the mass |
-| the third (a hypothesis), the mirror band | [-1, 2] | nothing | 1 | 2 | gives and takes one quantum | as matter | none |
+| Family, its rank | Pair | Holds, at the divisor | Parts | Clicks | Reads | Its free number |
+| --- | --- | --- | --- | --- | --- | --- |
+| gravity, the tensor | [1, 1] | the content, E_s = G | 1, 3, 6 | never | none | G |
+| charge, the vector | [1, 1] | the sign, E_s = alpha | 1, 3 | gives and takes one quantum | gravity, the bound charge | alpha |
+| the bound charge (polarisation), the exact band | [1, 2] | the content, E_s = 1 | 1 | never | none | none, both keys fixed |
+| matter, the scalar | [m, Gamma] | nothing | 1 | gives and takes one quantum | gravity, the bound charge; charge by q | m, the mass |
+| the third (a hypothesis), the mirror band | [-1, 2] | nothing | 1 | gives and takes one quantum | as matter | none |
 
 **The mass is one integer** (the owner, 2026-09-28, 10:46 Israel): every pair is written over the GameBoard's one denominator Gamma, cos omega_0 = m / Gamma, the file holding the numerator m alone: light m = Gamma, the exact band m = Gamma div 2 (Gamma even), matter its one integer, 6,667 in the universe of record (the nearest to 2 / 3: cos omega_0 0.666667 -> 0.6667, omega_0 0.841069 -> 0.841024, the reach cosh kappa 2.5 -> 2.49978, every number written before a run within 5 x 10^-5 of itself, the carried division the same act at the finer wall);
 
 **The wall is one** (Cheshbon's correction, 2026-09-28, 14:12 Israel, on the de Broglie Experimenter's finding that a pair reduced to lowest terms shrinks the wall 4,000-fold, lifts A to 1.3 x 10^9 and drives the count's line past the width): the wall is w = 6 Gamma^3 for every family, the pair enters the coefficients as the file writes it, m over Gamma (R_a = 2 m p_a^2, the rest term 12 (Gamma - m) p_0^2), and a reduction to lowest terms is a reading and never the loader's act, so every family's remainder has the one resolution and the exact bands leave none in any form (S + 6 R = 6 Gamma^3 exactly); so the width's amplitude unit falls (A = 512,409 in the universe of record against 4,270,079 at [800, 1200], the pair (level, remainder) carrying the same bits) and T is set so that every record at c T stays under A (T at most 9 x 10^11 for the givers of record; 5 x 10^11 proposed).
 
-**The final unification** (the owner, 2026-09-28, 10:53 Israel): the three of Rule3 is the three axes; the three axes give the three tensor ranks, 1, 3 and 6, the symmetric parts under the 48, and no fourth; every family is one rank and carries two keys, its pair and its divisor, of which the rule fixes at least one: a field that every family reads into its pace is on the pace's own band [1, 1] and its divisor is free (the vector's alpha, the tensor's G), a quantized scalar holds nothing, has no divisor, and its pair is free (the mass m), and an exact band ([1, 2], the period 6) has both fixed, the pair by the rule and the divisor 1 by the well being the count, so it carries none; thus each rank carries one free number and no more, the scalar the mass, the vector alpha, the tensor G: the count three is derived from the three axes, the values free as nature's. The crack, named: a second massive scalar family, a second mass at rank 1, the rule does not forbid; the universe of record declares one, and nature's spectrum of masses is the open row under this line. Its parts are the tensor rank of what writes it (1 the count; [1, 3] the count and the current; [1, 3, 6] the count, the current and the current's tensor), its phase is 2 where it carries quanta (a current, [the count's line](#the-counts-line), the clicks) and 1 where it never clicks: the highest rank, which every family writes and which reads none, and the exact band that holds the content (the bound charge on [1, 2]), whose rest rotation at the vacuum's pace leaves no remainder (no remainder, no click), so two real fields; an exact band that carries quanta (the third on [-1, 2]) is phase 2 and clicks as every family's does, exactly only in the vacuum (**The exact bands** below); its clicks are that same bit. Its reads are the graph of the ranks (each family reads the ranks above it) with the one weight 1 (reciprocity, [a family's write](#the-primitives)), the reader's own twist and by its own count with the sign of the body that holds it, the same word as the read family's held count. Its held writer writes the count with the body's sign and the dipole of the body's spin with the divisor equal to its phase (1 for the real field, 2 for a pair: Dirac's 2); the row's divisor E_s is one of the two free numbers of [the constants](#the-constants) (gravity's, G; the charge's, alpha). The action of one quantum is T, the universe's one integer for every family: Rule3 is linear and its form's scale is free, so no line of Rule3 fixes T; it is a unit, declared once, and no family, no body and no emitter declares its own (the owner, 2026-09-28). So the files hold Gamma, T, the matter pair and the two divisors, and nothing else of physics: `quantum` (1, the unit T), `sign` (0), `self_source` (0: the source is D_i div T), `clock` (the mode's `wavelength`), `Lambda` (1), every `weight` (1), `twist` ("own") and the held `factors` (the linearised field's 4 and 2, nature's numbers written by hand and no rule's) leave the files, and `spins_step` leaves with the spin's step below.
+**The final unification** (the owner, 2026-09-28, 10:53 Israel): the three of Rule3 is the three axes; the three axes give the three tensor ranks, 1, 3 and 6, the symmetric parts under the 48, and no fourth; every family is one rank and carries two keys, its pair and its divisor, of which the rule fixes at least one: a field that every family reads into its pace is on the pace's own band [1, 1] and its divisor is free (the vector's alpha, the tensor's G), a quantized scalar holds nothing, has no divisor, and its pair is free (the mass m), and an exact band ([1, 2], the period 6) has both fixed, the pair by the rule and the divisor 1 by the well being the count, so it carries none; thus each rank carries one free number and no more, the scalar the mass, the vector alpha, the tensor G: the count three is derived from the three axes, the values free as nature's. The crack, named: a second massive scalar family, a second mass at rank 1, the rule does not forbid; the universe of record declares one, and nature's spectrum of masses is the open row under this line. Its parts are the tensor rank of what writes it (1 the count; [1, 3] the count and the current; [1, 3, 6] the count, the current and the current's tensor), it carries quanta (a count and its current, [the count's line](#the-counts-line), the clicks) unless it holds the content, and never clicks where it does: the highest rank, which every family writes and which reads none, and the exact band that holds the content (the bound charge on [1, 2]), whose rest rotation at the vacuum's pace leaves no remainder (no remainder, no click), so two real fields; an exact band that carries quanta (the third on [-1, 2]) clicks as every family's does, exactly only in the vacuum (**The exact bands** below); its clicks are that same bit. Its reads are the graph of the ranks (each family reads the ranks above it) with the one weight 1 (reciprocity, [a family's write](#the-primitives)), and by its own count with the sign of the body that holds it, the same word as the read family's held count. Its held writer writes the count with the body's sign and the dipole of the body's spin with the divisor 1 for the real field and 2 for a family of quanta (Dirac's 2); the row's divisor E_s is one of the two free numbers of [the constants](#the-constants) (gravity's, G; the charge's, alpha). The action of one quantum is T, the universe's one integer for every family: Rule3 is linear and its form's scale is free, so no line of Rule3 fixes T; it is a unit, declared once, and no family, no body and no emitter declares its own (the owner, 2026-09-28). So the files hold Gamma, T, the matter pair and the two divisors, and nothing else of physics: `quantum` (1, the unit T), `sign` (0), `self_source` (0: the source is D_i div T), `clock` (the mode's `wavelength`), `Lambda` (1), every `weight` (1) and the held `factors` (the linearised field's 4 and 2, nature's numbers written by hand and no rule's) leave the files, and `spins_step` leaves with the spin's step below.
 
 **The exact bands** (the owner's word, 2026-09-28, 11:44 Israel: the quarks are there for a reason and are almost never seen; the algebra on one Node, 12:03 Israel): the line of one Node at rest, a_next = 2 cos omega_0 a_now - a_before, is exact in integers only where 2 cos omega_0 is an integer, so the rule carries exactly three exact rotations, 2 cos omega_0 = 1, 0 and -1, the periods 6, 4 and 3, the pairs [1, 2], [0, 1] and [-1, 2]; a record on an exact band at rest at the vacuum's pace leaves no remainder in its rest rotation, so its quanta stand exactly at every Node, it gives nothing and never decays alone, and stable matter is built on an exact band; everything else of it clicks as every family's does, its packets (a wave number is no integer rotation), its Nodes in a well (2 cos omega = 2 - (p_0 / Gamma)^2 there) and its reads, so an exact band is seen exactly when it is moved or probed and only then (the owner's word, 2026-09-28, 12:25 Israel: it does click).
 
@@ -95,7 +95,7 @@ The families as the rule derives them from the two keys of a row, its pair and w
 
 **The count is the record's form**: in a universe of clusters the count is laid from the record and no declared level stands beside it, the body's count SUM_i D_i div T over its Nodes with D = now^2 - next x before the form's Node term, the well at a Node D_i div T each interval with the remainder D mod T the fields' source, the click that integer division (the pixelation), so a declared count that is not the record's **Sum D** div T within the gate is refused by name; a count far below zero (the Bell Experimenter's -4,566, 14:27) is the count parted from its record, a defect of the lay and never a reading, while the hole of -1 at an edge Link is the line's own, conserved and filled: the count's line is the plain division act with no clamp, no block and no guard ([the count's line](#the-counts-line), **The inverse**).
 
-(2) **The count is read once**: a count enters a family's pace once, through the held content of the family that holds it at the divisor 1, read down the graph of the ranks at the weight 1 (**The final unification**), so every family's pace at a Node is p_0 = Gamma - c and on its Link p_a = p_0 - c - c_a, a pixel's horizon is Gamma div 2 (with two held rows of content at the divisor 1, gravity's [1, 1] and the bound charge's [1, 2], the pace reads the count twice and the horizon falls to Gamma div 4: which row is the count's one reader in the rule's own universe is item 9 of [what is open](#what-is-open)), and 2c (the count read as the hold and again as the record's source, or again as a spin's step at the divisor 1) is a reading of the engine that differs from the algebra, a defect and never a finding: the content 12,157 at a pixel of 3,034 is four such readings.
+(2) **The count is read once**: a count enters a family's pace once, through the held content of the family that holds it at the divisor 1, read down the graph of the ranks at the weight 1 (**The final unification**), so every family's pace at a Node is p_0 = Gamma - c and on its Link p_a = p_0 - c - c_a, a pixel's horizon is Gamma div 2 (with two held rows of content at the divisor 1, gravity's [1, 1] and the bound charge's [1, 2], the pace reads the count twice and the horizon falls to Gamma div 4: which row is the count's one reader in the rule's own universe is item 8 of [what is open](#what-is-open)), and 2c (the count read as the hold and again as the record's source, or again as a spin's step at the divisor 1) is a reading of the engine that differs from the algebra, a defect and never a finding: the content 12,157 at a pixel of 3,034 is four such readings.
 
 (3) **The edge**: a pixel binds itself where the GameBoard's Green's function of its own well closes, at 0.2255 Gamma (2,706 of 12,000) on the law and at 0.3444 Gamma (4,133) on an engine where the level enters the Link once; below the edge a pixel is a cloud and disperses.
 
@@ -125,17 +125,17 @@ The families as the rule derives them from the two keys of a row, its pair and w
 
 **The closed GameBoard has no rest** (on the Light Experimenter's refusal of 14:59): the sum's rest on a GameBoard closed on every axis exists only under a net count 0, so a bound universe closed on itself carries a mean of the held field that drifts by the net count over the Nodes each interval, the hypothesis **The universe expands** under its own name and no look of today; a look keeps one axis open with its pixels far from the faces, and there is no sink, a count being never negative.
 
-**The width bounds A by the least of the three** (Cheshbon's line, 15:27, on the Nature24 session's finding at Gamma = 24): the amplitude unit A is the largest amplitude at which every total of an interval stays inside the width, Rule3's 2 w A with w = 6 Gamma^3, the count's line's 6 A^2 and the transport's 3 d_1 d_0 (A + 1) with the largest d of the file's twist table, the least of the three and never Rule3's alone; at Gamma = 24 the three give 3.7 x 10^13, 1.2 x 10^9 and about 3,000, so A is about 3,000 against record levels of 3 to 9, and the universe of 24 runs inside the width; a pixel's twist is 0, its rotation living in its clock pair, the twist being the transport's.
+**The width bounds A by the least of the two** (Cheshbon's line, 15:27, on the Nature24 session's finding at Gamma = 24): the amplitude unit A is the largest amplitude at which every total of an interval stays inside the width, Rule3's 2 w A with w = 6 Gamma^3 and the count's line's 6 A^2, the least of the two and never Rule3's alone; at Gamma = 24 the two give 3.7 x 10^13 and 1.2 x 10^9, and the universe of 24 runs inside the width; a pixel's rotation lives in its clock pair.
 
 **The electron is the lightest band**, a hypothesis under its own name (the Nature24 session's line, 15:27, on the owner's question what the electron does; Cheshbon's check, 15:32): the lightest massive band the rule holds is m = Gamma - 1, cos omega_e = 1 - 1 / Gamma, omega_e = sqrt(2 / Gamma), and the electron is one quantum on it with q = -1, no pixel (a pixel's ratio is at most 2.22), stable by the integer (one quantum does not disperse into fractions and no massive band lies below), its charge the proton's exactly since q is the click's integer, the positron the same band with q = +1 and pair creation **The conversion**;
 
-**The mass is the count**: the rule reads inertia as the count, the momentum n = M v in the unit Q with the wall W = 3 Q M, so m_p / m_e = c_p / 1, the proton a pixel of 1,836 quanta, bound and within the horizon when 0.2255 Gamma <= 1,836 <= Gamma div 2, so Gamma lies between 3,672 (the horizon pixel) and 8,142 (the edge pixel) and the world's one number is measured; what this carries by name: one quantum is one energy and its rotation is its frequency, nature's E = h nu being the record's click rate, and the spin 1 / 2 is open. Two masses stand in this paragraph and are not one: the inertia of a body is its count (the momentum's wall W = 3 Q M), while the energy of a body is its quanta times their rotation (a quantum weighs its rotation, the source's row), so the inertial ratio c_p / 1 and the energy ratio c_p omega_b / omega_e differ by omega_b / omega_e, about 65 at Gamma = 12,000; which of the two nature's m_p / m_e reads is item 10 of [what is open](#what-is-open).
+**The mass is the count**: the rule reads inertia as the count, the momentum n = M v in the unit Q with the wall W = 3 Q M, so m_p / m_e = c_p / 1, the proton a pixel of 1,836 quanta, bound and within the horizon when 0.2255 Gamma <= 1,836 <= Gamma div 2, so Gamma lies between 3,672 (the horizon pixel) and 8,142 (the edge pixel) and the world's one number is measured; what this carries by name: one quantum is one energy and its rotation is its frequency, nature's E = h nu being the record's click rate, and the spin 1 / 2 is open. Two masses stand in this paragraph and are not one: the inertia of a body is its count (the momentum's wall W = 3 Q M), while the energy of a body is its quanta times their rotation (a quantum weighs its rotation, the source's row), so the inertial ratio c_p / 1 and the energy ratio c_p omega_b / omega_e differ by omega_b / omega_e, about 65 at Gamma = 12,000; which of the two nature's m_p / m_e reads is item 9 of [what is open](#what-is-open).
 
-**The generator is Rule3** (the owner's word, 2026-09-28, 15:28 Israel: no floating point in the generator; Cheshbon's integer run at Gamma = 24, 15:41 and 15:43): a body's bound record is what Rule3 makes of its count at its Node in the engine's own integers, seeded at the Node with the count's well held, run on its GameBoard over many periods until the record stands (its levels repeating over a whole period), and the record itself is the mode file; its period P, its amplitude b, its clock pair [next + before, now], its tail level(d + 1) / level(d) and its wavelength are readings of the standing record and never inputs, a clock pair, a tail or a twist computed in floating point being a tool's defect; at Gamma = 24 Rule3 in integers gives the periods 9.6, 11, 12 and 14 at the counts 8 to 11 on the law (the Green's function: 9.55, 10.8, 12.2, 13.8), and the pixels the integers hold are b = 5 carrying 8 to 10 quanta and b = 8 carrying 12 to 15;
+**The generator is Rule3** (the owner's word, 2026-09-28, 15:28 Israel: no floating point in the generator; Cheshbon's integer run at Gamma = 24, 15:41 and 15:43): a body's bound record is what Rule3 makes of its count at its Node in the engine's own integers, seeded at the Node with the count's well held, run on its GameBoard over many periods until the record stands (its levels repeating over a whole period), and the record itself is the mode file; its period P, its amplitude b, its clock pair [next + before, now], its tail level(d + 1) / level(d) and its wavelength are readings of the standing record and never inputs, a clock pair or a tail computed in floating point being a tool's defect; at Gamma = 24 Rule3 in integers gives the periods 9.6, 11, 12 and 14 at the counts 8 to 11 on the law (the Green's function: 9.55, 10.8, 12.2, 13.8), and the pixels the integers hold are b = 5 carrying 8 to 10 quanta and b = 8 carrying 12 to 15;
 
 **The count is the record's form over its period**: an integer record's form D at a Node moves between 0 and 2 c within one period at Gamma = 24, so the count is (SUM over the period of D) div (P T), read once per period on the record's own clock, never the form of one interval as the count (the form of one interval is the well, that interval's source of the fields, the hold's row of [the primitives](#the-primitives)), which as a count kills a pixel of the law and drives a pixel of the level once to the horizon within ten intervals; until a file declares the record itself, a declared count is a reading checked against the loaded record's form at the gate |c - D div T| <= 2 isqrt(c) + 1 (the rounding of an integer amplitude moves D by about 2 b (2 - 2 cos omega_b), 1.5 sqrt(c)), refused by name beyond it; a count moves only whole, and a clamp that sets a negative result to 0 creates quanta and is no rule: the deficit is the hole of [the count's line](#the-counts-line), the count -1 with its remainder in range, which the line conserves and fills.
 
-**Gamma is not constant**, a hypothesis under its own name (the owner's word, 2026-09-28, 15:44 Israel: every tick the universe grows by 6, which explains the expansion and how with the size more and more creatures became possible; Cheshbon's line, 15:50): Gamma_(t + 1) = Gamma_t + 6, the step the six Ports of a Node and no free number; the rule's physics depends on the ratios c / Gamma and m / Gamma alone, so every pair steps with Gamma ([m_0 Gamma_t div Gamma_0, Gamma_t], the matter +4 and light and the charge +6 per interval) and the wall, A and the twist's unit are derived from Gamma_t each interval, the file holding node_clock as [Gamma_0, 6] and the engine no number; a count is the integer its Node holds and stays, so a pixel that does not gather falls under the rising edge 0.2255 Gamma_t and dissolves after (c / 0.2255 - Gamma_0) / 6 intervals, the small giving to the large being the way a body keeps its c / Gamma; the distinct bound counts between the edge and the horizon number 0.2745 Gamma, one and two thirds more kinds each interval (7 at 24, 1,647 at 6,000, 2,235 at 8,142); light on [Gamma, Gamma] does not drift, the clocks of pixels do, a pixel of a fixed count slowing as c / Gamma falls with the rate H = (6 / Gamma) |d ln omega_b / d ln (c / Gamma)|, 5 x 10^-4 to 1.3 x 10^-3 per interval at 6,000, the rule's Hubble rate, and Gamma = 6 t reads the universe's age in intervals (1,000 at 6,000); a look reads it as the takers' clock ratio growing by (6 / Gamma)(s_taker - s_giver) per interval, about 2.6 x 10^-4 at 6,000; at Gamma = 24 every pixel dissolves within three intervals of stepping, so the five looks keep Gamma fixed and a stepping Gamma is a look of its own.
+**Gamma is not constant**, a hypothesis under its own name (the owner's word, 2026-09-28, 15:44 Israel: every tick the universe grows by 6, which explains the expansion and how with the size more and more creatures became possible; Cheshbon's line, 15:50): Gamma_(t + 1) = Gamma_t + 6, the step the six Ports of a Node and no free number; the rule's physics depends on the ratios c / Gamma and m / Gamma alone, so every pair steps with Gamma ([m_0 Gamma_t div Gamma_0, Gamma_t], the matter +4 and light and the charge +6 per interval) and the wall and A are derived from Gamma_t each interval, the file holding node_clock as [Gamma_0, 6] and the engine no number; a count is the integer its Node holds and stays, so a pixel that does not gather falls under the rising edge 0.2255 Gamma_t and dissolves after (c / 0.2255 - Gamma_0) / 6 intervals, the small giving to the large being the way a body keeps its c / Gamma; the distinct bound counts between the edge and the horizon number 0.2745 Gamma, one and two thirds more kinds each interval (7 at 24, 1,647 at 6,000, 2,235 at 8,142); light on [Gamma, Gamma] does not drift, the clocks of pixels do, a pixel of a fixed count slowing as c / Gamma falls with the rate H = (6 / Gamma) |d ln omega_b / d ln (c / Gamma)|, 5 x 10^-4 to 1.3 x 10^-3 per interval at 6,000, the rule's Hubble rate, and Gamma = 6 t reads the universe's age in intervals (1,000 at 6,000); a look reads it as the takers' clock ratio growing by (6 / Gamma)(s_taker - s_giver) per interval, about 2.6 x 10^-4 at 6,000; at Gamma = 24 every pixel dissolves within three intervals of stepping, so the five looks keep Gamma fixed and a stepping Gamma is a look of its own.
 
 **The close's weights under the term** (Cheshbon's line, 16:06, on the Newton Experimenter's reading of 15:56): the weighted current SUM q_n (now_n - before_n) is conserved where the Link coefficients are reciprocal in the weights, q_n R_(n to a) = q_a R_(a to n); without the conformal term R is symmetric and q_n = 2^16 Gamma^2 div p_n^2 at the clock's pace p_n = Gamma - c_n is exact, while under the term R_(n to a) = 2 m (Gamma - 2 c_n - c_a)^2 is not symmetric and no weight per Node is reciprocal on an uneven well, so B at the clock's pace leaves a current that the zero mode grows without bound; under the term the weight's pace is the Node's mean Link pace, p_n = Gamma - 2 c_n - (SUM over the six Ports of c_a) div 6, exact where the neighbours' counts are equal (a chain: Gamma - 2 c - t_x) and within the neighbours' spread otherwise, and only a current weighted on the Links is exact everywhere.
 
@@ -161,22 +161,20 @@ The engine steps every family from the state at the interval's start to
 the state at its end. Every read is of the start's values: the six
 neighbours' levels, the Node's own pace, the arrivals, never a value
 written in the same interval; one Link per interval and nothing in zero
-time. The interval has five places, in order:
+time. The interval has five acts, in order:
 
-(i) the clicking families' step, every component, with the transport through
-the Ports and the self-source; (ii) the count's line on every record (the
-current through the Ports), the reports at the detectors' Nodes and the
-givings at the bodies' clicks; (iii) the held
-families' step; (iv) the holds written (a body's values into its family's
-levels), the clicks' changes of a body's content, charge and momentum
-included; (v) the bodies on one Node: the feed, the induction, the spin's
-step, each a reading of the body's record and no write (a body has no law of its own).
+(i) the signed read: every family's paces from the held families' levels
+at the start, the guard two-sided; (ii) Rule3 on every level: each family
+of quanta by its pair and its paces, each held family's parts at the pace
+1; (iii) the count's line on every family's count (the current through the
+Ports), the reports at the Nodes told to report its reading; (iv) the
+hold: each held family's time part gains its source over its divisor; (v)
+the bodies' clocks and the givings at their clicks, each a reading of the
+count's line and the one act a click writes (a body has no law of its own).
 
-The order within a place, where two primitives write one value, is the
-step file's (`law/step.json`), one data file shared by every world,
-read at the start, its digest in every run's output. A click's writes
-are applied at (iv) of their own interval and read from the next. Backward, the places run in reverse order
-and each primitive runs its own inverse.
+A giving's writes are read from the next interval. Backward, the acts
+run in reverse order, each by Rule3's direction -1, and the givings are
+not taken back.
 
 ### Readings and measurements
 
@@ -200,8 +198,7 @@ start, a_before one interval earlier, and the remainder r kept at the Node:
   w a_next + r' = SUM_a R_a (arr_(+a) + arr_(-a)) + S a_now - w a_before + r,
   0 <= r' < w,
 
-arr_(±a) the **arrival** through the Port ±a: the neighbour's level, or
-its rotation by the Link's angle ([the transport](#the-transport)); 0 beyond an open face;
+arr_(±a) the **arrival** through the Port ±a: the neighbour's level; 0 beyond an open face;
 the Node's own level on a folded axis. The remainder r is the Node's own
 and never travels.
 
@@ -218,7 +215,7 @@ six-neighbour coupling, the rotation omega_0 with cos omega_0 = num /
 den at wave number zero. A held family's field steps at its row's pair with the pace 1 and the wall 3 den, at first order.
 **The clock once and the Link twice**, the two paces in one line: from the coefficients above, the rotation at a Node of the clock's pace p_0 and the Link's paces p_a is cos omega = 1 - (1 - num / den) (p_0 / Gamma)^2 - (num / (3 den)) SUM_a (p_a / Gamma)^2 (1 - cos k_a), the mass term scaling with the clock's square and the band term with the Link's pace. Two readings follow and no third.
 
-(i) **The clocks shift alike**: at k = 0 every massive band's rest rotation obeys 1 - cos omega_b = (p_0 / Gamma)^2 (1 - cos omega_0), one factor for every family, so two bound bodies at one Node shift their clocks alike (the redshift Phi = c / Gamma to the first order) and a packet's fall in a pace gradient, Delta x |d omega_b / d c| x (c_+ - c_-) / D, does not depend on its family beyond the band's own Delta and d omega_b / d c (item 4 of [what is open](#what-is-open)).
+(i) **The clocks shift alike**: at k = 0 every massive band's rest rotation obeys 1 - cos omega_b = (p_0 / Gamma)^2 (1 - cos omega_0), one factor for every family, so two bound bodies at one Node shift their clocks alike (the redshift Phi = c / Gamma to the first order) and a packet's fall in a pace gradient, Delta x |d omega_b / d c| x (c_+ - c_-) / D, does not depend on its family beyond the band's own Delta and d omega_b / d c (item 3 of [what is open](#what-is-open)).
 
 (ii) **The Link is twice**: along a Link every wave's speed falls with p_a = Gamma - 2 c - t_a, the level entering the Link twice and the clock once, so light is delayed and bent into a mass by twice the clock's share (the bending 4 U_1 / b, [the rows against nature](#the-rows-against-nature) (b)). The line is not conformal: a light wave at a fixed wave number scales with (p_a / Gamma)^2 and a bound mode at rest with (p_0 / Gamma)^2, and the two differ already at the first order in c / Gamma (0.625 against 0.411 at c = 3,000 of 12,000 on [8000, 12000], k = 0 against pi); a light record's rotation is conserved along its path, the paces being static, so a light record read against a matter clock at one level reads the clock's shift, (i), and the bending reads (ii).
 
@@ -338,44 +335,9 @@ generator's amplitude unit is the largest A that keeps it inside
 ([the generator](#the-generator) (f)). With Gamma = 10^4 and A = 2^20 the total is near 3 x
 10^18, one third of the room.
 
-### The transport
+### The self-source
 
-A family with a pair (re, im) at each Node and a read with a twist turns
-its arrivals by the Link's angle. On the Port along axis a in the sense
-sigma, for each such read with the factor f (the weight times the
-record's own rotation for the twist "own", else the declared twist; by q
-the charge sign):
-
-  k = sigma x f x (V_a at this Node + V_a arrived through the Port),
-
-V_a the read family's vector component along the axis; both ends form the
-same number with opposite signs, so the transport back is the inverse
-rotation. The **twist table** of the universe gives, for the angle k in
-units of theta_unit = 1 / unit radians (unit the file's, 4 Gamma 2^16 in the
-shipped files), a Pythagorean triple (c, s, d) with c^2 + s^2 = d^2 exactly:
-|k| = k_1 F + k_0 with F the fine table's length (2^10 in the shipped files),
-the fine triple of k_0 and the coarse triple of k_1 composed, (c_1 c_0 - s_1 s_0, s_1 c_0 + c_1
-s_0, d_1 d_0), with (c, -s, d) for k < 0 and (1, 0, 1) at k = 0; a k beyond
-the coarse table, or any k on a world without a table, refuses the run
-naming the Port. The arriving pair is rotated to the nearest unit:
-
-  R_re = (2 c re - 2 s im + d) div 2 d,   R_im = (2 s re + 2 c im + d) div 2 d,
-
-two read acts of Rule3 with the coefficients (2c, -2s) and (2s, 2c) on the
-two arrivals, the load d, the wall 2 d, the remainder not kept: a remainder
-carried across intervals is one to one only while d stands, and d changes
-with the angle every interval; the rounding is unbiased in the mean and the
-inverse recomputes the same triple from the start's levels, exact. The
-record's own rotation "own" is round(unit omega_0 / (4 Gamma)), written once
-by the loader from the record's pair (matter) or from its wavelength on light's
-dispersion (light), so no per-world number is declared. The charge's twist
-on a charged record is Lambda times "own", by q: no separate number exists.
-
-### The second level
-
-A phase-2 family runs [the line](#the-line) on each of its two levels with the
-transported arrivals; with no twist the second level stays exactly zero
-when it starts zero. The **self-source** of a family with the unit P_2
+The **self-source** of a family with the unit P_2
 above 0, at every Node from the start's levels,
 
   Sigma_self = (SUM over the six Links, the family's records and their levels of (a_j - a_i)^2) div P_2,
@@ -423,9 +385,7 @@ the two ends,
 
   F_ij = weight x (now_i before_j - before_i now_j),
 
-the pair's second level added (im_now_i im_before_j - im_before_i
-im_now_j), the weight the family's common wall in the form's units (its
-num where one pair stands); positive inward: a
+the weight the family's num; positive inward: a
 record of wave number k travelling from i to j has F_ij = -2 weight x
 |psi|^2 sin omega sin k, below 0. It is antisymmetric, F_ji = -F_ij, and
 it is the Link term of the conserved form of [the conserved form](#the-conserved-form): the current of
@@ -505,40 +465,27 @@ admitted.
 **A family's write is one act**: every write into a family's level on the GameBoard is (w x q(Node) + r) div E at a Node each interval, at both levels of the writer's rotation (the second the read act once more, halved), the division act with the remainder r carried at that Node: q(Node) the writer's own quantity THERE (a body: the count declared there times its tensor (1, n_a / W, n_a n_b / W^2), the source sigma u_a u_b; a record: its quanta there, D_i div T, times its rotation over the rest rotation of the matter quantum, omega_r / omega_m (the energy sources, as a photon weighs h omega / c^2); the giving: the body's record's two levels at the shell times its bound charge M_pol(Node), the polarisation it holds there; the recoil: the click's tally), w the one weight of the pair of families (the weight with which the writer's family reads the written family: whoever reads with w sources with w, action and reaction one key), E the written row's divisor (E_s; the recoil's wall L); the hold, the source, the giving, **The start** (the rest of the hold's line, its fixed point) and the recoil (the same act into the record's phase at the Port, the recoil's accumulator) are its five instances, and no number is the act's own; generic (the rows' keys), vector (one carried division), local (the Node).
 
 
-Every primitive of the engine is one folder under
-`src/event_universe/features/` with its declaration (its name, its
-place, what it reads, what it writes, its line here) and its function
-`apply(term, start, own)`, which calls Rule3 and nothing else; the loop binds
-the folders through the register and the step file. No folder holds a
-number, a family's name or a default. Every write of a primitive is a
-whole integer into a declared level; every division's remainder lives
-on the record of the primitive that divided.
+Every act of the engine is a pure function of the whole GameBoard's
+arrays that calls Rule3 and nothing else, in `src/event_universe/node.py`
+and in the folders of `src/event_universe/features/` (the count's line, the
+hold, the write, the signed read, the start); the GameBoard calls them in
+the interval's order ([the interval](#the-interval)). No act holds a
+number, a family's name or a default. Every write is a whole integer
+into a family's level; every division's remainder lives at the Node
+where it divided.
 
 | Primitive | Place | Reads | Writes | The line |
 | --- | --- | --- | --- | --- |
-| the pair | (i) | the pair [num, den] | the record's levels | Rule3's coefficients from the declared pair ([the line](#the-line)) |
-| the degree | (i) | the parts | the record's levels | the same line on 1, 3 or 6 components |
-| the phase | (i) | the phase | the record's levels | phase 2 is Rule3 on the pair; phase 1 is Rule3 with the coefficient on a_before declared 0 |
-| the signed read | (i), first on the right side | the read families' levels at the start, the signed weights, by, the tensor's parts | the paces | [the paces](#the-paces); the guard two-sided |
-| the send | (i) | the record's level | the Link's value | the value on the Link is the level times the read's weight, R's factor |
-| the receive | (i) | the Link's value, the twist reads, the twist table | the arrivals | [the transport](#the-transport): the angle per Port a read act over the wall 1, the triple the tables' composed reading, the rotation two read acts over the wall 2 d with the load d, the six arrivals summed per axis |
-| the internal representation | (i) | the generators' tables | the record's pairs | n pairs, each rotated at the Port by the generators' exact tables in sequence, the one-Node step at the tables' pairs |
-| the self-source | (i) | the family's own levels, P_2 | the family's level | [the second level](#the-second-level) |
-| the operation | (i) | the coefficients | the record's levels | Rule3's line itself |
-| the wait | (i) | the record's age | the record's age | the count (b) at a / b = 2: one interval |
-| the count's line | (ii) | every record's levels at the Node and across its six Ports as the step produced them, a body's own and a free record's (a loaded level carries no current), T, the weight, the Nodes told to report | the count at a Node, its remainder; at a report a body's content M_k, applied at (iv) and read from t + 1 | [the count's line](#the-counts-line), the free record: the one click |
-| the lifetime | (ii) | the record's age, L (the key `lifetime` of the record's family's row, an integer from 1; absent, for ever) | the record's end at the face | the age is the count (b) on the record; at age L, wherever the record stands, the quanta it still carries are handed to the border the key names, after the reports of that interval (the reports first) |
-| the giving | (ii) | the body's click (its clock's crossing), the body's own levels at its Nodes, the weight g, T, M | the given record's two levels and its count; M_k -= 1 of the given family at t + 1 | at the body's click, once (the model owner's word of 2026-09-29 on #1495, finding 10): the write (the given record's levels at the body's Nodes = g x a_body at both levels, the family's write by the body's record), the levels scaled so the count their form lays is exactly one quantum ([the count's line](#the-counts-line), the free record), and the birth (M_k -= 1 of the given family); no window stays open after it |
+| the signed read | (i) | the read families' time parts at the start, the weights, by, the tensor's parts | the paces | [the paces](#the-paces); the content as it is, no floor, the guard two-sided |
+| the operation | (ii) | the coefficients from the pair and the paces; a held family's parts at the pace 1 | every family's levels | Rule3's line itself |
+| the count's line | (iii) | the family's levels at the Node and across its six Ports as the step produced them, T, the weight num, the Nodes told to report | the family's count at a Node, its remainder | [the count's line](#the-counts-line): the count is the family's, one count per family over the GameBoard, laid once at the first act from the family's levels and moved by the line alone; a body's quanta of another family are that family's count at its Nodes; a detector reports the rise of the count summed over its Nodes, the net inflow across its boundary, a reading, and nothing is handed over (the model owner's word of 2026-09-29 on #1495, (c)) |
 | the hold | (iv) | a body's content M_k, the quantum's weight w_k of each family (one for every family, no key: the count's quantum), the row's divisor E_s (its key `divisor`, an integer from 1, required), the count's line's net current j_a at the Node (a reading of the record, as the momentum **n** is), the dipole (the body's spin **S**, the curl of that current about its centre, a reading) | the held family's levels at the body's Nodes; the body's remainders | the count s = SUM_k w_k M_k enters the field's line as a source: the time part at the body's Nodes gains (s + r) div E_s each interval, the division act as a load with the remainder r carried on the body, and at a body in the law's form ([what a body is](#what-a-body-is), its Nodes with their counts) each Node gains (w_k M_k(Node) + r) div E_s of the count declared THERE with a remainder of its own, never the whole s at every Node, a signed source the body's charge q times the Node's count (**The sign is the body's**, 2026-09-28: a family carries no sign and `sign` leaves its files, a body's key q signs its count, so one matter family holds bodies of both signs and the third exact band's sense is sign q); so that two bodies' wells add, a body stands in another's well, and the field's rest is Poisson's with the sources (nature's form: potentials add; a level clamped to the count would make a body's Nodes carry its own count alone); **The well of a body with a record is its record's form** (the owner's word 2026-09-28: the well is the count, and the count is the record's quanta, D_i div T): at every Node of such a body the count written is its own record's quanta there, D_i div T with the form's remainder carried, the source's instance on its own record each interval ([the count's line](#the-counts-line) is its integral, the same in the mean), so the well moves with the record to the form's resolution and the self-force vanishes (the well is the record's own, action and reaction), and a bound body falls in a pace gradient at the free packet's rate (Newton's reading, 2026-09-28: the engine equals the algebra for a free packet to a second order of the gradient); a well written from an integer count alone moves only when a quantum's current crosses T, lags the record's shift a / Omega^2 below one quantum and pins it (the engine's zero of a bound body alone in the tent), a defect and not a finding; the vector part (j_a + r) div (E_s T), j_a the count's line's net current of the Node through its two Ports of the axis ([the count's line](#the-counts-line); the momentum n_a = 3 Q j_a div T its reading, W = 3 Q M its wall), and the tensor part (n_a n_b + r) div (E_s M(Node)), each with its remainder carried and per Node as the time part: the three parts are one source, the count and its current's tensor at one scale with no factor of the files (the linearised field's 4 and 2 were nature's numbers by hand; the rule's own reading against the moving body decides them), so the row's divisor divides each; the dipole sigma (D x e_j)_i div its divisor at the six neighbours |
-| the source | (iv) | the record's quanta at its Nodes, D_i div T with D_i = now^2 - next x before (the form's Node term), the weight w with which the record's family reads the sourced family, the sourced row's divisor E_s | the sourced family's level at the record's Nodes; the record's remainder | a record writes as a body does (the family's write): the level gains w x ((D_i div T) x (omega_r / omega_m) + r_i) div E_s each interval (omega_r the record's rotation, omega_m the rest rotation of the matter quantum, cos omega_m = num / den of the matter row, the ratio by the host's arc cosine as the twist's: the energy is the source, a light quantum weighs its rotation), the division act as a load, with the same w the record's family reads the sourced family by (no weight, divisor or table of its own: the key `sourced` names the family alone, or the read implies it); so light sources gravity and the bound charge as its quanta do (E = m c^2) and every pair of families that read each other is reciprocal; the field's shape is the static limit of Rule3, (Delta - kappa^2) a = -sigma / q with kappa^2 = 6 den / num - 6 (kappa the inverse reach, sigma the source, q the charge's weight) |
-| the recoil | (iv) | the click's tally sigma_a, k_q (the quantum's wave number, 2 pi / lambda_q at the giver's rotation on the given family's band, cos k = 3 cos omega_b x den / num - 2, the generator's reading `wavelength` of the mode, no key), M (the body's count), the twist table | the body's own record's two levels at its Nodes, its phase along the tally's axis (the fifth instance of the one write, into the record's phase, [a family's write](#the-primitives)); the momentum **n** a reading | at the close the body's record turns by delta k = sigma_a x (k_q div M) per Link along each axis with a tally, the rotation act by the table's triple nearest delta k at the twist's unit, the angle's remainder carried at the body, the taker and the giver with opposite signs, so the record's envelope carries the phase k per Link of a moving body ([the generator](#the-generator) (e)) and the velocity moves by (num / (3 den sin omega_b)) x k_q / M, the quantum's momentum over the body's quanta ((o) of [the rows against nature](#the-rows-against-nature)), a heavy body's recoil small by its quanta; **n** is read from the record's current ([the count's line](#the-counts-line)) and is no level; a taker with no record of its own takes no recoil; a turn that would carry the phase per Link to pi or beyond is refused naming the body (no speed at the wall, [the paces](#the-paces)); no wall, no store, nothing declared |
-| the feed | (v) | **Derived**, no primitive: the body's record in the pace gradient | the body's momentum **n** as a reading | a body has no law of motion of its own: its record moves by Rule3 alone, and in a pace gradient its packet accelerates at a = Delta x |d omega_0 / d c| x (c_+ - c_-) / D (Delta the mode's top velocity, the second derivative of its band in k; d omega_0 / d c the mode's redshift per level; c_+ and c_- the read level at its two faces D Links apart), the count follows the record by the count's line, and its momentum **n** is the reading of its record's current (SUM over its Links of F_ij at the norm T: the count's line's velocity times 3 Q_unit M); no coefficient is declared; bodies with the same Delta x d omega_0 / d c fall alike, and two light bodies in one tent read it |
-| the induction | (v) | **Derived**, no primitive: the record's drift in the vector part | the body's momentum **n** as a reading | the reader's pace carries the read family's vector part, - (n_b V_b) div W ((f) **The charge** of [the rows against nature](#the-rows-against-nature)), so the record's packet turns and drifts in a vector part's gradient by Rule3 alone: the Lorentz force and its gravitational twin with no line of their own; **n** the reading as the feed's |
-| the spin's step | (v) | **S**, a reading of the body's record (the curl of its current about its centre, as **n** is its current) | nothing: no write | a body has no law of its own ([what a body is](#what-a-body-is)): the spin turns with the record by Rule3 alone, and the step's two weights (the curl's 1 / 4 and the tidal term's 3 / 4, nature's geodetic 3 / 2 against the frame's 1 / 2 written by hand) leave with it; the precession of a spinning body is a reading of its record against the row |
-| the trace | any | every act's integers | nothing | a reading of every act, it writes nothing |
+| the giving | (v) | the body's click (its clock's crossing), its family's count at its shell, its family's two levels at the Node that gives | the count at that Node, the given family's two levels there | at every click of every body, no key (the model owner's word of 2026-09-29 on #1495, (c)): one quantum leaves through an outer Port from the shell Node where its family's count stands highest, where it is at least 1, into the given family, the one holder of the sign its family reads (the count there -1 of its own family and +1 of the given; the conversion changes the family), and the given family's two levels there gain the body's family's two levels scaled so that the form the write adds lays exactly one count ([the count's line](#the-counts-line), the lay and the wall), refused by name where no scale does |
+| the feed | none | **Derived**, no primitive: the body's record in the pace gradient | the body's momentum **n** as a reading | a body has no law of motion of its own: its record moves by Rule3 alone, and in a pace gradient its packet accelerates at a = Delta x |d omega_0 / d c| x (c_+ - c_-) / D (Delta the mode's top velocity, the second derivative of its band in k; d omega_0 / d c the mode's redshift per level; c_+ and c_- the read level at its two faces D Links apart), the count follows the record by the count's line, and its momentum **n** is the reading of its record's current (SUM over its Links of F_ij at the norm T: the count's line's velocity times 3 Q_unit M); no coefficient is declared; bodies with the same Delta x d omega_0 / d c fall alike, and two light bodies in one tent read it |
+| the induction | none | **Derived**, no primitive: the record's drift in the vector part | the body's momentum **n** as a reading | the reader's pace carries the read family's vector part, - (n_b V_b) div W ((f) **The charge** of [the rows against nature](#the-rows-against-nature)), so the record's packet turns and drifts in a vector part's gradient by Rule3 alone: the Lorentz force and its gravitational twin with no line of their own; **n** the reading as the feed's |
 
 The hop is retired: the count's line moves the count with its record's
-current, and no accumulator of a body's position remains. The click is one mechanism: the count's line carries every record's quanta, a body's and a free record's, and a Node told to report hands on each quantum that arrives whole.
+current, and no accumulator of a body's position remains. The click is one mechanism: the count's line carries every family's quanta, and a Node told to report reads each quantum that arrives whole.
 
 A body's writes into its family's levels (the hold): a body of quanta
 M_k of the family k, each family's quantum weighing w_k (one for every
@@ -561,7 +508,7 @@ A body is its count and its record over its Nodes, and never one Node: every bod
 
 (c) **The count moves by the count's line alone**: the count is laid once, at the first act, from the record's form ([the count's line](#the-counts-line), **The lay and the wall**), and after it no count is laid from the form: the count at a Node changes only by the line's flux, and the total is conserved; the well, D_i div T each interval, is the record's quanta as the fields' source and no count. A body's Nodes are the Nodes where its count stands, each interval: the set follows the quanta by the line alone, nothing else moves it, and its shell, the Nodes among them with a Port to a Node beyond, is where its clicks are read (the surface rule), so a moving body's clicks are read at its moving shell.
 
-(d) **The fall**: a = Delta |d omega_b / dc| grad c, Delta the band's curvature at k = 0, d omega_b / dc from Rule3's coefficients at the body's pace and rotation, grad c the other body's content, one line for every held row the body sources. Which fixed point stands is [the stable body theorem](#the-functional-and-the-dilation). The world file names the body's family, its Nodes, its count per Node, its momentum **n** at its two levels (now and before, both declared, a resting body's equal) and its spin's two levels where it has one, and on a body that gives its stocks and its emitter (the given family and the weight g), and nothing else: no lowered pair on its Nodes, no seed, no stop, no profile, no closed Port, no period (P_body is its mode's rotation).
+(d) **The fall**: a = Delta |d omega_b / dc| grad c, Delta the band's curvature at k = 0, d omega_b / dc from Rule3's coefficients at the body's pace and rotation, grad c the other body's content, one line for every held row the body sources. Which fixed point stands is [the stable body theorem](#the-functional-and-the-dilation). The world file names the body's family, its Nodes with their counts and the quanta of other families it holds, and nothing else: no momentum, no spin, no emitter (every body gives at its click), no lowered pair on its Nodes, no seed, no stop, no closed Port, no period (P_body is its mode's rotation); its two levels are the generator's mode file beside the world.
 
 ### The well
 
@@ -721,6 +668,18 @@ drifts, names a missing law; the body's own numbers are never patched.
 
 ## What the law says of nature
 
+### The reading
+
+**One sentence** (the owner's word, 2026-09-29): the universe is counts of clicks at Nodes, moved by Rule3 through the records' currents, and a body is a place where the record's form lowers the pace until its clicks cannot leave.
+
+**One thing, two faces.** Outside, the count; inside, the form. The count at a Node is the number of clicks that came to rest there, and it is all the Outside sees. The form D div T of the record is what slows the clock inside, and nobody measures it. The count's line ties the two: its sum is the flux of the form, so the two agree on average and differ by a remainder. Matter and light are one thing in two states: matter is clicks at rest, light is clicks on their way; the band with a gap (m under Gamma) is where rest is allowed, and [1, 1] without a gap is not, and that is all the families say. A body, an atom, a star are readings: a world file holds counts and records, and who is bound to whom is read from the nesting of the levels at the Nodes, never declared.
+
+**What a body does, in the words of the clicks.** Under the edge the wave does not hold its clicks and they scatter as messages. In the window it holds them: a discrete breathing of Rule3's focusing non-linearity. In the lower half the body is a blot of a few Links moving as a soliton and the count follows it; "the fall is the bias of the clicks" describes it exactly. Near the horizon the hop to the neighbours vanishes as (1 - 2 c / Gamma)^2: the clicks are locked and the Node indifferent. Two bodies within tail range: the smaller's wave is nearer the band, more coupled to the messages, and its clicks migrate to the larger; the universe flows toward frozen bodies at the horizon. All of it consequences of the rule, with no correction in them.
+
+**The fork, sharper than it was** (the owner's decision, open item 12). "Matter is a click" asks one question of the universe: is there anything in it that is not a click? In the universe of record there is: gravity on [1, 1] never clicks, a real field that steps, and from it 1 / r and orbits. The rule's own universe erased it with the words "the well is the count and no field", and so has no attraction beyond three Links. If matter is only clicks, gravity too must be clicks, messages between clusters; the only way known here for clicks alone to give 1 / r^2 is Le Sage's shadow, an isotropic bath of light that opaque bodies absorb, which is not in the documents and carries the known drag. The hierarchy of clusters does not help: it gives a short binding at every level, never 1 / r. One field that is not a click, or a universe without a sun.
+
+**What is checked first.** Two looks already named: a body in a tent (the fall, (i)) and two bodies within tail range (the join of clusters); before them one computation, the edge 0.2255 recomputed for a smeared well, since the tail's Nodes have a well of their own. If both looks come out, the algebra of clusters is a right reading of Rule3, and what it lacks is one line that does not click.
+
 ### The postulates
 
 1. The world is Nodes and Events. Space is the GameBoard; an Event is a wall
@@ -734,15 +693,15 @@ neighbours with fixed work and storage for a fixed set of families
 forbidden, whatever the size of its final answer. 3. Consistency is local
 and causal: an Event first changes its own Node and travels Link by Link,
 one Link per interval, each Node updating on receipt under the same rule.
-The one exception is the click: a record ends at once, whole, at the
-detector. 4. The causal speed is one Link per interval, built in; every
+The one exception is the giving: a body's quantum changes family at
+once, whole, at its shell. 4. The causal speed is one Link per interval, built in; every
 other speed is a rational, a count of Links over a count of intervals. 5.
 Every physical calculation is on bounded integers; there is no float, no
 root and no draw in the law; a Node keeps only the law's own numbers: each
 record's two levels and its remainder, the family's pair and the Node clock
 from the content there. 6. A measurement is a detector's click, an action of
-the law on the state: the record ends at the detector and the detector's own
-record changes. Only a click is compared with nature or pinned as an
+the law on the state: a count arrives at the detector's Node and the
+detector's count changes. Only a click is compared with nature or pinned as an
 expectation; displays and the host's readings read state and write nothing.
 7. The Inside is the GameBoard, where no one measures; the Outside is the
 detectors and their clicks, the only thing claimed to represent nature.
@@ -801,11 +760,13 @@ defect, and no body's numbers are patched to meet it.
 
 1. Whether a body at rest jitters when its current's swing reaches T / 2: on sixteen Nodes the swing over 400 intervals is one percent of T / 2.
 2. The self-source's cubic term: not in the engine, the line is the squares' sum alone.
-3. The twist table's small angles: a triple with d at most 10^9 reaches no angle below 6.3 x 10^-5 radians.
-4. The equivalence principle holds to the band's own shape: Delta x 2 tan (omega_0 / 2) differs by a tenth across the bound bodies of the clock's table; the fall with two light bodies reads the rest.
-5. The two thirds' charges: a third with the sign q reads a third, and the composite read modulo a turn identifies -1 / 3 with +2 / 3, but no line gives the up third 2 / 3 and the down third 1 / 3.
-6. The three generations: a hypothesis under its own name, the three ranks of the exact band [-1, 2]; no line gives a rank a mass.
-7. The exact band [0, 1] of the period 4: a family that never clicks and carries no colour, unnamed in nature here.
-8. The stable body theorem's Hessian beyond the dilation for a set of held rows, and the functional beyond first order in the well over Gamma ([the functional and the dilation](#the-functional-and-the-dilation)); whether the hill holds the body and whether the cooling brings a body to it ((e)) are a run's findings.
-9. **The count is read once** against the graph of the reads: with gravity's [1, 1] and the bound charge's [1, 2] both holding the content at the divisor 1, a matter record's pace reads the count twice and the horizon falls to Gamma div 4; which row is the count's one reader in the rule's own universe.
-10. **The mass is the count** against a quantum weighing its rotation: whether nature's m_p / m_e is the counts' ratio c_p / 1 or the energies' ratio c_p omega_b / omega_e.
+3. The equivalence principle holds to the band's own shape: Delta x 2 tan (omega_0 / 2) differs by a tenth across the bound bodies of the clock's table; the fall with two light bodies reads the rest.
+4. The two thirds' charges: a third with the sign q reads a third, and the composite read modulo a turn identifies -1 / 3 with +2 / 3, but no line gives the up third 2 / 3 and the down third 1 / 3.
+5. The three generations: a hypothesis under its own name, the three ranks of the exact band [-1, 2]; no line gives a rank a mass.
+6. The exact band [0, 1] of the period 4: a family that never clicks and carries no colour, unnamed in nature here.
+7. The stable body theorem's Hessian beyond the dilation for a set of held rows, and the functional beyond first order in the well over Gamma ([the functional and the dilation](#the-functional-and-the-dilation)); whether the hill holds the body and whether the cooling brings a body to it ((e)) are a run's findings.
+8. **The count is read once** against the graph of the reads: with gravity's [1, 1] and the bound charge's [1, 2] both holding the content at the divisor 1, a matter record's pace reads the count twice and the horizon falls to Gamma div 4; which row is the count's one reader in the rule's own universe.
+9. **The two masses** are two readings of clicks from outside, how many (the inertia, the count) and at what rotation (the energy, the rotation): whether nature's m_p / m_e is the counts' ratio c_p / 1 or the energies' ratio c_p omega_b / omega_e.
+10. **The first lay** is the only source of matter that is not a click: the count laid once from the wave; in the rule's own universe the generator declares it, and that closes it.
+11. **The holes**, a count of -1, are debts of clicks inside; the Outside sees only closed accounts.
+12. **The fork on gravity**: one field that is not a click (gravity on [1, 1], the universe of record, 1 / r and orbits) or none (the rule's own universe, no attraction beyond three Links); the owner's decision (**The fork, sharper than it was**).

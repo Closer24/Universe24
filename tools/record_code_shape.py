@@ -4,7 +4,7 @@ through the Boss, records 2239 and 2241; #1198, gate 7: no recorded baseline fil
 For every Python file under `src/` the counts: total lines, docstring lines, comment lines,
 references to records or decisions ("record 2234", "decision 3"), sites of Rule3's arithmetic
 outside its one function, sites that shift an array across Nodes and sites that write a level onto
-the GameBoard (an item of, or the attribute, `now`, `before`, `im_now`, `im_before` or `remainder`
+the GameBoard (an item of, or the attribute, `now`, `before` or `remainder`
 assigned or augmented: the write's gate, the model owner's word of 2026-09-28: every level written
 is one act of the write, features/write, or Rule3's own step, applied by the loop at its sites at
 the merge base and nowhere new); for every Python file of
@@ -36,9 +36,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 from merge_base import base_ref, carried, tree_at  # noqa: E402
 
 PACKAGE = Path("src/event_universe")
-LOOP = PACKAGE / "events" / "detector_law.py"
-LOOP_MODULE = "event_universe.events.detector_law"
-LOOP_PUBLIC = frozenset({"DetectorLawSimulation"})
+LOOP = PACKAGE / "game_board.py"
+LOOP_MODULE = "event_universe.game_board"
+LOOP_PUBLIC = frozenset({"GameBoard"})
 NEW_FILE_LINES = 400
 DUPLICATE_MIN_STATEMENTS = 2
 RECORD_REFERENCE = re.compile(r"\b(?:record|records|decision|decisions)\s+\d+", re.IGNORECASE)
@@ -52,7 +52,7 @@ RULE_ARITHMETIC = (
 RULE_HOME = PACKAGE / "core" / "rule3.py"
 LEVEL_SHIFT = re.compile(r"np\.roll\(|self\._shift\(|\.take\(")
 SHIFT_HOME = PACKAGE / "core" / "ports.py"
-LEVELS = frozenset({"now", "before", "im_now", "im_before", "remainder"})
+LEVELS = frozenset({"now", "before", "remainder"})
 COUNTS = (
     "lines",
     "docstring_lines",
@@ -83,14 +83,14 @@ def docstring_of(node: ast.AST) -> ast.Expr | None:
 
 
 def written_object(target: ast.expr) -> ast.expr:
-    """The object a subscript writes into, through a call around it (`cast(np.ndarray, live.im_now)[mask]`)."""
+    """The object a subscript writes into, through a call around it (`cast(np.ndarray, record.now)[mask]`)."""
     while isinstance(target, ast.Call) and target.args:
         target = target.args[-1]
     return target
 
 
 def level_write_sites(tree: ast.AST) -> int:
-    """The assignments and augmented assignments whose target is an item of, or the attribute, a level of any object (`now`, `before`, `im_now`, `im_before`, `remainder`): the loop's applications of the write's act and of Rule3's step, and nothing new."""
+    """The assignments and augmented assignments whose target is an item of, or the attribute, a level of any object (`now`, `before`, `remainder`): the loop's applications of the write's act and of Rule3's step, and nothing new."""
     found = 0
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign | ast.AugAssign | ast.AnnAssign):

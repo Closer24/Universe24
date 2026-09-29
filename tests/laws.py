@@ -28,10 +28,9 @@ def body_at_24(tmp_path: Path, tool, quanta: int = BODY_24, centre=(6, 6, 6), mo
     events = ROOT / "examples" / "events"
     (tmp_path / "u.json").write_bytes((events / "planck.json").read_bytes())
     (tmp_path / "e.json").write_bytes((events / "engine_start.json").read_bytes())
-    body = dict(family="matter", nodes=[dict(node=list(centre), count=quanta)], momentum=[0, 0, 0])
-    body.update(momentum_before=[0, 0, 0], phase_denominator=1024)
+    body = dict(family="matter", nodes=[dict(node=list(centre), count=quanta)])
     document = dict(shape=[13, 13, 13], boundary=dict(x="open", y="open", z="open"), detectors=[])
-    document.update(ticks=64, N=1024, face_depth=1, universe="u.json", engine="e.json", measured=[body])
+    document.update(ticks=64, face_depth=1, universe="u.json", engine="e.json", measured=[body])
     (world := tmp_path / "body.json").write_text(json.dumps(document), encoding="utf-8")
     if mode:
         tool.main(["--input", str(world)])  # the body's Nodes and the record Rule3 makes of them
@@ -43,10 +42,11 @@ def chain_body_world(
     tool,
     quanta: int = 600,
     length: int = 240,
-    giver: dict[str, object] | None = None,
     taker_at: int | None = None,
+    holds: dict[str, int] | None = None,
+    charge: list[int] | None = None,
 ) -> Path:
-    """The universe of Gamma 6000 (examples/events/planck_6000.json, T = 32768, gravity's divisor raised to 10,000 so the binding row alone binds the chain) copied beside a chain of `length` Nodes (x open) with one body of matter declared on its middle Node with `quanta` (its keys joined by `giver`, a giving body's), and where `taker_at` names a Node a second body of `quanta` there with its set `taker`, laid by the pixel tool: the bodies' Nodes with their counts and the mode file beside them."""
+    """The universe of Gamma 6000 (examples/events/planck_6000.json, T = 32768, gravity's divisor raised to 10,000 so the binding row alone binds the chain) copied beside a chain of `length` Nodes (x open) with one body of matter declared on its middle Node with `quanta`, and where `taker_at` names a Node a second body of `quanta` there (holding `holds` of other families) read by the detector `taker` (the charge's pair `charge` in place of the file's where given), laid by the pixel tool: the bodies' Nodes with their counts and the mode file beside them."""
     events = ROOT / "examples" / "events"
     universe = json.loads((events / "planck_6000.json").read_text(encoding="utf-8"))
     for family in universe[
@@ -54,25 +54,23 @@ def chain_body_world(
     ]:  # the chain's body is bound by its binding row alone: gravity's divisor far up
         if family.get("name") == "gravity":
             family["held"]["divisor"] = 10_000
+        if family.get("name") == "charge" and charge is not None:
+            family["pair"] = charge
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((events / "engine_start.json").read_bytes())
 
     def body_at(x: int) -> dict[str, object]:
-        body = dict(family="matter", nodes=[dict(node=[x, 0, 0], count=quanta)], momentum=[0, 0, 0])
-        body.update(momentum_before=[0, 0, 0], phase_denominator=1024)
-        return body
+        return dict(family="matter", nodes=[dict(node=[x, 0, 0], count=quanta)])
 
-    measured = [{**body_at(length // 2), **(giver or {})}]
+    measured = [body_at(length // 2)]
     detectors: list[dict[str, object]] = []
     if taker_at is not None:
-        measured.append(body_at(taker_at))
+        measured.append({**body_at(taker_at), **({"holds": holds} if holds else {})})
         detectors.append({"name": "taker", "block": 1})
     document = dict(
         shape=[length, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), detectors=detectors
     )
-    document.update(
-        ticks=400, N=65536, face_depth=1, universe="u.json", engine="e.json", measured=measured
-    )
+    document.update(ticks=400, face_depth=1, universe="u.json", engine="e.json", measured=measured)
     (world := tmp_path / "chain.json").write_text(json.dumps(document), encoding="utf-8")
     tool.main(["--input", str(world)])
     return world

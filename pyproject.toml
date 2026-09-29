@@ -52,9 +52,3 @@ files = ["src/event_universe"]
 [[tool.mypy.overrides]]
 module = ["matplotlib.*", "mpl_toolkits.*", "PIL.*"]
 ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-# The one module of the cancel still on disk (docs/CANCELLED_WORLDS.md section 2): imported by
-# events/amplitude.py alone, whose deletion waits for the Boss's approval; not type-checked.
-module = ["event_universe.events.measured"]
-ignore_errors = true

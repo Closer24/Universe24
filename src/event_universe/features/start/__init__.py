@@ -10,7 +10,6 @@ import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import arrival
-from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
 
 NO_READ = (0, 0, 0)  # the line with no read
@@ -386,14 +385,3 @@ def rest(
     # THE CARRY'S ORIGIN IS ONE FOR EVERY NODE, E_s div 2: a ramp in memory order tilted a resting body's well along the first axis
     carries.ravel()[sources] = int(division(1, 2, np.array(divisor, dtype=np.int64)))
     return replace(field, carries=carries, remainder=int(division(1, 2, np.array(3 * pair[1] - 1))))
-
-
-DECLARATION = Declaration(
-    name="the start",
-    place="any",
-    reads=("a body's counts at its Nodes", "a family's pair", "the faces"),
-    writes=("a family's level at a Node",),
-    function=rest,
-    section="ALGEBRA.md #the-generator, #the-stable-body",
-    word="any",
-)

@@ -1,11 +1,10 @@
-"""THE START, its own folder (ALGEBRA.md #the-generator, the (g) row's THE START): every held family's rest at the load by one folder found by its name, on a chain in one pass in integers, elsewhere the clamp iterated; the generator reads the clamp from the folder."""
+"""THE START, its own folder (ALGEBRA.md #the-generator, the (g) row's THE START): every held family's rest at the load, on a chain in one pass in integers, on a box certified in integers, the clamp iterated its reference; the GameBoard and the generator read it from the folder."""
 
 from __future__ import annotations
 
 import numpy as np
 import pytest
 
-from event_universe.core.register import discover
 from event_universe.features.start import arrivals, chain_rest, field_at_rest, rest
 
 
@@ -14,12 +13,6 @@ def chain(extent: int = 40) -> np.ndarray:
     counts[10:13, 0, 0] = 30
     counts[25, 0, 0] = 12
     return counts
-
-
-def test_the_card_is_built_at_the_place_any_and_walked_by_nothing():
-    """The folder's card: "the start", the place and the word any, the function the rest; the loop's walk calls it for no term of the files."""
-    declaration = discover().declarations["the start"]
-    assert (declaration.function, declaration.place, declaration.word) == (rest, "any", "any")
 
 
 def test_the_chains_one_pass_is_the_clamps_fixed_point_on_every_face_kind_and_pair():
