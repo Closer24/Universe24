@@ -68,6 +68,9 @@ CLOCK_FAMILY = {"name": CLOCK_FAMILY_NAME, "pair": [1, 1], "held": HELD_SPIN, "s
 
 # the Node clock Gamma of every test world (ALGEBRA.md #the-paces, #the-line)
 NODE_CLOCK = 10**4
+ACTION = (
+    1 << 15
+)  # the quantum's action T of the fixtures, the power of two above 3 Gamma (issue #1495 finding 6)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -96,6 +99,7 @@ def chain_world(
         "N": PHASE_STEPS,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": ACTION,
         "momentum_unit": 64,
         "twist_table": TWIST_TABLE,
         "universe": [
@@ -174,6 +178,7 @@ def layer_world(receiver: object = None) -> dict:
         "N": PHASE_STEPS,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": ACTION,
         "momentum_unit": 64,
         "twist_table": TWIST_TABLE,
         "universe": [
@@ -226,6 +231,7 @@ def _emitter_world(
         "N": 1024,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": ACTION,
         "momentum_unit": 64,
         "twist_table": TWIST_TABLE,
         "universe": [
@@ -331,12 +337,33 @@ def _seeds() -> dict:
     return json.loads(SEEDS_FILE.read_text(encoding="utf-8"))
 
 
+def lawful_action(document: dict) -> int:
+    """THE COUNT IS THE RECORD'S FORM (issue #1495 finding 6): the fixture's T so that its recorded seeding is lawful, the first seeded body's form's share over 3 den times its declared count (the count's wall W_c = 3 den T lays the declared count), by the engine's own `count_share`; the fixtures' ACTION where no body carries a record."""
+    from event_universe.events.detector_law import DetectorLawSimulation
+    from event_universe.world_files import parse_nature_beam_world
+
+    probed = {**document, "quantum_action": 1}
+    probed["stamp"] = input_stamp(probed)
+    try:
+        probe = DetectorLawSimulation(parse_nature_beam_world(probed))
+    except ValueError:
+        return ACTION  # a fixture the loader refuses by name refuses at the test's own load
+    for block in probe.blocks:
+        if block.own is not None and block.definition.pair is not None:
+            quanta = probe._body_count(block)
+            share = int(probe.count_share(block, block.own).sum())
+            if quanta >= 1 and share > 0:
+                return max(1, share // (3 * block.definition.pair[1] * quanta))
+    return ACTION
+
+
 def _apply(document: dict, written: dict) -> None:
     from event_universe.world_files import input_stamp
 
     document.update(written["top"])
     for index, keys in written["measured"].items():
         document["measured"][int(index)].update(keys)
+    document["quantum_action"] = lawful_action(document)
     document["stamp"] = input_stamp(
         document
     )  # over the document as it stands (the recorded stamp's document)

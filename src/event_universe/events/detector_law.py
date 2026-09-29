@@ -15,7 +15,6 @@ from event_universe.core.register import Register, discover
 from event_universe.core.rule3 import (
     ISOTROPIC,
     NO_READ,
-    SPAN,
     THE_ADVANCE,
     THE_INVERSE,
     THE_REWRITE,
@@ -290,12 +289,13 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         if block.counts is None or block.count_remainder is None:
             block.counts, block.count_remainder = self._lay_count(block, live)
         wall, wrap = self.kind_wall(block.family, block.definition.pair), self.kind_wrap[block.family]
-        term = CountTerm(block.count_norm, wall, self.world.amplitude_bound, int(block.counts.max()))
+        term = CountTerm(
+            self.count_wall(block), wall, self.world.amplitude_bound, int(block.counts.max())
+        )
         levels = (live.now, live.before, live.im_now, live.im_before)
         arrived = [None if a is None else self.ports.arrivals(a, wrap) for a in levels]
         links = tuple(Levels(*(None if a is None else a[port] for a in arrived)) for port in range(6))
-        ports = lambda array: tuple(self.ports.arrivals(array, wrap))  # noqa: E731
-        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction, ports)
+        start = CountStart(block.counts, block.count_remainder, Levels(*levels), links, direction)
         writes = cast(CountWrites, line(term, start, None))
         block.counts, block.count_remainder = writes.count, writes.remainder
         if direction > 0:
@@ -305,29 +305,56 @@ class DetectorLawSimulation(GameBoardGeometry[Block]):
         """The count at the body, its quanta: the declared count per Node over its Nodes (the record's norm in quanta, ALGEBRA.md #what-a-body-is; the count's line moves them between the Nodes and loses none)."""
         return self.body_quanta(block, self.world.measured[block.number].amount)
 
-    def _lay_count(self, block: Block, live: LiveRecord) -> tuple[np.ndarray, np.ndarray]:
-        """THE COUNT'S LAY (ALGEBRA.md #the-counts-line, the remainder's origin): T, the count's wall, the record's conserved form per quantum of the body's declared count, read once by Rule3's division act; then at every Node of the record T c + r is the Node's share of the form plus the origin T / 2 (the share's exact rational n / d: c = (n + d T / 2) div (d T), r the rest div d, Rule3's division act twice), so the count follows the norm with the margin T / 2 against the rounding's walk; a form below one per quantum is the line's refusal."""
-        numerator, denominator = self.conserved_form(live)
-        block.count_norm = int(
-            rule3(NO_READ, NO_READ, 1, denominator * self._body_count(block), 0, 0, numerator)[0]
+    def count_wall(self, block: Block) -> int:
+        """THE COUNT'S WALL W_c = 3 den T (issue #1495 finding 6): the family's plain wall at the body's rest pair times the universe's one T, refused by name where the files declare no T."""
+        action = self.world.quantum_action
+        if action < 1:
+            raise ValueError(
+                f"the body {block.number} carries a record and the universe declares no quantum_action T: "
+                "the count's wall is 3 den T (ALGEBRA.md #the-counts-line, #a-familys-declaration)"
+            )
+        rest = (
+            block.definition.pair
+            if block.definition.pair is not None
+            else self.families[block.family].pair
         )
-        half = int(rule3(NO_READ, NO_READ, 1, SPAN, 0, 0, block.count_norm)[0])
-        counts = self.declared_counts(block)
-        remainder = np.full(self.shape, half, dtype=np.int64)
-        if block.definition.counts is not None:
-            return counts, remainder
-        terms, read_coefficient = self.form_terms(live)
-        for node in zip(*np.nonzero((live.now != 0) | (live.before != 0)), strict=True):
-            share = ratio_sum(
-                [(int(part[node]), int(read_coefficient[node])) for part, _ in terms]
-                + [(-int(links[node]), 1) for _, links in terms]
+        return 3 * int(rest[1]) * action
+
+    def count_share(self, block: Block, live: LiveRecord) -> np.ndarray:
+        """The record's form's share at every Node in the current's units, E_i / 2 = 3 den (now^2 + before^2) - num now S_6(before) (the second level's pair added), whose change over one interval is the six Ports' currents exactly (ALGEBRA.md #the-counts-line; issue #1495 finding 6): the form's Node term at the plain wall 3 den less the Link term by the read act with the level as the coefficient, core.rule3 alone."""
+        weight = self.kind_wall(block.family, block.definition.pair)
+        rest = (
+            block.definition.pair
+            if block.definition.pair is not None
+            else self.families[block.family].pair
+        )
+        wrap = self.kind_wrap[block.family]
+        pairs = [(live.now, live.before)]
+        if live.im_now is not None and live.im_before is not None:
+            pairs.append((live.im_now, live.im_before))
+        share = np.zeros(self.shape, dtype=np.int64)
+        for now, before in pairs:
+            share += form_term(0, 3 * int(rest[1]), now, before)
+            arrived = self.ports.arrivals(before, wrap)
+            sums = (arrived[0] + arrived[1], arrived[2] + arrived[3], arrived[4] + arrived[5])
+            share -= rule3((weight * now,) * 3, sums, 0, 1, 0, 0, 0)[0]
+        return share
+
+    def _lay_count(self, block: Block, live: LiveRecord) -> tuple[np.ndarray, np.ndarray]:
+        """THE COUNT'S LAY (ALGEBRA.md #the-counts-line, THE COUNT IS THE RECORD'S FORM; issue #1495 finding 6): at every Node W_c c_i + r_i = E_i / 2 + W_c div 2 by Rule3's division act, W_c div 2 the remainder's origin; the declared count is a reading, refused by name where it is off the laid total by more than 2 isqrt(c) + 1 ((|c - laid| - 1) div 2 squared above c, no root)."""
+        wall = self.count_wall(block)
+        counts, remainder = rule3(
+            NO_READ, NO_READ, 1, wall, 0, 0, self.count_share(block, live) + wall // 2
+        )
+        declared, laid = self._body_count(block), int(counts.sum())
+        off = abs(declared - laid)
+        if off > 1 and ((off - 1) // 2) ** 2 > declared:
+            raise ValueError(
+                f"the body {block.number} declares the count {declared} and its record's form lays "
+                f"{laid} quanta at T = {self.world.quantum_action}: a declared count is within "
+                "2 isqrt(c) + 1 of SUM D_i div T (ALGEBRA.md #the-counts-line, THE COUNT IS THE RECORD'S FORM)"
             )
-            count, rest = rule3(
-                NO_READ, NO_READ, 1, share[1] * block.count_norm, 0, 0, share[0] + share[1] * half
-            )
-            counts[node] = int(count)
-            remainder[node] = int(rule3(NO_READ, NO_READ, 1, share[1], 0, 0, rest)[0])
-        return counts, remainder
+        return counts.astype(np.int64), remainder.astype(np.int64)
 
     def _hold_stage(self, function: Callable[..., None], advance: bool) -> None:
         """The hold's two acts: at the interval's start the moved bodies' Nodes rewritten; after the records, the held families' own step, the hold and the pace guard."""

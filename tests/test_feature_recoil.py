@@ -163,7 +163,7 @@ def test_in_the_loop_the_givers_record_turns_at_the_close_opposite_to_the_light_
             - int(live.before[x + 1, 0, 0]) * int(live.now[x, 0, 0])
             for x in range(world.shape[0] - 1)
         )
-        reading = round(wall * weight * flow / (block.count_norm * quanta))
+        reading = round(wall * weight * flow / (simulation.world.quantum_action * quanta))
         assert abs(block.momentum[0] - reading) <= 1 and block.momentum[1:] == [0, 0]
         assert block.momentum_before == block.momentum
     (recoil,), (giving,) = lines_of(lines, "recoil"), lines_of(lines, "giving")

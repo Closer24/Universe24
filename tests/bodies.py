@@ -7,6 +7,7 @@ import numpy as np
 from event_universe.events.detector_law import DetectorLawSimulation
 from event_universe.world_files import input_stamp
 from tests.worlds import (
+    ACTION,
     CHARGE_FAMILY,
     CLOCK_FAMILY,
     NODE_CLOCK,
@@ -152,6 +153,7 @@ def block_world(
         "N": 1024,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": ACTION,
         "momentum_unit": 64,
         "twist_table": TWIST_TABLE,
         "universe": families,
@@ -229,6 +231,7 @@ def massive_world(shape: list[int], boundary: object, pair: list[int]) -> dict:
         "N": 1024,
         "engine": "examples/events/engine_start.json",
         "node_clock": NODE_CLOCK,
+        "quantum_action": ACTION,
         "momentum_unit": 64,
         "twist_table": TWIST_TABLE,
         "universe": [

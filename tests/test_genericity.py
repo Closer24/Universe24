@@ -36,7 +36,7 @@ INTEGERS = {**SHIPPED["integers"], "node_clock": TEMPLATE["node_clock"]}
 def world_of(drawn: dict[str, Any]) -> dict[str, Any]:
     """The world on the drawn universe: the emitter test world's chain of 80 with its body of the drawn body family (the shipped kind and well, the seed on the mode as the template carries it), its emitter giving the drawn given family to the screen of three receivers, or the body alone where the draw has one family."""
     roles, document = drawn["roles"], copy.deepcopy(TEMPLATE)
-    for key in ("node_clock", "amplitude_bound", "momentum_unit"):
+    for key in ("node_clock", "amplitude_bound", "momentum_unit", "quantum_action"):
         document.pop(key, None)
     document["universe"] = "universe.json"
     document["engine"] = "start.json"
@@ -75,8 +75,10 @@ def place(
     tmp_path: Path, monkeypatch, families: list[dict[str, Any]], document: dict[str, Any]
 ) -> dict[str, Any]:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    # the template's lawful T (tests.worlds.lawful_action): the seeded body's form per declared quantum
+    integers = {**INTEGERS, "quantum_action": TEMPLATE.get("quantum_action", INTEGERS["quantum_action"])}
     (tmp_path / "universe.json").write_text(
-        json.dumps({"integers": INTEGERS, "families": families}), encoding="utf-8"
+        json.dumps({"integers": integers, "families": families}), encoding="utf-8"
     )
     (tmp_path / "start.json").write_text(json.dumps({"mode": "check"}), encoding="utf-8")
     placed = copy.deepcopy(document)

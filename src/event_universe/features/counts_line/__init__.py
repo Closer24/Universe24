@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -47,8 +46,6 @@ class CountStart:
     here: Levels
     links: tuple[Levels, ...]
     direction: int
-    # the six Ports' arrivals of any array, the loop's; None blocks nothing
-    arrivals: Callable[[Any], tuple[Any, ...]] | None = None
 
 
 @dataclass(frozen=True)
@@ -93,8 +90,6 @@ def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
     """The primitive at (ii), bound to the loop (the line keeps no own record, `own` is None): the inflow per axis, the current into the Node through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and T on the count over the wall T (ALGEBRA.md #the-counts-line)."""
     check(term, start)
     through = [current(term.weight, start.here, start.links[port]) for port in range(PORTS)]
-    if start.arrivals is not None:
-        through = nothing_from_starved(through, start.count, start.remainder, term.norm, start.arrivals)
     net = [through[2 * axis] + through[2 * axis + 1] for axis in range(3)]
     sigma = start.direction
     count, remainder = rule3(
@@ -110,21 +105,8 @@ def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
     return CountWrites(count, remainder, (net[0], net[1], net[2]))
 
 
-def nothing_from_starved(
-    through: list[Any], count: Any, remainder: Any, norm: Any, arrivals: Callable[[Any], tuple[Any, ...]]
-) -> list[Any]:
-    """THE COUNT IS NEVER NEGATIVE, the Link's side: a Node whose outward currents through its six Ports sum beyond what it holds, T c + r, is starved and gives nothing this interval (a Node at 0 with any outward current among them); each of its outward currents is 0 at both ends of the Link, the giver's end where the current flows out of a starved Node, the taker's end where it flows in from a starved Node across the Port (the flag carried across by the Ports' arrivals)."""
-    outward = sum(np.maximum(-flow, 0) for flow in through)
-    starved = outward > norm * count + remainder
-    beyond = arrivals(starved.astype(np.int64))
-    return [
-        np.where(((flow < 0) & starved) | ((flow > 0) & (beyond[port] != 0)), 0, flow)
-        for port, flow in enumerate(through)
-    ]
-
-
 def never_negative(held: Any, count: Any) -> None:
-    """THE COUNT IS NEVER NEGATIVE, the Node's side: after the block a Node gives at most what it holds; the line's result below 0 at any Node is refused by name with the quanta it would move and the count held there (the Node's flat index in x-major order), a defect and never a clamp (a clamp creates quanta)."""
+    """THE COUNT IS NEVER NEGATIVE, the guard (issue #1495 finding 7): the line is the plain division act in both directions and alters nothing; its result below 0 at any Node (the law's hole, a defect of the lay and never a reading) ends the run by name with the quanta it would move and the count held there (the Node's flat index in x-major order), a defect and never a clamp (a clamp creates quanta)."""
     after = np.asarray(count)
     if not bool(np.any(after < 0)):
         return

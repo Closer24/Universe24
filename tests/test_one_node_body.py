@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import json
+from math import isqrt
 from pathlib import Path
+
+import pytest
 
 import event_universe.world_files as world_files
 from event_universe.events.detector_law import DetectorLawSimulation
@@ -13,7 +16,11 @@ from event_universe.world_files import input_stamp, load_world
 ROOT = Path(__file__).resolve().parents[1]
 UNIVERSE = ROOT / "examples" / "events" / "experiments" / "universe.json"
 START = ROOT / "examples" / "events" / "engine_start.json"
-NODE, COUNT, SIDE, CLOCK, AMPLITUDE = (4, 4, 4), 300, 9, 12000, 17  # the pixel, c, side, Gamma, isqrt(c)
+NODE, COUNT, SIDE, CLOCK, ACTION = (4, 4, 4), 300, 9, 12000, 65536  # the pixel, c, side, Gamma, T
+A_CLOCK, B_CLOCK = 432 * 13, 300 * 13  # the mode's clock [a, b], b at least the amplitude
+AMPLITUDE = isqrt(
+    COUNT * ACTION * 4 * B_CLOCK**2 // (4 * B_CLOCK**2 + A_CLOCK**2)
+)  # the count is the record's form, A^2 + before^2 = c T on one Node with before = A a / 2 b (issue #1495 finding 6)
 
 
 def pixel_world(tmp_path: Path, monkeypatch, divisor: int) -> Path:
@@ -34,7 +41,7 @@ def pixel_world(tmp_path: Path, monkeypatch, divisor: int) -> Path:
     world["stamp"] = input_stamp(world)
     (tmp_path / "pixel.json").write_text(json.dumps(world), encoding="utf-8")
     profile = [AMPLITUDE * (i == (NODE[0] * SIDE + NODE[1]) * SIDE + NODE[2]) for i in range(SIDE**3)]
-    entry = dict(family="matter", pair=[800, 1200], profile=profile, twist=0, clock=[432, 300])
+    entry = dict(family="matter", pair=[800, 1200], profile=profile, twist=0, clock=[A_CLOCK, B_CLOCK])
     mode = {"world_digest": world["stamp"]["hash"], "bodies": [entry]}
     (tmp_path / "pixel.mode.json").write_text(json.dumps(mode), encoding="utf-8")
     return tmp_path / "pixel.json"
@@ -58,7 +65,11 @@ def test_under_the_divisor_1_the_one_node_body_reads_as_bound_beside_its_lattice
     assert reading["rotation"]["levels"] == [AMPLITUDE, AMPLITUDE, 0]
     assert tuple(reading["rotation"]["line"]) == simulation.node_record_coefficients(block)
     assert simulation.node_sources(0, "content") == [(NODE, COUNT)]
-    for _ in range(12):
-        simulation.step()  # a cloud under the edge: a starved Node gives nothing, no count below 0
-    levels = dict(simulation.snapshot_stream())["blocks"][0]["rotation"]["levels"]
-    assert levels[0] != levels[1] and block.counts is not None and block.counts.min() >= 0
+    # a cloud under the edge disperses and its count's line would take more than a Node holds: the guard
+    # ends the run by name and alters nothing (ALGEBRA.md THE FOUR LINES OF THE BODY (a); issue #1495 finding 7)
+    with pytest.raises(
+        ValueError, match="a count is never negative, a Node gives at most what it holds"
+    ):
+        for _ in range(12):
+            simulation.step()
+    assert block.counts is not None and block.counts.min() >= 0 and simulation.tick >= 1
