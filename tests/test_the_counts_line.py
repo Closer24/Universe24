@@ -1,8 +1,9 @@
-"""THE COUNT'S LINE (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is refused by name; THE EXACT BANDS (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""THE COUNT'S LINE (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a count below zero at the interval's end is refused by name; THE EXACT BANDS (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
 from __future__ import annotations
 
 import random
+import re
 from fractions import Fraction
 
 import numpy as np
@@ -68,20 +69,22 @@ def test_the_count_is_conserved_to_the_bit_and_the_inverse_returns_the_start():
     assert np.array_equal(back.count, count) and np.array_equal(back.remainder, remainder)
 
 
-def test_a_hole_is_conserved_by_the_line_and_the_inverse_fills_it():
-    """THE REMAINDER'S ORIGIN: a Node with no quantum reads the count -1 at its first outward swing, a hole the line conserves (SUM (W_c c + r) unchanged, the remainder in range) and the inverse fills exactly (issue #1495 finding 7: the plain division act, no block)."""
+def test_a_count_below_zero_at_the_intervals_end_is_refused_by_name():
+    """THE COUNT IS NEVER NEGATIVE: a Node with no quantum reads the count -1 at its first outward swing (T c + r below 0), the arithmetic's hole, and the line refuses it by name at the interval's end with the quanta it would move and the count held there (ALGEBRA.md #the-counts-line THE INVERSE: a defect of the lay, never a clamp and never a block; issue #1495 finding 7); the same current from a Node holding the quanta moves them, conserved to the bit."""
     shape, wall = (3, 3, 3), 3 * 24 * 128
     now, before = np.zeros(shape, dtype=np.int64), np.zeros(shape, dtype=np.int64)
     now[1, 1, 1], before[0, 1, 1] = 100_000, 100_000  # a current out of the centre through one Port
     count, remainder = np.zeros(shape, dtype=np.int64), np.zeros(shape, dtype=np.int64)
     term = CountTerm(wall, 16, 1 << 20, 0)
     draw = np.random.default_rng(1)
+    with pytest.raises(ValueError, match=r"holding 0 < .*never negative") as refusal:
+        apply(term, periodic_start(draw, count, remainder, 1, (now, before)))
+    named = re.search(r"move (\d+) quanta .* Node (\d+) in", str(refusal.value))
+    moved, node = (int(named[1]), int(named[2])) if named else (0, 0)
+    count.ravel()[node] = moved  # the Node named, holding what the current moves
     forward = apply(term, periodic_start(draw, count, remainder, 1, (now, before)))
-    assert int(forward.count.min()) < 0
-    assert bool(np.all((0 <= forward.remainder) & (forward.remainder < wall)))
-    assert int((wall * forward.count + forward.remainder).sum()) == 0
-    back = apply(term, periodic_start(draw, forward.count, forward.remainder, -1, (now, before)))
-    assert np.array_equal(back.count, count) and np.array_equal(back.remainder, remainder)
+    assert int(forward.count.min()) >= 0 and int(forward.count.ravel()[node]) == 0
+    assert int((wall * forward.count + forward.remainder).sum()) == moved * wall
 
 
 @pytest.mark.parametrize(("pair", "period"), [((1, 2), 6), ((0, 1), 4), ((-1, 2), 3)])

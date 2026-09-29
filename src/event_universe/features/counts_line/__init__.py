@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
+import numpy as np
+
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.register import Declaration
 from event_universe.core.rule3 import rule3
@@ -99,7 +101,22 @@ def apply(term: CountTerm, start: CountStart, own: None = None) -> CountWrites:
         0,
         start.remainder,
     )
+    never_negative(start.count, count)
     return CountWrites(count, remainder, (net[0], net[1], net[2]))
+
+
+def never_negative(held: Any, count: Any) -> None:
+    """THE COUNT IS NEVER NEGATIVE, the Node's side: after the block a Node gives at most what it holds; the line's result below 0 at any Node is refused by name with the quanta it would move and the count held there (the Node's flat index in x-major order), a defect and never a clamp (a clamp creates quanta)."""
+    after = np.asarray(count)
+    if not bool(np.any(after < 0)):
+        return
+    index = int(np.argmin(after))
+    holding = int(np.asarray(held).ravel()[index])
+    moved = holding - int(after.ravel()[index])
+    raise ValueError(
+        f"the count's line would move {moved} quanta from a Node holding {holding} < {moved} (the Node "
+        f"{index} in x-major order): a count is never negative, a Node gives at most what it holds"
+    )
 
 
 DECLARATION = Declaration(
