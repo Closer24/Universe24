@@ -25,9 +25,9 @@ def read_momentum(
     if live.im_now is not None and live.im_before is not None:
         levels.append((live.im_now, live.im_before, arrived[2], arrived[3]))
     denominator, reading = (
-        loop.world.quantum_action * quanta,
+        loop.count_wall(block) * quanta,
         [],
-    )  # the record's form c T (THE COUNT IS THE RECORD'S FORM)
+    )  # the record's form c W_c, W_c = 3 den T the count's wall (THE COUNT IS THE RECORD'S FORM)
     for axis in range(3):
         total = 0
         for now, before, now_arrived, before_arrived in levels:
