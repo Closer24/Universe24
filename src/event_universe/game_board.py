@@ -99,7 +99,7 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22), the form that sources the fields (the vacuum's share of the two level pairs, laid at the count's wall) at the weight with which the record's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at every Node, a row with no source at 0 (or its rest) with the same remainder and carry."""
+        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22), the form that sources the fields (the vacuum's share of the two level pairs, laid at the count's wall) at the weight with which the record's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at every Node, a held row of the content with no source at 0 (or its rest) with the same remainder and carry, the holder of the sign keeping its laid record where nothing sources it."""
         forms = []
         for row in self.laid_rows():
             family = self.families[row.family]
@@ -126,6 +126,8 @@ class GameBoard:
             for source, form, turn in forms:
                 counts = counts + node.weight_of(index, self.families[source]) * form
                 counts = counts + node.weight_of(index, self.families[source], BY_SIGN) * turn
+            if family.quanta and not counts.any():
+                continue  # the holder of the sign keeps its laid record where nothing sources it
             state = self.states[index]
             wall = node.rule_of(family, self.world.node_clock, 0)[2]
             try:
