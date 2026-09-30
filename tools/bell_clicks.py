@@ -1,4 +1,4 @@
-"""Bell's reading (ALGEBRA.md row (h); the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast, #1515 comment 5912822802; the advisor's corrected instrument, #1563 comment 5918198102, the setting as the comb's shift, 5918297124): eight runs, one per pair angle, each a world with the pair's angle laid as the two lobes' relative phase, read against the blind expectation file. Per run and side the ports at each setting are unions of the screen's regions the expectation names (the + port about the central maximum, the - port about the two first minima, displaced by the setting), each port's inflow its regions' net front inflows summed over the run (the `seen` lines). The ports are calibrated over the eight runs (the advisor): P_+ and P_- their mean inflows at that setting, d = s_+ / P_+ - s_- / P_- per run, D half its swing over the runs; the outcome is the sign of d and the contrast |d| / D. The side the file names `sign` credits every quantum in its ports to the larger port; the side it names `contrast` credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest. E(a, b) among the coincidences over the runs (the outcomes' product weighted by the smaller of the two sides' clicks), S at the CHSH settings, the efficiency per side and setting (the clicks over the light in the ports), the reading by the shares beside it (the product of the two sides' normalised differences), the single-side patterns per region (the quanta over W_c) and the visibility from the u = 0 world, all in exact fractions; the whole crossings at the regions' boundaries counted beside as the count's line's diagnostic, `crossings`. DETECTOR.
+"""Bell's reading (ALGEBRA.md row (h); the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast, #1515 comment 5912822802; the advisor's corrected instrument, #1563 comment 5918198102, the setting as the comb's shift, 5918297124): eight runs, one per pair angle, each a world with the pair's angle laid as the two lobes' relative phase, read against the blind expectation file. Per run and side the ports at each setting are unions of the screen's regions the expectation names (the + port about the central maximum, the - port about the two first minima, displaced by the setting), each port's inflow its regions' net front inflows summed over the run (the `seen` lines). The ports are calibrated over the eight runs (the advisor): P_+ and P_- their mean inflows at that setting, d = s_+ / P_+ - s_- / P_- per run, D half its swing over the runs; the outcome is the sign of d and the contrast |d| / D. The side the file names `sign` credits every quantum in its ports to the larger port; the side it names `contrast` credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest. E(a, b) among the coincidences over the runs (the outcomes' product weighted by the smaller of the two sides' clicks), S at the CHSH settings, the efficiency per side and setting (the clicks over the light in the ports), the settings' phases calibrated from the same runs (the advisor, 5918622391: the calibrated difference over the run phases fitted to A cos(u - delta), delta the setting's phase, the mirror on the left) with E = cos(delta_A + delta_B) at them beside, the reading by the shares beside it (the product of the two sides' normalised differences), the single-side patterns per region (the quanta over W_c) and the visibility from the u = 0 world, all in exact fractions; the whole crossings at the regions' boundaries counted beside as the count's line's diagnostic, `crossings`. DETECTOR.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 from fractions import Fraction
+from math import atan2, cos, degrees, pi, sin
 from pathlib import Path
 from typing import Any
 
@@ -80,6 +81,15 @@ def calibrated(runs: list[dict[str, Any]], side: str, setting: str, wall: int) -
     }
 
 
+def phase_of(difference: list[Fraction], turns: int, side: str) -> float:
+    """A setting's phase in radians: the calibrated difference over the runs, the run k at the pair's phase (k + 1/2) / turns of the turn (its mirror on the left), fitted to A cos(u - delta) by its first harmonic (the advisor, #1563 comment 5918622391); 0 where nothing was read."""
+    mirror = -1 if side == "left" else 1
+    angles = [mirror * 2 * pi * (k + Fraction(1, 2)) / turns for k in range(turns)]
+    along = sum(float(d) * cos(u) for d, u in zip(difference, angles, strict=True))
+    across = sum(float(d) * sin(u) for d, u in zip(difference, angles, strict=True))
+    return atan2(across, along) if along or across else 0.0
+
+
 def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, object]:
     """The reading of the runs against the expectation: the runs' ports calibrated per side and setting, the clicks (side A's light, side B's light times its contrast), E at the four settings among the coincidences, S, the efficiencies, the reading by the shares, the single-side patterns, the visibility from the u = 0 world and the whole crossings beside; the blind row copied from the expectation."""
     loaded = load_world(world)
@@ -96,7 +106,8 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
             visibility_run = run
         else:
             runs.append(run)
-    runs.sort(key=lambda run: str(run["name"]))
+    runs.sort(key=lambda run: int(str(run["name"]).rsplit("_", 1)[1]))
+    turns = len(runs)
     if expected["sign"] == expected["contrast"]:
         raise ValueError("the expectation declares one side by the sign and the other by the contrast")
     by = {expected["sign"]: "sign", expected["contrast"]: "contrast"}
@@ -114,8 +125,15 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
         }
         for side, settings in sides.items()
     }
+    phases = {
+        side: {
+            setting: phase_of(values["difference"], turns, side) for setting, values in settings.items()
+        }
+        for side, settings in sides.items()
+    }
     correlation: dict[str, list[int]] = {}
     by_the_shares: dict[str, list[int]] = {}
+    cosines: dict[str, float] = {}
     for a, right in sides["right"].items():
         for b, left in sides["left"].items():
             weights = [min(x, y) for x, y in zip(clicks["right"][a], clicks["left"][b], strict=True)]
@@ -128,6 +146,7 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
                 na * nb for na, nb in zip(right["normalised"], left["normalised"], strict=True)
             ) / len(runs)
             by_the_shares[f"{a} {b}"] = pair(shares)
+            cosines[f"{a} {b}"] = round(cos(phases["right"][a] + phases["left"][b]), 3)
     (a, a_prime), (b, b_prime) = (list(sides["right"]), list(sides["left"]))
     e = {key: Fraction(*value) for key, value in correlation.items()}
     s_value = e[f"{a} {b}"] - e[f"{a} {b_prime}"] + e[f"{a_prime} {b}"] + e[f"{a_prime} {b_prime}"]
@@ -189,6 +208,17 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
         ],
         "correlation": correlation,
         "S": pair(s_value),
+        "phases": {
+            side: {k: round(degrees(v), 1) for k, v in v_side.items()} for side, v_side in phases.items()
+        },
+        "cosines": cosines,
+        "S_cosines": round(
+            cosines[f"{a} {b}"]
+            - cosines[f"{a} {b_prime}"]
+            + cosines[f"{a_prime} {b}"]
+            + cosines[f"{a_prime} {b_prime}"],
+            3,
+        ),
         "efficiency": efficiency,
         "by_the_shares": {"correlation": by_the_shares},
         "patterns": patterns,

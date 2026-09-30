@@ -1,5 +1,5 @@
 {
- "comment": "Bell's blind expectation (the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast; the advisor's corrected instrument, #1563 comment 5918198102, the setting as the comb's shift, 5918297124), written before any run by build_world.py from the Huygens sum: `blind.pattern` the single-side pattern at u = 0 over the rows (normalised), `blind.minima` its minima, `blind.correlation` E at the four settings (a b in rows) by the reader's calibrated rule on that sum, `blind.S`, `blind.efficiency` per side and setting; the advisor's scalar sum gave S = 2.830 and B's efficiency 0.647 with the ideal step and the Boss's with the comb's shift 2.826, 0.68 and 0.63; nature's S = 2.83 at both ports with the detection loophole closed above the efficiency 2 / 3; the runs' numbers against these are the row.",
+ "comment": "Bell's blind expectation (the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast; the advisor's corrected instrument, #1563 comment 5918198102, the setting as the comb's shift, 5918297124), written before any run by build_world.py from the Huygens sum: `blind.pattern` the single-side pattern at u = 0 over the rows (normalised), `blind.minima` its minima, `blind.correlation` E at the four settings (a b in rows) by the reader's calibrated rule on that sum, `blind.S`, `blind.efficiency` per side and setting, `blind.phases` the settings' calibrated phases in degrees from the sum, `blind.cosines` E = cos(delta_A + delta_B) at them and `blind.S_cosines` their CHSH sum, the row of the paper (the advisor, 5918622391: S = 2.80 at the shifts 0, 4, -2 and -6 rows, the row grid short of the ideal 2.83); the advisor's scalar sum gave S = 2.830 and B's efficiency 0.647 with the ideal step and the Boss's with the comb's shift 2.826, 0.68 and 0.63; nature's S = 2.83 at both ports with the detection loophole closed above the efficiency 2 / 3; the runs' numbers against these are the row.",
  "verdict": "DETECTOR",
  "family": "charge",
  "across": "y",
@@ -203,7 +203,31 @@
   "bell_4",
   "bell_5",
   "bell_6",
-  "bell_7"
+  "bell_7",
+  "bell_8",
+  "bell_9",
+  "bell_10",
+  "bell_11",
+  "bell_12",
+  "bell_13",
+  "bell_14",
+  "bell_15",
+  "bell_16",
+  "bell_17",
+  "bell_18",
+  "bell_19",
+  "bell_20",
+  "bell_21",
+  "bell_22",
+  "bell_23",
+  "bell_24",
+  "bell_25",
+  "bell_26",
+  "bell_27",
+  "bell_28",
+  "bell_29",
+  "bell_30",
+  "bell_31"
  ],
  "visibility_world": "bell_v",
  "quanta": null,
@@ -284,22 +308,39 @@
    31
   ],
   "correlation": {
-   "0 -2": 0.706,
-   "0 -6": -0.696,
-   "4 -2": 0.85,
-   "4 -6": 0.559
+   "0 -2": 0.831,
+   "0 -6": -0.373,
+   "4 -2": 0.71,
+   "4 -6": 0.828
   },
-  "S": 2.811,
+  "S": 2.742,
   "efficiency": {
    "left": {
     "-2": 1.0,
     "-6": 1.0
    },
    "right": {
-    "0": 0.707,
-    "4": 0.652
+    "0": 0.641,
+    "4": 0.641
    }
   },
+  "phases": {
+   "left": {
+    "-2": -39.3,
+    "-6": -117.9
+   },
+   "right": {
+    "0": -0.0,
+    "4": 78.5
+   }
+  },
+  "cosines": {
+   "0 -2": 0.774,
+   "0 -6": -0.468,
+   "4 -2": 0.774,
+   "4 -6": 0.773
+  },
+  "S_cosines": 2.789,
   "bound": 2.0
  }
 }

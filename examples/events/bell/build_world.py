@@ -11,7 +11,7 @@ import argparse
 import json
 import subprocess
 import sys
-from math import cos, pi, sin, sqrt
+from math import atan2, cos, degrees, pi, sin, sqrt
 from pathlib import Path
 from typing import Any
 
@@ -128,10 +128,18 @@ def minima_of(pattern: list[float]) -> list[int]:
     ]
 
 
+def phase_of(difference: list[float], turns: int, sign: int) -> float:
+    """A setting's phase in radians from the calibrated difference over the run phases (k + 1/2) / turns of the turn (the mirror on the left), fitted to A cos(u - delta) by its first harmonic, as the reader calibrates it (the advisor, #1563 comment 5918622391)."""
+    angles = [sign * 2 * pi * (k + 0.5) / turns for k in range(turns)]
+    along = sum(d * cos(u) for d, u in zip(difference, angles, strict=True))
+    across = sum(d * sin(u) for d, u in zip(difference, angles, strict=True))
+    return atan2(across, along)
+
+
 def side_reading(
     design: dict[str, Any], side: str, shift: int
-) -> tuple[list[float], list[float], list[int]]:
-    """The reader's rule on the Huygens sum for one side at one setting over the eight phases: the light in the ports, the contrast (the calibrated difference over its half swing) and the outcome (its sign), as tools/bell_clicks.py reads a run (`calibrated`)."""
+) -> tuple[list[float], list[float], list[int], float]:
+    """The reader's rule on the Huygens sum for one side at one setting over the run phases: the light in the ports, the contrast (the calibrated difference over its half swing), the outcome (its sign) and the setting's calibrated phase, as tools/bell_clicks.py reads a run (`calibrated`, `phase_of`)."""
     sign = dict(SIDES)[side]
     turns = int(design["angles"])
     plus_rows = list(
@@ -153,11 +161,11 @@ def side_reading(
     light = [a + b for a, b in zip(plus, minus, strict=True)]
     contrast = [abs(d) / half_swing if half_swing else 0.0 for d in difference]
     outcome = [1 if d > 0 else -1 if d < 0 else 0 for d in difference]
-    return light, contrast, outcome
+    return light, contrast, outcome, phase_of(difference, turns, sign)
 
 
 def blind_row(design: dict[str, Any]) -> dict[str, Any]:
-    """The blind numbers from the Huygens sum: the u = 0 pattern with its minima, and by the reader's own rule E at the four settings, S, B's efficiency per setting and the reading by the sign alone."""
+    """The blind numbers from the Huygens sum: the u = 0 pattern with its minima; by the reader's own rule E at the four settings, S and the efficiency per side and setting; and the settings' calibrated phases with E = cos(delta_A + delta_B) at them and S from those cosines (the advisor, 5918622391: the row of the paper, nature's law in the polariser's angles with the instrument's angles the calibrated ones)."""
     pattern = huygens(design, 0.0, 1)
     top = max(pattern)
     settings = {side: [int(v) for v in design["settings"][SIDE_SETTINGS[side]]] for side, _s in SIDES}
@@ -167,10 +175,12 @@ def blind_row(design: dict[str, Any]) -> dict[str, Any]:
     }
     correlation: dict[str, float] = {}
     efficiency: dict[str, dict[str, float]] = {side: {} for side in settings}
+    cosines: dict[str, float] = {}
     for shift_a in settings["right"]:
-        light_a, contrast_a, outcome_a = sides["right"][shift_a]
+        light_a, contrast_a, outcome_a, phase_a = sides["right"][shift_a]
         for shift_b in settings["left"]:
-            light_b, contrast_b, outcome_b = sides["left"][shift_b]
+            light_b, contrast_b, outcome_b, phase_b = sides["left"][shift_b]
+            cosines[f"{shift_a} {shift_b}"] = cos(phase_a + phase_b)
             clicks_a = [
                 n * (c if by["right"] == "contrast" else 1.0)
                 for n, c in zip(light_a, contrast_a, strict=True)
@@ -183,7 +193,7 @@ def blind_row(design: dict[str, Any]) -> dict[str, Any]:
             product = sum(oa * ob * w for oa, ob, w in zip(outcome_a, outcome_b, weights, strict=True))
             correlation[f"{shift_a} {shift_b}"] = product / sum(weights)
     for side, shifts in sides.items():
-        for shift, (light, contrast, _outcome) in shifts.items():
+        for shift, (light, contrast, _outcome, _phase) in shifts.items():
             credited = sum(
                 n * (c if by[side] == "contrast" else 1.0) for n, c in zip(light, contrast, strict=True)
             )
@@ -195,6 +205,12 @@ def blind_row(design: dict[str, Any]) -> dict[str, Any]:
         + correlation[f"{a_prime} {b}"]
         + correlation[f"{a_prime} {b_prime}"]
     )
+    s_cosines = (
+        cosines[f"{a} {b}"]
+        - cosines[f"{a} {b_prime}"]
+        + cosines[f"{a_prime} {b}"]
+        + cosines[f"{a_prime} {b_prime}"]
+    )
     return {
         "pattern": [round(value / top, 3) for value in pattern],
         "minima": minima_of(pattern),
@@ -203,6 +219,12 @@ def blind_row(design: dict[str, Any]) -> dict[str, Any]:
         "efficiency": {
             side: {k: round(v, 3) for k, v in values.items()} for side, values in efficiency.items()
         },
+        "phases": {
+            side: {str(shift): round(degrees(values[3]), 1) for shift, values in shifts.items()}
+            for side, shifts in sides.items()
+        },
+        "cosines": {key: round(value, 3) for key, value in cosines.items()},
+        "S_cosines": round(s_cosines, 3),
         "bound": 2.0,
     }
 

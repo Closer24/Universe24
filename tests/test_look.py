@@ -156,7 +156,7 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     built, tilted, blind = (json.loads((folder / f"{n}.json").read_text()) for n in BELL_FILES)
     assert built["shape"] == [343, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
     assert (
-        len(built["detectors"]) == 23 and len(blind["runs"]) == 8 and len(blind["sides"]["left"]) == 12
+        len(built["detectors"]) == 23 and len(blind["runs"]) == 32 and len(blind["sides"]["left"]) == 12
     )
     still = json.loads((folder / "bell_v.json").read_text())  # the visibility world, u = 0
     assert [m.get("phase") for m in still["messages"]] == [None] * 4
@@ -169,6 +169,6 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     ]
     assert blind["ports"]["right"]["0"] == {"plus": ["right_5"], "minus": ["right_3", "right_7"]}
     assert [len(rows) for rows in blind["sides"]["right"].values()] == [6] + [4] * 9 + [6]
-    assert blind["blind"]["minima"] == [16, 31] and 2.7 < blind["blind"]["S"] < 2.9
+    assert blind["blind"]["minima"] == [16, 31] and 2.7 < blind["blind"]["S_cosines"] < 2.9
     right = next(d for d in built["detectors"] if d["name"] == "right_0")
     assert {p[0] for p in right["positions"]} == set(range(331, 343))
