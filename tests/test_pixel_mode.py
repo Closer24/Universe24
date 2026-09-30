@@ -127,7 +127,8 @@ def test_a_body_is_laid_over_its_nodes_as_the_fixed_point_of_its_row_and_loads_l
     assert entry["moving"]["now"] == profile and len(entry["moving"]["before"]) == len(profile) == CHAIN
     assert entry["pair"] == [4000, 6000] and entry["family"] == "matter"
     assert mode["world_digest"] == input_digest(document)
-    matter = GameBoard(load_world(world)).states[3].levels  # lawful, the family's two levels
+    board = GameBoard(load_world(world))  # lawful, the family's two levels
+    matter = board.states[[family.name for family in board.families].index("matter")].levels
     assert matter is not None and matter.now[CHAIN // 2, 0, 0] == peak
     assert matter.before.ravel().tolist() == entry["moving"]["before"]
     turned = chain_body_world(tmp_path, TOOL, senses=(-1,))
@@ -138,19 +139,22 @@ def test_a_body_is_laid_over_its_nodes_as_the_fixed_point_of_its_row_and_loads_l
 def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_are_refused_by_name(
     tmp_path, monkeypatch
 ):
-    """Three quanta are a cloud, below the window of mass; four hundred fit no cube with a positive pace on the chain, above it; two bodies of fifty two Links apart collapse, their wells reaching the pace 0; two small bodies whose regions share a Node, a universe without T and a sense other than +1 or -1 are refused by name."""
+    """Three quanta are a cloud, below the window of mass (ten too, under the binding holder's range of 20 Links); three hundred fit no cube with a positive pace on the chain, above it; two bodies of a hundred two Links apart collapse, their wells reaching the pace 0; two bodies of twenty whose regions share a Node, a universe without T and a sense other than +1 or -1 are refused by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     with pytest.raises(ValueError, match="is a cloud: its standing reading rotates"):
         chain_body_world(tmp_path, TOOL, quanta=3)
     with pytest.raises(ValueError, match="fits no cube on this board with a positive pace"):
-        chain_body_world(tmp_path, TOOL, quanta=400)
+        chain_body_world(tmp_path, TOOL, quanta=6 * QUANTA)
     document = json.loads(chain_body_world(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     with pytest.raises(ValueError, match="a sense is \\+1 or -1"):
         TOOL.pixel_mode(json.loads(json.dumps(document)), [2])
-    near = {"family": "matter", "nodes": [{"node": [CHAIN // 2 + 2, 0, 0], "count": QUANTA}]}
+    heavy = [
+        {"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 2 * QUANTA}]}
+        for x in (CHAIN // 2, CHAIN // 2 + 2)
+    ]
     with pytest.raises(ValueError, match="collapses: its wells reach the pace 0"):
-        TOOL.pixel_mode({**document, "measured": [*document["measured"], near]})
-    small = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 8}]} for x in (20, 23)]
+        TOOL.pixel_mode({**document, "measured": heavy})
+    small = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 20}]} for x in (20, 23)]
     with pytest.raises(
         ValueError, match="measured\\[1\\] and measured\\[0\\] share a Node in their regions"
     ):

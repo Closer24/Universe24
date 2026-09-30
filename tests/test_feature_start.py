@@ -2,20 +2,24 @@
 
 from __future__ import annotations
 
+import json
+import math
 from fractions import Fraction
 
 import numpy as np
 import pytest
+from scipy.fft import dstn, idstn
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
 from event_universe.features.start import arrivals, rest
+from tests.laws import UNIVERSE
 
 OPEN_CHAIN = Wrap(False, True, True)
 
 
 def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
-    """On a chain and a box, at [1, 1] and at short-range pairs, with sources of one sign and of both (a box with one open face, its sink): one more act of the line returns the fine levels (the first repeat is a fixed point), the line's residual 6 den b - num S_6(b) - 3 den sigma is within one act's floor (0 to 6 den), and the levels are the fine levels over the unit to the nearest integer, of the sources' sign at the sources (a negative source beside a positive one at 0 at most) and, with one sign, never below 0."""
+    """On a chain and a box, at [1, 1], at the binding holder's pair [2400, 2401] (a periodic box too, the screening its sink) and at short-range pairs, with sources of one sign and of both (a box with one open face, its sink): one more act of the line returns the fine levels (the first repeat is a fixed point), the line's residual 6 den b - num S_6(b) - 3 den sigma is within one act's floor (0 to 6 den), and the levels are the fine levels over the unit to the nearest integer, of the sources' sign at the sources (a negative source beside a positive one at 0 at most) and, with one sign, never below 0."""
     chain = np.zeros((40, 1, 1), dtype=np.int64)
     chain[10:13, 0, 0], chain[25, 0, 0] = 30, 12
     box = np.zeros((6, 5, 4), dtype=np.int64)
@@ -27,8 +31,10 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     )  # sources of both signs, the tension's and the senses' case
     for counts, faces, pair, divisor in (
         (chain, OPEN_CHAIN, (1, 1), 7),
+        (chain, OPEN_CHAIN, (2400, 2401), 1),
         (chain, OPEN_CHAIN, (1, 4), 7),
         (box, OPEN_CHAIN, (1, 1), 7),
+        (box, Wrap(True, True, True), (2400, 2401), 1),
         (box, Wrap(True, True, True), (3, 4), 7),
         (mixed, OPEN_CHAIN, (1, 1), 7),
         (mixed, OPEN_CHAIN, (1, 2), 7),
@@ -65,6 +71,30 @@ def test_the_tent_on_an_open_chain_is_the_exact_rest_to_the_nearest_integer():
     for i in reversed(range(30)):
         exact[i] = (right[i] + (exact[i + 1] if i + 1 < 30 else 0)) / diagonal[i]
     assert [int(level) for level in found.levels[:, 0, 0]] == [round(value) for value in exact]
+
+
+def test_the_rest_of_a_gapped_pair_about_one_source_is_isotropic_and_the_lines_exact_solution():
+    """The binding holder's pair of the tests' universe at its divisor on a closed box of 21^3 with one source of 1,000 quanta per interval at the centre: the level at the six neighbours is one number (an isotropic rest, the vector test of the two rows), the level falls along each axis all the way to the face, and at every Node the level is the nearest integer of the line's exact solution, 6 den a - num S_6(a) = 3 den sigma with 0 beyond every face solved by the sine transform (the screened well of the six Ports, whose reach is the pair's, ALGEBRA.md #the-well)."""
+    rows = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
+    row = next(entry for entry in rows if entry["name"] == "binding")
+    (num, den), divisor = row["pair"], row["held"]["divisor"]
+    counts = np.zeros((21, 21, 21), dtype=np.int64)
+    counts[10, 10, 10] = 1000
+    levels = rest(counts, (num, den), Wrap(False, False, False), divisor, MAX_WORK_INT, 3 * den).levels
+    near = {
+        int(np.moveaxis(levels, axis, 0)[10 + side, 10, 10]) for axis in range(3) for side in (1, -1)
+    }
+    assert len(near) == 1 and 0 < near.pop() < int(levels[10, 10, 10])
+    for axis in range(3):
+        along = [int(np.moveaxis(levels, axis, 0)[10 + r, 10, 10]) for r in range(11)]
+        assert along == sorted(along, reverse=True) and along[10] >= 0
+    cosines = np.cos(math.pi * np.arange(1, 22) / 22)
+    denominator = 6 * den - 2 * num * (
+        cosines[:, None, None] + cosines[None, :, None] + cosines[None, None, :]
+    )
+    source = dstn(3 * den * counts.astype(float) / divisor, type=1, norm="ortho")
+    exact = idstn(source / denominator, type=1, norm="ortho")
+    assert np.array_equal(levels, np.rint(exact).astype(np.int64))
 
 
 def test_the_refusals_by_name():

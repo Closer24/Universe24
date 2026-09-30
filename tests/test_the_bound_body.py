@@ -10,6 +10,7 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe import node
 from event_universe.game_board import GameBoard
+from event_universe.loader.derived import CONTENT
 from event_universe.loader.world import spread
 from event_universe.world_files import input_digest, load_world
 from tests.laws import CHAIN, QUANTA, ROOT, chain_body_world, load_file
@@ -25,11 +26,12 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_form_
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)
     board = GameBoard(load_world(world))
-    matter = board.states[3]
+    index = [family.name for family in board.families].index("matter")
+    matter = board.states[index]
     declared = board.mask(board.world.bodies[0].nodes)
     board.step()
     assert matter.count is not None and matter.count_remainder is not None
-    laid, wall = int(matter.count[declared].sum()), node.count_wall(board.families[3], 32768)
+    laid, wall = int(matter.count[declared].sum()), node.count_wall(board.families[index], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(matter.count[declared].min()) >= 1
     total = int((wall * matter.count.astype(object) + matter.count_remainder).sum())
     kept = []
@@ -92,5 +94,9 @@ def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_rea
     content, _axis = node.signed_read(
         names.index("matter"), board.families, board.states, 6000, "now", board.shape
     )
-    plain = sum(board.states[names.index(name)].parts[0].now for name in ("gravity", "polarisation"))
+    plain = sum(  # every holder of the content, read as it stands
+        state.parts[0].now
+        for family, state in zip(board.families, board.states, strict=True)
+        if family.held == CONTENT
+    )
     assert ((content - plain) == -100 * q)[first | second].all()  # the hill at q = +1, the hollow at -1
