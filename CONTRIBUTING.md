@@ -14,11 +14,13 @@ the short procedure of [the shared workflow](skills/workflow.md).
    merge. Check `git status`, fetch `origin` and record the base commit; never
    overwrite local work of the user or another conversation; use a separate
    worktree for concurrent work.
-2. Only Main Loop touches `src/event_universe/core/`, `src/event_universe/node.py`
-   and `src/event_universe/game_board.py`. A new act of the law is a pure function
-   of arrays that calls Rule3 alone, approved by the mathematician with
-   `APPROVED-MATH` on its pull request. A new module of `core/` needs
-   `APPROVED-CORE` in the pull request's body.
+2. The core (`src/event_universe/core/`, `src/event_universe/node.py` and
+   `src/event_universe/game_board.py`) changes only by the Boss's worker on a
+   brief that names the law's line. A new act of the law is a pure function of
+   arrays that calls Rule3 alone, its line in `docs/ALGEBRA.md` first and the
+   three verdicts (generic, vector, local) in its pull request. A new module of
+   `core/` needs a line starting with `APPROVED-CORE` in the pull request's body,
+   the Boss's.
 3. A physics change starts from the law's line in `docs/ALGEBRA.md`; a bug (the
    code differs from the law) is fixed by whoever finds it with a test that fails
    before and passes after; a change of the interval's acts or their order is a
@@ -38,13 +40,14 @@ the short procedure of [the shared workflow](skills/workflow.md).
    documents, and which tests were not run. If `main` advances, merge it in (a merge
    commit, never a rebase) and recheck.
 7. Only the Boss merges into `main`, only on green CI and with `main` merged in;
-   never bypass a failing check. The Boss's reviewer reads a change to the law, a
-   physics folder or `core/`; everything else merges on green CI. Every result names
-   the `main` commit it ran on; there are no tags.
-8. One owner per area (`tools/owners.json`): a pull request that
-   touches another owner's area carries that owner's line
-   `HANDED BY <owner>: <files>` in its body, the Boss's line covering any area;
-   `tests/test_ownership.py` refuses it otherwise. A path in no area is free.
+   never bypass a failing check. The Boss reads every diff before the merge, and
+   reads a change to the law, a physics folder or `core/` against the law's lines;
+   everything else merges on green CI. Every result names the `main` commit it ran
+   on; there are no tags.
+8. One owner per area (`tools/owners.json`): the Boss owns every area and the
+   advisor writes nothing. A pull request from a session that is not the Boss's
+   carries the line `HANDED BY Boss: <files>` in its body, covering any area;
+   `tools/ownership.py` refuses it otherwise. A path in no area is free.
 
 ## Tests and documents
 

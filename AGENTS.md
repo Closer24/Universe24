@@ -8,7 +8,7 @@ nothing else. Start from the current checkout, never from a previous conversatio
 | The law: one algebraic line per rule, the families, the bodies, the clicks, every experiment's formula and blind expectation | [docs/ALGEBRA.md](docs/ALGEBRA.md) |
 | The engine as the code holds it on `main`: the words, the main loop and Rule3, the folders and the register, the loader and the files, the output, the gates, how to run a world and how to add a feature | [docs/ENGINE.md](docs/ENGINE.md) |
 | The decisions in force, one line each; a decision of the model owner replaces the line it changes | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) |
-| The team's roles, the short procedure and every shared way of working | [skills/workflow.md](skills/workflow.md) and [Boss orchestration](skills/boss-orchestrator/SKILL.md); each other skill is a short role card |
+| The team's roles, the short procedure and every shared way of working | [skills/workflow.md](skills/workflow.md), [the Boss's card](skills/boss-orchestrator/SKILL.md) and [the advisor's card](skills/advisor/SKILL.md) |
 | Every edit, check and Git operation | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 Keep changes within the user's scope: an explanation or diagnosis does not

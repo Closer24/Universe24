@@ -19,8 +19,8 @@ branch `main`. The Python package is `event_universe`.
 rule), then the three documents: [the law](docs/ALGEBRA.md),
 [the engine](docs/ENGINE.md) and
 [the decisions](docs/HIGHLIGHTS.md).
-[Boss orchestration](skills/boss-orchestrator/SKILL.md) and
-[the shared workflow](skills/workflow.md) define coordinated work.
+[The shared workflow](skills/workflow.md), [the Boss's card](skills/boss-orchestrator/SKILL.md)
+and [the advisor's card](skills/advisor/SKILL.md) define the team's work.
 
 ## Install and run
 
@@ -63,7 +63,7 @@ their consumers; `--full` runs everything. Every test is headless.
 | --- | --- |
 | `src/event_universe/node.py` | The Node: every family's NodeState and the interval's acts, each a call of Rule3 |
 | `src/event_universe/game_board.py` | The GameBoard: the NodeStates, the bodies' ledgers, the detectors, the interval forward and back, the output lines and the books |
-| `src/event_universe/core/` | Rule3, the six Ports and the working bound; only Main Loop writes here |
+| `src/event_universe/core/` | Rule3, the six Ports and the working bound; changed only by the Boss's worker on a brief that names the law's line |
 | `src/event_universe/features/` | The count's line, the hold, the write, the signed read and the start, each a pure function of arrays |
 | `src/event_universe/loader/` | The world's files checked into the GameBoard's world, and the families from the rule |
 | `examples/events/` | The universe files and the engine start file |
@@ -72,7 +72,7 @@ their consumers; `--full` runs everything. Every test is headless.
 | `docs/ALGEBRA.md` | The law |
 | `docs/ENGINE.md` | The engine as the code holds it |
 | `docs/HIGHLIGHTS.md` | The decisions in force |
-| `skills/` | The shared workflow and one short role card per skill |
+| `skills/` | The shared workflow, the Boss's card and the advisor's card |
 
 ## License and citation
 
