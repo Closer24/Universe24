@@ -1,5 +1,5 @@
 {
- "comment": "Blind, written before any run: the massless row's kick arrives at the far region before light by the intervals below, light reading the vacuum content in its paces (the advisor's 2 x L sqrt 3 is the long-wavelength limit of the same difference). The reading: per world, the field line of the packet's family at the region, its half-maximum onset (the first interval at or above half the run's largest reading), the centroid of its bump at half maximum and its peak; the difference of the two worlds' onsets against `onsets`, of their centroids against `centroids` (the peaks beside: the crests' passage through the region moves a peak, and averages out over the bump). A light click at the region is the measurement and is counted beside; every field line is a GameBoard reading labelled so.",
+ "comment": "Blind, written before any run: light at the vacuum content arrives at the far region after light at no vacuum content and after the massless row's kick by the intervals below, light reading the vacuum content in its paces (the advisor's 2 x L sqrt 3 is the long-wavelength limit of the same difference); the kick and light at no vacuum content arrive together, the massless row's own band. The reading: per world, the field line of the packet's family at the region, its half-maximum onset (the first interval at or above half the run's largest reading), the centroid of its bump at half maximum and its peak; each named difference of two worlds' onsets against its `onsets`, of their centroids against its `centroids` (the peaks beside: the crests' passage through the region moves a peak, and averages out over the bump). A light click at the region is the measurement and is counted beside; every field line is a GameBoard reading labelled so.",
  "verdict": "blind",
  "gamma": 6000,
  "vacuum_content": 60,
@@ -19,18 +19,44 @@
   "centroids": 457.5,
   "onsets": 446.58754668980896
  },
- "kick_before_light": {
-  "centroids": 17.93846232040748,
-  "onsets": 17.510587713788755,
-  "long_wavelength": 15.848264889255226
+ "differences": {
+  "light_0_before_light": {
+   "worlds": [
+    "light",
+    "light_0"
+   ],
+   "centroids": 17.93846232040748,
+   "onsets": 17.510587713788755,
+   "long_wavelength": 15.848264889255226
+  },
+  "kick_before_light": {
+   "worlds": [
+    "light",
+    "kick"
+   ],
+   "centroids": 17.93846232040748,
+   "onsets": 17.510587713788755,
+   "long_wavelength": 15.848264889255226
+  },
+  "kick_before_light_0": {
+   "worlds": [
+    "light_0",
+    "kick"
+   ],
+   "centroids": 0.0,
+   "onsets": 0.0,
+   "long_wavelength": 0.0
+  }
  },
  "worlds": {
   "light": "light.json",
+  "light_0": "light_0.json",
   "kick": "kick.json"
  },
  "region": "far",
  "families": {
   "light": "charge",
+  "light_0": "charge",
   "kick": "gravity"
  }
 }

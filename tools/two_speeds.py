@@ -1,8 +1,8 @@
-"""The two speeds' reading (ALGEBRA.md, Nature's numbers enter the board only as clicks, the series' line 1): the massless row's kick against light, each in its own world of one design (examples/events/two_speeds), read at the far region by the field line of the packet's family (a GameBoard reading labelled so: the count over the region for light, the squared deviation from the rest for the kick), one reading per interval where it changed. Per world: the readings' largest value and its interval (the peak), the half-maximum onset (the first interval at or above half the largest, the crossing placed by the line between the two readings around it), the bump's end (the last interval at or above the half) and its centroid (the readings' mean interval weighted by the reading, over the bump from the onset to the end, the packet's centre crossing the region's centre; the crests' passage averages out over the bump where the peak does not), the total of light's clicks at the region (the measurement, counted beside) and the largest reading of every other family at the region (the light's own wells, a diagnostic of the look's universe file). Then the intervals by which the kick's arrival precedes light's, at the onsets and at the centroids (the peaks beside, the crests' passage moving them), beside the blind expectation's `kick_before_light`. No number of the look stands here: the worlds, the region and the families come from the expectation file.
+"""The two speeds' reading (ALGEBRA.md, Nature's numbers enter the board only as clicks, the series' line 1): light at the vacuum content, light at no vacuum content and the massless row's kick, each in its own world of one design (examples/events/two_speeds), read at the far region by the field line of the packet's family (a GameBoard reading labelled so: the count over the region for light, the squared deviation from the rest for the kick), one reading per interval where it changed. Per world: the readings' largest value and its interval (the peak), the half-maximum onset (the first interval at or above half the largest, the crossing placed by the line between the two readings around it), the bump's end (the last interval at or above the half) and its centroid (the readings' mean interval weighted by the reading, over the bump from the onset to the end, the packet's centre crossing the region's centre; the crests' passage averages out over the bump where the peak does not), the total of light's clicks at the region (the measurement, counted beside) and the largest reading of every other family at the region (the light's own wells, a diagnostic of the look's universe file). Then every difference the expectation names (`differences`: a name and the two worlds, the second's arrival taken from the first's), at the onsets and at the centroids (the peaks beside, the crests' passage moving them), beside the blind numbers. No number of the look stands here: the worlds, the region and the families come from the expectation file.
 
 Run with PYTHONPATH set to the checkout's src:
 
-    PYTHONPATH=src python tools/two_speeds.py --expectation examples/events/two_speeds/expectation.json --outputs <light>.output.json <kick>.output.json
+    PYTHONPATH=src python tools/two_speeds.py --expectation examples/events/two_speeds/expectation.json --outputs <light>.output.json <light_0>.output.json <kick>.output.json
 """
 
 from __future__ import annotations
@@ -86,27 +86,25 @@ def arrival(output: dict[str, Any], family: str, region: str) -> dict[str, Any]:
 
 
 def reading(expectation: dict[str, Any], outputs: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    """The look's reading: each world's arrival by the expectation's families and region, and the kick's lead over light at the onsets and the peaks beside the blind numbers."""
+    """The look's reading: each world's arrival by the expectation's families and region, and every named difference (the second world's arrival taken from the first's) at the onsets, the centroids and the peaks, beside the blind numbers."""
     region = str(expectation["region"])
     found = {
         name: arrival(outputs[name], str(family), region)
         for name, family in expectation["families"].items()
+        if name in outputs
     }
-    light, kick = found["light"], found["kick"]
-    lead = {}
-    for key, light_at, kick_at in (
-        ("onsets", light["onset"], kick["onset"]),
-        ("centroids", light["centroid"], kick["centroid"]),
-        ("peaks", light["peak"], kick["peak"]),
-    ):
-        lead[key] = (
-            None if light_at is None or kick_at is None else Fraction(light_at) - Fraction(kick_at)
-        )
-    return {
-        "arrivals": found,
-        "kick_before_light": lead,
-        "blind": expectation["kick_before_light"],
-    }
+    differences: dict[str, Any] = {}
+    for key, blind in expectation["differences"].items():
+        first, second = (found.get(name) for name in blind["worlds"])
+        if first is None or second is None:
+            continue
+        lead: dict[str, Any] = {"worlds": blind["worlds"]}
+        for word, at in (("onsets", "onset"), ("centroids", "centroid"), ("peaks", "peak")):
+            one, other = first[at], second[at]
+            lead[word] = None if one is None or other is None else Fraction(one) - Fraction(other)
+        lead["blind"] = {word: blind[word] for word in ("onsets", "centroids", "long_wavelength")}
+        differences[key] = lead
+    return {"arrivals": found, "differences": differences}
 
 
 def plain(value: Any) -> Any:
@@ -124,7 +122,7 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--expectation", type=Path, required=True, help="the blind expectation file")
     parser.add_argument(
-        "--outputs", type=Path, nargs="+", required=True, help="the two worlds' output files"
+        "--outputs", type=Path, nargs="+", required=True, help="the worlds' output files"
     )
     args = parser.parse_args(argv)
     expectation = json.loads(args.expectation.read_text(encoding="utf-8"))

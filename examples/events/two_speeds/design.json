@@ -1,5 +1,5 @@
 {
- "comment": "The two speeds (ALGEBRA.md, Nature's numbers enter the board only as clicks, the series' line 1; the advisor's lay, #1563 comments 5916154126 and 5916173972; the Boss's build, 5916633729): the massless row's kick against light on the same board, in two worlds of one design so that light's own wells on the held rows do not swamp the kick. Each world lays one packet at the same wave number, over every row, and reads it at the far region, four columns backed by the receding face, by the field line (the count over the region for light, the squared deviation from the rest for the kick), one reading per interval. The universe file beside this design is rule.json with the massless row's rest c_vac = 60 (the vacuum content) and the three holders' divisors at a thousand million, so that light's own wells stay within a few levels over the run (at rule.json's divisors the two slits' run reached a content of 752 under the packet; at ten million the smoke world's well reached 22 levels in 70 intervals). Every number of the look stands here and in the universe file, none in the scripts or the engine.",
+ "comment": "The two speeds (ALGEBRA.md, Nature's numbers enter the board only as clicks, the series' line 1; the advisor's lay, #1563 comments 5916154126 and 5916173972; the Boss's build, 5916633729): the massless row's kick against light on the same board, in three worlds of one design (the advisor's check, #1563 comment 5916644644): light at the vacuum content, light at no vacuum content (universe_light_0.json, the same file without the rest) and the kick; light's two arrivals differ by the vacuum content alone, the same packet on the same lattice, and the kick's arrival against light's at no vacuum content checks the massless row's own speed. Each world lays one packet at the same wave number, over every row (the kick's world on the massless row alone, universe_kick.json, the same row and rest with no reader: a kick of 300, five times the rest, is needed for the integer packet to move at its band, since at 30 it moved 3 percent fast and at 60 2 percent, the rounding's shift, and a content below 0 is refused wherever light reads it), and reads it at the far region, four columns backed by the receding face, by the field line (the count over the region for light, the squared deviation from the rest for the kick), one reading per interval. The universe file beside this design is rule.json with the massless row's rest c_vac = 60 (the vacuum content) and the three holders' divisors at a thousand million, so that light's own wells stay within a few levels over the run (at rule.json's divisors the two slits' run reached a content of 752 under the packet; at ten million the smoke world's well reached 22 levels in 70 intervals). Every number of the look stands here and in the universe file, none in the scripts or the engine.",
  "universe": "examples/events/two_speeds/universe.json",
  "engine": "examples/events/engine_start.json",
  "length": 520,
@@ -18,9 +18,15 @@
    "family": "charge",
    "amplitude": 420
   },
+  "light_0": {
+   "family": "charge",
+   "amplitude": 420,
+   "universe": "examples/events/two_speeds/universe_light_0.json"
+  },
   "kick": {
    "family": "gravity",
-   "amplitude": 30
+   "amplitude": 300,
+   "universe": "examples/events/two_speeds/universe_kick.json"
   }
  },
  "region": {
@@ -40,5 +46,19 @@
    "layers": 64
   }
  },
- "ticks": 1000
+ "ticks": 1000,
+ "differences": {
+  "light_0_before_light": [
+   "light",
+   "light_0"
+  ],
+  "kick_before_light": [
+   "light",
+   "kick"
+  ],
+  "kick_before_light_0": [
+   "light_0",
+   "kick"
+  ]
+ }
 }
