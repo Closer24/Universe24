@@ -67,6 +67,7 @@ The model owner's decisions in force, one line each, grouped by topic; a new dec
 
 - **The step is defined by the run's files.** What each Port sends, what it receives, how long it waits and what operation acts on it, all generic and local, none of it in the code.
 - **The critical path first.** Work that shortens the way to the goal comes first, no stacked pull requests; every 30 minutes the Boss asks how to reach the goal faster and acts on it.
+- **The root leaves the run (the owner, 2026-09-30, on the advisor's answer to the five, #1509 comment 5902657899).** No act of the interval takes a square root: the integer square root stays only at load (the amplitude bound derived from the width) and in the generator; the guard leaves the interval with it, a diagnostic and never a rule (the whole initial state is checked at load against 0 < p <= P, the run reads no Node, the report gives the pace's minimum from the final state labelled as a diagnostic, and the host's trap on the arithmetic's width stays as the width's own check); the giving's scale is never found by a root or a search at run time (one division act with its remainder, or no act at all when the conversion at a crossing leaves).
 
 ## The folders and Rule3
 
