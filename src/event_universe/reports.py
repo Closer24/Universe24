@@ -49,6 +49,16 @@ def entered(
     ]
 
 
+def front(
+    nodes: np.ndarray, wrap: Wrap, instrument: np.ndarray, declared: np.ndarray
+) -> list[np.ndarray]:
+    """Per Port, the Nodes of the region at which that Port is a front boundary Port of the instrument: it leads in from a Node of the declared board outside the instrument (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
+    return [
+        nodes & ~arrival(instrument, axis, side, wrap, True) & arrival(declared, axis, side, wrap, False)
+        for axis, side in PORTS
+    ]
+
+
 def clicks(
     detector: Detector,
     nodes: np.ndarray,
@@ -60,14 +70,18 @@ def clicks(
     family: str,
     tick: int,
     instrument: np.ndarray,
+    declared: np.ndarray,
 ) -> tuple[list[dict[str, object]], int]:
-    """The clicks, the one measurement, and what the detector saw (ALGEBRA.md #the-counts-line, #the-click-ends-nothing; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): at every Node of the region the currents entering it through the region's boundary Ports (`entered`) are summed, and (r + SUM F_p) div W_c where that is above 0, r the Node's remainder before the line, is the whole quanta that entered the region there; one `click` line per quantum with the region's name, the family, the Ports crossed as [axis, side] (one, or two where a corner of the region is crossed in one interval) and the region's count after; a hop between two of its Nodes is no click, no line names a Node, and nothing is handed over. Beside the clicks, the region's inflow this interval, the inward currents through the instrument's boundary Ports at its Nodes summed in integers, the amplitudes the instrument saw at its boundary (its `seen` line of the interval, the host's reading for the credit by the shares); `instrument` is the union of the declared regions (a body's detector and the faces' layer their own Nodes), so that what passes between the regions of one screen is neither seen twice nor clicked twice."""
+    """The clicks, the one measurement, and what the detector saw (ALGEBRA.md #the-counts-line, #the-click-ends-nothing; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): at every Node of the region the currents entering it through the region's boundary Ports (`entered`) are summed, and (r + SUM F_p) div W_c where that is above 0, r the Node's remainder before the line, is the whole quanta that entered the region there; one `click` line per quantum with the region's name, the family, the Ports crossed as [axis, side] (one, or two where a corner of the region is crossed in one interval) and the region's count after; a hop between two of its Nodes is no click, no line names a Node, and nothing is handed over. Beside the clicks, the region's net inflow this interval: the currents through the instrument's front boundary Ports at its Nodes (`front`), inward positive, summed in integers with their signs, the density that entered the region from the declared board by the continuity of the count's line (the advisor's correction, #1515 comment 5912958018: the front Links only, net; the transverse Links inside the instrument and the Links toward a receding face's grown layers not counted); its `seen` line of the interval, the host's reading for the credit by the shares. `instrument` is the union of the declared regions (a body's detector and the faces' layer their own Nodes), so that what passes between the regions of one screen is neither seen twice nor clicked twice."""
     held = int(count[nodes].sum())
     line = {"event": "click", "tick": tick, "family": family, "detector": detector.name}
     inward = entered(nodes, through, wrap, instrument)
+    facing = front(nodes, wrap, instrument, declared)
     total = np.zeros(nodes.shape, dtype=np.int64)
+    seen = np.zeros(nodes.shape, dtype=np.int64)
     for port in range(len(PORTS)):
         total = total + np.where(inward[port], np.asarray(through[port]), 0)
+        seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
     crossed = np.asarray(division_forward(remainder + total, wall, 0)[0])
     found: list[dict[str, object]] = []
     for at in np.argwhere(crossed > 0):
@@ -75,7 +89,7 @@ def clicks(
         ports = [list(PORTS[port]) for port in range(len(PORTS)) if inward[port][where]]
         for _ in range(int(crossed[where])):
             found.append({**line, "ports": ports, "count": held, "body": detector.body})
-    return found, int(total.sum(dtype=object))
+    return found, int(seen.sum(dtype=object))
 
 
 def book(

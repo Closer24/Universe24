@@ -93,7 +93,7 @@ def test_the_exact_bands_turn_with_no_remainder(pair, period):
 
 
 def test_a_detectors_click_is_a_whole_quantums_entry_through_a_boundary_port_alone():
-    """The click (ALGEBRA.md #the-counts-line; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; the quanta the inward current carries over the wall at a Port leading in from outside the region click with the region's name and the Port's axis and side, never a Node, and none through a Port between two of its Nodes (a hop inside the region is no click); beside the clicks the region's inflow, what the instrument saw."""
+    """The click (ALGEBRA.md #the-counts-line; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; the quanta the inward current carries over the wall at a Port leading in from outside the region click with the region's name and the Port's axis and side, never a Node, and none through a Port between two of its Nodes (a hop inside the region is no click); beside the clicks the region's net front inflow, what the instrument saw from the declared board."""
     group = Detector("pair", np.array([True, True, False]).reshape(3, 1, 1), None)
     wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
     inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port
@@ -101,7 +101,10 @@ def test_a_detectors_click_is_a_whole_quantums_entry_through_a_boundary_port_alo
 
     def entered(port: int) -> tuple[list[dict[str, object]], int]:
         through = tuple(inward if p == port else zero for p in range(6))
-        return clicks(group, group.nodes, through, remainder, zero, 100, wrap, "charge", 5, group.nodes)
+        board = np.ones((3, 1, 1), dtype=bool)  # every Node declared, none grown
+        return clicks(
+            group, group.nodes, through, remainder, zero, 100, wrap, "charge", 5, group.nodes, board
+        )
 
     lines, seen = entered(0)  # from outside: one quantum, the Port +x, the region named and no Node
     assert [(line["detector"], line["ports"]) for line in lines] == [("pair", [[0, 1]])] and seen == 40

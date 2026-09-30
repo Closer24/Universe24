@@ -332,8 +332,20 @@ class GameBoard:
                 wall = count_wall(self.families[index], action)
                 self.states[held].flows[index] = flow.flow_origins(self.families[held], wall, self.shape)
 
+    def declared_board(self) -> np.ndarray:
+        """The declared board: the file's own Nodes over the GameBoard as grown, the layers a receding face has grown beyond them (what leaves into those layers has left the world, `growth`)."""
+        found = np.zeros(self.shape, dtype=bool)
+        first, extent = self.offset, self.world.shape
+        found[
+            first[0] : first[0] + extent[0],
+            first[1] : first[1] + extent[1],
+            first[2] : first[2] + extent[2],
+        ] = True
+        return found
+
     def report(self, writes: Lines, remainders: dict[int, np.ndarray]) -> None:
-        """The clicks of every detector per family of quanta (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), each one region: the whole quanta the count's line's currents carried into it through its boundary Ports this interval, from the remainders before the line, reported with the region's name and never a Node (`reports.clicks`); and what each detector saw this interval, its boundary's inflow in integers, one `seen` line per family and detector where it is above 0, the inward currents through the instrument's boundary at its Nodes, the amplitudes at the instrument's boundary, the host's reading for the credit by the shares and no click."""
+        """The clicks of every detector per family of quanta (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), each one region: the whole quanta the count's line's currents carried into it through its boundary Ports this interval, from the remainders before the line, reported with the region's name and never a Node (`reports.clicks`); and what each detector saw this interval, one `seen` line per family and detector where it is not 0: the net current through the instrument's front boundary at its Nodes, in integers (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares and no click."""
+        own = self.declared_board()
         for index, (count_line, _sense) in writes.items():
             family, count = self.families[index], self.states[index].count
             assert count is not None
@@ -355,11 +367,12 @@ class GameBoard:
                     family.name,
                     self.tick,
                     boundary_of,
+                    own,
                 )
                 for line in lines:
                     self.reports[index] += 1
                     self.emit(line)
-                if inflow > 0:
+                if inflow != 0:
                     self.emit(
                         {
                             "event": "seen",

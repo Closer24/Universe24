@@ -3,23 +3,124 @@
  "universe": "examples/events/rule.json",
  "engine": "examples/events/engine_start.json",
  "family": "charge",
- "length": 64,
+ "length": 45,
  "height": 48,
- "wave": [1, 4],
- "packet": {"column": 10, "edge_along": 6, "across": [4, 44], "edge_across": 2},
- "amplitude": {"bright": 1328, "dilute": 420},
+ "wave": [
+  1,
+  4
+ ],
+ "packet": {
+  "column": 10,
+  "edge_along": 6,
+  "across": [
+   4,
+   44
+  ],
+  "edge_across": 2
+ },
+ "amplitude": {
+  "bright": 1328,
+  "dilute": 420
+ },
  "wall": 20,
- "gaps": [[17, 19], [29, 31]],
+ "gaps": [
+  [
+   17,
+   19
+  ],
+  [
+   29,
+   31
+  ]
+ ],
  "screen": 44,
  "rows_per_region": 4,
- "receding": {"x": {"sides": ["high"], "largest": 256, "layers": 16}},
+ "receding": {
+  "x": {
+   "sides": [
+    "high"
+   ],
+   "largest": 256,
+   "layers": 16
+  }
+ },
  "ticks": 130,
- "window": [45, 120],
- "which_way": {"closed": 0, "detector": {"rows": [16, 19], "columns": [21, 24]}},
- "blind_per_node": [2, 6, 7, 6, 3, 3, 6, 8, 8, 6, 6, 6, 6, 4, 3, 2, 1, 2, 2, 4, 7, 9, 11, 13, 13, 12, 11, 9, 7, 4, 3, 2, 1, 2, 3, 5, 5, 6, 6, 8, 9, 6, 3, 4, 7, 8, 7, 3],
+ "window": [
+  45,
+  120
+ ],
+ "which_way": {
+  "closed": 0,
+  "detector": {
+   "rows": [
+    16,
+    19
+   ],
+   "columns": [
+    21,
+    24
+   ]
+  }
+ },
+ "blind_per_node": [
+  2,
+  6,
+  7,
+  6,
+  3,
+  3,
+  6,
+  8,
+  8,
+  6,
+  6,
+  6,
+  6,
+  4,
+  3,
+  2,
+  1,
+  2,
+  2,
+  4,
+  7,
+  9,
+  11,
+  13,
+  13,
+  12,
+  11,
+  9,
+  7,
+  4,
+  3,
+  2,
+  1,
+  2,
+  3,
+  5,
+  5,
+  6,
+  6,
+  8,
+  9,
+  6,
+  3,
+  4,
+  7,
+  8,
+  7,
+  3
+ ],
  "blind_through": 273,
- "laid": {"bright": 1989, "dilute": 168},
- "pattern": [1, 10],
+ "laid": {
+  "bright": 1989,
+  "dilute": 168
+ },
+ "pattern": [
+  1,
+  10
+ ],
  "spacing": 16,
  "seed": 24
 }

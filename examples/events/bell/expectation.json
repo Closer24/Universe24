@@ -1,5 +1,5 @@
 {
- "comment": "Bell's blind expectation (the advisor's design at the owner's word of 2026-09-30, #1515 comments 5912573191 and 5911802610; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. Per run and side the shares per region from what each region saw (the `seen` lines, the amplitudes at its boundary, over W_c the quanta) and its entries; the comb on a half-row about the setting's position (+1 on the rows y_a - 4 to y_a + 3 of each fringe, -1 on the other eight); the marginal at a setting the comb's mean per region weighted by the region's share; E(a, b) the product of the two sides' marginals (the sides independent given the record); S = E(a, b) - E(a, b') + E(a', b) + E(a', b'); E as a curve in a + b at the curve's positions; averaged over the runs. Blind: the first world (k = 0) E = 0.405 cos a cos b, S = 0.57, checking the reader alone; over the eight angles ours E = 0.203 cos(a + b), S = 0.57, the coincidence fringe's visibility 0.50; nature E = 0.405 cos(a + b), S = 1.15, visibility 1.00; the joint credit that would reach nature's row is the one non-local declaration, the owner's word. The GameBoard check: the single-side fringes at the spacing 16 in each run, shifted by q_k d.",
+ "comment": "Bell's blind expectation (the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast, #1515 comment 5912822802, on the advisor's design 5912573191 with his corrections 5912958018; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. Per run and side the shares per region from what each region saw (the `seen` lines, the net inflow through its front boundary, over W_c the quanta) and its entries; the two ports of a setting the unions of the regions in the comb's two half-rows about the setting's position (+ on the rows y_a - 3 to y_a + 4 of each fringe), the contrast their difference over their sum; the side `sign` (A, the left) credits every quantum to the larger port, the side `contrast` (B, the right) credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest; E(a, b) among the coincidences over the runs, S = E(a, b) - E(a, b') + E(a', b) + E(a', b'), E as a curve in a + b at the curve's positions of a against b's first setting, B's efficiency per setting; beside it the reading by the shares (E the product of the marginals) for comparison. Blind: by the contrast E = cos(a + b) in the fringe phase (the polariser's cos 2(a - b)), S = 2.83 exactly at eight run angles at the half-offsets, B's efficiency 0.64 at every setting, the uncounted pairs 36 percent (the detection loophole as a number); by the shares E = 0.203 cos(a + b), S = 0.57; nature 0.405 cos(a + b), S = 1.15 (2.83 with two-port analysers), and above the loophole's bound in the loophole-free experiments, where the law and nature part. The GameBoard check: the single-side fringes at the spacing 16 in each run, shifted by (k + 1/2) / 8 of it; B's clicks per run the same at every setting in the sum over the runs.",
  "verdict": "DETECTOR",
  "family": "charge",
  "across": "y",
@@ -9,69 +9,67 @@
     0,
     1,
     2,
-    3
+    3,
+    4
    ],
    "left_1": [
-    4,
     5,
     6,
-    7
+    7,
+    8
    ],
    "left_2": [
-    8,
     9,
     10,
-    11
+    11,
+    12
    ],
    "left_3": [
-    12,
     13,
     14,
-    15
+    15,
+    16
    ],
    "left_4": [
-    16,
     17,
     18,
-    19
+    19,
+    20
    ],
    "left_5": [
-    20,
     21,
     22,
-    23
+    23,
+    24
    ],
    "left_6": [
-    24,
     25,
     26,
-    27
+    27,
+    28
    ],
    "left_7": [
-    28,
     29,
     30,
-    31
+    31,
+    32
    ],
    "left_8": [
-    32,
     33,
     34,
-    35
+    35,
+    36
    ],
    "left_9": [
-    36,
     37,
     38,
-    39
+    39,
+    40
    ],
    "left_10": [
-    40,
     41,
     42,
-    43
-   ],
-   "left_11": [
+    43,
     44,
     45,
     46,
@@ -85,64 +83,64 @@
     2,
     3,
     4,
-    5
+    5,
+    6
    ],
    "right_1": [
-    6,
     7,
     8,
-    9
+    9,
+    10
    ],
    "right_2": [
-    10,
     11,
     12,
-    13
+    13,
+    14
    ],
    "right_3": [
-    14,
     15,
     16,
-    17
+    17,
+    18
    ],
    "right_4": [
-    18,
     19,
     20,
-    21
+    21,
+    22
    ],
    "right_5": [
-    22,
     23,
     24,
-    25
+    25,
+    26
    ],
    "right_6": [
-    26,
     27,
     28,
-    29
+    29,
+    30
    ],
    "right_7": [
-    30,
     31,
     32,
-    33
+    33,
+    34
    ],
    "right_8": [
-    34,
     35,
     36,
-    37
+    37,
+    38
    ],
    "right_9": [
-    38,
     39,
     40,
-    41
+    41,
+    42
    ],
    "right_10": [
-    42,
     43,
     44,
     45,
@@ -151,6 +149,8 @@
    ]
   }
  },
+ "sign": "left",
+ "contrast": "right",
  "runs": [
   "bell_0",
   "bell_1",
@@ -201,18 +201,35 @@
   ]
  },
  "blind": {
-  "first_world": {
-   "correlation": "0.405 cos a cos b",
+  "contrast": {
+   "correlation": "cos(a + b) in the fringe phase, cos 2(a - b) in the polariser angles",
    "settings": [
-    0.286,
-    -0.286,
-    0.0,
-    0.0
+    0.7071,
+    -0.7071,
+    0.7071,
+    0.7071
    ],
-   "S": 0.57,
-   "visibility": 0.0
+   "S": 2.8284,
+   "efficiency_B": 0.637,
+   "uncounted": 0.36,
+   "curve": {
+    "sum_of_settings_links": [
+     -2,
+     0,
+     2,
+     4,
+     6
+    ],
+    "E": [
+     0.7071,
+     1.0,
+     0.7071,
+     0.0,
+     -0.7071
+    ]
+   }
   },
-  "angles": {
+  "by_the_shares": {
    "correlation": "0.203 cos(a + b)",
    "settings": [
     0.143,
@@ -221,6 +238,7 @@
     0.143
    ],
    "S": 0.57,
+   "S_by_the_sign": 1.414,
    "visibility": 0.5
   },
   "nature": {
@@ -233,12 +251,14 @@
    ],
    "S": 1.15,
    "visibility": 1.0,
-   "two_port_S": 2.83
+   "two_port_S": 2.83,
+   "loophole_free": "above the efficiency 2 / 3, the violation stands; the law stops at 0.64"
   },
   "bound": 2.0,
   "check": {
    "fringe_spacing": 16,
-   "single_side_maxima": "at the spacing 16, shifted by q_k d"
+   "single_side_maxima": "at the spacing 16, shifted by (k + 1/2) / 8 of it",
+   "efficiency_B_per_setting": "the same at every setting b in the sum over the runs"
   }
  }
 }

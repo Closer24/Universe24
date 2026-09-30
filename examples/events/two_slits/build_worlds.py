@@ -153,6 +153,7 @@ def expectations(design: dict[str, Any]) -> dict[str, dict[str, object]]:
             "maxima": maxima,
             "minima": minima,
             "quanta": through,
+            "laid": int(design["laid"]["bright"]),
             "aside": ["gap"],
         },
         "expectation_dilute": {
@@ -163,6 +164,7 @@ def expectations(design: dict[str, Any]) -> dict[str, dict[str, object]]:
             "maxima": maxima,
             "minima": minima,
             "quanta": round(through * dilute_ratio, 1),
+            "laid": int(design["laid"]["dilute"]),
         },
         "expectation_which_way": {
             **base,
@@ -172,6 +174,7 @@ def expectations(design: dict[str, Any]) -> dict[str, dict[str, object]]:
             "maxima": [],
             "minima": [],
             "quanta": round(one_gap, 1),
+            "laid": int(design["laid"]["bright"]),
             "gap": {
                 "detector": "gap",
                 "credit": round(one_gap, 1),

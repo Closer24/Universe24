@@ -127,28 +127,63 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     assert PAGE.measurement(look, unnamed)["rises"][:2] == [1, 1]  # the screen's regions first
     bell = {"family": "charge", "sides": {"left": {"g0": [0, 1, 2, 3]}, "right": {"g4": [4, 5, 6, 7]}}}
     bell.update(
-        spacing=8, fringe_centre=2, settings={"a": [0, 4], "b": [0, 4]}, curve={"links": [0, 2, 4]}
+        spacing=8, fringe_centre=1, settings={"a": [0, 4], "b": [0, 4]}, curve={"links": [0, 2, 4]}
     )
+    bell.update(sign="left", contrast="right")  # A credits by the sign, B by the contrast
     (tmp_path / "bell.json").write_text(json.dumps(bell))
-    runs = BELL.reading(pair, [output], tmp_path / "bell.json")
-    assert runs["per_run"][0]["marginals"] == {"left": [[1, 1], [-1, 1]], "right": [[-1, 1], [1, 1]]}
+    loaded = BELL.load_world(pair)
+    wall = BELL.count_wall(next(f for f in loaded.families if f.name == "charge"), loaded.quantum_action)
+    big = [
+        {"event": "seen", "tick": 1, "family": "charge", "detector": d, "inflow": n * wall}
+        for d, n in (("g0", 3), ("g4", 2))
+    ]  # three quanta at A, two at B: the two coincide, the third has no partner
+    (bell_out := tmp_path / "bell.output.json").write_text(
+        json.dumps({"ticks": 3, "lines": [*flat, *big]})
+    )
+    runs = BELL.reading(pair, [bell_out], tmp_path / "bell.json")
+    run = runs["per_run"][0]  # the comb + on the rows 0 to 3 at the setting 0 and on 4 to 7 at 4
+    assert run["outcome"] == {"left": [1, -1], "right": [-1, 1]} and run["side_quanta"] == {
+        "left": 3,
+        "right": 2,
+    }
+    assert run["contrast"] == {"left": [[1, 1], [1, 1]], "right": [[1, 1], [1, 1]]}
+    assert run["clicks"] == {"left": [[3, 1], [3, 1]], "right": [[2, 1], [2, 1]]}
     assert runs["correlation"] == {"0 0": [-1, 1], "0 4": [1, 1], "4 0": [1, 1], "4 4": [-1, 1]}
     assert (
         runs["S"] == [-2, 1]
         and runs["runs"] == 1
-        and runs["entries"] == {"left": {"g0": 1}, "right": {"g4": 2}}
+        and runs["by"] == {"left": "sign", "right": "contrast"}
     )
-    assert runs["curve"] == [[-1, 1], [0, 1], [1, 1]] and runs["curve_at"]["4"] == [1, 1]
-    assert runs["patterns"] == {"left": {"g0": 0}, "right": {"g4": 0}}  # a few units, no whole quantum
+    assert runs["efficiency"] == {"left": [[1, 1], [1, 1]], "right": [[1, 1], [1, 1]]}
+    assert runs["curve"] == [[-1, 1], [0, 1], [1, 1]] and runs["curve_at"]["4"] == [1, 1]  # a tie at 2
+    assert runs["by_the_shares"] == {
+        "correlation": {"0 0": [-1, 1], "0 4": [1, 1], "4 0": [1, 1], "4 4": [-1, 1]},
+        "S": [-2, 1],
+    }
+    assert runs["entries"] == {"left": {"g0": 1}, "right": {"g4": 2}}
+    assert runs["patterns"] == {"left": {"g0": 3}, "right": {"g4": 2}}
+    with pytest.raises(ValueError, match="declares"):
+        (tmp_path / "bad.json").write_text(json.dumps({**bell, "contrast": "left"}))
+        BELL.reading(pair, [bell_out], tmp_path / "bad.json")
     BUILD.main(["--folder", str(folder := tmp_path / "bell")])
     built, tilted, blind = (json.loads((folder / f"{n}.json").read_text()) for n in BELL_FILES)
-    assert built["shape"] == [400, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
+    assert built["shape"] == [327, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
     assert (
-        len(built["detectors"]) == 23 and len(blind["runs"]) == 8 and len(blind["sides"]["left"]) == 12
+        len(built["detectors"]) == 22 and len(blind["runs"]) == 8 and len(blind["sides"]["left"]) == 11
     )
-    assert [m.get("phase") for m in built["messages"]] == [None, None, None, None]
-    assert [m.get("phase") for m in tilted["messages"]] == [None, [7, 8], None, [1, 8]]  # the mirror
-    assert [m["top"]["x"][0] for m in built["messages"]] == [140, 140, 260, 260]
+    assert [m.get("phase") for m in built["messages"]] == [
+        None,
+        [15, 16],
+        None,
+        [1, 16],
+    ]  # the half-offset
+    assert [m.get("phase") for m in tilted["messages"]] == [None, [13, 16], None, [3, 16]]  # the mirror
+    assert [m["top"]["x"][0] for m in built["messages"]] == [103, 103, 223, 223]
     assert blind["settings"] == {"a": [0, 4], "b": [-2, -6]} and blind["curve"]["links"] == LINKS
+    assert blind["sign"] == "left" and blind["contrast"] == "right"
     assert max(max(rows) for rows in blind["sides"]["right"].values()) == 47
-    assert [len(rows) for rows in blind["sides"]["right"].values()] == [6] + [4] * 9 + [6]
+    assert [len(rows) for rows in blind["sides"]["right"].values()] == [7] + [4] * 9 + [5]
+    assert [len(rows) for rows in blind["sides"]["left"].values()] == [5] + [4] * 9 + [7]
+    assert {p[0] for d in built["detectors"] if d["name"] == "right_0" for p in d["positions"]} == set(
+        range(315, 327)
+    )

@@ -90,7 +90,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     walled.step()
     remainder = walled.states[charge].count_remainder
     column = walled.mask(tuple(map(tuple, screen["positions"])))
-    assert (remainder[column] == np.array([7] * 8 + [9])).all() and not lines
+    clicked = [line for line in lines if line["event"] == "click"]  # the seen lines stand beside
+    assert (remainder[column] == np.array([7] * 8 + [9])).all() and not clicked
     assert remainder[23, 8, 0] == 3 * 6000 * 32768 // 2
     for _ in range(23):
         walled.step()
