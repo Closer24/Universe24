@@ -23,7 +23,7 @@ SCREEN = [
 ]
 BLIND = {"detector": [d["name"] for d in SCREEN], "family": "charge", "window": [1, 2], "across": "y"}
 BLIND.update(pattern=[0, 1], counts=[1.5, 2], through=10, watch={"4": 2, "0": 1.5}, seed=7)
-BELL_FILES, LINKS = ("bell_0", "bell_1", "expectation"), [0, 2, 4, 6, 8]  # the builder's files
+BELL_FILES, LINKS = ("bell_0", "bell_1", "expectation"), [0, 6, 12, 18, 24]  # the builder's files
 
 
 def shown(world, monkeypatch, at, blind):
@@ -167,10 +167,14 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
         BELL.reading(pair, [bell_out], tmp_path / "bad.json")
     BUILD.main(["--folder", str(folder := tmp_path / "bell")])
     built, tilted, blind = (json.loads((folder / f"{n}.json").read_text()) for n in BELL_FILES)
-    assert built["shape"] == [327, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
+    assert built["shape"] == [360, 96, 1] and built["ticks"] == 520 and len(built["messages"]) == 4
     assert (
-        len(built["detectors"]) == 22 and len(blind["runs"]) == 8 and len(blind["sides"]["left"]) == 11
+        len(built["detectors"]) == 46 and len(blind["runs"]) == 8 and len(blind["sides"]["left"]) == 23
     )
+    still = json.loads((folder / "bell_v.json").read_text())  # the visibility world, u = 0
+    assert [m.get("phase") for m in still["messages"]] == [None] * 4 and blind[
+        "visibility_world"
+    ] == "bell_v"
     assert [m.get("phase") for m in built["messages"]] == [
         None,
         [15, 16],
@@ -178,12 +182,12 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
         [1, 16],
     ]  # the half-offset
     assert [m.get("phase") for m in tilted["messages"]] == [None, [13, 16], None, [3, 16]]  # the mirror
-    assert [m["top"]["x"][0] for m in built["messages"]] == [103, 103, 223, 223]
-    assert blind["settings"] == {"a": [0, 4], "b": [-2, -6]} and blind["curve"]["links"] == LINKS
+    assert [m["top"]["x"][0] for m in built["messages"]] == [120, 120, 240, 240]
+    assert blind["settings"] == {"a": [0, 12], "b": [-6, -18]} and blind["curve"]["links"] == LINKS
     assert blind["sign"] == "left" and blind["contrast"] == "right"
-    assert max(max(rows) for rows in blind["sides"]["right"].values()) == 47
-    assert [len(rows) for rows in blind["sides"]["right"].values()] == [7] + [4] * 9 + [5]
-    assert [len(rows) for rows in blind["sides"]["left"].values()] == [5] + [4] * 9 + [7]
+    assert max(max(rows) for rows in blind["sides"]["right"].values()) == 95
+    assert [len(rows) for rows in blind["sides"]["right"].values()] == [7] + [4] * 21 + [5]
+    assert [len(rows) for rows in blind["sides"]["left"].values()] == [5] + [4] * 21 + [7]
     assert {p[0] for d in built["detectors"] if d["name"] == "right_0" for p in d["positions"]} == set(
-        range(315, 327)
+        range(348, 360)
     )
