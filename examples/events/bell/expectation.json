@@ -1,20 +1,167 @@
 {
- "comment": "Bell's first world's blind expectation (the advisor, #1515 comment 5910272948, C; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. A landing is a click line on a screen naming its whole; a pair is the left packet's whole n with the right packet's whole n (`mirrors`); the comb about a position: +1 where cos(Phi(y) - a) > 0 and -1 under, Phi(y) = 2 pi (y - fringe_centre) / spacing; E(a, b) the mean product over the pairs landing on both screens, S = E(a, b) - E(a, b') + E(a', b) + E(a', b'), E as a curve in a + b over every position, the coincidence map over Phi_A + Phi_B, each screen's single-side pattern. Blind under the whole line with the mirror lay: the triangle E = 1 - 2 |a + b| / pi, S = 2.00 exactly, a sharp ridge on Phi_A + Phi_B = 0; under the line as it stands E = 0.203 cos(a + b), S = 0.57, no ridge; nature with the same comb E = 0.405 cos(a + b), S = 1.15, a cosine ridge of visibility 1 (2.83 with two-port analysers). The GameBoard check: per pair two landings at mirror rows, the single-side fringes at the spacing 16.",
+ "comment": "Bell's blind expectation (the advisor's design at the owner's word of 2026-09-30, #1515 comments 5912573191 and 5911802610; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. Per run and side the shares per region from what each region saw (the `seen` lines, the amplitudes at its boundary, over W_c the quanta) and its entries; the comb on a half-row about the setting's position (+1 on the rows y_a - 4 to y_a + 3 of each fringe, -1 on the other eight); the marginal at a setting the comb's mean per region weighted by the region's share; E(a, b) the product of the two sides' marginals (the sides independent given the record); S = E(a, b) - E(a, b') + E(a', b) + E(a', b'); E as a curve in a + b at the curve's positions; averaged over the runs. Blind: the first world (k = 0) E = 0.405 cos a cos b, S = 0.57, checking the reader alone; over the eight angles ours E = 0.203 cos(a + b), S = 0.57, the coincidence fringe's visibility 0.50; nature E = 0.405 cos(a + b), S = 1.15, visibility 1.00; the joint credit that would reach nature's row is the one non-local declaration, the owner's word. The GameBoard check: the single-side fringes at the spacing 16 in each run, shifted by q_k d.",
  "verdict": "DETECTOR",
  "family": "charge",
  "across": "y",
- "along": "x",
  "sides": {
-  "left": "left",
-  "right": "right"
+  "left": {
+   "left_0": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "left_1": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "left_2": [
+    8,
+    9,
+    10,
+    11
+   ],
+   "left_3": [
+    12,
+    13,
+    14,
+    15
+   ],
+   "left_4": [
+    16,
+    17,
+    18,
+    19
+   ],
+   "left_5": [
+    20,
+    21,
+    22,
+    23
+   ],
+   "left_6": [
+    24,
+    25,
+    26,
+    27
+   ],
+   "left_7": [
+    28,
+    29,
+    30,
+    31
+   ],
+   "left_8": [
+    32,
+    33,
+    34,
+    35
+   ],
+   "left_9": [
+    36,
+    37,
+    38,
+    39
+   ],
+   "left_10": [
+    40,
+    41,
+    42,
+    43
+   ],
+   "left_11": [
+    44,
+    45,
+    46,
+    47
+   ]
+  },
+  "right": {
+   "right_0": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "right_1": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "right_2": [
+    10,
+    11,
+    12,
+    13
+   ],
+   "right_3": [
+    14,
+    15,
+    16,
+    17
+   ],
+   "right_4": [
+    18,
+    19,
+    20,
+    21
+   ],
+   "right_5": [
+    22,
+    23,
+    24,
+    25
+   ],
+   "right_6": [
+    26,
+    27,
+    28,
+    29
+   ],
+   "right_7": [
+    30,
+    31,
+    32,
+    33
+   ],
+   "right_8": [
+    34,
+    35,
+    36,
+    37
+   ],
+   "right_9": [
+    38,
+    39,
+    40,
+    41
+   ],
+   "right_10": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47
+   ]
+  }
  },
- "mirrors": [
-  [
-   0,
-   1
-  ]
+ "runs": [
+  "bell_0",
+  "bell_1",
+  "bell_2",
+  "bell_3",
+  "bell_4",
+  "bell_5",
+  "bell_6",
+  "bell_7"
  ],
- "wholes": 3000,
+ "quanta": null,
  "fringe_centre": 24,
  "spacing": 16,
  "settings": {
@@ -53,42 +200,45 @@
    8
   ]
  },
- "bins": 16,
  "blind": {
-  "whole_line": {
-   "correlation": "1 - 2 |a + b| / pi",
-   "curve": [
-    1.0,
-    0.5,
-    0.0,
-    -0.5,
-    -1.0
-   ],
+  "first_world": {
+   "correlation": "0.405 cos a cos b",
    "settings": [
-    0.5,
-    -0.5,
-    0.5,
-    0.5
+    0.286,
+    -0.286,
+    0.0,
+    0.0
    ],
-   "S": 2.0,
-   "ridge": "sharp on Phi_A + Phi_B = 0"
-  },
-  "line_as_it_stands": {
-   "correlation": "0.203 cos(a + b)",
    "S": 0.57,
-   "ridge": "none"
+   "visibility": 0.0
+  },
+  "angles": {
+   "correlation": "0.203 cos(a + b)",
+   "settings": [
+    0.143,
+    -0.143,
+    0.143,
+    0.143
+   ],
+   "S": 0.57,
+   "visibility": 0.5
   },
   "nature": {
    "correlation": "0.405 cos(a + b)",
+   "settings": [
+    0.286,
+    -0.286,
+    0.286,
+    0.286
+   ],
    "S": 1.15,
-   "ridge": "a cosine of visibility 1",
+   "visibility": 1.0,
    "two_port_S": 2.83
   },
   "bound": 2.0,
   "check": {
-   "landings_per_pair": 2,
-   "mirror_rows": true,
-   "fringe_spacing": 16
+   "fringe_spacing": 16,
+   "single_side_maxima": "at the spacing 16, shifted by q_k d"
   }
  }
 }

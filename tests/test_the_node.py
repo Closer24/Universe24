@@ -262,7 +262,7 @@ def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
         first = clicks[0]["tick"] if clicks else None
         print(f"DETECTOR the chain, sense {turn}: {len(clicks)} charge clicks, first at {first}")
         print(f"GAMEBOARD light born at {born}, matter's count {min(counts)} to {max(counts)} over 400")
-        assert all(e["event"] == "click" and e["node"][0] in (0, CHAIN - 1) for e in lines)
+        assert all(e["event"] == "click" and e["detector"] in ("left", "right") for e in lines)
         assert born > 0 if turn else (born == 0 and not clicks and not states[1].levels.now.any())
         assert all(book["balanced"] and book["sense_balanced"] for book in board.books().values())
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
@@ -501,7 +501,7 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
         assert all(np.array_equal(a, b[at]) for (_, a), (_, b) in zip(snapshot, wide, strict=True))
     books = grows.books()["charge"]
     assert grows.ended == end and grows.tick == 28 and books["total"] == large.books()["charge"]["total"]
-    assert grows.mask(((15, 0, 0),))[15 + low, 0, 0] and all(e["node"] == [15, 0, 0] for e in lines)
+    assert grows.mask(((15, 0, 0),))[15 + low, 0, 0] and all("node" not in e for e in lines)
     assert not grows.states[0].count[low : low + 16].any() and fixed.states[0].count.any()
     assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 28
     written = json.loads((tmp_path / "grows.output.json").read_text(encoding="utf-8"))

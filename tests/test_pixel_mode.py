@@ -97,8 +97,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         open_board.step()
         risen = [line for line in lines if line["tick"] == walled.tick and line["detector"] == "screen"]
         assert all(
-            line["axis"][0] == 0 and column[tuple(line["node"])] for line in risen
-        )  # no hop inside
+            all(port[0] == 0 for port in line["ports"]) and "node" not in line for line in risen
+        )  # no hop inside, no Node named
         for state in walled.states:
             records = [r for r in (*state.parts, state.levels, state.second) if r is not None]
             assert not any(getattr(r, key)[beyond].any() for r in records for key in ("now", "before"))

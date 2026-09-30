@@ -26,51 +26,39 @@ def shown(value: object) -> str:
     return f"{value:,}" if isinstance(value, int) and not isinstance(value, bool) else str(value)
 
 
-Node = tuple[int, ...]
-Reporter = tuple[
-    int, str, Node | None
-]  # its coordinate on the axis, its detector, its Node (None: the group)
+Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its detector
 
 
 def rises(
     look: dict[str, Any], detectors: list[str], family: str, window: tuple[int, int]
-) -> dict[tuple[str, Node], int]:
-    """The clicks per detector and Node of the named detectors and one family within the window [first, last] of intervals, from the look's frames' lines, counted as tools/click_counts.py counts them."""
-    found: dict[tuple[str, Node], int] = {}
+) -> dict[str, int]:
+    """The clicks per detector of the named detectors and one family within the window [first, last] of intervals, from the look's frames' lines, counted as tools/click_counts.py counts them (a click reports its region and never a Node)."""
+    found: dict[str, int] = {}
     for frame in look["frames"]:
         for line in frame["lines"]:
             if line.get("event") != "click" or line.get("detector") not in detectors:
                 continue
             if line.get("family") != family or not window[0] <= int(line["tick"]) <= window[1]:
                 continue
-            key = str(line["detector"]), tuple(int(i) for i in line["node"])
-            found[key] = found.get(key, 0) + 1
+            found[str(line["detector"])] = found.get(str(line["detector"]), 0) + 1
     return found
 
 
 def reporters(detectors: list[dict[str, Any]], axis: int) -> list[Reporter]:
-    """The reporters across `axis` as tools/click_counts.py places them, ordered by their coordinate on it: a detector whose Nodes share one coordinate on the axis is one reporter placed at it (a group across the beam), and one whose Nodes spread along it reports per Node."""
-    found: list[Reporter] = []
-    for detector in detectors:
-        nodes = [tuple(int(i) for i in node) for node in detector["nodes"]]
-        shared = {node[axis] for node in nodes}
-        if len(shared) == 1:
-            found.append((shared.pop(), str(detector["name"]), None))
-        else:
-            found.extend((node[axis], str(detector["name"]), node) for node in nodes)
-    return sorted(found, key=lambda reporter: reporter[:2])
+    """The reporters across `axis` as tools/click_counts.py places them, one per detector, ordered by their coordinate on it, the least of the detector's Nodes' (a region across the beam at its first row)."""
+    return sorted((min(int(node[axis]) for node in d["nodes"]), str(d["name"])) for d in detectors)
 
 
 def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str, Any] | None:
-    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every detector whose Nodes share one coordinate on the axis, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), each one's rises within the window, the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
+    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), each one's rises within the window, the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
     if blind is None or "across" not in blind:
         return None
     if blind["across"] not in AXES:
         raise ValueError(f"the blind file's across is one of {list(AXES)}, got {blind['across']!r}")
     axis = AXES.index(blind["across"])
     named = blind.get("detector")
-    if named is None:  # the train's expectation: every group placed on the axis, over the whole look
-        detectors = [d for d in look["detectors"] if len({n[axis] for n in d["nodes"]}) == 1]
+    if named is None:  # every declared region, over the whole look (the faces' layer is drawn, not read)
+        detectors = [d for d in look["detectors"] if d["body"] is None and d["name"] != "face"]
         names = [str(d["name"]) for d in detectors]
     else:
         names = [str(name) for name in named] if isinstance(named, list) else [str(named)]
@@ -81,13 +69,10 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
     window = (int(spanned[0]), int(spanned[1]))
     counted = rises(look, names, str(blind["family"]), window)
     placed = reporters(detectors, axis)
-    risen = [
-        sum(count for (name, at), count in counted.items() if name == detector and node in (None, at))
-        for _at, detector, node in placed
-    ]
+    risen = [counted.get(detector, 0) for _at, detector in placed]
     watch = blind.get("watch") if isinstance(blind.get("watch"), dict) else {}
     lines = [
-        f"{blind['across']} = {key}: {shown(sum(r for (at, _n, _o), r in zip(placed, risen, strict=True) if at == int(key)))} reported, the blind {shown(value)}"
+        f"{blind['across']} = {key}: {shown(sum(r for (at, _n), r in zip(placed, risen, strict=True) if at == int(key)))} reported, the blind {shown(value)}"
         for key, value in watch.items()
     ]
     return {
@@ -96,12 +81,8 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
         "window": list(window),
         "across": blind["across"],
         "axis": axis,
-        "at": [at for at, _name, _node in placed],
-        "labels": [
-            name if node is None else f"{name} [{', '.join(map(str, node))}]"
-            for _at, name, node in placed
-        ],
-        "nodes": [list(node) if node is not None else None for _at, _name, node in placed],
+        "at": [at for at, _name in placed],
+        "labels": [name for _at, name in placed],
         "rises": risen,
         "blind": list(blind.get("counts", [])),
         "pattern": blind.get("pattern"),

@@ -240,6 +240,31 @@ def detectors_of(
     return tuple(found)
 
 
+def regions_no_finer_than_half_a_wavelength(
+    detectors: tuple[DetectorRow, ...],
+    messages: tuple[MessageRow, ...],
+    shape: Node,
+    families: tuple[FamilyRule, ...],
+) -> None:
+    """The size rule of a detector's region (ALGEBRA.md #the-counts-line, No click names a Node; the owner's word of 2026-09-30, the uncertainty principle upheld): the finest structure the amplitudes of a family can carry is half its wavelength, so a declared region is at least half the wavelength of every message of its family across the beam, q / p Links for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) is refused by name; a detector reading a body declares no region and the open faces' layer is the board's own."""
+    for detector in detectors:
+        if detector.body is not None:
+            continue
+        for message in messages:
+            p, q = message.wave
+            for axis in range(3):
+                if axis == message.along or shape[axis] < 2:
+                    continue
+                coordinates = [node[axis] for node in detector.positions]
+                extent = max(coordinates) - min(coordinates) + 1
+                if extent * abs(p) < q:
+                    raise ValueError(
+                        f"detector {detector.name!r} is {extent} Node(s) across the {AXES[axis]} axis, under half "
+                        f"the wavelength of the {families[message.family].name!r} message's wave [{p}, {q}], "
+                        f"{q} / {abs(p)} Links: no click names a position finer than the amplitudes carry"
+                    )
+
+
 def largest_count(measured: object) -> int:
     """The largest count a body declares at a Node, the count's line's bound reads it (0 where none is declared; the counts are checked with their bodies)."""
     found = [0]
@@ -279,6 +304,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
     detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, families, action)
+    regions_no_finer_than_half_a_wavelength(detectors, messages, shape, families)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     return World(
         shape,
