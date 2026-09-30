@@ -50,10 +50,8 @@ def chain_body_world(
     ]
     if holds:
         measured[-1]["holds"] = holds
-    detectors: list[dict[str, object]] = [
-        {"name": "left", "positions": [[0, 0, 0]]},
-        {"name": "right", "positions": [[CHAIN - 1, 0, 0]]},
-    ]
+    detectors: list[dict[str, object]] = [{"name": "left", "positions": [[0, 0, 0]]}]
+    detectors += [{"name": "right", "positions": [[CHAIN - 1, 0, 0]]}]
     detectors += [{"name": "taker", "block": len(at) - 1}] if taker else []
     document = dict(
         shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), detectors=detectors

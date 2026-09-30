@@ -78,9 +78,8 @@ def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(t
     measure = PAGE.measurement(look, BLIND)
     assert look["faces"] == SLIT["faces"] and look["verdict"] == "LAWFUL" and measure["through"] == 3
     assert measure["nodes"] == SCREEN["positions"] and measure["rises"] == [0, 0, 0, 1, 2, 0, 0, 0, 0]
-    counted = COUNTS.rises(
-        [x for fr in look["frames"] for x in fr["lines"]], ["screen"], "charge", (1, 2)
-    )
+    flat = [x for fr in look["frames"] for x in fr["lines"]]
+    counted = COUNTS.rises(flat, ["screen"], "charge", (1, 2))
     assert [counted.get(("screen", tuple(n)), 0) for n in measure["nodes"]] == measure["rises"]
     assert measure["blind"] == BLIND["counts"] and measure["pattern"] == [1, 7]
     assert measure["totals"] == "through 3 reported (the blind 10)"
@@ -92,9 +91,7 @@ def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(t
     measure = PAGE.measurement(look, grouped)
     assert measure["at"] == [3, 4] and measure["labels"] == ["g3", "g4"] and measure["rises"] == [1, 1]
     output = tmp_path / "slit.output.json"
-    output.write_text(
-        json.dumps({"ticks": 3, "lines": [x for fr in look["frames"] for x in fr["lines"]]})
-    )
+    output.write_text(json.dumps({"ticks": 3, "lines": flat}))
     (tmp_path / "grouped.json").write_text(json.dumps(grouped))
     read = COUNTS.reading(world, output, tmp_path / "grouped.json")
     assert read["at"] == [3, 4] and read["rises"] == [1, 1] and read["through"] == 2

@@ -88,10 +88,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     charge, beyond = [family.name for family in walled.families].index("charge"), walled.wrap.beyond
     assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
     walled.step()
-    remainder, column = (
-        walled.states[charge].count_remainder,
-        walled.mask(tuple(map(tuple, screen["positions"]))),
-    )
+    remainder = walled.states[charge].count_remainder
+    column = walled.mask(tuple(map(tuple, screen["positions"])))
     assert (remainder[column] == np.array([7] * 8 + [9])).all() and not lines
     assert remainder[23, 8, 0] == 3 * 6000 * 32768 // 2
     for _ in range(23):

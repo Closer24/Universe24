@@ -9,7 +9,7 @@ from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived
 from event_universe.loader.derived import CONTENT, SIGN, FamilyRule, count_wall
-from event_universe.loader.faces import faces_of
+from event_universe.loader.faces import RecedingFace, faces_of, receding_of
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
@@ -17,7 +17,7 @@ from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("measured", "messages", "detectors")
+WORLD_KEYS += ("measured", "messages", "detectors", "receding")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width")
@@ -60,7 +60,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the amplitude bound A derived, the families, the bodies, the messages and the detectors."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the amplitude bound A derived, the families, the bodies, the messages, the detectors and the receding faces."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -76,6 +76,7 @@ class World:
     bodies: tuple[BodyRow, ...]
     messages: tuple[MessageRow, ...]
     detectors: tuple[DetectorRow, ...]
+    receding: tuple[RecedingFace, ...]
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
@@ -278,6 +279,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
     detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, families, action)
+    receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
@@ -293,4 +295,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         bodies,
         messages,
         detectors,
+        receding,
     )

@@ -1,4 +1,4 @@
-"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "GameBoard reading". Per interval: a family of quanta's real level now, its second level now, its count, the count's remainder, its sense, the form the interval booked (D_i over both level pairs, the engine's own `node.form`) and the least Link pace its read finds at that state (the engine's own read and `link_paces`); a held family's level (its time part) and its further parts; the bodies' Nodes; the interval's output lines. At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the folded axes, the bodies with their declared counts, the detectors), at the end the books. Frame 0 is the world as laid before the first interval, its counts the bodies' declared ones (the engine lays the counts at the first act). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
+"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "GameBoard reading". Per interval: a family of quanta's real level now, its second level now, its count, the count's remainder, its sense, the form the interval booked (D_i over both level pairs, the engine's own `node.form`) and the least Link pace its read finds at that state (the engine's own read and `link_paces`); a held family's level (its time part) and its further parts; the bodies' Nodes; the interval's output lines; the GameBoard's shape at that interval and its offset, the layers grown before the origin on each axis (a board with a receding face grows, every array of the frame over the shape of its own frame and every Node named at the file's coordinates). At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the receding faces, the folded axes, the bodies with their declared counts, the detectors), at the end the books and the end of the run where it ended at a receding face's largest size. Frame 0 is the world as laid before the first interval, its counts the bodies' declared ones (the engine lays the counts at the first act). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -15,7 +15,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import node, reports
+from event_universe import growth, node, reports
 from event_universe.core.rule3 import link_paces
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import FamilyRule, count_wall
@@ -42,9 +42,11 @@ def sparse(array: np.ndarray) -> object:
     return {"at": at.tolist(), "values": flat[at].tolist()}
 
 
-def nodes_of(mask: np.ndarray) -> list[list[int]]:
-    """The Nodes of a mask over the GameBoard as [x, y, z] rows."""
-    return [[int(i) for i in row] for row in np.argwhere(mask)]
+def nodes_of(mask: np.ndarray, offset: tuple[int, int, int] = (0, 0, 0)) -> list[list[int]]:
+    """The Nodes of a mask over the GameBoard as [x, y, z] rows at the file's coordinates, `offset` the layers grown before the origin."""
+    return [
+        [int(i) - before for i, before in zip(row, offset, strict=True)] for row in np.argwhere(mask)
+    ]
 
 
 def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int) -> dict[str, object]:
@@ -76,6 +78,7 @@ def declared(world: World, path: Path, board: GameBoard) -> dict[str, object]:
         "folded": [extent == 1 for extent in world.shape],
         "face_depth": world.face_depth,
         "faces": document.get("faces", []),
+        "receding": document.get("receding", {}),
         "declared_ticks": world.ticks,
         "node_clock": world.node_clock,
         "quantum_action": world.quantum_action,
@@ -123,7 +126,7 @@ def frame(
     kept: dict[int, tuple[node.Record, node.Record]] | None,
     declared_counts: dict[int, np.ndarray],
 ) -> dict[str, object]:
-    """One interval's reading of every family's arrays (`kept` the level pairs the interval started from, None at frame 0), the bodies' standing Nodes as a report derives them (reports.standing) and the output lines to come."""
+    """One interval's reading of every family's arrays (`kept` the level pairs the interval started from, None at frame 0), the bodies' standing Nodes as a report derives them (reports.standing), the GameBoard's shape and offset at the interval and the output lines to come."""
     world, families = board.world, {}
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         row: dict[str, object]
@@ -148,16 +151,24 @@ def frame(
     for body in world.bodies:
         state = board.states[body.family]
         count = declared_counts[body.family] if state.count is None else state.count
-        mask = np.zeros(world.shape, dtype=bool)
-        for at in body.nodes:
-            mask[at] = True
-        bodies.append(nodes_of(reports.standing(mask, count, board.wrap)))
-    return {"tick": board.tick, "families": families, "bodies": bodies, "lines": []}
+        mask = board.mask(body.nodes)
+        bodies.append(nodes_of(reports.standing(mask, count, board.wrap), board.offset))
+    found: dict[str, object] = {"tick": board.tick, "families": families, "bodies": bodies}
+    return {**found, "shape": list(board.shape), "offset": list(board.offset), "lines": []}
 
 
 def copied(record: node.Record) -> node.Record:
     """A level pair's two levels copied, so the form is read from the interval's start after the step."""
     return node.Record(record.now.copy(), record.before.copy(), record.remainder)
+
+
+def grown(record: node.Record, board: GameBoard) -> node.Record:
+    """A kept level pair over the GameBoard as the interval grew it (the layers a receding face added before this interval's acts, 0 at the interval's start), so the form is read at every Node of the frame."""
+    for served, axis, side, layers in board.growths:
+        if served == board.tick:
+            now, before = (growth.padded(a, axis, side, layers) for a in (record.now, record.before))
+            record = node.Record(now, before, record.remainder)
+    return record
 
 
 def record(path: Path, ticks: int | None) -> dict[str, object]:
@@ -178,9 +189,16 @@ def record(path: Path, ticks: int | None) -> dict[str, object]:
                 assert state.levels is not None and state.second is not None
                 kept[index] = (copied(state.levels), copied(state.second))
             board.step()
+            if board.ended is not None:
+                break
+            kept = {
+                index: (grown(real, board), grown(second, board))
+                for index, (real, second) in kept.items()
+            }
             frames.append(frame(board, kept, counts))
     except (ValueError, RuntimeError) as refusal:
         document.update(verdict="REFUSED", reason=str(refusal))
+    document["ended"] = board.ended
     for line in lines:
         if line["event"] in LINES:
             tick = int(str(line["tick"]))

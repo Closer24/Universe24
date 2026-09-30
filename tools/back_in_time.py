@@ -1,4 +1,4 @@
-"""The back-in-time gate (the owner's word of 2026-09-30: a check that the board can be taken back in time): a world is run N intervals forward after its first act (the lay, the one act not taken back) and N back by the GameBoard's own inverse, and every array of every family (the levels now and before, the remainders, the counts and their remainders, the well's and the Wronskian's remainders, the senses and their remainders, every held part and its carry, the flows' carries) and the interval counter are compared bit for bit with the state at the same interval on the way forward: the verdict MATCH, or MISS naming the first interval, the family, the array and the first Node that differ. A host tool and no state of the law.
+"""The back-in-time gate (the owner's word of 2026-09-30: a check that the board can be taken back in time): a world is run N intervals forward after its first act (the lay, the one act not taken back) and N back by the GameBoard's own inverse, and every array of every family (the levels now and before, the remainders, the counts and their remainders, the well's and the Wronskian's remainders, the senses and their remainders, every held part and its carry, the flows' carries) and the interval counter are compared bit for bit with the state at the same interval on the way forward: the verdict MATCH, or MISS naming the first interval, the family, the array and the first Node that differ; a GameBoard with a receding face is compared at the shape it had at that interval, the layers a step grew taken off by its inverse, and a run that ends at the largest size before N intervals goes back over the intervals it ran, the end named. A host tool and no state of the law.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -47,6 +47,8 @@ def first_difference(before: list[Snapshot], after: list[Snapshot]) -> tuple[str
     """The first array and the first Node at which two snapshots differ, or None where they agree bit for bit."""
     for family_before, family_after in zip(before, after, strict=True):
         for (label, was), (_label, now) in zip(family_before, family_after, strict=True):
+            if was.shape != now.shape:
+                return f"{label} (the shape {list(now.shape)} against {list(was.shape)})", []
             differing = np.argwhere(was != now)
             if len(differing):
                 return label, [int(i) for i in differing[0]]
@@ -54,19 +56,23 @@ def first_difference(before: list[Snapshot], after: list[Snapshot]) -> tuple[str
 
 
 def verdict(board: GameBoard, intervals: int) -> dict[str, object]:
-    """The gate on a loaded GameBoard: the first act (the lay), then `intervals` forward with a snapshot after each, then `intervals` back, each step back compared with the snapshot of its interval; MATCH, or MISS with the first interval, array and Node that differ."""
+    """The gate on a loaded GameBoard: the first act (the lay), then `intervals` forward with a snapshot after each (fewer where the run ends at a receding face's largest size, `ended`), then as many back, each step back compared with the snapshot of its interval; MATCH, or MISS with the first interval, array and Node that differ."""
     board.step()
-    snapshots = {board.tick: snapshot(board)}
+    snapshots, run = {board.tick: snapshot(board)}, 0
     for _ in range(intervals):
         board.step()
+        if board.ended is not None:
+            break
+        run += 1
         snapshots[board.tick] = snapshot(board)
-    for _ in range(intervals):
+    ended = board.ended
+    for _ in range(run):
         board.step_inverse()
         found = first_difference(snapshots[board.tick], snapshot(board))
         if found is not None:
             label, at = found
             return {"verdict": "MISS", "interval": board.tick, "array": label, "node": at}
-    return {"verdict": "MATCH", "intervals": intervals, "interval": board.tick}
+    return {"verdict": "MATCH", "intervals": run, "interval": board.tick, "ended": ended}
 
 
 def main(argv: list[str] | None = None) -> None:
