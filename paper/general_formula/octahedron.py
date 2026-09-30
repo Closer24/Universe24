@@ -1,9 +1,9 @@
-"""The octahedron figure of the click-model paper: the Nodes one interval
+"""The octahedron and lattice figures of the paper: the Nodes one interval
 away from a Node form the L1 unit ball |x| + |y| + |z| <= 1, the octahedron
 whose six vertices are the six Ports; its inscribed sphere, of radius
 1 / sqrt 3, touches the eight faces on the cube diagonals, and that radius
-is the rows' pace c = 1 / sqrt 3 Links per interval (the model section of
-main.tex; checks/light_speed.py). The unit cube whose group of 48 signed
+is light's speed at long wavelength, 1 / sqrt 3 Links per interval
+(docs/ALGEBRA.md, the lattice constants). The unit cube whose group of 48 signed
 axis permutations is also the octahedron's is drawn faint behind it.
 
     python paper/general_formula/octahedron.py --output paper/general_formula/figures
@@ -33,7 +33,7 @@ import numpy as np  # noqa: E402
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
-# Black and white only (the model owner, 2026-09-21).
+# Black and white only.
 INK, DARK, MID, LIGHT, PALE = "#000000", "#404040", "#808080", "#c8c8c8", "#e4e4e4"
 
 PORTS = {

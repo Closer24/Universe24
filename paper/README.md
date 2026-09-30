@@ -1,45 +1,34 @@
 # Paper
 
 The project has one paper: `general_formula/main.tex`. There is no other
-manuscript.
+manuscript. It is written from the current documents on `main` alone: every
+formula is taken from `docs/ALGEBRA.md`, `docs/ENGINE.md` or
+`docs/HIGHLIGHTS.md` and cited by the name of its section or line, and every
+claim carries its mark (theorem, derived, computed, assumption or hypothesis).
+The paper holds no run of its own; a run enters only through the documents'
+rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
 
-- `general_formula/main.tex`: the paper, algebra alone. Every formula is
-  taken from `docs/ALGEBRA.md` and cited by the name of its section, and
-  every claim carries its mark: theorem, derived, computed, assumption or
-  hypothesis. The paper holds no run, no code and no experiment: the forms
-  of nature are derived from the line as predictions, each beside the form
-  it is compared with. Build it with `pdflatex main.tex` twice. It needs
-  only its two figures.
-- `general_formula/main.pdf`: the compiled paper.
-- `general_formula/figures/lattice.pdf` and `octahedron.pdf`: the two
-  figures, drawn from the definitions with no run by
-  `python paper/general_formula/octahedron.py --output paper/general_formula/figures`.
-- `general_formula/algebraic_runs.py`: the experiments run algebraically,
-  every number of the paper's table computed from the law's formulas on
-  declared worlds, by no run of the engine:
-  `python paper/general_formula/algebraic_runs.py`.
-- `general_formula/shape_check.py`: the check of the proposition on the
-  bound record's shape (the symmetry under the 48 and the decay rates),
-  a computation of the algebra on a lattice, by no run of the engine.
-- `general_formula/dimension_check.py`: the check of the scaling of one
-  hollow on a chain, a plane and a box, the bodies it allows by mass, a
-  computation of the algebra on a lattice, by no run of the engine.
-- `general_formula/stable_body_check.py`: the stable body theorem in
-  closed form, the two critical points of a body under the binding hollow
-  and gravity, the largest mass with a minimum, and the lattice check of
-  the two kernels' constants, by no run of the engine.
-- `general_formula/surplus_check.py`: the check of the law's line THE
-  SURPLUS LEAVES on a chain: the form's exact fall under a deepening well
-  at a kept count (the mass defect), the free part, a cloud breathing in a
-  static well with open and with closed faces, and the swing of the form
-  at the shell, by no run of the engine.
-- `general_formula/einstein_check.py`: the Einstein rows from Rule3's
-  coefficients by the geometric optics of a band: light's bending and a
-  massive orbit's periapsis advance with the Link's pace lowered once or
-  twice and with the clock's second order, by no run of the engine.
-- `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
-  the journal.
-- `general_formula/COVER_LETTER.md`: the cover letter for the journal.
+- `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
+  twice; it needs only its figures.
+- `general_formula/main.pdf`: the compiled paper at the same commit.
+- `general_formula/figures/`: the figures, each drawn by a script from the
+  definitions or from the documents' rows, none from a run and none by a
+  generative tool: `lattice.pdf` and `octahedron.pdf` by
+  `python paper/general_formula/octahedron.py`, `band.pdf` and `channels.pdf`
+  by `python paper/general_formula/band_and_channels.py`.
+- `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
+  coefficients by the geometric optics of the band (the bending, the perihelion),
+  by no run of the engine; the law cites it under `the paces`.
+- `general_formula/stable_body_check.py`: the stable body theorem in closed
+  form and the lattice check of the two kernels' constants; the law cites it
+  under `the functional and the dilation`.
+- `general_formula/surplus_check.py`: the form's exact fall under a deepening
+  well at a kept count, the free part and a cloud breathing in a static well;
+  the law cites it under `the surplus leaves`.
+- `general_formula/dimension_check.py`: the bodies one hollow allows on a
+  chain, a plane and a box, the check of `the hollow's dimension`.
 
-The experiments enter after their runs on the engine with blind pins, as a
-second part; this paper is the first, complete in itself.
+The experiments' rows enter after their runs on the engine with blind
+expectations; today the paper carries the two slits. The paper's outline, its
+chapters and its questions are on the issue "The paper: the outline, the
+chapters and the questions".
