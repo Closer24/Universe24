@@ -1,4 +1,4 @@
-"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file. The page shows the GameBoard as cubes (a folded axis as a plane), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), the wave as the glow of the Node's cube, a field as grey mist, the detectors' Nodes as rings that flash the interval their count rises; the detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
+"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), the wave as the glow of the Node's cube, a field as grey mist, the detectors' Nodes as rings that flash the interval their count rises; the detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
 
 The blind file, optional, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional.
 
@@ -8,6 +8,8 @@ The blind file, optional, `{"expected": {detector name: count, ...} or [one coun
 from __future__ import annotations
 
 import argparse
+import base64
+import gzip
 import json
 from pathlib import Path
 from typing import Any
@@ -35,18 +37,24 @@ def embedded(value: object) -> str:
     return json.dumps(value, separators=(",", ":")).replace("</", "<\\/")
 
 
+def packed(value: object) -> str:
+    """A value as compact JSON, gzip-compressed (the same bytes for the same value) and base64-encoded, for the page to inflate at load: a look of many frames in one page."""
+    data = json.dumps(value, separators=(",", ":")).encode("utf-8")
+    return base64.b64encode(gzip.compress(data, compresslevel=9, mtime=0)).decode("ascii")
+
+
 def page(look: dict[str, Any], blind: dict[str, Any] | None) -> str:
     """The page's HTML from the look and the blind expectation, if any."""
     if not isinstance(look, dict) or "frames" not in look or "families" not in look:
         raise ValueError("the look file must hold the frames and the families (tools/look/record.py)")
     if blind is not None and not isinstance(blind, dict):
         raise ValueError("the blind file must be an object of expected, family, window and watch")
-    world = str(look.get("world", "world")).split(".")[0]
+    world = str(look.get("world", "world")).split(".")[0].replace("_", " ")
     title = f"{world[:1].upper()}{world[1:]} look"
     return (
         TEMPLATE.replace("{{TITLE}}", title)
         .replace("{{THREE}}", CDN_THREE)
-        .replace("{{LOOK}}", embedded(look))
+        .replace("{{LOOK}}", packed(look))
         .replace("{{ROLES}}", embedded(roles(look["families"])))
         .replace("{{BLIND}}", embedded(blind))
     )
@@ -140,7 +148,7 @@ td.num { font-family: var(--font-mono); }
 .watch { font-family: var(--font-mono); font-size: var(--small); margin-top: 6px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
-<script id="look" type="application/json">{{LOOK}}</script>
+<script id="look" type="application/gzip+base64">{{LOOK}}</script>
 <script id="roles" type="application/json">{{ROLES}}</script>
 <script id="blind" type="application/json">{{BLIND}}</script>
 <header>
@@ -186,7 +194,15 @@ td.num { font-family: var(--font-mono); }
 <script src="{{THREE}}"></script>
 <script>
 'use strict';
-const LOOK = JSON.parse(document.getElementById('look').textContent);
+/* The look is embedded gzip-compressed and base64-encoded, so that a look of many frames fits one page; the browser's own DecompressionStream inflates it at load and the numbers are the look's, untouched. */
+async function inflated(id) {
+  const text = document.getElementById(id).textContent.trim();
+  const bytes = Uint8Array.from(atob(text), c => c.charCodeAt(0));
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return JSON.parse(await new Response(stream).text());
+}
+(async () => {
+const LOOK = await inflated('look');
 const ROLES = JSON.parse(document.getElementById('roles').textContent);
 const BLIND = JSON.parse(document.getElementById('blind').textContent) || {};
 const root = document.documentElement;
@@ -614,6 +630,7 @@ const scheme = window.matchMedia('(prefers-color-scheme: dark)');
 scheme.addEventListener('change', start);
 new MutationObserver(start).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 start();
+})();
 </script>
 """
 

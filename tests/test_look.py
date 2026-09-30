@@ -59,4 +59,5 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles_from_th
     dashed = [name for name, role in roles.items() if role["dashed"]]
     assert dashed == [f["name"] for f in universe if "held" not in f][1:]
     assert "GameBoard reading" in html and PAGE.embedded(roles) in html and '"window":[1,2]' in html
+    assert PAGE.packed(look) in html and "DecompressionStream" in html  # the look inflated at load
     assert "<title>Chain look</title>" in html and "interpolat" not in html.lower()
