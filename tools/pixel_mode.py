@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from dataclasses import dataclass
-from math import isqrt
 from pathlib import Path
 from typing import Any, cast
 
@@ -16,12 +16,14 @@ from event_universe.core.rule3 import (
     ISOTROPIC,
     NO_READ,
     coefficients,
+    division_fixed_point,
     division_forward,
     rule3,
 )
 from event_universe.features.start import rest
+from event_universe.lay import share
 from event_universe.loader.derived import BY_PLAIN, family_rules
-from event_universe.node import Record, share
+from event_universe.node import Record
 from event_universe.world_files import input_digest, world_files
 
 Axis = tuple[int, int, int]
@@ -87,7 +89,7 @@ def period_reading(
     sign = 1 if now[node] > 0 else -1 if now[node] < 0 else 0
     length, largest, best, returned = 0, -1, None, False
     seen: set[bytes] = set()
-    while (key := now.tobytes() + before.tobytes() + remainder.tobytes()) not in seen:
+    while (key := digest(now, before, remainder)) not in seen:
         seen.add(key)
         nxt = step(board, content, now, before, remainder)
         here = int(now[node])
@@ -112,13 +114,21 @@ def period_reading(
     return None
 
 
+def digest(*arrays: np.ndarray) -> bytes:
+    """A state's digest for the repeat searches, the arrays' bytes hashed so that the memory of a search is bounded on a large board (a repeat is read exactly on the digest, the tool's own bookkeeping and no number of the law)."""
+    found = hashlib.sha256()
+    for array in arrays:
+        found.update(array.tobytes())
+    return found.digest()
+
+
 def agree(first: int, second: int) -> bool:
-    """Two readings of a count within the rounding of its amplitude, |a - b| <= 2 isqrt(a) + 1, as integer squares: ((|a - b| - 1) div 2)^2 at most the larger."""
+    """Two readings of a count within the rounding of its amplitude, ((|a - b| - 1) div 2)^2 at most the larger, as integer squares."""
     return bool(within(np.array(first - second), np.array(max(first, second))))
 
 
 def within(off: np.ndarray, largest: np.ndarray) -> np.ndarray:
-    """The law's gate at every Node, |a - b| <= 2 isqrt(c) + 1, as ((|a - b| - 1) div 2)^2 <= c by Rule3's division act."""
+    """The law's gate at every Node, ((|a - b| - 1) div 2)^2 <= c by Rule3's division act, the root's inequality written as a square."""
     half = np.asarray(division_forward(np.abs(off) - 1, 2, 0)[0])
     return (np.abs(off) <= 1) | (half * half <= largest)
 
@@ -162,7 +172,7 @@ def top_mode(
         if largest == 0:
             return a
         a = np.asarray(division_forward(total * unit, largest, 0)[0], dtype=np.int64)
-        key = a.tobytes()
+        key = digest(a)
         if key in seen:
             return a
         seen.add(key)
@@ -199,7 +209,8 @@ def standing(
             if (
                 abs(length - length_before) <= 1
                 and agree(carried, carried_before)
-                and abs(largest - largest_before) <= isqrt(max(largest, largest_before)) + 1
+                and abs(largest - largest_before)
+                <= division_fixed_point(max(largest, largest_before)) + 1
             ):
                 a, level = pair if largest >= largest_before else pair_before
                 now_at, before_at, next_at = (
@@ -222,7 +233,7 @@ def standing(
         read += 1
         if read == span:  # the purge after a span of periods, the span doubled at each purge
             state[:] = purged(keep, now_at, before_at)
-            key = state[0].tobytes() + state[1].tobytes()
+            key = digest(state[0], state[1])
             if key in purges:
                 return None
             purges.add(key)
@@ -265,7 +276,8 @@ def rests(
         if pair[0] != pair[1]:
             field = np.asarray(division_forward(counts, divisor, 0)[0], dtype=np.int64)
         else:
-            field = np.asarray(rest(counts, pair, wrap, divisor, width).levels, dtype=np.int64)
+            wall = 3 * pair[1]  # the plain rule's wall, the one the row steps by
+            field = np.asarray(rest(counts, pair, wrap, divisor, width, wall).levels, dtype=np.int64)
         total += field
         binding = field if binding is None else binding
     return total, cast(np.ndarray, binding)
@@ -344,7 +356,7 @@ def scaled_record(
             )
         return record
 
-    low = max(1, isqrt(max(1, centre_count) * board.action))
+    low = max(1, division_fixed_point(max(1, centre_count) * board.action))
     while low > 1 and ((found := read(low)) is None or found.carried > quanta):
         low = max(1, low // 2)
     high = low
@@ -471,7 +483,7 @@ def rotating(
     own = int(share_of(board, 0, pairs[0], pairs[1]).sum())
     both = own + int(share_of(board, 0, pairs[2], pairs[3]).sum())
     amplitude = max(int(np.abs(level).max()) for level in pairs)
-    scale = isqrt(int(division_forward(amplitude * amplitude * own, both, 0)[0]))
+    scale = division_fixed_point(int(division_forward(amplitude * amplitude * own, both, 0)[0]))
     found = [
         np.asarray(division_forward(level * scale, amplitude, 0)[0], dtype=np.int64) for level in pairs
     ]

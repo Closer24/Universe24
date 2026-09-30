@@ -26,7 +26,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
         (box, (True, True, True), (3, 4), 7),
     ):
         num, den = pair
-        found = rest(counts, pair, faces, divisor, MAX_WORK_INT)
+        found = rest(counts, pair, faces, divisor, MAX_WORK_INT, 3 * den)
         fine = found.fine.astype(object)
         side = counts.astype(object) * (3 * den * found.unit) // divisor
         left = 6 * den * fine - num * sum(arrivals(fine, faces)) - side
@@ -42,7 +42,7 @@ def test_the_tent_on_an_open_chain_is_the_exact_rest_to_the_nearest_integer():
     """The massless line on an open chain of 30 with two sources of 3,600 over the divisor 400: 2 a_i - a_(i-1) - a_(i+1) = 3 sigma_i with 0 beyond the faces, solved in exact rationals; the levels are its nearest integers."""
     counts = np.zeros((30, 1, 1), dtype=np.int64)
     counts[14:16, 0, 0] = 3600
-    found = rest(counts, (1, 1), OPEN_CHAIN, 400, MAX_WORK_INT)
+    found = rest(counts, (1, 1), OPEN_CHAIN, 400, MAX_WORK_INT, 3)
     sigma = [Fraction(int(c), 400) * 3 for c in counts[:, 0, 0]]
     diagonal, right = [Fraction(2)] * 30, list(sigma)
     for i in range(1, 30):  # the tridiagonal line eliminated forward, exact
@@ -60,9 +60,9 @@ def test_the_refusals_by_name():
     ring = np.zeros((16, 1, 1), dtype=np.int64)
     ring[3, 0, 0] = 2
     with pytest.raises(ValueError, match="needs a sink"):
-        rest(ring, (1, 1), (True, True, True), 1, MAX_WORK_INT)
+        rest(ring, (1, 1), (True, True, True), 1, MAX_WORK_INT, 3)
     ring[11, 0, 0] = -2
     with pytest.raises(ValueError, match="of one sign"):
-        rest(ring, (1, 2), (True, True, True), 1, MAX_WORK_INT)
+        rest(ring, (1, 2), (True, True, True), 1, MAX_WORK_INT, 6)
     with pytest.raises(ValueError, match="divisor is from 1"):
-        rest(ring, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT)
+        rest(ring, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6)

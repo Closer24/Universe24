@@ -41,8 +41,8 @@ def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int) -> int:
     return int(division(1, 2 * abs(pair[0]) * 6 * largest, width))
 
 
-def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int) -> FieldAtRest:
-    """The rest by the line itself: the fine levels b <- (num S_6(b) + 3 den x (count x unit div E_s)) div (6 den) by Rule3's division act from nothing, until the levels repeat; refused by name where the sources are not of one sign (the map is monotone only then), where a board periodic on its every axis at [1, 1] gives the sources no sink, and where the divisor is below 1."""
+def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, wall: int) -> FieldAtRest:
+    """The rest by the line itself: the fine levels b <- (num S_6(b) + 3 den x (count x unit div E_s)) div (6 den) by Rule3's division act from nothing, until the levels repeat, the remainder at the half of `wall`, the wall of the rule the row steps by; refused by name where the sources are not of one sign (the map is monotone only then), where a board periodic on its every axis at [1, 1] gives the sources no sink, and where the divisor is below 1."""
     num, den = pair
     if divisor < 1:
         raise ValueError(f"the start's divisor is from 1, got {divisor}")
@@ -68,4 +68,4 @@ def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int) -
     half = int(division(1, 2, unit))
     levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0], dtype=np.int64)
     carries = np.where(counts != 0, division(1, 2, divisor), 0).astype(np.int64)
-    return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, 3 * den - 1)), carries)
+    return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, wall - 1)), carries)

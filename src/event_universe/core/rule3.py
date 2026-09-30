@@ -1,11 +1,8 @@
-"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the form's Node term and the integers of the paces beside it (ALGEBRA.md #the-line, #the-direction, #the-interval)."""
+"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM_a R_a (arr_a+ + arr_a-) + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the fixed point of the division act iterated (the root the loader and the generator read, never the run); the form's Node term and the integers of the paces beside it (ALGEBRA.md #the-line, #the-direction, #the-interval)."""
 
 from __future__ import annotations
 
-from math import isqrt
 from typing import Any
-
-import numpy as np
 
 # the rule's three reads, one per axis of the Node (R_x, R_y, R_z); the three arrival
 # sums (arr_a+ + arr_a-) of the same axes; integers or the loop's integer arrays
@@ -48,19 +45,6 @@ def link_paces(
     return (pace - axis_contents[0], pace - axis_contents[1], pace - axis_contents[2])
 
 
-def clock_pace(gamma: Any, content: Any) -> Any:
-    """The clock's pace as an integer where a guard or a clock pair reads it: the integer square root of p_0^2 = (Gamma - c)^2 + c^2 (ALGEBRA.md #the-paces), Gamma - c + c^2 div 2 Gamma to the unit; on an array by Newton's integer iteration from above (Gamma + |c| is at or above the root), the descent stopping where it turns."""
-    squared = (gamma - content) * (gamma - content) + content * content
-    if not isinstance(squared, np.ndarray):
-        return isqrt(int(squared))
-    root = gamma + np.abs(content) + 1
-    while True:
-        lower = np.minimum(root, (root + squared // root) // 2)
-        if np.array_equal(lower, root):
-            return root
-        root = lower
-
-
 def rule3(
     reads: Reads,
     arrivals: tuple[Any, ...],
@@ -93,6 +77,18 @@ def division_forward(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
 def division_back(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
     """The division act one interval back by Rule3's direction -1: from the remainder after, the quotient the forward act wrote and the remainder before it, exact (ALGEBRA.md #the-direction)."""
     return rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry, -1)
+
+
+def division_fixed_point(square: int) -> int:
+    """The fixed point of the division act iterated from above, x <- (x + n div x) div 2 while it falls (Newton's integer iteration, the start's own act), the largest x with x^2 <= n; at n = 0 the descent ends at 0 (ALGEBRA.md #the-guard, the root leaves everywhere)."""
+    root = square + 1
+    while True:
+        lower = division_forward(root + division_forward(square, root, 0)[0], 2, 0)[0]
+        if lower >= root:
+            return int(root)
+        root = lower
+        if root == 0:
+            return 0
 
 
 def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
