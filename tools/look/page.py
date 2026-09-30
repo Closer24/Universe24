@@ -1,6 +1,6 @@
-"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), the wave as the glow of the Node's cube, a field as grey mist, the detectors' Nodes as rings that flash the interval their count rises; the detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
+"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the detectors' Nodes as rings, seen at rest and brighter and larger the interval their count rises; the detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw and the sums its bars draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size, the dark theme's values among them) stands in the one block at the top of the template's style and nowhere else; a button in the header sets the theme, remembered in the browser where it can be.
 
-The blind file, optional, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional.
+The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"detector": name, "family": name, "window": [first interval, last interval], "across": the axis across the detector, "counts": [the blind count per detector Node in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per detector Node ordered by its coordinate on that axis, the rises within the window summed per Node from the look's click lines as click_counts.py counts them, the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the detectors' totals, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional, one bar per detector.
 
     python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--out <world>.look.html]
 """
@@ -17,7 +17,65 @@ from typing import Any
 from event_universe.loader.derived import CONTENT, SIGN
 
 MATTER, LIGHT, FIELD = "matter", "light", "field"
+AXES = ("x", "y", "z")
 CDN_THREE = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+
+
+def shown(value: object) -> str:
+    """A number as the page prints it: an integer with its thousands separated, any other value as written."""
+    return f"{value:,}" if isinstance(value, int) and not isinstance(value, bool) else str(value)
+
+
+def rises(
+    look: dict[str, Any], detector: str, family: str, window: tuple[int, int]
+) -> dict[tuple[int, ...], int]:
+    """The clicks per Node of one detector and one family within the window [first, last] of intervals, from the look's frames' lines, counted as tools/click_counts.py counts them."""
+    found: dict[tuple[int, ...], int] = {}
+    for frame in look["frames"]:
+        for line in frame["lines"]:
+            if line.get("event") != "click" or line.get("detector") != detector:
+                continue
+            if line.get("family") != family or not window[0] <= int(line["tick"]) <= window[1]:
+                continue
+            node = tuple(int(i) for i in line["node"])
+            found[node] = found.get(node, 0) + 1
+    return found
+
+
+def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str, Any] | None:
+    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, `family`, `window`, `across`, `counts`), None from any other: the detector's Nodes ordered by their coordinate on the across axis, each Node's rises within the window, the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
+    if blind is None or "across" not in blind:
+        return None
+    if blind["across"] not in AXES:
+        raise ValueError(f"the blind file's across is one of {list(AXES)}, got {blind['across']!r}")
+    axis = AXES.index(blind["across"])
+    detector = next((d for d in look["detectors"] if d["name"] == blind["detector"]), None)
+    if detector is None:
+        raise ValueError(f"the blind file's detector {blind['detector']!r} is not in the look")
+    window = (int(blind["window"][0]), int(blind["window"][1]))
+    counted = rises(look, str(blind["detector"]), str(blind["family"]), window)
+    nodes = sorted((tuple(int(i) for i in node) for node in detector["nodes"]), key=lambda n: n[axis])
+    risen = [counted.get(node, 0) for node in nodes]
+    watch = blind.get("watch") if isinstance(blind.get("watch"), dict) else {}
+    lines = [
+        f"{blind['across']} = {key}: {shown(sum(r for n, r in zip(nodes, risen, strict=True) if n[axis] == int(key)))} reported, the blind {shown(value)}"
+        for key, value in watch.items()
+    ]
+    return {
+        "detector": blind["detector"],
+        "family": blind["family"],
+        "window": list(window),
+        "across": blind["across"],
+        "axis": axis,
+        "nodes": [list(node) for node in nodes],
+        "rises": risen,
+        "blind": list(blind.get("counts", [])),
+        "pattern": blind.get("pattern"),
+        "through": sum(risen),
+        "totals": f"through {shown(sum(risen))} reported (the blind {shown(blind.get('through'))})",
+        "watch": lines,
+        "recorded": len(look["frames"]) - 1,
+    }
 
 
 def roles(families: list[dict[str, Any]]) -> dict[str, dict[str, object]]:
@@ -48,7 +106,9 @@ def page(look: dict[str, Any], blind: dict[str, Any] | None) -> str:
     if not isinstance(look, dict) or "frames" not in look or "families" not in look:
         raise ValueError("the look file must hold the frames and the families (tools/look/record.py)")
     if blind is not None and not isinstance(blind, dict):
-        raise ValueError("the blind file must be an object of expected, family, window and watch")
+        raise ValueError(
+            "the blind file must be an object (tools/click_counts.py's format, or expected, family, window and watch)"
+        )
     world = str(look.get("world", "world")).split(".")[0].replace("_", " ")
     title = f"{world[:1].upper()}{world[1:]} look"
     return (
@@ -57,6 +117,7 @@ def page(look: dict[str, Any], blind: dict[str, Any] | None) -> str:
         .replace("{{LOOK}}", packed(look))
         .replace("{{ROLES}}", embedded(roles(look["families"])))
         .replace("{{BLIND}}", embedded(blind))
+        .replace("{{MEASURE}}", embedded(measurement(look, blind)))
     )
 
 
@@ -78,28 +139,30 @@ TEMPLATE = """<title>{{TITLE}}</title>
 <style>
 /* The page's own layout: every colour and size of the page stands in this one block and nowhere else. */
 :root {
-  --bg: #f6f5f0; --panel: #ffffff; --fg: #1e2027; --muted: #6a6e78; --line: #d8d6ce; --board: #ecebe5;
-  --cube: #cfcdc5; --matter: #2f6fd0; --light: #c07f0a; --field: #7a7e87; --ring: #2c2f36; --flash: #000000;
-  --blind: #6a6e78; --focus: #2f6fd0; --window: rgba(47, 111, 208, 0.16);
+  --bg: #f6f5f0; --panel: #ffffff; --fg: #1e2027; --muted: #6a6e78; --line: #d8d6ce; --board: #e4e2da;
+  --cube: #cfcdc5; --matter: #2f6fd0; --light: #d9640a; --field: #7a7e87; --wall: #2a2d34; --ring: #4c5059;
+  --flash: #ff3d00; --blind: #6a6e78; --focus: #2f6fd0; --window: rgba(47, 111, 208, 0.16);
   --font-body: "IBM Plex Sans", system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --text: 14px; --small: 12px; --title: 20px; --gap: 12px; --pad: 14px; --radius: 6px; --gutter: 16px;
-  --side-min: 300px; --board-height: 520px; --graph-width: 360; --graph-height: 84; --graph-pad: 6;
-  --cube-size: 0.78; --dot-radius: 0.38; --dot-floor: 0.08; --dot-offset: 0.22; --glow: 0.9;
+  --sky: #ffffff; --ground: #8c8c8c; --sun: 0.45;
+  --side-min: 300px; --board-height: min(76vh, 900px); --graph-width: 360; --graph-height: 84; --graph-pad: 6;
+  --bar-slot: 12; --measure-width: 960px;
+  --cube-size: 0.78; --cube-depth: 0.2; --dot-radius: 0.62; --dot-floor: 0.15; --dot-offset: 0.22; --glow: 1; --glow-power: 0.4; --glow-tint: 0.45;
   --mist-size: 1.02; --mist-opacity: 0.3; --mist-power: 0.5; --bar-length: 0.9; --bar-thickness: 0.07;
-  --ring-radius: 0.6; --ring-tube: 0.05; --flash-scale: 1.4; --plane-opacity: 0.12;
-  --camera-fov: 38; --camera-distance: 1.15; --camera-far: 12; --camera-tilt: 22; --camera-turn: -28;
+  --wall-size: 1; --wall-depth: 0.6; --ring-radius: 0.6; --ring-tube: 0.09; --flash-scale: 1.2; --plane-opacity: 0.12;
+  --camera-fov: 38; --camera-distance: 1.03; --camera-far: 12; --camera-tilt: 14; --camera-turn: -18;
   --orbit-rate: 0.006; --zoom-rate: 0.0012; --zoom-step: 0.85; --frames-per-second: 12; --line-width: 1.6;
   --label-size: 1.4;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #14161a; --panel: #1b1e24; --fg: #e9e7df; --muted: #9a9ea8; --line: #2e323a; --board: #0f1114;
-  --cube: #2b2e35; --matter: #5f97ea; --light: #f0b445; --field: #a3a7ae; --ring: #d9d7d0; --flash: #ffffff;
-  --blind: #9a9ea8; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2); color-scheme: dark;
+  --cube: #2b2e35; --matter: #6ea1f0; --light: #ffc24a; --field: #a3a7ae; --wall: #8b8f99; --ring: #c9c7c0;
+  --flash: #ff5a1f; --blind: #b4b8c0; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2); color-scheme: dark;
 } }
 :root[data-theme="dark"] {
   --bg: #14161a; --panel: #1b1e24; --fg: #e9e7df; --muted: #9a9ea8; --line: #2e323a; --board: #0f1114;
-  --cube: #2b2e35; --matter: #5f97ea; --light: #f0b445; --field: #a3a7ae; --ring: #d9d7d0; --flash: #ffffff;
-  --blind: #9a9ea8; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2); color-scheme: dark;
+  --cube: #2b2e35; --matter: #6ea1f0; --light: #ffc24a; --field: #a3a7ae; --wall: #8b8f99; --ring: #c9c7c0;
+  --flash: #ff5a1f; --blind: #b4b8c0; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2); color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { margin: 0; padding-inline: var(--gutter); padding-block: var(--pad); background: var(--bg); color: var(--fg); font: var(--text)/1.45 var(--font-body); }
@@ -145,15 +208,19 @@ th { color: var(--muted); font-weight: 600; }
 td.num { font-family: var(--font-mono); }
 .scroll { overflow-x: auto; }
 .measure { border-color: var(--fg); }
-.watch { font-family: var(--font-mono); font-size: var(--small); margin-top: 6px; }
+.measure svg { max-width: var(--measure-width); }
+.totals, .watch { font-family: var(--font-mono); font-size: var(--small); margin-top: 6px; }
+.theme { margin-left: auto; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 <script id="look" type="application/gzip+base64">{{LOOK}}</script>
 <script id="roles" type="application/json">{{ROLES}}</script>
 <script id="blind" type="application/json">{{BLIND}}</script>
+<script id="measurement" type="application/json">{{MEASURE}}</script>
 <header>
   <h1 id="title"></h1>
   <span class="verdict" id="verdict"></span>
+  <button type="button" class="theme" id="theme" aria-label="the theme">Dark</button>
 </header>
 <div class="page">
   <section class="panel wide">
@@ -171,10 +238,11 @@ td.num { font-family: var(--font-mono); }
     </div>
     <div class="lines" id="lines"></div>
   </section>
-  <section class="panel measure">
+  <section class="panel measure" id="measure-box">
     <h2>Measurement: the detectors' report</h2>
     <div class="picker" id="measure-picker"></div>
     <div class="graph" id="measure"></div>
+    <div class="totals" id="totals"></div>
     <div class="watch" id="watch"></div>
   </section>
   <section class="panel">
@@ -205,6 +273,7 @@ async function inflated(id) {
 const LOOK = await inflated('look');
 const ROLES = JSON.parse(document.getElementById('roles').textContent);
 const BLIND = JSON.parse(document.getElementById('blind').textContent) || {};
+const MEASURE = JSON.parse(document.getElementById('measurement').textContent);
 const root = document.documentElement;
 const token = name => getComputedStyle(root).getPropertyValue(name).trim();
 const size = name => parseFloat(token(name));
@@ -281,15 +350,18 @@ function fit() {
   }
   view.distance = needed * size('--camera-distance'); placeCamera();
 }
-const hemisphere = new THREE.HemisphereLight(0xffffff, 0x000000, 1), sun = new THREE.DirectionalLight(0xffffff, 0.5);
+const hemisphere = new THREE.HemisphereLight(0xffffff, 0x000000, 1), sun = new THREE.DirectionalLight(0xffffff, size('--sun'));
 sun.position.set(1, 2, 3);
 scene.add(hemisphere, sun);
 const position = i => { const [x, y, z] = nodeOf(i); return new THREE.Vector3(x - (X - 1) / 2, y - (Y - 1) / 2, z - (Z - 1) / 2); };
 const matrix = new THREE.Matrix4(), quaternion = new THREE.Quaternion(), scale = new THREE.Vector3(), colour = new THREE.Color(), tint = new THREE.Color();
 const hidden = new THREE.Matrix4().makeScale(0, 0, 0);
 const layers = {};
-const cubeSide = size('--cube-size');
-const cubes = new THREE.InstancedMesh(new THREE.BoxGeometry(cubeSide, cubeSide, cubeSide), new THREE.MeshLambertMaterial({ color: 0xffffff }), N);
+/* A cube is thin along a folded axis (the board a plane of slabs) and the dots rest on the slab's face, so a dot of any count is seen; along an axis of many Nodes a cube keeps its size. */
+const cubeSide = size('--cube-size'), cubeDepth = size('--cube-depth');
+const extentAlong = (side, depth) => [0, 1, 2].map(a => LOOK.folded[a] ? depth : side);
+const lift = [0, 1, 2].map(a => LOOK.folded[a] ? cubeDepth / 2 : 0);
+const cubes = new THREE.InstancedMesh(new THREE.BoxGeometry(...extentAlong(cubeSide, cubeDepth)), new THREE.MeshLambertMaterial({ color: 0xffffff }), N);
 for (let i = 0; i < N; i++) cubes.setMatrixAt(i, matrix.makeTranslation(...position(i).toArray()));
 for (let i = 0; i < N; i++) cubes.setColorAt(i, colour.set(0xffffff));
 scene.add(cubes);
@@ -324,6 +396,23 @@ const ringCapacity = LOOK.detectors.reduce((n, d) => n + (d.body === null ? d.no
 const rings = new THREE.InstancedMesh(new THREE.TorusGeometry(size('--ring-radius'), size('--ring-tube'), 8, 32), new THREE.MeshBasicMaterial({ color: 0xffffff }), Math.max(ringCapacity, 1));
 scene.add(rings);
 layers['detector rings'] = { on: true, objects: [rings] };
+/* The inner faces the world declares: the plane's Nodes across the axis at the coordinate, its gaps left open, drawn as dark cubes; the Nodes are the file's declaration and nothing is read there. */
+const beyond = new Set();
+for (const face of LOOK.faces || []) {
+  const a = AXES.indexOf(face.axis), others = [0, 1, 2].filter(k => k !== a), extents = [X, Y, Z];
+  for (let u = 0; u < extents[others[0]]; u++) for (let v = 0; v < extents[others[1]]; v++) {
+    const open = face.gaps.some(gap => { const [p, q] = gap[AXES[others[0]]], [r, s] = gap[AXES[others[1]]]; return p <= u && u <= q && r <= v && v <= s; });
+    if (open) continue;
+    const at = [0, 0, 0]; at[a] = face.at; at[others[0]] = u; at[others[1]] = v;
+    beyond.add(indexOf(...at));
+  }
+}
+const wall = new THREE.InstancedMesh(new THREE.BoxGeometry(...extentAlong(size('--wall-size'), size('--wall-depth'))), new THREE.MeshLambertMaterial({ color: 0xffffff }), Math.max(beyond.size, 1));
+wall.setMatrixAt(0, hidden);
+[...beyond].forEach((i, k) => wall.setMatrixAt(k, matrix.makeTranslation(...position(i).toArray())));
+wall.visible = beyond.size > 0;
+scene.add(wall);
+if (beyond.size) layers['the faces (declared)'] = { on: true, objects: [wall] };
 const box = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(X, Y, Z)), new THREE.LineBasicMaterial({ color: 0xffffff }));
 const faces = new THREE.Group();
 AXES.forEach((axis, a) => {
@@ -358,10 +447,10 @@ layers['the box and its axes'] = { on: true, objects: [box, faces, plane, labels
 
 function themed() {
   scene.background = new THREE.Color(token('--board'));
-  box.material.color.set(token('--line')); plane.material.color.set(token('--muted'));
+  box.material.color.set(token('--line')); plane.material.color.set(token('--muted')); wall.material.color.set(token('--wall'));
   faces.children.forEach(line => line.material.color.set(token('--fg')));
   labels.children.forEach(sprite => sprite.material.color.set(token('--muted')));
-  hemisphere.color.set(token('--fg')); hemisphere.groundColor.set(token('--board'));
+  hemisphere.color.set(token('--sky')); hemisphere.groundColor.set(token('--ground'));
   for (const f of QUANTA) { const hex = colourOf(f.name); if (!ROLES[f.name].dashed) dots[f.name].full.material.color.set(hex); else dots[f.name].full.material.map = striped(hex); dots[f.name].hollow.material.color.set(hex); }
   for (const f of HELD) { mists[f.name].material.color.set(colourOf(f.name)); (bars[f.name] || []).forEach(b => b.material.color.set(colourOf(f.name))); }
 }
@@ -369,16 +458,15 @@ function themed() {
 /* One frame drawn: no state between frames, every mark from the frame's arrays alone. */
 let t = 0, playing = null, named = null;
 function draw() {
-  const frame = LOOK.frames[t], fr = frameOf(t), glow = size('--glow');
+  const frame = LOOK.frames[t], fr = frameOf(t), glow = size('--glow'), glowPower = size('--glow-power'), glowTint = size('--glow-tint');
   const base = new THREE.Color(token('--cube'));
   for (let i = 0; i < N; i++) {
     colour.copy(base);
     for (const f of QUANTA) {
       if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
-      const a = fr[f.name], strength = glow * Math.max(Math.abs(a.now[i]), Math.abs(a.second[i])) / MOST[f.name].now;
-      colour.add(tint.set(colourOf(f.name)).multiplyScalar(strength));
+      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), Math.abs(a.second[i])) / MOST[f.name].now, glowPower);
+      colour.lerp(tint.set(colourOf(f.name)).lerp(base, glowTint), Math.min(1, strength));  // the glow a tint of the family's colour, the dots the colour itself
     }
-    colour.r = Math.min(colour.r, 1); colour.g = Math.min(colour.g, 1); colour.b = Math.min(colour.b, 1);
     cubes.setColorAt(i, colour);
   }
   cubes.instanceColor.needsUpdate = true;
@@ -387,7 +475,7 @@ function draw() {
     const { full, hollow, offset } = dots[f.name], count = fr[f.name].count, most = Math.sqrt(MOST[f.name].count) || 1;
     for (let i = 0; i < N; i++) {
       const c = count[i], r = c ? Math.max(floor, radius * Math.sqrt(Math.abs(c)) / most) : 0;
-      const p = position(i); p.y += offset;
+      const p = position(i); p.y += offset; p.x += lift[0]; p.y += lift[1]; p.z += lift[2];
       matrix.compose(p, quaternion, scale.setScalar(r));
       full.setMatrixAt(i, c > 0 ? matrix : hidden); hollow.setMatrixAt(i, c < 0 ? matrix : hidden);
     }
@@ -432,7 +520,7 @@ function draw() {
   const clicks = frame.lines.filter(line => line.event === 'click').map(line => line.detector + ': ' + line.family);
   byId('lines').textContent = t === 0 ? 'The world as laid: the bodies\\' declared counts, the levels of the mode file, every held row at its start.'
     : Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? '' : 's')).join(', ') + (clicks.length ? ' (' + [...new Set(clicks)].join(', ') + ')' : '') || 'no line this interval';
-  drawMeasure();
+  if (!MEASURE) drawMeasure();
   moveCursors();
 }
 
@@ -470,7 +558,7 @@ function pick(e) {
 function hover(e) {
   const panel = byId('hover'), i = e ? pick(e) : null;
   if (i === null) { panel.style.display = 'none'; return; }
-  const fr = frameOf(t), lines = ['Node [' + nodeOf(i).join(', ') + ']  (GameBoard reading)'];
+  const fr = frameOf(t), lines = ['Node [' + nodeOf(i).join(', ') + ']  (GameBoard reading)' + (beyond.has(i) ? ', beyond the board: a declared face' : '')];
   for (const f of FAMILIES) {
     const a = fr[f.name];
     if (f.quanta) {
@@ -569,13 +657,45 @@ picker.innerHTML = 'Node ' + AXES.map(axis => `<label>${axis} <input type="numbe
 AXES.forEach(axis => byId('node-' + axis).addEventListener('change', () => { named = AXES.map(a => Math.max(0, Math.min([X, Y, Z][AXES.indexOf(a)] - 1, Number(byId('node-' + a).value) || 0))); drawGraphs(); }));
 if (LOOK.bodies.length && LOOK.bodies[0].nodes.length) { named = LOOK.bodies[0].nodes[0].slice(); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); }
 
-/* The measurement, drawn once: the detectors' reports as bars, the dashed blind curve behind them. */
+/* The measurement: with an expectation across an axis, one bar per detector Node ordered along it, the rises within the window summed per Node (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the detectors' reports as bars, one each, the dashed blind curve behind them. */
 const measurePicker = byId('measure-picker'), select = document.createElement('select'); select.id = 'measure-family';
-for (const f of QUANTA) { const o = document.createElement('option'); o.value = f.name; o.textContent = f.name; select.append(o); }
-const reporting = QUANTA.find(f => f.name === BLIND.family) || QUANTA.find(f => ROLES[f.name].role === 'light') || QUANTA[0];
-if (reporting) select.value = reporting.name;
-select.addEventListener('change', drawMeasure);
-measurePicker.append('Family ', select, document.createTextNode(WINDOW ? ' within the window ' + WINDOW[0] + ' to ' + WINDOW[1] : ' over every interval'));
+function drawNodeMeasure() {
+  const m = MEASURE, n = m.rises.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
+  byId('measure-box').classList.add('wide');
+  measurePicker.textContent = `${m.detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per Node across ${m.across}`
+    + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
+  const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
+  const high = Math.max(1, ...m.rises, ...blind.filter(v => v !== null));
+  const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
+  const coordinate = k => m.nodes[k] ? m.nodes[k][m.axis] : '';
+  let body = '';
+  if (Array.isArray(m.pattern) && m.pattern.length === 2 && n) {
+    const [first, last] = m.pattern.map(v => Math.max(0, Math.min(n - 1, v)));
+    body += `<rect x="${(px(first) - slot / 2).toFixed(1)}" y="${pad}" width="${(slot * (last - first + 1)).toFixed(1)}" height="${(H - pad - bottom).toFixed(1)}" fill="${token('--window')}"><title>the pattern's range: ${m.across} ${coordinate(first)} to ${coordinate(last)}</title></rect>`;
+  }
+  body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
+  const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
+  m.rises.forEach((v, k) => {
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.detector)} [${m.nodes[k].join(', ')}]: ${format(v)} reported${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
+  });
+  if (blind.some(v => v !== null)) {
+    const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
+    body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  }
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} reported per Node (the look's click lines)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  box.innerHTML = `<div class="caption"><b>The rises of ${esc(family)} at ${esc(m.detector)}'s Nodes across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the detector's rises per Node">${body}</svg>`;
+  byId('totals').textContent = m.totals;
+  byId('watch').innerHTML = m.watch.map(esc).join('<br>');
+}
+if (!MEASURE) {
+  for (const f of QUANTA) { const o = document.createElement('option'); o.value = f.name; o.textContent = f.name; select.append(o); }
+  const reporting = QUANTA.find(f => f.name === BLIND.family) || QUANTA.find(f => ROLES[f.name].role === 'light') || QUANTA[0];
+  if (reporting) select.value = reporting.name;
+  select.addEventListener('change', drawMeasure);
+  measurePicker.append('Family ', select, document.createTextNode(WINDOW ? ' within the window ' + WINDOW[0] + ' to ' + WINDOW[1] : ' over every interval'));
+}
 function reported(detector, family) {
   const ticks = (reportsAt[detector] || {})[family] || [];
   return ticks.filter(k => k <= t && (!WINDOW || (k >= WINDOW[0] && k <= WINDOW[1]))).length;
@@ -606,7 +726,8 @@ function drawMeasure() {
 /* The world's numbers as the files hold them, and the books at the end. */
 function numbers() {
   const row = (k, v) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`;
-  let html = '<dl>' + row('world', LOOK.world) + row('shape', LOOK.shape.join(' x ')) + row('faces', AXES.map(a => a + ' ' + LOOK.boundary[a]).join(', ')) + row('folded', AXES.filter((a, k) => LOOK.folded[k]).join(', ') || 'none') + row('face depth', LOOK.face_depth)
+  const inner = (LOOK.faces || []).map(f => `${f.axis} at ${f.at}, gaps ${f.gaps.map(g => Object.entries(g).map(([k, v]) => k + ' [' + v.join(', ') + ']').join(' ')).join('; ') || 'none'}`).join(' | ') || 'none';
+  let html = '<dl>' + row('world', LOOK.world) + row('shape', LOOK.shape.join(' x ')) + row('boundary', AXES.map(a => a + ' ' + LOOK.boundary[a]).join(', ')) + row('inner faces', inner) + row('folded', AXES.filter((a, k) => LOOK.folded[k]).join(', ') || 'none') + row('face depth', LOOK.face_depth)
     + row('Gamma (the Node clock)', format(LOOK.node_clock)) + row('T (the quantum action)', format(LOOK.quantum_action)) + row('the largest integer', LOOK.largest_integer) + row('A (the amplitude bound)', format(LOOK.amplitude_bound))
     + row('intervals', format(LOOK.ticks) + ' recorded; the world declares ' + format(LOOK.declared_ticks)) + '</dl>';
   html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>divisor</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
@@ -622,11 +743,18 @@ function numbers() {
     + Object.entries(books).map(([name, book]) => `<tr><td>${esc(name)}</td>` + keys.map(k => `<td class="num">${format(book[k])}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>' : '<p>No interval was run.</p>';
 }
 
-/* The start: the title, the verdict, the theme, frame 0. */
+/* The start: the title, the verdict, the theme (the browser's, or the one the button set, remembered where the browser keeps it), frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
-function start() { themed(); fit(); numbers(); drawGraphs(); draw(); }
-const scheme = window.matchMedia('(prefers-color-scheme: dark)');
+const scheme = window.matchMedia('(prefers-color-scheme: dark)'), themeButton = byId('theme');
+const currentTheme = () => root.dataset.theme || (scheme.matches ? 'dark' : 'light');
+function setTheme(name) {
+  if (name === 'dark' || name === 'light') root.dataset.theme = name; else delete root.dataset.theme;
+  themeButton.textContent = currentTheme() === 'dark' ? 'Light' : 'Dark';
+}
+try { setTheme(localStorage.getItem('look-theme')); } catch (e) { setTheme(null); }
+themeButton.addEventListener('click', () => { const next = currentTheme() === 'dark' ? 'light' : 'dark'; setTheme(next); try { localStorage.setItem('look-theme', next); } catch (e) { /* the theme stands for this page alone */ } });
+function start() { themed(); fit(); numbers(); drawGraphs(); if (MEASURE) drawNodeMeasure(); draw(); themeButton.textContent = currentTheme() === 'dark' ? 'Light' : 'Dark'; }
 scheme.addEventListener('change', start);
 new MutationObserver(start).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 start();
