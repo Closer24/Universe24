@@ -28,12 +28,14 @@ matplotlib.rcParams.update(
     }
 )
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.axes import Axes  # noqa: E402
+from matplotlib.figure import Figure  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 INK, MID = "#000000", "#808080"
 
 # The cloud along its branch: total count, well / count, inertia / count, fall / free.
-CLOUD = [
+CLOUD: list[tuple[int, float | None, float | None, float | None]] = [
     (4000, 0.985, 1.061, 0.92),
     (3000, 0.991, 1.037, 0.95),
     (2000, 0.995, 1.022, 0.97),
@@ -41,7 +43,7 @@ CLOUD = [
 ]
 # The compact pixel along its branch: total count, well / count, inertia / count, fall / free
 # (None where the document gives no number).
-PIXEL = [
+PIXEL: list[tuple[int, float | None, float | None, float | None]] = [
     (2541, 0.70, 1.04, None),
     (2640, 0.62, 0.99, 0.27),
     (3005, 0.54, None, None),
@@ -52,16 +54,28 @@ PIXEL = [
 ]
 
 
-def save(fig, path: Path) -> None:
+def save(fig: Figure, path: Path) -> None:
     """The PDF the paper includes and the EPS a journal asks for, side by side."""
     fig.savefig(path)
     fig.savefig(path.with_suffix(".eps"))
 
 
-def panel(ax, column: int, title: str) -> None:
+def points(
+    rows: list[tuple[int, float | None, float | None, float | None]], column: int
+) -> list[tuple[int, float]]:
+    """The rows that carry a number in the column, as (total count, the number)."""
+    found: list[tuple[int, float]] = []
+    for row in rows:
+        value = row[column]
+        if value is not None:
+            found.append((row[0], value))
+    return found
+
+
+def panel(ax: Axes, column: int, title: str) -> None:
     """One mass over the count against the total count, both branches."""
-    cloud = [(row[0], row[column]) for row in CLOUD if row[column] is not None]
-    pixel = [(row[0], row[column]) for row in PIXEL if row[column] is not None]
+    cloud = points(CLOUD, column)
+    pixel = points(PIXEL, column)
     ax.plot(
         [c for c, _ in cloud], [v for _, v in cloud], "o-", color=INK, markersize=4, label="the cloud"
     )

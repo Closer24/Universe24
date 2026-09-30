@@ -30,6 +30,7 @@ matplotlib.rcParams.update(
 )  # the journal's lettering: Helvetica or Arial, 8 to 12 pt
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+from matplotlib.figure import Figure  # noqa: E402
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -46,7 +47,7 @@ PORTS = {
 }
 
 
-def save(fig, path):
+def save(fig: Figure, path: Path) -> None:
     """The PDF the paper includes and the EPS the journal asks for, side by side."""
     fig.savefig(path)
     fig.savefig(path.with_suffix(".eps"))
@@ -133,18 +134,8 @@ def draw(output: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--output", type=Path, default=HERE / "figures")
-    parser.add_argument("--png", type=Path, default=None, help="also write a PNG preview here")
     args = parser.parse_args()
     draw(args.output)
-    if args.png is not None:
-        args.png.mkdir(parents=True, exist_ok=True)
-        original = plt.Figure.savefig
-
-        def save_png(fig, path, *rest, **options):
-            original(fig, args.png / (Path(path).stem + ".png"), dpi=150)
-
-        plt.Figure.savefig = save_png  # type: ignore[method-assign]
-        draw(args.output)
 
 
 if __name__ == "__main__":

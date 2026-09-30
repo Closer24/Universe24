@@ -27,6 +27,7 @@ matplotlib.rcParams.update(
     }
 )
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.figure import Figure  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 INK, MID, LIGHT = "#000000", "#808080", "#d0d0d0"
@@ -40,7 +41,7 @@ MEASURED += [18, 17, 12, 8, 7, 6, 6, 0, 0, 2, 2, 2, 5, 4, 2, 3, 10, 1, 3, 4, 9, 
 PATTERN = (4, 43)
 
 
-def save(fig, path: Path) -> None:
+def save(fig: Figure, path: Path) -> None:
     """The PDF the paper includes and the EPS a journal asks for, side by side."""
     fig.savefig(path)
     fig.savefig(path.with_suffix(".eps"))

@@ -32,6 +32,8 @@ matplotlib.rcParams.update(
     }
 )
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.axes import Axes  # noqa: E402
+from matplotlib.figure import Figure  # noqa: E402
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -39,7 +41,7 @@ HERE = Path(__file__).resolve().parent
 INK, DARK, MID, LIGHT = "#000000", "#404040", "#808080", "#c8c8c8"
 
 
-def save(fig, path: Path) -> None:
+def save(fig: Figure, path: Path) -> None:
     """The PDF the paper includes and the EPS a journal asks for, side by side."""
     fig.savefig(path)
     fig.savefig(path.with_suffix(".eps"))
@@ -70,7 +72,7 @@ def band(output: Path) -> None:
     plt.close(fig)
 
 
-def box(ax, x: float, y: float, w: float, h: float, text: str, fill: str = "white") -> None:
+def box(ax: Axes, x: float, y: float, w: float, h: float, text: str, fill: str = "white") -> None:
     """A rounded box with its label."""
     ax.add_patch(
         FancyBboxPatch(
@@ -81,9 +83,9 @@ def box(ax, x: float, y: float, w: float, h: float, text: str, fill: str = "whit
 
 
 def arrow(
-    ax,
-    start,
-    end,
+    ax: Axes,
+    start: tuple[float, float],
+    end: tuple[float, float],
     text: str,
     style: str = "-",
     rad: float = 0.0,
