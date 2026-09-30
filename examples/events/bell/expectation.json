@@ -1,0 +1,94 @@
+{
+ "comment": "Bell's first world's blind expectation (the advisor, #1515 comment 5910272948, C; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. A landing is a click line on a screen naming its whole; a pair is the left packet's whole n with the right packet's whole n (`mirrors`); the comb about a position: +1 where cos(Phi(y) - a) > 0 and -1 under, Phi(y) = 2 pi (y - fringe_centre) / spacing; E(a, b) the mean product over the pairs landing on both screens, S = E(a, b) - E(a, b') + E(a', b) + E(a', b'), E as a curve in a + b over every position, the coincidence map over Phi_A + Phi_B, each screen's single-side pattern. Blind under the whole line with the mirror lay: the triangle E = 1 - 2 |a + b| / pi, S = 2.00 exactly, a sharp ridge on Phi_A + Phi_B = 0; under the line as it stands E = 0.203 cos(a + b), S = 0.57, no ridge; nature with the same comb E = 0.405 cos(a + b), S = 1.15, a cosine ridge of visibility 1 (2.83 with two-port analysers). The GameBoard check: per pair two landings at mirror rows, the single-side fringes at the spacing 16.",
+ "verdict": "DETECTOR",
+ "family": "charge",
+ "across": "y",
+ "along": "x",
+ "sides": {
+  "left": "left",
+  "right": "right"
+ },
+ "mirrors": [
+  [
+   0,
+   1
+  ]
+ ],
+ "wholes": 3000,
+ "fringe_centre": 24,
+ "spacing": 16,
+ "settings": {
+  "a": [
+   0,
+   4
+  ],
+  "b": [
+   -2,
+   -6
+  ]
+ },
+ "degrees": {
+  "a": [
+   0,
+   90
+  ],
+  "b": [
+   -45,
+   -135
+  ]
+ },
+ "curve": {
+  "degrees": [
+   0,
+   45,
+   90,
+   135,
+   180
+  ],
+  "links": [
+   0,
+   2,
+   4,
+   6,
+   8
+  ]
+ },
+ "bins": 16,
+ "blind": {
+  "whole_line": {
+   "correlation": "1 - 2 |a + b| / pi",
+   "curve": [
+    1.0,
+    0.5,
+    0.0,
+    -0.5,
+    -1.0
+   ],
+   "settings": [
+    0.5,
+    -0.5,
+    0.5,
+    0.5
+   ],
+   "S": 2.0,
+   "ridge": "sharp on Phi_A + Phi_B = 0"
+  },
+  "line_as_it_stands": {
+   "correlation": "0.203 cos(a + b)",
+   "S": 0.57,
+   "ridge": "none"
+  },
+  "nature": {
+   "correlation": "0.405 cos(a + b)",
+   "S": 1.15,
+   "ridge": "a cosine of visibility 1",
+   "two_port_S": 2.83
+  },
+  "bound": 2.0,
+  "check": {
+   "landings_per_pair": 2,
+   "mirror_rows": true,
+   "fringe_spacing": 16
+  }
+ }
+}

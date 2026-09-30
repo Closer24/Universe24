@@ -126,17 +126,9 @@ def forbidden_imports(tree: ast.AST) -> list[str]:
 
 
 ALLOCATIONS_NEEDING_DTYPE = {"zeros", "ones", "empty", "full"}
-NUMPY_CHAIN_FORBIDDEN = {
-    "fft",
-    "geomspace",
-    "interp",
-    "linalg",
-    "linspace",
-    "logspace",
-    "polyfit",
-    "polynomial",
-    "random",
-}
+NUMPY_CHAIN_FORBIDDEN = set(
+    "fft geomspace interp linalg linspace logspace polyfit polynomial random".split()
+)
 METHODS_FORBIDDEN = {"mean", "std", "var"}
 
 
@@ -262,9 +254,7 @@ def test_the_gate_catches_each_violation() -> None:
     """Every float literal, true division, forbidden import and numpy departure from the integers is caught."""
     assert all(checker(source) != [] for source, checker in SOURCE_CHECKS.items())
     assert all(forbidden_imports(ast.parse(source)) != [] for source in IMPORT_CHECKS)
-    assert all(
-        numpy_violations(ast.parse("import numpy as np\n" + source)) != [] for source in NUMPY_CHECKS
-    )
+    assert all(numpy_violations(ast.parse("import numpy as np\n" + text)) for text in NUMPY_CHECKS)
 
 
 def test_the_gate_passes_integer_numpy_and_the_carry() -> None:

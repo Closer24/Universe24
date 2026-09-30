@@ -29,10 +29,8 @@ def test_the_forms_share_changes_by_the_currents_exactly(pair):
     draw = random.Random(3)
     now = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
     before = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
-    nxt = [
-        (read * ring_sum(now)[i] + self_coefficient * now[i] - wall * before[i]) / wall
-        for i in range(NODES)
-    ]
+    ring = ring_sum(now)
+    nxt = [(read * ring[i] + self_coefficient * now[i] - wall * before[i]) / wall for i in range(NODES)]
 
     def share(a: list[Fraction], b: list[Fraction]) -> list[Fraction]:
         return [3 * den * (a[i] ** 2 + b[i] ** 2) - num * a[i] * ring_sum(b)[i] for i in range(NODES)]
@@ -88,9 +86,7 @@ def test_the_exact_bands_turn_with_no_remainder(pair, period):
     (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
     before, now = 0, 1_000
     for _ in range(1, period + 1):
-        nxt, carry = rule3(
-            (read, read, read), (2 * now, 2 * now, 2 * now), self_coefficient, wall, now, before, 0
-        )
+        nxt, carry = rule3((read,) * 3, (2 * now,) * 3, self_coefficient, wall, now, before, 0)
         assert carry == 0
         before, now = now, nxt
     assert (before, now) == (0, 1_000)
