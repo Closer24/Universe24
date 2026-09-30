@@ -1,4 +1,4 @@
-"""The count's line (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is conserved and filled; The exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""The count's line (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is conserved and filled; the click is a whole quantum's entry into a detector group through a boundary Port; The exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
 from __future__ import annotations
 
@@ -8,8 +8,10 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.features.counts_line import CountStart, CountTerm, Levels, apply
+from event_universe.reports import Detector, clicks
 
 GAMMA, NODES = 10_000, 12
 
@@ -92,3 +94,18 @@ def test_the_exact_bands_turn_with_no_remainder(pair, period):
         assert carry == 0
         before, now = now, nxt
     assert (before, now) == (0, 1_000)
+
+
+def test_a_detectors_click_is_a_whole_quantums_entry_through_a_boundary_port_alone():
+    """The click (ALGEBRA.md #the-counts-line; the advisor's ruling, #1515 comment 5909238819): a detector's Nodes are one group; the quanta the inward current carries over the wall at a Port leading in from outside the group click with the Port's axis and side, and none through a Port between two of its Nodes (a hop inside the group is no click)."""
+    group = Detector("pair", np.array([True, True, False]).reshape(3, 1, 1), None)
+    wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
+    inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port
+    remainder = np.array([70, 70, 70]).reshape(3, 1, 1)
+
+    def entered(port: int) -> list[dict[str, object]]:
+        through = tuple(inward if p == port else zero for p in range(6))
+        return clicks(group, group.nodes, through, remainder, zero, 100, wrap, "charge", 5)
+
+    assert [(line["node"], line["axis"]) for line in entered(0)] == [([1, 0, 0], [0, 1])]  # from outside
+    assert entered(1) == []  # through -x, from Node 0 inside the group

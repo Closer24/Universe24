@@ -1,4 +1,4 @@
-"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. The board's face rule (core/ports.py) is the file's: the wraps and the Nodes its inner faces declare beyond the board. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a Node declared in the file, its click the one measurement, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
+"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. The board's face rule (core/ports.py) is the file's: the wraps and the Nodes its inner faces declare beyond the board. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a group of Nodes declared in the file, its click the rise of the group's count, the one measurement, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
 
 from __future__ import annotations
 
@@ -12,9 +12,10 @@ from event_universe.core.ports import Wrap
 from event_universe.features.counts_line import CountWrites
 from event_universe.features.start import rest
 from event_universe.features.write import carried
-from event_universe.loader.derived import BY_PLAIN, BY_SIGN
+from event_universe.loader.derived import BY_PLAIN, BY_SIGN, count_wall
 from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
+from event_universe.loader.mode import Levels
 from event_universe.loader.world import FACE_NAME, BodyRow, World
 from event_universe.reports import Detector, book, clicks, standing
 
@@ -62,7 +63,7 @@ class GameBoard:
         """The records the file lays: the bodies and the messages, in the file's order."""
         return [*self.world.bodies, *self.world.messages]
 
-    def added(self, record: node.Record, now: tuple[int, ...], before: tuple[int, ...]) -> node.Record:
+    def added(self, record: node.Record, now: Levels, before: Levels) -> node.Record:
         """A level pair with a body's or a message's two levels from the mode file added over the GameBoard."""
         return replace(
             record,
@@ -70,9 +71,12 @@ class GameBoard:
             before=record.before + self.board_array(before),
         )
 
-    def board_array(self, values: tuple[int, ...]) -> np.ndarray:
-        """One integer per Node in x-major order as an array over the GameBoard."""
-        return np.array(values, dtype=np.int64).reshape(self.shape)
+    def board_array(self, values: Levels) -> np.ndarray:
+        """The levels the mode file lays as an array over the GameBoard: the nonzero Nodes' flat x-major indexes with their levels, 0 elsewhere."""
+        found = node.zeros(self.shape).reshape(-1)
+        for at, value in values:
+            found[at] += value
+        return found.reshape(self.shape)
 
     def mask(self, nodes: tuple[Node, ...]) -> np.ndarray:
         """The mask of a set of Nodes."""
@@ -92,7 +96,7 @@ class GameBoard:
             total = sum(
                 lay.share(family.pair, record, self.wrap, self.world.node_clock) for record in records
             )
-            laid = lay.laid(np.asarray(total), node.count_wall(family, self.world.quantum_action))[0]
+            laid = lay.laid(np.asarray(total), count_wall(family, self.world.quantum_action))[0]
             turn = node.well(
                 node.wronskian(*records), node.zeros(self.shape), self.world.quantum_action
             )[0]
@@ -147,7 +151,7 @@ class GameBoard:
         found: dict[str, dict[str, int | bool]] = {}
         for index in self.order:
             family, state = self.families[index], self.states[index]
-            wall = node.count_wall(family, self.world.quantum_action)
+            wall = count_wall(family, self.world.quantum_action)
             laid = (self.laid_total[index], self.laid_sense[index])
             pace = node.least_pace(index, self.families, self.states, self.world.node_clock, self.shape)
             found[family.name] = book(state, wall, laid, self.reports[index], pace)
@@ -225,7 +229,7 @@ class GameBoard:
             for by, written in ((BY_PLAIN, count), (BY_SIGN, sense)):
                 weight = node.weight_of(held, family, by)
                 if weight:
-                    wall = node.count_wall(family, self.world.quantum_action)
+                    wall = count_wall(family, self.world.quantum_action)
                     stress = tuple(np.asarray(value) for value in written.stress)
                     found[index] = flow.Flow(weight, (stress[0], stress[1], stress[2]), wall)
         return found
@@ -287,11 +291,17 @@ class GameBoard:
                     "the rounding of SUM D_i div T, ((|c - laid| - 1) div 2)^2 <= c (ALGEBRA.md #the-counts-line, "
                     "the lay and the wall)"
                 )
+        for detector in self.world.detectors:
+            for index, values in detector.remainders:
+                remainder = self.states[index].count_remainder
+                assert remainder is not None
+                for at, value in zip(detector.positions, values, strict=True):
+                    remainder[at] = value
         for index in self.order:
             family, state = self.families[index], self.states[index]
             assert state.count is not None and state.count_remainder is not None
             assert state.sense is not None and state.sense_remainder is not None
-            wall = node.count_wall(family, action)
+            wall = count_wall(family, action)
             self.laid_total[index] = int(
                 (wall * state.count.astype(object) + state.count_remainder).sum()
             )
@@ -302,30 +312,22 @@ class GameBoard:
             if len(self.families[held].parts) == 1:
                 continue
             for index in self.sources_of(held):
-                wall = node.count_wall(self.families[index], action)
+                wall = count_wall(self.families[index], action)
                 self.states[held].flows[index] = flow.flow_origins(self.families[held], wall, self.shape)
 
     def report(self, writes: Lines, remainders: dict[int, np.ndarray]) -> None:
-        """The clicks of every detector per family (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer): the quanta the count's line's currents carried into its Nodes through their Ports this interval, from the remainders before the line (`reports.clicks`)."""
+        """The clicks of every detector per family of quanta (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), each one group: the whole quanta the count's line's currents carried into it through its boundary Ports this interval, from the remainders before the line (`reports.clicks`)."""
         for index, (count_line, _sense) in writes.items():
             family, count = self.families[index], self.states[index].count
             assert count is not None
-            wall = node.count_wall(family, self.world.quantum_action)
+            wall = count_wall(family, self.world.quantum_action)
             for detector in self.detectors:
                 nodes = self.body_nodes(detector.body) if detector.body is not None else detector.nodes
                 assert nodes is not None
-                found = clicks(
-                    detector,
-                    nodes,
-                    count_line.through,
-                    remainders[index],
-                    count,
-                    wall,
-                    self.wrap,
-                    family.name,
-                    self.tick,
-                )
-                for line in found:
+                through, before = count_line.through, remainders[index]
+                for line in clicks(
+                    detector, nodes, through, before, count, wall, self.wrap, family.name, self.tick
+                ):
                     self.reports[index] += 1
                     self.emit(line)
 

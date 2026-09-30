@@ -19,7 +19,7 @@ from event_universe.features import counts_line
 from event_universe.features import signed_read as signed
 from event_universe.features.hold import components, diagonal, hold
 from event_universe.features.write import carried
-from event_universe.loader.derived import BY_PLAIN, BY_SIGN, FamilyRule
+from event_universe.loader.derived import BY_PLAIN, BY_SIGN, FamilyRule, count_wall
 
 Rule = tuple[tuple[Any, Any, Any], Any, Any]  # Rule3's integers at every Node: (R_x, R_y, R_z), S, w
 
@@ -211,11 +211,6 @@ def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1) -> Record:
         reads, sums, self_coefficient, wall, record.before, record.now, record.remainder, -1
     )
     return Record(record.before, np.asarray(back), np.asarray(remainder))
-
-
-def count_wall(family: FamilyRule, action: int) -> int:
-    """The count's wall W_c = 3 den T, the family's plain wall times the universe's quantum action (ALGEBRA.md #the-counts-line, the lay and the wall)."""
-    return 3 * family.pair[1] * action
 
 
 def count_term(family: FamilyRule, action: int, amplitude: int, most: int) -> counts_line.CountTerm:

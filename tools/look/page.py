@@ -26,48 +26,82 @@ def shown(value: object) -> str:
     return f"{value:,}" if isinstance(value, int) and not isinstance(value, bool) else str(value)
 
 
+Node = tuple[int, ...]
+Reporter = tuple[
+    int, str, Node | None
+]  # its coordinate on the axis, its detector, its Node (None: the group)
+
+
 def rises(
-    look: dict[str, Any], detector: str, family: str, window: tuple[int, int]
-) -> dict[tuple[int, ...], int]:
-    """The clicks per Node of one detector and one family within the window [first, last] of intervals, from the look's frames' lines, counted as tools/click_counts.py counts them."""
-    found: dict[tuple[int, ...], int] = {}
+    look: dict[str, Any], detectors: list[str], family: str, window: tuple[int, int]
+) -> dict[tuple[str, Node], int]:
+    """The clicks per detector and Node of the named detectors and one family within the window [first, last] of intervals, from the look's frames' lines, counted as tools/click_counts.py counts them."""
+    found: dict[tuple[str, Node], int] = {}
     for frame in look["frames"]:
         for line in frame["lines"]:
-            if line.get("event") != "click" or line.get("detector") != detector:
+            if line.get("event") != "click" or line.get("detector") not in detectors:
                 continue
             if line.get("family") != family or not window[0] <= int(line["tick"]) <= window[1]:
                 continue
-            node = tuple(int(i) for i in line["node"])
-            found[node] = found.get(node, 0) + 1
+            key = str(line["detector"]), tuple(int(i) for i in line["node"])
+            found[key] = found.get(key, 0) + 1
     return found
 
 
+def reporters(detectors: list[dict[str, Any]], axis: int) -> list[Reporter]:
+    """The reporters across `axis` as tools/click_counts.py places them, ordered by their coordinate on it: a detector whose Nodes share one coordinate on the axis is one reporter placed at it (a group across the beam), and one whose Nodes spread along it reports per Node."""
+    found: list[Reporter] = []
+    for detector in detectors:
+        nodes = [tuple(int(i) for i in node) for node in detector["nodes"]]
+        shared = {node[axis] for node in nodes}
+        if len(shared) == 1:
+            found.append((shared.pop(), str(detector["name"]), None))
+        else:
+            found.extend((node[axis], str(detector["name"]), node) for node in nodes)
+    return sorted(found, key=lambda reporter: reporter[:2])
+
+
 def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str, Any] | None:
-    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, `family`, `window`, `across`, `counts`), None from any other: the detector's Nodes ordered by their coordinate on the across axis, each Node's rises within the window, the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
+    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every detector whose Nodes share one coordinate on the axis, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), each one's rises within the window, the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
     if blind is None or "across" not in blind:
         return None
     if blind["across"] not in AXES:
         raise ValueError(f"the blind file's across is one of {list(AXES)}, got {blind['across']!r}")
     axis = AXES.index(blind["across"])
-    detector = next((d for d in look["detectors"] if d["name"] == blind["detector"]), None)
-    if detector is None:
-        raise ValueError(f"the blind file's detector {blind['detector']!r} is not in the look")
-    window = (int(blind["window"][0]), int(blind["window"][1]))
-    counted = rises(look, str(blind["detector"]), str(blind["family"]), window)
-    nodes = sorted((tuple(int(i) for i in node) for node in detector["nodes"]), key=lambda n: n[axis])
-    risen = [counted.get(node, 0) for node in nodes]
+    named = blind.get("detector")
+    if named is None:  # the train's expectation: every group placed on the axis, over the whole look
+        detectors = [d for d in look["detectors"] if len({n[axis] for n in d["nodes"]}) == 1]
+        names = [str(d["name"]) for d in detectors]
+    else:
+        names = [str(name) for name in named] if isinstance(named, list) else [str(named)]
+        detectors = [d for d in look["detectors"] if d["name"] in names]
+    if len(detectors) != len(names):
+        raise ValueError(f"the blind file's detectors {names} are not all in the look")
+    spanned = blind.get("window", [0, len(look["frames"]) - 1])
+    window = (int(spanned[0]), int(spanned[1]))
+    counted = rises(look, names, str(blind["family"]), window)
+    placed = reporters(detectors, axis)
+    risen = [
+        sum(count for (name, at), count in counted.items() if name == detector and node in (None, at))
+        for _at, detector, node in placed
+    ]
     watch = blind.get("watch") if isinstance(blind.get("watch"), dict) else {}
     lines = [
-        f"{blind['across']} = {key}: {shown(sum(r for n, r in zip(nodes, risen, strict=True) if n[axis] == int(key)))} reported, the blind {shown(value)}"
+        f"{blind['across']} = {key}: {shown(sum(r for (at, _n, _o), r in zip(placed, risen, strict=True) if at == int(key)))} reported, the blind {shown(value)}"
         for key, value in watch.items()
     ]
     return {
-        "detector": blind["detector"],
+        "detector": named if named is not None else names,
         "family": blind["family"],
         "window": list(window),
         "across": blind["across"],
         "axis": axis,
-        "nodes": [list(node) for node in nodes],
+        "at": [at for at, _name, _node in placed],
+        "labels": [
+            name if node is None else f"{name} [{', '.join(map(str, node))}]"
+            for _at, name, node in placed
+        ],
+        "nodes": [list(node) if node is not None else None for _at, _name, node in placed],
         "rises": risen,
         "blind": list(blind.get("counts", [])),
         "pattern": blind.get("pattern"),
@@ -662,13 +696,13 @@ const measurePicker = byId('measure-picker'), select = document.createElement('s
 function drawNodeMeasure() {
   const m = MEASURE, n = m.rises.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
   byId('measure-box').classList.add('wide');
-  measurePicker.textContent = `${m.detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per Node across ${m.across}`
+  measurePicker.textContent = `${m.detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
   const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
   const high = Math.max(1, ...m.rises, ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
-  const coordinate = k => m.nodes[k] ? m.nodes[k][m.axis] : '';
+  const coordinate = k => m.at[k];
   let body = '';
   if (Array.isArray(m.pattern) && m.pattern.length === 2 && n) {
     const [first, last] = m.pattern.map(v => Math.max(0, Math.min(n - 1, v)));
@@ -677,15 +711,15 @@ function drawNodeMeasure() {
   body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
   m.rises.forEach((v, k) => {
-    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.detector)} [${m.nodes[k].join(', ')}]: ${format(v)} reported${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} reported${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
   if (blind.some(v => v !== null)) {
     const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} reported per Node (the look's click lines)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
-  box.innerHTML = `<div class="caption"><b>The rises of ${esc(family)} at ${esc(m.detector)}'s Nodes across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the detector's rises per Node">${body}</svg>`;
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} reported per reporter (the look's click lines)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  box.innerHTML = `<div class="caption"><b>The rises of ${esc(family)} at ${esc(String(m.detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the detectors' rises per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals;
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
 }

@@ -1,4 +1,4 @@
-"""The detectors' clicks and the books (ALGEBRA.md #the-counts-line, #readings-and-measurements): a detector is a Node declared in the file, its click a quantum of a family's count entering its Nodes through a Port, the one measurement, with its family, its axis and its side; a body's Nodes, where its family's count stands about its declared Nodes, are derived when a report needs them and never kept; the books are a GameBoard reading."""
+"""The detectors' clicks and the books (ALGEBRA.md #the-counts-line, #readings-and-measurements; the advisor's ruling, #1515 comment 5909238819): a detector is a group of Nodes declared in the file, its click a whole quantum's entry into the group through one of its boundary Ports, the one measurement, with its family, its axis and its side; a hop between two of its Nodes is no click, and the rise of its summed count is a reading of its book and no click; a body's Nodes, where its family's count stands about its declared Nodes, are derived when a report needs them and never kept; the books are a GameBoard reading."""
 
 from __future__ import annotations
 
@@ -48,7 +48,7 @@ def clicks(
     family: str,
     tick: int,
 ) -> list[dict[str, object]]:
-    """The clicks, the one measurement (ALGEBRA.md #the-counts-line: a click has a family and an axis): at every Port of the detector's Nodes leading in from a Node outside them (none beyond an open face), the quanta the inward current carries into the Node's remainder, (r + F_p) div W_c where that is above 0, one division per Port in the order [+X, -X, +Y, -Y, +Z, -Z], r the Node's remainder before the line; one `click` line per quantum with the Node it entered, the Port's axis and side and the detector's count after; nothing is handed over."""
+    """The clicks, the one measurement (ALGEBRA.md #the-counts-line: a click has a family and an axis; the advisor's ruling, #1515 comment 5909238819): a whole quantum's entry into the detector through one of its boundary Ports, at every Port of its Nodes leading in from a Node outside them (none beyond an open face), the quanta the inward current carries into the Node's remainder, (r + F_p) div W_c where that is above 0, one division per Port in the order [+X, -X, +Y, -Y, +Z, -Z], r the Node's remainder before the line; one `click` line per quantum with the Node it entered, the Port's axis and side and the detector's count after; a hop between two of its Nodes is no click; nothing is handed over."""
     held = int(count[nodes].sum())
     line = {"event": "click", "tick": tick, "family": family, "detector": detector.name}
     found: list[dict[str, object]] = []

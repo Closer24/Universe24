@@ -11,6 +11,7 @@ TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")
 PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
+TRAIN = load_file("train_clicks", ROOT / "tools" / "train_clicks.py")
 ROLE_OF = {"sign": "light", "content": "field"}  # a holder of nothing is matter
 SCREEN = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
 BLIND = {"detector": "screen", "family": "charge", "window": [1, 2], "across": "y", "pattern": [1, 7]}
@@ -23,9 +24,10 @@ def shown(world, monkeypatch, detector, at, blind):
     class Clicking(RECORD.GameBoard):
         def step(self) -> None:
             super().step()
-            for node in at.get(self.tick, []):
-                line = {"event": "click", "tick": self.tick, "family": "charge", "detector": detector}
-                self.observer({**line, "node": node, "axis": [0, 1], "count": 1, "body": None})
+            for entry in at.get(self.tick, []):
+                name, node = entry if isinstance(entry, tuple) else (detector, entry)
+                line = {"event": "click", "tick": self.tick, "family": "charge", "detector": name}
+                self.observer({**line, "node": node, "count": 1, "body": None})
 
     monkeypatch.setattr(RECORD, "GameBoard", Clicking)
     RECORD.main([str(world), "--ticks", "3"])
@@ -66,18 +68,47 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
-    """The slit world with a screen of nine detector Nodes at x = 20, three intervals with the test's own click lines (two at y = 4 and one at y = 3 within the window [1, 2], one at y = 5 beyond it): the look holds the faces as declared; the page's measurement holds one row per screen Node ordered by y, the rises summed per Node exactly as tools/click_counts.py counts them, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer."""
+    """The slit world with a screen of nine detector Nodes at x = 20, three intervals with the test's own click lines (two at y = 4 and one at y = 3 within the window [1, 2], one at y = 5 beyond it): the look holds the faces as declared; the page's measurement holds one row per screen Node ordered by y, the rises summed per Node exactly as tools/click_counts.py counts them, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two detectors of two Nodes each sharing a y are each one reporter placed at it, on the page, in tools/click_counts.py (named, or every placed group over the whole run where the expectation names none) and in tools/train_clicks.py, whose reading gives each of two quanta the rises nearest its peak (the pace one Link an interval), the halves that rose and the rates."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = slit_world(tmp_path, TOOL, detectors=[SCREEN])
-    at = {1: [[20, 4, 0]], 2: [[20, 3, 0], [20, 4, 0]], 3: [[20, 5, 0]]}
+    groups = [{"name": f"g{y}", "positions": [[21, y, 0], [22, y, 0]]} for y in (3, 4)]
+    world = slit_world(tmp_path, TOOL, detectors=[SCREEN, *groups])
+    at = {1: [[20, 4, 0], ("g4", [21, 4, 0])], 2: [[20, 3, 0], [20, 4, 0], ("g3", [22, 3, 0])]}
+    at[3] = [[20, 5, 0], ("g4", [21, 4, 0])]
     look, html = shown(world, monkeypatch, "screen", at, BLIND)
     measure = PAGE.measurement(look, BLIND)
     assert look["faces"] == SLIT["faces"] and look["verdict"] == "LAWFUL" and measure["through"] == 3
     assert measure["nodes"] == SCREEN["positions"] and measure["rises"] == [0, 0, 0, 1, 2, 0, 0, 0, 0]
-    counted = COUNTS.rises([x for fr in look["frames"] for x in fr["lines"]], "screen", "charge", (1, 2))
-    assert [counted.get(tuple(n), 0) for n in measure["nodes"]] == measure["rises"]
+    counted = COUNTS.rises(
+        [x for fr in look["frames"] for x in fr["lines"]], ["screen"], "charge", (1, 2)
+    )
+    assert [counted.get(("screen", tuple(n)), 0) for n in measure["nodes"]] == measure["rises"]
     assert measure["blind"] == BLIND["counts"] and measure["pattern"] == [1, 7]
     assert measure["totals"] == "through 3 reported (the blind 10)"
     assert measure["watch"] == ["y = 4: 2 reported, the blind 2", "y = 3: 1 reported, the blind 1.5"]
     assert PAGE.embedded(measure) in html and PAGE.packed(look) in html
     assert "the faces (declared)" in html and "<title>Slit look</title>" in html
+    grouped = {**BLIND, "detector": ["g4", "g3"], "counts": [1, 2], "pattern": [0, 1]}
+    grouped.update(maxima=[1], minima=[0], visibility=1)
+    measure = PAGE.measurement(look, grouped)
+    assert measure["at"] == [3, 4] and measure["labels"] == ["g3", "g4"] and measure["rises"] == [1, 1]
+    output = tmp_path / "slit.output.json"
+    output.write_text(
+        json.dumps({"ticks": 3, "lines": [x for fr in look["frames"] for x in fr["lines"]]})
+    )
+    (tmp_path / "grouped.json").write_text(json.dumps(grouped))
+    read = COUNTS.reading(world, output, tmp_path / "grouped.json")
+    assert read["at"] == [3, 4] and read["rises"] == [1, 1] and read["through"] == 2
+    unnamed = {k: v for k, v in grouped.items() if k not in ("detector", "window")}
+    (tmp_path / "unnamed.json").write_text(json.dumps(unnamed))
+    whole = COUNTS.reading(world, output, tmp_path / "unnamed.json")
+    assert whole["detector"] == ["g3", "g4"] and whole["rises"] == [1, 2] and whole["window"] == [0, 3]
+    assert PAGE.measurement(look, unnamed)["rises"] == [1, 2]
+    train = {"family": "charge", "across": "y", "along": "x", "pace": [1, 1]}
+    train.update(halves={"left": [0, 3], "right": [4, 8]})
+    train["quanta"] = [{"peak": 1, "window": [1, 2]}, {"peak": 3, "window": [3, 4]}]
+    (tmp_path / "train.json").write_text(json.dumps(train))
+    rows = TRAIN.reading(world, output, tmp_path / "train.json")
+    assert [q["rises"] for q in rows["quanta"]] == [2, 1] and rows["groups"] == [3, 4]
+    assert [q["halves"] for q in rows["quanta"]] == [["left", "right"], ["right"]]
+    assert rows["both"] == [1, 2] and rows["one"] == [1, 2] and rows["neither"] == [0, 2]
+    assert rows["rises_per_quantum"] == [3, 2] and rows["per_group"] == [1, 2]

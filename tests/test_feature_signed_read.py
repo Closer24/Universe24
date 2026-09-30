@@ -36,9 +36,7 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert int(apply(term, hill(75)).content[1, 1, 1]) == -75
     guard(term, apply(term, hill(75)), own)
     assert int(apply(term, hill(150)).content[1, 1, 1]) == -150  # the read carries no guard
-    with pytest.raises(
-        ValueError, match=r"the clock\) squared is 103045000 at the Node \(1, 1, 1\) at load"
-    ):
+    with pytest.raises(ValueError, match=r"squared is 103045000 at the Node \(1, 1, 1\) at load"):
         guard(term, apply(term, hill(150)), own)
     flat, axis = np.zeros(SHAPE, dtype=np.int64), np.zeros(SHAPE, dtype=np.int64)
     axis[2, 0, 1] = -153
@@ -89,25 +87,18 @@ def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_
     """A read by a word other than plain or sign is refused naming the family and the word; a read whose reach leaves int64 is refused before any product; two reads whose reach together leaves int64 too."""
     shape = (2, 1, 1)
     level = np.array([[[3]], [[-4]]], dtype=np.int64)
+    unknown = SignedReadTerm(((1, 1, "signed"),), 1, (800, 850), GAMMA)
     with pytest.raises(ValueError, match="the read of family 1 is by 'signed': by 'plain' or by 'sign'"):
-        apply(
-            SignedReadTerm(((1, 1, "signed"),), 1, (800, 850), GAMMA),
-            SignedReadStart(shape, {1: level}, None),
-        )
+        apply(unknown, SignedReadStart(shape, {1: level}, None))
     huge = np.array([[[10**16]], [[-(10**16)]]], dtype=np.int64)
+    heavy = SignedReadTerm(((1, 1000, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
     with pytest.raises(
-        ValueError, match=r"family 1 at the weight 1000 reaches 10000000000000000000 .*int64"
+        ValueError, match="family 1 at the weight 1000 reaches 10000000000000000000 .*int64"
     ):
-        apply(
-            SignedReadTerm(((1, 1000, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA),
-            SignedReadStart(shape, {1: huge}, None),
-        )
+        apply(heavy, SignedReadStart(shape, {1: huge}, None))
     half = np.array([[[5 * 10**18]], [[0]]], dtype=np.int64)
-    two = SignedReadTerm(
-        ((1, 1, signed_read.BY_PLAIN), (2, -1, signed_read.BY_PLAIN)), 0, (800, 850), GAMMA
-    )
-    with pytest.raises(
-        ValueError, match=r"the read of family 2 at the weight -1 reaches 10000000000000000000"
-    ):
+    reads = ((1, 1, signed_read.BY_PLAIN), (2, -1, signed_read.BY_PLAIN))
+    two = SignedReadTerm(reads, 0, (800, 850), GAMMA)
+    with pytest.raises(ValueError, match="family 2 at the weight -1 reaches 10000000000000000000"):
         signed_read.content_of(two, SignedReadStart(shape, {1: half, 2: half}, None))
     assert signed_read.TOTAL_BOUND == 2**63 - 1

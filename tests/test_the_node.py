@@ -268,13 +268,9 @@ def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
             assert abs(int(states[1].count.sum())) <= CHAIN
         clicks = [e for e in lines if e["family"] == "charge" and e["detector"] in ("left", "right")]
         first = clicks[0]["tick"] if clicks else None
-        print(
-            f"DETECTOR the chain, the sense {turn}: {len(clicks)} clicks of the charge, first at {first}"
-        )
-        print(
-            f"GAMEBOARD light born at {born}, the matter's count {min(counts)} to {max(counts)} over 400"
-        )
-        assert all(e["event"] == "click" and e["axis"][0] == 0 for e in lines)
+        print(f"DETECTOR the chain, sense {turn}: {len(clicks)} charge clicks, first at {first}")
+        print(f"GAMEBOARD light born at {born}, matter's count {min(counts)} to {max(counts)} over 400")
+        assert all(e["event"] == "click" and e["node"][0] in (0, CHAIN - 1) for e in lines)
         assert born > 0 if turn else (born == 0 and not clicks and not states[1].levels.now.any())
         assert all(book["balanced"] and book["sense_balanced"] for book in board.books().values())
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
@@ -365,9 +361,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     written = node.count_line(FAMILIES[MATTER], quanta_state(record, shape), T, 1 << 20, WRAP)
     by_hand_stress = stress_by_hand(record.now, 4000)
     assert all(np.array_equal(t, h) for t, h in zip(written.stress, by_hand_stress, strict=True))
-    print(
-        f"GAMEBOARD the identity's remainders' term at most {max(differences)} against the wall {wall}"
-    )
+    print(f"GAMEBOARD the identity's remainders' term at most {max(differences)}, the wall {wall}")
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
     exact = family_rules([("exact", (1, 2), None, None)])[0]
     plane = quanta_state(node.Record(wave, wave, node.zeros(shape)), shape)

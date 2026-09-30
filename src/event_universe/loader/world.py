@@ -8,11 +8,11 @@ from dataclasses import dataclass
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived
-from event_universe.loader.derived import CONTENT, SIGN, FamilyRule
+from event_universe.loader.derived import CONTENT, SIGN, FamilyRule, count_wall
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
 from event_universe.loader.messages import MessageRow, messages_of
-from event_universe.loader.mode import entry_of, levels_of, mode_entries
+from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one detector of the open faces' layer
@@ -31,30 +31,31 @@ BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
     ("node", "count"),
 )
-DETECTOR_KEYS, START_KEYS = ("name", "positions", "block"), ("mode",)
+DETECTOR_KEYS, START_KEYS = ("name", "positions", "block", "remainder"), ("mode",)
 
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts, the quanta of other families it holds laid over its Nodes (family, count per Node), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file over the whole GameBoard in x-major order."""
+    """A body as declared: its family, its Nodes in the declared order with their counts, the quanta of other families it holds laid over its Nodes (family, count per Node), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels."""
 
     family: int
     nodes: tuple[Node, ...]
     counts: tuple[int, ...]
     holds: tuple[tuple[int, tuple[int, ...]], ...]
-    now: tuple[int, ...]
-    before: tuple[int, ...]
-    im_now: tuple[int, ...]
-    im_before: tuple[int, ...]
+    now: Levels
+    before: Levels
+    im_now: Levels
+    im_before: Levels
 
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), or the body whose Nodes report each interval (`block`)."""
+    """A detector: its name and its Nodes (`positions`), one group whose click is a whole quantum's entry through one of its boundary Ports, or the body whose Nodes report each interval (`block`); and the count remainders the file declares at its Nodes at the start (`remainder`), per family of quanta by its index one value per Node in the positions' order, none for a body."""
 
     name: str
     positions: tuple[Node, ...]
     body: int | None
+    remainders: tuple[tuple[int, tuple[int, ...]], ...]
 
 
 @dataclass(frozen=True)
@@ -178,10 +179,35 @@ def bodies_of(
     return tuple(found)
 
 
+def remainders_of(
+    value: object, label: str, families: tuple[FamilyRule, ...], action: int, nodes: int
+) -> tuple[tuple[int, tuple[int, ...]], ...]:
+    """A detector's declared count remainders at the start (the advisor, #1515 comment 5907540901: the warm screen is declared, not earned): per family of quanta named as a key, an integer from 0 below that family's count wall W_c = 3 den T laid at every Node of the group, or a list of one such integer per Node in the positions' order; the engine holds no rule for their values."""
+    names = {family.name: index for index, family in enumerate(families)}
+    found = []
+    for key, given in keyed(value, label, tuple(names), ()).items():
+        index = names[key]
+        if not families[index].quanta:
+            raise ValueError(f"{label} names {key!r}, which carries no count: a family of quanta")
+        wall = count_wall(families[index], action)
+        values = given if isinstance(given, list) else [given] * nodes
+        if len(values) != nodes:
+            raise ValueError(
+                f"{label}.{key} lists {len(values)} remainders for {nodes} Nodes: one per Node"
+            )
+        found.append((index, tuple(integer(v, f"{label}.{key}", 0, wall - 1) for v in values)))
+    return tuple(found)
+
+
 def detectors_of(
-    value: object, shape: Node, bodies: int, beyond: tuple[Node, ...]
+    value: object,
+    shape: Node,
+    bodies: int,
+    beyond: tuple[Node, ...],
+    families: tuple[FamilyRule, ...],
+    action: int,
 ) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board) or the body it names by its number."""
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one group, or the body it names by its number; a group may declare its count remainders at the start (`remainder`), a body may not."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
@@ -194,7 +220,12 @@ def detectors_of(
         if ("positions" in row) == ("block" in row):
             raise ValueError(f"{label} declares its `positions` or the `block` it reads, one of the two")
         if "block" in row:
-            found.append(DetectorRow(name, (), integer(row["block"], f"{label}.block", 0, bodies - 1)))
+            if "remainder" in row:
+                raise ValueError(
+                    f"{label} reads a body and lays no remainder: the body's start is the lay's"
+                )
+            body = integer(row["block"], f"{label}.block", 0, bodies - 1)
+            found.append(DetectorRow(name, (), body, ()))
             continue
         positions = row["positions"]
         if not isinstance(positions, list) or not positions:
@@ -202,7 +233,9 @@ def detectors_of(
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(DetectorRow(name, nodes, None))
+        declared = row.get("remainder", {})
+        remainders = remainders_of(declared, f"{label}.remainder", families, action, len(nodes))
+        found.append(DetectorRow(name, nodes, None, remainders))
     return tuple(found)
 
 
@@ -244,7 +277,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
-    detectors = detectors_of(world["detectors"], shape, len(bodies), beyond)
+    detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, families, action)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
