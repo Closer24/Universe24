@@ -1,63 +1,20 @@
 {
- "comment": "One owner per area (the owner's decision of 2026-09-27, 05:40Z, on #1198). An area is a path or a folder ending in '/'; the longest match names the owner; a path in no area is free. A pull request's author is the owner whose session link its body carries; one touching another owner's area needs the line 'HANDED BY <owner>: <files>' in its body, the arbiter's hand-over covering any area (tools/ownership.py). Nature24's areas (the loader, ENGINE.md) pass to the Paper Writer by the owner's word of 2026-09-29.",
+ "comment": "One owner per area (the owner's decision of 2026-09-27 on #1198; the team of two, the owner's word of 2026-09-30). An area is a path or a folder ending in '/'; the longest match names the owner; a path in no area is free. The Boss owns every area and is the arbiter: a pull request's author is the owner whose session link its body carries, and one from any other session carries the line 'HANDED BY Boss: <files>' in its body, the arbiter's hand-over covering any area (tools/ownership.py). The advisor writes nothing and owns no area.",
  "arbiter": "Boss",
  "owners": {
-  "Main Loop": {
-   "sessions": [
-    "session_01STjgfeDqFTYLmEfzHP4a9a"
-   ],
-   "areas": [
-    "src/event_universe/core/",
-    "src/event_universe/node.py",
-    "src/event_universe/game_board.py",
-    "tools/run_inputs.py"
-   ]
-  },
-  "Mathematician": {
-   "sessions": [
-    "session_014v7wQ91WVmN2s1hfrr8Gvz"
-   ],
-   "areas": [
-    "docs/ALGEBRA.md"
-   ]
-  },
-  "Mathematician 2": {
-   "sessions": [
-    "session_01DZyWRy1SURUMECPV5E69qv"
-   ],
-   "areas": [
-    "src/event_universe/features/counts_line/",
-    "src/event_universe/features/hold/"
-   ]
-  },
-  "Paper Writer": {
-   "sessions": [
-    "session_01YZm2KTx4ZEZomGr1qo2HVh"
-   ],
-   "areas": [
-    "paper/",
-    "tools/check.py",
-    "tools/every_pull_request.txt",
-    "tools/engine_gates.py",
-    "tools/merge_base.py",
-    "tools/owners.json",
-    "tools/ownership.py",
-    "tools/record_code_shape.py",
-    "tools/tests_shape.py",
-    "tests/bodies.py",
-    "tests/running.py",
-    "tests/worlds.py",
-    "src/event_universe/loader/",
-    "docs/ENGINE.md"
-   ]
-  },
   "Boss": {
    "sessions": [
-    "session_01LWjA4o154gnURFVv69FUco"
+    "session_01LWjA4o154gnURFVv69FUco",
+    "session_017hVS1H2zRire9j29bH1JLq"
    ],
    "areas": [
-    "docs/HIGHLIGHTS.md",
+    "src/",
+    "docs/",
+    "tools/",
+    "tests/",
     "skills/",
+    "examples/",
+    "paper/",
     "AGENTS.md",
     "README.md",
     "CONTRIBUTING.md"

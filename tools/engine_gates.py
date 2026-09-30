@@ -12,7 +12,7 @@ Four gates, selected on every pull request by `tools/check.py`:
    ratchet: a division belongs in `core/rule3.py`, and the count may only fall.
 4. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
    does not hold needs a line in the pull request's body that starts with `APPROVED-CORE` and
-   names Main Loop's approval. CI passes the body as the `PR_BODY` environment variable; the
+   names the Boss's approval. CI passes the body as the `PR_BODY` environment variable; the
    check runs on a pull request (or locally with PR_BODY set), never on a push to main.
 A merge base that git cannot resolve fails by name.
 
@@ -212,7 +212,7 @@ def core_approval(new: list[str], body: str | None) -> list[str]:
     if not new or any(line.lstrip().startswith(APPROVAL) for line in (body or "").splitlines()):
         return []
     return [
-        f"{rel} is a new module of core/: add a line starting with {APPROVAL} naming Main Loop's approval "
+        f"{rel} is a new module of core/: add a line starting with {APPROVAL} naming the Boss's approval "
         "to the pull request's body"
         for rel in new
     ]
