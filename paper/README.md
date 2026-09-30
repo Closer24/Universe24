@@ -33,6 +33,6 @@ rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
   chain, a plane and a box, the check of `the hollow's dimension`.
 
 The experiments' rows enter after their runs on the engine with blind
-expectations; today the paper carries the two slits. The paper's outline, its
+expectations; the paper carries two experiments and no more, the two slits (run) and Bell (its blind row, to be run). The paper's outline, its
 chapters and its questions are on the issue "The paper: the outline, the
 chapters and the questions".
