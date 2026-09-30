@@ -43,14 +43,18 @@ def chain_body_world(
     taker: bool = False,
     mode: bool = True,
 ) -> Path:
-    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last holding `holds` of other families, read by the detector `taker` where asked), rotating in the `senses` given, laid by the generator: the bodies' Nodes with their counts and the mode file beside them."""
+    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last holding `holds` of other families, read by the detector `taker` where asked), rotating in the `senses` given, laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right` on the chain's two end Nodes read the light's count rise there."""
     universe_beside(tmp_path)
     measured: list[dict[str, object]] = [
         dict(family="matter", nodes=[dict(node=[x, 0, 0], count=quanta)]) for x in at
     ]
     if holds:
         measured[-1]["holds"] = holds
-    detectors = [{"name": "taker", "block": len(at) - 1}] if taker else []
+    detectors: list[dict[str, object]] = [
+        {"name": "left", "positions": [[0, 0, 0]]},
+        {"name": "right", "positions": [[CHAIN - 1, 0, 0]]},
+    ]
+    detectors += [{"name": "taker", "block": len(at) - 1}] if taker else []
     document = dict(
         shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), detectors=detectors
     )

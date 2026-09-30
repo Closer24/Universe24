@@ -1,9 +1,9 @@
-"""The hold's folder (ALGEBRA.md #the-primitives, the row "the hold"): the time part gains (source + r) div E_s each interval by the write's carried division, the carry kept at the Node, exact back; the parts of a rank and the tensor's diagonal; the refusal by name."""
+"""The hold's folder (ALGEBRA.md #the-primitives, the row "the hold"): the time part gains (source + r) div E_s each interval by the write's carried division, the carry kept at the Node, exact back; the parts of a rank, the time part and the three tensions Rule3 reads; the refusal by name."""
 
 import numpy as np
 import pytest
 
-from event_universe.features.hold import TENSOR_AXES, components, diagonal, hold
+from event_universe.features.hold import components, diagonal, hold
 
 
 def test_the_source_adds_the_count_over_the_divisor_each_interval_and_steps_back():
@@ -28,9 +28,8 @@ def test_the_source_adds_the_count_over_the_divisor_each_interval_and_steps_back
 
 
 def test_the_parts_of_a_rank_and_the_refusal():
-    """The ranks 1, 1 + 3 and 1 + 3 + 6: one, four and ten components; the tensor's xx, yy, zz follow the time part and the vector; a divisor below 1 is refused by name."""
-    assert [components(parts) for parts in ((1,), (1, 3), (1, 3, 6))] == [1, 4, 10]
-    assert diagonal((1, 3, 6)) == (4, 5, 6) and diagonal((1, 3)) is None
-    assert TENSOR_AXES[:3] == ((0, 0), (1, 1), (2, 2))
+    """The ranks 1 and 1 + 3: one and four components, the tensions xx, yy, zz right after the time part, none at the rank 1 (the vector and the off-diagonal parts, which Rule3 never reads, left); a divisor below 1 is refused by name."""
+    assert [components(parts) for parts in ((1,), (1, 3))] == [1, 4]
+    assert diagonal((1, 3)) == (1, 2, 3) and diagonal((1,)) is None
     with pytest.raises(ValueError, match="divisor E_s is from 1"):
         hold(0, 1, 0, 0)

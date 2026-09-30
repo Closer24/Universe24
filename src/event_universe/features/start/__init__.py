@@ -1,4 +1,4 @@
-"""The start (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the pace 1 with the sum's sources, 6 den a = num S_6(a) + 3 den sigma at a fine unit derived from the width, the division act iterated from nothing until the levels repeat (the map monotone from nothing, its first repeat its fixed point), the levels the nearest integers by the division act; the remainder at the half wall, the division's origin, and the hold's carry E_s div 2 at the sources' Nodes; on a chain and a box alike, in the engine and in the generator."""
+"""The start (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the pace 1 with the sum's sources, 6 den a = num S_6(a) + 3 den sigma at a fine unit derived from the width, the division act iterated from nothing until the levels repeat (its first repeat its fixed point, the sources of either sign or both), the levels the nearest integers by the division act; the remainder at the half wall, the division's origin, and the hold's carry E_s div 2 at the sources' Nodes; on a chain and a box alike, in the engine and in the generator."""
 
 from __future__ import annotations
 
@@ -41,15 +41,11 @@ def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int) -> int:
     return int(division(1, 2 * abs(pair[0]) * 6 * largest, width))
 
 
-def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int) -> FieldAtRest:
-    """The rest by the line itself: the fine levels b <- (num S_6(b) + 3 den x (count x unit div E_s)) div (6 den) by Rule3's division act from nothing, until the levels repeat; refused by name where the sources are not of one sign (the map is monotone only then), where a board periodic on its every axis at [1, 1] gives the sources no sink, and where the divisor is below 1."""
+def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, wall: int) -> FieldAtRest:
+    """The rest by the line itself: the fine levels b <- (num S_6(b) + 3 den x (count x unit div E_s)) div (6 den) by Rule3's division act from nothing, until the levels repeat, the remainder at the half of `wall`, the wall of the rule the row steps by; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] gives the sources no sink, and where the divisor is below 1."""
     num, den = pair
     if divisor < 1:
         raise ValueError(f"the start's divisor is from 1, got {divisor}")
-    if bool((counts > 0).any()) and bool((counts < 0).any()):
-        raise ValueError(
-            "the start's sources are of one sign: the map from nothing is monotone only then"
-        )
     long = [axis for axis in range(len(wrap)) if counts.shape[axis] > 1]
     if num == den and all(wrap[axis] for axis in long) and bool(counts.any()):
         raise ValueError(
@@ -68,4 +64,4 @@ def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int) -
     half = int(division(1, 2, unit))
     levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0], dtype=np.int64)
     carries = np.where(counts != 0, division(1, 2, divisor), 0).astype(np.int64)
-    return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, 3 * den - 1)), carries)
+    return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, wall - 1)), carries)

@@ -1,16 +1,15 @@
-"""The signed read with the two-sided guard: the content c = SUM over the reads of (weight x by x the read family's time part), p_0^2 = (Gamma - c)^2 + c^2, the axes' paces with the tensor's parts, no floor and no clamp, and 0 < p <= P with P = isqrt(2 den Gamma^2 div (den + num)) at every Node, a pace outside ending the run by name (ALGEBRA.md #the-paces)."""
+"""The signed read: the content c = SUM over the reads of (weight x by x the read family's time part), p_0^2 = (Gamma - c)^2 + c^2, the axes' paces with the tensor's parts, no floor and no clamp, and the guard 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node as squares, read once on the whole initial state at load and never in the interval (ALGEBRA.md #the-paces, the root leaves the run)."""
 
 from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
-from math import isqrt
 from typing import Any
 
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.rule3 import clock_pace
+from event_universe.core.rule3 import division_forward, link_paces
 
 # by "plain" reads the level as it is; by "sign" reads it with the reader's own sign q at the Node
 BY_PLAIN = "plain"
@@ -41,11 +40,10 @@ class SignedReadStart:
 
 @dataclass(frozen=True)
 class SignedReadOwn:
-    """The reading family's identity for the guard's line: its index, its name, the interval."""
+    """The reading family's identity for the guard's line: its index and its name."""
 
     family: int
     name: str
-    interval: int
 
 
 @dataclass(frozen=True)
@@ -62,10 +60,10 @@ def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int]:
     return den + num, 2 * den * gamma * gamma
 
 
-def pace_bound(pair: tuple[int, int], gamma: int) -> int:
-    """The largest admitted pace P = isqrt(right div left), so that p^2 x left <= right exactly when p <= P."""
+def edge_squared(pair: tuple[int, int], gamma: int) -> int:
+    """The edge's square P^2 = right div left, so that p^2 x left <= right exactly when p^2 <= P^2; no root is taken."""
     left, right = stability_bound(pair, gamma)
-    return isqrt(right // left)
+    return int(division_forward(right, left, 0)[0])
 
 
 def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
@@ -95,41 +93,43 @@ def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
     return content
 
 
+def squared_paces(writes: SignedReadWrites, gamma: int) -> list[np.ndarray]:
+    """The clock's square p_0^2 = (Gamma - c)^2 + c^2 and each Link's pace p_a = Gamma - 2 c - t_a at every Node, the Link's paces as they are (integers) and the clock's as its square, in the order clock, x, y, z."""
+    content = writes.content
+    axes = writes.axis_contents if writes.axis_contents is not None else (0, 0, 0)
+    return [(gamma - content) * (gamma - content) + content * content, *link_paces(gamma, content, axes)]
+
+
 def guard(term: SignedReadTerm, writes: SignedReadWrites, own: SignedReadOwn) -> None:
-    """The two-sided guard 0 < p <= P on p_0 and every axis pace; a pace outside ends the run naming the Node, the family and the interval (ALGEBRA.md #the-paces)."""
+    """The guard at load, two-sided and on squares: every Link's pace above 0 and every pace's square at or below the edge's square (the clock's square is never 0); a state outside refuses the run naming the Node and the family (ALGEBRA.md #the-paces, the guard)."""
     gamma = term.gamma
     left, right = stability_bound(term.pair, gamma)
-    bound = pace_bound(term.pair, gamma)
-    paces = [clock_pace(gamma, writes.content)]
-    if writes.axis_contents is not None:
-        paces.extend(gamma - 2 * writes.content - t for t in writes.axis_contents)
-    else:
-        paces.append(gamma - 2 * writes.content)
-    for axis, pace in enumerate(paces):
+    edge = edge_squared(term.pair, gamma)
+    clock, *links = squared_paces(writes, gamma)
+    for axis, pace in enumerate(links):
         low = int(np.min(pace))
         if low <= 0:
             node = np.unravel_index(int(np.argmin(pace)), pace.shape)
-            raise RuntimeError(
+            raise ValueError(
                 f"the pace of {own.name!r} (family {own.family}, axis {axis}) is {low} at the Node "
-                f"{tuple(int(i) for i in node)} at interval {own.interval}: the pace stays above 0 "
+                f"{tuple(int(i) for i in node)} at load: the pace stays above 0 "
                 f"(the content {int(writes.content[node])} at the Node: the Link's pace Gamma - 2 c - t_a "
-                f"at or below 0 at Gamma = {gamma}; ALGEBRA.md #the-paces, the guard's lower side); the run ends"
+                f"at or below 0 at Gamma = {gamma}; ALGEBRA.md #the-paces, the guard's lower side); the run is refused"
             )
-        high = int(np.max(pace))
-        if high > bound:
-            node = np.unravel_index(int(np.argmax(pace)), pace.shape)
-            raise RuntimeError(
-                f"the pace of {own.name!r} (family {own.family}, axis {axis}) is {high} at the Node "
-                f"{tuple(int(i) for i in node)} at interval {own.interval}, above the stability "
-                f"edge {bound} of its pair {list(term.pair)} at Gamma = {gamma} (p^2 x {left} <= "
-                f"{right}; ALGEBRA.md #the-paces, the guard's upper side: a hill beyond the edge); "
-                "the run ends"
+    squares = [clock, *(pace * pace for pace in links)]
+    for label, square in zip(("the clock", "axis 0", "axis 1", "axis 2"), squares, strict=True):
+        high = int(np.max(square))
+        if high > edge:
+            node = np.unravel_index(int(np.argmax(square)), square.shape)
+            raise ValueError(
+                f"the pace of {own.name!r} (family {own.family}, {label}) squared is {high} at the Node "
+                f"{tuple(int(i) for i in node)} at load, above the stability edge's square {edge} of its "
+                f"pair {list(term.pair)} at Gamma = {gamma} (p^2 x {left} <= {right}; ALGEBRA.md #the-paces, "
+                "the guard's upper side: a hill beyond the edge); the run is refused"
             )
 
 
-def apply(term: SignedReadTerm, start: SignedReadStart, own: SignedReadOwn) -> SignedReadWrites:
-    """The read: the content as it is, no floor and no clamp (a hill that would take a pace above the edge ends the run by the guard), then the guard (ALGEBRA.md #the-paces)."""
+def apply(term: SignedReadTerm, start: SignedReadStart) -> SignedReadWrites:
+    """The read: the content as it is, no floor, no clamp and no guard in the interval (ALGEBRA.md #the-paces)."""
     content = content_of(term, start) if term.reads else np.zeros(start.shape, dtype=np.int64)
-    writes = SignedReadWrites(content, start.axis_contents)
-    guard(term, writes, own)
-    return writes
+    return SignedReadWrites(content, start.axis_contents)

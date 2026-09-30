@@ -45,13 +45,13 @@ def prose(path: Path) -> list[str]:
 def written(path: Path) -> list[str]:
     """A Python file's comments and string literals (its docstrings among them)."""
     source = path.read_text(encoding="utf-8")
-    texts = [
-        node.value
-        for node in ast.walk(ast.parse(source))
-        if isinstance(node, ast.Constant) and isinstance(node.value, str)
+    nodes = [
+        n
+        for n in ast.walk(ast.parse(source))
+        if isinstance(n, ast.Constant) and isinstance(n.value, str)
     ]
     tokens = tokenize.generate_tokens(io.StringIO(source).readline)
-    return texts + [token.string for token in tokens if token.type == tokenize.COMMENT]
+    return [n.value for n in nodes] + [t.string for t in tokens if t.type == tokenize.COMMENT]
 
 
 def test_every_heading_is_in_sentence_case_and_no_name_is_written_in_capitals():

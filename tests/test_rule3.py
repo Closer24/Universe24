@@ -121,19 +121,10 @@ def test_the_forms_node_term_and_the_load_bound_read_the_same_integers():
 
 
 # the rule's own lines in core/rule3.py: the Node's term, the far level's, the carry's and the form's; the second set is the old two-function form, refused anywhere in src/ as well
-RULE_LINES = (
-    r"self_coefficient \* now\b",
-    r"wall \* other\b",
-    r"direction \* total \+ carry",
-    r"direction \* quotient",
-    r"now \* now \+ before \* before",
-)
-RULE_ARITHMETIC = RULE_LINES + (
-    r"self_coefficient \* before\b",
-    r"wall \* before\b",
-    r"wall \* now \+ remainder",
-    r"direction \* carry\b",
-)
+RULE_LINES = (r"self_coefficient \* now\b", r"wall \* other\b", r"direction \* total \+ carry")
+RULE_LINES += (r"direction \* quotient", r"now \* now \+ before \* before")
+RULE_ARITHMETIC = RULE_LINES + (r"self_coefficient \* before\b", r"wall \* before\b")
+RULE_ARITHMETIC += (r"wall \* now \+ remainder", r"direction \* carry\b")
 
 
 def test_no_other_file_of_src_writes_the_rules_arithmetic():
@@ -204,4 +195,23 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_generator():
             if isinstance(node, ast.Constant) and type(node.value) in (int, float, complex):
                 if node.value not in allowed or type(node.value) is not int:
                     found.append(f"{path.relative_to(ROOT)}:{node.lineno} {node.value!r}")
+    assert not found, found
+
+
+def test_no_root_is_imported_or_called_anywhere_in_src_or_tools():
+    """The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root."""
+    import ast
+
+    found = []
+    for path in sorted([*SOURCE.rglob("*.py"), *(ROOT / "tools").glob("*.py")]):
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(node, ast.Import) and any(alias.name == "math" for alias in node.names):
+                found.append(f"{path.relative_to(ROOT)}:{node.lineno} import math")
+            if isinstance(node, ast.ImportFrom) and any("sqrt" in alias.name for alias in node.names):
+                found.append(f"{path.relative_to(ROOT)}:{node.lineno} from {node.module} import a root")
+            if isinstance(node, ast.Call):
+                callee = node.func
+                name = callee.id if isinstance(callee, ast.Name) else getattr(callee, "attr", "")
+                if "sqrt" in name:
+                    found.append(f"{path.relative_to(ROOT)}:{node.lineno} {name}")
     assert not found, found

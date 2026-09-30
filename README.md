@@ -35,7 +35,7 @@ PYTHONPATH=src python tools/run_inputs.py --out runs/first --jobs 1 <world>.json
 ```
 
 One run writes one file, `runs/first/<world>.output.json` (the verdict, the
-clicks, the givings, the reports and the books). A run carries no time, so the
+clicks and the books). A run carries no time, so the
 same input gives the same file again. A world's bodies are laid first by
 `tools/pixel_mode.py`, which writes the mode file beside it.
 

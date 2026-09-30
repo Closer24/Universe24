@@ -16,13 +16,13 @@ SRC = ROOT / "src" / "event_universe"
 PHYSICAL_MODULES: dict[str, str] = {
     "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
     "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
-    "flow.py": "the flows into a held row's vector and tensor parts, each a carried division of Rule3",
-    "bodies.py": "the bodies' ledgers, their Nodes following their counts and their givings at the Ports the count's line crossed",
-    "reports.py": "the detectors' reports, the output lines and the books, readings of whole-board arrays",
+    "flow.py": "the flows into a held row's tensions, each a carried division of Rule3",
+    "lay.py": "the lay of every family's count and sense at the first act from the weighted share, Rule3's division act at the count's wall",
+    "reports.py": "the detectors' clicks, a body's Nodes derived for a report and the books, readings of whole-board arrays",
     "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
     "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies' held quanta laid by the carried division",
     "loader/derived.py": "the families from the rule and the amplitude bound A derived from the width",
-    "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act and the form's term (ALGEBRA.md #the-line, #the-direction)",
+    "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act, its fixed point iterated and the form's term (ALGEBRA.md #the-line, #the-direction)",
     "core/integer.py": "the working bound, the host's signed integer range",
     "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port, the one shift across Nodes of the package",
 }
@@ -71,14 +71,8 @@ NUMPY_FORBIDDEN = {
 }
 BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integer_root"}
 
-# Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set.
-ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {
-    ("loader/derived.py", "amplitude_bound"): "at load, the width's bound on A from the count's line",
-    (
-        "core/rule3.py",
-        "clock_pace",
-    ): "the integer square root of p_0^2 where a guard or a clock pair reads the pace",
-}
+# Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set: empty, the root left everywhere (the owner, 2026-09-30), the fixed point of the division act in its place.
+ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {}
 
 
 def physical_sources() -> dict[str, str]:
@@ -313,60 +307,42 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
 
 
-@pytest.mark.parametrize(
-    "source,checker",
-    [
-        ("x = 1.5\n", lambda s, t: float_literals(s)),
-        ("x = 3 / 2\n", lambda s, t: true_divisions(s)),
-        ("x /= 2\n", lambda s, t: true_divisions(s)),
-        ("import random\n", lambda s, t: forbidden_imports(t)),
-        ("from math import sqrt\n", lambda s, t: forbidden_imports(t)),
-        ("import math\ny = math.sqrt(4)\n", lambda s, t: forbidden_imports(t)),
-        ("import numpy as np\ny = np.sqrt(x)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.zeros(3, dtype=np.float64)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = x.astype(np.int32)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.zeros(3, dtype=float)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.zeros(3)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.full(3, 0)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.array([1.5, 2])\n", lambda s, t: numpy_violations(t)),
-        ("y = float(x)\n", lambda s, t: numpy_violations(t)),
-        ("y = x.mean()\n", lambda s, t: numpy_violations(t)),
-        ("y = x.astype(scale)\n", lambda s, t: numpy_violations(t)),
-        ("y = x.astype(dtype)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.linalg.norm(x)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.linspace(0, 1, 3)\n", lambda s, t: numpy_violations(t)),
-        ("import numpy as np\ny = np.random.default_rng()\n", lambda s, t: numpy_violations(t)),
-        ("import math as m\n", lambda s, t: forbidden_imports(t)),
-        ("from math import isqrt as r\n", lambda s, t: forbidden_imports(t)),
-    ],
-)
-def test_the_gate_catches_each_violation(source: str, checker) -> None:
-    assert checker(source, ast.parse(source)) != []
+SOURCE_CHECKS = {"x = 1.5\n": float_literals, "x = 3 / 2\n": true_divisions, "x /= 2\n": true_divisions}
+IMPORT_CHECKS = ("import random\n", "from math import sqrt\n", "import math\ny = math.sqrt(4)\n")
+IMPORT_CHECKS += ("import math as m\n", "from math import isqrt as r\n")
+NUMPY_CHECKS = ("y = np.sqrt(x)\n", "y = np.zeros(3, dtype=np.float64)\n", "y = x.astype(np.int32)\n")
+NUMPY_CHECKS += ("y = np.zeros(3, dtype=float)\n", "y = np.zeros(3)\n", "y = np.full(3, 0)\n")
+NUMPY_CHECKS += ("y = np.array([1.5, 2])\n", "y = float(x)\n", "y = x.mean()\n", "y = x.astype(scale)\n")
+NUMPY_CHECKS += ("y = x.astype(dtype)\n", "y = np.linalg.norm(x)\n", "y = np.linspace(0, 1, 3)\n")
+NUMPY_CHECKS += ("y = np.random.default_rng()\n",)
+
+
+def test_the_gate_catches_each_violation() -> None:
+    """Every float literal, true division, forbidden import and numpy departure from the integers is caught."""
+    assert all(checker(source) != [] for source, checker in SOURCE_CHECKS.items())
+    assert all(forbidden_imports(ast.parse(source)) != [] for source in IMPORT_CHECKS)
+    assert all(
+        numpy_violations(ast.parse("import numpy as np\n" + source)) != [] for source in NUMPY_CHECKS
+    )
 
 
 def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
     source = (
-        "import numpy as np\nimport math\n"
-        "x = np.zeros(3, dtype=np.int64)\nm = np.ones(3, dtype=bool)\no = np.full(2, None, dtype=object)\n"
-        "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(object)\n"
+        "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\nm = np.ones(3, dtype=bool)\n"
     )
+    source += "o = np.full(2, None, dtype=object)\ny = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\n"
+    source += "r = np.array([1, -2, 3])\nz = x.astype(object)\n"
     tree = ast.parse(source)
     assert float_literals(source) == [] and true_divisions(source) == []
     assert forbidden_imports(tree) == [] and numpy_violations(tree) == []
 
 
-def test_a_root_outside_the_list_is_found_with_its_function() -> None:
-    source = "import math\ndef wall(x):\n    return math.isqrt(x)\n"
-    assert roots(ast.parse(source)) == {("wall", 3)}
+ROOT_SOURCES = ("import math\n", "from math import isqrt as r\n", "import math as m\n")
+ROOT_CALLS = ("math.isqrt(x)", "r(x)", "m.isqrt(x)", "ir(x)")
 
 
-@pytest.mark.parametrize(
-    "source",
-    [
-        "from math import isqrt as r\ndef wall(x):\n    return r(x)\n",
-        "import math as m\ndef wall(x):\n    return m.isqrt(x)\n",
-        "from event_universe.core.integer import integer_root as ir\ndef wall(x):\n    return ir(x)\n",
-    ],
-)
-def test_a_root_under_an_alias_is_still_found(source: str) -> None:
-    assert roots(ast.parse(source)) == {("wall", 3)}
+def test_a_root_outside_the_list_is_found_with_its_function_under_any_alias() -> None:
+    """A root called plainly or under an alias of the function or of the module is found with its function."""
+    sources = (*ROOT_SOURCES, "from event_universe.core.integer import integer_root as ir\n")
+    for source, call in zip(sources, ROOT_CALLS, strict=True):
+        assert roots(ast.parse(f"{source}def wall(x):\n    return {call}\n")) == {("wall", 3)}
