@@ -66,9 +66,9 @@ their consumers; `--full` runs everything. Every test is headless.
 | `src/event_universe/core/` | Rule3, the six Ports and the working bound; changed only by the Boss's worker on a brief that names the law's line |
 | `src/event_universe/features/` | The count's line, the hold, the write, the signed read and the start, each a pure function of arrays |
 | `src/event_universe/loader/` | The world's files checked into the GameBoard's world, and the families from the rule |
-| `examples/events/` | The universe files and the engine start file |
+| `examples/events/` | The universe files, the engine start file and the two slits' worlds with their blind expectation |
 | `tests/` | One module per generic rule on a minimal GameBoard and the repository gates |
-| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `pixel_mode.py` (the generator's lay of the bodies) |
+| `tools/` | One command each: `check.py` (the affected check), `run_inputs.py` (a run), `pixel_mode.py` (the generator's lay of the bodies and the messages), `back_in_time.py` (the back-in-time gate), `click_counts.py` (a detector's rises against its blind expectation) |
 | `docs/ALGEBRA.md` | The law |
 | `docs/ENGINE.md` | The engine as the code holds it |
 | `docs/HIGHLIGHTS.md` | The decisions in force |

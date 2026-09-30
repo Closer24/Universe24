@@ -1,4 +1,4 @@
-"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. The generator also lays every message of the world (ALGEBRA.md #the-generator, the message lay): a packet of a family of quanta and no body, its `now` the wave along its axis under its envelope and its `before` the same wave one interval earlier, every cosine by Rule3's rotation act and every root by the fixed point of the division act, its numbers the world's keys. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from typing import Any, cast
 
 import numpy as np
 
-from event_universe.core.ports import arrival
+from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import (
     ISOTROPIC,
     NO_READ,
@@ -23,6 +23,8 @@ from event_universe.core.rule3 import (
 from event_universe.features.start import rest
 from event_universe.lay import share
 from event_universe.loader.derived import BY_PLAIN, family_rules
+from event_universe.loader.faces import faces_of
+from event_universe.loader.keys import AXES
 from event_universe.node import Record
 from event_universe.world_files import input_digest, world_files
 
@@ -31,10 +33,10 @@ Axis = tuple[int, int, int]
 
 @dataclass(frozen=True)
 class Board:
-    """The world's board as Rule3 sees it: its shape, which axes wrap, the universe's Gamma and T, and a record's pair [num, den] as the file writes it."""
+    """The world's board as Rule3 sees it: its shape, its face rule (which axes wrap, the Nodes beyond it), the universe's Gamma and T, and a record's pair [num, den] as the file writes it."""
 
     shape: Axis
-    wrap: tuple[bool, bool, bool]
+    wrap: Wrap
     gamma: int
     action: int
     pair: tuple[int, int]
@@ -59,8 +61,7 @@ def step(
 ) -> np.ndarray:
     """One interval of Rule3 on the whole board, the loop's own isotropic form: the arrivals per axis the two neighbours' levels (0 beyond a face, the wrap on a periodic one), the coefficients from the paces at every Node (core.rule3, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
     arrivals = tuple(
-        arrival(now, axis, 1, board.wrap[axis], 0) + arrival(now, axis, -1, board.wrap[axis], 0)
-        for axis in range(3)
+        arrival(now, axis, 1, board.wrap, 0) + arrival(now, axis, -1, board.wrap, 0) for axis in range(3)
     )
     reads, self_coefficient, wall = coefficients(
         board.pair[0], board.pair[1], board.gamma, content, ISOTROPIC, True
@@ -133,12 +134,12 @@ def within(off: np.ndarray, largest: np.ndarray) -> np.ndarray:
     return (np.abs(off) <= 1) | (half * half <= largest)
 
 
-def dilated(mask: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
+def dilated(mask: np.ndarray, wrap: Wrap) -> np.ndarray:
     """The mask and its six-neighbour surroundings (the wrap on a periodic axis, nothing beyond a face)."""
     grown = mask.copy()
     for axis in range(3):
         for sense in (1, -1):
-            grown |= np.asarray(arrival(mask.astype(np.int64), axis, sense, wrap[axis], 0)) > 0
+            grown |= np.asarray(arrival(mask.astype(np.int64), axis, sense, wrap, 0)) > 0
     return grown
 
 
@@ -155,8 +156,7 @@ def top_mode(
     seen: set[bytes] = set()
     while True:
         arrivals = tuple(
-            arrival(a, axis, 1, board.wrap[axis], 0) + arrival(a, axis, -1, board.wrap[axis], 0)
-            for axis in range(3)
+            arrival(a, axis, 1, board.wrap, 0) + arrival(a, axis, -1, board.wrap, 0) for axis in range(3)
         )
         reads, self_coefficient, wall = coefficients(
             board.pair[0], board.pair[1], board.gamma, content, ISOTROPIC, True
@@ -266,7 +266,7 @@ def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[in
 def rests(
     rows: list[tuple[str, tuple[int, int], int]],
     counts: np.ndarray,
-    wrap: tuple[bool, bool, bool],
+    wrap: Wrap,
     width: int,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Every held row's level at these sources as the engine's start holds it, summed into the content every record reads: a row without a gap at its rest by the start (features/start: the division act iterated from nothing until it repeats), a row with a gap laid, the sources through its divisor; and the first (the binding) row's level alone, the body's own well."""
@@ -283,9 +283,7 @@ def rests(
     return total, cast(np.ndarray, binding)
 
 
-def region_of(
-    counts: np.ndarray, well: np.ndarray, centre: Axis, wrap: tuple[bool, bool, bool]
-) -> np.ndarray:
+def region_of(counts: np.ndarray, well: np.ndarray, centre: Axis, wrap: Wrap) -> np.ndarray:
     """A body's region: the Nodes carrying a quantum of it and one Link around them, where its form may reach next round (the body's width is its own: the iteration widens it a Link a round while its form reaches a quantum there, and narrows it where the form falls below one)."""
     if int(well[centre]) <= 0:
         raise ValueError(
@@ -499,8 +497,105 @@ def rotating(
     return found, share_counts(total, den, action), share_counts(plain, den, action)
 
 
+def turned(doubled: int, unit: int, steps: int) -> list[int]:
+    """Rule3's rotation act (ALGEBRA.md #the-four-acts (b)) from the level `unit` and the level `doubled` div 2 after it: a_next = (doubled x a_now + r) div unit - a_before with the remainder kept, `steps` turns; the levels unit x cos(n theta) at 2 unit cos theta = doubled."""
+    levels, carry = [unit, int(division_forward(doubled, 2, 0)[0])], 0
+    for _ in range(steps - 1):
+        nxt, carry = rule3(NO_READ, NO_READ, doubled, unit, levels[-1], levels[-2], carry)
+        levels.append(int(nxt))
+    return levels
+
+
+def half_turn(halves: int, unit: int) -> list[int]:
+    """The cosines of a half turn in `halves` x 2 steps at the unit, unit x cos(n pi / (2 halves)) for n from 0 through 2 halves, by the rotation act: its doubled cosine is the largest integer at which the rotation from the unit reaches 0 or below within `halves` turns (bisection on the integers, the first zero of the cosine at the quarter turn), no root and no table."""
+    lower, upper = 0, 2 * unit
+    while upper - lower > 1:
+        middle = int(division_forward(lower + upper, 2, 0)[0])
+        if min(turned(middle, unit, halves)) <= 0:
+            lower = middle
+        else:
+            upper = middle
+    return turned(lower, unit, 2 * halves)
+
+
+def cosine_at(turns: list[int], index: int) -> int:
+    """The cosine at a step of the full turn from a half turn's cosines, cos(2 pi - a) = cos a."""
+    whole = 2 * (len(turns) - 1)
+    index %= whole
+    return turns[whole - index] if index > len(turns) - 1 else turns[index]
+
+
+def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[int]:
+    """A raised cosine along one axis at the unit: the unit over the flat top [first, last], (unit + unit cos(pi j / edge)) div 2 at j Nodes beyond either end up to the half-width `edge`, 0 further; the unit at every Node where the edge is 0 within the top and 0 beyond it."""
+    taper = half_turn(edge, unit) if edge else []
+    found = []
+    for at in range(extent):
+        away = max(top[0] - at, at - top[1], 0)
+        if away == 0:
+            found.append(unit)
+        elif away <= edge:
+            found.append(int(division_forward(unit + taper[2 * away], 2, 0)[0]))
+        else:
+            found.append(0)
+    return found
+
+
+def message_levels(
+    board: Board, message: dict[str, Any], beyond: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`), x_i the Node's coordinate on that axis, b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a (k = 0 across), sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width; 0 beyond the board."""
+    along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
+    amplitude = int(message["amplitude"])
+    unit = division_fixed_point(int(division_forward(board.width, amplitude, 0)[0]))
+    cosines = half_turn(int(halves), unit)
+    axes = [
+        envelope(
+            board.shape[axis],
+            (int(message["top"][name][0]), int(message["top"][name][1])),
+            int(message["edge"][name]),
+            unit,
+        )
+        for axis, name in enumerate(AXES)
+    ]
+    coordinates = np.indices(board.shape)[along]
+    wave = np.vectorize(lambda x: cosine_at(cosines, 2 * int(turns) * int(x)), otypes=[object])
+    quadrature = np.vectorize(
+        lambda x: cosine_at(cosines, int(halves) - 2 * int(turns) * int(x)), otypes=[object]
+    )
+    cosine = sum(cosines[2 * int(turns)] if axis == along else unit for axis in range(3))
+    cosine = int(division_forward(cosine, 3, 0)[0])
+    sine = division_fixed_point(unit * unit - cosine * cosine)
+    shaped = [
+        np.array(levels, dtype=object).reshape([-1 if a == axis else 1 for a in range(3)])
+        for axis, levels in enumerate(axes)
+    ]
+    envelope_here = amplitude * shaped[0] * shaped[1] * shaped[2]
+    now = envelope_here * wave(coordinates) * unit
+    before = envelope_here * (wave(coordinates) * cosine - quadrature(coordinates) * sine)
+    scale = unit * unit * unit * unit * unit
+    half = int(division_forward(scale, 2, 0)[0])
+    found = []
+    for numerator in (now, before):
+        levels = np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, numerator + half)[0])
+        found.append(np.where(beyond, 0, levels.astype(np.int64)))
+    return found[0], found[1]
+
+
+def message_entry(board: Board, message: dict[str, Any], beyond: np.ndarray) -> dict[str, Any]:
+    """One message's mode entry: its family and pair, its amplitude, the count its record lays over the board at the vacuum's paces (a reading) and its two levels."""
+    now, before = message_levels(board, message, beyond)
+    laid = share_counts(share_of(board, 0, now, before), board.pair[1], board.action)
+    return {
+        "family": message["family"],
+        "pair": list(board.pair),
+        "amplitude": int(np.abs(now).max()),
+        "count": int(laid.sum()),
+        "moving": {"now": now.ravel().tolist(), "before": before.ravel().tolist()},
+    }
+
+
 def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dict[str, Any]:
-    """The mode document of a world of bodies: `world_digest` and `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record); the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's)."""
+    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's)."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
     integers = universe["integers"]
     if "quantum_action" not in integers:
@@ -512,15 +607,25 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
         for family in universe["families"]
     }
     shape = (int(document["shape"][0]), int(document["shape"][1]), int(document["shape"][2]))
-    wrap = tuple(document["boundary"][axis] == "periodic" for axis in "xyz")
+    beyond = np.zeros(shape, dtype=bool)
+    outside = faces_of(document["faces"], shape) if "faces" in document else ()
+    for node in outside:
+        beyond[node] = True
+    wrap = Wrap(
+        *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
+    )
     gamma = int(document.get("node_clock", integers["node_clock"]))
     bodies = cast(list[dict[str, Any]], document.get("measured", []))
     lays = []
-    for body in bodies:
+    for number, body in enumerate(bodies):
         counts, centre, quanta = declared(body, shape)
+        if bool(counts[beyond].any()):
+            raise ValueError(
+                f"measured[{number}] declares a Node beyond the board's inner face: nothing stands there"
+            )
         board = Board(
             shape,
-            (wrap[0], wrap[1], wrap[2]),
+            wrap,
             gamma,
             int(integers["quantum_action"]),
             pairs[body["family"]],
@@ -541,7 +646,7 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
             counts, centre, quanta = lays[number]
             board = Board(
                 shape,
-                (wrap[0], wrap[1], wrap[2]),
+                wrap,
                 gamma,
                 int(integers["quantum_action"]),
                 pairs[body["family"]],
@@ -581,7 +686,22 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
             entries.append(entry)
     for body, entry in zip(bodies, entries, strict=True):
         body["nodes"] = entry.pop("nodes")
-    return {"world_digest": input_digest(document), "bodies": entries}
+    messages = [
+        message_entry(
+            Board(
+                shape,
+                wrap,
+                gamma,
+                int(integers["quantum_action"]),
+                pairs[str(message["family"])],
+                int(2 ** int(integers["width"]) - 1),
+            ),
+            message,
+            beyond,
+        )
+        for message in cast(list[dict[str, Any]], document.get("messages", []))
+    ]
+    return {"world_digest": input_digest(document), "bodies": entries, "messages": messages}
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -613,6 +733,10 @@ def main(argv: list[str] | None = None) -> None:
     for body in mode["bodies"]:
         reading = {key: value for key, value in body.items() if key not in ("profile", "moving")}
         reading["nodes"] = sum(1 for level in body["profile"] if level)
+        print(json.dumps(reading))
+    for message in mode["messages"]:
+        reading = {key: value for key, value in message.items() if key != "moving"}
+        reading["nodes"] = sum(1 for level in message["moving"]["now"] if level)
         print(json.dumps(reading))
 
 

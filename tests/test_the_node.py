@@ -1,4 +1,4 @@
-"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count conserved, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body writes a wave into the sign holder's own record, its count's total stays 0 within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the tension is Rule3's own conservation of the current; the sense is the Wronskian, booked by the line."""
+"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count conserved, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body writes a wave into the sign holder's own record, its count's total stays 0 within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the real body's chain goes back in time, MATCH over 400 intervals; the tension is Rule3's own conservation of the current; the sense is the Wronskian, booked by the line."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ import pytest
 
 import event_universe.world_files as world_files
 from event_universe import flow, lay, node
+from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import family_rules
@@ -20,7 +21,7 @@ from tests.laws import CHAIN, ROOT, UNIVERSE, chain_body_world, load_file, unive
 
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
-WRAP, HERE, KEYS = (True, True, True), (1, 1, 1), ("now", "before", "remainder")
+WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
 ROWS = [("held", (4, 4), "content", 7), ("gapped", (3, 4), "content", 7), ("quanta", (5, 7), None, None)]
 HELD, GAPPED, QUANTA = family_rules(ROWS)
 UNIVERSE_ROWS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
@@ -66,7 +67,7 @@ def drawn(draw: np.random.Generator, shape: tuple[int, int, int], size: int, top
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand():
-    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the lay, the count's line, the well and the hold at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's); a laid row's level before returns; the tension's act is one carried division per axis at the wall E_s W_c from its origin, with no count in it."""
+    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the lay, the count's line, the well and the hold at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's); a laid row has one level and no past, recomputed from the wells forward and back with its carry stepped back; the tension's act is one carried division per axis at the wall E_s W_c from its origin, with no count in it."""
     draw, shape = np.random.default_rng(5), (3, 3, 3)
     for _ in range(20):
         levels, content = drawn(draw, shape, 900, 50), int(draw.integers(-40, 40))
@@ -105,15 +106,15 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         increment, carry_after = divmod(int(source[HERE]) + int(held.carry[HERE]), 7)
         found = (int(parts[0].now[HERE]), int(carry_after_hold[HERE]))
         assert found == (int(part.now[HERE]) + increment, carry_after)
-        # a row with a gap is laid, not stepped: (source + r) div E_s, the level before kept beside it, back exact
+        # a row with a gap is laid, not stepped: (source + r) div E_s, one level and no past; back the
+        # same level from the same wells and the carry before
         held.parts = [part]
         laid, laid_carry, _flows = node.held_step(GAPPED, held, source)
         assert (int(laid[0].now[HERE]), int(laid_carry[HERE])) == (increment, carry_after)
-        assert np.array_equal(laid[0].before, part.now) and np.array_equal(
-            laid[0].remainder, part.remainder
-        )
+        assert laid[0].before is laid[0].now and not laid[0].remainder.any()
         stood = node.NodeState(None, None, None, None, laid, laid_carry)
-        assert np.array_equal(node.held_step(GAPPED, stood, source, -1)[0][0].now, part.now)
+        back, carry_back, _flows = node.held_step(GAPPED, stood, source, -1)
+        assert np.array_equal(back[0].now, laid[0].now) and np.array_equal(carry_back, held.carry)
     # the tension's act (w x T_aa + r) div (E_s W_c) per axis from its origin (E_s W_c) div 2 = 7, back exact
     ones = np.ones((3, 1, 1), dtype=np.int64)
     current = flow.Flow(3, (5 * ones, -3 * ones, 4 * ones), 2)
@@ -230,7 +231,7 @@ def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
 
 
 def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
-    """(c) On the chain, a breathing body rotating in the sense +1 writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's SUM (W_c c + r) stays to the bit and its count's total within the Nodes' rounding, no quantum changes family (the matter's SUM (W_c c + r) to the bit over 400 intervals), and the quanta entering the end detectors are the clicks; a real body (no sense) writes nothing into it and no light is born."""
+    """(c) On the chain, a breathing body rotating in the sense +1 writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's SUM (W_c c + r) stays to the bit and its count's total within the Nodes' rounding, no quantum changes family (the matter's SUM (W_c c + r) to the bit over 400 intervals), and the quanta entering the end detectors are the clicks; a real body (no sense) writes nothing into it and no light is born, and its whole run goes back in time, the back-in-time gate MATCH over 400 intervals forward and 400 back (the bound charge's laid level stands still there; where a well moves a quantum between two intervals the laid row, with no past, returns the later lay: the law's line, ALGEBRA.md #what-is-open)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     envelope = [v * 4 // 5 for v in PROFILE[3:13]]
     for turn in (1, 0):
@@ -265,6 +266,10 @@ def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
             else (born == 0 and not clicks and not states[1].levels.now.any())
         )
         assert all(book["balanced"] and book["sense_balanced"] for book in board.books().values())
+        if not turn:
+            back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
+            print(f"GAMEBOARD the real body's chain, the gate over 400 intervals: {back}")
+            assert back["verdict"] == "MATCH"
 
 
 def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_the_light(
@@ -371,7 +376,7 @@ def chain_record(now_turn: tuple[int, ...], before_turn: tuple[int, ...]) -> nod
 
 def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
     """(d) On a chain, a record of matter moving along +x (the envelope times the plane wave's character, a quarter turn per Link) sources the vacuum's row's tension on x below 0 (a plane wave's -2 num b^2 sin^2 k) and none on y and z, so the Link's pace along x rises by the axis content above the pace along y; the same envelope at rest sources a tension of its own sign on x (the pressure of a standing record) and none on y and z; every family reads the vacuum's row as its stepped time part and the bound charge as the well it laid, light as matter."""
-    shape, wrap = (16, 1, 1), (False, True, True)
+    shape, wrap = (16, 1, 1), Wrap(False, True, True)
     matter, gravity = FAMILIES[MATTER], FAMILIES[GRAVITY]
     for moving in (True, False):
         turns = ((1, 0, -1, 0), (0, -1, 0, 1)) if moving else ((1,), (1,))
@@ -408,7 +413,7 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
 
 def test_the_sense_is_the_wronskian_booked_by_the_line_and_a_real_record_is_neutral():
     """(e) On a periodic cube of 6^3 at a fixed pace, a record rotating as e^(-i omega t) on the lowest wave number (two level pairs a quarter turn apart) has a Wronskian above 0 at every Node, its sense laid above 0 and read as q = +1; Rule3 steps both pairs with one rule and the sense's line moves the sense so SUM (W_c k + r) stays to the bit over 100 intervals; the opposite rotation has the opposite sense; a real record's Wronskian is 0 at every Node and its sense 0."""
-    shape, wrap = (6, 6, 6), (True, True, True)
+    shape, wrap = (6, 6, 6), WRAP
     matter = FAMILIES[MATTER]
     rule, wall = node.quanta_rule(matter, GAMMA, 700), node.count_wall(matter, T)
     x = np.indices(shape)[0]

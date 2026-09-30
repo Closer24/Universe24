@@ -1,21 +1,23 @@
-"""The world's files read into the GameBoard's world: the universe file (the integers and the families), the world file (the GameBoard, the bodies, the detectors) and the generator's mode file beside it (every body's levels); every key checked, every other key refused as unknown by name, no default written (ALGEBRA.md #a-familys-declaration)."""
+"""The world's files read into the GameBoard's world: the universe file (the integers and the families), the world file (the GameBoard with its inner faces, the bodies, the messages, the detectors) and the generator's mode file beside it (every body's and message's levels, `loader/mode.py`); every key checked, every other key refused as unknown by name, no default written (ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived
 from event_universe.loader.derived import CONTENT, SIGN, FamilyRule
+from event_universe.loader.faces import faces_of
+from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
+from event_universe.loader.messages import MessageRow, messages_of
+from event_universe.loader.mode import entry_of, levels_of, mode_entries
 
-Node = tuple[int, int, int]
-AXES = ("x", "y", "z")
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one detector of the open faces' layer
-WORLD_KEYS = ("shape", "boundary", "face_depth", "ticks", "universe", "engine", "measured", "detectors")
+WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
+WORLD_KEYS += ("measured", "messages", "detectors")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width")
@@ -30,21 +32,6 @@ BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("node", "count"),
 )
 DETECTOR_KEYS, START_KEYS = ("name", "positions", "block"), ("mode",)
-MODE_KEYS = ("world_digest", "bodies")
-MODE_BODY_KEYS = (
-    "family",
-    "pair",
-    "count",
-    "seed",
-    "carried",
-    "period",
-    "amplitude",
-    "clock",
-    "profile",
-    "moving",
-)
-MOVING_KEYS = ("now", "before", "im_now", "im_before")
-LEVEL_KEYS, SENSE_KEYS = ("now", "before"), ("im_now", "im_before")
 
 
 @dataclass(frozen=True)
@@ -72,12 +59,13 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the intervals, Gamma, T, the largest integer of the file's width, the amplitude bound A derived, the families, the bodies and the detectors."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the amplitude bound A derived, the families, the bodies, the messages and the detectors."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
     open_axes: tuple[bool, bool, bool]
     face_depth: int
+    beyond: tuple[Node, ...]
     ticks: int
     node_clock: int
     quantum_action: int
@@ -85,44 +73,8 @@ class World:
     amplitude_bound: int
     families: tuple[FamilyRule, ...]
     bodies: tuple[BodyRow, ...]
+    messages: tuple[MessageRow, ...]
     detectors: tuple[DetectorRow, ...]
-
-
-def keyed(
-    value: object, label: str, allowed: tuple[str, ...], required: tuple[str, ...]
-) -> dict[str, Any]:
-    """An object of the files: every key it holds among `allowed` and every key of `required` present, refused by name otherwise."""
-    if not isinstance(value, dict):
-        raise ValueError(f"{label} must be an object")
-    unknown = sorted(set(value) - set(allowed))
-    if unknown:
-        raise ValueError(f"{label} holds the unknown key {unknown[0]!r}: its keys are {list(allowed)}")
-    lacking = [key for key in required if key not in value]
-    if lacking:
-        raise ValueError(f"{label} lacks the key {lacking[0]!r}")
-    return value
-
-
-def integer(value: object, label: str, least: int, most: int = MAX_WORK_INT) -> int:
-    """An integer of the files within [least, most], refused by name otherwise."""
-    if type(value) is not int or not least <= value <= most:
-        raise ValueError(f"{label} must be an integer from {least} through {most}, got {value!r}")
-    return value
-
-
-def node_of(value: object, label: str, shape: Node) -> Node:
-    """A Node's address on the GameBoard, three integers inside the shape."""
-    if not isinstance(value, list) or len(value) != 3:
-        raise ValueError(f"{label} must be a Node [x, y, z]")
-    found = tuple(integer(value[axis], f"{label}[{axis}]", 0, shape[axis] - 1) for axis in range(3))
-    return found[0], found[1], found[2]
-
-
-def document_at(files: Mapping[str, object], path: object, label: str) -> object:
-    """The document the world names by its repository path, refused by name where the host read no file there."""
-    if not isinstance(path, str) or path not in files:
-        raise ValueError(f"{label} names {path!r}, and no file stands at that repository path")
-    return files[path]
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
@@ -171,58 +123,21 @@ def spread(total: int, counts: tuple[int, ...]) -> tuple[int, ...]:
     return tuple(found)
 
 
-def levels_of(
-    entry: object, label: str, family: FamilyRule, size: int, bound: int
-) -> tuple[tuple[int, ...], ...]:
-    """A body's two level pairs from its mode entry: `moving`'s now and before, and its im_now and im_before (the second level pair, the rotation sense; both or neither, 0 where absent), each one integer per Node in x-major order within the amplitude bound A; a sense without a rotation (a second pair on real levels at 0) is refused by name; the generator's readings beside them are read and not used."""
-    mode = keyed(entry, label, MODE_BODY_KEYS, ("family", "pair", "moving"))
-    if mode["family"] != family.name or mode["pair"] != list(family.pair):
-        raise ValueError(
-            f"{label} is of the family {mode['family']!r} with the pair {mode['pair']}, the body of "
-            f"{family.name!r} with {list(family.pair)}"
-        )
-    words = keyed(mode["moving"], f"{label}.moving", MOVING_KEYS, LEVEL_KEYS)
-    if (SENSE_KEYS[0] in words) != (SENSE_KEYS[1] in words):
-        raise ValueError(f"{label}.moving declares im_now and im_before together, or neither")
-    found = []
-    for word in MOVING_KEYS:
-        values = words.get(word, [0] * size)
-        if (
-            not isinstance(values, list)
-            or len(values) != size
-            or any(type(v) is not int for v in values)
-        ):
-            raise ValueError(
-                f"{label}'s {word} level must be {size} integers, one per Node in x-major order"
-            )
-        if max(abs(v) for v in values) > bound:
-            raise ValueError(f"{label}'s {word} level is above the amplitude bound A = {bound}")
-        found.append(tuple(values))
-    if any(found[2] + found[3]) and not any(found[0] + found[1]):
-        raise ValueError(
-            f"{label}.moving carries a sense without a rotation: its second level pair stands on real "
-            "levels at 0 at every Node (ALGEBRA.md #the-paces, the sign is the rotation sense)"
-        )
-    return found[0], found[1], found[2], found[3]
-
-
 def bodies_of(
-    value: object, mode: object, digest: str, families: tuple[FamilyRule, ...], shape: Node, bound: int
+    value: object,
+    mode: object,
+    digest: str,
+    families: tuple[FamilyRule, ...],
+    shape: Node,
+    bound: int,
+    beyond: tuple[Node, ...],
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared), the quanta of other families of quanta it holds, and its two levels from the mode file beside the world, which stands for this world by its digest; a body with no mode entry is refused by name."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board), the quanta of other families of quanta it holds, and its two levels from the mode file beside the world, which stands for this world by its digest; a body with no mode entry is refused by name."""
     names = {family.name: index for index, family in enumerate(families)}
     if not isinstance(value, list):
         raise ValueError("measured must be a list of bodies")
-    entries: list[object] = []
-    if value:
-        written = keyed(mode, "the mode file beside the world", MODE_KEYS, MODE_KEYS)
-        if written["world_digest"] != digest:
-            raise ValueError(
-                f"the mode file's world_digest {written['world_digest']} is not this world's digest {digest}: "
-                "the mode file stands beside another world, or the world changed after the generator wrote it"
-            )
-        entries = written["bodies"] if isinstance(written["bodies"], list) else []
-    size, taken, found = shape[0] * shape[1] * shape[2], set(), []
+    entries = mode_entries(mode, digest, "bodies") if value else []
+    taken, found = set(), []
     for number, entry in enumerate(value):
         label = f"measured[{number}]"
         body = keyed(entry, label, BODY_KEYS, BODY_REQUIRED)
@@ -235,7 +150,7 @@ def bodies_of(
         nodes, counts = [], []
         for index, line in enumerate(lines):
             keyed(line, f"{label}.nodes[{index}]", NODE_KEYS, NODE_KEYS)
-            node = node_of(line["node"], f"{label}.nodes[{index}].node", shape)
+            node = node_of(line["node"], f"{label}.nodes[{index}].node", shape, beyond)
             if node in taken:
                 raise ValueError(
                     f"{label}: two bodies share the Node {list(node)}; they stand apart or are one body"
@@ -249,12 +164,13 @@ def bodies_of(
             if other == family or not families[other].quanta:
                 raise ValueError(f"{label}.holds names {key!r}: the quanta of another family of quanta")
             holds.append((other, spread(integer(total, f"{label}.holds.{key}", 1), tuple(counts))))
-        if number >= len(entries):
-            raise ValueError(
-                f"{label} has no entry in the mode file beside the world: its levels are the generator's"
-            )
         now, before, im_now, im_before = levels_of(
-            entries[number], f"the mode file's bodies[{number}]", families[family], size, bound
+            entry_of(entries, number, label),
+            f"the mode file's bodies[{number}]",
+            families[family],
+            shape,
+            bound,
+            beyond,
         )
         found.append(
             BodyRow(family, tuple(nodes), tuple(counts), tuple(holds), now, before, im_now, im_before)
@@ -262,8 +178,10 @@ def bodies_of(
     return tuple(found)
 
 
-def detectors_of(value: object, shape: Node, bodies: int) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes or the body it names by its number."""
+def detectors_of(
+    value: object, shape: Node, bodies: int, beyond: tuple[Node, ...]
+) -> tuple[DetectorRow, ...]:
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board) or the body it names by its number."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
@@ -282,7 +200,7 @@ def detectors_of(value: object, shape: Node, bodies: int) -> tuple[DetectorRow, 
         if not isinstance(positions, list) or not positions:
             raise ValueError(f"{label}.positions must list its Nodes")
         nodes = tuple(
-            node_of(node, f"{label}.positions[{i}]", shape) for i, node in enumerate(positions)
+            node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
         found.append(DetectorRow(name, nodes, None))
     return tuple(found)
@@ -318,18 +236,21 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
             "face_depth is required on a GameBoard with an open face: the depth of its layer"
         )
     depth = integer(world["face_depth"], "face_depth", 1) if "face_depth" in world else 0
+    beyond = faces_of(world["faces"], shape) if "faces" in world else ()
     most = largest_count(world["measured"])
     gamma, action = integers["node_clock"], integers["quantum_action"]
     width = integers["width"]
     bound = derived.amplitude_bound(families, gamma, action, most, width)
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
-    bodies = bodies_of(world["measured"], mode, digest, families, shape, bound)
-    detectors = detectors_of(world["detectors"], shape, len(bodies))
+    bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
+    messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
+    detectors = detectors_of(world["detectors"], shape, len(bodies), beyond)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
         (open_axes[0], open_axes[1], open_axes[2]),
         depth,
+        beyond,
         integer(world["ticks"], "ticks", 0),
         gamma,
         action,
@@ -337,5 +258,6 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         bound,
         families,
         bodies,
+        messages,
         detectors,
     )
