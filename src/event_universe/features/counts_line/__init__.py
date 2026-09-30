@@ -11,6 +11,9 @@ from event_universe.core.rule3 import rule3
 Vector = tuple[Any, Any, Any]
 PORTS = 6  # a Node's six Ports, the lattice's own integer (Rule3's 6)
 PRODUCTS = 2  # the current's two products, now_i before_j and before_i now_j
+LEVELS = (
+    2  # a record's two level pairs, the real and the second (the rotation sense), whose currents add
+)
 
 
 @dataclass(frozen=True)
@@ -33,22 +36,25 @@ class CountTerm:
 
 @dataclass(frozen=True)
 class CountStart:
-    """The interval's reading after the step: the count c and its remainder r at every Node, the family's levels here and across the six Ports in the order +x, -x, +y, -y, +z, -z, the direction +1 forward, -1 backward."""
+    """The interval's reading after the step: the count c and its remainder r at every Node, the family's levels here and across the six Ports in the order +x, -x, +y, -y, +z, -z, the direction +1 forward, -1 backward, and the second level pair's here and across the Ports (None: a real record), whose current adds."""
 
     count: Any
     remainder: Any
     here: Levels
     links: tuple[Levels, ...]
     direction: int
+    second: tuple[Levels, tuple[Levels, ...]] | None = None
 
 
 @dataclass(frozen=True)
 class CountWrites:
-    """The line's writes: the count and its remainder after the act, and the inflow per axis it read, the current into the Node through the axis's two Ports."""
+    """The line's writes: the count and its remainder after the act; the inflow per axis it read, the current into the Node through the axis's two Ports; the current into the Node through each of the six Ports; and the travel per axis, the current through the Node along +a (in at the -a Port, out at the +a Port)."""
 
     count: Any
     remainder: Any
     net: Vector
+    through: tuple[Any, ...]
+    travel: Vector
 
 
 def current(weight: int, here: Levels, there: Levels) -> Any:
@@ -58,7 +64,7 @@ def current(weight: int, here: Levels, there: Levels) -> Any:
 
 def bound(term: CountTerm) -> int:
     """The largest total the line reaches at a Node whose levels stand at A: one current per Port, the weight times the two products of two levels at A, W_c (most + 1) and the remainder below W_c (ALGEBRA.md #the-counts-line, the bound)."""
-    current_bound = abs(term.weight) * PRODUCTS * term.amplitude * term.amplitude
+    current_bound = abs(term.weight) * PRODUCTS * LEVELS * term.amplitude * term.amplitude
     return PORTS * current_bound + term.norm * (term.most + 1) + term.norm
 
 
@@ -78,13 +84,17 @@ def check(term: CountTerm, start: CountStart) -> None:
 
 
 def apply(term: CountTerm, start: CountStart) -> CountWrites:
-    """The line at every Node: the inflow per axis, the current through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and W_c on the count over the wall W_c (ALGEBRA.md #the-counts-line)."""
+    """The line at every Node: the current through each Port (the second level pair's added where the record has one), the inflow per axis through its +a and -a Ports, read by Rule3 with the coefficient sigma on each axis and W_c on the count over the wall W_c; the travel per axis beside it (ALGEBRA.md #the-counts-line)."""
     check(term, start)
     through = [current(term.weight, start.here, start.links[port]) for port in range(PORTS)]
+    if start.second is not None:
+        here, links = start.second
+        through = [through[port] + current(term.weight, here, links[port]) for port in range(PORTS)]
     x, y, z = (through[2 * axis] + through[2 * axis + 1] for axis in range(3))
     net = (x, y, z)
+    travel = tuple(through[2 * axis + 1] - through[2 * axis] for axis in range(3))
     sigma = start.direction
     count, remainder = rule3(
         (sigma, sigma, sigma), net, term.norm, term.norm, start.count, 0, start.remainder
     )
-    return CountWrites(count, remainder, net)
+    return CountWrites(count, remainder, net, tuple(through), (travel[0], travel[1], travel[2]))

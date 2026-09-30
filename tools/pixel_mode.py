@@ -1,4 +1,4 @@
-"""THE GENERATOR MAKES A BODY (ALGEBRA.md #the-generator, THE GENERATOR IS RULE3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
 
 from __future__ import annotations
 
@@ -17,10 +17,11 @@ from event_universe.core.rule3 import (
     NO_READ,
     coefficients,
     division_forward,
-    form_term,
     rule3,
 )
 from event_universe.features.start import rest
+from event_universe.loader.derived import BY_PLAIN, family_rules
+from event_universe.node import Record, share
 from event_universe.world_files import input_digest, world_files
 
 Axis = tuple[int, int, int]
@@ -66,17 +67,10 @@ def step(
     return np.asarray(nxt, dtype=np.int64)
 
 
-def share_of(board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray) -> np.ndarray:
-    """The record's form's share at every Node in the current's units, the engine's `count_share` (ALGEBRA.md #the-counts-line; issue #1495 finding 6): 3 den (now^2 + before^2) - num now S_6(before), the form's Node term at the plain wall less the Link term by the read act."""
-    num, den = board.pair
-    arrivals = tuple(
-        arrival(before, axis, 1, board.wrap[axis], 0) + arrival(before, axis, -1, board.wrap[axis], 0)
-        for axis in range(3)
-    )
-    node_term = np.asarray(
-        form_term(0, 3 * den, now.astype(np.int64), before.astype(np.int64)), dtype=np.int64
-    )
-    return node_term - np.asarray(rule3((num * now,) * 3, arrivals, 0, 1, 0, 0, 0)[0], dtype=np.int64)
+def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: np.ndarray) -> np.ndarray:
+    """The record's weighted share at every Node in the current's units, the engine's own `node.share` at the paces of the content (ALGEBRA.md #the-counts-line, the lay and the wall): the conserved form's Node term over the Link's pace squared less the plain Link term."""
+    record = Record(now.astype(np.int64), before.astype(np.int64), np.zeros(board.shape, dtype=np.int64))
+    return np.asarray(share(board.pair, record, board.wrap, board.gamma, content), dtype=np.int64)
 
 
 def share_counts(share: np.ndarray, den: int, action: int) -> np.ndarray:
@@ -139,14 +133,14 @@ def dilated(mask: np.ndarray, wrap: tuple[bool, bool, bool]) -> np.ndarray:
 
 
 def purged(keep: np.ndarray, now: np.ndarray, before: np.ndarray) -> list[np.ndarray]:
-    """THE PURGE: the record re-seeded from itself at the peak phase within `keep`, 0 elsewhere, the remainders 0: the waste of a reflecting board left behind (Cheshbon's line of 2026-09-28, 18:05 Israel)."""
+    """The purge: the record re-seeded from itself at the peak phase within `keep`, 0 elsewhere, the remainders 0: the waste of a reflecting board left behind (Cheshbon's line of 2026-09-28, 18:05 Israel)."""
     return [np.where(keep, now, 0), np.where(keep, before, 0), np.zeros(now.shape, dtype=np.int64)]
 
 
 def top_mode(
     board: Board, content: np.ndarray, keep: np.ndarray, seed: np.ndarray, unit: int
 ) -> np.ndarray:
-    """THE ITERATION of the generator (ALGEBRA.md #the-generator (b)): Rule3's read act with the before-coefficient 0, a <- (SUM_a R_a arr_a + S a) div w within the body's region and 0 outside it, then the division act to the amplitude unit (the level times the unit over its largest size): the power iteration of the symmetric form's top mode, the body's bound mode; the stop is the first repeat of the integer vector, exact, no tolerance."""
+    """The iteration of the generator (ALGEBRA.md #the-generator (b)): Rule3's read act with the before-coefficient 0, a <- (SUM_a R_a arr_a + S a) div w within the body's region and 0 outside it, then the division act to the amplitude unit (the level times the unit over its largest size): the power iteration of the symmetric form's top mode, the body's bound mode; the stop is the first repeat of the integer vector, exact, no tolerance."""
     a = np.where(keep, seed, 0).astype(np.int64)
     seen: set[bytes] = set()
     while True:
@@ -235,24 +229,27 @@ def standing(
             previous, read, span = None, 0, 2 * span
 
 
-def held_rows(universe: dict[str, Any]) -> list[tuple[str, tuple[int, int], int]]:
-    """The universe's held content rows, (name, pair, divisor): the rows every record of the world reads at the weight 1 (THE FAMILIES FROM THE RULE); a sign row is read as 0 here, a body of the generator carries no charge."""
+def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int]]:
+    """The held rows a body's family reads by plain, (name, pair, divisor), as the loader derives the reads (ALGEBRA.md #the-paces: every holder of the content): the rows whose levels are the content its record reads; a read by sign is 0 here (a body of the generator is laid real unless a sense is asked, and its sense stands at 0 before the engine's first act)."""
     rows = []
-    for family in universe["families"]:
-        held = family.get("held")
-        if isinstance(held, dict) and held.get("count") == "content":
-            rows.append(
-                (
-                    str(family["name"]),
-                    (int(family["pair"][0]), int(family["pair"][1])),
-                    int(held["divisor"]),
-                )
-            )
-    if not rows:
+    for row in universe["families"]:
+        held = row.get("held")
+        word = str(held["count"]) if isinstance(held, dict) else None
+        divisor = int(held["divisor"]) if isinstance(held, dict) else None
+        rows.append((str(row["name"]), (int(row["pair"][0]), int(row["pair"][1])), word, divisor))
+    names = [row[0] for row in rows]
+    reads = family_rules(rows)[names.index(family)].reads
+    found = [
+        (rows[read.family][0], rows[read.family][1], int(rows[read.family][3] or 1))
+        for read in reads
+        if read.by == BY_PLAIN
+    ]
+    if not found:
         raise ValueError(
-            "the universe file holds no content row: a body needs a held row to bind in (ALGEBRA.md #the-generator)"
+            f"the family {family!r} reads no held row of the content by plain: a body needs a row to bind in "
+            "(ALGEBRA.md #the-generator)"
         )
-    return rows
+    return found
 
 
 def rests(
@@ -261,11 +258,14 @@ def rests(
     wrap: tuple[bool, bool, bool],
     width: int,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Every held row's rest at these counts by the start (features/start: the division act iterated from nothing until it repeats), summed into the content every record reads, and the first (the binding) row's rest alone, the body's own well."""
+    """Every held row's level at these sources as the engine's start holds it, summed into the content every record reads: a row without a gap at its rest by the start (features/start: the division act iterated from nothing until it repeats), a row with a gap laid, the sources through its divisor; and the first (the binding) row's level alone, the body's own well."""
     total = np.zeros(counts.shape, dtype=np.int64)
     binding: np.ndarray | None = None
     for _name, pair, divisor in rows:
-        field = np.asarray(rest(counts, pair, wrap, divisor, width).levels, dtype=np.int64)
+        if pair[0] != pair[1]:
+            field = np.asarray(division_forward(counts, divisor, 0)[0], dtype=np.int64)
+        else:
+            field = np.asarray(rest(counts, pair, wrap, divisor, width).levels, dtype=np.int64)
         total += field
         binding = field if binding is None else binding
     return total, cast(np.ndarray, binding)
@@ -289,7 +289,7 @@ def spread(
     rows: list[tuple[str, tuple[int, int], int]],
     others: np.ndarray,
 ) -> np.ndarray:
-    """THE FIRST LAY: a body declared on one Node is laid over the cube about its centre, its quanta shared alike, the cube widened one Link at a time until every pace is positive (no value of the law: the iteration moves it to the fixed point); a body declared on its Nodes is laid as declared."""
+    """The first lay: a body declared on one Node is laid over the cube about its centre, its quanta shared alike, the cube widened one Link at a time until every pace is positive (no value of the law: the iteration moves it to the fixed point); a body declared on its Nodes is laid as declared."""
     if int(np.count_nonzero(first)) > 1:
         return first.copy()
     quanta = int(first.sum())
@@ -340,7 +340,7 @@ def scaled_record(
             raise ValueError(
                 f"the record of the body of {quanta} quanta about the Node {list(centre)} scaled at {scale} "
                 "does not stand: a purged record repeats before two consecutive whole periods of its reading "
-                "at its centre agree (THE GENERATOR IS RULE3)"
+                "at its centre agree (the generator is Rule3)"
             )
         return record
 
@@ -369,8 +369,8 @@ def body_fixed_point(
     centre: Axis,
     quanta: int,
     first: np.ndarray,
-) -> tuple[np.ndarray, Standing, np.ndarray]:
-    """THE BODY IS THE FIXED POINT OF ITS BINDING ROW: from a first lay of its quanta, the rests of every held row at all counts (the other bodies' counts standing), the body's region from its own well, its standing record seeded with the well's shape and scaled until the form over the region carries its quanta, the counts the form; repeated until the counts return within the rounding at every Node; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive)."""
+) -> tuple[np.ndarray, np.ndarray, Standing, np.ndarray, np.ndarray]:
+    """The body is the fixed point of its binding row: from a first lay of its quanta, the rests of every held row at all sources (the other bodies' standing), the body's region from its own well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the sources the record's plain form (the vacuum's share, the form that sources the fields); repeated until the sources return within the rounding at every Node; returns the sources, the counts the engine lays (the weighted share at the paces), the record, the region and the content; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive)."""
     counts = first.copy()
     num, den = board.pair
     rounds: set[bytes] = set()
@@ -397,16 +397,24 @@ def body_fixed_point(
                 f"[{a}, {level}], not above the band's top 2 x {num} / {den} and below 2; its quanta are below its "
                 "binding row's window of mass (ALGEBRA.md #the-generator)"
             )
-        laid = np.where(  # the lay the engine makes at its first act, from the levels one step on
-            region,
-            share_counts(share_of(board, content, record.next, record.now), board.pair[1], board.action),
-            0,
+        # the form that sources the fields (the vacuum's share at the written moment, as the engine's
+        # start reads it) and the count the engine lays at its first act (the weighted share at the
+        # paces, from the levels one step on)
+        laid = np.where(
+            region, share_counts(share_of(board, 0, record.now, record.before), den, board.action), 0
         )
         if bool(np.all(within(laid - counts, np.maximum(laid, counts)))):
-            return laid, record, region
+            # the content the engine's start holds under these sources, and the count it lays there
+            content, _well = rests(rows, others + laid, board.wrap, board.width)
+            remainder = np.zeros(board.shape, dtype=np.int64)
+            nxt = step(board, content, record.now.copy(), record.before.copy(), remainder)
+            weighted = np.where(
+                region, share_counts(share_of(board, content, nxt, record.now), den, board.action), 0
+            )
+            return laid, weighted, record, region, content
         counts = (counts + laid) // 2  # the half step: the deep well overshoots under the whole step
     raise ValueError(
-        f"the body of {quanta} quanta about the Node {list(centre)} finds no fixed point: its counts repeat before they and its form return each other within the rounding (THE GENERATOR IS RULE3)"
+        f"the body of {quanta} quanta about the Node {list(centre)} finds no fixed point: its counts repeat before they and its form return each other within the rounding (the generator is Rule3)"
     )
 
 
@@ -446,15 +454,47 @@ def body_entry(
     return entry
 
 
-def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
-    """The mode document of a world of bodies: `world_digest` and `bodies`, one entry per measured event in the world's order, each the standing record of the whole body; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's)."""
+def rotating(
+    board: Board, content: np.ndarray, record: Standing, keep: np.ndarray, sense: int
+) -> tuple[list[np.ndarray], np.ndarray, np.ndarray]:
+    """A body laid with a sense (ALGEBRA.md #the-paces, the sign is the rotation sense): its record and its second level pair, sense x the standing record a quarter period on by Rule3 (the mode's own rotation, the period [window, 2]), both within the kept region and scaled by one factor so the two pairs' plain form at the written moment is the record's own (the start's sources, and so the well, unchanged); returns [re_now, re_before, im_now, im_before], the counts the engine lays from both at its first act and the form that sources the fields (the vacuum's share)."""
+    now, before = record.now.copy(), record.before.copy()
+    remainder = np.zeros(board.shape, dtype=np.int64)
+    quarter = (
+        record.window
+    )  # the period is [window, 2]: a quarter period is window div 8, three halvings
+    for _ in range(3):
+        quarter = int(division_forward(quarter, 2, 0)[0])
+    for _ in range(quarter):
+        now, before = step(board, content, now, before, remainder), now
+    pairs = [np.where(keep, level, 0) for level in (record.now, record.before, now, before)]
+    own = int(share_of(board, 0, pairs[0], pairs[1]).sum())
+    both = own + int(share_of(board, 0, pairs[2], pairs[3]).sum())
+    amplitude = max(int(np.abs(level).max()) for level in pairs)
+    scale = isqrt(int(division_forward(amplitude * amplitude * own, both, 0)[0]))
+    found = [
+        np.asarray(division_forward(level * scale, amplitude, 0)[0], dtype=np.int64) for level in pairs
+    ]
+    found[2], found[3] = sense * found[2], sense * found[3]
+    total, plain = np.zeros(board.shape, dtype=np.int64), np.zeros(board.shape, dtype=np.int64)
+    for first in (0, 2):
+        level_now, level_before = found[first].copy(), found[first + 1].copy()
+        rest_remainder = np.zeros(board.shape, dtype=np.int64)
+        nxt = step(board, content, level_now, level_before, rest_remainder)
+        total = total + share_of(board, content, nxt, level_now)
+        plain = plain + share_of(board, 0, level_now, level_before)
+    den, action = board.pair[1], board.action
+    return found, share_counts(total, den, action), share_counts(plain, den, action)
+
+
+def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dict[str, Any]:
+    """The mode document of a world of bodies: `world_digest` and `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record); the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's)."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
     integers = universe["integers"]
     if "quantum_action" not in integers:
         raise ValueError(
             "the universe file declares no quantum_action T: the count c = D div T needs it"
         )
-    rows = held_rows(universe)
     pairs = {
         family["name"]: (int(family["pair"][0]), int(family["pair"][1]))
         for family in universe["families"]
@@ -474,34 +514,61 @@ def pixel_mode(document: dict[str, Any]) -> dict[str, Any]:
             pairs[body["family"]],
             int(2 ** int(integers["width"]) - 1),
         )
+        rows = held_rows(universe, str(body["family"]))
         lays.append(
             (spread(counts, centre, board, rows, np.zeros(shape, dtype=np.int64)), centre, quanta)
         )
     all_counts = sum((counts for counts, _centre, _quanta in lays), np.zeros(shape, dtype=np.int64))
-    entries, regions = [], []
-    for number, body in enumerate(bodies):
-        counts, centre, quanta = lays[number]
-        board = Board(
-            shape,
-            (wrap[0], wrap[1], wrap[2]),
-            gamma,
-            int(integers["quantum_action"]),
-            pairs[body["family"]],
-            int(2 ** int(integers["width"]) - 1),
-        )
-        laid, record, region = body_fixed_point(board, rows, all_counts - counts, centre, quanta, counts)
-        for other, taken in enumerate(regions):
-            if bool(np.any(taken & region)):
-                raise ValueError(
-                    f"measured[{number}] and measured[{other}] share a Node in their regions: two bodies stand apart or are one body"
+    entries: list[dict[str, Any]] = []
+    # two passes where there are two bodies or more: the second lays each body in the others' sources
+    # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its form)
+    for _round in range(2 if len(bodies) > 1 else 1):
+        entries = []
+        regions: list[np.ndarray] = []
+        for number, body in enumerate(bodies):
+            counts, centre, quanta = lays[number]
+            board = Board(
+                shape,
+                (wrap[0], wrap[1], wrap[2]),
+                gamma,
+                int(integers["quantum_action"]),
+                pairs[body["family"]],
+                int(2 ** int(integers["width"]) - 1),
+            )
+            rows = held_rows(universe, str(body["family"]))
+            laid, weighted, record, region, content = body_fixed_point(
+                board, rows, all_counts - counts, centre, quanta, counts
+            )
+            sense = (senses or [])[number] if number < len(senses or []) else 0
+            if sense not in (-1, 0, 1):
+                raise ValueError(f"measured[{number}]: a sense is +1 or -1 (0: none), got {sense}")
+            levels: list[np.ndarray] = []
+            if sense:
+                levels, turned, plain = rotating(
+                    board, content, record, dilated(region, board.wrap), sense
                 )
-        regions.append(region)
-        all_counts = all_counts - counts + laid
-        body["nodes"] = [
-            {"node": [int(x), int(y), int(z)], "count": int(laid[x, y, z])}
-            for x, y, z in zip(*np.nonzero(laid), strict=True)
-        ]
-        entries.append(body_entry(record, board, region, body, quanta, int(record.clock[1])))
+                weighted, laid = np.where(region, turned, 0), np.where(region, plain, 0)
+            for other, taken in enumerate(regions):
+                if bool(np.any(taken & region)):
+                    raise ValueError(
+                        f"measured[{number}] and measured[{other}] share a Node in their regions: two bodies stand apart or are one body"
+                    )
+            regions.append(region)
+            all_counts = all_counts - counts + laid
+            lays[number] = (laid, centre, quanta)
+            entry = body_entry(record, board, region, body, quanta, int(record.clock[1]))
+            entry["nodes"] = [
+                {"node": [int(x), int(y), int(z)], "count": int(weighted[x, y, z])}
+                for x, y, z in zip(*np.nonzero(weighted), strict=True)
+            ]
+            if levels:
+                words = ("now", "before", "im_now", "im_before")
+                entry["moving"] = {
+                    word: level.ravel().tolist() for word, level in zip(words, levels, strict=True)
+                }
+            entries.append(entry)
+    for body, entry in zip(bodies, entries, strict=True):
+        body["nodes"] = entry.pop("nodes")
     return {"world_digest": input_digest(document), "bodies": entries}
 
 
@@ -518,9 +585,16 @@ def main(argv: list[str] | None = None) -> None:
         type=Path,
         help="the mode file to write; beside the world as <world>.mode.json when omitted",
     )
+    parser.add_argument(
+        "--sense",
+        type=int,
+        nargs="*",
+        default=[],
+        help="the rotation sense of each body in the world's order, +1 or -1 (0: a real record, neutral)",
+    )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
-    mode = pixel_mode(document)
+    mode = pixel_mode(document, list(args.sense))
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
     out.write_text(json.dumps(mode) + "\n", encoding="utf-8")

@@ -15,7 +15,10 @@ SRC = ROOT / "src" / "event_universe"
 # The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
-    "game_board.py": "the GameBoard: the NodeStates, the bodies' ledgers, the detectors, the interval forward and back, the output lines and the books",
+    "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
+    "flow.py": "the flows into a held row's vector and tensor parts, each a carried division of Rule3",
+    "bodies.py": "the bodies' ledgers, their Nodes following their counts and their givings at the Ports the count's line crossed",
+    "reports.py": "the detectors' reports, the output lines and the books, readings of whole-board arrays",
     "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
     "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies' held quanta laid by the carried division",
     "loader/derived.py": "the families from the rule and the amplitude bound A derived from the width",
@@ -278,7 +281,7 @@ def test_every_root_is_listed_with_its_reason_and_the_list_is_the_inventory() ->
     assert found - listed == set(), f"a root outside the list: {sorted(found - listed, key=str)}"
     assert listed - found == set(), f"a listed root no longer there: {sorted(listed - found, key=str)}"
     for key, reason in ALLOWED_ROOTS.items():
-        assert reason.startswith(("at load", "AT RUN TIME", "a predicate", "the integer square root")), (
+        assert reason.startswith(("at load", "at run time", "a predicate", "the integer square root")), (
             key
         )
 

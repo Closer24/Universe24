@@ -1,0 +1,14 @@
+{
+ "integers": {
+  "node_clock": 6000,
+  "quantum_action": 32768,
+  "width": 63
+ },
+ "families": [
+  {"name": "gravity", "pair": [6000, 6000], "held": {"count": "content", "divisor": 1}},
+  {"name": "charge", "pair": [6000, 6000], "held": {"count": "sign", "divisor": 1}},
+  {"name": "polarisation", "pair": [3000, 6000], "held": {"count": "content", "divisor": 1}},
+  {"name": "matter", "pair": [4000, 6000]},
+  {"name": "third", "pair": [-3000, 6000]}
+ ]
+}

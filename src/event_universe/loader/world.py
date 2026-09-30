@@ -43,12 +43,13 @@ MODE_BODY_KEYS = (
     "profile",
     "moving",
 )
-MOVING_KEYS = ("now", "before")
+MOVING_KEYS = ("now", "before", "im_now", "im_before")
+LEVEL_KEYS, SENSE_KEYS = ("now", "before"), ("im_now", "im_before")
 
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts, the quanta of other families it holds laid over its Nodes (family, count per Node), and its family's two levels from the mode file over the whole GameBoard in x-major order."""
+    """A body as declared: its family, its Nodes in the declared order with their counts, the quanta of other families it holds laid over its Nodes (family, count per Node), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file over the whole GameBoard in x-major order."""
 
     family: int
     nodes: tuple[Node, ...]
@@ -56,6 +57,8 @@ class BodyRow:
     holds: tuple[tuple[int, tuple[int, ...]], ...]
     now: tuple[int, ...]
     before: tuple[int, ...]
+    im_now: tuple[int, ...]
+    im_before: tuple[int, ...]
 
 
 @dataclass(frozen=True)
@@ -171,17 +174,19 @@ def spread(total: int, counts: tuple[int, ...]) -> tuple[int, ...]:
 def levels_of(
     entry: object, label: str, family: FamilyRule, size: int, bound: int
 ) -> tuple[tuple[int, ...], ...]:
-    """A body's two levels from its mode entry, `moving`'s now and before, each one integer per Node in x-major order within the amplitude bound A; the generator's readings beside them are read and not used."""
+    """A body's two level pairs from its mode entry: `moving`'s now and before, and its im_now and im_before (the second level pair, the rotation sense; both or neither, 0 where absent), each one integer per Node in x-major order within the amplitude bound A; a sense without a rotation (a second pair on real levels at 0) is refused by name; the generator's readings beside them are read and not used."""
     mode = keyed(entry, label, MODE_BODY_KEYS, ("family", "pair", "moving"))
     if mode["family"] != family.name or mode["pair"] != list(family.pair):
         raise ValueError(
             f"{label} is of the family {mode['family']!r} with the pair {mode['pair']}, the body of "
             f"{family.name!r} with {list(family.pair)}"
         )
-    words = keyed(mode["moving"], f"{label}.moving", MOVING_KEYS, MOVING_KEYS)
+    words = keyed(mode["moving"], f"{label}.moving", MOVING_KEYS, LEVEL_KEYS)
+    if (SENSE_KEYS[0] in words) != (SENSE_KEYS[1] in words):
+        raise ValueError(f"{label}.moving declares im_now and im_before together, or neither")
     found = []
     for word in MOVING_KEYS:
-        values = words[word]
+        values = words.get(word, [0] * size)
         if (
             not isinstance(values, list)
             or len(values) != size
@@ -193,7 +198,12 @@ def levels_of(
         if max(abs(v) for v in values) > bound:
             raise ValueError(f"{label}'s {word} level is above the amplitude bound A = {bound}")
         found.append(tuple(values))
-    return found[0], found[1]
+    if any(found[2] + found[3]) and not any(found[0] + found[1]):
+        raise ValueError(
+            f"{label}.moving carries a sense without a rotation: its second level pair stands on real "
+            "levels at 0 at every Node (ALGEBRA.md #the-paces, the sign is the rotation sense)"
+        )
+    return found[0], found[1], found[2], found[3]
 
 
 def bodies_of(
@@ -243,10 +253,12 @@ def bodies_of(
             raise ValueError(
                 f"{label} has no entry in the mode file beside the world: its levels are the generator's"
             )
-        now, before = levels_of(
+        now, before, im_now, im_before = levels_of(
             entries[number], f"the mode file's bodies[{number}]", families[family], size, bound
         )
-        found.append(BodyRow(family, tuple(nodes), tuple(counts), tuple(holds), now, before))
+        found.append(
+            BodyRow(family, tuple(nodes), tuple(counts), tuple(holds), now, before, im_now, im_before)
+        )
     return tuple(found)
 
 

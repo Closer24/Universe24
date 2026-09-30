@@ -10,7 +10,6 @@
   "tests/test_pixel_mode.py": 1.7,
   "tests/test_rule3.py": 0.0,
   "tests/test_the_bound_body.py": 2.6,
-  "tests/test_the_click.py": 3.9,
   "tests/test_the_counts_line.py": 0.0,
   "tests/test_the_node.py": 4.8,
   "tests/test_weak_field_rule.py": 0.0

@@ -122,7 +122,7 @@ integer bounds, local capacity and declared per-tick conservation. Check momentu
 and isolated-motion acceptance when the selected historical candidate requires them.
 Frame stride changes recording only, never the physical update interval. On a
 failure retain the trace and failed metadata for the retention period. If visualization was requested,
-also retain the failure frame and FAILED RUN HTML report. Do not smooth the
+also retain the failure frame and failed-run HTML report. Do not smooth the
 trajectory or silently rerun with weaker parameters.
 
 Inspect metadata and events for every run. Only when visualization was requested,

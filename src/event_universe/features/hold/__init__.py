@@ -1,4 +1,4 @@
-"""The hold: a held family's time part gains at every Node the source there over the row's divisor, (w x n_i + r) div E_s by the write's carried division with the remainder r carried at the Node, n_i the well of the families whose bodies source it (ALGEBRA.md #the-primitives, the row "the hold"; #the-interval), the division Rule3's act in either direction; the parts of the row's rank, 1, 1 + 3 or 1 + 3 + 6 components (ALGEBRA.md #a-familys-declaration)."""
+"""The hold: a held family's parts gain at every Node their source over the row's divisor by the write's carried division with the remainder carried at the Node (ALGEBRA.md #the-primitives, the row "the hold"; #the-interval): the time part (w x n_i + r) div E_s with n_i the well of the families that source it, the vector part (w x j_a + r_a) div (E_s W_c) with j_a the count's line's travel, the tensor part ((w x j_a j_b) div c_i + r_ab) div (E_s W_c^2) where the count c_i is above 0; the division Rule3's act in either direction; the parts of the row's rank, 1, 1 + 3 or 1 + 3 + 6 components (ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
