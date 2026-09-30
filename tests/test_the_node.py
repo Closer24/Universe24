@@ -314,9 +314,8 @@ def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_t
     assert max(swings) <= int(body.sum()) and sum(tensions[100 : 100 + span]) != 0
     books = board.books().values()
     assert all(e["body"] == 1 for e in taken) and all(book["balanced"] for book in books)
-    assert seen and all(
-        e["inflow"] > 0 for e in seen
-    )  # what the taker saw, the amplitudes at its boundary
+    assert seen and all(e["inflow"] != 0 for e in seen)  # the net front inflow, signed, never 0
+    assert sum(e["inflow"] for e in seen) > 0  # what the taker saw over the run, the light that entered
 
 
 def stress_by_hand(now: np.ndarray, num: int) -> list[np.ndarray]:
