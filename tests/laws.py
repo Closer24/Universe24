@@ -1,4 +1,4 @@
-"""The helpers of the law's tests: a module loaded by its path (a tool), and the generator's body of ALGEBRA.md #the-generator laid by the pixel tool on the rule's own universe (examples/events/planck.json)."""
+"""The helpers of the law's tests: a module loaded by its path (a tool), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`)."""
 
 from __future__ import annotations
 
@@ -8,6 +8,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+EVENTS = ROOT / "examples" / "events"
+UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, every divisor 1
+CHAIN, QUANTA = 48, 50  # a chain of 48 Nodes (x open) and a body of 50 quanta: five Nodes
 
 
 def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
@@ -20,56 +23,39 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-BODY_24 = 16  # a body of the generator at Gamma 24 under T = 128: seven Nodes; a cloud at 12 and below, a collapse at 48 (the Link's pace at 0), the window read on 2026-09-29
-
-
-def body_at_24(tmp_path: Path, tool, quanta: int = BODY_24, centre=(6, 6, 6), mode: bool = True) -> Path:
-    """The rule's own universe (examples/events/planck.json: T = 64, binding [23, 24] at 2, gravity at 10) copied beside a world of one body declared on one Node with `quanta` at `centre` on an open box of 13; the generator lays the body over its Nodes and writes its mode file when asked."""
-    events = ROOT / "examples" / "events"
-    (tmp_path / "u.json").write_bytes((events / "planck.json").read_bytes())
-    (tmp_path / "e.json").write_bytes((events / "engine_start.json").read_bytes())
-    body = dict(family="matter", nodes=[dict(node=list(centre), count=quanta)])
-    document = dict(shape=[13, 13, 13], boundary=dict(x="open", y="open", z="open"), detectors=[])
-    document.update(ticks=64, face_depth=1, universe="u.json", engine="e.json", measured=[body])
-    (world := tmp_path / "body.json").write_text(json.dumps(document), encoding="utf-8")
-    if mode:
-        tool.main(["--input", str(world)])  # the body's Nodes and the record Rule3 makes of them
-    return world
+def universe_beside(tmp_path: Path, drop: tuple[str, ...] = (), **pairs: list[int]) -> None:
+    """The tests' universe copied beside a world as u.json (the families `drop` names left out, a family's pair replaced where `pairs` names it) with the engine's start file as e.json."""
+    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    universe["families"] = [family for family in universe["families"] if family["name"] not in drop]
+    for family in universe["families"]:
+        family["pair"] = pairs.get(family["name"], family["pair"])
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
 
 def chain_body_world(
     tmp_path: Path,
     tool,
-    quanta: int = 600,
-    length: int = 240,
-    taker_at: int | None = None,
+    quanta: int = QUANTA,
+    at: tuple[int, ...] = (CHAIN // 2,),
     holds: dict[str, int] | None = None,
-    charge: list[int] | None = None,
+    senses: tuple[int, ...] = (),
+    taker: bool = False,
+    mode: bool = True,
 ) -> Path:
-    """The universe of Gamma 6000 (examples/events/planck_6000.json, T = 32768, without its massless row gravity: the binding row alone binds the chain) copied beside a chain of `length` Nodes (x open) with one body of matter declared on its middle Node with `quanta`, and where `taker_at` names a Node a second body of `quanta` there (holding `holds` of other families) read by the detector `taker` (the charge's pair `charge` in place of the file's where given), laid by the pixel tool: the bodies' Nodes with their counts and the mode file beside them."""
-    events = ROOT / "examples" / "events"
-    universe = json.loads((events / "planck_6000.json").read_text(encoding="utf-8"))
-    # the chain's body is bound by its binding row alone, and the massless row's rest on an open chain of
-    # 240 is the start's slowest (the iteration from nothing about 760,000 acts): the chain's universe leaves it out
-    universe["families"] = [row for row in universe["families"] if row.get("name") != "gravity"]
-    for family in universe["families"]:
-        if family.get("name") == "charge" and charge is not None:
-            family["pair"] = charge
-    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (tmp_path / "e.json").write_bytes((events / "engine_start.json").read_bytes())
-
-    def body_at(x: int) -> dict[str, object]:
-        return dict(family="matter", nodes=[dict(node=[x, 0, 0], count=quanta)])
-
-    measured = [body_at(length // 2)]
-    detectors: list[dict[str, object]] = []
-    if taker_at is not None:
-        measured.append({**body_at(taker_at), **({"holds": holds} if holds else {})})
-        detectors.append({"name": "taker", "block": 1})
+    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last holding `holds` of other families, read by the detector `taker` where asked), rotating in the `senses` given, laid by the generator: the bodies' Nodes with their counts and the mode file beside them."""
+    universe_beside(tmp_path)
+    measured: list[dict[str, object]] = [
+        dict(family="matter", nodes=[dict(node=[x, 0, 0], count=quanta)]) for x in at
+    ]
+    if holds:
+        measured[-1]["holds"] = holds
+    detectors = [{"name": "taker", "block": len(at) - 1}] if taker else []
     document = dict(
-        shape=[length, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), detectors=detectors
+        shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), detectors=detectors
     )
     document.update(ticks=400, face_depth=1, universe="u.json", engine="e.json", measured=measured)
     (world := tmp_path / "chain.json").write_text(json.dumps(document), encoding="utf-8")
-    tool.main(["--input", str(world)])
+    if mode:
+        tool.main(["--input", str(world), "--sense", *(str(sense) for sense in senses)])
     return world

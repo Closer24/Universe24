@@ -5,13 +5,14 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 from math import isqrt
+from typing import Any
 
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import clock_pace
 
-# by "plain" reads the level as it is; by "sign" reads it with the reading family's own sign q
+# by "plain" reads the level as it is; by "sign" reads it with the reader's own sign q at the Node
 BY_PLAIN = "plain"
 BY_SIGN = "sign"
 
@@ -21,10 +22,10 @@ TOTAL_BOUND = MAX_WORK_INT  # the reads' sum within the work integer's width, th
 
 @dataclass(frozen=True)
 class SignedReadTerm:
-    """The reading family's declaration: its reads (family, weight, by), its sign q, its pair and the Node clock Gamma."""
+    """The reading family's declaration: its reads (family, weight, by), its sign q (an integer or one per Node, the sign of its own sense there), its pair and the Node clock Gamma."""
 
     reads: tuple[tuple[int, int, str], ...]
-    q: int
+    q: Any
     pair: tuple[int, int]
     gamma: int
 
@@ -79,10 +80,11 @@ def content_of(term: SignedReadTerm, start: SignedReadStart) -> np.ndarray:
                 f"the read of family {other} is by {by!r}: by {BY_PLAIN!r} or by {BY_SIGN!r} "
                 "(ALGEBRA.md #the-paces)"
             )
-        factor = weight if by == BY_PLAIN else -term.q * weight
-        if factor:
+        factor = weight if by == BY_PLAIN else -np.asarray(term.q) * weight
+        size = int(np.max(np.abs(factor)))
+        if size:
             argument = start.arguments[other]
-            reach += abs(factor) * int(np.max(np.abs(argument)))
+            reach += size * int(np.max(np.abs(argument)))
             if reach > TOTAL_BOUND:
                 raise ValueError(
                     f"the read of family {other} at the weight {weight} reaches {reach} with the "

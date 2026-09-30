@@ -382,7 +382,7 @@ recap what the reader wrote; a number only when it changes what the reader
 does. The same holds for every exchange between the Boss and a session.
 The log record keeps the full text; the message does not.
 
-THE FOUR ANSWERS (record 1299: "when you turn to me with something that
+The four answers (record 1299: "when you turn to me with something that
 needs me, tell me what the generic law is, why I am needed, what you
 recommend, and what we get out of it"): every item put to the owner
 carries, one line each, in plain words, before the ask: (1) the generic law

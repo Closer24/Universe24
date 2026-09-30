@@ -1,4 +1,4 @@
-"""THE COUNT'S LINE (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is conserved and filled; THE EXACT BANDS (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""The count's line (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is conserved and filled; The exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
 from __future__ import annotations
 
@@ -49,7 +49,7 @@ def periodic_start(count: np.ndarray, remainder: np.ndarray, direction: int, lev
 
 
 def test_the_count_is_conserved_to_the_bit_and_the_inverse_returns_the_start():
-    """THEOREM (the count is conserved): on a periodic GameBoard SUM (W_c c + r) is constant; THE INVERSE is the same line with the current reversed, exact."""
+    """Theorem (the count is conserved): on a periodic GameBoard SUM (W_c c + r) is constant; the inverse is the same line with the current reversed, exact."""
     draw, shape = np.random.default_rng(7), (4, 4, 4)
     wall, weight = 3 * 24 * 128, 16
     now = draw.integers(-500, 500, shape).astype(np.int64)
@@ -65,7 +65,7 @@ def test_the_count_is_conserved_to_the_bit_and_the_inverse_returns_the_start():
 
 
 def test_a_hole_is_conserved_by_the_line_and_the_inverse_fills_it():
-    """THE REMAINDER'S ORIGIN: a Node with no quantum reads the count -1 at its first outward swing, a hole the line conserves (SUM (W_c c + r) unchanged, the remainder in range) and the inverse fills exactly (issue #1495 finding 7: the plain division act, no block)."""
+    """The remainder's origin: a Node with no quantum reads the count -1 at its first outward swing, a hole the line conserves (SUM (W_c c + r) unchanged, the remainder in range) and the inverse fills exactly (issue #1495 finding 7: the plain division act, no block)."""
     shape, wall = (3, 3, 3), 3 * 24 * 128
     now, before = np.zeros(shape, dtype=np.int64), np.zeros(shape, dtype=np.int64)
     now[1, 1, 1], before[0, 1, 1] = 100_000, 100_000  # a current out of the centre through one Port
@@ -81,7 +81,7 @@ def test_a_hole_is_conserved_by_the_line_and_the_inverse_fills_it():
 
 @pytest.mark.parametrize(("pair", "period"), [((1, 2), 6), ((0, 1), 4), ((-1, 2), 3)])
 def test_the_exact_bands_turn_with_no_remainder(pair, period):
-    """THE EXACT BANDS: a Node at rest in the vacuum (its six reads its own level) turns by 2 cos omega = 2 num / den; the three integer rotations 1, 0 and -1 close in 6, 4 and 3 intervals with the remainder 0 at every step."""
+    """The exact bands: a Node at rest in the vacuum (its six reads its own level) turns by 2 cos omega = 2 num / den; the three integer rotations 1, 0 and -1 close in 6, 4 and 3 intervals with the remainder 0 at every step."""
     num, den = pair
     (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
     before, now = 0, 1_000

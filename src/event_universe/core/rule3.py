@@ -28,11 +28,7 @@ def coefficients(
         read = pace * num
         return (read, read, read), 6 * den * content, 3 * den * gamma
     clock_squared = pace * pace + content * content
-    paces = (
-        pace - content - axis_contents[0],
-        pace - content - axis_contents[1],
-        pace - content - axis_contents[2],
-    )
+    paces = link_paces(gamma, content, axis_contents)
     gamma_squared = gamma * gamma
     reads = (
         2 * paces[0] * paces[0] * num,
@@ -42,6 +38,14 @@ def coefficients(
     squares = paces[0] * paces[0] + paces[1] * paces[1] + paces[2] * paces[2]
     self_coefficient = 12 * (den * gamma_squared - (den - num) * clock_squared) - 4 * num * squares
     return reads, self_coefficient, 6 * den * gamma_squared
+
+
+def link_paces(
+    gamma: Any, content: Any, axis_contents: tuple[Any, ...] = ISOTROPIC
+) -> tuple[Any, Any, Any]:
+    """The Link's paces at a Node, p_a = Gamma - 2 c - t_a, the level on the Link twice and the axis content once (ALGEBRA.md #the-paces)."""
+    pace = gamma - content - content
+    return (pace - axis_contents[0], pace - axis_contents[1], pace - axis_contents[2])
 
 
 def clock_pace(gamma: Any, content: Any) -> Any:

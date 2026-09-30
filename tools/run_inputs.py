@@ -1,4 +1,4 @@
-"""THE ONE COMMAND: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason), run on the GameBoard for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the output lines `click`, `giving` and `gather` (the reports, the measurements) and the books (a GameBoard diagnostic). The output carries no time.
+"""The one command: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason), run on the GameBoard for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the output lines `click`, `giving` and `gather` (the reports, the measurements) and the books (a GameBoard diagnostic). The output carries no time.
 
 Run with PYTHONPATH set to the checkout's src:
 

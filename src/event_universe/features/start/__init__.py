@@ -1,4 +1,4 @@
-"""THE START (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the pace 1 with the sum's sources, 6 den a = num S_6(a) + 3 den sigma at a fine unit derived from the width, the division act iterated from nothing until the levels repeat (the map monotone from nothing, its first repeat its fixed point), the levels the nearest integers by the division act; the remainder at the half wall, the division's origin, and the hold's carry E_s div 2 at the sources' Nodes; on a chain and a box alike, in the engine and in the generator."""
+"""The start (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the pace 1 with the sum's sources, 6 den a = num S_6(a) + 3 den sigma at a fine unit derived from the width, the division act iterated from nothing until the levels repeat (the map monotone from nothing, its first repeat its fixed point), the levels the nearest integers by the division act; the remainder at the half wall, the division's origin, and the hold's carry E_s div 2 at the sources' Nodes; on a chain and a box alike, in the engine and in the generator."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""THE SIGNED READ WITH THE TWO-SIDED GUARD, its own folder (ALGEBRA.md #the-paces): the content as it is, no floor, the reads summed by plain and by sign, the guard's edge (the checkerboard factor at -2) admits and refuses by name."""
+"""The signed read with the two-sided guard, its own folder (ALGEBRA.md #the-paces): the content as it is, no floor, the reads summed by plain and by sign, the guard's edge (the checkerboard factor at -2) admits and refuses by name."""
 
 from __future__ import annotations
 
@@ -64,7 +64,7 @@ def test_a_massless_family_is_refused_at_any_content_below_zero_and_every_family
 
 
 def test_a_multi_read_sum_by_sign_and_no_reads():
-    """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0."""
+    """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a read by sign with q per Node (+1 and -1, the senses at the Nodes) enters one level with opposite signs."""
     shape, a = (2, 1, 1), np.array([[[5]], [[7]]], dtype=np.int64)
     b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
     term = SignedReadTerm(
@@ -79,6 +79,10 @@ def test_a_multi_read_sum_by_sign_and_no_reads():
         SignedReadTerm((), 0, (1, 1), GAMMA), SignedReadStart(shape, {}, None), SignedReadOwn(1, "x", 0)
     )
     assert not silent.content.any() and silent.content.shape == shape
+    q, level = np.array([[[1]], [[-1]]], dtype=np.int64), np.full(shape, 7, dtype=np.int64)
+    term = SignedReadTerm(((3, 1, signed_read.BY_SIGN),), q, (800, 850), GAMMA)  # q per Node
+    hill = apply(term, SignedReadStart(shape, {3: level}, None), SignedReadOwn(0, "matter", 0))
+    assert hill.content.ravel().tolist() == [-7, 7]  # opposite senses read one level oppositely
 
 
 def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_by_name():

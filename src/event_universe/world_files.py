@@ -12,7 +12,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
 def input_digest(document: dict[str, object]) -> str:
-    """THE FILE'S DIGEST: SHA-256 of the canonical JSON (the keys sorted, no spaces, ASCII) of the document, the mode file's `world_digest` of the world it stands beside."""
+    """The file's digest: SHA-256 of the canonical JSON (the keys sorted, no spaces, ASCII) of the document, the mode file's `world_digest` of the world it stands beside."""
     canonical = json.dumps(document, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
     return hashlib.sha256(canonical.encode("ascii")).hexdigest()
 
