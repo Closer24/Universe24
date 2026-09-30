@@ -268,19 +268,13 @@ def rests(
     counts: np.ndarray,
     wrap: Wrap,
     width: int,
-) -> tuple[np.ndarray, np.ndarray]:
-    """Every held row's level at these sources as the engine's start holds it, summed into the content every record reads: a row without a gap at its rest by the start (features/start: the division act iterated from nothing until it repeats), a row with a gap laid, the sources through its divisor; and the first (the binding) row's level alone, the body's own well."""
+) -> np.ndarray:
+    """Every held row's level at these sources as the engine's start holds it, each row at the rest of its own line by the start (features/start: the division act iterated from nothing until it repeats, at the row's pair and divisor, with or without a gap), summed into the content every record reads: at a body's own sources alone, the body's own well."""
     total = np.zeros(counts.shape, dtype=np.int64)
-    binding: np.ndarray | None = None
     for _name, pair, divisor in rows:
-        if pair[0] != pair[1]:
-            field = np.asarray(division_forward(counts, divisor, 0)[0], dtype=np.int64)
-        else:
-            wall = 3 * pair[1]  # the plain rule's wall, the one the row steps by
-            field = np.asarray(rest(counts, pair, wrap, divisor, width, wall).levels, dtype=np.int64)
-        total += field
-        binding = field if binding is None else binding
-    return total, cast(np.ndarray, binding)
+        wall = 3 * pair[1]  # the plain rule's wall, the one the row steps by
+        total += np.asarray(rest(counts, pair, wrap, divisor, width, wall).levels, dtype=np.int64)
+    return total
 
 
 def region_of(counts: np.ndarray, well: np.ndarray, centre: Axis, wrap: Wrap) -> np.ndarray:
@@ -312,7 +306,7 @@ def spread(
         nodes = int(cube.sum())
         counts = np.where(cube, int(division_forward(quanta, nodes, 0)[0]), 0).astype(np.int64)
         counts[centre] += quanta - int(counts.sum())
-        content, _well = rests(
+        content = rests(
             rows, counts, board.wrap, board.width
         )  # the body alone: the others are spread in their turn
         if (
@@ -386,8 +380,8 @@ def body_fixed_point(
     rounds: set[bytes] = set()
     while (key := counts.tobytes()) not in rounds:
         rounds.add(key)
-        content, _well = rests(rows, others + counts, board.wrap, board.width)
-        _content, well = rests(
+        content = rests(rows, others + counts, board.wrap, board.width)
+        well = rests(
             rows, counts, board.wrap, board.width
         )  # the region from the body's own well, the others' wells aside
         if 2 * int(content.max()) >= board.gamma:
@@ -415,7 +409,7 @@ def body_fixed_point(
         )
         if bool(np.all(within(laid - counts, np.maximum(laid, counts)))):
             # the content the engine's start holds under these sources, and the count it lays there
-            content, _well = rests(rows, others + laid, board.wrap, board.width)
+            content = rests(rows, others + laid, board.wrap, board.width)
             remainder = np.zeros(board.shape, dtype=np.int64)
             nxt = step(board, content, record.now.copy(), record.before.copy(), remainder)
             weighted = np.where(

@@ -81,7 +81,7 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part without a gap at the rest of its line, and every one with a gap laid, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the form that sources the fields (the vacuum's share of the two level pairs, laid at the count's wall) at the weight with which the record's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at the sources' Nodes."""
+        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the form that sources the fields (the vacuum's share of the two level pairs, laid at the count's wall) at the weight with which the record's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at the sources' Nodes."""
         forms = []
         for row in self.laid_rows():
             family = self.families[row.family]
@@ -109,13 +109,6 @@ class GameBoard:
             if not counts.any():
                 continue
             state = self.states[index]
-            if (
-                family.gap
-            ):  # a held row with a gap is laid, the sources through its divisor, never stepped
-                origin = np.where(counts != 0, carried(family.divisor, 2, 0)[0], 0)
-                laid, state.carry = (np.asarray(a) for a in carried(counts, family.divisor, origin))
-                node.with_parts(state, [node.laid_level(laid)])
-                continue
             wall = node.rule_of(family, self.world.node_clock, 0)[2]
             try:
                 field = rest(counts, family.pair, self.wrap, family.divisor, self.world.width, wall)
@@ -163,15 +156,13 @@ class GameBoard:
     def stepped(
         self, index: int, level: str, direction: int
     ) -> tuple[tuple[np.ndarray, tuple[np.ndarray, ...]], list[node.Record]]:
-        """A family's read (from the held parts' `level`) and every record of it stepped by Rule3 in `direction` with the rule of that read: a family of quanta's two level pairs and a held family's parts (`node.records`); a row with a gap is not stepped."""
+        """A family's read (from the held parts' `level`) and every record of it stepped by Rule3 in `direction` with the rule of that read: a family of quanta's two level pairs and a held family's parts (`node.records`), every held row of the content among them, with or without a gap."""
         family, state = self.families[index], self.states[index]
         read = node.signed_read(
             index, self.families, self.states, self.world.node_clock, level, self.shape
         )
         rule = node.rule_of(family, self.world.node_clock, *read)
-        found = node.records(state)
-        if not family.gap:
-            found = [node.step(record, rule, self.wrap, direction) for record in found]
+        found = [node.step(record, rule, self.wrap, direction) for record in node.records(state)]
         return read, found
 
     def step(self) -> None:

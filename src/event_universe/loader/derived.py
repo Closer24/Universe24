@@ -1,4 +1,4 @@
-"""The families from the rule (ALGEBRA.md #a-familys-declaration, the families from the rule): a family's row holds its name, its pair and what it holds, and the rule derives the rest from its rank and its pair (the parts, the reads, whether it has a gap); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
+"""The families from the rule (ALGEBRA.md #a-familys-declaration, the families from the rule): a family's row holds its name, its pair and what it holds, and the rule derives the rest from its rank and its pair (the parts, the reads); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
 
 from __future__ import annotations
 
@@ -40,11 +40,6 @@ class FamilyRule:
     def quanta(self) -> bool:
         """Whether the family carries quanta: two levels, a count and its current (every family but the holders of the content)."""
         return self.held != CONTENT
-
-    @property
-    def gap(self) -> bool:
-        """Whether the family's band has a gap: num below den (the vacuum's pair, num = den, has none): a held row with a gap is laid as the well each interval, one without steps (ALGEBRA.md #the-primitives, the row "the hold")."""
-        return self.pair[0] != self.pair[1]
 
 
 def reduced(pair: tuple[int, int]) -> tuple[int, int]:

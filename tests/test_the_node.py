@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from itertools import permutations, product
 from pathlib import Path
@@ -14,8 +15,9 @@ import event_universe.world_files as world_files
 from event_universe import flow, lay, node
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, rule3
+from event_universe.features.start import rest
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import family_rules
+from event_universe.loader.derived import CONTENT, family_rules
 from event_universe.world_files import input_digest, load_world
 from tests.laws import CHAIN, ROOT, UNIVERSE, chain_body_world, load_file, universe_beside
 
@@ -25,7 +27,7 @@ WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remaind
 ROWS = [("held", (4, 4), "content", 7), ("gapped", (3, 4), "content", 7), ("quanta", (5, 7), None, None)]
 HELD, GAPPED, QUANTA = family_rules(ROWS)
 UNIVERSE_ROWS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
-FAMILIES = family_rules(  # the tests' universe: gravity, charge, polarisation, matter, third
+FAMILIES = family_rules(  # the tests' universe: gravity, charge, binding, polarisation, matter
     [
         (r["name"], tuple(r["pair"]), *[r.get("held", {}).get(k) for k in ("count", "divisor")])
         for r in UNIVERSE_ROWS
@@ -67,7 +69,7 @@ def drawn(draw: np.random.Generator, shape: tuple[int, int, int], size: int, top
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand():
-    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the lay, the count's line, the well and the hold at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's); a laid row has one level and no past, recomputed from the wells forward and back with its carry stepped back; the tension's act is one carried division per axis at the wall E_s W_c from its origin, with no count in it."""
+    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the lay, the count's line, the well and the hold at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's); a held row with a gap steps by the same call at its own pair, the plain rule's reads num, self coefficient 0 and wall 3 den, and its hold is the same act as the row without one, back exact (the generic test of the two rows: no name and no branch); the tension's act is one carried division per axis at the wall E_s W_c from its origin, with no count in it."""
     draw, shape = np.random.default_rng(5), (3, 3, 3)
     for _ in range(20):
         levels, content = drawn(draw, shape, 900, 50), int(draw.integers(-40, 40))
@@ -106,15 +108,21 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         increment, carry_after = divmod(int(source[HERE]) + int(held.carry[HERE]), 7)
         found = (int(parts[0].now[HERE]), int(carry_after_hold[HERE]))
         assert found == (int(part.now[HERE]) + increment, carry_after)
-        # a row with a gap is laid, not stepped: (source + r) div E_s, one level and no past; back the
-        # same level from the same wells and the carry before
+        # a row with a gap steps by the plain rule at its own pair, (3, 3, 3), 0, 12 at [3, 4], and its hold
+        # is the same act (source + r) div E_s at its time part, back exact
+        stepped = node.step(part, node.part_rule(GAPPED), WRAP)
+        arrived = by_hand(part.now, HERE)
+        sums = (arrived[0] + arrived[1], arrived[2] + arrived[3], arrived[4] + arrived[5])
+        here = tuple(int(getattr(part, k)[HERE]) for k in KEYS)
+        assert (int(stepped.now[HERE]), int(stepped.remainder[HERE])) == rule3(
+            (3, 3, 3), sums, 0, 12, *here
+        )
         held.parts = [part]
-        laid, laid_carry, _flows = node.held_step(GAPPED, held, source)
-        assert (int(laid[0].now[HERE]), int(laid_carry[HERE])) == (increment, carry_after)
-        assert laid[0].before is laid[0].now and not laid[0].remainder.any()
-        stood = node.NodeState(None, None, None, None, laid, laid_carry)
+        gapped, gapped_carry, _flows = node.held_step(GAPPED, held, source)
+        assert (int(gapped[0].now[HERE]), int(gapped_carry[HERE])) == found
+        stood = node.NodeState(None, None, None, None, gapped, gapped_carry)
         back, carry_back, _flows = node.held_step(GAPPED, stood, source, -1)
-        assert np.array_equal(back[0].now, laid[0].now) and np.array_equal(carry_back, held.carry)
+        assert np.array_equal(back[0].now, part.now) and np.array_equal(carry_back, held.carry)
     # the tension's act (w x T_aa + r) div (E_s W_c) per axis from its origin (E_s W_c) div 2 = 7, back exact
     ones = np.ones((3, 1, 1), dtype=np.int64)
     current = flow.Flow(3, (5 * ones, -3 * ones, 4 * ones), 2)
@@ -142,8 +150,8 @@ def laid_count(folder: Path, name: str, world: dict, mode: dict) -> int:
 
 
 def cube_world(folder: Path) -> Path:
-    """The closed cube of 9^3 in the tests' universe without its row with a gap (laid, its inverse is (a)'s), with one body of matter on its centre Node at the count the lay makes, its mode a profile symmetric under the cube's 48 (no standing record: it breathes)."""
-    universe_beside(folder, drop=("polarisation",))
+    """The closed cube of 9^3 in the tests' universe (every held row stepped, the two with a gap among them), with one body of matter on its centre Node at the count the lay makes, its mode a profile symmetric under the cube's 48 (no standing record: it breathes)."""
+    universe_beside(folder)
     world = dict(shape=[9, 9, 9], boundary=dict(x="closed", y="closed", z="closed"), ticks=8)
     world.update(universe="u.json", engine="e.json", detectors=[])
     distance = np.abs(np.indices((9, 9, 9)) - 4).sum(axis=0)
@@ -180,10 +188,15 @@ def keeps_the_48(board: GameBoard) -> None:
 def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48_and_returns(
     tmp_path, monkeypatch
 ):
-    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the weighted lay by name and admits the laid one; each interval the matter's levels are Rule3 from the interval's start at every Node with the vacuum's row read once, SUM (W_c c + r) stands to the bit, and every part of every NodeState keeps the cube's 48 about the body; the back-in-time gate (tools/back_in_time.py) over twelve intervals forward and twelve back returns every array bit for bit, MATCH (the tension's act has no count in its divisor and dumps nothing)."""
+    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the weighted lay by name and admits the laid one; at the start every holder of the content with a level stands at an isotropic rest about the body, its level at the six neighbours of the centre one number below the centre's (the vector test of the two rows); each interval the matter's levels change and are Rule3 from the interval's start at every Node with every holder of the content read once as its stepped time part (a family of quanta with a gap steps; the guard on the gap that froze matter on main is gone with the laid row), SUM (W_c c + r) stands to the bit, and every part of every NodeState keeps the cube's 48 about the body; the back-in-time gate (tools/back_in_time.py) over twelve intervals forward and twelve back returns every array bit for bit, MATCH (the tension's act has no count in its divisor and dumps nothing)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = GameBoard(load_world(cube_world(tmp_path)))
     matter, gravity = board.states[MATTER], board.states[GRAVITY]
+    holders = [s for f, s in zip(FAMILIES, board.states, strict=True) if f.held == CONTENT]
+    centre = (4, 4, 4)
+    for level in (holder.parts[0].now for holder in holders if holder.parts[0].now[centre] > 0):
+        near = by_hand(level, centre)
+        assert len(set(near)) == 1 and 0 < near[0] < int(level[centre]), near
     wall, total = node.count_wall(board.families[MATTER], T), None
     for _ in range(4):
         start = node.Record(*(getattr(matter.levels, k).copy() for k in KEYS))
@@ -191,10 +204,12 @@ def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48
         sums = tuple(
             (np.roll(padded, 1, a) + np.roll(padded, -1, a))[1:-1, 1:-1, 1:-1] for a in range(3)
         )
-        read = gravity.parts[0].now.copy(), tuple((gravity.parts[1 + a].now + 1) // 2 for a in range(3))
+        content = sum(holder.parts[0].now for holder in holders)
+        read = content, tuple((gravity.parts[1 + a].now + 1) // 2 for a in range(3))
         reads, self_coefficient, rule_wall = coefficients(4000, 6000, GAMMA, *read)
         expected = rule3(reads, sums, self_coefficient, rule_wall, *(getattr(start, k) for k in KEYS))
         board.step()
+        assert not np.array_equal(matter.levels.now, start.now)  # a family of quanta with a gap steps
         assert np.array_equal(matter.levels.now, expected[0])
         assert np.array_equal(matter.levels.remainder, expected[1])
         assert total is None or total_of(matter, wall) == total
@@ -208,7 +223,7 @@ def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48
 
 
 def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
-    """A world on the chain of 48 (x open) with one body of matter written by hand: a real pair at the envelope (now = before, a breathing record and no standing mode), its second pair `turn` times the envelope an interval before (a rotating record of that sense, 0 a real one), its count the one the lay makes, the detectors `left` and `right` at the chain's ends."""
+    """A world on the chain of 48 (x open) with one body of matter written by hand: a real pair at the envelope (now = before, a breathing record and no standing mode), its second pair `turn` times a sixteenth of the envelope an interval before (a rotating record of that sense, 0 a real one; at the whole envelope the light's hill about the body, no longer held by a massless tent under the two rows, ends the run by the amplitude bound within 42 intervals, at an eighth within 215), its count the one the lay makes, the detectors `left` and `right` at the chain's ends."""
     universe_beside(folder)
     levels, first = [0] * CHAIN, CHAIN // 2 - len(envelope) // 2
     levels[first : first + len(envelope)] = envelope
@@ -216,7 +231,7 @@ def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
         "now": levels,
         "before": levels,
         "im_now": [0] * CHAIN,
-        "im_before": [turn * v for v in levels],
+        "im_before": [turn * v // 16 for v in levels],
     }
     mode = {"family": "matter", "pair": [4000, 6000], "moving": moving}
     ends = [
@@ -231,7 +246,7 @@ def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
 
 
 def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
-    """(c) On the chain, a breathing body rotating in the sense +1 writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's SUM (W_c c + r) stays to the bit and its count's total within the Nodes' rounding, no quantum changes family (the matter's SUM (W_c c + r) to the bit over 400 intervals), and the quanta entering the end detectors are the clicks; a real body (no sense) writes nothing into it and no light is born, and its whole run goes back in time, the back-in-time gate MATCH over 400 intervals forward and 400 back (the bound charge's laid level stands still there; where a well moves a quantum between two intervals the laid row, with no past, returns the later lay: the law's line, ALGEBRA.md #what-is-open)."""
+    """(c) On the chain, a breathing body rotating in the sense +1 writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's SUM (W_c c + r) stays to the bit and its count's total within the Nodes' rounding, no quantum changes family (the matter's SUM (W_c c + r) to the bit over 400 intervals), and every output line is a click of an end detector (none within 400 intervals at the sixteenth sense that stays lawful under the two rows: the wave's flux at the ends crosses no wall in that window); a real body (no sense) writes nothing into it and no light is born; both runs go back in time whole, the back-in-time gate MATCH over 400 intervals forward and 400 back, every held row a stepped record whose level at the interval's start the state after it still holds (ALGEBRA.md #what-is-open, item 21)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     envelope = [v * 4 // 5 for v in PROFILE[3:13]]
     for turn in (1, 0):
@@ -260,16 +275,11 @@ def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
             f"GAMEBOARD light born at {born}, the matter's count {min(counts)} to {max(counts)} over 400"
         )
         assert all(e["event"] == "click" and e["axis"][0] == 0 for e in lines)
-        assert (
-            (born > 0 and clicks)
-            if turn
-            else (born == 0 and not clicks and not states[1].levels.now.any())
-        )
+        assert born > 0 if turn else (born == 0 and not clicks and not states[1].levels.now.any())
         assert all(book["balanced"] and book["sense_balanced"] for book in board.books().values())
-        if not turn:
-            back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
-            print(f"GAMEBOARD the real body's chain, the gate over 400 intervals: {back}")
-            assert back["verdict"] == "MATCH"
+        back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
+        print(f"GAMEBOARD the chain of the sense {turn}, the gate over 400 intervals: {back}")
+        assert back["verdict"] == "MATCH"
 
 
 def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_the_light(
@@ -375,7 +385,7 @@ def chain_record(now_turn: tuple[int, ...], before_turn: tuple[int, ...]) -> nod
 
 
 def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
-    """(d) On a chain, a record of matter moving along +x (the envelope times the plane wave's character, a quarter turn per Link) sources the vacuum's row's tension on x below 0 (a plane wave's -2 num b^2 sin^2 k) and none on y and z, so the Link's pace along x rises by the axis content above the pace along y; the same envelope at rest sources a tension of its own sign on x (the pressure of a standing record) and none on y and z; every family reads the vacuum's row as its stepped time part and the bound charge as the well it laid, light as matter."""
+    """(d) On a chain, a record of matter moving along +x (the envelope times the plane wave's character, a quarter turn per Link) sources the vacuum's row's tension on x below 0 (a plane wave's -2 num b^2 sin^2 k) and none on y and z, so the Link's pace along x rises by the axis content above the pace along y; the same envelope at rest sources a tension of its own sign on x (the pressure of a standing record) and none on y and z; every family reads every holder of the content as its stepped time part, light as matter."""
     shape, wrap = (16, 1, 1), Wrap(False, True, True)
     matter, gravity = FAMILIES[MATTER], FAMILIES[GRAVITY]
     for moving in (True, False):
@@ -403,12 +413,45 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
         content, axis = node.signed_read(MATTER, FAMILIES, states, GAMMA, "now", shape)
         assert np.array_equal(axis[0], (xx + 1) // 2) and not axis[1].any()
         assert np.array_equal(content, stepped)
-        laid_well = node.Record(
-            state.count, state.count, node.zeros(shape)
-        )  # the bound charge's laid level
-        node.with_parts(states[NAMES.index("polarisation")], [laid_well])
+        contact = node.Record(state.count, state.count, node.zeros(shape))  # the bound charge's level
+        node.with_parts(states[NAMES.index("polarisation")], [contact])
         light, _axis = node.signed_read(CHARGE, FAMILIES, states, GAMMA, "now", shape)
-        assert np.array_equal(light, stepped + state.count)  # every reader reads both rows as they stand
+        assert np.array_equal(light, stepped + state.count)  # every reader reads the rows as they stand
+
+
+def test_a_static_source_gives_a_static_field_that_falls_with_the_range_of_the_rows_pair():
+    """(f) The local test of the two rows on a chain (x open) of sixteen ranges: the binding holder's pair from the file at its divisor, started at its rest under a static source of 1,000 quanta per interval at the centre Node (features/start), falls from the Node by e^(-kappa) per Link with cosh kappa = 3 den / num - 2 (ALGEBRA.md #the-well, the reach of a held family is its pair), the range R = 1 / kappa (20 Links at [2400, 2401]): the level at R / 2, R and 3 R / 2 Links within one unit of the centre's times e^(-r / R); stepped by Rule3 at the pace 1 with the hold's same source each interval, the field is static within the rounding: the first interval moves no Node by more than two units and fewer than one Node in ten at all (the Nodes whose rounding residual passes the half wall, the remainder's origin), and over 200 intervals no Node drifts by more than two units per Node kicked, those kicks being Rule3's own waves along the chain (the fixed point is a pair, level and remainder)."""
+    binding = FAMILIES[NAMES.index("binding")]
+    num, den = binding.pair
+    kappa = math.acosh(3 * den / num - 2)
+    reach = round(1 / kappa)
+    assert binding.divisor is not None and reach == 20
+    shape, wrap = (16 * reach, 1, 1), Wrap(False, True, True)
+    source, centre = node.zeros(shape), 8 * reach
+    source[centre] = 1000
+    field = rest(source, binding.pair, wrap, binding.divisor, 2**63 - 1, node.part_rule(binding)[2])
+    away = (0, reach // 2, reach, 3 * reach // 2)
+    at = [int(field.levels[centre + r, 0, 0]) for r in away]
+    assert all(abs(at[i] - round(at[0] * math.exp(-kappa * r))) <= 1 for i, r in enumerate(away))
+    state = node.empty_state(binding, shape)
+    time = node.Record(field.levels.copy(), field.levels.copy(), np.full(shape, field.remainder))
+    node.with_parts(state, [time])
+    state.carry = field.carries
+    kicked, drift = 0, 0
+    for interval in range(200):
+        node.with_parts(state, [node.step(state.parts[0], node.part_rule(binding), wrap)])
+        state.parts, state.carry, state.flows = node.held_step(binding, state, source)
+        moved = np.abs(state.parts[0].now - field.levels)
+        if interval == 0:
+            kicked = int((moved > 0).sum())
+            assert int(moved.max()) <= 2 and 10 * kicked < shape[0], (int(moved.max()), kicked)
+        drift = max(drift, int(moved.max()))
+    after = [int(state.parts[0].now[centre + r, 0, 0]) for r in away]
+    print(f"GAMEBOARD the binding holder's rest at {away} Links {at}, after 200 intervals {after};")
+    print(
+        f"  {kicked} Nodes of {shape[0]} kicked at the first interval, the drift at most {drift} units"
+    )
+    assert drift <= 2 * kicked
 
 
 def test_the_sense_is_the_wronskian_booked_by_the_line_and_a_real_record_is_neutral():

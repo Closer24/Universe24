@@ -60,11 +60,6 @@ def empty_record(shape: tuple[int, int, int]) -> Record:
     return Record(zeros(shape), zeros(shape), zeros(shape))
 
 
-def laid_level(level: np.ndarray) -> Record:
-    """The time part of a held row with a gap: one level and no past, the well laid this interval standing as both levels of the pair (no interval steps it, so its remainder stays 0; ALGEBRA.md #the-primitives, the row "the hold")."""
-    return Record(level, level, np.zeros_like(level))
-
-
 def empty_state(family: FamilyRule, shape: tuple[int, int, int]) -> NodeState:
     """A family's NodeState before its start: its two level pairs at 0 where it carries quanta, its parts at 0 where it is held, its time part the real pair itself where it does both (the holder of the sign, its quanta light: `parts[0] is levels`)."""
     quanta = family.quanta
@@ -132,7 +127,7 @@ def read_terms(
     level: str,
     shape: tuple[int, int, int],
 ) -> tuple[signed.SignedReadTerm, signed.SignedReadStart]:
-    """The read's declaration and start for a family (ALGEBRA.md #the-paces): its reads, its q (`sense_sign`), its pair and Gamma; the read families' time parts at `level` ("now" forward at the interval's start, "before" backward; a held row with a gap read as the well it laid) and the axis contents t_a = SUM over the reads of (weight x by x the read family's aa part + 1) div 2, one division per read per axis rounded at the read."""
+    """The read's declaration and start for a family (ALGEBRA.md #the-paces): its reads, its q (`sense_sign`), its pair and Gamma; the read families' time parts at `level` ("now" forward at the interval's start, "before" backward) and the axis contents t_a = SUM over the reads of (weight x by x the read family's aa part + 1) div 2, one division per read per axis rounded at the read."""
     family = families[index]
     q = sense_sign(states[index], shape)
     reads = tuple((read.family, read.weight, read.by) for read in family.reads)
@@ -192,7 +187,7 @@ def quanta_rule(family: FamilyRule, gamma: int, content: Any, axis: tuple[Any, .
 
 
 def part_rule(family: FamilyRule) -> Rule:
-    """Rule3's integers for a held family's parts: the plain rule of the row's pair at the pace 1 and the wall 3 den (ALGEBRA.md #the-line)."""
+    """Rule3's integers for a held family's parts: the plain rule of the row's pair at the pace 1 and the wall 3 den, its reads num and its self coefficient 0, with or without a gap (ALGEBRA.md #the-line; #the-primitives, the row "the hold")."""
     num, den = family.pair
     return coefficients(num, den, 1, 0, ISOTROPIC, False)
 
@@ -327,14 +322,10 @@ def held_step(
     direction: int = 1,
     flows: dict[int, flow.Flow] | None = None,
 ) -> tuple[list[Record], np.ndarray, dict[int, list[np.ndarray]]]:
-    """A held family's hold (ALGEBRA.md #the-primitives, the row "the hold"), its parts already stepped by Rule3 in the interval's second act. A row without a gap: the hold (features/hold) at its time part, (source + r) div E_s added with the carry kept at the Node, and at its vector and tensor parts from every sourcing family's flow (`flow.flow_hold`); backward the holds' increments taken off and the carries stepped back. A row with a gap is not stepped and keeps no past: its time part is the one level the well lays this interval, (source + r) div E_s with the carry kept at the Node (`laid_level`), recomputed from the sourcing families' wells forward and back alike, the carry stepped back."""
+    """A held family's hold (ALGEBRA.md #the-primitives, the row "the hold"), its parts already stepped by Rule3 in the interval's second act, with or without a gap: the hold (features/hold) at its time part, (source + r) div E_s added with the carry kept at the Node, and at its tensor parts from every sourcing family's flow (`flow.flow_hold`); backward the holds' increments taken off and the carries stepped back."""
     assert state.carry is not None and family.divisor is not None
     parts, carry = list(state.parts), state.carry
     carries = dict(state.flows)
-    if family.gap:
-        laid, carry = carried(source_now, family.divisor, carry, direction)
-        parts[0] = laid_level(np.asarray(laid))
-        return parts, np.asarray(carry), carries
     time, carry = hold(parts[0].now, source_now, family.divisor, carry, direction)
     parts[0] = replace(parts[0], now=np.asarray(time))
     if len(family.parts) > 1:
