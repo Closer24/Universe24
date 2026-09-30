@@ -1,8 +1,8 @@
-"""Bell's reader by the comb (DETECTOR, the one measurement; ALGEBRA.md row (h); the advisor, #1515 comment 5910272948 C): a run's output read against Bell's world's expectation file. A landing is a click line on one of the two screens (the expectation's `sides`, the detectors' names) of the family, naming the whole that entered (`whole`, the whole line's: [message, n], the whole n of that message, or n alone); a pair is the two mirror wholes, the whole n of a message with the whole n of its mirror (`mirrors`, the expectation's rows of [left message, right message]; an n alone pairs across the sides). Every landing is an outcome: at a setting a (a position on the screen in Links) +1 where cos(Phi(y) - a) > 0 and -1 under, Phi(y) = 2 pi (y - `fringe_centre`) / `spacing` the fringe phase of its row, read in integers as (y - fringe_centre - a) about the spacing within a quarter turn of 0 on either side; a pair's outcome on a screen is the sign of its landings' outcomes summed (none where they cancel). E(a, b) is the mean over the pairs with an outcome on both screens of the product of the left outcome at a and the right outcome at b, at the expectation's settings (a and a' on the left, b and b' on the right), and S = E(a, b) - E(a, b') + E(a', b) + E(a', b'); E as a curve in a + b is E over every pair of positions, averaged by a + b about the spacing, with its values at the expectation's sums (`curve.links`); the coincidence map is the coincident pairs' landings binned by Phi_A + Phi_B over `bins` bins of the turn (the ridge), its visibility (most - least) over (most + least); each screen's single-side pattern is its landings per row with the local maxima; the GameBoard check counts the pairs with one landing on each screen and those at mirror rows (y_A + y_B twice the centre); a landing naming no whole counts in the pattern alone. The tool holds no number.
+"""Bell's reader by the contrast (DETECTOR, the one measurement; ALGEBRA.md row (h); the owner's decision of 2026-09-30, 14:15, via the advisor, #1515 comments 5912822802 and 5912958018): the runs' output files read against Bell's expectation file. Per run and per side, each region of the screen (the expectation's `sides`, a region's name with its rows) has its share, what it saw over the run (the `seen` lines, the net inflow through its front boundary, the density that entered) over the side's total, and beside it its entries (the click lines); the two ports of a setting, the + and - outputs of the polariser, are the unions of the regions in the comb's two half-rows about the setting's position (+ on the rows from three before the position to four after it in each fringe, the half-row centred half a row above the position so that the regions of four rows tile the half-fringes), their shares the regions' shares summed (a region straddling a half-row's edge, at a curve position, weighted by the comb's mean over its rows); the contrast is their difference over their sum. The side credited by the sign (`sign` in the expectation, side A) credits every quantum to the larger port; the side declared by the contrast (`contrast`, side B) credits the larger port for the fraction of the run's quanta equal to the contrast, the quantile remainders per quantum, and counts nothing for the rest (a setting whose two ports share alike clicks not at all). Among the coincidences, E(a, b) is the product of the two sides' outcomes weighted by B's clicks over the runs, one run per pair angle; S = E(a, b) - E(a, b') + E(a', b) + E(a', b') at the settings; E as a curve in a + b at the curve's positions (the right side at its first setting); B's efficiency per setting is its clicks over its quanta. Beside it, for comparison, the reading by the shares (the draw between the ports by their shares, E the product of the two sides' marginals averaged over the runs). The single-side patterns per region, over W_c the quanta, are the GameBoard check (the fringes shifted by the run's angle). The settings, the regions, the family, the curve and the two sides' declarations are the expectation file's; the tool holds no number.
 
 Run with PYTHONPATH set to the checkout's src:
 
-    PYTHONPATH=src python tools/bell_clicks.py --world <world>.json --output <world>.output.json --expectation <expectation>.json
+    PYTHONPATH=src python tools/bell_clicks.py --world <world>.json --expectation <expectation>.json --outputs <run>.output.json ...
 """
 
 from __future__ import annotations
@@ -13,169 +13,251 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from event_universe.loader.keys import AXES
+from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
 
 SIDE_SETTINGS = {"left": "a", "right": "b"}  # the settings' names per side in the expectation
 
 
 def comb(row: int, centre: int, setting: int, spacing: int) -> int:
-    """A landing's outcome at a setting: +1 where cos(Phi(y) - a) > 0 and -1 under, with Phi(y) - a = 2 pi (y - centre - a) / spacing, so +1 where (y - centre - a) taken about the spacing lies within a quarter turn of 0 on either side."""
-    turned = (row - centre - setting) % spacing
-    return 1 if 2 * 2 * turned < spacing or 2 * 2 * turned > 3 * spacing else -1
+    """A row's outcome at a setting: +1 on the rows from a quarter fringe less one row before the setting's position to a quarter fringe after it (the half-row centred half a row above the position), taken about the spacing, and -1 on the other half of each fringe."""
+    half = spacing // 2
+    turned = (row - centre - setting + half // 2 - 1) % spacing
+    return 1 if turned < half else -1
 
 
-def sign(total: int) -> int:
-    """The sign of a sum of outcomes, 0 where they cancel."""
-    return (total > 0) - (total < 0)
+def weight(rows: list[int], centre: int, setting: int, spacing: int) -> Fraction:
+    """A region's weight at a setting: the mean of its rows' outcomes, +1 or -1 where the region lies inside one half-fringe."""
+    return Fraction(sum(comb(row, centre, setting, spacing) for row in rows), len(rows))
 
 
-def outcome(rows: list[int], centre: int, setting: int, spacing: int) -> int:
-    """A pair's outcome on one screen at a setting: the sign of its landings' outcomes summed."""
-    return sign(sum(comb(row, centre, setting, spacing) for row in rows))
+def pair(value: Fraction) -> list[int]:
+    """A fraction as [numerator, denominator]."""
+    return [value.numerator, value.denominator]
 
 
-def pair_of(whole: object, mirrors: list[list[int]]) -> tuple[int, int] | None:
-    """The pair a landing's whole belongs to: [message, n] is the whole n of the mirrors' row holding that message, n alone the pair (0, n); None where the whole names no mirrored message."""
-    if isinstance(whole, int):
-        return (0, whole)
-    if not isinstance(whole, list) or len(whole) != 2:
-        return None
-    message, index = int(whole[0]), int(whole[1])
-    for row, pair in enumerate(mirrors):
-        if message in pair:
-            return (row, index)
-    return None
+def sign(value: Fraction) -> int:
+    """The sign of a fraction: +1, -1, or 0 at 0."""
+    return (value > 0) - (value < 0)
 
 
-def fraction(values: list[int]) -> list[int]:
-    """The mean of a list of outcomes' products as [numerator, denominator], [0, 1] over nothing."""
-    mean = Fraction(sum(values), len(values)) if values else Fraction(0)
-    return [mean.numerator, mean.denominator]
+def totals(
+    lines: list[dict[str, object]], family: str, regions: list[str]
+) -> tuple[dict[str, int], dict[str, int]]:
+    """Per region what it saw over the run (the `seen` lines' net inflows summed) and its entries (the click lines counted), of one family."""
+    saw = {name: 0 for name in regions}
+    entries = {name: 0 for name in regions}
+    for line in lines:
+        if line.get("family") != family or line.get("detector") not in saw:
+            continue
+        name = str(line["detector"])
+        if line.get("event") == "seen":
+            saw[name] += int(str(line["inflow"]))
+        elif line.get("event") == "click":
+            entries[name] += 1
+    return saw, entries
 
 
-def maxima_of(row: list[int]) -> list[int]:
-    """The local maxima of a pattern: a position above both neighbours, the ends compared with their one neighbour."""
-    found = []
-    for at, value in enumerate(row):
-        near = [row[at - 1]] if at > 0 else []
-        near += [row[at + 1]] if at < len(row) - 1 else []
-        if near and all(value > other for other in near):
-            found.append(at)
+def shares_of(seen: dict[str, int]) -> dict[str, Fraction]:
+    """The regions' shares of a side's total, 0 everywhere where the side saw nothing."""
+    total = sum(seen.values())
+    return {name: Fraction(value, total) if total else Fraction(0) for name, value in seen.items()}
+
+
+def ports(
+    shares: dict[str, Fraction],
+    rows: dict[str, list[int]],
+    setting: int,
+    centre: int,
+    spacing: int,
+) -> tuple[Fraction, Fraction]:
+    """The two ports' shares at a setting: the + port's the regions' shares weighted by (1 + w) / 2 and the - port's by (1 - w) / 2, w the comb's mean over the region (a region inside one half-fringe wholly one port's)."""
+    plus = minus = Fraction(0)
+    for name, share in shares.items():
+        w = weight(rows[name], centre, setting, spacing)
+        plus += share * (1 + w) / 2
+        minus += share * (1 - w) / 2
+    return plus, minus
+
+
+def contrast(plus: Fraction, minus: Fraction) -> Fraction:
+    """The contrast of a setting's two ports: their difference over their sum, 0 where nothing arrived."""
+    return abs(plus - minus) / (plus + minus) if plus + minus else Fraction(0)
+
+
+def one_run(lines: list[dict[str, object]], expected: dict[str, Any], wall: int) -> dict[str, Any]:
+    """One run's reading: per side the seen, the entries and the quanta per region, the side's quanta, and at each setting (and each curve position) the two ports' shares, the outcome (the larger port's sign), the contrast and the marginal (the + port's share less the - port's, the reading by the shares)."""
+    centre, spacing = int(expected["fringe_centre"]), int(expected["spacing"])
+    settings = {side: [int(v) for v in values] for side, values in expected["settings"].items()}
+    curve = [int(v) for v in expected.get("curve", {}).get("links", [])]
+    found: dict[str, Any] = {
+        "seen": {},
+        "entries": {},
+        "quanta": {},
+        "side_quanta": {},
+        "outcome": {},
+        "contrast": {},
+        "marginal": {},
+        "curve_outcome": {},
+        "curve_contrast": {},
+        "curve_marginal": {},
+    }
+    for side, regions in expected["sides"].items():
+        rows = {name: [int(r) for r in value] for name, value in regions.items()}
+        saw, entries = totals(lines, str(expected["family"]), list(rows))
+        shares = shares_of(saw)
+        found["seen"][side] = saw
+        found["entries"][side] = entries
+        found["quanta"][side] = {name: value // wall for name, value in saw.items()}
+        found["side_quanta"][side] = sum(saw.values()) // wall
+        for kind, positions in (("", settings[SIDE_SETTINGS[side]]), ("curve_", curve)):
+            read = [ports(shares, rows, at, centre, spacing) for at in positions]
+            found[f"{kind}outcome"][side] = [sign(plus - minus) for plus, minus in read]
+            found[f"{kind}contrast"][side] = [contrast(plus, minus) for plus, minus in read]
+            found[f"{kind}marginal"][side] = [plus - minus for plus, minus in read]
     return found
 
 
-def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
-    """The reading of one run: the landings per side and per pair, each pair's outcomes at its side's settings, E at the settings, S, the curve in a + b, the ridge, the single-side patterns and the GameBoard check, beside the blind rows."""
+def clicks_of(run: dict[str, Any], side: str, kind: str = "") -> list[Fraction]:
+    """A side's clicks per setting in one run: its quanta times the contrast where the side is declared by the contrast, and every quantum where it credits by the sign."""
+    quanta = Fraction(run["side_quanta"][side])
+    if run["by"][side] == "contrast":
+        return [quanta * value for value in run[f"{kind}contrast"][side]]
+    return [quanta for _ in run[f"{kind}contrast"][side]]
+
+
+def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, object]:
+    """The reading of the runs: per run the outcomes, the contrasts and the clicks, and over the runs E at the settings among the coincidences (the outcomes' product weighted by the clicks of both sides), S, the curve in a + b, B's efficiency per setting, the reading by the shares beside it, the single-side patterns summed, and the blind rows."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
-    lines = json.loads(output.read_text(encoding="utf-8"))["lines"]
     loaded = load_world(world)
-    across = AXES.index(expected["across"])
-    centre, spacing, bins = (
-        int(expected["fringe_centre"]),
-        int(expected["spacing"]),
-        int(expected["bins"]),
-    )
-    sides: dict[str, str] = {side: str(name) for side, name in expected["sides"].items()}
+    family = next(f for f in loaded.families if f.name == expected["family"])
+    wall = count_wall(family, loaded.quantum_action)
     declared = {row.name for row in loaded.detectors}
-    if not set(sides.values()) <= declared:
-        raise ValueError(
-            f"the expectation's sides {sides} are not the world's detectors {sorted(declared)}"
-        )
-    by_name = {name: side for side, name in sides.items()}
-    mirrors = [[int(m) for m in row] for row in expected.get("mirrors", [])]
+    for side, regions in expected["sides"].items():
+        if not set(regions) <= declared:
+            raise ValueError(
+                f"the expectation's {side} regions {sorted(regions)} are not the world's detectors"
+            )
+    by = {str(expected["sign"]): "sign", str(expected["contrast"]): "contrast"}
+    if set(by) != set(expected["sides"]):
+        raise ValueError(f"the expectation declares {by} for the sides {list(expected['sides'])}")
     settings = {side: [int(v) for v in values] for side, values in expected["settings"].items()}
-    landed: dict[tuple[int, int], dict[str, list[int]]] = {}
-    pattern: dict[str, dict[int, int]] = {side: {} for side in sides}
-    unnamed = 0
-    for line in lines:
-        if line.get("event") != "click" or line.get("family") != expected["family"]:
-            continue
-        side = by_name.get(str(line.get("detector")))
-        if side is None:
-            continue
-        row = int(list(line["node"])[across])  # type: ignore[call-overload]
-        pattern[side][row] = pattern[side].get(row, 0) + 1
-        key = pair_of(line.get("whole"), mirrors)
-        if key is None:
-            unnamed += 1
-            continue
-        landed.setdefault(key, {side: [] for side in sides})[side].append(row)
-    pairs: list[dict[str, Any]] = []
-    for key in sorted(landed):
-        rows = landed[key]
-        outcomes = {}
-        for side in sides:
-            found = [outcome(rows[side], centre, a, spacing) for a in settings[SIDE_SETTINGS[side]]]
-            if rows[side] and all(found):
-                outcomes[side] = found
-        pairs.append({"whole": list(key), "landings": rows, "outcomes": outcomes})
-    coincident = [pair for pair in pairs if len(pair["outcomes"]) == 2]
-    (a, a_prime), (b, b_prime) = settings["a"], settings["b"]
-    correlation = {}
-    for i, left in enumerate(settings["a"]):
-        for j, right in enumerate(settings["b"]):
-            products = [
-                pair["outcomes"]["left"][i] * pair["outcomes"]["right"][j] for pair in coincident
-            ]
-            correlation[f"{left} {right}"] = fraction(products)
-    e = {key: Fraction(*value) for key, value in correlation.items()}
-    s_value = e[f"{a} {b}"] - e[f"{a} {b_prime}"] + e[f"{a_prime} {b}"] + e[f"{a_prime} {b_prime}"]
-    sums: list[list[int]] = [[] for _ in range(spacing)]
-    for left in range(spacing):
-        for right in range(spacing):
-            for pair in coincident:
-                product = outcome(pair["landings"]["left"], centre, left, spacing) * outcome(
-                    pair["landings"]["right"], centre, right, spacing
-                )
-                if product:
-                    sums[(left + right) % spacing].append(product)
-    curve = [fraction(values) for values in sums]
-    ridge = [0] * bins
-    for pair in coincident:
-        for left in pair["landings"]["left"]:
-            for right in pair["landings"]["right"]:
-                ridge[((left - centre + right - centre) % spacing) * bins // spacing] += 1
-    most, least = max(ridge), min(ridge)
-    visibility = Fraction(most - least, most + least) if most + least else Fraction(0)
-    patterns = {
-        side: [rows.get(y, 0) for y in range(max(rows, default=-1) + 1)]
-        for side, rows in pattern.items()
+    runs = []
+    for path in outputs:
+        run = one_run(json.loads(path.read_text(encoding="utf-8"))["lines"], expected, wall)
+        run["by"] = by
+        run["clicks"] = {side: clicks_of(run, side) for side in expected["sides"]}
+        run["curve_clicks"] = {side: clicks_of(run, side, "curve_") for side in expected["sides"]}
+        runs.append(run)
+    count = len(runs)
+
+    def coincidence(left: str, right: str, i: int, j: int) -> Fraction:
+        """E over the runs at the left side's setting i and the right side's j: the outcomes' product weighted by the coincidences, the smaller of the two sides' clicks in each run."""
+        weighted = total = Fraction(0)
+        for run in runs:
+            pairs = min(run[f"{left}clicks"]["left"][i], run[f"{right}clicks"]["right"][j])
+            weighted += pairs * run[f"{left}outcome"]["left"][i] * run[f"{right}outcome"]["right"][j]
+            total += pairs
+        return weighted / total if total else Fraction(0)
+
+    correlation = {
+        f"{a} {b}": coincidence("", "", i, j)
+        for i, a in enumerate(settings["a"])
+        for j, b in enumerate(settings["b"])
     }
-    single = [pair for pair in pairs if all(len(rows) == 1 for rows in pair["landings"].values())]
-    mirrored = [p for p in single if p["landings"]["left"][0] + p["landings"]["right"][0] == 2 * centre]
+    (a, a_prime), (b, b_prime) = settings["a"], settings["b"]
+    s_value = (
+        correlation[f"{a} {b}"]
+        - correlation[f"{a} {b_prime}"]
+        + correlation[f"{a_prime} {b}"]
+        + correlation[f"{a_prime} {b_prime}"]
+    )
+    curve_links = [int(v) for v in expected.get("curve", {}).get("links", [])]
+    curve = [coincidence("curve_", "", i, 0) for i in range(len(curve_links))]
+    efficiency = {
+        side: [
+            sum((run["clicks"][side][i] for run in runs), Fraction(0))
+            / sum((Fraction(run["side_quanta"][side]) for run in runs), Fraction(0))
+            if any(run["side_quanta"][side] for run in runs)
+            else Fraction(0)
+            for i in range(len(settings[SIDE_SETTINGS[side]]))
+        ]
+        for side in expected["sides"]
+    }
+    by_shares = {
+        f"{a} {b}": sum(
+            (run["marginal"]["left"][i] * run["marginal"]["right"][j] for run in runs), Fraction(0)
+        )
+        / count
+        for i, a in enumerate(settings["a"])
+        for j, b in enumerate(settings["b"])
+    }
+    by_shares_s = (
+        by_shares[f"{a} {b}"]
+        - by_shares[f"{a} {b_prime}"]
+        + by_shares[f"{a_prime} {b}"]
+        + by_shares[f"{a_prime} {b_prime}"]
+    )
+    patterns = {
+        side: {name: sum(run["quanta"][side][name] for run in runs) for name in expected["sides"][side]}
+        for side in expected["sides"]
+    }
     return {
         "verdict": "DETECTOR",
         "family": expected["family"],
+        "runs": count,
         "settings": settings,
         "degrees": expected.get("degrees"),
-        "wholes": expected.get("wholes"),
-        "landings": {side: sum(rows.values()) for side, rows in pattern.items()},
-        "unnamed": unnamed,
-        "pairs": pairs,
-        "coincidences": len(coincident),
-        "correlation": correlation,
-        "S": [s_value.numerator, s_value.denominator],
-        "curve": curve,
+        "by": by,
+        "correlation": {key: pair(value) for key, value in correlation.items()},
+        "S": pair(s_value),
+        "curve": [pair(value) for value in curve],
         "curve_at": {
-            str(link): curve[int(link) % spacing] for link in expected.get("curve", {}).get("links", [])
+            str(link + settings["b"][0]): pair(curve[index]) for index, link in enumerate(curve_links)
         },
-        "ridge": ridge,
-        "visibility": [visibility.numerator, visibility.denominator],
-        "pattern": patterns,
-        "maxima": {side: maxima_of(rows) for side, rows in patterns.items()},
-        "check": {"pairs": len(pairs), "two_landings": len(single), "mirror_rows": len(mirrored)},
+        "efficiency": {side: [pair(v) for v in values] for side, values in efficiency.items()},
+        "by_the_shares": {
+            "correlation": {key: pair(value) for key, value in by_shares.items()},
+            "S": pair(by_shares_s),
+        },
+        "per_run": [
+            {
+                "outcome": run["outcome"],
+                "contrast": {
+                    side: [pair(v) for v in values] for side, values in run["contrast"].items()
+                },
+                "clicks": {side: [pair(v) for v in values] for side, values in run["clicks"].items()},
+                "marginal": {
+                    side: [pair(v) for v in values] for side, values in run["marginal"].items()
+                },
+                "side_quanta": run["side_quanta"],
+                "quanta": run["quanta"],
+                "entries": run["entries"],
+            }
+            for run in runs
+        ],
+        "patterns": patterns,
+        "entries": {
+            side: {
+                name: sum(run["entries"][side][name] for run in runs) for name in expected["sides"][side]
+            }
+            for side in expected["sides"]
+        },
         "blind": expected.get("blind"),
     }
 
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--world", type=Path, required=True, help="the world file the run ran")
-    parser.add_argument("--output", type=Path, required=True, help="the run's output file")
+    parser.add_argument(
+        "--world", type=Path, required=True, help="one of the runs' world files (the detectors)"
+    )
     parser.add_argument("--expectation", type=Path, required=True, help="the blind expectation file")
+    parser.add_argument(
+        "--outputs", type=Path, nargs="+", required=True, help="the runs' output files, one per angle"
+    )
     args = parser.parse_args(argv)
-    print(json.dumps(reading(args.world, args.output, args.expectation)))
+    print(json.dumps(reading(args.world, args.outputs, args.expectation)))
 
 
 if __name__ == "__main__":

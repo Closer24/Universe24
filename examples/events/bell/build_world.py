@@ -1,56 +1,75 @@
-"""Bell's first world's builder (the advisor, #1515 comment 5910272948, C; ALGEBRA.md row (h)): from a design file (`design.json` beside it, every number of the world), a flat board with the source at its centre column, one packet of the light family per side carrying N wholes at mirror quantiles, narrow across the beam as the two gaps' aperture, moving apart at one angle (theta = 0), the two-gap walls and the screens symmetric about the source, one detector per screen with no declared remainders, both far faces receding; and the blind expectation file (the comb's settings as positions in Links, the curve's sums, the mirrors' pairing, the blind rows). The pair's mirror lay is the engine round's; --mirror writes its declaration, a key the loader refuses until that round names it. Every number of the world is the design's and stands in the world files, none in the engine.
+"""Bell's worlds under the new laws (ALGEBRA.md row (h); the advisor's design at the owner's word of 2026-09-30, #1515 comments 5912573191 and 5911802610) from the design file beside this script: one world per angle, the pair's angle laid as the relative phase of the two lobes through the two gaps (the mirror on the two sides) at the half-offsets, (k + 1/2) / K of the turn (the advisor, #1515 comment 5912958018: at the whole offsets a run falls on a port's zero), the screens in regions of rows backed by receding faces, tiled inside the comb's half-fringes; their mode files by the message lay (tools/pixel_mode.py); and the blind expectation file, written before any run. Every number is the design's and stands in the files, none in this script or the engine.
 
-Run from the checkout with PYTHONPATH set to its src:
+Run with PYTHONPATH set to the checkout's src:
 
-    PYTHONPATH=src python examples/events/bell/build_world.py [--design <design>.json] [--folder <folder>] [--name <name>] [--mirror]
-
-then lay the packets with the generator, `PYTHONPATH=src python tools/pixel_mode.py --input <world>.json`.
+    PYTHONPATH=src python examples/events/bell/build_world.py [--design <design>.json] [--folder <folder>]
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import subprocess
+import sys
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+SIDES = (("left", -1), ("right", 1))
 
 
-def world(design: dict[str, Any], mirror: bool = False) -> dict[str, object]:
-    """The world file from the design: the board, the two symmetric walls with their gaps, the two packets (the left one at the source less the offset moving toward -x, the right one at the source plus the offset moving toward +x, each a flat top of one Node along x and of the two gaps' aperture across y with the raised-cosine edges, at the design's amplitude), the two screens as detectors over every row, both far faces receding as the design's `receding` key declares (the world's key, passed as written), the ticks; with `mirror`, each message names the other as its mirror."""
-    packet, source, slab = design["packet"], int(design["source"]), int(design["slab"])
-    height, across = int(design["height"]), [int(v) for v in packet["across"]]
+def regions(design: dict[str, Any], side: str) -> list[list[int]]:
+    """A screen's regions of rows: from the side's first boundary (`tiling`) by `rows_per_region`, the rows before the first boundary and after the last folded into the edge regions so that no region is narrower than the size rule allows."""
+    rows, height = int(design["rows_per_region"]), int(design["height"])
+    first = int(design["tiling"][side])
+    edges = list(range(first, height + 1, rows))
+    if edges[0] > 0:
+        edges[0] = 0
+    if height - edges[-1] < rows:
+        edges[-1] = height
+    if edges[-1] != height:
+        edges.append(height)
+    return [list(range(start, stop)) for start, stop in zip(edges[:-1], edges[1:], strict=True)]
+
+
+def world(design: dict[str, Any], angle: int) -> dict[str, object]:
+    """The world file of one angle k: the board, the two symmetric walls with their gaps, per side the two lobes (the upper one at the phase (k + 1/2) / K of the turn on the right side and its mirror, 1 - (k + 1/2) / K, on the left), the screens' regions, the far faces and the sides receding, the ticks."""
+    source, slab, height = int(design["source"]), int(design["slab"]), int(design["height"])
     p, q = (int(v) for v in design["wave"])
+    turns = int(design["angles"])
     gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
     messages: list[dict[str, object]] = []
-    for sign in (-1, 1):
-        top = source + sign * int(packet["offset"])
-        messages.append(
-            {
+    for _side, sign in SIDES:
+        top = source + sign * int(design["offset"])
+        for index, lobe in enumerate(design["lobes"]):
+            message: dict[str, object] = {
                 "family": design["family"],
                 "along": "x",
                 "wave": [sign * p, q],
-                "amplitude": int(packet["amplitude"]),
-                "top": {"x": [top, top], "y": across, "z": [0, 0]},
-                "edge": {"x": int(packet["edge_along"]), "y": int(packet["edge_across"]), "z": 0},
+                "amplitude": int(design["amplitude"]),
+                "top": {"x": [top, top], "y": [int(v) for v in lobe], "z": [0, 0]},
+                "edge": {"x": int(design["edge_along"]), "y": int(design["edge_across"]), "z": 0},
             }
-        )
-    if mirror:
-        messages[0]["mirror"], messages[1]["mirror"] = 1, 0
+            if index:
+                offset = 2 * angle + 1  # the half-offset (k + 1/2) / K as (2 k + 1) / (2 K)
+                message["phase"] = [offset if sign > 0 else 2 * turns - offset, 2 * turns]
+            messages.append(message)
     detectors = []
-    for side, sign in (("left", -1), ("right", 1)):
+    for side, sign in SIDES:
         near = source + sign * int(design["screen"])
         columns = sorted(range(near, near + sign * slab, sign))
-        positions = [[x, y, 0] for y in range(height) for x in columns]
-        detectors.append({"name": side, "positions": positions})
+        for number, rows in enumerate(regions(design, side)):
+            positions = [[x, y, 0] for y in rows for x in columns]
+            detectors.append({"name": f"{side}_{number}", "positions": positions})
     return {
         "shape": [int(design["length"]), height, 1],
         "boundary": {"x": "open", "y": "open", "z": "periodic"},
         "face_depth": 1,
         "faces": [
-            {"axis": "x", "at": source + sign * int(design["wall"]), "gaps": gaps} for sign in (-1, 1)
+            {"axis": "x", "at": source + sign * int(design["wall"]), "gaps": gaps}
+            for _side, sign in SIDES
         ],
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
@@ -71,24 +90,27 @@ def links(degrees: list[int], spacing: int) -> list[int]:
 
 
 def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind expectation file, as tools/bell_clicks.py reads it: the sides' detectors, the mirrors (the left packet's whole n pairs with the right packet's whole n), the wholes per side, the comb's centre, spacing, settings in Links, the curve's sums in Links and the bins, and the design's blind rows."""
-    comb, packet = design["comb"], design["packet"]
+    """The blind expectation file, as tools/bell_clicks.py reads it: the sides' regions with their rows, which side credits by the sign (A) and which by the contrast (B), the runs (one per angle), the comb's centre, spacing and settings in Links, the curve's positions in Links, and the design's blind rows."""
+    comb = design["comb"]
     spacing = int(comb["spacing"])
     return {
-        "comment": "Bell's first world's blind expectation (the advisor, #1515 comment 5910272948, C; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. A landing is a click line on a screen naming its whole; a pair is the left packet's whole n with the right packet's whole n (`mirrors`); the comb about a position: +1 where cos(Phi(y) - a) > 0 and -1 under, Phi(y) = 2 pi (y - fringe_centre) / spacing; E(a, b) the mean product over the pairs landing on both screens, S = E(a, b) - E(a, b') + E(a', b) + E(a', b'), E as a curve in a + b over every position, the coincidence map over Phi_A + Phi_B, each screen's single-side pattern. Blind under the whole line with the mirror lay: the triangle E = 1 - 2 |a + b| / pi, S = 2.00 exactly, a sharp ridge on Phi_A + Phi_B = 0; under the line as it stands E = 0.203 cos(a + b), S = 0.57, no ridge; nature with the same comb E = 0.405 cos(a + b), S = 1.15, a cosine ridge of visibility 1 (2.83 with two-port analysers). The GameBoard check: per pair two landings at mirror rows, the single-side fringes at the spacing 16.",
+        "comment": "Bell's blind expectation (the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast, #1515 comment 5912822802, on the advisor's design 5912573191 with his corrections 5912958018; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. Per run and side the shares per region from what each region saw (the `seen` lines, the net inflow through its front boundary, over W_c the quanta) and its entries; the two ports of a setting the unions of the regions in the comb's two half-rows about the setting's position (+ on the rows y_a - 3 to y_a + 4 of each fringe), the contrast their difference over their sum; the side `sign` (A, the left) credits every quantum to the larger port, the side `contrast` (B, the right) credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest; E(a, b) among the coincidences over the runs, S = E(a, b) - E(a, b') + E(a', b) + E(a', b'), E as a curve in a + b at the curve's positions of a against b's first setting, B's efficiency per setting; beside it the reading by the shares (E the product of the marginals) for comparison. Blind: by the contrast E = cos(a + b) in the fringe phase (the polariser's cos 2(a - b)), S = 2.83 exactly at eight run angles at the half-offsets, B's efficiency 0.64 at every setting, the uncounted pairs 36 percent (the detection loophole as a number); by the shares E = 0.203 cos(a + b), S = 0.57; nature 0.405 cos(a + b), S = 1.15 (2.83 with two-port analysers), and above the loophole's bound in the loophole-free experiments, where the law and nature part. The GameBoard check: the single-side fringes at the spacing 16 in each run, shifted by (k + 1/2) / 8 of it; B's clicks per run the same at every setting in the sum over the runs.",
         "verdict": "DETECTOR",
         "family": design["family"],
         "across": "y",
-        "along": "x",
-        "sides": {"left": "left", "right": "right"},
-        "mirrors": [[0, 1]],
-        "wholes": int(packet["wholes"]),
+        "sides": {
+            side: {f"{side}_{number}": rows for number, rows in enumerate(regions(design, side))}
+            for side, _sign in SIDES
+        },
+        "sign": design["comb"]["sign"],
+        "contrast": design["comb"]["contrast"],
+        "runs": [f"bell_{angle}" for angle in range(int(design["angles"]))],
+        "quanta": None,
         "fringe_centre": int(comb["centre"]),
         "spacing": spacing,
         "settings": {side: links(values, spacing) for side, values in comb["settings"].items()},
         "degrees": comb["settings"],
         "curve": {"degrees": list(comb["curve"]), "links": links(comb["curve"], spacing)},
-        "bins": int(comb["bins"]),
         "blind": design["blind"],
     }
 
@@ -96,23 +118,28 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--design", type=Path, default=HERE / "design.json", help="the design file")
-    parser.add_argument("--folder", type=Path, default=HERE, help="the folder of the world written")
-    parser.add_argument("--name", default="bell", help="the world's name")
+    parser.add_argument("--folder", type=Path, default=HERE, help="the folder of the worlds written")
     parser.add_argument(
-        "--mirror",
-        action="store_true",
-        help="declare the two packets mirrors (the key `mirror` on each message, the other's index); the loader refuses it until the whole line's round names it",
+        "--modes", action="store_true", help="write the mode files too (tools/pixel_mode.py)"
     )
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
     args.folder.mkdir(parents=True, exist_ok=True)
-    path = args.folder / f"{args.name}.json"
-    document = world(design, args.mirror)
-    path.write_text(json.dumps(document) + "\n", encoding="utf-8")
+    for angle in range(int(design["angles"])):
+        path = args.folder / f"bell_{angle}.json"
+        document = world(design, angle)
+        path.write_text(json.dumps(document) + "\n", encoding="utf-8")
+        if args.modes:
+            subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path)],
+                check=True,
+                cwd=ROOT,
+                stdout=subprocess.DEVNULL,
+            )
+        print(json.dumps({"world": str(path), "angle": angle, "detectors": len(document["detectors"])}))
     blind = args.folder / "expectation.json"
     blind.write_text(json.dumps(expectation(design), indent=1) + "\n", encoding="utf-8")
-    summary = {"world": str(path), "expectation": str(blind), "shape": document["shape"]}
-    print(json.dumps({**summary, "wholes": design["packet"]["wholes"], "ticks": document["ticks"]}))
+    print(json.dumps({"expectation": str(blind), "runs": int(design["angles"])}))
 
 
 if __name__ == "__main__":

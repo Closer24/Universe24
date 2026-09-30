@@ -1,4 +1,4 @@
-"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. The board's face rule (core/ports.py) is the file's: the wraps, the Nodes its inner faces declare beyond the board and its receding faces, beyond which it grows by layers of zeros as the front reaches them (growth.py), every declared coordinate staying the file's. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a group of Nodes declared in the file, its click the rise of the group's count, the one measurement, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
+"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. The board's face rule (core/ports.py) is the file's: the wraps, the Nodes its inner faces declare beyond the board and its receding faces, beyond which it grows by layers of zeros as the front reaches them (growth.py), every declared coordinate staying the file's. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a region of Nodes declared in the file, a declared instrument, its click a whole quantum's entry through its boundary reported with the region and never a Node, the one measurement, what it saw at its boundary a `seen` line for the host's credit, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
 
 from __future__ import annotations
 
@@ -132,6 +132,14 @@ class GameBoard:
         """One output line to the observer, if any."""
         if self.observer is not None:
             self.observer(line)
+
+    def instrument(self) -> np.ndarray:
+        """The instrument: the union of the declared regions (every detector with its own positions, the faces' layer and the bodies' detectors aside), whose boundary is where the clicks and the seen inflows are read (ALGEBRA.md #the-click-ends-nothing): what moves between two regions of one screen is neither an entry nor seen twice."""
+        found = np.zeros(self.shape, dtype=bool)
+        for detector in self.detectors:
+            if detector.body is None and detector.name != FACE_NAME and detector.nodes is not None:
+                found |= detector.nodes
+        return found
 
     def body_nodes(self, number: int) -> np.ndarray:
         """A body's Nodes as a report needs them: where its family's count stands about its declared Nodes, derived now and kept nowhere (`reports.standing`)."""
@@ -324,8 +332,20 @@ class GameBoard:
                 wall = count_wall(self.families[index], action)
                 self.states[held].flows[index] = flow.flow_origins(self.families[held], wall, self.shape)
 
+    def declared_board(self) -> np.ndarray:
+        """The declared board: the file's own Nodes over the GameBoard as grown, the layers a receding face has grown beyond them (what leaves into those layers has left the world, `growth`)."""
+        found = np.zeros(self.shape, dtype=bool)
+        first, extent = self.offset, self.world.shape
+        found[
+            first[0] : first[0] + extent[0],
+            first[1] : first[1] + extent[1],
+            first[2] : first[2] + extent[2],
+        ] = True
+        return found
+
     def report(self, writes: Lines, remainders: dict[int, np.ndarray]) -> None:
-        """The clicks of every detector per family of quanta (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), each one group: the whole quanta the count's line's currents carried into it through its boundary Ports this interval, from the remainders before the line (`reports.clicks`)."""
+        """The clicks of every detector per family of quanta (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), each one region: the whole quanta the count's line's currents carried into it through its boundary Ports this interval, from the remainders before the line, reported with the region's name and never a Node (`reports.clicks`); and what each detector saw this interval, one `seen` line per family and detector where it is not 0: the net current through the instrument's front boundary at its Nodes, in integers (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares and no click."""
+        own = self.declared_board()
         for index, (count_line, _sense) in writes.items():
             family, count = self.families[index], self.states[index].count
             assert count is not None
@@ -333,12 +353,35 @@ class GameBoard:
             for detector in self.detectors:
                 nodes = self.body_nodes(detector.body) if detector.body is not None else detector.nodes
                 assert nodes is not None
+                declared = detector.body is None and detector.name != FACE_NAME
+                boundary_of = self.instrument() if declared else nodes
                 through, before = count_line.through, remainders[index]
-                for line in clicks(
-                    detector, nodes, through, before, count, wall, self.wrap, family.name, self.tick
-                ):
+                lines, inflow = clicks(
+                    detector,
+                    nodes,
+                    through,
+                    before,
+                    count,
+                    wall,
+                    self.wrap,
+                    family.name,
+                    self.tick,
+                    boundary_of,
+                    own,
+                )
+                for line in lines:
                     self.reports[index] += 1
-                    self.emit({**line, "node": growth.declared(line["node"], self.offset)})
+                    self.emit(line)
+                if inflow != 0:
+                    self.emit(
+                        {
+                            "event": "seen",
+                            "tick": self.tick,
+                            "family": family.name,
+                            "detector": detector.name,
+                            "inflow": inflow,
+                        }
+                    )
 
     def booked_back(
         self,

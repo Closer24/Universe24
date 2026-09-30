@@ -24,7 +24,7 @@ def arrays_of(name: str, state: NodeState) -> Snapshot:
     """Every array of a family's NodeState with its name, copied."""
     found: list[tuple[str, np.ndarray]] = []
     records = [("levels", state.levels), ("second", state.second)]
-    records += [(f"parts[{index}]", part) for index, part in enumerate(state.parts)]
+    records += [(f"parts[{index}]", part) for index, part in enumerate(state.parts) if index]
     for label, record in records:
         if record is not None:
             found += [(f"{label}.{key}", getattr(record, key)) for key in ("now", "before", "remainder")]

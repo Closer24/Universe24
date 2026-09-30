@@ -1,25 +1,149 @@
 {
- "comment": "Bell's first world under the whole line (the advisor, #1515 comment 5910272948, C, correcting 5908460763 (3) and 5909819308; ALGEBRA.md row (h)): every number of the world, read by build_world.py, which writes the world file and the blind expectation file from it. One packet per side carrying N wholes at mirror quantiles, one angle (theta = 0, no transverse wave number; the angle spread of 5909819308 is the second world, later): the pair is born in one act, so its two wholes stand at mirror positions with mirror fractions, the same lay fraction for both and the axis fractions mirrored, the engine round's mirror lay; the world declares the two packets as mirrors (`packet.mirror`: the builder's --mirror writes the key `mirror` on each message naming the other's index, a key the loader refuses until the whole line's round names it, so the world file stands without it by default). The flat board `length` x `height` x 1 (z folded) with the source at the column `source`; the two packets of the light family at the wave `wave` centred `packet.offset` Links on either side of the source (the left one moving toward -x, the right one toward +x, apart: their envelopes do not meet), each a flat top of one Node along x with a raised-cosine edge of the half-width `packet.edge_along` (47, the advisor's Gaussian of sigma `packet.sigma_along` = 20 matched at the half maximum, edge = 2.355 sigma), and across y the flat top `packet.across`, the two gaps' aperture (y = 14 to 34, so that most of each quantum passes), with the edge `packet.edge_across`; at the amplitude `packet.amplitude` for N = `packet.wholes` = 3,000 wholes per side (measured by laying, the mass read from the GameBoard after the first act: 716 lays 2,999.9 quanta per packet, 730 lays 3,136, the count laid growing faster than the amplitude's square at this size, so the number is the measurement's and no formula's; the advisor's b = 30 sqrt N was the old train's narrower packet's; the flow's speed is free of the amplitude). The walls symmetric, inner faces `wall` from the source with the two gaps `gaps` across the beam (five Nodes wide at y = 14 to 18 and 30 to 34, d = 16, the train's); the screens `screen` from the source (32 past the walls), each one detector of a slab `slab` deep away from the source over every row, with no declared remainders (under the whole line the click is the whole's entry); both far faces receding as the world's `receding` key declares (ALGEBRA.md, **The unbounded board**; ENGINE.md, the receding face): the board grows beyond either by `layers` layers of zeros whenever a level, a count or a sense reaches the layer before it, so no return comes through either screen, up to the x axis's `largest` extent, where the run ends rather than reflecting; `ticks` intervals, the train's. The reading is the comb (tools/bell_clicks.py): on each screen a landing (a click line, the whole named on it) is +1 where cos(Phi(y) - a) > 0 and -1 under, Phi(y) = 2 pi (y - `comb.centre`) / `comb.spacing` the fringe phase of its row (the spacing lambda L / d = 8 x 32 / 16 = 16), every landing an outcome and no rise in a window; a pair is the two mirror wholes (the same lay fraction, the left packet's whole n with the right packet's whole n); the settings are readings about a position, `comb.settings` in degrees of fringe phase (a and a' on the left at y_c and y_c + 4, b and b' on the right at y_c - 2 and y_c - 6; 45 degrees = 2 Links), so all four E(a, b), S at the CHSH settings and E as a curve in a + b (`comb.curve`, in degrees) come from one run's landings, with the coincidence map over Phi_A + Phi_B in `comb.bins` bins and each screen's single-side pattern. The blind row (`blind`): under the whole line with the mirror lay the two landings of a pair are exact mirrors, the fringe phases obey u_B = -u_A and the comb's product depends on a + b alone, E(a, b) = 1 - 2 |a + b| / pi (1.0, 0.5, 0.0, -0.5, -1.0 at 0, 45, 90, 135, 180 degrees; the four settings 0.5, -0.5, 0.5, 0.5), S = 2.00 exactly, a sharp coincidence ridge on Phi_A + Phi_B = 0; under the line as it stands E = 0.203 cos(a + b), S = 0.57 and no ridge; nature with the same comb E = 0.405 cos(a + b), S = 1.15, a cosine ridge of visibility 1 and flat single-side patterns (2.83 with two-port analysers); every one under Bell's 2 but nature's shape. The GameBoard check (a diagnostic): per pair two landings at mirror rows, the single-side fringes at the spacing 16.",
+ "comment": "Bell under the new laws (the advisor's design at the owner's word of 2026-09-30, #1515 comment 5912573191; the owner's decision of 14:15, Bell by the detector's contrast, 5912822802, and the advisor's corrections 5912958018; ALGEBRA.md row (h)): every number of the worlds, read by build_world.py, which writes one world per angle with its mode file (tools/pixel_mode.py, the message lay) and the blind expectation file. The flat board `length` x `height` x 1 (z folded) with the source at the column `source`; per side two lobes of the light family at the wave `wave` (k = pi / 4, lambda = 8), one before each gap (the rows `lobes`, the two gaps' apertures, with the edge `edge_across`), each a flat top of one Node along x at `offset` from the source with the raised-cosine edge `edge_along` (the advisor's Gaussian of sigma 20 matched at the half maximum), at the amplitude `amplitude`, the left lobes moving toward -x and the right toward +x; the pair's angle laid as the relative phase of the two lobes through the two gaps, on the right side the upper lobe at the phase 2 pi (k + 1/2) / K and on the left its mirror, the run k of K = `angles` (the fringe at the right screen shifted by +(k + 1/2) / K of the spacing and at the left by the mirror, exactly the tilt of a pair laid with opposite transverse wave numbers at the gaps and free of the drift that carries a tilted packet off the gaps; the half-offsets so that no run falls on a port's zero). The walls symmetric, inner faces `wall` from the source with the gaps `gaps` (d = 16); the screens `screen` from the source, each a slab `slab` deep, the last `slab` columns of the board, backed by the receding faces `receding` (opaque: what enters leaves the declared board and never returns; the y faces recede too, so that no reflection of the fans off the board's sides reaches the screens), declared in regions of `rows_per_region` rows tiled from the row `tiling` of each side (A's from the row 1, B's from the row 3, the edge rows folded into the edge regions; the size rule, half the wavelength, No click names a Node), so that each setting's two ports are unions of whole regions; `ticks` intervals. The reading (tools/bell_clicks.py): per run and side the shares per region from what it saw (`seen`, the net front inflow) and its entries; the comb on a half-row, +1 on the rows y_a - 3 to y_a + 4 of each fringe of `comb.spacing` about the setting a at `comb.centre` and -1 on the other eight; the two ports of a setting the unions of the regions in its half-fringes, the contrast their difference over their sum; side A (`sign`, the left) credits every quantum to the larger port, side B (`contrast`, the right) credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest; E(a, b) among the coincidences over the K runs, S at the CHSH settings `comb.settings` (degrees of fringe phase; the mirrored lobe reads the polariser's a - b as a + b). The blind rows (`blind`): by the contrast E = cos(a + b) in the fringe phase, the polariser's cos 2(a - b), S = 2.83 exactly at K = 8, B's efficiency 2 / pi = 0.64 at every setting, the uncounted pairs 36 percent, those near the contrast's zero, the detection loophole as a number; by the shares, for comparison, E = 0.203 cos(a + b) and S = 0.57 in the comb's normalisation (1.41 by the sign, the visibility 0.50); nature E = 0.405 cos(a + b) and S = 1.15 in the comb's normalisation, 2.83 with two-port analysers, and above the loophole's bound in the loophole-free experiments, where the law and nature part.",
  "universe": "examples/events/rule.json",
  "engine": "examples/events/engine_start.json",
  "family": "charge",
- "length": 400,
+ "length": 327,
  "height": 48,
- "source": 200,
- "wave": [1, 4],
- "packet": {"offset": 60, "across": [14, 34], "edge_along": 47, "edge_across": 2, "sigma_along": 20, "amplitude": 716, "wholes": 3000, "mirror": true},
+ "source": 163,
+ "wave": [
+  1,
+  4
+ ],
+ "offset": 60,
+ "lobes": [
+  [
+   14,
+   18
+  ],
+  [
+   30,
+   34
+  ]
+ ],
+ "edge_along": 47,
+ "edge_across": 2,
+ "amplitude": 716,
+ "angles": 8,
  "wall": 120,
- "gaps": [[14, 18], [30, 34]],
+ "gaps": [
+  [
+   14,
+   18
+  ],
+  [
+   30,
+   34
+  ]
+ ],
  "screen": 152,
  "slab": 12,
- "receding": {"x": {"sides": ["low", "high"], "largest": 2000, "layers": 64}},
+ "rows_per_region": 4,
+ "tiling": {
+  "left": 1,
+  "right": 3
+ },
+ "receding": {
+  "x": {
+   "sides": [
+    "low",
+    "high"
+   ],
+   "largest": 2000,
+   "layers": 64
+  },
+  "y": {
+   "sides": [
+    "low",
+    "high"
+   ],
+   "largest": 1000,
+   "layers": 64
+  }
+ },
  "ticks": 400,
- "comb": {"centre": 24, "spacing": 16, "settings": {"a": [0, 90], "b": [-45, -135]}, "curve": [0, 45, 90, 135, 180], "bins": 16},
+ "comb": {
+  "centre": 24,
+  "spacing": 16,
+  "settings": {
+   "a": [
+    0,
+    90
+   ],
+   "b": [
+    -45,
+    -135
+   ]
+  },
+  "curve": [
+   0,
+   45,
+   90,
+   135,
+   180
+  ],
+  "sign": "left",
+  "contrast": "right"
+ },
  "blind": {
-  "whole_line": {"correlation": "1 - 2 |a + b| / pi", "curve": [1.0, 0.5, 0.0, -0.5, -1.0], "settings": [0.5, -0.5, 0.5, 0.5], "S": 2.0, "ridge": "sharp on Phi_A + Phi_B = 0"},
-  "line_as_it_stands": {"correlation": "0.203 cos(a + b)", "S": 0.57, "ridge": "none"},
-  "nature": {"correlation": "0.405 cos(a + b)", "S": 1.15, "ridge": "a cosine of visibility 1", "two_port_S": 2.83},
+  "contrast": {
+   "correlation": "cos(a + b) in the fringe phase, cos 2(a - b) in the polariser angles",
+   "settings": [
+    0.7071,
+    -0.7071,
+    0.7071,
+    0.7071
+   ],
+   "S": 2.8284,
+   "efficiency_B": 0.637,
+   "uncounted": 0.36,
+   "curve": {
+    "sum_of_settings_links": [
+     -2,
+     0,
+     2,
+     4,
+     6
+    ],
+    "E": [
+     0.7071,
+     1.0,
+     0.7071,
+     0.0,
+     -0.7071
+    ]
+   }
+  },
+  "by_the_shares": {
+   "correlation": "0.203 cos(a + b)",
+   "settings": [
+    0.143,
+    -0.143,
+    0.143,
+    0.143
+   ],
+   "S": 0.57,
+   "S_by_the_sign": 1.414,
+   "visibility": 0.5
+  },
+  "nature": {
+   "correlation": "0.405 cos(a + b)",
+   "settings": [
+    0.286,
+    -0.286,
+    0.286,
+    0.286
+   ],
+   "S": 1.15,
+   "visibility": 1.0,
+   "two_port_S": 2.83,
+   "loophole_free": "above the efficiency 2 / 3, the violation stands; the law stops at 0.64"
+  },
   "bound": 2.0,
-  "check": {"landings_per_pair": 2, "mirror_rows": true, "fringe_spacing": 16}
+  "check": {
+   "fringe_spacing": 16,
+   "single_side_maxima": "at the spacing 16, shifted by (k + 1/2) / 8 of it",
+   "efficiency_B_per_setting": "the same at every setting b in the sum over the runs"
+  }
  }
 }

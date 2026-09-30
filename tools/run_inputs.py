@@ -1,4 +1,4 @@
-"""The one command: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason, the guard's among them), run on the GameBoard for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval; a run whose front reaches a receding face's largest size ends there, LAWFUL, the end named under `ended` with the intervals run), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the end if the run ended, the output lines `click` (the detectors' clicks, the measurements) and the books (a GameBoard diagnostic, the least Link pace of the final state among them). The output carries no time.
+"""The one command: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason, the guard's among them), run on the GameBoard for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval; a run whose front reaches a receding face's largest size ends there, LAWFUL, the end named under `ended` with the intervals run), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the end if the run ended, the output lines `click` (the detectors' clicks, the measurements: each the region's name, the family and the Ports crossed, never a Node) and the books (a GameBoard diagnostic, the least Link pace of the final state among them). The output carries no time.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -15,7 +15,7 @@ from pathlib import Path
 from event_universe.game_board import GameBoard
 from event_universe.world_files import load_world
 
-LINES = ("click",)  # the lines written: the detectors' clicks
+LINES = ("click", "seen")  # the lines written: the detectors' clicks and what they saw
 
 
 def run_input(path: str, out_dir: str) -> dict[str, object]:
