@@ -538,15 +538,23 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
 def message_levels(
     board: Board, message: dict[str, Any], beyond: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side), phi = 2 pi r / s its phase (`phase`, 0 without the key), x_i the Node's coordinate on that axis, b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a (k = 0 across), sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold both fractions (a multiple of 2 x 2 q and of s); 0 beyond the board."""
+    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a, sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board."""
     along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
     turned, whole_turn = message.get("phase", [0, 1])
+    sideways = {
+        AXES.index(str(name)): (int(r), int(s)) for name, (r, s) in message.get("transverse", {}).items()
+    }
+    numbers = [
+        (int(turns), int(halves)) if axis == along else sideways.get(axis, (0, 1)) for axis in range(3)
+    ]
     amplitude = int(message["amplitude"])
     unit = division_fixed_point(int(division_forward(board.width, amplitude, 0)[0]))
-    steps = lcm(2 * 2 * int(halves), int(whole_turn))
+    steps = lcm(*(2 * 2 * q for _p, q in numbers), int(whole_turn))
     quarter = int(division_forward(steps, 2 * 2, 0)[0])
     cosines = half_turn(quarter, unit)  # cos(2 pi j / steps) for j from 0 through the half turn
-    per_link = int(division_forward(int(turns) * steps, 2 * int(halves), 0)[0])  # k's steps per Link
+    per_link = [
+        int(division_forward(p * steps, 2 * q, 0)[0]) for p, q in numbers
+    ]  # k's steps per Link per axis
     shift = int(division_forward(int(turned) * steps, int(whole_turn), 0)[0])  # the phase's steps
     axes = [
         envelope(
@@ -557,21 +565,19 @@ def message_levels(
         )
         for axis, name in enumerate(AXES)
     ]
-    coordinates = np.indices(board.shape)[along]
-    wave = np.vectorize(lambda x: cosine_at(cosines, per_link * int(x) + shift), otypes=[object])
-    quadrature = np.vectorize(
-        lambda x: cosine_at(cosines, per_link * int(x) + shift - quarter), otypes=[object]
-    )
-    cosine = sum(cosine_at(cosines, per_link) if axis == along else unit for axis in range(3))
-    cosine = int(division_forward(cosine, 3, 0)[0])
+    coordinates = np.indices(board.shape)
+    index = sum(per_link[axis] * coordinates[axis] for axis in range(3)) + shift
+    wave = np.vectorize(lambda i: cosine_at(cosines, int(i)), otypes=[object])(index)
+    quadrature = np.vectorize(lambda i: cosine_at(cosines, int(i) - quarter), otypes=[object])(index)
+    cosine = int(division_forward(sum(cosine_at(cosines, per_link[axis]) for axis in range(3)), 3, 0)[0])
     sine = division_fixed_point(unit * unit - cosine * cosine)
     shaped = [
         np.array(levels, dtype=object).reshape([-1 if a == axis else 1 for a in range(3)])
         for axis, levels in enumerate(axes)
     ]
     envelope_here = amplitude * shaped[0] * shaped[1] * shaped[2]
-    now = envelope_here * wave(coordinates) * unit
-    before = envelope_here * (wave(coordinates) * cosine - quadrature(coordinates) * sine)
+    now = envelope_here * wave * unit
+    before = envelope_here * (wave * cosine - quadrature * sine)
     scale = unit * unit * unit * unit * unit
     half = int(division_forward(scale, 2, 0)[0])
     found = []

@@ -12,6 +12,8 @@ RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")
 PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
 TRAIN = load_file("train_clicks", ROOT / "tools" / "train_clicks.py")
+BELL = load_file("bell_clicks", ROOT / "tools" / "bell_clicks.py")
+BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
 ROLE_OF = {"sign": "light", "content": "field"}  # a holder of nothing is matter
 SCREEN = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
 BLIND = {"detector": "screen", "family": "charge", "window": [1, 2], "across": "y", "pattern": [1, 7]}
@@ -68,7 +70,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
-    """The slit world with a screen of nine detector Nodes at x = 20, three intervals with the test's own click lines (two at y = 4 and one at y = 3 within the window [1, 2], one at y = 5 beyond it): the look holds the faces as declared; the page's measurement holds one row per screen Node ordered by y, the rises summed per Node exactly as tools/click_counts.py counts them, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two detectors of two Nodes each sharing a y are each one reporter placed at it, on the page, in tools/click_counts.py (named, or every placed group over the whole run where the expectation names none) and in tools/train_clicks.py, whose reading gives each of two quanta the rises nearest its peak (the pace one Link an interval), the halves that rose and the rates."""
+    """The slit world with a screen of nine detector Nodes at x = 20, three intervals with the test's own click lines (two at y = 4 and one at y = 3 within the window [1, 2], one at y = 5 beyond it): the look holds the faces as declared; the page's measurement holds one row per screen Node ordered by y, the rises summed per Node exactly as tools/click_counts.py counts them, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two detectors of two Nodes each sharing a y are each one reporter placed at it, on the page, in tools/click_counts.py (named, or every placed group over the whole run where the expectation names none) and in tools/train_clicks.py, whose reading gives each of two quanta the rises nearest its peak (the pace one Link an interval), the halves that rose and the rates, and in tools/bell_clicks.py, whose reading by the comb gives each of two pairs the outcomes of its landings at the settings, the correlation, S and the coincidences; Bell's builder writes from its design file the world of 20 pairs (612 x 48, 558 intervals, 40 packets, the first pair's at the transverse wave numbers -/+ 120 / 1440 of pi) and the expectation with the first pair's drift across the beam at the wall (-87.8 Links)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     groups = [{"name": f"g{y}", "positions": [[21, y, 0], [22, y, 0]]} for y in (3, 4)]
     world = slit_world(tmp_path, TOOL, detectors=[SCREEN, *groups])
@@ -109,3 +111,17 @@ def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(t
     assert [q["halves"] for q in rows["quanta"]] == [["left", "right"], ["right"]]
     assert rows["both"] == [1, 2] and rows["one"] == [1, 2] and rows["neither"] == [0, 2]
     assert rows["rises_per_quantum"] == [3, 2] and rows["per_group"] == [1, 2]
+    bell = {**train, "source": 0, "pairs": train["quanta"], "sides": {"left": "g3", "right": "g4"}}
+    bell.update(spacing=4, fringe_centre=3, settings={"a": [0, 2], "b": [1, 3]}, bins=4)
+    (tmp_path / "bell.json").write_text(json.dumps(bell))
+    pairs = BELL.reading(world, output, tmp_path / "bell.json")
+    outcomes = [p["outcomes"] for p in pairs["pairs"]]
+    assert outcomes == [{"left": [1, -1], "right": [1, -1]}, {"right": [1, -1]}]
+    assert pairs["correlation"] == {"0 1": [1, 1], "0 3": [-1, 1], "2 1": [-1, 1], "2 3": [1, 1]}
+    assert pairs["S"] == [2, 1] and pairs["coincidences"] == 1
+    assert pairs["landings"] == {"left": 1, "right": 2}
+    BUILD.main(["--folder", str(tmp_path / "bell")])
+    built = json.loads((tmp_path / "bell" / "bell.json").read_text())
+    blind = json.loads((tmp_path / "bell" / "expectation.json").read_text())["pairs"][0]
+    assert built["shape"] == [612, 48, 1] and built["ticks"] == 558 and len(built["messages"]) == 40
+    assert built["messages"][0]["transverse"] == {"y": [-120, 1440]} and blind["drift"] == -87.8
