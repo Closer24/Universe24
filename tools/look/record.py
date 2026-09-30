@@ -18,7 +18,7 @@ import numpy as np
 from event_universe import node, reports
 from event_universe.core.rule3 import link_paces
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import FamilyRule
+from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.world import AXES, World
 from event_universe.world_files import load_world
 
@@ -57,7 +57,7 @@ def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int
         "parts": list(family.parts),
         "quanta": family.quanta,
         "reads": [families[read.family].name for read in family.reads],
-        "wall": node.count_wall(family, action) if family.quanta else None,
+        "wall": count_wall(family, action) if family.quanta else None,
     }
 
 

@@ -1,4 +1,4 @@
-"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. The generator also lays every message of the world (ALGEBRA.md #the-generator, the message lay): a packet of a family of quanta and no body, its `now` the wave along its axis under its envelope and its `before` the same wave one interval earlier, every cosine by Rule3's rotation act and every root by the fixed point of the division act, its numbers the world's keys. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. The generator also lays every message of the world (ALGEBRA.md #the-generator, the message lay): a packet of a family of quanta and no body, its `now` the wave along its axis (toward either side, by the sign of its wave number) at its phase under its envelope and its `before` the same wave one interval earlier, every cosine by Rule3's rotation act and every root by the fixed point of the division act, its numbers the world's keys. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
 
 from __future__ import annotations
 
@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 from dataclasses import dataclass
+from math import lcm
 from pathlib import Path
 from typing import Any, cast
 
@@ -537,11 +538,16 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
 def message_levels(
     board: Board, message: dict[str, Any], beyond: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`), x_i the Node's coordinate on that axis, b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a (k = 0 across), sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width; 0 beyond the board."""
+    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side), phi = 2 pi r / s its phase (`phase`, 0 without the key), x_i the Node's coordinate on that axis, b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a (k = 0 across), sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold both fractions (a multiple of 2 x 2 q and of s); 0 beyond the board."""
     along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
+    turned, whole_turn = message.get("phase", [0, 1])
     amplitude = int(message["amplitude"])
     unit = division_fixed_point(int(division_forward(board.width, amplitude, 0)[0]))
-    cosines = half_turn(int(halves), unit)
+    steps = lcm(2 * 2 * int(halves), int(whole_turn))
+    quarter = int(division_forward(steps, 2 * 2, 0)[0])
+    cosines = half_turn(quarter, unit)  # cos(2 pi j / steps) for j from 0 through the half turn
+    per_link = int(division_forward(int(turns) * steps, 2 * int(halves), 0)[0])  # k's steps per Link
+    shift = int(division_forward(int(turned) * steps, int(whole_turn), 0)[0])  # the phase's steps
     axes = [
         envelope(
             board.shape[axis],
@@ -552,11 +558,11 @@ def message_levels(
         for axis, name in enumerate(AXES)
     ]
     coordinates = np.indices(board.shape)[along]
-    wave = np.vectorize(lambda x: cosine_at(cosines, 2 * int(turns) * int(x)), otypes=[object])
+    wave = np.vectorize(lambda x: cosine_at(cosines, per_link * int(x) + shift), otypes=[object])
     quadrature = np.vectorize(
-        lambda x: cosine_at(cosines, int(halves) - 2 * int(turns) * int(x)), otypes=[object]
+        lambda x: cosine_at(cosines, per_link * int(x) + shift - quarter), otypes=[object]
     )
-    cosine = sum(cosines[2 * int(turns)] if axis == along else unit for axis in range(3))
+    cosine = sum(cosine_at(cosines, per_link) if axis == along else unit for axis in range(3))
     cosine = int(division_forward(cosine, 3, 0)[0])
     sine = division_fixed_point(unit * unit - cosine * cosine)
     shaped = [
@@ -576,7 +582,7 @@ def message_levels(
 
 
 def message_entry(board: Board, message: dict[str, Any], beyond: np.ndarray) -> dict[str, Any]:
-    """One message's mode entry: its family and pair, its amplitude, the count its record lays over the board at the vacuum's paces (a reading) and its two levels."""
+    """One message's mode entry: its family and pair, its amplitude, the count its record lays over the board at the vacuum's paces (a reading) and its two levels as their nonzero Nodes."""
     now, before = message_levels(board, message, beyond)
     laid = share_counts(share_of(board, 0, now, before), board.pair[1], board.action)
     return {
@@ -584,8 +590,15 @@ def message_entry(board: Board, message: dict[str, Any], beyond: np.ndarray) -> 
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
         "count": int(laid.sum()),
-        "moving": {"now": now.ravel().tolist(), "before": before.ravel().tolist()},
+        "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
+
+
+def nonzero(levels: np.ndarray) -> dict[str, list[int]]:
+    """A level over the board as its nonzero Nodes alone, the mode file's sparse form: their flat x-major indexes and their levels (a packet stands on few Nodes of a long board)."""
+    flat = levels.ravel()
+    at = np.flatnonzero(flat)
+    return {"at": at.tolist(), "values": flat[at].tolist()}
 
 
 def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dict[str, Any]:
@@ -723,14 +736,14 @@ def main(argv: list[str] | None = None) -> None:
     mode = pixel_mode(document, list(args.sense))
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
-    out.write_text(json.dumps(mode) + "\n", encoding="utf-8")
+    out.write_text(json.dumps(mode, separators=(",", ":")) + "\n", encoding="utf-8")
     for body in mode["bodies"]:
         reading = {key: value for key, value in body.items() if key not in ("profile", "moving")}
         reading["nodes"] = sum(1 for level in body["profile"] if level)
         print(json.dumps(reading))
     for message in mode["messages"]:
         reading = {key: value for key, value in message.items() if key != "moving"}
-        reading["nodes"] = sum(1 for level in message["moving"]["now"] if level)
+        reading["nodes"] = sum(1 for level in message["moving"]["now"]["values"] if level)
         print(json.dumps(reading))
 
 

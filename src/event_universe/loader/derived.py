@@ -73,6 +73,11 @@ def family_rules(
     return tuple(found)
 
 
+def count_wall(family: FamilyRule, action: int) -> int:
+    """The count's wall W_c = 3 den T, the family's plain wall times the universe's quantum action (ALGEBRA.md #the-counts-line, the lay and the wall)."""
+    return 3 * family.pair[1] * action
+
+
 def largest_of(width: int) -> int:
     """The largest integer of the file's width in bits, 2^width - 1, the bound every total of the law stays inside (ALGEBRA.md #the-bound)."""
     return int(2**width - 1)
