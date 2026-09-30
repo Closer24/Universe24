@@ -17,7 +17,9 @@ rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
   `python paper/general_formula/octahedron.py`, `band.pdf` and `channels.pdf`
   by `python paper/general_formula/band_and_channels.py`, `branches.pdf` (the three
   masses along the two branches, from the rows of the law) by
-  `python paper/general_formula/branches.py`.
+  `python paper/general_formula/branches.py`, `two_slits.pdf` (the screen's rises
+  beside the blind row, from row (g) of the law) by
+  `python paper/general_formula/two_slits.py`.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.
