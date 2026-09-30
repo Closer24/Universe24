@@ -46,7 +46,7 @@ def remainders(rule: dict[str, Any], rank: int, slab: int, wall: int, nodes: int
 
 
 def world(design: dict[str, Any], wall: int, warm: bool, whole: bool = False) -> dict[str, object]:
-    """The world file from the design: the shift is the train's length, packets x spacing; the leading packet's top the design's before the wall, every next one a spacing behind; the slab from the screen's coordinate beyond the shift, one detector per column of the design's range with its slab's Nodes and, on the warm screen, its remainders; the far face `beyond_slab` beyond the slab; the ticks from the pace."""
+    """The world file from the design: the shift is the train's length, packets x spacing; the leading packet's top the design's before the wall, every next one a spacing behind; the slab from the screen's coordinate beyond the shift, one detector per column of the design's range with its slab's Nodes and, on the warm screen, its remainders; the far face `beyond_slab` beyond the slab, receding as the design's `receding` key declares (the world's key, passed as written); the ticks from the pace."""
     slits, packets, spacing = design["slits"], int(design["packets"]), int(design["spacing"])
     slab, shift = int(design["slab"]), packets * spacing
     first = int(slits["screen"]) + shift
@@ -91,6 +91,7 @@ def world(design: dict[str, Any], wall: int, warm: bool, whole: bool = False) ->
         "measured": [],
         "messages": messages,
         "detectors": detectors,
+        "receding": design["receding"],
     }
 
 

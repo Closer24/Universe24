@@ -42,9 +42,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_form_
         assert (matter.count[standing] != 0).all() and (standing & declared).any()
         assert int((wall * matter.count.astype(object) + matter.count_remainder).sum()) == total
         assert abs(int(matter.count.sum()) - laid) <= CHAIN  # the remainders' walk, a Node at most each
-    print(
-        f"GAMEBOARD the laid body of {laid}: its count at its Nodes {min(kept)} to {max(kept)} over 100 intervals"
-    )
+    print(f"GAMEBOARD the laid body of {laid}: its count at its Nodes {min(kept)} to {max(kept)} in 100")
     assert board.books()["matter"]["balanced"] and board.books()["matter"]["pace"] > 0
     document = json.loads(world.read_text(encoding="utf-8"))
     for line in document["measured"][0]["nodes"]:
@@ -69,34 +67,18 @@ def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_rea
     board.step()
     first, second = board.body_nodes(0), board.body_nodes(1)
     q = node.sense_sign(matter, board.shape)
-    assert (
-        (q[first] >= 0).all()
-        and (q[first] == 1).any()
-        and (q[second] <= 0).all()
-        and (q[second] == -1).any()
-    )
+    assert (q[first] >= 0).all() and (q[first] == 1).any() and (q[second] <= 0).all()
+    assert (q[second] == -1).any()
     assert (np.sign(node.wronskian(matter.levels, matter.second))[first] == 1).all()
     level = charge.parts[0].now
     assert charge.levels is charge.parts[0]  # light is the sign holder's own record
-    assert int(level[first].min()) >= 0 < int(level[first].sum()) and int(
-        level[second].max()
-    ) <= 0 > int(level[second].sum())
-    node.with_parts(
-        charge,
-        [
-            node.Record(
-                np.full(board.shape, 100, dtype=np.int64),
-                charge.parts[0].before,
-                charge.parts[0].remainder,
-            )
-        ],
-    )
+    assert int(level[first].min()) >= 0 < int(level[first].sum())
+    assert int(level[second].max()) <= 0 > int(level[second].sum())
+    hill = np.full(board.shape, 100, dtype=np.int64)
+    node.with_parts(charge, [node.Record(hill, charge.parts[0].before, charge.parts[0].remainder)])
     content, _axis = node.signed_read(
         names.index("matter"), board.families, board.states, 6000, "now", board.shape
     )
-    plain = sum(  # every holder of the content, read as it stands
-        state.parts[0].now
-        for family, state in zip(board.families, board.states, strict=True)
-        if family.held == CONTENT
-    )
+    holders = [s for f, s in zip(board.families, board.states, strict=True) if f.held == CONTENT]
+    plain = sum(state.parts[0].now for state in holders)  # every holder of the content, as it stands
     assert ((content - plain) == -100 * q)[first | second].all()  # the hill at q = +1, the hollow at -1

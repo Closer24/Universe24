@@ -1,4 +1,4 @@
-"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. The board's face rule (core/ports.py) is the file's: the wraps and the Nodes its inner faces declare beyond the board. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a group of Nodes declared in the file, its click the rise of the group's count, the one measurement, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
+"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. The board's face rule (core/ports.py) is the file's: the wraps, the Nodes its inner faces declare beyond the board and its receding faces, beyond which it grows by layers of zeros as the front reaches them (growth.py), every declared coordinate staying the file's. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a group of Nodes declared in the file, its click the rise of the group's count, the one measurement, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from dataclasses import replace
 
 import numpy as np
 
-from event_universe import flow, lay, node
+from event_universe import flow, growth, lay, node
 from event_universe.core.ports import Wrap
 from event_universe.features.counts_line import CountWrites
 from event_universe.features.start import rest
@@ -29,7 +29,9 @@ class GameBoard:
 
     def __init__(self, world: World, observer: Observer | None = None) -> None:
         self.world, self.observer, self.tick = world, observer, 0
-        self.shape = world.shape
+        self.shape, self.offset = world.shape, (0, 0, 0)
+        self.growths: list[growth.Growth] = []
+        self.ended: dict[str, object] | None = None
         beyond = self.mask(world.beyond) if world.beyond else None
         self.wrap = Wrap(world.periodic[0], world.periodic[1], world.periodic[2], beyond)
         self.families = world.families
@@ -38,6 +40,7 @@ class GameBoard:
         self.held = [index for index, family in enumerate(self.families) if family.held is not None]
         count = len(self.families)
         self.laid_total, self.laid_sense, self.reports = [0] * count, [0] * count, [0] * count
+        self.origins = [0] * count  # the remainder the start gave each held row, 0 where it gave none
         for row in self.laid_rows():
             state = self.states[row.family]
             assert state.levels is not None and state.second is not None
@@ -52,10 +55,12 @@ class GameBoard:
             for row in world.detectors
         ]
         face = np.zeros(self.shape, dtype=bool)
+        receding = [(row.axis, row.side) for row in world.receding]
         for axis in range(3):
             if world.open_axes[axis]:
                 layer = np.moveaxis(face, axis, 0)
-                layer[: world.face_depth], layer[self.shape[axis] - world.face_depth :] = True, True
+                layer[: world.face_depth] = (axis, -1) not in receding
+                layer[self.shape[axis] - world.face_depth :] = (axis, 1) not in receding
         if bool(face.any()):
             self.detectors.append(Detector(FACE_NAME, face, None))
 
@@ -79,9 +84,9 @@ class GameBoard:
         return found.reshape(self.shape)
 
     def mask(self, nodes: tuple[Node, ...]) -> np.ndarray:
-        """The mask of a set of Nodes."""
+        """The mask of a set of Nodes declared at the file's coordinates, on the GameBoard as grown."""
         found = np.zeros(self.shape, dtype=bool)
-        found[tuple(np.array(nodes).T)] = True
+        found[tuple((np.array(nodes) + np.array(self.offset)).T)] = True
         return found
 
     def start(self) -> None:
@@ -121,7 +126,7 @@ class GameBoard:
             remainder = np.full(self.shape, field.remainder, dtype=np.int64)
             time = node.Record(field.levels.copy(), field.levels.copy(), remainder)
             node.with_parts(state, [time, *state.parts[1:]])
-            state.carry = field.carries
+            state.carry, self.origins[index] = field.carries, field.remainder
 
     def emit(self, line: dict[str, object]) -> None:
         """One output line to the observer, if any."""
@@ -170,7 +175,11 @@ class GameBoard:
         return read, found
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval): the signed read and Rule3 on every record with the wells and the Wronskian's quanta; the count's and the sense's lines (laid at the first act); the clicks; the holds."""
+        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the signed read and Rule3 on every record with the wells and the Wronskian's quanta; the count's and the sense's lines (laid at the first act); the clicks; the holds."""
+        if self.ended is not None:
+            raise RuntimeError(f"the run ended at interval {self.tick}: {self.ended}")
+        if not growth.grow(self):
+            return
         self.tick += 1
         action = self.world.quantum_action
         wells: dict[int, np.ndarray] = {}
@@ -329,7 +338,7 @@ class GameBoard:
                     detector, nodes, through, before, count, wall, self.wrap, family.name, self.tick
                 ):
                     self.reports[index] += 1
-                    self.emit(line)
+                    self.emit({**line, "node": growth.declared(line["node"], self.offset)})
 
     def booked_back(
         self,
@@ -381,4 +390,6 @@ class GameBoard:
             node.with_records(state, records)
             if start is not None:
                 state.well_remainder, state.wronskian_remainder = start, turned
-        self.tick -= 1
+        self.tick, self.ended = self.tick - 1, None
+        while self.growths and self.growths[-1][0] == self.tick + 1:
+            growth.resize(self, *self.growths.pop()[1:], -1)

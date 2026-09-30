@@ -1,4 +1,4 @@
-"""The one command: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason, the guard's among them), run on the GameBoard for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the output lines `click` (the detectors' clicks, the measurements) and the books (a GameBoard diagnostic, the least Link pace of the final state among them). The output carries no time.
+"""The one command: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason, the guard's among them), run on the GameBoard for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval; a run whose front reaches a receding face's largest size ends there, LAWFUL, the end named under `ended` with the intervals run), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the end if the run ended, the output lines `click` (the detectors' clicks, the measurements) and the books (a GameBoard diagnostic, the least Link pace of the final state among them). The output carries no time.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -26,7 +26,9 @@ def run_input(path: str, out_dir: str) -> dict[str, object]:
         board = GameBoard(load_world(source), lambda line: lines.append(line))
         for _ in range(board.world.ticks):
             board.step()
-        output.update(ticks=board.tick, books=board.books())
+            if board.ended is not None:
+                break
+        output.update(ticks=board.tick, ended=board.ended, books=board.books())
     except (ValueError, RuntimeError) as refusal:
         output.update(verdict="REFUSED", reason=str(refusal))
     output["lines"] = [line for line in lines if line["event"] in LINES]

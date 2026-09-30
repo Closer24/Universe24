@@ -75,7 +75,37 @@ engine round now running, before the train of single quanta runs (the owner, 202
 properly", on the build's finding that the far face returns each
 quantum's transmitted part through the screen inside the next quanta's
 windows); the pixel's and the two slits' worlds and blind rows stand on
-their faces as written. A finding beside
+their faces as written. What the build found (the engine round of
+2026-09-30, `src/event_universe/growth.py`, ENGINE.md): the board grows
+by the file's `layers` layers of zeros at a time, a second number of the
+face beside its largest size, so the growth copies every array once per
+that many intervals per face and holds nothing else (a board of 3,700 by
+48 Nodes is about 75 megabytes of state at its full size, no snapshot
+kept); the front is the front of every level, count and sense of every
+family, the held rows' rest fields and their tensions among them, so a
+board grows from the binding holder's screened rest, which reaches tens
+of Links in integers, before the light arrives (the two slits' bright
+world first grows at interval 21), and a wave's tension runs one Link
+ahead of its levels (T_aa reads two Links); a grown Node is laid as the
+first act lays a Node with no level, the levels 0 and every remainder
+at its origin (the count's and the sense's at W_c div 2, a held row's
+time part at the start's half wall where the start gave it, the flows'
+carries at theirs), and with that the run of the receding board is the
+run of the larger board it grows into bit for bit at every interval
+where the rows read 0 at the front at the start (a chain of light alone,
+exact to the end at the largest size), while with held rows sourced at
+the start the two runs differ by the start alone, the rest being the
+declared board's fixed point with its sink at the faces ([what is
+open](#what-is-open), item 13), and not by the growth; the end is
+lawful and named (the interval, the axis, the side, the largest size)
+and the gate goes back over the intervals run; the two slits' bright
+world with its far face receding (the largest size 160, 8 layers per
+growth) says MATCH over its 130 intervals with the screen's rises within
+the window 252 against 258 on the fixed board (the blind 273), the far
+face's returns through the screen gone, and the train world's prefix of 130 intervals, its far face receding
+to the largest size 8,000 by 64 layers (`examples/events/two_slits_train/design.json`,
+the board of 3,664 by 48 grown twice, at intervals 51 and 115, to
+3,792 along x), says MATCH too. A finding beside
 it: a receding face grows the board and stretches nothing, so Hubble's
 redshift does not come from the law's growth; if the law is to give it,
 it comes from elsewhere, a vacuum content that changes with the age
