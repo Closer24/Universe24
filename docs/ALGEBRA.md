@@ -79,9 +79,8 @@ their faces as written. What the build found (the engine round of
 2026-09-30, `src/event_universe/growth.py`, ENGINE.md): the board grows
 by the file's `layers` layers of zeros at a time, a second number of the
 face beside its largest size, so the growth copies every array once per
-that many intervals per face and holds nothing else (a board of 3,700 by
-48 Nodes is about 75 megabytes of state at its full size, no snapshot
-kept); the front is the front of every level, count and sense of every
+that many intervals per face and holds nothing else (ENGINE.md); the
+front is the front of every level, count and sense of every
 family, the held rows' rest fields and their tensions among them, so a
 board grows from the binding holder's screened rest, which reaches tens
 of Links in integers, before the light arrives (the two slits' bright
