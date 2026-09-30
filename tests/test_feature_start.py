@@ -8,9 +8,10 @@ import numpy as np
 import pytest
 
 from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.ports import Wrap
 from event_universe.features.start import arrivals, rest
 
-OPEN_CHAIN = (False, True, True)
+OPEN_CHAIN = Wrap(False, True, True)
 
 
 def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
@@ -27,10 +28,10 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     for counts, faces, pair, divisor in (
         (chain, OPEN_CHAIN, (1, 1), 7),
         (chain, OPEN_CHAIN, (1, 4), 7),
-        (box, (False, True, True), (1, 1), 7),
-        (box, (True, True, True), (3, 4), 7),
-        (mixed, (False, True, True), (1, 1), 7),
-        (mixed, (False, True, True), (1, 2), 7),
+        (box, OPEN_CHAIN, (1, 1), 7),
+        (box, Wrap(True, True, True), (3, 4), 7),
+        (mixed, OPEN_CHAIN, (1, 1), 7),
+        (mixed, OPEN_CHAIN, (1, 2), 7),
     ):
         num, den = pair
         found = rest(counts, pair, faces, divisor, MAX_WORK_INT, 3 * den)
@@ -71,6 +72,6 @@ def test_the_refusals_by_name():
     ring = np.zeros((16, 1, 1), dtype=np.int64)
     ring[3, 0, 0] = 2
     with pytest.raises(ValueError, match="needs a sink"):
-        rest(ring, (1, 1), (True, True, True), 1, MAX_WORK_INT, 3)
+        rest(ring, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3)
     with pytest.raises(ValueError, match="divisor is from 1"):
         rest(ring, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6)

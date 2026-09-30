@@ -143,13 +143,13 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
     assert all(re.search(pattern, own) for pattern in RULE_LINES)
 
 
-# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a Link is core/ports.py's `arrival`; every reading of a neighbour's level (Rule3's arrival sums, the currents at a Port, a body's shell and region) takes it from there.
-SHIFT_HOME = {"src/event_universe/core/ports.py": {"arrival"}}
+# A Node's level goes to its six neighbours only through the Ports: the one shift of an array across a Link is core/ports.py's `shifted`, read through `arrival` under the board's face rule; every reading of a neighbour's level (Rule3's arrival sums, the currents at a Port, a body's shell and region) takes it from there.
+SHIFT_HOME = {"src/event_universe/core/ports.py": {"shifted"}}
 SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 
 
 def test_no_other_code_moves_a_level_from_one_node_to_another():
-    """Every shift of an array across Nodes in src/ is core/ports.py's `arrival` (no np.roll, no take, no shift elsewhere: the Node reads its neighbours through the Ports), and no function of src/ is a split of its own."""
+    """Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: the Node reads its neighbours through the Ports, `arrival`), and no function of src/ is a split of its own."""
     import ast
 
     found: dict[str, set[str]] = {}
@@ -184,12 +184,31 @@ LAW_INTEGERS = frozenset({0, 1, 2, 3, 6})
 RULE_LINE_INTEGERS = frozenset({4, 12})
 
 
-def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_generator():
-    """No integer literal in src/event_universe or tools/pixel_mode.py beyond the law's own (LAW_INTEGERS; Rule3's line's 4 and 12 in core/rule3.py alone): every other number is a file's key or the rule's own act, so a number cannot enter the engine again."""
+def tools_on_the_arrays() -> list[Path]:
+    """Every tool that touches the engine's arrays: a file of tools/ that imports the package (the generator, the runner, the back-in-time gate, the reading of the clicks), found by its imports and never listed."""
     import ast
 
     found = []
-    for path in [*sorted(SOURCE.rglob("*.py")), ROOT / "tools" / "pixel_mode.py"]:
+    for path in sorted((ROOT / "tools").glob("*.py")):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        modules = [node.module or "" for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)]
+        modules += [
+            a.name for node in ast.walk(tree) if isinstance(node, ast.Import) for a in node.names
+        ]
+        if any(module.split(".")[0] == "event_universe" for module in modules):
+            found.append(path)
+    return found
+
+
+def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
+    """No integer literal in src/event_universe or in any tool that touches the engine's arrays (the owner, 2026-09-30: every coordinate, gap, wavelength, width, amplitude, count and window comes from the world's files) beyond the law's own (LAW_INTEGERS; Rule3's line's 4 and 12 in core/rule3.py alone): every other number is a file's key or the rule's own act, so a number cannot enter the engine again."""
+    import ast
+
+    tools = tools_on_the_arrays()
+    names = {path.name for path in tools}
+    assert {"pixel_mode.py", "back_in_time.py", "run_inputs.py", "click_counts.py"} <= names
+    found = []
+    for path in [*sorted(SOURCE.rglob("*.py")), *tools]:
         allowed = LAW_INTEGERS | (RULE_LINE_INTEGERS if path.name == "rule3.py" else frozenset())
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             if isinstance(node, ast.Constant) and type(node.value) in (int, float, complex):

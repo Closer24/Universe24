@@ -60,6 +60,11 @@ def empty_record(shape: tuple[int, int, int]) -> Record:
     return Record(zeros(shape), zeros(shape), zeros(shape))
 
 
+def laid_level(level: np.ndarray) -> Record:
+    """The time part of a held row with a gap: one level and no past, the well laid this interval standing as both levels of the pair (no interval steps it, so its remainder stays 0; ALGEBRA.md #the-primitives, the row "the hold")."""
+    return Record(level, level, np.zeros_like(level))
+
+
 def empty_state(family: FamilyRule, shape: tuple[int, int, int]) -> NodeState:
     """A family's NodeState before its start: its two level pairs at 0 where it carries quanta, its parts at 0 where it is held, its time part the real pair itself where it does both (the holder of the sign, its quanta light: `parts[0] is levels`)."""
     quanta = family.quanta
@@ -104,7 +109,7 @@ def with_parts(state: NodeState, parts: list[Record]) -> None:
 
 def ports(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
     """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, 0 beyond a face that does not wrap, the Node itself on a folded axis."""
-    return tuple(arrival(a, axis, side, wrap[axis]) for axis in range(3) for side in (1, -1))
+    return tuple(arrival(a, axis, side, wrap) for axis in range(3) for side in (1, -1))
 
 
 def axis_sums(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -256,7 +261,7 @@ def axis_differences(
     found = []
     for axis in range(3):
         d = arrived[2 * axis] - arrived[2 * axis + 1]
-        plus, minus = arrival(d, axis, 1, wrap[axis]), arrival(d, axis, -1, wrap[axis])
+        plus, minus = arrival(d, axis, 1, wrap), arrival(d, axis, -1, wrap)
         found.append(counts_line.Differences(now, d, plus, minus))
     return found[0], found[1], found[2]
 
@@ -322,14 +327,13 @@ def held_step(
     direction: int = 1,
     flows: dict[int, flow.Flow] | None = None,
 ) -> tuple[list[Record], np.ndarray, dict[int, list[np.ndarray]]]:
-    """A held family's hold (ALGEBRA.md #the-primitives, the row "the hold"), its parts already stepped by Rule3 in the interval's second act. A row without a gap: the hold (features/hold) at its time part, (source + r) div E_s added with the carry kept at the Node, and at its vector and tensor parts from every sourcing family's flow (`flow.flow_hold`); backward the holds' increments taken off and the carries stepped back. A row with a gap is not stepped: its time part is the well laid each interval, (source + r) div E_s with its own remainder, the level before kept beside it; backward the level before returns and the remainder steps back (the row keeps one interval of its past, so its inverse is exact where its level stands still)."""
+    """A held family's hold (ALGEBRA.md #the-primitives, the row "the hold"), its parts already stepped by Rule3 in the interval's second act. A row without a gap: the hold (features/hold) at its time part, (source + r) div E_s added with the carry kept at the Node, and at its vector and tensor parts from every sourcing family's flow (`flow.flow_hold`); backward the holds' increments taken off and the carries stepped back. A row with a gap is not stepped and keeps no past: its time part is the one level the well lays this interval, (source + r) div E_s with the carry kept at the Node (`laid_level`), recomputed from the sourcing families' wells forward and back alike, the carry stepped back."""
     assert state.carry is not None and family.divisor is not None
     parts, carry = list(state.parts), state.carry
     carries = dict(state.flows)
     if family.gap:
         laid, carry = carried(source_now, family.divisor, carry, direction)
-        now = np.asarray(laid) if direction == 1 else parts[0].before
-        parts[0] = Record(now, parts[0].now if direction == 1 else parts[0].before, parts[0].remainder)
+        parts[0] = laid_level(np.asarray(laid))
         return parts, np.asarray(carry), carries
     time, carry = hold(parts[0].now, source_now, family.divisor, carry, direction)
     parts[0] = replace(parts[0], now=np.asarray(time))

@@ -1,4 +1,4 @@
-"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a detector is a Node declared in the file, its click the one measurement, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
+"""The GameBoard: every family's NodeState over the Nodes (node.py) and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the signed read and Rule3 on every record, the count's and the sense's lines, the clicks, the hold; `step_inverse` runs the same acts back. The board's face rule (core/ports.py) is the file's: the wraps and the Nodes its inner faces declare beyond the board. No ledger of bodies is kept: a body's Nodes are where its family's count stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a Node declared in the file, its click the one measurement, every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
 
 from __future__ import annotations
 
@@ -8,11 +8,14 @@ from dataclasses import replace
 import numpy as np
 
 from event_universe import flow, lay, node
+from event_universe.core.ports import Wrap
 from event_universe.features.counts_line import CountWrites
 from event_universe.features.start import rest
 from event_universe.features.write import carried
 from event_universe.loader.derived import BY_PLAIN, BY_SIGN
-from event_universe.loader.world import FACE_NAME, Node, World
+from event_universe.loader.keys import Node
+from event_universe.loader.messages import MessageRow
+from event_universe.loader.world import FACE_NAME, BodyRow, World
 from event_universe.reports import Detector, book, clicks, standing
 
 Observer = Callable[[dict[str, object]], None]
@@ -25,14 +28,16 @@ class GameBoard:
 
     def __init__(self, world: World, observer: Observer | None = None) -> None:
         self.world, self.observer, self.tick = world, observer, 0
-        self.shape, self.wrap = world.shape, world.periodic
+        self.shape = world.shape
+        beyond = self.mask(world.beyond) if world.beyond else None
+        self.wrap = Wrap(world.periodic[0], world.periodic[1], world.periodic[2], beyond)
         self.families = world.families
         self.states = [node.empty_state(family, self.shape) for family in self.families]
         self.order = [index for index, family in enumerate(self.families) if family.quanta]
         self.held = [index for index, family in enumerate(self.families) if family.held is not None]
         count = len(self.families)
         self.laid_total, self.laid_sense, self.reports = [0] * count, [0] * count, [0] * count
-        for row in world.bodies:
+        for row in self.laid_rows():
             state = self.states[row.family]
             assert state.levels is not None and state.second is not None
             real = self.added(state.levels, row.now, row.before)
@@ -53,8 +58,12 @@ class GameBoard:
         if bool(face.any()):
             self.detectors.append(Detector(FACE_NAME, face, None))
 
+    def laid_rows(self) -> list[BodyRow | MessageRow]:
+        """The records the file lays: the bodies and the messages, in the file's order."""
+        return [*self.world.bodies, *self.world.messages]
+
     def added(self, record: node.Record, now: tuple[int, ...], before: tuple[int, ...]) -> node.Record:
-        """A level pair with a body's two levels from the mode file added over the GameBoard."""
+        """A level pair with a body's or a message's two levels from the mode file added over the GameBoard."""
         return replace(
             record,
             now=record.now + self.board_array(now),
@@ -72,9 +81,9 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part without a gap at the rest of its line, and every one with a gap laid, under the bodies' sources at its Nodes, the form that sources the fields (the vacuum's share of a body's two level pairs, laid at the count's wall) at the weight with which the body's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at the sources' Nodes."""
+        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part without a gap at the rest of its line, and every one with a gap laid, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the form that sources the fields (the vacuum's share of the two level pairs, laid at the count's wall) at the weight with which the record's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at the sources' Nodes."""
         forms = []
-        for row in self.world.bodies:
+        for row in self.laid_rows():
             family = self.families[row.family]
             records = [
                 node.Record(self.board_array(now), self.board_array(before), node.zeros(self.shape))
@@ -87,16 +96,16 @@ class GameBoard:
             turn = node.well(
                 node.wronskian(*records), node.zeros(self.shape), self.world.quantum_action
             )[0]
-            forms.append(
-                (np.where(self.mask(row.nodes), laid, 0), np.where(self.mask(row.nodes), turn, 0))
-            )
+            everywhere = np.ones(self.shape, dtype=bool)
+            on = self.mask(row.nodes) if isinstance(row, BodyRow) else everywhere
+            forms.append((row.family, np.where(on, laid, 0), np.where(on, turn, 0)))
         for index in self.held:
             family = self.families[index]
             assert family.divisor is not None
             counts = node.zeros(self.shape)
-            for row, (form, turn) in zip(self.world.bodies, forms, strict=True):
-                counts = counts + node.weight_of(index, self.families[row.family]) * form
-                counts = counts + node.weight_of(index, self.families[row.family], BY_SIGN) * turn
+            for source, form, turn in forms:
+                counts = counts + node.weight_of(index, self.families[source]) * form
+                counts = counts + node.weight_of(index, self.families[source], BY_SIGN) * turn
             if not counts.any():
                 continue
             state = self.states[index]
@@ -105,7 +114,7 @@ class GameBoard:
             ):  # a held row with a gap is laid, the sources through its divisor, never stepped
                 origin = np.where(counts != 0, carried(family.divisor, 2, 0)[0], 0)
                 laid, state.carry = (np.asarray(a) for a in carried(counts, family.divisor, origin))
-                node.with_parts(state, [node.Record(laid, laid.copy(), node.zeros(self.shape))])
+                node.with_parts(state, [node.laid_level(laid)])
                 continue
             wall = node.rule_of(family, self.world.node_clock, 0)[2]
             try:

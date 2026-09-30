@@ -30,7 +30,7 @@ def standing(declared: np.ndarray, count: np.ndarray, wrap: Wrap) -> np.ndarray:
         grown = region.copy()
         for axis in range(3):
             for side in (1, -1):
-                grown |= arrival(region, axis, side, wrap[axis], False)
+                grown |= arrival(region, axis, side, wrap, False)
         grown &= count != 0
         if np.array_equal(grown, region):
             return np.asarray(region, dtype=bool)
@@ -53,7 +53,7 @@ def clicks(
     line = {"event": "click", "tick": tick, "family": family, "detector": detector.name}
     found: list[dict[str, object]] = []
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
-        outer = nodes & ~arrival(nodes, axis, side, wrap[axis], True)
+        outer = nodes & ~arrival(nodes, axis, side, wrap, True)
         crossed = np.asarray(division_forward(remainder + np.asarray(through[port]), wall, 0)[0])
         for at in np.argwhere(outer & (crossed > 0)):
             node = [int(i) for i in at]
