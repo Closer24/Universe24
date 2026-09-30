@@ -50,7 +50,7 @@ def by_hand(a: np.ndarray, node: tuple[int, int, int]) -> tuple[int, ...]:
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand_forward_and_back():
-    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the lay, the count's line, the well and the hold at one Node equal Rule3 called by hand on that Node's integers, and each act's direction -1 returns its start bit for bit."""
+    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the lay, the count's line, the well and the hold at one Node equal Rule3 called by hand on that Node's integers, and each act's direction -1 returns its start bit for bit; the hold's tensor part is one act from its origin, and a carry kept over its count's fall writes at once what the act back does not return."""
     draw, shape = np.random.default_rng(5), (3, 3, 3)
     for _ in range(20):
         levels = node.Record(
@@ -149,6 +149,20 @@ def test_one_nodes_acts_are_rule3_called_by_hand_forward_and_back():
         stood = node.NodeState(None, None, None, None, laid, laid_carry)
         back, back_carry, _flows = node.held_step(GAPPED, stood, source, WRAP, -1)
         assert np.array_equal(back[0].now, part.now) and np.array_equal(back_carry, held.carry)
+    # the tensor's one act (w x j_a j_b + r) div (E_s W_c^2 c_i), from its origin, a count 0 skipping it, back exact
+    ones, count = np.ones((3, 1, 1), dtype=np.int64), np.array([0, 2, 1]).reshape(3, 1, 1)
+    current = flow.Flow(3, (np.array([5, -3, 4]).reshape(3, 1, 1), ones, 0 * ones), count, 2)
+    levels, carries = [0 * ones for _ in range(10)], flow.flow_origins(HELD, 2, count)
+    written, found = flow.flow_hold(HELD, levels, current, carries, 1)
+    assert written[4].ravel().tolist() == [0, 0, 2] and found[3].ravel().tolist() == [0, 55, 6]
+    back, returned = flow.flow_hold(HELD, written, current, found, -1)
+    assert all(np.array_equal(a, b) for a, b in zip(back + returned, levels + carries, strict=True))
+    # the count at the Node falls to 1 with its carry 55 kept: 55 div 28 written at once, not returned back
+    fallen = flow.Flow(3, (0 * ones, 0 * ones, 0 * ones), np.array([0, 1, 1]).reshape(3, 1, 1), 2)
+    dumped, kept = flow.flow_hold(HELD, written, fallen, found, 1)
+    back, returned = flow.flow_hold(HELD, dumped, fallen, kept, -1)
+    assert dumped[4].ravel().tolist() == [0, 1, 2]
+    assert back[4][1, 0, 0] == 1 and returned[3][1, 0, 0] == 27  # not 0 and 55: the dump stays
 
 
 def cube_world(folder: Path, count: int) -> Path:
@@ -214,7 +228,7 @@ def read_of(held: node.NodeState) -> tuple[np.ndarray, tuple[np.ndarray, ...]]:
 def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48_and_returns(
     tmp_path, monkeypatch
 ):
-    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the weighted lay by name and admits the laid one; each interval the matter's levels are Rule3 from the interval's start at every Node with the vacuum's row read once, SUM (W_c c + r) moves by the givings alone, to the bit, and every array keeps the cube's 48 about the body with the givings at the Ports the line crossed; over two intervals with no giving the inverse returns every array bit for bit."""
+    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the weighted lay by name and admits the laid one; each interval the matter's levels are Rule3 from the interval's start at every Node with the vacuum's row read once, SUM (W_c c + r) moves by the givings alone, to the bit, and every array keeps the cube's 48 about the body with the givings at the Ports the line crossed; over two intervals with no giving and no count falling below a tensor carry's divisor the inverse returns every array bit for bit."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     with pytest.raises(ValueError, match="declares the count 1 and its family's form lays") as refused:
         GameBoard(load_world(cube_world(tmp_path, 1))).step()
@@ -245,17 +259,14 @@ def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48
         assert total is None or found == total - wall * (board.given[index] - given)
         total = found
         keeps_the_48(board)
+        # intervals 2 and 3 give nothing and no count falls below a tensor carry's divisor
+        if board.tick == 1:
+            kept, given = everything(board), board.given[index]
+            for act in (board.step, board.step, board.step_inverse, board.step_inverse):
+                act()
+            assert board.given[index] == given and board.tick == 1
+            assert all(np.array_equal(a, b) for a, b in zip(everything(board), kept, strict=True))
     assert board.given[index] > 0  # the body gave, at every one of the 48's images of a Port at once
-    kept, given = everything(board), board.given[index]
-    for _ in range(2):
-        board.step()
-    assert board.given[index] == given
-    for _ in range(2):
-        board.step_inverse()
-    assert (
-        all(np.array_equal(a, b) for a, b in zip(everything(board), kept, strict=True))
-        and board.tick == 7
-    )
 
 
 def test_the_giving_is_the_lines_click_at_the_shell_and_the_report_a_reading_on_the_chain(
