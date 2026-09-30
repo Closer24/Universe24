@@ -13,7 +13,8 @@ not in this document.
 A **Node** is a physical location. The **GameBoard** is all the Nodes
 together, a box of `shape` = (N_x, N_y, N_z) Nodes; each axis is periodic
 (the box a torus on that axis) or open (a face beyond which no Node
-lies), as the world declares. Two Nodes that differ by one step along
+lies), as the world declares, and a face may be declared receding
+(**The unbounded board**, below). Two Nodes that differ by one step along
 one axis are joined by a **Link**; each Node has six Links, one through
 each of its six **Ports**, named by their outward direction +x, -x, +y,
 -y, +z, -z. An axis of one layer folds: its two Ports return the Node
@@ -32,6 +33,50 @@ engine. The local information of a Node is its **NodeState**: the
 levels and remainders of the families at that Node, and nothing else.
 A change of a NodeState is an **Event**; the rule that makes it is a
 **LocalRule**, and there is one LocalRule, Rule3 ([Rule3](#rule3)).
+
+**The unbounded board** (the owner, 2026-09-30, via the advisor, "record
+it, and also in HIGHLIGHTS and ALGEBRA, so that it enters the paper",
+#1519 comment 5907697068, on the advisor's test 5906503409; replacing the
+hypothesis The board grows on demand of the same day). Beyond the front
+of a world nothing has arrived and every row is 0; a receding face
+computes that board only where something is: the board is a dense cube
+that grows by a layer of zeros on that side whenever a level other than
+0 reaches the Node before the face, so no wave ever meets it, and a run
+of such a board is a run of the unbounded lattice with 0 beyond the
+front, since Rule3 needs nothing else and a level leaves 0 only where a
+neighbour was not 0 the interval before. An option beside open, folded
+and periodic faces, never the default; the file declares with it a
+largest size, and a run whose front reaches that size reports and ends
+rather than reflecting; the back-in-time gate is unchanged, the zeros
+returning to zeros. On it the massless and the binding rows build their
+rest behind the front by the run itself (Huygens on the lattice: a
+source switched on reaches its rest within 3 percent in ten intervals;
+the advisor's run of one octant with mirror symmetry, 200 intervals,
+real arithmetic, Rule3 alone: the massless row [1, 1] at the seed 1,000
+at the first interval, 667, 778, 782 at ten intervals, 758 at eighty,
+the rest 758 exact; the binding holder [2400, 2401] 780 at ten, 746 at
+eighty, its rest 746), the rows with a heavy gap ring and radiate the
+ringing away within about a hundred intervals (the polarisation row
+[3000, 6000] 736 at the seed at five intervals against its rest 523,
+488 at twenty, 525 at eighty, settled by 120, its troughs running
+outward, -16 levels at five Links at forty intervals for a source of
+1,000 per interval, the troughs that size c_vac at about 2 percent of
+the source's well at five Links), nothing reflects, the blind numbers of
+the looks are the infinite lattice's exactly, and the world's size is
+its age in Links. What it does not change: the first act of a world is
+the generator's lay, a record with its rows at their rest, since a seed
+of one Node crosses the horizon at the second interval and parts its
+count from its record (a seed of 1,000 quanta of matter with the rows
+at 0 reaches the content 0.55 before anything spreads and stands as a
+compact body of content 0.37 with 1,720 quanta carried outward and -720
+left at the body; a seed of 500 sheds everything, no body); and the wall
+of the two slits and the detectors stay declarations. Built after the
+looks now running (the pixel, the two slits, the single quanta), whose
+worlds and blind rows stand on their faces as written. A finding beside
+it: a receding face grows the board and stretches nothing, so Hubble's
+redshift does not come from the law's growth; if the law is to give it,
+it comes from elsewhere, a vacuum content that changes with the age
+being the one candidate named, not derived.
 
 A **family** is one kind of physical value with its own declarations
 ([a family's declaration](#a-familys-declaration)). A family's **record** is a set of levels over the
@@ -748,8 +793,6 @@ Every hypothesis stands outside the law under its own name until it passes the t
 **The anti-body is the count's sign reversed** (a hypothesis, the advisor's line of 2026-09-30): the anti-body of any body is the same record with its count's sign reversed, a body of holes, which the count's line makes and conserves (pair creation the line's own act at an empty Node); a neutron and an antineutron are both real records (W = 0) and differ by the sign of their count, an antiproton holes with the opposite sense, and the baryon number is the count's sign. Decided by a lay of a body of holes and its clicks, a detector reading the fall of its family's count, against nature's antineutron, distinct from the neutron.
 
 **The second level's amplitude is a count of its own** (a hypothesis, the advisor's line, #1519 comment 5904459493, not the law): the second level's amplitude quantised as a count of its own, a circular quantum the unit and a body's charge its number of circular quanta, so that |q_p| = |q_e| would be derived where the law as written leaves a body's charge continuous (**The charge is the record's, not the count's**); the count's line as written does not do it and the four-acts theorem may not allow it. Decided by a line that passes the three tests, or refused by the theorem.
-
-**The board grows on demand** (a hypothesis, the owner's thought of 2026-09-30 in the advisor's session, "maybe one Node starts, Nodes are added on demand only"; the advisor's test, #1519 comment 5906503409; not decided, a line under its own name after the looks now running): such a board is the unbounded board with 0 beyond the front, since Rule3 needs nothing else and a level leaves 0 only when a neighbour was not 0 the interval before. The advisor ran one octant of a cube with mirror symmetry through the seed and the far faces never reached, 200 intervals, real arithmetic, Rule3 alone, with three findings. A static source switched on builds its rest behind the front with no ringing on the rows without a gap or with a small one: the massless row [1, 1] at the seed 1,000 at the first interval (the source), 667, 778, 782 at ten intervals, 758 at eighty, the rest 758 exact; the binding holder [2400, 2401] 780 at ten, 746 at eighty, its rest 746; Huygens on the lattice, within 3 percent and settled, so the start's rest is not needed for these rows on an unbounded board, the field building at one Link per interval. The polarisation row [3000, 6000] rings and radiates it away: at the seed 736 at five intervals against its rest 523, 1.4 times over, 488 at twenty, 536 at forty, 525 at eighty, settled by 120; its troughs run outward, -16 levels at five Links at forty intervals for a source of 1,000 per interval, -1.5 at ten Links; on the unbounded board the ringing leaves within a hundred intervals, on a chain it cannot; the troughs size c_vac, about 2 percent of the source's well at five Links, so 60 levels covers sources up to about 3,000 per interval. A seed of one Node is not a start the law accepts, on any board: a seed of 1,000 quanta of matter with the rows at 0 crosses the horizon, x >= 0.5, at the second interval on the unbounded board as on the 61-cube, the polarisation's overshoot and the record's own pumping by its sudden well raising the seed's content to 0.55 before anything spreads; it then stands as a compact body of content 0.37 while the count's line has carried 1,720 quanta outward with the shed waves, leaving -720 at the body, the count parted from its record; a seed of 500 sheds everything, 1,740 out and -1,240 at the seed, no body; so the first act of a world is the generator's lay, a mode with its rows at their rest, on a growing board as on a box, and the growing board changes the faces, not the start. What it buys: no faces and no mirrors (what is shed leaves for good, and the two slits' wall stays a declaration of Nodes never created), no sink question, the massless rows' rest built by the run itself, and the universe's size its age in Links (growth, not stretching: Hubble's redshift does not come from it, a finding to write); what it costs the engine: a sparse board, a Node created when a neighbour is not 0 and deleted by the gate on the way back, its state returning to 0 exactly. Decided by the owner's word.
 
 The hypotheses the law keeps by name elsewhere in this document: **The conversion** (the weak force), **Gamma is not constant**, **The three distances are the rule's**, **The hill holds the body**, **The cooling**, the third way of gravity (**The fork, decided**), a controlled phase of order one ((k)) and **A cross-axis read or a current's read** ([what is open](#what-is-open), item 15).
 
