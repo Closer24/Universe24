@@ -15,7 +15,7 @@ from pathlib import Path
 from event_universe.game_board import GameBoard
 from event_universe.world_files import load_world
 
-LINES = ("click", "seen")  # the lines written: the detectors' clicks and what they saw
+LINES = ("click", "seen", "field")  # the lines written: the detectors' clicks and what they saw
 
 
 def run_input(path: str, out_dir: str) -> dict[str, object]:

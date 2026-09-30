@@ -43,11 +43,20 @@ class GameBoard:
         self.origins = [0] * count  # the remainder the start gave each held row, 0 where it gave none
         for row in self.laid_rows():
             state = self.states[row.family]
-            assert state.levels is not None and state.second is not None
+            if state.levels is None:
+                continue  # a kick on a holder of the content is laid after the start, on the row's rest
+            assert state.second is not None
             real = self.added(state.levels, row.now, row.before)
             second = self.added(state.second, row.im_now, row.im_before)
             node.with_records(state, [real, second, *node.records(state)[2:]])
         self.start()
+        for row in self.laid_rows():
+            state = self.states[row.family]
+            if state.levels is None:  # the kick: the row's own travelling events on its rest, no count
+                node.with_parts(
+                    state, [self.added(state.parts[0], row.now, row.before), *state.parts[1:]]
+                )
+        self.fields: dict[tuple[int, str], int] = {}  # the last field reading per holder and region
         for index in self.order:
             node.guarded(index, self.families, self.states, self.world.node_clock, self.shape)
         self.detectors = [
@@ -90,10 +99,12 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the form that sources the fields (the vacuum's share of the two level pairs, laid at the count's wall) at the weight with which the record's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at the sources' Nodes."""
+        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22), the form that sources the fields (the vacuum's share of the two level pairs, laid at the count's wall) at the weight with which the record's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at every Node, a held row of the content with no source at 0 (or its rest) with the same remainder and carry, the holder of the sign keeping its laid record where nothing sources it."""
         forms = []
         for row in self.laid_rows():
             family = self.families[row.family]
+            if not family.quanta:
+                continue  # a kick on a holder of the content sources nothing: it is the row's own events
             records = [
                 node.Record(self.board_array(now), self.board_array(before), node.zeros(self.shape))
                 for now, before in ((row.now, row.before), (row.im_now, row.im_before))
@@ -115,8 +126,8 @@ class GameBoard:
             for source, form, turn in forms:
                 counts = counts + node.weight_of(index, self.families[source]) * form
                 counts = counts + node.weight_of(index, self.families[source], BY_SIGN) * turn
-            if not counts.any():
-                continue
+            if family.quanta and not counts.any():
+                continue  # the holder of the sign keeps its laid record where nothing sources it
             state = self.states[index]
             wall = node.rule_of(family, self.world.node_clock, 0)[2]
             try:
@@ -127,6 +138,12 @@ class GameBoard:
             time = node.Record(field.levels.copy(), field.levels.copy(), remainder)
             node.with_parts(state, [time, *state.parts[1:]])
             state.carry, self.origins[index] = field.carries, field.remainder
+        for index in self.held:
+            family, state = self.families[index], self.states[index]
+            if family.rest:
+                time = state.parts[0]
+                time = replace(time, now=time.now + family.rest, before=time.before + family.rest)
+                node.with_parts(state, [time, *state.parts[1:]])
 
     def emit(self, line: dict[str, object]) -> None:
         """One output line to the observer, if any."""
@@ -173,13 +190,17 @@ class GameBoard:
     def stepped(
         self, index: int, level: str, direction: int
     ) -> tuple[tuple[np.ndarray, tuple[np.ndarray, ...]], list[node.Record]]:
-        """A family's read (from the held parts' `level`) and every record of it stepped by Rule3 in `direction` with the rule of that read: a family of quanta's two level pairs and a held family's parts (`node.records`), every held row of the content among them, with or without a gap."""
+        """A family's read (from the held parts' `level`) and every record of it stepped by Rule3 in `direction` with the rule of that read: a family of quanta's two level pairs and a held family's parts (`node.records`), every held row of the content among them, with or without a gap, the time part of the massless row reading its rest beyond every face (`node.step`, `fill`)."""
         family, state = self.families[index], self.states[index]
         read = node.signed_read(
             index, self.families, self.states, self.world.node_clock, level, self.shape
         )
         rule = node.rule_of(family, self.world.node_clock, *read)
-        found = [node.step(record, rule, self.wrap, direction) for record in node.records(state)]
+        time = state.parts[0] if state.parts else None
+        found = [
+            node.step(record, rule, self.wrap, direction, family.rest if record is time else 0)
+            for record in node.records(state)
+        ]
         return read, found
 
     def step(self) -> None:
@@ -382,6 +403,33 @@ class GameBoard:
                             "inflow": inflow,
                         }
                     )
+        self.fields_read()
+
+    def fields_read(self) -> None:
+        """A GameBoard reading, no measurement, labelled so: per family and declared region, the family's density over the region this interval, one `field` line where it differs from the last interval's: for a family of quanta its count summed over the region (what its clicks count, the packet's passage), for a holder of the content the square of its time part's deviation from the row's rest summed over the region (a row with no count's line, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
+        for index, (family, state) in enumerate(zip(self.families, self.states, strict=True)):
+            if family.quanta:
+                assert state.count is not None
+                density = state.count
+            else:
+                deviation = state.parts[0].now - family.rest
+                density = deviation * deviation
+            for detector in self.detectors:
+                if detector.body is not None or detector.name == FACE_NAME or detector.nodes is None:
+                    continue
+                total = int(density[detector.nodes].sum(dtype=object))
+                if self.fields.get((index, detector.name)) == total:
+                    continue
+                self.fields[(index, detector.name)] = total
+                self.emit(
+                    {
+                        "event": "field",
+                        "tick": self.tick,
+                        "family": family.name,
+                        "detector": detector.name,
+                        "reading": total,
+                    }
+                )
 
     def booked_back(
         self,

@@ -241,21 +241,22 @@ def standing(
             previous, read, span = None, 0, 2 * span
 
 
-def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int]]:
-    """The held rows a body's family reads by plain, (name, pair, divisor), as the loader derives the reads (ALGEBRA.md #the-paces: every holder of the content): the rows whose levels are the content its record reads; a read by sign is 0 here (a body of the generator is laid real unless a sense is asked, and its sense stands at 0 before the engine's first act)."""
+def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int, int]]:
+    """The held rows a body's family reads by plain, (name, pair, divisor, rest), as the loader derives the reads (ALGEBRA.md #the-paces: every holder of the content): the rows whose levels are the content its record reads; a read by sign is 0 here (a body of the generator is laid real unless a sense is asked, and its sense stands at 0 before the engine's first act)."""
     rows = []
     for row in universe["families"]:
         held = row.get("held")
         word = str(held["count"]) if isinstance(held, dict) else None
         divisor = int(held["divisor"]) if isinstance(held, dict) else None
-        rows.append((str(row["name"]), (int(row["pair"][0]), int(row["pair"][1])), word, divisor))
+        rest = int(held.get("rest", 0)) if isinstance(held, dict) else 0
+        rows.append((str(row["name"]), (int(row["pair"][0]), int(row["pair"][1])), word, divisor, rest))
     names = [row[0] for row in rows]
     reads = family_rules(rows)[names.index(family)].reads
-    found = [
-        (rows[read.family][0], rows[read.family][1], int(rows[read.family][3] or 1))
-        for read in reads
-        if read.by == BY_PLAIN
-    ]
+    found = []
+    for read in reads:
+        name, pair, _held, divisor, vacuum = rows[read.family]
+        if read.by == BY_PLAIN:
+            found.append((name, pair, int(divisor or 1), vacuum))
     if not found:
         raise ValueError(
             f"the family {family!r} reads no held row of the content by plain: a body needs a row to bind in "
@@ -265,16 +266,18 @@ def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[in
 
 
 def rests(
-    rows: list[tuple[str, tuple[int, int], int]],
+    rows: list[tuple[str, tuple[int, int], int, int]],
     counts: np.ndarray,
     wrap: Wrap,
     width: int,
 ) -> np.ndarray:
-    """Every held row's level at these sources as the engine's start holds it, each row at the rest of its own line by the start (features/start: the division act iterated from nothing until it repeats, at the row's pair and divisor, with or without a gap), summed into the content every record reads: at a body's own sources alone, the body's own well."""
+    """Every held row's level at these sources as the engine's start holds it, each row at the rest of its own line by the start (features/start: the division act iterated from nothing until it repeats, at the row's pair and divisor, with or without a gap) with its vacuum content added (the massless row's `rest`), summed into the content every record reads: at a body's own sources alone, the body's own well."""
     total = np.zeros(counts.shape, dtype=np.int64)
-    for _name, pair, divisor in rows:
+    for _name, pair, divisor, vacuum in rows:
         wall = 3 * pair[1]  # the plain rule's wall, the one the row steps by
-        total += np.asarray(rest(counts, pair, wrap, divisor, width, wall).levels, dtype=np.int64)
+        total += (
+            np.asarray(rest(counts, pair, wrap, divisor, width, wall).levels, dtype=np.int64) + vacuum
+        )
     return total
 
 
@@ -291,7 +294,7 @@ def spread(
     first: np.ndarray,
     centre: Axis,
     board: Board,
-    rows: list[tuple[str, tuple[int, int], int]],
+    rows: list[tuple[str, tuple[int, int], int, int]],
     others: np.ndarray,
 ) -> np.ndarray:
     """The first lay: a body declared on one Node is laid over the cube about its centre, its quanta shared alike, the cube widened one Link at a time until every pace is positive (no value of the law: the iteration moves it to the fixed point); a body declared on its Nodes is laid as declared."""
@@ -369,7 +372,7 @@ def scaled_record(
 
 def body_fixed_point(
     board: Board,
-    rows: list[tuple[str, tuple[int, int], int]],
+    rows: list[tuple[str, tuple[int, int], int, int]],
     others: np.ndarray,
     centre: Axis,
     quanta: int,

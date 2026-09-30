@@ -26,7 +26,7 @@ class Read:
 
 @dataclass(frozen=True)
 class FamilyRule:
-    """A family as the rule derives it from its row: its name, its pair [num, den], what it holds (content, sign or nothing) at the divisor E_s, its parts, its reads (the rows it sources, at the same weights) and its sign q."""
+    """A family as the rule derives it from its row: its name, its pair [num, den], what it holds (content, sign or nothing) at the divisor E_s, its parts, its reads (the rows it sources, at the same weights), its sign q and its rest (the vacuum content c_vac of the massless row holding the content, the level at which the row rests everywhere, up to every face and beyond it; 0 for every other row, ALGEBRA.md #what-is-open, item 22)."""
 
     name: str
     pair: tuple[int, int]
@@ -35,6 +35,7 @@ class FamilyRule:
     parts: tuple[int, ...]
     reads: tuple[Read, ...]
     sign: int
+    rest: int
 
     @property
     def quanta(self) -> bool:
@@ -56,20 +57,20 @@ def rank_of(held: str | None, pair: tuple[int, int]) -> tuple[int, ...]:
 
 
 def family_rules(
-    rows: list[tuple[str, tuple[int, int], str | None, int | None]],
+    rows: list[tuple[str, tuple[int, int], str | None, int | None, int]],
 ) -> tuple[FamilyRule, ...]:
-    """Every family from its row (name, pair, held word, divisor): the reads of a family of quanta are every holder of the content by plain and every other holder of the sign by its own sign, at the weight 1, in the file's order, and it sources what it reads at the same weight; a held family of the content reads nothing; no family gives another anything (ALGEBRA.md #the-counts-line, light is born by the write)."""
-    ranks = [rank_of(held, pair) for _name, pair, held, _divisor in rows]
+    """Every family from its row (name, pair, held word, divisor, rest): the reads of a family of quanta are every holder of the content by plain and every other holder of the sign by its own sign, at the weight 1, in the file's order, and it sources what it reads at the same weight; a held family of the content reads nothing; no family gives another anything (ALGEBRA.md #the-counts-line, light is born by the write)."""
+    ranks = [rank_of(held, pair) for _name, pair, held, _divisor, _rest in rows]
     found = []
-    for index, (name, pair, held, divisor) in enumerate(rows):
+    for index, (name, pair, held, divisor, rest) in enumerate(rows):
         reads: list[Read] = []
         if held != CONTENT:
-            for other, (_n, _p, other_held, _d) in enumerate(rows):
+            for other, (_n, _p, other_held, _d, _r) in enumerate(rows):
                 if other_held == CONTENT:
                     reads.append(Read(other, 1, BY_PLAIN))
                 elif other_held == SIGN and other != index:
                     reads.append(Read(other, 1, BY_SIGN))
-        found.append(FamilyRule(name, pair, held, divisor, ranks[index], tuple(reads), NO_SIGN))
+        found.append(FamilyRule(name, pair, held, divisor, ranks[index], tuple(reads), NO_SIGN, rest))
     return tuple(found)
 
 
