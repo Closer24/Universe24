@@ -1,11 +1,11 @@
 {
- "comment": "Bell under the new laws (the advisor's design at the owner's word of 2026-09-30, #1515 comment 5912573191; the owner's decision of 14:15, Bell by the detector's contrast, 5912822802, and the advisor's corrections 5912958018; ALGEBRA.md row (h)): every number of the worlds, read by build_world.py, which writes one world per angle with its mode file (tools/pixel_mode.py, the message lay) and the blind expectation file. The flat board `length` x `height` x 1 (z folded) with the source at the column `source`; per side two lobes of the light family at the wave `wave` (k = pi / 4, lambda = 8), one before each gap (the rows `lobes`, the two gaps' apertures, with the edge `edge_across`), each a flat top of one Node along x at `offset` from the source with the raised-cosine edge `edge_along` (the advisor's Gaussian of sigma 20 matched at the half maximum), at the amplitude `amplitude`, the left lobes moving toward -x and the right toward +x; the pair's angle laid as the relative phase of the two lobes through the two gaps, on the right side the upper lobe at the phase 2 pi (k + 1/2) / K and on the left its mirror, the run k of K = `angles` (the fringe at the right screen shifted by +(k + 1/2) / K of the spacing and at the left by the mirror, exactly the tilt of a pair laid with opposite transverse wave numbers at the gaps and free of the drift that carries a tilted packet off the gaps; the half-offsets so that no run falls on a port's zero). The walls symmetric, inner faces `wall` from the source with the gaps `gaps` (d = 16); the screens `screen` from the source, each a slab `slab` deep, the last `slab` columns of the board, backed by the receding faces `receding` (opaque: what enters leaves the declared board and never returns; the y faces recede too, so that no reflection of the fans off the board's sides reaches the screens), declared in regions of `rows_per_region` rows tiled from the row `tiling` of each side (A's from the row 1, B's from the row 3, the edge rows folded into the edge regions; the size rule, half the wavelength, No click names a Node), so that each setting's two ports are unions of whole regions; `ticks` intervals. The reading (tools/bell_clicks.py): per run and side the shares per region from what it saw (`seen`, the net front inflow) and its entries; the comb on a half-row, +1 on the rows y_a - 3 to y_a + 4 of each fringe of `comb.spacing` about the setting a at `comb.centre` and -1 on the other eight; the two ports of a setting the unions of the regions in its half-fringes, the contrast their difference over their sum; side A (`sign`, the left) credits every quantum to the larger port, side B (`contrast`, the right) credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest; E(a, b) among the coincidences over the K runs, S at the CHSH settings `comb.settings` (degrees of fringe phase; the mirrored lobe reads the polariser's a - b as a + b). The blind rows (`blind`): by the contrast E = cos(a + b) in the fringe phase, the polariser's cos 2(a - b), S = 2.83 exactly at K = 8, B's efficiency 2 / pi = 0.64 at every setting, the uncounted pairs 36 percent, those near the contrast's zero, the detection loophole as a number; by the shares, for comparison, E = 0.203 cos(a + b) and S = 0.57 in the comb's normalisation (1.41 by the sign, the visibility 0.50); nature E = 0.405 cos(a + b) and S = 1.15 in the comb's normalisation, 2.83 with two-port analysers, and above the loophole's bound in the loophole-free experiments, where the law and nature part.",
+ "comment": "Bell under the new laws in the far field (the advisor's design at the owner's word of 2026-09-30, #1515 comment 5912573191; the owner's decision of 14:15, Bell by the detector's contrast, 5912822802; the advisor's corrections 5912958018 and the far-field world of #1563 comment 5915723915; ALGEBRA.md row (h)): every number of the worlds, read by build_world.py, which writes one world per angle with its mode file (tools/pixel_mode.py, the message lay), the u = 0 world `bell_v` for the visibility written blind, and the blind expectation file. The flat board `length` x `height` x 1 (z folded) with the source at the column `source`; per side two lobes of the light family at the wave `wave` (k = pi / 4, lambda = 8), one before each gap (the rows `lobes`, three rows each at d = 8, with the edge `edge_across`), each a flat top of one Node along x at `offset` from the source with the raised-cosine edge `edge_along`, at the amplitude `amplitude` (about 3,000 quanta per packet), the left lobes moving toward -x and the right toward +x; the pair's angle laid as the relative phase of the two lobes through the two gaps, on the right side the upper lobe at the phase 2 pi (k + 1/2) / K and on the left its mirror, the run k of K = `angles` (the fringe at the right screen shifted by (k + 1/2) / K of the spacing, 3, 9, 15 to 45 rows, and at the left by the mirror; the half-offsets so that no run falls on a port's zero; `bell_v` with the two lobes in phase, u = 0). The walls symmetric, inner faces `wall` from the source with the gaps `gaps` (d = 8); the screens `screen` from the source, L = 48 beyond the walls (the far field: L / (d^2 / lambda) = 6), each the last `slab` columns of the board, backed by the receding faces `receding` (opaque: what enters leaves the declared board and never returns; the y faces recede too), declared in regions of `rows_per_region` rows tiled from the row `tiling` of each side (A's from the row 1, B's from the row 3, the edge rows folded into the edge regions), so that each setting's two ports are unions of whole regions of the half-fringe of 24 rows; `ticks` intervals. The reading (tools/bell_clicks.py): per run and side the shares per region from what it saw (`seen`, the net front inflow) and its entries; the comb on a half-row, + on the rows y_a - 11 to y_a + 12 of each fringe of `comb.spacing` about the setting a at `comb.centre` and - on the other 24; the two ports of a setting the unions of the regions in its half-fringes, the contrast their difference over their sum; side A (`sign`, the left) credits every quantum to the larger port, side B (`contrast`, the right) credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest; E(a, b) among the coincidences over the K runs, S at the CHSH settings `comb.settings` (degrees of fringe phase, 45 degrees = 6 rows; the mirrored lobe reads the polariser's a - b as a + b). The blind rows (`blind`): by the contrast E = cos(a + b) in the fringe phase exactly for every visibility V, S = 2.83 at K = 8, B's efficiency 0.41 V at every setting (the square comb's contrast (2 / pi) V |cos phi|), A's 1, V written blind from bell_v's single-side entries (max less min over max plus min per fringe); by the shares E = 0.203 cos(a + b) and S = 0.57 at V = 1; nature 0.405 cos(a + b), S = 1.15, 2.83 with two-port analysers, and above the loophole's bound in the loophole-free experiments, where the law and nature part.",
  "universe": "examples/events/rule.json",
  "engine": "examples/events/engine_start.json",
  "family": "charge",
- "length": 327,
- "height": 48,
- "source": 163,
+ "length": 360,
+ "height": 96,
+ "source": 180,
  "wave": [
   1,
   4
@@ -13,30 +13,30 @@
  "offset": 60,
  "lobes": [
   [
-   14,
-   18
+   43,
+   45
   ],
   [
-   30,
-   34
+   51,
+   53
   ]
  ],
  "edge_along": 47,
  "edge_across": 2,
- "amplitude": 716,
+ "amplitude": 1333,
  "angles": 8,
  "wall": 120,
  "gaps": [
   [
-   14,
-   18
+   43,
+   45
   ],
   [
-   30,
-   34
+   51,
+   53
   ]
  ],
- "screen": 152,
+ "screen": 168,
  "slab": 12,
  "rows_per_region": 4,
  "tiling": {
@@ -61,10 +61,10 @@
    "layers": 64
   }
  },
- "ticks": 400,
+ "ticks": 520,
  "comb": {
-  "centre": 24,
-  "spacing": 16,
+  "centre": 48,
+  "spacing": 48,
   "settings": {
    "a": [
     0,
@@ -87,7 +87,7 @@
  },
  "blind": {
   "contrast": {
-   "correlation": "cos(a + b) in the fringe phase, cos 2(a - b) in the polariser angles",
+   "correlation": "cos(a + b) in the fringe phase, cos 2(a - b) in the polariser angles, exact for every visibility V (the advisor, #1563 comment 5915723915)",
    "settings": [
     0.7071,
     -0.7071,
@@ -95,15 +95,15 @@
     0.7071
    ],
    "S": 2.8284,
-   "efficiency_B": 0.637,
-   "uncounted": 0.36,
+   "efficiency_B": "0.41 V at both settings, V the single-side visibility written blind from the u = 0 world (bell_v)",
+   "efficiency_A": 1.0,
    "curve": {
     "sum_of_settings_links": [
-     -2,
+     -6,
      0,
-     2,
-     4,
-     6
+     6,
+     12,
+     18
     ],
     "E": [
      0.7071,
@@ -115,13 +115,7 @@
    }
   },
   "by_the_shares": {
-   "correlation": "0.203 cos(a + b)",
-   "settings": [
-    0.143,
-    -0.143,
-    0.143,
-    0.143
-   ],
+   "correlation": "0.203 cos(a + b) at V = 1",
    "S": 0.57,
    "S_by_the_sign": 1.414,
    "visibility": 0.5
@@ -137,13 +131,14 @@
    "S": 1.15,
    "visibility": 1.0,
    "two_port_S": 2.83,
-   "loophole_free": "above the efficiency 2 / 3, the violation stands; the law stops at 0.64"
+   "loophole_free": "above the efficiency 2 / 3, the violation stands; the law stops at 0.41 V"
   },
   "bound": 2.0,
   "check": {
-   "fringe_spacing": 16,
-   "single_side_maxima": "at the spacing 16, shifted by (k + 1/2) / 8 of it",
-   "efficiency_B_per_setting": "the same at every setting b in the sum over the runs"
+   "fringe_spacing": 48,
+   "single_side_maxima": "at the spacing 48, shifted by (k + 1/2) / 8 of it",
+   "efficiency_B_per_setting": "the same at every setting b in the sum over the runs (no signalling)",
+   "far_field": "L = 48 at d = 8 and lambda = 8: L / (d^2 / lambda) = 6, the Fresnel number of a three-row gap 0.02"
   }
  }
 }

@@ -34,8 +34,8 @@ def regions(design: dict[str, Any], side: str) -> list[list[int]]:
     return [list(range(start, stop)) for start, stop in zip(edges[:-1], edges[1:], strict=True)]
 
 
-def world(design: dict[str, Any], angle: int) -> dict[str, object]:
-    """The world file of one angle k: the board, the two symmetric walls with their gaps, per side the two lobes (the upper one at the phase (k + 1/2) / K of the turn on the right side and its mirror, 1 - (k + 1/2) / K, on the left), the screens' regions, the far faces and the sides receding, the ticks."""
+def world(design: dict[str, Any], angle: int | None) -> dict[str, object]:
+    """The world file of one angle k: the board, the two symmetric walls with their gaps, per side the two lobes (the upper one at the phase (k + 1/2) / K of the turn on the right side and its mirror, 1 - (k + 1/2) / K, on the left; both lobes in phase, u = 0, where the angle is None: the visibility world), the screens' regions, the far faces and the sides receding, the ticks."""
     source, slab, height = int(design["source"]), int(design["slab"]), int(design["height"])
     p, q = (int(v) for v in design["wave"])
     turns = int(design["angles"])
@@ -52,7 +52,7 @@ def world(design: dict[str, Any], angle: int) -> dict[str, object]:
                 "top": {"x": [top, top], "y": [int(v) for v in lobe], "z": [0, 0]},
                 "edge": {"x": int(design["edge_along"]), "y": int(design["edge_across"]), "z": 0},
             }
-            if index:
+            if index and angle is not None:
                 offset = 2 * angle + 1  # the half-offset (k + 1/2) / K as (2 k + 1) / (2 K)
                 message["phase"] = [offset if sign > 0 else 2 * turns - offset, 2 * turns]
             messages.append(message)
@@ -105,6 +105,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "sign": design["comb"]["sign"],
         "contrast": design["comb"]["contrast"],
         "runs": [f"bell_{angle}" for angle in range(int(design["angles"]))],
+        "visibility_world": "bell_v",
         "quanta": None,
         "fringe_centre": int(comb["centre"]),
         "spacing": spacing,
@@ -125,8 +126,10 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
     args.folder.mkdir(parents=True, exist_ok=True)
-    for angle in range(int(design["angles"])):
-        path = args.folder / f"bell_{angle}.json"
+    worlds: list[tuple[str, int | None]] = [("bell_v", None)]
+    worlds += [(f"bell_{angle}", angle) for angle in range(int(design["angles"]))]
+    for name, angle in worlds:
+        path = args.folder / f"{name}.json"
         document = world(design, angle)
         path.write_text(json.dumps(document) + "\n", encoding="utf-8")
         if args.modes:

@@ -70,10 +70,82 @@
     41,
     42,
     43,
-    44,
+    44
+   ],
+   "left_11": [
     45,
     46,
-    47
+    47,
+    48
+   ],
+   "left_12": [
+    49,
+    50,
+    51,
+    52
+   ],
+   "left_13": [
+    53,
+    54,
+    55,
+    56
+   ],
+   "left_14": [
+    57,
+    58,
+    59,
+    60
+   ],
+   "left_15": [
+    61,
+    62,
+    63,
+    64
+   ],
+   "left_16": [
+    65,
+    66,
+    67,
+    68
+   ],
+   "left_17": [
+    69,
+    70,
+    71,
+    72
+   ],
+   "left_18": [
+    73,
+    74,
+    75,
+    76
+   ],
+   "left_19": [
+    77,
+    78,
+    79,
+    80
+   ],
+   "left_20": [
+    81,
+    82,
+    83,
+    84
+   ],
+   "left_21": [
+    85,
+    86,
+    87,
+    88
+   ],
+   "left_22": [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95
    ]
   },
   "right": {
@@ -144,8 +216,80 @@
     43,
     44,
     45,
-    46,
-    47
+    46
+   ],
+   "right_11": [
+    47,
+    48,
+    49,
+    50
+   ],
+   "right_12": [
+    51,
+    52,
+    53,
+    54
+   ],
+   "right_13": [
+    55,
+    56,
+    57,
+    58
+   ],
+   "right_14": [
+    59,
+    60,
+    61,
+    62
+   ],
+   "right_15": [
+    63,
+    64,
+    65,
+    66
+   ],
+   "right_16": [
+    67,
+    68,
+    69,
+    70
+   ],
+   "right_17": [
+    71,
+    72,
+    73,
+    74
+   ],
+   "right_18": [
+    75,
+    76,
+    77,
+    78
+   ],
+   "right_19": [
+    79,
+    80,
+    81,
+    82
+   ],
+   "right_20": [
+    83,
+    84,
+    85,
+    86
+   ],
+   "right_21": [
+    87,
+    88,
+    89,
+    90
+   ],
+   "right_22": [
+    91,
+    92,
+    93,
+    94,
+    95
    ]
   }
  },
@@ -161,17 +305,18 @@
   "bell_6",
   "bell_7"
  ],
+ "visibility_world": "bell_v",
  "quanta": null,
- "fringe_centre": 24,
- "spacing": 16,
+ "fringe_centre": 48,
+ "spacing": 48,
  "settings": {
   "a": [
    0,
-   4
+   12
   ],
   "b": [
-   -2,
-   -6
+   -6,
+   -18
   ]
  },
  "degrees": {
@@ -194,15 +339,15 @@
   ],
   "links": [
    0,
-   2,
-   4,
    6,
-   8
+   12,
+   18,
+   24
   ]
  },
  "blind": {
   "contrast": {
-   "correlation": "cos(a + b) in the fringe phase, cos 2(a - b) in the polariser angles",
+   "correlation": "cos(a + b) in the fringe phase, cos 2(a - b) in the polariser angles, exact for every visibility V (the advisor, #1563 comment 5915723915)",
    "settings": [
     0.7071,
     -0.7071,
@@ -210,15 +355,15 @@
     0.7071
    ],
    "S": 2.8284,
-   "efficiency_B": 0.637,
-   "uncounted": 0.36,
+   "efficiency_B": "0.41 V at both settings, V the single-side visibility written blind from the u = 0 world (bell_v)",
+   "efficiency_A": 1.0,
    "curve": {
     "sum_of_settings_links": [
-     -2,
+     -6,
      0,
-     2,
-     4,
-     6
+     6,
+     12,
+     18
     ],
     "E": [
      0.7071,
@@ -230,13 +375,7 @@
    }
   },
   "by_the_shares": {
-   "correlation": "0.203 cos(a + b)",
-   "settings": [
-    0.143,
-    -0.143,
-    0.143,
-    0.143
-   ],
+   "correlation": "0.203 cos(a + b) at V = 1",
    "S": 0.57,
    "S_by_the_sign": 1.414,
    "visibility": 0.5
@@ -252,13 +391,14 @@
    "S": 1.15,
    "visibility": 1.0,
    "two_port_S": 2.83,
-   "loophole_free": "above the efficiency 2 / 3, the violation stands; the law stops at 0.64"
+   "loophole_free": "above the efficiency 2 / 3, the violation stands; the law stops at 0.41 V"
   },
   "bound": 2.0,
   "check": {
-   "fringe_spacing": 16,
-   "single_side_maxima": "at the spacing 16, shifted by (k + 1/2) / 8 of it",
-   "efficiency_B_per_setting": "the same at every setting b in the sum over the runs"
+   "fringe_spacing": 48,
+   "single_side_maxima": "at the spacing 48, shifted by (k + 1/2) / 8 of it",
+   "efficiency_B_per_setting": "the same at every setting b in the sum over the runs (no signalling)",
+   "far_field": "L = 48 at d = 8 and lambda = 8: L / (d^2 / lambda) = 6, the Fresnel number of a three-row gap 0.02"
   }
  }
 }
