@@ -93,11 +93,8 @@ def float_literals(source: str) -> list[int]:
 
 def true_divisions(source: str) -> list[int]:
     """The lines of every `/` operator token (`//` is one token, `//=` another)."""
-    return [
-        token.start[0]
-        for token in tokenize.generate_tokens(io.StringIO(source).readline)
-        if token.type == tokenize.OP and token.string in ("/", "/=")
-    ]
+    tokens = tokenize.generate_tokens(io.StringIO(source).readline)
+    return [t.start[0] for t in tokens if t.type == tokenize.OP and t.string in ("/", "/=")]
 
 
 def forbidden_imports(tree: ast.AST) -> list[str]:
@@ -126,9 +123,9 @@ def forbidden_imports(tree: ast.AST) -> list[str]:
 
 
 ALLOCATIONS_NEEDING_DTYPE = {"zeros", "ones", "empty", "full"}
-NUMPY_CHAIN_FORBIDDEN = set(
-    "fft geomspace interp linalg linspace logspace polyfit polynomial random".split()
-)
+NUMPY_CHAIN_FORBIDDEN = {
+    *"fft geomspace interp linalg linspace logspace polyfit polynomial random".split()
+}
 METHODS_FORBIDDEN = {"mean", "std", "var"}
 
 
@@ -231,12 +228,8 @@ def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     """Every module of the package, of `core/` and of `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed."""
-    modules = {
-        path.relative_to(SRC).as_posix()
-        for folder in (SRC, SRC / "core", SRC / "loader")
-        for path in folder.glob("*.py")
-        if path.name != "__init__.py"
-    }
+    files = [path for folder in (SRC, SRC / "core", SRC / "loader") for path in folder.glob("*.py")]
+    modules = {path.relative_to(SRC).as_posix() for path in files if path.name != "__init__.py"}
     assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
 
 

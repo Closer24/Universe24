@@ -21,9 +21,10 @@ WORLD_KEYS += ("measured", "messages", "detectors", "receding")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width")
-FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS = (
+FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "held"),
     ("name", "pair"),
+    ("count", "divisor", "rest"),
     ("count", "divisor"),
 )
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
@@ -80,7 +81,7 @@ class World:
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair and what it holds, the rest derived by the rule."""
+    """The universe file: its integers and its families, each row its name, its pair and what it holds (with the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on a holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22), everything else derived by the rule."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -88,7 +89,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     entries = universe["families"]
     if not isinstance(entries, list) or not entries:
         raise ValueError("families must be a list of the families' rows")
-    rows: list[tuple[str, tuple[int, int], str | None, int | None]] = []
+    rows: list[tuple[str, tuple[int, int], str | None, int | None, int]] = []
     for index, entry in enumerate(entries):
         label = f"families[{index}]"
         row = keyed(entry, label, FAMILY_KEYS, FAMILY_REQUIRED)
@@ -104,15 +105,23 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
             raise ValueError(
                 f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
             )
-        held, divisor = None, None
+        held, divisor, rest = None, None, 0
         if "held" in row:
-            holds = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_KEYS)
+            holds = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)
             if holds["count"] not in (CONTENT, SIGN):
                 raise ValueError(
                     f"{label}.held.count is {CONTENT!r} or {SIGN!r}, got {holds['count']!r}"
                 )
             held, divisor = str(holds["count"]), integer(holds["divisor"], f"{label}.held.divisor", 1)
-        rows.append((name, (num, den), held, divisor))
+            if "rest" in holds:
+                if held != CONTENT or num != den:
+                    raise ValueError(
+                        f"{label}.held.rest: only the massless row holding the content rests at a level"
+                    )
+                rest = integer(
+                    holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
+                )
+        rows.append((name, (num, den), held, divisor, rest))
     return integers, derived.family_rules(rows)
 
 

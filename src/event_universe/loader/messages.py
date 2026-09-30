@@ -14,7 +14,7 @@ MESSAGE_REQUIRED = ("family", "along", "wave", "amplitude", "top", "edge")
 
 @dataclass(frozen=True)
 class MessageRow:
-    """A laid record as declared, a packet of a family of quanta and no body: its family, the axis it travels along, its wave number as a fraction of pi per Link [p, q] (p below 0: the packet travels toward the axis's lower side), its amplitude (the level at the envelope's top), per axis the Nodes [first, last] of its flat top and the half-width of the raised cosine beyond them, its phase as a fraction of the turn [r, s] ((0, 1) without the key), its wave number per axis across the beam as a fraction of pi per Link ((0, 1) where none; `transverse`), and its two level pairs from the mode file, each the nonzero Nodes' flat x-major indexes with their levels (the second pair 0, a real packet)."""
+    """A laid record as declared, a packet of a family of quanta and no body (or a kick on a holder of the content, laid on the row's rest): its family, the axis it travels along, its wave number as a fraction of pi per Link [p, q] (p below 0: the packet travels toward the axis's lower side), its amplitude (the level at the envelope's top), per axis the Nodes [first, last] of its flat top and the half-width of the raised cosine beyond them, its phase as a fraction of the turn [r, s] ((0, 1) without the key), its wave number per axis across the beam as a fraction of pi per Link ((0, 1) where none; `transverse`), and its two level pairs from the mode file, each the nonzero Nodes' flat x-major indexes with their levels (the second pair 0, a real packet)."""
 
     family: int
     along: int
@@ -39,7 +39,7 @@ def messages_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[MessageRow, ...]:
-    """The messages: each its family (a family of quanta), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), and its levels from the mode file; a message with no mode entry is refused by name; `whole`, a Node at which the message's count would be laid whole with its levels spread as they are, is refused by name, since no family's line lays a count whole today (the lay is the share's; the key waits for the light family's line)."""
+    """The messages: each its family (a family of quanta, or a holder of the content: a kick laid on the row's rest, the row's own travelling events with no count, the advisor's lay for the two speeds, #1563 comment 5916154126), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), and its levels from the mode file; a message with no mode entry is refused by name; `whole`, a Node at which the message's count would be laid whole with its levels spread as they are, is refused by name, since no family's line lays a count whole today (the lay is the share's; the key waits for the light family's line)."""
     names = {family.name: index for index, family in enumerate(families)}
     if not isinstance(value, list):
         raise ValueError("messages must be a list of laid records")
@@ -49,8 +49,10 @@ def messages_of(
         label = f"messages[{number}]"
         message = keyed(entry, label, MESSAGE_KEYS, MESSAGE_REQUIRED)
         family = names.get(message["family"])
-        if family is None or not families[family].quanta:
-            raise ValueError(f"{label}.family must name a family of quanta, got {message['family']!r}")
+        if family is None:
+            raise ValueError(
+                f"{label}.family must name a family of the universe, got {message['family']!r}"
+            )
         if "whole" in message:
             at = node_of(message["whole"], f"{label}.whole", shape, beyond)
             raise ValueError(

@@ -1,0 +1,44 @@
+{
+ "comment": "The two speeds (ALGEBRA.md, Nature's numbers enter the board only as clicks, the series' line 1; the advisor's lay, #1563 comments 5916154126 and 5916173972; the Boss's build, 5916633729): the massless row's kick against light on the same board, in two worlds of one design so that light's own wells on the held rows do not swamp the kick. Each world lays one packet at the same wave number, over every row, and reads it at the far region, four columns backed by the receding face, by the field line (the count over the region for light, the squared deviation from the rest for the kick), one reading per interval. The universe file beside this design is rule.json with the massless row's rest c_vac = 60 (the vacuum content) and the three holders' divisors at a thousand million, so that light's own wells stay within a few levels over the run (at rule.json's divisors the two slits' run reached a content of 752 under the packet; at ten million the smoke world's well reached 22 levels in 70 intervals). Every number of the look stands here and in the universe file, none in the scripts or the engine.",
+ "universe": "examples/events/two_speeds/universe.json",
+ "engine": "examples/events/engine_start.json",
+ "length": 520,
+ "height": 48,
+ "wave": [
+  1,
+  4
+ ],
+ "top": [
+  52,
+  68
+ ],
+ "edge": 8,
+ "worlds": {
+  "light": {
+   "family": "charge",
+   "amplitude": 420
+  },
+  "kick": {
+   "family": "gravity",
+   "amplitude": 30
+  }
+ },
+ "region": {
+  "name": "far",
+  "columns": [
+   516,
+   519
+  ]
+ },
+ "receding": {
+  "x": {
+   "sides": [
+    "low",
+    "high"
+   ],
+   "largest": 2000,
+   "layers": 64
+  }
+ },
+ "ticks": 1000
+}

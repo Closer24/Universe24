@@ -1,0 +1,36 @@
+{
+ "comment": "Blind, written before any run: the massless row's kick arrives at the far region before light by the intervals below, light reading the vacuum content in its paces (the advisor's 2 x L sqrt 3 is the long-wavelength limit of the same difference). The reading: per world, the field line of the packet's family at the region, its half-maximum onset (the first interval at or above half the run's largest reading), the centroid of its bump at half maximum and its peak; the difference of the two worlds' onsets against `onsets`, of their centroids against `centroids` (the peaks beside: the crests' passage through the region moves a peak, and averages out over the bump). A light click at the region is the measurement and is counted beside; every field line is a GameBoard reading labelled so.",
+ "verdict": "blind",
+ "gamma": 6000,
+ "vacuum_content": 60,
+ "wave_number": [
+  1,
+  4
+ ],
+ "band": {
+  "kick": 0.9023689270621825,
+  "light": 0.9062351175505201
+ },
+ "group_velocity": {
+  "kick": 0.5469181606780271,
+  "light": 0.5354359894782413
+ },
+ "distance": {
+  "centroids": 457.5,
+  "onsets": 446.58754668980896
+ },
+ "kick_before_light": {
+  "centroids": 17.93846232040748,
+  "onsets": 17.510587713788755,
+  "long_wavelength": 15.848264889255226
+ },
+ "worlds": {
+  "light": "light.json",
+  "kick": "kick.json"
+ },
+ "region": "far",
+ "families": {
+  "light": "charge",
+  "kick": "gravity"
+ }
+}

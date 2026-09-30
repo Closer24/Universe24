@@ -61,9 +61,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
             load_world(slit_world(tmp_path, TOOL, "r", detectors=[entry]))
     aslant = {**PACKET, "wave": [-1, 4], "phase": [1, 4], "transverse": {"y": [1, 8]}}
     turned = slit_world(tmp_path, TOOL, "turned", messages=[aslant])
-    mirrored = dense(
-        json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
-    )
+    before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
+    mirrored = dense(before)
     tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
     for x in range(
         24
@@ -108,9 +107,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         assert walled.books()["charge"]["balanced"]
     level = np.abs(walled.states[charge].levels.now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].levels.now[:12]).sum()
-    print(
-        f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()}, before it {int(level[:12].sum())} against {int(free)} with no wall"
-    )
+    print(f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()},")
+    print(f"  before it {int(level[:12].sum())} against {int(free)} with no wall")
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
 
@@ -157,10 +155,8 @@ def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_ar
     document = json.loads(chain_body_world(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     with pytest.raises(ValueError, match="a sense is \\+1 or -1"):
         TOOL.pixel_mode(json.loads(json.dumps(document)), [2])
-    heavy = [
-        {"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 2 * QUANTA}]}
-        for x in (CHAIN // 2, CHAIN // 2 + 2)
-    ]
+    at = (CHAIN // 2, CHAIN // 2 + 2)
+    heavy = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 2 * QUANTA}]} for x in at]
     with pytest.raises(ValueError, match="collapses: its wells reach the pace 0"):
         TOOL.pixel_mode({**document, "measured": heavy})
     small = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 20}]} for x in (20, 23)]

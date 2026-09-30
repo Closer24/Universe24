@@ -102,14 +102,14 @@ def with_parts(state: NodeState, parts: list[Record]) -> None:
         state.levels = parts[0]
 
 
-def ports(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
-    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, 0 beyond a face that does not wrap, the Node itself on a folded axis."""
-    return tuple(arrival(a, axis, side, wrap) for axis in range(3) for side in (1, -1))
+def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
+    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, `fill` beyond a face that does not wrap (0, or the row's rest for the massless row holding the content: the vacuum beyond the face is the same vacuum, ALGEBRA.md #what-is-open, item 22), the Node itself on a folded axis."""
+    return tuple(arrival(a, axis, side, wrap, fill) for axis in range(3) for side in (1, -1))
 
 
-def axis_sums(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """The two arrivals of each axis summed, the three sums Rule3 reads."""
-    arrived = ports(a, wrap)
+def axis_sums(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """The two arrivals of each axis summed, the three sums Rule3 reads, `fill` beyond a face."""
+    arrived = ports(a, wrap, fill)
     x, y, z = (arrived[2 * axis] + arrived[2 * axis + 1] for axis in range(3))
     return x, y, z
 
@@ -197,16 +197,16 @@ def rule_of(family: FamilyRule, gamma: int, content: Any, axis: tuple[Any, ...] 
     return quanta_rule(family, gamma, content, axis) if family.quanta else part_rule(family)
 
 
-def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1) -> Record:
-    """Rule3 on a level pair (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six reads through the Ports of the level the step starts from."""
+def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0) -> Record:
+    """Rule3 on a level pair (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six reads through the Ports of the level the step starts from, `fill` read beyond a face (the row's rest)."""
     reads, self_coefficient, wall = rule
     if direction == 1:
-        sums = axis_sums(record.now, wrap)
+        sums = axis_sums(record.now, wrap, fill)
         nxt, remainder = rule3(
             reads, sums, self_coefficient, wall, record.now, record.before, record.remainder
         )
         return Record(np.asarray(nxt), record.now, np.asarray(remainder))
-    sums = axis_sums(record.before, wrap)
+    sums = axis_sums(record.before, wrap, fill)
     back, remainder = rule3(
         reads, sums, self_coefficient, wall, record.before, record.now, record.remainder, -1
     )
