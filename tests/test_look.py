@@ -21,15 +21,16 @@ BLIND.update(counts=[0, 1, 2, 4, 2, 1, 0, 0, 0], through=10, watch={"4": 2, "3":
 
 
 def shown(world, monkeypatch, detector, at, blind):
-    """The look of `world` over three intervals from a GameBoard that clicks on `detector` at the Nodes `at` names per interval (the worlds here do not click by themselves in three intervals; the lines' placement and their counting is what is checked), and the page built from it with `blind` as its expectation file, as text."""
+    """The look of `world` over three intervals from a GameBoard that clicks on `detector` at the Nodes `at` names per interval (a Node, or a tuple of a detector's name, a Node and optionally the whole the line names; the worlds here do not click by themselves in three intervals; the lines' placement and their counting is what is checked), and the page built from it with `blind` as its expectation file, as text."""
 
     class Clicking(RECORD.GameBoard):
         def step(self) -> None:
             super().step()
             for entry in at.get(self.tick, []):
-                name, node = entry if isinstance(entry, tuple) else (detector, entry)
+                name, node, *whole = entry if isinstance(entry, tuple) else (detector, entry)
                 line = {"event": "click", "tick": self.tick, "family": "charge", "detector": name}
-                self.observer({**line, "node": node, "count": 1, "body": None})
+                line.update(node=node, count=1, body=None, **({"whole": whole[0]} if whole else {}))
+                self.observer(line)
 
     monkeypatch.setattr(RECORD, "GameBoard", Clicking)
     RECORD.main([str(world), "--ticks", "3"])
@@ -70,12 +71,13 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
-    """The slit world with a screen of nine detector Nodes at x = 20, three intervals with the test's own click lines (two at y = 4 and one at y = 3 within the window [1, 2], one at y = 5 beyond it): the look holds the faces as declared; the page's measurement holds one row per screen Node ordered by y, the rises summed per Node exactly as tools/click_counts.py counts them, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two detectors of two Nodes each sharing a y are each one reporter placed at it, on the page, in tools/click_counts.py (named, or every placed group over the whole run where the expectation names none) and in tools/train_clicks.py, whose reading gives each of two quanta the rises nearest its peak (the pace one Link an interval), the halves that rose and the rates, and in tools/bell_clicks.py, whose reading by the comb gives each of two pairs the outcomes of its landings at the settings, the correlation, S and the coincidences; Bell's builder writes from its design file the world of 20 pairs (612 x 48, 558 intervals, 40 packets, the first pair's at the transverse wave numbers -/+ 120 / 1440 of pi) and the expectation with the first pair's drift across the beam at the wall (-87.8 Links)."""
+    """The slit world with a screen of nine detector Nodes at x = 20, three intervals with the test's own click lines (two at y = 4 and one at y = 3 within the window [1, 2], one at y = 5 beyond it): the look holds the faces as declared; the page's measurement holds one row per screen Node ordered by y, the rises summed per Node exactly as tools/click_counts.py counts them, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two detectors of two Nodes each sharing a y are each one reporter placed at it, on the page, in tools/click_counts.py (named, or every placed group over the whole run where the expectation names none) and in tools/train_clicks.py, whose reading gives each of two quanta the rises nearest its peak (the pace one Link an interval), the halves that rose and the rates, and in tools/bell_clicks.py, whose reading by the comb pairs the landings by the whole each click line names (the left packet's whole n with the right packet's whole n), gives each pair the outcomes of its landings at the settings, the correlation at the settings, S, the coincidences, E as a curve in a + b over every position and the coincidence map's ridge; tools/click_counts.py reads beside the rises the summed absolute deviation from the blind row's shares over the total and the wholes named on the lines (each one's first entry alone, none twice, none in two groups); Bell's first world's builder writes from its design file the world (400 x 48, 400 intervals, the two packets at x = 140 and 260) and the expectation (the mirrors, the settings and the curve's sums in Links)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     groups = [{"name": f"g{y}", "positions": [[21, y, 0], [22, y, 0]]} for y in (3, 4)]
     world = slit_world(tmp_path, TOOL, detectors=[SCREEN, *groups])
-    at = {1: [[20, 4, 0], ("g4", [21, 4, 0])], 2: [[20, 3, 0], [20, 4, 0], ("g3", [22, 3, 0])]}
-    at[3] = [[20, 5, 0], ("g4", [21, 4, 0])]
+    at = {1: [[20, 4, 0], ("g4", [21, 4, 0], [1, 0])]}
+    at[2] = [[20, 3, 0], [20, 4, 0], ("g3", [22, 3, 0], [0, 0])]
+    at[3] = [[20, 5, 0], ("g4", [21, 4, 0], [1, 1])]
     look, html = shown(world, monkeypatch, "screen", at, BLIND)
     measure = PAGE.measurement(look, BLIND)
     assert look["faces"] == SLIT["faces"] and look["verdict"] == "LAWFUL" and measure["through"] == 3
@@ -97,6 +99,7 @@ def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(t
     (tmp_path / "grouped.json").write_text(json.dumps(grouped))
     read = COUNTS.reading(world, output, tmp_path / "grouped.json")
     assert read["at"] == [3, 4] and read["rises"] == [1, 1] and read["through"] == 2
+    assert read["deviation"] == [1, 3] and read["wholes"] == {"wholes": 3, "twice": 0, "two_groups": 0}
     unnamed = {k: v for k, v in grouped.items() if k not in ("detector", "window")}
     (tmp_path / "unnamed.json").write_text(json.dumps(unnamed))
     whole = COUNTS.reading(world, output, tmp_path / "unnamed.json")
@@ -111,17 +114,19 @@ def test_the_page_draws_the_screen_per_node_with_the_blind_curve_and_the_faces(t
     assert [q["halves"] for q in rows["quanta"]] == [["left", "right"], ["right"]]
     assert rows["both"] == [1, 2] and rows["one"] == [1, 2] and rows["neither"] == [0, 2]
     assert rows["rises_per_quantum"] == [3, 2] and rows["per_group"] == [1, 2]
-    bell = {**train, "source": 0, "pairs": train["quanta"], "sides": {"left": "g3", "right": "g4"}}
-    bell.update(spacing=4, fringe_centre=3, settings={"a": [0, 2], "b": [1, 3]}, bins=4)
+    bell = {**train, "sides": {"left": "g3", "right": "g4"}, "mirrors": [[0, 1]], "spacing": 4}
+    bell.update(fringe_centre=3, settings={"a": [0, 2], "b": [1, 3]}, bins=4, curve={"links": [0, 1, 2]})
     (tmp_path / "bell.json").write_text(json.dumps(bell))
     pairs = BELL.reading(world, output, tmp_path / "bell.json")
-    outcomes = [p["outcomes"] for p in pairs["pairs"]]
-    assert outcomes == [{"left": [1, -1], "right": [1, -1]}, {"right": [1, -1]}]
+    assert pairs["pairs"][0]["outcomes"] == {"left": [1, -1], "right": [1, -1]}
+    assert pairs["pairs"][1]["outcomes"] == {"right": [1, -1]} and pairs["coincidences"] == 1
     assert pairs["correlation"] == {"0 1": [1, 1], "0 3": [-1, 1], "2 1": [-1, 1], "2 3": [1, 1]}
-    assert pairs["S"] == [2, 1] and pairs["coincidences"] == 1
-    assert pairs["landings"] == {"left": 1, "right": 2}
+    assert pairs["S"] == [2, 1] and pairs["landings"] == {"left": 1, "right": 2}
+    assert pairs["curve"] == [[0, 1], [1, 1], [0, 1], [0, 1]] and pairs["ridge"] == [0, 1, 0, 0]
     BUILD.main(["--folder", str(tmp_path / "bell")])
     built = json.loads((tmp_path / "bell" / "bell.json").read_text())
-    blind = json.loads((tmp_path / "bell" / "expectation.json").read_text())["pairs"][0]
-    assert built["shape"] == [612, 48, 1] and built["ticks"] == 558 and len(built["messages"]) == 40
-    assert built["messages"][0]["transverse"] == {"y": [-120, 1440]} and blind["drift"] == -87.8
+    blind = json.loads((tmp_path / "bell" / "expectation.json").read_text())
+    assert built["shape"] == [400, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 2
+    assert [m["top"]["x"][0] for m in built["messages"]] == [140, 260]
+    assert blind["settings"] == {"a": [0, 4], "b": [-2, -6]} and blind["mirrors"] == [[0, 1]]
+    assert blind["curve"]["links"] == [0, 2, 4, 6, 8] and blind["wholes"] == 3000

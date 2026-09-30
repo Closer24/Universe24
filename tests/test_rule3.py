@@ -189,9 +189,7 @@ def tools_on_the_arrays() -> list[Path]:
     for path in sorted((ROOT / "tools").glob("*.py")):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         modules = [node.module or "" for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)]
-        modules += [
-            a.name for node in ast.walk(tree) if isinstance(node, ast.Import) for a in node.names
-        ]
+        modules += [a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names]
         if any(module.split(".")[0] == "event_universe" for module in modules):
             found.append(path)
     return found

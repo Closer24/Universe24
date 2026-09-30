@@ -65,8 +65,9 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
     )
     tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
-    # toward -x at the phase pi / 2 with k_y = pi / 8: b e cos(-k x + k_y y + pi / 2 + omega), k_y y = pi / 2 at y = 4
-    for x in range(24):
+    for x in range(
+        24
+    ):  # toward -x at the phase pi / 2, k_y = pi / 8: b e cos(-k x + k_y y + pi / 2 + omega), k_y y = pi / 2 at y = 4
         away = abs(x - 5)
         e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
         assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1

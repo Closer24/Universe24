@@ -1,21 +1,22 @@
 {
- "comment": "Bell's world's blind expectation (the advisor, #1515 comments 5908460763 and 5909819308; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. Per pair the interval its two peaks reach the screens' near faces (the design's pace) and its window; a landing (a click on a screen) belongs to the pair whose peak passes its Node nearest in time. The reading is the comb: a landing's outcome at a setting a (a position on its screen in Links) is +1 where cos(Phi(y) - a) > 0 and -1 under, Phi(y) = 2 pi (y - fringe_centre) / spacing the fringe phase of its row; a pair's outcome on a screen is the sign of its landings' outcomes summed; E(a, b) is the mean over the pairs with a landing on both screens of the product of the left outcome at a and the right outcome at b; S = E(a, b) - E(a, b') + E(a', b) + E(a', b'); the coincidence fringe is the pairs' landings binned by Phi_A + Phi_B, its visibility (most - least) over (most + least). Blind under the count's line as it stands: E = 0.203 cos(a + b), S = 0.57, the visibility 0.50; nature: E = 0.405 cos(a + b), S = 1.15, the visibility 1.00; Bell's bound for any local line 0.71. The GameBoard check: each screen's single-side pattern flat over the train within the rounding, and two landings per pair. On the cold twin no landing at all.",
+ "comment": "Bell's first world's blind expectation (the advisor, #1515 comment 5910272948, C; ALGEBRA.md row (h)), written before the run from design.json: DETECTOR. A landing is a click line on a screen naming its whole; a pair is the left packet's whole n with the right packet's whole n (`mirrors`); the comb about a position: +1 where cos(Phi(y) - a) > 0 and -1 under, Phi(y) = 2 pi (y - fringe_centre) / spacing; E(a, b) the mean product over the pairs landing on both screens, S = E(a, b) - E(a, b') + E(a', b) + E(a', b'), E as a curve in a + b over every position, the coincidence map over Phi_A + Phi_B, each screen's single-side pattern. Blind under the whole line with the mirror lay: the triangle E = 1 - 2 |a + b| / pi, S = 2.00 exactly, a sharp ridge on Phi_A + Phi_B = 0; under the line as it stands E = 0.203 cos(a + b), S = 0.57, no ridge; nature with the same comb E = 0.405 cos(a + b), S = 1.15, a cosine ridge of visibility 1 (2.83 with two-port analysers). The GameBoard check: per pair two landings at mirror rows, the single-side fringes at the spacing 16.",
+ "verdict": "DETECTOR",
  "family": "charge",
  "across": "y",
  "along": "x",
- "source": 306,
- "pace": [
-  12,
-  22
- ],
- "band_pace": {
-  "plain": 0.5469,
-  "tilted_most": 0.5192
- },
  "sides": {
   "left": "left",
   "right": "right"
  },
+ "mirrors": [
+  [
+   0,
+   1
+  ]
+ ],
+ "wholes": 3000,
+ "fringe_centre": 24,
+ "spacing": 16,
  "settings": {
   "a": [
    0,
@@ -36,283 +37,58 @@
    -135
   ]
  },
- "fringe_centre": 24,
- "spacing": 16,
- "bins": 8,
- "pairs": [
-  {
-   "peak": 508,
-   "window": [
-    508,
-    530
-   ],
-   "index": 0,
-   "transverse": [
-    -120,
-    1440
-   ],
-   "drift": -87.8
-  },
-  {
-   "peak": 462,
-   "window": [
-    462,
-    484
-   ],
-   "index": 1,
-   "transverse": [
-    28,
-    1440
-   ],
-   "drift": 19.7
-  },
-  {
-   "peak": 445,
-   "window": [
-    445,
-    467
-   ],
-   "index": 2,
-   "transverse": [
-    -63,
-    1440
-   ],
-   "drift": -41.9
-  },
-  {
-   "peak": 428,
-   "window": [
-    428,
-    450
-   ],
-   "index": 3,
-   "transverse": [
-    85,
-    1440
-   ],
-   "drift": 53.2
-  },
-  {
-   "peak": 395,
-   "window": [
-    395,
-    417
-   ],
-   "index": 4,
-   "transverse": [
-    -7,
-    1440
-   ],
-   "drift": -4.1
-  },
-  {
-   "peak": 386,
-   "window": [
-    386,
-    408
-   ],
-   "index": 5,
-   "transverse": [
-    -98,
-    1440
-   ],
-   "drift": -54.0
-  },
-  {
-   "peak": 354,
-   "window": [
-    354,
-    376
-   ],
-   "index": 6,
-   "transverse": [
-    50,
-    1440
-   ],
-   "drift": 25.9
-  },
-  {
-   "peak": 331,
-   "window": [
-    331,
-    353
-   ],
-   "index": 7,
-   "transverse": [
-    -42,
-    1440
-   ],
-   "drift": -20.2
-  },
-  {
-   "peak": 320,
-   "window": [
-    320,
-    342
-   ],
-   "index": 8,
-   "transverse": [
-    107,
-    1440
-   ],
-   "drift": 47.1
-  },
-  {
-   "peak": 285,
-   "window": [
-    285,
-    307
-   ],
-   "index": 9,
-   "transverse": [
-    15,
-    1440
-   ],
-   "drift": 6.1
-  },
-  {
-   "peak": 269,
-   "window": [
-    269,
-    291
-   ],
-   "index": 10,
-   "transverse": [
-    -77,
-    1440
-   ],
-   "drift": -28.4
-  },
-  {
-   "peak": 246,
-   "window": [
-    246,
-    268
-   ],
-   "index": 11,
-   "transverse": [
-    72,
-    1440
-   ],
-   "drift": 23.9
-  },
-  {
-   "peak": 219,
-   "window": [
-    219,
-    241
-   ],
-   "index": 12,
-   "transverse": [
-    -20,
-    1440
-   ],
-   "drift": -5.9
-  },
-  {
-   "peak": 206,
-   "window": [
-    206,
-    228
-   ],
-   "index": 13,
-   "transverse": [
-    -112,
-    1440
-   ],
-   "drift": -28.7
-  },
-  {
-   "peak": 176,
-   "window": [
-    176,
-    198
-   ],
-   "index": 14,
-   "transverse": [
-    37,
-    1440
-   ],
-   "drift": 8.2
-  },
-  {
-   "peak": 155,
-   "window": [
-    155,
-    177
-   ],
-   "index": 15,
-   "transverse": [
-    -55,
-    1440
-   ],
-   "drift": -10.2
-  },
-  {
-   "peak": 135,
-   "window": [
-    135,
-    157
-   ],
-   "index": 16,
-   "transverse": [
-    93,
-    1440
-   ],
-   "drift": 13.7
-  },
-  {
-   "peak": 109,
-   "window": [
-    109,
-    131
-   ],
-   "index": 17,
-   "transverse": [
-    2,
-    1440
-   ],
-   "drift": 0.2
-  },
-  {
-   "peak": 90,
-   "window": [
-    90,
-    112
-   ],
-   "index": 18,
-   "transverse": [
-    -90,
-    1440
-   ],
-   "drift": -6.6
-  },
-  {
-   "peak": 66,
-   "window": [
-    66,
-    88
-   ],
-   "index": 19,
-   "transverse": [
-    58,
-    1440
-   ],
-   "drift": 2.1
-  }
- ],
+ "curve": {
+  "degrees": [
+   0,
+   45,
+   90,
+   135,
+   180
+  ],
+  "links": [
+   0,
+   2,
+   4,
+   6,
+   8
+  ]
+ },
+ "bins": 16,
  "blind": {
-  "correlation": "0.203 cos(a + b)",
-  "S": 0.57,
-  "visibility": 0.5
- },
- "nature": {
-  "correlation": "0.405 cos(a + b)",
-  "S": 1.15,
-  "visibility": 1.0
- },
- "bound": 0.71,
- "cold": {
-  "landings": 0
+  "whole_line": {
+   "correlation": "1 - 2 |a + b| / pi",
+   "curve": [
+    1.0,
+    0.5,
+    0.0,
+    -0.5,
+    -1.0
+   ],
+   "settings": [
+    0.5,
+    -0.5,
+    0.5,
+    0.5
+   ],
+   "S": 2.0,
+   "ridge": "sharp on Phi_A + Phi_B = 0"
+  },
+  "line_as_it_stands": {
+   "correlation": "0.203 cos(a + b)",
+   "S": 0.57,
+   "ridge": "none"
+  },
+  "nature": {
+   "correlation": "0.405 cos(a + b)",
+   "S": 1.15,
+   "ridge": "a cosine of visibility 1",
+   "two_port_S": 2.83
+  },
+  "bound": 2.0,
+  "check": {
+   "landings_per_pair": 2,
+   "mirror_rows": true,
+   "fringe_spacing": 16
+  }
  }
 }

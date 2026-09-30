@@ -225,12 +225,8 @@ def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
     universe_beside(folder)
     levels, first = [0] * CHAIN, CHAIN // 2 - len(envelope) // 2
     levels[first : first + len(envelope)] = envelope
-    moving = {
-        "now": levels,
-        "before": levels,
-        "im_now": [0] * CHAIN,
-        "im_before": [turn * v // 16 for v in levels],
-    }
+    moving = {"now": levels, "before": levels, "im_now": [0] * CHAIN}
+    moving["im_before"] = [turn * v // 16 for v in levels]
     mode = {"family": "matter", "pair": [4000, 6000], "moving": moving}
     ends = [{"name": "left", "positions": [[0, 0, 0]]}]
     ends += [{"name": "right", "positions": [[CHAIN - 1, 0, 0]]}]
