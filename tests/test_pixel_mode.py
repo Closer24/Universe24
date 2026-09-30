@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import math
-from pathlib import Path
 
 import numpy as np
 import pytest
@@ -12,24 +11,10 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
-from tests.laws import CHAIN, QUANTA, ROOT, chain_body_world, load_file, universe_beside
+from tests.laws import CHAIN, QUANTA, ROOT, SLIT, chain_body_world, load_file, slit_world
 
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
-SLIT = dict(shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, ticks=24)
-SLIT.update(universe="u.json", engine="e.json", measured=[], detectors=[])
-SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
-PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "amplitude": 1328}
-PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
-
-
-def slit_world(folder: Path, name: str, **changes: object) -> Path:
-    """The slit world, a wall across x with one gap at y = 4 on a board of 24 x 9 x 1 (z folded), the packet of light laid by the generator, in the tests' universe without its row with a gap; `changes` replace the world's keys."""
-    universe_beside(folder, drop=("polarisation",))
-    path = folder / f"{name}.json"
-    path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")
-    TOOL.main(["--input", str(path)])
-    return path
 
 
 def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_but_for_its_gap(
@@ -37,7 +22,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
 ):
     """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face and faces that leave no Node; in the run the Nodes beyond the board stay 0 in every family and no quantum crosses their Links (SUM (W_c c + r) kept to the bit), the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    path = slit_world(tmp_path, "slit")
+    path = slit_world(tmp_path, TOOL)
     mode = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"][0]
     now, before = (np.array(mode["moving"][word]).reshape(24, 9, 1) for word in ("now", "before"))
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
@@ -56,7 +41,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     ]
     for reason, changes in refused:
         with pytest.raises(ValueError, match=reason):
-            load_world(slit_world(tmp_path, "refused", **changes))
+            load_world(slit_world(tmp_path, TOOL, "refused", **changes))
     with pytest.raises(ValueError, match="beyond the board's inner face: nothing stands there"):
         TOOL.pixel_mode(
             {**SLIT, "measured": [{"family": "matter", "nodes": [{"node": [12, 0, 0], "count": 50}]}]}
@@ -72,7 +57,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         json.dumps({**tampered, "messages": [mode]}), encoding="utf-8"
     )
     boards = [
-        GameBoard(load_world(slit_world(tmp_path, name, **changes)))
+        GameBoard(load_world(slit_world(tmp_path, TOOL, name, **changes)))
         for name, changes in (("slit", {}), ("open", dict(faces=[])))
     ]
     walled, open_board = boards

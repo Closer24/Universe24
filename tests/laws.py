@@ -63,3 +63,19 @@ def chain_body_world(
     if mode:
         tool.main(["--input", str(world), "--sense", *(str(sense) for sense in senses)])
     return world
+
+
+SLIT = dict(shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, ticks=24)
+SLIT.update(universe="u.json", engine="e.json", measured=[], detectors=[])
+SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
+PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "amplitude": 1328}
+PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
+
+
+def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
+    """The slit world, a wall across x with one gap at y = 4 on a board of 24 x 9 x 1 (z folded), the packet of light laid by the generator `tool`, in the tests' universe without its row with a gap; `changes` replace the world's keys."""
+    universe_beside(folder, drop=("polarisation",))
+    path = folder / f"{name}.json"
+    path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")
+    tool.main(["--input", str(path)])
+    return path

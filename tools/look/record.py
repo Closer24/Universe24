@@ -1,4 +1,4 @@
-"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "GameBoard reading". Per interval: a family of quanta's real level now, its second level now, its count, the count's remainder, its sense, the form the interval booked (D_i over both level pairs, the engine's own `node.form`) and the least Link pace its read finds at that state (the engine's own read and `link_paces`); a held family's level (its time part) and its further parts; the bodies' Nodes; the interval's output lines. At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the faces, the folded axes, the bodies with their declared counts, the detectors), at the end the books. Frame 0 is the world as laid before the first interval, its counts the bodies' declared ones (the engine lays the counts at the first act). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
+"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "GameBoard reading". Per interval: a family of quanta's real level now, its second level now, its count, the count's remainder, its sense, the form the interval booked (D_i over both level pairs, the engine's own `node.form`) and the least Link pace its read finds at that state (the engine's own read and `link_paces`); a held family's level (its time part) and its further parts; the bodies' Nodes; the interval's output lines. At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the folded axes, the bodies with their declared counts, the detectors), at the end the books. Frame 0 is the world as laid before the first interval, its counts the bodies' declared ones (the engine lays the counts at the first act). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -62,18 +62,20 @@ def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int
 
 
 def declared(world: World, path: Path, board: GameBoard) -> dict[str, object]:
-    """The world's declared numbers as the loader read them, and the detectors as the GameBoard holds them (the open faces' layer among them)."""
+    """The world's declared numbers as the loader read them (the inner faces as the world file declares them, each its axis, its coordinate and its gaps, the loader having admitted them), and the detectors as the GameBoard holds them (the open faces' layer among them)."""
     families = world.families
     faces = [
         "open" if opened else "periodic" if wraps else "closed"
         for opened, wraps in zip(world.open_axes, world.periodic, strict=True)
     ]
+    document = json.loads(path.read_text(encoding="utf-8"))
     return {
         "world": path.name,
         "shape": list(world.shape),
         "boundary": dict(zip(AXES, faces, strict=True)),
         "folded": [extent == 1 for extent in world.shape],
         "face_depth": world.face_depth,
+        "faces": document.get("faces", []),
         "declared_ticks": world.ticks,
         "node_clock": world.node_clock,
         "quantum_action": world.quantum_action,
