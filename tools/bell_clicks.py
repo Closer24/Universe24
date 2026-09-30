@@ -82,12 +82,12 @@ def calibrated(runs: list[dict[str, Any]], side: str, setting: str, wall: int) -
 
 
 def phase_of(difference: list[Fraction], turns: int, side: str) -> float:
-    """A setting's phase in radians: the calibrated difference over the runs, the run k at the pair's phase (k + 1/2) / turns of the turn (its mirror on the left), fitted to A cos(u - delta) by its first harmonic (the advisor, #1563 comment 5918622391); 0 where nothing was read."""
+    """A setting's phase in radians: the calibrated difference over the runs, the run k at the pair's phase (k + 1/2) / turns of the turn (its mirror on the left), fitted to A cos(u - delta) by its first harmonic (the advisor, #1563 comment 5918622391); atan2 gives 0 where nothing was read."""
     mirror = -1 if side == "left" else 1
     angles = [mirror * 2 * pi * (k + Fraction(1, 2)) / turns for k in range(turns)]
     along = sum(float(d) * cos(u) for d, u in zip(difference, angles, strict=True))
     across = sum(float(d) * sin(u) for d, u in zip(difference, angles, strict=True))
-    return atan2(across, along) if along or across else 0.0
+    return atan2(across, along)
 
 
 def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, object]:
