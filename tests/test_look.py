@@ -160,8 +160,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     )
     still = json.loads((folder / "bell_v.json").read_text())  # the visibility world, u = 0
     assert [m.get("phase") for m in still["messages"]] == [None] * 4
-    assert [m.get("phase") for m in built["messages"]] == [None, [15, 16], None, [1, 16]]  # the offset
-    assert [m.get("phase") for m in tilted["messages"]] == [None, [13, 16], None, [3, 16]]  # the mirror
+    assert [m.get("phase") for m in built["messages"]] == [None, [63, 64], None, [1, 64]]  # the offset
+    assert [m.get("phase") for m in tilted["messages"]] == [None, [61, 64], None, [3, 64]]  # the mirror
     assert [m["top"]["x"][0] for m in built["messages"]] == [111, 111, 231, 231]
     assert blind["settings"] == {"left": [-2, -6], "right": [0, 4]} and blind["degrees"]["left"] == [
         -45,
