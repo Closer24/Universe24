@@ -72,7 +72,7 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part without a gap at the rest of its line, and every one with a gap laid, under the bodies' sources, the form that sources the fields (the vacuum's share of a body's two level pairs, laid at the count's wall) at its Nodes at the weight with which the body's family sources the row, over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at the sources' Nodes; a row sourced by nothing at the start (the holder of the sign, sourced by the Wronskian's quanta from the first interval) stays at 0."""
+        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time part without a gap at the rest of its line, and every one with a gap laid, under the bodies' sources at its Nodes, the form that sources the fields (the vacuum's share of a body's two level pairs, laid at the count's wall) at the weight with which the body's family sources the row by plain and the Wronskian's quanta at the written moment, W div T, at the weight by sign (the holder of the sign's rest, of either sign), over its divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by and the hold's carry E_s div 2 at the sources' Nodes."""
         forms = []
         for row in self.world.bodies:
             family = self.families[row.family]
@@ -84,13 +84,19 @@ class GameBoard:
                 lay.share(family.pair, record, self.wrap, self.world.node_clock) for record in records
             )
             laid = lay.laid(np.asarray(total), node.count_wall(family, self.world.quantum_action))[0]
-            forms.append(np.where(self.mask(row.nodes), laid, 0))
+            turn = node.well(
+                node.wronskian(*records), node.zeros(self.shape), self.world.quantum_action
+            )[0]
+            forms.append(
+                (np.where(self.mask(row.nodes), laid, 0), np.where(self.mask(row.nodes), turn, 0))
+            )
         for index in self.held:
             family = self.families[index]
             assert family.divisor is not None
             counts = node.zeros(self.shape)
-            for row, form in zip(self.world.bodies, forms, strict=True):
+            for row, (form, turn) in zip(self.world.bodies, forms, strict=True):
                 counts = counts + node.weight_of(index, self.families[row.family]) * form
+                counts = counts + node.weight_of(index, self.families[row.family], BY_SIGN) * turn
             if not counts.any():
                 continue
             state = self.states[index]
