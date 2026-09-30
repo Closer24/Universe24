@@ -23,7 +23,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face and faces that leave no Node; in the run the Nodes beyond the board stay 0 in every family and no quantum crosses their Links (SUM (W_c c + r) kept to the bit), the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = slit_world(tmp_path, TOOL)
-    mode = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"][0]
+    mode_file = path.with_suffix(".mode.json")
+    mode = json.loads(mode_file.read_text(encoding="utf-8"))["messages"][0]
     now, before = (np.array(mode["moving"][word]).reshape(24, 9, 1) for word in ("now", "before"))
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
     for x in range(24):
@@ -32,44 +33,23 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         assert abs(now[x, 4, 0] - 1328 * e * math.cos(k * x)) <= 1
         assert abs(before[x, 4, 0] - 1328 * e * math.cos(k * x + omega)) <= 1
     assert (now[:, 4:5, :] == now).all() and mode["count"] > 0 and not now[12].any()
-    refused = [
-        (
-            "beyond the board's inner face: nothing stands there",
-            dict(detectors=[{"name": "d", "positions": [[12, 0, 0]]}]),
-        ),
-        ("faces leave no Node", dict(faces=[{"axis": "z", "at": 0, "gaps": []}])),
-    ]
-    for reason, changes in refused:
-        with pytest.raises(ValueError, match=reason):
-            load_world(slit_world(tmp_path, TOOL, "refused", **changes))
-    with pytest.raises(ValueError, match="beyond the board's inner face: nothing stands there"):
-        TOOL.pixel_mode(
-            {**SLIT, "measured": [{"family": "matter", "nodes": [{"node": [12, 0, 0], "count": 50}]}]}
-        )
-    tampered = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    inner, at = "beyond the board's inner face", {"node": [12, 0, 0], "count": 50}
+    with pytest.raises(ValueError, match=f"{inner}: nothing stands there"):
+        load_world(slit_world(tmp_path, TOOL, "r", detectors=[{"name": "d", "positions": [[12, 0, 0]]}]))
+    with pytest.raises(ValueError, match="faces leave no Node"):
+        load_world(slit_world(tmp_path, TOOL, "r", faces=[{"axis": "z", "at": 0, "gaps": []}]))
+    with pytest.raises(ValueError, match=f"{inner}: nothing stands there"):
+        TOOL.pixel_mode({**SLIT, "measured": [{"family": "matter", "nodes": [at]}]})
+    tampered = json.loads(mode_file.read_text(encoding="utf-8"))
     tampered["messages"][0]["moving"]["now"][12 * 9] = 5
-    path.with_suffix(".mode.json").write_text(json.dumps(tampered), encoding="utf-8")
-    with pytest.raises(
-        ValueError, match=r"is 5 at the Node \[12, 0, 0\], beyond the board's inner face"
-    ):
+    mode_file.write_text(json.dumps(tampered), encoding="utf-8")
+    with pytest.raises(ValueError, match=rf"is 5 at the Node \[12, 0, 0\], {inner}"):
         load_world(path)
-    path.with_suffix(".mode.json").write_text(
-        json.dumps({**tampered, "messages": [mode]}), encoding="utf-8"
-    )
-    boards = [
-        GameBoard(load_world(slit_world(tmp_path, TOOL, name, **changes)))
-        for name, changes in (("slit", {}), ("open", dict(faces=[])))
-    ]
-    walled, open_board = boards
-    names = [family.name for family in walled.families]
-    charge = names.index("charge")
-    beyond = walled.wrap.beyond
-    assert (
-        beyond is not None
-        and beyond.sum() == 8
-        and not beyond[12, 4, 0]
-        and open_board.wrap.beyond is None
-    )
+    mode_file.write_text(json.dumps({**tampered, "messages": [mode]}), encoding="utf-8")
+    walled = GameBoard(load_world(path))
+    open_board = GameBoard(load_world(slit_world(tmp_path, TOOL, "open", faces=[])))
+    charge, beyond = [family.name for family in walled.families].index("charge"), walled.wrap.beyond
+    assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
     walled.step()
     for _ in range(23):
         walled.step()
@@ -80,14 +60,11 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
             assert not any(a[beyond].any() for a in (state.count, state.sense) if a is not None)
         assert walled.books()["charge"]["balanced"]
     level = np.abs(walled.states[charge].levels.now[:, :, 0])
-    passed = level[13:].sum(axis=0)
+    passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].levels.now[:12]).sum()
     print(
-        f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()}, before it {int(level[:12].sum())} against {int(np.abs(open_board.states[charge].levels.now[:12]).sum())} with no wall"
+        f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()}, before it {int(level[:12].sum())} against {int(free)} with no wall"
     )
-    assert (
-        passed[4] > passed[0] > 0
-        and level[:12].sum() > np.abs(open_board.states[charge].levels.now[:12]).sum()
-    )
+    assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
 
 
@@ -141,7 +118,7 @@ def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_ar
         TOOL.pixel_mode({**document, "measured": heavy})
     small = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 20}]} for x in (20, 23)]
     with pytest.raises(
-        ValueError, match="measured\\[1\\] and measured\\[0\\] share a Node in their regions"
+        ValueError, match=r"measured\[1\] and measured\[0\] share a Node in their regions"
     ):
         TOOL.pixel_mode({**document, "measured": small})
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
