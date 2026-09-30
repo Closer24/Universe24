@@ -96,6 +96,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         walled.step()
         open_board.step()
         risen = [line for line in lines if line["tick"] == walled.tick and line["detector"] == "screen"]
+        risen = [line for line in risen if line["event"] == "click"]  # the seen lines beside them
         assert all(
             all(port[0] == 0 for port in line["ports"]) and "node" not in line for line in risen
         )  # no hop inside, no Node named

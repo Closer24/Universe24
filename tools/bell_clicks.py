@@ -21,8 +21,9 @@ SIDE_SETTINGS = {"left": "a", "right": "b"}  # the settings' names per side in t
 
 def comb(row: int, centre: int, setting: int, spacing: int) -> int:
     """A row's outcome at a setting: +1 on the rows from a quarter fringe before the setting's position to a quarter fringe after it, taken about the spacing, and -1 on the other half of each fringe."""
-    turned = (row - centre - setting + spacing // 4) % spacing
-    return 1 if 2 * turned < spacing else -1
+    half = spacing // 2
+    turned = (row - centre - setting + half // 2) % spacing
+    return 1 if turned < half else -1
 
 
 def weight(rows: list[int], centre: int, setting: int, spacing: int) -> Fraction:

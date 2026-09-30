@@ -258,11 +258,16 @@ def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
             counts.append(int(states[0].count.sum()))
             assert [total_of(s, w) for w, s in zip(walls, states, strict=True)] == totals
             assert abs(int(states[1].count.sum())) <= CHAIN
-        clicks = [e for e in lines if e["family"] == "charge" and e["detector"] in ("left", "right")]
+        clicks = [e for e in lines if e["family"] == "charge" and e["event"] == "click"]
         first = clicks[0]["tick"] if clicks else None
         print(f"DETECTOR the chain, sense {turn}: {len(clicks)} charge clicks, first at {first}")
         print(f"GAMEBOARD light born at {born}, matter's count {min(counts)} to {max(counts)} over 400")
-        assert all(e["event"] == "click" and e["detector"] in ("left", "right") for e in lines)
+        ends = (
+            "left",
+            "right",
+            "face",
+        )  # the chain's end detectors and the open faces' layer at the same Nodes
+        assert all(e["detector"] in ends for e in lines if e["event"] == "click")
         assert born > 0 if turn else (born == 0 and not clicks and not states[1].levels.now.any())
         assert all(book["balanced"] and book["sense_balanced"] for book in board.books().values())
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
@@ -298,6 +303,8 @@ def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_t
     span = mode["period"][0] // mode["period"][1] + 1
     swings = [max(writes[i : i + span]) - min(writes[i : i + span]) for i in range(100, 399 - span)]
     taken = [e for e in lines if e["detector"] == "taker" and e["family"] == "charge"]
+    seen = [e for e in taken if e["event"] == "seen"]
+    taken = [e for e in taken if e["event"] == "click"]
     print(f"GAMEBOARD the static body of {int(body.sum())} Nodes: the write's swing over a period")
     print(
         f"  at most {max(swings)} quanta (the write {min(writes)} to {max(writes)}), its count {min(counts)} to"
@@ -307,6 +314,9 @@ def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_t
     assert max(swings) <= int(body.sum()) and sum(tensions[100 : 100 + span]) != 0
     books = board.books().values()
     assert all(e["body"] == 1 for e in taken) and all(book["balanced"] for book in books)
+    assert seen and all(
+        e["inflow"] > 0 for e in seen
+    )  # what the taker saw, the amplitudes at its boundary
 
 
 def stress_by_hand(now: np.ndarray, num: int) -> list[np.ndarray]:
