@@ -42,9 +42,8 @@ def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
         assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
         lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
         parts = [line for line in lines if line["event"] == "parts"]
-        assert parts and all(
-            len(set(map(tuple, p["levels"]))) == 1 and p["label"] == "DETECTOR" for p in parts
-        )
+        equal = all(len(set(map(tuple, p["levels"]))) == 1 and p["label"] == "DETECTOR" for p in parts)
+        assert parts and equal
         board = GameBoard(load_world(folder / f"{name}.json"))
         assert BACK.verdict(board, board.world.ticks)["verdict"] == "MATCH"
     outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]

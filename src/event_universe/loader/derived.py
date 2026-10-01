@@ -7,7 +7,7 @@ from math import gcd
 
 from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
 from event_universe.features.currents import AXIS_PORTS, PORTS, PRODUCTS
-from event_universe.features.rotation import TURNED_REACH
+from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK
 
 
 @dataclass(frozen=True)
@@ -147,7 +147,7 @@ def largest_of(width: int) -> int:
 
 
 def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) -> int:
-    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products, or the form's two per line of its record (now^2 and next x before); where the source's record is turned (`turns`) the booking is read from the step's levels before the turn, each within twice A (features/rotation, `TURNED_REACH`): the Wronskian's two products of a turned level and a level, the form's now^2 and the two turned levels' product per line."""
+    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products, or the form's two per line of its record (now^2 and next x before); where the source's record is turned (`turns`) the booking is read from the step's levels before the turn, each within twice A once A is read as A + 2 (features/rotation, `TURNED_REACH`, `TURNED_SLACK`; `amplitude_bound`): the Wronskian's two products of a turned level and a level, the form's now^2 and the two turned levels' product per line."""
     reach = TURNED_REACH if turns(families, index) else 1
     if wronskian:
         return PRODUCTS * reach
@@ -174,23 +174,24 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) 
 
 
 def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, width: int) -> int:
-    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound; for a turned record the six arrivals within twice A, `TURNED_REACH`, and the three shears' largest product, 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice A and one, features/rotation), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), and at which every held family's one write per part, its numerator at the sources' room (`write_rooms`) plus its remainder under the wall, does too; refused by name where no level fits."""
+    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), and at which every held family's one write per part, its numerator at the sources' room (`write_rooms`) plus its remainder under the wall, does too; refused by name where no level fits. Where a holder turns a record (features/rotation) every room of the universe is read at the level A + 2 and the level found is 2 less (`TURNED_SLACK`: a turned level stays below 2^(1 / 2) A + 3, within twice A + 2, and not within twice A, the audit's witness (-1, -1) turning to (-3, -1) at A = 1), the turned record's total 6 R x twice the level + |S| A + w x twice the level + w (its six arrivals and the level before it is stepped against both turned, `TURNED_REACH`), the three shears' largest product 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice the level and one, and its bookings' products of turned levels (`booking_room`)."""
     largest = largest_of(width)
     found = largest
+    slack = TURNED_SLACK if any(turns(families, index) for index in range(len(families))) else 0
     for index, family in enumerate(families):
         num, den = family.pair
         reach = TURNED_REACH if turns(families, index) else 1
         for level in (0, int(division_forward(gamma, 2, 0)[0]), gamma - 1):
             reads, self_coefficient, wall = coefficients(num, den, gamma, level)
-            room = sum(abs(read) for read in reads) * reach + abs(self_coefficient) + wall
-            found = min(found, int(division_forward(largest - wall, room, 0)[0]))
+            room = (sum(abs(read) for read in reads) + wall) * reach + abs(self_coefficient)
+            found = min(found, int(division_forward(largest - wall, room, 0)[0]) - slack)
         if reach > 1:
             link = 2 * 2 * gamma  # the Link's wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma)
             product = int(division_forward(largest, 2 * link * link, 0)[0])  # 2 n w x1 at n = w
-            found = min(found, int(division_forward(product - 1, reach, 0)[0]))
+            found = min(found, int(division_forward(product - 1, reach, 0)[0]) - slack)
         if family.quanta and num:
             room = PORTS * PRODUCTS * family.record * abs(num)
-            found = min(found, division_fixed_point(int(division_forward(largest, room, 0)[0])))
+            found = min(found, division_fixed_point(int(division_forward(largest, room, 0)[0])) - slack)
         if family.held:
             write = held_write(families, index, action)
             for wall, room in zip(write.walls, write_rooms(families, index, write), strict=True):
@@ -198,7 +199,7 @@ def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, w
                     found = 0
                 elif room:
                     fits = int(division_forward(largest - wall, room, 0)[0])
-                    found = min(found, division_fixed_point(fits))
+                    found = min(found, division_fixed_point(fits) - slack)
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "

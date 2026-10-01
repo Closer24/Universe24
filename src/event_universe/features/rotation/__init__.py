@@ -1,4 +1,4 @@
-"""The rotation of a two-part record (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record, the act a holder of the sign declares in the universe file): a plane's pair (re, im) turned by the angle theta with tan(theta / 2) = numerator / wall, in three shears, each x' = x + (a y) div d by Rule3's division act with no remainder kept and no new state; direction -1 subtracts the same three numbers in the reverse order, so the turn is a bijection of the integer pairs, inverted bit for bit (the back-in-time gate). In the rationals the turn is exactly a rotation (sin theta = 2 n w / (w^2 + n^2) and cos theta = (w^2 - n^2) / (w^2 + n^2) at the tangent half-angle n / w) and the integers' floors stand beside it, so a turned level stays within twice the amplitude while the tangent half-angle is at most 1 (`TURNED_REACH`; the loader's bound and the guard at load, `guard`). A positive numerator turns the plane counterclockwise, re + i im times e^(i theta): the Node's step turns the plane by the holder's time level against the sense of the record of positive Wronskian (z_before = z_now e^(i omega), clockwise), so that record rotates faster by theta in a positive level and the record of the opposite sense slower, and turns the pair arriving through the +a Port by the Link's odd level and through the -a Port by its opposite (node.step_plane)."""
+"""The rotation of a two-part record (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record, the act a holder of the sign declares in the universe file): a plane's pair (re, im) turned by the angle theta with tan(theta / 2) = numerator / wall, in three shears, each x' = x + (a y) div d by Rule3's division act with no remainder kept and no new state; direction -1 subtracts the same three numbers in the reverse order, so the turn is a bijection of the integer pairs, inverted bit for bit (the back-in-time gate). In the rationals the turn is exactly a rotation (sin theta = 2 n w / (w^2 + n^2) and cos theta = (w^2 - n^2) / (w^2 + n^2) at the tangent half-angle n / w) and the integers' floors stand beside it, each in (-1, 0]: against the exact rotation of a pair within A the turned x is off by e1 cos theta - tan(theta / 2) e2 + e3 and the turned y by sin theta e1 + e2, so while the tangent half-angle is at most 1 a turned level stays below 2^(1 / 2) A + 3, within twice (A + 2) (`TURNED_REACH`, `TURNED_SLACK`; the loader's bound and the guard at load, `guard`), and not within twice A: the pair (-1, -1) at A = 1 turned at the tangent half-angle -1 / 4 is (-3, -1), the audit's witness. A positive numerator turns the plane counterclockwise, re + i im times e^(i theta): the Node's step turns the plane by the holder's time level against the sense of the record of positive Wronskian (z_before = z_now e^(i omega), clockwise), so that record rotates faster by theta in a positive level and the record of the opposite sense slower, and turns the pair arriving through the +a Port by the Link's odd level and through the -a Port by its opposite (node.step_plane)."""
 
 from __future__ import annotations
 
@@ -8,9 +8,8 @@ import numpy as np
 
 from event_universe.core.rule3 import division_forward
 
-TURNED_REACH = (
-    2  # a turned level within twice the amplitude: the rotation's root of two and the three floors
-)
+TURNED_REACH = 2  # a turned level within twice a level's bound: the rotation's root of two, rounded up
+TURNED_SLACK = 2  # the three shears' floors beside it: a turned level below 2^(1 / 2) A + 3 is within twice (A + 2), so the loader reads a turned record's rooms at the level A + 2
 
 
 def shear(x: Any, y: Any, numerator: Any, wall: Any, direction: int = 1) -> Any:
@@ -19,7 +18,7 @@ def shear(x: Any, y: Any, numerator: Any, wall: Any, direction: int = 1) -> Any:
 
 
 def turned(x: Any, y: Any, numerator: Any, wall: Any, direction: int = 1) -> tuple[Any, Any]:
-    """The pair (x, y) turned by the angle theta with tan(theta / 2) = numerator / wall, counterclockwise for a positive numerator: x1 = x - (n y) div w, y1 = y + (2 n w x1) div (w^2 + n^2), x2 = x1 - (n y1) div w, the three shears, (x2, y1) the turned pair; direction -1 undoes the three in the reverse order, (x, y) back from (x2, y1) bit for bit."""
+    """The pair (x, y) turned by the angle theta with tan(theta / 2) = numerator / wall, counterclockwise for a positive numerator: x1 = x + (-n y) div w, y1 = y + (2 n w x1) div (w^2 + n^2), x2 = x1 + (-n y1) div w, the three shears, each the floor of its product as the code computes it (the floor of -n y over w, not minus the floor of n y over w, which differs where w does not divide n y), (x2, y1) the turned pair; direction -1 undoes the three in the reverse order, (x, y) back from (x2, y1) bit for bit."""
     sine, circle = 2 * numerator * wall, wall * wall + numerator * numerator
     if direction == 1:
         x1 = shear(x, y, -numerator, wall)

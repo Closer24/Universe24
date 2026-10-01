@@ -8,12 +8,9 @@ ROOT, SUFFIXES = Path(__file__).resolve().parents[1], (".py", ".md", ".json", ".
 
 def test_every_text_file_holds_ascii_letters_only():
     """Every letter of every tracked or new text file is an ASCII letter; a dash, a sign or a symbol is no letter and passes."""
+    git = ["git", "ls-files", "--cached", "--others", "--exclude-standard"]
     listed = subprocess.run(
-        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
+        git, cwd=ROOT, capture_output=True, text=True, check=True
     ).stdout.splitlines()
     found = [
         f"{name}:{number}: {character!r}"

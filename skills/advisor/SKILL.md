@@ -69,15 +69,16 @@ are the acts of [the interval](../../docs/ALGEBRA.md#the-interval):
 
 | Channel | What passes | Effect on the other family | Place |
 | --- | --- | --- | --- |
-| The read | B's level at the Node; B's vector part on the Link | Multiplies: the level lowers A's paces, the vector part turns A's arrivals through the transport | (i) |
-| The write | A's quanta D div T times its rotation; a body's count | Adds: into B's level over the divisor E_s, the remainder carried | (iv) |
-| The click | One whole quantum | Leaves A's count and enters B's count: the giving, the taking, the conversion | (ii) |
+| The read | B's time line at the Node and its axis lines at the Link's two ends (the content and the Link's tension); under the rotation the holder's time level and odd lines as angles | Multiplies: the level enters A's paces, the clock once and the Link twice; the angles turn A's two-part record and its arrivals through the Ports | (i) |
+| The write | A's form D (its Wronskian W for the holder of the sign) and its tension's part -num h_a at the Node, at the weight A reads B with | Adds: one write per line of B over the wall E_s T (E_s W_c for an axis line), the one remainder carried at the Node | (iv) |
+| The click | Nothing: the detector's report of the net current into its region through its front boundary Ports, the one measurement | Ends nothing and writes no state; no quantum changes family, and the credit of quanta to detectors is the host's reading by the shares | (iii) |
 
 No composition of Rule3's acts writes a product of two levels (the theorem of
 [the four acts](../../docs/ALGEBRA.md#the-four-acts)); whoever reads with w
-writes with w; the click is the one coupling of quanta and the one non-local
-act. Whatever a proposal needs beyond a pace, a source or a click is a
-hypothesis under its own name.
+writes with w; the click is a reading of the record and couples nothing, and
+the credit by the shares is the one non-local place of the description, in the
+instrument's declaration. Whatever a proposal needs beyond a pace, a source or
+a click is a hypothesis under its own name.
 
 ## How to answer "does it fit Rule3"
 

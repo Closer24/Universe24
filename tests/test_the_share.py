@@ -1,58 +1,88 @@
-"""The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; the engine reads the same currents from the record and a detector's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; in integers the identities carry Rule3's remainder term and the reader's own floor, the audit's exact witnesses pinned (#1582, #1583, #1579); the engine reads the same currents from the record and a detector's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
-import random
 from fractions import Fraction
 
 import numpy as np
-import pytest
 
-from event_universe import node
+from event_universe import node, share
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients, rule3
+from event_universe.core.rule3 import coefficients, form_term, link_paces, rule3
+from event_universe.features.read import edge_squared, guard
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.reports import inflow
 from tests.laws import real_row
 
-GAMMA, NODES = 10_000, 12
+RING, HERE, GAMMA = Wrap(True, True, True), (1, 1, 1), 6000  # the witnesses at the rule's Gamma
 
 
-def ring_sum(values: list[Fraction]) -> list[Fraction]:
-    """S_6 on a ring with four self reads: the six Ports' arrivals of a Node."""
-    return [4 * values[i] + values[i - 1] + values[(i + 1) % NODES] for i in range(NODES)]
-
-
-@pytest.mark.parametrize("pair", [(24, 24), (16, 24), (5000, 10000)])
-def test_the_share_changes_by_the_currents_at_the_pair_the_step_started_from(pair):
-    """E_i / 2 = 3 den (now^2 + before^2) - num now S_6(before): its change over one interval of Rule3 (exact in rationals) is SUM_j F_ij with F_ij = num (now_i before_j - before_i now_j) at every Node, the currents at the pair the step started from (issue #1495 finding 6; the paper writer's finding, #1538 comment 5921398465), and not at the pair the step left."""
-    num, den = pair
-    (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
-    draw = random.Random(3)
-    now = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
-    before, ring = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)], ring_sum(now)
-    nxt = [(read * ring[i] + self_coefficient * now[i] - wall * before[i]) / wall for i in range(NODES)]
-
-    def share(a: list[Fraction], b: list[Fraction]) -> list[Fraction]:
-        return [3 * den * (a[i] ** 2 + b[i] ** 2) - num * a[i] * ring_sum(b)[i] for i in range(NODES)]
-
-    def flux(a: list[Fraction], b: list[Fraction]) -> list[Fraction]:
-        return [num * (a[i] * ring_sum(b)[i] - b[i] * ring_sum(a)[i]) for i in range(NODES)]
-
-    change = [share(nxt, now)[i] - share(now, before)[i] for i in range(NODES)]
-    assert change == flux(now, before) and change != flux(nxt, now)
-
-
-@pytest.mark.parametrize(("pair", "period"), [((1, 2), 6), ((0, 1), 4), ((-1, 2), 3)])
-def test_the_exact_bands_turn_with_no_remainder(pair, period):
-    """The exact bands: a Node at rest in the vacuum (its six reads its own level) turns by 2 cos omega = 2 num / den; the three integer rotations 1, 0 and -1 close in 6, 4 and 3 intervals with the remainder 0 at every step."""
-    num, den = pair
-    (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
-    before, now = 0, 1_000
-    for _ in range(1, period + 1):
-        nxt, carry = rule3((read,) * 3, (2 * now,) * 3, self_coefficient, wall, now, before, 0)
-        assert carry == 0
-        before, now = now, nxt
-    assert (before, now) == (0, 1_000)
+def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floor():
+    """The share's change is the currents at the pair the step started from (issue #1495 finding 6; the paper writer's finding, #1538 comment 5921398465) and not at the pair it left, and the audit's exact witnesses, each the engine's own integers against the law's rational identity, so that an exact-equality wording cannot return (#1582; #1583 B1 to B3; #1579). (a) At equal paces (pair [1, 1], Gamma 5, the content 1, the Node at -3 / -3 with its three + neighbours at -3) the integer share goes 54 to 26: the currents -27, Rule3's remainder term -3 (next - before) (r' - r) / P^2 = -2 / 3, and the reader's own floor residual, frac(q(now, before)) - frac(q(next, now)) = -1 / 3 with q the weighted Node term before its floor, strictly between -1 and 1 per Node and level pair, the identity exact with it. (b) The vacuum witness, pair [2, 3] at Gamma 6,000 from now 1 and before 0: next 1 with r' = 216,000,000, the share 9 to 6 with no current, Rule3's term rho = (r - r') / (2 Gamma^2) = -3 (over Gamma^2 alone it would read -6), the line 6 den Gamma^2 (next + before) = 2 num Gamma^2 S_6(now) + r - r' exact. (c) The Wronskian under the integer step (#1579): at [2, 3] the parts (1, 3) from zeros step to (1, 4) and W from 0 to -1, exactly the remainder term eps_re im_now - eps_im re_now with eps = (r - r') / w, under |re_now| + |im_now| per Node and interval, the inverse exact; at [1, 2] the parts stand and W stays 0 (the divisible control): the integer W is conserved up to that term and no quadratic form of the levels and remainders is conserved exactly (the second mathematician, #1572 comment 5932042343), so every test of a conserved quantity asserts a bound, never exactness. (d) The band's edge (B2): light's checkerboard at wave number pi on every axis reads 2 cos omega = -2 exactly, a repeated root the guard admits at p = Gamma, and the line grows it linearly, (-1)^t (t + 1) with the remainder 0, so the guard excludes exponential growth and does not bound the record; the same checkerboard with before = -now has the share 0 at every Node, a null mode that is no static uniform record. (e) The conserved form's domain (B1): at Node-isotropic paces the weighted form E with the Node weights 1 / p_i^2 is conserved exactly by the unrounded line, on the audit's 2 x 1 x 1 light board at Gamma 2 with the paces 2 and 1 (M = [[4 / 3, 2 / 3], [1 / 6, 11 / 6]]) E standing at 6 while the unweighted D falls from 1 to 11 / 12, and on the 2 x 2 x 1 square with p_x(A) = 2 among paces 1 the product of M_ij / M_ji around the square is 4, so no positive Node weight symmetrises a read booked per Node per axis. The exact bands beside them: a Node at rest in the vacuum turns by 2 cos omega = 2 num / den, the three integer rotations 1, 0 and -1 closing in 6, 4 and 3 intervals with the remainder 0 at every step."""
+    zero, ones = np.zeros((3, 3, 3), dtype=np.int64), np.ones((3, 3, 3), dtype=np.int64)
+    rule, now, before = coefficients(1, 1, 5, 1), zero.copy(), zero.copy()  # R 18, S 192, w 150
+    now[1, 1, 1] = now[2, 1, 1] = now[1, 2, 1] = now[1, 1, 2] = before[1, 1, 1] = -3
+    after = node.step(record := node.Record(now, before, zero), rule, RING)
+    squares = sum(p * p for p in link_paces(5, (2,) * 6))  # P^2 = 54, the six paces 3
+    shares = [int(share.share((1, 1), r, RING, 5, 1)[HERE]) for r in (record, after)]
+    currents = sum(int(f[HERE]) for f in node.currents_of(1, [record], RING))
+    nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
+    unfloored = [Fraction(3 * form_term(rule[1], rule[2], a, -3), squares) for a in (-3, nxt)]
+    residual = unfloored[0] % 1 - unfloored[1] % 1
+    assert (nxt, carried, shares, currents, residual) == (-2, 12, [54, 26], -27, Fraction(-1, 3))
+    assert sum(int(f[HERE]) for f in node.currents_of(1, [after], RING)) != currents  # not the pair left
+    assert shares[1] - shares[0] == currents + Fraction(-3 * (nxt + 3) * carried, squares) + residual
+    after = node.step(
+        record := node.Record(ones, zero, zero), rule := coefficients(2, 3, GAMMA, 0), RING
+    )
+    nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
+    shares = [int(share.share((2, 3), r, RING, GAMMA)[HERE]) for r in (record, after)]
+    assert (nxt, carried, rule[2], shares) == (1, 216_000_000, 648_000_000, [9, 6])
+    assert not any(f[HERE] for f in node.currents_of(2, [record], RING))
+    assert Fraction(-carried, 2 * GAMMA**2) == shares[1] - shares[0] == -3
+    assert rule[2] * (nxt + 0) == 2 * 2 * GAMMA**2 * 6 + 0 - carried
+    for pair, levels, turned in (((2, 3), [1, 4], -1), ((1, 2), [1, 3], 0)):
+        rule = coefficients(*pair, GAMMA, 0)
+        lines = [node.Record(ones, zero, zero), node.Record(3 * ones, zero, zero)]
+        after = [node.step(line, rule, RING) for line in lines]
+        eps = [Fraction(-int(a.remainder[HERE]), rule[2]) for a in after]  # (r - r') / w from r = 0
+        found = int(node.wronskian(after, True)[HERE])
+        assert ([int(a.now[HERE]) for a in after], found) == (levels, turned)
+        assert found == eps[0] * 3 - eps[1] * 1 and abs(found) < 1 + 3
+        back = [node.step(a, rule, RING, -1) for a in after]
+        assert [int(b.now[HERE]) for b in back] == [1, 3] and not any(b.remainder.any() for b in back)
+    rule = coefficients(1, 1, GAMMA, 0)
+    assert Fraction(rule[1] - 6 * rule[0][0], rule[2]) == -2 and edge_squared((1, 1), GAMMA) == GAMMA**2
+    guard((1, 1), GAMMA, 0, (0,) * 6, "light")  # the edge admitted: the clock and the paces at Gamma
+    record = node.Record(parity := (-1) ** np.indices((2, 2, 2)).sum(0), 0 * parity, 0 * parity)
+    for t in range(1, 7):
+        record = node.step(record, rule, RING)
+        assert np.array_equal(record.now, (-1) ** t * (t + 1) * parity) and not record.remainder.any()
+    assert not share.share((1, 1), node.Record(parity, -parity, 0 * parity), RING, GAMMA).any()
+    paces = (2, 1)  # Gamma 2: the pace 2 at A and 1 at B on a chain of two, y and z folded
+    rules = [coefficients(1, 1, 2, 0, (2 - p,) * 6) for p in paces]
+    wall, reads, selfs = rules[0][2], [r[0][0] for r in rules], [r[1] for r in rules]
+    own = [Fraction(selfs[i] + 4 * reads[i], wall) for i in range(2)]  # M_ii, four self reads
+    link = [Fraction(2 * reads[i], wall) for i in range(2)]  # M_ij, the two reads of the neighbour
+    assert (own, link) == ([Fraction(4, 3), Fraction(11, 6)], [Fraction(2, 3), Fraction(1, 6)])
+    states = [([Fraction(1), Fraction(0)], [Fraction(0), Fraction(0)])]  # (now, before) at A and B
+    for _ in range(2):
+        x, y = states[-1]
+        states.append(([own[i] * x[i] + link[i] * x[1 - i] - y[i] for i in range(2)], x))
+    for k, (unweighted, weighted) in enumerate(((1, 6), (Fraction(11, 12), 6))):  # D falls, E stands
+        (x, y), (nxt, _) = states[k], states[k + 1]
+        node_terms = [Fraction(form_term(selfs[i], wall, x[i], y[i]), paces[i] ** 2) for i in range(2)]
+        assert sum(a * a for a in x) - sum(a * b for a, b in zip(nxt, y, strict=True)) == unweighted
+        assert sum(node_terms) - 2 * sum(x[i] * (4 * y[i] + 2 * y[1 - i]) for i in range(2)) == weighted
+    corner, rest = coefficients(1, 1, 2, 0, (0, 0, 1, 1, 1, 1))[0], coefficients(1, 1, 2, 0, (1,) * 6)[0]
+    assert Fraction(corner[0], rest[0]) * Fraction(rest[2], corner[2]) == 4  # around the square
+    for pair, period in (((1, 2), 6), ((0, 1), 4), ((-1, 2), 3)):
+        (read, *_), self_coefficient, wall = coefficients(*pair, GAMMA, 0)
+        before, now = 0, 1_000
+        for _ in range(period):
+            nxt, carry = rule3((read,) * 3, (2 * now,) * 3, self_coefficient, wall, now, before, 0)
+            assert carry == 0
+            before, now = now, nxt
+        assert (before, now) == (0, 1_000)
 
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():

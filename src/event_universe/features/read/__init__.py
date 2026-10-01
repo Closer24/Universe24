@@ -1,4 +1,4 @@
-"""The read: the content c = SUM over the reads of (weight x the read family's time line) at the Node, p_0^2 = (Gamma - c)^2 + c^2, and the content of each of its six Links, 2 c_i + t_a(i, j), the Node's content twice (the pace's form as main holds it) and the Link's own tension from the held row's axis parts at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the mean of the two ends' parts, one number per Link read the same from both ends and never per Node per axis, no floor and no clamp; and the guard 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node as squares, on the clock and on the six Links, read once on the whole initial state at load and never in the interval (ALGEBRA.md #the-paces, the root leaves the run; #the-interval, the dependency radius; #the-primitives, The tension)."""
+"""The read: the content c = SUM over the reads of (weight x the read family's time line) at the Node, p_0^2 = (Gamma - c)^2 + c^2, and the content of each of its six Links, 2 c_i + t_a(i, j), the Node's content twice (the pace's form as main holds it) and the Link's own tension from the held row's axis parts at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the mean of the two ends' parts, one number per Link read the same from both ends and never per Node per axis, no floor and no clamp; and the guard 0 < p and p^2 (den + |num|) <= 2 den Gamma^2 at every Node as squares, on the clock and on the six Links, read once on the whole initial state at load and never in the interval (the band's lowest mode at or above -2, at wave number pi for a numerator at or above 0 and at wave number 0 for one below it: no exponential growth, the edge itself a repeated root admitted) (ALGEBRA.md #the-paces, the root leaves the run; #the-interval, the dependency radius; #the-primitives, The tension)."""
 
 from __future__ import annotations
 
@@ -42,9 +42,9 @@ def link_contents(
 
 
 def stability_bound(pair: tuple[int, int], gamma: int) -> tuple[int, int]:
-    """The guard's upper side as one integer comparison, p^2 x left <= right with left = den + num and right = 2 den Gamma^2: the mode at wave number pi, (S - 6 R) / w = 2 - 2 (1 + num / den) (p / Gamma)^2, stays at or above -2 (ALGEBRA.md #the-paces)."""
+    """The guard's upper side as one integer comparison, p^2 x left <= right with left = den + |num| and right = 2 den Gamma^2: the band's lowest mode stays at or above -2, at wave number pi for a numerator at or above 0, (S - 6 R) / w = 2 - 2 (1 + num / den) (p / Gamma)^2, and at wave number 0 for one below it, (S + 6 R) / w = 2 - 2 (1 - num / den) (p_0 / Gamma)^2 (the pair [-1, 2] at Gamma = 4 with the content -1 reads -23 / 8 there under the edge of den + num, the audit's witness); so the guard excludes exponential growth, and at the edge itself, 2 cos omega = -2, a repeated root, the unrounded line grows linearly (light's vacuum checkerboard at wave number pi), admitted (ALGEBRA.md #the-paces, the guard)."""
     num, den = pair
-    return den + num, 2 * den * gamma * gamma
+    return den + abs(num), 2 * den * gamma * gamma
 
 
 def edge_squared(pair: tuple[int, int], gamma: int) -> int:
