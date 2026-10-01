@@ -273,7 +273,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
-    assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 1, 2, 4]
+    assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 2, 4]
     calls: list[tuple[tuple, tuple]] = []  # type: ignore[type-arg]
     original = core.rule3
 

@@ -1,4 +1,4 @@
-"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair and either its dimension (a family of quanta: one real line, or a plane of two) or what sources it (a held row: the form, the tensions, the Wronskian) at its divisor and its rest, and the rule derives the rest from these alone with no name (who reads whom, who sources whom, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
+"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair and either its dimension (a family of quanta: one real line, or a plane of two) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row) and its rest, and the rule derives the rest from these alone with no name (who reads whom, who sources whom, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
 
 from __future__ import annotations
 
@@ -11,14 +11,14 @@ from event_universe.features.currents import DIFFERENCE, PORTS, PRODUCTS
 
 @dataclass(frozen=True)
 class Row:
-    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines (a family of quanta's dimension, 1 or 2; a held row's sources' count, one real line per source), whether its lines are a plane (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), its divisor where it is held and its rest."""
+    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines (a family of quanta's dimension, 1 or 2; a held row's sources' count, one real line per source), whether its lines are a plane (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), its level weight where it is held and its rest."""
 
     name: str
     pair: tuple[int, int]
     lines: int
     plane: bool
     wronskian: bool
-    divisor: int | None
+    level_weight: int | None
     rest: int
 
 
@@ -38,8 +38,8 @@ class FamilyRule(Row):
 
     @property
     def held(self) -> bool:
-        """Whether the family is held: a row with a divisor, written by the hold and read by others."""
-        return self.divisor is not None
+        """Whether the family is held: a row with a level weight, written by the hold and read by others."""
+        return self.level_weight is not None
 
     @property
     def quanta(self) -> bool:
@@ -65,9 +65,13 @@ def family_rules(rows: list[Row]) -> tuple[FamilyRule, ...]:
     found = []
     for index, row in enumerate(rows):
         reads: list[Read] = []
-        if row.divisor is None or row.wronskian:
+        if row.level_weight is None or row.wronskian:
             for other, held in enumerate(rows):
-                if held.divisor is not None and other != index and (row.plane or not held.wronskian):
+                if (
+                    held.level_weight is not None
+                    and other != index
+                    and (row.plane or not held.wronskian)
+                ):
                     reads.append(Read(other, 1))
         found.append(
             FamilyRule(
@@ -76,7 +80,7 @@ def family_rules(rows: list[Row]) -> tuple[FamilyRule, ...]:
                 row.lines,
                 row.plane,
                 row.wronskian,
-                row.divisor,
+                row.level_weight,
                 row.rest,
                 tuple(reads),
             )
@@ -100,16 +104,16 @@ def count_wall(family: FamilyRule, action: int) -> int:
 
 
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
-    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's divisor, the quantum action and the den of the families that source its axis lines (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, and each source's factor, the multiple over its den."""
+    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and the den of the families that source its axis lines (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, and each source's factor, the multiple over its den."""
     family = families[index]
-    assert family.divisor is not None
+    assert family.level_weight is not None
     sources = readers_of(families, index)
     multiple = 1
     for other in sources:
         den = families[other].pair[1]
         multiple = int(division_forward(multiple * den, gcd(multiple, den), 0)[0])
-    walls = [family.divisor * action]
-    walls += [family.divisor * 3 * multiple * action] * (family.lines - 1)
+    walls = [family.level_weight * action]
+    walls += [family.level_weight * 3 * multiple * action] * (family.lines - 1)
     factors = {
         other: int(division_forward(multiple, families[other].pair[1], 0)[0]) for other in sources
     }
