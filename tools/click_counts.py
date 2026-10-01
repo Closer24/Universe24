@@ -1,4 +1,4 @@
-"""The credit per detector over a window of intervals, read from a run's output file against an expectation file (DETECTOR, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the detector a declared instrument and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's detector (or detectors, a list) and one family within the window are summed per detector, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each detector saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the instrument's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders, the expectation and no sample, and the clicks are one draw of N by the shares with the expectation's `seed` (the instrument draws; no draw is in the law), one quantum to one detector by the draw's construction (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range, the visibility at the blind central maximum against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over the window as an exact fraction and its half-maximum span, in the engine's interval labels (the click at tick t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the detectors, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
+"""The credit per detector over a window of intervals, read from a run's output file against an expectation file (DETECTOR, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the detector a declared instrument and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's detector (or detectors, a list) and one family within the window are summed per detector, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each detector saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the instrument's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders (a tie of remainders broken by the lower index), the expectation and no sample, and the clicks are one draw of N by the shares with the expectation's `seed` (the instrument draws, by Python's `random.Random(seed).choices`; no draw is in the law), one quantum to one detector by the draw's construction (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range (`extrema`, the one rule of the builder and the reader), the visibility at the blind central maximum (the expectation's `central`) against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over every interval of the window, the negative ones included, as an exact fraction and its half-maximum span, in the engine's interval labels (the click at tick t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the detectors, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+from collections.abc import Sequence
 from fractions import Fraction
 from pathlib import Path
 
@@ -49,14 +50,13 @@ def per_interval(
 
 
 def arrival(profile: dict[int, int]) -> dict[str, object]:
-    """The arrival of the screen's inflow: the peak interval (the first at the largest inflow), the centroid over the window as [numerator, denominator] (the intervals weighted by their inflow, those above 0), and the half-maximum span, the first and the last interval at or above half the peak; None where nothing arrived."""
-    positive = {tick: value for tick, value in profile.items() if value > 0}
-    if not positive:
+    """The arrival of the screen's inflow over every interval of the window, the negative ones included (the law names the peak and the centroid over the window and excludes nothing): the peak interval (the first at the largest inflow), the centroid as [numerator, denominator] (the intervals weighted by their inflow, an exact fraction) and the half-maximum span, the first and the last interval at or above half the peak; None where nothing arrived (no inflow above 0, or the window's sum not above 0)."""
+    if not profile or max(profile.values()) <= 0 or sum(profile.values()) <= 0:
         return {"peak": None, "centroid": None, "span": None}
-    largest = max(positive.values())
-    peak = min(tick for tick, value in positive.items() if value == largest)
-    centroid = Fraction(sum(tick * value for tick, value in positive.items()), sum(positive.values()))
-    high = [tick for tick, value in positive.items() if 2 * value >= largest]
+    largest = max(profile.values())
+    peak = min(tick for tick, value in profile.items() if value == largest)
+    centroid = Fraction(sum(tick * value for tick, value in profile.items()), sum(profile.values()))
+    high = [tick for tick, value in profile.items() if 2 * value >= largest]
     return {
         "peak": peak,
         "centroid": [centroid.numerator, centroid.denominator],
@@ -70,7 +70,7 @@ def nearest(total: int, wall: int) -> int:
 
 
 def apportioned(quanta: int, shares: list[int]) -> list[int]:
-    """N apportioned by the shares to whole numbers, the largest remainders first: the rounded shares, the expectation and no sample (0 everywhere where nothing was seen)."""
+    """N apportioned by the shares to whole numbers, the largest remainders first (a tie of remainders broken by the lower index, the instrument's declaration): the rounded shares, the expectation and no sample (0 everywhere where nothing was seen)."""
     total = sum(shares)
     if not total or quanta <= 0:
         return [0] * len(shares)
@@ -82,7 +82,7 @@ def apportioned(quanta: int, shares: list[int]) -> list[int]:
 
 
 def drawn(quanta: int, shares: list[int], seed: int) -> list[int]:
-    """One draw of N clicks by the shares, the instrument's, with the declared seed: each quantum credited to one detector and never two; the clicks."""
+    """One draw of N clicks by the shares, the instrument's, with the declared seed (Python's `random.Random(seed).choices`, the instrument's generator): each quantum credited to one detector and never two; the clicks."""
     found = [0] * len(shares)
     if sum(shares) and quanta > 0:
         for index in random.Random(seed).choices(range(len(shares)), weights=shares, k=quanta):
@@ -105,28 +105,24 @@ def reporters(rows: list[DetectorRow], axis: int) -> list[Reporter]:
     return sorted((min(node[axis] for node in row.positions), row.name) for row in rows)
 
 
-def extrema(row: list[int], first: int, last: int) -> tuple[list[int], list[int]]:
-    """The local maxima and minima of a row within [first, last]: a position whose count is above both neighbours' (a maximum) or below both (a minimum), the ends compared with their one neighbour."""
-    maxima, minima = [], []
-    for at in range(first, last + 1):
-        near = [row[at - 1]] if at > first else []
-        near += [row[at + 1]] if at < last else []
-        if all(row[at] > value for value in near):
-            maxima.append(at)
-        if all(row[at] < value for value in near):
-            minima.append(at)
+def extrema(row: Sequence[float], first: int, last: int) -> tuple[list[int], list[int]]:
+    """The local maxima and minima of a row within [first, last], the one rule of the builder and the reader (examples/events/two_slits/build_world.py imports it for the blind row): a position above its left neighbour and at or above its right (a maximum), or below its left and at or below its right (a minimum); the row's own ends, with one neighbour, are neither."""
+    inside = [at for at in range(first, last + 1) if 0 < at < len(row) - 1]
+    maxima = [at for at in inside if row[at] > row[at - 1] and row[at] >= row[at + 1]]
+    minima = [at for at in inside if row[at] < row[at - 1] and row[at] <= row[at + 1]]
     return maxima, minima
 
 
 def read_row(row: list[int], expected: dict[str, object]) -> dict[str, object]:
-    """One row's readings against the expectation: the row, its local maxima and minima within the pattern's range, the visibility at the blind central maximum (the middle of the blind maxima) against the blind minima as [most x the minima's count - least, the same sum] and the deviation from the blind row's shares; the visibility None where the blind names no minima; the wings the expectation names, the row's counts there."""
+    """One row's readings against the expectation: the row, its local maxima and minima within the pattern's range, the visibility at the blind central maximum (the expectation's `central`; the middle of the blind maxima where it names none) against the blind minima as [most x the minima's count - least, the same sum] and the deviation from the blind row's shares; the visibility None where the blind names no minima; the wings the expectation names, the row's counts there."""
     first, last = int(expected["pattern"][0]), int(expected["pattern"][1])  # type: ignore[index]
     maxima, minima = extrema(row, first, last)
     watched = [int(at) for at in expected.get("maxima", [])]  # type: ignore[union-attr]
     least = [int(at) for at in expected.get("minima", [])]  # type: ignore[union-attr]
+    central = expected.get("central", watched[len(watched) // 2] if watched else None)
     visibility = None
-    if watched and least:
-        most, low = row[watched[len(watched) // 2]], sum(row[at] for at in least)
+    if central is not None and least:
+        most, low = row[int(str(central))], sum(row[at] for at in least)
         visibility = [most * len(least) - low, most * len(least) + low]
     wings = expected.get("wings", {})
     regions = [int(at) for at in wings.get("regions", [])] if isinstance(wings, dict) else []
