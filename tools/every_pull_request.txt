@@ -11,5 +11,6 @@ tests/test_pixel_mode.py
 tests/test_repository_language.py
 tests/test_rule3.py
 tests/test_the_bound_body.py
+tests/test_the_meeting.py
 tests/test_the_node.py
 tests/test_the_share.py
