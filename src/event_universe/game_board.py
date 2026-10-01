@@ -180,9 +180,11 @@ class GameBoard:
     def share_of(self, index: int, direction: int = 1) -> tuple[np.ndarray, np.ndarray]:
         """A family of quanta's share at every Node in the current's units, a reading of its record's lines at the paces of its read at the level a step in `direction` starts from (share.family_share; ALGEBRA.md #the-count-is-the-records-share), with the mask of its frozen Nodes, every Link pace 0, where the share is not read (`share.frozen`)."""
         family, state, gamma = self.families[index], self.states[index], self.world.node_clock
-        content, axis = node.read(index, self.families, self.states, direction)
-        found = share.family_share(family, state.lines[: family.record], self.wrap, gamma, content, axis)
-        return found, np.broadcast_to(share.frozen(gamma, content, axis), self.shape)
+        content, links = node.read(index, self.families, self.states, direction, self.wrap)
+        found = share.family_share(
+            family, state.lines[: family.record], self.wrap, gamma, content, links
+        )
+        return found, np.broadcast_to(share.frozen(gamma, links), self.shape)
 
     def quanta(self, index: int) -> tuple[np.ndarray, np.ndarray]:
         """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, with the mask of its frozen Nodes, where it is not read."""
@@ -213,15 +215,17 @@ class GameBoard:
             if total is not None:
                 quanta = int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
                 drift = None if laid is None else total - laid
-            pace = node.least_pace(index, self.families, self.states, self.world.node_clock)
+            pace = node.least_pace(index, self.families, self.states, self.world.node_clock, self.wrap)
             found[family.name] = book(total, quanta, drift, pace, cold)
         return found
 
     def stepped(self, index: int, direction: int) -> tuple[list[node.Record], node.Booking]:
-        """Every line of a family stepped by Rule3 in `direction` with the rule of its read (from the held rows' level the step starts from), every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face, a turned record's planes under the rotation (`node.step_family`), with the booking its form and its Wronskian are read from."""
+        """Every line of a family stepped by Rule3 in `direction` with the rule of its read (from the held rows' levels the step starts from, the Node's content and its six Links' contents, the Node's twice with each Link's own tension), every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face, a turned record's planes under the rotation (`node.step_family`), with the booking its form and its Wronskian are read from."""
         family = self.families[index]
         rule = node.rule_of(
-            family, self.world.node_clock, *node.read(index, self.families, self.states, direction)
+            family,
+            self.world.node_clock,
+            *node.read(index, self.families, self.states, direction, self.wrap),
         )
         return node.step_family(
             index, self.families, self.states, rule, self.wrap, self.world.node_clock, direction
@@ -239,7 +243,7 @@ class GameBoard:
         }
 
     def stresses(self) -> Stresses:
-        """Every family of quanta's tension on each axis at every Node, read from its record's levels now (`node.stresses_of`), the stress the content's axis lines take in their one write."""
+        """Every family of quanta's tension's part on each axis at every Node, read from its record as it stands, the pair the step starts from (`node.stresses_of`): the Node's own part h_a(i) the content's axis lines take in their one write, the Link's tension being the sum of its two ends' parts, read through the Ports at the next interval (ALGEBRA.md #the-primitives, The tension)."""
         return {
             index: node.stresses_of(self.families[index].pair[0], self.record(index), self.wrap)
             for index in self.order
@@ -250,13 +254,14 @@ class GameBoard:
         return {index: node.momentum_of(self.record(index), self.wrap) for index in self.turning}
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents and the turned records' momentum densities read from every record at the pair the step starts from, the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the detectors' reports; the one write per held line with the tensions read from the stepped levels."""
+        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' momentum densities and the tensions' parts read from every record at the pair the step starts from, the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the detectors' reports; the one write per held line from the bookings of the start."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.tick}: {self.ended}")
         if not growth.grow(self):
             return
         self.tick += 1
-        forms, turns, currents, momenta = Bookings(), Bookings(), self.currents(), self.momenta()
+        forms, turns = Bookings(), Bookings()
+        currents, momenta, stresses = self.currents(), self.momenta(), self.stresses()
         begun = [state.lines for state in self.states]
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, (first, second)) in found.items():
@@ -267,7 +272,6 @@ class GameBoard:
                 forms[index] = node.form(first[: family.record], second[: family.record])
                 turns[index] = node.wronskian(second[: family.record], family.plane)
             state.lines = lines
-        stresses = self.stresses()
         self.report(currents, forms, begun)
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses, momenta)
@@ -281,7 +285,7 @@ class GameBoard:
         stresses: Stresses,
         momenta: Stresses,
     ) -> None:
-        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the hold"): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, and from their axis bookings, the tensions read from the records for a row of the content and the momentum densities for the holder of the sign under the rotation (`node.write_sources`), each line's division at its wall with its one remainder (`node.held_write`)."""
+        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the hold"): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, and from their axis bookings at the interval's start, the tensions' parts read from the records for a row of the content and the momentum densities for the holder of the sign under the rotation (`node.write_sources`), each line's division at its wall with its one remainder (`node.held_write`)."""
         family, state = self.families[index], self.states[index]
         bookings, axes = turns if family.wronskian else forms, momenta if family.rotation else stresses
         numerators = node.write_sources(index, self.families, bookings, axes, self.writes[index])
@@ -358,12 +362,12 @@ class GameBoard:
         stresses: Stresses,
         momenta: Stresses,
     ) -> None:
-        """A family of quanta's lines one interval back, its record free of any write: its tension read from the levels as the step left them (as the forward write read it), every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers), a turned record's momentum density from the pair it started from, the lines kept aside until every read of the interval's start is done."""
-        family, record = self.families[index], self.record(index)
-        stresses[index] = node.stresses_of(family.pair[0], record, self.wrap)
+        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers), its tension's parts and a turned record's momentum density from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done."""
+        family = self.families[index]
         lines, (first, second) = self.stepped(index, -1)
         forms[index] = node.form(first[: family.record], second[: family.record])
         turns[index] = node.wronskian(second[: family.record], family.plane)
+        stresses[index] = node.stresses_of(family.pair[0], lines[: family.record], self.wrap)
         if index in self.turning:
             momenta[index] = node.momentum_of(lines[: family.record], self.wrap)
         books[index] = lines

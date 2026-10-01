@@ -14,7 +14,7 @@ import numpy as np
 import event_universe.world_files as world_files
 from event_universe import node, share
 from event_universe.core import rule3 as core
-from event_universe.core.rule3 import ISOTROPIC, NO_READ, coefficients, form_term, rule3
+from event_universe.core.rule3 import NO_READ, coefficients, form_term, rule3
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, TOOL, chain_body_world
@@ -23,43 +23,38 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
 
 
-def law_line(num, den, gamma, content, axis_contents=(0, 0, 0), weak_field=True):  # type: ignore[no-untyped-def]
-    """The law's line at a Node, the oracle (ALGEBRA.md #the-line, #the-paces): p_0^2 = (Gamma - c)^2 + c^2, p_a = Gamma - 2 c - t_a, R_a = 2 num p_a^2, S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2, w = 6 den Gamma^2; or the plain first-order rule."""
+def law_line(num, den, gamma, content, links=None, weak_field=True):  # type: ignore[no-untyped-def]
+    """The law's line at a Node, the oracle (ALGEBRA.md #the-line, #the-paces): p_0^2 = (Gamma - c)^2 + c^2, p_a(i, j) = Gamma - (2 c + t_a(i, j)) on each of the six Links, the Node's content twice and the Link's own tension (Gamma - 2 c with no Links' contents given), R_ij = 2 num p_a(i, j)^2, S = 12 den Gamma^2 - 12 (den - num) p_0^2 - SUM over the six Ports of R_ij, w = 6 den Gamma^2; or the plain first-order rule."""
     if not weak_field:
-        return ((gamma - content) * num,) * 3, 6 * den * content, 3 * den * gamma
-    paces = [gamma - 2 * content - t for t in axis_contents]
-    clock_squared, squares = (gamma - content) ** 2 + content**2, sum(p**2 for p in paces)
-    self_coefficient = 12 * den * gamma**2 - 12 * (den - num) * clock_squared - 4 * num * squares
-    return tuple(2 * p**2 * num for p in paces), self_coefficient, 6 * den * gamma**2
+        return ((gamma - content) * num,) * 6, 6 * den * content, 3 * den * gamma
+    paces = [gamma - link for link in (links or [2 * content] * 6)]
+    clock_squared, reads = (gamma - content) ** 2 + content**2, tuple(2 * p**2 * num for p in paces)
+    self_coefficient = 12 * den * gamma**2 - 12 * (den - num) * clock_squared - sum(reads)
+    return reads, self_coefficient, 6 * den * gamma**2
 
 
 def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_contents():
-    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule; the band's rotation at k = 0 carries the clock's square and light's band on a chain the Link's pace squared, exact in rationals."""
+    """With no Links' contents the uniform level's six reads (R,) x 6, S, w term for term; with the six Links' contents the six Ports' reads, each from its Link's content, the Node's content twice and the Link's own tension, the same tension read from either end; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule; the band's rotation at k = 0 carries the clock's square and light's band on a chain the Link's pace squared, exact in rationals."""
     rng = random.Random(3)
     for _ in range(500):
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, 100, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
-        axis_contents = (rng.randint(-50, 50), rng.randint(-50, 50), rng.randint(-50, 50))
+        links = tuple(2 * content + rng.randint(-50, 50) for _ in range(6))
         for weak_field in (True, False):
             expected = law_line(num, den, gamma, content, weak_field=weak_field)
             assert coefficients(num, den, gamma, content, weak_field=weak_field) == expected
-        assert coefficients(num, den, gamma, content, axis_contents) == law_line(
-            num, den, gamma, content, axis_contents
-        )
-        assert coefficients(num, den, gamma, content, ISOTROPIC) == coefficients(
-            num, den, gamma, content
-        )
+        assert coefficients(num, den, gamma, content, links) == law_line(num, den, gamma, content, links)
+        plain = coefficients(num, den, gamma, content)
+        assert coefficients(num, den, gamma, content, (2 * content,) * 6) == plain
         # the vacuum c = 0: 2 Gamma^2 times the plain rule (the levels bit for bit)
-        assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 3, 0, 6 * den * gamma**2)
-        # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_link^2), the Link's pace Gamma - 2 c
-        pace, axis_pace = gamma - 2 * content, gamma - 2 * content - axis_contents[0]
-        (read, *_), self_iso, wall = coefficients(num, den, gamma, content)
-        along = (2 * axis_pace**2 * num, read, read), self_iso - 4 * num * (axis_pace**2 - pace**2), wall
-        assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == along
-    assert ISOTROPIC == (0, 0, 0)
+        assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 6, 0, 6 * den * gamma**2)
+        # a content on the +x Link alone slows that Port's read and the own term by 2 num (p_link^2 - p^2), the uniform level's pace Gamma - 2 c on the other five
+        p, q, ((read, *_), self_iso, wall) = gamma - 2 * content, gamma - links[0], plain
+        along = (2 * q**2 * num,) + (read,) * 5, self_iso - 2 * num * (q**2 - p**2), wall
+        assert coefficients(num, den, gamma, content, (links[0],) + (2 * content,) * 5) == along
     # the band at k = 0, 2 cos omega = (6 R + S) / w = 2 - 2 f (1 - num / den) with f = p_0^2 / Gamma^2 the clock's square (the Link's pace cancels at k = 0); light on a chain, cos omega = 1 - f_a (1 - cos k) / 3 with f_a = (Gamma - 2 c)^2 / Gamma^2, the level entering the Link twice, at cos k = 1, 0 and -1 (ALGEBRA.md #the-paces)
     for num, den, c in ((800, 809, 500), (3200, 3227, 2000), (1, 1, 0), (1, 1, 2000)):
-        (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, c)
+        (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, c)
         clock = Fraction((GAMMA - c) ** 2 + c * c, GAMMA**2)
         link = Fraction((GAMMA - 2 * c) ** 2, GAMMA**2)
         assert Fraction(6 * read + self_coefficient, wall) == 2 - 2 * clock * (1 - Fraction(num, den))
@@ -69,14 +64,14 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
 
 
 def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays():
-    """w a_next + r' = SUM_a R_a arr_a + S a_now - w a_before + r with 0 <= r' < w, the inverse exact; on int64 arrays the sum over the axes equals R times the six-sum bit for bit, the dtype kept. The form's Node term w (now^2 + before^2) - S now before and the load bound 6 A R + A |S| + w (A + 1) are read from the one function's integers."""
+    """w a_next + r' = SUM over the six Ports of R_ij arr_j + S a_now - w a_before + r with 0 <= r' < w, the inverse exact; on int64 arrays at a uniform level the sum over the Ports equals R times the six-sum bit for bit, the dtype kept. The form's Node term w (now^2 + before^2) - S now before and the load bound 6 A R + A |S| + w (A + 1) are read from the one function's integers."""
     rng = random.Random(5)
     for _ in range(500):
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
-        contents = (rng.randint(-30, 30), rng.randint(-30, 30), rng.randint(-30, 30))
-        reads, self_coefficient, wall = coefficients(num, den, gamma, content, contents)
-        *arrivals, now, before = (rng.randint(-(10**6), 10**6) for _ in range(5))
+        links = tuple(2 * content + rng.randint(-30, 30) for _ in range(6))
+        reads, self_coefficient, wall = coefficients(num, den, gamma, content, links)
+        *arrivals, now, before = (rng.randint(-(10**6), 10**6) for _ in range(8))
         remainder = rng.randint(0, wall - 1)
         total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
         total += self_coefficient * now - wall * before + remainder
@@ -87,7 +82,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     generator, shape = np.random.default_rng(9), (4, 3, 2)
     num, den = np.full(shape, 800, dtype=np.int64), np.full(shape, 809, dtype=np.int64)
     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
-    arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(3))
+    arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(6))
     now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
     reads, self_coefficient, wall = coefficients(num, den, GAMMA, content)
     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall

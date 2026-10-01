@@ -1,4 +1,4 @@
-"""The Node: every family's NodeState over the GameBoard, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py): the read (ALGEBRA.md #the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines (the currents and the tension, features/currents; the form and the Wronskian; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the hold"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
+"""The Node: every family's NodeState over the GameBoard, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node and of each of its six Links, the Node's twice with the Link's own tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the hold"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
 
 from __future__ import annotations
 
@@ -9,20 +9,15 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.ports import Wrap, arrival
-from event_universe.core.rule3 import (
-    ISOTROPIC,
-    NO_READ,
-    coefficients,
-    link_paces,
-    rule3,
-)
+from event_universe.core.rule3 import NO_READ, coefficients, link_paces, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.hold import hold
-from event_universe.features.read import axis_content, content_of, guard
+from event_universe.features.read import content_of, guard, link_contents
 from event_universe.features.write import carried
 from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, turns, weight_of
 
-Rule = tuple[tuple[Any, Any, Any], Any, Any]  # Rule3's integers at every Node: (R_x, R_y, R_z), S, w
+Rule = tuple[tuple[Any, ...], Any, Any]  # Rule3's integers at every Node: the six Ports' R_ij, S, w
+Links = tuple[Any, ...]  # the content of a Node's six Links in Port order, 2 c_i + t_a(i, j)
 Angles = tuple[Any, tuple[Any, Any, Any]]  # the turn's numerators at every Node: the time's, each axis's
 
 
@@ -79,13 +74,6 @@ def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
     return tuple(arrival(a, axis, side, wrap, fill) for axis in range(3) for side in (1, -1))
 
 
-def axis_sums(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """The two arrivals of each axis summed, the three sums Rule3 reads, `fill` beyond a face."""
-    arrived = ports(a, wrap, fill)
-    x, y, z = (arrived[2 * axis] + arrived[2 * axis + 1] for axis in range(3))
-    return x, y, z
-
-
 def level_at(record: Record, direction: int) -> np.ndarray:
     """The level a step in `direction` starts from: the level now forward (+1), the level before backward (-1), the one the state after the interval still holds (ALGEBRA.md #the-direction)."""
     return record.now if direction == 1 else record.before
@@ -96,19 +84,19 @@ def read(
     families: tuple[FamilyRule, ...],
     states: list[NodeState],
     direction: int,
-) -> tuple[Any, tuple[Any, Any, Any]]:
-    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`) and the axis contents t_a = SUM over those reads of (weight x the read family's axis line a + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`); no floor, no clamp and no guard in the interval (features/read)."""
+    wrap: Wrap,
+) -> tuple[Any, Links]:
+    """The read of a family at the interval's start (ALGEBRA.md #the-paces; #the-interval, the dependency radius): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`), and the content of each of its six Links, 2 c_i + t_a(i, j), the Node's content twice and the Link's own tension from the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one division per read per Link rounded at the read, one number per Link read the same from both ends (features/read, `link_contents`); the integer 0 at the Node and on every Link where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
     reads = [r for r in families[index].reads if not families[r.family].rotation]
+    if not reads:
+        return 0, NO_READ
     content = content_of([(r.weight, level_at(states[r.family].lines[0], direction)) for r in reads])
-    axis = []
-    for a in range(3):
-        found = [
-            (r.weight, level_at(states[r.family].lines[1 + a], direction))
-            for r in reads
-            if families[r.family].axes
-        ]
-        axis.append(axis_content(found))
-    return content, (axis[0], axis[1], axis[2])
+    axes = [
+        (r.weight, [level_at(states[r.family].lines[1 + a], direction) for a in range(3)])
+        for r in reads
+        if families[r.family].axes
+    ]
+    return content, link_contents(content, axes, wrap)
 
 
 def turning(
@@ -129,10 +117,10 @@ def turning(
 def guarded(
     index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int, wrap: Wrap
 ) -> None:
-    """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `guard`): the time angle's numerator within 2 Gamma and each Link's two ends' sum within 4 Gamma, a tangent half-angle at most 1."""
+    """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock and on the six Links, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `guard`): the time angle's numerator within 2 Gamma and each Link's two ends' sum within 4 Gamma, a tangent half-angle at most 1."""
     if families[index].reads:
-        content, axis = read(index, families, states, 1)
-        guard(families[index].pair, gamma, content, axis, families[index].name)
+        content, links = read(index, families, states, 1, wrap)
+        guard(families[index].pair, gamma, content, links, families[index].name)
     angles = turning(index, families, states, 1)
     if angles is not None:
         time, links = angles
@@ -143,49 +131,51 @@ def guarded(
                 rotation.guard(link, 2 * 2 * gamma, families[index].name, a)
 
 
-def least_pace(index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int) -> int:
-    """The least Link pace Gamma - 2 c - t_a of a family over the GameBoard as it stands, a GameBoard diagnostic for the report and no act of the law."""
-    content, axis = read(index, families, states, 1)
-    return min(int(np.min(pace)) for pace in link_paces(gamma, content, axis))
+def least_pace(
+    index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int, wrap: Wrap
+) -> int:
+    """The least Link pace Gamma - 2 c_i - t_a(i, j) of a family over the GameBoard's Links as it stands, a GameBoard diagnostic for the report and no act of the law."""
+    _content, links = read(index, families, states, 1, wrap)
+    return min(int(np.min(pace)) for pace in link_paces(gamma, links))
 
 
-def quanta_rule(family: FamilyRule, gamma: int, content: Any, axis: tuple[Any, ...] = ISOTROPIC) -> Rule:
-    """Rule3's integers for a family of quanta at every Node from its pair and the paces (ALGEBRA.md #the-line)."""
+def quanta_rule(family: FamilyRule, gamma: int, content: Any, links: Links | None = None) -> Rule:
+    """Rule3's integers for a family of quanta at every Node from its pair and the paces, the clock's from the Node's content and each Link's from the Link's content (ALGEBRA.md #the-line; None a uniform level)."""
     num, den = family.pair
-    return coefficients(num, den, gamma, content, axis, True)
+    return coefficients(num, den, gamma, content, links, True)
 
 
 def part_rule(family: FamilyRule) -> Rule:
     """Rule3's integers for a held row of the content's lines: the plain rule of the row's pair at the pace 1 and the wall 3 den, its reads num and its self coefficient 0, with or without a gap (ALGEBRA.md #the-line; #the-primitives, the row "the hold")."""
     num, den = family.pair
-    return coefficients(num, den, 1, 0, ISOTROPIC, False)
+    return coefficients(num, den, 1, 0, None, False)
 
 
-def rule_of(family: FamilyRule, gamma: int, content: Any, axis: tuple[Any, ...] = ISOTROPIC) -> Rule:
+def rule_of(family: FamilyRule, gamma: int, content: Any, links: Links | None = None) -> Rule:
     """The rule every line of a family steps by: a family of quanta's at the paces of its read (the holder of the sign included, its line its record), a holder of the content's the plain rule at the pace 1 (ALGEBRA.md #the-interval)."""
-    return quanta_rule(family, gamma, content, axis) if family.quanta else part_rule(family)
+    return quanta_rule(family, gamma, content, links) if family.quanta else part_rule(family)
 
 
 def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0) -> Record:
-    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six reads through the Ports of the level the step starts from, `fill` read beyond a face (the row's rest)."""
+    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six arrivals through the Ports of the level the step starts from, each under its Port's read, `fill` read beyond a face (the row's rest)."""
     reads, self_coefficient, wall = rule
     if direction == 1:
-        sums = axis_sums(record.now, wrap, fill)
+        arrived = ports(record.now, wrap, fill)
         nxt, remainder = rule3(
-            reads, sums, self_coefficient, wall, record.now, record.before, record.remainder
+            reads, arrived, self_coefficient, wall, record.now, record.before, record.remainder
         )
         return Record(np.asarray(nxt), record.now, np.asarray(remainder))
-    sums = axis_sums(record.before, wrap, fill)
+    arrived = ports(record.before, wrap, fill)
     back, remainder = rule3(
-        reads, sums, self_coefficient, wall, record.before, record.now, record.remainder, -1
+        reads, arrived, self_coefficient, wall, record.before, record.now, record.remainder, -1
     )
     return Record(record.before, np.asarray(back), np.asarray(remainder))
 
 
-def turned_sums(
+def turned_ports(
     now: tuple[Any, Any], links: tuple[Any, Any, Any], wall: int, wrap: Wrap
-) -> tuple[tuple[Any, Any, Any], tuple[Any, Any, Any]]:
-    """The three axis sums of a plane's two lines with the phase on the Link (ALGEBRA.md #the-rows-against-nature (b2), Peierls' coupling): the pair arriving through the +a Port turned by the angle with tan(theta_a / 2) = (L_a(i) + L_a(i + a)) / wall, the Link's odd level the mean of its two ends' over Gamma at the wall 4 Gamma, and the pair through the -a Port turned by the opposite angle of its own Link, (L_a(i - a) + L_a(i)); the re sums and the im sums (features/rotation)."""
+) -> tuple[tuple[Any, ...], tuple[Any, ...]]:
+    """The six arrivals of a plane's two lines with the phase on the Link, in Port order (ALGEBRA.md #the-rows-against-nature (b2), Peierls' coupling): the pair arriving through the +a Port turned by the angle with tan(theta_a / 2) = (L_a(i) + L_a(i + a)) / wall, the Link's odd level the mean of its two ends' over Gamma at the wall 4 Gamma, and the pair through the -a Port turned by the opposite angle of its own Link, (L_a(i - a) + L_a(i)); the re arrivals and the im arrivals, each under its Port's read (features/rotation)."""
     re, im = [], []
     for axis, level in enumerate(links):
         ahead, behind = level + arrival(level, axis, 1, wrap), level + arrival(level, axis, -1, wrap)
@@ -195,27 +185,27 @@ def turned_sums(
         minus = rotation.turned(
             arrival(now[0], axis, -1, wrap), arrival(now[1], axis, -1, wrap), -behind, wall
         )
-        re.append(plus[0] + minus[0])
-        im.append(plus[1] + minus[1])
-    return (re[0], re[1], re[2]), (im[0], im[1], im[2])
+        re += [plus[0], minus[0]]
+        im += [plus[1], minus[1]]
+    return tuple(re), tuple(im)
 
 
 def step_plane(
     re: Record, im: Record, rule: Rule, wrap: Wrap, angles: Angles, gamma: int, direction: int = 1
 ) -> tuple[list[Record], Booking]:
-    """Rule3 on a plane's two lines under the rotation (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/rotation): with z = re + i im and theta the holder's time level L over Gamma at the Node, e^(i theta) z_next + e^(-i theta) z_before = (S z_now + SUM_a R_a (e^(i theta_a) z_(+a) + e^(-i theta_a) z_(-a))) / w, the tangent half-angles L / (2 Gamma) and, on the Link ij, (L_a(i) + L_a(j)) / (4 Gamma) (`turned_sums`), the turn against the sense of the record of positive Wronskian, which then rotates faster by theta: forward the level before is turned, u = e^(-i theta) z_before, Rule3 steps re and im with one rule and their own remainders against u, each neighbour's pair arriving turned through its Port, and the result v is turned the same way, z_next = e^(-i theta) v; backward v = e^(i theta) z_next undoes the turn, Rule3 at -1 gives u and the remainders back and e^(i theta) u the level before, bit for bit. Returns the two lines and the booking (first, second) the form and the Wronskian are read from, D = form(first, second) = |z_now|^2 - v . u and W = wronskian(second) = Im(conj(v) z_now), the bookings carrying the angle (the step's levels before the turn), the same numbers in either direction."""
+    """Rule3 on a plane's two lines under the rotation (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/rotation): with z = re + i im and theta the holder's time level L over Gamma at the Node, e^(i theta) z_next + e^(-i theta) z_before = (S z_now + SUM over the Ports of R_ij (e^(i theta_a) z_(+a) or e^(-i theta_a) z_(-a))) / w, the tangent half-angles L / (2 Gamma) and, on the Link ij, (L_a(i) + L_a(j)) / (4 Gamma) (`turned_ports`), the turn against the sense of the record of positive Wronskian, which then rotates faster by theta: forward the level before is turned, u = e^(-i theta) z_before, Rule3 steps re and im with one rule and their own remainders against u, each neighbour's pair arriving turned through its Port, and the result v is turned the same way, z_next = e^(-i theta) v; backward v = e^(i theta) z_next undoes the turn, Rule3 at -1 gives u and the remainders back and e^(i theta) u the level before, bit for bit. Returns the two lines and the booking (first, second) the form and the Wronskian are read from, D = form(first, second) = |z_now|^2 - v . u and W = wronskian(second) = Im(conj(v) z_now), the bookings carrying the angle (the step's levels before the turn), the same numbers in either direction."""
     reads, self_coefficient, wall = rule
     time, links = angles
     half = 2 * gamma  # the time turn's wall, tan(theta / 2) = L / (2 Gamma); the Link's twice it
     now = (level_at(re, direction), level_at(im, direction))
     other = (re.before, im.before) if direction == 1 else (re.now, im.now)
-    sums = turned_sums(now, links, 2 * half, wrap)
+    arrived = turned_ports(now, links, 2 * half, wrap)
     turned_other = rotation.turned(other[0], other[1], -time, half, direction)
     stepped = []
-    for part, (record, sum_a) in enumerate(zip((re, im), sums, strict=True)):
+    for part, (record, through) in enumerate(zip((re, im), arrived, strict=True)):
         level, remainder = rule3(
             reads,
-            sum_a,
+            through,
             self_coefficient,
             wall,
             now[part],
@@ -289,24 +279,20 @@ def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.nd
 
 
 def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The tension on each axis at every Node from a record's levels now, every line's tensions added, a reading of the lines into the held rows' axis lines (features/currents; ALGEBRA.md #the-primitives, the row "the hold")."""
+    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the hold", The tension)."""
     tensions: currents.Vector = (0, 0, 0)
     for record in lines:
-        found = currents.stress(weight, axis_differences(record.now, wrap))
+        found = currents.stress(weight, axis_neighbours(record.now, wrap))
         tensions = (tensions[0] + found[0], tensions[1] + found[1], tensions[2] + found[2])
     return tuple(np.asarray(value) for value in tensions)  # type: ignore[return-value]
 
 
-def axis_differences(
+def axis_neighbours(
     now: np.ndarray, wrap: Wrap
-) -> tuple[currents.Differences, currents.Differences, currents.Differences]:
-    """The level's difference across each axis's two Ports at every Node, D_a = the +a arrival minus the -a arrival, with the neighbours' own differences brought through the axis's two Ports, the tension's reads (ALGEBRA.md #the-primitives, the row "the hold", the tension)."""
+) -> tuple[currents.Neighbours, currents.Neighbours, currents.Neighbours]:
+    """The level now at every Node and at its two neighbours along each axis, through the +a and the -a Port, the tension's reads (ALGEBRA.md #the-primitives, the row "the hold", The tension)."""
     arrived = ports(now, wrap)
-    found = []
-    for axis in range(3):
-        d = arrived[2 * axis] - arrived[2 * axis + 1]
-        plus, minus = arrival(d, axis, 1, wrap), arrival(d, axis, -1, wrap)
-        found.append(currents.Differences(now, d, plus, minus))
+    found = [currents.Neighbours(now, arrived[2 * axis], arrived[2 * axis + 1]) for axis in range(3)]
     return found[0], found[1], found[2]
 
 
