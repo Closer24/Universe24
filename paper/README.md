@@ -106,7 +106,7 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "30 pages, 2 figures, 4 tables; code and documents at
-  doi:10.5281/zenodo.22738746". The abstract has 245 words and 1410
+  doi:10.5281/zenodo.22738746". The abstract has 246 words and 1426
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
   the EPS files and the scripts; it compiles under pdflatex in a clean
@@ -114,8 +114,14 @@ the journal.
   document. Met.
 - The licence: CC BY 4.0, the author's choice, irrevocable for a version;
   an announced paper is never removed.
-- The category: `quant-ph` with `gr-qc` as a cross-list; the moderators
-  may move a foundational lattice model to `physics.gen-ph`.
+- The category: `quant-ph` as primary, since the paper's claim is about
+  measurement and Bell, with `gr-qc` (the weak-field forms) and `nlin.CG`
+  (a reversible cellular automaton) as cross-lists; the moderators may move
+  a foundational lattice model to `physics.gen-ph`, which is their call.
+- The field: foundations of physics, the journal's own scope; the paper is
+  not a general-relativity paper (its gravity stands against the tests at
+  the rule's own matter pair) and not a particle-physics paper, and should
+  not be sent to a journal of either.
 - Endorsement: since 21 January 2026 an institutional email alone does
   not endorse; an author without accepted papers in the category needs a
   personal endorser.
