@@ -1,4 +1,4 @@
-"""The Node: every family's NodeState over the GameBoard, the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py): the signed read (ALGEBRA.md #the-paces; the guard once at load), Rule3 on every record (#the-line, #the-direction), the readings of the record (the currents and the tension, features/currents; the form, the Wronskian and its sign; the count is the record's share, #the-count-is-the-records-share) and the one write per held part (#the-primitives, the row "the hold")."""
+"""The Node: every family's NodeState over the GameBoard, the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py): the read (ALGEBRA.md #the-paces; the guard once at load), Rule3 on every record (#the-line, #the-direction), the readings of the record (the currents and the tension, features/currents; the form and the Wronskian; the count is the record's share, #the-count-is-the-records-share) and the one write per held part (#the-primitives, the row "the hold")."""
 
 from __future__ import annotations
 
@@ -17,10 +17,10 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.features import currents
-from event_universe.features import signed_read as signed
 from event_universe.features.hold import components, diagonal, hold
+from event_universe.features.read import axis_content, content_of, guard
 from event_universe.features.write import carried
-from event_universe.loader.derived import BY_PLAIN, BY_SIGN, FamilyRule, HeldWrite, weight_of
+from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, weight_of
 
 Rule = tuple[tuple[Any, Any, Any], Any, Any]  # Rule3's integers at every Node: (R_x, R_y, R_z), S, w
 
@@ -105,48 +105,25 @@ def axis_sums(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, np.
     return x, y, z
 
 
-def sense_sign(state: NodeState, shape: tuple[int, int, int]) -> np.ndarray:
-    """The reader's q at every Node: the sign of its own rotation sense there, the Wronskian of its two level pairs read from the record (0 where it has none; ALGEBRA.md #the-paces, the sign is the rotation sense)."""
-    if state.levels is None or state.second is None:
-        return zeros(shape)
-    return np.asarray(np.sign(wronskian(state.levels, state.second)), dtype=np.int64)
-
-
-def read_terms(
+def read(
     index: int,
     families: tuple[FamilyRule, ...],
     states: list[NodeState],
-    gamma: int,
     level: str,
     shape: tuple[int, int, int],
-) -> tuple[signed.SignedReadTerm, signed.SignedReadStart]:
-    """The read's declaration and start for a family (ALGEBRA.md #the-paces): its reads, its q (`sense_sign`), its pair and Gamma; the read families' time parts at `level` ("now" forward at the interval's start, "before" backward) and the axis contents t_a = SUM over the reads of (weight x by x the read family's aa part + 1) div 2, one division per read per axis rounded at the read."""
-    family = families[index]
-    q = sense_sign(states[index], shape)
-    reads = tuple((read.family, read.weight, read.by) for read in family.reads)
-    arguments = {read.family: getattr(states[read.family].parts[0], level) for read in family.reads}
-    axis = [zeros(shape), zeros(shape), zeros(shape)]
-    for read in family.reads:
-        tensor = diagonal(families[read.family].parts)
-        factor = read.weight if read.by == BY_PLAIN else -q * read.weight
-        for a, part in enumerate(tensor or ()):
-            axis[a] += carried(factor * getattr(states[read.family].parts[part], level), 2, 1)[0]
-    term = signed.SignedReadTerm(reads, q, family.pair, gamma)
-    return term, signed.SignedReadStart(shape, arguments, (axis[0], axis[1], axis[2]))
-
-
-def signed_read(
-    index: int,
-    families: tuple[FamilyRule, ...],
-    states: list[NodeState],
-    gamma: int,
-    level: str,
-    shape: tuple[int, int, int],
-) -> tuple[np.ndarray, tuple[np.ndarray, ...]]:
-    """The signed read (ALGEBRA.md #the-paces): the content c = SUM over the family's reads of (weight x by x the read family's time part) and the axis contents, no floor, no clamp and no guard in the interval (features/signed_read)."""
-    writes = signed.apply(*read_terms(index, families, states, gamma, level, shape))
-    assert writes.axis_contents is not None
-    return writes.content, writes.axis_contents
+) -> tuple[Any, tuple[Any, Any, Any]]:
+    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time part at `level`, "now" forward and "before" backward) and the axis contents t_a = SUM over the reads of (weight x the read family's aa part + 1) div 2, one division per read per axis rounded at the read; 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
+    reads = families[index].reads
+    content = content_of([(r.weight, getattr(states[r.family].parts[0], level)) for r in reads])
+    axis = []
+    for a in range(3):
+        found = []
+        for r in reads:
+            tensor = diagonal(families[r.family].parts)
+            if tensor is not None:
+                found.append((r.weight, getattr(states[r.family].parts[tensor[a]], level)))
+        axis.append(axis_content(found) if found else zeros(shape))
+    return content, (axis[0], axis[1], axis[2])
 
 
 def guarded(
@@ -156,9 +133,10 @@ def guarded(
     gamma: int,
     shape: tuple[int, int, int],
 ) -> None:
-    """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node, refused by name outside; no act of the interval reads it (features/signed_read)."""
-    term, start = read_terms(index, families, states, gamma, "now", shape)
-    signed.guard(term, signed.apply(term, start), signed.SignedReadOwn(index, families[index].name))
+    """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read)."""
+    if families[index].reads:
+        content, axis = read(index, families, states, "now", shape)
+        guard(families[index].pair, gamma, content, axis, families[index].name)
 
 
 def least_pace(
@@ -169,7 +147,7 @@ def least_pace(
     shape: tuple[int, int, int],
 ) -> int:
     """The least Link pace Gamma - 2 c - t_a of a family over the GameBoard as it stands, a GameBoard diagnostic for the report and no act of the law."""
-    content, axis = signed_read(index, families, states, gamma, "now", shape)
+    content, axis = read(index, families, states, "now", shape)
     return min(int(np.min(pace)) for pace in link_paces(gamma, content, axis))
 
 
@@ -264,19 +242,16 @@ def well(booking: np.ndarray, action: int) -> np.ndarray:
 def write_sources(
     held: int,
     families: tuple[FamilyRule, ...],
-    forms: dict[int, np.ndarray],
-    turns: dict[int, np.ndarray],
+    bookings: dict[int, np.ndarray],
     stresses: dict[int, currents.Vector],
     write: HeldWrite,
     shape: tuple[int, int, int],
 ) -> list[np.ndarray]:
-    """The numerators of a held family's one write per part at every Node (ALGEBRA.md #the-primitives, the row "the hold"): for the time part SUM over the sourcing families of w x q, q the form D of each that sources the row by plain and the Wronskian W of each that sources it by sign; for each axis part SUM over the sources by plain of w x factor x T_aa, the tension of each times its factor of the common wall (`HeldWrite`)."""
+    """The numerators of a held family's one write per part at every Node (ALGEBRA.md #the-primitives, the row "the hold"): for the time part SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's parts afford, the form D of a reader of a row of real parts and the Wronskian W of a reader of a row of a plane (`bookings`); for each axis part SUM over the sources of w x factor x T_aa, the tension of each times its factor of the common wall (`HeldWrite`)."""
     family = families[held]
     time = zeros(shape)
-    for index, form in forms.items():
-        time = time + weight_of(held, families[index]) * form
-    for index, turn in turns.items():
-        time = time + weight_of(held, families[index], BY_SIGN) * turn
+    for index in readers_of(families, held):
+        time = time + weight_of(held, families[index]) * bookings.get(index, 0)
     found = [time]
     for axis in range(sum(family.parts[1:])):
         total = zeros(shape)

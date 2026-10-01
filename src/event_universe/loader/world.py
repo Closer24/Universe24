@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from typing import Any
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
-from event_universe.loader.derived import CONTENT, SIGN, FamilyRule
+from event_universe.loader.derived import FamilyRule, Row
 from event_universe.loader.faces import RecedingFace, faces_of, receding_of
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
 from event_universe.loader.messages import MessageRow, messages_of
@@ -21,11 +22,18 @@ WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured"
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
-    ("name", "pair", "held"),
+    ("name", "pair", "dimension", "held"),
     ("name", "pair"),
-    ("count", "divisor", "rest"),
-    ("count", "divisor"),
+    ("sources", "divisor", "rest"),
+    ("sources", "divisor"),
 )
+FORM, TENSIONS, WRONSKIAN = (
+    "form",
+    "tensions",
+    "wronskian",
+)  # what sources a held row: one real line each
+SOURCES = ((FORM,), (FORM, TENSIONS), (WRONSKIAN,))  # the lists a held row may declare, in this order
+PLANE = 2  # the dimension of a plane, re and im: charged matter; 1 one real line
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
     ("family", "nodes"),
@@ -77,8 +85,27 @@ class World:
     receding: tuple[RecedingFace, ...]
 
 
+def shape_of(row: dict[str, Any], label: str) -> tuple[int, bool, bool]:
+    """A family's shape from its row, (lines, plane, wronskian): a family of quanta declares its `dimension`, 1 (one real line) or 2 (a plane, re and im), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), and no dimension, a held row never being a plane; refused by name otherwise (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
+    if "held" in row:
+        if "dimension" in row:
+            raise ValueError(
+                f"{label} is a held row and declares no dimension: its shape is its sources' count"
+            )
+        sources = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)["sources"]
+        if not isinstance(sources, list) or tuple(sources) not in SOURCES:
+            raise ValueError(
+                f"{label}.held.sources is one of {[list(s) for s in SOURCES]}, got {sources!r}"
+            )
+        return 1 + 3 * (TENSIONS in sources), False, WRONSKIAN in sources
+    if "dimension" not in row:
+        raise ValueError(f"{label} lacks the key 'dimension': a family of quanta declares 1 or {PLANE}")
+    lines = integer(row["dimension"], f"{label}.dimension", 1, PLANE)
+    return lines, lines == PLANE, False
+
+
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair and what it holds (with the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on a holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22), everything else derived by the rule."""
+    """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its divisor and its rest (a held row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22), everything else derived by the rule from the pair and the shape."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -86,12 +113,12 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     entries = universe["families"]
     if not isinstance(entries, list) or not entries:
         raise ValueError("families must be a list of the families' rows")
-    rows: list[tuple[str, tuple[int, int], str | None, int | None, int]] = []
+    rows: list[Row] = []
     for index, entry in enumerate(entries):
         label = f"families[{index}]"
         row = keyed(entry, label, FAMILY_KEYS, FAMILY_REQUIRED)
         name = row["name"]
-        if not isinstance(name, str) or not name or name in [found[0] for found in rows]:
+        if not isinstance(name, str) or not name or name in [found.name for found in rows]:
             raise ValueError(f"{label}.name must be a name of its own")
         pair = row["pair"]
         if not isinstance(pair, list) or len(pair) != 2:
@@ -102,23 +129,20 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
             raise ValueError(
                 f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
             )
-        held, divisor, rest = None, None, 0
+        lines, plane, wronskian = shape_of(row, label)
+        divisor, rest = None, 0
         if "held" in row:
-            holds = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)
-            if holds["count"] not in (CONTENT, SIGN):
-                raise ValueError(
-                    f"{label}.held.count is {CONTENT!r} or {SIGN!r}, got {holds['count']!r}"
-                )
-            held, divisor = str(holds["count"]), integer(holds["divisor"], f"{label}.held.divisor", 1)
+            holds = row["held"]
+            divisor = integer(holds["divisor"], f"{label}.held.divisor", 1)
             if "rest" in holds:
-                if held != CONTENT or num != den:
+                if wronskian or num != den:
                     raise ValueError(
                         f"{label}.held.rest: only the massless row holding the content rests at a level"
                     )
                 rest = integer(
                     holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
                 )
-        rows.append((name, (num, den), held, divisor, rest))
+        rows.append(Row(name, (num, den), lines, plane, wronskian, divisor, rest))
     return integers, derived.family_rules(rows)
 
 

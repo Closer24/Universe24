@@ -12,7 +12,10 @@
     6000
    ],
    "held": {
-    "count": "content",
+    "sources": [
+     "form",
+     "tensions"
+    ],
     "divisor": 1000000,
     "rest": 0
    }
@@ -24,7 +27,9 @@
     6000
    ],
    "held": {
-    "count": "sign",
+    "sources": [
+     "wronskian"
+    ],
     "divisor": 1
    }
   },
@@ -35,7 +40,9 @@
     2401
    ],
    "held": {
-    "count": "content",
+    "sources": [
+     "form"
+    ],
     "divisor": 1000000
    }
   },
@@ -46,7 +53,9 @@
     6000
    ],
    "held": {
-    "count": "content",
+    "sources": [
+     "form"
+    ],
     "divisor": 1000000
    }
   },
@@ -55,7 +64,8 @@
    "pair": [
     4000,
     6000
-   ]
+   ],
+   "dimension": 1
   }
  ]
 }

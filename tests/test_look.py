@@ -17,7 +17,10 @@ PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
 BELL = load_file("bell_clicks", ROOT / "tools" / "bell_clicks.py")
 BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
-ROLE_OF = {"sign": "light", "content": "field"}  # a holder of nothing is matter
+ROLE_OF = {
+    (True, True): "light",
+    (True, False): "field",
+}  # (held, a plane); a holder of nothing is matter
 SCREEN = [
     {"name": f"screen {y}", "positions": [[20, y + r, 0] for r in range(4 + (y == 4))]} for y in (0, 4)
 ]
@@ -74,7 +77,8 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert set(look["books"]) == {f["name"] for f in look["families"] if f["quanta"]}
     roles = PAGE.roles(look["families"])
     for family, role in zip(universe, roles.values(), strict=True):
-        assert role["role"] == ROLE_OF.get(family.get("held", {}).get("count"), "matter")
+        shape = ("held" in family, "wronskian" in family.get("held", {}).get("sources", []))
+        assert role["role"] == ROLE_OF.get(shape, "matter")
     dashed = [name for name, role in roles.items() if role["dashed"]]
     assert dashed == [f["name"] for f in universe if "held" not in f][1:]
     assert "GameBoard reading" in html and PAGE.embedded(roles) in html and '"window":[1,2]' in html

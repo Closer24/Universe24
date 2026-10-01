@@ -283,7 +283,6 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             share.family_share(family, (state.levels, state.second), board.wrap, board.world.node_clock)
             node.currents_of(family, state, board.wrap)
             node.stresses_of(family, state, board.wrap)
-            node.sense_sign(state, board.shape)
             node.wronskian(state.levels, state.second)
             node.form(state.levels, state.second)
             board.quanta(index)

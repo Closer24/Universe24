@@ -53,7 +53,7 @@ def pairs_of(given: object, label: str, size: int) -> Levels:
 def levels_of(
     entry: object, label: str, family: FamilyRule, shape: Node, bound: int, beyond: tuple[Node, ...]
 ) -> tuple[Levels, Levels, Levels, Levels]:
-    """A body's or a message's two level pairs from its mode entry as their nonzero Nodes: `moving`'s now and before, and its im_now and im_before (the second level pair, the rotation sense; both or neither, 0 where absent), each one integer per Node in x-major order or the nonzero Nodes alone (`pairs_of`), within the amplitude bound A and 0 at every Node beyond the board (nothing is laid there); a sense without a rotation (a second pair on real levels at 0) is refused by name; the generator's readings beside them are read and not used."""
+    """A body's or a message's two level pairs from its mode entry as their nonzero Nodes: `moving`'s now and before, and its im_now and im_before (the second level pair of a family of dimension two, a plane; both or neither, 0 where absent; refused by name on a family of dimension one), each one integer per Node in x-major order or the nonzero Nodes alone (`pairs_of`), within the amplitude bound A and 0 at every Node beyond the board (nothing is laid there); a sense without a rotation (a second pair on real levels at 0) is refused by name; the generator's readings beside them are read and not used."""
     size = shape[0] * shape[1] * shape[2]
     outside = {(x * shape[1] + y) * shape[2] + z: (x, y, z) for x, y, z in beyond}
     mode = keyed(entry, label, MODE_BODY_KEYS, ("family", "pair", "moving"))
@@ -65,6 +65,11 @@ def levels_of(
     words = keyed(mode["moving"], f"{label}.moving", MOVING_KEYS, LEVEL_KEYS)
     if (SENSE_KEYS[0] in words) != (SENSE_KEYS[1] in words):
         raise ValueError(f"{label}.moving declares im_now and im_before together, or neither")
+    if SENSE_KEYS[0] in words and not family.plane:
+        raise ValueError(
+            f"{label}.moving lays a second level pair on {family.name!r}, a family of dimension one: the lay "
+            "is within the family's dimension (ALGEBRA.md #a-familys-declaration)"
+        )
     found = []
     for word in MOVING_KEYS:
         pairs = pairs_of(words.get(word, []), f"{label}'s {word} level", size) if word in words else ()

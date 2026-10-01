@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the two rows
 CHAIN, QUANTA = 48, 50  # a chain of 48 Nodes (x open) and a body of 50 quanta: seven Nodes
+CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
 
 
 def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
@@ -23,10 +24,13 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-def universe_beside(tmp_path: Path, drop: tuple[str, ...] = (), **pairs: list[int]) -> None:
-    """The tests' universe copied beside a world as u.json (the families `drop` names left out, a family's pair replaced where `pairs` names it) with the engine's start file as e.json."""
+def universe_beside(
+    tmp_path: Path, drop: tuple[str, ...] = (), charged: bool = False, **pairs: list[int]
+) -> None:
+    """The tests' universe copied beside a world as u.json (the families `drop` names left out, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`) with the engine's start file as e.json."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"] = [family for family in universe["families"] if family["name"] not in drop]
+    universe["families"] += [dict(CHARGED)] if charged else []
     for family in universe["families"]:
         family["pair"] = pairs.get(family["name"], family["pair"])
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
@@ -42,10 +46,12 @@ def chain_body_world(
     taker: bool = False,
     mode: bool = True,
 ) -> Path:
-    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last read by the detector `taker` where asked), rotating in the `senses` given, laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right` on the chain's two end Nodes report the light's inflow there."""
-    universe_beside(tmp_path)
+    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right` on the chain's two end Nodes report the light's inflow there."""
+    turning = [bool(senses[i]) if i < len(senses) else False for i in range(len(at))]
+    universe_beside(tmp_path, charged=any(turning))
     measured: list[dict[str, object]] = [
-        dict(family="matter", nodes=[dict(node=[x, 0, 0], count=quanta)]) for x in at
+        dict(family=CHARGED["name"] if turns else "matter", nodes=[dict(node=[x, 0, 0], count=quanta)])
+        for x, turns in zip(at, turning, strict=True)
     ]
     detectors: list[dict[str, object]] = [{"name": "left", "positions": [[0, 0, 0]]}]
     detectors += [{"name": "right", "positions": [[CHAIN - 1, 0, 0]]}]
