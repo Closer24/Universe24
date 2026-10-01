@@ -5,16 +5,13 @@ from __future__ import annotations
 import json
 
 import numpy as np
-import pytest
 
 import event_universe.world_files as world_files
 from event_universe import node
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import input_digest, load_world
-from tests.laws import CHAIN, CHARGED, QUANTA, ROOT, chain_body_world, load_file
-
-TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
+from tests.laws import CHAIN, CHARGED, QUANTA, TOOL, chain_body_world, refused
 
 
 def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_path, monkeypatch):
@@ -23,8 +20,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     world = chain_body_world(tmp_path, TOOL)
     board = GameBoard(load_world(world))
     index = [family.name for family in board.families].index("matter")
-    declared = board.mask(board.world.bodies[0].nodes)
-    quanta = board.quanta(index)[0]
+    declared, quanta = board.mask(board.world.bodies[0].nodes), board.quanta(index)[0]
     laid, wall = int(quanta[declared].sum()), count_wall(board.families[index], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(quanta[declared].min()) >= 1
     kept, drifts = [], []
@@ -40,15 +36,13 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     print(f"  the share's drift {min(drifts)} to {max(drifts)} units against the wall {wall}")
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0
     document = json.loads(world.read_text(encoding="utf-8"))
-    for line in document["measured"][0]["nodes"]:
-        line["count"] = 1  # far below the share
+    document["measured"][0]["nodes"] = [{**n, "count": 1} for n in document["measured"][0]["nodes"]]
     world.write_text(json.dumps(document), encoding="utf-8")
     mode_path = world.with_suffix(".mode.json")
     mode = json.loads(mode_path.read_text(encoding="utf-8"))
     mode["world_digest"] = input_digest(document)
     mode_path.write_text(json.dumps(mode), encoding="utf-8")
-    with pytest.raises(ValueError, match="a declared count is within the rounding of the share"):
-        GameBoard(load_world(world))
+    refused("a declared count is within the rounding of the share", lambda: GameBoard(load_world(world)))
 
 
 def test_opposite_senses_source_the_sign_holder_oppositely_and_a_plane_reads_it(tmp_path, monkeypatch):

@@ -1,4 +1,4 @@
-"""The helpers of the law's tests: a module loaded by its path (a tool), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`)."""
+"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`)."""
 
 from __future__ import annotations
 
@@ -6,6 +6,8 @@ import importlib.util
 import json
 import sys
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
@@ -22,6 +24,16 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
+
+
+def refused(match: str, call, *args, **keys):  # type: ignore[no-untyped-def]
+    """The call on its arguments refused by name: a ValueError whose message matches `match`."""
+    with pytest.raises(ValueError, match=match):
+        call(*args, **keys)
+
+
+TOOLS = ("pixel_mode", "back_in_time", "run_inputs")  # the generator, the back-in-time gate, the runner
+TOOL, BACK, RUN = (load_file(name, ROOT / "tools" / f"{name}.py") for name in TOOLS)
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
