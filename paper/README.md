@@ -4,9 +4,11 @@ The project has one paper: `general_formula/main.tex`. There is no other
 manuscript. It is written from the current documents on `main` alone: every
 formula is taken from `docs/ALGEBRA.md`, `docs/ENGINE.md` or
 `docs/HIGHLIGHTS.md` and cited by the name of its section or line, and every
-claim carries its mark (theorem, derived, computed, assumption or hypothesis).
-The paper holds no run of its own; a run enters only through the documents'
-rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
+claim carries its mark (theorem, derived, computed, assumption or hypothesis,
+and fitted where an input was chosen with the result known). The paper holds
+no run of its own; only a detector's click is a measurement, and a number read
+off the GameBoard is a diagnostic. Table 1 of the paper lists every result with
+its kind and what it rests on.
 
 - `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
   twice; it needs only its figures.
@@ -60,7 +62,7 @@ the journal.
 - Data availability is stated (the Springer Nature policy). Met by the
   Zenodo concept DOI; the version DOI is added at the release.
 - A large language model is never an author; its use is documented in the
-  method (the paragraph on the marks) and in the statements; no figure is
+  method (the paragraph on how to read the paper) and in the statements; no figure is
   made by a generative tool. Met.
 - A preprint is allowed; its DOI and licence are declared at submission,
   and the preprint is updated with the journal's DOI after publication.
@@ -74,15 +76,18 @@ the journal.
   submission; the switch at acceptance changes the preamble alone.
 - The scope is the conceptual bases of modern physics; a desk rejection
   follows overclaiming, missing references or a text that reads as
-  internal notes. Open, below.
+  internal notes. Met: the text is in the author's voice with every term
+  defined, every result names what it rests on and whether an input was
+  fitted to it, and every named result has a published source checked
+  against its publisher's record.
 
 ### arXiv
 
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "N pages, 6 figures, 4 tables; code and documents at
-  doi:10.5281/zenodo.22738746". The abstract has 1440 characters.
+  "N pages, 6 figures, 6 tables; code and documents at
+  doi:10.5281/zenodo.22738746". The abstract has 1393 characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
   the EPS files and the scripts; it compiles under pdflatex in a clean
   directory, and no `.bbl` is needed since the references are in the
@@ -103,15 +108,13 @@ the journal.
 
 These need the author's decision or hand:
 
-1. The voice: the text still names the project's process (the owner, the
-   advisor, dated decisions, issue numbers), which a reader outside the
-   project reads as internal notes; it is rewritten in the author's
-   voice, the decisions stated as the model's postulates.
-2. The literature: a published source for every form of nature the paper
-   sets beside the law's (Bell, the CHSH sum, the Aspect and loophole-free
-   tests, the Shapiro delay, Pound and Rebka, Vakhitov and Kolokolov,
-   Pekar, 't Hooft, Harrigan and Spekkens and others), each checked
-   against its publisher's record, and a short section on related work.
+1. The title: the paper marks light's bending, its delay and the
+   perihelion as fitted, since the Link's factor two and the clock's second
+   order were chosen with them known; the title's "arrive at Einstein"
+   holds for the forms and not as predictions, and whether it stays is the
+   author's call.
+2. A fuller section on related work, if wanted beyond the paragraph in the
+   introduction.
 3. arXiv: the account, an endorser, the licence, and whether an earlier
    paper of the project was posted.
 4. The archive: a GitHub release of the paper's commit and its Zenodo
