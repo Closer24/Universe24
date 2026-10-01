@@ -1,6 +1,19 @@
 {
- "comment": "The two slits' blind expectation (the advisor, #1515 comment 5903745976), written before the run: DETECTOR, the count that passes each Node of the screen over the window, the detector's rises summing to it within the rounding.",
- "detector": "screen",
+ "verdict": "DETECTOR",
+ "detector": [
+  "screen_0",
+  "screen_1",
+  "screen_2",
+  "screen_3",
+  "screen_4",
+  "screen_5",
+  "screen_6",
+  "screen_7",
+  "screen_8",
+  "screen_9",
+  "screen_10",
+  "screen_11"
+ ],
  "family": "charge",
  "window": [
   45,
@@ -8,74 +21,41 @@
  ],
  "across": "y",
  "pattern": [
-  4,
-  43
- ],
- "counts": [
-  2,
-  6,
-  7,
-  6,
-  3,
-  3,
-  6,
-  8,
-  8,
-  6,
-  6,
-  6,
-  6,
-  4,
-  3,
-  2,
   1,
-  2,
-  2,
-  4,
-  7,
-  9,
-  11,
-  13,
-  13,
-  12,
-  11,
-  9,
-  7,
-  4,
-  3,
-  2,
-  1,
-  2,
-  3,
-  5,
-  5,
-  6,
-  6,
-  8,
-  9,
-  6,
-  3,
-  4,
-  7,
-  8,
-  7,
-  3
+  10
  ],
- "through": 273,
  "spacing": 16,
+ "seed": 24,
+ "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, summed by four; ALGEBRA.md row (g)): the clicks per region N times the region's share, the fringes at the spacing 16 with the visibility 1, the total N the passing count, the draw's scatter sqrt(N p (1 - p)) per region; the credit by the shares of the seen inflows with the seed, the instrument's.",
+ "counts": [
+  21.0,
+  20.0,
+  26.0,
+  15.0,
+  9.0,
+  40.0,
+  45.0,
+  16.0,
+  11.0,
+  25.0,
+  22.0,
+  25.0
+ ],
+ "through": 273.0,
  "maxima": [
-  8,
-  24,
-  40
+  2,
+  6,
+  9
  ],
  "minima": [
-  16,
-  32
+  1,
+  4,
+  8,
+  10
  ],
- "watch": {
-  "24": 13,
-  "16": 1.3,
-  "32": 1.3
- },
- "visibility": 0.85
+ "quanta": 273.0,
+ "laid": 1797,
+ "aside": [
+  "gap"
+ ]
 }

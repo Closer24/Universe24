@@ -1,0 +1,58 @@
+{
+ "verdict": "DETECTOR",
+ "detector": [
+  "screen_0",
+  "screen_1",
+  "screen_2",
+  "screen_3",
+  "screen_4",
+  "screen_5",
+  "screen_6",
+  "screen_7",
+  "screen_8",
+  "screen_9",
+  "screen_10",
+  "screen_11"
+ ],
+ "family": "charge",
+ "window": [
+  45,
+  120
+ ],
+ "across": "y",
+ "pattern": [
+  1,
+  10
+ ],
+ "spacing": 16,
+ "seed": 24,
+ "comment": "The dilute world's blind row per region: the bright row's shares over the dilute packet's own passing count (the laid counts' ratio), the pattern rising click by click as Born by the credit's draw, the instrument's declaration; no rise of the count's line at the screen is expected on the board itself, the credit reading the seen inflows.",
+ "counts": [
+  1.0,
+  0.9,
+  1.2,
+  0.7,
+  0.4,
+  1.9,
+  2.1,
+  0.8,
+  0.5,
+  1.2,
+  1.0,
+  1.2
+ ],
+ "through": 12.9,
+ "maxima": [
+  2,
+  6,
+  9
+ ],
+ "minima": [
+  1,
+  4,
+  8,
+  10
+ ],
+ "quanta": 12.9,
+ "laid": 85
+}

@@ -25,20 +25,12 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     box = np.zeros((6, 5, 4), dtype=np.int64)
     box[1:3, 1:3, 1] = 9
     mixed = box.copy()
-    mixed[4, 2:4, 2], mixed[1, 1, 1] = (
-        -13,
-        -9,
-    )  # sources of both signs, the tension's and the senses' case
-    for counts, faces, pair, divisor in (
-        (chain, OPEN_CHAIN, (1, 1), 7),
-        (chain, OPEN_CHAIN, (2400, 2401), 1),
-        (chain, OPEN_CHAIN, (1, 4), 7),
-        (box, OPEN_CHAIN, (1, 1), 7),
-        (box, Wrap(True, True, True), (2400, 2401), 1),
-        (box, Wrap(True, True, True), (3, 4), 7),
-        (mixed, OPEN_CHAIN, (1, 1), 7),
-        (mixed, OPEN_CHAIN, (1, 2), 7),
-    ):
+    mixed[4, 2:4, 2], mixed[1, 1, 1] = -13, -9  # sources of both signs, the tension and the senses
+    cases = [(chain, OPEN_CHAIN, (1, 1), 7), (chain, OPEN_CHAIN, (2400, 2401), 1)]
+    cases += [(chain, OPEN_CHAIN, (1, 4), 7), (box, OPEN_CHAIN, (1, 1), 7)]
+    cases += [(box, Wrap(True, True, True), (2400, 2401), 1), (box, Wrap(True, True, True), (3, 4), 7)]
+    cases += [(mixed, OPEN_CHAIN, (1, 1), 7), (mixed, OPEN_CHAIN, (1, 2), 7)]
+    for counts, faces, pair, divisor in cases:
         num, den = pair
         found = rest(counts, pair, faces, divisor, MAX_WORK_INT, 3 * den)
         fine = found.fine.astype(object)

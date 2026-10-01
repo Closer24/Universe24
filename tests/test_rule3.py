@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import random
 import re
 from pathlib import Path
@@ -47,14 +48,10 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
         axis_contents = (rng.randint(-50, 50), rng.randint(-50, 50), rng.randint(-50, 50))
         for weak_field in (True, False):
             read, self_coefficient, wall = law_isotropic(num, den, gamma, content, weak_field)
-            assert coefficients(num, den, gamma, content, weak_field=weak_field) == (
-                (read, read, read),
-                self_coefficient,
-                wall,
-            )
-        assert coefficients(num, den, gamma, content, axis_contents) == law_axes(
-            num, den, gamma, content, axis_contents
-        )
+            expected = ((read, read, read), self_coefficient, wall)
+            assert coefficients(num, den, gamma, content, weak_field=weak_field) == expected
+        axes = law_axes(num, den, gamma, content, axis_contents)
+        assert coefficients(num, den, gamma, content, axis_contents) == axes
         assert coefficients(num, den, gamma, content, (0, 0, 0)) == coefficients(
             num, den, gamma, content
         )
@@ -63,11 +60,9 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
         # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_link^2), the Link's pace Gamma - 2 c
         pace, axis_pace = gamma - 2 * content, gamma - 2 * content - axis_contents[0]
         (read, *_), self_iso, wall = coefficients(num, den, gamma, content)
-        assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == (
-            (2 * axis_pace**2 * num, read, read),
-            self_iso - 4 * num * (axis_pace**2 - pace**2),
-            wall,
-        )
+        reads = (2 * axis_pace**2 * num, read, read)
+        along = self_iso - 4 * num * (axis_pace**2 - pace**2)
+        assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == (reads, along, wall)
     assert ISOTROPIC == (0, 0, 0)
 
 
@@ -77,18 +72,13 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     for _ in range(500):
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
-        reads, self_coefficient, wall = coefficients(
-            num, den, gamma, content, (rng.randint(-30, 30), rng.randint(-30, 30), rng.randint(-30, 30))
-        )
+        contents = (rng.randint(-30, 30), rng.randint(-30, 30), rng.randint(-30, 30))
+        reads, self_coefficient, wall = coefficients(num, den, gamma, content, contents)
         arrivals = tuple(rng.randint(-(10**6), 10**6) for _ in range(3))
         now, before = rng.randint(-(10**6), 10**6), rng.randint(-(10**6), 10**6)
         remainder = rng.randint(0, wall - 1)
-        total = (
-            sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
-            + self_coefficient * now
-            - wall * before
-            + remainder
-        )
+        total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
+        total += self_coefficient * now - wall * before + remainder
         nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
         assert (nxt, carried) == (total // wall, total % wall) and 0 <= carried < wall
         stepped_back = (before, remainder)
@@ -150,19 +140,14 @@ SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
 
 def test_no_other_code_moves_a_level_from_one_node_to_another():
     """Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: the Node reads its neighbours through the Ports, `arrival`), and no function of src/ is a split of its own."""
-    import ast
-
     found: dict[str, set[str]] = {}
     for path in sorted(SOURCE.rglob("*.py")):
         text = path.read_text(encoding="utf-8")
         if not SHIFT_TOKENS.search(text):
             continue
         tree = ast.parse(text)
-        spans = [
-            (node.lineno, node.end_lineno or node.lineno, node.name)
-            for node in ast.walk(tree)
-            if isinstance(node, ast.FunctionDef)
-        ]
+        functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
+        spans = [(node.lineno, node.end_lineno or node.lineno, node.name) for node in functions]
         for match in SHIFT_TOKENS.finditer(text):
             line = text.count("\n", 0, match.start()) + 1
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
@@ -186,15 +171,11 @@ RULE_LINE_INTEGERS = frozenset({4, 12})
 
 def tools_on_the_arrays() -> list[Path]:
     """Every tool that touches the engine's arrays: a file of tools/ that imports the package (the generator, the runner, the back-in-time gate, the reading of the clicks), found by its imports and never listed."""
-    import ast
-
     found = []
     for path in sorted((ROOT / "tools").glob("*.py")):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         modules = [node.module or "" for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)]
-        modules += [
-            a.name for node in ast.walk(tree) if isinstance(node, ast.Import) for a in node.names
-        ]
+        modules += [a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names]
         if any(module.split(".")[0] == "event_universe" for module in modules):
             found.append(path)
     return found
@@ -202,8 +183,6 @@ def tools_on_the_arrays() -> list[Path]:
 
 def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     """No integer literal in src/event_universe or in any tool that touches the engine's arrays (the owner, 2026-09-30: every coordinate, gap, wavelength, width, amplitude, count and window comes from the world's files) beyond the law's own (LAW_INTEGERS; Rule3's line's 4 and 12 in core/rule3.py alone): every other number is a file's key or the rule's own act, so a number cannot enter the engine again."""
-    import ast
-
     tools = tools_on_the_arrays()
     names = {path.name for path in tools}
     assert {"pixel_mode.py", "back_in_time.py", "run_inputs.py", "click_counts.py"} <= names
@@ -219,8 +198,6 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
 
 def test_no_root_is_imported_or_called_anywhere_in_src_or_tools():
     """The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root."""
-    import ast
-
     found = []
     for path in sorted([*SOURCE.rglob("*.py"), *(ROOT / "tools").glob("*.py")]):
         for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):

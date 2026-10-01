@@ -1,4 +1,4 @@
-"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count conserved, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body writes a wave into the sign holder's own record, its count's total stays 0 within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the real body's chain goes back in time, MATCH over 400 intervals; the tension is Rule3's own conservation of the current; the sense is the Wronskian, booked by the line."""
+"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count conserved, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body writes a wave into the sign holder's own record, its count's total stays 0 within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the real body's chain goes back in time, MATCH over 400 intervals; the tension is Rule3's own conservation of the current; the sense is the Wronskian, booked by the line; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning."""
 
 from __future__ import annotations
 
@@ -19,19 +19,20 @@ from event_universe.features.start import rest
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import CONTENT, family_rules
 from event_universe.world_files import input_digest, load_world
-from tests.laws import CHAIN, ROOT, UNIVERSE, chain_body_world, load_file, universe_beside
+from tests.laws import CHAIN, PACKET, ROOT, UNIVERSE, chain_body_world, load_file, universe_beside
 
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
+RUN = load_file("run_inputs", ROOT / "tools" / "run_inputs.py")
+RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")
 WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
-ROWS = [("held", (4, 4), "content", 7), ("gapped", (3, 4), "content", 7), ("quanta", (5, 7), None, None)]
+ROWS = [("held", (4, 4), "content", 7, 0), ("gapped", (3, 4), "content", 7, 0)]
+ROWS.append(("quanta", (5, 7), None, None, 0))
 HELD, GAPPED, QUANTA = family_rules(ROWS)
 UNIVERSE_ROWS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
+HOLDS = [(r.get("held", {}).get("count"), r.get("held", {}).get("divisor")) for r in UNIVERSE_ROWS]
 FAMILIES = family_rules(  # the tests' universe: gravity, charge, binding, polarisation, matter
-    [
-        (r["name"], tuple(r["pair"]), *[r.get("held", {}).get(k) for k in ("count", "divisor")])
-        for r in UNIVERSE_ROWS
-    ]
+    [(r["name"], tuple(r["pair"]), *held, 0) for r, held in zip(UNIVERSE_ROWS, HOLDS, strict=True)]
 )
 NAMES = [family.name for family in FAMILIES]
 MATTER, GRAVITY, CHARGE = (NAMES.index(name) for name in ("matter", "gravity", "charge"))
@@ -63,9 +64,8 @@ def total_of(state: node.NodeState, wall: int) -> int:
 
 def drawn(draw: np.random.Generator, shape: tuple[int, int, int], size: int, top: int) -> node.Record:
     """A random level pair within `size` with a remainder below `top`."""
-    return node.Record(
-        *(draw.integers(-size, size, shape) for _ in range(2)), draw.integers(0, top, shape)
-    )
+    levels = [draw.integers(-size, size, shape) for _ in range(2)]
+    return node.Record(*levels, draw.integers(0, top, shape))
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand():
@@ -83,9 +83,8 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         # the lay from the weighted share: [w (now^2 + before^2) - S now before] div (2 p^2) - num now S_6(before)
         count_wall, now_here, before_here = 3 * 7 * 64, int(after.now[HERE]), int(after.before[HERE])
         node_term = wall * (now_here**2 + before_here**2) - self_coefficient * now_here * before_here
-        share = node_term // (2 * (100 - 2 * content) ** 2) - 5 * now_here * sum(
-            by_hand(after.before, HERE)
-        )
+        near = sum(by_hand(after.before, HERE))
+        share = node_term // (2 * (100 - 2 * content) ** 2) - 5 * now_here * near
         count, remainder = lay.lay(QUANTA, (after,), 64, WRAP, 100, content)
         assert (int(count[HERE]), int(remainder[HERE])) == divmod(share + count_wall // 2, count_wall)
         # the count's line: the six currents num (now_i before_j - before_i now_j), W_c c + r moved by their sum
@@ -114,9 +113,8 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         arrived = by_hand(part.now, HERE)
         sums = (arrived[0] + arrived[1], arrived[2] + arrived[3], arrived[4] + arrived[5])
         here = tuple(int(getattr(part, k)[HERE]) for k in KEYS)
-        assert (int(stepped.now[HERE]), int(stepped.remainder[HERE])) == rule3(
-            (3, 3, 3), sums, 0, 12, *here
-        )
+        by_rule = rule3((3, 3, 3), sums, 0, 12, *here)
+        assert (int(stepped.now[HERE]), int(stepped.remainder[HERE])) == by_rule
         held.parts = [part]
         gapped, gapped_carry, _flows = node.held_step(GAPPED, held, source)
         assert (int(gapped[0].now[HERE]), int(gapped_carry[HERE])) == found
@@ -155,9 +153,8 @@ def cube_world(folder: Path) -> Path:
     world = dict(shape=[9, 9, 9], boundary=dict(x="closed", y="closed", z="closed"), ticks=8)
     world.update(universe="u.json", engine="e.json", detectors=[])
     distance = np.abs(np.indices((9, 9, 9)) - 4).sum(axis=0)
-    levels = (
-        np.select([distance == 0, distance == 1, distance == 2], [1200, 600, 200], 0).ravel().tolist()
-    )
+    select = np.select([distance == 0, distance == 1, distance == 2], [1200, 600, 200], 0)
+    levels = select.ravel().tolist()
     mode = {"family": "matter", "pair": [4000, 6000], "moving": {"now": levels, "before": levels}}
     body = {"family": "matter", "nodes": [{"node": [4, 4, 4], "count": 1}]}
     body["nodes"][0]["count"] = laid_count(folder, "cube", {**world, "measured": [body]}, mode)
@@ -201,9 +198,8 @@ def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48
     for _ in range(4):
         start = node.Record(*(getattr(matter.levels, k).copy() for k in KEYS))
         padded = np.pad(start.now, 1)
-        sums = tuple(
-            (np.roll(padded, 1, a) + np.roll(padded, -1, a))[1:-1, 1:-1, 1:-1] for a in range(3)
-        )
+        rolled = [np.roll(padded, 1, a) + np.roll(padded, -1, a) for a in range(3)]
+        sums = tuple(r[1:-1, 1:-1, 1:-1] for r in rolled)
         content = sum(holder.parts[0].now for holder in holders)
         read = content, tuple((gravity.parts[1 + a].now + 1) // 2 for a in range(3))
         reads, self_coefficient, rule_wall = coefficients(4000, 6000, GAMMA, *read)
@@ -227,17 +223,11 @@ def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
     universe_beside(folder)
     levels, first = [0] * CHAIN, CHAIN // 2 - len(envelope) // 2
     levels[first : first + len(envelope)] = envelope
-    moving = {
-        "now": levels,
-        "before": levels,
-        "im_now": [0] * CHAIN,
-        "im_before": [turn * v // 16 for v in levels],
-    }
+    moving = {"now": levels, "before": levels, "im_now": [0] * CHAIN}
+    moving["im_before"] = [turn * v // 16 for v in levels]
     mode = {"family": "matter", "pair": [4000, 6000], "moving": moving}
-    ends = [
-        {"name": "left", "positions": [[0, 0, 0]]},
-        {"name": "right", "positions": [[CHAIN - 1, 0, 0]]},
-    ]
+    ends = [{"name": "left", "positions": [[0, 0, 0]]}]
+    ends += [{"name": "right", "positions": [[CHAIN - 1, 0, 0]]}]
     world = dict(shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), ticks=400)
     world.update(face_depth=1, universe="u.json", engine="e.json", detectors=ends)
     body = {"family": "matter", "nodes": [{"node": [CHAIN // 2, 0, 0], "count": 1}]}
@@ -266,15 +256,16 @@ def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
             counts.append(int(states[0].count.sum()))
             assert [total_of(s, w) for w, s in zip(walls, states, strict=True)] == totals
             assert abs(int(states[1].count.sum())) <= CHAIN
-        clicks = [e for e in lines if e["family"] == "charge" and e["detector"] in ("left", "right")]
+        clicks = [e for e in lines if e["family"] == "charge" and e["event"] == "click"]
         first = clicks[0]["tick"] if clicks else None
-        print(
-            f"DETECTOR the chain, the sense {turn}: {len(clicks)} clicks of the charge, first at {first}"
-        )
-        print(
-            f"GAMEBOARD light born at {born}, the matter's count {min(counts)} to {max(counts)} over 400"
-        )
-        assert all(e["event"] == "click" and e["axis"][0] == 0 for e in lines)
+        print(f"DETECTOR the chain, sense {turn}: {len(clicks)} charge clicks, first at {first}")
+        print(f"GAMEBOARD light born at {born}, matter's count {min(counts)} to {max(counts)} over 400")
+        ends = (
+            "left",
+            "right",
+            "face",
+        )  # the chain's end detectors and the open faces' layer at the same Nodes
+        assert all(e["detector"] in ends for e in lines if e["event"] == "click")
         assert born > 0 if turn else (born == 0 and not clicks and not states[1].levels.now.any())
         assert all(book["balanced"] and book["sense_balanced"] for book in board.books().values())
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
@@ -310,18 +301,20 @@ def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_t
     span = mode["period"][0] // mode["period"][1] + 1
     swings = [max(writes[i : i + span]) - min(writes[i : i + span]) for i in range(100, 399 - span)]
     taken = [e for e in lines if e["detector"] == "taker" and e["family"] == "charge"]
+    seen = [e for e in taken if e["event"] == "seen"]
+    taken = [e for e in taken if e["event"] == "click"]
+    print(f"GAMEBOARD the static body of {int(body.sum())} Nodes: the write's swing over a period")
+    print(f"  at most {max(swings)} quanta (the write {min(writes)} to {max(writes)}),")
+    tension = sum(tensions[100 : 100 + span])
     print(
-        f"GAMEBOARD the static body of {int(body.sum())} Nodes: the write's swing over a period at most"
+        f"  its count {min(counts)} to {max(counts)}, its tail's tension on x over a period {tension};"
     )
-    print(
-        f"  {max(swings)} quanta (the write {min(writes)} to {max(writes)}), its count {min(counts)} to"
-    )
-    print(f"  {max(counts)}, its tail's tension on x over a period {sum(tensions[100 : 100 + span])};")
     print(f"  DETECTOR the taker's clicks {len(taken)}")
-    assert max(swings) <= int(body.sum()) and sum(tensions[100 : 100 + span]) != 0
-    assert all(e["body"] == 1 for e in taken) and all(
-        book["balanced"] for book in board.books().values()
-    )
+    assert max(swings) <= int(body.sum()) and tension != 0
+    books = board.books().values()
+    assert all(e["body"] == 1 for e in taken) and all(book["balanced"] for book in books)
+    assert seen and all(e["inflow"] != 0 for e in seen)  # the net front inflow, signed, never 0
+    assert sum(e["inflow"] for e in seen) > 0  # what the taker saw over the run, the light that entered
 
 
 def stress_by_hand(now: np.ndarray, num: int) -> list[np.ndarray]:
@@ -358,18 +351,15 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     for a in range(3):
         left = wall * (momentum(nxt, now, a) - momentum(now, before, a))
         right = sum(read * (np.roll(flux(a, b), 1, b) - flux(a, b)) for b in range(3))
-        assert np.array_equal(
-            left, right - remainder * difference(now, a) + now * difference(remainder, a)
-        )
+        expected = right - remainder * difference(now, a) + now * difference(remainder, a)
+        assert np.array_equal(left, expected)
         differences.append(int(np.abs(left - right).max()))
     written = node.count_line(FAMILIES[MATTER], quanta_state(record, shape), T, 1 << 20, WRAP)
     by_hand_stress = stress_by_hand(record.now, 4000)
     assert all(np.array_equal(t, h) for t, h in zip(written.stress, by_hand_stress, strict=True))
-    print(
-        f"GAMEBOARD the identity's remainders' term at most {max(differences)} against the wall {wall}"
-    )
+    print(f"GAMEBOARD the identity's remainders' term at most {max(differences)}, the wall {wall}")
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
-    exact = family_rules([("exact", (1, 2), None, None)])[0]
+    exact = family_rules([("exact", (1, 2), None, None, 0)])[0]
     plane = quanta_state(node.Record(wave, wave, node.zeros(shape)), shape)
     tension = node.count_line(exact, plane, T, 1 << 20, WRAP).stress
     assert (tension[0] == -3 * 2000 * 2000 // 2).all() and not tension[1].any() and not tension[2].any()
@@ -400,9 +390,7 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
         held.parts, held.carry, held.flows = node.held_step(gravity, held, node.zeros(shape), 1, current)
         xx = held.parts[1].now
         low, high, part = int(stress[0].min()), int(stress[0].max()), (int(xx.min()), int(xx.max()))
-        print(
-            f"GAMEBOARD the record {'moving' if moving else 'at rest'}: the tension on x {low} to {high},"
-        )
+        print(f"GAMEBOARD the record {'moving' if moving else 'at rest'}: tension on x {low} to {high}")
         print(f"  the xx part {part}")
         assert not (moving and int(stress[0].max()) > 0) and bool((stress[0] != 0).any())
         assert not stress[1].any() and not stress[2].any() and not held.parts[2].now.any()
@@ -448,9 +436,7 @@ def test_a_static_source_gives_a_static_field_that_falls_with_the_range_of_the_r
         drift = max(drift, int(moved.max()))
     after = [int(state.parts[0].now[centre + r, 0, 0]) for r in away]
     print(f"GAMEBOARD the binding holder's rest at {away} Links {at}, after 200 intervals {after};")
-    print(
-        f"  {kicked} Nodes of {shape[0]} kicked at the first interval, the drift at most {drift} units"
-    )
+    print(f"  {kicked} Nodes of {shape[0]} kicked at the first interval, the drift at most {drift}")
     assert drift <= 2 * kicked
 
 
@@ -480,3 +466,110 @@ def test_the_sense_is_the_wronskian_booked_by_the_line_and_a_real_record_is_neut
     real = node.Record(cosine, turned, node.zeros(shape))
     assert not node.wronskian(real, node.empty_record(shape)).any()
     assert not lay.lay_sense(matter, real, node.empty_record(shape), T, GAMMA)[0].any()
+
+
+def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: object) -> Path:
+    """A chain of `extent` Nodes (x open) in a universe of the sign holder alone (light reads nothing), a packet of light at k = pi / 4 about x = `first` laid by the generator, a detector at the file's Node 15 and `keys` the world's further keys (the receding faces)."""
+    universe_beside(folder, drop=tuple(name for name in NAMES if name != "charge"))
+    world = dict(shape=[extent, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
+    world.update(ticks=200, universe="u.json", engine="e.json", measured=[], **keys)
+    world["messages"] = [{**PACKET, "top": {"x": [first, first], "y": [0, 0], "z": [0, 0]}}]
+    world["detectors"] = [{"name": "post", "positions": [[15, 0, 0]]}]
+    (path := folder / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    return path
+
+
+def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_returns(tmp_path, monkeypatch):
+    """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the GameBoard grows by 4 layers of zeros beyond a face whenever a level, a count or a sense stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes, the books balanced and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's count over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size, the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    both = {"x": {"sides": ["low", "high"], "largest": 64, "layers": 4}}
+    for receding, reason in (
+        ({"y": {**both["x"], "sides": ["high"]}}, "stands on an open or closed axis"),
+        ({"x": {**both["x"], "largest": 16}}, "receding.x.largest must be an integer from 17"),
+        ({"x": {**both["x"], "sides": ["far"]}}, "a side is one of"),
+    ):
+        with pytest.raises(ValueError, match=reason):
+            load_world(light_alone_world(tmp_path, "refused", 16, 8, receding=receding))
+    lines: list[dict[str, object]] = []
+    world = light_alone_world(tmp_path, "grows", 16, 8, receding=both)
+    grows, history = GameBoard(load_world(world), lines.append), []
+    fixed = GameBoard(load_world(light_alone_world(tmp_path, "fixed", 16, 8)))
+    while grows.ended is None:
+        grows.step()
+        if grows.ended is None:
+            fixed.step()
+            history.append((grows.shape[0], grows.offset[0], BACK.snapshot(grows)[0]))
+    low, end = grows.offset[0], {"interval": 28, "axis": "x", "side": "high", "largest": 64}
+    large = GameBoard(load_world(light_alone_world(tmp_path, "large", 64, 8 + low)))
+    for extent, offset, snapshot in history:
+        large.step()
+        at, wide = slice(low - offset, low - offset + extent), BACK.snapshot(large)[0]
+        assert all(np.array_equal(a, b[at]) for (_, a), (_, b) in zip(snapshot, wide, strict=True))
+    books = grows.books()["charge"]
+    assert grows.ended == end and grows.tick == 28 and books["total"] == large.books()["charge"]["total"]
+    assert grows.mask(((15, 0, 0),))[15 + low, 0, 0] and all("node" not in e for e in lines)
+    assert not grows.states[0].count[low : low + 16].any() and fixed.states[0].count.any()
+    assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 28
+    written = json.loads((tmp_path / "grows.output.json").read_text(encoding="utf-8"))
+    look = RECORD.record(world, None)
+    assert written["verdict"] == "LAWFUL" and written["ended"] == end == look["ended"]
+    assert [look["frames"][k]["shape"][0] for k in (0, 28)] == [16, 64] and lines
+    assert look["frames"][28]["offset"][0] == low
+    back = BACK.verdict(GameBoard(load_world(world)), 100)
+    assert back["verdict"] == "MATCH" and back["intervals"] == 27 and back["ended"] == end
+
+
+def test_the_massless_row_rests_at_the_vacuum_content_up_to_every_face_and_beyond(tmp_path, monkeypatch):
+    """(h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, the count's line untouched), the layers grown before its front stand at 60 and the gate says MATCH; light's count over a region is its field line."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    receding = {"x": {"sides": ["high"], "largest": 64, "layers": 4}}
+    world = light_alone_world(tmp_path, "light", 24, 6, receding=receding)
+    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    universe["families"] = [
+        row for row in UNIVERSE_ROWS if row["name"] in ("gravity", "charge", "binding")
+    ]
+    for name in ("charge", "binding"):
+        rows = json.loads(json.dumps(universe["families"]))
+        next(row for row in rows if row["name"] == name)["held"]["rest"] = 60
+        (tmp_path / "u.json").write_text(json.dumps({**universe, "families": rows}), encoding="utf-8")
+        with pytest.raises(ValueError, match="only the massless"):
+            load_world(world)
+    universe["families"][0]["held"]["rest"] = 60
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    still = json.loads(world.read_text(encoding="utf-8"))
+    still.update(messages=[], faces=[{"axis": "x", "at": 10, "gaps": []}], ticks=30)
+    (tmp_path / "still.json").write_text(json.dumps(still), encoding="utf-8")
+    lines: list[dict[str, object]] = []
+    board = GameBoard(load_world(tmp_path / "still.json"), lines.append)
+    gravity = board.families.index(next(f for f in board.families if f.rest))
+    time = board.states[gravity].parts[0]
+    assert (time.now == 60).all() and (time.before == 60).all() and (time.remainder == 8999).all()
+    for _ in range(30):
+        board.step()
+    assert (board.states[gravity].parts[0].now == 60).all() and board.shape[0] == 24
+    assert all(line["reading"] == 0 for line in lines if line["event"] == "field")
+    kick = json.loads((tmp_path / "still.json").read_text(encoding="utf-8"))
+    packet = {**PACKET, "family": "gravity", "amplitude": 12, "edge": {"x": 3, "y": 0, "z": 0}}
+    packet["top"] = {"x": [4, 4], "y": [0, 0], "z": [0, 0]}
+    kick.update(faces=[], ticks=40, messages=[packet])
+    (tmp_path / "kick.json").write_text(json.dumps(kick), encoding="utf-8")
+    TOOL.main(["--input", str(tmp_path / "kick.json")])
+    lines.clear()
+    board = GameBoard(load_world(tmp_path / "kick.json"), lines.append)
+    assert abs(board.states[gravity].parts[0].now[4, 0, 0] - 60) == 12
+    for _ in range(40):
+        board.step()
+    grown = board.states[gravity].parts[0].now[24:, 0, 0]
+    assert board.shape[0] > 24 and (grown[-1] == 60) and (grown != 60).any()
+    readings = [
+        line["reading"] for line in lines if line["event"] == "field" and line["family"] == "gravity"
+    ]
+    assert max(readings) > 0
+    assert BACK.verdict(GameBoard(load_world(tmp_path / "kick.json")), 40)["verdict"] == "MATCH"
+    output = RUN.run_input(str(world), str(tmp_path))
+    written = json.loads((tmp_path / "light.output.json").read_text(encoding="utf-8"))
+    readings = [
+        x["reading"] for x in written["lines"] if x["event"] == "field" and x["family"] == "charge"
+    ]
+    assert output["verdict"] == "LAWFUL" and readings and max(readings) > 0

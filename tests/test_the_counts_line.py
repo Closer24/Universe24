@@ -1,4 +1,4 @@
-"""The count's line (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is conserved and filled; The exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""The count's line (ALGEBRA.md #the-counts-line): T c_next + r' = T c_now + SUM F_ij + r is the exact continuity of Rule3's conserved form, SUM (W_c c + r) is conserved to the bit over a closed board, the inverse returns the start, a hole is conserved and filled; the click is a whole quantum's entry into a detector group through a boundary Port; The exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
 from __future__ import annotations
 
@@ -8,8 +8,10 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.features.counts_line import CountStart, CountTerm, Levels, apply
+from event_universe.reports import Detector, clicks
 
 GAMMA, NODES = 10_000, 12
 
@@ -27,10 +29,8 @@ def test_the_forms_share_changes_by_the_currents_exactly(pair):
     draw = random.Random(3)
     now = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
     before = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
-    nxt = [
-        (read * ring_sum(now)[i] + self_coefficient * now[i] - wall * before[i]) / wall
-        for i in range(NODES)
-    ]
+    ring = ring_sum(now)
+    nxt = [(read * ring[i] + self_coefficient * now[i] - wall * before[i]) / wall for i in range(NODES)]
 
     def share(a: list[Fraction], b: list[Fraction]) -> list[Fraction]:
         return [3 * den * (a[i] ** 2 + b[i] ** 2) - num * a[i] * ring_sum(b)[i] for i in range(NODES)]
@@ -86,9 +86,27 @@ def test_the_exact_bands_turn_with_no_remainder(pair, period):
     (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
     before, now = 0, 1_000
     for _ in range(1, period + 1):
-        nxt, carry = rule3(
-            (read, read, read), (2 * now, 2 * now, 2 * now), self_coefficient, wall, now, before, 0
-        )
+        nxt, carry = rule3((read,) * 3, (2 * now,) * 3, self_coefficient, wall, now, before, 0)
         assert carry == 0
         before, now = now, nxt
     assert (before, now) == (0, 1_000)
+
+
+def test_a_detectors_click_is_a_whole_quantums_entry_through_a_boundary_port_alone():
+    """The click (ALGEBRA.md #the-counts-line; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; the quanta the inward current carries over the wall at a Port leading in from outside the region click with the region's name and the Port's axis and side, never a Node, and none through a Port between two of its Nodes (a hop inside the region is no click); beside the clicks the region's net front inflow, what the instrument saw from the declared board."""
+    group = Detector("pair", np.array([True, True, False]).reshape(3, 1, 1), None)
+    wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
+    inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port
+    remainder = np.array([70, 70, 70]).reshape(3, 1, 1)
+
+    def entered(port: int) -> tuple[list[dict[str, object]], int]:
+        through = tuple(inward if p == port else zero for p in range(6))
+        board = np.ones((3, 1, 1), dtype=bool)  # every Node declared, none grown
+        return clicks(
+            group, group.nodes, through, remainder, zero, 100, wrap, "charge", 5, group.nodes, board
+        )
+
+    lines, seen = entered(0)  # from outside: one quantum, the Port +x, the region named and no Node
+    assert [(line["detector"], line["ports"]) for line in lines] == [("pair", [[0, 1]])] and seen == 40
+    assert "node" not in lines[0] and entered(1) == ([], 0)  # through -x, from Node 0 inside the region
+    assert entered(2) == ([], 0)  # +y leads beyond the board (one Node across y): no boundary Port

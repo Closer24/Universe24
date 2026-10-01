@@ -11,21 +11,30 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
-from tests.laws import CHAIN, QUANTA, ROOT, SLIT, chain_body_world, load_file, slit_world
+from tests.laws import CHAIN, PACKET, QUANTA, ROOT, SLIT, chain_body_world, load_file, slit_world
 
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
+
+
+def dense(levels: dict[str, list[int]]) -> np.ndarray:
+    """A level of the mode file's sparse form as the slit board's array."""
+    return np.bincount(levels["at"], levels["values"], 24 * 9).astype(np.int64).reshape(24, 9, 1)
+
+
 BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
 
 
 def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_but_for_its_gap(
     tmp_path, monkeypatch
 ):
-    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face and faces that leave no Node; in the run the Nodes beyond the board stay 0 in every family and no quantum crosses their Links (SUM (W_c c + r) kept to the bit), the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
+    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's declared remainders at or above W_c, on a family carrying no count, on a detector that reads a body or not one per Node, and a message's `whole` Node (no family's line lays a count whole today); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's declared remainders stand at its Nodes after the first act (the half wall elsewhere) and its click lines are the whole quanta entering its column through its two boundary Ports along x, none through a Port between two of its Nodes; in the run the Nodes beyond the board stay 0 in every family and no quantum crosses their Links (SUM (W_c c + r) kept to the bit), the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    path = slit_world(tmp_path, TOOL)
+    screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
+    screen["remainder"] = {"charge": [7] * 8 + [9]}
+    path = slit_world(tmp_path, TOOL, detectors=[screen])
     mode_file = path.with_suffix(".mode.json")
     mode = json.loads(mode_file.read_text(encoding="utf-8"))["messages"][0]
-    now, before = (np.array(mode["moving"][word]).reshape(24, 9, 1) for word in ("now", "before"))
+    now, before = (dense(mode["moving"][word]) for word in ("now", "before"))
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
     for x in range(24):
         away = abs(x - 5)
@@ -38,22 +47,59 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         load_world(slit_world(tmp_path, TOOL, "r", detectors=[{"name": "d", "positions": [[12, 0, 0]]}]))
     with pytest.raises(ValueError, match="faces leave no Node"):
         load_world(slit_world(tmp_path, TOOL, "r", faces=[{"axis": "z", "at": 0, "gaps": []}]))
+    with pytest.raises(ValueError, match=r"whole names the Node \[5, 4, 0\]: no line of the family"):
+        load_world(slit_world(tmp_path, TOOL, "r", messages=[{**PACKET, "whole": [5, 4, 0]}]))
+    for reason, remainder, block in (
+        ("remainder.charge must be an integer from 0 through 589823999", {"charge": 589824000}, None),
+        ("names 'gravity', which carries no count", {"gravity": 1}, None),
+        ("reads a body and lays no remainder", {"charge": 1}, 0),
+        ("remainder.charge lists 2 remainders for 9 Nodes", {"charge": [1, 2]}, None),
+    ):
+        entry = {**({"block": block} if block is not None else screen), "name": "d"}
+        entry["remainder"] = remainder
+        with pytest.raises(ValueError, match=reason):
+            load_world(slit_world(tmp_path, TOOL, "r", detectors=[entry]))
+    aslant = {**PACKET, "wave": [-1, 4], "phase": [1, 4], "transverse": {"y": [1, 8]}}
+    turned = slit_world(tmp_path, TOOL, "turned", messages=[aslant])
+    before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
+    mirrored = dense(before)
+    tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
+    for x in range(
+        24
+    ):  # toward -x at the phase pi / 2, k_y = pi / 8: b e cos(-k x + k_y y + pi / 2 + omega), k_y y = pi / 2 at y = 4
+        away = abs(x - 5)
+        e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
+        assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1
+    with pytest.raises(ValueError, match="transverse holds the unknown key 'x'"):
+        load_world(slit_world(tmp_path, TOOL, "bad", messages=[{**PACKET, "transverse": {"x": [1, 8]}}]))
     with pytest.raises(ValueError, match=f"{inner}: nothing stands there"):
         TOOL.pixel_mode({**SLIT, "measured": [{"family": "matter", "nodes": [at]}]})
     tampered = json.loads(mode_file.read_text(encoding="utf-8"))
-    tampered["messages"][0]["moving"]["now"][12 * 9] = 5
+    tampered["messages"][0]["moving"]["now"]["at"].append(12 * 9)
+    tampered["messages"][0]["moving"]["now"]["values"].append(5)
     mode_file.write_text(json.dumps(tampered), encoding="utf-8")
     with pytest.raises(ValueError, match=rf"is 5 at the Node \[12, 0, 0\], {inner}"):
         load_world(path)
     mode_file.write_text(json.dumps({**tampered, "messages": [mode]}), encoding="utf-8")
-    walled = GameBoard(load_world(path))
+    lines: list[dict[str, object]] = []
+    walled = GameBoard(load_world(path), lines.append)
     open_board = GameBoard(load_world(slit_world(tmp_path, TOOL, "open", faces=[])))
     charge, beyond = [family.name for family in walled.families].index("charge"), walled.wrap.beyond
     assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
     walled.step()
+    remainder = walled.states[charge].count_remainder
+    column = walled.mask(tuple(map(tuple, screen["positions"])))
+    clicked = [line for line in lines if line["event"] == "click"]  # the seen lines stand beside
+    assert (remainder[column] == np.array([7] * 8 + [9])).all() and not clicked
+    assert remainder[23, 8, 0] == 3 * 6000 * 32768 // 2
     for _ in range(23):
         walled.step()
         open_board.step()
+        risen = [line for line in lines if line["tick"] == walled.tick and line["detector"] == "screen"]
+        risen = [line for line in risen if line["event"] == "click"]  # the seen lines beside them
+        assert all(
+            all(port[0] == 0 for port in line["ports"]) and "node" not in line for line in risen
+        )  # no hop inside, no Node named
         for state in walled.states:
             records = [r for r in (*state.parts, state.levels, state.second) if r is not None]
             assert not any(getattr(r, key)[beyond].any() for r in records for key in ("now", "before"))
@@ -61,9 +107,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         assert walled.books()["charge"]["balanced"]
     level = np.abs(walled.states[charge].levels.now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].levels.now[:12]).sum()
-    print(
-        f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()}, before it {int(level[:12].sum())} against {int(free)} with no wall"
-    )
+    print(f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()},")
+    print(f"  before it {int(level[:12].sum())} against {int(free)} with no wall")
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
 
@@ -110,16 +155,12 @@ def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_ar
     document = json.loads(chain_body_world(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     with pytest.raises(ValueError, match="a sense is \\+1 or -1"):
         TOOL.pixel_mode(json.loads(json.dumps(document)), [2])
-    heavy = [
-        {"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 2 * QUANTA}]}
-        for x in (CHAIN // 2, CHAIN // 2 + 2)
-    ]
+    at = (CHAIN // 2, CHAIN // 2 + 2)
+    heavy = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 2 * QUANTA}]} for x in at]
     with pytest.raises(ValueError, match="collapses: its wells reach the pace 0"):
         TOOL.pixel_mode({**document, "measured": heavy})
     small = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 20}]} for x in (20, 23)]
-    with pytest.raises(
-        ValueError, match=r"measured\[1\] and measured\[0\] share a Node in their regions"
-    ):
+    with pytest.raises(ValueError, match=r"measured\[1\] and measured\[0\] share a Node"):
         TOOL.pixel_mode({**document, "measured": small})
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     del universe["integers"]["quantum_action"]

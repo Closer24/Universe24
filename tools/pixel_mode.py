@@ -1,4 +1,4 @@
-"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. The generator also lays every message of the world (ALGEBRA.md #the-generator, the message lay): a packet of a family of quanta and no body, its `now` the wave along its axis under its envelope and its `before` the same wave one interval earlier, every cosine by Rule3's rotation act and every root by the fixed point of the division act, its numbers the world's keys. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's form, D_i = now^2 - next x before div T at every Node of the body's region, until the counts return themselves within the rounding; the counts are laid with the remainder carried from Node to Node (no quantum lost to a Node's rounding) and each round takes the half step from the counts toward the form (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the form reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its form over the region carries M quanta, the scale bracketed from the centre's count and bisected as the count's line reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. The generator also lays every message of the world (ALGEBRA.md #the-generator, the message lay): a packet of a family of quanta and no body, its `now` the wave along its axis (toward either side, by the sign of its wave number) at its phase under its envelope and its `before` the same wave one interval earlier, every cosine by Rule3's rotation act and every root by the fixed point of the division act, its numbers the world's keys. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
 
 from __future__ import annotations
 
@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 from dataclasses import dataclass
+from math import lcm
 from pathlib import Path
 from typing import Any, cast
 
@@ -240,21 +241,22 @@ def standing(
             previous, read, span = None, 0, 2 * span
 
 
-def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int]]:
-    """The held rows a body's family reads by plain, (name, pair, divisor), as the loader derives the reads (ALGEBRA.md #the-paces: every holder of the content): the rows whose levels are the content its record reads; a read by sign is 0 here (a body of the generator is laid real unless a sense is asked, and its sense stands at 0 before the engine's first act)."""
+def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int, int]]:
+    """The held rows a body's family reads by plain, (name, pair, divisor, rest), as the loader derives the reads (ALGEBRA.md #the-paces: every holder of the content): the rows whose levels are the content its record reads; a read by sign is 0 here (a body of the generator is laid real unless a sense is asked, and its sense stands at 0 before the engine's first act)."""
     rows = []
     for row in universe["families"]:
         held = row.get("held")
         word = str(held["count"]) if isinstance(held, dict) else None
         divisor = int(held["divisor"]) if isinstance(held, dict) else None
-        rows.append((str(row["name"]), (int(row["pair"][0]), int(row["pair"][1])), word, divisor))
+        rest = int(held.get("rest", 0)) if isinstance(held, dict) else 0
+        rows.append((str(row["name"]), (int(row["pair"][0]), int(row["pair"][1])), word, divisor, rest))
     names = [row[0] for row in rows]
     reads = family_rules(rows)[names.index(family)].reads
-    found = [
-        (rows[read.family][0], rows[read.family][1], int(rows[read.family][3] or 1))
-        for read in reads
-        if read.by == BY_PLAIN
-    ]
+    found = []
+    for read in reads:
+        name, pair, _held, divisor, vacuum = rows[read.family]
+        if read.by == BY_PLAIN:
+            found.append((name, pair, int(divisor or 1), vacuum))
     if not found:
         raise ValueError(
             f"the family {family!r} reads no held row of the content by plain: a body needs a row to bind in "
@@ -264,16 +266,18 @@ def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[in
 
 
 def rests(
-    rows: list[tuple[str, tuple[int, int], int]],
+    rows: list[tuple[str, tuple[int, int], int, int]],
     counts: np.ndarray,
     wrap: Wrap,
     width: int,
 ) -> np.ndarray:
-    """Every held row's level at these sources as the engine's start holds it, each row at the rest of its own line by the start (features/start: the division act iterated from nothing until it repeats, at the row's pair and divisor, with or without a gap), summed into the content every record reads: at a body's own sources alone, the body's own well."""
+    """Every held row's level at these sources as the engine's start holds it, each row at the rest of its own line by the start (features/start: the division act iterated from nothing until it repeats, at the row's pair and divisor, with or without a gap) with its vacuum content added (the massless row's `rest`), summed into the content every record reads: at a body's own sources alone, the body's own well."""
     total = np.zeros(counts.shape, dtype=np.int64)
-    for _name, pair, divisor in rows:
+    for _name, pair, divisor, vacuum in rows:
         wall = 3 * pair[1]  # the plain rule's wall, the one the row steps by
-        total += np.asarray(rest(counts, pair, wrap, divisor, width, wall).levels, dtype=np.int64)
+        total += (
+            np.asarray(rest(counts, pair, wrap, divisor, width, wall).levels, dtype=np.int64) + vacuum
+        )
     return total
 
 
@@ -290,7 +294,7 @@ def spread(
     first: np.ndarray,
     centre: Axis,
     board: Board,
-    rows: list[tuple[str, tuple[int, int], int]],
+    rows: list[tuple[str, tuple[int, int], int, int]],
     others: np.ndarray,
 ) -> np.ndarray:
     """The first lay: a body declared on one Node is laid over the cube about its centre, its quanta shared alike, the cube widened one Link at a time until every pace is positive (no value of the law: the iteration moves it to the fixed point); a body declared on its Nodes is laid as declared."""
@@ -368,7 +372,7 @@ def scaled_record(
 
 def body_fixed_point(
     board: Board,
-    rows: list[tuple[str, tuple[int, int], int]],
+    rows: list[tuple[str, tuple[int, int], int, int]],
     others: np.ndarray,
     centre: Axis,
     quanta: int,
@@ -537,11 +541,24 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
 def message_levels(
     board: Board, message: dict[str, Any], beyond: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`), x_i the Node's coordinate on that axis, b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a (k = 0 across), sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width; 0 beyond the board."""
+    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a, sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board."""
     along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
+    turned, whole_turn = message.get("phase", [0, 1])
+    sideways = {
+        AXES.index(str(name)): (int(r), int(s)) for name, (r, s) in message.get("transverse", {}).items()
+    }
+    numbers = [
+        (int(turns), int(halves)) if axis == along else sideways.get(axis, (0, 1)) for axis in range(3)
+    ]
     amplitude = int(message["amplitude"])
     unit = division_fixed_point(int(division_forward(board.width, amplitude, 0)[0]))
-    cosines = half_turn(int(halves), unit)
+    steps = lcm(*(2 * 2 * q for _p, q in numbers), int(whole_turn))
+    quarter = int(division_forward(steps, 2 * 2, 0)[0])
+    cosines = half_turn(quarter, unit)  # cos(2 pi j / steps) for j from 0 through the half turn
+    per_link = [
+        int(division_forward(p * steps, 2 * q, 0)[0]) for p, q in numbers
+    ]  # k's steps per Link per axis
+    shift = int(division_forward(int(turned) * steps, int(whole_turn), 0)[0])  # the phase's steps
     axes = [
         envelope(
             board.shape[axis],
@@ -551,21 +568,19 @@ def message_levels(
         )
         for axis, name in enumerate(AXES)
     ]
-    coordinates = np.indices(board.shape)[along]
-    wave = np.vectorize(lambda x: cosine_at(cosines, 2 * int(turns) * int(x)), otypes=[object])
-    quadrature = np.vectorize(
-        lambda x: cosine_at(cosines, int(halves) - 2 * int(turns) * int(x)), otypes=[object]
-    )
-    cosine = sum(cosines[2 * int(turns)] if axis == along else unit for axis in range(3))
-    cosine = int(division_forward(cosine, 3, 0)[0])
+    coordinates = np.indices(board.shape)
+    index = sum(per_link[axis] * coordinates[axis] for axis in range(3)) + shift
+    wave = np.vectorize(lambda i: cosine_at(cosines, int(i)), otypes=[object])(index)
+    quadrature = np.vectorize(lambda i: cosine_at(cosines, int(i) - quarter), otypes=[object])(index)
+    cosine = int(division_forward(sum(cosine_at(cosines, per_link[axis]) for axis in range(3)), 3, 0)[0])
     sine = division_fixed_point(unit * unit - cosine * cosine)
     shaped = [
         np.array(levels, dtype=object).reshape([-1 if a == axis else 1 for a in range(3)])
         for axis, levels in enumerate(axes)
     ]
     envelope_here = amplitude * shaped[0] * shaped[1] * shaped[2]
-    now = envelope_here * wave(coordinates) * unit
-    before = envelope_here * (wave(coordinates) * cosine - quadrature(coordinates) * sine)
+    now = envelope_here * wave * unit
+    before = envelope_here * (wave * cosine - quadrature * sine)
     scale = unit * unit * unit * unit * unit
     half = int(division_forward(scale, 2, 0)[0])
     found = []
@@ -576,7 +591,7 @@ def message_levels(
 
 
 def message_entry(board: Board, message: dict[str, Any], beyond: np.ndarray) -> dict[str, Any]:
-    """One message's mode entry: its family and pair, its amplitude, the count its record lays over the board at the vacuum's paces (a reading) and its two levels."""
+    """One message's mode entry: its family and pair, its amplitude, the count its record lays over the board at the vacuum's paces (a reading) and its two levels as their nonzero Nodes."""
     now, before = message_levels(board, message, beyond)
     laid = share_counts(share_of(board, 0, now, before), board.pair[1], board.action)
     return {
@@ -584,8 +599,15 @@ def message_entry(board: Board, message: dict[str, Any], beyond: np.ndarray) -> 
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
         "count": int(laid.sum()),
-        "moving": {"now": now.ravel().tolist(), "before": before.ravel().tolist()},
+        "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
+
+
+def nonzero(levels: np.ndarray) -> dict[str, list[int]]:
+    """A level over the board as its nonzero Nodes alone, the mode file's sparse form: their flat x-major indexes and their levels (a packet stands on few Nodes of a long board)."""
+    flat = levels.ravel()
+    at = np.flatnonzero(flat)
+    return {"at": at.tolist(), "values": flat[at].tolist()}
 
 
 def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dict[str, Any]:
@@ -723,14 +745,14 @@ def main(argv: list[str] | None = None) -> None:
     mode = pixel_mode(document, list(args.sense))
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
-    out.write_text(json.dumps(mode) + "\n", encoding="utf-8")
+    out.write_text(json.dumps(mode, separators=(",", ":")) + "\n", encoding="utf-8")
     for body in mode["bodies"]:
         reading = {key: value for key, value in body.items() if key not in ("profile", "moving")}
         reading["nodes"] = sum(1 for level in body["profile"] if level)
         print(json.dumps(reading))
     for message in mode["messages"]:
         reading = {key: value for key, value in message.items() if key != "moving"}
-        reading["nodes"] = sum(1 for level in message["moving"]["now"] if level)
+        reading["nodes"] = sum(1 for level in message["moving"]["now"]["values"] if level)
         print(json.dumps(reading))
 
 

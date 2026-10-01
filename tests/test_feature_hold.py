@@ -8,11 +8,8 @@ from event_universe.features.hold import components, diagonal, hold
 
 def test_the_source_adds_the_count_over_the_divisor_each_interval_and_steps_back():
     """A source of 10 over E_s = 7 from the carry 0 adds [1, 1, 2, 1, 2, 1, 2] over seven intervals, 10 in all with the carry back at 0; the inverse takes each increment off and returns the carry, exact on arrays."""
-    level, carry, increments = (
-        np.zeros((2, 1, 1), dtype=np.int64),
-        np.zeros((2, 1, 1), dtype=np.int64),
-        [],
-    )
+    zero = np.zeros((2, 1, 1), dtype=np.int64)
+    level, carry, increments = zero, zero.copy(), []
     source = np.array([[[10]], [[0]]], dtype=np.int64)
     states = [(level, carry)]
     for _ in range(7):

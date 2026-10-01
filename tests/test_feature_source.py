@@ -24,14 +24,8 @@ def test_the_well_is_the_forms_quanta_with_the_remainder_carried_and_steps_back(
     assert quanta.ravel().tolist() == [100, 0, 0, 2, 0, 1]
     assert carry.ravel().tolist() == [72, 18_909, 0, 0, 1, 0]
     again, twice = node.well(form, carry, T)
-    assert again.ravel().tolist() == [100, 1, 0, 2, 0, 1] and twice.ravel().tolist() == [
-        144,
-        18_908,
-        0,
-        0,
-        2,
-        0,
-    ]
+    assert again.ravel().tolist() == [100, 1, 0, 2, 0, 1]
+    assert twice.ravel().tolist() == [144, 18_908, 0, 0, 2, 0]
     back, start = node.well(form, twice, T, -1)
     assert np.array_equal(back, again) and np.array_equal(start, carry)
     assert not node.wronskian(after, node.Record(*(np.zeros(SHAPE, dtype=np.int64),) * 3)).any()

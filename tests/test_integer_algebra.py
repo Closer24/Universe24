@@ -1,4 +1,4 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function, and a root only in the functions ALLOWED_ROOTS names, each with its reason."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate)."""
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "flow.py": "the flows into a held row's tensions, each a carried division of Rule3",
     "lay.py": "the lay of every family's count and sense at the first act from the weighted share, Rule3's division act at the count's wall",
     "reports.py": "the detectors' clicks, a body's Nodes derived for a report and the books, readings of whole-board arrays",
+    "growth.py": "the receding face: the GameBoard grown by layers of zeros as the front reaches it, taken off on the way back",
     "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
     "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies' held quanta laid by the carried division",
     "loader/keys.py": "the keys of the files: an object, an integer, a Node on the board, a range along an axis",
@@ -34,53 +35,46 @@ PHYSICAL_MODULES: dict[str, str] = {
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
 NUMPY_DTYPES_FORBIDDEN = {
-    "int8",
-    "int16",
-    "int32",
-    "uint8",
-    "uint16",
-    "uint32",
-    "uint64",
+    "complex128",
+    "complex64",
+    "complex_",
+    "complexfloating",
+    "float128",
     "float16",
     "float32",
     "float64",
-    "float128",
-    "floating",
     "float_",
-    "complex64",
-    "complex128",
-    "complexfloating",
-    "complex_",
+    "floating",
+    "int16",
+    "int32",
+    "int8",
+    "uint16",
+    "uint32",
+    "uint64",
+    "uint8",
 }
 NUMPY_FORBIDDEN = {
-    "sqrt",
-    "mean",
-    "float",
-    "true_divide",
+    "arctan2",
+    "average",
+    "cbrt",
+    "cos",
     "divide",
     "exp",
-    "log",
-    "sin",
-    "cos",
-    "tan",
-    "average",
-    "std",
-    "var",
-    "cbrt",
-    "power",
-    "log2",
-    "log10",
-    "arctan2",
+    "float",
     "hypot",
+    "log",
+    "log10",
+    "log2",
+    "mean",
+    "power",
+    "sin",
+    "sqrt",
+    "std",
+    "tan",
+    "true_divide",
+    "var",
 }
 BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integer_root"}
-
-# Every root in the physical modules today, by (module, function), with its reason; `None` is the module level. The set found must equal this set: empty, the root left everywhere (the owner, 2026-09-30), the fixed point of the division act in its place.
-ALLOWED_ROOTS: dict[tuple[str, str | None], str] = {}
-
-
-def physical_sources() -> dict[str, str]:
-    return {name: (SRC / name).read_text(encoding="utf-8") for name in PHYSICAL_MODULES}
 
 
 def float_literals(source: str) -> list[int]:
@@ -99,15 +93,12 @@ def float_literals(source: str) -> list[int]:
 
 def true_divisions(source: str) -> list[int]:
     """The lines of every `/` operator token (`//` is one token, `//=` another)."""
-    return [
-        token.start[0]
-        for token in tokenize.generate_tokens(io.StringIO(source).readline)
-        if token.type == tokenize.OP and token.string in ("/", "/=")
-    ]
+    tokens = tokenize.generate_tokens(io.StringIO(source).readline)
+    return [t.start[0] for t in tokens if t.type == tokenize.OP and t.string in ("/", "/=")]
 
 
 def forbidden_imports(tree: ast.AST) -> list[str]:
-    """Every forbidden import, and every alias of `math`, `isqrt` or `integer_root` (an alias would hide a root from `roots`, so aliasing them is itself a violation)."""
+    """Every forbidden import, and every alias of `math`, `isqrt` or `integer_root` (an alias would hide a root, so aliasing them is itself a violation)."""
     found = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
@@ -133,15 +124,7 @@ def forbidden_imports(tree: ast.AST) -> list[str]:
 
 ALLOCATIONS_NEEDING_DTYPE = {"zeros", "ones", "empty", "full"}
 NUMPY_CHAIN_FORBIDDEN = {
-    "linalg",
-    "linspace",
-    "logspace",
-    "geomspace",
-    "fft",
-    "random",
-    "polyfit",
-    "interp",
-    "polynomial",
+    *"fft geomspace interp linalg linspace logspace polyfit polynomial random".split()
 }
 METHODS_FORBIDDEN = {"mean", "std", "var"}
 
@@ -217,48 +200,6 @@ def numpy_violations(tree: ast.AST) -> list[str]:
     return found
 
 
-def root_aliases(tree: ast.AST) -> tuple[set[str], set[str]]:
-    """The local names bound to `isqrt` or `integer_root` (with or without an alias) and the local names of the `math` module."""
-    names: set[str] = set()
-    modules: set[str] = set()
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            for alias in node.names:
-                if alias.name == "math":
-                    modules.add(alias.asname or "math")
-        elif isinstance(node, ast.ImportFrom):
-            for alias in node.names:
-                if alias.name in ROOT_NAMES:
-                    names.add(alias.asname or alias.name)
-    return names | ROOT_NAMES, modules | {"math"}
-
-
-def roots(tree: ast.AST) -> set[tuple[str | None, int]]:
-    """Every call of `isqrt` or `integer_root`, under any alias, with its enclosing function."""
-    names, modules = root_aliases(tree)
-    found: set[tuple[str | None, int]] = set()
-
-    def walk(node: ast.AST, function: str | None) -> None:
-        for child in ast.iter_child_nodes(node):
-            inner = (
-                child.name if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)) else function
-            )
-            if isinstance(child, ast.Call):
-                callee = child.func
-                if isinstance(callee, ast.Name) and callee.id in names:
-                    found.add((inner, child.lineno))
-                elif (
-                    isinstance(callee, ast.Attribute)
-                    and callee.attr in ROOT_NAMES
-                    and (not isinstance(callee.value, ast.Name) or callee.value.id in modules)
-                ):
-                    found.add((inner, child.lineno))
-            walk(child, inner)
-
-    walk(tree, None)
-    return found
-
-
 @pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES))
 def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     source = (SRC / name).read_text(encoding="utf-8")
@@ -267,21 +208,6 @@ def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     assert true_divisions(source) == [], (name, true_divisions(source))
     assert forbidden_imports(tree) == [], (name, forbidden_imports(tree))
     assert numpy_violations(tree) == [], (name, numpy_violations(tree))
-
-
-def test_every_root_is_listed_with_its_reason_and_the_list_is_the_inventory() -> None:
-    found = {
-        (name, function)
-        for name, source in physical_sources().items()
-        for function, _ in roots(ast.parse(source))
-    }
-    listed = set(ALLOWED_ROOTS)
-    assert found - listed == set(), f"a root outside the list: {sorted(found - listed, key=str)}"
-    assert listed - found == set(), f"a listed root no longer there: {sorted(listed - found, key=str)}"
-    for key, reason in ALLOWED_ROOTS.items():
-        assert reason.startswith(("at load", "at run time", "a predicate", "the integer square root")), (
-            key
-        )
 
 
 def features_modules() -> list[str]:
@@ -302,12 +228,8 @@ def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     """Every module of the package, of `core/` and of `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed."""
-    modules = {
-        path.relative_to(SRC).as_posix()
-        for folder in (SRC, SRC / "core", SRC / "loader")
-        for path in folder.glob("*.py")
-        if path.name != "__init__.py"
-    }
+    files = [path for folder in (SRC, SRC / "core", SRC / "loader") for path in folder.glob("*.py")]
+    modules = {path.relative_to(SRC).as_posix() for path in files if path.name != "__init__.py"}
     assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
 
 
@@ -325,9 +247,7 @@ def test_the_gate_catches_each_violation() -> None:
     """Every float literal, true division, forbidden import and numpy departure from the integers is caught."""
     assert all(checker(source) != [] for source, checker in SOURCE_CHECKS.items())
     assert all(forbidden_imports(ast.parse(source)) != [] for source in IMPORT_CHECKS)
-    assert all(
-        numpy_violations(ast.parse("import numpy as np\n" + source)) != [] for source in NUMPY_CHECKS
-    )
+    assert all(numpy_violations(ast.parse("import numpy as np\n" + text)) for text in NUMPY_CHECKS)
 
 
 def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
@@ -339,14 +259,3 @@ def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
     tree = ast.parse(source)
     assert float_literals(source) == [] and true_divisions(source) == []
     assert forbidden_imports(tree) == [] and numpy_violations(tree) == []
-
-
-ROOT_SOURCES = ("import math\n", "from math import isqrt as r\n", "import math as m\n")
-ROOT_CALLS = ("math.isqrt(x)", "r(x)", "m.isqrt(x)", "ir(x)")
-
-
-def test_a_root_outside_the_list_is_found_with_its_function_under_any_alias() -> None:
-    """A root called plainly or under an alias of the function or of the module is found with its function."""
-    sources = (*ROOT_SOURCES, "from event_universe.core.integer import integer_root as ir\n")
-    for source, call in zip(sources, ROOT_CALLS, strict=True):
-        assert roots(ast.parse(f"{source}def wall(x):\n    return {call}\n")) == {("wall", 3)}
