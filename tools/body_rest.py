@@ -2,7 +2,7 @@
 
 Run with PYTHONPATH set to the checkout's src:
 
-    PYTHONPATH=src python tools/body_rest.py [--intervals N] [--reach R] [--expectation <expectation>.json] [--output <world>.output.json] <world>.json ...
+    PYTHONPATH=src python tools/body_rest.py [--intervals N] [--reach R] [--expectation <expectation>.json] [--output <world>.output.json ...] <world>.json ...
 """
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ from event_universe.loader.keys import AXES
 from event_universe.world_files import load_world
 
 LABEL = "GAMEBOARD"
-Node = tuple[int, int, int]
+Node = tuple[int, ...]
 
 
 def pair(value: Fraction | None) -> list[int] | None:
@@ -138,10 +138,20 @@ def body_reading(
     }
 
 
+def grown(array: np.ndarray, shape: tuple[int, ...], offset: Node, board: GameBoard) -> np.ndarray:
+    """An array kept before a step brought to the board's shape after it: where a receding face grew the GameBoard during the step (`growth.resize`), the layers grown before the origin (the offset's change) are prepended and the rest appended, as zeros, so that the interval's start and its end are read at the same Nodes."""
+    pads = []
+    for axis in range(len(AXES)):
+        low = board.offset[axis] - offset[axis]
+        pads.append((low, board.shape[axis] - shape[axis] - low))
+    return np.pad(array, pads) if any(pad != (0, 0) for pad in pads) else array
+
+
 def read_about_one_interval(
-    board: GameBoard, masks: list[np.ndarray], reach: int
+    board: GameBoard, centres: list[Node], reach: int
 ) -> list[dict[str, object]]:
-    """Every body's reading about the interval the board is at: the records, shares and quanta of the start are kept, the board steps once, and each body is read (`body_reading`)."""
+    """Every body's reading about the interval the board is at: the records, shares and quanta of the start are kept, the board steps once (grown at a receding face where the front reaches it, the kept arrays grown with it, `grown`), the regions are read at the board's shape after the step, and each body is read (`body_reading`)."""
+    shape, offset = tuple(board.shape), tuple(board.offset)
     kept = {}
     for number, row in enumerate(board.world.bodies):
         begun = [
@@ -149,10 +159,21 @@ def read_about_one_interval(
         ]
         kept[number] = (begun, board.share_of(row.family)[0].copy(), board.quanta(row.family)[0].copy())
     board.step()
-    return [
-        body_reading(board, number, masks[number], *kept[number], reach)
-        for number in range(len(board.world.bodies))
-    ]
+    masks = regions(board, centres)
+    found = []
+    for number in range(len(board.world.bodies)):
+        begun, share, quanta = kept[number]
+        begun = [
+            node.Record(
+                grown(line.now, shape, offset, board),
+                grown(line.before, shape, offset, board),
+                line.remainder,
+            )
+            for line in begun
+        ]
+        share, quanta = grown(share, shape, offset, board), grown(quanta, shape, offset, board)
+        found.append(body_reading(board, number, masks[number], begun, share, quanta, reach))
+    return found
 
 
 def separation(readings: list[dict[str, object]], centres: list[Node]) -> Fraction | None:
@@ -179,11 +200,10 @@ def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
         )
     steps = board.world.ticks if intervals is None else intervals
     centres = [centre_of(board, number) for number in range(len(board.world.bodies))]
-    masks = regions(board, centres)
-    start = read_about_one_interval(board, masks, reach)
+    start = read_about_one_interval(board, centres, reach)
     while board.tick < steps and board.ended is None:
         board.step()
-    end = read_about_one_interval(board, masks, reach) if board.ended is None else None
+    end = read_about_one_interval(board, centres, reach) if board.ended is None else None
     found: dict[str, Any] = {
         "label": LABEL,
         "input": path.name,
@@ -282,7 +302,11 @@ def main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument("--expectation", type=Path, default=None, help="the blind expectation file")
     parser.add_argument(
-        "--output", type=Path, nargs="*", default=[], help="run output files, their field lines"
+        "--output",
+        type=Path,
+        action="append",
+        default=[],
+        help="a run's output file, its field lines read (the flag once per file)",
     )
     args = parser.parse_args(argv)
     expected = (
