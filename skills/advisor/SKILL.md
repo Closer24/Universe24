@@ -55,6 +55,13 @@ owner's word alone; and a first look with a blind expectation decides it. A
 hypothesis is neither a defect (the engine differs from the algebra: fixed now)
 nor a finding (a click outside its band: it names the missing law).
 
+Every derivation follows the method of derivation of
+[skills/workflow.md](../workflow.md): Rule3's line first, a body's clicks as the
+only bridge to nature, every observable a click formula and every other formula
+labelled GameBoard, a re-derivation at every change, and the six statuses of the
+paper (theorem, derived, computed from the law, the owner's declaration,
+hypothesis, to be determined by an experiment).
+
 ## The three channels between families
 
 Under Rule3 a family affects another in three ways and no fourth; the places

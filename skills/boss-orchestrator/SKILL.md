@@ -66,6 +66,10 @@ measurement or document rewrite.
    one pull request at a time, its base `main`; the branch deleted; the next
    branch restarted from `main`.
 
+A brief that asks a worker for a blind number or a derivation names the method
+of derivation of [skills/workflow.md](../workflow.md); a worker's number without
+its status and its fence (GameBoard or clicks) is sent back.
+
 ## Context economy
 
 Read only what is interesting: the file the task names, the lines a search

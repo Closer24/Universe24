@@ -7,7 +7,7 @@ read from git, so no baseline file is kept: a pull request may lower a count, ne
     request that adds tests offsets them by deletions (the model owner, 2026-09-27); a test
     file above 600 lines holds no more than at the merge base, and a new one stays under.
 (b) Copied setup. No test module imports another `test_*.py`: shared builders live in
-    `tests/worlds.py` and `tests/running.py`. A function of 8 lines or more whose abstracted
+    `tests/laws.py`. A function of 8 lines or more whose abstracted
     body appears twice across tests/ is refused beyond the merge base's groups.
 (c) History. Across tests/, the docstring and comment lines that carry a history marker, and
     the docstrings beyond three lines, stay at or below the merge base's (a moved helper moves
