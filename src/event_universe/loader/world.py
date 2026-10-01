@@ -236,16 +236,45 @@ def detectors_of(
     return tuple(found)
 
 
-def regions_no_finer_than_half_a_wavelength(
+def connected(nodes: tuple[Node, ...], shape: Node, periodic: tuple[bool, bool, bool]) -> bool:
+    """Whether a set of Nodes is one region: every Node reached from the first along the Links, across a periodic wrap too."""
+    region, seen, front = set(nodes), {nodes[0]}, [nodes[0]]
+    while front:
+        node = front.pop()
+        for axis in range(3):
+            for side in (1, -1):
+                there = list(node)
+                there[axis] += side
+                if periodic[axis]:
+                    there[axis] %= shape[axis]
+                at = (there[0], there[1], there[2])
+                if at in region and at not in seen:
+                    seen.add(at)
+                    front.append(at)
+    return seen == region
+
+
+def regions_of_the_law(
     detectors: tuple[DetectorRow, ...],
     messages: tuple[MessageRow, ...],
     shape: Node,
+    periodic: tuple[bool, bool, bool],
     families: tuple[FamilyRule, ...],
 ) -> None:
-    """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's word of 2026-09-30, the uncertainty principle upheld): the finest structure the amplitudes of a family can carry is half its wavelength, so a declared region is at least half the wavelength of every message of its family across the beam, q / p Links for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) is refused by name; a detector reading a body declares no region and the open faces' layer is the board's own."""
+    """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words of 2026-09-30 and of 2026-10-01, 03:20, the uncertainty principle upheld): a declared region is one connected region of Nodes, never one Node, and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a detector reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
     for detector in detectors:
         if not detector.declared:
             continue
+        if len(detector.positions) < 2:
+            raise ValueError(
+                f"detector {detector.name!r} is one Node: a detector is a region of Nodes, never one Node "
+                "(no click names a Node)"
+            )
+        if not connected(detector.positions, shape, periodic):
+            raise ValueError(
+                f"detector {detector.name!r} is not one connected region: its Nodes fall into pieces with "
+                "no Link between them"
+            )
         for message in messages:
             p, q = message.wave
             for axis in range(3):
@@ -257,7 +286,7 @@ def regions_no_finer_than_half_a_wavelength(
                     raise ValueError(
                         f"detector {detector.name!r} is {extent} Node(s) across the {AXES[axis]} axis, under half "
                         f"the wavelength of the {families[message.family].name!r} message's wave [{p}, {q}], "
-                        f"{q} / {abs(p)} Links: no click names a position finer than the amplitudes carry"
+                        f"{q} / {abs(p)} Nodes: no click names a position finer than the amplitudes carry"
                     )
 
 
@@ -291,7 +320,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
     detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, layer)
-    regions_no_finer_than_half_a_wavelength(detectors, messages, shape, families)
+    regions_of_the_law(detectors, messages, shape, (periodic[0], periodic[1], periodic[2]), families)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),

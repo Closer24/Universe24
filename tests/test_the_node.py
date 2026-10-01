@@ -256,8 +256,8 @@ def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
     second = {"im_now": [0] * CHAIN, "im_before": [turn * v // 16 for v in levels]} if turn else {}
     moving, family = {"now": levels, "before": levels, **second}, CHARGED["name"] if turn else "matter"
     mode = {"family": family, "pair": [4000, 6000], "moving": moving}
-    ends = [{"name": "left", "positions": [[0, 0, 0]]}]
-    ends += [{"name": "right", "positions": [[CHAIN - 1, 0, 0]]}]
+    ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
+    ends += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
     world = dict(shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), ticks=400)
     world.update(face_depth=1, universe="u.json", engine="e.json", detectors=ends)
     body = {"family": family, "nodes": [{"node": [CHAIN // 2, 0, 0], "count": 1}]}
@@ -490,12 +490,12 @@ def test_the_wronskians_sign_is_read_from_the_record_and_a_real_record_has_none(
 
 
 def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: object) -> Path:
-    """A chain of `extent` Nodes (x open) in a universe of the sign holder alone (light reads nothing), a packet of light at k = pi / 4 about x = `first` laid by the generator, a detector at the file's Node 15 and `keys` the world's further keys (the receding faces)."""
+    """A chain of `extent` Nodes (x open) in a universe of the sign holder alone (light reads nothing), a packet of light at k = pi / 4 about x = `first` laid by the generator, a detector `post` at the file's Nodes 14 and 15 and `keys` the world's further keys (the receding faces)."""
     universe_beside(folder, drop=tuple(name for name in NAMES if name != "charge"))
     world = dict(shape=[extent, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
     world.update(ticks=200, universe="u.json", engine="e.json", measured=[], **keys)
     world["messages"] = [{**PACKET, "top": {"x": [first, first], "y": [0, 0], "z": [0, 0]}}]
-    world["detectors"] = [{"name": "post", "positions": [[15, 0, 0]]}]
+    world["detectors"] = [{"name": "post", "positions": [[14, 0, 0], [15, 0, 0]]}]
     (path := folder / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     return path

@@ -44,6 +44,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     inner, at = "beyond the board's inner face", {"node": [12, 0, 0], "count": 50}
     with pytest.raises(ValueError, match=f"{inner}: nothing stands there"):
         load_world(slit_world(tmp_path, TOOL, "r", detectors=[{"name": "d", "positions": [[12, 0, 0]]}]))
+    with pytest.raises(ValueError, match="wave's p is 0"):
+        load_world(slit_world(tmp_path, TOOL, "r", messages=[{**PACKET, "wave": [0, 4]}]))
     with pytest.raises(ValueError, match="faces leave no Node"):
         load_world(slit_world(tmp_path, TOOL, "r", faces=[{"axis": "z", "at": 0, "gaps": []}]))
     with pytest.raises(ValueError, match=r"whole names the Node \[5, 4, 0\]: no line of the family"):
@@ -85,14 +87,10 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         open_board.step()
         risen = [x for x in lines if x["tick"] == walled.tick and x["detector"] == "screen"]
         # the region's report and the field's reading alone, no Node named
-        assert all(
-            x["event"] in ("click", "field") and "node" not in x and "ports" not in x for x in risen
-        )
+        assert all(x["event"] in ("click", "field") and not {"node", "ports"} & x.keys() for x in risen)
         assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")
         for state in walled.states:
-            assert not any(
-                getattr(r, key)[beyond].any() for r in state.lines for key in ("now", "before")
-            )
+            assert not any(a[beyond].any() for r in state.lines for a in (r.now, r.before))
         assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()

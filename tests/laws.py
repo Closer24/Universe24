@@ -46,15 +46,15 @@ def chain_body_world(
     taker: bool = False,
     mode: bool = True,
 ) -> Path:
-    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right` on the chain's two end Nodes report the light's inflow there."""
+    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
     turning = [bool(senses[i]) if i < len(senses) else False for i in range(len(at))]
     universe_beside(tmp_path, charged=any(turning))
     measured: list[dict[str, object]] = [
         dict(family=CHARGED["name"] if turns else "matter", nodes=[dict(node=[x, 0, 0], count=quanta)])
         for x, turns in zip(at, turning, strict=True)
     ]
-    detectors: list[dict[str, object]] = [{"name": "left", "positions": [[0, 0, 0]]}]
-    detectors += [{"name": "right", "positions": [[CHAIN - 1, 0, 0]]}]
+    detectors: list[dict[str, object]] = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
+    detectors += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
     detectors += [{"name": "taker", "block": len(at) - 1}] if taker else []
     document = dict(
         shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), detectors=detectors
