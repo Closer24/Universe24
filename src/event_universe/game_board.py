@@ -249,19 +249,19 @@ class GameBoard:
             for index in self.order
         }
 
-    def momenta(self) -> Stresses:
-        """Every turned record's momentum density on each axis at every Node, read from its record as it stands, the pair the step starts from (`node.momentum_of`): the source the holder of the sign's odd lines take in their one write under the rotation."""
-        return {index: node.momentum_of(self.record(index), self.wrap) for index in self.turning}
+    def sense_currents(self) -> Stresses:
+        """Every turned record's sign current on each axis at every Node, the mean of the Node's two a-Links' Wronskian currents, J_a / 2 with J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its record as it stands at the interval's start (`node.sense_current_of`): the source the holder of the sign's odd lines take in their one write under the rotation at the wall den T."""
+        return {index: node.sense_current_of(self.record(index), self.wrap) for index in self.turning}
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' momentum densities and the tensions' parts read from every record at the pair the step starts from, the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the detectors' reports; the one write per held line from the bookings of the start."""
+        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the detectors' reports; the one write per held line from the bookings of the start."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.tick}: {self.ended}")
         if not growth.grow(self):
             return
         self.tick += 1
         forms, turns = Bookings(), Bookings()
-        currents, momenta, stresses = self.currents(), self.momenta(), self.stresses()
+        currents, senses, stresses = self.currents(), self.sense_currents(), self.stresses()
         begun = [state.lines for state in self.states]
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, (first, second)) in found.items():
@@ -274,7 +274,7 @@ class GameBoard:
             state.lines = lines
         self.report(currents, forms, begun)
         for index in self.held:
-            self.hold(index, forms, turns, 1, stresses, momenta)
+            self.hold(index, forms, turns, 1, stresses, senses)
 
     def hold(
         self,
@@ -283,11 +283,11 @@ class GameBoard:
         turns: Bookings,
         direction: int,
         stresses: Stresses,
-        momenta: Stresses,
+        senses: Stresses,
     ) -> None:
-        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the hold"): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, and from their axis bookings at the interval's start, the tensions' parts read from the records for a row of the content and the momentum densities for the holder of the sign under the rotation (`node.write_sources`), each line's division at its wall with its one remainder (`node.held_write`)."""
+        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the hold"): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, and from their axis bookings at the interval's start, the tensions' parts read from the records for a row of the content and the sign currents for the holder of the sign under the rotation (`node.write_sources`), each line's division at its wall with its one remainder (`node.held_write`)."""
         family, state = self.families[index], self.states[index]
-        bookings, axes = turns if family.wronskian else forms, momenta if family.rotation else stresses
+        bookings, axes = turns if family.wronskian else forms, senses if family.rotation else stresses
         numerators = node.write_sources(index, self.families, bookings, axes, self.writes[index])
         state.lines, state.write_remainders = node.held_write(
             state.lines, numerators, self.walls(index), state.write_remainders, direction
@@ -360,34 +360,34 @@ class GameBoard:
         forms: Bookings,
         turns: Bookings,
         stresses: Stresses,
-        momenta: Stresses,
+        senses: Stresses,
     ) -> None:
-        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers), its tension's parts and a turned record's momentum density from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done."""
+        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers), its tension's parts and a turned record's sign current from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done."""
         family = self.families[index]
         lines, (first, second) = self.stepped(index, -1)
         forms[index] = node.form(first[: family.record], second[: family.record])
         turns[index] = node.wronskian(second[: family.record], family.plane)
         stresses[index] = node.stresses_of(family.pair[0], lines[: family.record], self.wrap)
         if index in self.turning:
-            momenta[index] = node.momentum_of(lines[: family.record], self.wrap)
+            senses[index] = node.sense_current_of(lines[: family.record], self.wrap)
         books[index] = lines
 
     def step_inverse(self) -> None:
         """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back; the lay is not taken back."""
-        forms, turns, stresses, momenta = Bookings(), Bookings(), Stresses(), Stresses()
+        forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
         books: dict[int, list[node.Record]] = {}
         pending = list(self.held)
         while True:
             for index in self.order:
                 if index not in books and (index not in self.held or index not in pending):
-                    self.booked_back(index, books, forms, turns, stresses, momenta)
+                    self.booked_back(index, books, forms, turns, stresses, senses)
             sources = {held: readers_of(self.families, held) for held in pending}
             ready = [held for held in pending if all(index in books for index in sources[held])]
             if not pending:
                 break
             assert ready, "the held rows' sources form a cycle"
             for held in ready:
-                self.hold(held, forms, turns, -1, stresses, momenta)
+                self.hold(held, forms, turns, -1, stresses, senses)
             pending = [held for held in pending if held not in ready]
         for index in self.held:
             if index not in books:

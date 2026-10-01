@@ -155,7 +155,7 @@ def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) 
 
 
 def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) -> list[int]:
-    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the momentum density, the bare currents through the axis's two Ports, two products each)."""
+    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays)."""
     family = families[index]
     sources = readers_of(families, index)
     time = sum(
