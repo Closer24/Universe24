@@ -95,7 +95,7 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "54 pages, 6 figures, 7 tables; code and documents at
-  doi:10.5281/zenodo.22738746". The abstract has 249 words and 1445
+  doi:10.5281/zenodo.22738746". The abstract has 249 words and 1438
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
   the EPS files and the scripts; it compiles under pdflatex in a clean
