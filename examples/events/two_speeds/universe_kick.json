@@ -12,7 +12,10 @@
     6000
    ],
    "held": {
-    "count": "content",
+    "sources": [
+     "form",
+     "tensions"
+    ],
     "divisor": 1000000000,
     "rest": 60
    }

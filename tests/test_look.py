@@ -17,7 +17,9 @@ PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
 BELL = load_file("bell_clicks", ROOT / "tools" / "bell_clicks.py")
 BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
-ROLE_OF = {"sign": "light", "content": "field"}  # a holder of nothing is matter
+ROLE_OF = {(True, True): "light", (True, False): "field"}  # (held, by the Wronskian), else matter
+REFUSED = [([[20, 4, 0]], "never one Node"), ([[20, 4, 0], [20, 5, 0]], "under half the wavelength")]
+REFUSED += [([[20, y, 0] for y in (0, 1, 6, 7)], "not one connected region")]  # the size rule's refusals
 SCREEN = [
     {"name": f"screen {y}", "positions": [[20, y + r, 0] for r in range(4 + (y == 4))]} for y in (0, 4)
 ]
@@ -74,7 +76,8 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert set(look["books"]) == {f["name"] for f in look["families"] if f["quanta"]}
     roles = PAGE.roles(look["families"])
     for family, role in zip(universe, roles.values(), strict=True):
-        assert role["role"] == ROLE_OF.get(family.get("held", {}).get("count"), "matter")
+        shape = ("held" in family, "wronskian" in family.get("held", {}).get("sources", []))
+        assert role["role"] == ROLE_OF.get(shape, "matter")
     dashed = [name for name, role in roles.items() if role["dashed"]]
     assert dashed == [f["name"] for f in universe if "held" not in f][1:]
     assert "GameBoard reading" in html and PAGE.embedded(roles) in html and '"window":[1,2]' in html
@@ -84,7 +87,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
-    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses a region narrower than half the wavelength), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall and the clicks credited by the shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the credit the summed absolute deviation from the blind row's shares, one draw by the seed and a bare region named `aside`; tools/bell_clicks.py reads the runs by the comb per region (the weights, the marginals, E as the product, S, the curve) and Bell's builder writes from its design file one world per angle with the expectation."""
+    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall and the clicks credited by the shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the credit the summed absolute deviation from the blind row's shares, one draw by the seed and a bare region named `aside`; tools/bell_clicks.py reads the runs by the comb per region (the weights, the marginals, E as the product, S, the curve) and Bell's builder writes from its design file one world per angle with the expectation."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     groups = [
         {"name": f"g{y}", "positions": [[x, y + r, 0] for x in (21, 22) for r in range(4)]}
@@ -92,9 +95,9 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     ]
     world = slit_world(tmp_path, TOOL, detectors=[*SCREEN, *groups])
     pair = slit_world(tmp_path, TOOL, "pair", detectors=groups)
-    narrow = [{"name": "n", "positions": [[20, 4, 0]]}]
-    with pytest.raises(ValueError, match="under half the wavelength"):
-        load_world(slit_world(tmp_path, TOOL, "narrow", detectors=narrow))
+    for nodes, reason in REFUSED:
+        with pytest.raises(ValueError, match=reason):
+            load_world(slit_world(tmp_path, TOOL, "n", detectors=[{"name": "n", "positions": nodes}]))
     at = {1: ["screen 4", "g4"], 2: ["screen 0", "screen 4", "g0"], 3: ["screen 4", "g4"]}
     look, html = shown(world, monkeypatch, at, BLIND)
     measure = PAGE.measurement(look, BLIND)
@@ -139,10 +142,7 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     (tmp_path / "bell.json").write_text(json.dumps(bell))
     click = {"event": "click", "tick": 1, "family": "charge"}
     outs = []
-    for name, quanta in (
-        ("bell_0", (3, 1, 1, 2)),
-        ("bell_1", (1, 3, 2, 1)),
-    ):  # left +, left -, right +, right -
+    for name, quanta in (("bell_0", (3, 1, 1, 2)), ("bell_1", (1, 3, 2, 1))):  # left +, -, right +, -
         big = [
             {**click, "detector": d, "inflow": n * wall}
             for d, n in zip(BELL_REGIONS, quanta, strict=True)
@@ -171,10 +171,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     assert [m.get("phase") for m in built["messages"]] == [None, [63, 64], None, [1, 64]]  # the offset
     assert [m.get("phase") for m in tilted["messages"]] == [None, [61, 64], None, [3, 64]]  # the mirror
     assert [m["top"]["x"][0] for m in built["messages"]] == [111, 111, 231, 231]
-    assert blind["settings"] == {"left": [-2, -6], "right": [0, 4]} and blind["degrees"]["left"] == [
-        -45,
-        -135,
-    ]
+    assert blind["settings"] == {"left": [-2, -6], "right": [0, 4]}
+    assert blind["degrees"]["left"] == [-45, -135]
     assert blind["ports"]["right"]["0"] == {"plus": ["right_5"], "minus": ["right_3", "right_7"]}
     assert [len(rows) for rows in blind["sides"]["right"].values()] == [6] + [4] * 9 + [6]
     assert blind["blind"]["minima"] == [16, 31] and 2.7 < blind["blind"]["S_cosines"] < 2.9

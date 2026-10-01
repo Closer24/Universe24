@@ -14,8 +14,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-from event_universe.loader.derived import CONTENT, SIGN
-
 MATTER, LIGHT, FIELD = "matter", "light", "field"
 AXES = ("x", "y", "z")
 CDN_THREE = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
@@ -114,8 +112,7 @@ def roles(families: list[dict[str, Any]]) -> dict[str, dict[str, object]]:
     found: dict[str, dict[str, object]] = {}
     seen = False
     for family in families:
-        held = family.get("held")
-        role = LIGHT if held == SIGN else FIELD if held == CONTENT else MATTER
+        role = LIGHT if family.get("sign") else FIELD if family.get("held") else MATTER
         found[str(family["name"])] = {"role": role, "dashed": role == MATTER and seen}
         seen = seen or role == MATTER
     return found
@@ -337,7 +334,7 @@ function frameOf(t) {
   const frame = LOOK.frames[t], out = {};
   for (const f of FAMILIES) {
     const row = frame.families[f.name] || {}, a = {};
-    if (f.quanta) { for (const key of ['now', 'second', 'count', 'sense', 'form']) a[key] = arrayOf(row[key], frame); a.pace = row.pace; }
+    if (f.quanta) { for (const key of ['now', 'second', 'count', 'form']) if (row[key] !== undefined) a[key] = arrayOf(row[key], frame); a.pace = row.pace; }
     else { a.level = arrayOf(row.level, frame); a.parts = (row.parts || []).map(part => arrayOf(part, frame)); }
     out[f.name] = a;
   }
@@ -352,7 +349,7 @@ for (let t = 0; t <= T; t++) {
   const fr = frameOf(t);
   for (const f of FAMILIES) {
     const a = fr[f.name], m = MOST[f.name];
-    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), peak(a.second)); m.count = Math.max(m.count, peak(a.count)); TOTALS[f.name][t] = sum(a.count); }
+    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); TOTALS[f.name][t] = sum(a.count); }
     else { m.level = Math.max(m.level, peak(a.level)); for (const p of a.parts) m.part = Math.max(m.part, peak(p)); }
   }
 }
@@ -516,7 +513,7 @@ function draw() {
     colour.copy(base);
     for (const f of QUANTA) {
       if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
-      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), Math.abs(a.second[i])) / MOST[f.name].now, glowPower);
+      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), a.second ? Math.abs(a.second[i]) : 0) / MOST[f.name].now, glowPower);
       colour.lerp(tint.set(colourOf(f.name)).lerp(base, glowTint), Math.min(1, strength));  // the glow a tint of the family's colour, the dots the colour itself
     }
     cubes.setColorAt(i, colour);
@@ -598,7 +595,7 @@ new ResizeObserver(() => {
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); fit(); renderer.render(scene, camera);
 }).observe(stage);
 
-/* The hover: a Node's numbers as they are, the count the record's share in quanta, the sense as an arrow. */
+/* The hover: a Node's numbers as they are, the count the record's share in quanta. */
 const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
 function pick(e) {
   const r = canvas.getBoundingClientRect();
@@ -615,9 +612,8 @@ function hover(e) {
     const a = fr[f.name];
     if (f.quanta) {
       const parts = ['level ' + format(a.now[i])];
-      if (MOST[f.name].now && a.second[i]) parts.push('second ' + format(a.second[i]));
+      if (MOST[f.name].now && a.second && a.second[i]) parts.push('second ' + format(a.second[i]));
       parts.push('count ' + format(a.count[i]));
-      if (a.sense[i]) parts.push('sense ' + (a.sense[i] > 0 ? '\\u21bb' : '\\u21ba') + ' ' + format(a.sense[i]));
       lines.push(f.name + ': ' + parts.join(', '));
     } else {
       const parts = a.parts.map((p, k) => PARTS[k] + ' ' + format(p[i]));
@@ -785,7 +781,7 @@ function numbers() {
     + row('Gamma (the Node clock)', format(LOOK.node_clock)) + row('T (the quantum action)', format(LOOK.quantum_action)) + row('the largest integer', LOOK.largest_integer) + row('A (the amplitude bound)', format(LOOK.amplitude_bound))
     + row('intervals', format(LOOK.ticks) + ' recorded; the world declares ' + format(LOOK.declared_ticks)) + '</dl>';
   html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>divisor</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
-    + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held || 'nothing'}</td><td class="num">${f.divisor === null ? '' : f.divisor}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
+    + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held ? (f.sign ? 'the sign' : 'the content') : 'nothing'}</td><td class="num">${f.divisor === null ? '' : f.divisor}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th></tr></thead><tbody>'
     + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>detector</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'

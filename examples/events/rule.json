@@ -5,10 +5,10 @@
   "width": 63
  },
  "families": [
-  {"name": "gravity", "pair": [6000, 6000], "held": {"count": "content", "divisor": 1000}},
-  {"name": "charge", "pair": [6000, 6000], "held": {"count": "sign", "divisor": 1}},
-  {"name": "binding", "pair": [2400, 2401], "held": {"count": "content", "divisor": 1}},
-  {"name": "polarisation", "pair": [3000, 6000], "held": {"count": "content", "divisor": 1}},
-  {"name": "matter", "pair": [4000, 6000]}
+  {"name": "gravity", "pair": [6000, 6000], "held": {"sources": ["form", "tensions"], "divisor": 1000}},
+  {"name": "charge", "pair": [6000, 6000], "held": {"sources": ["wronskian"], "divisor": 1}},
+  {"name": "binding", "pair": [2400, 2401], "held": {"sources": ["form"], "divisor": 1}},
+  {"name": "polarisation", "pair": [3000, 6000], "held": {"sources": ["form"], "divisor": 1}},
+  {"name": "matter", "pair": [4000, 6000], "dimension": 1}
  ]
 }

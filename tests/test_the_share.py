@@ -11,7 +11,8 @@ import pytest
 from event_universe import node
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, rule3
-from event_universe.loader.derived import family_rules
+from event_universe.loader.derived import Row, family_rules
+from event_universe.loader.world import kind_of
 from event_universe.reports import inflow
 
 GAMMA, NODES = 10_000, 12
@@ -45,11 +46,11 @@ def test_the_share_changes_by_the_currents_at_the_pair_the_step_started_from(pai
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it."""
-    (quanta,) = family_rules([("quanta", (5, 7), None, None, 0)])
+    (quanta,) = family_rules([Row("quanta", (5, 7), 1, False, False, None, 0)])
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
-    real = node.Record(draw.integers(-50, 50, shape), draw.integers(-50, 50, shape), node.zeros(shape))
-    second = node.Record(draw.integers(-50, 50, shape), draw.integers(-50, 50, shape), node.zeros(shape))
-    through = node.currents_of(quanta, node.NodeState(real, second, [], []), wrap)
+    zero = node.zeros(shape, kind_of(63))
+    real, second = (node.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
+    through = node.currents_of(quanta.pair[0], [real, second], wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
         expected = sum(
             5 * (r.now * np.roll(r.before, -side, axis) - r.before * np.roll(r.now, -side, axis))

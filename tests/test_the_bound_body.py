@@ -1,4 +1,4 @@
-"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the GameBoard admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands; two bodies of opposite senses source the sign holder with opposite signs and read it with opposite q."""
+"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the GameBoard admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands; two bodies of a plane of opposite senses source the sign holder with opposite signs and both read it plainly, a body of real parts not at all."""
 
 from __future__ import annotations
 
@@ -10,9 +10,9 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe import node
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import CONTENT, count_wall
+from event_universe.loader.derived import count_wall
 from event_universe.world_files import input_digest, load_world
-from tests.laws import CHAIN, QUANTA, ROOT, chain_body_world, load_file
+from tests.laws import CHAIN, CHARGED, QUANTA, ROOT, chain_body_world, load_file
 
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 
@@ -26,13 +26,13 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_share
     board = GameBoard(load_world(world))
     index = [family.name for family in board.families].index("matter")
     declared = board.mask(board.world.bodies[0].nodes)
-    quanta = board.quanta(index)
+    quanta = board.quanta(index)[0]
     laid, wall = int(quanta[declared].sum()), count_wall(board.families[index], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(quanta[declared].min()) >= 1
     kept, drifts = [], []
     for _ in range(100):
         board.step()
-        quanta, standing = board.quanta(index), board.body_nodes(0)
+        quanta, standing = board.quanta(index)[0], board.body_nodes(0)
         kept.append(int(quanta[standing].sum()))
         assert (quanta[standing] != 0).all() and (standing & declared).any()
         books = board.books()["matter"]
@@ -53,28 +53,28 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_share
         GameBoard(load_world(world))
 
 
-def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_read_it_with_opposite_q(
+def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_a_plane_reads_it(
     tmp_path, monkeypatch
 ):
-    """The sign is the rotation sense: on the chain two bodies laid rotating in the senses +1 and -1 carry the Wronskian and the sense of those signs at their Nodes (0 where the booked sense rounds to none), so each reads the sign holder with its own q, +1 and -1; after one interval the sign holder's record (its time part, the light's own record) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all (the Wronskian's quanta its source), and a level of one sign read by both enters their contents with opposite signs (the hill and the hollow)."""
+    """The dimension's table (ALGEBRA.md #a-familys-declaration): on the chain two bodies of the charged family (matter's pair as a plane) laid rotating in the senses +1 and -1 carry the Wronskian of those signs at their Nodes, so after one interval the sign holder's record (its time part, the light's own record) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all (the Wronskian's quanta its source); the charged family reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, reads nothing of it and light does not read its own row."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, at=(14, 34), senses=(1, -1))))
     names = [family.name for family in board.families]
-    matter, charge = board.states[names.index("matter")], board.states[names.index("charge")]
+    charged, charge = names.index(CHARGED["name"]), names.index("charge")
+    plane, light = board.states[charged], board.states[charge]
     board.step()
     first, second = board.body_nodes(0), board.body_nodes(1)
-    q = node.sense_sign(matter, board.shape)
-    assert (q[first] >= 0).all() and (q[first] == 1).any() and (q[second] <= 0).all()
-    assert (q[second] == -1).any()
-    assert (np.sign(node.wronskian(matter.levels, matter.second))[first] == 1).all()
-    level = charge.parts[0].now
-    assert charge.levels is charge.parts[0]  # light is the sign holder's own record
-    assert int(level[first].min()) >= 0 < int(level[first].sum())
+    turn = np.sign(node.wronskian(plane.lines))
+    assert (turn[first] == 1).all() and (turn[second] == -1).all()
+    level = light.lines[0].now
+    assert len(light.lines) == 1 and int(level[first].min()) >= 0 < int(level[first].sum())  # one line
     assert int(level[second].max()) <= 0 > int(level[second].sum())
     hill = np.full(board.shape, 100, dtype=np.int64)
-    node.with_parts(charge, [node.Record(hill, charge.parts[0].before, charge.parts[0].remainder)])
-    reader = names.index("matter")
-    content, _axis = node.signed_read(reader, board.families, board.states, 6000, "now", board.shape)
-    holders = [s for f, s in zip(board.families, board.states, strict=True) if f.held == CONTENT]
-    plain = sum(state.parts[0].now for state in holders)  # every holder of the content, as it stands
-    assert ((content - plain) == -100 * q)[first | second].all()  # the hill at q = +1, the hollow at -1
+    light.lines[0] = node.Record(hill, light.lines[0].before, light.lines[0].remainder)
+    held = [s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian]
+    plain = sum(state.lines[0].now for state in held)  # every holder of the content, as it stands
+    content, _axis = node.read(charged, board.families, board.states, 1)
+    assert ((content - plain) == 100)[first | second].all()  # the plane reads the holder plainly
+    for reader in (names.index("matter"), charge):  # dimension one, and the holder's own record
+        assert charge not in [read.family for read in board.families[reader].reads]
+        assert np.array_equal(node.read(reader, board.families, board.states, 1)[0], plain)

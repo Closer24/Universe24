@@ -12,7 +12,9 @@
     24
    ],
    "held": {
-    "count": "content",
+    "sources": [
+     "form"
+    ],
     "divisor": 2
    }
   },
@@ -23,7 +25,10 @@
     24
    ],
    "held": {
-    "count": "content",
+    "sources": [
+     "form",
+     "tensions"
+    ],
     "divisor": 10
    }
   },
@@ -34,7 +39,9 @@
     24
    ],
    "held": {
-    "count": "sign",
+    "sources": [
+     "wronskian"
+    ],
     "divisor": 36
    }
   },
@@ -43,7 +50,8 @@
    "pair": [
     16,
     24
-   ]
+   ],
+   "dimension": 1
   }
  ]
 }

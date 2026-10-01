@@ -1,4 +1,4 @@
-"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's share in quanta at the vacuum's paces (the form that sources the fields; ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read: the content holders' rests under the plain shares at the body's Nodes and the sign holder's rest under the Wronskian's quanta of a rotating record, read with the record's own q at every Node (`read_at_the_start`), so the gate's reading and the declaration are one number. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its share over the region carries M quanta, the scale bracketed from the centre's count and bisected as the share reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. The generator also lays every message of the world (ALGEBRA.md #the-generator, the message lay): a packet of a family of quanta and no body, its `now` the wave along its axis (toward either side, by the sign of its wave number) at its phase under its envelope and its `before` the same wave one interval earlier, every cosine by Rule3's rotation act and every root by the fixed point of the division act, its numbers the world's keys. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's divisor, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, and the counts are that record's share in quanta at the vacuum's paces (the form that sources the fields; ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one), and the record written is the standing record inside that region and a Link around it, the waste of the reflecting board dropped. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read: the content holders' rests under the plain shares at the body's Nodes and the sign holder's rest under the Wronskian's quanta of a rotating record of a plane, read plainly (`read_at_the_start`), so the gate's reading and the declaration are one number. Refused by name: a universe without T; a body whose standing rotation is not above its band's top (a cloud, below the window of mass); a body whose iteration drives a pace to zero (a collapse, above the window); two bodies whose regions share a Node. The record is seeded with the shape of the body's own well (the others' wells aside), scaled so that its share over the region carries M quanta, the scale bracketed from the centre's count and bisected as the share reads it; every arithmetic on the record is Rule3's (`core/rule3`, `core/ports`), the rests the start's. The generator also lays every message of the world (ALGEBRA.md #the-generator, the message lay): a packet of a family of quanta and no body, its `now` the wave along its axis (toward either side, by the sign of its wave number) at its phase under its envelope and its `before` the same wave one interval earlier, every cosine by Rule3's rotation act and every root by the fixed point of the division act, its numbers the world's keys. Usage: `python tools/pixel_mode.py --input <world.json> [--out <world.mode.json>]`: the world is rewritten with every body's Nodes and counts (its digest changes) and the mode file is written beside it."""
 
 from __future__ import annotations
 
@@ -22,9 +22,10 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.features.start import rest
-from event_universe.loader.derived import BY_PLAIN, BY_SIGN, family_rules
+from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES
+from event_universe.loader.world import universe_of
 from event_universe.node import Record, well, wronskian
 from event_universe.share import quanta_of, share
 from event_universe.world_files import input_digest, world_files
@@ -79,7 +80,7 @@ def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: n
 
 def read_quanta(share_now: np.ndarray, den: int, action: int) -> np.ndarray:
     """A share read in quanta at every Node, the engine's own reading (`share.quanta_of`): (share + W_c div 2) div W_c with W_c = 3 den T by Rule3's division act (ALGEBRA.md #the-count-is-the-records-share)."""
-    return np.asarray(quanta_of(share_now, 3 * den * action), dtype=np.int64)
+    return np.asarray(quanta_of(share_now, 3 * den * action, np.int64))
 
 
 def period_reading(
@@ -241,40 +242,39 @@ def standing(
 
 
 def rows_read(
-    universe: dict[str, Any], family: str, by: str
+    universe: dict[str, Any], family: str, sign: bool
 ) -> list[tuple[str, tuple[int, int], int, int]]:
-    """The held rows a body's family reads by `by` (plain or sign), (name, pair, divisor, rest), as the loader derives the reads (ALGEBRA.md #the-paces)."""
-    rows = []
-    for row in universe["families"]:
-        held = row.get("held")
-        word = str(held["count"]) if isinstance(held, dict) else None
-        divisor = int(held["divisor"]) if isinstance(held, dict) else None
-        rest = int(held.get("rest", 0)) if isinstance(held, dict) else 0
-        rows.append((str(row["name"]), (int(row["pair"][0]), int(row["pair"][1])), word, divisor, rest))
-    names = [row[0] for row in rows]
-    reads = family_rules(rows)[names.index(family)].reads
+    """The held rows a body's family reads that hold the sign (`sign`, sourced by the Wronskian) or the content (sourced by the form), (name, pair, divisor, rest), as the loader derives the reads from the pair and the dimension (ALGEBRA.md #the-paces)."""
+    families = universe_of(universe)[1]
+    reader = families[[row.name for row in families].index(family)]
     found = []
-    for read in reads:
-        name, pair, _held, divisor, vacuum = rows[read.family]
-        if read.by == by:
-            found.append((name, pair, int(divisor or 1), vacuum))
+    for read in reader.reads:
+        row = families[read.family]
+        if row.wronskian == sign:
+            found.append((row.name, row.pair, int(row.divisor or 1), row.rest))
     return found
 
 
 def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int, int]]:
-    """The held rows a body's family reads by plain, every holder of the content: the rows whose levels are the content its record reads, sourced by the plain share of its record; refused by name where there is none, a body needing a row to bind in."""
-    found = rows_read(universe, family, BY_PLAIN)
+    """The held rows holding the content a body's family reads: the rows whose levels are the content its record reads, sourced by the plain share of its record; refused by name where there is none, a body needing a row to bind in."""
+    found = rows_read(universe, family, False)
     if not found:
         raise ValueError(
-            f"the family {family!r} reads no held row of the content by plain: a body needs a row to bind in "
+            f"the family {family!r} reads no held row of the content: a body needs a row to bind in "
             "(ALGEBRA.md #the-generator)"
         )
     return found
 
 
 def sign_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int, int]]:
-    """The held rows a body's family reads by sign, the holders of the sign: sourced by the Wronskian's quanta of its record and read with the record's own q at every Node (ALGEBRA.md #the-paces, the sign is the rotation sense)."""
-    return rows_read(universe, family, BY_SIGN)
+    """The held rows holding the sign a body's family reads (a family of dimension two, a plane, reads them, a family of dimension one none): sourced by the Wronskian's quanta of its record and read plainly into its paces (ALGEBRA.md #the-paces, the dimension's table)."""
+    return rows_read(universe, family, True)
+
+
+def family_of(universe: dict[str, Any], name: str) -> FamilyRule:
+    """A family of the universe file as the loader derives it, by its name."""
+    families = universe_of(universe)[1]
+    return families[[row.name for row in families].index(name)]
 
 
 def rests(
@@ -499,19 +499,15 @@ def read_at_the_start(
     region: np.ndarray,
     pairs: list[tuple[np.ndarray, np.ndarray]],
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """The count the engine's gate reads at the start (ALGEBRA.md #the-count-is-the-records-share; `GameBoard.gate`): the record's share in quanta at the paces of its read, at the Nodes where it stands. The engine's start sources every held row the body's family reads at the body's declared Nodes, the holders of the content by the plain share of its level pairs at the vacuum's paces (the form that sources the fields) and the holders of the sign by the Wronskian's quanta of its two pairs, W div T (`well`, `wronskian`); the read then sums the content holders' rests and takes the sign holders' rests at the record's own q, the sign of W at the Node, as `node.sense_sign` reads it; the body's Nodes are where that share stands in quanta, so the sources' Nodes and the Nodes read return each other, iterated from the region until the Nodes repeat. `others` are the other bodies' plain and sign sources as laid. Returns the plain sources, the sign sources and the counts at the Nodes; refused by name where the Nodes cycle without returning."""
+    """The count the engine's gate reads at the start (ALGEBRA.md #the-count-is-the-records-share; `GameBoard.gate`): the record's share in quanta at the paces of its read, at the Nodes where it stands. The engine's start sources every held row the body's family reads at the body's declared Nodes, the holders of the content by the plain share of its level pairs at the vacuum's paces (the form that sources the fields) and the holders of the sign, where the family is a plane, by the Wronskian's quanta of its two pairs, W div T (`well`, `wronskian`); the read then sums the content holders' rests and, for a plane, the sign holders' rests plainly (ALGEBRA.md #the-paces, the dimension's table); the body's Nodes are where that share stands in quanta, so the sources' Nodes and the Nodes read return each other, iterated from the region until the Nodes repeat. `others` are the other bodies' plain and sign sources as laid. Returns the plain sources, the sign sources and the counts at the Nodes; refused by name where the Nodes cycle without returning."""
     den, action = board.pair[1], board.action
     zero = np.zeros(board.shape, dtype=np.int64)
     plain_share = sum((share_of(board, 0, now, before) for now, before in pairs), zero)
     plain_everywhere = read_quanta(plain_share, den, action)
-    turn, q = zero, zero
+    turn = zero
     if len(pairs) == 2:
         first, second = (Record(now, before, zero) for now, before in pairs)
-        booking = np.asarray(wronskian(first, second))
-        turn, q = (
-            np.asarray(well(booking, action)),
-            np.asarray(np.sign(booking), dtype=np.int64),
-        )
+        turn = np.asarray(well(np.asarray(wronskian([first, second])), action))
     nodes, seen = region.copy(), set()
     while True:
         plain, turned = np.where(nodes, plain_everywhere, 0), np.where(nodes, turn, 0)
@@ -520,7 +516,7 @@ def read_at_the_start(
         if bool(sourced.any()):
             for _name, pair, divisor, _vacuum in signs:
                 level = rest(sourced, pair, board.wrap, divisor, board.width, 3 * pair[1]).levels
-                content = content - q * np.asarray(level, dtype=np.int64)
+                content = content + np.asarray(level, dtype=np.int64)
         total = sum((share_of(board, content, now, before) for now, before in pairs), zero)
         weighted = np.where(region, read_quanta(total, den, action), 0)
         found = weighted != 0
@@ -719,6 +715,11 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
             sense = (senses or [])[number] if number < len(senses or []) else 0
             if sense not in (-1, 0, 1):
                 raise ValueError(f"measured[{number}]: a sense is +1 or -1 (0: none), got {sense}")
+            if sense and not family_of(universe, str(body["family"])).plane:
+                raise ValueError(
+                    f"measured[{number}]: a body of {body['family']!r}, a family of dimension one, is laid with "
+                    "no sense: a rotating record is a plane, dimension two (ALGEBRA.md #a-familys-declaration)"
+                )
             keep = dilated(region, board.wrap)
             levels: list[np.ndarray] = []
             pairs_kept = [(np.where(keep, record.now, 0), np.where(keep, record.before, 0))]

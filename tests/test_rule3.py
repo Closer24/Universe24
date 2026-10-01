@@ -1,9 +1,10 @@
-"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic; and the generic Node is closed for building (HIGHLIGHTS.md): the NodeState is the records and the writes' remainders alone, one Rule3 division per part and one write per held part per interval, the readings write nothing, the output click and field only, ENGINE.md's table the code's."""
+"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic; and the generic Node is closed for building (HIGHLIGHTS.md): the NodeState is the lines and the writes' remainders alone, one shape for every family, one Rule3 division per line and one write per held line per interval, the readings write nothing, the output click and field only, ENGINE.md's table the code's."""
 
 from __future__ import annotations
 
 import ast
 import dataclasses
+import json
 import random
 import re
 import sys
@@ -12,7 +13,7 @@ from pathlib import Path
 import numpy as np
 
 import event_universe.world_files as world_files
-from event_universe import growth, node, share
+from event_universe import node, share
 from event_universe.core import rule3 as core
 from event_universe.core.rule3 import (
     ISOTROPIC,
@@ -23,7 +24,7 @@ from event_universe.core.rule3 import (
     rule_total_bound,
 )
 from event_universe.game_board import GameBoard
-from event_universe.world_files import load_world
+from event_universe.world_files import input_digest, load_world
 from tests.laws import chain_body_world, load_file
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,9 +38,7 @@ def law_isotropic(num: int, den: int, gamma: int, c: int, weak_field: bool) -> t
     if not weak_field:
         return (gamma - c) * num, 6 * den * c, 3 * den * gamma
     clock_squared, link_squared, gamma_squared = (gamma - c) ** 2 + c * c, (gamma - 2 * c) ** 2, gamma**2
-    self_coefficient = (
-        12 * den * gamma_squared - 12 * (den - num) * clock_squared - 12 * num * link_squared
-    )
+    self_coefficient = 12 * (den * gamma_squared - (den - num) * clock_squared - num * link_squared)
     return 2 * link_squared * num, self_coefficient, 6 * den * gamma_squared
 
 
@@ -69,9 +68,8 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
             assert coefficients(num, den, gamma, content, weak_field=weak_field) == expected
         axes = law_axes(num, den, gamma, content, axis_contents)
         assert coefficients(num, den, gamma, content, axis_contents) == axes
-        assert coefficients(num, den, gamma, content, (0, 0, 0)) == coefficients(
-            num, den, gamma, content
-        )
+        plain = coefficients(num, den, gamma, content)
+        assert coefficients(num, den, gamma, content, ISOTROPIC) == plain
         # the vacuum c = 0: 2 Gamma^2 times the plain rule (the levels bit for bit)
         assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 3, 0, 6 * den * gamma**2)
         # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_link^2), the Link's pace Gamma - 2 c
@@ -230,9 +228,26 @@ def test_no_root_is_imported_or_called_anywhere_in_src_or_tools():
     assert not found, found
 
 
-# The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per part, two levels and Rule3's remainder; per held part, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record.
-NODE_STATE = {"levels": "Record | None", "second": "Record | None", "parts": "list[Record]"}
-NODE_STATE["write_remainders"] = "list[np.ndarray]"
+def test_the_engine_holds_no_word_outside_the_loader_and_the_reports():
+    """The names gate (HIGHLIGHTS.md **The engine works only with families of dimension one**; the owner, 2026-10-01, 03:25): no string literal stands in src/event_universe outside docstrings, the messages of `raise` and `assert` and f-strings, but in the loader (the files' key tables), in reports.py (the output's words), in world_files.py (the host's files) and in the package's version; so no act or reading of the engine names a family, a key or a kind, and a family name cannot enter the engine again."""
+    found = []
+    for path in sorted(SOURCE.rglob("*.py")):
+        name = path.relative_to(SOURCE).as_posix()
+        if name.startswith("loader/") or name in ("reports.py", "world_files.py", "__init__.py"):
+            continue
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        spoken = {id(item.value) for item in ast.walk(tree) if isinstance(item, ast.Expr)}
+        for item in ast.walk(tree):
+            if isinstance(item, ast.Raise | ast.Assert | ast.JoinedStr):
+                spoken |= {id(part) for part in ast.walk(item)}
+        for item in ast.walk(tree):
+            if isinstance(item, ast.Constant) and isinstance(item.value, str) and id(item) not in spoken:
+                found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
+    assert not found, found
+
+
+# The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per line, two levels and Rule3's remainder; per held line, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record; one shape of state for every family.
+NODE_STATE = {"lines": "list[Record]", "write_remainders": "list[np.ndarray]"}
 TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState table, its first column
 
 
@@ -249,13 +264,16 @@ def is_step(args: tuple) -> bool:  # type: ignore[type-arg]
 
 
 def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
-    """(a) The NodeState holds the records per part (now, before, Rule3's remainder) and one write remainder per held part and nothing else, and the growth's and the gate's arrays beside the records name only the writes' remainders; (b) on the chain with a rotating body (every kind of family: a family of quanta with its second pair, the holder of the sign, two rows with a gap, the massless row with its axis parts) one interval forward and one back make exactly one Rule3 division per part, the level each record started from that call's own, and exactly one write per held part, and every reading the engine exposes leaves every record bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a)."""
+    """(a) The NodeState holds lines (now, before, Rule3's remainder), as many as the loader derives for the family (a family of quanta's dimension, a held row's sources' count), and one write remainder per held line and nothing else, one shape for every family; (b) on the chain with a rotating body (every kind of family: a plane of two lines, a family of one line, the holder of the sign, two rows with a gap, the massless row with its axis lines) one interval forward and one back make exactly one Rule3 division per line, the level each line started from that call's own, and exactly one write per held line, and every reading the engine exposes leaves every line bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a)."""
     assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
     assert [f.name for f in dataclasses.fields(node.Record)] == ["now", "before", "remainder"]
-    assert set(growth.SCALARS) == set(BACK.SCALARS) == {"write_remainders"}
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict[str, object]] = []
     board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), lines.append)
+    for family, state in zip(board.families, board.states, strict=True):
+        assert len(state.lines) == family.lines
+        assert len(state.write_remainders) == family.lines * family.held
+    assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 1, 2, 4]
     calls: list[tuple[tuple, tuple]] = []  # type: ignore[type-arg]
     original = core.rule3
 
@@ -270,22 +288,22 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for direction, act in ((1, board.step), (-1, board.step_inverse)):
         calls.clear()
         act()
-        records = [record for state in board.states for record in node.records(state)]
+        records = [record for state in board.states for record in state.lines]
         steps = [args for args, _found in calls if is_step(args)]
         assert len(steps) == len(records)
         begun = {id(getattr(record, "before" if direction == 1 else "now")) for record in records}
-        assert begun == {id(args[4]) for args in steps}  # the level each record's one call started from
-        assert sum(is_write(args) for args, _found in calls) == sum(len(s.parts) for s in board.states)
+        assert begun == {id(args[4]) for args in steps}  # the level each line's one call started from
+        written = sum(len(s.write_remainders) for s in board.states)
+        assert sum(is_write(args) for args, _found in calls) == written
     kept = BACK.snapshot(board)
     calls.clear()
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-        if state.levels is not None and state.second is not None:
-            share.family_share(family, (state.levels, state.second), board.wrap, board.world.node_clock)
-            node.currents_of(family, state, board.wrap)
-            node.stresses_of(family, state, board.wrap)
-            node.sense_sign(state, board.shape)
-            node.wronskian(state.levels, state.second)
-            node.form(state.levels, state.second)
+        if family.quanta:
+            share.family_share(family, state.lines, board.wrap, board.world.node_clock)
+            node.currents_of(family.pair[0], state.lines, board.wrap)
+            node.stresses_of(family.pair[0], state.lines, board.wrap)
+            node.wronskian(state.lines)
+            node.form(state.lines, state.lines)
             board.quanta(index)
     board.books()
     assert not any(is_write(args) for args, _found in calls)  # the readings write nothing
@@ -299,3 +317,37 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
     table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
     assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)
+
+
+def test_the_width_chooses_the_arrays_kind_and_a_run_above_the_hosts_bits_gives_the_same_lines(
+    tmp_path, monkeypatch
+):
+    """The width is the run's declaration (the owner, 2026-10-01, 02:35): the loader's one site maps `integers.width` to the arrays' kind, the hardware's 64-bit integers at or under the host's signed bits and Python's integers above them (`loader.world.kind_of`); the chain world run at the width 63 and at 127 over forty intervals gives the same click and field lines and the same books bit for bit, every array of the wider run an array of Python integers; no other file of src names an integer's kind."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    world = chain_body_world(tmp_path, TOOL)
+    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    universe["integers"]["width"] = 127
+    document = {**json.loads(world.read_text(encoding="utf-8")), "universe": "wide.json"}
+    mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    mode["world_digest"] = input_digest(document)
+    for name, text in (("wide", universe), ("chain_wide", document), ("chain_wide.mode", mode)):
+        (tmp_path / f"{name}.json").write_text(json.dumps(text), encoding="utf-8")
+    runs = []
+    for path, kind in ((world, np.int64), (tmp_path / "chain_wide.json", object)):
+        lines: list[dict[str, object]] = []
+        board = GameBoard(load_world(path), lines.append)
+        for _ in range(40):
+            board.step()
+        arrays = [a for s in board.states for r in s.lines for a in (r.now, r.remainder)]
+        assert board.world.kind is kind and all(a.dtype == np.dtype(kind) for a in arrays)
+        runs.append((lines, board.books()))
+    assert runs[0] == runs[1] and runs[0][0]
+    named = [
+        f"{path.relative_to(ROOT)}: {m.group(0)}"
+        for path in sorted(SOURCE.rglob("*.py"))
+        for m in INTEGER_KINDS.finditer(path.read_text(encoding="utf-8"))
+    ]
+    assert named == ["src/event_universe/loader/world.py: np.int64"], named
+
+
+INTEGER_KINDS = re.compile(r"np\.u?int(?:8|16|32|64|p)?\b|np\.iinfo|\"int64\"|dtype=np\.")

@@ -39,7 +39,8 @@ NUMPY_DTYPES_FORBIDDEN = {
 NUMPY_FORBIDDEN = {
     *"arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power sin sqrt std tan true_divide var".split()
 }
-BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integer_root"}
+BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int", "kind"}  # kind: the loader's choice by the width
+ROOT_NAMES = {"isqrt", "integer_root"}
 
 
 def float_literals(source: str) -> list[int]:
@@ -88,9 +89,7 @@ def forbidden_imports(tree: ast.AST) -> list[str]:
 
 
 ALLOCATIONS_NEEDING_DTYPE = {"zeros", "ones", "empty", "full"}
-NUMPY_CHAIN_FORBIDDEN = {
-    *"fft geomspace interp linalg linspace logspace polyfit polynomial random".split()
-}
+NUMPY_CHAINS = {*"fft geomspace interp linalg linspace logspace polyfit polynomial random".split()}
 METHODS_FORBIDDEN = {"mean", "std", "var"}
 
 
@@ -117,17 +116,13 @@ def is_integer_literal(node: ast.AST) -> bool:
 
 
 def numpy_violations(tree: ast.AST) -> list[str]:
-    """Every `np.<chain>` that names a forbidden dtype, a function that leaves the integers or a forbidden family (`np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`, `np.polyfit`, `np.interp`); every allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` without a `dtype` keyword (float64 by default) and every `np.array` of a non-integer literal; every call of the builtin `float`; every method call `.mean`, `.std`, `.var`; every `dtype=` or `.astype(...)` argument that is not `np.int64`, `bool`, `object`, `int` or the name `dtype` (a variable carrying one)."""
+    """Every `np.<chain>` that names a forbidden dtype, a function that leaves the integers or a forbidden family (`np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`, `np.polyfit`, `np.interp`); every allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` without a `dtype` keyword (float64 by default) and every `np.array` of a non-integer literal; every call of the builtin `float`; every method call `.mean`, `.std`, `.var`; every `dtype=` or `.astype(...)` argument that is not `np.int64` (the loader's one site), `bool`, `object`, `int` or the name `kind` (the loader's choice of the integers by the file's width)."""
     found = []
     for node in ast.walk(tree):
         chain = numpy_chain(node) if isinstance(node, ast.Attribute) else None
         if chain:
             head = chain[0]
-            if (
-                head in NUMPY_DTYPES_FORBIDDEN
-                or head in NUMPY_FORBIDDEN
-                or head in NUMPY_CHAIN_FORBIDDEN
-            ):
+            if head in NUMPY_DTYPES_FORBIDDEN or head in NUMPY_FORBIDDEN or head in NUMPY_CHAINS:
                 found.append(f"np.{'.'.join(chain)} at line {node.lineno}")
         if not isinstance(node, ast.Call):
             continue

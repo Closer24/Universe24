@@ -54,7 +54,7 @@ def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, w
         )
     unit = unit_of(counts, pair, divisor, width)
     source = division(3 * den * unit, divisor, counts)
-    fine, iterations = np.zeros(counts.shape, dtype=np.int64), 0
+    fine, iterations = np.zeros_like(counts), 0
     while True:
         iterations += 1
         after = np.asarray(rule3((num, num, num), arrivals(fine, wrap), 0, 6 * den, fine, 0, source)[0])
@@ -62,5 +62,5 @@ def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, w
             break
         fine = after
     half = int(division(1, 2, unit))
-    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0], dtype=np.int64)
+    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0])
     return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, wall - 1)))

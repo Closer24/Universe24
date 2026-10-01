@@ -10,9 +10,6 @@ from event_universe.core.rule3 import NO_READ, rule3
 Vector = tuple[Any, Any, Any]
 PORTS = 6  # a Node's six Ports, the lattice's own integer (Rule3's 6)
 PRODUCTS = 2  # the current's two products, now_i before_j and before_i now_j
-LEVELS = (
-    2  # a record's two level pairs, the real and the second (the rotation sense), whose currents add
-)
 DIFFERENCE = (
     2  # a difference of two levels, at most twice the amplitude: the tension's reach per product
 )

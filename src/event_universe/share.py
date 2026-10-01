@@ -1,4 +1,4 @@
-"""The share (ALGEBRA.md #the-count-is-the-records-share): the count is the record's weighted share at every Node, a reading of the record and no line of its own, in the current's units, e_i = 3 [w (now_i^2 + before_i^2) - S_i now_i before_i] div (2 SUM_a p_a^2) - num now_i S_6(before)_i at the paces of the read, Rule3's integers exact at any size; in quanta over the wall W_c = 3 den T, (e + W_c div 2) div W_c by the division act, the unit every book and every body's declaration is read in. Its change over one step of Rule3 is exactly SUM_j F_ij, the six currents at the pair the step started from (features/currents), so nothing is kept at a Node beside the record."""
+"""The share (ALGEBRA.md #the-count-is-the-records-share): the count is the record's weighted share at every Node, a reading of the record and no line of its own, in the current's units, e_i = 3 [w (now_i^2 + before_i^2) - S_i now_i before_i] div (2 SUM_a p_a^2) - num now_i S_6(before)_i at the paces of the read, Rule3's integers exact at any size; in quanta over the wall W_c = 3 den T, (e + W_c div 2) div W_c by the division act, the unit every book and every body's declaration is read in. Its change over one step of Rule3 is exactly SUM_j F_ij, the six currents at the pair the step started from (features/currents), so nothing is kept at a Node beside the record. A frozen Node, every pace 0, has no share: the readers report it as not read and its well D div T as its content reading (`frozen`)."""
 
 from __future__ import annotations
 
@@ -19,11 +19,16 @@ def squared_paces(gamma: int, content: Any, axis: tuple[Any, ...]) -> Any:
     return paces[0] * paces[0] + paces[1] * paces[1] + paces[2] * paces[2]
 
 
+def frozen(gamma: int, content: Any, axis: tuple[Any, ...]) -> Any:
+    """Where a Node is frozen: every Link pace 0, SUM_a p_a^2 = 0, the content exactly Gamma div 2 with no axis content, so the Node is cut from its six neighbours and its share is not a number (the advisor, #1563 comment 5923771616; ALGEBRA.md #the-count-is-the-records-share, the frozen Node); a Node with one or two frozen axes keeps its share; a reading never stops a run."""
+    return squared_paces(gamma, content, axis) == 0
+
+
 def over_paces(numerator: Any, gamma: int, content: Any, axis: tuple[Any, ...]) -> np.ndarray:
-    """A Node term over the Link's pace squared, 3 x numerator div (2 SUM_a p_a^2) by Rule3's division act: numerator div 2 p^2 where the three paces are one."""
-    return np.asarray(
-        rule3(NO_READ, NO_READ, len(axis), 2 * squared_paces(gamma, content, axis), numerator, 0, 0)[0]
-    )
+    """A Node term over the Link's pace squared, 3 x numerator div (2 SUM_a p_a^2) by Rule3's division act: numerator div 2 p^2 where the three paces are one; at a frozen Node the wall is 0 and the division has no value, so the act divides there by the wall 1 and every reader reports the Node as frozen, not read (`frozen`), never the number."""
+    squares = squared_paces(gamma, content, axis)
+    wall = 2 * squares + (squares == 0)
+    return np.asarray(rule3(NO_READ, NO_READ, len(axis), wall, numerator, 0, 0)[0])
 
 
 def share(
@@ -59,8 +64,8 @@ def family_share(
     return np.asarray(total)
 
 
-def quanta_of(share_now: Any, wall: int) -> np.ndarray:
-    """A share in quanta at every Node, (share + W_c div 2) div W_c by Rule3's division act, W_c div 2 the rounding's origin: the reading of a share as whole quanta."""
+def quanta_of(share_now: Any, wall: int, kind: type) -> np.ndarray:
+    """A share in quanta at every Node, (share + W_c div 2) div W_c by Rule3's division act, W_c div 2 the rounding's origin: the reading of a share as whole quanta, in the run's kind of integers (the share itself is summed in Python's integers, exact beyond the width)."""
     origin = rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0]
     quanta, _remainder = rule3(NO_READ, NO_READ, 1, wall, 0, 0, np.asarray(share_now) + origin)
-    return np.asarray(quanta, dtype=np.int64)
+    return np.asarray(quanta, dtype=kind)
