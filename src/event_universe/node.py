@@ -1,4 +1,4 @@
-"""The Node: every family's NodeState over the GameBoard, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node and of each of its six Links, the Node's twice with the Link's own tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the hold"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
+"""The Node: every family's NodeState over the GameBoard, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node into the composed clock and the Node's pace, the clock twice, with each Link's own factor from its tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the hold"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
 
 from __future__ import annotations
 
@@ -8,17 +8,19 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core import paces
 from event_universe.core.ports import Wrap, arrival
-from event_universe.core.rule3 import NO_READ, coefficients, division_forward, link_paces, rule3
+from event_universe.core.rule3 import NO_READ, PORTS, coefficients, division_forward, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.hold import hold
-from event_universe.features.read import content_of, guard, link_contents
+from event_universe.features.read import axis_paces, content_of, guard, link_factors, link_tensions
 from event_universe.features.write import carried
 from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, turns, weight_of
 
 Rule = tuple[tuple[Any, ...], Any, Any]  # Rule3's integers at every Node: the six Ports' R_ij, S, w
-Links = tuple[Any, ...]  # the content of a Node's six Links in Port order, 2 c_i + t_a(i, j)
+Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order, in the unit G^2
 Angles = tuple[Any, tuple[Any, Any, Any]]  # the turn's numerators at every Node: the time's, each axis's
+Rulers = tuple[Any, tuple[Any, Any, Any]]  # a read's paces at every Node: the clock p_0, each axis's p_a
 
 
 @dataclass(frozen=True)
@@ -39,6 +41,10 @@ class NodeState:
 
     lines: list[Record]
     write_remainders: list[np.ndarray]
+
+
+Families = tuple[FamilyRule, ...]  # the families as the loader derived them, in the file's order
+States = list[NodeState]  # every family's NodeState, in the families' order
 
 
 def zeros(shape: tuple[int, int, int], kind: type) -> np.ndarray:
@@ -79,30 +85,39 @@ def level_at(record: Record, direction: int) -> np.ndarray:
     return record.now if direction == 1 else record.before
 
 
-def read(
-    index: int,
-    families: tuple[FamilyRule, ...],
-    states: list[NodeState],
-    direction: int,
-    wrap: Wrap,
-) -> tuple[Any, Links]:
-    """The read of a family at the interval's start (ALGEBRA.md #the-paces; #the-interval, the dependency radius): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`), and the content of each of its six Links, 2 c_i + t_a(i, j), the Node's content twice and the Link's own tension from the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one division per read per Link rounded at the read, one number per Link read the same from both ends (features/read, `link_contents`); the integer 0 at the Node and on every Link where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
+def read_lines(index: int, families: Families, states: States, direction: int) -> tuple[Any, list[Any]]:
+    """The lines a family's read takes at the interval's start in `direction` (ALGEBRA.md #the-paces, Every row reads the content): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`), a held row of the content reading its own level among them, and per read row carrying axis lines its weight and its three axis lines at the same level; the integer 0 and no axis lines where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`)."""
     reads = [r for r in families[index].reads if not families[r.family].rotation]
-    if not reads:
-        return 0, NO_READ
     content = content_of([(r.weight, level_at(states[r.family].lines[0], direction)) for r in reads])
-    axes = [
-        (r.weight, [level_at(states[r.family].lines[1 + a], direction) for a in range(3)])
-        for r in reads
-        if families[r.family].axes
+    rows = [r for r in reads if families[r.family].axes]
+    return content, [
+        (r.weight, [level_at(states[r.family].lines[1 + a], direction) for a in range(3)]) for r in rows
     ]
-    return content, link_contents(content, axes, wrap)
 
 
-def turning(
-    index: int, families: tuple[FamilyRule, ...], states: list[NodeState], direction: int
-) -> Angles | None:
-    """The angles a turned record reads (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record): from every holder it reads that declares the rotation, the time angle's numerator SUM of (weight x the holder's time line) and each axis's SUM of (weight x the holder's odd line a) at every Node, at the level the step in `direction` starts from (the same number read back, so the inverse is explicit); None where the family's record is not turned (`derived.turns`: a one-part family, or every holder acting on the pace)."""
+def read(
+    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int, unit: int
+) -> tuple[Any, Factors]:
+    """The read of a family at the interval's start (ALGEBRA.md #the-paces, Every row reads the content; The clock is the Node's, the tension is the Link's; #the-interval, the dependency radius): the content at every Node (`read_lines`) and the factor of each of its six Links, Q_ij from the Link's tension, the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one number per Link read the same from both ends, booked once per Link in the unit G^2 (features/read, `link_tensions`, `link_factors`); the integer 0 at the Node and G^2 on every Link where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
+    if not any(not families[r.family].rotation for r in families[index].reads):
+        return 0, (unit * unit,) * PORTS
+    content, axes = read_lines(index, families, states, direction)
+    return content, link_factors(gamma, unit, link_tensions(axes, wrap))
+
+
+def rulers(
+    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+) -> Rulers:
+    """The paces a family's read gives it at every Node for the write's factor (ALGEBRA.md, The write per proper volume and per proper interval; The paces compose): the clock p_0 from its content and its pace along each axis, p_a = p_i (q_(+a) + q_(-a)) / (2 Gamma), the Node's pace p_i = p_0^2 / Gamma times the mean of its two a-Links' factors from their tensions, one reading per axis through its two Ports (`features/read`, `axis_paces`), the ruler h_a = p_0 / p_a; Gamma on the clock and on every axis where the family reads nothing (every factor 1 at the vacuum's paces); read at the level the step in `direction` starts from, the same numbers read back."""
+    if not any(not families[r.family].rotation for r in families[index].reads):
+        return gamma, (gamma, gamma, gamma)
+    content, axes = read_lines(index, families, states, direction)
+    clock, pace = paces.node_paces(gamma, content)
+    return clock, axis_paces(gamma, pace, link_tensions(axes, wrap))
+
+
+def turning(index: int, families: Families, states: States, direction: int, gamma: int) -> Angles | None:
+    """The angles a turned record reads (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; The turn per proper interval): from every holder it reads that declares the rotation, the time angle's numerator SUM of (weight x the holder's time line) scaled by the turned family's own clock, p_0 / Gamma from the content it reads (`turned_by`, the angle per proper interval), and each axis's SUM of (weight x the holder's odd line a) as it is, at every Node, at the level the step in `direction` starts from (the same number read back, so the inverse is explicit); None where the family's record is not turned (`derived.turns`: a one-part family, or every holder acting on the pace)."""
     if not turns(families, index):
         return None
     reads = [r for r in families[index].reads if families[r.family].rotation]
@@ -111,17 +126,16 @@ def turning(
         content_of([(r.weight, level_at(states[r.family].lines[1 + a], direction)) for r in reads])
         for a in range(3)
     ]
-    return time, (axis[0], axis[1], axis[2])
+    clock = paces.clock_of(gamma, read_lines(index, families, states, direction)[0])
+    return turned_by(time, clock, gamma), (axis[0], axis[1], axis[2])
 
 
-def guarded(
-    index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int, wrap: Wrap
-) -> None:
-    """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock and on the six Links, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `guard`): the time angle's numerator within 2 Gamma and each Link's two ends' sum within 4 Gamma, a tangent half-angle at most 1."""
+def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> None:
+    """The guard once at load (ALGEBRA.md #the-paces, The guard): the family's read of the initial state checked as squares, the content below the Link's zero (the lower side, a frozen clock refused by name) and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock, on the Node's pace and on each Link's pace p_i^2 Q_ij / G^2, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `guard`): the time angle's numerator within 2 Gamma and each Link's two ends' sum within 4 Gamma, a tangent half-angle at most 1."""
     if families[index].reads:
-        content, links = read(index, families, states, 1, wrap)
-        guard(families[index].pair, gamma, content, links, families[index].name)
-    angles = turning(index, families, states, 1)
+        content, factors = read(index, families, states, 1, wrap, gamma, unit)
+        guard(families[index].pair, gamma, unit, content, factors, families[index].name)
+    angles = turning(index, families, states, 1, gamma)
     if angles is not None:
         time, links = angles
         rotation.guard(time, 2 * gamma, families[index].name, None)
@@ -131,29 +145,19 @@ def guarded(
                 rotation.guard(link, 2 * 2 * gamma, families[index].name, a)
 
 
-def least_pace(
-    index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int, wrap: Wrap
-) -> int:
-    """The least Link pace Gamma - 2 c_i - t_a(i, j) of a family over the GameBoard's Links as it stands, a GameBoard diagnostic for the report and no act of the law."""
-    _content, links = read(index, families, states, 1, wrap)
-    return min(int(np.min(pace)) for pace in link_paces(gamma, links))
+def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:
+    """The least Node pace p_i = p_0^2 / Gamma of a family over the GameBoard as it stands, 0 at a frozen Node, a GameBoard diagnostic for the report and no act of the law (the Links' factors beside it are read by no report)."""
+    content, _factors = read(index, families, states, 1, wrap, gamma, unit)
+    return int(np.min(paces.link_pace_of(gamma, content)))
 
 
-def quanta_rule(family: FamilyRule, gamma: int, content: Any, links: Links | None = None) -> Rule:
-    """Rule3's integers for a family of quanta at every Node from its pair and the paces, the clock's from the Node's content and each Link's from the Link's content (ALGEBRA.md #the-line; None a uniform level)."""
+def rule_of(
+    family: FamilyRule, gamma: int, content: Any, factors: Factors | None = None, unit: int = 1
+) -> Rule:
+    """The rule every line of a family steps by, Rule3's integers at every Node from its pair and the paces of its read, the clock and the Node's pace from the Node's content (`paces.node_paces`, The paces compose) and each Link's factor (ALGEBRA.md #the-line; #the-interval): a family of quanta's (the holder of the sign included, its line its record) and a held row's alike, the row's own level among the content it reads (Every row reads the content); None no tension, G^2 on every Link."""
     num, den = family.pair
-    return coefficients(num, den, gamma, content, links, True)
-
-
-def part_rule(family: FamilyRule) -> Rule:
-    """Rule3's integers for a held row of the content's lines: the plain rule of the row's pair at the pace 1 and the wall 3 den, its reads num and its self coefficient 0, with or without a gap (ALGEBRA.md #the-line; #the-primitives, the row "the hold")."""
-    num, den = family.pair
-    return coefficients(num, den, 1, 0, None, False)
-
-
-def rule_of(family: FamilyRule, gamma: int, content: Any, links: Links | None = None) -> Rule:
-    """The rule every line of a family steps by: a family of quanta's at the paces of its read (the holder of the sign included, its line its record), a holder of the content's the plain rule at the pace 1 (ALGEBRA.md #the-interval)."""
-    return quanta_rule(family, gamma, content, links) if family.quanta else part_rule(family)
+    clock, pace = paces.node_paces(gamma, content)
+    return coefficients(num, den, gamma, clock, pace, factors, unit)
 
 
 def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0) -> Record:
@@ -233,8 +237,8 @@ def step_plane(
 
 def step_family(
     index: int,
-    families: tuple[FamilyRule, ...],
-    states: list[NodeState],
+    families: Families,
+    states: States,
     rule: Rule,
     wrap: Wrap,
     gamma: int,
@@ -242,7 +246,7 @@ def step_family(
 ) -> tuple[list[Record], Booking]:
     """Every line of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`), each part's plane as one (`step_plane`); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one."""
     family, state = families[index], states[index]
-    angles = turning(index, families, states, direction)
+    angles = turning(index, families, states, direction, gamma)
     if angles is None:
         found = [
             step(record, rule, wrap, direction, family.rest if number == 0 else 0)
@@ -328,22 +332,38 @@ def well(booking: Any, action: int) -> np.ndarray:
     return np.asarray(carried(booking, action, 0)[0])
 
 
+def written(count: Any, rulers: Rulers, gamma: int, intervals: int) -> Any:
+    """The write's factor, one place (ALGEBRA.md, The write per proper volume and per proper interval): a source's booking scaled per proper volume and per proper interval at the source family's paces, N^intervals p_x p_y p_z / p_0^3 with N = p_0 / Gamma, the three axes divided one at a time (`paces.write_factor`), `intervals` the proper-interval powers of the held row's source, 2 on a count (the form) and 1 on the Wronskian, which carries one N of its own; the booking itself at the vacuum's paces."""
+    clock, (p_x, p_y, p_z) = rulers
+    return paces.write_factor(count, p_x, p_y, p_z, clock, gamma, intervals)
+
+
+def turned_by(angle: Any, clock: Any, gamma: int) -> Any:
+    """The turn's factor, one place (ALGEBRA.md, The turn per proper interval): the holder's level read into a plane's phase is the angle per proper interval, the numerator times the turned family's clock over Gamma, rounded once (`paces.turn_factor`); the angle itself at the vacuum's clock."""
+    return paces.turn_factor(angle, clock, gamma)
+
+
 def write_sources(
     held: int,
-    families: tuple[FamilyRule, ...],
+    families: Families,
     bookings: dict[int, Any],
     stresses: dict[int, currents.Vector],
     write: HeldWrite,
+    rulers: dict[int, Rulers],
+    gamma: int,
 ) -> list[Any]:
-    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's sources name, the form D for a row sourced by the form and the Wronskian W for the holder of the sign (`bookings`); for each axis line SUM over the sources of w x factor x the axis booking of each, its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the readers' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
+    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval, the factor by the source's kind; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x the booking of each that the row's sources name scaled by the write's factor at that family's paces (`written`, `rulers` per source family), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over the sources of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's 70, #1572 comment 5935615659: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the readers' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     time: Any = 0
+    intervals = 1 if families[held].wronskian else 2
     for index in readers_of(families, held):
-        time = time + weight_of(held, families[index]) * bookings.get(index, 0)
+        scaled = written(bookings.get(index, 0), rulers[index], gamma, intervals)
+        time = time + weight_of(held, families[index]) * scaled
     found = [time]
     for axis in range(len(write.walls) - 1):
         total: Any = 0
         for index, stress in stresses.items():
-            total = total + weight_of(held, families[index]) * write.factors.get(index, 0) * stress[axis]
+            scaled = written(stress[axis], rulers[index], gamma, 2)
+            total = total + weight_of(held, families[index]) * write.factors.get(index, 0) * scaled
         found.append(total)
     return found
 

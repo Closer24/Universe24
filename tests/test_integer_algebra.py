@@ -1,4 +1,4 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate)."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate). PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, one line each why."""
 
 import ast
 import io
@@ -10,7 +10,6 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-# The physical modules: every module that runs a physical step of the interval or forms the tables it reads, one line each why.
 PHYSICAL_MODULES: dict[str, str] = {
     "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
     "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
@@ -27,6 +26,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/instrument.py": "the instrument's declaration on a detector, its setting and its parts' pattern, read by nothing in the engine",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act, its fixed point iterated and the form's term (ALGEBRA.md #the-line, #the-direction)",
     "core/integer.py": "the working bound, the host's signed integer range",
+    "core/paces.py": "the composed paces, the clock and the Link's pace of the content, and the factors",
     "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port, the one shift across Nodes of the package",
 }
 
@@ -164,9 +164,7 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     files = [path for folder in (SRC, SRC / "core", SRC / "loader") for path in folder.glob("*.py")]
     modules = {path.relative_to(SRC).as_posix() for path in files if path.name != "__init__.py"}
     assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
-
-    SOURCE_CHECKS = {"x = 1.5\n": float_literals}
-    SOURCE_CHECKS.update({"x = 3 / 2\n": true_divisions, "x /= 2\n": true_divisions})
+    SOURCES = {"x = 1.5\n": float_literals, "x = 3 / 2\n": true_divisions, "x /= 2\n": true_divisions}
     IMPORT_CHECKS = ("import random\n", "from math import sqrt\n", "import math\ny = math.sqrt(4)\n")
     IMPORT_CHECKS += ("import math as m\n", "from math import isqrt as r\n")
     NUMPY_CHECKS = ("y = np.sqrt(x)\n", "y = np.zeros(3, dtype=np.float64)\n", "y = x.mean()\n")
@@ -174,12 +172,10 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     NUMPY_CHECKS += ("y = np.array([1.5, 2])\n", "y = float(x)\n", "y = x.astype(np.int32)\n")
     NUMPY_CHECKS += ("y = x.astype(dtype)\n", "y = np.linalg.norm(x)\n", "y = np.linspace(0, 1, 3)\n")
     NUMPY_CHECKS += ("y = np.random.default_rng()\n", "y = x.astype(scale)\n")
-
     PASSING = "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\no = np.full(2, None, dtype=object)\n"
     PASSING += "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(object)\nm = np.ones(3, dtype=bool)\n"
-    assert all(checker(source) != [] for source, checker in SOURCE_CHECKS.items())
+    assert all(checker(source) != [] for source, checker in SOURCES.items())
     assert all(forbidden_imports(ast.parse(source)) != [] for source in IMPORT_CHECKS)
     assert all(numpy_violations(ast.parse("import numpy as np\n" + text)) for text in NUMPY_CHECKS)
-    tree = ast.parse(PASSING)
     assert float_literals(PASSING) == [] and true_divisions(PASSING) == []
-    assert forbidden_imports(tree) == [] and numpy_violations(tree) == []
+    assert forbidden_imports(tree := ast.parse(PASSING)) == [] and numpy_violations(tree) == []

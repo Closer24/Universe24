@@ -5,8 +5,9 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import node, share
+from event_universe.core import paces
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients, form_term, link_paces, rule3
+from event_universe.core.rule3 import coefficients, form_term, rule3
 from event_universe.features.read import edge_squared, guard
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
@@ -17,23 +18,23 @@ RING, HERE, GAMMA = Wrap(True, True, True), (1, 1, 1), 6000  # the witnesses at 
 
 
 def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floor():
-    """The share's change is the currents at the pair the step started from (issue #1495 finding 6; the paper writer's finding, #1538 comment 5921398465) and not at the pair it left, and the audit's exact witnesses, each the engine's own integers against the law's rational identity, so that an exact-equality wording cannot return (#1582; #1583 B1 to B3; #1579). (a) At equal paces (pair [1, 1], Gamma 5, the content 1, the Node at -3 / -3 with its three + neighbours at -3) the integer share goes 54 to 26: the currents -27, Rule3's remainder term -3 (next - before) (r' - r) / P^2 = -2 / 3, and the reader's own floor residual, frac(q(now, before)) - frac(q(next, now)) = -1 / 3 with q the weighted Node term before its floor, strictly between -1 and 1 per Node and level pair, the identity exact with it. (b) The vacuum witness, pair [2, 3] at Gamma 6,000 from now 1 and before 0: next 1 with r' = 216,000,000, the share 9 to 6 with no current, Rule3's term rho = (r - r') / (2 Gamma^2) = -3 (over Gamma^2 alone it would read -6), the line 6 den Gamma^2 (next + before) = 2 num Gamma^2 S_6(now) + r - r' exact. (c) The Wronskian under the integer step (#1579): at [2, 3] the parts (1, 3) from zeros step to (1, 4) and W from 0 to -1, exactly the remainder term eps_re im_now - eps_im re_now with eps = (r - r') / w, under |re_now| + |im_now| per Node and interval, the inverse exact; at [1, 2] the parts stand and W stays 0 (the divisible control): the integer W is conserved up to that term and no quadratic form of the levels and remainders is conserved exactly (the second mathematician, #1572 comment 5932042343), so every test of a conserved quantity asserts a bound, never exactness. (d) The band's edge (B2): light's checkerboard at wave number pi on every axis reads 2 cos omega = -2 exactly, a repeated root the guard admits at p = Gamma, and the line grows it linearly, (-1)^t (t + 1) with the remainder 0, so the guard excludes exponential growth and does not bound the record; the same checkerboard with before = -now has the share 0 at every Node, a null mode that is no static uniform record. (e) The conserved form's domain (B1): at Node-isotropic paces the weighted form E with the Node weights 1 / p_i^2 is conserved exactly by the unrounded line, on the audit's 2 x 1 x 1 light board at Gamma 2 with the paces 2 and 1 (M = [[4 / 3, 2 / 3], [1 / 6, 11 / 6]]) E standing at 6 while the unweighted D falls from 1 to 11 / 12, and on the 2 x 2 x 1 square with p_x(A) = 2 among paces 1 the product of M_ij / M_ji around the square is 4, so no positive Node weight symmetrises a read booked per Node per axis. The exact bands beside them: a Node at rest in the vacuum turns by 2 cos omega = 2 num / den, the three integer rotations 1, 0 and -1 closing in 6, 4 and 3 intervals with the remainder 0 at every step."""
+    """The share's change is the currents at the pair the step started from (issue #1495 finding 6; the paper writer's finding, #1538 comment 5921398465) and not at the pair it left, and the audit's exact witnesses, each the engine's own integers against the law's rational identity, so that an exact-equality wording cannot return (#1582; #1583 B1 to B3; #1579). (a) At equal paces (pair [1, 1], Gamma 5, the content 1, the Node at -3 / -3 with its three + neighbours at -3) the integer share goes 54 to 26: the currents -27, Rule3's remainder term -3 (next - before) (r' - r) / P^2 = -2 / 3, and the reader's own floor residual, frac(q(now, before)) - frac(q(next, now)) = -1 / 3 with q the weighted Node term before its floor, strictly between -1 and 1 per Node and level pair, the identity exact with it. (b) The vacuum witness, pair [2, 3] at Gamma 6,000 from now 1 and before 0: next 1 with r' = 216,000,000, the share 9 to 6 with no current, Rule3's term rho = (r - r') / (2 Gamma^2) = -3 (over Gamma^2 alone it would read -6), the line 6 den Gamma^2 (next + before) = 2 num Gamma^2 S_6(now) + r - r' exact. (c) The Wronskian under the integer step (#1579): at [2, 3] the parts (1, 3) from zeros step to (1, 4) and W from 0 to -1, exactly the remainder term eps_re im_now - eps_im re_now with eps = (r - r') / w, under |re_now| + |im_now| per Node and interval, the inverse exact; at [1, 2] the parts stand and W stays 0 (the divisible control): the integer W is conserved up to that term and no quadratic form of the levels and remainders is conserved exactly (the second mathematician, #1572 comment 5932042343), so every test of a conserved quantity asserts a bound, never exactness. (d) The band's edge (B2): light's checkerboard at wave number pi on every axis reads 2 cos omega = -2 exactly, a repeated root the guard admits at p = Gamma, and the line grows it linearly, (-1)^t (t + 1) with the remainder 0, so the guard excludes exponential growth and does not bound the record; the same checkerboard with before = -now has the share 0 at every Node, a null mode that is no static uniform record. (e) The conserved form's domain (B1): at Node-isotropic paces the weighted form E with the Node weights 1 / p_i^2 is conserved exactly by the unrounded line, on the audit's 2 x 1 x 1 light board at Gamma 2 with the paces 2 and 1 (M = [[4 / 3, 2 / 3], [1 / 6, 11 / 6]]) E standing at 6 while the unweighted D falls from 1 to 11 / 12, and on the 2 x 2 x 1 square with p_x(A) = 2 among paces 1 the product of M_ij / M_ji around the square is 4, so no positive Node weight symmetrises a read booked per Node per axis. The exact bands beside them: a Node at rest in the vacuum turns by 2 cos omega = 2 num / den, the three integer rotations 1, 0 and -1 closing in 6, 4 and 3 intervals with the remainder 0 at every step. The corner's reads carry the x Links' factor 4 at the pace 1 against the plain reads."""
     zero, ones = np.zeros((3, 3, 3), dtype=np.int64), np.ones((3, 3, 3), dtype=np.int64)
-    rule, now, before = coefficients(1, 1, 5, 1), zero.copy(), zero.copy()  # R 18, S 192, w 150
+    rule = coefficients(1, 1, 5, *paces.node_paces(5, 1))  # the clock 4, the pace 3: R 18, S 192, w 150
+    now, before = zero.copy(), zero.copy()
     now[1, 1, 1] = now[2, 1, 1] = now[1, 2, 1] = now[1, 1, 2] = before[1, 1, 1] = -3
     after = node.step(record := node.Record(now, before, zero), rule, RING)
-    squares = sum(p * p for p in link_paces(5, (2,) * 6))  # P^2 = 54, the six paces 3
+    weight = 2 * paces.link_pace(5, 1) ** 2  # the share's wall 2 p_i^2 G^2 = 18 at the Node's pace 3
     shares = [int(share.share((1, 1), r, RING, 5, 1)[HERE]) for r in (record, after)]
     currents = sum(int(f[HERE]) for f in node.currents_of(1, [record], RING))
     nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
-    unfloored = [Fraction(3 * form_term(rule[1], rule[2], a, -3), squares) for a in (-3, nxt)]
+    unfloored = [Fraction(form_term(rule[1], rule[2], a, -3), weight) for a in (-3, nxt)]
     residual = unfloored[0] % 1 - unfloored[1] % 1
     assert (nxt, carried, shares, currents, residual) == (-2, 12, [54, 26], -27, Fraction(-1, 3))
     assert sum(int(f[HERE]) for f in node.currents_of(1, [after], RING)) != currents  # not the pair left
-    assert shares[1] - shares[0] == currents + Fraction(-3 * (nxt + 3) * carried, squares) + residual
-    after = node.step(
-        record := node.Record(ones, zero, zero), rule := coefficients(2, 3, GAMMA, 0), RING
-    )
+    assert shares[1] - shares[0] == currents + Fraction(-(nxt + 3) * carried, weight) + residual
+    record, rule = node.Record(ones, zero, zero), coefficients(2, 3, GAMMA, GAMMA, GAMMA)
+    after = node.step(record, rule, RING)
     nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
     shares = [int(share.share((2, 3), r, RING, GAMMA)[HERE]) for r in (record, after)]
     assert (nxt, carried, rule[2], shares) == (1, 216_000_000, 648_000_000, [9, 6])
@@ -41,7 +42,7 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
     assert Fraction(-carried, 2 * GAMMA**2) == shares[1] - shares[0] == -3
     assert rule[2] * (nxt + 0) == 2 * 2 * GAMMA**2 * 6 + 0 - carried
     for pair, levels, turned in (((2, 3), [1, 4], -1), ((1, 2), [1, 3], 0)):
-        rule = coefficients(*pair, GAMMA, 0)
+        rule = coefficients(*pair, GAMMA, GAMMA, GAMMA)
         lines = [node.Record(ones, zero, zero), node.Record(3 * ones, zero, zero)]
         after = [node.step(line, rule, RING) for line in lines]
         eps = [Fraction(-int(a.remainder[HERE]), rule[2]) for a in after]  # (r - r') / w from r = 0
@@ -50,16 +51,16 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
         assert found == eps[0] * 3 - eps[1] * 1 and abs(found) < 1 + 3
         back = [node.step(a, rule, RING, -1) for a in after]
         assert [int(b.now[HERE]) for b in back] == [1, 3] and not any(b.remainder.any() for b in back)
-    rule = coefficients(1, 1, GAMMA, 0)
+    rule = coefficients(1, 1, GAMMA, GAMMA, GAMMA)
     assert Fraction(rule[1] - 6 * rule[0][0], rule[2]) == -2 and edge_squared((1, 1), GAMMA) == GAMMA**2
-    guard((1, 1), GAMMA, 0, (0,) * 6, "light")  # the edge admitted: the clock and the paces at Gamma
+    guard((1, 1), GAMMA, 1, 0, (1,) * 6, "light")  # the edge admitted: the clock and the paces at Gamma
     record = node.Record(parity := (-1) ** np.indices((2, 2, 2)).sum(0), 0 * parity, 0 * parity)
     for t in range(1, 7):
         record = node.step(record, rule, RING)
         assert np.array_equal(record.now, (-1) ** t * (t + 1) * parity) and not record.remainder.any()
     assert not share.share((1, 1), node.Record(parity, -parity, 0 * parity), RING, GAMMA).any()
-    paces = (2, 1)  # Gamma 2: the pace 2 at A and 1 at B on a chain of two, y and z folded
-    rules = [coefficients(1, 1, 2, 0, (2 - p,) * 6) for p in paces]
+    at = (2, 1)  # Gamma 2: the Node's pace 2 at A and 1 at B on a chain of two, the clock 2
+    rules = [coefficients(1, 1, 2, 2, p) for p in at]
     wall, reads, selfs = rules[0][2], [r[0][0] for r in rules], [r[1] for r in rules]
     own = [Fraction(selfs[i] + 4 * reads[i], wall) for i in range(2)]  # M_ii, four self reads
     link = [Fraction(2 * reads[i], wall) for i in range(2)]  # M_ij, the two reads of the neighbour
@@ -70,13 +71,13 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
         states.append(([own[i] * x[i] + link[i] * x[1 - i] - y[i] for i in range(2)], x))
     for k, (unweighted, weighted) in enumerate(((1, 6), (Fraction(11, 12), 6))):  # D falls, E stands
         (x, y), (nxt, _) = states[k], states[k + 1]
-        node_terms = [Fraction(form_term(selfs[i], wall, x[i], y[i]), paces[i] ** 2) for i in range(2)]
+        node_terms = [Fraction(form_term(selfs[i], wall, x[i], y[i]), at[i] ** 2) for i in range(2)]
         assert sum(a * a for a in x) - sum(a * b for a, b in zip(nxt, y, strict=True)) == unweighted
         assert sum(node_terms) - 2 * sum(x[i] * (4 * y[i] + 2 * y[1 - i]) for i in range(2)) == weighted
-    corner, rest = coefficients(1, 1, 2, 0, (0, 0, 1, 1, 1, 1))[0], coefficients(1, 1, 2, 0, (1,) * 6)[0]
+    corner, rest = (coefficients(1, 1, 2, 2, 1, f)[0] for f in ((4, 4, 1, 1, 1, 1), (1,) * 6))
     assert Fraction(corner[0], rest[0]) * Fraction(rest[2], corner[2]) == 4  # around the square
     for pair, period in (((1, 2), 6), ((0, 1), 4), ((-1, 2), 3)):
-        (read, *_), self_coefficient, wall = coefficients(*pair, GAMMA, 0)
+        (read, *_), self_coefficient, wall = coefficients(*pair, GAMMA, GAMMA, GAMMA)
         before, now = 0, 1_000
         for _ in range(period):
             nxt, carry = rule3((read,) * 3, (2 * now,) * 3, self_coefficient, wall, now, before, 0)
@@ -86,27 +87,24 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
-    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board."""
+    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board. On the chain of three with every Node declared and none grown: +x from Node 2 is outside the region; -x from Node 0 inside it is a hop, no entry; +y beyond the board has no boundary Port."""
     (quanta,) = family_rules([real_row("quanta", (5, 7), 1, None)])
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = node.zeros(shape, kind_of(63))
     real, second = (node.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
     through = node.currents_of(quanta.pair[0], [real, second], wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
-        expected = sum(
-            5 * (r.now * np.roll(r.before, -side, axis) - r.before * np.roll(r.now, -side, axis))
-            for r in (real, second)
-        )
+        rolled = [
+            (r, np.roll(r.now, -side, axis), np.roll(r.before, -side, axis)) for r in (real, second)
+        ]
+        expected = sum(5 * (r.now * before - r.before * now) for r, now, before in rolled)
         assert np.array_equal(through[port], expected)
-    nodes = np.array([True, True, False]).reshape(3, 1, 1)
+    nodes, board = np.array([True, True, False]).reshape(3, 1, 1), np.ones((3, 1, 1), dtype=bool)
     wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
     inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port
-    board = np.ones((3, 1, 1), dtype=bool)  # every Node declared, none grown
 
     def seen(port: int) -> int:
         through = tuple(inward if p == port else zero for p in range(6))
         return inflow(nodes, through, wrap, nodes, board)
 
-    assert seen(0) == 40  # through +x from Node 2, outside the region
-    assert seen(1) == 0  # through -x from Node 0, inside the region: a hop, no entry
-    assert seen(2) == 0  # +y leads beyond the board (one Node across y): no boundary Port
+    assert [seen(port) for port in range(3)] == [40, 0, 0]

@@ -4,9 +4,9 @@ import json
 import math
 
 import numpy as np
-import pytest
 
 import event_universe.world_files as world_files
+from event_universe.core import paces
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, PACKET, QUANTA, SLIT, TOOL, chain_body_world, refused, slit_world
@@ -18,7 +18,7 @@ def dense(levels: dict[str, list[int]]) -> np.ndarray:
 
 
 def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(tmp_path, monkeypatch):
-    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node (no line lays a count whole: the count is read); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run. One Node declaring 50 quanta on the chain becomes a body of several Nodes, each carrying a quantum, their counts within the rounding of 50; its standing reading rotates above the matter band's top and below 2, its peak at the centre, its period read whole; the mode file stands for the world by its digest and the GameBoard loads its levels as written; a body laid with a sense carries its second level pair beside them, a neutral one none. Three quanta are a cloud, below the window of mass (ten too, under the binding holder's range of 20 Links); three hundred fit no cube with a positive pace on the chain, above it; two bodies of a hundred two Links apart collapse, their wells reaching the pace 0; two bodies of twenty whose regions share a Node, a universe without T and a sense other than +1 or -1 are refused by name."""
+    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node (no line lays a count whole: the count is read); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run. One Node declaring the tests' count of quanta on the chain becomes a body of several Nodes, each carrying a quantum, their counts within the rounding of the declaration; its standing reading rotates above the matter band's top and below 2, its peak at the centre, its period read whole; the mode file stands for the world by its digest and the GameBoard loads its levels as written; a body laid with a sense carries its second level pair beside them, a neutral one none. Two quanta are a cloud, below Pekar's threshold (the binding row reading its own level); six times the tests' count lay as one body on the chain, its well far below the Link's zero (no finite count collapses under the composed paces, the write per proper volume, ALGEBRA.md #the-paces, The paces compose; the horizon on Nodes left with the quadratic forms); two bodies of twice the count two Links apart and two of twenty three Links apart share a Node in their regions, a universe without T and a sense other than +1 or -1 are refused by name. The aslant message toward -x at the phase pi / 2 with k_y = pi / 8 is b e cos(-k x + k_y y + pi / 2 + omega), k_y y = pi / 2 at y = 4; the screen's lines are the region's report and the field's reading alone, no Node named."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
     path = slit_world(tmp_path, TOOL, detectors=[screen])
@@ -47,7 +47,6 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
     mirrored = dense(before)
     tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
-    # toward -x at the phase pi / 2, k_y = pi / 8: b e cos(-k x + k_y y + pi / 2 + omega), k_y y = pi / 2 at y = 4
     for x in range(24):
         away = abs(x - 5)
         e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
@@ -71,7 +70,6 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         walled.step()
         open_board.step()
         risen = [x for x in lines if x["tick"] == walled.tick and x["detector"] == "screen"]
-        # the region's report and the field's reading alone, no Node named
         assert all(x["event"] in ("click", "field") and not {"node", "ports"} & x.keys() for x in risen)
         assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")
         for state in walled.states:
@@ -83,7 +81,6 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     print(f"GAMEBOARD slit: light beyond the wall per row {passed.tolist()}, before {before} vs {free}")
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)
     document = json.loads(world.read_text(encoding="utf-8"))
     mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))
@@ -107,17 +104,17 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     turned = chain_body_world(tmp_path, TOOL, senses=(-1,))
     rotating = json.loads(turned.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
     assert any(rotating["moving"]["im_now"]) and len(rotating["moving"]["im_before"]) == CHAIN
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    refused("is a cloud: its standing reading rotates", chain_body_world, tmp_path, TOOL, quanta=3)
-    refused("fits no cube on this board", chain_body_world, tmp_path, TOOL, quanta=6 * QUANTA)
+    refused("is a cloud: its standing reading rotates", chain_body_world, tmp_path, TOOL, quanta=2)
+    big = GameBoard(load_world(chain_body_world(tmp_path, TOOL, quanta=6 * QUANTA)))
+    holders = [s for f, s in zip(big.families, big.states, strict=True) if f.held and not f.wronskian]
+    deep = int(sum(s.lines[0].now for s in holders).max())
+    print(f"GAMEBOARD the body of {6 * QUANTA} on the chain: its content {deep}, U = {deep / 6000:.3f}")
+    assert 0 < deep < paces.frozen_content(big.world.node_clock) and big.books()["matter"]["quanta"] > 0
     document = json.loads(chain_body_world(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     refused("a sense is \\+1 or -1", lambda: TOOL.pixel_mode(json.loads(json.dumps(document)), [2]))
-    at = (CHAIN // 2, CHAIN // 2 + 2)
-    heavy = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 2 * QUANTA}]} for x in at]
-    refused("collapses: its wells reach the pace 0", TOOL.pixel_mode, {**document, "measured": heavy})
-    small = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 20}]} for x in (20, 23)]
-    with pytest.raises(ValueError, match=r"measured\[1\] and measured\[0\] share a Node"):
-        TOOL.pixel_mode({**document, "measured": small})
+    for at, count in (((CHAIN // 2, CHAIN // 2 + 2), 2 * QUANTA), ((20, 23), 20)):
+        near = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": count}]} for x in at]
+        refused("share a Node", TOOL.pixel_mode, {**document, "measured": near})
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     del universe["integers"]["quantum_action"]
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")

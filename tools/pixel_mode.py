@@ -12,6 +12,7 @@ from typing import Any, cast
 
 import numpy as np
 
+from event_universe.core import paces
 from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import (
     NO_READ,
@@ -20,7 +21,7 @@ from event_universe.core.rule3 import (
     division_forward,
     rule3,
 )
-from event_universe.features.start import rest
+from event_universe.features.start import RestCollapses, rest, settled_rows
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES
@@ -42,6 +43,7 @@ class Board:
     action: int
     pair: tuple[int, int]
     width: int  # the largest integer of the universe's width, 2^width - 1
+    unit: int  # the Link's unit G, the run's declaration like Gamma (ALGEBRA.md #the-paces)
 
 
 @dataclass(frozen=True)
@@ -60,9 +62,14 @@ class Standing:
 def step(
     board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray, remainder: np.ndarray
 ) -> np.ndarray:
-    """One interval of Rule3 on the whole board, the engine's own form: the six arrivals through the Ports (0 beyond a face, the wrap on a periodic one, `node.ports`), the coefficients from the paces at every Node with no tension (core.rule3, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
+    """One interval of Rule3 on the whole board, the engine's own form: the six arrivals through the Ports (0 beyond a face, the wrap on a periodic one, `node.ports`), the coefficients from the composed paces of the content at every Node with no tension (core.rule3, core.paces, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
     reads, self_coefficient, wall = coefficients(
-        board.pair[0], board.pair[1], board.gamma, content, None, True
+        board.pair[0],
+        board.pair[1],
+        board.gamma,
+        *paces.node_paces(board.gamma, content),
+        None,
+        board.unit,
     )
     arrivals = ports(now, board.wrap)
     nxt, remainder[...] = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
@@ -72,7 +79,8 @@ def step(
 def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: np.ndarray) -> np.ndarray:
     """The record's weighted share at every Node in the current's units, the engine's own `share.share` at the paces of the content (ALGEBRA.md #the-count-is-the-records-share): the conserved form's Node term over the Link's pace squared less the plain Link term."""
     record = Record(now.astype(np.int64), before.astype(np.int64), np.zeros(board.shape, dtype=np.int64))
-    return np.asarray(share(board.pair, record, board.wrap, board.gamma, content), dtype=np.int64)
+    found = share(board.pair, record, board.wrap, board.gamma, content, None, board.unit)
+    return np.asarray(found, dtype=np.int64)
 
 
 def read_quanta(share_now: np.ndarray, den: int, action: int) -> np.ndarray:
@@ -153,7 +161,12 @@ def top_mode(
     a = np.where(keep, seed, 0).astype(np.int64)
     seen: set[bytes] = set()
     reads, self_coefficient, wall = coefficients(
-        board.pair[0], board.pair[1], board.gamma, content, None, True
+        board.pair[0],
+        board.pair[1],
+        board.gamma,
+        *paces.node_paces(board.gamma, content),
+        None,
+        board.unit,
     )
     while True:
         total = np.asarray(rule3(reads, ports(a, board.wrap), self_coefficient, wall, a, 0, 0)[0])
@@ -267,20 +280,18 @@ def family_of(universe: dict[str, Any], name: str) -> FamilyRule:
 
 
 def rests(
-    rows: list[tuple[str, tuple[int, int], int, int]],
-    counts: np.ndarray,
-    wrap: Wrap,
-    width: int,
+    rows: list[tuple[str, tuple[int, int], int, int]], counts: np.ndarray, board: Board
 ) -> np.ndarray:
-    """Every held row's level at these sources as the engine's start holds it, each row at the rest of its own line by the start (features/start: the division act iterated from nothing until it repeats, at the row's pair and level weight, with or without a gap) with its vacuum content added (the massless row's `rest`), summed into the content every record reads: at a body's own sources alone, the body's own well."""
-    total = np.zeros(counts.shape, dtype=np.int64)
-    for _name, pair, level_weight, vacuum in rows:
-        wall = 3 * pair[1]  # the plain rule's wall, the one the row steps by
-        total += (
-            np.asarray(rest(counts, pair, wrap, level_weight, width, wall).levels, dtype=np.int64)
-            + vacuum
-        )
-    return total
+    """Every held row's level at these sources as the engine's start holds it, every holder of the content at the rest of its own line, its own level and the others' among the content it reads (features/start, `settled_rows`: the division act iterated from nothing until it repeats, at the row's pair and level weight, with or without a gap, Every row reads the content), with its vacuum content added (the massless row's `rest`), summed into the content every record reads: at a body's own sources alone, the body's own well."""
+    sourced = [(counts, pair, level_weight, vacuum, ()) for _name, pair, level_weight, vacuum in rows]
+    fields = settled_rows(sourced, board.wrap, board.width, board.gamma, board.unit)
+    return sum(
+        (
+            np.asarray(field.levels, dtype=np.int64) + row[3]
+            for field, row in zip(fields, rows, strict=True)
+        ),
+        np.zeros(counts.shape, dtype=np.int64),
+    )
 
 
 def region_of(counts: np.ndarray, well: np.ndarray, centre: Axis, wrap: Wrap) -> np.ndarray:
@@ -299,7 +310,7 @@ def spread(
     rows: list[tuple[str, tuple[int, int], int, int]],
     others: np.ndarray,
 ) -> np.ndarray:
-    """The first lay: a body declared on one Node is laid over the cube about its centre, its quanta shared alike, the cube widened one Link at a time until every pace is positive (no value of the law: the iteration moves it to the fixed point); a body declared on its Nodes is laid as declared."""
+    """The first lay: a body declared on one Node is laid over the cube about its centre, its quanta shared alike, the cube widened one Link at a time until every pace is positive, the content below the Link's zero (no value of the law: the iteration moves it to the fixed point); a body declared on its Nodes is laid as declared."""
     if int(np.count_nonzero(first)) > 1:
         return first.copy()
     quanta = int(first.sum())
@@ -312,12 +323,13 @@ def spread(
         nodes = int(cube.sum())
         counts = np.where(cube, int(division_forward(quanta, nodes, 0)[0]), 0).astype(np.int64)
         counts[centre] += quanta - int(counts.sum())
-        content = rests(
-            rows, counts, board.wrap, board.width
-        )  # the body alone: the others are spread in their turn
-        if (
-            2 * int(content.max()) < board.gamma
-        ):  # the Link's pace Gamma - 2 c above 0 (ALGEBRA.md #the-paces)
+        try:  # the body alone: the others are spread in their turn
+            content = rests(rows, counts, board)
+        except RestCollapses:
+            continue  # the rows' own rests reach the pace 0 under this cube: the next
+        if int(content.max()) < paces.frozen_content(
+            board.gamma
+        ):  # the Node's pace above 0 (#the-paces)
             return counts
     raise ValueError(
         f"the body of {quanta} quanta about the Node {list(centre)} fits no cube on this board with a positive pace"
@@ -386,16 +398,15 @@ def body_fixed_point(
     rounds: set[bytes] = set()
     while (key := counts.tobytes()) not in rounds:
         rounds.add(key)
-        content = rests(rows, others + counts, board.wrap, board.width)
-        well = rests(
-            rows, counts, board.wrap, board.width
-        )  # the region from the body's own well, the others' wells aside
-        if 2 * int(content.max()) >= board.gamma:
+        content = rests(rows, others + counts, board)
+        # the region from the body's own well, the others' wells aside
+        well = rests(rows, counts, board)
+        if int(content.max()) >= paces.frozen_content(board.gamma):
             raise ValueError(
                 f"the body of {quanta} quanta about the Node {list(centre)} collapses: its wells reach the pace 0 "
-                f"(the content {int(content.max())} at or beyond Gamma div 2 = {board.gamma // 2}, the Link's pace "
-                f"Gamma - 2 c; ALGEBRA.md #the-paces); its quanta are above its "
-                "binding row's window of mass (ALGEBRA.md #the-generator)"
+                f"(the content {int(content.max())} at or beyond the Link's zero {paces.frozen_content(board.gamma)}, "
+                "where the Node's pace p_0^2 / Gamma rounds to 0, a frozen clock; ALGEBRA.md #the-paces, "
+                "The paces compose)"
             )
         region = region_of(counts, well, centre, board.wrap)
         own = np.where(region, well, 0)  # the shape of the seed: the body's own well over its region
@@ -413,7 +424,7 @@ def body_fixed_point(
             region, read_quanta(share_of(board, 0, record.now, record.before), den, board.action), 0
         )
         if bool(np.all(within(laid - counts, np.maximum(laid, counts)))):
-            return laid, record, region, rests(rows, others + laid, board.wrap, board.width)
+            return laid, record, region, rests(rows, others + laid, board)
         counts = (counts + laid) // 2  # the half step: the deep well overshoots under the whole step
     raise ValueError(
         f"the body of {quanta} quanta about the Node {list(centre)} finds no fixed point: its counts repeat before they and its form return each other within the rounding (the generator is Rule3)"
@@ -501,11 +512,21 @@ def read_at_the_start(
     nodes, seen = region.copy(), set()
     while True:
         plain, turned = np.where(nodes, plain_everywhere, 0), np.where(nodes, turn, 0)
-        content = rests(rows, others[0] + plain, board.wrap, board.width)
+        content = rests(rows, others[0] + plain, board)
         sourced = others[1] + turned
         if bool(sourced.any()):
             for _name, pair, level_weight, _vacuum in signs:
-                level = rest(sourced, pair, board.wrap, level_weight, board.width, 3 * pair[1]).levels
+                level = rest(
+                    sourced,
+                    pair,
+                    board.wrap,
+                    level_weight,
+                    board.width,
+                    3 * pair[1],
+                    board.gamma,
+                    content,
+                    1,
+                ).levels
                 content = content + np.asarray(level, dtype=np.int64)
         total = sum((share_of(board, content, now, before) for now, before in pairs), zero)
         weighted = np.where(region, read_quanta(total, den, action), 0)
@@ -675,6 +696,7 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
             int(integers["quantum_action"]),
             pairs[body["family"]],
             int(2 ** int(integers["width"]) - 1),
+            int(integers["link_unit"]),
         )
         rows = held_rows(universe, str(body["family"]))
         lays.append((spread(counts, centre, board, rows, zero), zero, centre, quanta))
@@ -696,14 +718,22 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
                 int(integers["quantum_action"]),
                 pairs[body["family"]],
                 int(2 ** int(integers["width"]) - 1),
+                int(integers["link_unit"]),
             )
             rows, signs = (
                 held_rows(universe, str(body["family"])),
                 sign_rows(universe, str(body["family"])),
             )
-            laid, record, region, content = body_fixed_point(
-                board, rows, all_counts - counts, centre, quanta, counts
-            )
+            try:
+                laid, record, region, content = body_fixed_point(
+                    board, rows, all_counts - counts, centre, quanta, counts
+                )
+            except RestCollapses as refusal:
+                raise ValueError(
+                    f"the body of {quanta} quanta about the Node {list(centre)} collapses: its wells reach the "
+                    f"pace 0 ({refusal}; the rows reading their own levels, ALGEBRA.md #the-paces, Every row "
+                    "reads the content; a frozen clock, The paces compose)"
+                ) from refusal
             sense = (senses or [])[number] if number < len(senses or []) else 0
             if sense not in (-1, 0, 1):
                 raise ValueError(f"measured[{number}]: a sense is +1 or -1 (0: none), got {sense}")
@@ -719,7 +749,15 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
                 levels = rotating(board, content, record, keep, sense)
                 pairs_kept = [(levels[0], levels[1]), (levels[2], levels[3])]
             others = (all_counts - counts, all_turns - turns)
-            laid, turned, weighted = read_at_the_start(board, rows, signs, others, region, pairs_kept)
+            try:
+                laid, turned, weighted = read_at_the_start(
+                    board, rows, signs, others, region, pairs_kept
+                )
+            except RestCollapses as refusal:
+                raise ValueError(
+                    f"the body of {quanta} quanta about the Node {list(centre)} collapses at the start's read: "
+                    f"{refusal} (a frozen clock; ALGEBRA.md #the-paces, The paces compose)"
+                ) from refusal
             for other, taken in enumerate(regions):
                 if bool(np.any(taken & region)):
                     raise ValueError(
@@ -750,6 +788,7 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
                 int(integers["quantum_action"]),
                 pairs[str(message["family"])],
                 int(2 ** int(integers["width"]) - 1),
+                int(integers["link_unit"]),
             ),
             message,
             beyond,

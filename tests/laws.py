@@ -25,16 +25,16 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     """The module at `path` loaded under `name` and registered in sys.modules (a tool or a generator)."""
     spec = importlib.util.spec_from_file_location(name, path)
     assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[name] = module
+    sys.modules[name] = module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
 def refused(match: str, call, *args, **keys):  # type: ignore[no-untyped-def]
     """The call on its arguments refused by name: a ValueError whose message matches `match`."""
-    with pytest.raises(ValueError, match=match):
+    with pytest.raises(ValueError, match=match) as refusal:
         call(*args, **keys)
+    return refusal.value
 
 
 TOOLS = ("pixel_mode", "back_in_time", "run_inputs")  # the generator, the back-in-time gate, the runner
@@ -57,20 +57,18 @@ def chain_body_world(tmp_path, tool, quanta=QUANTA, at=(CHAIN // 2,), senses=(),
     """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
     turning = [bool(senses[i]) if i < len(senses) else False for i in range(len(at))]
     universe_beside(tmp_path, charged=any(turning))
-    measured: list[dict[str, object]] = [
-        dict(family=CHARGED["name"] if turns else "matter", nodes=[dict(node=[x, 0, 0], count=quanta)])
-        for x, turns in zip(at, turning, strict=True)
-    ]
-    detectors: list[dict[str, object]] = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
-    detectors += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
-    detectors += [{"name": "taker", "block": len(at) - 1}] if taker else []
-    document = dict(shape=[CHAIN, 1, 1], detectors=detectors)
-    document["boundary"] = dict(x="open", y="periodic", z="periodic")
-    document.update(ticks=400, face_depth=1, universe="u.json", engine="e.json", measured=measured)
-    (world := tmp_path / "chain.json").write_text(json.dumps(document), encoding="utf-8")
+    families = [CHARGED["name"] if turns else "matter" for turns in turning]
+    nodes = [[dict(node=[x, 0, 0], count=quanta)] for x in at]
+    measured = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
+    ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
+    ends += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
+    detectors = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
+    world = dict(shape=[CHAIN, 1, 1], detectors=detectors, measured=measured, ticks=400, face_depth=1)
+    world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
+    (path := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     if mode:
-        tool.main(["--input", str(world), "--sense", *(str(sense) for sense in senses)])
-    return world
+        tool.main(["--input", str(path), "--sense", *(str(sense) for sense in senses)])
+    return path
 
 
 SLIT = dict(shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, ticks=24)
