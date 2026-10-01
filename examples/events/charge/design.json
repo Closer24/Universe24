@@ -1,0 +1,94 @@
+{
+ "comment": "World (iv) of the families round, charge (HIGHLIGHTS.md, Every family run on the engine and seen to work; the advisor's blinds, #1563 comment 5928483084; ALGEBRA.md row (f), The sign holder rotates the two-part record, The lattice constants): the holder of the sign sourced by a charged body's Wronskian and read plainly, the act `pace`, at the law's level weight 1. The universe `charged.json`: the rule's own rows (examples/events/rule.json) with the charged family added, matter's pair [4000, 6000] at the dimension 2, a plane, as the tests add it; the charge, the holder of the sign, declares no act, the plain read into its readers' paces. Three worlds on the open box of `shape`: `charged_body`, one body of the charged family, `quanta` quanta in the engine's count at the centre, laid rotating by the generator in the sense +1 (its second level pair the record a quarter period on); `like` and `unlike`, two such bodies at the Nodes `centres`, `apart` Links apart along x, laid in the senses +1 and +1, and +1 and -1. The fence of the lay: at the level weight 1 a body of the window's own sign well is of the order of its content well (the sign's source W div T per interval about the count), and the holder's level, read plainly into the plane's pace as the content is, may bring the body's pace to 0, which the generator refuses by name as a collapse (the build prints the refusal and the world stays declared; the like-or-unlike look at the level weight 100 on a chain, examples/events/like_or_unlike/, is the committed reading of the sign at a weight the body bears). The lay of `charged_body` on main 3fe40aeb's engine, before the self-read round and before any run (every lay named here is the generator's on main 3fe40aeb's engine, before the self-read round, whose rest differs: every held row reads the content at the Node's pace, and bodies above 2 / 27 of content have no rest; the worlds are laid anew by the builder, with --modes, on the finished engine, and no world laid on the old engine is committed): the generator lays the body's standing record as the neutral pixel's (the clock pair [12789, 8310], the period 9.0, 225 Nodes) and the engine's start reads the holder of the sign's rest 688 at the Node beside the binding holder's 2,046 and gravity's 2, the charged family's least Link pace 528 (Gamma - 2 c at a content of 2,736, under the horizon's 3,000), and the body's share at the paces of that read 120,390 quanta at the centre Node for the 10,000 laid, the declaration the generator writes (the count is the record's share at the paces of the read; a deep Node counts the same record more): the world loads LAWFUL, the guard and the gate admitting it, the body standing a few hundred levels from the horizon, which the run reads. The lay of `unlike`, two such bodies twelve Links apart in the senses +1 and -1, is refused by the generator by name: 'the body of 10000 quanta about the Node [6, 12, 12] finds no fixed point: its counts repeat before they and its form return each other within the rounding' (the sign holder's level of either sign in the pair's iteration at the level weight 1); the world file stands declared without a mode file and the loader refuses it at load; the lay of `like` is the build's verdict beside it. Headless, `ticks` intervals; the reading by tools/body_rest.py, a GameBoard reading and no click. The run is not performed in the round that prepares it.",
+ "engine": "examples/events/engine_start.json",
+ "universe": "examples/events/charge/charged.json",
+ "family": "charged",
+ "holder": "charge",
+ "level_weight": 1,
+ "window": [
+  1,
+  400
+ ],
+ "worlds": {
+  "charged_body": {
+   "shape": [
+    25,
+    25,
+    25
+   ],
+   "centres": [
+    [
+     12,
+     12,
+     12
+    ]
+   ],
+   "senses": [
+    1
+   ],
+   "quanta": 10000,
+   "ticks": 100
+  },
+  "like": {
+   "shape": [
+    25,
+    25,
+    25
+   ],
+   "centres": [
+    [
+     6,
+     12,
+     12
+    ],
+    [
+     18,
+     12,
+     12
+    ]
+   ],
+   "apart": 12,
+   "senses": [
+    1,
+    1
+   ],
+   "quanta": 10000,
+   "ticks": 400
+  },
+  "unlike": {
+   "shape": [
+    25,
+    25,
+    25
+   ],
+   "centres": [
+    [
+     6,
+     12,
+     12
+    ],
+    [
+     18,
+     12,
+     12
+    ]
+   ],
+   "apart": 12,
+   "senses": [
+    1,
+    -1
+   ],
+   "quanta": 10000,
+   "ticks": 400
+  }
+ },
+ "reading": "per world (tools/body_rest.py, GameBoard): each body's Wronskian at its centre (its sense) and its 2 cos omega_b, the holder of the sign's level at r = 0 through 6 along each axis from each centre at the window's ends beside the binding holder's and gravity's, the centroid of each body's share over its half of the board, and for two bodies the separation along x at the ends and its change, like against unlike.",
+ "blind": {
+  "wronskian": "a charged plane of amplitude A at the rotation omega_b: W = re_now im_before - im_now re_before = -A^2 sin omega_b per Node for z_before = z_now e^(i omega_b), the sense; the engine's lay in the sense +1 is the record of positive Wronskian (ENGINE.md, section 3, the engine's convention), the sign the reader reports",
+  "sign_write": "the holder's time line gains (SUM W + r) div (E_s T) per interval at E_s = 1, the sign's source s_q = SUM over the body's Nodes of W div T, of either sign",
+  "well": "the holder's rest about the body is the same Green's function as the content's: 3 G(r) s_q with 3 G(0) = 0.7582 at the Node, 0.2582, 0.1286, 0.0826, 0.0608 and 0.0483 at 1 to 5 Links, 0.2387 / r far on an open box (The lattice constants), its sign the Wronskian's: a positive level about a body of the sense +1 and a negative one about the sense -1",
+  "like_or_unlike": "under the plain read (row (f)) the holder's level is a hollow whatever the reader's sense: like senses, both levels positive, are drawn to each other's level and their separation closes faster than two neutral bodies' (examples/events/matter_and_binding/pair.json, the same bodies of the matter family); unlike senses, one level positive and one negative, the first body pushed from the second's negative level and the second drawn to the first's positive one, both drifting the same way, the separation near the neutral pair's to the first order; the blind is the sign the run reads with both senses laid, the plain read telling like from unlike by no force of one sign (the rotation round's blinds for the rotation read, examples/events/like_or_unlike/expectation.json: like apart and unlike together under the act `rotation`)",
+  "status": "computed from the law's lines at Gamma = 6,000 (the Wronskian's bilinear, the hold's write, the lattice constants, row (f)), nothing read back from a run; whether a body of the window bears its own sign well at the level weight 1 is the generator's verdict at the lay, by name",
+  "fence": "GameBoard: a held row's level and a centroid's drift are readings and no click; the clicks that tell like from unlike, like charges repelled and unlike attracted at one size, are the bodies' round's (row (f))"
+ }
+}
