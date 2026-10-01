@@ -12,10 +12,12 @@ detector reports). Its title is "Universe24: one integer rule with the cube's 24
 the lattice Klein-Gordon and Poisson equations, with Schroedinger's as its slow
 limit", the equations alone and no experiment, by the owner's word; the earlier title, the meeting of the past with the future, stands in
 the introduction as the statement of what a click is. The paper is kept to 32 pages and to what is safe: the rule, its exact
-properties, the measurement, the families, the bodies and their clusters, the
-weak-field forms with both potentials, and the two worlds derived and not run;
-the magnetic force, the sign of the charge, the hypotheses and the compact
-pixel's numbers stand only in the long version. The runs the
+properties, the measurement with the sign of the charge (Section 5.5), the
+families, the bodies and their clusters, the weak-field forms with both
+potentials and the magnetic force (Section 8, Tables 1 and 2), the two
+hypotheses by name where they stand (Sections 7.5 and 10.2), and the three
+worlds derived and read by the gates, whose runs Section 3.7 reports; the
+compact pixel's numbers stand only in the long version. The runs the
 paper reports are the gates' (Section 3.7): the back-in-time gate's MATCH on
 every world, taken by the owner's word of 2026-10-01 ("if there is a run of
 the reversal that looks good and agrees with nature, take it"), and the two
@@ -31,7 +33,7 @@ their statuses.
 - `general_formula/main.pdf`: the compiled paper at the same commit.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.27 in the order of the paper's sections,
+  its proof, Derivations S.1 to S.32 in the order of the paper's sections,
   cited in the paper as (S.n); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
@@ -83,7 +85,7 @@ their statuses.
 The paper carries no experiment: until a run has worked and the advisor and
 the reviewer have confirmed it, no click count of a run stands in it beside
 nature's, the gates' runs above being the engine's check of the algebra; the
-implementation's two gates, the two slits and Bell, stand as the engine's
+implementation's three gates, the two slits, Bell and GHZ, stand as the engine's
 worlds and the law's derivations of what each must give. The derivations of
 the bodies' clicks, the two potentials (the clock's share and Kepler's) and
 the magnetic force enter with their statuses as the mathematician derived
@@ -134,7 +136,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "32 pages, 2 figures, 4 tables; supplementary material of 8 pages as an
+  "32 pages, 2 figures, 4 tables; supplementary material of 9 pages as an
   ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 250 words and about 1600
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
