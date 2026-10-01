@@ -22,7 +22,9 @@ rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
   worlds, from row (g) of the law) by `python paper/general_formula/two_slits.py`,
   and `bell.pdf` (the correlation at the four settings against the settings'
   calibrated phases, from row (h) of the law) by
-  `python paper/general_formula/bell.py`.
+  `python paper/general_formula/bell.py`, and `meeting.pdf` (the click as the
+  meeting of the future with the past, schematically, from the definitions) by
+  `python paper/general_formula/meeting.py`.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.
