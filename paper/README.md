@@ -8,9 +8,9 @@ claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
-detector reports). Its title is "Universe24: a simple integer rule and the group of order 24
-give the two slits, Bell's correlation and the weak-field forms of gravity as
-clicks"; the earlier title, the meeting of the past with the future, stands in
+detector reports). Its title is "Universe24: the algebra of one integer rule and the cube's
+group of 48, its 24 rotations with the reflections, gives the two slits, Bell's
+correlation and the weak-field forms of gravity as clicks"; the earlier title, the meeting of the past with the future, stands in
 the introduction as the statement of what a click is. The paper is kept to 30 pages and to what is safe: the rule, its exact
 properties, the measurement, the families, the bodies and their clusters, the
 weak-field forms with both potentials, and the two worlds derived and not run;
@@ -114,7 +114,7 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "30 pages, 2 figures, 4 tables; supplementary material of 7 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 246 words and 1426
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 249 words and about 1450
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
