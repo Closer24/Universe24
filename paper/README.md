@@ -15,9 +15,13 @@ the introduction as the statement of what a click is. The paper is kept to 30 pa
 properties, the measurement, the families, the bodies and their clusters, the
 weak-field forms with both potentials, and the two worlds derived and not run;
 the magnetic force, the sign of the charge, the hypotheses and the compact
-pixel's numbers stand only in the long version. The paper holds no
-run of its own; only a detector's click is a measurement, and a number read off
-the GameBoard is a diagnostic. Table 1 of the paper lists every result with its
+pixel's numbers stand only in the long version. The paper carries one
+result of a run of the implementation, the back-in-time gate's MATCH on the two
+slits' and Bell's worlds (Section 4.1 and Table 1), taken by the owner's word of
+2026-10-01 ("if there is a run of the reversal that looks good and agrees with
+nature, take it") as a computed diagnostic and no measurement; only a
+detector's click is a measurement, and a number read off the GameBoard is a
+diagnostic. Table 1 of the paper lists every result with its
 kind, its fence and what it rests on, and Table 2 the formulas of clicks with
 their statuses.
 
@@ -56,7 +60,8 @@ their statuses.
   chain, a plane and a box, the check of `the hollow's dimension`.
 
 The paper carries no experiment: until a run has worked and the advisor and
-the reviewer have confirmed it, no run's number stands in it; the
+the reviewer have confirmed it, no click count of a run stands in it, the
+gate's MATCH above being the one run it reports; the
 implementation's two gates, the two slits and Bell, stand as the engine's
 worlds and the law's derivations of what each must give. The derivations of
 the bodies' clicks, the two potentials (the clock's share and Kepler's) and
