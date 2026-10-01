@@ -307,12 +307,12 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
 
 
 def stress_by_hand(now: np.ndarray, num: int) -> list[np.ndarray]:
-    """T_aa(i) = num (G_aa(i) + G_aa(i - a)) div 2 on a periodic board by rolls alone, the advisor's line."""
+    """T_aa(i) = -num (G_aa(i) + G_aa(i - a)) div 2 on a periodic board by rolls alone, the law's sign."""
     found = []
     for axis in range(3):
         plus, minus = np.roll(now, -1, axis), np.roll(now, 1, axis)
         g = now * (np.roll(now, -2, axis) - now) - plus * (plus - minus)
-        found.append((num * (g + np.roll(g, 1, axis))) // 2)
+        found.append((-num * (g + np.roll(g, 1, axis))) // 2)
     return found
 
 
@@ -322,7 +322,7 @@ def difference(a: np.ndarray, axis: int) -> np.ndarray:
 
 
 def test_the_tension_is_rule3s_own_conservation_of_the_current():
-    """(d) On a periodic cube of 6^3 in the vacuum: w (P_a(t + 1) - P_a(t)) = SUM_b R_b (G_ab(i - b) - G_ab(i)) exactly once the remainders' term is added, P_a the count's line's current per axis and G_ab the flux of the a-momentum through the b-Link at one time; the engine's tension is num (G_aa(i) + G_aa(i - a)) div 2 at every Node; a plane wave of the amplitude b on the exact band [1, 2] at k = pi / 3 has G_xx = -2 b^2 sin^2 k = -3 b^2 / 2 and a uniform record 0. (d) On a chain, a record of matter moving along +x (the envelope times the plane wave's character, a quarter turn per Link) sources the vacuum's row's tension on x below 0 (a plane wave's -2 num b^2 sin^2 k) and none on y and z, so the Link's pace along x rises by the axis content above the pace along y; the same envelope at rest sources a tension of its own sign on x (the pressure of a standing record) and none on y and z; every family reads every holder of the content as its stepped time part, light as matter. (f) The local test of the two rows on a chain (x open) of sixteen ranges: the binding holder's pair from the file at its level weight, started at its rest under a static source of 1,000 quanta per interval at the centre Node (features/start), falls from the Node by e^(-kappa) per Link with cosh kappa = 3 den / num - 2 (ALGEBRA.md #the-well, the reach of a held family is its pair), the range R = 1 / kappa (20 Links at [2400, 2401]): the level at R / 2, R and 3 R / 2 Links within one unit of the centre's times e^(-r / R); stepped by Rule3 at the pace 1 with the same source written each interval through the one wall E_s T (1,000 T in the numerator), the field is static within the rounding: the first interval moves no Node by more than two units and fewer than one Node in ten at all (the Nodes whose rounding residual passes the half wall, the remainder's origin), and over 200 intervals no Node drifts by more than two units per Node kicked, those kicks being Rule3's own waves along the chain (the fixed point is a pair, level and remainder)."""
+    """(d) On a periodic cube of 6^3 in the vacuum: w (P_a(t + 1) - P_a(t)) = SUM_b R_b (G_ab(i - b) - G_ab(i)) exactly once the remainders' term is added, P_a the count's line's current per axis and G_ab the flux of the a-momentum through the b-Link at one time; the engine's tension at every Node is the law's -num (G_aa(i) + G_aa(i - a)) div 2 (ALGEBRA.md #the-primitives, The tension: the advisor's correction of #1519 comment 5906225516), the documented pattern [2, 0, -2, 0] along x giving +8 at every Node at the weight 1 (the engine on main wrote -8, the stress itself); a plane wave of the amplitude b at the weight 1 at k = pi / 3 has -G_xx = 2 b^2 sin^2 k = 3 b^2 / 2 and a uniform record 0. (d) On a chain, a record of matter moving along +x (the envelope times the plane wave's character, a quarter turn per Link) sources the vacuum's row's tension on x above 0 (a plane wave's +2 num b^2 sin^2 k: the stress deepens the content, light gravitates by its pressure) and none on y and z, so the Link's pace along x falls by the axis content below the pace along y; the same envelope at rest sources a tension of its own sign on x (the pressure of a standing record) and none on y and z; every family reads every holder of the content as its stepped time part, light as matter. (f) The local test of the two rows on a chain (x open) of sixteen ranges: the binding holder's pair from the file at its level weight, started at its rest under a static source of 1,000 quanta per interval at the centre Node (features/start), falls from the Node by e^(-kappa) per Link with cosh kappa = 3 den / num - 2 (ALGEBRA.md #the-well, the reach of a held family is its pair), the range R = 1 / kappa (20 Links at [2400, 2401]): the level at R / 2, R and 3 R / 2 Links within one unit of the centre's times e^(-r / R); stepped by Rule3 at the pace 1 with the same source written each interval through the one wall E_s T (1,000 T in the numerator), the field is static within the rounding: the first interval moves no Node by more than two units and fewer than one Node in ten at all (the Nodes whose rounding residual passes the half wall, the remainder's origin), and over 200 intervals no Node drifts by more than two units per Node kicked, those kicks being Rule3's own waves along the chain (the fixed point is a pair, level and remainder)."""
     draw, shape = np.random.default_rng(3), (6, 6, 6)
     (read, _, _), self_coefficient, wall = coefficients(4000, 6000, GAMMA, 0)
     start = drawn(draw, shape, 3000, 1)
@@ -348,12 +348,12 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     assert all(np.array_equal(t, h) for t, h in zip(stresses, by_hand_stress, strict=True))
     print(f"GAMEBOARD the identity's remainders' term at most {max(differences)}, the wall {wall}")
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
-    exact = family_rules([real_row("exact", (1, 2), 1, None)])[0]
-    plane = [node.Record(wave, wave, node.zeros(shape, np.int64))]
-    tension = node.stresses_of(exact.pair[0], plane, WRAP)
-    assert (tension[0] == -3 * 2000 * 2000 // 2).all() and not tension[1].any() and not tension[2].any()
-    flat = [node.Record(0 * wave + 7, 0 * wave + 7, node.zeros(shape, np.int64))]
-    assert not any(t.any() for t in node.stresses_of(exact.pair[0], flat, WRAP))
+    four = np.array([2, 0, -2, 0]).reshape(4, 1, 1)  # the law's pattern: +8 at every Node
+    assert (node.stresses_of(1, [node.Record(four, four, 0 * four)], WRAP)[0] == 8).all()
+    tension = node.stresses_of(1, [node.Record(wave, wave, 0 * wave)], WRAP)
+    assert (tension[0] == 3 * 2000 * 2000 // 2).all() and not tension[1].any() and not tension[2].any()
+    flat = [node.Record(0 * wave + 7, 0 * wave + 7, 0 * wave)]
+    assert not any(t.any() for t in node.stresses_of(1, flat, WRAP))
 
     def chain_record(now_turn: tuple[int, ...], before_turn: tuple[int, ...]) -> node.Record:
         """A record on a chain: the envelope PROFILE times a character, (1, 0, -1, 0) at the step's level and its turn at the level before."""
@@ -376,10 +376,9 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         held.lines, held.write_remainders = written
         xx = held.lines[1].now
         low, high, part = int(stress[0].min()), int(stress[0].max()), (int(xx.min()), int(xx.max()))
-        print(
-            f"GAMEBOARD the record {'moving' if moving else 'at rest'}: x tension {low}-{high}, xx {part}"
-        )
-        assert not (moving and int(stress[0].max()) > 0) and bool((stress[0] != 0).any())
+        kind = "moving" if moving else "at rest"
+        print(f"GAMEBOARD the record {kind}: x tension {low}-{high}, xx {part}")
+        assert not (moving and int(stress[0].min()) < 0) and bool((stress[0] != 0).any())
         assert not stress[1].any() and not stress[2].any() and not held.lines[2].now.any()
         states = [node.empty_state(f, shape, w, np.int64) for f, w in zip(FAMILIES, WALLS, strict=True)]
         states[GRAVITY] = held
