@@ -1,4 +1,4 @@
-"""Bell's worlds (ALGEBRA.md row (h); the advisor's corrected instrument of 2026-09-30, #1563 comment 5918198102, with the setting as the comb's shift, the Boss's 5918297124) from the design file beside this script: the near-field board of 48 rows, per side two lobes of the light family before a wall with two gaps of two wavelengths and a bar between them, the pair's angle laid as the relative phase of the two lobes (the mirror on the two sides) at the half-offsets (k + 1/2) / K of the turn, the screens at L beyond the walls in regions of rows backed by receding faces, tiled on each side's setting grid; the ports three regions of four rows about the central maximum and the two first minima, displaced by the setting; their mode files by the message lay (tools/pixel_mode.py); and the blind expectation file, written before any run: the single-side pattern and its minima by the Huygens sum over the gaps' Nodes, and E, S and the efficiencies by the reader's own calibrated rule applied to that sum. Every number is the design's and stands in the files, none in this script or the engine.
+"""Bell's gate world (ALGEBRA.md row (h); the advisor's corrected instrument of 2026-09-30, #1563 comment 5918198102) from the design file beside this script: the near-field board of 48 rows, per side two lobes of the light family before a wall with two gaps of two wavelengths and a bar between them, the pair's angle laid as the relative phase of the two lobes (the mirror on the two sides) at the half-offset (k + 1/2) / K of the turn for the design's angle k, the screens at L beyond the walls in regions of rows backed by receding faces, tiled on each side's setting grid; the ports three regions of four rows about the central maximum and the two first minima, displaced by the setting; its mode file by the message lay (tools/pixel_mode.py, with --modes); and the blind expectation file, written before any run: the single-side pattern and its minima by the Huygens sum over the gaps' Nodes, and E, S and the efficiencies by the calibrated rule applied to that sum over the K run phases. Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -35,8 +35,8 @@ def regions(design: dict[str, Any], side: str) -> list[list[int]]:
     return [list(range(start, stop)) for start, stop in zip(edges[:-1], edges[1:], strict=True)]
 
 
-def world(design: dict[str, Any], angle: int | None) -> dict[str, object]:
-    """The world file of one angle k: the board, the two symmetric walls with their gaps, per side the two lobes (the upper one at the phase (k + 1/2) / K of the turn on the right side and its mirror on the left; no phase for the visibility world), the screens' regions and the receding faces."""
+def world(design: dict[str, Any], angle: int) -> dict[str, object]:
+    """The world file of the angle k: the board, the two symmetric walls with their gaps, per side the two lobes (the upper one at the phase (k + 1/2) / K of the turn on the right side and its mirror on the left), the screens' regions and the receding faces."""
     source, slab, height = int(design["source"]), int(design["slab"]), int(design["height"])
     p, q = (int(v) for v in design["wave"])
     turns = int(design["angles"])
@@ -53,7 +53,7 @@ def world(design: dict[str, Any], angle: int | None) -> dict[str, object]:
                 "top": {"x": [top, top], "y": [int(v) for v in lobe], "z": [0, 0]},
                 "edge": {"x": int(design["edge_along"]), "y": int(design["edge_across"]), "z": 0},
             }
-            if index and angle is not None:
+            if index:
                 offset = 2 * angle + 1  # the half-offset (k + 1/2) / K as (2 k + 1) / (2 K)
                 message["phase"] = [offset if sign > 0 else 2 * turns - offset, 2 * turns]
             messages.append(message)
@@ -139,7 +139,7 @@ def phase_of(difference: list[float], turns: int, sign: int) -> float:
 def side_reading(
     design: dict[str, Any], side: str, shift: int
 ) -> tuple[list[float], list[float], list[int], float]:
-    """The reader's rule on the Huygens sum for one side at one setting over the run phases: the light in the ports, the contrast (the calibrated difference over its half swing), the outcome (its sign) and the setting's calibrated phase, as tools/bell_clicks.py reads a run (`calibrated`, `phase_of`)."""
+    """The calibrated rule on the Huygens sum for one side at one setting over the K run phases: the light in the ports, the contrast (the calibrated difference over its half swing), the outcome (its sign) and the setting's calibrated phase."""
     sign = dict(SIDES)[side]
     turns = int(design["angles"])
     plus_rows = list(
@@ -230,7 +230,7 @@ def blind_row(design: dict[str, Any]) -> dict[str, Any]:
 
 
 def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind expectation file, as tools/bell_clicks.py reads it: the sides' regions with their rows, per side and setting the regions of the two ports, which side credits by the sign (A) and which by the contrast (B), the runs, the settings in rows and in degrees of fringe phase, and the blind row from the Huygens sum."""
+    """The blind expectation file: the sides' regions with their rows, per side and setting the regions of the two ports, which side credits by the sign (A) and which by the contrast (B), the settings in rows and in degrees of fringe phase, and the blind row from the Huygens sum."""
     spacing = int(design["spacing"])
     settings = {side: [int(v) for v in design["settings"][SIDE_SETTINGS[side]]] for side, _s in SIDES}
     return {
@@ -248,8 +248,6 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         },
         "sign": design["sign"],
         "contrast": design["contrast"],
-        "runs": [f"bell_{angle}" for angle in range(int(design["angles"]))],
-        "visibility_world": "bell_v",
         "quanta": None,
         "spacing": spacing,
         "settings": settings,
@@ -263,30 +261,28 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--design", type=Path, default=HERE / "design.json", help="the design file")
-    parser.add_argument("--folder", type=Path, default=HERE, help="the folder of the worlds written")
+    parser.add_argument("--folder", type=Path, default=HERE, help="the folder of the world written")
     parser.add_argument(
-        "--modes", action="store_true", help="write the mode files too (tools/pixel_mode.py)"
+        "--modes", action="store_true", help="write the mode file too (tools/pixel_mode.py)"
     )
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
     args.folder.mkdir(parents=True, exist_ok=True)
-    worlds: list[tuple[str, int | None]] = [("bell_v", None)]
-    worlds += [(f"bell_{angle}", angle) for angle in range(int(design["angles"]))]
-    for name, angle in worlds:
-        path = args.folder / f"{name}.json"
-        document = world(design, angle)
-        path.write_text(json.dumps(document) + "\n", encoding="utf-8")
-        if args.modes:
-            subprocess.run(
-                [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path)],
-                check=True,
-                cwd=ROOT,
-                stdout=subprocess.DEVNULL,
-            )
-        print(json.dumps({"world": str(path), "angle": angle, "detectors": len(document["detectors"])}))
+    angle = int(design["angle"])
+    path = args.folder / f"bell_{angle}.json"
+    document = world(design, angle)
+    path.write_text(json.dumps(document) + "\n", encoding="utf-8")
+    if args.modes:
+        subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path)],
+            check=True,
+            cwd=ROOT,
+            stdout=subprocess.DEVNULL,
+        )
+    print(json.dumps({"world": str(path), "angle": angle, "detectors": len(document["detectors"])}))
     blind = args.folder / "expectation.json"
     blind.write_text(json.dumps(expectation(design), indent=1) + "\n", encoding="utf-8")
-    print(json.dumps({"expectation": str(blind), "runs": int(design["angles"])}))
+    print(json.dumps({"expectation": str(blind)}))
 
 
 if __name__ == "__main__":

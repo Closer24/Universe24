@@ -3,7 +3,7 @@
 # The back-in-time gate (tools/back_in_time.py) runs inside tests/test_the_node.py on the closed cube.
 tests/test_documents.py
 tests/test_feature_hold.py
-tests/test_feature_signed_read.py
+tests/test_feature_read.py
 tests/test_feature_start.py
 tests/test_feature_write.py
 tests/test_integer_algebra.py
