@@ -1,4 +1,4 @@
-"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept."""
+"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, labelled the measurement, the field line, labelled a GameBoard reading, and the run's end."""
 
 from __future__ import annotations
 
@@ -12,13 +12,57 @@ from event_universe.core.ports import Wrap, arrival
 PORTS = tuple((axis, side) for axis in range(3) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
 
 
+MEASUREMENT, DIAGNOSTIC = (
+    "DETECTOR",
+    "GAMEBOARD",
+)  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
+CLICK, FIELD = (
+    "click",
+    "field",
+)  # the output's two lines: the detector's report and the GameBoard reading
+OUTPUT = (
+    "event",
+    "label",
+    "tick",
+    "family",
+    "detector",
+    "inflow",
+    "reading",
+)  # the lines' keys, in their order
+END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
+BOOKS = ("share", "quanta", "drift", "pace")  # the keys of a family's books, a GameBoard diagnostic
+
+
 @dataclass(frozen=True)
 class Detector:
-    """A detector: its name, its declared Nodes (None: the Nodes of the body it names, derived each interval) and that body's number."""
+    """A detector: its name, its Nodes (None: the Nodes of the body it names, derived each interval), that body's number, and whether it is a region of the declared instrument (the faces' layer and a body's detector are not: each reads its own boundary and takes no field line)."""
 
     name: str
     nodes: np.ndarray | None
     body: int | None
+    declared: bool
+
+
+def click(tick: int, family: str, detector: str, inflow: int) -> dict[str, object]:
+    """The click line, the measurement: the detector's report of one interval, the net current into its region through the instrument's front boundary Ports in the current's units (undivided; N over W_c is the host's reading), with the region's name and the family and never a Node, labelled DETECTOR."""
+    return dict(zip(OUTPUT, (CLICK, MEASUREMENT, tick, family, detector, inflow), strict=False))
+
+
+def field(tick: int, family: str, detector: str, reading: int | None) -> dict[str, object]:
+    """The field line, a GameBoard reading labelled so and no measurement: the family's density over the region this interval."""
+    line = dict(zip(OUTPUT, (FIELD, DIAGNOSTIC, tick, family, detector), strict=False))
+    line[OUTPUT[-1]] = reading
+    return line
+
+
+def book(share: int, quanta: int, drift: int, pace: int) -> dict[str, int]:
+    """A family's books, a GameBoard diagnostic: its share summed over the GameBoard in the current's units, the same in quanta over W_c, the share's drift from the one the world started with and the least Link pace of the final state."""
+    return dict(zip(BOOKS, (share, quanta, drift, pace), strict=True))
+
+
+def end(interval: int, axis: str, side: str, largest: int) -> dict[str, object]:
+    """The lawful end, named: the front stands on the layer before the receding face of an axis grown to its largest size after this interval, and the next interval would reflect it."""
+    return dict(zip(END, (interval, axis, side, largest), strict=True))
 
 
 def standing(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.ndarray:

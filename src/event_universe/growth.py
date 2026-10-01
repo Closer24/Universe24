@@ -10,7 +10,7 @@ from event_universe import node
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
-from event_universe.reports import Detector
+from event_universe.reports import Detector, end
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
@@ -96,7 +96,10 @@ def resized_detector(detector: Detector, axis: int, side: int, layers: int, dire
     if detector.nodes is None:
         return detector
     return Detector(
-        detector.name, sized(detector.nodes, axis, side, layers, direction, False), detector.body
+        detector.name,
+        sized(detector.nodes, axis, side, layers, direction, False),
+        detector.body,
+        detector.declared,
     )
 
 
@@ -107,7 +110,7 @@ def grow(board: GameBoard) -> bool:
             continue
         layers = min(face.layers, face.largest - board.shape[face.axis])
         if layers < 1:
-            board.ended = end(face, board.tick)
+            board.ended = ended(face, board.tick)
             return False
         resize(board, face.axis, face.side, layers, 1)
         board.growths.append((board.tick + 1, face.axis, face.side, layers))
@@ -138,7 +141,6 @@ def declared(at: object, offset: Node) -> list[int]:
     return [int(index) - before for index, before in zip(list(at), offset, strict=True)]  # type: ignore[call-overload]
 
 
-def end(face: RecedingFace, tick: int) -> dict[str, object]:
-    """The lawful end, named: the front stands on the layer before the receding face of an axis grown to its largest size after this interval, and the next interval would reflect it."""
-    side = SIDES[1] if face.side > 0 else SIDES[0]
-    return {"interval": tick, "axis": AXES[face.axis], "side": side, "largest": face.largest}
+def ended(face: RecedingFace, tick: int) -> dict[str, object]:
+    """The lawful end, named by the reports' words (`reports.end`): the interval, the axis and the side of the receding face grown to its largest size."""
+    return end(tick, AXES[face.axis], SIDES[1] if face.side > 0 else SIDES[0], face.largest)

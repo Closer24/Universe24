@@ -120,7 +120,7 @@ def frame(board: GameBoard, kept: dict[int, list[node.Record]] | None) -> dict[s
                 row["second"] = state.lines[1].now
             if kept is not None:
                 row["form"] = node.form(kept[index], state.lines)
-            content, axis = node.read(index, board.families, board.states, "now")
+            content, axis = node.read(index, board.families, board.states, 1)
             row["pace"] = min(int(np.min(pace)) for pace in link_paces(world.node_clock, content, axis))
         else:
             row = {"level": state.lines[0].now, "parts": [line.now for line in state.lines[1:]]}

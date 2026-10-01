@@ -82,19 +82,24 @@ def axis_sums(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, np.
     return x, y, z
 
 
+def level_at(record: Record, direction: int) -> np.ndarray:
+    """The level a step in `direction` starts from: the level now forward (+1), the level before backward (-1), the one the state after the interval still holds (ALGEBRA.md #the-direction)."""
+    return record.now if direction == 1 else record.before
+
+
 def read(
     index: int,
     families: tuple[FamilyRule, ...],
     states: list[NodeState],
-    level: str,
+    direction: int,
 ) -> tuple[Any, tuple[Any, Any, Any]]:
-    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time line at `level`, "now" forward and "before" backward) and the axis contents t_a = SUM over the reads of (weight x the read family's axis line a + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
+    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`) and the axis contents t_a = SUM over the reads of (weight x the read family's axis line a + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
     reads = families[index].reads
-    content = content_of([(r.weight, getattr(states[r.family].lines[0], level)) for r in reads])
+    content = content_of([(r.weight, level_at(states[r.family].lines[0], direction)) for r in reads])
     axis = []
     for a in range(3):
         found = [
-            (r.weight, getattr(states[r.family].lines[1 + a], level))
+            (r.weight, level_at(states[r.family].lines[1 + a], direction))
             for r in reads
             if families[r.family].axes
         ]
@@ -105,13 +110,13 @@ def read(
 def guarded(index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int) -> None:
     """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read)."""
     if families[index].reads:
-        content, axis = read(index, families, states, "now")
+        content, axis = read(index, families, states, 1)
         guard(families[index].pair, gamma, content, axis, families[index].name)
 
 
 def least_pace(index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int) -> int:
     """The least Link pace Gamma - 2 c - t_a of a family over the GameBoard as it stands, a GameBoard diagnostic for the report and no act of the law."""
-    content, axis = read(index, families, states, "now")
+    content, axis = read(index, families, states, 1)
     return min(int(np.min(pace)) for pace in link_paces(gamma, content, axis))
 
 

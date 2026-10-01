@@ -92,7 +92,7 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
     axis = AXES.index(expected["across"])
     named = expected.get("detector")
     if named is None:  # every detector but the open faces' layer, over the whole run
-        rows = [d for d in loaded.detectors if d.body is None]
+        rows = [d for d in loaded.detectors if d.declared]
         names = [d.name for d in rows]
     else:
         names = [str(name) for name in named] if isinstance(named, list) else [str(named)]

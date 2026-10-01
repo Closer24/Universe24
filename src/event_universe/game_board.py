@@ -16,8 +16,8 @@ from event_universe.loader.derived import HeldWrite, count_wall, held_write, rea
 from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
 from event_universe.loader.mode import Levels
-from event_universe.loader.world import FACE_NAME, BodyRow, World
-from event_universe.reports import Detector, inflow, standing
+from event_universe.loader.world import BodyRow, World
+from event_universe.reports import Detector, book, click, field, inflow, standing
 
 Observer = Callable[[dict[str, object]], None]
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
@@ -58,18 +58,11 @@ class GameBoard:
         for index in self.order:
             node.guarded(index, self.families, self.states, self.world.node_clock)
         self.detectors = [
-            Detector(row.name, self.mask(row.positions) if row.body is None else None, row.body)
+            Detector(
+                row.name, self.mask(row.positions) if row.body is None else None, row.body, row.declared
+            )
             for row in world.detectors
         ]
-        face = np.zeros(self.shape, dtype=bool)
-        receding = [(row.axis, row.side) for row in world.receding]
-        for axis in range(3):
-            if world.open_axes[axis]:
-                layer = np.moveaxis(face, axis, 0)
-                layer[: world.face_depth] = (axis, -1) not in receding
-                layer[self.shape[axis] - world.face_depth :] = (axis, 1) not in receding
-        if bool(face.any()):
-            self.detectors.append(Detector(FACE_NAME, face, None))
         self.laid = {index: self.total_share(index) for index in self.order}  # the books' origin
         self.gate()
 
@@ -175,17 +168,17 @@ class GameBoard:
             self.observer(line)
 
     def instrument(self) -> np.ndarray:
-        """The instrument: the union of the declared regions (every detector with its own positions, the faces' layer and the bodies' detectors aside), whose boundary is where the reports are read (ALGEBRA.md #the-click-ends-nothing): what moves between two regions of one screen is not seen twice."""
+        """The instrument: the union of the declared regions (every detector with its own positions, the faces' layer and the bodies' detectors aside, `Detector.declared`), whose boundary is where the reports are read (ALGEBRA.md #the-click-ends-nothing): what moves between two regions of one screen is not seen twice."""
         found = np.zeros(self.shape, dtype=bool)
         for detector in self.detectors:
-            if detector.body is None and detector.name != FACE_NAME and detector.nodes is not None:
+            if detector.declared and detector.nodes is not None:
                 found |= detector.nodes
         return found
 
-    def share_of(self, index: int, level: str = "now") -> np.ndarray:
-        """A family of quanta's share at every Node in the current's units, a reading of its record's lines at the paces of its read from `level` (share.family_share; ALGEBRA.md #the-count-is-the-records-share)."""
+    def share_of(self, index: int, direction: int = 1) -> np.ndarray:
+        """A family of quanta's share at every Node in the current's units, a reading of its record's lines at the paces of its read at the level a step in `direction` starts from (share.family_share; ALGEBRA.md #the-count-is-the-records-share)."""
         family, state = self.families[index], self.states[index]
-        content, axis = node.read(index, self.families, self.states, level)
+        content, axis = node.read(index, self.families, self.states, direction)
         return share.family_share(family, state.lines, self.wrap, self.world.node_clock, content, axis)
 
     def quanta(self, index: int) -> np.ndarray:
@@ -213,7 +206,7 @@ class GameBoard:
         ]
 
     def books(self) -> dict[str, dict[str, int]]:
-        """The books per family of quanta, a GameBoard diagnostic: its share summed over the GameBoard in the current's units and in quanta over its wall W_c, the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), and the least Link pace of the final state."""
+        """The books per family of quanta, a GameBoard diagnostic (`reports.book`): its share summed over the GameBoard in the current's units and in quanta over its wall W_c, the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), and the least Link pace of the final state."""
         found: dict[str, dict[str, int]] = {}
         for index in self.order:
             family = self.families[index]
@@ -221,20 +214,15 @@ class GameBoard:
             total = self.total_share(index)
             quanta = int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
             pace = node.least_pace(index, self.families, self.states, self.world.node_clock)
-            found[family.name] = {
-                "share": total,
-                "quanta": quanta,
-                "drift": total - self.laid[index],
-                "pace": pace,
-            }
+            found[family.name] = book(total, quanta, total - self.laid[index], pace)
         return found
 
     def stepped(
-        self, index: int, level: str, direction: int
+        self, index: int, direction: int
     ) -> tuple[tuple[np.ndarray, tuple[np.ndarray, ...]], list[node.Record]]:
-        """A family's read (from the held rows' `level`) and every line of it stepped by Rule3 in `direction` with the rule of that read, every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face (`node.step`, `fill`)."""
+        """A family's read (from the held rows' level the step in `direction` starts from) and every line of it stepped by Rule3 in `direction` with the rule of that read, every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face (`node.step`, `fill`)."""
         family, state = self.families[index], self.states[index]
-        read = node.read(index, self.families, self.states, level)
+        read = node.read(index, self.families, self.states, direction)
         rule = node.rule_of(family, self.world.node_clock, *read)
         found = [
             node.step(record, rule, self.wrap, direction, family.rest if number == 0 else 0)
@@ -266,7 +254,7 @@ class GameBoard:
         forms: Bookings = {}
         turns: Bookings = {}
         currents = self.currents()
-        found = {index: self.stepped(index, "now", 1) for index in range(len(self.families))}
+        found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (_read, lines) in found.items():
             state = self.states[index]
             for record in lines:
@@ -313,30 +301,21 @@ class GameBoard:
         return found
 
     def report(self, currents: Currents) -> None:
-        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`)."""
+        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement)."""
         own = self.declared_board()
         for index, through in currents.items():
             family = self.families[index]
             for detector in self.detectors:
                 nodes = self.body_nodes(detector.body) if detector.body is not None else detector.nodes
                 assert nodes is not None
-                declared = detector.body is None and detector.name != FACE_NAME
-                boundary_of = self.instrument() if declared else nodes
+                boundary_of = self.instrument() if detector.declared else nodes
                 seen = inflow(nodes, through, self.wrap, boundary_of, own)
                 if seen != 0:
-                    self.emit(
-                        {
-                            "event": "click",
-                            "tick": self.tick,
-                            "family": family.name,
-                            "detector": detector.name,
-                            "inflow": seen,
-                        }
-                    )
+                    self.emit(click(self.tick, family.name, detector.name, seen))
         self.fields_read()
 
     def fields_read(self) -> None:
-        """A GameBoard reading, no measurement, labelled so: per family and declared region, the family's density over the region this interval, one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
+        """A GameBoard reading, no measurement, labelled so (`reports.field`): per family and declared region, the family's density over the region this interval, one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
         for index, (family, state) in enumerate(zip(self.families, self.states, strict=True)):
             if family.quanta:
                 density = self.quanta(index)
@@ -344,21 +323,13 @@ class GameBoard:
                 deviation = state.lines[0].now - family.rest
                 density = deviation * deviation
             for detector in self.detectors:
-                if detector.body is not None or detector.name == FACE_NAME or detector.nodes is None:
+                if not detector.declared or detector.nodes is None:
                     continue
                 total = int(density[detector.nodes].sum(dtype=object))
                 if self.fields.get((index, detector.name)) == total:
                     continue
                 self.fields[(index, detector.name)] = total
-                self.emit(
-                    {
-                        "event": "field",
-                        "tick": self.tick,
-                        "family": family.name,
-                        "detector": detector.name,
-                        "reading": total,
-                    }
-                )
+                self.emit(field(self.tick, family.name, detector.name, total))
 
     def booked_back(
         self,
@@ -371,7 +342,7 @@ class GameBoard:
         """A family of quanta's lines one interval back, its record free of any write: its tension read from the levels as the step left them (as the forward write read it), every line back, its form and its Wronskian read about the step from the same three levels the forward write read, the lines kept aside until every read of the interval's start is done."""
         state = self.states[index]
         stresses[index] = node.stresses_of(self.families[index].pair[0], state.lines, self.wrap)
-        _read, lines = self.stepped(index, "before", -1)
+        _read, lines = self.stepped(index, -1)
         forms[index] = node.form(lines, state.lines)
         turns[index] = node.wronskian(state.lines)
         books[index] = lines
@@ -397,7 +368,7 @@ class GameBoard:
             pending = [held for held in pending if held not in ready]
         for index in self.held:
             if index not in books:
-                books[index] = self.stepped(index, "before", -1)[1]
+                books[index] = self.stepped(index, -1)[1]
         for index, lines in books.items():
             self.states[index].lines = lines
         self.tick, self.ended = self.tick - 1, None

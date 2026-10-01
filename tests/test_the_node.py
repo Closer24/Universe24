@@ -71,7 +71,7 @@ def quanta_of(board: GameBoard, index: int) -> int:
 def within_the_reach(board: GameBoard, index: int) -> int:
     """One step of the GameBoard: a family's share read at the start's paces changes by the net currents at the start pair plus two terms exact in rationals from the step's three levels and remainders, the paces' anisotropy term num (next - before) SUM_a (3 p_a^2 - P^2) arr_a(now) / P^2 (P^2 = SUM_a p_a^2; 0 where the three paces are equal) and Rule3's remainder term -3 (next - before) (r' - r) / (2 P^2), up to the division act's floor at every Node of each level pair, under one unit each (ALGEBRA.md #the-count-is-the-records-share); returned, the paces' own part of the change, read beside (the books' drift holds both)."""
     family, state, gamma = board.families[index], board.states[index], board.world.node_clock
-    content, axis = node.read(index, board.families, board.states, "now")
+    content, axis = node.read(index, board.families, board.states, 1)
     paces = link_paces(gamma, content.astype(object), tuple(a.astype(object) for a in axis))
     squares = [pace * pace for pace in paces]
     total = squares[0] + squares[1] + squares[2]
@@ -430,12 +430,12 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
         states[GRAVITY] = held
         stepped = np.arange(16, dtype=np.int64).reshape(shape)  # the vacuum's row's stepped time part
         held.lines[0] = node.Record(stepped, stepped, node.zeros(shape, KIND))
-        content, axis = node.read(MATTER, FAMILIES, states, "now")
+        content, axis = node.read(MATTER, FAMILIES, states, 1)
         assert np.array_equal(axis[0], (xx + 1) // 2) and not axis[1].any()
         assert np.array_equal(content, stepped)
         contact = node.Record(count, count, node.zeros(shape, KIND))  # the bound charge's level
         states[NAMES.index("polarisation")].lines[0] = contact
-        light, _axis = node.read(CHARGE, FAMILIES, states, "now")
+        light, _axis = node.read(CHARGE, FAMILIES, states, 1)
         assert np.array_equal(light, stepped + count)  # every reader reads the rows as they stand
 
 

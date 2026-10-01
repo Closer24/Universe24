@@ -64,12 +64,13 @@ def guard(
                 "#the-paces, the guard's lower side); the run is refused"
             )
     squares = [clock, *(pace * pace for pace in links)]
-    for label, square in zip(("the clock", "axis 0", "axis 1", "axis 2"), squares, strict=True):
+    for number, square in enumerate(squares):
         high = int(np.max(square))
         if high > edge:
             node = np.unravel_index(int(np.argmax(square)), np.shape(square))
             raise ValueError(
-                f"the pace of {name!r} ({label}) squared is {high} at the Node {tuple(int(i) for i in node)} at "
+                f"the pace of {name!r} ({f'axis {number - 1}' if number else 'the clock'}) squared is {high} "
+                f"at the Node {tuple(int(i) for i in node)} at "
                 f"load, above the stability edge's square {edge} of its pair {list(pair)} at Gamma = {gamma} "
                 f"(p^2 x {left} <= {right}; ALGEBRA.md #the-paces, the guard's upper side: a hill beyond the edge); "
                 "the run is refused"

@@ -11,7 +11,7 @@ import numpy as np
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule, Row
-from event_universe.loader.faces import RecedingFace, faces_of, receding_of
+from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
@@ -59,11 +59,12 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`)."""
+    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede."""
 
     name: str
     positions: tuple[Node, ...]
     body: int | None
+    declared: bool
 
 
 @dataclass(frozen=True)
@@ -205,8 +206,9 @@ def detectors_of(
     shape: Node,
     bodies: int,
     beyond: tuple[Node, ...],
+    layer: tuple[Node, ...],
 ) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region, or the body it names by its number."""
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, or the body it names by its number; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
@@ -220,7 +222,7 @@ def detectors_of(
             raise ValueError(f"{label} declares its `positions` or the `block` it reads, one of the two")
         if "block" in row:
             body = integer(row["block"], f"{label}.block", 0, bodies - 1)
-            found.append(DetectorRow(name, (), body))
+            found.append(DetectorRow(name, (), body, False))
             continue
         positions = row["positions"]
         if not isinstance(positions, list) or not positions:
@@ -228,7 +230,9 @@ def detectors_of(
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(DetectorRow(name, nodes, None))
+        found.append(DetectorRow(name, nodes, None, True))
+    if layer:
+        found.append(DetectorRow(FACE_NAME, layer, None, False))
     return tuple(found)
 
 
@@ -240,7 +244,7 @@ def regions_no_finer_than_half_a_wavelength(
 ) -> None:
     """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's word of 2026-09-30, the uncertainty principle upheld): the finest structure the amplitudes of a family can carry is half its wavelength, so a declared region is at least half the wavelength of every message of its family across the beam, q / p Links for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) is refused by name; a detector reading a body declares no region and the open faces' layer is the board's own."""
     for detector in detectors:
-        if detector.body is not None:
+        if not detector.declared:
             continue
         for message in messages:
             p, q = message.wave
@@ -284,9 +288,10 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
-    detectors = detectors_of(world["detectors"], shape, len(bodies), beyond)
-    regions_no_finer_than_half_a_wavelength(detectors, messages, shape, families)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
+    layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
+    detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, layer)
+    regions_no_finer_than_half_a_wavelength(detectors, messages, shape, families)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
