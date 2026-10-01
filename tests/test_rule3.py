@@ -1,18 +1,35 @@
-"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic."""
+"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic; and the generic Node is closed for building (HIGHLIGHTS.md): the NodeState is the records and the writes' remainders alone, one Rule3 division per part and one write per held part per interval, the readings write nothing, the output click and field only, ENGINE.md's table the code's."""
 
 from __future__ import annotations
 
 import ast
+import dataclasses
 import random
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
 
-from event_universe.core.rule3 import ISOTROPIC, coefficients, form_term, rule3, rule_total_bound
+import event_universe.world_files as world_files
+from event_universe import growth, node, share
+from event_universe.core import rule3 as core
+from event_universe.core.rule3 import (
+    ISOTROPIC,
+    NO_READ,
+    coefficients,
+    form_term,
+    rule3,
+    rule_total_bound,
+)
+from event_universe.game_board import GameBoard
+from event_universe.world_files import load_world
+from tests.laws import chain_body_world, load_file
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
+TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
+BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
 
 
 def law_isotropic(num: int, den: int, gamma: int, c: int, weak_field: bool) -> tuple[int, int, int]:
@@ -159,9 +176,9 @@ def test_no_other_code_moves_a_level_from_one_node_to_another():
     stepping = [SOURCE / "node.py", SOURCE / "game_board.py", *sorted((SOURCE / "core").glob("*.py"))]
     stepping += sorted((SOURCE / "features").rglob("*.py"))
     for path in stepping:
-        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
-            if isinstance(node, ast.FunctionDef):
-                assert "split" not in node.name.lower(), f"{path.name}: {node.name}"
+        for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(item, ast.FunctionDef):
+                assert "split" not in item.name.lower(), f"{path.name}: {item.name}"
 
 
 # The integers the law writes and the engine may hold: 0 and 1 (the identity and the direction, -1 the inverse and the hole), 2 (the halves: W_c div 2, the half wall, the axis contents' rounding, two levels), 3 (the three axes, 3 den) and 6 (the six Ports, 6 den); in Rule3's own line (core/rule3.py) also 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2.
@@ -189,10 +206,10 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     found = []
     for path in [*sorted(SOURCE.rglob("*.py")), *tools]:
         allowed = LAW_INTEGERS | (RULE_LINE_INTEGERS if path.name == "rule3.py" else frozenset())
-        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
-            if isinstance(node, ast.Constant) and type(node.value) in (int, float, complex):
-                if node.value not in allowed or type(node.value) is not int:
-                    found.append(f"{path.relative_to(ROOT)}:{node.lineno} {node.value!r}")
+        for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(item, ast.Constant) and type(item.value) in (int, float, complex):
+                if item.value not in allowed or type(item.value) is not int:
+                    found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
     assert not found, found
 
 
@@ -200,14 +217,85 @@ def test_no_root_is_imported_or_called_anywhere_in_src_or_tools():
     """The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root."""
     found = []
     for path in sorted([*SOURCE.rglob("*.py"), *(ROOT / "tools").glob("*.py")]):
-        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
-            if isinstance(node, ast.Import) and any(alias.name == "math" for alias in node.names):
-                found.append(f"{path.relative_to(ROOT)}:{node.lineno} import math")
-            if isinstance(node, ast.ImportFrom) and any("sqrt" in alias.name for alias in node.names):
-                found.append(f"{path.relative_to(ROOT)}:{node.lineno} from {node.module} import a root")
-            if isinstance(node, ast.Call):
-                callee = node.func
+        for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(item, ast.Import) and any(alias.name == "math" for alias in item.names):
+                found.append(f"{path.relative_to(ROOT)}:{item.lineno} import math")
+            if isinstance(item, ast.ImportFrom) and any("sqrt" in alias.name for alias in item.names):
+                found.append(f"{path.relative_to(ROOT)}:{item.lineno} from {item.module} import a root")
+            if isinstance(item, ast.Call):
+                callee = item.func
                 name = callee.id if isinstance(callee, ast.Name) else getattr(callee, "attr", "")
                 if "sqrt" in name:
-                    found.append(f"{path.relative_to(ROOT)}:{node.lineno} {name}")
+                    found.append(f"{path.relative_to(ROOT)}:{item.lineno} {name}")
     assert not found, found
+
+
+# The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per part, two levels and Rule3's remainder; per held part, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record.
+NODE_STATE = {"levels": "Record | None", "second": "Record | None", "parts": "list[Record]"}
+NODE_STATE["write_remainders"] = "list[np.ndarray]"
+TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState table, its first column
+
+
+def is_write(args: tuple) -> bool:  # type: ignore[type-arg]
+    """Whether a call of Rule3 is one write: the division act on the level 1 with the remainder kept at every Node (features/write, `carried`), no read and no other level."""
+    reads, _arrivals, _numerator, _wall, now, other, remainder = args[:7]
+    division = reads is NO_READ and type(now) is int and now == 1 and other == 0
+    return division and isinstance(remainder, np.ndarray)
+
+
+def is_step(args: tuple) -> bool:  # type: ignore[type-arg]
+    """Whether a call of Rule3 is one step of a record: the three reads with the level now and the other level as arrays (a reading's plain Link term reads with no other level)."""
+    return args[0] is not NO_READ and isinstance(args[4], np.ndarray) and isinstance(args[5], np.ndarray)
+
+
+def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
+    """(a) The NodeState holds the records per part (now, before, Rule3's remainder) and one write remainder per held part and nothing else, and the growth's and the gate's arrays beside the records name only the writes' remainders; (b) on the chain with a rotating body (every kind of family: a family of quanta with its second pair, the holder of the sign, two rows with a gap, the massless row with its axis parts) one interval forward and one back make exactly one Rule3 division per part, the level each record started from that call's own, and exactly one write per held part, and every reading the engine exposes leaves every record bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a)."""
+    assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
+    assert [f.name for f in dataclasses.fields(node.Record)] == ["now", "before", "remainder"]
+    assert set(growth.SCALARS) == set(BACK.SCALARS) == {"write_remainders"}
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    lines: list[dict[str, object]] = []
+    board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), lines.append)
+    calls: list[tuple[tuple, tuple]] = []  # type: ignore[type-arg]
+    original = core.rule3
+
+    def counting(*args):  # type: ignore[no-untyped-def]
+        found = original(*args)
+        calls.append((args, found))
+        return found
+
+    engine = [m for m in list(sys.modules.values()) if getattr(m, "__name__", "").startswith("event_")]
+    for module in [m for m in engine if m.__dict__.get("rule3") is original]:
+        monkeypatch.setattr(module, "rule3", counting)
+    for direction, act in ((1, board.step), (-1, board.step_inverse)):
+        calls.clear()
+        act()
+        records = [record for state in board.states for record in node.records(state)]
+        steps = [args for args, _found in calls if is_step(args)]
+        assert len(steps) == len(records)
+        begun = {id(getattr(record, "before" if direction == 1 else "now")) for record in records}
+        assert begun == {id(args[4]) for args in steps}  # the level each record's one call started from
+        assert sum(is_write(args) for args, _found in calls) == sum(len(s.parts) for s in board.states)
+    kept = BACK.snapshot(board)
+    calls.clear()
+    for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
+        if state.levels is not None and state.second is not None:
+            share.family_share(family, (state.levels, state.second), board.wrap, board.world.node_clock)
+            node.currents_of(family, state, board.wrap)
+            node.stresses_of(family, state, board.wrap)
+            node.sense_sign(state, board.shape)
+            node.wronskian(state.levels, state.second)
+            node.form(state.levels, state.second)
+            board.quanta(index)
+    board.books()
+    assert not any(is_write(args) for args, _found in calls)  # the readings write nothing
+    assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands
+    for _ in range(60):
+        board.step()
+    regions = {row.name for row in board.world.detectors} | {"face"}
+    assert lines and {str(line["event"]) for line in lines} <= {"click", "field"}
+    clicks = [line for line in lines if line["event"] == "click"]
+    assert clicks and all(line["detector"] in regions and "node" not in line for line in clicks)
+    engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
+    table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
+    assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)

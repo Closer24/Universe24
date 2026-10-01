@@ -509,7 +509,7 @@ def read_at_the_start(
         first, second = (Record(now, before, zero) for now, before in pairs)
         booking = np.asarray(wronskian(first, second))
         turn, q = (
-            np.asarray(well(booking, zero, action)[0]),
+            np.asarray(well(booking, action)),
             np.asarray(np.sign(booking), dtype=np.int64),
         )
     nodes, seen = region.copy(), set()

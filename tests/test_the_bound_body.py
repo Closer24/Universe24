@@ -38,9 +38,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_share
         books = board.books()["matter"]
         drifts.append(books["drift"])
         assert abs(books["quanta"] - laid) <= CHAIN  # Rule3's rounding, under a quantum per Node
-    print(
-        f"GAMEBOARD the laid body of {laid}: its quanta at its Nodes {min(kept)} to {max(kept)} in 100,"
-    )
+    print(f"GAMEBOARD the laid body of {laid}: quanta at its Nodes {min(kept)} to {max(kept)} in 100,")
     print(f"  the share's drift {min(drifts)} to {max(drifts)} units against the wall {wall}")
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0
     document = json.loads(world.read_text(encoding="utf-8"))
@@ -75,9 +73,8 @@ def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_rea
     assert int(level[second].max()) <= 0 > int(level[second].sum())
     hill = np.full(board.shape, 100, dtype=np.int64)
     node.with_parts(charge, [node.Record(hill, charge.parts[0].before, charge.parts[0].remainder)])
-    content, _axis = node.signed_read(
-        names.index("matter"), board.families, board.states, 6000, "now", board.shape
-    )
+    reader = names.index("matter")
+    content, _axis = node.signed_read(reader, board.families, board.states, 6000, "now", board.shape)
     holders = [s for f, s in zip(board.families, board.states, strict=True) if f.held == CONTENT]
     plain = sum(state.parts[0].now for state in holders)  # every holder of the content, as it stands
     assert ((content - plain) == -100 * q)[first | second].all()  # the hill at q = +1, the hollow at -1

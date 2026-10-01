@@ -16,7 +16,6 @@ SRC = ROOT / "src" / "event_universe"
 PHYSICAL_MODULES: dict[str, str] = {
     "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
     "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
-    "flow.py": "the flows into a held row's tensions, each a carried division of Rule3",
     "share.py": "the share: the count as the record's reading at every Node, in quanta over the count's wall by Rule3's division act",
     "reports.py": "the detectors' reports, the net inflow through a region's front boundary, and a body's Nodes derived for a report, readings of whole-board arrays",
     "growth.py": "the receding face: the GameBoard grown by layers of zeros as the front reaches it, taken off on the way back",
@@ -35,44 +34,10 @@ PHYSICAL_MODULES: dict[str, str] = {
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
 NUMPY_DTYPES_FORBIDDEN = {
-    "complex128",
-    "complex64",
-    "complex_",
-    "complexfloating",
-    "float128",
-    "float16",
-    "float32",
-    "float64",
-    "float_",
-    "floating",
-    "int16",
-    "int32",
-    "int8",
-    "uint16",
-    "uint32",
-    "uint64",
-    "uint8",
+    *"complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
 }
 NUMPY_FORBIDDEN = {
-    "arctan2",
-    "average",
-    "cbrt",
-    "cos",
-    "divide",
-    "exp",
-    "float",
-    "hypot",
-    "log",
-    "log10",
-    "log2",
-    "mean",
-    "power",
-    "sin",
-    "sqrt",
-    "std",
-    "tan",
-    "true_divide",
-    "var",
+    *"arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power sin sqrt std tan true_divide var".split()
 }
 BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integer_root"}
 
