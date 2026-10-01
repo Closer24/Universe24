@@ -35,9 +35,9 @@ HERE = Path(__file__).resolve().parent
 INK, MID = "#000000", "#808080"
 
 # The bright world: the blind row per region (273 in all) and the clicks credited by
-# the shares of what the screen saw (284 in all).
+# the shares of what the screen saw (281 in all, the engine of the share).
 BRIGHT_BLIND = [21, 20, 26, 15, 9, 40, 45, 16, 11, 25, 22, 25]
-BRIGHT_CLICKS = [21, 20, 27, 16, 10, 42, 48, 15, 12, 27, 22, 24]
+BRIGHT_CLICKS = [21, 20, 27, 16, 9, 41, 48, 15, 12, 27, 22, 23]
 # The dilute world: the blind row (12.9 in all) and the clicks credited (28 in all).
 DILUTE_BLIND = [1.0, 0.9, 1.2, 0.7, 0.4, 1.9, 2.1, 0.8, 0.5, 1.2, 1.0, 1.2]
 DILUTE_CLICKS = [2, 2, 3, 2, 1, 4, 5, 1, 1, 3, 2, 2]
@@ -80,7 +80,7 @@ def panel(ax: Axes, clicks: list[int], blind: list[float], title: str, top: floa
 def two_slits(output: Path) -> None:
     """The three worlds side by side."""
     fig, axes = plt.subplots(1, 3, figsize=(6.6, 2.9))
-    panel(axes[0], BRIGHT_CLICKS, BRIGHT_BLIND, "bright: 284 clicks (blind 273)", 55)
+    panel(axes[0], BRIGHT_CLICKS, BRIGHT_BLIND, "bright: 281 clicks (blind 273)", 55)
     panel(axes[1], DILUTE_CLICKS, DILUTE_BLIND, "dilute: 28 clicks (blind 13)", 6)
     panel(axes[2], WHICH_WAY_CLICKS, WHICH_WAY_BLIND, "lower gap closed: 142 (blind 137)", 22)
     axes[0].set_ylabel("quanta over the window")

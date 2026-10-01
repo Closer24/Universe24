@@ -148,7 +148,13 @@ def channels(output: Path) -> None:
         rad=0.25,
     )
     # The write: the bookings into the held level.
-    arrow(ax, (5.0, 2.9), (5.0, 1.3), "the write (iv):\n$(w\\,q + r)\\ \\mathrm{div}\\ E$", style="--")
+    arrow(
+        ax,
+        (5.0, 2.9),
+        (5.0, 1.3),
+        "the write (iv), one per held part:\n$(\\sum_f w_f q_f + r)\\ \\mathrm{div}\\ E$",
+        style="--",
+    )
     # The click: the detector's reading, one quantum per wall of inflow, credited.
     arrow(
         ax,

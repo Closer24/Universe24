@@ -2,11 +2,11 @@
 
 The correlation E at the four CHSH settings against the sum of the settings'
 calibrated phases, as docs/ALGEBRA.md holds them in row (h) of the rows against
-nature: E among the coincidences with side B credited by the contrast (the
-filled marks, DETECTOR), E by the signs alone on both sides with every quantum
-credited (the open marks), the cosine nature's E = cos(delta_A + delta_B) and the
-triangle 1 - 2 |phi| / pi of a shared classical phase read by its sign. Every
-number below is the law's document's.
+nature: E by the signs alone on both sides with every quantum credited (the
+marks, DETECTOR, the classical pair under a local credit, S = 2.000), the
+triangle 1 - 2 |phi| / pi of a shared classical phase read by its sign, and the
+cosine, nature's E = cos(delta_A + delta_B) and the meeting's blind row for the
+run to come. Every number below is the law's document's.
 
     python paper/general_formula/bell.py --output paper/general_formula/figures
 
@@ -38,8 +38,6 @@ INK, MID = "#000000", "#808080"
 # The calibrated phases of the settings, in degrees: a and a' on the right, b and b' on the left.
 PHASES = {"a": 0.0, "a'": 73.6, "b": -37.2, "b'": -108.8}
 SETTINGS = [("a", "b"), ("a", "b'"), ("a'", "b"), ("a'", "b'")]
-# E among the coincidences, side B by the contrast (S = 2.757).
-CONTRAST = [0.831, -0.379, 0.770, 0.777]
 # E by the signs alone on both sides, every quantum credited (S = 2.000).
 SIGNS = [0.625, -0.250, 0.500, 0.625]
 
@@ -52,7 +50,7 @@ def save(fig: Figure, path: Path) -> None:
 
 def bell(output: Path) -> None:
     """E against the phases' sum: the two readings beside the cosine and the triangle."""
-    fig, ax = plt.subplots(figsize=(4.6, 2.7))
+    fig, ax = plt.subplots(figsize=(4.6, 3.1))
     degrees = [d / 2 for d in range(-360, 361)]
     ax.plot(
         degrees,
@@ -60,7 +58,7 @@ def bell(output: Path) -> None:
         "-",
         color=INK,
         linewidth=0.9,
-        label=r"nature: $\cos(\delta_A + \delta_B)$",
+        label=r"nature, and the meeting's blind row: $\cos(\delta_A + \delta_B)$, $S = 2.83$",
     )
     ax.plot(
         degrees,
@@ -73,23 +71,19 @@ def bell(output: Path) -> None:
     sums = [PHASES[a] + PHASES[b] for a, b in SETTINGS]
     ax.plot(
         sums,
-        CONTRAST,
-        "o",
-        color=INK,
-        markersize=5,
-        label="run: B by the contrast, $S = 2.757$ (DETECTOR)",
-    )
-    ax.plot(
-        sums,
         SIGNS,
         "s",
         color=INK,
-        markerfacecolor="white",
         markersize=5,
-        label="run: the signs alone, $S = 2.000$",
+        label="run: the signs alone, $S = 2.000$ (DETECTOR)",
     )
-    offsets = {("a", "b"): (-14, 4), ("a", "b'"): (-16, 0), ("a'", "b"): (14, 4), ("a'", "b'"): (12, 6)}
-    for (a, b), total, value in zip(SETTINGS, sums, CONTRAST, strict=True):
+    offsets = {
+        ("a", "b"): (-14, 6),
+        ("a", "b'"): (-16, 0),
+        ("a'", "b"): (14, 6),
+        ("a'", "b'"): (12, -12),
+    }
+    for (a, b), total, value in zip(SETTINGS, sums, SIGNS, strict=True):
         ax.annotate(
             f"({a}, {b})",
             (total, value),
@@ -105,7 +99,7 @@ def bell(output: Path) -> None:
     ax.set_xticks(range(-180, 181, 60))
     ax.set_xlabel(r"$\delta_A + \delta_B$, the settings' calibrated phases, in degrees")
     ax.set_ylabel("$E$")
-    ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=2, fontsize=6.5)
+    ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=1, fontsize=6.5)
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     fig.tight_layout()
