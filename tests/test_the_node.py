@@ -17,7 +17,7 @@ from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, rule3
 from event_universe.features.start import rest
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import CONTENT, family_rules
+from event_universe.loader.derived import CONTENT, count_wall, family_rules
 from event_universe.world_files import input_digest, load_world
 from tests.laws import CHAIN, PACKET, ROOT, UNIVERSE, chain_body_world, load_file, universe_beside
 
@@ -376,17 +376,17 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         expected = right - remainder * difference(now, a) + now * difference(remainder, a)
         assert np.array_equal(left, expected)
         differences.append(int(np.abs(left - right).max()))
-    written = node.count_line(FAMILIES[MATTER], quanta_state(record, shape), T, 1 << 20, WRAP)
+    stresses = node.stresses_of(FAMILIES[MATTER], quanta_state(record, shape), WRAP)
     by_hand_stress = stress_by_hand(record.now, 4000)
-    assert all(np.array_equal(t, h) for t, h in zip(written.stress, by_hand_stress, strict=True))
+    assert all(np.array_equal(t, h) for t, h in zip(stresses, by_hand_stress, strict=True))
     print(f"GAMEBOARD the identity's remainders' term at most {max(differences)}, the wall {wall}")
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
     exact = family_rules([("exact", (1, 2), None, None, 0)])[0]
     plane = quanta_state(node.Record(wave, wave, node.zeros(shape)), shape)
-    tension = node.count_line(exact, plane, T, 1 << 20, WRAP).stress
+    tension = node.stresses_of(exact, plane, WRAP)
     assert (tension[0] == -3 * 2000 * 2000 // 2).all() and not tension[1].any() and not tension[2].any()
     flat = quanta_state(node.Record(0 * wave + 7, 0 * wave + 7, node.zeros(shape)), shape)
-    assert not any(t.any() for t in node.count_line(exact, flat, T, 1 << 20, WRAP).stress)
+    assert not any(t.any() for t in node.stresses_of(exact, flat, WRAP))
 
 
 def chain_record(now_turn: tuple[int, ...], before_turn: tuple[int, ...]) -> node.Record:
@@ -404,7 +404,7 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
         turns = ((1, 0, -1, 0), (0, -1, 0, 1)) if moving else ((1,), (1,))
         record, zero = chain_record(*turns), node.empty_record(shape)
         state = node.NodeState(record, None, [], None, zero)
-        held, wall = node.empty_state(gravity, shape), node.count_wall(matter, T)
+        held, wall = node.empty_state(gravity, shape), count_wall(matter, T)
         count = share.quanta_of(share.family_share(matter, (record, zero), wrap, GAMMA), wall)
         stress = node.stresses_of(matter, state, wrap)
         held.flows = {MATTER: flow.flow_origins(gravity, wall, shape)}

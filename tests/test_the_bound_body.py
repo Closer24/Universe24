@@ -10,7 +10,7 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe import node
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import CONTENT
+from event_universe.loader.derived import CONTENT, count_wall
 from event_universe.world_files import input_digest, load_world
 from tests.laws import CHAIN, QUANTA, ROOT, chain_body_world, load_file
 
@@ -27,7 +27,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_share
     index = [family.name for family in board.families].index("matter")
     declared = board.mask(board.world.bodies[0].nodes)
     quanta = board.quanta(index)
-    laid, wall = int(quanta[declared].sum()), node.count_wall(board.families[index], 32768)
+    laid, wall = int(quanta[declared].sum()), count_wall(board.families[index], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(quanta[declared].min()) >= 1
     kept, drifts = [], []
     for _ in range(100):
