@@ -1,10 +1,10 @@
-"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM over the six Ports of R_ij arr_j + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the fixed point of the division act iterated (the root the loader and the generator read, never the run); the form's Node term and the integers of the paces beside it, one read per Port from the Link's own pace (ALGEBRA.md #the-line, #the-direction, #the-interval, #the-paces)."""
+"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM over the six Ports of R_ij arr_j + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the fixed point of the division act iterated (the root the loader and the generator read, never the run); the form's Node term and the rule's integers from the paces beside it, one read per Port as the product of the Node's pace squared and the Link's factor, the clock the Node's and the tension the Link's, the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-line, #the-direction, #the-interval, #the-paces)."""
 
 from __future__ import annotations
 
 from typing import Any
 
-# the rule's reads, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_a(i, j)^2 on
+# the rule's reads, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij on
 # the Link to that neighbour; the arrivals through the same Ports; integers or the loop's integer arrays
 Reads = tuple[Any, ...]
 
@@ -16,26 +16,28 @@ def coefficients(
     num: Any,
     den: Any,
     gamma: Any,
-    content: Any,
-    links: tuple[Any, ...] | None = None,
-    weak_field: bool = True,
+    clock: Any,
+    pace: Any,
+    factors: tuple[Any, ...] | None = None,
+    unit: Any = 1,
 ) -> tuple[Reads, Any, Any]:
-    """The rule's integers at a Node from the paces, (the six reads, S, w): the clock's square p_0^2 = (Gamma - c)^2 + c^2 from the Node's content and each Link's pace p_a(i, j) = Gamma - 2 c_i - t_a(i, j) from the Link's content `links`, the Node's content twice and the Link's own tension in Port order (None: no tension, Gamma - 2 c on every Link), the level entering the clock once with its square over twice the clock and the Link twice (ALGEBRA.md #the-paces), the tension one number per Link read the same from both ends (#the-interval, the dependency radius); R_ij = 2 num p_a(i, j)^2 per Port, S = 12 den Gamma^2 - 12 (den - num) p_0^2 - SUM over the six Ports of R_ij (4 num SUM_a p_a^2 with no tension, so the rotation at wave number zero is the clock's alone), w = 6 den Gamma^2 (#the-line); the plain first-order rule with weak_field False."""
-    pace = gamma - content
-    if not weak_field:
-        read = pace * num
-        return (read,) * PORTS, 6 * den * content, 3 * den * gamma
-    clock_squared = pace * pace + content * content
-    paces = link_paces(gamma, (content + content,) * PORTS if links is None else links)
-    reads = tuple(2 * link * link * num for link in paces)
+    """The rule's integers at a Node from its paces, (the six reads, S, w), the clock the Node's and the tension the Link's (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; The paces compose): the clock p_0 = Gamma (1 - 1 / Gamma)^c to the unit from the Node's content c, the reading row's own level among it, the primary number whose square enters S (`paces.clock_of`); the Node's pace p_i = p_0^2 / Gamma, the clock twice, on every one of its six Links (`paces.link_pace_of`); each Link's factor Q_ij, one integer per Link in the unit G^2 of the run's Link unit G (`link_factor`, read the same from both ends; None: no tension, G^2 on every Link); R_ij = 2 num p_i^2 Q_ij per Port, the product and not the sum; S = 12 (den Gamma^2 - (den - num) p_0^2) G^2 - SUM over the six Ports of R_ij (12 num p_i^2 G^2 with no tension, so the rotation at wave number zero is the clock's alone), w = 6 den Gamma^2 G^2 (#the-line); at the vacuum's paces p_0 = p_i = Gamma the plain rule of the pair."""
+    square = unit * unit
+    clock_squared = clock * clock
+    node_squared = pace * pace
+    links = (square,) * PORTS if factors is None else factors
+    reads = tuple(2 * node_squared * factor * num for factor in links)
     gamma_squared = gamma * gamma
-    self_coefficient = 12 * (den * gamma_squared - (den - num) * clock_squared) - sum(reads)
-    return reads, self_coefficient, 6 * den * gamma_squared
+    self_coefficient = 12 * (den * gamma_squared - (den - num) * clock_squared) * square - sum(reads)
+    return reads, self_coefficient, 6 * den * gamma_squared * square
 
 
-def link_paces(gamma: Any, links: tuple[Any, ...]) -> tuple[Any, ...]:
-    """The six Links' paces at a Node, p_a(i, j) = Gamma - (2 c_i + t_a(i, j)), one per Port from the Link's content, the Node's level twice and the Link's own tension once (ALGEBRA.md #the-paces; Gamma - 2 c with no tension)."""
-    return tuple(gamma - link for link in links)
+def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
+    """The Link's factor Q_ij, the one place of its form (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; the Boss's booking): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 booked squared as one integer per Link in the unit G^2 of the run's Link unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the division act, rounded once to the nearest from the Link's tension t and read the same from both ends, so the step's operator is exactly symmetric in integers; G^2 with no tension, 0 where the tension reaches Gamma (the Link's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
+    pace = gamma - tension
+    wall = gamma * gamma
+    half = division_forward(wall, 2, 0)[0]
+    return division_forward(unit * unit * pace * pace, wall, half)[0]
 
 
 def rule3(
@@ -86,10 +88,10 @@ def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
 
 
 def rule_total_bound(
-    num: int, den: int, gamma: int, content: int, amplitude: int, weak_field: bool
+    num: int, den: int, gamma: int, clock: int, pace: int, amplitude: int, unit: int = 1
 ) -> int:
-    """The largest total the rule reaches at a Node whose reads and levels stand at the amplitude bound A, A SUM over the six Ports of |R_ij| + A |S| + w (A + 1), 6 A R in a uniform level; below 2^width - 1 or the world is refused (ALGEBRA.md #the-line, #the-rows-against-nature)."""
-    reads, self_coefficient, wall = coefficients(num, den, gamma, content, None, weak_field)
+    """The largest total the rule reaches at a Node of the paces (p_0, p_i) whose reads and levels stand at the amplitude bound A, A SUM over the six Ports of |R_ij| + A |S| + w (A + 1), 6 A R in a uniform level, the Link's unit G^2 among the integers; below 2^width - 1 or the world is refused (ALGEBRA.md #the-line, #the-bound, #the-rows-against-nature)."""
+    reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
     return int(
         amplitude * sum(abs(read) for read in reads)
         + amplitude * abs(self_coefficient)

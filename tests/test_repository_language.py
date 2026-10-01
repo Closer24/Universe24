@@ -9,15 +9,9 @@ ROOT, SUFFIXES = Path(__file__).resolve().parents[1], (".py", ".md", ".json", ".
 def test_every_text_file_holds_ascii_letters_only():
     """Every letter of every tracked or new text file is an ASCII letter; a dash, a sign or a symbol is no letter and passes."""
     git = ["git", "ls-files", "--cached", "--others", "--exclude-standard"]
-    listed = subprocess.run(
-        git, cwd=ROOT, capture_output=True, text=True, check=True
-    ).stdout.splitlines()
-    found = [
-        f"{name}:{number}: {character!r}"
-        for name in listed
-        if name.endswith(SUFFIXES) and (ROOT / name).is_file()
-        for number, line in enumerate((ROOT / name).read_text(encoding="utf-8").splitlines(), 1)
-        for character in line
-        if character.isalpha() and not character.isascii()
-    ]
+    listed = subprocess.check_output(git, cwd=ROOT, text=True).splitlines()
+    found = []
+    for name in (n for n in listed if n.endswith(SUFFIXES) and (ROOT / n).is_file()):
+        for number, line in enumerate((ROOT / name).read_text(encoding="utf-8").splitlines(), 1):
+            found += [f"{name}:{number}: {c!r}" for c in line if c.isalpha() and not c.isascii()]
     assert not found, found[:20]

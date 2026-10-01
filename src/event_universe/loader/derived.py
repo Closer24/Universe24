@@ -7,6 +7,7 @@ from math import gcd
 
 from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
 from event_universe.features.currents import AXIS_PORTS, PORTS, PRODUCTS
+from event_universe.features.read import edge_of
 from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK
 
 
@@ -84,14 +85,13 @@ def family_rules(rows: list[Row]) -> tuple[FamilyRule, ...]:
     found = []
     for index, row in enumerate(rows):
         reads: list[Read] = []
-        if row.level_weight is None or row.wronskian:
-            for other, held in enumerate(rows):
-                if (
-                    held.level_weight is not None
-                    and other != index
-                    and (row.plane or not held.wronskian)
-                ):
-                    reads.append(Read(other, 1))
+        for other, held in enumerate(rows):
+            if held.level_weight is not None and other != index and row.plane and held.wronskian:
+                reads.append(Read(other, 1))  # a plane reads every holder of the sign
+            elif held.level_weight is not None and not held.wronskian:
+                reads.append(
+                    Read(other, 1)
+                )  # every row reads every holder of the content, itself among them
         found.append(
             FamilyRule(
                 row.name,
@@ -115,8 +115,8 @@ def weight_of(held: int, reader: FamilyRule) -> int:
 
 
 def readers_of(families: tuple[FamilyRule, ...], held: int) -> list[int]:
-    """The families that read the held family `held`, and so source it, in the file's order."""
-    return [other for other, family in enumerate(families) if weight_of(held, family)]
+    """The families of quanta that read the held family `held`, and so source it, in the file's order (ALGEBRA.md #the-primitives, A family's write is one act: the writer's quantity is a family of quanta's form, Wronskian or tension); a held row of the content reads the content as every family does since Every row reads the content, its own level among it, and sources nothing by the write."""
+    return [other for other, family in enumerate(families) if weight_of(held, family) and family.quanta]
 
 
 def count_wall(family: FamilyRule, action: int) -> int:
@@ -154,12 +154,23 @@ def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) 
     return families[index].record * (1 + reach * reach if reach > 1 else PRODUCTS)
 
 
-def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) -> list[int]:
-    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays)."""
+def hill_scale(pair: tuple[int, int], gamma: int) -> tuple[int, int, int]:
+    """The write's factor at a source's hill's edge (ALGEBRA.md, The write per proper volume and per proper interval; The guard): P the edge's pace of the source's pair, the largest the guard admits (`features/read`, `edge_of`), where the factor N^k p_x p_y p_z / p_0^3 is at most (P / Gamma)^3 (1 at most in a hollow, every pace at or below Gamma); returns P, the factor's room P^3 div Gamma^3 rounded up, which multiplies the booking's room in the write's numerator, and the per-axis booking's room P^3 div Gamma^2 rounded up, the scaled booking times the last pace before its division, the largest intermediate of the three divisions (every earlier one smaller, P at or above Gamma)."""
+    edge = edge_of(pair, gamma)
+    cube, square = gamma * gamma * gamma, gamma * gamma
+    factor = int(division_forward(edge * edge * edge, cube, cube - 1)[0])
+    intermediate = int(division_forward(edge * edge * edge, square, square - 1)[0])
+    return edge, factor, intermediate
+
+
+def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite, gamma: int) -> list[int]:
+    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`), times the write's factor's room at the source's hill's edge (`hill_scale`, 1 in a hollow); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays)."""
     family = families[index]
     sources = readers_of(families, index)
     time = sum(
-        abs(weight_of(index, families[other])) * booking_room(families, other, family.wronskian)
+        abs(weight_of(index, families[other]))
+        * booking_room(families, other, family.wronskian)
+        * hill_scale(families[other].pair, gamma)[1]
         for other in sources
     )
     axis = sum(
@@ -173,16 +184,19 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) 
     return [time] + [axis] * (family.lines - 1)
 
 
-def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, width: int) -> int:
-    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), and at which every held family's one write per part, its numerator at the sources' room (`write_rooms`) plus its remainder under the wall, does too; refused by name where no level fits. Where a holder turns a record (features/rotation) every room of the universe is read at the level A + 2 and the level found is 2 less (`TURNED_SLACK`: a turned level stays below 2^(1 / 2) A + 3, within twice A + 2, and not within twice A, the audit's witness (-1, -1) turning to (-3, -1) at A = 1), the turned record's total 6 R x twice the level + |S| A + w x twice the level + w (its six arrivals and the level before it is stepped against both turned, `TURNED_REACH`), the three shears' largest product 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice the level and one, and its bookings' products of turned levels (`booking_room`)."""
+def amplitude_bound(
+    families: tuple[FamilyRule, ...], gamma: int, action: int, width: int, unit: int = 1
+) -> int:
+    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the vacuum's paces, at a frozen clock (the paces 0, the bound the deepest hollow approaches: |S| grows to 12 den Gamma^2 G^2 as the paces fall) and at the hill's edge P on the clock and the pace alike (`features/read`, `edge_of`; the three the extremes of the guard, ALGEBRA.md #the-bound, #the-paces, The guard; for a turned record the six arrivals within twice A, `TURNED_REACH`, and the three shears' largest product, 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice A and one, features/rotation), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), at which every held family's one write per part, its numerator at the sources' room with the write's factor at the hill's edge (`write_rooms`) plus its remainder under the wall, does too, and at which the write's factor's per-axis booking, the scaled booking times one pace before its division rounded half up, 2 x the booking's room x P^3 div Gamma^2 x A^2 + 2 P per source (`hill_scale`; ALGEBRA.md, The write per proper volume and per proper interval, the engine's booking), does too; refused by name where no level fits. Where a holder turns a record (features/rotation) every room of the universe is read at the level A + 2 and the level found is 2 less (`TURNED_SLACK`: a turned level stays below 2^(1 / 2) A + 3, within twice A + 2, and not within twice A, the audit's witness (-1, -1) turning to (-3, -1) at A = 1), the turned record's total 6 R x twice the level + |S| A + w x twice the level + w (its six arrivals and the level before it is stepped against both turned, `TURNED_REACH`), the three shears' largest product 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice the level and one, and its bookings' products of turned levels (`booking_room`)."""
     largest = largest_of(width)
     found = largest
     slack = TURNED_SLACK if any(turns(families, index) for index in range(len(families))) else 0
     for index, family in enumerate(families):
         num, den = family.pair
         reach = TURNED_REACH if turns(families, index) else 1
-        for level in (0, int(division_forward(gamma, 2, 0)[0]), gamma - 1):
-            reads, self_coefficient, wall = coefficients(num, den, gamma, level)
+        edge = edge_of(family.pair, gamma)
+        for clock, pace in ((gamma, gamma), (0, 0), (edge, edge)):
+            reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
             room = (sum(abs(read) for read in reads) + wall) * reach + abs(self_coefficient)
             found = min(found, int(division_forward(largest - wall, room, 0)[0]) - slack)
         if reach > 1:
@@ -194,12 +208,17 @@ def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, w
             found = min(found, division_fixed_point(int(division_forward(largest, room, 0)[0])) - slack)
         if family.held:
             write = held_write(families, index, action)
-            for wall, room in zip(write.walls, write_rooms(families, index, write), strict=True):
+            for wall, room in zip(write.walls, write_rooms(families, index, write, gamma), strict=True):
                 if wall > largest:
                     found = 0
                 elif room:
                     fits = int(division_forward(largest - wall, room, 0)[0])
                     found = min(found, division_fixed_point(fits) - slack)
+            for other in readers_of(families, index):
+                edge, _factor, intermediate = hill_scale(families[other].pair, gamma)
+                room = 2 * booking_room(families, other, family.wronskian) * intermediate
+                fits = int(division_forward(largest - 2 * edge, room, 0)[0])
+                found = min(found, division_fixed_point(fits) - slack)
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "

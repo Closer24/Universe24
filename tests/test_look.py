@@ -78,7 +78,6 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert PAGE.embedded(PAGE.gate(look, gate, reading)) in gated and PAGE.embedded(other) in gated
     assert "drawGate();" in gated and "gate-reading" not in html and "{{" not in html
     refused("not among the reading's worlds", PAGE.page, look, gate, {"worlds": {}})
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     cells = [(21 + c // 4, c % 4) for c in range(8)]
     groups = [{"name": f"g{y}", "positions": [[x, y + r, 0] for x, r in cells]} for y in (0, 4)]
     world = slit_world(tmp_path, TOOL, detectors=[*SCREEN, *groups])
