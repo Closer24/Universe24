@@ -91,6 +91,34 @@ Only a detector's click is a measurement. Every number reported is labelled
 DETECTOR or GAMEBOARD; a GameBoard reading is a diagnostic, never compared with
 nature and never a result on its own.
 
+## The method of derivation (the owner, 2026-10-01)
+
+Every row of nature is derived from the law by one method, in six steps, and
+the paper explains it as its own:
+
+1. Start from Rule3's line alone: a reader's band at the paces the row gives
+   it, the clock once and the Link twice. No structure is written before its
+   band is computed.
+2. The source is a row's static rest: the six Ports' Green's function at the
+   row's pair, a body's well the one number.
+3. The bridge to nature is a body's clicks and nothing else: a bound body's
+   rotation reading the content once is the clock; its click rate against
+   nature's identifies the law's level with nature's potential. The source is a
+   body's well, the clock a body, the detector a body, an orbit a body's chain
+   of clicks. The body enters through its clicks, never through its generator's
+   equations.
+4. Every observable is a click formula: the instrument's form over the
+   quantum's measure on the forward orbit, or a ratio of two such. Every other
+   formula is of the GameBoard, a diagnostic, and is labelled so beside its
+   status (the fence: GameBoard or clicks).
+5. Re-derive every row whenever a line changes and look for the problems: a
+   row that does not come out, a sign that turns, a band that is not real. Each
+   is a finding by name, never smoothed. Two hands derive before a line is
+   written, and the blind numbers are written before any build.
+6. Every result carries its status: theorem, derived, computed from the law,
+   the owner's declaration (the model's postulate in the paper), hypothesis, or
+   to be determined by an experiment, the experiment named.
+
 ## Names with meaning, never codes (the owner, 2026-09-24 and 2026-09-25)
 
 Every experiment, rule, folder and file is called by its plain name: "the two
