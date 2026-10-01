@@ -158,7 +158,7 @@ def pair(ax: Axes) -> None:
 
 def meeting(output: Path) -> None:
     """The three panels stacked in one figure, at the final width."""
-    fig, axes = plt.subplots(3, 1, figsize=(4.69, 6.6))
+    fig, axes = plt.subplots(3, 1, figsize=(4.68, 6.6))
     two_slits(axes[0])
     closed(axes[1])
     pair(axes[2])
