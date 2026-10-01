@@ -8,10 +8,10 @@ claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
-detector reports). Its title is "Universe24: the algebra of a reversible integer rule and the
-cube's group of 48 with its 24 rotations: exact theorems, the two slits and
-Bell's correlation under a declared credit, and the weak-field forms of a
-scalar pace"; the earlier title, the meeting of the past with the future, stands in
+detector reports). Its title is "Universe24: one integer rule with the cube's 24 rotations gives
+the lattice Klein-Gordon and Poisson equations, Schroedinger's as its slow
+limit, light's index 1 / (1 - 2U), and Bell's 2 sqrt 2 under one declared
+credit"; the earlier title, the meeting of the past with the future, stands in
 the introduction as the statement of what a click is. The paper is kept to 30 pages and to what is safe: the rule, its exact
 properties, the measurement, the families, the bodies and their clusters, the
 weak-field forms with both potentials, and the two worlds derived and not run;
