@@ -71,10 +71,8 @@ def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_a_p
     assert int(level[second].max()) <= 0 > int(level[second].sum())
     hill = np.full(board.shape, 100, dtype=np.int64)
     light.lines[0] = node.Record(hill, light.lines[0].before, light.lines[0].remainder)
-    holders = [
-        s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian
-    ]
-    plain = sum(state.lines[0].now for state in holders)  # every holder of the content, as it stands
+    held = [s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian]
+    plain = sum(state.lines[0].now for state in held)  # every holder of the content, as it stands
     content, _axis = node.read(charged, board.families, board.states, 1)
     assert ((content - plain) == 100)[first | second].all()  # the plane reads the holder plainly
     for reader in (names.index("matter"), charge):  # dimension one, and the holder's own record

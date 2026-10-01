@@ -56,9 +56,8 @@ def chain_body_world(
     detectors: list[dict[str, object]] = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
     detectors += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
     detectors += [{"name": "taker", "block": len(at) - 1}] if taker else []
-    document = dict(
-        shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), detectors=detectors
-    )
+    document = dict(shape=[CHAIN, 1, 1], detectors=detectors)
+    document["boundary"] = dict(x="open", y="periodic", z="periodic")
     document.update(ticks=400, face_depth=1, universe="u.json", engine="e.json", measured=measured)
     (world := tmp_path / "chain.json").write_text(json.dumps(document), encoding="utf-8")
     if mode:

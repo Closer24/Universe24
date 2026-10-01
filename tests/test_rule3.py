@@ -38,9 +38,7 @@ def law_isotropic(num: int, den: int, gamma: int, c: int, weak_field: bool) -> t
     if not weak_field:
         return (gamma - c) * num, 6 * den * c, 3 * den * gamma
     clock_squared, link_squared, gamma_squared = (gamma - c) ** 2 + c * c, (gamma - 2 * c) ** 2, gamma**2
-    self_coefficient = (
-        12 * den * gamma_squared - 12 * (den - num) * clock_squared - 12 * num * link_squared
-    )
+    self_coefficient = 12 * (den * gamma_squared - (den - num) * clock_squared - num * link_squared)
     return 2 * link_squared * num, self_coefficient, 6 * den * gamma_squared
 
 
@@ -70,9 +68,8 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
             assert coefficients(num, den, gamma, content, weak_field=weak_field) == expected
         axes = law_axes(num, den, gamma, content, axis_contents)
         assert coefficients(num, den, gamma, content, axis_contents) == axes
-        assert coefficients(num, den, gamma, content, (0, 0, 0)) == coefficients(
-            num, den, gamma, content
-        )
+        plain = coefficients(num, den, gamma, content)
+        assert coefficients(num, den, gamma, content, ISOTROPIC) == plain
         # the vacuum c = 0: 2 Gamma^2 times the plain rule (the levels bit for bit)
         assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 3, 0, 6 * den * gamma**2)
         # a tensor along x alone slows the x read and the own term by 4 num (p_x^2 - p_link^2), the Link's pace Gamma - 2 c
@@ -231,6 +228,24 @@ def test_no_root_is_imported_or_called_anywhere_in_src_or_tools():
     assert not found, found
 
 
+def test_the_engine_holds_no_word_outside_the_loader_and_the_reports():
+    """The names gate (HIGHLIGHTS.md **The engine works only with families of dimension one**; the owner, 2026-10-01, 03:25): no string literal stands in src/event_universe outside docstrings, the messages of `raise` and `assert` and f-strings, but in the loader (the files' key tables), in reports.py (the output's words), in world_files.py (the host's files) and in the package's version; so no act or reading of the engine names a family, a key or a kind, and a family name cannot enter the engine again."""
+    found = []
+    for path in sorted(SOURCE.rglob("*.py")):
+        name = path.relative_to(SOURCE).as_posix()
+        if name.startswith("loader/") or name in ("reports.py", "world_files.py", "__init__.py"):
+            continue
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        spoken = {id(item.value) for item in ast.walk(tree) if isinstance(item, ast.Expr)}
+        for item in ast.walk(tree):
+            if isinstance(item, ast.Raise | ast.Assert | ast.JoinedStr):
+                spoken |= {id(part) for part in ast.walk(item)}
+        for item in ast.walk(tree):
+            if isinstance(item, ast.Constant) and isinstance(item.value, str) and id(item) not in spoken:
+                found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
+    assert not found, found
+
+
 # The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per line, two levels and Rule3's remainder; per held line, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record; one shape of state for every family.
 NODE_STATE = {"lines": "list[Record]", "write_remainders": "list[np.ndarray]"}
 TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState table, its first column
@@ -256,10 +271,8 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     lines: list[dict[str, object]] = []
     board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), lines.append)
     for family, state in zip(board.families, board.states, strict=True):
-        assert (
-            len(state.lines) == family.lines
-            and len(state.write_remainders) == family.lines * family.held
-        )
+        assert len(state.lines) == family.lines
+        assert len(state.write_remainders) == family.lines * family.held
     assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 1, 2, 4]
     calls: list[tuple[tuple, tuple]] = []  # type: ignore[type-arg]
     original = core.rule3
@@ -337,6 +350,4 @@ def test_the_width_chooses_the_arrays_kind_and_a_run_above_the_hosts_bits_gives_
     assert named == ["src/event_universe/loader/world.py: np.int64"], named
 
 
-INTEGER_KINDS = re.compile(
-    r"np\.u?int(?:8|16|32|64|p)?\b|np\.iinfo|\"int64\"|dtype=np\."
-)  # an integer's kind named
+INTEGER_KINDS = re.compile(r"np\.u?int(?:8|16|32|64|p)?\b|np\.iinfo|\"int64\"|dtype=np\.")

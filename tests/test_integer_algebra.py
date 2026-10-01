@@ -89,9 +89,7 @@ def forbidden_imports(tree: ast.AST) -> list[str]:
 
 
 ALLOCATIONS_NEEDING_DTYPE = {"zeros", "ones", "empty", "full"}
-NUMPY_CHAIN_FORBIDDEN = {
-    *"fft geomspace interp linalg linspace logspace polyfit polynomial random".split()
-}
+NUMPY_CHAINS = {*"fft geomspace interp linalg linspace logspace polyfit polynomial random".split()}
 METHODS_FORBIDDEN = {"mean", "std", "var"}
 
 
@@ -124,11 +122,7 @@ def numpy_violations(tree: ast.AST) -> list[str]:
         chain = numpy_chain(node) if isinstance(node, ast.Attribute) else None
         if chain:
             head = chain[0]
-            if (
-                head in NUMPY_DTYPES_FORBIDDEN
-                or head in NUMPY_FORBIDDEN
-                or head in NUMPY_CHAIN_FORBIDDEN
-            ):
+            if head in NUMPY_DTYPES_FORBIDDEN or head in NUMPY_FORBIDDEN or head in NUMPY_CHAINS:
                 found.append(f"np.{'.'.join(chain)} at line {node.lineno}")
         if not isinstance(node, ast.Call):
             continue

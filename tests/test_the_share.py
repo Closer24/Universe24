@@ -49,9 +49,7 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     (quanta,) = family_rules([Row("quanta", (5, 7), 1, False, False, None, 0)])
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = node.zeros(shape, kind_of(63))
-    real, second = (
-        node.Record(draw.integers(-50, 50, shape), draw.integers(-50, 50, shape), zero) for _ in range(2)
-    )
+    real, second = (node.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
     through = node.currents_of(quanta.pair[0], [real, second], wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
         expected = sum(

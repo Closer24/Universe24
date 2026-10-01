@@ -42,10 +42,7 @@ def test_the_reads_sum_at_their_weights_and_the_axis_content_rounds_at_the_read(
     """Three reads (2 a - 3 b + 4 c) sum per Node exactly; no reads give the integer 0 (the plain rule at Gamma); the axis content is SUM over the reads of (weight x level + 1) div 2, one division per read: 7 and -7 at the weight 1 give 4 and -3, two reads of 3 and 4 give 2 + 2."""
     shape, a = (2, 1, 1), np.array([[[5]], [[7]]], dtype=np.int64)
     b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
-    assert content_of([(2, a), (-3, b), (4, c)]).tolist() == [
-        [[2 * 5 - 3 * 1 + 4 * 3]],
-        [[2 * 7 + 3 * 2]],
-    ]
+    assert content_of([(2, a), (-3, b), (4, c)]).tolist() == [[[10 - 3 + 12]], [[14 + 6]]]
     assert content_of([]) == 0 and axis_content([]) == 0
     level = np.array([[[7]], [[-7]]], dtype=np.int64)
     assert axis_content([(1, level)]).ravel().tolist() == [4, -3]
