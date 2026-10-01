@@ -7,13 +7,12 @@ import math
 from fractions import Fraction
 
 import numpy as np
-import pytest
 from scipy.fft import dstn, idstn
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
 from event_universe.features.start import arrivals, rest
-from tests.laws import UNIVERSE
+from tests.laws import UNIVERSE, refused
 
 OPEN_CHAIN = Wrap(False, True, True)
 
@@ -88,7 +87,5 @@ def test_the_refusals_by_name():
     """A board periodic on its every axis at [1, 1] gives the sources no sink; a level weight below 1 is refused."""
     ring = np.zeros((16, 1, 1), dtype=np.int64)
     ring[3, 0, 0] = 2
-    with pytest.raises(ValueError, match="needs a sink"):
-        rest(ring, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3)
-    with pytest.raises(ValueError, match="level weight is from 1"):
-        rest(ring, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6)
+    refused("needs a sink", lambda: rest(ring, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3))
+    refused("level weight is from 1", lambda: rest(ring, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6))

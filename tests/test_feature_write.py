@@ -5,10 +5,10 @@ from __future__ import annotations
 from itertools import pairwise
 
 import numpy as np
-import pytest
 
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
+from tests.laws import refused
 
 
 def test_the_write_is_the_carried_division_exact_back_and_refusing_by_name():
@@ -26,10 +26,8 @@ def test_the_write_is_the_carried_division_exact_back_and_refusing_by_name():
             assert np.array_equal(back, quotient) and np.array_equal(before, carry)
             written, carry = written + quotient, after
         assert np.array_equal(written * wall + carry, 40 * numerator + start)
-    with pytest.raises(ValueError, match="wall is from 1"):
-        carried(5, 0, 0)
-    with pytest.raises(ValueError, match="direction"):
-        carried(5, 3, 0, 2)
+    refused("wall is from 1", lambda: carried(5, 0, 0))
+    refused("direction", lambda: carried(5, 3, 0, 2))
 
 
 def test_the_one_write_and_the_refusal():
@@ -45,5 +43,4 @@ def test_the_one_write_and_the_refusal():
     for back_level, back_carry in reversed(states):
         level, carry = hold(level, numerator, 7, carry, -1)
         assert np.array_equal(level, back_level) and np.array_equal(carry, back_carry)
-    with pytest.raises(ValueError, match="wall E_s T is from 1"):
-        hold(0, 1, 0, 0)
+    refused("wall E_s T is from 1", lambda: hold(0, 1, 0, 0))
