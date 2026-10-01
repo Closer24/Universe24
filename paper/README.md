@@ -32,7 +32,7 @@ their statuses.
 - `general_formula/main.pdf`: the compiled paper at the same commit.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.25 in the order of the paper's sections,
+  its proof, Derivations S.1 to S.27 in the order of the paper's sections,
   cited in the paper as (S.n); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
@@ -116,7 +116,7 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "30 pages, 2 figures, 4 tables; supplementary material of 7 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 250 words and about 1550
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 250 words and about 1600
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
