@@ -94,7 +94,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "51 pages, 6 figures, 7 tables; code and documents at
+  "53 pages, 6 figures, 7 tables; code and documents at
   doi:10.5281/zenodo.22738746". The abstract has 249 words and 1413
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
