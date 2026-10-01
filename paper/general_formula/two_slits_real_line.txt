@@ -1,0 +1,67 @@
+The two slits by the law's real line (docs/ALGEBRA.md row (g); the paper's Sections 9.1 and 9.2)
+the world examples/events/two_slits/two_slits.json, the expectation examples/events/two_slits/expectation.json
+the family 'charge' with the pair [6000, 6000], Gamma = 6000, T = 32768, W_c = 589824000 (the count wall, 3 den T)
+Rule3 at the vacuum's paces: R / w = 0.3333333333 on every axis, S / w = 0.0000000000, the current's weight num = 6000
+the board 45 x 48 x 1 (z folded), x and y open, both x faces receding; the wall 42 Nodes beyond the board at the column [20], its gaps the rows [17, 18, 19, 29, 30, 31]
+the packet: k = pi x 1 / 4 = 0.785398 per Link (lambda = 8.0 Links), b = 1328, the top x [10, 10] with the half-width 6, the top y [4, 44] with the half-width 2
+the band at k: cos omega = 0.902369, omega = 0.445561, the period 14.10 intervals, the group velocity 0.5469 Links per interval, light's speed at long wavelength 0.5774
+the screen: 12 regions of 4 Nodes each at the column [44], read over the window [45, 130] of 130 intervals; the bare regions beside: ['gap']
+the lay against the mode file's integers: the largest difference of a level 0.48 (now) and 0.49 (before); the lay stands on 344 Nodes now and 473 before; the generator's count of the lay 1989 quanta
+
+1. The world as declared, both x faces receding, the window [45, 130] in the engine's labels (the click at the tick t reports the pair after t - 1 steps)
+  N = 277.85 quanta: the screen's net front inflow summed over the window, over W_c
+  the regions' quanta, from the row 0 across y: 20.32, 19.47, 26.75, 16.38, 9.31, 40.33, 47.31, 14.40, 12.38, 26.62, 21.39, 23.19
+  the shares, each region's quanta over N: 0.0731, 0.0701, 0.0963, 0.0589, 0.0335, 0.1452, 0.1703, 0.0518, 0.0445, 0.0958, 0.0770, 0.0835
+  maxima at the regions [2, 6, 9], minima at [1, 4, 8, 10] (the reader's rule within the pattern [1, 10])
+  the visibility at the blind first minima's regions [4, 8] against the blind central maximum, the region 6: 0.6270
+  the deviation from the blind shares, SUM |n_g B - T b_g| / (T B): 0.0460
+  the wings, the regions [3, 8]: 16.38, 12.38
+  N to the nearest whole 278, apportioned by the largest remainders (the rounded shares): [20, 20, 27, 16, 9, 40, 47, 15, 12, 27, 22, 23]
+  one draw of 278 by the shares at the seed 24 (the clicks): [14, 19, 31, 16, 12, 36, 46, 13, 15, 29, 23, 24]
+  the arrival in the engine's labels: the peak at 69, the centroid 73.74, the half-maximum span 63 to 77, the rms duration 10.85 intervals
+  arrived before the window 0.00 quanta, after it 0.15 (the labels' whole run)
+  the bare region 'gap' beside the screen saw -0.57 quanta net over the window
+  over the meeting round's window [45, 120] (history): N = 275.85, the regions 20.3, 19.4, 26.7, 16.1, 8.9, 40.0, 47.1, 14.1, 12.1, 26.6, 21.4, 23.2, the wings 16.13, 12.10
+  in the physical labels (the pair after t steps labelled t), the window [45, 130]: N = 278.00, the arrival's peak at 68, the centroid 72.77, the span 62 to 76, the rms duration 10.93
+  over the whole run in the physical labels: N = 278.00, the peak at 68, the centroid 72.77, the span 62 to 76
+  the same from the mode file's integer lay: N = 277.80, the regions 20.31, 19.47, 26.75, 16.37, 9.31, 40.33, 47.30, 14.40, 12.37, 26.62, 21.39, 23.18
+
+2. The meeting round's world, the source face open (read as 0, reflecting), the window [45, 130] in the engine's labels
+  N = 284.86 quanta: the screen's net front inflow summed over the window, over W_c
+  the regions' quanta, from the row 0 across y: 20.68, 19.94, 27.75, 16.45, 9.89, 41.46, 47.88, 15.20, 12.70, 27.59, 21.78, 23.55
+  the shares, each region's quanta over N: 0.0726, 0.0700, 0.0974, 0.0577, 0.0347, 0.1456, 0.1681, 0.0534, 0.0446, 0.0969, 0.0765, 0.0827
+  maxima at the regions [2, 6, 9], minima at [1, 4, 8, 10] (the reader's rule within the pattern [1, 10])
+  the visibility at the blind first minima's regions [4, 8] against the blind central maximum, the region 6: 0.6183
+  the deviation from the blind shares, SUM |n_g B - T b_g| / (T B): 0.0462
+  the wings, the regions [3, 8]: 16.45, 12.70
+  N to the nearest whole 285, apportioned by the largest remainders (the rounded shares): [21, 20, 28, 16, 10, 41, 48, 15, 13, 28, 22, 23]
+  one draw of 285 by the shares at the seed 24 (the clicks): [14, 19, 34, 16, 12, 37, 47, 14, 15, 31, 22, 24]
+  the arrival in the engine's labels: the peak at 69, the centroid 74.79, the half-maximum span 63 to 77, the rms duration 12.68 intervals
+  arrived before the window 0.00 quanta, after it 0.39 (the labels' whole run)
+  the same from the mode file's integer lay: N = 284.81
+  over the window [45, 120]: N = 280.39 in the engine's labels, 280.76 in the physical labels (the engine's [46, 121]), the regions in the physical labels 20.5, 19.7, 27.1, 16.2, 9.4, 41.1, 47.7, 14.6, 12.2, 27.1, 21.6, 23.4
+  the second pass inside the window, the open face's N less the receding face's: 7.01 over [45, 130], 4.53 over [45, 120]
+
+3. The Huygens blind of the expectation file (the advisor's per-Node row summed per region)
+  the blind row 21.0, 20.0, 26.0, 15.0, 9.0, 40.0, 45.0, 16.0, 11.0, 25.0, 22.0, 25.0, its sum 275.0 by the per-Node rounding, N's blind 273.0
+  maxima at the regions [2, 6, 9], minima at [1, 4, 8, 10]; the visibility at [4, 8] against 6: 0.6364
+  the real line's row against the blind: the deviation 0.0460 of the total; N 277.85 against 273, 1.8 percent over
+
+4. The central maximum against the two first minima in the draw's scatter sqrt(N p (1 - p))
+  the Huygens blind row at N = 273: the central region 6 45.00 with the scatter 6.13; the minima at [4, 8] 9.00, 11.00 with the scatters 2.95, 3.25; the central less the minima's mean 10.00 is 5.71 of the central's scatter and 5.19 of the difference's own
+  the real line's row, both faces receding, N = 277.85: the central region 6 47.31 with the scatter 6.27; the minima at [4, 8] 9.31, 12.38 with the scatters 3.00, 3.44; the central less the minima's mean 10.85 is 5.82 of the central's scatter and 5.27 of the difference's own
+  the real line's row, the source face open, N = 284.86: the central region 6 47.88 with the scatter 6.31; the minima at [4, 8] 9.89, 12.70 with the scatters 3.09, 3.48; the central less the minima's mean 11.29 is 5.80 of the central's scatter and 5.24 of the difference's own
+
+5. The arrival's spread (the paper's Table 2): sigma_t = sqrt(sigma_x^2 + (omega'' L sigma_k / v_g)^2) / v_g
+  sigma_x = 1.6974 Links, the rms half-width of the lay's intensity e_i^2 along x about its centroid 10.0; sigma_k = 0.3021 per Link, the rms half-width of the lay's spectrum |E(k)|^2; their product 0.5128
+  v_g = 0.5469 Links per interval at k = 0.7854; omega'' = -0.0794, the band's curvature there; L = 34 Links from the packet's centre to the screen's column 44; the flight t = L / v_g = 62.17 intervals
+  the packet's width at the screen sqrt(sigma_x^2 + (omega'' t sigma_k)^2) = 2.2593 Links; sigma_t = 4.13 intervals
+  beside it the real line's own screen inflow in the physical labels over the window: the rms duration 10.93 intervals (every row's path and both gaps summed), the peak at 68 against the flight's 62.2, the half-maximum span 62 to 76
+
+6. The continuum: the same world scaled by s (every extent times s, lambda = 8 s, the wall and the screen one Node thick, the packet's top one column), both x faces receding, the run 130 s intervals, read in the physical labels over the window [45 s, 130 s] and the labels over s
+  s = 1 (the lattice itself, the physical labels): N = 278.00, the wings 16.39, 12.40, the peak at 68.0, the centroid 72.77, the span 62.0 to 76.0, v_g 0.5469
+  s = 2: N = 288.27, the regions 17.7, 17.5, 26.8, 22.9, 10.7, 41.6, 50.8, 13.6, 19.2, 28.2, 19.2, 20.1, the wings 22.88, 19.24, the peak at 62.5, the centroid 69.14, the span 58.5 to 71.5, v_g 0.5699
+  s = 4: N = 283.95, the regions 16.5, 16.7, 26.2, 23.7, 11.2, 40.7, 50.1, 13.4, 20.4, 27.8, 18.3, 18.8, the wings 23.74, 20.42, the peak at 61.8, the centroid 68.44, the span 57.8 to 70.5, v_g 0.5755
+  s = 8: N = 279.56, the regions 15.9, 16.3, 25.9, 23.7, 11.2, 39.9, 49.3, 13.2, 20.5, 27.5, 17.9, 18.3, the wings 23.69, 20.46, the peak at 61.6, the centroid 68.34, the span 57.8 to 70.2, v_g 0.5769
+  the limit by the corrections falling as 1 / s^2, from s = 4 and 8: N 278.10, the wing at the region 3 23.68, the wing at the region 8 20.48, the peak 61.58, the centroid 68.31
+  the lattice against the continuum at the largest scale, the physical labels: the peak 68.0 against 61.6, the centroid 72.77 against 68.34, the wings 16.4, 12.4 against 23.7, 20.5
