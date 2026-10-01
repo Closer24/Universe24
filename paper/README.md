@@ -4,11 +4,16 @@ The project has one paper: `general_formula/main.tex`. There is no other
 manuscript. It is written from the current documents on `main` alone: every
 formula is taken from `docs/ALGEBRA.md`, `docs/ENGINE.md` or
 `docs/HIGHLIGHTS.md` and cited by the name of its section or line, and every
-claim carries its mark (theorem, derived, computed, assumption or hypothesis,
-and fitted where an input was chosen with the result known). The paper holds
-no run of its own; only a detector's click is a measurement, and a number read
-off the GameBoard is a diagnostic. Table 1 of the paper lists every result with
-its kind and what it rests on.
+claim carries its mark (theorem, derived, computed, assumption, hypothesis or
+experiment, the last for a number the model does not fix with the experiment
+named, and fitted where an input was chosen with the result known) and its
+fence (GameBoard for a reading of the lattice, clicks for a formula of what a
+detector reports). Its title is "Universe24: the meeting of the past with the
+future, the least computation that shows nature's clicks". The paper holds no
+run of its own; only a detector's click is a measurement, and a number read off
+the GameBoard is a diagnostic. Table 1 of the paper lists every result with its
+kind, its fence and what it rests on, and Table 2 the formulas of clicks with
+their statuses.
 
 - `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
   twice; it needs only its figures.
@@ -37,11 +42,14 @@ its kind and what it rests on.
   chain, a plane and a box, the check of `the hollow's dimension`.
 
 The paper carries no experiment: until a run has worked and the advisor and
-the reviewer have confirmed it, no run's number stands in it; its two
-experiments, the two slits and Bell, stand as the engine's worlds and the law's
-derivations of what each must give. The paper's outline, its chapters and its
-questions are on the issue "The paper: the outline, the chapters and the
-questions".
+the reviewer have confirmed it, no run's number stands in it; the
+implementation's two gates, the two slits and Bell, stand as the engine's
+worlds and the law's derivations of what each must give. The derivations of
+the bodies' clicks, the two potentials (the clock's share and Kepler's) and
+the magnetic force enter with their statuses as the mathematician derived
+them and the advisor checked them, never as results. The paper's outline, its
+chapters and its questions are on the issue "The paper: the outline, the
+chapters and the questions".
 
 ## Submission rules and status
 
@@ -86,8 +94,9 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "N pages, 6 figures, 6 tables; code and documents at
-  doi:10.5281/zenodo.22738746". The abstract has 1393 characters.
+  "51 pages, 6 figures, 7 tables; code and documents at
+  doi:10.5281/zenodo.22738746". The abstract has 249 words and 1413
+  characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
   the EPS files and the scripts; it compiles under pdflatex in a clean
   directory, and no `.bbl` is needed since the references are in the
