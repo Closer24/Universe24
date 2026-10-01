@@ -608,86 +608,23 @@ symmetric **M**; so W, the charge density as the law has it (**The sign is
 the rotation sense**), is read and never stepped, while the energy-like share
 is not invariant under the paces' change, which is the finding above.
 
-**The click is the detector's report** below), by the
-division act, (e_i + W_c div 2) div W_c, the nearest whole: the unit every
-book, every declaration and every credit is read in. Nothing is kept at a
-Node beside the record: no count, no remainder of a count, no sense. What
-stays is Rule3 on the record and four readings of it: D, the form, the wells'
-source; W, the Wronskian, the rotation sense, the sign holder's source; F,
-the current, what a detector reads through its boundary
-Ports; and the tension from the levels into the paces.
-
-**The share's change is the currents** (the paper writer's finding, #1538
-comment 5921398465; the Boss's check, 5921607048; the advisor on the
-anisotropy, 5909822494). Over one step of Rule3 the share at the paces the
-step read changes by exactly
-
-  e_i(next, now) - e_i(now, before) = SUM_j F_ij + num (next_i - before_i) SUM_a (3 p_a^2 - P^2) arr_a(now)_i / P^2 - 3 (next_i - before_i) (r'_i - r_i) / (2 P^2),
-
-F_ij = num (now_i before_j - before_i now_j) the six currents into the Node
-at the pair the step started from ([the booking](#the-booking)), P^2 =
-SUM_a p_a^2, arr_a the two arrivals of the axis a summed, r and r' Rule3's
-remainder before and after the step: the first term the currents, the second
-the paces' anisotropy (0 where the three paces are equal, the one pace
-Gamma - 2 c, in the vacuum and in a well alike), the third Rule3's own
-rounding of the level, exact in rationals from the step's three levels and
-its remainders, and in integers the division act's floor at every Node of
-each level pair under one unit beside (the check on the chain by hand: the
-floors' part under 10 units of 96 over 400 intervals; `tests/test_the_node.py`).
-So the count the line moved was the share one interval ahead of the record,
-an integer shadow with two more numbers at every Node that no act of Rule3
-read back, and the share is the continuity of Rule3's conserved form
-everywhere, the currents its flux.
-
-**The paces' own change moves the share with no current** (the Boss's
-finding, #1563 comment 5922238958; the owner's word of 2026-10-01, 00:45,
-"not interested in a well"): the identity above holds at the paces the step
-read, and a step that moves the paces (a well deepening or filling under a
-breathing or moving body) moves the share read at the new paces beside it,
-with no current crossing any Link. The numbers: the chain by hand (a breathing
-body of matter of 10 Nodes rotating at a sixteenth, the content at its Nodes
-330 to 2,330 of Gamma 6,000) reads 66, 128, 56, 227, 50 and 85 quanta over
-the board at the intervals 0, 50, 100, 200, 350 and 400; the closed cube of
-9^3 reads 157 to 159 over 12 intervals; a static body of the generator on the
-chain stays within the rounding over 100. The share stays the count, and its
-drift under a moving well is a reading of the books (`drift`, the share's
-total against the one the world started with) and no line: the finding of
-the moving well stands here by name beside the parked wells, and the well's
-three lines, **The count is the baryon number**, **The mass is the well** and
-**The mass defect is the form's fall at a kept count** ([the surplus
-leaves](#the-surplus-leaves), [what is open](#what-is-open), item 11), are
-parked with the pixel at the owner's word of 00:50 via the advisor ("we do
-not need them; the well is not of interest; the generic computation of the
-Node is enough", #1563 comment 5922402951), to be restated when the wells
-return.
-
-**The sign's count is the record's own** (the advisor, #1563 comment
-5922381773): the Wronskian's total SUM_i (re_now,i im_before,i - im_now,i
-re_before,i) is exactly invariant in the rationals under any change of the
-paces, since for the symmetric recurrence a_next = **M**(t) a_now - a_before
-the bracket im_now^T **M** re_now - re_now^T **M** im_now is 0 for every
-symmetric **M**; so W, the charge density as the law has it (**The sign is
-the rotation sense**), is read and never stepped, while the energy-like share
-is not invariant under the paces' change, which is the finding above.
-
-**The sense's inverse, a finding of this round** (the hand chain of
-`tests/test_the_node.py`, 2026-10-01): the signed read's q enters the
-coefficients of the step, and the step back must read the same q to return
-the record bit for bit; the forward step reads sign W at the pair it starts
-from, (now, before), and the state after the step holds (next, now), whose
-W differs from the first by the Wronskian's current and the rounding, so
-wherever W passes 0 across a step at a Node carrying a level of a holder of
-the sign (the record's edge as it spreads), the step back reads another q
-and another content and the gate says MISS: on the chain of 48 with a
-breathing body rotating at a sixteenth q turns from 0 to 1 at the Node 18 at
-the interval 2 under a light level of 28, the gate MATCH over the interval
-before it and MISS at it; the real body's chain (W = 0, q = 0 everywhere)
-MATCH over 400, and the light-only worlds (the two slits, Bell, light reading
-nothing by sign) MATCH over their intervals. Under the sense's line q was a
-number at the Node, stepped by its own inverse; as a reading of the record it
-is not recoverable at the step back without the step itself. The owner's word
-decides what the law holds here; until it the finding stands by name
-([what is open](#what-is-open), item 21).
+**The frozen Node has no share** (the advisor on the owner's word of
+2026-10-01, #1563 comment 5923771616): where every Link pace of a Node is 0,
+SUM_a p_a^2 = 0, the content exactly Gamma div 2 with no axis content (the
+horizon, [the paces](#the-paces)), the share's divisor is 0 and the Node is
+cut from its six neighbours, so its share is not a number: no floor and no
+number is invented for it. The reader reports the Node's well D div T as its
+content reading and the share as not read: the field line over a region
+holding a frozen Node reads None, the frozen Nodes' wells summed beside it
+(`well`), and the books over a GameBoard holding one read None for the
+share, its quanta and its drift, the frozen Nodes' count beside them
+(`frozen`). A Node with one or two frozen axes keeps its share (SUM_a p_a^2
+> 0 there), a frozen Node stands among its body's Nodes, and a reading never
+stops a run: Rule3 steps the frozen Node's record as every record, R_a = 0 at
+its closed Links (`tests/test_the_node.py`, the horizon by hand on the chain
+of light; the static body of the generator, whose world once ended at the
+interval 318 in this division by 0 under the signed read, runs 400 with no
+frozen Node since the sense left the read, its least pace 1,673).
 
 **The click is the detector's report** (the owner, 2026-09-30, 12:52 and
 13:08, via the advisor, #1515 comments 5911652932 and 5911919204;

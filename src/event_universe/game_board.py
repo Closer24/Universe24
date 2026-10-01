@@ -54,7 +54,7 @@ class GameBoard:
         for row in self.laid_rows():
             if not self.families[row.family].quanta:
                 self.lay(row)  # the kick: the row's own travelling events on its rest, no count
-        self.fields: dict[tuple[int, str], int] = {}  # the last field reading per family and region
+        self.fields: dict[tuple[int, str], tuple[int | None, int | None]] = {}  # the last field readings
         for index in self.order:
             node.guarded(index, self.families, self.states, self.world.node_clock)
         self.detectors = [
@@ -63,7 +63,7 @@ class GameBoard:
             )
             for row in world.detectors
         ]
-        self.laid = {index: self.total_share(index) for index in self.order}  # the books' origin
+        self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.gate()
 
     def walls(self, index: int) -> tuple[int, ...]:
@@ -151,7 +151,7 @@ class GameBoard:
         """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's share in quanta over its declared Nodes, ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
         for number, row in enumerate(self.world.bodies):
             declared = sum(row.counts)
-            read = int(self.quanta(row.family)[self.mask(row.nodes)].sum())
+            read = int(self.quanta(row.family)[0][self.mask(row.nodes)].sum())
             off = abs(declared - read)
             half = int(carried(off - 1, 2, 0)[0])  # (|c - read| - 1) div 2, the division act
             if off > 1 and half * half > declared:
@@ -175,46 +175,44 @@ class GameBoard:
                 found |= detector.nodes
         return found
 
-    def share_of(self, index: int, direction: int = 1) -> np.ndarray:
-        """A family of quanta's share at every Node in the current's units, a reading of its record's lines at the paces of its read at the level a step in `direction` starts from (share.family_share; ALGEBRA.md #the-count-is-the-records-share)."""
-        family, state = self.families[index], self.states[index]
+    def share_of(self, index: int, direction: int = 1) -> tuple[np.ndarray, np.ndarray]:
+        """A family of quanta's share at every Node in the current's units, a reading of its record's lines at the paces of its read at the level a step in `direction` starts from (share.family_share; ALGEBRA.md #the-count-is-the-records-share), with the mask of its frozen Nodes, every Link pace 0, where the share is not read (`share.frozen`)."""
+        family, state, gamma = self.families[index], self.states[index], self.world.node_clock
         content, axis = node.read(index, self.families, self.states, direction)
-        return share.family_share(family, state.lines, self.wrap, self.world.node_clock, content, axis)
+        found = share.family_share(family, state.lines, self.wrap, gamma, content, axis)
+        return found, np.broadcast_to(share.frozen(gamma, content, axis), self.shape)
 
-    def quanta(self, index: int) -> np.ndarray:
-        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading."""
+    def quanta(self, index: int) -> tuple[np.ndarray, np.ndarray]:
+        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, with the mask of its frozen Nodes, where it is not read."""
         wall = count_wall(self.families[index], self.world.quantum_action)
-        return share.quanta_of(self.share_of(index), wall, self.kind)
+        found, frozen = self.share_of(index)
+        return share.quanta_of(found, wall, self.kind), frozen
 
-    def total_share(self, index: int) -> int:
-        """A family's share summed over the GameBoard in the current's units, a reading."""
-        return int(self.share_of(index).sum(dtype=object))
+    def total_share(self, index: int) -> tuple[int | None, int]:
+        """A family's share summed over the GameBoard in the current's units, a reading, None over a GameBoard holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""
+        found, frozen = self.share_of(index)
+        cold = int(frozen.sum())
+        return (None if cold else int(found.sum(dtype=object))), cold
 
     def body_nodes(self, number: int) -> np.ndarray:
-        """A body's Nodes as a report needs them: where its family's share stands in quanta about its declared Nodes, derived now and kept nowhere (`reports.standing`)."""
+        """A body's Nodes as a report needs them: where its family's share stands in quanta about its declared Nodes, a frozen Node among them standing, derived now and kept nowhere (`reports.standing`)."""
         row = self.world.bodies[number]
-        return standing(self.mask(row.nodes), self.quanta(row.family) != 0, self.wrap)
+        quanta, frozen = self.quanta(row.family)
+        return standing(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
 
-    def contents(self) -> list[dict[str, int]]:
-        """Every body's quanta per family of quanta: that family's share in quanta summed over the body's Nodes (a GameBoard reading)."""
-        return [
-            {
-                self.families[index].name: int(self.quanta(index)[self.body_nodes(number)].sum())
-                for index in self.order
-            }
-            for number in range(len(self.world.bodies))
-        ]
-
-    def books(self) -> dict[str, dict[str, int]]:
-        """The books per family of quanta, a GameBoard diagnostic (`reports.book`): its share summed over the GameBoard in the current's units and in quanta over its wall W_c, the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), and the least Link pace of the final state."""
-        found: dict[str, dict[str, int]] = {}
+    def books(self) -> dict[str, dict[str, int | None]]:
+        """The books per family of quanta, a GameBoard diagnostic (`reports.book`): its share summed over the GameBoard in the current's units and in quanta over its wall W_c, the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), the three None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
+        found: dict[str, dict[str, int | None]] = {}
         for index in self.order:
             family = self.families[index]
             wall = count_wall(family, self.world.quantum_action)
-            total = self.total_share(index)
-            quanta = int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
+            (total, cold), laid = self.total_share(index), self.laid[index]
+            quanta = drift = None
+            if total is not None:
+                quanta = int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
+                drift = None if laid is None else total - laid
             pace = node.least_pace(index, self.families, self.states, self.world.node_clock)
-            found[family.name] = book(total, quanta, total - self.laid[index], pace)
+            found[family.name] = book(total, quanta, drift, pace, cold)
         return found
 
     def stepped(
@@ -264,7 +262,7 @@ class GameBoard:
                 turns[index] = node.wronskian(lines)
             state.lines = lines
         stresses = self.stresses()
-        self.report(currents)
+        self.report(currents, forms)
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses)
 
@@ -300,7 +298,7 @@ class GameBoard:
         ] = True
         return found
 
-    def report(self, currents: Currents) -> None:
+    def report(self, currents: Currents, forms: Bookings) -> None:
         """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement)."""
         own = self.declared_board()
         for index, through in currents.items():
@@ -312,24 +310,28 @@ class GameBoard:
                 seen = inflow(nodes, through, self.wrap, boundary_of, own)
                 if seen != 0:
                     self.emit(click(self.tick, family.name, detector.name, seen))
-        self.fields_read()
+        self.fields_read(forms)
 
-    def fields_read(self) -> None:
-        """A GameBoard reading, no measurement, labelled so (`reports.field`): per family and declared region, the family's density over the region this interval, one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
+    def fields_read(self, forms: Bookings) -> None:
+        """A GameBoard reading, no measurement, labelled so (`reports.field`): per family and declared region, the family's density over the region this interval, one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
         for index, (family, state) in enumerate(zip(self.families, self.states, strict=True)):
+            frozen, well = np.zeros(self.shape, dtype=bool), None
             if family.quanta:
-                density = self.quanta(index)
+                density, frozen = self.quanta(index)
+                well = node.well(forms[index], self.world.quantum_action)
             else:
                 deviation = state.lines[0].now - family.rest
                 density = deviation * deviation
             for detector in self.detectors:
                 if not detector.declared or detector.nodes is None:
                     continue
-                total = int(density[detector.nodes].sum(dtype=object))
-                if self.fields.get((index, detector.name)) == total:
+                cold = detector.nodes & frozen
+                reading = None if cold.any() else int(density[detector.nodes].sum(dtype=object))
+                content = int(well[cold].sum(dtype=object)) if well is not None and cold.any() else None
+                if self.fields.get((index, detector.name)) == (reading, content):
                     continue
-                self.fields[(index, detector.name)] = total
-                self.emit(field(self.tick, family.name, detector.name, total))
+                self.fields[(index, detector.name)] = (reading, content)
+                self.emit(field(self.tick, family.name, detector.name, reading, content))
 
     def booked_back(
         self,

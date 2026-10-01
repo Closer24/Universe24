@@ -26,13 +26,13 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_share
     board = GameBoard(load_world(world))
     index = [family.name for family in board.families].index("matter")
     declared = board.mask(board.world.bodies[0].nodes)
-    quanta = board.quanta(index)
+    quanta = board.quanta(index)[0]
     laid, wall = int(quanta[declared].sum()), count_wall(board.families[index], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(quanta[declared].min()) >= 1
     kept, drifts = [], []
     for _ in range(100):
         board.step()
-        quanta, standing = board.quanta(index), board.body_nodes(0)
+        quanta, standing = board.quanta(index)[0], board.body_nodes(0)
         kept.append(int(quanta[standing].sum()))
         assert (quanta[standing] != 0).all() and (standing & declared).any()
         books = board.books()["matter"]

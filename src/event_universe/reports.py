@@ -28,9 +28,10 @@ OUTPUT = (
     "detector",
     "inflow",
     "reading",
+    "well",
 )  # the lines' keys, in their order
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
-BOOKS = ("share", "quanta", "drift", "pace")  # the keys of a family's books, a GameBoard diagnostic
+BOOKS = ("share", "quanta", "drift", "pace", "frozen")  # the keys of a family's books, a diagnostic
 
 
 @dataclass(frozen=True)
@@ -48,16 +49,22 @@ def click(tick: int, family: str, detector: str, inflow: int) -> dict[str, objec
     return dict(zip(OUTPUT, (CLICK, MEASUREMENT, tick, family, detector, inflow), strict=False))
 
 
-def field(tick: int, family: str, detector: str, reading: int | None) -> dict[str, object]:
-    """The field line, a GameBoard reading labelled so and no measurement: the family's density over the region this interval."""
+def field(
+    tick: int, family: str, detector: str, reading: int | None, well: int | None = None
+) -> dict[str, object]:
+    """The field line, a GameBoard reading labelled so and no measurement: the family's density over the region this interval; None where a Node of the region is frozen, every Link pace 0, the share not read there (ALGEBRA.md #the-count-is-the-records-share, the frozen Node), and then the frozen Nodes' wells D div T summed, their content reading, as `well`."""
     line = dict(zip(OUTPUT, (FIELD, DIAGNOSTIC, tick, family, detector), strict=False))
-    line[OUTPUT[-1]] = reading
+    line[OUTPUT[-2]] = reading
+    if well is not None:
+        line[OUTPUT[-1]] = well
     return line
 
 
-def book(share: int, quanta: int, drift: int, pace: int) -> dict[str, int]:
-    """A family's books, a GameBoard diagnostic: its share summed over the GameBoard in the current's units, the same in quanta over W_c, the share's drift from the one the world started with and the least Link pace of the final state."""
-    return dict(zip(BOOKS, (share, quanta, drift, pace), strict=True))
+def book(
+    share: int | None, quanta: int | None, drift: int | None, pace: int, frozen: int
+) -> dict[str, int | None]:
+    """A family's books, a GameBoard diagnostic: its share summed over the GameBoard in the current's units, the same in quanta over W_c, the share's drift from the one the world started with (the three None where a Node is frozen: the share is not read there and no number is invented), the least Link pace of the final state and the count of the frozen Nodes."""
+    return dict(zip(BOOKS, (share, quanta, drift, pace, frozen), strict=True))
 
 
 def end(interval: int, axis: str, side: str, largest: int) -> dict[str, object]:

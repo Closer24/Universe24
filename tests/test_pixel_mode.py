@@ -79,7 +79,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
     walled.step()
     clicked = [line for line in lines if line["event"] == "click"]
-    assert not clicked and not walled.quanta(charge)[beyond].any()  # nothing stands beyond the face
+    assert not clicked and not walled.quanta(charge)[0][beyond].any()  # nothing stands beyond the face
     for _ in range(23):
         walled.step()
         open_board.step()
