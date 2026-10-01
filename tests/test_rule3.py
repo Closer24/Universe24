@@ -8,6 +8,7 @@ import json
 import random
 import re
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -56,7 +57,7 @@ def law_axes(
 
 
 def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_contents():
-    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
+    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule; the band's rotation at k = 0 carries the clock's square and light's band on a chain the Link's pace squared, exact in rationals."""
     rng = random.Random(3)
     for _ in range(500):
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, 100, GAMMA])
@@ -79,6 +80,17 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
         along = self_iso - 4 * num * (axis_pace**2 - pace**2)
         assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == (reads, along, wall)
     assert ISOTROPIC == (0, 0, 0)
+    # the band at k = 0, 2 cos omega = (6 R + S) / w = 2 - 2 f (1 - num / den) with f = p_0^2 / Gamma^2 the clock's square (the Link's pace cancels at k = 0); light on a chain, cos omega = 1 - f_a (1 - cos k) / 3 with f_a = (Gamma - 2 c)^2 / Gamma^2, the level entering the Link twice, at cos k = 1, 0 and -1 (ALGEBRA.md #the-paces)
+    for num, den, c in ((800, 809, 500), (3200, 3227, 2000), (1, 1, 0), (1, 1, 2000)):
+        (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, c)
+        clock, link = (
+            Fraction((GAMMA - c) ** 2 + c * c, GAMMA**2),
+            Fraction((GAMMA - 2 * c) ** 2, GAMMA**2),
+        )
+        assert Fraction(6 * read + self_coefficient, wall) == 2 - 2 * clock * (1 - Fraction(num, den))
+        for cosine in (1, 0, -1):
+            band = Fraction(read * (2 * cosine + 4) + self_coefficient, 2 * wall)
+            assert num != den or band == 1 - link * (1 - cosine) / 3
 
 
 def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays():
@@ -302,7 +314,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             share.family_share(family, state.lines, board.wrap, board.world.node_clock)
             node.currents_of(family.pair[0], state.lines, board.wrap)
             node.stresses_of(family.pair[0], state.lines, board.wrap)
-            node.wronskian(state.lines)
+            node.wronskian(state.lines, family.plane)
             node.form(state.lines, state.lines)
             board.quanta(index)
     board.books()

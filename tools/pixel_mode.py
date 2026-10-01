@@ -507,7 +507,7 @@ def read_at_the_start(
     turn = zero
     if len(pairs) == 2:
         first, second = (Record(now, before, zero) for now, before in pairs)
-        turn = np.asarray(well(np.asarray(wronskian([first, second])), action))
+        turn = np.asarray(well(np.asarray(wronskian([first, second], True)), action))
     nodes, seen = region.copy(), set()
     while True:
         plain, turned = np.where(nodes, plain_everywhere, 0), np.where(nodes, turn, 0)
@@ -626,15 +626,17 @@ def message_levels(
     return found[0], found[1]
 
 
-def message_entry(board: Board, message: dict[str, Any], beyond: np.ndarray) -> dict[str, Any]:
-    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading) and its two levels as their nonzero Nodes."""
+def message_entry(
+    board: Board, message: dict[str, Any], beyond: np.ndarray, parts: int
+) -> dict[str, Any]:
+    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading, over every part of the family, the one event laid on each part alike) and its two levels as their nonzero Nodes."""
     now, before = message_levels(board, message, beyond)
     laid = read_quanta(share_of(board, 0, now, before), board.pair[1], board.action)
     return {
         "family": message["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(laid.sum()),
+        "count": int(laid.sum()) * parts,
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 
@@ -761,6 +763,7 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
             ),
             message,
             beyond,
+            family_of(universe, str(message["family"])).parts,
         )
         for message in cast(list[dict[str, Any]], document.get("messages", []))
     ]

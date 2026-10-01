@@ -1,95 +1,53 @@
 {
- "comment": "Bell's worlds as the advisor corrected the instrument (2026-09-30, #1563 comment 5918198102: the 48-row board and the near field kept, the gaps two wavelengths wide with a bar between them, the screen at L = 40, three fixed regions of four rows per side as the ports, the ports calibrated by their mean shares and their swing; the setting the comb's shift, the Boss's 5918297124: a step of a gap along the beam moves the fringe phase by 1.4 degrees per Link and not 45, so the ports are read displaced by the setting instead), every number of the nine worlds read by build_world.py, which writes the world files, their mode files (tools/pixel_mode.py, the message lay) and the blind expectation file. The flat board `length` x `height` x 1 (z folded) on the light-only universe file (rule.json with the massless row's rest 60 and the three holders' divisors at a million, so light's own well stays under one level); the source's two lobes per side at the column `source` +/- `offset`, each a packet of the light family at the wave `wave` (lambda = 8) over the rows of its gap (`lobes`) with the raised-cosine edges `edge_along` and `edge_across`, at the amplitude `amplitude`; the pair's angle the relative phase of the upper lobe, (k + 1/2) / `angles` of the turn on the right side and its mirror on the left, k = 0 to 31 (32 run phases, the advisor's 5918622391: the eight are exact only at the nominal angles), and no phase in the visibility world bell_v; the two walls the inner faces at `source` +/- `wall` with the gaps `gaps` (16 rows each, the bar 22 to 25, d = 20); the screens at `source` +/- `screen` (L = 40 beyond the walls), each `slab` columns deep, the board's last columns backed by the receding face `receding`, declared in regions of `rows_per_region` rows on the side's setting grid (`tiling`); the ports at the setting 0 the rows `ports.plus` about the central maximum and `ports.minus` about the two first minima (the Huygens sum puts them at the rows 16 and 31), displaced by the setting's shift in rows: `settings.a` on the right (0 and 90 degrees at the fringe spacing `spacing` = lambda L / d = 16 rows) and `settings.b` on the left (-45 and -135, the mirror); the side `sign` credits every quantum to the larger port and the side `contrast` the larger port for the fraction equal to the contrast; the settings' phases are calibrated from the same runs (the calibrated difference over the run phases fitted to A cos(u - delta), about 19.6 degrees per row in the near field, not 22.5) and the row of the paper is E = cos(delta_A + delta_B) at the calibrated phases; `ticks` intervals. The reading (tools/bell_clicks.py): per side and setting over the eight runs, s_+ and s_- the ports' net front inflows, P_+ and P_- their means, d = s_+ / P_+ - s_- / P_-, D half its swing, the outcome the sign of d and the contrast |d| / D; E among the coincidences weighted by the clicks of both sides, S at the four settings, the efficiencies, and the reading by the shares beside. The blind row is written by the builder from the Huygens sum over the gaps' Nodes with the reader's own rule.",
- "blind_comment": "Bell's blind expectation (the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast; the advisor's corrected instrument, #1563 comment 5918198102, the setting as the comb's shift, 5918297124), written before any run by build_world.py from the Huygens sum: `blind.pattern` the single-side pattern at u = 0 over the rows (normalised), `blind.minima` its minima, `blind.correlation` E at the four settings (a b in rows) by the reader's calibrated rule on that sum, `blind.S`, `blind.efficiency` per side and setting, `blind.phases` the settings' calibrated phases in degrees from the sum, `blind.cosines` E = cos(delta_A + delta_B) at them and `blind.S_cosines` their CHSH sum, the row of the paper (the advisor, 5918622391: S = 2.80 at the shifts 0, 4, -2 and -6 rows, the row grid short of the ideal 2.83); the advisor's scalar sum gave S = 2.830 and B's efficiency 0.647 with the ideal step and the Boss's with the comb's shift 2.826, 0.68 and 0.63; nature's S = 2.83 at both ports with the detection loophole closed above the efficiency 2 / 3; the runs' numbers against these are the row.",
- "universe": "examples/events/light.json",
+ "comment": "Bell as the engine's gate (the owner, 2026-10-01, 06:55 and 07:10: Bell is built as a gate, two simple worlds show the engine works; ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate): every number of the four worlds read by build_worlds.py, which writes the world files, their mode files (tools/pixel_mode.py, the message lay, with --modes) and the blind expectation file, derived from the settings before any run and never touched after. One chain of `length` Nodes (y and z folded) on the universe file `universe` (examples/events/light.json with the pair family added, light's pair at the dimension [2, 1], two real lines never summed at a Node); the pair laid as one event at the column `source`, two messages of the pair family at the wave `wave` (k = pi / 4, lambda = 8) toward +x and -x with the raised-cosine edge `edge_along` along x at the amplitude `amplitude`, the lay the same on both parts (the symmetric lay, UU + LL); one beam to each side, each to one declared region of `screen` Nodes, the chain's first and last, backed by the receding face `receding` (opaque: what enters leaves the declared board and never returns); the side a's region `left` and the side b's `right`, each declaring its setting as its `basis` (p, q), the + port reading the parts as (p, q) and the - port as (-q, p); the four worlds the four pairs of `settings`, a and a' on the left, b and b' on the right; `ticks` intervals, the reading over `window`, the whole passage. The reading (tools/bell_gate.py): the engine's `parts` lines, per interval and region the parts' signed level sums, paired through the root and squared, the joint share J over the window on both members of the level pair, E per world, S over the four, the marginal, one pair drawn by the shares with `seed`; beside it the two local credits as the fence (by the parts' shares and by the sign) and the local sums, from the same reports, and r and rho, the parts' mismatch, GAMEBOARD diagnostics never in the blind.",
+ "universe": "examples/events/pair.json",
  "engine": "examples/events/engine_start.json",
- "family": "charge",
- "length": 343,
- "height": 48,
- "source": 171,
+ "family": "light_pair",
+ "length": 61,
+ "source": 30,
  "wave": [
   1,
   4
  ],
- "offset": 60,
- "lobes": [
-  [
-   6,
-   21
-  ],
-  [
-   26,
-   41
-  ]
- ],
- "edge_along": 47,
- "edge_across": 2,
- "amplitude": 1333,
- "angles": 32,
- "wall": 120,
- "gaps": [
-  [
-   6,
-   21
-  ],
-  [
-   26,
-   41
-  ]
- ],
- "screen": 160,
- "slab": 12,
- "rows_per_region": 4,
- "tiling": {
-  "left": 0,
-  "right": 2
- },
- "ports": {
-  "plus": [
-   22,
-   25
-  ],
-  "minus": [
-   [
-    14,
-    17
-   ],
-   [
-    30,
-    33
-   ]
-  ]
- },
- "settings": {
-  "a": [
-   0,
-   4
-  ],
-  "b": [
-   -2,
-   -6
-  ]
- },
- "spacing": 16,
- "sign": "left",
- "contrast": "right",
+ "edge_along": 6,
+ "amplitude": 1328,
+ "screen": 4,
  "receding": {
   "x": {
    "sides": [
     "low",
     "high"
    ],
-   "largest": 2000,
-   "layers": 64
-  },
-  "y": {
-   "sides": [
-    "low",
-    "high"
-   ],
-   "largest": 1000,
-   "layers": 64
+   "largest": 400,
+   "layers": 16
   }
  },
- "ticks": 400
+ "ticks": 100,
+ "window": [
+  1,
+  100
+ ],
+ "sides": {
+  "a": "left",
+  "b": "right"
+ },
+ "settings": {
+  "a": [
+   1,
+   0
+  ],
+  "a_prime": [
+   1,
+   1
+  ],
+  "b": [
+   12,
+   5
+  ],
+  "b_prime": [
+   5,
+   12
+  ]
+ },
+ "seed": 24
 }

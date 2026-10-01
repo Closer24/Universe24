@@ -38,8 +38,8 @@ RUN = load_file("run_inputs", ROOT / "tools" / "run_inputs.py")
 RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")
 WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
 KIND = kind_of(63)  # the tests' arrays, the hardware's integers
-ROWS = [Row("held", (4, 4), 4, False, False, 7, 0), Row("gapped", (3, 4), 1, False, False, 7, 0)]
-ROWS.append(Row("quanta", (5, 7), 1, False, False, None, 0))
+ROWS = [Row("held", (4, 4), 4, 1, False, False, 7, 0), Row("gapped", (3, 4), 1, 1, False, False, 7, 0)]
+ROWS.append(Row("quanta", (5, 7), 1, 1, False, False, None, 0))
 HELD, GAPPED, QUANTA = family_rules(ROWS)
 WRITE = held_write((HELD, GAPPED, QUANTA), 0, 64)  # the massless row's one write per part at T = 64
 UNIVERSE_ROWS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
@@ -158,8 +158,8 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     assert WRITE.walls == (7 * 64,) + (7 * 3 * 7 * 64,) * 3 and WRITE.factors == {2: 1}
     origins = node.write_origins(WRITE.walls, (1, 1, 1), KIND)
     assert [int(a[0, 0, 0]) for a in origins] == [wall // 2 for wall in WRITE.walls]
-    mixed = [Row("row", (1, 1), 4, False, False, 5, 0), Row("a", (1, 4), 1, False, False, None, 0)]
-    mixed.append(Row("b", (5, 6), 1, False, False, None, 0))
+    mixed = [Row("row", (1, 1), 4, 1, False, False, 5, 0), Row("a", (1, 4), 1, 1, False, False, None, 0)]
+    mixed.append(Row("b", (5, 6), 1, 1, False, False, None, 0))
     assert held_write(family_rules(mixed), 0, 10) == HeldWrite((50, 1800, 1800, 1800), {1: 3, 2: 2})
 
 
@@ -276,8 +276,9 @@ def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
         states = [board.states[body], board.states[CHARGE]]
         board.step()
         laid = quanta_of(board, body)
-        assert len(states[1].lines) == 1  # light is the sign holder's own record, one real line
-        assert (CHARGE in [r.family for r in board.families[body].reads]) == bool(turn)
+        assert len(states[1].lines) == 1 and (
+            CHARGE in [r.family for r in board.families[body].reads]
+        ) == bool(turn)
         away = np.ones(board.shape, dtype=bool)
         away[CHAIN // 2 - 8 : CHAIN // 2 + 8] = False
         born, counts, moved = 0, [], 0
@@ -318,7 +319,7 @@ def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_t
     body, writes, counts, tensions, totals = board.body_nodes(0), [], [], [], []
     tail = body & ~board.mask(((24, 0, 0),))
     for _ in range(179):  # this side of the horizon the two bodies' rows reach later
-        turn = node.well(node.wronskian(matter.lines), T)
+        turn = node.well(node.wronskian(matter.lines, True), T)
         writes.append(int(turn[body].sum()))
         tensions.append(int(node.stresses_of(family.pair[0], matter.lines, board.wrap)[0][tail].sum()))
         within_the_reach(board, turning)
@@ -381,7 +382,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     assert all(np.array_equal(t, h) for t, h in zip(stresses, by_hand_stress, strict=True))
     print(f"GAMEBOARD the identity's remainders' term at most {max(differences)}, the wall {wall}")
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
-    exact = family_rules([Row("exact", (1, 2), 1, False, False, None, 0)])[0]
+    exact = family_rules([Row("exact", (1, 2), 1, 1, False, False, None, 0)])[0]
     plane = [node.Record(wave, wave, node.zeros(shape, KIND))]
     tension = node.stresses_of(exact.pair[0], plane, WRAP)
     assert (tension[0] == -3 * 2000 * 2000 // 2).all() and not tension[1].any() and not tension[2].any()
@@ -407,18 +408,15 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
         count = share.quanta_of(share.family_share(matter, (record,), wrap, GAMMA), wall, KIND)
         stress = node.stresses_of(matter.pair[0], [record], wrap)
         numerators = node.write_sources(GRAVITY, FAMILIES, {}, {MATTER: stress}, write)
-        held.lines, held.write_remainders = node.held_write(
-            held.lines, numerators, write.walls, held.write_remainders
-        )
+        written = node.held_write(held.lines, numerators, write.walls, held.write_remainders)
+        held.lines, held.write_remainders = written
         xx = held.lines[1].now
         low, high, part = int(stress[0].min()), int(stress[0].max()), (int(xx.min()), int(xx.max()))
         print(f"GAMEBOARD the record {'moving' if moving else 'at rest'}: tension on x {low} to {high}")
         print(f"  the xx part {part}")
         assert not (moving and int(stress[0].max()) > 0) and bool((stress[0] != 0).any())
         assert not stress[1].any() and not stress[2].any() and not held.lines[2].now.any()
-        states = [
-            node.empty_state(f, shape, walls, KIND) for f, walls in zip(FAMILIES, WALLS, strict=True)
-        ]
+        states = [node.empty_state(f, shape, w, KIND) for f, w in zip(FAMILIES, WALLS, strict=True)]
         states[GRAVITY] = held
         stepped = np.arange(16, dtype=np.int64).reshape(shape)  # the vacuum's row's stepped time part
         held.lines[0] = node.Record(stepped, stepped, node.zeros(shape, KIND))
@@ -447,15 +445,13 @@ def test_a_static_source_gives_a_static_field_that_falls_with_the_range_of_the_r
     assert all(abs(at[i] - round(at[0] * math.exp(-kappa * r))) <= 1 for i, r in enumerate(away))
     walls = WALLS[NAMES.index("binding")]
     state = node.empty_state(binding, shape, walls, KIND)
-    state.lines[0] = node.Record(
-        field.levels.copy(), field.levels.copy(), np.full(shape, field.remainder)
-    )
+    levels = field.levels
+    state.lines[0] = node.Record(levels.copy(), levels.copy(), np.full(shape, field.remainder))
     kicked, drift = 0, 0
     for interval in range(200):
         state.lines[0] = node.step(state.lines[0], node.part_rule(binding), wrap)
-        state.lines, state.write_remainders = node.held_write(
-            state.lines, [source * T], walls, state.write_remainders
-        )
+        kept = state.write_remainders
+        state.lines, state.write_remainders = node.held_write(state.lines, [source * T], walls, kept)
         moved = np.abs(state.lines[0].now - field.levels)
         if interval == 0:
             kicked = int((moved > 0).sum())
@@ -480,13 +476,11 @@ def test_the_wronskians_sign_is_read_from_the_record_and_a_real_record_has_none(
         record = node.Record(cosine, turned, node.zeros(shape, KIND))
         second = node.Record(node.zeros(shape, KIND), sense * quarter, node.zeros(shape, KIND))
         lines = [record, second]
-        assert (np.sign(node.wronskian(lines)) == sense).all()
+        assert (np.sign(node.wronskian(lines, True)) == sense).all()
         for _ in range(100):
             lines = [node.step(line, rule, wrap) for line in lines]
-            assert (np.sign(node.wronskian(lines)) == sense).all()
-    assert not node.wronskian(
-        [node.Record(cosine, turned, second.now), node.empty_record(shape, KIND)]
-    ).any()
+            assert (np.sign(node.wronskian(lines, True)) == sense).all()
+    assert not node.wronskian([node.Record(cosine, turned, second.now)], False)
 
 
 def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: object) -> Path:

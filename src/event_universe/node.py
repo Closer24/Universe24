@@ -195,11 +195,14 @@ def form(begun: Sequence[Record], stepped: Sequence[Record]) -> Any:
     return total
 
 
-def wronskian(lines: Sequence[Record]) -> Any:
-    """The Wronskian of a record's two lines at every Node, W_i = re_now im_before - im_now re_before, the booking of the rotation sense, the charge density: the source of the row that holds the sign; the integer 0 for a record of one line, which has no plane."""
-    if len(lines) < 2:
+def wronskian(lines: Sequence[Record], plane: bool) -> Any:
+    """The Wronskian of a plane's two lines at every Node, W_i = re_now im_before - im_now re_before, the booking of the rotation sense, the charge density, summed over the record's planes: the source of the row that holds the sign; the integer 0 for a record of real lines (one line, or the pair family's two never summed at a Node), which has no plane (ALGEBRA.md #a-familys-declaration)."""
+    if not plane:
         return 0
-    return lines[0].now * lines[1].before - lines[1].now * lines[0].before
+    total: Any = 0
+    for re, im in zip(lines[0::2], lines[1::2], strict=True):
+        total = total + (re.now * im.before - im.now * re.before)
+    return total
 
 
 def well(booking: Any, action: int) -> np.ndarray:

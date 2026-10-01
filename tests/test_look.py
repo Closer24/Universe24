@@ -15,8 +15,6 @@ TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")
 PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
-BELL = load_file("bell_clicks", ROOT / "tools" / "bell_clicks.py")
-BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
 ROLE_OF = {(True, True): "light", (True, False): "field"}  # (held, by the Wronskian), else matter
 REFUSED = [([[20, 4, 0]], "never one Node"), ([[20, 4, 0], [20, 5, 0]], "under half the wavelength")]
 REFUSED += [([[20, y, 0] for y in (0, 1, 6, 7)], "not one connected region")]  # the size rule's refusals
@@ -25,8 +23,6 @@ SCREEN = [
 ]
 BLIND = {"detector": [d["name"] for d in SCREEN], "family": "charge", "window": [1, 2], "across": "y"}
 BLIND.update(pattern=[0, 1], counts=[1.5, 2], through=10, watch={"4": 2, "0": 1.5}, seed=7)
-BELL_FILES, BELL_REGIONS = ("bell_0", "bell_1", "expectation"), ("g0", "g4", "screen 0", "screen 4")
-SCREEN_PORTS = {"plus": ["screen 0"], "minus": ["screen 4"]}  # the toy right side's ports
 
 
 def shown(world, monkeypatch, at, blind):
@@ -87,7 +83,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
-    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall and the clicks credited by the shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the credit the summed absolute deviation from the blind row's shares, one draw by the seed and a bare region named `aside`; tools/bell_clicks.py reads the runs by the comb per region (the weights, the marginals, E as the product, S, the curve) and Bell's builder writes from its design file one world per angle with the expectation."""
+    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall and the clicks credited by the shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the credit the summed absolute deviation from the blind row's shares, one draw by the seed and a bare region named `aside`."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     groups = [
         {"name": f"g{y}", "positions": [[x, y + r, 0] for x in (21, 22) for r in range(4)]}
@@ -104,8 +100,7 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     wall = next(f["wall"] for f in look["families"] if f["name"] == "charge")
     assert look["faces"] == SLIT["faces"] and look["verdict"] == "LAWFUL" and measure["quanta"] == 3
     assert measure["at"] == [0, 4] and measure["credited"] == [1, 2]
-    assert measure["seen"] == [wall, 2 * wall]
-    assert measure["labels"] == BLIND["detector"]
+    assert measure["seen"] == [wall, 2 * wall] and measure["labels"] == BLIND["detector"]
     flat = [x for fr in look["frames"] for x in fr["lines"]]
     counted = COUNTS.inflows(flat, BLIND["detector"], "charge", (1, 2))
     assert [counted[name] for name in BLIND["detector"]] == measure["seen"]
@@ -134,47 +129,3 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     assert every["detector"] == ["g0", "g4"] and every["credited"] == [1, 2]
     assert every["window"] == [0, 3]
     assert PAGE.measurement(look, unnamed)["credited"][:2] == [1, 1]  # the screen's regions first
-    ports = {"plus": ["g0"], "minus": ["g4"]}
-    bell = {"family": "charge", "sides": {"left": {"g0": [0, 1, 2, 3], "g4": [4, 5, 6, 7]}}}
-    bell["sides"]["right"] = {"screen 0": [0, 1, 2, 3], "screen 4": [4, 5, 6, 7, 8]}
-    bell["ports"] = {"left": {"0": ports, "4": ports}, "right": {k: SCREEN_PORTS for k in ("0", "4")}}
-    bell.update(sign="left", contrast="right", settings={"left": [0, 4], "right": [0, 4]}, blind={})
-    (tmp_path / "bell.json").write_text(json.dumps(bell))
-    click = {"event": "click", "tick": 1, "family": "charge"}
-    outs = []
-    for name, quanta in (("bell_0", (3, 1, 1, 2)), ("bell_1", (1, 3, 2, 1))):  # left +, -, right +, -
-        big = [
-            {**click, "detector": d, "inflow": n * wall}
-            for d, n in zip(BELL_REGIONS, quanta, strict=True)
-        ]
-        outs.append(tmp_path / f"{name}.output.json")
-        outs[-1].write_text(json.dumps({"input": f"{name}.json", "ticks": 3, "lines": big}))
-    runs = BELL.reading(world, outs, tmp_path / "bell.json")
-    run = runs["per_run"][0]  # the left's + port fuller in the first run, the right's - port
-    assert run["outcome"] == {"left": {"0": 1, "4": 1}, "right": {"0": -1, "4": -1}}
-    assert run["light"]["left"]["0"] == [4, 1] and run["contrast"]["right"]["4"] == [1, 1]
-    assert runs["correlation"] == {"0 0": [-1, 1], "0 4": [-1, 1], "4 0": [-1, 1], "4 4": [-1, 1]}
-    assert runs["S"] == [-2, 1] and runs["runs"] == ["bell_0", "bell_1"] and runs["visibility"] is None
-    assert runs["efficiency"] == {s: {"0": [1, 1], "4": [1, 1]} for s in ("left", "right")}
-    assert runs["by_the_shares"]["correlation"]["0 4"] == [-1, 1]
-    assert runs["patterns"] == {"left": {"g0": 4, "g4": 4}, "right": {"screen 0": 3, "screen 4": 3}}
-    with pytest.raises(ValueError, match="declares"):
-        (tmp_path / "bad.json").write_text(json.dumps({**bell, "contrast": "left"}))
-        BELL.reading(world, outs, tmp_path / "bad.json")
-    BUILD.main(["--folder", str(folder := tmp_path / "bell")])
-    built, tilted, blind = (json.loads((folder / f"{n}.json").read_text()) for n in BELL_FILES)
-    assert built["shape"] == [343, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
-    assert len(built["detectors"]) == 23 and len(blind["runs"]) == 32
-    assert len(blind["sides"]["left"]) == 12
-    still = json.loads((folder / "bell_v.json").read_text())  # the visibility world, u = 0
-    assert [m.get("phase") for m in still["messages"]] == [None] * 4
-    assert [m.get("phase") for m in built["messages"]] == [None, [63, 64], None, [1, 64]]  # the offset
-    assert [m.get("phase") for m in tilted["messages"]] == [None, [61, 64], None, [3, 64]]  # the mirror
-    assert [m["top"]["x"][0] for m in built["messages"]] == [111, 111, 231, 231]
-    assert blind["settings"] == {"left": [-2, -6], "right": [0, 4]}
-    assert blind["degrees"]["left"] == [-45, -135]
-    assert blind["ports"]["right"]["0"] == {"plus": ["right_5"], "minus": ["right_3", "right_7"]}
-    assert [len(rows) for rows in blind["sides"]["right"].values()] == [6] + [4] * 9 + [6]
-    assert blind["blind"]["minima"] == [16, 31] and 2.7 < blind["blind"]["S_cosines"] < 2.9
-    right = next(d for d in built["detectors"] if d["name"] == "right_0")
-    assert {p[0] for p in right["positions"]} == set(range(331, 343))

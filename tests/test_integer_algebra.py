@@ -136,11 +136,8 @@ def numpy_violations(tree: ast.AST) -> list[str]:
             if call_chain and len(call_chain) == 1:
                 if call_chain[0] in ALLOCATIONS_NEEDING_DTYPE and "dtype" not in keywords:
                     found.append(f"np.{call_chain[0]} without dtype at line {node.lineno}")
-                if (
-                    call_chain[0] in ("array", "asarray")
-                    and node.args
-                    and not is_integer_literal(node.args[0])
-                ):
+                arrays = call_chain[0] in ("array", "asarray") and node.args
+                if arrays and not is_integer_literal(node.args[0]):
                     found.append(f"np.{call_chain[0]} of a non-integer literal at line {node.lineno}")
         arguments = [k.value for k in node.keywords if k.arg == "dtype"]
         if isinstance(callee, ast.Attribute) and callee.attr == "astype":
@@ -160,24 +157,14 @@ def numpy_violations(tree: ast.AST) -> list[str]:
     return found
 
 
-@pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES))
-def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
-    source = (SRC / name).read_text(encoding="utf-8")
-    tree = ast.parse(source)
-    assert float_literals(source) == [], (name, float_literals(source))
-    assert true_divisions(source) == [], (name, true_divisions(source))
-    assert forbidden_imports(tree) == [], (name, forbidden_imports(tree))
-    assert numpy_violations(tree) == [], (name, numpy_violations(tree))
-
-
 def features_modules() -> list[str]:
     """Every feature's module, found by its folder (no list to keep: record 2221 (3))."""
     return sorted(path.relative_to(SRC).as_posix() for path in (SRC / "features").glob("*/__init__.py"))
 
 
-@pytest.mark.parametrize("name", features_modules())
-def test_a_feature_holds_integer_mathematics_only(name: str) -> None:
-    """A feature's folder is a physical module under the same gate as the engine's (issue #1154 cut 2), found by its folder and never listed."""
+@pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES) + features_modules())
+def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
+    """Every physical module, and every feature's folder under the same gate (issue #1154 cut 2), found by its folder and never listed."""
     source = (SRC / name).read_text(encoding="utf-8")
     tree = ast.parse(source)
     assert float_literals(source) == [], (name, float_literals(source))

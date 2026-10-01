@@ -64,7 +64,7 @@ def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_a_p
     plane, light = board.states[charged], board.states[charge]
     board.step()
     first, second = board.body_nodes(0), board.body_nodes(1)
-    turn = np.sign(node.wronskian(plane.lines))
+    turn = np.sign(node.wronskian(plane.lines, True))
     assert (turn[first] == 1).all() and (turn[second] == -1).all()
     level = light.lines[0].now
     assert len(light.lines) == 1 and int(level[first].min()) >= 0 < int(level[first].sum())  # one line

@@ -11,11 +11,12 @@ from event_universe.features.currents import DIFFERENCE, PORTS, PRODUCTS
 
 @dataclass(frozen=True)
 class Row:
-    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines (a family of quanta's dimension, 1 or 2; a held row's sources' count, one real line per source), whether its lines are a plane (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), its divisor where it is held and its rest."""
+    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, 1 or 2, times its parts; a held row's sources' count, one real line per source), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), its divisor where it is held and its rest."""
 
     name: str
     pair: tuple[int, int]
     lines: int
+    parts: int
     plane: bool
     wronskian: bool
     divisor: int | None
@@ -47,6 +48,11 @@ class FamilyRule(Row):
         return not self.held or self.wronskian
 
     @property
+    def width(self) -> int:
+        """The lines of one part, the lines in all over the parts: one real line, or a plane's two (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
+        return self.lines // self.parts
+
+    @property
     def axes(self) -> bool:
         """Whether the row carries the three axis lines beside its time line: a held row sourced by the tensions (the massless row holding the content)."""
         return self.held and self.lines > 1
@@ -74,6 +80,7 @@ def family_rules(rows: list[Row]) -> tuple[FamilyRule, ...]:
                 row.name,
                 row.pair,
                 row.lines,
+                row.parts,
                 row.plane,
                 row.wronskian,
                 row.divisor,
