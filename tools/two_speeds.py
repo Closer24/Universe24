@@ -58,7 +58,7 @@ def centroid(readings: Series) -> tuple[Fraction, int] | None:
 
 
 def arrival(output: dict[str, Any], family: str, region: str) -> dict[str, Any]:
-    """One world's arrival at the region: the packet family's onset, centroid, end and peak, light's clicks there and the other families' largest readings."""
+    """One world's arrival at the region: the packet family's onset, centroid, end and peak, and the other families' largest readings."""
     readings = series(output, family, region)
     peak = max(readings, key=lambda pair: pair[1]) if readings else None
     middle = centroid(readings)
@@ -75,9 +75,6 @@ def arrival(output: dict[str, Any], family: str, region: str) -> dict[str, Any]:
         "onset": onset(readings),
         "centroid": middle[0] if middle else None,
         "end": middle[1] if middle else None,
-        "clicks": sum(
-            1 for line in output["lines"] if line["event"] == "click" and line["detector"] == region
-        ),
         "others": {
             other: max((reading for _at, reading in series(output, other, region)), default=0)
             for other in others

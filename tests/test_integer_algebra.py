@@ -16,12 +16,11 @@ SRC = ROOT / "src" / "event_universe"
 PHYSICAL_MODULES: dict[str, str] = {
     "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
     "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
-    "flow.py": "the flows into a held row's tensions, each a carried division of Rule3",
-    "lay.py": "the lay of every family's count and sense at the first act from the weighted share, Rule3's division act at the count's wall",
-    "reports.py": "the detectors' clicks, a body's Nodes derived for a report and the books, readings of whole-board arrays",
+    "share.py": "the share: the count as the record's reading at every Node, in quanta over the count's wall by Rule3's division act",
+    "reports.py": "the detectors' reports, the net inflow through a region's front boundary, and a body's Nodes derived for a report, readings of whole-board arrays",
     "growth.py": "the receding face: the GameBoard grown by layers of zeros as the front reaches it, taken off on the way back",
     "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
-    "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies' held quanta laid by the carried division",
+    "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies, the messages and the detectors",
     "loader/keys.py": "the keys of the files: an object, an integer, a Node on the board, a range along an axis",
     "loader/mode.py": "the generator's mode file: every body's and message's levels within the amplitude bound and 0 beyond the board",
     "loader/faces.py": "the inner faces of the board: the Nodes declared beyond it, read as 0 through every Port",
@@ -35,44 +34,10 @@ PHYSICAL_MODULES: dict[str, str] = {
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
 NUMPY_DTYPES_FORBIDDEN = {
-    "complex128",
-    "complex64",
-    "complex_",
-    "complexfloating",
-    "float128",
-    "float16",
-    "float32",
-    "float64",
-    "float_",
-    "floating",
-    "int16",
-    "int32",
-    "int8",
-    "uint16",
-    "uint32",
-    "uint64",
-    "uint8",
+    *"complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
 }
 NUMPY_FORBIDDEN = {
-    "arctan2",
-    "average",
-    "cbrt",
-    "cos",
-    "divide",
-    "exp",
-    "float",
-    "hypot",
-    "log",
-    "log10",
-    "log2",
-    "mean",
-    "power",
-    "sin",
-    "sqrt",
-    "std",
-    "tan",
-    "true_divide",
-    "var",
+    *"arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power sin sqrt std tan true_divide var".split()
 }
 BUILTIN_DTYPES_ALLOWED, ROOT_NAMES = {"bool", "object", "int"}, {"isqrt", "integer_root"}
 

@@ -4,14 +4,14 @@
 tests/test_documents.py
 tests/test_feature_hold.py
 tests/test_feature_signed_read.py
-tests/test_feature_source.py
 tests/test_feature_start.py
 tests/test_feature_write.py
 tests/test_integer_algebra.py
+tests/test_look.py
 tests/test_pixel_mode.py
 tests/test_repository_language.py
 tests/test_rule3.py
 tests/test_the_bound_body.py
-tests/test_the_counts_line.py
 tests/test_the_node.py
+tests/test_the_share.py
 tests/test_weak_field_rule.py

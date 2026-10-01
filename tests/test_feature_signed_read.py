@@ -67,12 +67,8 @@ def test_a_multi_read_sum_by_sign_and_no_reads():
     """Three reads (2 a - 3 b plain, + 4 c by sign with q = -1) sum per Node exactly; no reads give 0; a read by sign with q per Node (+1 and -1, the senses at the Nodes) enters one level with opposite signs."""
     shape, a = (2, 1, 1), np.array([[[5]], [[7]]], dtype=np.int64)
     b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
-    term = SignedReadTerm(
-        ((1, 2, signed_read.BY_PLAIN), (2, -3, signed_read.BY_PLAIN), (3, 4, signed_read.BY_SIGN)),
-        -1,
-        (800, 850),
-        GAMMA,
-    )
+    reads = ((1, 2, signed_read.BY_PLAIN), (2, -3, signed_read.BY_PLAIN), (3, 4, signed_read.BY_SIGN))
+    term = SignedReadTerm(reads, -1, (800, 850), GAMMA)
     writes = apply(term, SignedReadStart(shape, {1: a, 2: b, 3: c}, None))
     assert writes.content.tolist() == [[[2 * 5 - 3 * 1 + 4 * 3]], [[2 * 7 + 3 * 2]]]
     silent = apply(SignedReadTerm((), 0, (1, 1), GAMMA), SignedReadStart(shape, {}, None))
@@ -92,9 +88,7 @@ def test_a_read_by_an_unknown_word_and_a_sum_that_could_leave_int64_are_refused_
         apply(unknown, SignedReadStart(shape, {1: level}, None))
     huge = np.array([[[10**16]], [[-(10**16)]]], dtype=np.int64)
     heavy = SignedReadTerm(((1, 1000, signed_read.BY_PLAIN),), 0, (800, 850), GAMMA)
-    with pytest.raises(
-        ValueError, match="family 1 at the weight 1000 reaches 10000000000000000000 .*int64"
-    ):
+    with pytest.raises(ValueError, match="family 1 at the weight 1000 reaches 10000000000000000000"):
         apply(heavy, SignedReadStart(shape, {1: huge}, None))
     half = np.array([[[5 * 10**18]], [[0]]], dtype=np.int64)
     reads = ((1, 1, signed_read.BY_PLAIN), (2, -1, signed_read.BY_PLAIN))
