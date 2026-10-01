@@ -30,30 +30,23 @@ def sign(value: Fraction) -> int:
     return (value > 0) - (value < 0)
 
 
-def totals(
-    lines: list[dict[str, object]], family: str, regions: list[str]
-) -> tuple[dict[str, int], dict[str, int]]:
-    """Per region what it saw over the run (the `seen` lines' net inflows summed) and its whole crossings (the click lines counted), of one family."""
+def totals(lines: list[dict[str, object]], family: str, regions: list[str]) -> dict[str, int]:
+    """Per region what it saw over the run, its `click` lines' net inflows summed, of one family."""
     saw = {name: 0 for name in regions}
-    crossings = {name: 0 for name in regions}
     for line in lines:
         if line.get("family") != family or line.get("detector") not in saw:
             continue
-        name = str(line["detector"])
-        if line.get("event") == "seen":
-            saw[name] += int(str(line["inflow"]))
-        elif line.get("event") == "click":
-            crossings[name] += 1
-    return saw, crossings
+        if line.get("event") == "click":
+            saw[str(line["detector"])] += int(str(line["inflow"]))
+    return saw
 
 
 def one_run(lines: list[dict[str, object]], expected: dict[str, Any]) -> dict[str, Any]:
-    """One run's totals: per side the seen and the whole crossings per region, and per setting the two ports' inflows (the regions the expectation names summed)."""
-    found: dict[str, Any] = {"seen": {}, "crossings": {}, "ports": {}}
+    """One run's totals: per side what each region saw, and per setting the two ports' inflows (the regions the expectation names summed)."""
+    found: dict[str, Any] = {"seen": {}, "ports": {}}
     for side, regions in expected["sides"].items():
-        saw, crossings = totals(lines, str(expected["family"]), list(regions))
+        saw = totals(lines, str(expected["family"]), list(regions))
         found["seen"][side] = saw
-        found["crossings"][side] = crossings
         found["ports"][side] = {
             setting: {port: sum(saw[name] for name in names) for port, names in ports.items()}
             for setting, ports in expected["ports"][side].items()
@@ -168,12 +161,6 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
         }
         for side in expected["sides"]
     }
-    crossings = {
-        side: {
-            name: sum(run["crossings"][side][name] for run in runs) for name in expected["sides"][side]
-        }
-        for side in expected["sides"]
-    }
     visibility = None
     if visibility_run is not None:
         visibility = {}
@@ -222,7 +209,6 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
         "efficiency": efficiency,
         "by_the_shares": {"correlation": by_the_shares},
         "patterns": patterns,
-        "crossings": crossings,
         "visibility": visibility,
         "blind": expected["blind"],
     }

@@ -22,11 +22,11 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.features.start import rest
-from event_universe.lay import share
 from event_universe.loader.derived import BY_PLAIN, family_rules
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES
 from event_universe.node import Record
+from event_universe.share import share
 from event_universe.world_files import input_digest, world_files
 
 Axis = tuple[int, int, int]

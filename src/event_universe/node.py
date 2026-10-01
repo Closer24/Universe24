@@ -1,4 +1,4 @@
-"""The Node: every family's NodeState over the GameBoard, the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py): the signed read (ALGEBRA.md #the-paces; the guard once at load), Rule3 on every record (#the-line, #the-direction), the count's line and the sense's line with their lay from the weighted share (#the-counts-line), the well and the Wronskian's quanta (the record's form and its sense per interval, #the-primitives) and the hold with its time, vector and tensor parts (#the-primitives, the row "the hold")."""
+"""The Node: every family's NodeState over the GameBoard, the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py): the signed read (ALGEBRA.md #the-paces; the guard once at load), Rule3 on every record (#the-line, #the-direction), the currents and the tension read from the record (features/currents; the count is the record's share, #the-count-is-the-records-share), the well and the Wronskian's quanta (the record's form and its sense per interval, #the-primitives) and the hold with its time, vector and tensor parts (#the-primitives, the row "the hold")."""
 
 from __future__ import annotations
 
@@ -15,11 +15,11 @@ from event_universe.core.rule3 import (
     link_paces,
     rule3,
 )
-from event_universe.features import counts_line
+from event_universe.features import currents
 from event_universe.features import signed_read as signed
 from event_universe.features.hold import components, diagonal, hold
 from event_universe.features.write import carried
-from event_universe.loader.derived import BY_PLAIN, BY_SIGN, FamilyRule, count_wall
+from event_universe.loader.derived import BY_PLAIN, BY_SIGN, FamilyRule
 
 Rule = tuple[tuple[Any, Any, Any], Any, Any]  # Rule3's integers at every Node: (R_x, R_y, R_z), S, w
 
@@ -35,17 +35,13 @@ class Record:
 
 @dataclass
 class NodeState:
-    """A family's NodeState at every Node. A family of quanta: its record's level pair with the remainder and its second level pair (the rotation sense, 0 on a real record), its count and the count's remainder and its sense (the booked Wronskian) and the sense's remainder (laid at the first act), the remainders of its well and of its Wronskian's quanta. A held family: its parts, each a level pair with its remainder, the hold's carry of the time part, and per family that sources it the carries of its vector and tensor parts. A family of quanta that holds a row (the holder of the sign, its quanta light) keeps its record as its time part alone, `levels` None (`record_of`)."""
+    """A family's NodeState at every Node, the law's numbers and nothing else. A family of quanta: its record's level pair with the remainder and its second level pair (the rotation sense, 0 on a real record), the remainders of its well and of its Wronskian's quanta; its count and its sense are readings of the record (share.py, features/currents) and stand nowhere. A held family: its parts, each a level pair with its remainder, the hold's carry of the time part, and per family that sources it the carries of its vector and tensor parts. A family of quanta that holds a row (the holder of the sign, its quanta light) keeps its record as its time part alone, `levels` None (`record_of`)."""
 
     levels: Record | None
-    count: np.ndarray | None
-    count_remainder: np.ndarray | None
     well_remainder: np.ndarray | None
     parts: list[Record]
     carry: np.ndarray | None
     second: Record | None = None
-    sense: np.ndarray | None = None
-    sense_remainder: np.ndarray | None = None
     wronskian_remainder: np.ndarray | None = None
     flows: dict[int, list[np.ndarray]] = field(default_factory=dict)
 
@@ -67,14 +63,10 @@ def empty_state(family: FamilyRule, shape: tuple[int, int, int]) -> NodeState:
     levels = parts[0] if parts and quanta else empty_record(shape) if quanta else None
     return NodeState(
         levels,
-        None,
-        None,
         zeros(shape) if quanta else None,
         parts,
         zeros(shape) if family.held else None,
         empty_record(shape) if quanta else None,
-        None,
-        None,
         zeros(shape) if quanta else None,
     )
 
@@ -115,8 +107,10 @@ def axis_sums(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, np.
 
 
 def sense_sign(state: NodeState, shape: tuple[int, int, int]) -> np.ndarray:
-    """The reader's q at every Node: the sign of its own sense there, the booked Wronskian of its two level pairs (0 where it has none; ALGEBRA.md #the-paces, the sign is the rotation sense)."""
-    return np.sign(state.sense) if state.sense is not None else zeros(shape)
+    """The reader's q at every Node: the sign of its own rotation sense there, the Wronskian of its two level pairs read from the record (0 where it has none; ALGEBRA.md #the-paces, the sign is the rotation sense)."""
+    if state.levels is None or state.second is None:
+        return zeros(shape)
+    return np.asarray(np.sign(wronskian(state.levels, state.second)), dtype=np.int64)
 
 
 def read_terms(
@@ -213,62 +207,44 @@ def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int =
     return Record(record.before, np.asarray(back), np.asarray(remainder))
 
 
-def count_term(family: FamilyRule, action: int, amplitude: int, most: int) -> counts_line.CountTerm:
-    """The count's line's declaration for a family: its wall W_c, the current's weight num, the amplitude bound A and the largest count."""
-    return counts_line.CountTerm(count_wall(family, action), family.pair[0], amplitude, most)
-
-
-def count_line(
-    family: FamilyRule, state: NodeState, action: int, amplitude: int, wrap: Wrap, direction: int = 1
-) -> counts_line.CountWrites:
-    """The count's line on the family's count (ALGEBRA.md #the-counts-line): the six currents F_ij = num (now_i before_j - before_i now_j) through the Ports from the family's two level pairs as the step left them, summed, the count and its remainder moved forward or back by the line's division act, the tension on each axis booked beside it from both pairs' levels now (features/counts_line)."""
-    assert state.levels is not None and state.count is not None and state.count_remainder is not None
-
-    def pairs(record: Record) -> tuple[counts_line.Levels, tuple[counts_line.Levels, ...]]:
+def currents_of(family: FamilyRule, state: NodeState, wrap: Wrap) -> tuple[np.ndarray, ...]:
+    """The currents of a family of quanta at every Node, a reading of its record (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, both level pairs' currents added, at the level pairs as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a detector reads at its boundary."""
+    assert state.levels is not None
+    found: list[Any] = [0] * 6
+    for record in (state.levels, state.second):
+        if record is None:
+            continue
+        here = currents.Levels(record.now, record.before)
         now, before = ports(record.now, wrap), ports(record.before, wrap)
-        links = tuple(counts_line.Levels(now[port], before[port]) for port in range(6))
-        return counts_line.Levels(record.now, record.before), links
+        for port in range(6):
+            there = currents.Levels(now[port], before[port])
+            found[port] = found[port] + currents.current(family.pair[0], here, there)
+    return tuple(np.asarray(value) for value in found)
 
-    here, links = pairs(state.levels)
-    second = pairs(state.second) if state.second is not None else None
-    term = count_term(family, action, amplitude, int(np.abs(state.count).max()))
-    differences = tuple(
-        axis_differences(record.now, wrap)
-        for record in (state.levels, state.second)
-        if record is not None
-    )
-    start = counts_line.CountStart(
-        state.count, state.count_remainder, here, links, direction, second, differences
-    )
-    return counts_line.apply(term, start)
+
+def stresses_of(family: FamilyRule, state: NodeState, wrap: Wrap) -> currents.Vector:
+    """The tension on each axis at every Node from a family of quanta's levels now, both level pairs' tensions added, a reading of the record into the held rows' paces (features/currents; ALGEBRA.md #the-primitives, the row "the hold")."""
+    assert state.levels is not None
+    tensions: currents.Vector = (0, 0, 0)
+    for record in (state.levels, state.second):
+        if record is None:
+            continue
+        found = currents.stress(family.pair[0], axis_differences(record.now, wrap))
+        tensions = (tensions[0] + found[0], tensions[1] + found[1], tensions[2] + found[2])
+    return tuple(np.asarray(value) for value in tensions)  # type: ignore[return-value]
 
 
 def axis_differences(
     now: np.ndarray, wrap: Wrap
-) -> tuple[counts_line.Differences, counts_line.Differences, counts_line.Differences]:
+) -> tuple[currents.Differences, currents.Differences, currents.Differences]:
     """The level's difference across each axis's two Ports at every Node, D_a = the +a arrival minus the -a arrival, with the neighbours' own differences brought through the axis's two Ports, the tension's reads (ALGEBRA.md #the-primitives, the row "the hold", the tension)."""
     arrived = ports(now, wrap)
     found = []
     for axis in range(3):
         d = arrived[2 * axis] - arrived[2 * axis + 1]
         plus, minus = arrival(d, axis, 1, wrap), arrival(d, axis, -1, wrap)
-        found.append(counts_line.Differences(now, d, plus, minus))
+        found.append(currents.Differences(now, d, plus, minus))
     return found[0], found[1], found[2]
-
-
-def sense_line(
-    family: FamilyRule, state: NodeState, action: int, amplitude: int, wrap: Wrap, direction: int = 1
-) -> counts_line.CountWrites:
-    """The sense's line (ALGEBRA.md #the-paces, the sign is the rotation sense): the sense moved by the count's line with the Wronskian's current G_ij = num (im_i re_j - re_i im_j) through each Port at the level pairs the step started from, the change of the sense's share over the interval, forward or back; no tension is booked by sign (a holder of the sign has none)."""
-    assert state.levels is not None and state.second is not None
-    assert state.sense is not None and state.sense_remainder is not None
-    real, turned = state.levels.before, state.second.before
-    re_there, im_there = ports(real, wrap), ports(turned, wrap)
-    links = tuple(counts_line.Levels(im_there[port], re_there[port]) for port in range(6))
-    term = count_term(family, action, amplitude, int(np.abs(state.sense).max()))
-    here = counts_line.Levels(turned, real)
-    start = counts_line.CountStart(state.sense, state.sense_remainder, here, links, direction)
-    return counts_line.apply(term, start)
 
 
 def form(before: Record, after: Record) -> np.ndarray:

@@ -28,7 +28,7 @@ def arrays_of(name: str, state: NodeState) -> Snapshot:
     for label, record in records:
         if record is not None:
             found += [(f"{label}.{key}", getattr(record, key)) for key in ("now", "before", "remainder")]
-    scalars = ("count", "count_remainder", "sense", "sense_remainder", "well_remainder")
+    scalars = ("well_remainder", "wronskian_remainder", "carry")
     scalars += ("wronskian_remainder", "carry")
     found += [(key, value) for key in scalars if (value := getattr(state, key)) is not None]
     for source, carries in state.flows.items():

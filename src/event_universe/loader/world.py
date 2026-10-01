@@ -6,9 +6,8 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived
-from event_universe.loader.derived import CONTENT, SIGN, FamilyRule, count_wall
+from event_universe.loader.derived import CONTENT, SIGN, FamilyRule
 from event_universe.loader.faces import RecedingFace, faces_of, receding_of
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
 from event_universe.loader.messages import MessageRow, messages_of
@@ -28,21 +27,20 @@ FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("count", "divisor"),
 )
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes", "holds"),
+    ("family", "nodes"),
     ("family", "nodes"),
     ("node", "count"),
 )
-DETECTOR_KEYS, START_KEYS = ("name", "positions", "block", "remainder"), ("mode",)
+DETECTOR_KEYS, START_KEYS = ("name", "positions", "block"), ("mode",)
 
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts, the quanta of other families it holds laid over its Nodes (family, count per Node), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels."""
 
     family: int
     nodes: tuple[Node, ...]
     counts: tuple[int, ...]
-    holds: tuple[tuple[int, tuple[int, ...]], ...]
     now: Levels
     before: Levels
     im_now: Levels
@@ -51,12 +49,11 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), one group whose click is a whole quantum's entry through one of its boundary Ports, or the body whose Nodes report each interval (`block`); and the count remainders the file declares at its Nodes at the start (`remainder`), per family of quanta by its index one value per Node in the positions' order, none for a body."""
+    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`)."""
 
     name: str
     positions: tuple[Node, ...]
     body: int | None
-    remainders: tuple[tuple[int, tuple[int, ...]], ...]
 
 
 @dataclass(frozen=True)
@@ -125,15 +122,6 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     return integers, derived.family_rules(rows)
 
 
-def spread(total: int, counts: tuple[int, ...]) -> tuple[int, ...]:
-    """A body's held quanta laid over its Nodes in proportion to its own counts by Rule3's carried division, the remainder carried from Node to Node in the declared order, so no quantum is lost to a Node's rounding."""
-    whole, carry, found = sum(counts), 0, []
-    for count in counts:
-        share, carry = division_forward(total * count, whole, carry)
-        found.append(int(share))
-    return tuple(found)
-
-
 def bodies_of(
     value: object,
     mode: object,
@@ -143,7 +131,7 @@ def bodies_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board), the quanta of other families of quanta it holds, and its two levels from the mode file beside the world, which stands for this world by its digest; a body with no mode entry is refused by name."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest; a body with no mode entry is refused by name."""
     names = {family.name: index for index, family in enumerate(families)}
     if not isinstance(value, list):
         raise ValueError("measured must be a list of bodies")
@@ -169,12 +157,6 @@ def bodies_of(
             taken.add(node)
             nodes.append(node)
             counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
-        holds = []
-        for key, total in keyed(body.get("holds", {}), f"{label}.holds", tuple(names), ()).items():
-            other = names[key]
-            if other == family or not families[other].quanta:
-                raise ValueError(f"{label}.holds names {key!r}: the quanta of another family of quanta")
-            holds.append((other, spread(integer(total, f"{label}.holds.{key}", 1), tuple(counts))))
         now, before, im_now, im_before = levels_of(
             entry_of(entries, number, label),
             f"the mode file's bodies[{number}]",
@@ -183,29 +165,7 @@ def bodies_of(
             bound,
             beyond,
         )
-        found.append(
-            BodyRow(family, tuple(nodes), tuple(counts), tuple(holds), now, before, im_now, im_before)
-        )
-    return tuple(found)
-
-
-def remainders_of(
-    value: object, label: str, families: tuple[FamilyRule, ...], action: int, nodes: int
-) -> tuple[tuple[int, tuple[int, ...]], ...]:
-    """A detector's declared count remainders at the start (the advisor, #1515 comment 5907540901: the warm screen is declared, not earned): per family of quanta named as a key, an integer from 0 below that family's count wall W_c = 3 den T laid at every Node of the group, or a list of one such integer per Node in the positions' order; the engine holds no rule for their values."""
-    names = {family.name: index for index, family in enumerate(families)}
-    found = []
-    for key, given in keyed(value, label, tuple(names), ()).items():
-        index = names[key]
-        if not families[index].quanta:
-            raise ValueError(f"{label} names {key!r}, which carries no count: a family of quanta")
-        wall = count_wall(families[index], action)
-        values = given if isinstance(given, list) else [given] * nodes
-        if len(values) != nodes:
-            raise ValueError(
-                f"{label}.{key} lists {len(values)} remainders for {nodes} Nodes: one per Node"
-            )
-        found.append((index, tuple(integer(v, f"{label}.{key}", 0, wall - 1) for v in values)))
+        found.append(BodyRow(family, tuple(nodes), tuple(counts), now, before, im_now, im_before))
     return tuple(found)
 
 
@@ -214,10 +174,8 @@ def detectors_of(
     shape: Node,
     bodies: int,
     beyond: tuple[Node, ...],
-    families: tuple[FamilyRule, ...],
-    action: int,
 ) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one group, or the body it names by its number; a group may declare its count remainders at the start (`remainder`), a body may not."""
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region, or the body it names by its number."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
@@ -230,12 +188,8 @@ def detectors_of(
         if ("positions" in row) == ("block" in row):
             raise ValueError(f"{label} declares its `positions` or the `block` it reads, one of the two")
         if "block" in row:
-            if "remainder" in row:
-                raise ValueError(
-                    f"{label} reads a body and lays no remainder: the body's start is the lay's"
-                )
             body = integer(row["block"], f"{label}.block", 0, bodies - 1)
-            found.append(DetectorRow(name, (), body, ()))
+            found.append(DetectorRow(name, (), body))
             continue
         positions = row["positions"]
         if not isinstance(positions, list) or not positions:
@@ -243,9 +197,7 @@ def detectors_of(
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        declared = row.get("remainder", {})
-        remainders = remainders_of(declared, f"{label}.remainder", families, action, len(nodes))
-        found.append(DetectorRow(name, nodes, None, remainders))
+        found.append(DetectorRow(name, nodes, None))
     return tuple(found)
 
 
@@ -255,7 +207,7 @@ def regions_no_finer_than_half_a_wavelength(
     shape: Node,
     families: tuple[FamilyRule, ...],
 ) -> None:
-    """The size rule of a detector's region (ALGEBRA.md #the-counts-line, No click names a Node; the owner's word of 2026-09-30, the uncertainty principle upheld): the finest structure the amplitudes of a family can carry is half its wavelength, so a declared region is at least half the wavelength of every message of its family across the beam, q / p Links for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) is refused by name; a detector reading a body declares no region and the open faces' layer is the board's own."""
+    """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's word of 2026-09-30, the uncertainty principle upheld): the finest structure the amplitudes of a family can carry is half its wavelength, so a declared region is at least half the wavelength of every message of its family across the beam, q / p Links for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) is refused by name; a detector reading a body declares no region and the open faces' layer is the board's own."""
     for detector in detectors:
         if detector.body is not None:
             continue
@@ -272,16 +224,6 @@ def regions_no_finer_than_half_a_wavelength(
                         f"the wavelength of the {families[message.family].name!r} message's wave [{p}, {q}], "
                         f"{q} / {abs(p)} Links: no click names a position finer than the amplitudes carry"
                     )
-
-
-def largest_count(measured: object) -> int:
-    """The largest count a body declares at a Node, the count's line's bound reads it (0 where none is declared; the counts are checked with their bodies)."""
-    found = [0]
-    for body in measured if isinstance(measured, list) else []:
-        for line in body.get("nodes", []) if isinstance(body, dict) else []:
-            if isinstance(line, dict) and type(line.get("count")) is int:
-                found.append(line["count"])
-    return max(found)
 
 
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
@@ -305,14 +247,13 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         )
     depth = integer(world["face_depth"], "face_depth", 1) if "face_depth" in world else 0
     beyond = faces_of(world["faces"], shape) if "faces" in world else ()
-    most = largest_count(world["measured"])
     gamma, action = integers["node_clock"], integers["quantum_action"]
     width = integers["width"]
-    bound = derived.amplitude_bound(families, gamma, action, most, width)
+    bound = derived.amplitude_bound(families, gamma, action, width)
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
-    detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, families, action)
+    detectors = detectors_of(world["detectors"], shape, len(bodies), beyond)
     regions_no_finer_than_half_a_wavelength(detectors, messages, shape, families)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     return World(

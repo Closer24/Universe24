@@ -49,16 +49,9 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         load_world(slit_world(tmp_path, TOOL, "r", faces=[{"axis": "z", "at": 0, "gaps": []}]))
     with pytest.raises(ValueError, match=r"whole names the Node \[5, 4, 0\]: no line of the family"):
         load_world(slit_world(tmp_path, TOOL, "r", messages=[{**PACKET, "whole": [5, 4, 0]}]))
-    for reason, remainder, block in (
-        ("remainder.charge must be an integer from 0 through 589823999", {"charge": 589824000}, None),
-        ("names 'gravity', which carries no count", {"gravity": 1}, None),
-        ("reads a body and lays no remainder", {"charge": 1}, 0),
-        ("remainder.charge lists 2 remainders for 9 Nodes", {"charge": [1, 2]}, None),
-    ):
-        entry = {**({"block": block} if block is not None else screen), "name": "d"}
-        entry["remainder"] = remainder
-        with pytest.raises(ValueError, match=reason):
-            load_world(slit_world(tmp_path, TOOL, "r", detectors=[entry]))
+    with pytest.raises(ValueError, match="unknown key 'remainder'"):  # no count stands at a Node
+        entry = {**screen, "name": "d", "remainder": {"charge": 1}}
+        load_world(slit_world(tmp_path, TOOL, "r", detectors=[entry]))
     aslant = {**PACKET, "wave": [-1, 4], "phase": [1, 4], "transverse": {"y": [1, 8]}}
     turned = slit_world(tmp_path, TOOL, "turned", messages=[aslant])
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
@@ -87,24 +80,19 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     charge, beyond = [family.name for family in walled.families].index("charge"), walled.wrap.beyond
     assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
     walled.step()
-    remainder = walled.states[charge].count_remainder
-    column = walled.mask(tuple(map(tuple, screen["positions"])))
-    clicked = [line for line in lines if line["event"] == "click"]  # the seen lines stand beside
-    assert (remainder[column] == np.array([7] * 8 + [9])).all() and not clicked
-    assert remainder[23, 8, 0] == 3 * 6000 * 32768 // 2
+    clicked = [line for line in lines if line["event"] == "click"]
+    assert not clicked and not walled.quanta(charge)[beyond].any()  # nothing stands beyond the face
     for _ in range(23):
         walled.step()
         open_board.step()
         risen = [line for line in lines if line["tick"] == walled.tick and line["detector"] == "screen"]
-        risen = [line for line in risen if line["event"] == "click"]  # the seen lines beside them
         assert all(
-            all(port[0] == 0 for port in line["ports"]) and "node" not in line for line in risen
-        )  # no hop inside, no Node named
+            line["event"] == "click" and "node" not in line and "ports" not in line for line in risen
+        )  # the region's report alone, no Node named
         for state in walled.states:
             records = [r for r in (*state.parts, state.levels, state.second) if r is not None]
             assert not any(getattr(r, key)[beyond].any() for r in records for key in ("now", "before"))
-            assert not any(a[beyond].any() for a in (state.count, state.sense) if a is not None)
-        assert walled.books()["charge"]["balanced"]
+        assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].levels.now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].levels.now[:12]).sum()
     print(f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()},")
