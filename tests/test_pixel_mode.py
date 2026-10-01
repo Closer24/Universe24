@@ -94,11 +94,11 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     entry, (a, den) = mode["bodies"][0], mode["bodies"][0]["clock"]
     assert TOOL.agree(entry["carried"], QUANTA) and entry["count"] == QUANTA and entry["seed"] >= 1
     assert 2 * 4000 * den < a * 6000 and a < 2 * den  # above the band's top 2 x 4000 / 6000, below 2
-    profile, peak = entry["profile"], entry["amplitude"]
+    profile, peak, moving = entry["profile"], entry["amplitude"], entry["moving"]
     assert max(map(abs, profile)) == abs(profile[CHAIN // 2]) == peak > 0  # the peak at the centre
-    assert entry["period"][1] == 2 and entry["period"][0] >= 4 and "im_now" not in entry["moving"]
-    assert entry["moving"]["now"] == profile and len(entry["moving"]["before"]) == len(profile) == CHAIN
-    assert entry["pair"] == [4000, 6000] and entry["family"] == "matter"
+    assert entry["period"][1] == 2 and entry["period"][0] >= 4 and "im_now" not in moving
+    assert moving["now"] == profile and len(moving["before"]) == len(profile) == CHAIN
+    assert (entry["pair"], entry["family"]) == ([4000, 6000], "matter")
     assert mode["world_digest"] == input_digest(document)
     board = GameBoard(load_world(world))  # lawful, the family's two levels
     matter = board.states[[family.name for family in board.families].index("matter")].lines[0]

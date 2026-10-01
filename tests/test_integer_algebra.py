@@ -60,24 +60,17 @@ def forbidden_imports(tree: ast.AST) -> list[str]:
     """Every forbidden import, and every alias of `math`, `isqrt` or `integer_root` (an alias would hide a root, so aliasing them is itself a violation)."""
     found = []
     for node in ast.walk(tree):
+        if isinstance(node, ast.Import | ast.ImportFrom):
+            aliased = [a for a in node.names if a.asname not in (None, a.name)]
         if isinstance(node, ast.Import):
             found += [a.name for a in node.names if a.name.split(".")[0] in FORBIDDEN_IMPORTS]
-            found += [
-                f"math aliased as {a.asname}"
-                for a in node.names
-                if a.name == "math" and a.asname not in (None, "math")
-            ]
+            found += [f"math aliased as {a.asname}" for a in aliased if a.name == "math"]
         elif isinstance(node, ast.ImportFrom):
             module = (node.module or "").split(".")[0]
             found += [node.module or ""] * (module in FORBIDDEN_IMPORTS)
-            found += [
-                f"math.{a.name}" for a in node.names if module == "math" and a.name not in MATH_ALLOWED
-            ]
-            found += [
-                f"{a.name} aliased as {a.asname}"
-                for a in node.names
-                if a.name in ROOT_NAMES and a.asname not in (None, a.name)
-            ]
+            if module == "math":
+                found += [f"math.{a.name}" for a in node.names if a.name not in MATH_ALLOWED]
+            found += [f"{a.name} aliased as {a.asname}" for a in aliased if a.name in ROOT_NAMES]
         elif isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
             found += [f"math.{node.attr}"] * (node.value.id == "math" and node.attr not in MATH_ALLOWED)
     return found
@@ -176,13 +169,11 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     SOURCE_CHECKS.update({"x = 3 / 2\n": true_divisions, "x /= 2\n": true_divisions})
     IMPORT_CHECKS = ("import random\n", "from math import sqrt\n", "import math\ny = math.sqrt(4)\n")
     IMPORT_CHECKS += ("import math as m\n", "from math import isqrt as r\n")
-    NUMPY_CHECKS = ("y = np.sqrt(x)\n", "y = np.zeros(3, dtype=np.float64)\n")
-    NUMPY_CHECKS += ("y = x.astype(np.int32)\n",)
+    NUMPY_CHECKS = ("y = np.sqrt(x)\n", "y = np.zeros(3, dtype=np.float64)\n", "y = x.mean()\n")
     NUMPY_CHECKS += ("y = np.zeros(3, dtype=float)\n", "y = np.zeros(3)\n", "y = np.full(3, 0)\n")
-    NUMPY_CHECKS += ("y = np.array([1.5, 2])\n", "y = float(x)\n")
-    NUMPY_CHECKS += ("y = x.mean()\n", "y = x.astype(scale)\n")
+    NUMPY_CHECKS += ("y = np.array([1.5, 2])\n", "y = float(x)\n", "y = x.astype(np.int32)\n")
     NUMPY_CHECKS += ("y = x.astype(dtype)\n", "y = np.linalg.norm(x)\n", "y = np.linspace(0, 1, 3)\n")
-    NUMPY_CHECKS += ("y = np.random.default_rng()\n",)
+    NUMPY_CHECKS += ("y = np.random.default_rng()\n", "y = x.astype(scale)\n")
 
     PASSING = "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\no = np.full(2, None, dtype=object)\n"
     PASSING += "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(object)\nm = np.ones(3, dtype=bool)\n"

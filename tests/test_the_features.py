@@ -15,13 +15,13 @@ from event_universe.features.hold import hold
 from event_universe.features.read import content_of, edge_squared, guard, link_tension, stability_bound
 from event_universe.features.start import arrivals, rest
 from event_universe.features.write import carried
-from tests.laws import UNIVERSE
+from tests.laws import UNIVERSE, refused
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
 
 
 def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_name():
-    """No floor and no clamp: a hill of 150 on [800, 850] (the edge's square 2 den Gamma^2 div (den + num) between 10,150^2 and 10,151^2) takes the clock's square to 10,151^2 and the load refuses it naming the Node; 75 passes as it is, the content -75, and the read alone never refuses; the same hill on one Link's content alone is caught on that Port as an integer pace; for den = num the edge is p <= Gamma exactly: a content of -1 refuses by name, a content at Gamma div 2 at both ends of every Link (the Link's pace at 0) refuses on the lower side and Gamma div 2 - 1 passes. Three reads (2 a - 3 b + 4 c) sum per Node exactly; no reads give the integer 0 (the plain rule at Gamma); the Link's tension is SUM over the reads of (weight x (aa_i + aa_j) + 1) div 2, the mean of its two ends' parts, one division per read per Link: the ends 7 and 7 at the weight 1 give 7 and -7 and -7 give -7 (the Node's own part in a uniform level), the ends 7 and -7 give 0 and a second read of the ends 3 and 4 beside it 0 + 4. Forward the quotient and the remainder of numerator + r; back from the remainder after, the same quotient and the remainder before; forty intervals write forty times the numerator over the wall within one unit; a wall below 1 and a direction other than +1 or -1 are refused by name. A numerator of 10 over the wall 7 from the remainder 0 adds [1, 1, 2, 1, 2, 1, 2] over seven intervals, 10 in all with the remainder back at 0, and the inverse takes each increment off; a wall below 1 is refused by name."""
+    """No floor and no clamp: a hill of 150 on [800, 850] (the edge's square 2 den Gamma^2 div (den + num) between 10,150^2 and 10,151^2) takes the clock's square to 10,151^2 and the load refuses it naming the Node; 75 passes as it is, the content -75, and the read alone never refuses; the same hill on one Link's content alone is caught on that Port as an integer pace; for den = num the edge is p <= Gamma exactly: a content of -1 refuses by name, a content at Gamma div 2 at both ends of every Link (the Link's pace at 0) refuses on the lower side and Gamma div 2 - 1 passes; for a negative numerator the band's lowest mode is at wave number 0 and the edge's square is 2 den Gamma^2 div (den + |num|), 21 for the pair [-1, 2] at Gamma = 4, so the audit's witness (#1583 B2), the content -1 with the clock's square 26 and 2 cos omega = -23 / 8 at k = 0, is refused by name where the edge of den + num (64) admitted it, and the vacuum of that pair passes. Three reads (2 a - 3 b + 4 c) sum per Node exactly; no reads give the integer 0 (the plain rule at Gamma); the Link's tension is SUM over the reads of (weight x (aa_i + aa_j) + 1) div 2, the mean of its two ends' parts, one division per read per Link: the ends 7 and 7 at the weight 1 give 7 and -7 and -7 give -7 (the Node's own part in a uniform level), the ends 7 and -7 give 0 and a second read of the ends 3 and 4 beside it 0 + 4. Forward the quotient and the remainder of numerator + r; back from the remainder after, the same quotient and the remainder before; forty intervals forward and back exact at three walls; a wall below 1 and a direction other than +1 or -1 are refused by name. A numerator of 10 over the wall 7 from the remainder 0 adds [1, 1, 2, 1, 2, 1, 2] over seven intervals, 10 in all with the remainder back at 0, and the inverse takes each increment off; a wall below 1 is refused by name."""
     (left, right), edge = stability_bound((800, 850), GAMMA), edge_squared((800, 850), GAMMA)
     assert (left, right) == (1_650, GAMMA * GAMMA * 1_700) and edge == right // left
     assert 10_150**2 <= edge < 10_151**2 and GAMMA % 2 == 0
@@ -47,6 +47,12 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
         guard((1, 1), GAMMA, deep, links(deep), "light")
     deep[1, 1, 1] = GAMMA // 2 - 1
     guard((1, 1), GAMMA, deep, links(deep), "light")
+    assert (stability_bound((-1, 2), 4), edge_squared((-1, 2), 4)) == ((3, 64), 21)  # [-1, 2] at Gamma 4
+    witness = r"the clock\) squared is 26 at the Node \(0, 0, 0\) at load, above the stability edge's square 21"
+    refused(witness, guard, (-1, 2), 4, flat - 1, links(flat - 1), "quarks")  # the content -1 everywhere
+    guard(
+        (-1, 2), 4, flat, links(flat), "quarks"
+    )  # the pair's vacuum, 2 cos omega = -1 at k = 0, admitted
     shape, a = (2, 1, 1), np.array([[[5]], [[7]]], dtype=np.int64)
     b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
     assert content_of([(2, a), (-3, b), (4, c)]).tolist() == [[[10 - 3 + 12]], [[14 + 6]]]
@@ -56,17 +62,15 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert link_tension([(1, level, -level), (1, full, full + 1)]).ravel().tolist() == [4, 4]
     draw = np.random.default_rng(11)
     for wall in (1, 7, 12_345):
-        numerator = draw.integers(-(10**6), 10**6, (3, 2, 1))
-        carry, written = draw.integers(0, wall, (3, 2, 1)), np.zeros((3, 2, 1), dtype=np.int64)
-        start = carry.copy()
+        numerator, carry = draw.integers(-(10**6), 10**6, (3, 2, 1)), draw.integers(0, wall, (3, 2, 1))
         for _ in range(40):
             quotient, after = carried(numerator, wall, carry)
             assert np.array_equal(quotient * wall + after, numerator + carry) and (0 <= after).all()
-            assert (after < wall).all()
             back, before = carried(numerator, wall, after, -1)
-            assert np.array_equal(back, quotient) and np.array_equal(before, carry)
-            written, carry = written + quotient, after
-        assert np.array_equal(written * wall + carry, 40 * numerator + start)
+            assert (
+                (after < wall).all() and np.array_equal(back, quotient) and np.array_equal(before, carry)
+            )
+            carry = after
     with pytest.raises(ValueError, match="wall is from 1"):
         carried(5, 0, 0)
     with pytest.raises(ValueError, match="direction"):
