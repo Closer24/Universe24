@@ -1,45 +1,157 @@
 # Paper
 
 The project has one paper: `general_formula/main.tex`. There is no other
-manuscript.
+manuscript. It is written from the current documents on `main` alone: every
+formula is taken from `docs/ALGEBRA.md`, `docs/ENGINE.md` or
+`docs/HIGHLIGHTS.md` and cited by the name of its section or line, and every
+claim carries its mark (theorem, derived, computed, assumption, hypothesis or
+experiment, the last for a number the model does not fix with the experiment
+named, and fitted where an input was chosen with the result known) and its
+fence (GameBoard for a reading of the lattice, clicks for a formula of what a
+detector reports). Its title is "Universe24: the algebra of a reversible integer rule and the
+cube's group of 48 with its 24 rotations: exact theorems, the two slits and
+Bell's correlation under a declared credit, and the weak-field forms of a
+scalar pace"; the earlier title, the meeting of the past with the future, stands in
+the introduction as the statement of what a click is. The paper is kept to 30 pages and to what is safe: the rule, its exact
+properties, the measurement, the families, the bodies and their clusters, the
+weak-field forms with both potentials, and the two worlds derived and not run;
+the magnetic force, the sign of the charge, the hypotheses and the compact
+pixel's numbers stand only in the long version. The paper carries one
+result of a run of the implementation, the back-in-time gate's MATCH on the two
+slits' and Bell's worlds (Section 4.1 and Table 1), taken by the owner's word of
+2026-10-01 ("if there is a run of the reversal that looks good and agrees with
+nature, take it") as a computed diagnostic and no measurement; only a
+detector's click is a measurement, and a number read off the GameBoard is a
+diagnostic. Table 1 of the paper lists every result with its
+kind, its fence and what it rests on, and Table 2 the formulas of clicks with
+their statuses.
 
-- `general_formula/main.tex`: the paper, algebra alone. Every formula is
-  taken from `docs/ALGEBRA.md` and cited by the name of its section, and
-  every claim carries its mark: theorem, derived, computed, assumption or
-  hypothesis. The paper holds no run, no code and no experiment: the forms
-  of nature are derived from the line as predictions, each beside the form
-  it is compared with. Build it with `pdflatex main.tex` twice. It needs
-  only its two figures.
-- `general_formula/main.pdf`: the compiled paper.
-- `general_formula/figures/lattice.pdf` and `octahedron.pdf`: the two
-  figures, drawn from the definitions with no run by
-  `python paper/general_formula/octahedron.py --output paper/general_formula/figures`.
-- `general_formula/algebraic_runs.py`: the experiments run algebraically,
-  every number of the paper's table computed from the law's formulas on
-  declared worlds, by no run of the engine:
-  `python paper/general_formula/algebraic_runs.py`.
-- `general_formula/shape_check.py`: the check of the proposition on the
-  bound record's shape (the symmetry under the 48 and the decay rates),
-  a computation of the algebra on a lattice, by no run of the engine.
-- `general_formula/dimension_check.py`: the check of the scaling of one
-  hollow on a chain, a plane and a box, the bodies it allows by mass, a
-  computation of the algebra on a lattice, by no run of the engine.
-- `general_formula/stable_body_check.py`: the stable body theorem in
-  closed form, the two critical points of a body under the binding hollow
-  and gravity, the largest mass with a minimum, and the lattice check of
-  the two kernels' constants, by no run of the engine.
-- `general_formula/surplus_check.py`: the check of the law's line THE
-  SURPLUS LEAVES on a chain: the form's exact fall under a deepening well
-  at a kept count (the mass defect), the free part, a cloud breathing in a
-  static well with open and with closed faces, and the swing of the form
-  at the shell, by no run of the engine.
-- `general_formula/einstein_check.py`: the Einstein rows from Rule3's
-  coefficients by the geometric optics of a band: light's bending and a
-  massive orbit's periapsis advance with the Link's pace lowered once or
-  twice and with the clock's second order, by no run of the engine.
-- `general_formula/SUBMISSION.md`: the submission checklist for arXiv and
-  the journal.
-- `general_formula/COVER_LETTER.md`: the cover letter for the journal.
+- `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
+  twice; it needs only its figures.
+- `general_formula/main.pdf`: the compiled paper at the same commit.
+- `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
+  material, the algebraic steps of every derivation the paper states without
+  its proof, Derivations S.1 to S.25 in the order of the paper's sections,
+  cited in the paper as (S.n); submitted as supplementary material to the
+  journal (Online Resource 1, its title page carrying the article's title,
+  the journal, the author, the affiliation and the email, as Springer
+  asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
+  source.
+- `general_formula/figures/`: the figures, each drawn by a script from the
+  definitions or from the documents' rows, none from a run and none by a
+  generative tool, at its final size and included at it, 1:1 (at most 119 mm
+  wide, 8 pt sans-serif lettering, fonts embedded, no transparency), with an
+  EPS beside each PDF for the journal. The paper uses two: `lattice.pdf` by
+  `python paper/general_formula/octahedron.py` and `meeting.pdf` (the click as
+  the meeting of the future with the past, schematically) by
+  `python paper/general_formula/meeting.py`. The others, `octahedron.pdf`,
+  `band.pdf`, `channels.pdf` (by `band_and_channels.py`) and `branches.pdf`
+  (by `branches.py`), belong to the long version of the paper, which stays in
+  the branch's history (commit 5adef30), and are kept for it.
+- `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
+  coefficients by the geometric optics of the band (the bending, the perihelion),
+  by no run of the engine; the law cites it under `the paces`.
+- `general_formula/stable_body_check.py`: the stable body theorem in closed
+  form and the lattice check of the two kernels' constants; the law cites it
+  under `the functional and the dilation`.
+- `general_formula/surplus_check.py`: the form's exact fall under a deepening
+  well at a kept count, the free part and a cloud breathing in a static well;
+  the law cites it under `the surplus leaves`.
+- `general_formula/dimension_check.py`: the bodies one hollow allows on a
+  chain, a plane and a box, the check of `the hollow's dimension`.
 
-The experiments enter after their runs on the engine with blind pins, as a
-second part; this paper is the first, complete in itself.
+The paper carries no experiment: until a run has worked and the advisor and
+the reviewer have confirmed it, no click count of a run stands in it, the
+gate's MATCH above being the one run it reports; the
+implementation's two gates, the two slits and Bell, stand as the engine's
+worlds and the law's derivations of what each must give. The derivations of
+the bodies' clicks, the two potentials (the clock's share and Kepler's) and
+the magnetic force enter with their statuses as the mathematician derived
+them and the advisor checked them, never as results. The paper's outline, its
+chapters and its questions are on the issue "The paper: the outline, the
+chapters and the questions".
+
+## Submission rules and status
+
+The paper goes first to arXiv and then to Foundations of Physics
+(Springer). The rules below were read from the venues' published pages; the
+author checks the live pages before submitting. The order that avoids
+rework: the GitHub release and its Zenodo version DOI, then arXiv, then
+the journal.
+
+### Foundations of Physics
+
+- The abstract has 150 to 250 words, with no undefined abbreviation and no
+  unspecified reference; there are 4 to 6 keywords. Met.
+- A section "Statements and Declarations" stands before the references,
+  or the submission is returned as incomplete: funding, competing
+  interests, ethics and consent, data availability, author contributions.
+  Met; the system asks for the same at submission.
+- Data availability is stated (the Springer Nature policy). Met by the
+  Zenodo concept DOI; the version DOI is added at the release.
+- A large language model is never an author; its use is documented in the
+  method (the paragraph on how to read the paper) and in the statements; no figure is
+  made by a generative tool. Met.
+- A preprint is allowed; its DOI and licence are declared at submission,
+  and the preprint is updated with the journal's DOI after publication.
+- Review is single-blind, so the title page stays.
+- At most three levels of displayed headings; tables and figures are
+  cited in numerical order, every table has a caption, and a figure's
+  label reads "Fig." in bold. Met.
+- Artwork: vector figures with embedded fonts, lettering of 8 to 12 pt at
+  the final size, lines of at least 0.3 pt, at most 119 mm wide. Met.
+- The template `sn-jnl` is recommended and another class is accepted at
+  submission; the switch at acceptance changes the preamble alone.
+- The scope is the conceptual bases of modern physics; a desk rejection
+  follows overclaiming, missing references or a text that reads as
+  internal notes. Met: the text is in the author's voice with every term
+  defined, every result names what it rests on and whether an input was
+  fitted to it, and every named result has a published source checked
+  against its publisher's record.
+
+### arXiv
+
+- The metadata: the title, the author, the abstract as plain ASCII of at
+  most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
+  `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
+  "30 pages, 2 figures, 4 tables; supplementary material of 7 pages as an
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 249 words and about 1500
+  characters.
+- The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
+  supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
+  scripts; it compiles under pdflatex in a clean directory, and no `.bbl`
+  is needed since the references are in the document. Met.
+- The licence: CC BY 4.0, the author's choice, irrevocable for a version;
+  an announced paper is never removed.
+- The category: `quant-ph` as primary, since the paper's claim is about
+  measurement and Bell, with `gr-qc` (the weak-field forms) and `nlin.CG`
+  (a reversible cellular automaton) as cross-lists; the moderators may move
+  a foundational lattice model to `physics.gen-ph`, which is their call.
+- The field: foundations of physics, the journal's own scope; the paper is
+  not a general-relativity paper (its gravity stands against the tests at
+  the rule's own matter pair) and not a particle-physics paper, and should
+  not be sent to a journal of either.
+- Endorsement: since 21 January 2026 an institutional email alone does
+  not endorse; an author without accepted papers in the category needs a
+  personal endorser.
+- The paper is complete in English, refereeable and written to scholarly
+  standards, with references; the author answers for every word, and
+  unchecked text from a language model (an invented reference, a
+  chatbot's remark, a placeholder) brings a one-year ban.
+
+### Open before submission
+
+These need the author's decision or hand. The Statements and Declarations,
+the author contributions and the statement on the use of a language model
+are the author's own words and are submitted in the author's name: the
+author confirms each of them in the submission system, and the paper and
+the supplement are uploaded under the author's own accounts at arXiv and at
+the journal.
+
+1. arXiv: the account, an endorser, the licence, and whether an earlier
+   paper of the project was posted.
+2. The archive: a GitHub release of the paper's commit and its Zenodo
+   version DOI.
+3. The cover letter, written for this paper.
+4. The journal: an Editorial Manager account; the preprint declared at
+   submission.

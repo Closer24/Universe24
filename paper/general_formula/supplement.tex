@@ -1,0 +1,211 @@
+% Supplementary material to the paper: the algebraic steps of every derivation
+% the paper marks derived, in the order of the paper's sections. Standalone.
+\documentclass[10pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{microtype}
+\setlength{\emergencystretch}{1.5em}
+\usepackage{enumitem}\setlist{nosep}
+\renewcommand{\labelitemi}{$\bullet$}
+\hypersetup{colorlinks=true,allcolors=black}
+\newcommand{\num}{\mathrm{num}}
+\newcommand{\den}{\mathrm{den}}
+\newcommand{\anow}{a_{\mathrm{now}}}
+\newcommand{\abefore}{a_{\mathrm{before}}}
+\newcommand{\anext}{a_{\mathrm{next}}}
+\newcommand{\ddiv}{\ \mathrm{div}\ }
+\newcommand{\Wc}{W_c}
+\newtheorem{derivation}{Derivation}
+\renewcommand{\thederivation}{S.\arabic{derivation}}
+\theoremstyle{definition}
+
+\title{Supplementary material (Online Resource 1): the derivations\\ \large to the article ``Universe24: the algebra of a reversible integer rule and the cube's group of 48 with its 24 rotations: exact theorems, the two slits and Bell's correlation under a declared credit, and the weak-field forms of a scalar pace'', submitted to Foundations of Physics}
+\author{Alon Gonen\\
+\small Independent researcher, Haifa, Israel\\
+\small \texttt{alon@defounder.ai} \quad ORCID 0009-0008-2701-4599}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\noindent This supplement gives the algebraic steps of every result the paper marks \textsc{derived} or \textsc{computed} without a proof in its text, in the order of the paper's sections; the theorems proved in the paper are not repeated. Each derivation names its inputs from the paper, its steps, and, where a number was computed, the computation and its check. The notation is the paper's: Rule3's coefficients at a Node of clock pace $p_0$ and Link paces $p_a$ are $R_a = 2\,\num\,p_a^2$ on the two arrivals of the axis $a$, $S = 12\,\den\,\Gamma^2 - 12(\den - \num)\,p_0^2 - 4\,\num\sum_a p_a^2$ on the Node's own level, and the wall $w = 6\,\den\,\Gamma^2$; the content read at the Node is $x = c / \Gamma$, also written $U$; $g = (\den - \num) / \den = 1 - \cos\omega_0$.
+
+\section*{The path from Rule3 to each result}
+
+Every result of the paper is reached from Eq.~(1), Rule3's line with its one write and its three readings, by a chain of the derivations below; where a link of a chain is an assumption of the model, it is named in the chain, so that each path is closed in the algebra with its assumptions explicit.
+\begin{itemize}[leftmargin=1.4em]
+\item \emph{Light's speed and dispersion:} Eq.~(1) at the vacuum's pace $\to$ the band, S.1.
+\item \emph{Gravity as a slowed clock, light's index, the bending and Shapiro's delay:} Eq.~(1) $\to$ the paces, Eq.~(3) (the assumption: the level read once into the clock and twice into the Link) $\to$ the band at a pace, S.1 $\to$ the index, S.2 $\to$ the ray integral, Eq.~(15) and S.20.
+\item \emph{The redshift of a bound rotation:} Eq.~(1) $\to$ S.1 at $k = 0$ with the clock's pace $\to$ S.15.
+\item \emph{The fall, the Newtonian potential the orbits measure and the post-Newtonian parameters:} Eq.~(1) $\to$ S.1 at small $k$ $\to$ the inertia and the ray equations, S.18 $\to$ S.19.
+\item \emph{Lorentz's factor to the second order:} Eq.~(1) $\to$ the exact band of a free record, S.1 $\to$ the rotation at the moving centre, S.21, closed in the algebra for a free quantum of any family; for a body, the body's own band from its fixed point, S.13, computed by the generator, enters the same S.21.
+\item \emph{De Broglie's relation:} Eq.~(1) $\to$ S.1 $\to$ S.22.
+\item \emph{From the Node to us, bodies, clusters and the observer:} Eq.~(1) with the write $\to$ the fixed point and the functional, S.13 $\to$ the stability, Theorem 4 $\to$ the cloud and the free fall (computed) $\to$ the clicks between bodies, S.9, S.14 to S.17 $\to$ the clusters and the observer as a cluster (Section 7.5, with the assumption that the universe is bound).
+\item \emph{The count:} Eq.~(1) $\to$ the conserved form, Theorem 3 $\to$ the share, S.5 and S.6 $\to$ the invariant and the drift, S.14.
+\item \emph{Light born by the write, absorption and emission:} Eq.~(1)'s write line $\to$ the Wronskian, S.9 $\to$ the resonance, S.16.
+\item \emph{Bell:} Eq.~(1) linear $\to$ the parts' determinism (Section 9.4) $\to$ the declared credit (the assumption) $\to$ S.10.
+\item \emph{The two slits:} Eq.~(1) stepped in real arithmetic on the declared world $\to$ S.23 and the computed numbers of Section 9.
+\item \emph{The constants and the bounds:} Eq.~(1) $\to$ S.1 $\to$ S.24 (the Link); the field's rest $\to$ S.25 (Newton's constant); S.11 (the reach), S.12 (the two speeds).
+\end{itemize}
+
+\section*{The model (Section 3 of the paper)}
+
+\begin{derivation}[the band at a pace, Eq.~(4) of the paper]
+\emph{Inputs:} Rule3's line, $w\,\anext = \sum_a R_a(\mathrm{arr}_{+a} + \mathrm{arr}_{-a}) + S\,\anow - w\,\abefore$, with the remainders dropped (they are bounded by $w$ and do not move a plane wave's rotation). \emph{Steps:} for a plane wave $a_t(\mathbf x) = A\cos(\mathbf k \cdot \mathbf x - \omega t)$ the two arrivals of the axis $a$ sum to $2\cos k_a\,\anow$ and $\anext + \abefore = 2\cos\omega\,\anow$, so
+\[
+2\cos\omega = \frac{2\sum_a R_a\cos k_a + S}{w}
+= \frac{4\,\num\sum_a p_a^2\cos k_a + 12\,\den\,\Gamma^2 - 12(\den - \num)\,p_0^2 - 4\,\num\sum_a p_a^2}{6\,\den\,\Gamma^2},
+\]
+that is $\cos\omega = 1 - g\,(p_0 / \Gamma)^2 - \frac{\num}{3\,\den}\sum_a (p_a / \Gamma)^2(1 - \cos k_a)$, which is Eq.~(4). At the vacuum's pace, $p_0 = p_a = \Gamma$, this is $\cos\omega = \num / \den - \frac{\num}{3\,\den}\sum_a(1 - \cos k_a) = \frac{\num}{3\,\den}\sum_a\cos k_a$; at $k = 0$, $\cos\omega_0 = \num / \den$. \emph{Light's speed and dispersion:} for $[1, 1]$ along one axis $\cos\omega = (2 + \cos k) / 3$; expanding, $1 - \omega^2 / 2 + \omega^4 / 24 = 1 - k^2 / 6 + k^4 / 72$, so $\omega = (k / \sqrt 3)(1 - k^2 / 36 + \dots)$ and the group velocity $d\omega / dk = \sin k / (3\sin\omega) = (1 / \sqrt 3)(1 - k^2 / 12 + \dots)$: the speed $1 / \sqrt 3$ at long wavelength and the group speed falling as $1 - 0.083\,k^2$. \emph{Check:} at $k = 0.05$, $0.1$ and $0.2$ the exact $\sqrt 3\,d\omega / dk - 1$ over $k^2$ is $-0.0833$, $-0.0834$ and $-0.0835$.
+\end{derivation}
+
+\begin{derivation}[light's index at a content, Section 3.4]
+\emph{Inputs:} Eq.~(4) with the paces of Eq.~(3), $p_0^2 = \Gamma^2(1 - 2x + 2x^2)$ and $p_a = \Gamma(1 - 2x)$ for a reader at the weight $1$ and no tension. \emph{Steps:} for light, $g = 0$, so $\cos\omega = 1 - \frac{1}{3}(1 - 2x)^2\sum_a(1 - \cos k_a)$, and at long wavelength $\omega = (1 - 2x)\,|\mathbf k| / \sqrt 3$. Light's speed at the content $x$ is $(1 - 2x)$ times its vacuum speed, so its index is $n = 1 / (1 - 2x)$ and $n - 1 = 2x + O(x^2)$: the Link's pace reads the content twice, and so does light.
+\end{derivation}
+
+\begin{derivation}[the guard's edge and the horizon, Section 3.4]
+\emph{Inputs:} Eq.~(4). \emph{Steps:} the lowest rotation of the band is at $k_a = \pi$ on every axis, where $2\cos\omega = 2 - 2g\,(p_0 / \Gamma)^2 - \frac{4\,\num}{3\,\den}\sum_a(p_a / \Gamma)^2$; the recurrence $\anext + \abefore = 2\cos\omega\,\anow$ has no exponentially growing solution iff $|2\cos\omega| \le 2$; at the edges $\pm 2$ a linearly growing solution exists ($u_t = \pm t$ from $u_0 = 0$, $u_1 = 1$), which the guard admits, light's checkerboard mode sitting at $-2$; the bound below is stated for $\num \ge 0$, since for a negative numerator the lowest rotation is at $k = 0$. With $p_0 = p_a = p$ the condition $2\cos\omega \ge -2$ reads $(p / \Gamma)^2\,(2g + 4\,\num / \den) \le 4$, that is $(p / \Gamma)^2 \le 2\,\den / (\den + \num)$, so the edge is $P^2 = 2\,\den\,\Gamma^2 \ddiv (\den + \num)$, which is $\Gamma^2$ for light. \emph{The horizon:} $R_a = 2\,\num\,p_a^2$ vanishes where $p_a = \Gamma(1 - 2x) = 0$, at $x = 1 / 2$. The clock's pace there is $(p_0 / \Gamma)^2 = (1 - x)^2 + x^2$, whose minimum over $x$ is $1 / 2$ at $x = 1 / 2$: the clock never stops, and at the horizon it runs at $1 / \sqrt 2$ of the vacuum's rate. \emph{The frozen Node:} with all three $p_a = 0$ the line is $\anext + \abefore = (S / w)\,\anow$ with $S = 12\,\den\,\Gamma^2 - 12(\den - \num)\,\Gamma^2 / 2 = 6\,\Gamma^2(\den + \num)$, so $2\cos\omega = (\den + \num) / \den = 1 + \cos\omega_0$; $5 / 3$ at $[2, 3]$, a period of $10.7$ intervals.
+\end{derivation}
+
+\begin{derivation}[the cube's group of 48 and its action, Section 3.1]
+\emph{Inputs:} Rule3's line, whose six arrivals enter through the three axis coefficients $R_a = 2\,\num\,p_a^2$ with no coefficient naming an axis beyond its own pace; the readings $D$, $F$ and $W$ of Eq.~(1). \emph{The group:} a map of the six Ports onto themselves that keeps opposite Ports opposite is a signed permutation of the three axes, $\mathbf x \mapsto \mathbf P\mathbf x$ with $\mathbf P$ a permutation matrix with signs; there are $3! \cdot 2^3 = 48$ of them, the group $O_h$ of the cube, of which the $24$ with $\det\mathbf P = +1$ are the rotations and the other $24$ reflections and rotatory reflections; with the translations of the lattice they form the space group of the simple cubic lattice. \emph{Covariance:} let $\sigma$ be such a map and let the turned world carry the levels $a^\sigma_{\sigma(i)} = a_i$ and the paces $p^\sigma_{\sigma(a)}(\sigma(i)) = p_a(i)$. The arrivals of the axis $\sigma(a)$ at $\sigma(i)$ in the turned world are the arrivals of the axis $a$ at $i$ in the original, in either order, and $R_a$ is even in the axis's sign; so the sum $\sum_a R_a(\mathrm{arr}_{+a} + \mathrm{arr}_{-a})$ is the same number at $\sigma(i)$ as at $i$, $S$ and $w$ are the same, and the division gives the same quotient and remainder: the step commutes with $\sigma$, and a world turned by $\sigma$ runs as the turned world. A translation commutes for the same reason. \emph{The readings' kinds:} $D_i$ is one number at a Node with no axis in it, carried to $\sigma(i)$ unchanged, a scalar; the currents $F_{ij}$ are attached to the Links and carried with them, and the momentum density $P_a(i) = (F_{i, i+a} - F_{i, i-a}) / \num$ changes sign where $\sigma$ reverses the axis $a$ and is carried to the image axis otherwise, a vector; $W_i$ carries no axis and is carried unchanged, and it changes sign under the reflection of a plane record's sense, $\mathrm{im} \mapsto -\mathrm{im}$, a pseudoscalar in that sense; the click $(R, t)$ names a region and an interval and is carried to the turned region, a scalar. \emph{The time reversal:} exchanging $\mathrm{now}$ and $\mathrm{before}$ leaves $D_i = \mathrm{now}_i^2 - \mathrm{next}_i\,\mathrm{before}_i$ unchanged once $\mathrm{next}$ and $\mathrm{before}$ exchange their roles, since $D$ is symmetric in the pair $(\mathrm{next}, \mathrm{before})$; it reverses $F_{ij}$ and $W_i$, which are antisymmetric in $(\mathrm{now}, \mathrm{before})$; and it carries the step to its inverse by Theorem 1. \emph{The rational rotation:} the two parts of a plane record obey the same linear line with the same coefficients, so any linear combination of them does; the combination $(\mathrm{re}', \mathrm{im}') = ((p\,\mathrm{re} - q\,\mathrm{im}) / r, (q\,\mathrm{re} + p\,\mathrm{im}) / r)$ with $p^2 + q^2 = r^2$ carries solutions to solutions, and its Wronskian is $(p^2 + q^2) / r^2$ times the old one, unchanged. \emph{What is not in the group:} a boost changes the record's wave number and rotation together, which no permutation of Ports does, and a rotation by an angle other than the cube's carries a Node off the lattice; so neither is a symmetry, and Lorentz's factor, where the paper finds it, is a property of the clicks (Derivation S.21).
+\end{derivation}
+
+\section*{Exact properties (Section 4)}
+
+\begin{derivation}[the share's change is the currents, Eq.~(10)]
+\emph{Inputs:} the share at the vacuum's paces, $e_i = 3\,\den\,(\mathrm{now}_i^2 + \mathrm{before}_i^2) - \num\,\mathrm{now}_i\,S_6(\mathrm{before})_i$, with $S_6$ the six-neighbour sum; Rule3 at the vacuum's paces, where $S = 0$, $R_a = 2\,\num\,\Gamma^2$ and $w = 6\,\den\,\Gamma^2$, so that $3\,\den\,(\mathrm{next}_i + \mathrm{before}_i) = \num\,S_6(\mathrm{now})_i + \rho_i$ with $\rho_i = (r_i - r_i') / (2\Gamma^2)$ the remainders' term (from $6\,\den\,\Gamma^2(\mathrm{next} + \mathrm{before}) = 2\,\num\,\Gamma^2 S_6(\mathrm{now}) + r - r'$). \emph{Steps:} after the step the pair $(\mathrm{now}, \mathrm{before})$ becomes $(\mathrm{next}, \mathrm{now})$, so
+\[
+e_i' - e_i = 3\,\den\,(\mathrm{next}_i^2 - \mathrm{before}_i^2) - \num\,[\mathrm{next}_i\,S_6(\mathrm{now})_i - \mathrm{now}_i\,S_6(\mathrm{before})_i].
+\]
+With $3\,\den\,(\mathrm{next}_i + \mathrm{before}_i) = \num\,S_6(\mathrm{now})_i + \rho_i$ the first term is $(\mathrm{next}_i - \mathrm{before}_i)(\num\,S_6(\mathrm{now})_i + \rho_i)$, and the bracket cancels its $\mathrm{next}_i$ part:
+\begin{align*}
+e_i' - e_i &= \num\,[\mathrm{now}_i\,S_6(\mathrm{before})_i - \mathrm{before}_i\,S_6(\mathrm{now})_i] + (\mathrm{next}_i - \mathrm{before}_i)\,\rho_i\\
+&= \sum_{j \sim i} \num\,(\mathrm{now}_i\,\mathrm{before}_j - \mathrm{before}_i\,\mathrm{now}_j) + (\mathrm{next}_i - \mathrm{before}_i)\,\rho_i,
+\end{align*}
+the six currents $F_{ij}$ into the Node plus the remainder term. Where the three Link paces are equal but not $\Gamma$ the Node term carries the weight $3\Gamma^2 / \sum_a p_a^2$ and the same substitution goes through with $S \ne 0$, the $S$ term cancelling between $\mathrm{next}_i^2 - \mathrm{before}_i^2$ and the bracket as in the proof of Theorem 3; where they differ, the term that does not cancel is the anisotropy term of Eq.~(10), $\num\,\mathrm{now}_i\sum_a(1 - 3p_a^2 / P^2)\,\mathrm{arr}_a$ with $P^2 = \sum_a p_a^2$.
+\end{derivation}
+
+\begin{derivation}[the total share is non-negative, Section 4.4]
+\emph{Inputs:} $e_i$ as above on a closed or periodic GameBoard; $S_6$ symmetric with eigenvalues $2\sum_a\cos k_a \in [-6, 6]$. \emph{Steps:} $\sum_i e_i = 3\,\den\,(|\mathbf n|^2 + |\mathbf b|^2) - \num\,\mathbf n \cdot S_6\mathbf b$, and $|\mathbf n \cdot S_6\mathbf b| \le \|S_6\|\,|\mathbf n|\,|\mathbf b| \le 6\,|\mathbf n|\,|\mathbf b| \le 3(|\mathbf n|^2 + |\mathbf b|^2)$, so $\sum_i e_i \ge 3(\den - |\num|)(|\mathbf n|^2 + |\mathbf b|^2) \ge 0$ for $|\num| \le \den$. Equality needs $|\num| = \den$ and $\mathbf b$ an eigenvector of $S_6$ at $\pm 6$ with $\mathbf n = \pm\mathbf b$: the static uniform level of light, or on an even periodic board its checkerboard, $\mathrm{now} = (-1)^{x + y + z}$ with $\mathrm{before} = -\mathrm{now}$, whose shares are $0$. \emph{A Node's share:} at fixed $\mathrm{before}_i$ and $S_6(\mathrm{before})_i = s$, $e_i$ is a quadratic in $\mathrm{now}_i$ with the minimum $3\,\den\,\mathrm{before}_i^2 - \num^2 s^2 / (12\,\den)$, negative iff $|s| > 6(\den / \num)\,|\mathrm{before}_i|$; a plane record has $|s| / |\mathrm{before}_i| = 2\sum_a\cos k_a \le 6$ and is never negative, a lay's edge can be. \emph{A region:} pairing each boundary Link's cross term and bounding $2|\mathrm{now}_i\,\mathrm{before}_j| \le \mathrm{now}_i^2 + \mathrm{before}_j^2$, $\sum_{i \in R} e_i \ge 3(\den - \num)\sum_R(\mathrm{now}_i^2 + \mathrm{before}_i^2) - \frac{\num}{2}\sum_{\text{boundary Ports}}(\mathrm{now}_j^2 + \mathrm{before}_j^2)$ over the outside neighbours $j$: a region's share is negative at most by half a level-square per boundary Port in the current's units.
+\end{derivation}
+
+\begin{derivation}[the tension of a plane wave, Section 4.3]
+\emph{Inputs:} the stress reading $G_{aa}(i) = \mathrm{now}_i(\mathrm{now}_{i+2a} - \mathrm{now}_i) - \mathrm{now}_{i+a}(\mathrm{now}_{i+a} - \mathrm{now}_{i-a})$. \emph{Steps:} for $\mathrm{now}_i = b\cos(kx_i + \phi)$ along the axis, with $c_n = \cos(kx_i + nk + \phi)$, $G = b^2[c_0 c_2 - c_0^2 - c_1^2 + c_1 c_{-1}]$; the identities $c_0 c_2 = \frac{1}{2}[\cos(2kx + 2k + 2\phi) + \cos 2k]$, $c_1 c_{-1} = \frac{1}{2}[\cos(2kx + 2\phi) + \cos 2k]$, $c_0^2 = \frac{1}{2}[1 + \cos(2kx + 2\phi)]$ and $c_1^2 = \frac{1}{2}[1 + \cos(2kx + 2k + 2\phi)]$ cancel the phase-dependent parts, leaving $G = b^2(\cos 2k - 1) = -2\,b^2\sin^2 k$ at every Node and interval; so $T_{aa} = -\num\,(G(i) + G(i - a)) \ddiv 2 = 2\,\num\,b^2\sin^2 k$, and for a wave with the components $k_a$, $k_b$ the cross reading is $G_{ab} = -2\,b^2\sin k_a\sin k_b$.
+\end{derivation}
+
+\section*{Measurement (Section 5)}
+
+\begin{derivation}[the region's reading factor and the draw's scatter, Section 5.3]
+\emph{Steps:} a region of $n$ consecutive rows sums a fringe $\cos(2\pi y / \Lambda)$ to $\mathrm{Re}\sum_{y = 0}^{n - 1} e^{2\pi i y / \Lambda} = \mathrm{Re}\,\frac{1 - e^{2\pi i n / \Lambda}}{1 - e^{2\pi i / \Lambda}}$, whose modulus is $\sin(\pi n / \Lambda) / \sin(\pi / \Lambda)$; over $n$ rows the fringe's modulation is kept with the factor $\sin(\pi n / \Lambda) / (n\sin(\pi / \Lambda))$, $0.90$ at $n = 4$, $\Lambda = 16$, and $0$ at $\Lambda = n$. A frequency read as a click rate over $N$ intervals resolves $\Delta\omega \ge 2\pi / N$, the window's own resolution. $N$ quanta drawn independently by the shares $p_i$ give each region a binomial count, $Np_i \pm \sqrt{Np_i(1 - p_i)}$.
+\end{derivation}
+
+\begin{derivation}[the Wronskian's conservation and its current, Section 5.5]
+\emph{Inputs:} the two parts of a plane record step by the same symmetric read matrix $\mathbf M$ (the paper's Theorem 3), $\mathbf{re}_{\mathrm{next}} = \mathbf M\,\mathbf{re}_{\mathrm{now}} - \mathbf{re}_{\mathrm{before}}$ and the same for $\mathbf{im}$, with the weights $\mathbf D$ of the conserved form, $\mathbf D\mathbf M$ symmetric. \emph{Steps:} let $W = \mathbf{re}_{\mathrm{now}}^\top\mathbf D\,\mathbf{im}_{\mathrm{before}} - \mathbf{im}_{\mathrm{now}}^\top\mathbf D\,\mathbf{re}_{\mathrm{before}}$. After the step it is $\mathbf{re}_{\mathrm{next}}^\top\mathbf D\,\mathbf{im}_{\mathrm{now}} - \mathbf{im}_{\mathrm{next}}^\top\mathbf D\,\mathbf{re}_{\mathrm{now}} = (\mathbf M\mathbf{re}_{\mathrm{now}} - \mathbf{re}_{\mathrm{before}})^\top\mathbf D\,\mathbf{im}_{\mathrm{now}} - (\mathbf M\mathbf{im}_{\mathrm{now}} - \mathbf{im}_{\mathrm{before}})^\top\mathbf D\,\mathbf{re}_{\mathrm{now}}$; the $\mathbf M$ terms are $\mathbf{re}_{\mathrm{now}}^\top\mathbf M^\top\mathbf D\,\mathbf{im}_{\mathrm{now}} - \mathbf{im}_{\mathrm{now}}^\top\mathbf M^\top\mathbf D\,\mathbf{re}_{\mathrm{now}}$, which vanish since $\mathbf M^\top\mathbf D = \mathbf D\mathbf M$ is symmetric, and the rest is $W$ again. Per Node the same cancellation leaves the Link terms, $\num\,(\mathrm{im}_i\,\mathrm{re}_j - \mathrm{re}_i\,\mathrm{im}_j)$, the Wronskian's current. For the circular record $\mathrm{re} = A\cos\omega t$, $\mathrm{im} = eA\sin\omega t$ at one Node, $W = A\cos\omega t\cdot eA\sin\omega(t - 1) - eA\sin\omega t\cdot A\cos\omega(t - 1) = -eA^2\sin\omega$, constant. \emph{Domain:} the identity is the line's, $\mathbf{re}_{\mathrm{next}} = \mathbf M\,\mathbf{re}_{\mathrm{now}} - \mathbf{re}_{\mathrm{before}}$ exactly; the integer step's division adds $\epsilon = (r - r') / w$ to each part, and the remainder term $\epsilon_{\mathrm{re}}\,\mathrm{im}_{\mathrm{now}} - \epsilon_{\mathrm{im}}\,\mathrm{re}_{\mathrm{now}}$ is not zero in general: at the vacuum's pace $S = 0$ and $w\,\anext = 12\,\num\,\Gamma^2\anow - w\,\abefore$ for a uniform level, so at $[2, 3]$ the parts $(1, 3)$ with zeros before step to $(\lfloor 4 / 3\rfloor, \lfloor 4\rfloor) = (1, 4)$ and $W$ goes from $0$ to $1\cdot 3 - 4\cdot 1 = -1$; an exactly conserved integer charge is open.
+\end{derivation}
+
+\begin{derivation}[Bell's correlation under the declared credit, Section 5.7 and Section 9.4]
+\emph{Inputs:} two parts with the products $M_1$, $M_2$ of their amplitudes at the two sides' ports; the port coefficients $e(+) = (\cos a, \sin a)$, $e(-) = (-\sin a, \cos a)$ on side A and the same with $b$ on side B; the joint share $J(p, q) = \bigl(\sum_k e_k(p)\,e_k(q)\,M_k\bigr)^2$; $E = \sum_{p, q} s(p)s(q)\,J(p, q) / \sum_{p, q} J(p, q)$ with $s(\pm) = \pm 1$. \emph{Steps:} write $c_a = \cos a$, $s_a = \sin a$ and the same for $b$. The four sums are $M_1 c_a c_b + M_2 s_a s_b$, $M_1 s_a s_b + M_2 c_a c_b$, $-M_1 c_a s_b + M_2 s_a c_b$ and $-M_1 s_a c_b + M_2 c_a s_b$ for $(+, +)$, $(-, -)$, $(+, -)$ and $(-, +)$. Their squares sum to $(M_1^2 + M_2^2)(c_a^2 c_b^2 + s_a^2 s_b^2 + c_a^2 s_b^2 + s_a^2 c_b^2) = M_1^2 + M_2^2$, the cross terms cancelling in pairs. The signed sum is $(M_1^2 + M_2^2)(c_a^2 - s_a^2)(c_b^2 - s_b^2) + 8M_1M_2\,c_a s_a c_b s_b$, so
+\[
+E(a, b) = \cos 2a\cos 2b + \rho\sin 2a\sin 2b, \qquad \rho = \frac{2M_1M_2}{M_1^2 + M_2^2},
+\]
+and the marginal $P(A+) = [(M_1 c_a c_b + M_2 s_a s_b)^2 + (-M_1 c_a s_b + M_2 s_a c_b)^2] / (M_1^2 + M_2^2) = (M_1^2 c_a^2 + M_2^2 s_a^2) / (M_1^2 + M_2^2)$, independent of $b$. For equal parts $\rho = 1$ and $E = \cos 2(a - b)$. \emph{The integer settings:} with $e(+) = (p, q)$ and $e(-) = (-q, p)$ unnormalised and equal parts, $J(+, +) = J(-, -) = (p_Ap_B + q_Aq_B)^2$ and $J(+, -) = J(-, +) = (p_Aq_B - q_Ap_B)^2$, whose sum is $2(p_A^2 + q_A^2)(p_B^2 + q_B^2)$ by Lagrange's identity, so $E = [(p_Ap_B + q_Aq_B)^2 - (p_Aq_B - q_Ap_B)^2] / [(p_A^2 + q_A^2)(p_B^2 + q_B^2)]$, a rational number. At $a = (1, 0)$, $a' = (1, 1)$, $b = (12, 5)$, $b' = (5, 12)$: $E(a, b) = (144 - 25) / 169 = 119 / 169$, $E(a, b') = (25 - 144) / 169 = -119 / 169$, $E(a', b) = (17^2 - 7^2) / 338 = 120 / 169$, $E(a', b') = 120 / 169$, and $S = E(a, b) - E(a, b') + E(a', b) + E(a', b') = 478 / 169 = 2.8284$. At the ideal angles $S = \sqrt 2(1 + \rho)$; at the integer settings $S = (238 + 240\rho) / 169$. \emph{The two local credits:} with the pair's phase $\theta$ uniform, a credit of each side by the shares of its ports gives $E = \langle\cos 2(a - \theta)\cos 2(b - \theta)\rangle_\theta = \frac{1}{2}\cos 2(a - b)$ and $S = \sqrt 2$; a credit by the sign of the larger port gives $E = \langle\mathrm{sgn}\cos 2(a - \theta)\,\mathrm{sgn}\cos 2(b - \theta)\rangle_\theta = 1 - 4|a - b| / \pi$, the sawtooth, whose sum at the four settings is exactly $2$. \emph{Check:} the averages over $\theta$ on a grid of $2 \times 10^5$ points give $S = 1.4142$ and $2.0000$, and the contrast credit, which discards the pairs near the contrast's zero, $S = 2.8284$ at the efficiency $2 / \pi$.
+\end{derivation}
+
+\section*{The families (Section 6)}
+
+\begin{derivation}[the reach of a field with a gap, Section 6.4]
+\emph{Inputs:} a field's rest outside its source, the line with $\anext = \abefore = \anow = a$: $6\,\den\,a = \num\,S_6(a)$ at the vacuum's pace, that is $\num\,(S_6 - 6)\,a = 6(\den - \num)\,a$. \emph{Steps:} for a rest falling along one axis as $e^{-\kappa r}$ and uniform across, $S_6(a) = (2\cosh\kappa + 4)\,a$, so $6\,\den = \num\,(2\cosh\kappa + 4)$ and $\cosh\kappa = 3\,\den / \num - 2$. For $\num$ just under $\den$, $\cosh\kappa = 1 + \kappa^2 / 2 + \dots$, so $\kappa^2 = 6\,\den / \num - 6 = 6(\den - \num) / \num$ and the range is $R = 1 / \kappa = \sqrt{\num / (6(\den - \num))}$ Links: $20.00$ at $[2400, 2401]$; $[1, 2]$ has $\cosh\kappa = 4$, $e^{-\kappa} = 0.127$. The gap is also the rest rotation of the field's own travelling events, $\cos\omega_g = \num / \den$, $\omega_g^2 = 2(\den - \num) / \den + \dots$, whose Compton length at light's speed, $c / \omega_g = \sqrt{\den / (6(\den - \num))} = R\sqrt{\den / \num}$, is the range to the gap's first order: Yukawa's identity with no input.
+\end{derivation}
+
+\begin{derivation}[the two speeds, Section 6.5]
+\emph{Steps:} light at a content $x$ travels at $(1 - 2x) / \sqrt 3$ (Derivation S.2) and the massless field's own events, which read no content, at $1 / \sqrt 3$; over $L$ Links they arrive $L\sqrt 3\,[1 / (1 - 2x) - 1] = 2xL\sqrt 3 + O(x^2)$ intervals apart at long wavelength. GW170817 bounds the difference of the two speeds at $7 \times 10^{-16}$ of light's, so $2x < 7 \times 10^{-16}$ and the vacuum content over $\Gamma$ is below $10^{-15}$.
+\end{derivation}
+
+\section*{Bodies (Section 7)}
+
+\begin{derivation}[the bound body: the fixed point and the functional, Section 7.2]
+\emph{Inputs:} Rule3's line at the paces of the wells the record sources; a standing record $a_{i, t} = \phi_i\cos(\omega_b t)$ with one rotation at every Node; the clock's pace $(p_0 / \Gamma)^2 = 1 - 2\Phi_i / \Gamma + \dots$ at a well $\Phi_i$ (in levels). \emph{The fixed point's equation:} with the remainders dropped the line gives at every Node
+\[
+2\cos\omega_b\,\phi_i = \frac{1}{w}\Bigl[\sum_a R_a(i)\,(\phi_{i+a} + \phi_{i-a}) + S_i\,\phi_i\Bigr] = (\mathbf M\phi)_i,
+\]
+so $\phi$ is an eigenvector of the read matrix $\mathbf M$ and the standing record is its top mode, the maximiser of $\phi^\top\mathbf D\mathbf M\phi$ on the weighted sphere $\phi^\top\mathbf D\phi = 1$, $\mathbf D\mathbf M$ symmetric at Node-isotropic paces (S.5) (the generator of Section 7.1 iterates this read act). To the first order in $\Phi / \Gamma$, $S_i / w = 2 - 2g(1 - 2\Phi_i / \Gamma) - \frac{2\,\num}{3\,\den}\sum_a (p_a / \Gamma)^2 = 2\cos\omega_0 + 4g\Phi_i / \Gamma - \frac{2\,\num}{3\,\den}\sum_a(p_a / \Gamma)^2$ and $R_a / w = \frac{\num}{3\,\den}(p_a / \Gamma)^2$, so, keeping the band's term at the vacuum's Link pace (its product with the well is of the second order),
+\[
+(\mathbf M\phi)_i = 2\cos\omega_0\,\phi_i + \frac{4g}{\Gamma}\,\Phi_i\,\phi_i - \frac{\num}{3\,\den}\,(-\Delta^2\phi)_i, \qquad (-\Delta^2\phi)_i = 6\phi_i - \sum_a(\phi_{i+a} + \phi_{i-a}).
+\]
+\emph{The functional:} the well is sourced by the record itself, $\Phi_i = \sum_r \sigma_r (M / E_r)\sum_j G_{r, ij}\,\phi_j^2$ for a body of $M$ quanta with the counts $c_j = M\phi_j^2$. Let
+\[
+F[\phi] = \frac{\num}{3\,\den}\sum_{\text{Links}}(\phi_i - \phi_j)^2 - \frac{2g}{\Gamma}\sum_r \sigma_r\frac{M}{E_r}\sum_{ij}\phi_i^2\,G_{r, ij}\,\phi_j^2,
+\]
+the paper's Eq.~(12). Its gradient is $\partial F / \partial\phi_i = \frac{2\,\num}{3\,\den}(-\Delta^2\phi)_i - \frac{8g}{\Gamma}\Phi_i\phi_i$, using the symmetry of $G_r$ (each well counted once, Hartree's form, is what makes the factor $2g$ in $F$ give $4g$ in the gradient). So $\partial F / \partial\phi = 2\lambda\phi$ on the sphere is exactly the fixed point's equation with $\lambda = 2\cos\omega_0 - 2\cos\omega_b$: a body is a critical point of $F$ on the sphere, and the virial and the second variation along the dilation are Theorem 4 of the paper. \emph{The scaling powers:} under $\phi_R(\mathbf x) = R^{-d / 2}\phi(\mathbf x / R)$ the sum over Links of $(\phi_i - \phi_j)^2$ is the lattice form of $\int|\nabla\phi|^2$ and scales as $R^{-2}$, the pressure $K / R^2$; the well energy $\sum_{ij}\phi_i^2 G_{ij}\phi_j^2$ is $\int\!\!\int\rho(\mathbf x)G(\mathbf x - \mathbf y)\rho(\mathbf y)$ with $\rho = \phi^2$ of unit mass, which scales as $R^{-(d - 2)}$ for the massless kernel $G \sim 1 / r$ and for a screened kernel within its reach, and as $R^{-d}$ for a screened kernel beyond its reach, where $G$ acts as a point kernel and the energy is $\int\rho^2$: the powers $s_r$ of Theorem 4. \emph{The cloud's size:} for the massless kernel in three dimensions $F(R) = a / R^2 - c / R$ with $a = \frac{\num}{3\,\den}\int|\nabla\phi|^2$ and $c = \frac{2g}{\Gamma}\frac{M}{E}\int\!\!\int\frac{\rho\rho'}{4\pi|\mathbf x - \mathbf y|}\cdot 3$ at the unit size, so the minimum is at $R = 2a / c \propto \Gamma E / (gM)$: the radius falls as $1 / M$ and grows with $\Gamma$, the paper's $2\Gamma / C$ up to the shape's constants, which the generator computes.
+\end{derivation}
+
+\begin{derivation}[the invariant and the count's drift, Eq.~(13)]
+\emph{Inputs:} the one-Node line $a_{t+1} + a_{t-1} = 2\cos\omega_t\,a_t$ with $\omega_t$ changing slowly. \emph{Steps:} at fixed $\omega$ the form $D_t = a_t^2 - a_{t+1}a_{t-1} = a_t^2 + a_{t-1}^2 - 2\cos\omega\,a_t a_{t-1}$ is conserved and equals $A^2\sin^2\omega$ for $a_t = A\cos(\omega t + \phi)$; in the plane $(a_t, a_{t-1})$ the step is a linear map of determinant $1$ whose orbits are the ellipses $D = \text{const}$, of area $\pi D / \sin\omega$. A slow change of $\omega$ keeps the area enclosed by the orbit, the action of the map, so $D / \sin\omega = A^2\sin\omega$ is the adiabatic invariant: the discrete form of $E / \omega$. Equivalently, the ansatz $a_t = C\cos(\sum_{s \le t}\omega_s + \phi) / \sqrt{\sin\omega_t}$ satisfies the line to the first order in $\omega_{t+1} - \omega_t$. \emph{Check:} the recurrence stepped $20{,}000$ intervals with $\omega$ lowered from $0.841$ to $0.600$ keeps $D / \sin\omega$ within $4 \times 10^{-5}$ of its value while $D$ falls by a quarter. \emph{The drift:} the share at a Node in quanta is $(3\Gamma^2 / \sum_a p_a^2)\,A^2\sin^2\omega_b / T$ (Eq.~(9) at the Node's paces), so with $A^2\sin\omega_b$ fixed, $N(t_2) / N(t_1) = [\sin\omega_b(t_2) / \sin\omega_b(t_1)]\,[\sum_a p_a^2(t_1) / \sum_a p_a^2(t_2)]$, Eq.~(13). \emph{Planck's relation:} the share $A^2\sin^2\omega / T$ is the invariant $I = A^2\sin\omega / T$ times $\sin\omega$.
+\end{derivation}
+
+\begin{derivation}[the clock's click rate, Section 7.4]
+\emph{Inputs:} Eq.~(4) at $k = 0$ with $p_0^2 = \Gamma^2(1 - 2U + 2U^2)$: $\cos\omega(U) = 1 - g(1 - 2U + 2U^2) = \cos\omega_0 + 2gU - 2gU^2$. \emph{Steps:} to first order $d(\cos\omega) = 2g\,dU = -\sin\omega_0\,d\omega$, so $d\omega / \omega_0 = -[2g / (\omega_0\sin\omega_0)]\,dU = -f(\omega_0)\,dU$ with $f(\omega_0) = 2(1 - \cos\omega_0) / (\omega_0\sin\omega_0)$; $f = 1.063$ at $[2, 3]$, and as $\omega_0 \to 0$, $1 - \cos\omega_0 \to \omega_0^2 / 2$ and $f \to 1$, the rate $1 - U$ of the clock's pace alone. \emph{The light clock:} a packet between two faces $L$ Links apart at the content $x$ has the round trip $2L / v_g = 2L\sqrt 3 / (1 - 2x)$ (Derivation S.2), so its rate falls by $2x$.
+\end{derivation}
+
+\begin{derivation}[the resonance at twice the rotation, Section 7.4]
+\emph{Inputs:} the one-Node line with the rotation modulated by a light level $b_L\cos\omega_L t$ read into the content: $2\cos\omega(t) = 2 - 2g\,(1 - 2x + 2x^2)$ with $x = x_0 + b_L\cos(\omega_L t) / \Gamma$, so $d(2\cos\omega) / dx = 4g(1 - 2x)$ and $\anext + \abefore = [2\cos\omega_b + \epsilon\cos(\omega_L t + \vartheta)]\,\anow$ with $\epsilon = 4g(1 - 2x_0)\,b_L / \Gamma$. \emph{Steps:} write $a_t = \mathrm{Re}[z_t e^{i\omega_b t}]$ with $z$ slowly varying, $z_{t \pm 1} = z_t \pm z'$. Then $a_{t+1} + a_{t-1} = \mathrm{Re}[e^{i\omega_b t}(2\cos\omega_b\,z_t + 2i\sin\omega_b\,z')]$, and the product $\epsilon\cos(\omega_L t + \vartheta)\,\mathrm{Re}[z_t e^{i\omega_b t}]$ has, at $\omega_L = 2\omega_b$, the resonant part $(\epsilon / 2)\,\mathrm{Re}[\bar z_t e^{i\vartheta} e^{i\omega_b t}]$. Equating the slowly varying coefficients of $e^{i\omega_b t}$, $2i\sin\omega_b\,z' = (\epsilon / 2)\,e^{i\vartheta}\bar z$, so $z' = -i\epsilon e^{i\vartheta}\bar z / (4\sin\omega_b)$; this antilinear map $z \mapsto \lambda\bar z$ with $|\lambda| = \mu$ has the real eigenvalues $\pm\mu$ on two lines of the $z$ plane, so the amplitude grows as $e^{\mu t}$ along one line and the share, quadratic in the amplitude, as $e^{2\mu t}$. Detuned by $\Delta = \omega_L - 2\omega_b$, the substitution $z = \zeta e^{i\Delta t / 2}$ gives $\zeta' = -i(\Delta / 2)\zeta - i\mu e^{i\vartheta}\bar\zeta$, whose exponents are $\pm\sqrt{\mu^2 - \Delta^2 / 4}$: growth only for $|\Delta| < 2\mu$, a full width $\epsilon / \sin\omega_b$. \emph{Check:} the recurrence stepped $20{,}000$ intervals at $2\cos\omega_b = 1.4317$ and $\epsilon = 0.013$ grows at $0.004654$ per interval against the formula's $0.004654$. \emph{The two-mode line:} with two bound modes the same modulation multiplies $a_t = \mathrm{Re}[z_i e^{i\omega_i t} + z_j e^{i\omega_j t}]$, and its product with $\cos\omega_L t$ carries the frequencies $\omega_i \pm \omega_L$; the term resonant with the mode $j$ from the mode $i$ is at $\omega_L = \omega_j - \omega_i$, a transfer between the two modes, and the term that drives both from the conjugate of the other is at $\omega_L = \omega_i + \omega_j$, of which the one-mode case above is the degenerate case $i = j$ (at $i = j$ the difference line is $\omega_L = 0$, a static shift and no line). The transfer's rate is derived in the law's document and waits on a second check.
+\end{derivation}
+
+\begin{derivation}[the cross current of two standing records, Section 7.5]
+\emph{Inputs:} two standing records $a_t = A\cos(\omega_1 t + \alpha)$ and $b_t = B\cos(\omega_2 t + \beta)$ at the two ends of a Link. \emph{Steps:} the current $\num\,(a_t b_{t-1} - a_{t-1} b_t)$ is $\num AB[\cos(\omega_1 t + \alpha)\cos(\omega_2 t - \omega_2 + \beta) - \cos(\omega_1 t - \omega_1 + \alpha)\cos(\omega_2 t + \beta)]$, a sum of cosines of $(\omega_1 - \omega_2)t$ and $(\omega_1 + \omega_2)t$ with the constant parts $\frac{1}{2}\cos(\alpha - \beta + \omega_2)$ and $\frac{1}{2}\cos(\alpha - \beta - \omega_1)$ only when $\omega_1 = \omega_2$; for $\omega_1 \ne \omega_2$ its mean over the beat is $0$, so no quantum passes at the first order. \emph{The reach:} two bodies' tails are $a_1 e^{-\kappa d_1}$ and $a_2 e^{-\kappa d_2}$ at a Link $d = d_1 + d_2$ Links from the two centres, so the current there is of the order $a_1 a_2 e^{-\kappa d}$ per interval and falls under one quantum, $T$, at $d = \ln(a_1 a_2 / T) / \kappa$.
+\end{derivation}
+
+\section*{The forms of nature (Section 8)}
+
+\begin{derivation}[the fall and the Newtonian potential the orbits measure, Eq.~(14)]
+\emph{Inputs:} Eq.~(4) at a content $U$ for a reader at the weight $1$, $\cos\omega(k, U) = 1 - g(1 - 2U + 2U^2) - \frac{\num}{3\,\den}(1 - 2U)^2(1 - \cos k)$ along the motion. \emph{Steps:} at small $k$ and $U$, $\omega(k, U) = \omega_0(U) + k^2 / (2m^*)$ with the inertia $m^* = 3\,\den\sin\omega_0 / \num = 3\tan\omega_0$ (from $\sin\omega_0\,d\omega = \frac{\num}{3\,\den}\,k\,dk$), so the group velocity is $v = k / m^*$. The rays of $\omega(k, x)$ give $dk / dt = -\partial\omega / \partial x = -(d\omega_0 / dU)\,\nabla U = (2g / \sin\omega_0)\,|\nabla U|$ toward the well (Derivation S.15), so the acceleration is
+\[
+a = \frac{1}{m^*}\frac{dk}{dt} = \frac{\num}{3\,\den\sin\omega_0}\cdot\frac{2g}{\sin\omega_0}\,|\nabla U|
+= \frac{2\cos\omega_0(1 - \cos\omega_0)}{3\sin^2\omega_0}\,|\nabla U| = \frac{2\cos\omega_0}{3(1 + \cos\omega_0)}\,|\nabla U|,
+\]
+which in the gap $\epsilon = 1 - \cos\omega_0$ is $[(1 - \epsilon) / (3(1 - \epsilon / 2))]\,|\nabla U|$: $0.2667$ at $[2, 3]$ and $1 / 3$ as the gap closes. Nature's fall is $a = c^2\,|\nabla U_K|$ with $U_K = GM_K / (c^2 r)$ and $c^2 = 1 / 3$ here, so $U_K = [2\cos\omega_0 / (1 + \cos\omega_0)]\,U$, Eq.~(14), $0.800$ at $[2, 3]$.
+\end{derivation}
+
+\begin{derivation}[the post-Newtonian parameters against the Newtonian potential the orbits measure, Section 8]
+\emph{Inputs:} Eq.~(14), $U = \lambda\,U_K$ with $\lambda = (1 + \cos\omega_0) / (2\cos\omega_0) = (\den + \num) / (2\num)$; the three forms in $U$: the bending $4U_b$, the periapsis $6\pi U_1 / (a(1 - e^2))$, the redshift $f(\omega_0)\,U$. \emph{Steps:} the bending is $4\lambda U_{K, b} = 2(1 + \den / \num)\,U_{K, b}$, and the post-Newtonian bending is $(1 + \gamma)\,2GM / (c^2 b) = (1 + \gamma)\,2U_{K, b}$, so $1 + \gamma_K = 1 + \den / \num$, $\gamma_K = \den / \num$. The periapsis is $\lambda$ times Einstein's $6\pi U_{K, 1} / (a(1 - e^2))$, and the post-Newtonian advance is $(2 - \beta + 2\gamma) / 3$ of Einstein's, so $(2 - \beta_K + 2\,\den / \num) / 3 = (\den + \num) / (2\num)$, whence $\beta_K = 2 + 2\,\den / \num - 3(\den + \num) / (2\num) = (\den + \num) / (2\num)$. The redshift is $f(\omega_0)\lambda\,U_K$, and $f\lambda = \frac{2(1 - \cos\omega_0)}{\omega_0\sin\omega_0}\cdot\frac{1 + \cos\omega_0}{2\cos\omega_0} = \frac{\sin^2\omega_0}{\omega_0\sin\omega_0\cos\omega_0} = \frac{\tan\omega_0}{\omega_0}$, so $1 + \alpha_K = \tan\omega_0 / \omega_0$. At $[2, 3]$: $1.5$, $1.25$ and $1.329$; all three tend to $1$ as $\omega_0 \to 0$, and $\gamma_K - 1 < 2 \times 10^{-5}$ requires $\den / \num - 1 < 2 \times 10^{-5}$.
+\end{derivation}
+
+\begin{derivation}[Shapiro's delay, Section 8 (c)]
+\emph{Inputs:} light's index $n = 1 + 2U$ with $U = \mu / r$ (Derivation S.2). \emph{Steps:} the delay along a straight path at the impact parameter $b$ from $-x_1$ to $x_2$ is $\int(n - 1)\,dl / c = 2\sqrt 3\,\mu\int_{-x_1}^{x_2} dl / \sqrt{l^2 + b^2} = 2\sqrt 3\,\mu\,[\operatorname{arsinh}(x_2 / b) + \operatorname{arsinh}(x_1 / b)]$, which for $x_1, x_2 \gg b$ is $2\sqrt 3\,\mu\ln(4x_1x_2 / b^2)$: Shapiro's delay with $\gamma = 1$ in $U$, and with $\gamma_K$ against $U_K$ by the same factor as the bending, since the bending is the transverse derivative of the same integral.
+\end{derivation}
+
+\begin{derivation}[the moving clock to the second order, Section 8 (e)]
+\emph{Inputs:} the exact band of a free record of the pair $[\num, \den]$ along an axis, from Eq.~(1) at the vacuum's pace (S.1): $\cos\omega = c_0(2 + \cos k)$ with $c_0 = \num / (3\,\den)$, $\cos\omega_0 = 3c_0$; the rotation at the moving centre, $\Omega(k) = \omega(k) - k\,\omega'(k)$, the phase rate less $k$ times the group velocity $v = \omega'(k)$, which is what a clock carried by the packet reads. \emph{Steps:} write $s = \sin\omega_0$, $c = \cos\omega_0$ and $u = 1 - \cos k = k^2 / 2 - k^4 / 24 + \dots$; then $\cos\omega = c - c_0 u$, and with $\omega = \omega_0 + \delta$, $\cos\omega = c - s\delta - c\delta^2 / 2 + \dots$, so $s\delta + c\delta^2 / 2 = c_0 u$ and
+\[
+\omega(k) = \omega_0 + \alpha k^2 - \beta k^4 + O(k^6), \qquad \alpha = \frac{c_0}{2s}, \qquad \beta = \frac{c_0}{24s} + \frac{c\,c_0^2}{8s^3}.
+\]
+Hence $v = \omega' = 2\alpha k - 4\beta k^3$, $\Omega = \omega - k\omega' = \omega_0 - \alpha k^2 + 3\beta k^4$, and inverting $v(k)$, $k^2 = v^2 / (4\alpha^2) + \beta v^4 / (4\alpha^5) + \dots$, so
+\[
+\frac{\Omega}{\omega_0} = 1 - \frac{v^2}{4\alpha\omega_0} - \frac{\beta\,v^4}{16\alpha^4\omega_0} + O(v^6) = 1 - \frac{v^2}{2c_m^2} - \frac{2\omega_0}{\sin 2\omega_0}\cdot\frac{v^4}{8c_m^4} + O(v^6), \qquad c_m^2 = 2\alpha\omega_0 = \frac{c_0\,\omega_0}{s} = \frac{\omega_0}{3\tan\omega_0},
+\]
+where the fourth-order coefficient is $\beta / (16\alpha^4\omega_0)$ over Lorentz's $1 / (8c_m^4)$, which reduces with $3c_0 = c$ to $\omega_0(s / c + c / s) = \omega_0 / (\sin\omega_0\cos\omega_0) = 2\omega_0 / \sin 2\omega_0$. So the tick of a free quantum is Lorentz's factor at the family's own light speed $c_m$ to the second order in $v$ exactly, and at the fourth order it carries the factor $2\omega_0 / \sin 2\omega_0$, $1.69$ at $[2, 3]$ and $1$ as the gap closes: the full factor is reached only in the limit of a small rest rotation, the same limit in which the post-Newtonian parameters reach $1$ (S.19). \emph{Check:} with the exact band at $[2, 3]$ the residual $(f - 1 + v^2 / (2c_m^2)) / v^4$ at $v = 0.02$ is $-3.37$ against $1.6926$ times Lorentz's $-1.988$, that is $-3.365$. \emph{A body:} a bound body's centre moves on the body's own band, $\omega_b(k)$, whose rest rotation and curvature the generator computes from the fixed point (S.13); the same steps on that band give the same form with the body's $c_b^2 = \omega_b / m_b^*$, and the body's band is a computed input, not derived in closed form here.
+\end{derivation}
+
+\begin{derivation}[de Broglie's relation, Section 8 (h)]
+\emph{Steps:} from Derivation S.18, $v = k / m^*$ with $m^* = 3\tan\omega_0$ at the vacuum's content, so $k = m^* v = \omega_b v / c_m^2$ with $c_m^2 = \omega_0 / m^* = \omega_0 / (3\tan\omega_0)$, the family's own light speed; $0.2508$ at $[2, 3]$.
+\end{derivation}
+
+\section*{The two slits (Section 9)}
+
+\begin{derivation}[the fringe's spacing and the near-field minima, Section 9.2]
+\emph{Inputs:} the gaps centred at the rows $18$ and $30$, $d = 12$; the screen $L = 24$ Links from the wall; $\lambda = 8$. \emph{Steps:} the far-field spacing is $\lambda L / d = 16$ Links. In the near field the minima are where the two gaps' paths to the screen differ by half a wavelength, $\sqrt{L^2 + (y - 18)^2} - \sqrt{L^2 + (y - 30)^2} = \pm 4$, whose solutions are $y = 15.28$ and $y = 32.72$: the rows $15$ and $33$. \emph{Check:} the two roots computed from the equation above.
+\end{derivation}
+
+\section*{Calibration (Section 10)}
+
+\begin{derivation}[the Link's bound from light's dispersion, Section 10.2]
+\emph{Inputs:} the group speed $v_g = (1 / \sqrt 3)(1 - k^2 / 12)$ (Derivation S.1); the bound on a quadratic dependence of light's speed on its energy, MAGIC's $E_{\mathrm{QG}, 2}$ above about $6 \times 10^{10}$ GeV, that is $|\delta v / v| = (3 / 2)(E / E_{\mathrm{QG}, 2})^2 < 4.5 \times 10^{-16}$ at $E = 1$ TeV in the standard quadratic form. \emph{Steps:} $k^2 / 12 < 4.5 \times 10^{-16}$ gives $k < 7.3 \times 10^{-8}$ per Link at $1$ TeV; with $k = 2\pi\,\mathrm{Link} / \lambda$ and $\lambda = 1.24 \times 10^{-18}$ m at $1$ TeV, the Link is below $k\lambda / (2\pi) = 1.4 \times 10^{-26}$ m.
+\end{derivation}
+
+\begin{derivation}[Newton's constant as a reading, Eq.~(18)]
+\emph{Inputs:} the massless field's rest far from a static source of $s$ quanta per interval, $3s / (4\pi r)$ over the divisor $E_g$; the clock's share $U = c / \Gamma$. \emph{Steps:} $U = 3s / (4\pi r\,\Gamma E_g)$, and nature's $U = GM / (c^2 r)$ with $M = s$ in quanta and $c^2 = 1 / 3$ gives $G / c^2 = 3 / (4\pi\Gamma E_g)$, that is $G_{\mathrm{clock}} = 1 / (4\pi\Gamma E_g)$; Kepler's $G$, read from the orbits of matter, is $[2\cos\omega_0 / (1 + \cos\omega_0)]\,G_{\mathrm{clock}}$ by Eq.~(14).
+\end{derivation}
+
+\end{document}
