@@ -24,6 +24,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/faces.py": "the inner faces of the board: the Nodes declared beyond it, read as 0 through every Port",
     "loader/messages.py": "the messages, laid records of a family of quanta: their keys and their levels from the mode file",
     "loader/derived.py": "the families from the rule and the amplitude bound A derived from the width",
+    "loader/instrument.py": "the instrument's declaration on a detector, its setting and its parts' pattern, read by nothing in the engine",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act, its fixed point iterated and the form's term (ALGEBRA.md #the-line, #the-direction)",
     "core/integer.py": "the working bound, the host's signed integer range",
     "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port, the one shift across Nodes of the package",

@@ -1,9 +1,11 @@
-"""The helpers of the law's tests: a module loaded by its path (a tool), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`)."""
+"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`)."""
 
 import importlib.util
 import json
 import sys
 from pathlib import Path
+
+import pytest
 
 from event_universe.loader.derived import Row
 
@@ -29,9 +31,14 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")  # the generator
-BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")  # the back-in-time gate
-RUN = load_file("run_inputs", ROOT / "tools" / "run_inputs.py")  # the runner
+def refused(match: str, call, *args, **keys):  # type: ignore[no-untyped-def]
+    """The call on its arguments refused by name: a ValueError whose message matches `match`."""
+    with pytest.raises(ValueError, match=match):
+        call(*args, **keys)
+
+
+TOOLS = ("pixel_mode", "back_in_time", "run_inputs")  # the generator, the back-in-time gate, the runner
+TOOL, BACK, RUN = (load_file(name, ROOT / "tools" / f"{name}.py") for name in TOOLS)
 RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the look's reader
 
 

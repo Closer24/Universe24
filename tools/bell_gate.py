@@ -1,8 +1,9 @@
-"""Bell's gate, the joint-share reader (ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment). Four worlds, one per pair of settings, each with the pair family's two parts laid equal, one beam to each side and one declared region per side whose `basis` (p, q) is the side's setting; the engine reports per interval the parts' signed level sums at each region (the `parts` lines, the instrument's read). The reader pairs each part with the same part through the root: with e(+) = (p, q) and e(-) = (-q, p) the ports of a side and c_k = e_k(p_A) e_k(p_B) for a pair of ports, the joint share is accumulated over the window on both members of the level pair, J(p_A, p_B) = SUM over the window of (SUM_k c_k now_k^A now_k^B)^2 + (SUM_k c_k before_k^A before_k^B)^2 (the advisor, #1563 comment 5924731760; the mathematician's confirmation, #1572 comment 5925374010), a sum of squares and never negative, so no floor is needed; E(a, b) = (J_++ + J_-- - J_+- - J_-+) over the four summed, the marginal P(A+) = (J_++ + J_+-) over the four, S = E(a, b) - E(a, b') + E(a', b) + E(a', b'), every pair credited (the efficiency 1 by the draw's construction), one pair drawn per world by the shares with the declared seed (the click); every number an exact fraction. At equal parts E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) exactly, Lagrange's identity, 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12). Beside it, from the same reports, the local credits as the fence: by the parts' shares (each part's share credited alone, no sum before the square; 238 / 169), by the local sums (the square of each side's own sum; 240 / 169) and by the sign (each side's larger port, 0 at a tie; 2); and the diagnostics r (the parts' accumulated cross-side products' ratio M_2 / M_1) and rho = 2 M_1 M_2 / (M_1^2 + M_2^2), the mismatch's one number (E = cos 2a cos 2b + rho sin 2a sin 2b, the mathematician, #1572 comment 5925175652), GAMEBOARD, never in the blind and never in the credit. The settings, the window, the regions and the seed are the files'; the tool holds no number.
+"""Bell's gate and the GHZ gate, the joint-share reader (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment). Four worlds, one per combination of settings, each with one record of several parts laid equal (the pair family's two, the GHZ family's four), one beam to each side and one declared region per side whose `basis` (p, q) is the side's setting and whose `pattern`, one integer pair [alpha_k, beta_k] per part, says how each part reads it; the engine reports per interval the parts' signed level sums at each region (the `parts` lines, the instrument's read). The reader pairs each part with the same part through the root across every side: with e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p the ports of a side and c_k the product over the sides of e_k at their ports, the joint share of one combination of ports is accumulated over the window on both members of the level pair, J = SUM over the window of (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2 (the advisor, #1563 comment 5924731760; the mathematician, #1572 comments 5925374010 and 5927559738), a sum of squares and never negative, so no floor is needed; E_n is the sum of the shares signed by the product of the ports' signs over their sum (for two sides E(a, b) = (J_++ + J_-- - J_+- - J_-+) over the four), a side's marginal P(+) its + shares over the sum, a sub-correlation over a subset of the sides the same signed by that subset alone; the four worlds' E combined with the expectation's signs, S = E(a, b) - E(a, b') + E(a', b) + E(a', b') for two sides (CHSH) and M = E(a, b', c') + E(a', b, c') + E(a', b', c) - E(a, b, c) for three (Mermin); every combination of ports credited (the efficiency 1 by the draw's construction), one combination drawn per world by the shares with the declared seed (the click); every number an exact fraction. At equal parts the pair gives E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)), Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12); the GHZ patterns give the shares cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, E_3 = cos 2(a + b + c), M = -4 at x = (1, 0) and y = (1, 1). Beside it, from the same reports, the local credits as the fence: by the parts' shares (each part's share credited alone, no sum before the square; S = 238 / 169, M = -1), by the local sums (the product of the sides' own squared sums; S = 240 / 169, M = -1) and by the sign (each side's larger port, 0 at a tie; S = 2, M = -1), every one a product form, S at most 2 and |M| at most 2; and the diagnostics `mismatch` (the parts' accumulated cross-side products M_k, their ratios M_k / M_1 and the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2), the mismatch's one number, E = cos 2a cos 2b + rho sin 2a sin 2b for the pair, the mathematician, #1572 comment 5925175652), GAMEBOARD, never in the blind and never in the credit. The settings, the patterns, the window, the regions, the seed and the combination's signs are the files'; the tool holds no number; the builders derive the blind by the same algebra on equal parts (`at_equal_parts`).
 
 Run with PYTHONPATH set to the checkout's src:
 
     PYTHONPATH=src python tools/bell_gate.py --expectation examples/events/bell/expectation.json --outputs runs/bell/*.output.json
+    PYTHONPATH=src python tools/bell_gate.py --expectation examples/events/ghz/expectation.json --outputs runs/ghz/*.output.json
 """
 
 from __future__ import annotations
@@ -12,15 +13,20 @@ import json
 import random
 from collections.abc import Iterable
 from fractions import Fraction
+from itertools import combinations, product
+from math import prod
 from pathlib import Path
 from typing import Any
 
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
 
-PORTS = ("plus", "minus")  # a side's two ports, e(+) = (p, q) and e(-) = (-q, p)
+PORTS = ("plus", "minus")  # a side's two ports: the pattern at the setting (p, q) and at (-q, p)
 Levels = dict[int, list[list[int]]]  # per interval, per part [now, before] at a region
-Joint = dict[tuple[str, str], Fraction]  # per pair of ports (A's, B's) a share
+Ports = dict[str, tuple[int, ...]]  # a side's two ports, each one coefficient per part
+Key = tuple[str, ...]  # one port per side
+Joint = dict[Key, Fraction]  # per combination of ports a share
+Pattern = tuple[tuple[int, int], ...]  # per part [alpha_k, beta_k], as the loader reads it
 
 
 def pair(value: Fraction | None) -> list[int] | None:
@@ -28,12 +34,30 @@ def pair(value: Fraction | None) -> list[int] | None:
     return None if value is None else [value.numerator, value.denominator]
 
 
-def ports_of(basis: tuple[int, ...]) -> dict[str, tuple[int, ...]]:
-    """A side's two ports from its declared basis (p, q): e(+) = (p, q) and e(-) = (-q, p), orthogonal with equal norms; a basis of other than two coefficients is refused by name (the pair has two parts)."""
-    if len(basis) != 2:
-        raise ValueError(f"a side's basis is a pair (p, q) for the pair family's two parts, got {basis}")
+def fraction(value: object) -> Fraction | None:
+    """A file's [numerator, denominator] or whole number as a fraction; None where nothing was credited."""
+    if value is None:
+        return None
+    return Fraction(*value) if isinstance(value, list) else Fraction(int(str(value)))
+
+
+def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
+    """A side's two ports from its declared setting (p, q) and its parts' pattern [[alpha_k, beta_k], ...]: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, the - port the + port's with the setting turned a quarter (the pair's pattern [[1, 0], [0, 1]] gives (p, q) and (-q, p)); refused by name: a setting of other than two coefficients, no pattern, and two ports not orthogonal with equal norms, which is no instrument of two outcomes."""
+    if len(basis) != 2 or not pattern:
+        raise ValueError(
+            "a side declares its setting (p, q) as `basis` and one pair [alpha, beta] per part as "
+            f"`pattern`, got {basis} and {list(pattern)}"
+        )
     p, q = basis
-    return {PORTS[0]: (p, q), PORTS[1]: (-q, p)}
+    plus = tuple(alpha * p + beta * q for alpha, beta in pattern)
+    minus = tuple(beta * p - alpha * q for alpha, beta in pattern)
+    crossed = sum(u * v for u, v in zip(plus, minus, strict=True))
+    if crossed or sum(u * u for u in plus) != sum(v * v for v in minus):
+        raise ValueError(
+            f"the pattern {list(pattern)} at the setting {basis} gives the ports {plus} and {minus}, "
+            "not orthogonal with equal norms: no instrument of two outcomes"
+        )
+    return {PORTS[0]: plus, PORTS[1]: minus}
 
 
 def reports(
@@ -61,44 +85,43 @@ def ticks_of(*sides: Levels) -> list[int]:
     return sorted({tick for side in sides for tick in side})
 
 
-def joint(
-    a: Levels, b: Levels, e_a: dict[str, tuple[int, ...]], e_b: dict[str, tuple[int, ...]]
-) -> Joint:
-    """The joint shares of the four pairs of ports, accumulated over the window on both members of the level pair: per interval the cross-side sum over the parts of c_k a_k b_k, c_k = e_k(p_A) e_k(p_B), squared (the meeting's form: the parts paired by their label through the root, then summed, then squared)."""
-    parts = len(next(iter(e_a.values())))
-    found: Joint = {(x, y): Fraction(0) for x in PORTS for y in PORTS}
-    for tick in ticks_of(a, b):
-        here, there = at(a, tick, parts), at(b, tick, parts)
-        for x in PORTS:
-            for y in PORTS:
-                for member in range(2):
-                    amplitude = sum(
-                        e_a[x][k] * e_b[y][k] * here[k][member] * there[k][member] for k in range(parts)
+def keys_of(sides: int) -> list[Key]:
+    """Every combination of ports over the sides, 2^n keys, one port per side, the + port first."""
+    return list(product(PORTS, repeat=sides))
+
+
+def credited(sides: list[Levels], ports: list[Ports], joined: bool) -> Joint:
+    """The shares of every combination of ports accumulated over the window on both members of the level pair: per interval and member the parts' terms, each the product over the sides of e_k(port) times the part's sum there, summed over the parts and then squared where `joined` (the meeting: the parts paired by their label through the root across every side, then summed, then squared), or each squared alone (the local credit by the parts' shares)."""
+    parts = len(ports[0][PORTS[0]])
+    found = {key: Fraction(0) for key in keys_of(len(sides))}
+    for tick in ticks_of(*sides):
+        levels = [at(side, tick, parts) for side in sides]
+        for key in found:
+            for member in range(2):
+                terms = [
+                    prod(
+                        e[port][k] * now[k][member]
+                        for e, port, now in zip(ports, key, levels, strict=True)
                     )
-                    found[(x, y)] += amplitude * amplitude
+                    for k in range(parts)
+                ]
+                found[key] += sum(terms) ** 2 if joined else sum(term * term for term in terms)
     return found
 
 
-def parts_shares(
-    a: Levels, b: Levels, e_a: dict[str, tuple[int, ...]], e_b: dict[str, tuple[int, ...]]
-) -> Joint:
-    """The local credit by the parts' shares: each part's share credited alone, the squares summed over the parts and never the amplitudes (rho = 0, E = cos 2a cos 2b; 238 / 169 at the four settings)."""
-    parts = len(next(iter(e_a.values())))
-    found: Joint = {(x, y): Fraction(0) for x in PORTS for y in PORTS}
-    for tick in ticks_of(a, b):
-        here, there = at(a, tick, parts), at(b, tick, parts)
-        for x in PORTS:
-            for y in PORTS:
-                for k in range(parts):
-                    for member in range(2):
-                        term = e_a[x][k] * e_b[y][k] * here[k][member] * there[k][member]
-                        found[(x, y)] += term * term
-    return found
+def joint(sides: list[Levels], ports: list[Ports]) -> Joint:
+    """The meeting's joint shares: J = SUM over the window of (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports."""
+    return credited(sides, ports, True)
 
 
-def side_sums(levels: Levels, ports: dict[str, tuple[int, ...]]) -> dict[str, Fraction]:
+def parts_shares(sides: list[Levels], ports: list[Ports]) -> Joint:
+    """The local credit by the parts' shares: each part's share credited alone, the squares summed over the parts and never the amplitudes (rho = 0, E = cos 2a cos 2b for the pair; S = 238 / 169 and M = -1 at the gates' settings)."""
+    return credited(sides, ports, False)
+
+
+def side_sums(levels: Levels, ports: Ports) -> dict[str, Fraction]:
     """A side's local shares per port, the square of its own sum over the parts accumulated over the window on both members: what one detector could read alone."""
-    parts = len(next(iter(ports.values())))
+    parts = len(ports[PORTS[0]])
     found = {port: Fraction(0) for port in PORTS}
     for tick in ticks_of(levels):
         here = at(levels, tick, parts)
@@ -109,12 +132,13 @@ def side_sums(levels: Levels, ports: dict[str, tuple[int, ...]]) -> dict[str, Fr
     return found
 
 
-def local_sums(
-    a: Levels, b: Levels, e_a: dict[str, tuple[int, ...]], e_b: dict[str, tuple[int, ...]]
-) -> Joint:
-    """The local credit by the local sums: the product of the two sides' own shares per port (E = sin 2a sin 2b, a product form; 240 / 169 at the four settings)."""
-    here, there = side_sums(a, e_a), side_sums(b, e_b)
-    return {(x, y): here[x] * there[y] for x in PORTS for y in PORTS}
+def local_sums(sides: list[Levels], ports: list[Ports]) -> Joint:
+    """The local credit by the local sums: the product over the sides of each side's own share at its port, a product form (E = sin 2a sin 2b for the pair; S = 240 / 169 and M = -1 at the gates' settings)."""
+    own = [side_sums(side, e) for side, e in zip(sides, ports, strict=True)]
+    return {
+        key: prod((shares[port] for shares, port in zip(own, key, strict=True)), start=Fraction(1))
+        for key in keys_of(len(sides))
+    }
 
 
 def sign_of(shares: dict[str, Fraction]) -> int:
@@ -122,47 +146,98 @@ def sign_of(shares: dict[str, Fraction]) -> int:
     return (shares[PORTS[0]] > shares[PORTS[1]]) - (shares[PORTS[0]] < shares[PORTS[1]])
 
 
-def correlation(shares: Joint) -> Fraction | None:
-    """E from four shares, (++ and -- less +- and -+) over their sum; None where nothing was credited (every share 0)."""
+def by_the_sign(sides: list[Levels], ports: list[Ports]) -> Fraction:
+    """The local credit by the sign: the product over the sides of each side's larger port, +1 or -1, 0 where a side ties (S = 2 and M = -1 at the gates' settings)."""
+    return Fraction(prod(sign_of(side_sums(side, e)) for side, e in zip(sides, ports, strict=True)))
+
+
+def signed(key: Key, chosen: Iterable[int]) -> int:
+    """The product of the port signs of the sides chosen, +1 for the + port and -1 for the - port."""
+    return prod(1 if key[i] == PORTS[0] else -1 for i in chosen)
+
+
+def correlation(shares: Joint, chosen: Iterable[int] | None = None) -> Fraction | None:
+    """E over the sides chosen by their indexes (every side where None): the shares signed by the product of those sides' port signs over their sum, the other sides summed over; for two sides (J_++ + J_-- - J_+- - J_-+) over the four, for n sides E_n by the product of the n signs, for a subset a sub-correlation; None where nothing was credited."""
     total = sum(shares.values(), Fraction(0))
     if not total:
         return None
-    signed = sum((1 if x == y else -1) * value for (x, y), value in shares.items())
-    return signed / total
+    sides = tuple(range(len(next(iter(shares))))) if chosen is None else tuple(chosen)
+    return sum((signed(key, sides) * value for key, value in shares.items()), Fraction(0)) / total
 
 
-def marginal(shares: Joint) -> Fraction | None:
-    """A's marginal, the shares of its + port over the four; None where nothing was credited."""
+def marginal(shares: Joint, side: int = 0) -> Fraction | None:
+    """A side's marginal, the shares of its + port over the sum of all; None where nothing was credited."""
     total = sum(shares.values(), Fraction(0))
-    return None if not total else (shares[(PORTS[0], PORTS[0])] + shares[(PORTS[0], PORTS[1])]) / total
+    if not total:
+        return None
+    return sum((value for key, value in shares.items() if key[side] == PORTS[0]), Fraction(0)) / total
 
 
-def mismatch(a: Levels, b: Levels, parts: int) -> dict[str, Any]:
-    """The parts' mismatch, GAMEBOARD diagnostics from the same reports: M_k the cross-side products of the part k accumulated over the window on both members, r = M_2 / M_1 and rho = 2 M_1 M_2 / (M_1^2 + M_2^2) (1 and 1 for equal parts; S = (238 + 240 rho) / 169 at the four settings), and per side the parts' squares' ratio; None where a divisor is 0."""
+def credits_of(sides: list[Levels], ports: list[Ports]) -> dict[str, Any]:
+    """The reader's numbers from the sides' reports: the 2^n joint shares of the meeting, E_n, each side's marginal, every sub-correlation over two or more sides below n (keyed by the sides' indexes) and the three local credits' E, exact fractions."""
+    shares, count = joint(sides, ports), len(ports)
+    subsets = [chosen for size in range(2, count) for chosen in combinations(range(count), size)]
+    return {
+        "shares": shares,
+        "correlation": correlation(shares),
+        "marginals": [marginal(shares, side) for side in range(count)],
+        "sub_correlations": {chosen: correlation(shares, chosen) for chosen in subsets},
+        "by_the_parts_shares": correlation(parts_shares(sides, ports)),
+        "by_the_local_sums": correlation(local_sums(sides, ports)),
+        "by_the_sign": by_the_sign(sides, ports),
+    }
+
+
+def at_equal_parts(ports: list[Ports]) -> dict[str, Any]:
+    """The reader's numbers at equal parts, the blind's (the builders' call, before any run): every part of every side reading [1, 0] at one interval, so every ratio is the ports' alone, the parts' common factor cancelling."""
+    parts = len(ports[0][PORTS[0]])
+    return credits_of([{1: [[1, 0]] * parts} for _ in ports], ports)
+
+
+def written(credits: dict[str, Any], labels: list[str]) -> dict[str, Any]:
+    """The reader's numbers as the file writes them: every fraction [numerator, denominator], the joint shares J keyed by the ports' names in the sides' order (`joint`, as accumulated) and over their sum (`shares`, the probabilities of the combinations), the marginals and the sub-correlations by the sides' labels."""
+    joint_shares, subsets = credits["shares"], credits["sub_correlations"]
+    total = sum(joint_shares.values(), Fraction(0))
+    return {
+        "joint": {" ".join(key): pair(value) for key, value in joint_shares.items()},
+        "shares": {
+            " ".join(key): pair(value / total) if total else None for key, value in joint_shares.items()
+        },
+        "correlation": pair(credits["correlation"]),
+        "marginals": dict(zip(labels, map(pair, credits["marginals"]), strict=True)),
+        "sub_correlations": {
+            " ".join(labels[i] for i in chosen): pair(e) for chosen, e in subsets.items()
+        },
+        "by_the_parts_shares": pair(credits["by_the_parts_shares"]),
+        "by_the_local_sums": pair(credits["by_the_local_sums"]),
+        "by_the_sign": pair(credits["by_the_sign"]),
+    }
+
+
+def mismatch(sides: list[Levels], parts: int) -> dict[str, Any]:
+    """The parts' mismatch, GAMEBOARD diagnostics from the same reports: M_k the cross-side products of the part k (the product over the sides of its sums) accumulated over the window on both members, the ratios M_k / M_1 of the parts after the first (1 at equal parts; the pair's r), the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2) from the first two parts (S = (238 + 240 rho) / 169 at Bell's settings), and per side the parts' squares' ratios to the first part's; None where a divisor is 0."""
     products = [Fraction(0)] * parts
-    squares = {"a": [Fraction(0)] * parts, "b": [Fraction(0)] * parts}
-    for tick in ticks_of(a, b):
-        here, there = at(a, tick, parts), at(b, tick, parts)
+    squares = [[Fraction(0)] * parts for _ in sides]
+    for tick in ticks_of(*sides):
+        levels = [at(side, tick, parts) for side in sides]
         for k in range(parts):
             for member in range(2):
-                products[k] += here[k][member] * there[k][member]
-                squares["a"][k] += here[k][member] * here[k][member]
-                squares["b"][k] += there[k][member] * there[k][member]
+                products[k] += prod(now[k][member] for now in levels)
+                for own, now in zip(squares, levels, strict=True):
+                    own[k] += now[k][member] * now[k][member]
     first, second = products[0], products[1]
     norm = first * first + second * second
     return {
         "label": "GAMEBOARD",
         "products": [pair(value) for value in products],
-        "r": pair(second / first) if first else None,
+        "ratios": [pair(value / first) if first else None for value in products[1:]],
         "rho": pair(2 * first * second / norm) if norm else None,
-        "squares_ratio": {
-            side: pair(values[1] / values[0]) if values[0] else None for side, values in squares.items()
-        },
+        "squares_ratios": [[pair(v / own[0]) if own[0] else None for v in own[1:]] for own in squares],
     }
 
 
 def drawn(shares: Joint, seed: int) -> list[str] | None:
-    """One pair of ports drawn by the joint shares with the declared seed, the click of the world: the instrument's draw and no line of the law; None where nothing was credited."""
+    """One combination of ports drawn by the joint shares with the declared seed, the click of the world: the instrument's draw and no line of the law; None where nothing was credited."""
     keys = sorted(shares)
     weights = [shares[key] for key in keys]
     if not sum(weights):
@@ -174,59 +249,85 @@ def drawn(shares: Joint, seed: int) -> list[str] | None:
     return list(random.Random(seed).choices(keys, weights=whole, k=1)[0])
 
 
+def inflow_of(
+    lines: list[dict[str, object]], family: str, detector: str, window: tuple[int, int]
+) -> int:
+    """A region's `click` lines' inflows of one family summed over the window, in the current's units."""
+    return sum(
+        int(str(line["inflow"]))
+        for line in lines
+        if line.get("event") == "click"
+        and line.get("family") == family
+        and line.get("detector") == detector
+        and window[0] <= int(str(line["tick"])) <= window[1]
+    )
+
+
 def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, Any]) -> dict[str, Any]:
-    """One world's reading: its two sides' declared bases and ports, the joint shares, E and the marginal, the three local credits, the drawn pair, the mismatch and each side's inflow in quanta over the window."""
+    """One world's reading: its sides' declared settings and patterns, the 2^n joint shares, E_n, each side's marginal and every sub-correlation, the three local credits, the drawn combination, the mismatch and each side's inflow in quanta over the window; a pattern of other than the family's parts is refused by name."""
     loaded = load_world(world)
     family = next(f for f in loaded.families if f.name == expected["family"])
     window = (int(expected["window"][0]), int(expected["window"][1]))
-    sides = {}
-    for side, name in expected["sides"].items():
-        row = next(d for d in loaded.detectors if d.name == name)
-        sides[side] = (ports_of(row.basis), reports(lines, family.name, name, window), row.basis)
-    (e_a, a, basis_a), (e_b, b, basis_b) = sides["a"], sides["b"]
-    shares = joint(a, b, e_a, e_b)
-    by_shares, by_sums = parts_shares(a, b, e_a, e_b), local_sums(a, b, e_a, e_b)
-    outcome = sign_of(side_sums(a, e_a)) * sign_of(side_sums(b, e_b))
+    labels = list(expected["sides"])
+    rows = [next(d for d in loaded.detectors if d.name == expected["sides"][label]) for label in labels]
+    for row in rows:
+        if len(row.pattern) != family.parts:
+            raise ValueError(
+                f"detector {row.name!r} declares a pattern of {len(row.pattern)} parts, and the family "
+                f"{family.name!r} has {family.parts}"
+            )
+    ports = [ports_of(row.basis, row.pattern) for row in rows]
+    sides = [reports(lines, family.name, row.name, window) for row in rows]
     wall = count_wall(family, loaded.quantum_action)
-    seen = {
-        side: sum(
-            int(str(line["inflow"]))
-            for line in lines
-            if line.get("event") == "click"
-            and line.get("family") == family.name
-            and line.get("detector") == expected["sides"][side]
-            and window[0] <= int(str(line["tick"])) <= window[1]
-        )
-        for side in expected["sides"]
-    }
     return {
         "world": world.name,
-        "bases": {"a": list(basis_a), "b": list(basis_b)},
-        "intervals_reported": len(ticks_of(a, b)),
-        "shares": {f"{x} {y}": pair(value) for (x, y), value in shares.items()},
-        "correlation": pair(correlation(shares)),
-        "marginal": pair(marginal(shares)),
-        "drawn": drawn(shares, int(expected["seed"])),
-        "by_the_parts_shares": pair(correlation(by_shares)),
-        "by_the_local_sums": pair(correlation(by_sums)),
-        "by_the_sign": outcome,
-        "mismatch": mismatch(a, b, family.parts),
-        "quanta": {side: [value, wall] for side, value in seen.items()},
+        "bases": {label: list(row.basis) for label, row in zip(labels, rows, strict=True)},
+        "patterns": {
+            label: [list(part) for part in row.pattern] for label, row in zip(labels, rows, strict=True)
+        },
+        "intervals_reported": len(ticks_of(*sides)),
+        **written(credits_of(sides, ports), labels),
+        "drawn": drawn(joint(sides, ports), int(expected["seed"])),
+        "mismatch": mismatch(sides, family.parts),
+        "quanta": {
+            label: [inflow_of(lines, family.name, row.name, window), wall]
+            for label, row in zip(labels, rows, strict=True)
+        },
     }
 
 
-def chsh(values: Iterable[Fraction | None]) -> Fraction | None:
-    """S = E(a, b) - E(a, b') + E(a', b) + E(a', b') from the four worlds' E in the expectation's order; None where a world credited nothing."""
+def combination(values: Iterable[Fraction | None], signs: Iterable[int]) -> Fraction | None:
+    """The four worlds' E combined with the expectation's signs in its order: S = E(a, b) - E(a, b') + E(a', b) + E(a', b') for two sides (the signs 1, -1, 1, 1), M = E(a, b', c') + E(a', b, c') + E(a', b', c) - E(a, b, c) for three (1, 1, 1, -1); None where a world credited nothing."""
     found = list(values)
     if any(value is None for value in found):
         return None
-    first, second, third, fourth = found
-    assert first is not None and second is not None and third is not None and fourth is not None
-    return first - second + third + fourth
+    return sum((sign * value for sign, value in zip(signs, found, strict=True)), Fraction(0))
+
+
+def blind_of(
+    worlds: dict[str, list[Ports]], labels: list[str], name: str, signs: list[int]
+) -> dict[str, Any]:
+    """The blind's numbers from the settings alone, the builders' call before any run: per combination of settings (keyed in the expectation's order) the reader's numbers at equal parts, and the combination `name` (S or M) of the four E by the meeting and by each local credit with the signs given; the statuses are the builder's."""
+    numbers = {key: written(at_equal_parts(ports), labels) for key, ports in worlds.items()}
+
+    def combined(field: str) -> list[int] | None:
+        return pair(combination((fraction(numbers[key][field]) for key in worlds), signs))
+
+    found: dict[str, Any] = {
+        field: {key: numbers[key][field] for key in worlds}
+        for field in ("correlation", "marginals", "sub_correlations", "shares", "joint")
+    }
+    found[name] = combined("correlation")
+    for field in ("by_the_parts_shares", "by_the_local_sums", "by_the_sign"):
+        found[field] = {
+            "correlation": {key: numbers[key][field] for key in worlds},
+            name: combined(field),
+        }
+    return found
 
 
 def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
-    """The reading of the four worlds against the expectation: per world the shares, E, the marginal, the local credits, the drawn pair and the mismatch; S by the meeting and by each local credit; the blind row copied from the expectation."""
+    """The reading of the four worlds against the expectation: per world the shares, E_n, the marginals, the sub-correlations, the local credits, the drawn combination and the mismatch; the combination (S or M, named by the expectation with its signs) by the meeting and by each local credit; the blind row copied from the expectation."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     worlds: dict[str, dict[str, Any]] = {}
     for path in outputs:
@@ -234,23 +335,31 @@ def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
         name = Path(str(output["input"])).stem
         worlds[name] = one_world(expectation.with_name(f"{name}.json"), output["lines"], expected)
     ordered = [worlds[str(expected["runs"][key])] for key in expected["order"]]
+    label, signs = (
+        str(expected["combination"]["name"]),
+        [int(s) for s in expected["combination"]["signs"]],
+    )
+
+    def combined(field: str) -> list[int] | None:
+        return pair(combination((fraction(world[field]) for world in ordered), signs))
+
     return {
         "verdict": "DETECTOR",
         "rule": expected["rule"],
         "worlds": {name: worlds[name] for name in sorted(worlds)},
-        "correlation": {key: ordered[i]["correlation"] for i, key in enumerate(expected["order"])},
-        "S": pair(chsh(Fraction(*w["correlation"]) if w["correlation"] else None for w in ordered)),
-        "marginal": [w["marginal"] for w in ordered],
-        "S_by_the_parts_shares": pair(
-            chsh(
-                Fraction(*w["by_the_parts_shares"]) if w["by_the_parts_shares"] else None
-                for w in ordered
-            )
-        ),
-        "S_by_the_local_sums": pair(
-            chsh(Fraction(*w["by_the_local_sums"]) if w["by_the_local_sums"] else None for w in ordered)
-        ),
-        "S_by_the_sign": pair(chsh(Fraction(w["by_the_sign"]) for w in ordered)),
+        "correlation": {
+            key: world["correlation"] for key, world in zip(expected["order"], ordered, strict=True)
+        },
+        label: combined("correlation"),
+        "marginals": {
+            key: world["marginals"] for key, world in zip(expected["order"], ordered, strict=True)
+        },
+        "sub_correlations": {
+            key: world["sub_correlations"] for key, world in zip(expected["order"], ordered, strict=True)
+        },
+        f"{label}_by_the_parts_shares": combined("by_the_parts_shares"),
+        f"{label}_by_the_local_sums": combined("by_the_local_sums"),
+        f"{label}_by_the_sign": combined("by_the_sign"),
         "blind": expected["blind"],
     }
 

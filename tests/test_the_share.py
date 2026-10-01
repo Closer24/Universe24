@@ -29,8 +29,7 @@ def test_the_share_changes_by_the_currents_at_the_pair_the_step_started_from(pai
     (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
     draw = random.Random(3)
     now = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
-    before = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
-    ring = ring_sum(now)
+    before, ring = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)], ring_sum(now)
     nxt = [(read * ring[i] + self_coefficient * now[i] - wall * before[i]) / wall for i in range(NODES)]
 
     def share(a: list[Fraction], b: list[Fraction]) -> list[Fraction]:

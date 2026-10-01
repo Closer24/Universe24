@@ -9,16 +9,7 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
-from tests.laws import (
-    BACK,
-    CHAIN,
-    PACKET,
-    QUANTA,
-    SLIT,
-    TOOL,
-    chain_body_world,
-    slit_world,
-)
+from tests.laws import BACK, CHAIN, PACKET, QUANTA, SLIT, TOOL, chain_body_world, refused, slit_world
 
 
 def dense(levels: dict[str, list[int]]) -> np.ndarray:
@@ -42,22 +33,15 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         assert abs(before[x, 4, 0] - 1328 * e * math.cos(k * x + omega)) <= 1
     assert (now[:, 4:5, :] == now).all() and mode["count"] > 0 and not now[12].any()
     inner, at = "beyond the board's inner face", {"node": [12, 0, 0], "count": 50}
-    refused = [
-        (dict(detectors=[{"name": "d", "positions": [[12, 0, 0]]}]), f"{inner}: nothing stands there"),
-        (dict(messages=[{**PACKET, "wave": [0, 4]}]), "wave's p is 0"),
-        (dict(faces=[{"axis": "z", "at": 0, "gaps": []}]), "faces leave no Node"),
-        (
-            dict(messages=[{**PACKET, "whole": [5, 4, 0]}]),
-            r"whole names the Node \[5, 4, 0\]: no line of",
-        ),
-        (
-            dict(detectors=[{**screen, "name": "d", "remainder": {"charge": 1}}]),
-            "unknown key 'remainder'",
-        ),
-    ]  # the last: no count stands at a Node
-    for changes, reason in refused:
-        with pytest.raises(ValueError, match=reason):
-            load_world(slit_world(tmp_path, TOOL, "r", **changes))
+    for change, reason in (
+        ({"detectors": [{"name": "d", "positions": [[12, 0, 0]]}]}, f"{inner}: nothing stands there"),
+        ({"messages": [{**PACKET, "wave": [0, 4]}]}, "wave's p is 0"),
+        ({"faces": [{"axis": "z", "at": 0, "gaps": []}]}, "faces leave no Node"),
+        ({"messages": [{**PACKET, "whole": [5, 4, 0]}]}, r"whole names the Node \[5, 4, 0\]"),
+        ({"detectors": [{**screen, "remainder": {"charge": 1}}]}, "unknown key 'remainder'"),  # no count
+        ({"messages": [{**PACKET, "transverse": {"x": [1, 8]}}]}, "transverse holds the unknown key"),
+    ):
+        refused(reason, lambda c=change: load_world(slit_world(tmp_path, TOOL, "r", **c)))
     aslant = {**PACKET, "wave": [-1, 4], "phase": [1, 4], "transverse": {"y": [1, 8]}}
     turned = slit_world(tmp_path, TOOL, "turned", messages=[aslant])
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
@@ -68,19 +52,18 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         away = abs(x - 5)
         e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
         assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1
-    with pytest.raises(ValueError, match="transverse holds the unknown key 'x'"):
-        load_world(slit_world(tmp_path, TOOL, "bad", messages=[{**PACKET, "transverse": {"x": [1, 8]}}]))
-    with pytest.raises(ValueError, match=f"{inner}: nothing stands there"):
-        TOOL.pixel_mode({**SLIT, "measured": [{"family": "matter", "nodes": [at]}]})
+    refused(
+        f"{inner}: nothing stands there",
+        TOOL.pixel_mode,
+        {**SLIT, "measured": [{"family": "matter", "nodes": [at]}]},
+    )
     tampered = json.loads(mode_file.read_text(encoding="utf-8"))
     tampered["messages"][0]["moving"]["now"]["at"].append(12 * 9)
     tampered["messages"][0]["moving"]["now"]["values"].append(5)
     mode_file.write_text(json.dumps(tampered), encoding="utf-8")
-    with pytest.raises(ValueError, match=rf"is 5 at the Node \[12, 0, 0\], {inner}"):
-        load_world(path)
+    refused(f"is 5 at the Node \\[12, 0, 0\\], {inner}", lambda: load_world(path))
     mode_file.write_text(json.dumps({**tampered, "messages": [mode]}), encoding="utf-8")
-    lines: list[dict[str, object]] = []
-    walled = GameBoard(load_world(path), lines.append)
+    walled = GameBoard(load_world(path), (lines := []).append)
     open_board = GameBoard(load_world(slit_world(tmp_path, TOOL, "open", faces=[])))
     charge, beyond = [family.name for family in walled.families].index("charge"), walled.wrap.beyond
     assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
@@ -129,22 +112,17 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     rotating = json.loads(turned.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
     assert any(rotating["moving"]["im_now"]) and len(rotating["moving"]["im_before"]) == CHAIN
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    with pytest.raises(ValueError, match="is a cloud: its standing reading rotates"):
-        chain_body_world(tmp_path, TOOL, quanta=3)
-    with pytest.raises(ValueError, match="fits no cube on this board with a positive pace"):
-        chain_body_world(tmp_path, TOOL, quanta=6 * QUANTA)
+    refused("is a cloud: its standing reading rotates", chain_body_world, tmp_path, TOOL, quanta=3)
+    refused("fits no cube on this board", chain_body_world, tmp_path, TOOL, quanta=6 * QUANTA)
     document = json.loads(chain_body_world(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
-    with pytest.raises(ValueError, match="a sense is \\+1 or -1"):
-        TOOL.pixel_mode(json.loads(json.dumps(document)), [2])
+    refused("a sense is \\+1 or -1", lambda: TOOL.pixel_mode(json.loads(json.dumps(document)), [2]))
     at = (CHAIN // 2, CHAIN // 2 + 2)
     heavy = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 2 * QUANTA}]} for x in at]
-    with pytest.raises(ValueError, match="collapses: its wells reach the pace 0"):
-        TOOL.pixel_mode({**document, "measured": heavy})
+    refused("collapses: its wells reach the pace 0", TOOL.pixel_mode, {**document, "measured": heavy})
     small = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 20}]} for x in (20, 23)]
     with pytest.raises(ValueError, match=r"measured\[1\] and measured\[0\] share a Node"):
         TOOL.pixel_mode({**document, "measured": small})
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     del universe["integers"]["quantum_action"]
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    with pytest.raises(ValueError, match="declares no quantum_action T"):
-        TOOL.pixel_mode(document)
+    refused("declares no quantum_action T", lambda: TOOL.pixel_mode(document))

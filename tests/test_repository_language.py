@@ -3,8 +3,7 @@
 import subprocess
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-SUFFIXES = (".py", ".md", ".json", ".toml", ".txt", ".yml")
+ROOT, SUFFIXES = Path(__file__).resolve().parents[1], (".py", ".md", ".json", ".toml", ".txt", ".yml")
 
 
 def test_every_text_file_holds_ascii_letters_only():

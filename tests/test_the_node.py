@@ -20,18 +20,9 @@ from event_universe.loader.derived import HeldWrite, count_wall, family_rules, h
 from event_universe.loader.world import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests import laws
-from tests.laws import (
-    BACK,
-    CHAIN,
-    CHARGED,
-    PACKET,
-    RECORD,
-    RUN,
-    TOOL,
-    UNIVERSE,
-    real_row,
-    universe_beside,
-)
+from tests.laws import CHAIN, CHARGED, PACKET, UNIVERSE, real_row, refused, universe_beside
+
+TOOL, BACK, RUN, RECORD = laws.TOOL, laws.BACK, laws.RUN, laws.RECORD  # the tools loaded once
 
 WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
 ROWS = [
@@ -131,8 +122,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
             assert (int(parts[i].now[HERE]), int(after_write[i][HERE])) == (level, kept)
         # a row with a gap steps by the plain rule at its own pair, (3, 3, 3), 0, 12 at [3, 4], and its write
         # is the same act at its time part, back exact
-        stepped = node.step(part, node.part_rule(GAPPED), WRAP)
-        arrived = by_hand(part.now, HERE)
+        stepped, arrived = node.step(part, node.part_rule(GAPPED), WRAP), by_hand(part.now, HERE)
         sums = (arrived[0] + arrived[1], arrived[2] + arrived[3], arrived[4] + arrived[5])
         here = tuple(int(getattr(part, k)[HERE]) for k in KEYS)
         by_rule = rule3((3, 3, 3), sums, 0, 12, *here)
@@ -253,8 +243,9 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     envelope = [v * 4 // 5 for v in PROFILE[3:13]]
     for turn in (1, 0):
-        lines: list[dict[str, object]] = []
-        board = GameBoard(load_world(chain_world_by_hand(tmp_path, envelope, turn)), lines.append)
+        board = GameBoard(
+            load_world(chain_world_by_hand(tmp_path, envelope, turn)), (lines := []).append
+        )
         body = [f.name for f in board.families].index(CHARGED["name"] if turn else "matter")
         states = [board.states[body], board.states[CHARGE]]
         board.step()
@@ -284,8 +275,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         assert back["verdict"] == "MATCH" and back["intervals"] == 400
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = laws.chain_body_world(tmp_path, TOOL, at=(24, 36), senses=(1, 0), taker=True)
-    lines: list[dict[str, object]] = []
-    board = GameBoard(load_world(world), lines.append)
+    board = GameBoard(load_world(world), (lines := []).append)
     turning = [f.name for f in board.families].index(CHARGED["name"])
     matter, family = board.states[turning], board.families[turning]
     declared = [sum(row.counts) for row in board.world.bodies]
@@ -415,8 +405,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     at = [int(field.levels[centre + r, 0, 0]) for r in away]
     assert all(abs(at[i] - round(at[0] * math.exp(-kappa * r))) <= 1 for i, r in enumerate(away))
     walls = WALLS[NAMES.index("binding")]
-    state = node.empty_state(binding, shape, walls, np.int64)
-    levels = field.levels
+    state, levels = node.empty_state(binding, shape, walls, np.int64), field.levels
     state.lines[0] = node.Record(levels.copy(), levels.copy(), np.full(shape, field.remainder))
     kicked, drift = 0, 0
     for interval in range(200):
@@ -451,13 +440,12 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the GameBoard grows by 4 layers of zeros beyond a face whenever a level stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes, the books the same and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's share over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size, the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew. (h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, no count in it), the layers grown before its front stand at 60 and the gate says MATCH; light's share over a region is its field line. The frozen Node (ALGEBRA.md #the-count-is-the-records-share): the row set by hand to Gamma div 2 at three Nodes freezes light there, every pace 0, so the books read None for the share, its quanta and its drift with the frozen count 3 (a Node with one pace 0 keeps its share), the step runs and the region's field line reads None with the frozen Nodes' wells 0 as `well`."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     both = {"x": {"sides": ["low", "high"], "largest": 64, "layers": 4}}
-    for receding, reason in (
+    for face, reason in (
         ({"y": {**both["x"], "sides": ["high"]}}, "stands on an open or closed axis"),
         ({"x": {**both["x"], "largest": 16}}, "receding.x.largest must be an integer from 17"),
         ({"x": {**both["x"], "sides": ["far"]}}, "a side is one of"),
     ):
-        with pytest.raises(ValueError, match=reason):
-            load_world(light_alone_world(tmp_path, "refused", 16, 8, receding=receding))
+        refused(reason, lambda f=face: load_world(light_alone_world(tmp_path, "r", 16, 8, receding=f)))
     lines: list[dict[str, object]] = []
     world = light_alone_world(tmp_path, "grows", 16, 8, receding=both)
     grows, history = GameBoard(load_world(world), lines.append), []
@@ -494,15 +482,13 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
         rows = json.loads(json.dumps(universe["families"]))
         next(row for row in rows if row["name"] == name)["held"]["rest"] = 60
         (tmp_path / "u.json").write_text(json.dumps({**universe, "families": rows}), encoding="utf-8")
-        with pytest.raises(ValueError, match="only the massless"):
-            load_world(world)
+        refused("only the massless", lambda: load_world(world))
     universe["families"][0]["held"]["rest"] = 60
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     still = json.loads(world.read_text(encoding="utf-8"))
     still.update(messages=[], faces=[{"axis": "x", "at": 10, "gaps": []}], ticks=30)
     (tmp_path / "still.json").write_text(json.dumps(still), encoding="utf-8")
-    lines: list[dict[str, object]] = []
-    board = GameBoard(load_world(tmp_path / "still.json"), lines.append)
+    board = GameBoard(load_world(tmp_path / "still.json"), (lines := []).append)
     gravity = board.families.index(next(f for f in board.families if f.rest))
     time = board.states[gravity].lines[0]
     assert (time.now == 60).all() and (time.before == 60).all() and (time.remainder == 8999).all()

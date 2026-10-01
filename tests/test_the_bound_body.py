@@ -4,7 +4,6 @@ import json
 import math
 
 import numpy as np
-import pytest
 
 import event_universe.world_files as world_files
 from event_universe import node
@@ -15,10 +14,10 @@ from event_universe.game_board import GameBoard
 from event_universe.loader.derived import count_wall, held_write, turns
 from event_universe.loader.world import parse_world, universe_of
 from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, CHAIN, CHARGED, EVENTS, QUANTA, ROOT, TOOL, chain_body_world, load_file
+from tests.laws import BACK, CHAIN, CHARGED, EVENTS, QUANTA, TOOL, chain_body_world, load_file, refused
 
-DRIFT = load_file("body_drift", ROOT / "tools" / "body_drift.py")
-BUILD = load_file("like_build", ROOT / "examples" / "events" / "like_or_unlike" / "build_world.py")
+DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")
+BUILD = load_file("like_build", EVENTS / "like_or_unlike" / "build_world.py")
 LOOK = EVENTS / "like_or_unlike"
 GAMMA, T, PAIR, RING = 6000, 32768, (4000, 6000), Wrap(True, True, True)
 ONE, LEVEL, SHAPE = (1, 1, 1), 100_000, (24, 1, 1)
@@ -58,8 +57,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     world = chain_body_world(tmp_path, TOOL)
     board = GameBoard(load_world(world))
     index = [family.name for family in board.families].index("matter")
-    declared = board.mask(board.world.bodies[0].nodes)
-    quanta = board.quanta(index)[0]
+    declared, quanta = board.mask(board.world.bodies[0].nodes), board.quanta(index)[0]
     laid, wall = int(quanta[declared].sum()), count_wall(board.families[index], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(quanta[declared].min()) >= 1
     kept, drifts = [], []
@@ -74,15 +72,13 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     print(f"GAMEBOARD body {laid}: quanta {min(kept)}-{max(kept)}, drift {min(drifts)}-{max(drifts)}")
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0
     document = json.loads(world.read_text(encoding="utf-8"))
-    for line in document["measured"][0]["nodes"]:
-        line["count"] = 1  # far below the share
+    document["measured"][0]["nodes"] = [{**n, "count": 1} for n in document["measured"][0]["nodes"]]
     world.write_text(json.dumps(document), encoding="utf-8")
     mode_path = world.with_suffix(".mode.json")
     mode = json.loads(mode_path.read_text(encoding="utf-8"))
     mode["world_digest"] = input_digest(document)
     mode_path.write_text(json.dumps(mode), encoding="utf-8")
-    with pytest.raises(ValueError, match="a declared count is within the rounding of the share"):
-        GameBoard(load_world(world))
+    refused("a declared count is within the rounding of the share", lambda: GameBoard(load_world(world)))
 
     draw, shape = np.random.default_rng(1), (4, 3, 2)
     x, y = (draw.integers(-(10**6), 10**6, shape) for _ in range(2))
@@ -146,16 +142,14 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     paced = universe_of(universe)[1][charge]
     assert (paced.lines, paced.rotation) == (1, False)
     rows["charge"]["held"]["act"] = "sideways"
-    with pytest.raises(ValueError, match="act is one of"):
-        universe_of(universe)
+    refused("act is one of", universe_of, universe)
     del rows["charge"]["held"]["act"]
     rows["gravity"]["held"]["act"] = "rotation"
-    with pytest.raises(ValueError, match="a holder of the content, sourced by the form"):
-        universe_of(universe)
+    refused("a holder of the content, sourced by the form", universe_of, universe)
     for name in ("light", "pair"):
         gate = json.loads((EVENTS / f"{name}.json").read_text(encoding="utf-8"))["families"]
         assert not any("act" in row.get("held", {}) for row in gate)
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     bell = EVENTS / "bell" / "bell_a_b.json"
     document = json.loads(bell.read_text(encoding="utf-8"))
     files = world_files.world_files(document)

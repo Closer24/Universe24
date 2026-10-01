@@ -82,21 +82,17 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         total += self_coefficient * now - wall * before + remainder
         nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
         assert (nxt, carried) == (total // wall, total % wall) and 0 <= carried < wall
-        assert rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1) == (
-            before,
-            remainder,
-        )
+        back = rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1)
+        assert back == (before, remainder)
     generator, shape = np.random.default_rng(9), (4, 3, 2)
     num, den = np.full(shape, 800, dtype=np.int64), np.full(shape, 809, dtype=np.int64)
     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
-    *arrivals, now, before = (
-        generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(5)
-    )
+    arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(3))
+    now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
     reads, self_coefficient, wall = coefficients(num, den, GAMMA, content)
     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall
     nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
-    six_sum = arrivals[0] + arrivals[1] + arrivals[2]
-    total = reads[0] * six_sum + self_coefficient * now - wall * before + remainder
+    total = reads[0] * sum(arrivals) + self_coefficient * now - wall * before + remainder
     assert nxt.dtype == np.int64 and np.array_equal(nxt, np.floor_divide(total, wall))
     assert np.array_equal(carried, total - wall * nxt)
     back, remainder_back = rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1)
@@ -154,8 +150,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
 
 
 # The integers the law writes and the engine may hold: 0 and 1 (the identity and the direction, -1 the inverse and the hole), 2 (the halves: W_c div 2, the half wall, the axis contents' rounding, two levels), 3 (the three axes, 3 den) and 6 (the six Ports, 6 den); in Rule3's own line (core/rule3.py) also 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2.
-LAW_INTEGERS = frozenset({0, 1, 2, 3, 6})
-RULE_LINE_INTEGERS = frozenset({4, 12})
+LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 6}), frozenset({4, 12})
 
 
 def tools_on_the_arrays() -> list[Path]:
@@ -237,8 +232,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
     assert [f.name for f in dataclasses.fields(node.Record)] == ["now", "before", "remainder"]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    lines: list[dict[str, object]] = []
-    board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), lines.append)
+    board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), (lines := []).append)
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
@@ -298,8 +292,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         (tmp_path / f"{name}.json").write_text(json.dumps(text), encoding="utf-8")
     runs = []
     for path, kind in ((world, np.int64), (tmp_path / "chain_wide.json", object)):
-        lines: list[dict[str, object]] = []
-        board = GameBoard(load_world(path), lines.append)
+        board = GameBoard(load_world(path), (lines := []).append)
         for _ in range(40):
             board.step()
         arrays = [a for s in board.states for r in s.lines for a in (r.now, r.remainder)]
