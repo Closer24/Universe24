@@ -8,8 +8,10 @@ claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
-detector reports). Its title is "Universe24: the meeting of the past with the
-future, the least computation that shows nature's clicks". The paper is kept to 30 pages and to what is safe: the rule, its exact
+detector reports). Its title is "Universe24: a simple integer rule and the group of order 24
+give the two slits, Bell's correlation and the weak-field forms of gravity as
+clicks"; the earlier title, the meeting of the past with the future, stands in
+the introduction as the statement of what a click is. The paper is kept to 30 pages and to what is safe: the rule, its exact
 properties, the measurement, the families, the bodies and their clusters, the
 weak-field forms with both potentials, and the two worlds derived and not run;
 the magnetic force, the sign of the charge, the hypotheses and the compact
