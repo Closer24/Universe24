@@ -28,7 +28,10 @@ their statuses.
   material, the algebraic steps of every derivation the paper states without
   its proof, Derivations S.1 to S.25 in the order of the paper's sections,
   cited in the paper as (S.n); submitted as supplementary material to the
-  journal and as an ancillary file to arXiv.
+  journal (Online Resource 1, its title page carrying the article's title,
+  the journal, the author, the affiliation and the email, as Springer
+  asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
+  source.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, none from a run and none by a
   generative tool, at its final size and included at it, 1:1 (at most 119 mm
@@ -105,13 +108,13 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "30 pages, 2 figures, 4 tables; code and documents at
-  doi:10.5281/zenodo.22738746". The abstract has 246 words and 1426
+  "30 pages, 2 figures, 4 tables; supplementary material of 7 pages as an
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 246 words and 1426
   characters.
-- The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
-  the EPS files and the scripts; it compiles under pdflatex in a clean
-  directory, and no `.bbl` is needed since the references are in the
-  document. Met.
+- The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
+  supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
+  scripts; it compiles under pdflatex in a clean directory, and no `.bbl`
+  is needed since the references are in the document. Met.
 - The licence: CC BY 4.0, the author's choice, irrevocable for a version;
   an announced paper is never removed.
 - The category: `quant-ph` as primary, since the paper's claim is about
@@ -132,7 +135,12 @@ the journal.
 
 ### Open before submission
 
-These need the author's decision or hand:
+These need the author's decision or hand. The Statements and Declarations,
+the author contributions and the statement on the use of a language model
+are the author's own words and are submitted in the author's name: the
+author confirms each of them in the submission system, and the paper and
+the supplement are uploaded under the author's own accounts at arXiv and at
+the journal.
 
 1. arXiv: the account, an endorser, the licence, and whether an earlier
    paper of the project was posted.
