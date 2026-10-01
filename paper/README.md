@@ -9,7 +9,11 @@ experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
 detector reports). Its title is "Universe24: the meeting of the past with the
-future, the least computation that shows nature's clicks". The paper holds no
+future, the least computation that shows nature's clicks". The paper is kept to 30 pages and to what is safe: the rule, its exact
+properties, the measurement, the families, the bodies and their clusters, the
+weak-field forms with both potentials, and the two worlds derived and not run;
+the magnetic force, the sign of the charge, the hypotheses and the compact
+pixel's numbers stand only in the long version. The paper holds no
 run of its own; only a detector's click is a measurement, and a number read off
 the GameBoard is a diagnostic. Table 1 of the paper lists every result with its
 kind, its fence and what it rests on, and Table 2 the formulas of clicks with
@@ -22,13 +26,13 @@ their statuses.
   definitions or from the documents' rows, none from a run and none by a
   generative tool, at its final size and included at it, 1:1 (at most 119 mm
   wide, 8 pt sans-serif lettering, fonts embedded, no transparency), with an
-  EPS beside each PDF for the journal: `lattice.pdf` and `octahedron.pdf` by
-  `python paper/general_formula/octahedron.py`, `band.pdf` and `channels.pdf`
-  by `python paper/general_formula/band_and_channels.py`, `branches.pdf` (the three
-  masses along the two branches, from the rows of the law) by
-  `python paper/general_formula/branches.py`, and `meeting.pdf` (the click as the
-  meeting of the future with the past, schematically, from the definitions) by
-  `python paper/general_formula/meeting.py`.
+  EPS beside each PDF for the journal. The paper uses two: `lattice.pdf` by
+  `python paper/general_formula/octahedron.py` and `meeting.pdf` (the click as
+  the meeting of the future with the past, schematically) by
+  `python paper/general_formula/meeting.py`. The others, `octahedron.pdf`,
+  `band.pdf`, `channels.pdf` (by `band_and_channels.py`) and `branches.pdf`
+  (by `branches.py`), belong to the long version of the paper, which stays in
+  the branch's history (commit 5adef30), and are kept for it.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.
@@ -94,7 +98,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "54 pages, 6 figures, 7 tables; code and documents at
+  "30 pages, 2 figures, 4 tables; code and documents at
   doi:10.5281/zenodo.22738746". The abstract has 249 words and 1438
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
