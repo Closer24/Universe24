@@ -1,7 +1,5 @@
 """The generator is Rule3 (ALGEBRA.md #the-generator): the generator lays a body as the fixed point of the row it reads, its declared count the weighted share its record lays, a body rotating in a sense beside its record, refusing a cloud, a body that fits no positive pace, a universe without T and two bodies sharing a region by name; it lays a message as the wave under its envelope by the rotation act, and an inner face of the board (the face rule inside it) reflects the wave but for its gap, the gate MATCH."""
 
-from __future__ import annotations
-
 import json
 import math
 
@@ -11,9 +9,16 @@ import pytest
 import event_universe.world_files as world_files
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
-from tests.laws import CHAIN, PACKET, QUANTA, ROOT, SLIT, chain_body_world, load_file, slit_world
-
-TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
+from tests.laws import (
+    BACK,
+    CHAIN,
+    PACKET,
+    QUANTA,
+    SLIT,
+    TOOL,
+    chain_body_world,
+    slit_world,
+)
 
 
 def dense(levels: dict[str, list[int]]) -> np.ndarray:
@@ -21,11 +26,8 @@ def dense(levels: dict[str, list[int]]) -> np.ndarray:
     return np.bincount(levels["at"], levels["values"], 24 * 9).astype(np.int64).reshape(24, 9, 1)
 
 
-BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
-
-
 def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(tmp_path, monkeypatch):
-    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node (no line lays a count whole: the count is read); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
+    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node (no line lays a count whole: the count is read); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run. One Node declaring 50 quanta on the chain becomes a body of several Nodes, each carrying a quantum, their counts within the rounding of 50; its standing reading rotates above the matter band's top and below 2, its peak at the centre, its period read whole; the mode file stands for the world by its digest and the GameBoard loads its levels as written; a body laid with a sense carries its second level pair beside them, a neutral one none. Three quanta are a cloud, below the window of mass (ten too, under the binding holder's range of 20 Links); three hundred fit no cube with a positive pace on the chain, above it; two bodies of a hundred two Links apart collapse, their wells reaching the pace 0; two bodies of twenty whose regions share a Node, a universe without T and a sense other than +1 or -1 are refused by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
     path = slit_world(tmp_path, TOOL, detectors=[screen])
@@ -40,17 +42,22 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         assert abs(before[x, 4, 0] - 1328 * e * math.cos(k * x + omega)) <= 1
     assert (now[:, 4:5, :] == now).all() and mode["count"] > 0 and not now[12].any()
     inner, at = "beyond the board's inner face", {"node": [12, 0, 0], "count": 50}
-    with pytest.raises(ValueError, match=f"{inner}: nothing stands there"):
-        load_world(slit_world(tmp_path, TOOL, "r", detectors=[{"name": "d", "positions": [[12, 0, 0]]}]))
-    with pytest.raises(ValueError, match="wave's p is 0"):
-        load_world(slit_world(tmp_path, TOOL, "r", messages=[{**PACKET, "wave": [0, 4]}]))
-    with pytest.raises(ValueError, match="faces leave no Node"):
-        load_world(slit_world(tmp_path, TOOL, "r", faces=[{"axis": "z", "at": 0, "gaps": []}]))
-    with pytest.raises(ValueError, match=r"whole names the Node \[5, 4, 0\]: no line of the family"):
-        load_world(slit_world(tmp_path, TOOL, "r", messages=[{**PACKET, "whole": [5, 4, 0]}]))
-    with pytest.raises(ValueError, match="unknown key 'remainder'"):  # no count stands at a Node
-        entry = {**screen, "name": "d", "remainder": {"charge": 1}}
-        load_world(slit_world(tmp_path, TOOL, "r", detectors=[entry]))
+    refused = [
+        (dict(detectors=[{"name": "d", "positions": [[12, 0, 0]]}]), f"{inner}: nothing stands there"),
+        (dict(messages=[{**PACKET, "wave": [0, 4]}]), "wave's p is 0"),
+        (dict(faces=[{"axis": "z", "at": 0, "gaps": []}]), "faces leave no Node"),
+        (
+            dict(messages=[{**PACKET, "whole": [5, 4, 0]}]),
+            r"whole names the Node \[5, 4, 0\]: no line of",
+        ),
+        (
+            dict(detectors=[{**screen, "name": "d", "remainder": {"charge": 1}}]),
+            "unknown key 'remainder'",
+        ),
+    ]  # the last: no count stands at a Node
+    for changes, reason in refused:
+        with pytest.raises(ValueError, match=reason):
+            load_world(slit_world(tmp_path, TOOL, "r", **changes))
     aslant = {**PACKET, "wave": [-1, 4], "phase": [1, 4], "transverse": {"y": [1, 8]}}
     turned = slit_world(tmp_path, TOOL, "turned", messages=[aslant])
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
@@ -92,14 +99,11 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()
-    print(f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()},")
-    print(f"  before it {int(level[:12].sum())} against {int(free)} with no wall")
+    print(
+        f"GAMEBOARD slit: light beyond the wall per row {passed.tolist()}, before {int(level[:12].sum())} vs {int(free)}"
+    )
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
-
-
-def test_a_body_is_laid_over_its_nodes_as_its_rows_fixed_point_and_loads_lawful(tmp_path, monkeypatch):
-    """One Node declaring 50 quanta on the chain becomes a body of several Nodes, each carrying a quantum, their counts within the rounding of 50; its standing reading rotates above the matter band's top and below 2, its peak at the centre, its period read whole; the mode file stands for the world by its digest and the GameBoard loads its levels as written; a body laid with a sense carries its second level pair beside them, a neutral one none."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)
     document = json.loads(world.read_text(encoding="utf-8"))
@@ -124,10 +128,6 @@ def test_a_body_is_laid_over_its_nodes_as_its_rows_fixed_point_and_loads_lawful(
     turned = chain_body_world(tmp_path, TOOL, senses=(-1,))
     rotating = json.loads(turned.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
     assert any(rotating["moving"]["im_now"]) and len(rotating["moving"]["im_before"]) == CHAIN
-
-
-def test_a_cloud_a_collapse_no_t_and_two_bodies_in_one_region_are_refused_by_name(tmp_path, monkeypatch):
-    """Three quanta are a cloud, below the window of mass (ten too, under the binding holder's range of 20 Links); three hundred fit no cube with a positive pace on the chain, above it; two bodies of a hundred two Links apart collapse, their wells reaching the pace 0; two bodies of twenty whose regions share a Node, a universe without T and a sense other than +1 or -1 are refused by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     with pytest.raises(ValueError, match="is a cloud: its standing reading rotates"):
         chain_body_world(tmp_path, TOOL, quanta=3)

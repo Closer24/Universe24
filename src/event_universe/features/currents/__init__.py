@@ -9,6 +9,7 @@ from event_universe.core.rule3 import NO_READ, rule3
 
 Vector = tuple[Any, Any, Any]
 PORTS = 6  # a Node's six Ports, the lattice's own integer (Rule3's 6)
+AXIS_PORTS = 2  # the two Ports of one axis, +a and -a, whose currents differ in the momentum density
 PRODUCTS = 2  # the current's two products, now_i before_j and before_i now_j
 DIFFERENCE = (
     2  # a difference of two levels, at most twice the amplitude: the tension's reach per product

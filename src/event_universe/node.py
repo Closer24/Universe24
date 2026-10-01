@@ -16,13 +16,14 @@ from event_universe.core.rule3 import (
     link_paces,
     rule3,
 )
-from event_universe.features import currents
+from event_universe.features import currents, rotation
 from event_universe.features.hold import hold
 from event_universe.features.read import axis_content, content_of, guard
 from event_universe.features.write import carried
-from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, weight_of
+from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, turns, weight_of
 
 Rule = tuple[tuple[Any, Any, Any], Any, Any]  # Rule3's integers at every Node: (R_x, R_y, R_z), S, w
+Angles = tuple[Any, tuple[Any, Any, Any]]  # the turn's numerators at every Node: the time's, each axis's
 
 
 @dataclass(frozen=True)
@@ -32,6 +33,9 @@ class Record:
     now: np.ndarray
     before: np.ndarray
     remainder: np.ndarray
+
+
+Booking = tuple[list[Record], list[Record]]  # the lines the form and the Wronskian are read from
 
 
 @dataclass
@@ -93,8 +97,8 @@ def read(
     states: list[NodeState],
     direction: int,
 ) -> tuple[Any, tuple[Any, Any, Any]]:
-    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`) and the axis contents t_a = SUM over the reads of (weight x the read family's axis line a + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
-    reads = families[index].reads
+    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`) and the axis contents t_a = SUM over those reads of (weight x the read family's axis line a + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`); no floor, no clamp and no guard in the interval (features/read)."""
+    reads = [r for r in families[index].reads if not families[r.family].rotation]
     content = content_of([(r.weight, level_at(states[r.family].lines[0], direction)) for r in reads])
     axis = []
     for a in range(3):
@@ -107,11 +111,36 @@ def read(
     return content, (axis[0], axis[1], axis[2])
 
 
-def guarded(index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int) -> None:
-    """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read)."""
+def turning(
+    index: int, families: tuple[FamilyRule, ...], states: list[NodeState], direction: int
+) -> Angles | None:
+    """The angles a turned record reads (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record): from every holder it reads that declares the rotation, the time angle's numerator SUM of (weight x the holder's time line) and each axis's SUM of (weight x the holder's odd line a) at every Node, at the level the step in `direction` starts from (the same number read back, so the inverse is explicit); None where the family's record is not turned (`derived.turns`: a one-part family, or every holder acting on the pace)."""
+    if not turns(families, index):
+        return None
+    reads = [r for r in families[index].reads if families[r.family].rotation]
+    time = content_of([(r.weight, level_at(states[r.family].lines[0], direction)) for r in reads])
+    axis = [
+        content_of([(r.weight, level_at(states[r.family].lines[1 + a], direction)) for r in reads])
+        for a in range(3)
+    ]
+    return time, (axis[0], axis[1], axis[2])
+
+
+def guarded(
+    index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int, wrap: Wrap
+) -> None:
+    """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `guard`): the time angle's numerator within 2 Gamma and each Link's two ends' sum within 4 Gamma, a tangent half-angle at most 1."""
     if families[index].reads:
         content, axis = read(index, families, states, 1)
         guard(families[index].pair, gamma, content, axis, families[index].name)
+    angles = turning(index, families, states, 1)
+    if angles is not None:
+        time, links = angles
+        rotation.guard(time, 2 * gamma, families[index].name, None)
+        for a in range(3):
+            for side in (1, -1):
+                link = links[a] + arrival(links[a], a, side, wrap)
+                rotation.guard(link, 2 * 2 * gamma, families[index].name, a)
 
 
 def least_pace(index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int) -> int:
@@ -151,6 +180,100 @@ def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int =
         reads, sums, self_coefficient, wall, record.before, record.now, record.remainder, -1
     )
     return Record(record.before, np.asarray(back), np.asarray(remainder))
+
+
+def turned_sums(
+    now: tuple[Any, Any], links: tuple[Any, Any, Any], wall: int, wrap: Wrap
+) -> tuple[tuple[Any, Any, Any], tuple[Any, Any, Any]]:
+    """The three axis sums of a plane's two lines with the phase on the Link (ALGEBRA.md #the-rows-against-nature (b2), Peierls' coupling): the pair arriving through the +a Port turned by the angle with tan(theta_a / 2) = (L_a(i) + L_a(i + a)) / wall, the Link's odd level the mean of its two ends' over Gamma at the wall 4 Gamma, and the pair through the -a Port turned by the opposite angle of its own Link, (L_a(i - a) + L_a(i)); the re sums and the im sums (features/rotation)."""
+    re, im = [], []
+    for axis, level in enumerate(links):
+        ahead, behind = level + arrival(level, axis, 1, wrap), level + arrival(level, axis, -1, wrap)
+        plus = rotation.turned(
+            arrival(now[0], axis, 1, wrap), arrival(now[1], axis, 1, wrap), ahead, wall
+        )
+        minus = rotation.turned(
+            arrival(now[0], axis, -1, wrap), arrival(now[1], axis, -1, wrap), -behind, wall
+        )
+        re.append(plus[0] + minus[0])
+        im.append(plus[1] + minus[1])
+    return (re[0], re[1], re[2]), (im[0], im[1], im[2])
+
+
+def step_plane(
+    re: Record, im: Record, rule: Rule, wrap: Wrap, angles: Angles, gamma: int, direction: int = 1
+) -> tuple[list[Record], Booking]:
+    """Rule3 on a plane's two lines under the rotation (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/rotation): with z = re + i im and theta the holder's time level L over Gamma at the Node, e^(i theta) z_next + e^(-i theta) z_before = (S z_now + SUM_a R_a (e^(i theta_a) z_(+a) + e^(-i theta_a) z_(-a))) / w, the tangent half-angles L / (2 Gamma) and, on the Link ij, (L_a(i) + L_a(j)) / (4 Gamma) (`turned_sums`), the turn against the sense of the record of positive Wronskian, which then rotates faster by theta: forward the level before is turned, u = e^(-i theta) z_before, Rule3 steps re and im with one rule and their own remainders against u, each neighbour's pair arriving turned through its Port, and the result v is turned the same way, z_next = e^(-i theta) v; backward v = e^(i theta) z_next undoes the turn, Rule3 at -1 gives u and the remainders back and e^(i theta) u the level before, bit for bit. Returns the two lines and the booking (first, second) the form and the Wronskian are read from, D = form(first, second) = |z_now|^2 - v . u and W = wronskian(second) = Im(conj(v) z_now), the bookings carrying the angle (the step's levels before the turn), the same numbers in either direction."""
+    reads, self_coefficient, wall = rule
+    time, links = angles
+    half = 2 * gamma  # the time turn's wall, tan(theta / 2) = L / (2 Gamma); the Link's twice it
+    now = (level_at(re, direction), level_at(im, direction))
+    other = (re.before, im.before) if direction == 1 else (re.now, im.now)
+    sums = turned_sums(now, links, 2 * half, wrap)
+    turned_other = rotation.turned(other[0], other[1], -time, half, direction)
+    stepped = []
+    for part, (record, sum_a) in enumerate(zip((re, im), sums, strict=True)):
+        level, remainder = rule3(
+            reads,
+            sum_a,
+            self_coefficient,
+            wall,
+            now[part],
+            turned_other[part],
+            record.remainder,
+            direction,
+        )
+        stepped.append((np.asarray(level), np.asarray(remainder)))
+    out = rotation.turned(stepped[0][0], stepped[1][0], -time, half, direction)
+    u, v = (
+        (turned_other, [s[0] for s in stepped])
+        if direction == 1
+        else ([s[0] for s in stepped], turned_other)
+    )
+    lines = [
+        Record(np.asarray(out[part]), record.now, stepped[part][1])
+        if direction == 1
+        else Record(record.before, np.asarray(out[part]), stepped[part][1])
+        for part, record in enumerate((re, im))
+    ]
+    first = [Record(now[part], np.asarray(u[part]), lines[part].remainder) for part in range(2)]
+    second = [Record(np.asarray(v[part]), now[part], lines[part].remainder) for part in range(2)]
+    return lines, (first, second)
+
+
+def step_family(
+    index: int,
+    families: tuple[FamilyRule, ...],
+    states: list[NodeState],
+    rule: Rule,
+    wrap: Wrap,
+    gamma: int,
+    direction: int = 1,
+) -> tuple[list[Record], Booking]:
+    """Every line of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`), each part's plane as one (`step_plane`); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one."""
+    family, state = families[index], states[index]
+    angles = turning(index, families, states, direction)
+    if angles is None:
+        found = [
+            step(record, rule, wrap, direction, family.rest if number == 0 else 0)
+            for number, record in enumerate(state.lines)
+        ]
+        return found, ((state.lines, found) if direction == 1 else (found, state.lines))
+    lines: list[Record] = []
+    first: list[Record] = []
+    second: list[Record] = []
+    for start in range(0, family.lines, family.width):
+        planes = state.lines[start], state.lines[start + 1]
+        found, (begun, left) = step_plane(*planes, rule, wrap, angles, gamma, direction)
+        lines, first, second = lines + found, first + begun, second + left
+    return lines, (first, second)
+
+
+def momentum_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
+    """The momentum density of a record at every Node on each axis, a reading of its lines (ALGEBRA.md #the-rows-against-nature (b2); #what-is-open, item 15): P_a = (F_(+a) - F_(-a)) / num, the currents through the axis's two Ports with the weight 1 differing, every line's added, at the lines as they stand (the pair the step starts from, as the currents), odd under the time reversal with the current; the source of the holder of the sign's odd lines under the rotation, as the tension is of the content's axis lines."""
+    through = currents_of(1, lines, wrap)
+    x, y, z = (through[2 * axis] - through[2 * axis + 1] for axis in range(3))
+    return x, y, z
 
 
 def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.ndarray, ...]:
@@ -217,7 +340,7 @@ def write_sources(
     stresses: dict[int, currents.Vector],
     write: HeldWrite,
 ) -> list[Any]:
-    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's sources name, the form D for a row sourced by the form and the Wronskian W for the holder of the sign (`bookings`); for each axis line SUM over the sources of w x factor x T_aa, the tension of each times its factor of the common wall (`HeldWrite`, one wall per line)."""
+    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's sources name, the form D for a row sourced by the form and the Wronskian W for the holder of the sign (`bookings`); for each axis line SUM over the sources of w x factor x the axis booking of each, its tension T_aa for a row of the content and its momentum density P_a for the holder of the sign under the rotation (`stresses`, the readers' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     time: Any = 0
     for index in readers_of(families, held):
         time = time + weight_of(held, families[index]) * bookings.get(index, 0)

@@ -1,7 +1,5 @@
 """The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate)."""
 
-from __future__ import annotations
-
 import ast
 import io
 import tokenize
@@ -33,28 +31,22 @@ PHYSICAL_MODULES: dict[str, str] = {
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
-NUMPY_DTYPES_FORBIDDEN = {
-    *"complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
-}
-NUMPY_FORBIDDEN = {
-    *"arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power sin sqrt std tan true_divide var".split()
-}
+NUMPY_DTYPES_FORBIDDEN = set(
+    "complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
+)
+NUMPY_FORBIDDEN = set(
+    "arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power sin sqrt std tan true_divide var".split()
+)
 BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int", "kind"}  # kind: the loader's choice by the width
 ROOT_NAMES = {"isqrt", "integer_root"}
 
 
 def float_literals(source: str) -> list[int]:
     """The lines of every float literal token (a decimal point or an exponent outside a hexadecimal literal)."""
-    found = []
-    for token in tokenize.generate_tokens(io.StringIO(source).readline):
-        if token.type != tokenize.NUMBER:
-            continue
-        text = token.string.lower()
-        if text.startswith(("0x", "0o", "0b")):
-            continue
-        if "." in text or "e" in text or text.endswith("j"):
-            found.append(token.start[0])
-    return found
+    tokens = tokenize.generate_tokens(io.StringIO(source).readline)
+    numbers = [(t.start[0], t.string.lower()) for t in tokens if t.type == tokenize.NUMBER]
+    decimal = [(line, text) for line, text in numbers if not text.startswith(("0x", "0o", "0b"))]
+    return [line for line, text in decimal if "." in text or "e" in text or text.endswith("j")]
 
 
 def true_divisions(source: str) -> list[int]:
@@ -68,23 +60,25 @@ def forbidden_imports(tree: ast.AST) -> list[str]:
     found = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
-            for alias in node.names:
-                if alias.name.split(".")[0] in FORBIDDEN_IMPORTS:
-                    found.append(alias.name)
-                if alias.name == "math" and alias.asname not in (None, "math"):
-                    found.append(f"math aliased as {alias.asname}")
+            found += [a.name for a in node.names if a.name.split(".")[0] in FORBIDDEN_IMPORTS]
+            found += [
+                f"math aliased as {a.asname}"
+                for a in node.names
+                if a.name == "math" and a.asname not in (None, "math")
+            ]
         elif isinstance(node, ast.ImportFrom):
             module = (node.module or "").split(".")[0]
-            if module in FORBIDDEN_IMPORTS:
-                found.append(node.module or "")
-            if module == "math":
-                found.extend(f"math.{a.name}" for a in node.names if a.name not in MATH_ALLOWED)
-            for alias in node.names:
-                if alias.name in ROOT_NAMES and alias.asname not in (None, alias.name):
-                    found.append(f"{alias.name} aliased as {alias.asname}")
+            found += [node.module or ""] * (module in FORBIDDEN_IMPORTS)
+            found += [
+                f"math.{a.name}" for a in node.names if module == "math" and a.name not in MATH_ALLOWED
+            ]
+            found += [
+                f"{a.name} aliased as {a.asname}"
+                for a in node.names
+                if a.name in ROOT_NAMES and a.asname not in (None, a.name)
+            ]
         elif isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
-            if node.value.id == "math" and node.attr not in MATH_ALLOWED:
-                found.append(f"math.{node.attr}")
+            found += [f"math.{node.attr}"] * (node.value.id == "math" and node.attr not in MATH_ALLOWED)
     return found
 
 
@@ -120,10 +114,8 @@ def numpy_violations(tree: ast.AST) -> list[str]:
     found = []
     for node in ast.walk(tree):
         chain = numpy_chain(node) if isinstance(node, ast.Attribute) else None
-        if chain:
-            head = chain[0]
-            if head in NUMPY_DTYPES_FORBIDDEN or head in NUMPY_FORBIDDEN or head in NUMPY_CHAINS:
-                found.append(f"np.{'.'.join(chain)} at line {node.lineno}")
+        if chain and chain[0] in NUMPY_DTYPES_FORBIDDEN | NUMPY_FORBIDDEN | NUMPY_CHAINS:
+            found.append(f"np.{'.'.join(chain)} at line {node.lineno}")
         if not isinstance(node, ast.Call):
             continue
         callee, keywords = node.func, {k.arg for k in node.keywords}
@@ -174,33 +166,38 @@ def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
 
 
 def test_the_module_list_names_every_module_that_runs_a_step() -> None:
-    """Every module of the package, of `core/` and of `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed."""
+    """Every module of the package, of `core/` and of `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed. Every float literal, true division, forbidden import and numpy departure from the integers is caught; integer numpy, the carry, the greatest common divisor and a hexadecimal literal pass."""
     files = [path for folder in (SRC, SRC / "core", SRC / "loader") for path in folder.glob("*.py")]
     modules = {path.relative_to(SRC).as_posix() for path in files if path.name != "__init__.py"}
     assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
 
+    SOURCE_CHECKS = {
+        "x = 1.5\n": float_literals,
+        "x = 3 / 2\n": true_divisions,
+        "x /= 2\n": true_divisions,
+    }
+    IMPORT_CHECKS = ("import random\n", "from math import sqrt\n", "import math\ny = math.sqrt(4)\n")
+    IMPORT_CHECKS += ("import math as m\n", "from math import isqrt as r\n")
+    NUMPY_CHECKS = (
+        "y = np.sqrt(x)\n",
+        "y = np.zeros(3, dtype=np.float64)\n",
+        "y = x.astype(np.int32)\n",
+    )
+    NUMPY_CHECKS += ("y = np.zeros(3, dtype=float)\n", "y = np.zeros(3)\n", "y = np.full(3, 0)\n")
+    NUMPY_CHECKS += (
+        "y = np.array([1.5, 2])\n",
+        "y = float(x)\n",
+        "y = x.mean()\n",
+        "y = x.astype(scale)\n",
+    )
+    NUMPY_CHECKS += ("y = x.astype(dtype)\n", "y = np.linalg.norm(x)\n", "y = np.linspace(0, 1, 3)\n")
+    NUMPY_CHECKS += ("y = np.random.default_rng()\n",)
 
-SOURCE_CHECKS = {"x = 1.5\n": float_literals, "x = 3 / 2\n": true_divisions, "x /= 2\n": true_divisions}
-IMPORT_CHECKS = ("import random\n", "from math import sqrt\n", "import math\ny = math.sqrt(4)\n")
-IMPORT_CHECKS += ("import math as m\n", "from math import isqrt as r\n")
-NUMPY_CHECKS = ("y = np.sqrt(x)\n", "y = np.zeros(3, dtype=np.float64)\n", "y = x.astype(np.int32)\n")
-NUMPY_CHECKS += ("y = np.zeros(3, dtype=float)\n", "y = np.zeros(3)\n", "y = np.full(3, 0)\n")
-NUMPY_CHECKS += ("y = np.array([1.5, 2])\n", "y = float(x)\n", "y = x.mean()\n", "y = x.astype(scale)\n")
-NUMPY_CHECKS += ("y = x.astype(dtype)\n", "y = np.linalg.norm(x)\n", "y = np.linspace(0, 1, 3)\n")
-NUMPY_CHECKS += ("y = np.random.default_rng()\n",)
-
-
-def test_the_gate_catches_each_violation() -> None:
-    """Every float literal, true division, forbidden import and numpy departure from the integers is caught."""
+    PASSING = "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\no = np.full(2, None, dtype=object)\n"
+    PASSING += "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(object)\nm = np.ones(3, dtype=bool)\n"
     assert all(checker(source) != [] for source, checker in SOURCE_CHECKS.items())
     assert all(forbidden_imports(ast.parse(source)) != [] for source in IMPORT_CHECKS)
     assert all(numpy_violations(ast.parse("import numpy as np\n" + text)) for text in NUMPY_CHECKS)
-
-
-def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
-    source = "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\n"
-    source += "o = np.full(2, None, dtype=object)\ny = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\n"
-    source += "r = np.array([1, -2, 3])\nz = x.astype(object)\nm = np.ones(3, dtype=bool)\n"
-    tree = ast.parse(source)
-    assert float_literals(source) == [] and true_divisions(source) == []
+    tree = ast.parse(PASSING)
+    assert float_literals(PASSING) == [] and true_divisions(PASSING) == []
     assert forbidden_imports(tree) == [] and numpy_violations(tree) == []

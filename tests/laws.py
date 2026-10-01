@@ -1,17 +1,22 @@
 """The helpers of the law's tests: a module loaded by its path (a tool), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`)."""
 
-from __future__ import annotations
-
 import importlib.util
 import json
 import sys
 from pathlib import Path
+
+from event_universe.loader.derived import Row
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
 CHAIN, QUANTA = 48, 50  # a chain of 48 Nodes (x open) and a body of 50 quanta: seven Nodes
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
+
+
+def real_row(name: str, pair: tuple[int, int], lines: int, level_weight: int | None) -> Row:
+    """A row of real lines as the loader reads it (loader.derived.Row), one part, no plane, sourced by the form where it is held, acting on the pace."""
+    return Row(name, pair, lines, 1, False, False, False, level_weight, 0)
 
 
 def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
@@ -22,6 +27,12 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
+
+
+TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")  # the generator
+BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")  # the back-in-time gate
+RUN = load_file("run_inputs", ROOT / "tools" / "run_inputs.py")  # the runner
+RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the look's reader
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]

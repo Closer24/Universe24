@@ -2,14 +2,12 @@
 # One test per line, sorted; the law's tests, all of them (the owner's word of 2026-09-29).
 # The back-in-time gate (tools/back_in_time.py) runs inside tests/test_the_node.py on the closed cube.
 tests/test_documents.py
-tests/test_feature_read.py
-tests/test_feature_start.py
-tests/test_feature_write.py
 tests/test_integer_algebra.py
 tests/test_look.py
 tests/test_pixel_mode.py
 tests/test_repository_language.py
 tests/test_rule3.py
 tests/test_the_bound_body.py
+tests/test_the_features.py
 tests/test_the_node.py
 tests/test_the_share.py

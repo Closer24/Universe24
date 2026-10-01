@@ -1,7 +1,5 @@
 """The meeting's gate (ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate): the pair family of two real lines laid as one event and never summed at a Node, the instrument's read of the parts' signed level sums (the parts line) and the joint-share reader pairing the parts through the root (tools/bell_gate.py): the exact algebra at the four settings and for unequal parts, the three local credits as the fence, the determinism of equal parts, and the four small worlds of examples/events/bell end to end with the back-in-time gate MATCH; Bell is a gate and never a result."""
 
-from __future__ import annotations
-
 import json
 from fractions import Fraction
 
@@ -10,13 +8,10 @@ import pytest
 from event_universe.game_board import GameBoard
 from event_universe.loader.world import basis_of, universe_of
 from event_universe.world_files import load_world
-from tests.laws import ROOT, load_file
+from tests.laws import BACK, ROOT, RUN, TOOL, load_file
 
 GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")
 BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
-TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
-BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
-RUN = load_file("run_inputs", ROOT / "tools" / "run_inputs.py")
 BELL = ROOT / "examples" / "events" / "bell"
 A, A2, B, B2 = ((1, 0), (1, 1), (12, 5), (5, 12))  # the CHSH settings as the declared bases (p, q)
 ORDER = ((A, B), (A, B2), (A2, B), (A2, B2))  # S = E(a, b) - E(a, b') + E(a', b) + E(a', b')

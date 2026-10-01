@@ -1,7 +1,5 @@
 """The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; the engine reads the same currents from the record and a detector's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
-from __future__ import annotations
-
 import random
 from fractions import Fraction
 
@@ -11,9 +9,10 @@ import pytest
 from event_universe import node
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, rule3
-from event_universe.loader.derived import Row, family_rules
+from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.reports import inflow
+from tests.laws import real_row
 
 GAMMA, NODES = 10_000, 12
 
@@ -44,21 +43,6 @@ def test_the_share_changes_by_the_currents_at_the_pair_the_step_started_from(pai
     assert change == flux(now, before) and change != flux(nxt, now)
 
 
-def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
-    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it."""
-    (quanta,) = family_rules([Row("quanta", (5, 7), 1, 1, False, False, None, 0)])
-    draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
-    zero = node.zeros(shape, kind_of(63))
-    real, second = (node.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
-    through = node.currents_of(quanta.pair[0], [real, second], wrap)
-    for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
-        expected = sum(
-            5 * (r.now * np.roll(r.before, -side, axis) - r.before * np.roll(r.now, -side, axis))
-            for r in (real, second)
-        )
-        assert np.array_equal(through[port], expected)
-
-
 @pytest.mark.parametrize(("pair", "period"), [((1, 2), 6), ((0, 1), 4), ((-1, 2), 3)])
 def test_the_exact_bands_turn_with_no_remainder(pair, period):
     """The exact bands: a Node at rest in the vacuum (its six reads its own level) turns by 2 cos omega = 2 num / den; the three integer rotations 1, 0 and -1 close in 6, 4 and 3 intervals with the remainder 0 at every step."""
@@ -72,8 +56,19 @@ def test_the_exact_bands_turn_with_no_remainder(pair, period):
     assert (before, now) == (0, 1_000)
 
 
-def test_a_detectors_click_is_its_net_inflow_through_its_front_boundary_alone():
-    """The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board."""
+def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
+    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board."""
+    (quanta,) = family_rules([real_row("quanta", (5, 7), 1, None)])
+    draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
+    zero = node.zeros(shape, kind_of(63))
+    real, second = (node.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
+    through = node.currents_of(quanta.pair[0], [real, second], wrap)
+    for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
+        expected = sum(
+            5 * (r.now * np.roll(r.before, -side, axis) - r.before * np.roll(r.now, -side, axis))
+            for r in (real, second)
+        )
+        assert np.array_equal(through[port], expected)
     nodes = np.array([True, True, False]).reshape(3, 1, 1)
     wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
     inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port

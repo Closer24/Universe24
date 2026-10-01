@@ -6,12 +6,13 @@ from dataclasses import dataclass
 from math import gcd
 
 from event_universe.core.rule3 import ISOTROPIC, coefficients, division_fixed_point, division_forward
-from event_universe.features.currents import DIFFERENCE, PORTS, PRODUCTS
+from event_universe.features.currents import AXIS_PORTS, DIFFERENCE, PORTS, PRODUCTS
+from event_universe.features.rotation import TURNED_REACH
 
 
 @dataclass(frozen=True)
 class Row:
-    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, 1 or 2, times its parts; a held row's sources' count, one real line per source), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), its level weight where it is held (the quanta of form that write one level of the row) and its rest."""
+    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, 1 or 2, times its parts; a held row's sources' count, one real line per source, and the three odd axis lines of a holder of the sign under the rotation), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), whether it acts on its readers by the rotation of the two-part record (the holder of the sign's declared act; else by the plain read into their paces), its level weight where it is held (the quanta of form that write one level of the row) and its rest."""
 
     name: str
     pair: tuple[int, int]
@@ -19,6 +20,7 @@ class Row:
     parts: int
     plane: bool
     wronskian: bool
+    rotation: bool
     level_weight: int | None
     rest: int
 
@@ -54,13 +56,24 @@ class FamilyRule(Row):
 
     @property
     def axes(self) -> bool:
-        """Whether the row carries the three axis lines beside its time line: a held row sourced by the tensions (the massless row holding the content)."""
+        """Whether the row carries three axis lines beside its time line: a held row sourced by the tensions (the massless row holding the content, read into the Link's paces), or the holder of the sign under the rotation (the odd lines, the phase on the Link)."""
         return self.held and self.lines > 1
+
+    @property
+    def record(self) -> int:
+        """The lines of the family's record of quanta, the ones its share, its currents, its form and its Wronskian are read from: every line of a family of quanta; the time line alone of a held row (light, the holder of the sign's own record), its axis lines being held parts."""
+        return 1 if self.held else self.lines
+
+
+def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
+    """Whether a family's record is turned: a plane that reads a holder declaring the rotation (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record); a one-part family reads no holder of the sign and is untouched, as is a plane in a universe whose holders act on the pace."""
+    family = families[index]
+    return family.plane and any(families[read.family].rotation for read in family.reads)
 
 
 @dataclass(frozen=True)
 class HeldWrite:
-    """A held family's one write per line as the rule derives it from the rows (ALGEBRA.md #the-primitives, a family's write is one act): the walls, one per line, the time line's E_s T and each axis line's E_s W_c with W_c = 3 den T of the families that source it (one den among them; with several, the least common multiple of their den in den's place), and per sourcing family the factor with which its tension enters the axis parts' numerator, the multiple over its own den (1 where one den serves every source), so that the sum of the sources' fractions is one fraction over one wall, exact."""
+    """A held family's one write per line as the rule derives it from the rows (ALGEBRA.md #the-primitives, a family's write is one act): the walls, one per line, the time line's E_s T and each axis line's E_s times one measure of a current of the families that source it, the quantum's W_c = 3 den T for a tension line and one axis's den T for an odd line (ALGEBRA.md #the-rows-against-nature (b2), the wall den T; one den among the sources; with several, the least common multiple of their den in den's place), and per sourcing family the factor with which its tension or its momentum density enters the axis parts' numerator, the multiple over its own den (1 where one den serves every source), so that the sum of the sources' fractions is one fraction over one wall, exact."""
 
     walls: tuple[int, ...]
     factors: dict[int, int]
@@ -87,6 +100,7 @@ def family_rules(rows: list[Row]) -> tuple[FamilyRule, ...]:
                 row.parts,
                 row.plane,
                 row.wronskian,
+                row.rotation,
                 row.level_weight,
                 row.rest,
                 tuple(reads),
@@ -111,7 +125,7 @@ def count_wall(family: FamilyRule, action: int) -> int:
 
 
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
-    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and the den of the families that source its axis lines (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, and each source's factor, the multiple over its den."""
+    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and the den of the families that source its axis lines (its readers, whose tension or momentum density it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions, den T for the odd lines), and each source's factor, the multiple over its den."""
     family = families[index]
     assert family.level_weight is not None
     sources = readers_of(families, index)
@@ -119,8 +133,8 @@ def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> Hel
     for other in sources:
         den = families[other].pair[1]
         multiple = int(division_forward(multiple * den, gcd(multiple, den), 0)[0])
-    walls = [family.level_weight * action]
-    walls += [family.level_weight * 3 * multiple * action] * (family.lines - 1)
+    measure = multiple * action if family.rotation else 3 * multiple * action
+    walls = [family.level_weight * action] + [family.level_weight * measure] * (family.lines - 1)
     factors = {
         other: int(division_forward(multiple, families[other].pair[1], 0)[0]) for other in sources
     }
@@ -132,40 +146,50 @@ def largest_of(width: int) -> int:
     return int(2**width - 1)
 
 
+def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) -> int:
+    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products, or the form's two per line of its record (now^2 and next x before); where the source's record is turned (`turns`) the booking is read from the step's levels before the turn, each within twice A (features/rotation, `TURNED_REACH`): the Wronskian's two products of a turned level and a level, the form's now^2 and the two turned levels' product per line."""
+    reach = TURNED_REACH if turns(families, index) else 1
+    if wronskian:
+        return PRODUCTS * reach
+    return families[index].record * (1 + reach * reach if reach > 1 else PRODUCTS)
+
+
 def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) -> list[int]:
-    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x 2 per line of a source (the form, two products per line) where the row takes the form, and w x 2 per source (the Wronskian, two products) where it takes the Wronskian; for each axis part SUM over the sources of w x factor x lines x 2 x 2 |num| (the tension per line, two products of a level and a difference of two levels, |num| on each)."""
+    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`); for each axis part SUM over the sources of w x factor x lines x 2 x 2 |num| for a tension line (the tension per line of the source's record, two products of a level and a difference of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the momentum density, the bare currents through the axis's two Ports, two products each)."""
     family = families[index]
     sources = readers_of(families, index)
     time = sum(
-        abs(weight_of(index, families[other]))
-        * PRODUCTS
-        * (1 if family.wronskian else families[other].lines)
+        abs(weight_of(index, families[other])) * booking_room(families, other, family.wronskian)
         for other in sources
     )
     axis = sum(
         abs(weight_of(index, families[other]))
         * write.factors[other]
-        * families[other].lines
+        * families[other].record
         * PRODUCTS
-        * DIFFERENCE
-        * abs(families[other].pair[0])
+        * (AXIS_PORTS if family.rotation else DIFFERENCE * abs(families[other].pair[0]))
         for other in sources
     )
     return [time] + [axis] * (family.lines - 1)
 
 
 def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, width: int) -> int:
-    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), and at which every held family's one write per part, its numerator at the sources' room (`write_rooms`) plus its remainder under the wall, does too; refused by name where no level fits."""
+    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound; for a turned record the six arrivals within twice A, `TURNED_REACH`, and the three shears' largest product, 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice A and one, features/rotation), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), and at which every held family's one write per part, its numerator at the sources' room (`write_rooms`) plus its remainder under the wall, does too; refused by name where no level fits."""
     largest = largest_of(width)
     found = largest
     for index, family in enumerate(families):
         num, den = family.pair
+        reach = TURNED_REACH if turns(families, index) else 1
         for level in (0, int(division_forward(gamma, 2, 0)[0]), gamma - 1):
             reads, self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, True)
-            room = 6 * abs(reads[0]) + abs(self_coefficient) + wall
+            room = 6 * abs(reads[0]) * reach + abs(self_coefficient) + wall
             found = min(found, int(division_forward(largest - wall, room, 0)[0]))
+        if reach > 1:
+            link = 2 * 2 * gamma  # the Link's wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma)
+            product = int(division_forward(largest, 2 * link * link, 0)[0])  # 2 n w x1 at n = w
+            found = min(found, int(division_forward(product - 1, reach, 0)[0]))
         if family.quanta and num:
-            room = PORTS * PRODUCTS * family.lines * abs(num)
+            room = PORTS * PRODUCTS * family.record * abs(num)
             found = min(found, division_fixed_point(int(division_forward(largest, room, 0)[0])))
         if family.held:
             write = held_write(families, index, action)
