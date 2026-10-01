@@ -26,7 +26,7 @@ Bookings = dict[int, np.ndarray]
 
 
 class GameBoard:
-    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines `click` and `field`."""
+    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines `click`, `parts` and `field`."""
 
     def __init__(self, world: World, observer: Observer | None = None) -> None:
         self.world, self.observer, self.tick = world, observer, 0

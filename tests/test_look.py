@@ -42,7 +42,7 @@ def shown(world, monkeypatch, at, blind):
 
 
 def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_path, monkeypatch):
-    """(a) The look of the chain over three intervals: the label, the file's families, per frame every array sized to the board, frame 0 the record's share in quanta, the bodies' declared counts in all (the gate admitted them within the share's rounding), each click line in its interval's frame (one per interval from the test's own GameBoard), no inner face, the books; (b) the page: the label, the roles from the file's rows (the holder of the sign light, a holder of the content a field, a holder of nothing matter, a further one dashed), the blind file's window, the per-detector bars of an expectation without an axis, and no interpolation between Nodes. The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall to the nearest whole and the rounded shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the rounded shares (the expectation) the clicks (one draw by the seed), each row's extrema, visibility and deviation from the blind row's shares, the arrival of the screen's inflow in the engine's labels (the peak, the centroid, the half-maximum span) and a bare region named `aside`; a region's seen inflow is floored at 0 before the shares, the instrument's declaration."""
+    """(a) The look of the chain over three intervals: the label, the file's families, per frame every array sized to the board, frame 0 the record's share in quanta, the bodies' declared counts in all (the gate admitted them within the share's rounding), each click line in its interval's frame (one per interval from the test's own GameBoard), no inner face, the books; (b) the page: the label, the roles from the file's rows (the holder of the sign light, a holder of the content a field, a holder of nothing matter, a further one dashed), the blind file's window, the per-detector bars of an expectation without an axis, and no interpolation between Nodes. The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall to the nearest whole and the rounded shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the rounded shares (the expectation) the clicks (one draw by the seed), each row's extrema (the one rule of the builder and the reader: above the left neighbour and at or above the right a maximum, below and at or below a minimum, the row's ends neither), visibility at the blind `central` (the middle blind maximum where it names none) and deviation from the blind row's shares, the arrival of the screen's inflow in the engine's labels over every interval of the window, the negative ones included (the peak, the centroid, the half-maximum span), and a bare region named `aside`; a region's seen inflow is floored at 0 before the shares, the instrument's declaration."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL, at=(24, 40), taker=True)
     blind = {"expected": {"taker": 3}, "family": "charge", "window": [1, 2]}
@@ -92,24 +92,18 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert measure["at"] == [0, 4] and measure["rounded_shares"] == [1, 2]
     assert measure["seen"] == [wall, 2 * wall] and measure["labels"] == BLIND["detector"]
     flat = [x for fr in look["frames"] for x in fr["lines"]]
-    counted = COUNTS.inflows(flat, BLIND["detector"], "charge", (1, 2))
-    assert [counted[name] for name in BLIND["detector"]] == measure["seen"]
-    assert measure["blind"] == BLIND["counts"] and measure["pattern"] == [0, 1]
-    assert measure["totals"] == "N 3 by the shares (the blind 10)"
+    assert list(COUNTS.inflows(flat, BLIND["detector"], "charge", (1, 2)).values()) == measure["seen"]
+    assert measure["totals"] == "N 3 by the shares (the blind 10)" and measure["pattern"] == [0, 1]
     watch = [f"y = {y}: {n} by the shares, the blind {b}" for y, n, b in ((4, 2, 2), (0, 1, 1.5))]
-    assert measure["watch"] == watch
+    assert measure["watch"] == watch and measure["blind"] == BLIND["counts"]
     assert PAGE.embedded(measure) in html and PAGE.packed(look) in html
     assert "the faces (declared)" in html and "<title>Slit look</title>" in html
     grouped = {**BLIND, "detector": ["g4", "g0"], "counts": [1, 2], "aside": ["screen 0"]}
     grouped.update(maxima=[1], minima=[0], visibility=1)
     measure = PAGE.measurement(look, grouped)
-    assert (
-        measure["at"] == [0, 4]
-        and measure["labels"] == ["g0", "g4"]
-        and measure["rounded_shares"] == [1, 1]
-    )
-    output = tmp_path / "slit.output.json"
-    output.write_text(json.dumps({"ticks": 3, "lines": flat}))
+    assert measure["at"] == [0, 4] and measure["labels"] == ["g0", "g4"]
+    assert measure["rounded_shares"] == [1, 1]
+    (output := tmp_path / "slit.output.json").write_text(json.dumps({"ticks": 3, "lines": flat}))
     (tmp_path / "grouped.json").write_text(json.dumps(grouped))
     read = COUNTS.reading(world, output, tmp_path / "grouped.json")
     assert read["at"] == [0, 4] and read["seen"] == [wall, wall] and read["quanta"] == 2
@@ -119,6 +113,11 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert read["arrival"] == {"peak": 1, "centroid": [3, 2], "span": [1, 2]} and not read["floored"]
     assert read["aside"] == {"screen 0": {"seen": wall, "quanta": 1}}
     assert COUNTS.apportioned(10, [3, 1]) == [8, 2] and sum(COUNTS.drawn(10, [3, 1], 7)) == 10
+    blind = {"pattern": [0, 3], "maxima": [0, 2, 3], "minima": [1], "counts": [1, 1, 1, 1]}
+    rows = [COUNTS.read_row([5, 1, 4, 2], b) for b in ({**blind, "central": 0}, blind)]
+    assert [(r["maxima"], r["minima"]) for r in rows] == [([2], [1])] * 2  # the ends 0 and 3 are neither
+    assert [r["visibility"] for r in rows] == [[4, 6], [3, 5]]  # `central` read; else the middle maximum
+    assert COUNTS.arrival({1: 3, 2: -1, 3: 2}) == {"peak": 1, "centroid": [7, 4], "span": [1, 3]}
     unnamed = {k: v for k, v in grouped.items() if k not in ("detector", "window", "aside")}
     (tmp_path / "unnamed.json").write_text(json.dumps(unnamed))
     every = COUNTS.reading(pair, output, tmp_path / "unnamed.json")

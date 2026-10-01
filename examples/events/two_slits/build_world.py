@@ -16,6 +16,9 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from click_counts import extrema  # noqa: E402  # the one extrema rule, the reader's and the builder's
 
 
 def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
@@ -97,20 +100,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
     blind = per_region([float(v) for v in design["blind_per_node"]], rows)
     through = float(design["blind_through"])
     first, last = design["pattern"]
-    maxima = [
-        index
-        for index in range(first, last + 1)
-        if 0 < index < len(blind) - 1
-        and blind[index] > blind[index - 1]
-        and blind[index] >= blind[index + 1]
-    ]
-    minima = [
-        index
-        for index in range(first, last + 1)
-        if 0 < index < len(blind) - 1
-        and blind[index] < blind[index - 1]
-        and blind[index] <= blind[index + 1]
-    ]
+    maxima, minima = extrema(blind, first, last)
     central, first_two = first_minima(blind, maxima, minima)
     most, low = blind[central], sum(blind[at] for at in first_two)
     return {
@@ -122,7 +112,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "pattern": [first, last],
         "spacing": design["spacing"],
         "seed": design["seed"],
-        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the instrument's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (2.8 percent under the law's own real line, 280.8), the arrival and the wings computed from the law's line; fence: clicks.",
+        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the instrument's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks.",
         "counts": rounded(blind),
         "through": through,
         "maxima": maxima,
