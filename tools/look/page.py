@@ -786,8 +786,8 @@ function numbers() {
     + row('intervals', format(LOOK.ticks) + ' recorded; the world declares ' + format(LOOK.declared_ticks)) + '</dl>';
   html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>divisor</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
     + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held || 'nothing'}</td><td class="num">${f.divisor === null ? '' : f.divisor}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
-  html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th><th>holds</th></tr></thead><tbody>'
-    + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td><td>${Object.entries(b.holds).map(([k, v]) => k + ' ' + format(v.reduce((s, c) => s + c, 0))).join(', ')}</td></tr>`).join('') + '</tbody></table></div>';
+  html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th></tr></thead><tbody>'
+    + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>detector</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'
     + LOOK.detectors.map(d => `<tr><td>${esc(d.name)}</td><td class="num">${d.body === null ? d.nodes.length : 'the body\\'s'}</td><td>${d.body === null ? 'its Nodes' : 'body ' + d.body}</td></tr>`).join('') + '</tbody></table></div>';
   if (Object.keys(BLIND).length) html += '<dl>' + row('blind expectation', JSON.stringify(BLIND)) + '</dl>';

@@ -64,7 +64,13 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     declared, read = sum(b["declared"] for b in look["bodies"]), sum(x[0][0] for a in laid for x in a)
     assert ((abs(declared - read) - 1) // 2) ** 2 <= declared and "holds" not in look["bodies"][0]
     assert all(line["tick"] == t for t, frame in enumerate(look["frames"]) for line in frame["lines"])
-    assert [len(frame["lines"]) for frame in look["frames"]] == [0, 1, 1, 1]
+    wall, frames = next(f["wall"] for f in look["families"] if f["name"] == "charge"), look["frames"]
+    own = [[x for x in fr["lines"] if x["detector"] == "taker" and x["inflow"] == wall] for fr in frames]
+    assert [len(lines) for lines in own] == [0, 1, 1, 1]  # the test's own clicks, one per interval
+    engine = [x for fr in frames for x in fr["lines"] if x not in [y for z in own for y in z]]
+    ends = ("left", "right", "taker", "face")  # the engine's reports: a region and an inflow, no Node
+    assert engine and all(x["event"] == "click" and x["detector"] in ends for x in engine)
+    assert all("node" not in x and x["inflow"] != 0 for x in engine)
     assert set(look["books"]) == {f["name"] for f in look["families"] if f["quanta"]}
     roles = PAGE.roles(look["families"])
     for family, role in zip(universe, roles.values(), strict=True):
