@@ -30,8 +30,10 @@ matplotlib.rcParams.update(
         "font.family": "sans-serif",
         "font.sans-serif": ["Arial", "Helvetica", "Liberation Sans", "DejaVu Sans"],
         "font.size": 8,
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
     }
-)
+)  # the journal's lettering: 8 pt at the final size, each figure drawn 1:1, fonts embedded
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.axes import Axes  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
@@ -80,91 +82,84 @@ def box(ax: Axes, x: float, y: float, w: float, h: float, text: str, fill: str =
             (x, y), w, h, boxstyle="round,pad=0.02", linewidth=0.8, edgecolor=INK, facecolor=fill
         )
     )
-    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=8)
+    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center")
 
 
 def arrow(
     ax: Axes,
     start: tuple[float, float],
     end: tuple[float, float],
-    text: str,
     style: str = "-",
     rad: float = 0.0,
     width: float = 1.0,
-    above: float = 0.0,
 ) -> None:
-    """One channel: an arrow with its line, the line above the arrow where asked."""
+    """One channel's arrow."""
     patch = FancyArrowPatch(
         start,
         end,
         arrowstyle="-|>",
-        mutation_scale=10,
+        mutation_scale=9,
         linewidth=width,
         linestyle=style,
         color=INK,
         connectionstyle=f"arc3,rad={rad}",
     )
     ax.add_patch(patch)
-    mid = ((start[0] + end[0]) / 2, (start[1] + end[1]) / 2)
-    offset = (-rad * (end[1] - start[1]) * 0.5, rad * (end[0] - start[0]) * 0.5 + above)
+
+
+def label(ax: Axes, x: float, y: float, text: str, ha: str = "center") -> None:
+    """A channel's line, on white so that it reads over the arrows."""
     ax.text(
-        mid[0] + offset[0],
-        mid[1] + offset[1],
+        x,
+        y,
         text,
-        ha="center",
+        ha=ha,
         va="center",
-        fontsize=7,
         color=DARK,
-        bbox={"boxstyle": "square,pad=0.15", "facecolor": "white", "edgecolor": "none"},
+        bbox={"boxstyle": "square,pad=0.1", "facecolor": "white", "edgecolor": "none"},
     )
 
 
 def channels(output: Path) -> None:
     """The three channels: the read, the write and the click."""
-    fig, ax = plt.subplots(figsize=(6.4, 2.9))
+    fig, ax = plt.subplots(figsize=(4.69, 3.1))
     ax.set_xlim(0, 10)
-    ax.set_ylim(0, 4.4)
+    ax.set_ylim(0, 6.6)
     ax.axis("off")
     # The lane of a family of quanta: its record, its bookings and what a detector sees.
-    box(ax, 0.3, 2.9, 2.2, 0.9, "the record\n(now, before), (re, im)")
-    box(ax, 3.9, 2.9, 2.2, 0.9, "the bookings\n$D$, $W$, $F$, $T_{aa}$")
-    box(ax, 7.4, 2.9, 2.2, 0.9, "the current $F$ through\na region's boundary")
-    # The lane of a held family: its level.
-    box(ax, 3.75, 0.4, 2.5, 0.9, "the held level\n(the time part, the tensions)", fill="#f2f2f2")
-    box(ax, 7.4, 0.4, 2.2, 0.9, "a declared detector,\na region of Nodes", fill="#f2f2f2")
+    box(ax, 0.1, 4.4, 3.0, 1.0, "the record\n(now, before), (re, im)")
+    box(ax, 3.5, 4.4, 3.0, 1.0, "the bookings\n$D$, $W$, $F$, $T_{aa}$")
+    box(ax, 6.9, 4.4, 3.0, 1.0, "the current $F$ through\na region's boundary")
+    # The lane of a held family, and the Outside.
+    box(ax, 3.5, 0.6, 3.0, 1.0, "the held level\n(time part, tensions)", fill="#f2f2f2")
+    box(ax, 6.9, 0.6, 3.0, 1.0, "a declared detector,\na region of Nodes", fill="#f2f2f2")
     # Rule3 steps the record; the bookings read it.
-    ax.annotate(
-        "", xy=(0.9, 3.8), xytext=(0.9, 4.25), arrowprops={"arrowstyle": "-|>", "color": INK, "lw": 0.8}
-    )
-    ax.text(1.05, 4.15, "Rule3, act (ii)", fontsize=7, color=DARK, va="center")
-    arrow(ax, (2.5, 3.35), (3.9, 3.35), "read, no write", above=0.45)
-    arrow(ax, (6.1, 3.35), (7.4, 3.35), "summed over the passage", above=0.45)
+    arrow(ax, (0.55, 6.35), (0.55, 5.45))
+    label(ax, 0.75, 6.0, "Rule3, act (ii)", ha="left")
+    arrow(ax, (3.1, 4.9), (3.5, 4.9))
+    label(ax, 3.3, 5.75, "read, no write")
+    arrow(ax, (6.5, 4.9), (6.9, 4.9))
+    label(ax, 6.7, 5.75, "summed over the passage")
     # The read: the held level into the record's paces.
-    arrow(
+    arrow(ax, (3.5, 1.1), (2.7, 4.4), rad=-0.2)
+    label(
         ax,
-        (3.75, 0.85),
-        (1.4, 2.9),
-        "the read (i): the level into the paces,\nthe clock once and the Link twice",
-        rad=0.25,
+        0.1,
+        2.7,
+        "the read (i):\nthe level into\nthe paces, the clock\nonce, the Link twice",
+        ha="left",
     )
     # The write: the bookings into the held level.
-    arrow(
-        ax,
-        (5.0, 2.9),
-        (5.0, 1.3),
-        "the write (iv), one per held part:\n$(\\sum_f w_f q_f + r)\\ \\mathrm{div}\\ E$",
-        style="--",
+    arrow(ax, (5.0, 4.4), (5.0, 1.6), style="--")
+    label(
+        ax, 5.0, 3.0, "the write (iv),\none per held part:\n$(\\sum_f w_f q_f + r)\\ \\mathrm{div}\\ E$"
     )
     # The click: the detector's reading, one quantum per wall of inflow, credited.
-    arrow(
-        ax,
-        (8.5, 2.9),
-        (8.5, 1.3),
-        "the click (iii): one quantum per $W_c$\nof inflow, credited by the shares",
-        width=2.0,
-    )
-    ax.text(0.3, 2.45, "a family of quanta", fontsize=7, color=MID, style="italic")
-    ax.text(0.3, 0.75, "a held family, and the Outside", fontsize=7, color=MID, style="italic")
+    arrow(ax, (8.4, 4.4), (8.4, 1.6), width=1.8)
+    label(ax, 8.4, 3.0, "the click (iii):\none quantum per $W_c$\nof inflow, credited\nby the shares")
+    ax.text(0.1, 4.05, "a family of quanta", color=MID, style="italic")
+    ax.text(0.1, 0.25, "a held family, and the Outside", color=MID, style="italic")
+    fig.subplots_adjust(left=0.01, right=0.99, bottom=0.01, top=0.99)
     save(fig, output / "channels.pdf")
     plt.close(fig)
 

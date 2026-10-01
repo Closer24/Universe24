@@ -27,9 +27,11 @@ matplotlib.rcParams.update(
     {
         "font.family": "sans-serif",
         "font.sans-serif": ["Arial", "Helvetica", "Liberation Sans", "DejaVu Sans"],
-        "font.size": 7,
+        "font.size": 8,
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
     }
-)
+)  # the journal's lettering: 8 pt at the final size, the figure drawn 1:1, fonts embedded
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.axes import Axes  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
@@ -155,12 +157,12 @@ def pair(ax: Axes) -> None:
 
 
 def meeting(output: Path) -> None:
-    """The three panels in one figure."""
-    fig, axes = plt.subplots(1, 3, figsize=(6.8, 3.0))
+    """The three panels stacked in one figure, at the final width."""
+    fig, axes = plt.subplots(3, 1, figsize=(4.69, 6.6))
     two_slits(axes[0])
     closed(axes[1])
     pair(axes[2])
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.9, bottom=0.01, wspace=0.06)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.93, bottom=0.01, hspace=0.38)
     save(fig, output / "meeting.pdf")
     plt.close(fig)
 

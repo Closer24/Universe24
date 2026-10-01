@@ -25,8 +25,10 @@ matplotlib.rcParams.update(
         "font.family": "sans-serif",
         "font.sans-serif": ["Arial", "Helvetica", "Liberation Sans", "DejaVu Sans"],
         "font.size": 8,
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
     }
-)
+)  # the journal's lettering: 8 pt at the final size, the figure drawn 1:1, fonts embedded
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.axes import Axes  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
@@ -72,7 +74,7 @@ def points(
     return found
 
 
-def panel(ax: Axes, column: int, title: str) -> None:
+def panel(ax: Axes, column: int, title: str, bottom: bool) -> None:
     """One mass over the count against the total count, both branches."""
     cloud = points(CLOUD, column)
     pixel = points(PIXEL, column)
@@ -89,22 +91,25 @@ def panel(ax: Axes, column: int, title: str) -> None:
         label="the compact pixel",
     )
     ax.axhline(1.0, color=MID, linewidth=0.6)
-    ax.set_title(title, fontsize=8)
-    ax.set_xlabel("total count, in quanta")
+    ax.set_ylabel(title)
+    if bottom:
+        ax.set_xlabel("total count, in quanta")
     ax.set_xlim(1000, 5800)
     ax.set_ylim(0, 1.15)
+    ax.set_yticks([0, 0.5, 1.0])
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
 
 
 def branches(output: Path) -> None:
-    """The figure: three panels, one per mass."""
-    fig, axes = plt.subplots(1, 3, figsize=(6.6, 2.3))
-    panel(axes[0], 1, "the well over the count")
-    panel(axes[1], 2, "the inertia over the count")
-    panel(axes[2], 3, "the fall against a free packet's")
-    axes[0].legend(frameon=False, loc="lower left")
-    fig.tight_layout()
+    """The figure: three panels stacked, one per mass, at the final width."""
+    fig, axes = plt.subplots(3, 1, figsize=(4.69, 4.4), sharex=True)
+    panel(axes[0], 1, "the well\nover the count", False)
+    panel(axes[1], 2, "the inertia\nover the count", False)
+    panel(axes[2], 3, "the fall against\na free packet's", True)
+    axes[0].legend(frameon=False, loc="lower left", ncol=2)
+    fig.align_ylabels(axes)
+    fig.tight_layout(h_pad=0.6)
     save(fig, output / "branches.pdf")
     plt.close(fig)
 

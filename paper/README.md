@@ -13,7 +13,9 @@ rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
 - `general_formula/main.pdf`: the compiled paper at the same commit.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, none from a run and none by a
-  generative tool: `lattice.pdf` and `octahedron.pdf` by
+  generative tool, at its final size and included at it, 1:1 (at most 119 mm
+  wide, 8 pt sans-serif lettering, fonts embedded, no transparency), with an
+  EPS beside each PDF for the journal: `lattice.pdf` and `octahedron.pdf` by
   `python paper/general_formula/octahedron.py`, `band.pdf` and `channels.pdf`
   by `python paper/general_formula/band_and_channels.py`, `branches.pdf` (the three
   masses along the two branches, from the rows of the law) by
@@ -38,3 +40,82 @@ experiments, the two slits and Bell, stand as the engine's worlds and the law's
 derivations of what each must give. The paper's outline, its chapters and its
 questions are on the issue "The paper: the outline, the chapters and the
 questions".
+
+## Submission rules and status
+
+The paper goes first to arXiv and then to Foundations of Physics
+(Springer). The rules below were read from the venues' published pages; the
+author checks the live pages before submitting. The order that avoids
+rework: the GitHub release and its Zenodo version DOI, then arXiv, then
+the journal.
+
+### Foundations of Physics
+
+- The abstract has 150 to 250 words, with no undefined abbreviation and no
+  unspecified reference; there are 4 to 6 keywords. Met.
+- A section "Statements and Declarations" stands before the references,
+  or the submission is returned as incomplete: funding, competing
+  interests, ethics and consent, data availability, author contributions.
+  Met; the system asks for the same at submission.
+- Data availability is stated (the Springer Nature policy). Met by the
+  Zenodo concept DOI; the version DOI is added at the release.
+- A large language model is never an author; its use is documented in the
+  method (the paragraph on the marks) and in the statements; no figure is
+  made by a generative tool. Met.
+- A preprint is allowed; its DOI and licence are declared at submission,
+  and the preprint is updated with the journal's DOI after publication.
+- Review is single-blind, so the title page stays.
+- At most three levels of displayed headings; tables and figures are
+  cited in numerical order, every table has a caption, and a figure's
+  label reads "Fig." in bold. Met.
+- Artwork: vector figures with embedded fonts, lettering of 8 to 12 pt at
+  the final size, lines of at least 0.3 pt, at most 119 mm wide. Met.
+- The template `sn-jnl` is recommended and another class is accepted at
+  submission; the switch at acceptance changes the preamble alone.
+- The scope is the conceptual bases of modern physics; a desk rejection
+  follows overclaiming, missing references or a text that reads as
+  internal notes. Open, below.
+
+### arXiv
+
+- The metadata: the title, the author, the abstract as plain ASCII of at
+  most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
+  `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
+  "N pages, 6 figures, 4 tables; code and documents at
+  doi:10.5281/zenodo.22738746". The abstract has 1440 characters.
+- The source, not the PDF: `main.tex` and `figures/*.pdf` alone, without
+  the EPS files and the scripts; it compiles under pdflatex in a clean
+  directory, and no `.bbl` is needed since the references are in the
+  document. Met.
+- The licence: CC BY 4.0, the author's choice, irrevocable for a version;
+  an announced paper is never removed.
+- The category: `quant-ph` with `gr-qc` as a cross-list; the moderators
+  may move a foundational lattice model to `physics.gen-ph`.
+- Endorsement: since 21 January 2026 an institutional email alone does
+  not endorse; an author without accepted papers in the category needs a
+  personal endorser.
+- The paper is complete in English, refereeable and written to scholarly
+  standards, with references; the author answers for every word, and
+  unchecked text from a language model (an invented reference, a
+  chatbot's remark, a placeholder) brings a one-year ban.
+
+### Open before submission
+
+These need the author's decision or hand:
+
+1. The voice: the text still names the project's process (the owner, the
+   advisor, dated decisions, issue numbers), which a reader outside the
+   project reads as internal notes; it is rewritten in the author's
+   voice, the decisions stated as the model's postulates.
+2. The literature: a published source for every form of nature the paper
+   sets beside the law's (Bell, the CHSH sum, the Aspect and loophole-free
+   tests, the Shapiro delay, Pound and Rebka, Vakhitov and Kolokolov,
+   Pekar, 't Hooft, Harrigan and Spekkens and others), each checked
+   against its publisher's record, and a short section on related work.
+3. arXiv: the account, an endorser, the licence, and whether an earlier
+   paper of the project was posted.
+4. The archive: a GitHub release of the paper's commit and its Zenodo
+   version DOI.
+5. The cover letter, written for this paper.
+6. The journal: an Editorial Manager account; the preprint declared at
+   submission.
