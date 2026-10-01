@@ -1,4 +1,4 @@
-"""The two slits' world (ALGEBRA.md row (g); the advisor's design at the owner's word of 2026-09-30, #1515 comment 5912573191) from the design file beside this script: the bright world as run, the screen declared as regions of four rows backed by a receding face and a bare region behind one gap read beside the screen; its mode file by the message lay (tools/pixel_mode.py); and its blind expectation file, per region, written before any run. Every number is the design's and stands in the files, none in this script or the engine.
+"""The two slits' world (ALGEBRA.md row (g); the advisor's design at the owner's word of 2026-09-30, #1515 comment 5912573191, with the fixes of the owner's word of 2026-10-01, 04:50) from the design file beside this script: the bright world as run, the screen declared as regions of four rows backed by a receding face, the source's face receding too, and a bare region behind one gap read beside the screen; its mode file by the message lay (tools/pixel_mode.py); and its blind expectation file, per region, written before any run: the blind row with its central maximum and the first minima about it, the blind visibility, the arrival wager and the wings from the design, `laid` the generator's count of the lay from the mode file. Every number is the design's or the generator's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -84,8 +84,14 @@ def rounded(row: list[float]) -> list[float]:
     return [round(value, 1) for value in row]
 
 
-def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind expectation file, per region (DETECTOR, written before the run, as tools/click_counts.py reads it): the advisor's per-Node row summed per region, its total the passing count, its maxima and minima within the pattern's range, the laid count and the bare region read beside the screen."""
+def first_minima(blind: list[float], maxima: list[int], minima: list[int]) -> tuple[int, list[int]]:
+    """The blind central maximum, the maximum nearest the pattern's centre, and the two first minima about it, the minima nearest it on either side (the regions 4 and 8 of the bright row; the edge ripple's minima are no interference minima)."""
+    central = min(maxima, key=lambda at: abs(2 * at - (len(blind) - 1)))
+    return central, [max(at for at in minima if at < central), min(at for at in minima if at > central)]
+
+
+def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
+    """The blind expectation file, per region (DETECTOR, written before the run, as tools/click_counts.py reads it): the advisor's per-Node row summed per region, its total N's blind, its maxima within the pattern's range, the central maximum with the first minima about it and the blind visibility there, the arrival wager and the wings from the design, `laid` the generator's count of the lay and the bare region read beside the screen."""
     rows = int(design["rows_per_region"])
     names = [detector["name"] for detector in screen_regions(design)]
     blind = per_region([float(v) for v in design["blind_per_node"]], rows)
@@ -105,6 +111,8 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         and blind[index] < blind[index - 1]
         and blind[index] <= blind[index + 1]
     ]
+    central, first_two = first_minima(blind, maxima, minima)
+    most, low = blind[central], sum(blind[at] for at in first_two)
     return {
         "verdict": "DETECTOR",
         "detector": names,
@@ -114,13 +122,18 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "pattern": [first, last],
         "spacing": design["spacing"],
         "seed": design["seed"],
-        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, summed by four; ALGEBRA.md row (g)): the clicks per region N times the region's share, the fringes at the spacing 16 with the visibility 1, the total N the passing count, the draw's scatter sqrt(N p (1 - p)) per region; the credit by the shares of the seen inflows with the seed, the instrument's.",
+        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the instrument's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (2.8 percent under the law's own real line, 280.8), the arrival and the wings computed from the law's line; fence: clicks.",
         "counts": rounded(blind),
         "through": through,
         "maxima": maxima,
-        "minima": minima,
+        "minima": first_two,
+        "central": central,
+        "visibility": [round(most * len(first_two) - low, 1), round(most * len(first_two) + low, 1)],
         "quanta": through,
-        "laid": int(design["laid"]),
+        "counts_sum": round(sum(blind), 1),
+        "laid": laid,
+        "arrival": design["arrival"],
+        "wings": design["wings"],
         "aside": [str(design["aside"]["name"])],
     }
 
@@ -141,7 +154,9 @@ def main(argv: list[str] | None = None) -> None:
         cwd=ROOT,
     )
     print(json.dumps({"world": str(path), "detectors": len(document["detectors"])}))
-    blind = expectation(design)
+    mode = json.loads((args.folder / "two_slits.mode.json").read_text(encoding="utf-8"))
+    laid = sum(int(message["count"]) for message in mode["messages"])  # the generator's count
+    blind = expectation(design, laid)
     (args.folder / "expectation.json").write_text(json.dumps(blind, indent=1) + "\n", encoding="utf-8")
     print(
         json.dumps(

@@ -24,9 +24,7 @@ def dense(levels: dict[str, list[int]]) -> np.ndarray:
 BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
 
 
-def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_but_for_its_gap(
-    tmp_path, monkeypatch
-):
+def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(tmp_path, monkeypatch):
     """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node (no line lays a count whole: the count is read); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
@@ -100,9 +98,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
 
 
-def test_a_body_is_laid_over_its_nodes_as_the_fixed_point_of_its_row_and_loads_lawful(
-    tmp_path, monkeypatch
-):
+def test_a_body_is_laid_over_its_nodes_as_its_rows_fixed_point_and_loads_lawful(tmp_path, monkeypatch):
     """One Node declaring 50 quanta on the chain becomes a body of several Nodes, each carrying a quantum, their counts within the rounding of 50; its standing reading rotates above the matter band's top and below 2, its peak at the centre, its period read whole; the mode file stands for the world by its digest and the GameBoard loads its levels as written; a body laid with a sense carries its second level pair beside them, a neutral one none."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)
@@ -130,9 +126,7 @@ def test_a_body_is_laid_over_its_nodes_as_the_fixed_point_of_its_row_and_loads_l
     assert any(rotating["moving"]["im_now"]) and len(rotating["moving"]["im_before"]) == CHAIN
 
 
-def test_a_cloud_a_collapse_a_universe_without_t_and_two_bodies_in_one_region_are_refused_by_name(
-    tmp_path, monkeypatch
-):
+def test_a_cloud_a_collapse_no_t_and_two_bodies_in_one_region_are_refused_by_name(tmp_path, monkeypatch):
     """Three quanta are a cloud, below the window of mass (ten too, under the binding holder's range of 20 Links); three hundred fit no cube with a positive pace on the chain, above it; two bodies of a hundred two Links apart collapse, their wells reaching the pace 0; two bodies of twenty whose regions share a Node, a universe without T and a sense other than +1 or -1 are refused by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     with pytest.raises(ValueError, match="is a cloud: its standing reading rotates"):

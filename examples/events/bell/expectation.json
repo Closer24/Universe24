@@ -1,0 +1,173 @@
+{
+ "verdict": "DETECTOR",
+ "comment": "Bell as the engine's gate (the owner, 2026-10-01, 06:55 and 07:10: Bell is built as a gate, two simple worlds show the engine works; ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate): every number of the four worlds read by build_world.py, which writes the world files, their mode files (tools/pixel_mode.py, the message lay, with --modes) and the blind expectation file, derived from the settings before any run and never touched after. One chain of `length` Nodes (y and z folded) on the universe file `universe` (examples/events/light.json with the pair family added, light's pair at the dimension [2, 1], two real lines never summed at a Node); the pair laid as one event at the column `source`, two messages of the pair family at the wave `wave` (k = pi / 4, lambda = 8) toward +x and -x with the raised-cosine edge `edge_along` along x at the amplitude `amplitude`, the lay the same on both parts (the symmetric lay, UU + LL); one beam to each side, each to one declared region of `screen` Nodes, the chain's first and last, backed by the receding face `receding` (opaque: what enters leaves the declared board and never returns); the side a's region `left` and the side b's `right`, each declaring its setting as its `basis` (p, q), the + port reading the parts as (p, q) and the - port as (-q, p); the four worlds the four pairs of `settings`, a and a' on the left, b and b' on the right; `ticks` intervals, the reading over `window`, the whole passage. The reading (tools/bell_gate.py): the engine's `parts` lines, per interval and region the parts' signed level sums, paired through the root and squared, the joint share J over the window on both members of the level pair, E per world, S over the four, the marginal, one pair drawn by the shares with `seed`; beside it the two local credits as the fence (by the parts' shares and by the sign) and the local sums, from the same reports, and r and rho, the parts' mismatch, GAMEBOARD diagnostics never in the blind.",
+ "family": "light_pair",
+ "window": [
+  1,
+  100
+ ],
+ "sides": {
+  "a": "left",
+  "b": "right"
+ },
+ "settings": {
+  "a": [
+   1,
+   0
+  ],
+  "a_prime": [
+   1,
+   1
+  ],
+  "b": [
+   12,
+   5
+  ],
+  "b_prime": [
+   5,
+   12
+  ]
+ },
+ "order": [
+  "a b",
+  "a b_prime",
+  "a_prime b",
+  "a_prime b_prime"
+ ],
+ "runs": {
+  "a b": "bell_a_b",
+  "a b_prime": "bell_a_b_prime",
+  "a_prime b": "bell_a_prime_b",
+  "a_prime b_prime": "bell_a_prime_b_prime"
+ },
+ "rule": "the joint share accumulated over the window on both members of the level pair: J(p_A, p_B) = SUM over the window of (SUM_k c_k now_k^A now_k^B)^2 + (SUM_k c_k before_k^A before_k^B)^2 with c_k = e_k(p_A) e_k(p_B), e(+) = (p, q) the declared basis and e(-) = (-q, p); E = (J_++ + J_-- - J_+- - J_-+) over the four summed; the window the whole passage, the credit's interval the draw's by the shares over it, one pair per world drawn with the seed; J is a sum of squares and never negative, so no floor is needed (the advisor, #1563 comment 5924731760; the mathematician, #1572 comment 5925374010)",
+ "seed": 24,
+ "blind": {
+  "correlation": {
+   "a b": [
+    119,
+    169
+   ],
+   "a b_prime": [
+    -119,
+    169
+   ],
+   "a_prime b": [
+    120,
+    169
+   ],
+   "a_prime b_prime": [
+    120,
+    169
+   ]
+  },
+  "S": [
+   478,
+   169
+  ],
+  "marginal": {
+   "a b": [
+    1,
+    2
+   ],
+   "a b_prime": [
+    1,
+    2
+   ],
+   "a_prime b": [
+    1,
+    2
+   ],
+   "a_prime b_prime": [
+    1,
+    2
+   ]
+  },
+  "efficiency": "1, closed by construction: every pair is credited by the draw",
+  "status": "theorem under the owner's declaration of the credit (the one form of the click, the meeting): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at equal parts, Lagrange's identity, the parts laid equal stepping equal by the determinism of Rule3; a gate of the engine and never a result (HIGHLIGHTS.md, One experiment and one gate)",
+  "fence": "clicks",
+  "by_the_parts_shares": {
+   "correlation": {
+    "a b": [
+     119,
+     169
+    ],
+    "a b_prime": [
+     -119,
+     169
+    ],
+    "a_prime b": [
+     0,
+     1
+    ],
+    "a_prime b_prime": [
+     0,
+     1
+    ]
+   },
+   "S": [
+    238,
+    169
+   ],
+   "status": "theorem: each part's share credited alone is a product form, E = cos 2a cos 2b, rho = 0, S at most 2; the lower fence",
+   "fence": "clicks"
+  },
+  "by_the_local_sums": {
+   "correlation": {
+    "a b": [
+     0,
+     1
+    ],
+    "a b_prime": [
+     0,
+     1
+    ],
+    "a_prime b": [
+     120,
+     169
+    ],
+    "a_prime b_prime": [
+     120,
+     169
+    ]
+   },
+   "S": [
+    240,
+    169
+   ],
+   "status": "theorem: the square of each side's own sum is a product form, E = sin 2a sin 2b, S at most 2; a reader rewritten as a local sum lands here",
+   "fence": "clicks"
+  },
+  "by_the_sign": {
+   "correlation": {
+    "a b": [
+     0,
+     1
+    ],
+    "a b_prime": [
+     0,
+     1
+    ],
+    "a_prime b": [
+     1,
+     1
+    ],
+    "a_prime b_prime": [
+     1,
+     1
+    ]
+   },
+   "S": [
+    2,
+    1
+   ],
+   "status": "theorem: the larger port on each side, every outcome the same, E = 1 where neither side ties and 0 where one does, S = 2 exactly; the upper fence of a local credit",
+   "fence": "clicks"
+  },
+  "of_rho": {
+   "S": "(238 + 240 rho) / 169",
+   "status": "derived (the mathematician, #1572 comment 5925175652): E = cos 2a cos 2b + rho sin 2a sin 2b, rho = 2 r / (1 + r^2) the parts' mismatch, 1 at the equal lay; r and rho are the reader's labelled diagnostics and no number of this blind",
+   "fence": "GameBoard for r and rho, clicks for S"
+  }
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "integers": {
+  "node_clock": 6000,
+  "quantum_action": 32768,
+  "width": 63
+ },
+ "families": [
+  {
+   "name": "gravity",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "sources": [
+     "form",
+     "tensions"
+    ],
+    "level_weight": 1000000,
+    "rest": 0
+   }
+  },
+  {
+   "name": "charge",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 1
+   }
+  },
+  {
+   "name": "binding",
+   "pair": [
+    2400,
+    2401
+   ],
+   "held": {
+    "sources": [
+     "form"
+    ],
+    "level_weight": 1000000
+   }
+  },
+  {
+   "name": "matter",
+   "pair": [
+    4000,
+    6000
+   ],
+   "dimension": 1
+  },
+  {
+   "name": "light_pair",
+   "pair": [
+    6000,
+    6000
+   ],
+   "dimension": [
+    2,
+    1
+   ]
+  }
+ ]
+}

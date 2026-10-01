@@ -41,7 +41,7 @@ BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
     ("node", "count"),
 )
-DETECTOR_KEYS, START_KEYS = ("name", "positions", "block"), ("mode",)
+DETECTOR_KEYS, START_KEYS = ("name", "positions", "block", "basis"), ("mode",)
 
 
 @dataclass(frozen=True)
@@ -59,12 +59,13 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede."""
+    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared coefficients, one integer per part of the record it reads at the credit (the pair's (p, q), ALGEBRA.md #the-click-is-the-meeting), the reader's and nothing of the engine's, empty where none is declared."""
 
     name: str
     positions: tuple[Node, ...]
     body: int | None
     declared: bool
+    basis: tuple[int, ...]
 
 
 @dataclass(frozen=True)
@@ -89,8 +90,8 @@ class World:
     receding: tuple[RecedingFace, ...]
 
 
-def shape_of(row: dict[str, Any], label: str) -> tuple[int, bool, bool]:
-    """A family's shape from its row, (lines, plane, wronskian): a family of quanta declares its `dimension`, 1 (one real line) or 2 (a plane, re and im), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), and no dimension, a held row never being a plane; refused by name otherwise (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
+def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool]:
+    """A family's shape from its row, (lines, parts, plane, wronskian): a family of quanta declares its `dimension`, 1 (one real line), 2 (a plane, re and im) or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), and no dimension, a held row never being a plane; refused by name otherwise."""
     if "held" in row:
         if "dimension" in row:
             raise ValueError(
@@ -101,11 +102,18 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, bool, bool]:
             raise ValueError(
                 f"{label}.held.sources is one of {[list(s) for s in SOURCES]}, got {sources!r}"
             )
-        return 1 + 3 * (TENSIONS in sources), False, WRONSKIAN in sources
+        return 1 + 3 * (TENSIONS in sources), 1, False, WRONSKIAN in sources
     if "dimension" not in row:
-        raise ValueError(f"{label} lacks the key 'dimension': a family of quanta declares 1 or {PLANE}")
-    lines = integer(row["dimension"], f"{label}.dimension", 1, PLANE)
-    return lines, lines == PLANE, False
+        raise ValueError(
+            f"{label} lacks the key 'dimension': a family of quanta declares 1, {PLANE} or [parts, dimension]"
+        )
+    shape = row["dimension"]
+    if isinstance(shape, list) and len(shape) != 2:
+        raise ValueError(f"{label}.dimension as a shape is [parts, dimension], got {shape!r}")
+    parts, lines = shape if isinstance(shape, list) else [1, shape]
+    parts = integer(parts, f"{label}.dimension's parts", 1)
+    lines = integer(lines, f"{label}.dimension", 1, PLANE)
+    return parts * lines, parts, lines == PLANE, False
 
 
 def kind_of(width: int) -> type:
@@ -137,7 +145,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
             raise ValueError(
                 f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
             )
-        lines, plane, wronskian = shape_of(row, label)
+        lines, parts, plane, wronskian = shape_of(row, label)
         level_weight, rest = None, 0
         if "held" in row:
             holds = row["held"]
@@ -150,7 +158,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 rest = integer(
                     holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
                 )
-        rows.append(Row(name, (num, den), lines, plane, wronskian, level_weight, rest))
+        rows.append(Row(name, (num, den), lines, parts, plane, wronskian, level_weight, rest))
     return integers, derived.family_rules(rows)
 
 
@@ -208,7 +216,7 @@ def detectors_of(
     beyond: tuple[Node, ...],
     layer: tuple[Node, ...],
 ) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, or the body it names by its number; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's coefficients at the credit, a list of integers not all 0 (one per part of the record it reads; the reader's declaration, read by nothing in the engine), or the body it names by its number (no basis); after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
@@ -220,9 +228,14 @@ def detectors_of(
             raise ValueError(f"{label}.name must be a name of its own, not {FACE_NAME!r}")
         if ("positions" in row) == ("block" in row):
             raise ValueError(f"{label} declares its `positions` or the `block` it reads, one of the two")
+        basis = basis_of(row["basis"], f"{label}.basis") if "basis" in row else ()
         if "block" in row:
+            if basis:
+                raise ValueError(
+                    f"{label}.basis: a basis is declared on a region, not on a body's detector"
+                )
             body = integer(row["block"], f"{label}.block", 0, bodies - 1)
-            found.append(DetectorRow(name, (), body, False))
+            found.append(DetectorRow(name, (), body, False, ()))
             continue
         positions = row["positions"]
         if not isinstance(positions, list) or not positions:
@@ -230,10 +243,17 @@ def detectors_of(
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(DetectorRow(name, nodes, None, True))
+        found.append(DetectorRow(name, nodes, None, True, basis))
     if layer:
-        found.append(DetectorRow(FACE_NAME, layer, None, False))
+        found.append(DetectorRow(FACE_NAME, layer, None, False, ()))
     return tuple(found)
+
+
+def basis_of(value: object, label: str) -> tuple[int, ...]:
+    """A detector's declared basis: a list of integers, one coefficient per part of the record read at the credit, not all 0 (the pair's + port (p, q), its - port (-q, p)); refused by name otherwise."""
+    if not isinstance(value, list) or not value or not any(value):
+        raise ValueError(f"{label} must be a list of integers, one per part, not all 0")
+    return tuple(integer(v, f"{label}[{i}]", -MAX_WORK_INT) for i, v in enumerate(value))
 
 
 def connected(nodes: tuple[Node, ...], shape: Node, periodic: tuple[bool, bool, bool]) -> bool:

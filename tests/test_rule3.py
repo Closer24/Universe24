@@ -8,6 +8,7 @@ import json
 import random
 import re
 import sys
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
@@ -15,14 +16,7 @@ import numpy as np
 import event_universe.world_files as world_files
 from event_universe import node, share
 from event_universe.core import rule3 as core
-from event_universe.core.rule3 import (
-    ISOTROPIC,
-    NO_READ,
-    coefficients,
-    form_term,
-    rule3,
-    rule_total_bound,
-)
+from event_universe.core.rule3 import ISOTROPIC, NO_READ, coefficients, form_term, rule3
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
 from tests.laws import chain_body_world, load_file
@@ -56,7 +50,7 @@ def law_axes(
 
 
 def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_contents():
-    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule."""
+    """With the axis contents zero the isotropic rule's (R, R, R), S, w term for term; with them the four paces' reads; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule; the band's rotation at k = 0 carries the clock's square and light's band on a chain the Link's pace squared, exact in rationals."""
     rng = random.Random(3)
     for _ in range(500):
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, 100, GAMMA])
@@ -79,6 +73,15 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
         along = self_iso - 4 * num * (axis_pace**2 - pace**2)
         assert coefficients(num, den, gamma, content, (axis_contents[0], 0, 0)) == (reads, along, wall)
     assert ISOTROPIC == (0, 0, 0)
+    # the band at k = 0, 2 cos omega = (6 R + S) / w = 2 - 2 f (1 - num / den) with f = p_0^2 / Gamma^2 the clock's square (the Link's pace cancels at k = 0); light on a chain, cos omega = 1 - f_a (1 - cos k) / 3 with f_a = (Gamma - 2 c)^2 / Gamma^2, the level entering the Link twice, at cos k = 1, 0 and -1 (ALGEBRA.md #the-paces)
+    for num, den, c in ((800, 809, 500), (3200, 3227, 2000), (1, 1, 0), (1, 1, 2000)):
+        (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, c)
+        clock = Fraction((GAMMA - c) ** 2 + c * c, GAMMA**2)
+        link = Fraction((GAMMA - 2 * c) ** 2, GAMMA**2)
+        assert Fraction(6 * read + self_coefficient, wall) == 2 - 2 * clock * (1 - Fraction(num, den))
+        for cosine in (1, 0, -1):
+            band = Fraction(read * (2 * cosine + 4) + self_coefficient, 2 * wall)
+            assert num != den or band == 1 - link * (1 - cosine) / 3
 
 
 def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays():
@@ -120,9 +123,8 @@ def test_the_forms_node_term_and_the_load_bound_read_the_same_integers():
     reads, self_coefficient, wall = coefficients(800, 809, GAMMA, 250)
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
     amplitude = 1 << 20
-    assert rule_total_bound(800, 809, GAMMA, 250, amplitude, True) == 6 * amplitude * abs(
-        reads[0]
-    ) + amplitude * abs(self_coefficient) + wall * (amplitude + 1)
+    bound = 6 * amplitude * abs(reads[0]) + amplitude * abs(self_coefficient) + wall * (amplitude + 1)
+    assert core.rule_total_bound(800, 809, GAMMA, 250, amplitude, True) == bound
 
 
 # the rule's own lines in core/rule3.py: the Node's term, the far level's, the carry's and the form's; the second set is the old two-function form, refused anywhere in src/ as well
@@ -302,7 +304,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             share.family_share(family, state.lines, board.wrap, board.world.node_clock)
             node.currents_of(family.pair[0], state.lines, board.wrap)
             node.stresses_of(family.pair[0], state.lines, board.wrap)
-            node.wronskian(state.lines)
+            node.wronskian(state.lines, family.plane)
             node.form(state.lines, state.lines)
             board.quanta(index)
     board.books()
@@ -319,9 +321,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)
 
 
-def test_the_width_chooses_the_arrays_kind_and_a_run_above_the_hosts_bits_gives_the_same_lines(
-    tmp_path, monkeypatch
-):
+def test_the_width_chooses_the_arrays_kind_and_a_wider_run_gives_the_same_lines(tmp_path, monkeypatch):
     """The width is the run's declaration (the owner, 2026-10-01, 02:35): the loader's one site maps `integers.width` to the arrays' kind, the hardware's 64-bit integers at or under the host's signed bits and Python's integers above them (`loader.world.kind_of`); the chain world run at the width 63 and at 127 over forty intervals gives the same click and field lines and the same books bit for bit, every array of the wider run an array of Python integers; no other file of src names an integer's kind."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)

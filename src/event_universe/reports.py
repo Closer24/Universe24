@@ -1,13 +1,15 @@
-"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, labelled the measurement, the field line, labelled a GameBoard reading, and the run's end."""
+"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements, #the-click-is-the-meeting; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. For a record of several parts (the pair family) the instrument reports beside it the parts' signed level sums over its region each interval, the read the credit pairs through the root (the parts line). A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line and the parts line, labelled the detector's, the field line, labelled a GameBoard reading, and the run's end."""
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
 
 from event_universe.core.ports import Wrap, arrival
+from event_universe.node import Record
 
 PORTS = tuple((axis, side) for axis in range(3) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
 
@@ -16,10 +18,11 @@ MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
     "GAMEBOARD",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, FIELD = (
+CLICK, FIELD, PARTS = (
     "click",
     "field",
-)  # the output's two lines: the detector's report and the GameBoard reading
+    "parts",
+)  # the output's three lines: the detector's report, the GameBoard reading and the parts' levels
 OUTPUT = (
     "event",
     "label",
@@ -29,6 +32,7 @@ OUTPUT = (
     "inflow",
     "reading",
     "well",
+    "levels",
 )  # the lines' keys, in their order
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
 BOOKS = ("share", "quanta", "drift", "pace", "frozen")  # the keys of a family's books, a diagnostic
@@ -54,10 +58,25 @@ def field(
 ) -> dict[str, object]:
     """The field line, a GameBoard reading labelled so and no measurement: the family's density over the region this interval; None where a Node of the region is frozen, every Link pace 0, the share not read there (ALGEBRA.md #the-count-is-the-records-share, the frozen Node), and then the frozen Nodes' wells D div T summed, their content reading, as `well`."""
     line = dict(zip(OUTPUT, (FIELD, DIAGNOSTIC, tick, family, detector), strict=False))
-    line[OUTPUT[-2]] = reading
+    line[OUTPUT[-3]] = reading
     if well is not None:
-        line[OUTPUT[-1]] = well
+        line[OUTPUT[-2]] = well
     return line
+
+
+def parts(tick: int, family: str, detector: str, levels: list[list[int]]) -> dict[str, object]:
+    """The parts line, the instrument's read of a record of several parts (ALGEBRA.md #the-click-is-the-meeting, the pair's form): per part the signed sums of its two levels over the region at the interval's start, [now, before], labelled DETECTOR with the region's name and never a Node; the credit pairs each part with the same part through the root and squares (the reader, `tools/bell_gate.py`), and nothing is handed over."""
+    line = dict(zip(OUTPUT, (PARTS, MEASUREMENT, tick, family, detector), strict=False))
+    line[OUTPUT[-1]] = levels
+    return line
+
+
+def level_sums(nodes: np.ndarray, lines: Sequence[Record]) -> list[list[int]]:
+    """Per line of a record, the signed sums of its two levels over a region's Nodes, [now, before], in Python's integers: the parts' read of the parts line, a reading of the lines that writes nothing."""
+    return [
+        [int(line.now[nodes].sum(dtype=object)), int(line.before[nodes].sum(dtype=object))]
+        for line in lines
+    ]
 
 
 def book(

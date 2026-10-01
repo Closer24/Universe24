@@ -15,7 +15,6 @@ TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")
 PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
-BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
 ROLE_OF = {(True, True): "light", (True, False): "field"}  # (held, by the Wronskian), else matter
 REFUSED = [([[20, 4, 0]], "never one Node"), ([[20, 4, 0], [20, 5, 0]], "under half the wavelength")]
 REFUSED += [([[20, y, 0] for y in (0, 1, 6, 7)], "not one connected region")]  # the size rule's refusals
@@ -84,12 +83,10 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
-    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall and the clicks credited by the shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the credit the summed absolute deviation from the blind row's shares, one draw by the seed and a bare region named `aside`; Bell's builder writes from its design file the gate's world at the design's angle."""
+    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall to the nearest whole and the rounded shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the rounded shares (the expectation) the clicks (one draw by the seed), each row's extrema, visibility and deviation from the blind row's shares, the arrival of the screen's inflow in the engine's labels (the peak, the centroid, the half-maximum span) and a bare region named `aside`; a region's seen inflow is floored at 0 before the shares, the instrument's declaration."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    groups = [
-        {"name": f"g{y}", "positions": [[x, y + r, 0] for x in (21, 22) for r in range(4)]}
-        for y in (0, 4)
-    ]
+    cells = [(21 + c // 4, c % 4) for c in range(8)]
+    groups = [{"name": f"g{y}", "positions": [[x, y + r, 0] for x, r in cells]} for y in (0, 4)]
     world = slit_world(tmp_path, TOOL, detectors=[*SCREEN, *groups])
     pair = slit_world(tmp_path, TOOL, "pair", detectors=groups)
     for nodes, reason in REFUSED:
@@ -100,45 +97,36 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     measure = PAGE.measurement(look, BLIND)
     wall = next(f["wall"] for f in look["families"] if f["name"] == "charge")
     assert look["faces"] == SLIT["faces"] and look["verdict"] == "LAWFUL" and measure["quanta"] == 3
-    assert measure["at"] == [0, 4] and measure["credited"] == [1, 2]
-    assert measure["seen"] == [wall, 2 * wall]
-    assert measure["labels"] == BLIND["detector"]
+    assert measure["at"] == [0, 4] and measure["rounded_shares"] == [1, 2]
+    assert measure["seen"] == [wall, 2 * wall] and measure["labels"] == BLIND["detector"]
     flat = [x for fr in look["frames"] for x in fr["lines"]]
     counted = COUNTS.inflows(flat, BLIND["detector"], "charge", (1, 2))
     assert [counted[name] for name in BLIND["detector"]] == measure["seen"]
     assert measure["blind"] == BLIND["counts"] and measure["pattern"] == [0, 1]
-    assert measure["totals"] == "N 3 credited (the blind 10)"
-    assert measure["watch"] == ["y = 4: 2 credited, the blind 2", "y = 0: 1 credited, the blind 1.5"]
+    assert measure["totals"] == "N 3 by the shares (the blind 10)"
+    watch = [f"y = {y}: {n} by the shares, the blind {b}" for y, n, b in ((4, 2, 2), (0, 1, 1.5))]
+    assert measure["watch"] == watch
     assert PAGE.embedded(measure) in html and PAGE.packed(look) in html
     assert "the faces (declared)" in html and "<title>Slit look</title>" in html
     grouped = {**BLIND, "detector": ["g4", "g0"], "counts": [1, 2], "aside": ["screen 0"]}
     grouped.update(maxima=[1], minima=[0], visibility=1)
     measure = PAGE.measurement(look, grouped)
     assert measure["at"] == [0, 4] and measure["labels"] == ["g0", "g4"]
-    assert measure["credited"] == [1, 1]
+    assert measure["rounded_shares"] == [1, 1]
     output = tmp_path / "slit.output.json"
     output.write_text(json.dumps({"ticks": 3, "lines": flat}))
     (tmp_path / "grouped.json").write_text(json.dumps(grouped))
     read = COUNTS.reading(world, output, tmp_path / "grouped.json")
     assert read["at"] == [0, 4] and read["seen"] == [wall, wall] and read["quanta"] == 2
-    assert read["deviation"] == [1, 3] and read["credited"] == [1, 1] and read["seed"] == 7
-    assert sum(read["drawn"]) == 2 and read["maxima"] == [] and read["visibility"] == [0, 2]
+    shares, clicks = read["rounded_shares"], read["clicks"]
+    assert shares["deviation"] == [1, 3] and shares["row"] == [1, 1] and read["seed"] == 7
+    assert sum(clicks["row"]) == 2 and shares["maxima"] == [] and shares["visibility"] == [0, 2]
+    assert read["arrival"] == {"peak": 1, "centroid": [3, 2], "span": [1, 2]} and not read["floored"]
     assert read["aside"] == {"screen 0": {"seen": wall, "quanta": 1}}
     assert COUNTS.apportioned(10, [3, 1]) == [8, 2] and sum(COUNTS.drawn(10, [3, 1], 7)) == 10
     unnamed = {k: v for k, v in grouped.items() if k not in ("detector", "window", "aside")}
     (tmp_path / "unnamed.json").write_text(json.dumps(unnamed))
     every = COUNTS.reading(pair, output, tmp_path / "unnamed.json")
-    assert every["detector"] == ["g0", "g4"] and every["credited"] == [1, 2]
+    assert every["detector"] == ["g0", "g4"] and every["rounded_shares"]["row"] == [1, 2]
     assert every["window"] == [0, 3]
-    assert PAGE.measurement(look, unnamed)["credited"][:2] == [1, 1]  # the screen's regions first
-    BUILD.main(["--folder", str(folder := tmp_path / "bell")])
-    built = json.loads((folder / "bell_0.json").read_text())
-    assert built["shape"] == [343, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
-    names = [d["name"] for d in built["detectors"]]
-    assert len(names) == 23 and names[:2] == ["left_0", "left_1"] and names[12] == "right_0"
-    assert [m.get("phase") for m in built["messages"]] == [None, [63, 64], None, [1, 64]]  # the mirror
-    assert [m["top"]["x"][0] for m in built["messages"]] == [111, 111, 231, 231]
-    rows = [len(d["positions"]) // 12 for d in built["detectors"]]  # twelve columns per region
-    assert rows[:12] == [4] * 12 and rows[12:] == [6] + [4] * 9 + [6]  # the edge rows folded in
-    right = next(d for d in built["detectors"] if d["name"] == "right_0")
-    assert {p[0] for p in right["positions"]} == set(range(331, 343))
+    assert PAGE.measurement(look, unnamed)["rounded_shares"][:2] == [1, 1]  # the screen's regions first

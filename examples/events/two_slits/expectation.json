@@ -26,7 +26,7 @@
  ],
  "spacing": 16,
  "seed": 24,
- "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, summed by four; ALGEBRA.md row (g)): the clicks per region N times the region's share, the fringes at the spacing 16 with the visibility 1, the total N the passing count, the draw's scatter sqrt(N p (1 - p)) per region; the credit by the shares of the seen inflows with the seed, the instrument's.",
+ "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the instrument's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (2.8 percent under the law's own real line, 280.8), the arrival and the wings computed from the law's line; fence: clicks.",
  "counts": [
   21.0,
   20.0,
@@ -48,13 +48,53 @@
   9
  ],
  "minima": [
-  1,
   4,
-  8,
-  10
+  8
+ ],
+ "central": 6,
+ "visibility": [
+  70.0,
+  110.0
  ],
  "quanta": 273.0,
- "laid": 1797,
+ "counts_sum": 275.0,
+ "laid": 1989,
+ "arrival": {
+  "peak": 69,
+  "centroid": 74,
+  "span": [
+   63,
+   77
+  ],
+  "labels": "the engine's interval labels: the click at tick t reports the state after t - 1 steps, so the law's real line's 68 and 73 read 69 and 74 here",
+  "real_line": {
+   "peak": 68,
+   "centroid": 73
+  },
+  "continuum": {
+   "peak": 63,
+   "centroid": 70
+  },
+  "resolution": 1,
+  "status": "computed from the law: Rule3's own line for light in real arithmetic on this world (the advisor, #1563 comment 5924429783; the reviewer's float lattice 68.0 and 72.8 with the source side absorbing, two_experiments_review D) against the same world scaled toward the long-wavelength limit, the continuum (the advisor's 63 and 70; the reviewer's 61.8 and 68.4), the corrections falling as 1 / s^2; the resolution one interval, the peak's top flat within 1.2 percent over three intervals; the wager of the lattice's own number, a demonstration and no experiment against nature, which has no clicks at wavelengths of a few Links",
+  "fence": "clicks"
+ },
+ "wings": {
+  "regions": [
+   3,
+   8
+  ],
+  "lattice": [
+   16.4,
+   12.4
+  ],
+  "continuum": [
+   23.7,
+   20.4
+  ],
+  "status": "computed from the law's real line with the source side absorbing (the reviewer, two_experiments_review D; the advisor's 16.2 and 12.2 against 22.6 and 19.2 with the open face): a lattice effect and no window artefact, the second lattice number of the same world",
+  "fence": "clicks"
+ },
  "aside": [
   "gap"
  ]

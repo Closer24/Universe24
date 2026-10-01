@@ -1,66 +1,53 @@
 {
- "comment": "Bell's gate world as the advisor corrected the instrument (2026-09-30, #1563 comment 5918198102: the 48-row board and the near field kept, the gaps two wavelengths wide with a bar between them, the screen at L = 40, the screens in regions of four rows), every number of the world read by build_world.py, which writes the world file bell_<angle>.json and its mode file (tools/pixel_mode.py, the message lay, with --modes). The flat board `length` x `height` x 1 (z folded) on the light-only universe file examples/events/light.json (rule.json with the holders of the content at the level weight 1,000,000, so light's own well stays under one level); the source's two lobes per side at the column `source` +/- `offset`, each a packet of the light family at the wave `wave` (lambda = 8) over the rows of its gap (`lobes`) with the raised-cosine edges `edge_along` and `edge_across`, at the amplitude `amplitude`; the pair's angle the relative phase of the upper lobe, (`angle` + 1/2) / `angles` of the turn on the right side and its mirror on the left; the two walls the inner faces at `source` +/- `wall` with the gaps `gaps` (16 rows each, the bar 22 to 25, d = 20); the screens at `source` +/- `screen` (L = 40 beyond the walls), each `slab` columns deep, the board's last columns backed by the receding face `receding`, declared in regions of `rows_per_region` rows from the side's first boundary (`tiling`); `ticks` intervals. The world is the engine's gate (tools/back_in_time.py), not an experiment; its blind expectation is written in the meeting round (the four small worlds, S = 478/169 exactly, the marginal one half).",
- "universe": "examples/events/light.json",
+ "comment": "Bell as the engine's gate (the owner, 2026-10-01, 06:55 and 07:10: Bell is built as a gate, two simple worlds show the engine works; ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate): every number of the four worlds read by build_world.py, which writes the world files, their mode files (tools/pixel_mode.py, the message lay, with --modes) and the blind expectation file, derived from the settings before any run and never touched after. One chain of `length` Nodes (y and z folded) on the universe file `universe` (examples/events/light.json with the pair family added, light's pair at the dimension [2, 1], two real lines never summed at a Node); the pair laid as one event at the column `source`, two messages of the pair family at the wave `wave` (k = pi / 4, lambda = 8) toward +x and -x with the raised-cosine edge `edge_along` along x at the amplitude `amplitude`, the lay the same on both parts (the symmetric lay, UU + LL); one beam to each side, each to one declared region of `screen` Nodes, the chain's first and last, backed by the receding face `receding` (opaque: what enters leaves the declared board and never returns); the side a's region `left` and the side b's `right`, each declaring its setting as its `basis` (p, q), the + port reading the parts as (p, q) and the - port as (-q, p); the four worlds the four pairs of `settings`, a and a' on the left, b and b' on the right; `ticks` intervals, the reading over `window`, the whole passage. The reading (tools/bell_gate.py): the engine's `parts` lines, per interval and region the parts' signed level sums, paired through the root and squared, the joint share J over the window on both members of the level pair, E per world, S over the four, the marginal, one pair drawn by the shares with `seed`; beside it the two local credits as the fence (by the parts' shares and by the sign) and the local sums, from the same reports, and r and rho, the parts' mismatch, GAMEBOARD diagnostics never in the blind.",
+ "universe": "examples/events/pair.json",
  "engine": "examples/events/engine_start.json",
- "family": "charge",
- "length": 343,
- "height": 48,
- "source": 171,
+ "family": "light_pair",
+ "length": 61,
+ "source": 30,
  "wave": [
   1,
   4
  ],
- "offset": 60,
- "lobes": [
-  [
-   6,
-   21
-  ],
-  [
-   26,
-   41
-  ]
- ],
- "edge_along": 47,
- "edge_across": 2,
- "amplitude": 1333,
- "angles": 32,
- "angle": 0,
- "wall": 120,
- "gaps": [
-  [
-   6,
-   21
-  ],
-  [
-   26,
-   41
-  ]
- ],
- "screen": 160,
- "slab": 12,
- "rows_per_region": 4,
- "tiling": {
-  "left": 0,
-  "right": 2
- },
+ "edge_along": 6,
+ "amplitude": 1328,
+ "screen": 4,
  "receding": {
   "x": {
    "sides": [
     "low",
     "high"
    ],
-   "largest": 2000,
-   "layers": 64
-  },
-  "y": {
-   "sides": [
-    "low",
-    "high"
-   ],
-   "largest": 1000,
-   "layers": 64
+   "largest": 400,
+   "layers": 16
   }
  },
- "ticks": 400
+ "ticks": 100,
+ "window": [
+  1,
+  100
+ ],
+ "sides": {
+  "a": "left",
+  "b": "right"
+ },
+ "settings": {
+  "a": [
+   1,
+   0
+  ],
+  "a_prime": [
+   1,
+   1
+  ],
+  "b": [
+   12,
+   5
+  ],
+  "b_prime": [
+   5,
+   12
+  ]
+ },
+ "seed": 24
 }

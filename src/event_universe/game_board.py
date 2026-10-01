@@ -17,7 +17,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
 from event_universe.loader.mode import Levels
 from event_universe.loader.world import BodyRow, World
-from event_universe.reports import Detector, book, click, field, inflow, standing
+from event_universe.reports import Detector, book, click, field, inflow, level_sums, parts, standing
 
 Observer = Callable[[dict[str, object]], None]
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
@@ -75,11 +75,12 @@ class GameBoard:
         return [*self.world.bodies, *self.world.messages]
 
     def lay(self, row: BodyRow | MessageRow) -> None:
-        """A body's or a message's levels from the mode file added to its family's lines: its real pair to the first line, its second pair to the second where the family is a plane (the loader admits none otherwise)."""
-        lines = self.states[row.family].lines
-        lines[0] = self.added(lines[0], row.now, row.before)
-        if len(lines) > 1 and self.families[row.family].plane:
-            lines[1] = self.added(lines[1], row.im_now, row.im_before)
+        """A body's or a message's levels from the mode file added to its family's lines, one event laid on every part alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting): its real pair to each part's first line, its second pair to the part's second line where the family is a plane (the loader admits none otherwise)."""
+        family, lines = self.families[row.family], self.states[row.family].lines
+        for first in range(0, family.lines, family.width):
+            lines[first] = self.added(lines[first], row.now, row.before)
+            if family.plane:
+                lines[first + 1] = self.added(lines[first + 1], row.im_now, row.im_before)
 
     def added(self, record: node.Record, now: Levels, before: Levels) -> node.Record:
         """A line with a body's or a message's two levels from the mode file added over the GameBoard."""
@@ -109,7 +110,7 @@ class GameBoard:
             family = self.families[row.family]
             if not family.quanta:
                 continue  # a kick on a holder of the content sources nothing: it is the row's own events
-            pairs = [(row.now, row.before), (row.im_now, row.im_before)][: family.lines]
+            pairs = [(row.now, row.before), (row.im_now, row.im_before)][: family.width] * family.parts
             records = [
                 node.Record(
                     self.board_array(now), self.board_array(before), node.zeros(self.shape, self.kind)
@@ -118,7 +119,7 @@ class GameBoard:
             ]
             total = share.family_share(family, records, self.wrap, self.world.node_clock)
             laid = share.quanta_of(total, count_wall(family, self.world.quantum_action), self.kind)
-            turn = node.well(node.wronskian(records), self.world.quantum_action)
+            turn = node.well(node.wronskian(records, family.plane), self.world.quantum_action)
             everywhere = np.ones(self.shape, dtype=bool)
             on = self.mask(row.nodes) if isinstance(row, BodyRow) else everywhere
             forms.append((row.family, np.where(on, laid, 0), np.where(on, turn, 0)))
@@ -243,7 +244,7 @@ class GameBoard:
         }
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents read from every record at the pair the step starts from; the read and Rule3 on every line, the form D and the Wronskian W read about the step; the detectors' reports; the one write per held line with the tensions read from the stepped levels."""
+        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents read from every record at the pair the step starts from, the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step; the detectors' reports; the one write per held line with the tensions read from the stepped levels."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.tick}: {self.ended}")
         if not growth.grow(self):
@@ -252,6 +253,7 @@ class GameBoard:
         forms: Bookings = {}
         turns: Bookings = {}
         currents = self.currents()
+        begun = [state.lines for state in self.states]
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (_read, lines) in found.items():
             state = self.states[index]
@@ -259,10 +261,10 @@ class GameBoard:
                 self.bounded(self.families[index].name, record)
             if self.families[index].quanta:
                 forms[index] = node.form(state.lines, lines)
-                turns[index] = node.wronskian(lines)
+                turns[index] = node.wronskian(lines, self.families[index].plane)
             state.lines = lines
         stresses = self.stresses()
-        self.report(currents, forms)
+        self.report(currents, forms, begun)
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses)
 
@@ -298,8 +300,8 @@ class GameBoard:
         ] = True
         return found
 
-    def report(self, currents: Currents, forms: Bookings) -> None:
-        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement)."""
+    def report(self, currents: Currents, forms: Bookings, begun: list[list[node.Record]]) -> None:
+        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family), per declared region one `parts` line where a sum is not 0: the signed sums of each part's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`)."""
         own = self.declared_board()
         for index, through in currents.items():
             family = self.families[index]
@@ -310,6 +312,10 @@ class GameBoard:
                 seen = inflow(nodes, through, self.wrap, boundary_of, own)
                 if seen != 0:
                     self.emit(click(self.tick, family.name, detector.name, seen))
+                if family.parts > 1 and detector.declared:
+                    levels = level_sums(nodes, begun[index])
+                    if any(any(level) for level in levels):
+                        self.emit(parts(self.tick, family.name, detector.name, levels))
         self.fields_read(forms)
 
     def fields_read(self, forms: Bookings) -> None:
@@ -346,7 +352,7 @@ class GameBoard:
         stresses[index] = node.stresses_of(self.families[index].pair[0], state.lines, self.wrap)
         _read, lines = self.stepped(index, -1)
         forms[index] = node.form(lines, state.lines)
-        turns[index] = node.wronskian(state.lines)
+        turns[index] = node.wronskian(state.lines, self.families[index].plane)
         books[index] = lines
 
     def step_inverse(self) -> None:

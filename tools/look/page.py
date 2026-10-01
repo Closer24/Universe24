@@ -1,6 +1,6 @@
 """The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the detectors' Nodes as rings, seen at rest and brighter and larger the interval they click; the detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw and the sums its bars draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size, the dark theme's values among them) stands in the one block at the top of the template's style and nowhere else; a button in the header sets the theme, remembered in the browser where it can be.
 
-The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the clicks credited to it as click_counts.py credits them (what it saw within the window summed from the look's click lines, N the screen's total over the family's wall W_c, N apportioned by the shares), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the detectors' totals, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional, one bar per detector, what it saw over W_c up to the frame shown.
+The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the detectors' totals, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional, one bar per detector, what it saw over W_c up to the frame shown.
 
     python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--out <world>.look.html]
 """
@@ -43,7 +43,7 @@ def inflows(
 
 
 def apportioned(quanta: int, shares: list[int]) -> list[int]:
-    """N clicks apportioned by the shares to whole numbers, the largest remainders first, as tools/click_counts.py credits them (0 everywhere where nothing was seen)."""
+    """N apportioned by the shares to whole numbers, the largest remainders first, the rounded shares as tools/click_counts.py reads them, the expectation and no sample (0 everywhere where nothing was seen)."""
     total = sum(shares)
     if not total or quanta <= 0:
         return [0] * len(shares)
@@ -60,7 +60,7 @@ def reporters(detectors: list[dict[str, Any]], axis: int) -> list[Reporter]:
 
 
 def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str, Any] | None:
-    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, N over the family's wall and the clicks credited by the shares (`apportioned`, as the tool credits them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
+    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, floored at 0, N over the family's wall to the nearest whole and the rounded shares (`apportioned`, as the tool reads them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
     if blind is None or "across" not in blind:
         return None
     if blind["across"] not in AXES:
@@ -81,11 +81,12 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
     placed = reporters(detectors, axis)
     seen = [saw[detector] for _at, detector in placed]
     wall = next(int(f["wall"]) for f in look["families"] if f["name"] == blind["family"])
-    quanta = sum(seen) // wall
-    credited = apportioned(quanta, seen)
+    shares = [max(value, 0) for value in seen]  # the credit's floor, the instrument's declaration
+    quanta = (sum(shares) + wall // 2) // wall
+    rounded = apportioned(quanta, shares)
     watch = blind.get("watch") if isinstance(blind.get("watch"), dict) else {}
     lines = [
-        f"{blind['across']} = {key}: {shown(sum(c for (at, _n), c in zip(placed, credited, strict=True) if at == int(key)))} credited, the blind {shown(value)}"
+        f"{blind['across']} = {key}: {shown(sum(c for (at, _n), c in zip(placed, rounded, strict=True) if at == int(key)))} by the shares, the blind {shown(value)}"
         for key, value in watch.items()
     ]
     return {
@@ -98,10 +99,10 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
         "labels": [name for _at, name in placed],
         "seen": seen,
         "quanta": quanta,
-        "credited": credited,
+        "rounded_shares": rounded,
         "blind": list(blind.get("counts", [])),
         "pattern": blind.get("pattern"),
-        "totals": f"N {shown(quanta)} credited (the blind {shown(blind.get('through'))})",
+        "totals": f"N {shown(quanta)} by the shares (the blind {shown(blind.get('quanta', blind.get('through')))})",
         "watch": lines,
         "recorded": len(look["frames"]) - 1,
     }
@@ -704,16 +705,16 @@ picker.innerHTML = 'Node ' + AXES.map((axis, a) => `<label>${axis} <input type="
 AXES.forEach(axis => byId('node-' + axis).addEventListener('change', () => { named = AXES.map((a, k) => Math.max(LOW[k], Math.min(HIGH[k] - 1, Number(byId('node-' + a).value) || 0))); drawGraphs(); }));
 if (LOOK.bodies.length && LOOK.bodies[0].nodes.length) { named = LOOK.bodies[0].nodes[0].slice(); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); }
 
-/* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the clicks credited to it by the shares of what the reporters saw within the window (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the detectors' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
+/* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the rounded shares of what the reporters saw within the window, the expectation (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the detectors' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
 const measurePicker = byId('measure-picker'), select = document.createElement('select'); select.id = 'measure-family';
 function drawNodeMeasure() {
-  const m = MEASURE, n = m.credited.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
+  const m = MEASURE, n = m.rounded_shares.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
   byId('measure-box').classList.add('wide');
   measurePicker.textContent = `${m.detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
   const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
-  const high = Math.max(1, ...m.credited, ...blind.filter(v => v !== null));
+  const high = Math.max(1, ...m.rounded_shares, ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
   const coordinate = k => m.at[k];
   let body = '';
@@ -723,15 +724,15 @@ function drawNodeMeasure() {
   }
   body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
-  m.credited.forEach((v, k) => {
-    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} credited, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+  m.rounded_shares.forEach((v, k) => {
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
   if (blind.some(v => v !== null)) {
     const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} credited per reporter (N by the shares of the look's click lines)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the detectors' credit per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals;
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');

@@ -24,9 +24,7 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-def universe_beside(
-    tmp_path: Path, drop: tuple[str, ...] = (), charged: bool = False, **pairs: list[int]
-) -> None:
+def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
     """The tests' universe copied beside a world as u.json (the families `drop` names left out, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`) with the engine's start file as e.json."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"] = [family for family in universe["families"] if family["name"] not in drop]
@@ -37,15 +35,7 @@ def universe_beside(
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
 
-def chain_body_world(
-    tmp_path: Path,
-    tool,
-    quanta: int = QUANTA,
-    at: tuple[int, ...] = (CHAIN // 2,),
-    senses: tuple[int, ...] = (),
-    taker: bool = False,
-    mode: bool = True,
-) -> Path:
+def chain_body_world(tmp_path, tool, quanta=QUANTA, at=(CHAIN // 2,), senses=(), taker=False, mode=True):  # type: ignore[no-untyped-def]
     """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
     turning = [bool(senses[i]) if i < len(senses) else False for i in range(len(at))]
     universe_beside(tmp_path, charged=any(turning))
