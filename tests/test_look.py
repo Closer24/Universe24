@@ -100,9 +100,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     measure = PAGE.measurement(look, BLIND)
     wall = next(f["wall"] for f in look["families"] if f["name"] == "charge")
     assert look["faces"] == SLIT["faces"] and look["verdict"] == "LAWFUL" and measure["quanta"] == 3
-    assert (
-        measure["at"] == [0, 4] and measure["credited"] == [1, 2] and measure["seen"] == [wall, 2 * wall]
-    )
+    assert measure["at"] == [0, 4] and measure["credited"] == [1, 2]
+    assert measure["seen"] == [wall, 2 * wall]
     assert measure["labels"] == BLIND["detector"]
     flat = [x for fr in look["frames"] for x in fr["lines"]]
     counted = COUNTS.inflows(flat, BLIND["detector"], "charge", (1, 2))
@@ -115,9 +114,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     grouped = {**BLIND, "detector": ["g4", "g0"], "counts": [1, 2], "aside": ["screen 0"]}
     grouped.update(maxima=[1], minima=[0], visibility=1)
     measure = PAGE.measurement(look, grouped)
-    assert (
-        measure["at"] == [0, 4] and measure["labels"] == ["g0", "g4"] and measure["credited"] == [1, 1]
-    )
+    assert measure["at"] == [0, 4] and measure["labels"] == ["g0", "g4"]
+    assert measure["credited"] == [1, 1]
     output = tmp_path / "slit.output.json"
     output.write_text(json.dumps({"ticks": 3, "lines": flat}))
     (tmp_path / "grouped.json").write_text(json.dumps(grouped))
@@ -130,9 +128,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     unnamed = {k: v for k, v in grouped.items() if k not in ("detector", "window", "aside")}
     (tmp_path / "unnamed.json").write_text(json.dumps(unnamed))
     every = COUNTS.reading(pair, output, tmp_path / "unnamed.json")
-    assert (
-        every["detector"] == ["g0", "g4"] and every["credited"] == [1, 2] and every["window"] == [0, 3]
-    )
+    assert every["detector"] == ["g0", "g4"] and every["credited"] == [1, 2]
+    assert every["window"] == [0, 3]
     assert PAGE.measurement(look, unnamed)["credited"][:2] == [1, 1]  # the screen's regions first
     ports = {"plus": ["g0"], "minus": ["g4"]}
     bell = {"family": "charge", "sides": {"left": {"g0": [0, 1, 2, 3], "g4": [4, 5, 6, 7]}}}
@@ -167,9 +164,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     BUILD.main(["--folder", str(folder := tmp_path / "bell")])
     built, tilted, blind = (json.loads((folder / f"{n}.json").read_text()) for n in BELL_FILES)
     assert built["shape"] == [343, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
-    assert (
-        len(built["detectors"]) == 23 and len(blind["runs"]) == 32 and len(blind["sides"]["left"]) == 12
-    )
+    assert len(built["detectors"]) == 23 and len(blind["runs"]) == 32
+    assert len(blind["sides"]["left"]) == 12
     still = json.loads((folder / "bell_v.json").read_text())  # the visibility world, u = 0
     assert [m.get("phase") for m in still["messages"]] == [None] * 4
     assert [m.get("phase") for m in built["messages"]] == [None, [63, 64], None, [1, 64]]  # the offset

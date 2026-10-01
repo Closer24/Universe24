@@ -47,11 +47,9 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it."""
     (quanta,) = family_rules([("quanta", (5, 7), None, None, 0)])
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
-    real, second = (
-        node.Record(draw.integers(-50, 50, shape), draw.integers(-50, 50, shape), node.zeros(shape))
-        for _ in range(2)
-    )
-    through = node.currents_of(quanta, node.NodeState(real, None, [], None, second), wrap)
+    real = node.Record(draw.integers(-50, 50, shape), draw.integers(-50, 50, shape), node.zeros(shape))
+    second = node.Record(draw.integers(-50, 50, shape), draw.integers(-50, 50, shape), node.zeros(shape))
+    through = node.currents_of(quanta, node.NodeState(real, second, [], []), wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
         expected = sum(
             5 * (r.now * np.roll(r.before, -side, axis) - r.before * np.roll(r.now, -side, axis))

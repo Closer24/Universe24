@@ -1,4 +1,4 @@
-"""The back-in-time gate (the owner's word of 2026-09-30: a check that the board can be taken back in time): a world is run N intervals forward after its first interval and N back by the GameBoard's own inverse, and every array of every family (every record's levels now and before and its remainder, the well's and the Wronskian's remainders, every held part and its carry, the flows' carries) and the interval counter are compared bit for bit with the state at the same interval on the way forward: the verdict MATCH, or MISS naming the first interval, the family, the array and the first Node that differ; a GameBoard with a receding face is compared at the shape it had at that interval, the layers a step grew taken off by its inverse, and a run that ends at the largest size before N intervals goes back over the intervals it ran, the end named. A host tool and no state of the law.
+"""The back-in-time gate (the owner's word of 2026-09-30: a check that the board can be taken back in time): a world is run N intervals forward after its first interval and N back by the GameBoard's own inverse, and every array of every family (every record's levels now and before and its remainder, every held part's write remainder) and the interval counter are compared bit for bit with the state at the same interval on the way forward: the verdict MATCH, or MISS naming the first interval, the family, the array and the first Node that differ; a GameBoard with a receding face is compared at the shape it had at that interval, the layers a step grew taken off by its inverse, and a run that ends at the largest size before N intervals goes back over the intervals it ran, the end named. A host tool and no state of the law.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -14,6 +14,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.game_board import GameBoard
+from event_universe.growth import SCALARS
 from event_universe.node import NodeState
 from event_universe.world_files import load_world
 
@@ -28,10 +29,8 @@ def arrays_of(name: str, state: NodeState) -> Snapshot:
     for label, record in records:
         if record is not None:
             found += [(f"{label}.{key}", getattr(record, key)) for key in ("now", "before", "remainder")]
-    scalars = ("well_remainder", "wronskian_remainder", "carry")
-    found += [(key, value) for key in scalars if (value := getattr(state, key)) is not None]
-    for source, carries in state.flows.items():
-        found += [(f"flows[{source}][{axis}]", carry) for axis, carry in enumerate(carries)]
+    for key in SCALARS:
+        found += [(f"{key}[{part}]", value) for part, value in enumerate(getattr(state, key))]
     return [(f"{name}.{label}", np.asarray(value).copy()) for label, value in found]
 
 

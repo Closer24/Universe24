@@ -56,9 +56,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
     mirrored = dense(before)
     tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
-    for x in range(
-        24
-    ):  # toward -x at the phase pi / 2, k_y = pi / 8: b e cos(-k x + k_y y + pi / 2 + omega), k_y y = pi / 2 at y = 4
+    # toward -x at the phase pi / 2, k_y = pi / 8: b e cos(-k x + k_y y + pi / 2 + omega), k_y y = pi / 2 at y = 4
+    for x in range(24):
         away = abs(x - 5)
         e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
         assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1
@@ -85,9 +84,10 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         walled.step()
         open_board.step()
         risen = [x for x in lines if x["tick"] == walled.tick and x["detector"] == "screen"]
+        # the region's report and the field's reading alone, no Node named
         assert all(
             x["event"] in ("click", "field") and "node" not in x and "ports" not in x for x in risen
-        )  # the region's report and the field's reading alone, no Node named
+        )
         assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")
         for state in walled.states:
             records = [r for r in (*state.parts, state.levels, state.second) if r is not None]

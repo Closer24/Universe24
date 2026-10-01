@@ -1,4 +1,4 @@
-"""The start (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the pace 1 with the sum's sources, 6 den a = num S_6(a) + 3 den sigma at a fine unit derived from the width, the division act iterated from nothing until the levels repeat (its first repeat its fixed point, the sources of either sign or both), the levels the nearest integers by the division act; the remainder at the half wall, the division's origin, and the hold's carry E_s div 2 at every Node (the division's origin too, so a source of a few units at a Node the packet reaches later rounds to nothing rather than to a level below); on a chain and a box alike, in the engine and in the generator."""
+"""The start (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the pace 1 with the sum's sources, 6 den a = num S_6(a) + 3 den sigma at a fine unit derived from the width, the division act iterated from nothing until the levels repeat (its first repeat its fixed point, the sources of either sign or both), the levels the nearest integers by the division act, the remainder at the half wall, the division's origin (the write's remainder starts at half its wall too, `node.write_origins`, so a source of a few units at a Node the packet reaches later rounds to nothing rather than to a level below); on a chain and a box alike, in the engine and in the generator."""
 
 from __future__ import annotations
 
@@ -14,14 +14,13 @@ Pair = tuple[int, int]
 
 @dataclass(frozen=True)
 class FieldAtRest:
-    """The held field at rest: the levels (the nearest integers), the fine levels at the unit, the unit, the iterations to the repeat, the level's remainder at the half wall and the hold's carries E_s div 2 at every Node."""
+    """The held field at rest: the levels (the nearest integers), the fine levels at the unit, the unit, the iterations to the repeat and the level's remainder at the half wall."""
 
     levels: np.ndarray
     fine: np.ndarray
     unit: int
     iterations: int
     remainder: int
-    carries: np.ndarray
 
 
 def division(numerator: object, wall: object, value: object) -> np.ndarray:
@@ -64,5 +63,4 @@ def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, w
         fine = after
     half = int(division(1, 2, unit))
     levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0], dtype=np.int64)
-    carries = np.full(counts.shape, int(division(1, 2, divisor)), dtype=np.int64)
-    return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, wall - 1)), carries)
+    return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, wall - 1)))

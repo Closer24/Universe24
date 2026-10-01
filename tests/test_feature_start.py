@@ -43,9 +43,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
         else:
             assert (found.levels[counts > 0] > 0).all() and (found.levels[counts < 0] <= 0).all()
             assert (found.levels < 0).any()  # the far negative sources sink below 0
-        assert (
-            found.remainder == (3 * den - 1) // 2 and (found.carries[counts > 0] == divisor // 2).all()
-        )
+        assert found.remainder == (3 * den - 1) // 2
 
 
 def test_the_tent_on_an_open_chain_is_the_exact_rest_to_the_nearest_integer():
@@ -73,17 +71,14 @@ def test_the_rest_of_a_gapped_pair_about_one_source_is_isotropic_and_the_lines_e
     counts = np.zeros((21, 21, 21), dtype=np.int64)
     counts[10, 10, 10] = 1000
     levels = rest(counts, (num, den), Wrap(False, False, False), divisor, MAX_WORK_INT, 3 * den).levels
-    near = {
-        int(np.moveaxis(levels, axis, 0)[10 + side, 10, 10]) for axis in range(3) for side in (1, -1)
-    }
+    near = {int(np.moveaxis(levels, a, 0)[10 + s, 10, 10]) for a in range(3) for s in (1, -1)}
     assert len(near) == 1 and 0 < near.pop() < int(levels[10, 10, 10])
     for axis in range(3):
         along = [int(np.moveaxis(levels, axis, 0)[10 + r, 10, 10]) for r in range(11)]
         assert along == sorted(along, reverse=True) and along[10] >= 0
     cosines = np.cos(math.pi * np.arange(1, 22) / 22)
-    denominator = 6 * den - 2 * num * (
-        cosines[:, None, None] + cosines[None, :, None] + cosines[None, None, :]
-    )
+    summed = cosines[:, None, None] + cosines[None, :, None] + cosines[None, None, :]
+    denominator = 6 * den - 2 * num * summed
     source = dstn(3 * den * counts.astype(float) / divisor, type=1, norm="ortho")
     exact = idstn(source / denominator, type=1, norm="ortho")
     assert np.array_equal(levels, np.rint(exact).astype(np.int64))

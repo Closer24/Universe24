@@ -1,4 +1,4 @@
-"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the GameBoard grows by layers of zeros beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level 0 (the massless row holding the content at its rest, the vacuum content, ALGEBRA.md #what-is-open, item 22), a held row's time part at the remainder the start gave the row and its hold's carry at E_s div 2, the flows' carries at their origin (`flow.flow_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
+"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the GameBoard grows by layers of zeros beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level 0 (the massless row holding the content at its rest, the vacuum content, ALGEBRA.md #what-is-open, item 22), a held row's time part at the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import flow, node
-from event_universe.loader.derived import FamilyRule, count_wall
+from event_universe import node
+from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
 from event_universe.reports import Detector
@@ -17,7 +17,9 @@ if TYPE_CHECKING:
 
 Growth = tuple[int, int, int, int]  # a growth: the interval it served, the axis, the side, the layers
 ONE = (1, 1, 1)  # the shape of one Node, at which an act's origin is read
-SCALARS = ("well_remainder", "wronskian_remainder", "carry")
+SCALARS = (
+    "write_remainders",
+)  # the arrays of a NodeState beside its records: the writes' remainders per part
 
 
 def padded(a: Any, axis: int, side: int, layers: int, value: int = 0) -> Any:
@@ -70,10 +72,10 @@ def resized(
     side: int,
     layers: int,
     origin: int,
-    walls: dict[int, int],
+    walls: tuple[int, ...],
     direction: int,
 ) -> None:
-    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time part at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, the hold's carry at E_s div 2, the flows' carries at their origin per sourcing family's wall (`walls`), everything else 0; or the same layers taken off (direction -1)."""
+    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time part at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per part), everything else 0; or the same layers taken off (direction -1)."""
 
     def grown(a: Any, value: int = 0) -> Any:
         return sized(a, axis, side, layers, direction, value)
@@ -89,15 +91,10 @@ def resized(
             )
         )
     node.with_records(state, records)
+    origins = [origin_of(at) for at in node.write_origins(walls, ONE)]
     for key in SCALARS:
-        if (a := getattr(state, key)) is not None:
-            origin_of_carry = family.divisor // 2 if key == "carry" and family.divisor else 0
-            setattr(state, key, grown(a, origin_of_carry))
-    for source, carries in state.flows.items():
-        origins = flow.flow_origins(family, walls[source], ONE)
-        state.flows[source] = [
-            grown(carry, origin_of(at)) for carry, at in zip(carries, origins, strict=True)
-        ]
+        arrays = getattr(state, key)
+        setattr(state, key, [grown(a, at) for a, at in zip(arrays, origins, strict=True)])
 
 
 def resized_detector(detector: Detector, axis: int, side: int, layers: int, direction: int) -> Detector:
@@ -125,10 +122,8 @@ def grow(board: GameBoard) -> bool:
 
 def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) -> None:
     """The GameBoard grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the detectors' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
-    action = board.world.quantum_action
-    walls = {index: count_wall(board.families[index], action) for index in board.order}
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-        resized(state, family, axis, side, layers, board.origins[index], walls, direction)
+        resized(state, family, axis, side, layers, board.origins[index], board.walls(index), direction)
     board.detectors = [resized_detector(d, axis, side, layers, direction) for d in board.detectors]
     if board.wrap.beyond is not None:
         beyond = sized(board.wrap.beyond, axis, side, layers, direction, False)
