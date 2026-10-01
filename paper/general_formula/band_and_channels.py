@@ -8,7 +8,8 @@ the content and its top stays at 2, and the slope at k = 0 is light's speed
 
 The channels: the three ways one family acts on another (docs/ALGEBRA.md, the
 interval; docs/HIGHLIGHTS.md, the coupling is the click alone): the read at act
-(i), the write at act (iv) and the click at act (iii), each one line of the law.
+(i), the write at act (iv) and the click at act (iii), the detector's reading of the
+record's current through its boundary, each one line of the law.
 
     python paper/general_formula/band_and_channels.py --output paper/general_formula/figures
 
@@ -124,20 +125,20 @@ def channels(output: Path) -> None:
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 4.4)
     ax.axis("off")
-    # The lane of a family of quanta: its record, its bookings and its count.
+    # The lane of a family of quanta: its record, its bookings and what a detector sees.
     box(ax, 0.3, 2.9, 2.2, 0.9, "the record\n(now, before), (re, im)")
     box(ax, 3.9, 2.9, 2.2, 0.9, "the bookings\n$D$, $W$, $F$, $T_{aa}$")
-    box(ax, 7.4, 2.9, 2.2, 0.9, "the count $c$\nand its remainder")
+    box(ax, 7.4, 2.9, 2.2, 0.9, "the current $F$ through\na region's boundary")
     # The lane of a held family: its level.
     box(ax, 3.75, 0.4, 2.5, 0.9, "the held level\n(the time part, the tensions)", fill="#f2f2f2")
-    box(ax, 7.4, 0.4, 2.2, 0.9, "a Node declared\nto report", fill="#f2f2f2")
+    box(ax, 7.4, 0.4, 2.2, 0.9, "a declared detector,\na region of Nodes", fill="#f2f2f2")
     # Rule3 steps the record; the bookings read it.
     ax.annotate(
         "", xy=(0.9, 3.8), xytext=(0.9, 4.25), arrowprops={"arrowstyle": "-|>", "color": INK, "lw": 0.8}
     )
     ax.text(1.05, 4.15, "Rule3, act (ii)", fontsize=7, color=DARK, va="center")
     arrow(ax, (2.5, 3.35), (3.9, 3.35), "read, no write", above=0.45)
-    arrow(ax, (6.1, 3.35), (7.4, 3.35), "the count's line (iii)", above=0.45)
+    arrow(ax, (6.1, 3.35), (7.4, 3.35), "summed over the passage", above=0.45)
     # The read: the held level into the record's paces.
     arrow(
         ax,
@@ -148,12 +149,12 @@ def channels(output: Path) -> None:
     )
     # The write: the bookings into the held level.
     arrow(ax, (5.0, 2.9), (5.0, 1.3), "the write (iv):\n$(w\\,q + r)\\ \\mathrm{div}\\ E$", style="--")
-    # The click: one whole quantum, reported.
+    # The click: the detector's reading, one quantum per wall of inflow, credited.
     arrow(
         ax,
         (8.5, 2.9),
         (8.5, 1.3),
-        "the click (iii): one whole\nquantum where $r$ crosses $W_c$",
+        "the click (iii): one quantum per $W_c$\nof inflow, credited by the shares",
         width=2.0,
     )
     ax.text(0.3, 2.45, "a family of quanta", fontsize=7, color=MID, style="italic")
