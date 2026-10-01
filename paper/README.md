@@ -60,6 +60,26 @@ their statuses.
   the law cites it under `the surplus leaves`.
 - `general_formula/dimension_check.py`: the bodies one hollow allows on a
   chain, a plane and a box, the check of `the hollow's dimension`.
+- `general_formula/two_slits_real_line.py`: the two slits' row by the law's
+  real line, the reference computation Sections 3.7, 9.1 and 9.2 and Table 2
+  cite (`docs/ALGEBRA.md` row (g) and item 1 of the click formulas), by no run
+  of the engine. It reads the two slits' world as the engine's loader reads it
+  (`examples/events/two_slits/two_slits.json` with its mode file, the universe
+  file it names and the blind `expectation.json` beside it) and steps Rule3's
+  line for light at the vacuum's paces in floating point, with no integer
+  division and no remainder, on the same declared board, wall, gaps, emitter and
+  screen regions, reading what the engine's click lines report, the net current
+  through each region's front boundary Ports over the expectation's window over
+  the count wall, so that the integer run is checked against it to the rounding.
+  Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`;
+  its printed output stands beside it as `two_slits_real_line.txt`, every
+  number with its definition: the total over the whole passage, the twelve
+  regions' quanta and shares, the visibility, the wings and the arrival (in the
+  engine's interval labels and in the physical ones), the meeting round's world
+  with its source face open, the Huygens blind of the expectation file, the
+  central maximum against the first minima in the draw's scatter, the arrival's
+  spread sigma_t from the band and the lay's widths, and the same world scaled
+  toward the continuum.
 
 The paper carries no experiment: until a run has worked and the advisor and
 the reviewer have confirmed it, no click count of a run stands in it beside

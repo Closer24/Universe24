@@ -1,8 +1,10 @@
 """The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the detectors' Nodes as rings, seen at rest and brighter and larger the interval they click; the detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw and the sums its bars draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size, the dark theme's values among them) stands in the one block at the top of the template's style and nowhere else; a button in the header sets the theme, remembered in the browser where it can be.
 
-The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the clicks credited to it as click_counts.py credits them (what it saw within the window summed from the look's click lines, N the screen's total over the family's wall W_c, N apportioned by the shares), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the detectors' totals, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional, one bar per detector, what it saw over W_c up to the frame shown.
+The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the detectors' totals, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional, one bar per detector, what it saw over W_c up to the frame shown.
 
-    python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--out <world>.look.html]
+A gate's reading, optional: with `--gate <reading>.json`, the joint-share reader's file (`tools/bell_gate.py`'s output over the gate's worlds, the look's world among them), and the gate's blind as `--blind` (the expectation of the gate's form: `family`, `sides`, `order`, `runs`, `combination`, `blind`), the page adds the gate's panels, inserted at three markers of the template and absent without a reading (a page without one holds none of them): the board seen from above at the frame shown (frame 0 the input as laid, the record's counts at its Nodes and each side's region with its declared setting and pattern as the reader read them; the beams leaving the record and meeting the regions over the intervals; a region brighter the interval it clicks), labelled a GameBoard reading; the gate's family's `parts` lines per region over the intervals (the parts overlaid, one curve where they are equal) with the region's `click` lines marked, the instrument's read; and the reader's credit beside the blind: the 2^n joint shares as bars, the run filled and the blind outlined, the drawn combination (the click) named, E_n, the marginals, the sub-correlations and the three local credits of the look's world in one table against the blind, the combination over the gate's worlds (its formula from the blind's order and signs, the run's value beside the blind's) on a ruler from minus to plus the number of its terms (the algebraic maximum, one per term) with the fence the blind's theorem lines name ("at most") shaded and the local credits marked on it. `--beside <other>.json` adds one line with another gate's blind combination, read from that file and typed nowhere. Every number of the panels is the reader's file's, the blind's or the look's; the page compares them and sums nothing new.
+
+    python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--gate <reading>.json] [--beside <other>.json] [--out <world>.look.html]
 """
 
 from __future__ import annotations
@@ -13,8 +15,6 @@ import gzip
 import json
 from pathlib import Path
 from typing import Any
-
-from event_universe.loader.derived import CONTENT, SIGN
 
 MATTER, LIGHT, FIELD = "matter", "light", "field"
 AXES = ("x", "y", "z")
@@ -45,7 +45,7 @@ def inflows(
 
 
 def apportioned(quanta: int, shares: list[int]) -> list[int]:
-    """N clicks apportioned by the shares to whole numbers, the largest remainders first, as tools/click_counts.py credits them (0 everywhere where nothing was seen)."""
+    """N apportioned by the shares to whole numbers, the largest remainders first, the rounded shares as tools/click_counts.py reads them, the expectation and no sample (0 everywhere where nothing was seen)."""
     total = sum(shares)
     if not total or quanta <= 0:
         return [0] * len(shares)
@@ -62,7 +62,7 @@ def reporters(detectors: list[dict[str, Any]], axis: int) -> list[Reporter]:
 
 
 def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str, Any] | None:
-    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, N over the family's wall and the clicks credited by the shares (`apportioned`, as the tool credits them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
+    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, floored at 0, N over the family's wall to the nearest whole and the rounded shares (`apportioned`, as the tool reads them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
     if blind is None or "across" not in blind:
         return None
     if blind["across"] not in AXES:
@@ -83,11 +83,12 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
     placed = reporters(detectors, axis)
     seen = [saw[detector] for _at, detector in placed]
     wall = next(int(f["wall"]) for f in look["families"] if f["name"] == blind["family"])
-    quanta = sum(seen) // wall
-    credited = apportioned(quanta, seen)
+    shares = [max(value, 0) for value in seen]  # the credit's floor, the instrument's declaration
+    quanta = (sum(shares) + wall // 2) // wall
+    rounded = apportioned(quanta, shares)
     watch = blind.get("watch") if isinstance(blind.get("watch"), dict) else {}
     lines = [
-        f"{blind['across']} = {key}: {shown(sum(c for (at, _n), c in zip(placed, credited, strict=True) if at == int(key)))} credited, the blind {shown(value)}"
+        f"{blind['across']} = {key}: {shown(sum(c for (at, _n), c in zip(placed, rounded, strict=True) if at == int(key)))} by the shares, the blind {shown(value)}"
         for key, value in watch.items()
     ]
     return {
@@ -100,10 +101,10 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
         "labels": [name for _at, name in placed],
         "seen": seen,
         "quanta": quanta,
-        "credited": credited,
+        "rounded_shares": rounded,
         "blind": list(blind.get("counts", [])),
         "pattern": blind.get("pattern"),
-        "totals": f"N {shown(quanta)} credited (the blind {shown(blind.get('through'))})",
+        "totals": f"N {shown(quanta)} by the shares (the blind {shown(blind.get('quanta', blind.get('through')))})",
         "watch": lines,
         "recorded": len(look["frames"]) - 1,
     }
@@ -114,8 +115,7 @@ def roles(families: list[dict[str, Any]]) -> dict[str, dict[str, object]]:
     found: dict[str, dict[str, object]] = {}
     seen = False
     for family in families:
-        held = family.get("held")
-        role = LIGHT if held == SIGN else FIELD if held == CONTENT else MATTER
+        role = LIGHT if family.get("sign") else FIELD if family.get("held") else MATTER
         found[str(family["name"])] = {"role": role, "dashed": role == MATTER and seen}
         seen = seen or role == MATTER
     return found
@@ -132,8 +132,40 @@ def packed(value: object) -> str:
     return base64.b64encode(gzip.compress(data, compresslevel=9, mtime=0)).decode("ascii")
 
 
-def page(look: dict[str, Any], blind: dict[str, Any] | None) -> str:
-    """The page's HTML from the look and the blind expectation, if any."""
+GATE_FORM = ("family", "sides", "order", "runs", "combination", "blind")  # the keys of a gate's blind
+
+
+def gate(look: dict[str, Any], blind: dict[str, Any] | None, reading: dict[str, Any]) -> dict[str, Any]:
+    """The gate's reading for the page: the look's world named by its stem, its key in the blind's order (the combination of settings whose run it is) and the reader's file (tools/bell_gate.py's output over the gate's worlds) untouched; refused by name where the blind is not of the gate's form or the look's world is not among the reading's worlds and the blind's runs."""
+    world = str(look.get("world", "")).rsplit(".", 1)[0]
+    if blind is None or not all(key in blind for key in GATE_FORM):
+        raise ValueError(
+            f"a gate's reading needs the gate's blind beside it, with the keys {list(GATE_FORM)}"
+        )
+    keys = [key for key, run in blind["runs"].items() if run == world]
+    if not isinstance(reading, dict) or world not in reading.get("worlds", {}) or not keys:
+        raise ValueError(
+            f"the look's world {world!r} is not among the reading's worlds "
+            f"{sorted(reading.get('worlds', {})) if isinstance(reading, dict) else reading} and the blind's runs"
+        )
+    return {"world": world, "key": keys[0], "reading": reading}
+
+
+def beside(path: Path) -> dict[str, Any]:
+    """Another gate's blind for the one line beside the reading: the file's content with its path, its combination's name and value read there and typed nowhere."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or "combination" not in document or "blind" not in document:
+        raise ValueError(f"{path} is not a gate's blind: it holds no combination and blind")
+    return {"file": path.as_posix(), **document}
+
+
+def page(
+    look: dict[str, Any],
+    blind: dict[str, Any] | None,
+    reading: dict[str, Any] | None = None,
+    other: dict[str, Any] | None = None,
+) -> str:
+    """The page's HTML from the look and the blind expectation, if any; with a gate's reading, the gate's panels inserted at the template's three markers (`other` the line of another gate's blind)."""
     if not isinstance(look, dict) or "frames" not in look or "families" not in look:
         raise ValueError("the look file must hold the frames and the families (tools/look/record.py)")
     if blind is not None and not isinstance(blind, dict):
@@ -142,13 +174,19 @@ def page(look: dict[str, Any], blind: dict[str, Any] | None) -> str:
         )
     world = str(look.get("world", "world")).split(".")[0].replace("_", " ")
     title = f"{world[:1].upper()}{world[1:]} look"
+    gated = gate(look, blind, reading) if reading is not None else None
+    template = TEMPLATE
+    for marker, text in GATE_MARKERS.items():
+        template = template.replace(marker, text if gated else "")
     return (
-        TEMPLATE.replace("{{TITLE}}", title)
+        template.replace("{{TITLE}}", title)
         .replace("{{THREE}}", CDN_THREE)
         .replace("{{LOOK}}", packed(look))
         .replace("{{ROLES}}", embedded(roles(look["families"])))
         .replace("{{BLIND}}", embedded(blind))
         .replace("{{MEASURE}}", embedded(measurement(look, blind)))
+        .replace("{{GATE}}", embedded(gated))
+        .replace("{{BESIDE}}", embedded(other))
     )
 
 
@@ -156,12 +194,17 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("look", type=Path, help="the look file (<world>.look.json)")
     parser.add_argument("--blind", type=Path, default=None, help="the blind expectation file")
+    parser.add_argument("--gate", type=Path, default=None, help="a gate's reading (tools/bell_gate.py)")
+    parser.add_argument("--beside", type=Path, default=None, help="another gate's blind, for one line")
     parser.add_argument("--out", type=Path, default=None, help="the page (<world>.look.html)")
     args = parser.parse_args(argv)
     look = json.loads(args.look.read_text(encoding="utf-8"))
     blind = json.loads(args.blind.read_text(encoding="utf-8")) if args.blind else None
+    reading = json.loads(args.gate.read_text(encoding="utf-8")) if args.gate else None
     target: Path = args.out or args.look.with_suffix(".html")
-    target.write_text(page(look, blind), encoding="utf-8")
+    target.write_text(
+        page(look, blind, reading, beside(args.beside) if args.beside else None), encoding="utf-8"
+    )
     print(json.dumps({"look": args.look.name, "page": str(target), "bytes": target.stat().st_size}))
 
 
@@ -268,7 +311,7 @@ td.num { font-family: var(--font-mono); }
       <div class="frame" id="frame"></div>
     </div>
     <div class="lines" id="lines"></div>
-  </section>
+  </section>{{GATE_PANELS}}
   <section class="panel measure" id="measure-box">
     <h2>Measurement: the detectors' report</h2>
     <div class="picker" id="measure-picker"></div>
@@ -337,7 +380,7 @@ function frameOf(t) {
   const frame = LOOK.frames[t], out = {};
   for (const f of FAMILIES) {
     const row = frame.families[f.name] || {}, a = {};
-    if (f.quanta) { for (const key of ['now', 'second', 'count', 'sense', 'form']) a[key] = arrayOf(row[key], frame); a.pace = row.pace; }
+    if (f.quanta) { for (const key of ['now', 'second', 'count', 'form']) if (row[key] !== undefined) a[key] = arrayOf(row[key], frame); a.pace = row.pace; }
     else { a.level = arrayOf(row.level, frame); a.parts = (row.parts || []).map(part => arrayOf(part, frame)); }
     out[f.name] = a;
   }
@@ -352,7 +395,7 @@ for (let t = 0; t <= T; t++) {
   const fr = frameOf(t);
   for (const f of FAMILIES) {
     const a = fr[f.name], m = MOST[f.name];
-    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), peak(a.second)); m.count = Math.max(m.count, peak(a.count)); TOTALS[f.name][t] = sum(a.count); }
+    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); TOTALS[f.name][t] = sum(a.count); }
     else { m.level = Math.max(m.level, peak(a.level)); for (const p of a.parts) m.part = Math.max(m.part, peak(p)); }
   }
 }
@@ -393,7 +436,7 @@ function fit() {
 const hemisphere = new THREE.HemisphereLight(0xffffff, 0x000000, 1), sun = new THREE.DirectionalLight(0xffffff, size('--sun'));
 sun.position.set(1, 2, 3);
 scene.add(hemisphere, sun);
-const position = i => { const [x, y, z] = nodeOf(i); return new THREE.Vector3(x - (X - 1) / 2, y - (Y - 1) / 2, z - (Z - 1) / 2); };
+const position = i => { const [x, y, z] = nodeOf(i); return new THREE.Vector3(x - LOW[0] - (X - 1) / 2, y - LOW[1] - (Y - 1) / 2, z - LOW[2] - (Z - 1) / 2); };  // the Node at its file coordinates within the box, the layers grown before the origin counted
 const matrix = new THREE.Matrix4(), quaternion = new THREE.Quaternion(), scale = new THREE.Vector3(), colour = new THREE.Color(), tint = new THREE.Color();
 const hidden = new THREE.Matrix4().makeScale(0, 0, 0);
 const layers = {};
@@ -516,7 +559,7 @@ function draw() {
     colour.copy(base);
     for (const f of QUANTA) {
       if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
-      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), Math.abs(a.second[i])) / MOST[f.name].now, glowPower);
+      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), a.second ? Math.abs(a.second[i]) : 0) / MOST[f.name].now, glowPower);
       colour.lerp(tint.set(colourOf(f.name)).lerp(base, glowTint), Math.min(1, strength));  // the glow a tint of the family's colour, the dots the colour itself
     }
     cubes.setColorAt(i, colour);
@@ -573,7 +616,7 @@ function draw() {
   byId('lines').textContent = t === 0 ? 'The world as laid: the bodies\\' declared counts, the levels of the mode file, every held row at its start.'
     : Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? '' : 's')).join(', ') + (clicks.length ? ' (' + [...new Set(clicks)].join(', ') + ')' : '') || 'no line this interval';
   if (!MEASURE) drawMeasure();
-  moveCursors();
+  moveCursors();{{GATE_DRAW}}
 }
 
 /* The view: drag turns the board, the wheel and the two buttons bring it closer or farther. */
@@ -598,7 +641,7 @@ new ResizeObserver(() => {
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); fit(); renderer.render(scene, camera);
 }).observe(stage);
 
-/* The hover: a Node's numbers as they are, the count the record's share in quanta, the sense as an arrow. */
+/* The hover: a Node's numbers as they are, the count the record's share in quanta. */
 const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
 function pick(e) {
   const r = canvas.getBoundingClientRect();
@@ -615,9 +658,8 @@ function hover(e) {
     const a = fr[f.name];
     if (f.quanta) {
       const parts = ['level ' + format(a.now[i])];
-      if (MOST[f.name].now && a.second[i]) parts.push('second ' + format(a.second[i]));
+      if (MOST[f.name].now && a.second && a.second[i]) parts.push('second ' + format(a.second[i]));
       parts.push('count ' + format(a.count[i]));
-      if (a.sense[i]) parts.push('sense ' + (a.sense[i] > 0 ? '\\u21bb' : '\\u21ba') + ' ' + format(a.sense[i]));
       lines.push(f.name + ': ' + parts.join(', '));
     } else {
       const parts = a.parts.map((p, k) => PARTS[k] + ' ' + format(p[i]));
@@ -708,16 +750,16 @@ picker.innerHTML = 'Node ' + AXES.map((axis, a) => `<label>${axis} <input type="
 AXES.forEach(axis => byId('node-' + axis).addEventListener('change', () => { named = AXES.map((a, k) => Math.max(LOW[k], Math.min(HIGH[k] - 1, Number(byId('node-' + a).value) || 0))); drawGraphs(); }));
 if (LOOK.bodies.length && LOOK.bodies[0].nodes.length) { named = LOOK.bodies[0].nodes[0].slice(); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); }
 
-/* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the clicks credited to it by the shares of what the reporters saw within the window (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the detectors' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
+/* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the rounded shares of what the reporters saw within the window, the expectation (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the detectors' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
 const measurePicker = byId('measure-picker'), select = document.createElement('select'); select.id = 'measure-family';
 function drawNodeMeasure() {
-  const m = MEASURE, n = m.credited.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
+  const m = MEASURE, n = m.rounded_shares.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
   byId('measure-box').classList.add('wide');
   measurePicker.textContent = `${m.detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
   const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
-  const high = Math.max(1, ...m.credited, ...blind.filter(v => v !== null));
+  const high = Math.max(1, ...m.rounded_shares, ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
   const coordinate = k => m.at[k];
   let body = '';
@@ -727,15 +769,15 @@ function drawNodeMeasure() {
   }
   body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
-  m.credited.forEach((v, k) => {
-    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} credited, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+  m.rounded_shares.forEach((v, k) => {
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
   if (blind.some(v => v !== null)) {
     const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} credited per reporter (N by the shares of the look's click lines)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the detectors' credit per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals;
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
@@ -784,8 +826,8 @@ function numbers() {
   let html = '<dl>' + row('world', LOOK.world) + row('shape', LOOK.shape.join(' x ') + (X * Y * Z > LOOK.shape[0] * LOOK.shape[1] * LOOK.shape[2] ? ', grown to ' + [X, Y, Z].join(' x ') : '')) + row('boundary', AXES.map(a => a + ' ' + LOOK.boundary[a]).join(', ')) + row('inner faces', inner) + row('receding faces', receding) + row('ended', ended) + row('folded', AXES.filter((a, k) => LOOK.folded[k]).join(', ') || 'none') + row('face depth', LOOK.face_depth)
     + row('Gamma (the Node clock)', format(LOOK.node_clock)) + row('T (the quantum action)', format(LOOK.quantum_action)) + row('the largest integer', LOOK.largest_integer) + row('A (the amplitude bound)', format(LOOK.amplitude_bound))
     + row('intervals', format(LOOK.ticks) + ' recorded; the world declares ' + format(LOOK.declared_ticks)) + '</dl>';
-  html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>divisor</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
-    + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held || 'nothing'}</td><td class="num">${f.divisor === null ? '' : f.divisor}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
+  html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>level weight</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
+    + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held ? (f.sign ? 'the sign' : 'the content') : 'nothing'}</td><td class="num">${f.level_weight === null ? '' : f.level_weight}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th></tr></thead><tbody>'
     + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>detector</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'
@@ -797,7 +839,7 @@ function numbers() {
     + Object.entries(books).map(([name, book]) => `<tr><td>${esc(name)}</td>` + keys.map(k => `<td class="num">${format(book[k])}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>' : '<p>No interval was run.</p>';
 }
 
-/* The start: the title, the verdict, the theme (the browser's, or the one the button set, remembered where the browser keeps it), frame 0. */
+{{GATE_SCRIPT}}/* The start: the title, the verdict, the theme (the browser's, or the one the button set, remembered where the browser keeps it), frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
 const scheme = window.matchMedia('(prefers-color-scheme: dark)'), themeButton = byId('theme');
@@ -815,6 +857,168 @@ start();
 })();
 </script>
 """
+
+# The gate's panels, inserted at the template's three markers with a reading and absent without one.
+GATE_PANELS = """
+<script id="gate" type="application/json">{{GATE}}</script>
+<script id="beside" type="application/json">{{BESIDE}}</script>
+  <section class="panel">
+    <h2>The gate's input and run, seen from above</h2>
+    <div class="graph" id="gate-above"></div>
+    <div id="gate-sides"></div>
+  </section>
+  <section class="panel">
+    <h2>The parts lines per region</h2>
+    <div class="stack" id="gate-parts"></div>
+  </section>
+  <section class="panel wide">
+    <h2>The gate's reading beside the blind</h2>
+    <div class="stack" id="gate-reading"></div>
+  </section>"""
+
+GATE_SCRIPT = r"""/* The gate's panels (the joint-share reader's file over the gate's worlds and the blind of the gate's form): the board from above at the frame shown, the parts lines per region and the reader's credit beside the blind; every number the look's, the reader's or the blind's, the page comparing them and summing nothing new. */
+const GATE = JSON.parse(byId('gate').textContent), BESIDE = JSON.parse(byId('beside').textContent);
+const READING = GATE.reading, WORLD = READING.worlds[GATE.world], KEY = GATE.key, EXPECTED = BLIND.blind || {};
+const SIDES = Object.keys(BLIND.sides), NAME = String(BLIND.combination.name), GATE_FAMILY = String(BLIND.family);
+const SIDE_TONES = ['--matter', '--light', '--field', '--flash', '--ring'], CREDITS = ['by_the_parts_shares', 'by_the_local_sums', 'by_the_sign'];
+const sideColour = k => token(SIDE_TONES[k % SIDE_TONES.length]), gateHex = () => ROLES[GATE_FAMILY] ? colourOf(GATE_FAMILY) : token('--fg');
+const frac = v => v === null || v === undefined ? 'none' : v[1] === 1 ? format(v[0]) : format(v[0]) + ' / ' + format(v[1]);
+const ratio = v => v === null || v === undefined ? NaN : v[0] / v[1];
+const same = (u, v) => u !== null && u !== undefined && v !== null && v !== undefined && u[0] === v[0] && u[1] === v[1];
+const verdictOf = (u, v) => same(u, v) ? 'MATCH' : 'differs';
+const port = key => String(key).split(' ').map(p => p === 'plus' ? '+' : p === 'minus' ? '\u2212' : p).join(' ');
+const regionOf = label => LOOK.detectors.find(d => d.name === BLIND.sides[label]) || { name: String(BLIND.sides[label]), nodes: [], body: null };
+const clickedAt = (frame, name) => frame.lines.some(line => line.event === 'click' && line.detector === name && line.family === GATE_FAMILY);
+const AT_MOST = /at most (\d+)/, boundOf = text => { const m = AT_MOST.exec(String(text || '')); return m ? Number(m[1]) : null; };
+const FENCE = CREDITS.map(f => boundOf((EXPECTED[f] || {}).status)).find(b => b !== null) ?? null;
+
+/* From above: the two unfolded axes (a chain with its folded neighbour), the third summed; the view the frame's own box, growing with it. */
+const UNFOLDED = [0, 1, 2].filter(a => !LOOK.folded[a]), U = UNFOLDED[0] ?? 0, V = UNFOLDED[1] ?? [0, 1, 2].find(a => a !== U);
+function drawAbove() {
+  const frame = LOOK.frames[t], row = frameOf(t)[GATE_FAMILY] || {}, count = row.count, cells = new Map();
+  const o = originOf(frame), s = shapeOf(frame), left = o[U], top = o[V] + s[V];
+  const px = u => u - left, py = v => top - 1 - v;
+  if (count) for (let i = 0; i < N; i++) if (count[i]) { const n = nodeOf(i), k = px(n[U]) * s[V] + py(n[V]); cells.set(k, (cells.get(k) || 0) + count[i]); }
+  const most = Math.sqrt(Math.max(0, ...Array.from(cells.values(), Math.abs))) || 1;
+  let body = `<rect x="0" y="0" width="${s[U]}" height="${s[V]}" fill="${token('--board')}" stroke="${token('--line')}" stroke-width="0.3"/>`;
+  for (const [k, c] of cells) {
+    const x = Math.floor(k / s[V]), y = k % s[V], strength = Math.min(1, Math.sqrt(Math.abs(c)) / most);
+    body += c > 0 ? `<rect x="${x}" y="${y}" width="1" height="1" fill="${gateHex()}" fill-opacity="${strength.toFixed(3)}"/>` : `<rect x="${x + 0.15}" y="${y + 0.15}" width="0.7" height="0.7" fill="none" stroke="${gateHex()}" stroke-width="0.2"/>`;
+  }
+  const letter = Math.max(2, Math.min(s[U], s[V]) / 16);
+  SIDES.forEach((label, k) => {
+    const region = regionOf(label), nodes = region.body === null ? region.nodes : frame.bodies[region.body], flashing = clickedAt(frame, region.name);
+    const stroke = flashing ? token('--flash') : sideColour(k);
+    for (const n of nodes) body += `<rect x="${px(n[U]) + 0.1}" y="${py(n[V]) + 0.1}" width="0.8" height="0.8" fill="none" stroke="${stroke}" stroke-width="${flashing ? 0.3 : 0.15}"/>`;
+    if (nodes.length) {
+      const cx = nodes.reduce((a, n) => a + px(n[U]) + 0.5, 0) / nodes.length, cy = nodes.reduce((a, n) => a + py(n[V]) + 0.5, 0) / nodes.length;
+      body += `<text x="${cx.toFixed(1)}" y="${(cy + letter * 0.35).toFixed(1)}" text-anchor="middle" font-size="${letter}" font-family="${esc(token('--font-mono'))}" font-weight="600" fill="${stroke}">${esc(label)}</text>`;
+    }
+  });
+  body += `<text x="${s[U] - 0.3}" y="${s[V] - 0.5}" text-anchor="end" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[U]}</text><text x="0.3" y="${letter}" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[V]}</text>`;
+  const title = t === 0 ? `The input as laid: ${esc(GATE_FAMILY)}'s record at its Nodes and the ${SIDES.length} regions` : `Interval ${t}: the beams of ${esc(GATE_FAMILY)} and the ${SIDES.length} regions`;
+  byId('gate-above').innerHTML = `<div class="caption"><b>${title}</b><span>GameBoard reading, a diagnostic</span></div><svg viewBox="0 0 ${s[U]} ${s[V]}" role="img" aria-label="the board from above" shape-rendering="crispEdges" style="max-height: var(--board-height)">${body}</svg><div class="caption"><span>${AXES[U]} across, ${AXES[V]} up; a Node's count of ${esc(GATE_FAMILY)} as the cell's depth against the frame's largest (a hollow cell a count below 0); the box the frame's own, ${s[U]} x ${s[V]} at the file's coordinates from (${left}, ${o[V]})</span></div>`;
+}
+function sidesList() {
+  const family = FAMILIES.find(f => f.name === GATE_FAMILY), rows = SIDES.map((label, k) => {
+    const region = regionOf(label), basis = WORLD.bases[label] || [], pattern = WORLD.patterns[label] || [];
+    return `<dt style="color:${sideColour(k)}">${esc(label)}</dt><dd>${esc(region.name)}, ${format(region.nodes.length)} Nodes: the setting (p, q) = (${basis.map(format).join(', ')}), the pattern ${pattern.map(part => '[' + part.map(format).join(', ') + ']').join(' ')}</dd>`;
+  });
+  byId('gate-sides').innerHTML = `<dl>${rows.join('')}<dt>record</dt><dd>${esc(GATE_FAMILY)}, ${family ? format(family.lines) + ' parts laid alike' : 'not in the look'}; frame 0 the world as laid</dd><dt>declared</dt><dd>the settings and the patterns are the world file's, read by the reader (${esc(WORLD.world)}) and by nothing in the engine; the regions' Nodes are the file's</dd></dl>`;
+}
+
+/* The parts lines: per region the parts' signed level sums (now) over the intervals, the parts overlaid, and a strip of its click lines. */
+const PARTS_AT = {};
+for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'parts' && line.family === GATE_FAMILY) (PARTS_AT[line.detector] || (PARTS_AT[line.detector] = {}))[line.tick] = line.levels;
+function drawParts() {
+  const box = byId('gate-parts'); box.innerHTML = '';
+  SIDES.forEach((label, k) => {
+    const region = regionOf(label), at = PARTS_AT[region.name] || {}, parts = Math.max(0, ...Object.values(at).map(levels => levels.length));
+    const series = Array.from({ length: parts }, (_, p) => ({ name: label + ' part ' + (p + 1), colour: sideColour(k), dashed: p > 0, values: Float64Array.from({ length: T + 1 }, (_, i) => at[i] && at[i][p] ? at[i][p][0] : 0) }));
+    const g = document.createElement('div'); g.className = 'graph'; box.append(g);
+    graph(g, `The parts at ${region.name} (${label}): ${parts} parts overlaid, the sums now`, series, "the parts lines, the instrument's read");
+    const clicks = (reportsAt[region.name] || {})[GATE_FAMILY] || [];
+    if (!g.dataset.px) return;
+    const [left, right, frames] = JSON.parse(g.dataset.px), W = size('--graph-width'), h = size('--graph-pad') * 3, px = i => left + (frames > 1 ? i / (frames - 1) : 0) * (right - left);
+    const marks = clicks.map(([tick, inflow]) => `<line x1="${px(tick).toFixed(1)}" x2="${px(tick).toFixed(1)}" y1="0" y2="${h - size('--small')}" stroke="${token('--flash')}" stroke-width="1"><title>click at interval ${tick}: the inflow ${format(inflow)}</title></line>`).join('');
+    g.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 ${W} ${h}" role="img" aria-label="the click lines of ${esc(region.name)}">${marks}${svgText(format(clicks.length) + ' click lines of ' + region.name + ' (the measurement)', right, h - 1, 'end')}</svg>`);
+  });
+  moveCursors();
+}
+
+/* The reading: the joint shares as shareBars beside the blind, the world's numbers in one table, the combination over the gate's worlds on its ruler, the otherGate gate's line. */
+function shareBars() {
+  const keys = Object.keys(WORLD.shares || {}), n = keys.length, blind = (EXPECTED.shares || {})[KEY] || {}, drawn = WORLD.drawn ? WORLD.drawn.join(' ') : null;
+  const W = size('--graph-width') * 1.5, H = size('--graph-height') * 2, pad = size('--graph-pad'), left = pad * 6, bottom = pad * 9, small = size('--small') * 0.75;
+  const slot = (W - left - pad) / Math.max(n, 1), py = v => pad + (1 - v) * (H - pad - bottom), w = Math.max(1, slot * 0.3);
+  let body = `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText('1', left - 3, pad + small * 0.4, 'end') + svgText('0', left - 3, py(0), 'end');
+  keys.forEach((key, k) => {
+    const x = left + slot * (k + 0.5), run = WORLD.shares[key], expected = blind[key], rv = run ? ratio(run) : 0;
+    body += `<rect x="${(x - w).toFixed(1)}" y="${py(rv).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(rv)).toFixed(1)}" fill="${gateHex()}"><title>${port(key)}: the run's share ${frac(run)}, J = ${frac(WORLD.joint[key])}</title></rect>`;
+    if (expected) body += `<rect x="${x.toFixed(1)}" y="${py(ratio(expected)).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(ratio(expected))).toFixed(1)}" fill="none" stroke="${token('--blind')}" stroke-dasharray="3 2"><title>${port(key)}: the blind's share ${frac(expected)}</title></rect>`;
+    body += svgText(port(key), x, H - bottom + small * 1.2, 'middle') + svgText(frac(run), x, H - bottom + small * 2.4, 'middle') + (expected ? svgText('blind ' + frac(expected), x, H - bottom + small * 3.6, 'middle') : '') + (key === drawn ? svgText('drawn: the click', x, H - bottom + small * 4.8, 'middle') : '');
+  });
+  const identical = n > 0 && keys.every(key => same(WORLD.shares[key], blind[key]));
+  const legend = `<span><i style="border-color:${gateHex()};border-top-width:6px"></i>the run's shares J over their sum (the reader's credit over the parts lines)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>the blind's shares</span><span>drawn: the combination of ports drawn by the shares with the declared seed, the click</span>`;
+  return `<div class="graph"><div class="caption"><b>The ${n} joint shares at (${esc(KEY)}): ${identical ? 'the blind\u2019s exactly' : 'the run beside the blind'}</b><span>the reader's credit over the parts lines</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the joint shares beside the blind" style="max-width: var(--measure-width)">${body}</svg></div>`;
+}
+function worldTable() {
+  const rows = [[`E_${SIDES.length}, the correlation over the ${SIDES.length} sides`, WORLD.correlation, (EXPECTED.correlation || {})[KEY]]];
+  for (const label of SIDES) rows.push([`the marginal P(+) of ${label} (${regionOf(label).name})`, (WORLD.marginals || {})[label], ((EXPECTED.marginals || {})[KEY] || {})[label]]);
+  for (const [subset, e] of Object.entries(WORLD.sub_correlations || {})) rows.push([`E over ${subset} alone`, e, ((EXPECTED.sub_correlations || {})[KEY] || {})[subset]]);
+  for (const f of CREDITS) rows.push([`E ${f.replace(/_/g, ' ')}, a local credit (the fence)`, WORLD[f], ((EXPECTED[f] || {}).correlation || {})[KEY]]);
+  const cells = rows.map(([what, run, expected]) => `<tr><td>${esc(what)}</td><td class="num">${frac(run)}</td><td class="num">${frac(expected)}</td><td>${verdictOf(run, expected)}</td></tr>`).join('');
+  const quanta = Object.entries(WORLD.quanta || {}).map(([label, [inflow, wall]]) => `${label} ${format(inflow)} over W_c ${format(wall)}, about ${format(Math.round(inflow / wall))} quanta`).join('; ');
+  const mismatch = WORLD.mismatch || {}, ratios = (mismatch.ratios || []).map(frac).join(', ');
+  return `<div class="scroll"><table><thead><tr><th>${esc(GATE_FAMILY)} at (${esc(KEY)}), the world ${esc(WORLD.world)}</th><th>the run (the reader's credit)</th><th>the blind</th><th></th></tr></thead><tbody>${cells}</tbody></table></div>`
+    + `<div class="totals">drawn ${WORLD.drawn ? port(WORLD.drawn.join(' ')) : 'nothing'} (the click, one combination by the shares with the seed ${format(BLIND.seed)}); ${format(WORLD.intervals_reported)} intervals reported within the window ${(BLIND.window || []).join(' to ')}; the sides' inflow: ${quanta}</div>`
+    + `<div class="watch">${esc(mismatch.label || 'GAMEBOARD')}, a diagnostic and no credit: the parts' cross-side products' ratios to the first part's ${ratios || 'none'}, rho ${frac(mismatch.rho)}</div>`;
+}
+function rulerOf(most) {
+  const run = READING[NAME], expected = EXPECTED[NAME], W = size('--graph-width') * 1.5, H = size('--graph-height'), pad = size('--graph-pad'), left = pad * 5, right = W - pad * 5, mid = H / 2, small = size('--small') * 0.75;
+  const px = v => left + (v + most) / (2 * most) * (right - left);
+  let body = FENCE === null ? '' : `<rect x="${px(-FENCE).toFixed(1)}" y="${pad}" width="${(px(FENCE) - px(-FENCE)).toFixed(1)}" height="${H - 2 * pad}" fill="${token('--window')}"><title>the fence: |${NAME}| at most ${FENCE}, the blind's theorem lines</title></rect>`;
+  body += `<line x1="${left}" x2="${right}" y1="${mid}" y2="${mid}" stroke="${token('--line')}"/>`;
+  for (let v = -most; v <= most; v++) body += `<line x1="${px(v)}" x2="${px(v)}" y1="${mid - 4}" y2="${mid + 4}" stroke="${token('--line')}"/>` + svgText(format(v), px(v), H - pad, 'middle');
+  CREDITS.forEach((f, k) => { const own = READING[NAME + '_' + f]; if (own) body += `<path d="M ${px(ratio(own)).toFixed(1)} ${mid - 2} l -5 -8 h 10 z" fill="${token('--muted')}"><title>the local credit ${f.replace(/_/g, ' ')}: ${NAME} = ${frac(own)} (the blind ${frac((EXPECTED[f] || {})[NAME])})</title></path>` + (k === 0 ? svgText('the local credits, the fence', px(ratio(own)), mid - 12, 'middle') : ''); });
+  if (expected) body += `<circle cx="${px(ratio(expected)).toFixed(1)}" cy="${mid}" r="8" fill="none" stroke="${token('--blind')}" stroke-dasharray="3 2"><title>the blind's ${NAME} = ${frac(expected)}</title></circle>`;
+  if (run) body += `<circle cx="${px(ratio(run)).toFixed(1)}" cy="${mid}" r="4.5" fill="${gateHex()}"><title>the run's ${NAME} = ${frac(run)}</title></circle>` + svgText(NAME + ' = ' + frac(run), px(ratio(run)), mid + 16 + small, 'middle');
+  body += svgText('the algebraic maximum, one per term', right, pad + small, 'end') + (FENCE === null ? '' : svgText('|' + NAME + '| at most ' + FENCE + ', local realism', px(0), pad + small, 'middle'));
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(NAME)} on its ruler" style="max-width: var(--measure-width)">${body}</svg>`;
+}
+function combinationBox() {
+  const order = BLIND.order, signs = BLIND.combination.signs.map(Number), most = signs.reduce((s, v) => s + Math.abs(v), 0);
+  const formula = NAME + ' = ' + order.map((key, i) => (signs[i] < 0 ? (i ? ' \u2212 ' : '\u2212 ') : (i ? ' + ' : '')) + 'E(' + key + ')').join('');
+  const rows = order.map(key => `<tr><td>${esc(key)}${key === KEY ? ' (this page)' : ''}</td><td>${esc(String(BLIND.runs[key]))}</td><td class="num">${frac((READING.correlation || {})[key])}</td><td class="num">${frac((EXPECTED.correlation || {})[key])}</td><td>${verdictOf((READING.correlation || {})[key], (EXPECTED.correlation || {})[key])}</td></tr>`).join('');
+  const credits = CREDITS.map(f => `${f.replace(/_/g, ' ')} ${frac(READING[NAME + '_' + f])} (the blind ${frac((EXPECTED[f] || {})[NAME])})`).join('; ');
+  const statuses = CREDITS.map(f => (EXPECTED[f] || {}).status).filter(Boolean).map(text => `<div class="watch">${esc(text)}</div>`).join('');
+  return `<div class="graph"><div class="caption"><b>${esc(formula)}</b><span>over the gate's ${format(order.length)} worlds, the reader's file beside the blind</span></div>`
+    + `<div class="scroll"><table><thead><tr><th>settings</th><th>world</th><th>E, the run</th><th>E, the blind</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>${rulerOf(most)}`
+    + `<div class="totals">${esc(NAME)} = ${frac(READING[NAME])} by the meeting, the run; the blind ${frac(EXPECTED[NAME])}, ${verdictOf(READING[NAME], EXPECTED[NAME])}; the algebraic maximum ${format(most)}, one per term; the local credits as the fence: ${esc(credits)}</div>${statuses}</div>`;
+}
+function otherGate() {
+  if (!BESIDE) return '';
+  const name = String(BESIDE.combination.name), fence = CREDITS.map(f => boundOf(((BESIDE.blind || {})[f] || {}).status)).find(b => b !== null);
+  return `<div class="totals">Beside it, the other gate's blind, ${esc(BESIDE.file)}: ${esc(name)} = ${frac((BESIDE.blind || {})[name])} for ${esc(String(BESIDE.family))} over ${format(Object.keys(BESIDE.sides || {}).length)} sides at the settings ${esc(JSON.stringify(BESIDE.settings || {}))}${fence === null || fence === undefined ? '' : ', its fence |' + esc(name) + '| at most ' + format(fence)}</div>`;
+}
+function drawReading() { byId('gate-reading').innerHTML = shareBars() + worldTable() + combinationBox() + otherGate(); }
+let gateTheme = '';
+function drawGate() {
+  drawAbove();
+  const frame = LOOK.frames[t], counts = {}, clicked = frame.lines.filter(line => line.event === 'click').map(line => line.detector + ': ' + line.family);
+  for (const line of frame.lines) counts[line.event] = (counts[line.event] || 0) + 1;
+  if (t) byId('lines').textContent = Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? ' line' : ' lines')).join(', ') + (clicked.length ? ' (' + [...new Set(clicked)].join(', ') + ')' : '') || 'no line this interval';
+  const theme = token('--fg') + token('--matter');
+  if (theme !== gateTheme) { gateTheme = theme; sidesList(); drawParts(); drawReading(); }
+}
+
+"""
+
+GATE_MARKERS = {
+    "{{GATE_PANELS}}": GATE_PANELS,
+    "{{GATE_SCRIPT}}": GATE_SCRIPT,
+    "{{GATE_DRAW}}": " drawGate();",
+}
 
 
 if __name__ == "__main__":

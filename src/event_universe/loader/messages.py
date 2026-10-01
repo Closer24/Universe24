@@ -39,7 +39,7 @@ def messages_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[MessageRow, ...]:
-    """The messages: each its family (a family of quanta, or a holder of the content: a kick laid on the row's rest, the row's own travelling events with no count, the advisor's lay for the two speeds, #1563 comment 5916154126), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), and its levels from the mode file; a message with no mode entry is refused by name; `whole`, a Node at which the message's count would be laid whole with its levels spread as they are, is refused by name, since no family's line lays a count whole today (the lay is the share's; the key waits for the light family's line)."""
+    """The messages: each its family (a family of quanta, or a holder of the content: a kick laid on the row's rest, the row's own travelling events with no count, the advisor's lay, #1563 comment 5916154126), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q and not 0, refused by name at 0, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), and its levels from the mode file; a message with no mode entry is refused by name; `whole`, a Node at which the message's count would be laid whole with its levels spread as they are, is refused by name, since no family's line lays a count whole today (the lay is the share's; the key waits for the light family's line)."""
     names = {family.name: index for index, family in enumerate(families)}
     if not isinstance(value, list):
         raise ValueError("messages must be a list of laid records")
@@ -66,6 +66,11 @@ def messages_of(
             raise ValueError(f"{label}.wave must be [p, q], the wave number pi p / q per Link")
         halves = integer(wave[1], f"{label}.wave's q", 1)
         turns = integer(wave[0], f"{label}.wave's p", -halves, halves)
+        if turns == 0:
+            raise ValueError(
+                f"{label}.wave's p is 0: a message has a wave number pi p / q per Link, p not 0, its sign "
+                "the direction along the axis (a detector's region is read against it)"
+            )
         phase = message.get("phase", [0, 1])
         if not isinstance(phase, list) or len(phase) != 2:
             raise ValueError(f"{label}.phase must be [r, s], the phase 2 pi r / s")

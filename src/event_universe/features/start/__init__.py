@@ -33,18 +33,20 @@ def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
     return tuple(arrival(a, axis, 1, wrap) + arrival(a, axis, -1, wrap) for axis in range(3))
 
 
-def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int) -> int:
-    """The fine unit, derived from the width and never written: the largest unit at which num S_6 of the rest stays inside the width, the rest's bound the larger of the counts and the tent of the whole source over the longest extent (half of 3 x the source total over the divisor times the extent)."""
-    tent = int(division(3 * int(np.abs(counts).sum()) * (max(counts.shape) + 1), 2 * divisor, 1))
+def unit_of(counts: np.ndarray, pair: Pair, level_weight: int, width: int) -> int:
+    """The fine unit, derived from the width and never written: the largest unit at which num S_6 of the rest stays inside the width, the rest's bound the larger of the counts and the tent of the whole source over the longest extent (half of 3 x the source total over the level weight times the extent)."""
+    tent = int(division(3 * int(np.abs(counts).sum()) * (max(counts.shape) + 1), 2 * level_weight, 1))
     largest = max(int(np.abs(counts).max()), tent + 1)
     return int(division(1, 2 * abs(pair[0]) * 6 * largest, width))
 
 
-def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, wall: int) -> FieldAtRest:
-    """The rest by the line itself: the fine levels b <- (num S_6(b) + 3 den x (count x unit div E_s)) div (6 den) by Rule3's division act from nothing, until the levels repeat, the remainder at the half of `wall`, the wall of the rule the row steps by; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, and where the divisor is below 1."""
+def rest(
+    counts: np.ndarray, pair: Pair, wrap: Wrap, level_weight: int, width: int, wall: int
+) -> FieldAtRest:
+    """The rest by the line itself: the fine levels b <- (num S_6(b) + 3 den x (count x unit div E_s)) div (6 den), E_s the row's level weight, by Rule3's division act from nothing, until the levels repeat, the remainder at the half of `wall`, the wall of the rule the row steps by; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, and where the level weight is below 1."""
     num, den = pair
-    if divisor < 1:
-        raise ValueError(f"the start's divisor is from 1, got {divisor}")
+    if level_weight < 1:
+        raise ValueError(f"the start's level weight is from 1, got {level_weight}")
     long = [axis for axis in range(len(counts.shape)) if counts.shape[axis] > 1]
     closed = all(wrap[axis] for axis in long) and wrap.beyond is None
     if num == den and closed and bool(counts.any()):
@@ -52,9 +54,9 @@ def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, w
             f"the sum's rest needs a sink: a board periodic on every axis at [1, 1] has no rest under the "
             f"source total {int(counts.sum())}"
         )
-    unit = unit_of(counts, pair, divisor, width)
-    source = division(3 * den * unit, divisor, counts)
-    fine, iterations = np.zeros(counts.shape, dtype=np.int64), 0
+    unit = unit_of(counts, pair, level_weight, width)
+    source = division(3 * den * unit, level_weight, counts)
+    fine, iterations = np.zeros_like(counts), 0
     while True:
         iterations += 1
         after = np.asarray(rule3((num, num, num), arrivals(fine, wrap), 0, 6 * den, fine, 0, source)[0])
@@ -62,5 +64,5 @@ def rest(counts: np.ndarray, pair: Pair, wrap: Wrap, divisor: int, width: int, w
             break
         fine = after
     half = int(division(1, 2, unit))
-    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0], dtype=np.int64)
+    levels = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0])
     return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, wall - 1)))

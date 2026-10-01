@@ -1,4 +1,4 @@
-"""Bell's worlds (ALGEBRA.md row (h); the advisor's corrected instrument of 2026-09-30, #1563 comment 5918198102, with the setting as the comb's shift, the Boss's 5918297124) from the design file beside this script: the near-field board of 48 rows, per side two lobes of the light family before a wall with two gaps of two wavelengths and a bar between them, the pair's angle laid as the relative phase of the two lobes (the mirror on the two sides) at the half-offsets (k + 1/2) / K of the turn, the screens at L beyond the walls in regions of rows backed by receding faces, tiled on each side's setting grid; the ports three regions of four rows about the central maximum and the two first minima, displaced by the setting; their mode files by the message lay (tools/pixel_mode.py); and the blind expectation file, written before any run: the single-side pattern and its minima by the Huygens sum over the gaps' Nodes, and E, S and the efficiencies by the reader's own calibrated rule applied to that sum. Every number is the design's and stands in the files, none in this script or the engine.
+"""Bell's gate worlds (ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment) from the design file beside this script: four chain worlds, one per pair of settings, the pair family's two parts laid equal as one event at the centre, two beams to the two declared regions at the chain's ends, each region's `basis` the side's setting (p, q) and its `pattern` the pair's, [[1, 0], [0, 1]]; their mode files by the message lay (tools/pixel_mode.py, with --modes); and the blind expectation file, derived from the settings in exact fractions before any run and never touched after, by the reader's own algebra on equal parts (tools/bell_gate.py, `blind_of`): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at equal parts, Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12), the marginal 1 / 2, and the two local credits as the fence (by the parts' shares 238 / 169 and by the sign 2) with the local sums (240 / 169) beside them, each with its status and its fence label. Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -11,67 +11,57 @@ import argparse
 import json
 import subprocess
 import sys
-from math import atan2, cos, degrees, pi, sin, sqrt
 from pathlib import Path
 from typing import Any
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-SIDES = (("left", -1), ("right", 1))
-SIDE_SETTINGS = {"left": "b", "right": "a"}
+sys.path.insert(0, str(ROOT / "tools"))
+
+import bell_gate  # noqa: E402  # the reader's algebra: the blind is what it gives on equal parts
+
+ORDER = (
+    ("a", "b"),
+    ("a", "b_prime"),
+    ("a_prime", "b"),
+    ("a_prime", "b_prime"),
+)  # CHSH, minus on the second
+COMBINATION = {"name": "S", "signs": [1, -1, 1, 1]}  # S = E(a, b) - E(a, b') + E(a', b) + E(a', b')
 
 
-def regions(design: dict[str, Any], side: str) -> list[list[int]]:
-    """A screen's regions of rows: from the side's first boundary (`tiling`) by `rows_per_region`, the rows before the first boundary and after the last folded into the edge regions so that no region is narrower than the size rule allows."""
-    rows, height = int(design["rows_per_region"]), int(design["height"])
-    first = int(design["tiling"][side])
-    edges = list(range(first, height + 1, rows))
-    if edges[0] > 0:
-        edges[0] = 0
-    if height - edges[-1] < rows:
-        edges[-1] = height
-    if edges[-1] != height:
-        edges.append(height)
-    return [list(range(start, stop)) for start, stop in zip(edges[:-1], edges[1:], strict=True)]
-
-
-def world(design: dict[str, Any], angle: int | None) -> dict[str, object]:
-    """The world file of one angle k: the board, the two symmetric walls with their gaps, per side the two lobes (the upper one at the phase (k + 1/2) / K of the turn on the right side and its mirror on the left; no phase for the visibility world), the screens' regions and the receding faces."""
-    source, slab, height = int(design["source"]), int(design["slab"]), int(design["height"])
+def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
+    """One world: the chain, the pair laid as one event at the centre toward both sides, the two regions at the ends with their settings as their bases and the pair's pattern, the receding faces, the ticks."""
+    source, depth, length = int(design["source"]), int(design["screen"]), int(design["length"])
     p, q = (int(v) for v in design["wave"])
-    turns = int(design["angles"])
-    gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
-    messages: list[dict[str, object]] = []
-    for _side, sign in SIDES:
-        top = source + sign * int(design["offset"])
-        for index, lobe in enumerate(design["lobes"]):
-            message: dict[str, object] = {
-                "family": design["family"],
-                "along": "x",
-                "wave": [sign * p, q],
-                "amplitude": int(design["amplitude"]),
-                "top": {"x": [top, top], "y": [int(v) for v in lobe], "z": [0, 0]},
-                "edge": {"x": int(design["edge_along"]), "y": int(design["edge_across"]), "z": 0},
-            }
-            if index and angle is not None:
-                offset = 2 * angle + 1  # the half-offset (k + 1/2) / K as (2 k + 1) / (2 K)
-                message["phase"] = [offset if sign > 0 else 2 * turns - offset, 2 * turns]
-            messages.append(message)
-    detectors = []
-    for side, sign in SIDES:
-        near = source + sign * int(design["screen"])
-        columns = sorted(range(near, near + sign * slab, sign))
-        for number, rows in enumerate(regions(design, side)):
-            positions = [[x, y, 0] for y in rows for x in columns]
-            detectors.append({"name": f"{side}_{number}", "positions": positions})
+    messages = [
+        {
+            "family": design["family"],
+            "along": "x",
+            "wave": [sign * p, q],
+            "amplitude": int(design["amplitude"]),
+            "top": {"x": [source, source], "y": [0, 0], "z": [0, 0]},
+            "edge": {"x": int(design["edge_along"]), "y": 0, "z": 0},
+        }
+        for sign in (-1, 1)
+    ]
+    detectors = [
+        {
+            "name": design["sides"]["a"],
+            "positions": [[x, 0, 0] for x in range(depth)],
+            "basis": [int(v) for v in design["settings"][a]],
+            "pattern": design["patterns"]["a"],
+        },
+        {
+            "name": design["sides"]["b"],
+            "positions": [[x, 0, 0] for x in range(length - depth, length)],
+            "basis": [int(v) for v in design["settings"][b]],
+            "pattern": design["patterns"]["b"],
+        },
+    ]
     return {
-        "shape": [int(design["length"]), height, 1],
-        "boundary": {"x": "open", "y": "open", "z": "periodic"},
+        "shape": [length, 1, 1],
+        "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "face_depth": 1,
-        "faces": [
-            {"axis": "x", "at": source + sign * int(design["wall"]), "gaps": gaps}
-            for _side, sign in SIDES
-        ],
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
@@ -82,181 +72,71 @@ def world(design: dict[str, Any], angle: int | None) -> dict[str, object]:
     }
 
 
-def port_regions(design: dict[str, Any], side: str, shift: int) -> dict[str, list[str]]:
-    """The names of the regions that make the two ports of a side at a setting: the + port the rows about the centre and the - port the rows about the two first minima, each displaced by the setting's shift in rows; a port's rows must be whole regions of the side's tiling, refused by name otherwise."""
-    tiles = {tuple(rows): f"{side}_{number}" for number, rows in enumerate(regions(design, side))}
-    ports = design["ports"]
-    wanted = {"plus": [ports["plus"]], "minus": [list(pair) for pair in ports["minus"]]}
-    found: dict[str, list[str]] = {}
-    for port, spans in wanted.items():
-        names = []
-        for first, last in spans:
-            rows = tuple(range(int(first) + shift, int(last) + shift + 1))
-            if rows not in tiles:
-                raise ValueError(
-                    f"the {port} port of {side} at the shift {shift} is not a region: rows {rows}"
-                )
-            names.append(tiles[rows])
-        found[port] = names
+def ports(design: dict[str, Any], settings: tuple[str, ...]) -> list[dict[str, tuple[int, ...]]]:
+    """The sides' ports for one combination of settings, each side's from its setting and its pattern."""
+    return [
+        bell_gate.ports_of(
+            tuple(int(v) for v in design["settings"][setting]),
+            tuple((int(a), int(b)) for a, b in design["patterns"][label]),
+        )
+        for label, setting in zip(design["sides"], settings, strict=True)
+    ]
+
+
+def blind(design: dict[str, Any]) -> dict[str, Any]:
+    """The blind numbers from the settings alone, exact, by the reader's algebra on equal parts: E per pair of settings and S by the meeting, the marginals, the three local credits with their S, S as one line of rho, and the status and fence of each."""
+    found = bell_gate.blind_of(
+        {" ".join(pair): ports(design, pair) for pair in ORDER},
+        list(design["sides"]),
+        COMBINATION["name"],
+        COMBINATION["signs"],
+    )
+    s_meeting, s_shares = (
+        bell_gate.fraction(found["S"]),
+        bell_gate.fraction(found["by_the_parts_shares"]["S"]),
+    )
+    assert s_meeting is not None and s_shares is not None
+    found.update(
+        efficiency="1, closed by construction: every pair is credited by the draw",
+        status="theorem under the owner's declaration of the credit (the one form of the click, the meeting): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at equal parts, Lagrange's identity, the parts laid equal stepping equal by the determinism of Rule3; a gate of the engine and never a result (HIGHLIGHTS.md, One experiment and one gate)",
+        fence="clicks",
+    )
+    found["by_the_parts_shares"].update(
+        status="theorem: each part's share credited alone is a product form, E = cos 2a cos 2b, rho = 0, S at most 2; the lower fence",
+        fence="clicks",
+    )
+    found["by_the_local_sums"].update(
+        status="theorem: the square of each side's own sum is a product form, E = sin 2a sin 2b, S at most 2; a reader rewritten as a local sum lands here",
+        fence="clicks",
+    )
+    found["by_the_sign"].update(
+        status="theorem: the larger port on each side, every outcome the same, E = 1 where neither side ties and 0 where one does, S = 2 exactly; the upper fence of a local credit",
+        fence="clicks",
+    )
+    found["of_rho"] = {
+        "S": f"({s_shares.numerator} + {(s_meeting - s_shares).numerator} rho) / {s_meeting.denominator}",
+        "status": "derived (the mathematician, #1572 comment 5925175652): E = cos 2a cos 2b + rho sin 2a sin 2b, rho = 2 r / (1 + r^2) the parts' mismatch, 1 at the equal lay; r and rho are the reader's labelled diagnostics and no number of this blind",
+        "fence": "GameBoard for r and rho, clicks for S",
+    }
     return found
 
 
-def huygens(design: dict[str, Any], phase: float, sign: int) -> list[float]:
-    """The single-side pattern at the screen by the Huygens sum in two dimensions: every Node of each gap a source at the wall, the upper gap's sources at the relative phase (the pair's angle on the right, its mirror on the left), the field at each screen row the sum of e^(i k r) / sqrt r, the intensity its square; no number of the engine, the design's alone."""
-    p, q = (int(v) for v in design["wave"])
-    k = pi * p / q
-    distance = float(int(design["screen"]) - int(design["wall"]))
-    pattern = []
-    for row in range(int(design["height"])):
-        real = imaginary = 0.0
-        for index, (first, last) in enumerate(design["gaps"]):
-            turn = sign * phase if index else 0.0
-            for source in range(int(first), int(last) + 1):
-                r = sqrt(distance * distance + (row - source) ** 2)
-                real += cos(k * r + turn) / sqrt(r)
-                imaginary += sin(k * r + turn) / sqrt(r)
-        pattern.append(real * real + imaginary * imaginary)
-    return pattern
-
-
-def minima_of(pattern: list[float]) -> list[int]:
-    """The rows of the pattern's local minima."""
-    return [
-        row
-        for row in range(1, len(pattern) - 1)
-        if pattern[row] < pattern[row - 1] and pattern[row] < pattern[row + 1]
-    ]
-
-
-def phase_of(difference: list[float], turns: int, sign: int) -> float:
-    """A setting's phase in radians from the calibrated difference over the run phases (k + 1/2) / turns of the turn (the mirror on the left), fitted to A cos(u - delta) by its first harmonic, as the reader calibrates it (the advisor, #1563 comment 5918622391)."""
-    angles = [sign * 2 * pi * (k + 0.5) / turns for k in range(turns)]
-    along = sum(d * cos(u) for d, u in zip(difference, angles, strict=True))
-    across = sum(d * sin(u) for d, u in zip(difference, angles, strict=True))
-    return atan2(across, along)
-
-
-def side_reading(
-    design: dict[str, Any], side: str, shift: int
-) -> tuple[list[float], list[float], list[int], float]:
-    """The reader's rule on the Huygens sum for one side at one setting over the run phases: the light in the ports, the contrast (the calibrated difference over its half swing), the outcome (its sign) and the setting's calibrated phase, as tools/bell_clicks.py reads a run (`calibrated`, `phase_of`)."""
-    sign = dict(SIDES)[side]
-    turns = int(design["angles"])
-    plus_rows = list(
-        range(int(design["ports"]["plus"][0]) + shift, int(design["ports"]["plus"][1]) + shift + 1)
-    )
-    minus_rows = [
-        row
-        for first, last in design["ports"]["minus"]
-        for row in range(int(first) + shift, int(last) + shift + 1)
-    ]
-    plus, minus = [], []
-    for angle in range(turns):
-        pattern = huygens(design, 2 * pi * (2 * angle + 1) / (2 * turns), sign)
-        plus.append(sum(pattern[row] for row in plus_rows))
-        minus.append(sum(pattern[row] for row in minus_rows))
-    mean_plus, mean_minus = sum(plus) / turns, sum(minus) / turns
-    difference = [a / mean_plus - b / mean_minus for a, b in zip(plus, minus, strict=True)]
-    half_swing = (max(difference) - min(difference)) / 2
-    light = [a + b for a, b in zip(plus, minus, strict=True)]
-    contrast = [abs(d) / half_swing if half_swing else 0.0 for d in difference]
-    outcome = [1 if d > 0 else -1 if d < 0 else 0 for d in difference]
-    return light, contrast, outcome, phase_of(difference, turns, sign)
-
-
-def blind_row(design: dict[str, Any]) -> dict[str, Any]:
-    """The blind numbers from the Huygens sum: the u = 0 pattern with its minima; by the reader's own rule E at the four settings, S and the efficiency per side and setting; and the settings' calibrated phases with E = cos(delta_A + delta_B) at them and S from those cosines (the advisor, 5918622391: the row of the paper, nature's law in the polariser's angles with the instrument's angles the calibrated ones)."""
-    pattern = huygens(design, 0.0, 1)
-    top = max(pattern)
-    settings = {side: [int(v) for v in design["settings"][SIDE_SETTINGS[side]]] for side, _s in SIDES}
-    by = {design["sign"]: "sign", design["contrast"]: "contrast"}
-    sides = {
-        side: {shift: side_reading(design, side, shift) for shift in settings[side]} for side in settings
-    }
-    correlation: dict[str, float] = {}
-    efficiency: dict[str, dict[str, float]] = {side: {} for side in settings}
-    cosines: dict[str, float] = {}
-    for shift_a in settings["right"]:
-        light_a, contrast_a, outcome_a, phase_a = sides["right"][shift_a]
-        for shift_b in settings["left"]:
-            light_b, contrast_b, outcome_b, phase_b = sides["left"][shift_b]
-            cosines[f"{shift_a} {shift_b}"] = cos(phase_a + phase_b)
-            clicks_a = [
-                n * (c if by["right"] == "contrast" else 1.0)
-                for n, c in zip(light_a, contrast_a, strict=True)
-            ]
-            clicks_b = [
-                n * (c if by["left"] == "contrast" else 1.0)
-                for n, c in zip(light_b, contrast_b, strict=True)
-            ]
-            weights = [min(x, y) for x, y in zip(clicks_a, clicks_b, strict=True)]
-            product = sum(oa * ob * w for oa, ob, w in zip(outcome_a, outcome_b, weights, strict=True))
-            correlation[f"{shift_a} {shift_b}"] = product / sum(weights)
-    for side, shifts in sides.items():
-        for shift, (light, contrast, _outcome, _phase) in shifts.items():
-            credited = sum(
-                n * (c if by[side] == "contrast" else 1.0) for n, c in zip(light, contrast, strict=True)
-            )
-            efficiency[side][str(shift)] = credited / sum(light)
-    (a, a_prime), (b, b_prime) = settings["right"], settings["left"]
-    s_value = (
-        correlation[f"{a} {b}"]
-        - correlation[f"{a} {b_prime}"]
-        + correlation[f"{a_prime} {b}"]
-        + correlation[f"{a_prime} {b_prime}"]
-    )
-    s_cosines = (
-        cosines[f"{a} {b}"]
-        - cosines[f"{a} {b_prime}"]
-        + cosines[f"{a_prime} {b}"]
-        + cosines[f"{a_prime} {b_prime}"]
-    )
-    return {
-        "pattern": [round(value / top, 3) for value in pattern],
-        "minima": minima_of(pattern),
-        "correlation": {key: round(value, 3) for key, value in correlation.items()},
-        "S": round(s_value, 3),
-        "efficiency": {
-            side: {k: round(v, 3) for k, v in values.items()} for side, values in efficiency.items()
-        },
-        "phases": {
-            side: {str(shift): round(degrees(values[3]), 1) for shift, values in shifts.items()}
-            for side, shifts in sides.items()
-        },
-        "cosines": {key: round(value, 3) for key, value in cosines.items()},
-        "S_cosines": round(s_cosines, 3),
-        "bound": 2.0,
-    }
-
-
 def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind expectation file, as tools/bell_clicks.py reads it: the sides' regions with their rows, per side and setting the regions of the two ports, which side credits by the sign (A) and which by the contrast (B), the runs, the settings in rows and in degrees of fringe phase, and the blind row from the Huygens sum."""
-    spacing = int(design["spacing"])
-    settings = {side: [int(v) for v in design["settings"][SIDE_SETTINGS[side]]] for side, _s in SIDES}
+    """The blind expectation file, as tools/bell_gate.py reads it: the family, the window, the sides' regions, the settings and the patterns, the four worlds in CHSH order with the combination's name and signs, the credit's rule named, the seed and the blind."""
     return {
-        "comment": design["blind_comment"],
         "verdict": "DETECTOR",
+        "comment": design["comment"],
         "family": design["family"],
-        "across": "y",
-        "sides": {
-            side: {f"{side}_{number}": rows for number, rows in enumerate(regions(design, side))}
-            for side, _sign in SIDES
-        },
-        "ports": {
-            side: {str(shift): port_regions(design, side, shift) for shift in shifts}
-            for side, shifts in settings.items()
-        },
-        "sign": design["sign"],
-        "contrast": design["contrast"],
-        "runs": [f"bell_{angle}" for angle in range(int(design["angles"]))],
-        "visibility_world": "bell_v",
-        "quanta": None,
-        "spacing": spacing,
-        "settings": settings,
-        "degrees": {
-            side: [shift * 360 // spacing for shift in shifts] for side, shifts in settings.items()
-        },
-        "blind": blind_row(design),
+        "window": [int(v) for v in design["window"]],
+        "sides": design["sides"],
+        "settings": design["settings"],
+        "patterns": design["patterns"],
+        "order": [" ".join(pair) for pair in ORDER],
+        "runs": {" ".join(pair): "bell_" + "_".join(pair) for pair in ORDER},
+        "combination": COMBINATION,
+        "rule": "the joint share accumulated over the window on both members of the level pair: J(p_A, p_B) = SUM over the window of (SUM_k c_k now_k^A now_k^B)^2 + (SUM_k c_k before_k^A before_k^B)^2 with c_k = e_k(p_A) e_k(p_B), e(+) = (p, q) the declared basis under the pair's pattern [[1, 0], [0, 1]] and e(-) = (-q, p); E = (J_++ + J_-- - J_+- - J_-+) over the four summed; the window the whole passage, the credit's interval the draw's by the shares over it, one pair per world drawn with the seed; J is a sum of squares and never negative, so no floor is needed (the advisor, #1563 comment 5924731760; the mathematician, #1572 comment 5925374010)",
+        "seed": int(design["seed"]),
+        "blind": blind(design),
     }
 
 
@@ -270,11 +150,9 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
     args.folder.mkdir(parents=True, exist_ok=True)
-    worlds: list[tuple[str, int | None]] = [("bell_v", None)]
-    worlds += [(f"bell_{angle}", angle) for angle in range(int(design["angles"]))]
-    for name, angle in worlds:
-        path = args.folder / f"{name}.json"
-        document = world(design, angle)
+    for a, b in ORDER:
+        path = args.folder / f"bell_{a}_{b}.json"
+        document = world(design, a, b)
         path.write_text(json.dumps(document) + "\n", encoding="utf-8")
         if args.modes:
             subprocess.run(
@@ -283,10 +161,14 @@ def main(argv: list[str] | None = None) -> None:
                 cwd=ROOT,
                 stdout=subprocess.DEVNULL,
             )
-        print(json.dumps({"world": str(path), "angle": angle, "detectors": len(document["detectors"])}))
-    blind = args.folder / "expectation.json"
-    blind.write_text(json.dumps(expectation(design), indent=1) + "\n", encoding="utf-8")
-    print(json.dumps({"expectation": str(blind), "runs": int(design["angles"])}))
+        print(json.dumps({"world": str(path), "settings": [a, b]}))
+    written = expectation(design)
+    (args.folder / "expectation.json").write_text(json.dumps(written, indent=1) + "\n", encoding="utf-8")
+    print(
+        json.dumps(
+            {"expectation": str(args.folder / "expectation.json"), "blind": written["blind"]["S"]}
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -50,6 +50,26 @@ def receding_of(value: object, shape: Node, boundary: Mapping[str, object]) -> t
     return tuple(found)
 
 
+def layer_of(
+    shape: Node, open_axes: tuple[bool, bool, bool], depth: int, receding: tuple[RecedingFace, ...]
+) -> tuple[Node, ...]:
+    """The open faces' layer, the Nodes within `depth` of an open face that does not recede, sorted: the one region of the board's own that reports (ENGINE.md, the words), none where every open face recedes."""
+    gone = {(face.axis, face.side) for face in receding}
+    found: set[Node] = set()
+    for axis in range(3):
+        if not open_axes[axis]:
+            continue
+        for x in range(shape[0]):
+            for y in range(shape[1]):
+                for z in range(shape[2]):
+                    at = (x, y, z)
+                    if (at[axis] < depth and (axis, -1) not in gone) or (
+                        at[axis] >= shape[axis] - depth and (axis, 1) not in gone
+                    ):
+                        found.add(at)
+    return tuple(sorted(found))
+
+
 def faces_of(value: object, shape: Node) -> tuple[Node, ...]:
     """The Nodes beyond the board, sorted, from the inner faces: each across an axis at a coordinate, the plane's Nodes beyond the board except its gaps, each gap a range on each of the other two axes; faces that leave no Node on the board are refused by name."""
     if not isinstance(value, list):

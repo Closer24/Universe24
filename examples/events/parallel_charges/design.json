@@ -1,0 +1,32 @@
+{
+ "comment": "The parallel charges' force, the magnetism row (b2) of ALGEBRA.md #the-rows-against-nature, designed in the rotation round and to be run (ENGINE.md, section 6): the force between two like charges moving side by side over the static force, nature's Coulomb over gamma, read on the GameBoard as the transverse separation's second difference. The board `shape`, periodic along x (the bodies run around the chain) and open across y with the faces' layer one Node deep, on the universe `universe` (the holder of the sign at the level weight `level_weight` declaring the act `rotation`, so that it carries its three odd axis lines, sourced by the momentum density of its two-part readers at the wall den T and read as the phase on the Link); two bodies of `quanta` quanta of the plane family `family` laid rotating in the sense +1, `apart` Links apart across y at the column `column`, both moving along +x at the velocity `velocity` (as a fraction of light's speed on the lattice, 1 / sqrt 3 Links per interval), the moving lay the generator does not make yet: a body's standing record times cos(k x) on its real pair and the quadrature on its second, k the body's wave number for that velocity from its band, v = (num / (3 den)) sin k / sin omega_0 (ALGEBRA.md #the-velocity); and the same two bodies at rest, the static reference. Over `ticks` intervals the reading (GameBoard) is each body's share centroid across y per interval, the separation's second difference the acceleration, the moving pair's over the static pair's the force over the static one. The matter pair's own top speed on the lattice is (num / (3 den sin omega_0)) = 0.298 Links per interval, 0.516 of light's, so the body at 0.5 c runs near its band's top where the lattice's dispersion is far from the continuum's, the lattice computation to three digits being exactly the look.",
+ "universe": "examples/events/like_or_unlike/turning.json",
+ "engine": "examples/events/engine_start.json",
+ "family": "charged",
+ "holder": "charge",
+ "level_weight": 10,
+ "shape": [
+  64,
+  24,
+  1
+ ],
+ "column": 16,
+ "apart": 8,
+ "quanta": 50,
+ "velocity": [
+  [
+   1,
+   10
+  ],
+  [
+   1,
+   2
+  ]
+ ],
+ "ticks": 200,
+ "window": [
+  1,
+  200
+ ],
+ "status": "to be run: the generator lays a body at rest and no moving body yet; the design and the blind stand committed until it does"
+}
