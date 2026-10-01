@@ -6,6 +6,8 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any
 
+import numpy as np
+
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule, Row
@@ -66,7 +68,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the amplitude bound A derived, the families, the bodies, the messages, the detectors and the receding faces."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors and the receding faces."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -77,6 +79,7 @@ class World:
     node_clock: int
     quantum_action: int
     width: int
+    kind: type
     amplitude_bound: int
     families: tuple[FamilyRule, ...]
     bodies: tuple[BodyRow, ...]
@@ -104,12 +107,16 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, bool, bool]:
     return lines, lines == PLANE, False
 
 
+def kind_of(width: int) -> type:
+    """The kind of the run's arrays from the declared width, the one place the engine's integers are chosen (the owner, 2026-10-01, 02:35, "choose 64 or 128 bits outside the engine, at the start"): the host's 64-bit integers where the width is at or under the host's signed bits, Python's integers (arrays of objects, exact at any width and slow) above it; the amplitude bound A is derived at the declared width either way (ENGINE.md, the loader)."""
+    return np.int64 if width <= MAX_WORK_INT.bit_length() else object
+
+
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
     """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its divisor and its rest (a held row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22), everything else derived by the rule from the pair and the shape."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
-    integer(integers["width"], "integers.width", 1, MAX_WORK_INT.bit_length())
     entries = universe["families"]
     if not isinstance(entries, list) or not entries:
         raise ValueError("families must be a list of the families' rows")
@@ -290,6 +297,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         gamma,
         action,
         derived.largest_of(width),
+        kind_of(width),
         bound,
         families,
         bodies,

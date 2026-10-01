@@ -80,7 +80,7 @@ def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: n
 
 def read_quanta(share_now: np.ndarray, den: int, action: int) -> np.ndarray:
     """A share read in quanta at every Node, the engine's own reading (`share.quanta_of`): (share + W_c div 2) div W_c with W_c = 3 den T by Rule3's division act (ALGEBRA.md #the-count-is-the-records-share)."""
-    return np.asarray(quanta_of(share_now, 3 * den * action), dtype=np.int64)
+    return np.asarray(quanta_of(share_now, 3 * den * action, np.int64))
 
 
 def period_reading(

@@ -122,7 +122,7 @@ def frame(
             if kept is not None:
                 real, second = kept[index]
                 row["form"] = node.form(real, state.levels) + node.form(second, state.second)
-            content, axis = node.read(index, board.families, board.states, "now", board.shape)
+            content, axis = node.read(index, board.families, board.states, "now")
             row["pace"] = min(int(np.min(pace)) for pace in link_paces(world.node_clock, content, axis))
         else:
             row = {"level": state.parts[0].now, "parts": [part.now for part in state.parts[1:]]}

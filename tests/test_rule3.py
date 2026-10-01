@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 import dataclasses
+import json
 import random
 import re
 import sys
@@ -23,7 +24,7 @@ from event_universe.core.rule3 import (
     rule_total_bound,
 )
 from event_universe.game_board import GameBoard
-from event_universe.world_files import load_world
+from event_universe.world_files import input_digest, load_world
 from tests.laws import chain_body_world, load_file
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -298,3 +299,39 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
     table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
     assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)
+
+
+def test_the_width_chooses_the_arrays_kind_and_a_run_above_the_hosts_bits_gives_the_same_lines(
+    tmp_path, monkeypatch
+):
+    """The width is the run's declaration (the owner, 2026-10-01, 02:35): the loader's one site maps `integers.width` to the arrays' kind, the hardware's 64-bit integers at or under the host's signed bits and Python's integers above them (`loader.world.kind_of`); the chain world run at the width 63 and at 127 over forty intervals gives the same click and field lines and the same books bit for bit, every array of the wider run an array of Python integers; no other file of src names an integer's kind."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    world = chain_body_world(tmp_path, TOOL)
+    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    universe["integers"]["width"] = 127
+    document = {**json.loads(world.read_text(encoding="utf-8")), "universe": "wide.json"}
+    mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    mode["world_digest"] = input_digest(document)
+    for name, text in (("wide", universe), ("chain_wide", document), ("chain_wide.mode", mode)):
+        (tmp_path / f"{name}.json").write_text(json.dumps(text), encoding="utf-8")
+    runs = []
+    for path, kind in ((world, np.int64), (tmp_path / "chain_wide.json", object)):
+        lines: list[dict[str, object]] = []
+        board = GameBoard(load_world(path), lines.append)
+        for _ in range(40):
+            board.step()
+        arrays = [a for s in board.states for r in node.records(s) for a in (r.now, r.remainder)]
+        assert board.world.kind is kind and all(a.dtype == np.dtype(kind) for a in arrays)
+        runs.append((lines, board.books()))
+    assert runs[0] == runs[1] and runs[0][0]
+    named = [
+        f"{path.relative_to(ROOT)}: {m.group(0)}"
+        for path in sorted(SOURCE.rglob("*.py"))
+        for m in INTEGER_KINDS.finditer(path.read_text(encoding="utf-8"))
+    ]
+    assert named == ["src/event_universe/loader/world.py: np.int64"], named
+
+
+INTEGER_KINDS = re.compile(
+    r"np\.u?int(?:8|16|32|64|p)?\b|np\.iinfo|\"int64\"|dtype=np\."
+)  # an integer's kind named

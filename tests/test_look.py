@@ -17,10 +17,7 @@ PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
 BELL = load_file("bell_clicks", ROOT / "tools" / "bell_clicks.py")
 BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
-ROLE_OF = {
-    (True, True): "light",
-    (True, False): "field",
-}  # (held, a plane); a holder of nothing is matter
+ROLE_OF = {(True, True): "light", (True, False): "field"}  # (held, by the Wronskian), else matter
 SCREEN = [
     {"name": f"screen {y}", "positions": [[20, y + r, 0] for r in range(4 + (y == 4))]} for y in (0, 4)
 ]
@@ -143,10 +140,7 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     (tmp_path / "bell.json").write_text(json.dumps(bell))
     click = {"event": "click", "tick": 1, "family": "charge"}
     outs = []
-    for name, quanta in (
-        ("bell_0", (3, 1, 1, 2)),
-        ("bell_1", (1, 3, 2, 1)),
-    ):  # left +, left -, right +, right -
+    for name, quanta in (("bell_0", (3, 1, 1, 2)), ("bell_1", (1, 3, 2, 1))):  # left +, -, right +, -
         big = [
             {**click, "detector": d, "inflow": n * wall}
             for d, n in zip(BELL_REGIONS, quanta, strict=True)
@@ -175,10 +169,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     assert [m.get("phase") for m in built["messages"]] == [None, [63, 64], None, [1, 64]]  # the offset
     assert [m.get("phase") for m in tilted["messages"]] == [None, [61, 64], None, [3, 64]]  # the mirror
     assert [m["top"]["x"][0] for m in built["messages"]] == [111, 111, 231, 231]
-    assert blind["settings"] == {"left": [-2, -6], "right": [0, 4]} and blind["degrees"]["left"] == [
-        -45,
-        -135,
-    ]
+    assert blind["settings"] == {"left": [-2, -6], "right": [0, 4]}
+    assert blind["degrees"]["left"] == [-45, -135]
     assert blind["ports"]["right"]["0"] == {"plus": ["right_5"], "minus": ["right_3", "right_7"]}
     assert [len(rows) for rows in blind["sides"]["right"].values()] == [6] + [4] * 9 + [6]
     assert blind["blind"]["minima"] == [16, 31] and 2.7 < blind["blind"]["S_cosines"] < 2.9

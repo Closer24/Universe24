@@ -12,10 +12,9 @@ GAMMA, SHAPE = 10_000, (3, 3, 3)
 
 def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_name():
     """No floor and no clamp: a hill of 150 on [800, 850] (the edge's square 2 den Gamma^2 div (den + num) between 10,150^2 and 10,151^2) takes the clock's square to 10,151^2 and the load refuses it naming the Node; 75 passes as it is, the content -75, and the read alone never refuses; the same hill on the axis contents alone is caught on that axis as an integer pace; for den = num the edge is p <= Gamma exactly: a content of -1 refuses by name, a content at Gamma div 2 (the Link's pace at 0) refuses on the lower side and Gamma div 2 - 1 passes."""
-    left, right = stability_bound((800, 850), GAMMA)
-    edge = edge_squared((800, 850), GAMMA)
+    (left, right), edge = stability_bound((800, 850), GAMMA), edge_squared((800, 850), GAMMA)
     assert (left, right) == (1_650, GAMMA * GAMMA * 1_700) and edge == right // left
-    assert 10_150**2 <= edge < 10_151**2
+    assert 10_150**2 <= edge < 10_151**2 and GAMMA % 2 == 0
     flat = np.zeros(SHAPE, dtype=np.int64)
 
     def hill(depth: int) -> np.ndarray:
@@ -27,16 +26,12 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     guard((800, 850), GAMMA, hill(75), (flat, flat, flat), "matter")
     with pytest.raises(ValueError, match=r"squared is 103045000 at the Node \(1, 1, 1\) at load"):
         guard((800, 850), GAMMA, hill(150), (flat, flat, flat), "matter")
-    axis = flat.copy()
-    axis[2, 0, 1] = -153
+    axis, hollow, deep = flat.copy(), flat.copy(), flat.copy()
+    axis[2, 0, 1], hollow[0, 1, 0], deep[1, 1, 1] = -153, -1, GAMMA // 2
     with pytest.raises(ValueError, match=r"axis 2\) squared is 103083409 at the Node \(2, 0, 1\)"):
         guard((800, 850), GAMMA, flat, (flat, flat, axis), "matter")
-    hollow = flat.copy()
-    hollow[0, 1, 0] = -1
     with pytest.raises(ValueError, match=r"squared is 100020002 at the Node \(0, 1, 0\) at load, above"):
         guard((1, 1), GAMMA, hollow, (flat, flat, flat), "light")
-    deep = flat.copy()
-    deep[1, 1, 1] = GAMMA // 2
     with pytest.raises(ValueError, match=r"is 0 at the Node \(1, 1, 1\) at load: the pace"):
         guard((1, 1), GAMMA, deep, (flat, flat, flat), "light")
     deep[1, 1, 1] = GAMMA // 2 - 1

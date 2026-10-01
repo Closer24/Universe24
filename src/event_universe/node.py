@@ -44,30 +44,35 @@ class NodeState:
     write_remainders: list[np.ndarray]
 
 
-def zeros(shape: tuple[int, int, int]) -> np.ndarray:
-    """An integer array of zeros over the GameBoard."""
-    return np.zeros(shape, dtype=np.int64)
+def zeros(shape: tuple[int, int, int], kind: type) -> np.ndarray:
+    """An array of zeros over the GameBoard, of the run's kind of integers (the loader's choice by the file's width, `World.kind`)."""
+    return np.zeros(shape, dtype=kind)
 
 
-def empty_record(shape: tuple[int, int, int]) -> Record:
+def full(shape: tuple[int, int, int], value: Any, kind: type) -> np.ndarray:
+    """An array over the GameBoard at one value, of the run's kind of integers."""
+    return np.full(shape, value, dtype=kind)
+
+
+def empty_record(shape: tuple[int, int, int], kind: type) -> Record:
     """A level pair at 0 with the remainder 0 at every Node."""
-    return Record(zeros(shape), zeros(shape), zeros(shape))
+    return Record(zeros(shape, kind), zeros(shape, kind), zeros(shape, kind))
 
 
-def write_origins(walls: Sequence[int], shape: tuple[int, int, int]) -> list[np.ndarray]:
+def write_origins(walls: Sequence[int], shape: tuple[int, int, int], kind: type) -> list[np.ndarray]:
     """A held family's write remainders at a Node with no level, one per part at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start)."""
-    return [
-        np.full(shape, rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0], dtype=np.int64) for wall in walls
-    ]
+    return [full(shape, rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0], kind) for wall in walls]
 
 
-def empty_state(family: FamilyRule, shape: tuple[int, int, int], walls: Sequence[int]) -> NodeState:
+def empty_state(
+    family: FamilyRule, shape: tuple[int, int, int], walls: Sequence[int], kind: type
+) -> NodeState:
     """A family's NodeState before its start, the state of a Node with no level: its two level pairs at 0 where it carries quanta, its parts at 0 with their write remainders at the origin (`walls` the write's wall per part) where it is held, its time part the real pair itself where it does both (the holder of the sign, its quanta light: `parts[0] is levels`)."""
     quanta = family.quanta
-    parts = [empty_record(shape) for _ in range(components(family.parts))] if family.held else []
-    levels = parts[0] if parts and quanta else empty_record(shape) if quanta else None
-    second = empty_record(shape) if quanta else None
-    return NodeState(levels, second, parts, write_origins(walls, shape) if family.held else [])
+    parts = [empty_record(shape, kind) for _ in range(components(family.parts))] if family.held else []
+    levels = parts[0] if parts and quanta else empty_record(shape, kind) if quanta else None
+    second = empty_record(shape, kind) if quanta else None
+    return NodeState(levels, second, parts, write_origins(walls, shape, kind) if family.held else [])
 
 
 def records(state: NodeState) -> list[Record]:
@@ -110,9 +115,8 @@ def read(
     families: tuple[FamilyRule, ...],
     states: list[NodeState],
     level: str,
-    shape: tuple[int, int, int],
 ) -> tuple[Any, tuple[Any, Any, Any]]:
-    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time part at `level`, "now" forward and "before" backward) and the axis contents t_a = SUM over the reads of (weight x the read family's aa part + 1) div 2, one division per read per axis rounded at the read; 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
+    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time part at `level`, "now" forward and "before" backward) and the axis contents t_a = SUM over the reads of (weight x the read family's aa part + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
     reads = families[index].reads
     content = content_of([(r.weight, getattr(states[r.family].parts[0], level)) for r in reads])
     axis = []
@@ -122,32 +126,20 @@ def read(
             tensor = diagonal(families[r.family].parts)
             if tensor is not None:
                 found.append((r.weight, getattr(states[r.family].parts[tensor[a]], level)))
-        axis.append(axis_content(found) if found else zeros(shape))
+        axis.append(axis_content(found))
     return content, (axis[0], axis[1], axis[2])
 
 
-def guarded(
-    index: int,
-    families: tuple[FamilyRule, ...],
-    states: list[NodeState],
-    gamma: int,
-    shape: tuple[int, int, int],
-) -> None:
+def guarded(index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int) -> None:
     """The guard once at load (ALGEBRA.md #the-paces, the guard): the family's read of the initial state checked as squares, 0 < p and p^2 (den + num) <= 2 den Gamma^2 at every Node, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read)."""
     if families[index].reads:
-        content, axis = read(index, families, states, "now", shape)
+        content, axis = read(index, families, states, "now")
         guard(families[index].pair, gamma, content, axis, families[index].name)
 
 
-def least_pace(
-    index: int,
-    families: tuple[FamilyRule, ...],
-    states: list[NodeState],
-    gamma: int,
-    shape: tuple[int, int, int],
-) -> int:
+def least_pace(index: int, families: tuple[FamilyRule, ...], states: list[NodeState], gamma: int) -> int:
     """The least Link pace Gamma - 2 c - t_a of a family over the GameBoard as it stands, a GameBoard diagnostic for the report and no act of the law."""
-    content, axis = read(index, families, states, "now", shape)
+    content, axis = read(index, families, states, "now")
     return min(int(np.min(pace)) for pace in link_paces(gamma, content, axis))
 
 
@@ -245,16 +237,15 @@ def write_sources(
     bookings: dict[int, np.ndarray],
     stresses: dict[int, currents.Vector],
     write: HeldWrite,
-    shape: tuple[int, int, int],
-) -> list[np.ndarray]:
-    """The numerators of a held family's one write per part at every Node (ALGEBRA.md #the-primitives, the row "the hold"): for the time part SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's parts afford, the form D of a reader of a row of real parts and the Wronskian W of a reader of a row of a plane (`bookings`); for each axis part SUM over the sources of w x factor x T_aa, the tension of each times its factor of the common wall (`HeldWrite`)."""
+) -> list[Any]:
+    """The numerators of a held family's one write per part at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a part): for the time part SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's parts afford, the form D of a reader of a row of real parts and the Wronskian W of a reader of a row of a plane (`bookings`); for each axis part SUM over the sources of w x factor x T_aa, the tension of each times its factor of the common wall (`HeldWrite`)."""
     family = families[held]
-    time = zeros(shape)
+    time: Any = 0
     for index in readers_of(families, held):
         time = time + weight_of(held, families[index]) * bookings.get(index, 0)
     found = [time]
     for axis in range(sum(family.parts[1:])):
-        total = zeros(shape)
+        total: Any = 0
         for index, stress in stresses.items():
             total = total + weight_of(held, families[index]) * write.factors.get(index, 0) * stress[axis]
         found.append(total)
@@ -262,7 +253,7 @@ def write_sources(
 
 
 def held_write(
-    state: NodeState, numerators: list[np.ndarray], walls: Sequence[int], direction: int = 1
+    state: NodeState, numerators: Sequence[Any], walls: Sequence[int], direction: int = 1
 ) -> tuple[list[Record], list[np.ndarray]]:
     """A held family's one write per part (ALGEBRA.md #the-primitives, the row "the hold"), its parts already stepped by Rule3 in the interval's second act, with or without a gap: each part's level gains (numerator + r) div wall by the write's carried division (features/hold) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the parts and the remainders after."""
     parts, remainders = [], []
@@ -270,8 +261,8 @@ def held_write(
         state.parts, numerators, walls, state.write_remainders, strict=True
     ):
         level, after = hold(part.now, numerator, wall, remainder, direction)
-        parts.append(replace(part, now=np.asarray(level, dtype=np.int64)))
-        remainders.append(np.asarray(after, dtype=np.int64))
+        parts.append(replace(part, now=np.asarray(level)))
+        remainders.append(np.asarray(after))
     return parts, remainders
 
 

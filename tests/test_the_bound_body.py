@@ -76,9 +76,8 @@ def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_a_p
         s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian
     ]
     plain = sum(state.parts[0].now for state in holders)  # every holder of the content, as it stands
-    content, _axis = node.read(charged, board.families, board.states, "now", board.shape)
+    content, _axis = node.read(charged, board.families, board.states, "now")
     assert ((content - plain) == 100)[first | second].all()  # the plane reads the holder plainly
-    for reader in (names.index("matter"), charge):  # real parts, and the holder's own record
+    for reader in (names.index("matter"), charge):  # dimension one, and the holder's own record
         assert charge not in [read.family for read in board.families[reader].reads]
-        content, _axis = node.read(reader, board.families, board.states, "now", board.shape)
-        assert np.array_equal(content, plain)
+        assert np.array_equal(node.read(reader, board.families, board.states, "now")[0], plain)

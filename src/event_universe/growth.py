@@ -74,6 +74,7 @@ def resized(
     origin: int,
     walls: tuple[int, ...],
     direction: int,
+    kind: type,
 ) -> None:
     """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time part at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per part), everything else 0; or the same layers taken off (direction -1)."""
 
@@ -91,7 +92,7 @@ def resized(
             )
         )
     node.with_records(state, records)
-    origins = [origin_of(at) for at in node.write_origins(walls, ONE)]
+    origins = [origin_of(at) for at in node.write_origins(walls, ONE, kind)]
     for key in SCALARS:
         arrays = getattr(state, key)
         setattr(state, key, [grown(a, at) for a, at in zip(arrays, origins, strict=True)])
@@ -123,7 +124,10 @@ def grow(board: GameBoard) -> bool:
 def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) -> None:
     """The GameBoard grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the detectors' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-        resized(state, family, axis, side, layers, board.origins[index], board.walls(index), direction)
+        kind = board.world.kind
+        resized(
+            state, family, axis, side, layers, board.origins[index], board.walls(index), direction, kind
+        )
     board.detectors = [resized_detector(d, axis, side, layers, direction) for d in board.detectors]
     if board.wrap.beyond is not None:
         beyond = sized(board.wrap.beyond, axis, side, layers, direction, False)

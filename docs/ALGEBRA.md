@@ -463,8 +463,10 @@ the dilation, s the row's scaling power at the body's size.
 
 The rule's total at a Node whose levels and arrivals stand at the
 amplitude A is at most 6 A |R| + A |S| + w (A + 1). Every world declares
-integers under which this total sits below 2^63 - 1, the width of the
-engine's integers, or the loader refuses it naming the total; the
+integers under which this total sits below 2^width - 1, the width the
+universe file declares (the engine's integers are the hardware's 64-bit
+integers at a width at or under 63 and Python's integers above it, the
+loader's one choice at the start, ENGINE.md), or the loader refuses it naming the total; the
 generator's amplitude unit is the largest A that keeps it inside
 ([the generator](#the-generator) (f)). With Gamma = 10^4 and A = 2^20 the total is near 3 x
 10^18, one third of the room.

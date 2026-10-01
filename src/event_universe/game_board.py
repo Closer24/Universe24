@@ -35,7 +35,7 @@ class GameBoard:
         self.ended: dict[str, object] | None = None
         beyond = self.mask(world.beyond) if world.beyond else None
         self.wrap = Wrap(world.periodic[0], world.periodic[1], world.periodic[2], beyond)
-        self.families = world.families
+        self.families, self.kind = world.families, world.kind
         self.order = [index for index, family in enumerate(self.families) if family.quanta]
         self.held = [index for index, family in enumerate(self.families) if family.held]
         action = self.world.quantum_action
@@ -43,7 +43,7 @@ class GameBoard:
             index: held_write(self.families, index, action) for index in self.held
         }
         self.states = [
-            node.empty_state(family, self.shape, self.walls(index))
+            node.empty_state(family, self.shape, self.walls(index), self.kind)
             for index, family in enumerate(self.families)
         ]
         self.origins = [0] * len(self.families)  # the remainder the start gave each held row
@@ -64,7 +64,7 @@ class GameBoard:
                 )
         self.fields: dict[tuple[int, str], int] = {}  # the last field reading per family and region
         for index in self.order:
-            node.guarded(index, self.families, self.states, self.world.node_clock, self.shape)
+            node.guarded(index, self.families, self.states, self.world.node_clock)
         self.detectors = [
             Detector(row.name, self.mask(row.positions) if row.body is None else None, row.body)
             for row in world.detectors
@@ -99,7 +99,7 @@ class GameBoard:
 
     def board_array(self, values: Levels) -> np.ndarray:
         """The levels the mode file lays as an array over the GameBoard: the nonzero Nodes' flat x-major indexes with their levels, 0 elsewhere."""
-        found = node.zeros(self.shape).reshape(-1)
+        found = node.zeros(self.shape, self.kind).reshape(-1)
         for at, value in values:
             found[at] += value
         return found.reshape(self.shape)
@@ -118,11 +118,13 @@ class GameBoard:
             if not family.quanta:
                 continue  # a kick on a holder of the content sources nothing: it is the row's own events
             records = [
-                node.Record(self.board_array(now), self.board_array(before), node.zeros(self.shape))
+                node.Record(
+                    self.board_array(now), self.board_array(before), node.zeros(self.shape, self.kind)
+                )
                 for now, before in ((row.now, row.before), (row.im_now, row.im_before))
             ]
             total = share.family_share(family, records, self.wrap, self.world.node_clock)
-            laid = share.quanta_of(total, count_wall(family, self.world.quantum_action))
+            laid = share.quanta_of(total, count_wall(family, self.world.quantum_action), self.kind)
             turn = node.well(node.wronskian(*records), self.world.quantum_action)
             everywhere = np.ones(self.shape, dtype=bool)
             on = self.mask(row.nodes) if isinstance(row, BodyRow) else everywhere
@@ -130,7 +132,7 @@ class GameBoard:
         for index in self.held:
             family = self.families[index]
             assert family.divisor is not None
-            counts = node.zeros(self.shape)
+            counts = node.zeros(self.shape, self.kind)
             for source, form, turn in forms:
                 booking = turn if family.wronskian else form
                 counts = counts + weight_of(index, self.families[source]) * booking
@@ -142,7 +144,7 @@ class GameBoard:
                 field = rest(counts, family.pair, self.wrap, family.divisor, self.world.width, wall)
             except ValueError as refusal:
                 raise ValueError(f"the start of the held family {family.name!r}: {refusal}") from refusal
-            remainder = np.full(self.shape, field.remainder, dtype=np.int64)
+            remainder = node.full(self.shape, field.remainder, self.kind)
             time = node.Record(field.levels.copy(), field.levels.copy(), remainder)
             node.with_parts(state, [time, *state.parts[1:]])
             self.origins[index] = field.remainder
@@ -185,7 +187,7 @@ class GameBoard:
         """A family of quanta's share at every Node in the current's units, a reading of its two level pairs at the paces of its read from `level` (share.family_share; ALGEBRA.md #the-count-is-the-records-share)."""
         family, state = self.families[index], self.states[index]
         assert state.levels is not None and state.second is not None
-        content, axis = node.read(index, self.families, self.states, level, self.shape)
+        content, axis = node.read(index, self.families, self.states, level)
         return share.family_share(
             family, (state.levels, state.second), self.wrap, self.world.node_clock, content, axis
         )
@@ -193,7 +195,7 @@ class GameBoard:
     def quanta(self, index: int) -> np.ndarray:
         """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading."""
         wall = count_wall(self.families[index], self.world.quantum_action)
-        return share.quanta_of(self.share_of(index), wall)
+        return share.quanta_of(self.share_of(index), wall, self.kind)
 
     def total_share(self, index: int) -> int:
         """A family's share summed over the GameBoard in the current's units, a reading."""
@@ -221,8 +223,8 @@ class GameBoard:
             family = self.families[index]
             wall = count_wall(family, self.world.quantum_action)
             total = self.total_share(index)
-            quanta = int(share.quanta_of(np.array([total], dtype=object), wall)[0])
-            pace = node.least_pace(index, self.families, self.states, self.world.node_clock, self.shape)
+            quanta = int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
+            pace = node.least_pace(index, self.families, self.states, self.world.node_clock)
             found[family.name] = {
                 "share": total,
                 "quanta": quanta,
@@ -236,7 +238,7 @@ class GameBoard:
     ) -> tuple[tuple[np.ndarray, tuple[np.ndarray, ...]], list[node.Record]]:
         """A family's read (from the held parts' `level`) and every record of it stepped by Rule3 in `direction` with the rule of that read: a family of quanta's two level pairs and a held family's parts (`node.records`), every held row of the content among them, with or without a gap, the time part of the massless row reading its rest beyond every face (`node.step`, `fill`)."""
         family, state = self.families[index], self.states[index]
-        read = node.read(index, self.families, self.states, level, self.shape)
+        read = node.read(index, self.families, self.states, level)
         rule = node.rule_of(family, self.world.node_clock, *read)
         time = state.parts[0] if state.parts else None
         found = [
@@ -293,9 +295,7 @@ class GameBoard:
         """The one write per part of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the hold"): the numerators from the bookings of the families that source it, the Wronskians for a row of a plane and the forms for a row of real parts, and from their tensions read from the records (`node.write_sources`), each part's division at its wall with its one remainder (`node.held_write`)."""
         family, state = self.families[index], self.states[index]
         bookings = turns if family.wronskian else forms
-        numerators = node.write_sources(
-            index, self.families, bookings, stresses, self.writes[index], self.shape
-        )
+        numerators = node.write_sources(index, self.families, bookings, stresses, self.writes[index])
         parts, state.write_remainders = node.held_write(state, numerators, self.walls(index), direction)
         node.with_parts(state, parts)
         for part in parts:

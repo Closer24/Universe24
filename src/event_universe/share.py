@@ -59,8 +59,8 @@ def family_share(
     return np.asarray(total)
 
 
-def quanta_of(share_now: Any, wall: int) -> np.ndarray:
-    """A share in quanta at every Node, (share + W_c div 2) div W_c by Rule3's division act, W_c div 2 the rounding's origin: the reading of a share as whole quanta."""
+def quanta_of(share_now: Any, wall: int, kind: type) -> np.ndarray:
+    """A share in quanta at every Node, (share + W_c div 2) div W_c by Rule3's division act, W_c div 2 the rounding's origin: the reading of a share as whole quanta, in the run's kind of integers (the share itself is summed in Python's integers, exact beyond the width)."""
     origin = rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0]
     quanta, _remainder = rule3(NO_READ, NO_READ, 1, wall, 0, 0, np.asarray(share_now) + origin)
-    return np.asarray(quanta, dtype=np.int64)
+    return np.asarray(quanta, dtype=kind)

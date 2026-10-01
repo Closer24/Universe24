@@ -56,7 +56,7 @@ def inflow(
 ) -> int:
     """A detector's report of one interval, its click (ALGEBRA.md #the-count-is-the-records-share, #the-click-ends-nothing; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): the currents through the instrument's front boundary Ports at the region's Nodes (`front`), inward positive, summed in integers with their signs, the density that entered the region from the declared board (the advisor's correction, #1515 comment 5912958018: the front Links only, net; the transverse Links inside the instrument and the Links toward a receding face's grown layers not counted); the host's reading for the credit by the shares. `instrument` is the union of the declared regions (a body's detector and the faces' layer their own Nodes), so that what passes between the regions of one screen is not seen twice; nothing is handed over and no line names a Node."""
     facing = front(nodes, wrap, instrument, declared)
-    seen = np.zeros(nodes.shape, dtype=np.int64)
+    seen: Any = 0
     for port in range(len(PORTS)):
         seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
-    return int(seen.sum(dtype=object))
+    return int(np.asarray(seen).sum(dtype=object))
