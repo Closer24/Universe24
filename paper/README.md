@@ -17,12 +17,7 @@ rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
   `python paper/general_formula/octahedron.py`, `band.pdf` and `channels.pdf`
   by `python paper/general_formula/band_and_channels.py`, `branches.pdf` (the three
   masses along the two branches, from the rows of the law) by
-  `python paper/general_formula/branches.py`, `two_slits.pdf` (the clicks credited
-  to the screen's twelve declared detectors beside the blind row, for the three
-  worlds, from row (g) of the law) by `python paper/general_formula/two_slits.py`,
-  and `bell.pdf` (the correlation at the four settings against the settings'
-  calibrated phases, from row (h) of the law) by
-  `python paper/general_formula/bell.py`, and `meeting.pdf` (the click as the
+  `python paper/general_formula/branches.py`, and `meeting.pdf` (the click as the
   meeting of the future with the past, schematically, from the definitions) by
   `python paper/general_formula/meeting.py`.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
@@ -37,8 +32,9 @@ rows, labelled DETECTOR (a click) or GAMEBOARD (a diagnostic).
 - `general_formula/dimension_check.py`: the bodies one hollow allows on a
   chain, a plane and a box, the check of `the hollow's dimension`.
 
-The experiments' rows enter after their runs on the engine with blind
-expectations; the paper carries two experiments and no more, the two slits and
-Bell, both run, each written as it stands beside its blind row. The paper's
-outline, its chapters and its questions are on the issue "The paper: the
-outline, the chapters and the questions".
+The paper carries no experiment: until a run has worked and the advisor and
+the reviewer have confirmed it, no run's number stands in it; its two
+experiments, the two slits and Bell, stand as the engine's worlds and the law's
+derivations of what each must give. The paper's outline, its chapters and its
+questions are on the issue "The paper: the outline, the chapters and the
+questions".
