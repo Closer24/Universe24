@@ -1,4 +1,4 @@
-"""The Node: every family's NodeState over the GameBoard, the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py): the read (ALGEBRA.md #the-paces; the guard once at load), Rule3 on every record (#the-line, #the-direction), the readings of the record (the currents and the tension, features/currents; the form and the Wronskian; the count is the record's share, #the-count-is-the-records-share) and the one write per held part (#the-primitives, the row "the hold")."""
+"""The Node: every family's NodeState over the GameBoard, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py): the read (ALGEBRA.md #the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines (the currents and the tension, features/currents; the form and the Wronskian; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the hold"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from event_universe.core.rule3 import (
     rule3,
 )
 from event_universe.features import currents
-from event_universe.features.hold import components, diagonal, hold
+from event_universe.features.hold import hold
 from event_universe.features.read import axis_content, content_of, guard
 from event_universe.features.write import carried
 from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, weight_of
@@ -27,7 +27,7 @@ Rule = tuple[tuple[Any, Any, Any], Any, Any]  # Rule3's integers at every Node: 
 
 @dataclass(frozen=True)
 class Record:
-    """One level pair over the GameBoard: the level now, the level before and the remainder r at every Node."""
+    """One line of dimension one over the GameBoard: the level now, the level before and the remainder r at every Node."""
 
     now: np.ndarray
     before: np.ndarray
@@ -36,11 +36,9 @@ class Record:
 
 @dataclass
 class NodeState:
-    """A family's NodeState at every Node, the law's numbers and nothing else (ALGEBRA.md #the-postulates): per part two levels and Rule3's remainder, and per held part the one remainder of its write. A family of quanta: its real level pair and its second (the rotation sense, 0 on a real record); a held family: its parts, each a level pair with its remainder, and one write remainder per part; the holder of the sign keeps its record as its time part alone (`parts[0] is levels`). Its count, sense, currents, tension, form and Wronskian are readings of the record (share.py, features/currents, `form`, `wronskian`) and stand nowhere."""
+    """A family's NodeState at every Node, the law's numbers and nothing else (ALGEBRA.md #the-postulates): its lines, each a record of dimension one (two levels and Rule3's remainder), one shape for every family, and per held line the one remainder of its write. A family of quanta's lines are its record, one line (dimension 1) or two (a plane, re and im); a held row's lines are its sources' count, the time line and, where the tensions source it, the three axis lines; the holder of the sign's one line is its record, light. Its count, currents, tension, form and Wronskian are readings of the lines (share.py, features/currents, `form`, `wronskian`) and stand nowhere."""
 
-    levels: Record | None
-    second: Record | None
-    parts: list[Record]
+    lines: list[Record]
     write_remainders: list[np.ndarray]
 
 
@@ -55,47 +53,21 @@ def full(shape: tuple[int, int, int], value: Any, kind: type) -> np.ndarray:
 
 
 def empty_record(shape: tuple[int, int, int], kind: type) -> Record:
-    """A level pair at 0 with the remainder 0 at every Node."""
+    """A line at 0 with the remainder 0 at every Node."""
     return Record(zeros(shape, kind), zeros(shape, kind), zeros(shape, kind))
 
 
 def write_origins(walls: Sequence[int], shape: tuple[int, int, int], kind: type) -> list[np.ndarray]:
-    """A held family's write remainders at a Node with no level, one per part at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start)."""
+    """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start)."""
     return [full(shape, rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0], kind) for wall in walls]
 
 
 def empty_state(
     family: FamilyRule, shape: tuple[int, int, int], walls: Sequence[int], kind: type
 ) -> NodeState:
-    """A family's NodeState before its start, the state of a Node with no level: its two level pairs at 0 where it carries quanta, its parts at 0 with their write remainders at the origin (`walls` the write's wall per part) where it is held, its time part the real pair itself where it does both (the holder of the sign, its quanta light: `parts[0] is levels`)."""
-    quanta = family.quanta
-    parts = [empty_record(shape, kind) for _ in range(components(family.parts))] if family.held else []
-    levels = parts[0] if parts and quanta else empty_record(shape, kind) if quanta else None
-    second = empty_record(shape, kind) if quanta else None
-    return NodeState(levels, second, parts, write_origins(walls, shape, kind) if family.held else [])
-
-
-def records(state: NodeState) -> list[Record]:
-    """Every level pair of a NodeState in one order: the real pair and the second of a family of quanta, then a held family's parts, after the time part where that part is the real pair itself."""
-    own = [r for r in (state.levels, state.second) if r is not None]
-    return own + list(state.parts[1:] if state.levels is not None and state.parts else state.parts)
-
-
-def with_records(state: NodeState, found: list[Record]) -> None:
-    """Every level pair of the NodeState replaced in the order of `records`, the time part of a held family of quanta its real pair."""
-    found = list(found)
-    if state.levels is not None:
-        state.levels = found.pop(0)
-    if state.second is not None:
-        state.second = found.pop(0)
-    state.parts = ([state.levels] if state.levels is not None and state.parts else []) + found
-
-
-def with_parts(state: NodeState, parts: list[Record]) -> None:
-    """A held family's parts replaced after the write, its time part the real pair where it carries quanta."""
-    state.parts = parts
-    if state.levels is not None:
-        state.levels = parts[0]
+    """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), and where it is held one write remainder per line at the origin (`walls` the write's wall per line)."""
+    lines = [empty_record(shape, kind) for _ in range(family.lines)]
+    return NodeState(lines, write_origins(walls, shape, kind) if family.held else [])
 
 
 def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
@@ -116,16 +88,16 @@ def read(
     states: list[NodeState],
     level: str,
 ) -> tuple[Any, tuple[Any, Any, Any]]:
-    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time part at `level`, "now" forward and "before" backward) and the axis contents t_a = SUM over the reads of (weight x the read family's aa part + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
+    """The read of a family at the interval's start (ALGEBRA.md #the-paces): the content c = SUM over its reads of (weight x the read family's time line at `level`, "now" forward and "before" backward) and the axis contents t_a = SUM over the reads of (weight x the read family's axis line a + 1) div 2, one division per read per axis rounded at the read; the integer 0 where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval (features/read)."""
     reads = families[index].reads
-    content = content_of([(r.weight, getattr(states[r.family].parts[0], level)) for r in reads])
+    content = content_of([(r.weight, getattr(states[r.family].lines[0], level)) for r in reads])
     axis = []
     for a in range(3):
-        found = []
-        for r in reads:
-            tensor = diagonal(families[r.family].parts)
-            if tensor is not None:
-                found.append((r.weight, getattr(states[r.family].parts[tensor[a]], level)))
+        found = [
+            (r.weight, getattr(states[r.family].lines[1 + a], level))
+            for r in reads
+            if families[r.family].axes
+        ]
         axis.append(axis_content(found))
     return content, (axis[0], axis[1], axis[2])
 
@@ -150,18 +122,18 @@ def quanta_rule(family: FamilyRule, gamma: int, content: Any, axis: tuple[Any, .
 
 
 def part_rule(family: FamilyRule) -> Rule:
-    """Rule3's integers for a held family's parts: the plain rule of the row's pair at the pace 1 and the wall 3 den, its reads num and its self coefficient 0, with or without a gap (ALGEBRA.md #the-line; #the-primitives, the row "the hold")."""
+    """Rule3's integers for a held row of the content's lines: the plain rule of the row's pair at the pace 1 and the wall 3 den, its reads num and its self coefficient 0, with or without a gap (ALGEBRA.md #the-line; #the-primitives, the row "the hold")."""
     num, den = family.pair
     return coefficients(num, den, 1, 0, ISOTROPIC, False)
 
 
 def rule_of(family: FamilyRule, gamma: int, content: Any, axis: tuple[Any, ...] = ISOTROPIC) -> Rule:
-    """The rule every record of a family steps by: a family of quanta's at the paces of its read (the holder of the sign included, its time part its record), a holder of the content's the plain rule at the pace 1 (ALGEBRA.md #the-interval)."""
+    """The rule every line of a family steps by: a family of quanta's at the paces of its read (the holder of the sign included, its line its record), a holder of the content's the plain rule at the pace 1 (ALGEBRA.md #the-interval)."""
     return quanta_rule(family, gamma, content, axis) if family.quanta else part_rule(family)
 
 
 def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0) -> Record:
-    """Rule3 on a level pair (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six reads through the Ports of the level the step starts from, `fill` read beyond a face (the row's rest)."""
+    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six reads through the Ports of the level the step starts from, `fill` read beyond a face (the row's rest)."""
     reads, self_coefficient, wall = rule
     if direction == 1:
         sums = axis_sums(record.now, wrap, fill)
@@ -176,29 +148,23 @@ def step(record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int =
     return Record(record.before, np.asarray(back), np.asarray(remainder))
 
 
-def currents_of(family: FamilyRule, state: NodeState, wrap: Wrap) -> tuple[np.ndarray, ...]:
-    """The currents of a family of quanta at every Node, a reading of its record (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, both level pairs' currents added, at the level pairs as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a detector reads at its boundary."""
-    assert state.levels is not None
+def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.ndarray, ...]:
+    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a detector reads at its boundary."""
     found: list[Any] = [0] * 6
-    for record in (state.levels, state.second):
-        if record is None:
-            continue
+    for record in lines:
         here = currents.Levels(record.now, record.before)
         now, before = ports(record.now, wrap), ports(record.before, wrap)
         for port in range(6):
             there = currents.Levels(now[port], before[port])
-            found[port] = found[port] + currents.current(family.pair[0], here, there)
+            found[port] = found[port] + currents.current(weight, here, there)
     return tuple(np.asarray(value) for value in found)
 
 
-def stresses_of(family: FamilyRule, state: NodeState, wrap: Wrap) -> currents.Vector:
-    """The tension on each axis at every Node from a family of quanta's levels now, both level pairs' tensions added, a reading of the record into the held rows' axis parts (features/currents; ALGEBRA.md #the-primitives, the row "the hold")."""
-    assert state.levels is not None
+def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
+    """The tension on each axis at every Node from a record's levels now, every line's tensions added, a reading of the lines into the held rows' axis lines (features/currents; ALGEBRA.md #the-primitives, the row "the hold")."""
     tensions: currents.Vector = (0, 0, 0)
-    for record in (state.levels, state.second):
-        if record is None:
-            continue
-        found = currents.stress(family.pair[0], axis_differences(record.now, wrap))
+    for record in lines:
+        found = currents.stress(weight, axis_differences(record.now, wrap))
         tensions = (tensions[0] + found[0], tensions[1] + found[1], tensions[2] + found[2])
     return tuple(np.asarray(value) for value in tensions)  # type: ignore[return-value]
 
@@ -216,35 +182,39 @@ def axis_differences(
     return found[0], found[1], found[2]
 
 
-def form(before: Record, after: Record) -> np.ndarray:
-    """The record's form at every Node over one interval, D_i = now^2 - next x before from the three levels around the step (`before` holds (now, before) at the interval's start, `after` holds next as its `now`): the source of the rows that hold the content."""
-    return np.asarray(before.now * before.now - after.now * before.before)
+def form(begun: Sequence[Record], stepped: Sequence[Record]) -> Any:
+    """The record's form at every Node over one interval, D_i = now^2 - next x before from the three levels around the step summed over its lines (`begun` holds (now, before) at the interval's start, `stepped` holds next as its `now`): the source of the rows that hold the content."""
+    total: Any = 0
+    for before, after in zip(begun, stepped, strict=True):
+        total = total + (before.now * before.now - after.now * before.before)
+    return total
 
 
-def wronskian(record: Record, second: Record) -> np.ndarray:
-    """The Wronskian of a record's two level pairs at every Node, W_i = re_now im_before - im_now re_before, the booking of the rotation sense, the charge density (0 on a real record): the source of the row that holds the sign."""
-    return np.asarray(record.now * second.before - second.now * record.before)
+def wronskian(lines: Sequence[Record]) -> Any:
+    """The Wronskian of a record's two lines at every Node, W_i = re_now im_before - im_now re_before, the booking of the rotation sense, the charge density: the source of the row that holds the sign; the integer 0 for a record of one line, which has no plane."""
+    if len(lines) < 2:
+        return 0
+    return lines[0].now * lines[1].before - lines[1].now * lines[0].before
 
 
-def well(booking: np.ndarray, action: int) -> np.ndarray:
-    """A reading, the well of one interval (ALGEBRA.md #the-primitives, the rows "the hold" and "the source"; row (u), a body's well is gravity's source as a number): a booking of the record at every Node (its form D_i, or its Wronskian W_i) in quanta, booking div T by the division act, no remainder kept; the run writes the booking itself through the one wall of the held part."""
+def well(booking: Any, action: int) -> np.ndarray:
+    """A reading, the well of one interval (ALGEBRA.md #the-primitives, the rows "the hold" and "the source"; row (u), a body's well is gravity's source as a number): a booking of the record at every Node (its form D_i, or its Wronskian W_i) in quanta, booking div T by the division act, no remainder kept; the run writes the booking itself through the one wall of the held line."""
     return np.asarray(carried(booking, action, 0)[0])
 
 
 def write_sources(
     held: int,
     families: tuple[FamilyRule, ...],
-    bookings: dict[int, np.ndarray],
+    bookings: dict[int, Any],
     stresses: dict[int, currents.Vector],
     write: HeldWrite,
 ) -> list[Any]:
-    """The numerators of a held family's one write per part at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a part): for the time part SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's parts afford, the form D of a reader of a row of real parts and the Wronskian W of a reader of a row of a plane (`bookings`); for each axis part SUM over the sources of w x factor x T_aa, the tension of each times its factor of the common wall (`HeldWrite`)."""
-    family = families[held]
+    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's sources name, the form D for a row sourced by the form and the Wronskian W for the holder of the sign (`bookings`); for each axis line SUM over the sources of w x factor x T_aa, the tension of each times its factor of the common wall (`HeldWrite`, one wall per line)."""
     time: Any = 0
     for index in readers_of(families, held):
         time = time + weight_of(held, families[index]) * bookings.get(index, 0)
     found = [time]
-    for axis in range(sum(family.parts[1:])):
+    for axis in range(len(write.walls) - 1):
         total: Any = 0
         for index, stress in stresses.items():
             total = total + weight_of(held, families[index]) * write.factors.get(index, 0) * stress[axis]
@@ -253,19 +223,21 @@ def write_sources(
 
 
 def held_write(
-    state: NodeState, numerators: Sequence[Any], walls: Sequence[int], direction: int = 1
+    lines: Sequence[Record],
+    numerators: Sequence[Any],
+    walls: Sequence[int],
+    remainders: Sequence[np.ndarray],
+    direction: int = 1,
 ) -> tuple[list[Record], list[np.ndarray]]:
-    """A held family's one write per part (ALGEBRA.md #the-primitives, the row "the hold"), its parts already stepped by Rule3 in the interval's second act, with or without a gap: each part's level gains (numerator + r) div wall by the write's carried division (features/hold) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the parts and the remainders after."""
-    parts, remainders = [], []
-    for part, numerator, wall, remainder in zip(
-        state.parts, numerators, walls, state.write_remainders, strict=True
-    ):
-        level, after = hold(part.now, numerator, wall, remainder, direction)
-        parts.append(replace(part, now=np.asarray(level)))
-        remainders.append(np.asarray(after))
-    return parts, remainders
+    """A held family's one write per line (ALGEBRA.md #the-primitives, the row "the hold"), its lines already stepped by Rule3 in the interval's second act, with or without a gap: each line's level gains (numerator + r) div wall by the write's carried division (features/hold) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the lines and the remainders after."""
+    written, after = [], []
+    for line, numerator, wall, remainder in zip(lines, numerators, walls, remainders, strict=True):
+        level, kept = hold(line.now, numerator, wall, remainder, direction)
+        written.append(replace(line, now=np.asarray(level)))
+        after.append(np.asarray(kept))
+    return written, after
 
 
 def largest(record: Record) -> int:
-    """The largest size of a level pair's newest level, read against the amplitude bound A."""
+    """The largest size of a line's newest level, read against the amplitude bound A."""
     return int(np.abs(record.now).max())

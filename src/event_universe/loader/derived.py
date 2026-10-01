@@ -51,15 +51,10 @@ class FamilyRule(Row):
         """Whether the row carries the three axis lines beside its time line: a held row sourced by the tensions (the massless row holding the content)."""
         return self.held and self.lines > 1
 
-    @property
-    def parts(self) -> tuple[int, ...]:
-        """The components Rule3 reads of a held row: the time part alone, or with the three axis tensions."""
-        return (1, 3) if self.axes else (1,)
-
 
 @dataclass(frozen=True)
 class HeldWrite:
-    """A held family's one write per part as the rule derives it from the rows (ALGEBRA.md #the-primitives, a family's write is one act): the walls, one per part, the time part's E_s T and each axis part's E_s W_c with W_c = 3 den T of the families that source it (one den among them; with several, the least common multiple of their den in den's place), and per sourcing family the factor with which its tension enters the axis parts' numerator, the multiple over its own den (1 where one den serves every source), so that the sum of the sources' fractions is one fraction over one wall, exact."""
+    """A held family's one write per line as the rule derives it from the rows (ALGEBRA.md #the-primitives, a family's write is one act): the walls, one per line, the time line's E_s T and each axis line's E_s W_c with W_c = 3 den T of the families that source it (one den among them; with several, the least common multiple of their den in den's place), and per sourcing family the factor with which its tension enters the axis parts' numerator, the multiple over its own den (1 where one den serves every source), so that the sum of the sources' fractions is one fraction over one wall, exact."""
 
     walls: tuple[int, ...]
     factors: dict[int, int]
@@ -105,7 +100,7 @@ def count_wall(family: FamilyRule, action: int) -> int:
 
 
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
-    """The one write per part of the held family `index` (`HeldWrite`): its walls from the row's divisor, the quantum action and the den of the families that source its axis parts (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, and each source's factor, the multiple over its den."""
+    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's divisor, the quantum action and the den of the families that source its axis lines (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, and each source's factor, the multiple over its den."""
     family = families[index]
     assert family.divisor is not None
     sources = readers_of(families, index)
@@ -114,7 +109,7 @@ def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> Hel
         den = families[other].pair[1]
         multiple = int(division_forward(multiple * den, gcd(multiple, den), 0)[0])
     walls = [family.divisor * action]
-    walls += [family.divisor * 3 * multiple * action] * sum(family.parts[1:])
+    walls += [family.divisor * 3 * multiple * action] * (family.lines - 1)
     factors = {
         other: int(division_forward(multiple, families[other].pair[1], 0)[0]) for other in sources
     }
@@ -145,7 +140,7 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) 
         * abs(families[other].pair[0])
         for other in sources
     )
-    return [time] + [axis] * sum(family.parts[1:])
+    return [time] + [axis] * (family.lines - 1)
 
 
 def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, width: int) -> int:

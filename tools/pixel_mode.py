@@ -507,7 +507,7 @@ def read_at_the_start(
     turn = zero
     if len(pairs) == 2:
         first, second = (Record(now, before, zero) for now, before in pairs)
-        turn = np.asarray(well(np.asarray(wronskian(first, second)), action))
+        turn = np.asarray(well(np.asarray(wronskian([first, second])), action))
     nodes, seen = region.copy(), set()
     while True:
         plain, turned = np.where(nodes, plain_everywhere, 0), np.where(nodes, turn, 0)

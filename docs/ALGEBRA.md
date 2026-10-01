@@ -316,6 +316,8 @@ written in one format, each labelled DETECTOR, GAMEBOARD or HOST.
 
 ### The line
 
+Rule3 is named for the three axes of the lattice, the three directions of the vector the rule works with: the Link's paces (p_x, p_y, p_z) are that vector, and the line has one read coefficient per direction, R_a = 2 num p_a^2, serving the direction's two Ports; the six Ports and the wall's 6 in w = 6 den Gamma^2 are the three directions twice, so the six follows from the three; in time the rule is a three-level recurrence (before, now, next), and in light's own line, num = den at the vacuum's paces, the three stands in the open: a_next = the six arrivals over 3 minus a_before.
+
 **The law in one line**: at every Node, each interval, the division act below with its coefficients from the family's pair and the Node's paces; every level on the GameBoard is written by that same act ([a family's write](#the-primitives)), every count is a reading of the record, its share over the wall W_c ([the count is the record's share](#the-count-is-the-records-share)), and everything else is a number in a file. Every family, at every Node, with the wall w, the read coefficient R_a on
 each axis a, the self coefficient S, the level a_now at the interval's
 start, a_before one interval earlier, and the remainder r kept at the Node:

@@ -1,4 +1,4 @@
-"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic; and the generic Node is closed for building (HIGHLIGHTS.md): the NodeState is the records and the writes' remainders alone, one Rule3 division per part and one write per held part per interval, the readings write nothing, the output click and field only, ENGINE.md's table the code's."""
+"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every record in either direction, the isotropic rule is the same call with equal paces, and no other file of src/ writes this arithmetic; and the generic Node is closed for building (HIGHLIGHTS.md): the NodeState is the lines and the writes' remainders alone, one shape for every family, one Rule3 division per line and one write per held line per interval, the readings write nothing, the output click and field only, ENGINE.md's table the code's."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 
 import event_universe.world_files as world_files
-from event_universe import growth, node, share
+from event_universe import node, share
 from event_universe.core import rule3 as core
 from event_universe.core.rule3 import (
     ISOTROPIC,
@@ -231,9 +231,8 @@ def test_no_root_is_imported_or_called_anywhere_in_src_or_tools():
     assert not found, found
 
 
-# The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per part, two levels and Rule3's remainder; per held part, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record.
-NODE_STATE = {"levels": "Record | None", "second": "Record | None", "parts": "list[Record]"}
-NODE_STATE["write_remainders"] = "list[np.ndarray]"
+# The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per line, two levels and Rule3's remainder; per held line, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record; one shape of state for every family.
+NODE_STATE = {"lines": "list[Record]", "write_remainders": "list[np.ndarray]"}
 TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState table, its first column
 
 
@@ -250,13 +249,18 @@ def is_step(args: tuple) -> bool:  # type: ignore[type-arg]
 
 
 def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
-    """(a) The NodeState holds the records per part (now, before, Rule3's remainder) and one write remainder per held part and nothing else, and the growth's and the gate's arrays beside the records name only the writes' remainders; (b) on the chain with a rotating body (every kind of family: a family of quanta with its second pair, the holder of the sign, two rows with a gap, the massless row with its axis parts) one interval forward and one back make exactly one Rule3 division per part, the level each record started from that call's own, and exactly one write per held part, and every reading the engine exposes leaves every record bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a)."""
+    """(a) The NodeState holds lines (now, before, Rule3's remainder), as many as the loader derives for the family (a family of quanta's dimension, a held row's sources' count), and one write remainder per held line and nothing else, one shape for every family; (b) on the chain with a rotating body (every kind of family: a plane of two lines, a family of one line, the holder of the sign, two rows with a gap, the massless row with its axis lines) one interval forward and one back make exactly one Rule3 division per line, the level each line started from that call's own, and exactly one write per held line, and every reading the engine exposes leaves every line bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a)."""
     assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
     assert [f.name for f in dataclasses.fields(node.Record)] == ["now", "before", "remainder"]
-    assert set(growth.SCALARS) == set(BACK.SCALARS) == {"write_remainders"}
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict[str, object]] = []
     board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), lines.append)
+    for family, state in zip(board.families, board.states, strict=True):
+        assert (
+            len(state.lines) == family.lines
+            and len(state.write_remainders) == family.lines * family.held
+        )
+    assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 1, 2, 4]
     calls: list[tuple[tuple, tuple]] = []  # type: ignore[type-arg]
     original = core.rule3
 
@@ -271,21 +275,22 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for direction, act in ((1, board.step), (-1, board.step_inverse)):
         calls.clear()
         act()
-        records = [record for state in board.states for record in node.records(state)]
+        records = [record for state in board.states for record in state.lines]
         steps = [args for args, _found in calls if is_step(args)]
         assert len(steps) == len(records)
         begun = {id(getattr(record, "before" if direction == 1 else "now")) for record in records}
-        assert begun == {id(args[4]) for args in steps}  # the level each record's one call started from
-        assert sum(is_write(args) for args, _found in calls) == sum(len(s.parts) for s in board.states)
+        assert begun == {id(args[4]) for args in steps}  # the level each line's one call started from
+        written = sum(len(s.write_remainders) for s in board.states)
+        assert sum(is_write(args) for args, _found in calls) == written
     kept = BACK.snapshot(board)
     calls.clear()
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-        if state.levels is not None and state.second is not None:
-            share.family_share(family, (state.levels, state.second), board.wrap, board.world.node_clock)
-            node.currents_of(family, state, board.wrap)
-            node.stresses_of(family, state, board.wrap)
-            node.wronskian(state.levels, state.second)
-            node.form(state.levels, state.second)
+        if family.quanta:
+            share.family_share(family, state.lines, board.wrap, board.world.node_clock)
+            node.currents_of(family.pair[0], state.lines, board.wrap)
+            node.stresses_of(family.pair[0], state.lines, board.wrap)
+            node.wronskian(state.lines)
+            node.form(state.lines, state.lines)
             board.quanta(index)
     board.books()
     assert not any(is_write(args) for args, _found in calls)  # the readings write nothing
@@ -320,7 +325,7 @@ def test_the_width_chooses_the_arrays_kind_and_a_run_above_the_hosts_bits_gives_
         board = GameBoard(load_world(path), lines.append)
         for _ in range(40):
             board.step()
-        arrays = [a for s in board.states for r in node.records(s) for a in (r.now, r.remainder)]
+        arrays = [a for s in board.states for r in s.lines for a in (r.now, r.remainder)]
         assert board.world.kind is kind and all(a.dtype == np.dtype(kind) for a in arrays)
         runs.append((lines, board.books()))
     assert runs[0] == runs[1] and runs[0][0]

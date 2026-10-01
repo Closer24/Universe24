@@ -52,7 +52,7 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     real, second = (
         node.Record(draw.integers(-50, 50, shape), draw.integers(-50, 50, shape), zero) for _ in range(2)
     )
-    through = node.currents_of(quanta, node.NodeState(real, second, [], []), wrap)
+    through = node.currents_of(quanta.pair[0], [real, second], wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
         expected = sum(
             5 * (r.now * np.roll(r.before, -side, axis) - r.before * np.roll(r.now, -side, axis))

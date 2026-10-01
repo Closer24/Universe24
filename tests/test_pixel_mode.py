@@ -90,11 +90,12 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         )
         assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")
         for state in walled.states:
-            records = [r for r in (*state.parts, state.levels, state.second) if r is not None]
-            assert not any(getattr(r, key)[beyond].any() for r in records for key in ("now", "before"))
+            assert not any(
+                getattr(r, key)[beyond].any() for r in state.lines for key in ("now", "before")
+            )
         assert walled.books()["charge"]["quanta"] > 0
-    level = np.abs(walled.states[charge].levels.now[:, :, 0])
-    passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].levels.now[:12]).sum()
+    level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
+    passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()
     print(f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()},")
     print(f"  before it {int(level[:12].sum())} against {int(free)} with no wall")
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
@@ -123,7 +124,7 @@ def test_a_body_is_laid_over_its_nodes_as_the_fixed_point_of_its_row_and_loads_l
     assert entry["pair"] == [4000, 6000] and entry["family"] == "matter"
     assert mode["world_digest"] == input_digest(document)
     board = GameBoard(load_world(world))  # lawful, the family's two levels
-    matter = board.states[[family.name for family in board.families].index("matter")].levels
+    matter = board.states[[family.name for family in board.families].index("matter")].lines[0]
     assert matter is not None and matter.now[CHAIN // 2, 0, 0] == peak
     assert matter.before.ravel().tolist() == entry["moving"]["before"]
     turned = chain_body_world(tmp_path, TOOL, senses=(-1,))

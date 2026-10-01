@@ -334,7 +334,7 @@ function frameOf(t) {
   const frame = LOOK.frames[t], out = {};
   for (const f of FAMILIES) {
     const row = frame.families[f.name] || {}, a = {};
-    if (f.quanta) { for (const key of ['now', 'second', 'count', 'form']) a[key] = arrayOf(row[key], frame); a.pace = row.pace; }
+    if (f.quanta) { for (const key of ['now', 'second', 'count', 'form']) if (row[key] !== undefined) a[key] = arrayOf(row[key], frame); a.pace = row.pace; }
     else { a.level = arrayOf(row.level, frame); a.parts = (row.parts || []).map(part => arrayOf(part, frame)); }
     out[f.name] = a;
   }
@@ -349,7 +349,7 @@ for (let t = 0; t <= T; t++) {
   const fr = frameOf(t);
   for (const f of FAMILIES) {
     const a = fr[f.name], m = MOST[f.name];
-    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), peak(a.second)); m.count = Math.max(m.count, peak(a.count)); TOTALS[f.name][t] = sum(a.count); }
+    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); TOTALS[f.name][t] = sum(a.count); }
     else { m.level = Math.max(m.level, peak(a.level)); for (const p of a.parts) m.part = Math.max(m.part, peak(p)); }
   }
 }
@@ -513,7 +513,7 @@ function draw() {
     colour.copy(base);
     for (const f of QUANTA) {
       if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
-      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), Math.abs(a.second[i])) / MOST[f.name].now, glowPower);
+      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), a.second ? Math.abs(a.second[i]) : 0) / MOST[f.name].now, glowPower);
       colour.lerp(tint.set(colourOf(f.name)).lerp(base, glowTint), Math.min(1, strength));  // the glow a tint of the family's colour, the dots the colour itself
     }
     cubes.setColorAt(i, colour);
@@ -612,7 +612,7 @@ function hover(e) {
     const a = fr[f.name];
     if (f.quanta) {
       const parts = ['level ' + format(a.now[i])];
-      if (MOST[f.name].now && a.second[i]) parts.push('second ' + format(a.second[i]));
+      if (MOST[f.name].now && a.second && a.second[i]) parts.push('second ' + format(a.second[i]));
       parts.push('count ' + format(a.count[i]));
       lines.push(f.name + ': ' + parts.join(', '));
     } else {

@@ -64,18 +64,17 @@ def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_a_p
     plane, light = board.states[charged], board.states[charge]
     board.step()
     first, second = board.body_nodes(0), board.body_nodes(1)
-    turn = np.sign(node.wronskian(plane.levels, plane.second))
+    turn = np.sign(node.wronskian(plane.lines))
     assert (turn[first] == 1).all() and (turn[second] == -1).all()
-    level = light.parts[0].now
-    assert light.levels is light.parts[0]  # light is the sign holder's own record
-    assert int(level[first].min()) >= 0 < int(level[first].sum())
+    level = light.lines[0].now
+    assert len(light.lines) == 1 and int(level[first].min()) >= 0 < int(level[first].sum())  # one line
     assert int(level[second].max()) <= 0 > int(level[second].sum())
     hill = np.full(board.shape, 100, dtype=np.int64)
-    node.with_parts(light, [node.Record(hill, light.parts[0].before, light.parts[0].remainder)])
+    light.lines[0] = node.Record(hill, light.lines[0].before, light.lines[0].remainder)
     holders = [
         s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian
     ]
-    plain = sum(state.parts[0].now for state in holders)  # every holder of the content, as it stands
+    plain = sum(state.lines[0].now for state in holders)  # every holder of the content, as it stands
     content, _axis = node.read(charged, board.families, board.states, "now")
     assert ((content - plain) == 100)[first | second].all()  # the plane reads the holder plainly
     for reader in (names.index("matter"), charge):  # dimension one, and the holder's own record
