@@ -30,11 +30,11 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     cases += [(chain, OPEN_CHAIN, (1, 4), 7), (box, OPEN_CHAIN, (1, 1), 7)]
     cases += [(box, Wrap(True, True, True), (2400, 2401), 1), (box, Wrap(True, True, True), (3, 4), 7)]
     cases += [(mixed, OPEN_CHAIN, (1, 1), 7), (mixed, OPEN_CHAIN, (1, 2), 7)]
-    for counts, faces, pair, divisor in cases:
+    for counts, faces, pair, level_weight in cases:
         num, den = pair
-        found = rest(counts, pair, faces, divisor, MAX_WORK_INT, 3 * den)
+        found = rest(counts, pair, faces, level_weight, MAX_WORK_INT, 3 * den)
         fine = found.fine.astype(object)
-        side = counts.astype(object) * (3 * den * found.unit) // divisor
+        side = counts.astype(object) * (3 * den * found.unit) // level_weight
         left = 6 * den * fine - num * sum(arrivals(fine, faces)) - side
         assert ((0 >= left) & (left > -6 * den)).all(), (pair, faces)
         assert (found.levels == (fine + found.unit // 2) // found.unit).all() and found.iterations > 1
@@ -47,7 +47,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
 
 
 def test_the_tent_on_an_open_chain_is_the_exact_rest_to_the_nearest_integer():
-    """The massless line on an open chain of 30 with two sources of 3,600 over the divisor 400: 2 a_i - a_(i-1) - a_(i+1) = 3 sigma_i with 0 beyond the faces, solved in exact rationals; the levels are its nearest integers."""
+    """The massless line on an open chain of 30 with two sources of 3,600 over the level weight 400: 2 a_i - a_(i-1) - a_(i+1) = 3 sigma_i with 0 beyond the faces, solved in exact rationals; the levels are its nearest integers."""
     counts = np.zeros((30, 1, 1), dtype=np.int64)
     counts[14:16, 0, 0] = 3600
     found = rest(counts, (1, 1), OPEN_CHAIN, 400, MAX_WORK_INT, 3)
@@ -64,13 +64,13 @@ def test_the_tent_on_an_open_chain_is_the_exact_rest_to_the_nearest_integer():
 
 
 def test_the_rest_of_a_gapped_pair_about_one_source_is_isotropic_and_the_lines_exact_solution():
-    """The binding holder's pair of the tests' universe at its divisor on a closed box of 21^3 with one source of 1,000 quanta per interval at the centre: the level at the six neighbours is one number (an isotropic rest, the vector test of the two rows), the level falls along each axis all the way to the face, and at every Node the level is the nearest integer of the line's exact solution, 6 den a - num S_6(a) = 3 den sigma with 0 beyond every face solved by the sine transform (the screened well of the six Ports, whose reach is the pair's, ALGEBRA.md #the-well)."""
+    """The binding holder's pair of the tests' universe at its level weight on a closed box of 21^3 with one source of 1,000 quanta per interval at the centre: the level at the six neighbours is one number (an isotropic rest, the vector test of the two rows), the level falls along each axis all the way to the face, and at every Node the level is the nearest integer of the line's exact solution, 6 den a - num S_6(a) = 3 den sigma with 0 beyond every face solved by the sine transform (the screened well of the six Ports, whose reach is the pair's, ALGEBRA.md #the-well)."""
     rows = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
     row = next(entry for entry in rows if entry["name"] == "binding")
-    (num, den), divisor = row["pair"], row["held"]["divisor"]
+    (num, den), weight = row["pair"], row["held"]["level_weight"]
     counts = np.zeros((21, 21, 21), dtype=np.int64)
     counts[10, 10, 10] = 1000
-    levels = rest(counts, (num, den), Wrap(False, False, False), divisor, MAX_WORK_INT, 3 * den).levels
+    levels = rest(counts, (num, den), Wrap(False, False, False), weight, MAX_WORK_INT, 3 * den).levels
     near = {int(np.moveaxis(levels, a, 0)[10 + s, 10, 10]) for a in range(3) for s in (1, -1)}
     assert len(near) == 1 and 0 < near.pop() < int(levels[10, 10, 10])
     for axis in range(3):
@@ -79,16 +79,16 @@ def test_the_rest_of_a_gapped_pair_about_one_source_is_isotropic_and_the_lines_e
     cosines = np.cos(math.pi * np.arange(1, 22) / 22)
     summed = cosines[:, None, None] + cosines[None, :, None] + cosines[None, None, :]
     denominator = 6 * den - 2 * num * summed
-    source = dstn(3 * den * counts.astype(float) / divisor, type=1, norm="ortho")
+    source = dstn(3 * den * counts.astype(float) / weight, type=1, norm="ortho")
     exact = idstn(source / denominator, type=1, norm="ortho")
     assert np.array_equal(levels, np.rint(exact).astype(np.int64))
 
 
 def test_the_refusals_by_name():
-    """A board periodic on its every axis at [1, 1] gives the sources no sink; a divisor below 1 is refused."""
+    """A board periodic on its every axis at [1, 1] gives the sources no sink; a level weight below 1 is refused."""
     ring = np.zeros((16, 1, 1), dtype=np.int64)
     ring[3, 0, 0] = 2
     with pytest.raises(ValueError, match="needs a sink"):
         rest(ring, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3)
-    with pytest.raises(ValueError, match="divisor is from 1"):
+    with pytest.raises(ValueError, match="level weight is from 1"):
         rest(ring, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6)

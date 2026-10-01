@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
-UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the two rows
+UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
 CHAIN, QUANTA = 48, 50  # a chain of 48 Nodes (x open) and a body of 50 quanta: seven Nodes
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
 
@@ -63,8 +63,8 @@ PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0,
 
 
 def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
-    """The slit world, a wall across x with one gap at y = 4 on a board of 24 x 9 x 1 (z folded), the packet of light laid by the generator `tool`, in the tests' universe without its row with a gap; `changes` replace the world's keys."""
-    universe_beside(folder, drop=("polarisation",))
+    """The slit world, a wall across x with one gap at y = 4 on a board of 24 x 9 x 1 (z folded), the packet of light laid by the generator `tool`, in the tests' universe; `changes` replace the world's keys."""
+    universe_beside(folder)
     path = folder / f"{name}.json"
     path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")
     tool.main(["--input", str(path)])

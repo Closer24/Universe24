@@ -50,7 +50,7 @@ def nodes_of(mask: np.ndarray, offset: tuple[int, int, int] = (0, 0, 0)) -> list
 
 
 def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int) -> dict[str, object]:
-    """A family's row as the rule derived it: its name, pair, its lines (a family of quanta's dimension, a held row's sources' count), whether they are a plane, whether it is held and at which divisor, whether its readers' Wronskian sources it (the holder of the sign), its parts, whether it carries quanta, the rows it reads and its count's wall W_c."""
+    """A family's row as the rule derived it: its name, pair, its lines (a family of quanta's dimension, a held row's sources' count), whether they are a plane, whether it is held and at which level weight, whether its readers' Wronskian sources it (the holder of the sign), its parts, whether it carries quanta, the rows it reads and its count's wall W_c."""
     return {
         "name": family.name,
         "pair": list(family.pair),
@@ -58,7 +58,7 @@ def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int
         "plane": family.plane,
         "held": family.held,
         "sign": family.wronskian,
-        "divisor": family.divisor,
+        "level_weight": family.level_weight,
         "parts": [1, 3] if family.axes else [1],
         "quanta": family.quanta,
         "reads": [families[read.family].name for read in family.reads],

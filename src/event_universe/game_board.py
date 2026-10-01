@@ -104,7 +104,7 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time line at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the share of the record's lines in quanta over the count's wall (a reading of the form that sources the fields) for a row sourced by the form and the Wronskian's quanta at the written moment, W div T (`node.well`, a reading), for the holder of the sign (its rest, of either sign), each at the weight with which the record's family reads the row, over the row's divisor (features/start), both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder, the holder of the sign keeping its laid record where nothing sources it."""
+        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time line at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the share of the record's lines in quanta over the count's wall (a reading of the form that sources the fields) for a row sourced by the form and the Wronskian's quanta at the written moment, W div T (`node.well`, a reading), for the holder of the sign (its rest, of either sign), each at the weight with which the record's family reads the row, over the row's level weight (features/start), both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder, the holder of the sign keeping its laid record where nothing sources it."""
         forms = []
         for row in self.laid_rows():
             family = self.families[row.family]
@@ -125,7 +125,7 @@ class GameBoard:
             forms.append((row.family, np.where(on, laid, 0), np.where(on, turn, 0)))
         for index in self.held:
             family = self.families[index]
-            assert family.divisor is not None
+            assert family.level_weight is not None
             counts = node.zeros(self.shape, self.kind)
             for source, form, turn in forms:
                 booking = turn if family.wronskian else form
@@ -134,7 +134,7 @@ class GameBoard:
                 continue  # the holder of the sign keeps its laid record where nothing sources it
             wall = node.rule_of(family, self.world.node_clock, 0)[2]
             try:
-                field = rest(counts, family.pair, self.wrap, family.divisor, self.world.width, wall)
+                field = rest(counts, family.pair, self.wrap, family.level_weight, self.world.width, wall)
             except ValueError as refusal:
                 raise ValueError(f"the start of the held family {family.name!r}: {refusal}") from refusal
             remainder = node.full(self.shape, field.remainder, self.kind)

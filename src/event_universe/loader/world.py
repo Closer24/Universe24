@@ -26,8 +26,8 @@ INTEGER_KEYS = ("node_clock", "quantum_action", "width")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held"),
     ("name", "pair"),
-    ("sources", "divisor", "rest"),
-    ("sources", "divisor"),
+    ("sources", "level_weight", "rest"),
+    ("sources", "level_weight"),
 )
 FORM, TENSIONS, WRONSKIAN = (
     "form",
@@ -122,7 +122,7 @@ def kind_of(width: int) -> type:
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its divisor and its rest (a held row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22), everything else derived by the rule from the pair and the shape."""
+    """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its level weight and its rest (a held row; the level weight `level_weight`, the quanta of form that write one level of the row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22), everything else derived by the rule from the pair and the shape."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -146,10 +146,10 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
             )
         lines, parts, plane, wronskian = shape_of(row, label)
-        divisor, rest = None, 0
+        level_weight, rest = None, 0
         if "held" in row:
             holds = row["held"]
-            divisor = integer(holds["divisor"], f"{label}.held.divisor", 1)
+            level_weight = integer(holds["level_weight"], f"{label}.held.level_weight", 1)
             if "rest" in holds:
                 if wronskian or num != den:
                     raise ValueError(
@@ -158,7 +158,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 rest = integer(
                     holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
                 )
-        rows.append(Row(name, (num, den), lines, parts, plane, wronskian, divisor, rest))
+        rows.append(Row(name, (num, den), lines, parts, plane, wronskian, level_weight, rest))
     return integers, derived.family_rules(rows)
 
 

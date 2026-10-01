@@ -1,5 +1,5 @@
 {
- "comment": "The two slits as run, the click experiment (the owner, 2026-09-30, 13:30, 'fringes are clicks, because a person sees them'; the advisor's design at the owner's word of 13:50, #1515 comment 5912573191; ALGEBRA.md row (g)): every number of the three worlds, on the light-only universe file examples/events/light.json (rule.json with the massless row's rest 60, the vacuum content, and the three holders' divisors at a million, the advisor's E_g for the light-only worlds, #1563 comment 5918198102, so that light's own well stays under one level; the run at E_g = 1,000 a finding by name, light's self-focusing), read by build_worlds.py, which writes the world files, their mode files (tools/pixel_mode.py, the message lay) and the blind expectation files per region. The flat board `length` x `height` x 1 (z folded), the packet of the light family at the wave `wave` (k = pi / 4, lambda = 8) laid over the column `packet.column` with the raised-cosine edge `packet.edge_along` along x, flat across the rows `packet.across` with the edge `packet.edge_across`, at the amplitude `amplitude.bright` (10.00 quanta per Node of the plane record at the vacuum's paces; `laid` the count the engine lays at the paces of the vacuum content, from the run's books) or `amplitude.dilute` (about one quantum per Node); the wall the inner face at `wall` with the two gaps `gaps` (d = 12); the screen the column `screen` (L = 24) declared as `screen_regions` detectors of `rows_per_region` rows each, half the wavelength, the smallest region the law allows (No click names a Node), each opaque by the receding face `receding` beyond the screen, through which everything that passes the screen leaves the declared board and never returns, and the source's face receding too, the axis's largest size 400 so that the run completes its intervals (the reviewer's A and the advisor's confirmation, 2026-10-01: the wall's return leaves instead of passing the gaps a second time inside the window, so the reading is window-free in substance and the window a declaration); `ticks` intervals, the screen read in the window `window` (the packet's centre at the wall at about 18 and at the screen at about 62). The which-way world closes the gap `which_way.closed` (the wall's own face there) and declares the opaque detector `which_way.detector` before it, the rows and columns of a region against the wall, which absorbs that gap's events (the wall reflects them back, and the region's back Ports face the wall, so its inflow is the arriving events once). The blind rows: the bright world's per-Node row of the advisor (#1515 comment 5903745976) summed per region; the dilute world's the same shares over its own passing count; the which-way world's the open gap's envelope alone, the Boss's Huygens sum from the gap's Nodes at lambda = 8, summed per region, no fringes. The credit (the reading, tools/click_counts.py): each detector's share is its boundary's inflow (the `seen` lines) over the screen's total, N the total over W_c, the clicks credited N times the share and one draw by the shares with the seed `seed`, the instrument's; the exclusivity by the draw's construction. The fixes of the owner's word of 2026-10-01, 04:50 (the audit's four items): the rows named, the rounded shares the expectation and the drawn row the clicks; N the nearest whole of the total over W_c; the visibility read at the blind first minima's regions (4 and 8) against the blind central maximum; the source face receding; the blind file's arrival wager in the engine's labels (`arrival`) with the wings (`wings`); a region's seen inflow floored at 0 before the shares (the owner, 09:00); `quanta` is N's blind, the Huygens sum's 273, and the twelve counts sum to 275 by their rounding; `laid` the generator's count of the lay; the blind file is written before the run and never touched after.",
+ "comment": "The two slits as run, the click experiment (the owner, 2026-09-30, 13:30, 'fringes are clicks, because a person sees them'; the advisor's design at the owner's word of 13:50, #1515 comment 5912573191; ALGEBRA.md row (g)): every number of the world, on the light-only universe file examples/events/light.json (rule.json with the holders of the content at the level weight 1,000,000, the advisor's LW for the light-only worlds, #1563 comment 5918198102, so that light's own well stays under one level), read by build_world.py, which writes the world file, its mode file (tools/pixel_mode.py, the message lay) and the blind expectation file per region. The flat board `length` x `height` x 1 (z folded), the packet of the light family at the wave `wave` (k = pi / 4, lambda = 8) laid over the column `packet.column` with the raised-cosine edge `packet.edge_along` along x, flat across the rows `packet.across` with the edge `packet.edge_across`, at the amplitude `amplitude` (10.00 quanta per Node of the plane record at the vacuum's paces; `laid` the generator's count of the lay at the vacuum's paces, from the mode file); the wall the inner face at `wall` with the two gaps `gaps` (d = 12); the screen the column `screen` (L = 24) declared as detectors of `rows_per_region` rows each, half the wavelength, the smallest region the law allows (No click names a Node), each opaque by the receding face `receding` beyond the screen, through which everything that passes the screen leaves the declared board and never returns, and the source's face receding too, the axis's largest size 400 so that the run completes its intervals (the reviewer's A and the advisor's confirmation, 2026-10-01: the wall's return leaves instead of passing the gaps a second time inside the window, so the reading is window-free in substance and the window a declaration); the bare region `aside` behind one gap, the rows and columns of a region against the wall, read beside the screen and taking no share (what arrives there); `ticks` intervals, the screen read in the window `window` (the packet's centre at the wall at about 18 and at the screen at about 62). The blind row: the advisor's per-Node row `blind_per_node` (#1515 comment 5903745976) summed per region, its total `blind_through`. The credit (the reading, tools/click_counts.py): each detector's share is its boundary's inflow (the `seen` lines) over the screen's total, N the total over W_c, the rounded shares N times the shares (the expectation) and the clicks one draw by the shares with the seed `seed`, the instrument's; the exclusivity by the draw's construction. The fixes of the owner's word of 2026-10-01, 04:50 (the audit's four items): the rows named, the rounded shares the expectation and the drawn row the clicks; N the nearest whole of the total over W_c; the visibility read at the blind first minima's regions (4 and 8) against the blind central maximum; the source face receding; the blind file's arrival wager in the engine's labels (`arrival`) with the wings (`wings`); a region's seen inflow floored at 0 before the shares (the owner, 09:00); `quanta` is N's blind, the Huygens sum's 273, and the twelve counts sum to 275 by their rounding; `laid` the generator's count of the lay; the blind file is written before the run and never touched after.",
  "universe": "examples/events/light.json",
  "engine": "examples/events/engine_start.json",
  "family": "charge",
@@ -18,10 +18,7 @@
   ],
   "edge_across": 2
  },
- "amplitude": {
-  "bright": 1328,
-  "dilute": 420
- },
+ "amplitude": 1328,
  "wall": 20,
  "gaps": [
   [
@@ -50,18 +47,16 @@
   45,
   120
  ],
- "which_way": {
-  "closed": 0,
-  "detector": {
-   "rows": [
-    16,
-    19
-   ],
-   "columns": [
-    21,
-    24
-   ]
-  }
+ "aside": {
+  "name": "gap",
+  "rows": [
+   16,
+   19
+  ],
+  "columns": [
+   21,
+   24
+  ]
  },
  "blind_per_node": [
   2,
@@ -114,10 +109,6 @@
   3
  ],
  "blind_through": 273,
- "laid": {
-  "bright": 1797,
-  "dilute": 85
- },
  "pattern": [
   1,
   10

@@ -13,7 +13,7 @@ from event_universe.world_files import load_world
 from tests.laws import ROOT, load_file
 
 GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")
-BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_worlds.py")
+BUILD = load_file("bell_build", ROOT / "examples" / "events" / "bell" / "build_world.py")
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
 RUN = load_file("run_inputs", ROOT / "tools" / "run_inputs.py")
@@ -79,9 +79,7 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     path = tmp_path / f"{expected['runs'][expected['order'][0]]}.json"
     board = GameBoard(load_world(path), lines.append)
     pair = [f.name for f in board.families].index(expected["family"])
-    board.states[pair].lines[1].now[board.shape[0] // 2, 0, 0] += (
-        1  # one part one level off at the source
-    )
+    board.states[pair].lines[1].now[board.shape[0] // 2, 0, 0] += 1  # one part a level off
     for _ in range(board.world.ticks):
         board.step()
     assert (board.states[pair].lines[0].now != board.states[pair].lines[1].now).any()

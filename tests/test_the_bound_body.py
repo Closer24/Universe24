@@ -17,9 +17,7 @@ from tests.laws import CHAIN, CHARGED, QUANTA, ROOT, chain_body_world, load_file
 TOOL = load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py")
 
 
-def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_share_refused(
-    tmp_path, monkeypatch
-):
+def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_path, monkeypatch):
     """The count is the record's share in quanta over the wall 3 den T, read at the start within the law's tolerance of the declared count, every Node of the body carrying a quantum; over a hundred intervals the share's total moves only by Rule3's own rounding (the books' drift, under a quantum per Node of the chain) and no quantum changes family, the quanta at the declared Nodes stay above 0 and the body's Nodes derived for a report are where its share stands; a declared count off the share beyond the rounding refuses the world by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)
@@ -53,9 +51,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_count_far_from_its_share
         GameBoard(load_world(world))
 
 
-def test_two_bodies_of_opposite_senses_source_the_sign_holder_oppositely_and_a_plane_reads_it(
-    tmp_path, monkeypatch
-):
+def test_opposite_senses_source_the_sign_holder_oppositely_and_a_plane_reads_it(tmp_path, monkeypatch):
     """The dimension's table (ALGEBRA.md #a-familys-declaration): on the chain two bodies of the charged family (matter's pair as a plane) laid rotating in the senses +1 and -1 carry the Wronskian of those signs at their Nodes, so after one interval the sign holder's record (its time part, the light's own record) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all (the Wronskian's quanta its source); the charged family reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, reads nothing of it and light does not read its own row."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, at=(14, 34), senses=(1, -1))))

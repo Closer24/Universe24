@@ -198,11 +198,9 @@ def test_the_gate_catches_each_violation() -> None:
 
 
 def test_the_gate_passes_integer_numpy_and_the_carry() -> None:
-    source = (
-        "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\nm = np.ones(3, dtype=bool)\n"
-    )
+    source = "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\n"
     source += "o = np.full(2, None, dtype=object)\ny = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\n"
-    source += "r = np.array([1, -2, 3])\nz = x.astype(object)\n"
+    source += "r = np.array([1, -2, 3])\nz = x.astype(object)\nm = np.ones(3, dtype=bool)\n"
     tree = ast.parse(source)
     assert float_literals(source) == [] and true_divisions(source) == []
     assert forbidden_imports(tree) == [] and numpy_violations(tree) == []

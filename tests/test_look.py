@@ -85,10 +85,8 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
     """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall to the nearest whole and the rounded shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the rounded shares (the expectation) the clicks (one draw by the seed), each row's extrema, visibility and deviation from the blind row's shares, the arrival of the screen's inflow in the engine's labels (the peak, the centroid, the half-maximum span) and a bare region named `aside`; a region's seen inflow is floored at 0 before the shares, the instrument's declaration."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    groups = [
-        {"name": f"g{y}", "positions": [[x, y + r, 0] for x in (21, 22) for r in range(4)]}
-        for y in (0, 4)
-    ]
+    cells = [(21 + c // 4, c % 4) for c in range(8)]
+    groups = [{"name": f"g{y}", "positions": [[x, y + r, 0] for x, r in cells]} for y in (0, 4)]
     world = slit_world(tmp_path, TOOL, detectors=[*SCREEN, *groups])
     pair = slit_world(tmp_path, TOOL, "pair", detectors=groups)
     for nodes, reason in REFUSED:
@@ -106,10 +104,8 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     assert [counted[name] for name in BLIND["detector"]] == measure["seen"]
     assert measure["blind"] == BLIND["counts"] and measure["pattern"] == [0, 1]
     assert measure["totals"] == "N 3 by the shares (the blind 10)"
-    assert measure["watch"] == [
-        "y = 4: 2 by the shares, the blind 2",
-        "y = 0: 1 by the shares, the blind 1.5",
-    ]
+    watch = [f"y = {y}: {n} by the shares, the blind {b}" for y, n, b in ((4, 2, 2), (0, 1, 1.5))]
+    assert measure["watch"] == watch
     assert PAGE.embedded(measure) in html and PAGE.packed(look) in html
     assert "the faces (declared)" in html and "<title>Slit look</title>" in html
     grouped = {**BLIND, "detector": ["g4", "g0"], "counts": [1, 2], "aside": ["screen 0"]}
