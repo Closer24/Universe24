@@ -84,7 +84,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces(tmp_path, monkeypatch):
-    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall and the clicks credited by the shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the credit the summed absolute deviation from the blind row's shares, one draw by the seed and a bare region named `aside`; Bell's builder writes from its design file the gate's world at the design's angle with its blind expectation."""
+    """The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall and the clicks credited by the shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the credit the summed absolute deviation from the blind row's shares, one draw by the seed and a bare region named `aside`; Bell's builder writes from its design file the gate's world at the design's angle."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     groups = [
         {"name": f"g{y}", "positions": [[x, y + r, 0] for x in (21, 22) for r in range(4)]}
@@ -132,15 +132,13 @@ def test_the_page_draws_the_screen_per_region_with_the_blind_curve_and_the_faces
     assert every["window"] == [0, 3]
     assert PAGE.measurement(look, unnamed)["credited"][:2] == [1, 1]  # the screen's regions first
     BUILD.main(["--folder", str(folder := tmp_path / "bell")])
-    built, blind = (json.loads((folder / f"{n}.json").read_text()) for n in ("bell_0", "expectation"))
+    built = json.loads((folder / "bell_0.json").read_text())
     assert built["shape"] == [343, 48, 1] and built["ticks"] == 400 and len(built["messages"]) == 4
-    assert len(built["detectors"]) == 23 and len(blind["sides"]["left"]) == 12
+    names = [d["name"] for d in built["detectors"]]
+    assert len(names) == 23 and names[:2] == ["left_0", "left_1"] and names[12] == "right_0"
     assert [m.get("phase") for m in built["messages"]] == [None, [63, 64], None, [1, 64]]  # the mirror
     assert [m["top"]["x"][0] for m in built["messages"]] == [111, 111, 231, 231]
-    assert blind["settings"] == {"left": [-2, -6], "right": [0, 4]}
-    assert blind["degrees"]["left"] == [-45, -135]
-    assert blind["ports"]["right"]["0"] == {"plus": ["right_5"], "minus": ["right_3", "right_7"]}
-    assert [len(rows) for rows in blind["sides"]["right"].values()] == [6] + [4] * 9 + [6]
-    assert blind["blind"]["minima"] == [16, 31] and 2.7 < blind["blind"]["S_cosines"] < 2.9
+    rows = [len(d["positions"]) // 12 for d in built["detectors"]]  # twelve columns per region
+    assert rows[:12] == [4] * 12 and rows[12:] == [6] + [4] * 9 + [6]  # the edge rows folded in
     right = next(d for d in built["detectors"] if d["name"] == "right_0")
     assert {p[0] for p in right["positions"]} == set(range(331, 343))
