@@ -1,4 +1,4 @@
-"""The entries and the credit per detector over a window of intervals, read from a run's output file against an expectation file (DETECTOR, the one measurement; ALGEBRA.md #the-click-ends-nothing, the detector a declared instrument): the click lines of the expectation's detector (or detectors, a list) and one family within the window are counted per detector, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30); the entries are printed beside the blind counts with the total through the reporters, the local maxima and minima within the pattern's range, the visibility at the blind central maximum against the blind minima, (most - least) over (most + least), as integers, and the summed absolute deviation of the entries from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the entries' total, B the blind row's), as a fraction. The credit, the instrument's declaration (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018): what each detector saw, the net inflow through its front boundary summed over the window (the `seen` lines, the density that entered it from the declared board), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c, and the laid count less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere, the wall's return through the source's face; the clicks credited are N times the shares, apportioned by the largest remainders (the draw's expectation), and one draw of N clicks by the shares with the expectation's `seed` (the instrument draws; no draw is in the law), the exclusivity by the draw's construction; a bare region named in the expectation's `aside` is read beside the screen (what it saw over W_c and its entries) and takes no share. The window, the detectors, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
+"""The credit per detector over a window of intervals, read from a run's output file against an expectation file (DETECTOR, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the detector a declared instrument and the click its report): the `click` lines of the expectation's detector (or detectors, a list) and one family within the window are summed per detector, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each detector saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere, the wall's return through the source's face; the clicks credited are N times the shares, apportioned by the largest remainders (the draw's expectation), and one draw of N clicks by the shares with the expectation's `seed` (the instrument draws; no draw is in the law), the exclusivity by the draw's construction (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018). The credited clicks are printed beside the blind counts with the local maxima and minima within the pattern's range, the visibility at the blind central maximum against the blind minima, (most - least) over (most + least), as integers, and the summed absolute deviation of the credited clicks from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the credited total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The window, the detectors, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -21,27 +21,13 @@ from event_universe.world_files import load_world
 Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its detector
 
 
-def rises(
+def inflows(
     lines: list[dict[str, object]], detectors: list[str], family: str, window: tuple[int, int]
 ) -> dict[str, int]:
-    """The clicks per detector of the named detectors and one family within the window [first, last] of intervals (a click reports its region, never a Node)."""
-    found: dict[str, int] = {}
-    for line in lines:
-        if line.get("event") != "click" or line.get("detector") not in detectors:
-            continue
-        if line.get("family") != family or not window[0] <= int(str(line["tick"])) <= window[1]:
-            continue
-        found[str(line["detector"])] = found.get(str(line["detector"]), 0) + 1
-    return found
-
-
-def seen(
-    lines: list[dict[str, object]], detectors: list[str], family: str, window: tuple[int, int]
-) -> dict[str, int]:
-    """What each named detector saw of one family within the window: its `seen` lines' net front inflows summed (0 where it saw nothing)."""
+    """What each named detector saw of one family within the window [first, last] of intervals: its `click` lines' net front inflows summed, in the current's units (0 where it saw nothing; a click reports its region, never a Node)."""
     found = {name: 0 for name in detectors}
     for line in lines:
-        if line.get("event") != "seen" or line.get("family") != family:
+        if line.get("event") != "click" or line.get("family") != family:
             continue
         if line.get("detector") in found and window[0] <= int(str(line["tick"])) <= window[1]:
             found[str(line["detector"])] += int(str(line["inflow"]))
@@ -70,7 +56,7 @@ def drawn(quanta: int, shares: list[int], seed: int) -> list[int]:
 
 
 def deviation(found: list[int], blind: list[object]) -> list[int]:
-    """The summed absolute deviation of the entries from the blind row's shares over the total, sum |n_g B - T b_g| over T B with T the entries' total and B the blind row's, as [numerator, denominator]; [0, 1] where nothing entered."""
+    """The summed absolute deviation of the credited clicks from the blind row's shares over the total, sum |n_g B - T b_g| over T B with T the credited total and B the blind row's, as [numerator, denominator]; [0, 1] where nothing was credited."""
     shares = [Fraction(str(value)) for value in blind]
     total, whole = sum(found), sum(shares)
     if not total or not whole:
@@ -98,7 +84,7 @@ def extrema(row: list[int], first: int, last: int) -> tuple[list[int], list[int]
 
 
 def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
-    """The reading: the entries per detector of the expectation's detector (or detectors) and family over its window, ordered along its axis, with the blind counts, the totals, the extrema, the visibility and the deviation from the blind row's shares."""
+    """The reading: what each detector of the expectation's detector (or detectors) and family saw over its window, ordered along its axis, N over the wall, the clicks credited by the shares and one draw by the seed, with the blind counts, the extrema, the visibility and the deviation from the blind row's shares."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     document = json.loads(output.read_text(encoding="utf-8"))
     lines = document["lines"]
@@ -117,25 +103,23 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
         )
     spanned = expected.get("window", [0, document.get("ticks", 0)])
     window = (int(spanned[0]), int(spanned[1]))
-    counted = rises(lines, names, str(expected["family"]), window)
     placed = reporters(rows, axis)
-    found = [counted.get(name, 0) for _at, name in placed]
     family = next(f for f in loaded.families if f.name == expected["family"])
     wall = count_wall(family, loaded.quantum_action)
-    saw = seen(lines, names, str(expected["family"]), window)
+    saw = inflows(lines, names, str(expected["family"]), window)
     shares = [saw[name] for _at, name in placed]
     quanta = sum(shares) // wall
+    credited = apportioned(quanta, shares)
     seed = expected.get("seed")
     aside = [str(name) for name in expected.get("aside", [])]  # bare regions read beside the screen
-    aside_seen = seen(lines, aside, str(expected["family"]), window)
-    aside_entries = rises(lines, aside, str(expected["family"]), window)
+    aside_seen = inflows(lines, aside, str(expected["family"]), window)
     first, last = int(expected["pattern"][0]), int(expected["pattern"][1])
-    maxima, minima = extrema(found, first, last)
+    maxima, minima = extrema(credited, first, last)
     watched = [int(at) for at in expected.get("maxima", [])]
     least = [int(at) for at in expected.get("minima", [])]
     visibility = None  # none where the blind row names no minima (one region, no fringe to read)
     if watched and least:
-        most, low = found[watched[len(watched) // 2]], sum(found[at] for at in least)
+        most, low = credited[watched[len(watched) // 2]], sum(credited[at] for at in least)
         visibility = [most * len(least) - low, most * len(least) + low]
     return {
         "verdict": "DETECTOR",
@@ -144,35 +128,26 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
         "window": list(window),
         "across": expected["across"],
         "at": [at for at, _name in placed],
-        "rises": found,
+        "seen": shares,
+        "quanta": quanta,
+        "blind_quanta": expected.get("quanta"),
+        "blind_through": expected.get("through"),
+        "laid": expected.get("laid"),
+        "elsewhere": int(expected["laid"]) - quanta if "laid" in expected else None,
+        "credited": credited,
+        "drawn": drawn(quanta, shares, int(seed)) if seed is not None else None,
+        "seed": seed,
         "blind": expected["counts"],
-        "through": sum(found),
-        "blind_through": expected["through"],
         "maxima": maxima,
         "minima": minima,
         "blind_maxima": watched,
         "blind_minima": least,
         "visibility": visibility,
         "blind_visibility": expected.get("visibility"),
-        "deviation": deviation(found, list(expected["counts"])),
-        "seen": shares,
-        "quanta": quanta,
-        "blind_quanta": expected.get("quanta"),
-        "laid": expected.get("laid"),
-        "elsewhere": int(expected["laid"]) - quanta if "laid" in expected else None,
-        "credited": apportioned(quanta, shares),
-        "drawn": drawn(quanta, shares, int(seed)) if seed is not None else None,
-        "seed": seed,
-        "credited_deviation": deviation(apportioned(quanta, shares), list(expected["counts"])),
+        "deviation": deviation(credited, list(expected["counts"])),
         "aside": {
-            name: {
-                "seen": aside_seen[name],
-                "quanta": aside_seen[name] // wall,
-                "entries": aside_entries.get(name, 0),
-            }
-            for name in aside
+            name: {"seen": aside_seen[name], "quanta": aside_seen[name] // wall} for name in aside
         },
-        "clicks_in_all": sum(1 for line in lines if line.get("event") == "click"),
     }
 
 

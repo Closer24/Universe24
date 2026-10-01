@@ -27,10 +27,9 @@ BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")
 def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_but_for_its_gap(
     tmp_path, monkeypatch
 ):
-    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's declared remainders at or above W_c, on a family carrying no count, on a detector that reads a body or not one per Node, and a message's `whole` Node (no family's line lays a count whole today); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's declared remainders stand at its Nodes after the first act (the half wall elsewhere) and its click lines are the whole quanta entering its column through its two boundary Ports along x, none through a Port between two of its Nodes; in the run the Nodes beyond the board stay 0 in every family and no quantum crosses their Links (SUM (W_c c + r) kept to the bit), the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
+    """The message lay: now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, within one unit of the real numbers at the packet's Nodes (the rotation act and the fixed point of the division act, no table); the loader admits the folded board and refuses by name a detector Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a detector's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node (no line lays a count whole: the count is read); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within one unit, its band's omega with cos k_y, and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
-    screen["remainder"] = {"charge": [7] * 8 + [9]}
     path = slit_world(tmp_path, TOOL, detectors=[screen])
     mode_file = path.with_suffix(".mode.json")
     mode = json.loads(mode_file.read_text(encoding="utf-8"))["messages"][0]
@@ -49,16 +48,9 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
         load_world(slit_world(tmp_path, TOOL, "r", faces=[{"axis": "z", "at": 0, "gaps": []}]))
     with pytest.raises(ValueError, match=r"whole names the Node \[5, 4, 0\]: no line of the family"):
         load_world(slit_world(tmp_path, TOOL, "r", messages=[{**PACKET, "whole": [5, 4, 0]}]))
-    for reason, remainder, block in (
-        ("remainder.charge must be an integer from 0 through 589823999", {"charge": 589824000}, None),
-        ("names 'gravity', which carries no count", {"gravity": 1}, None),
-        ("reads a body and lays no remainder", {"charge": 1}, 0),
-        ("remainder.charge lists 2 remainders for 9 Nodes", {"charge": [1, 2]}, None),
-    ):
-        entry = {**({"block": block} if block is not None else screen), "name": "d"}
-        entry["remainder"] = remainder
-        with pytest.raises(ValueError, match=reason):
-            load_world(slit_world(tmp_path, TOOL, "r", detectors=[entry]))
+    with pytest.raises(ValueError, match="unknown key 'remainder'"):  # no count stands at a Node
+        entry = {**screen, "name": "d", "remainder": {"charge": 1}}
+        load_world(slit_world(tmp_path, TOOL, "r", detectors=[entry]))
     aslant = {**PACKET, "wave": [-1, 4], "phase": [1, 4], "transverse": {"y": [1, 8]}}
     turned = slit_world(tmp_path, TOOL, "turned", messages=[aslant])
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
@@ -87,24 +79,20 @@ def test_a_message_is_the_wave_under_its_envelope_and_an_inner_face_reflects_it_
     charge, beyond = [family.name for family in walled.families].index("charge"), walled.wrap.beyond
     assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
     walled.step()
-    remainder = walled.states[charge].count_remainder
-    column = walled.mask(tuple(map(tuple, screen["positions"])))
-    clicked = [line for line in lines if line["event"] == "click"]  # the seen lines stand beside
-    assert (remainder[column] == np.array([7] * 8 + [9])).all() and not clicked
-    assert remainder[23, 8, 0] == 3 * 6000 * 32768 // 2
+    clicked = [line for line in lines if line["event"] == "click"]
+    assert not clicked and not walled.quanta(charge)[beyond].any()  # nothing stands beyond the face
     for _ in range(23):
         walled.step()
         open_board.step()
-        risen = [line for line in lines if line["tick"] == walled.tick and line["detector"] == "screen"]
-        risen = [line for line in risen if line["event"] == "click"]  # the seen lines beside them
+        risen = [x for x in lines if x["tick"] == walled.tick and x["detector"] == "screen"]
         assert all(
-            all(port[0] == 0 for port in line["ports"]) and "node" not in line for line in risen
-        )  # no hop inside, no Node named
+            x["event"] in ("click", "field") and "node" not in x and "ports" not in x for x in risen
+        )  # the region's report and the field's reading alone, no Node named
+        assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")
         for state in walled.states:
             records = [r for r in (*state.parts, state.levels, state.second) if r is not None]
             assert not any(getattr(r, key)[beyond].any() for r in records for key in ("now", "before"))
-            assert not any(a[beyond].any() for a in (state.count, state.sense) if a is not None)
-        assert walled.books()["charge"]["balanced"]
+        assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].levels.now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].levels.now[:12]).sum()
     print(f"GAMEBOARD the slit: the light beyond the wall per row {passed.tolist()},")

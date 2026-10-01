@@ -1,4 +1,4 @@
-"""Bell's reading (ALGEBRA.md row (h); the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast, #1515 comment 5912822802; the advisor's corrected instrument, #1563 comment 5918198102, the setting as the comb's shift, 5918297124): eight runs, one per pair angle, each a world with the pair's angle laid as the two lobes' relative phase, read against the blind expectation file. Per run and side the ports at each setting are unions of the screen's regions the expectation names (the + port about the central maximum, the - port about the two first minima, displaced by the setting), each port's inflow its regions' net front inflows summed over the run (the `seen` lines). The ports are calibrated over the eight runs (the advisor): P_+ and P_- their mean inflows at that setting, d = s_+ / P_+ - s_- / P_- per run, D half its swing over the runs; the outcome is the sign of d and the contrast |d| / D. The side the file names `sign` credits every quantum in its ports to the larger port; the side it names `contrast` credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest. E(a, b) among the coincidences over the runs (the outcomes' product weighted by the smaller of the two sides' clicks), S at the CHSH settings, the efficiency per side and setting (the clicks over the light in the ports), the settings' phases calibrated from the same runs (the advisor, 5918622391: the calibrated difference over the run phases fitted to A cos(u - delta), delta the setting's phase, the mirror on the left) with E = cos(delta_A + delta_B) at them beside, the reading by the shares beside it (the product of the two sides' normalised differences), the single-side patterns per region (the quanta over W_c) and the visibility from the u = 0 world, all in exact fractions; the whole crossings at the regions' boundaries counted beside as the count's line's diagnostic, `crossings`. DETECTOR.
+"""Bell's reading (ALGEBRA.md row (h); the owner's decision of 2026-09-30, 14:15, Bell by the detector's contrast, #1515 comment 5912822802; the advisor's corrected instrument, #1563 comment 5918198102, the setting as the comb's shift, 5918297124): eight runs, one per pair angle, each a world with the pair's angle laid as the two lobes' relative phase, read against the blind expectation file. Per run and side the ports at each setting are unions of the screen's regions the expectation names (the + port about the central maximum, the - port about the two first minima, displaced by the setting), each port's inflow its regions' net front inflows summed over the run (the `click` lines, the detectors' reports). The ports are calibrated over the eight runs (the advisor): P_+ and P_- their mean inflows at that setting, d = s_+ / P_+ - s_- / P_- per run, D half its swing over the runs; the outcome is the sign of d and the contrast |d| / D. The side the file names `sign` credits every quantum in its ports to the larger port; the side it names `contrast` credits the larger port for the fraction of its quanta equal to the contrast and counts nothing for the rest. E(a, b) among the coincidences over the runs (the outcomes' product weighted by the smaller of the two sides' clicks), S at the CHSH settings, the efficiency per side and setting (the clicks over the light in the ports), the settings' phases calibrated from the same runs (the advisor, 5918622391: the calibrated difference over the run phases fitted to A cos(u - delta), delta the setting's phase, the mirror on the left) with E = cos(delta_A + delta_B) at them beside, the reading by the shares beside it (the product of the two sides' normalised differences), the single-side patterns per region (the quanta over W_c) and the visibility from the u = 0 world, all in exact fractions. DETECTOR.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -30,30 +30,23 @@ def sign(value: Fraction) -> int:
     return (value > 0) - (value < 0)
 
 
-def totals(
-    lines: list[dict[str, object]], family: str, regions: list[str]
-) -> tuple[dict[str, int], dict[str, int]]:
-    """Per region what it saw over the run (the `seen` lines' net inflows summed) and its whole crossings (the click lines counted), of one family."""
+def totals(lines: list[dict[str, object]], family: str, regions: list[str]) -> dict[str, int]:
+    """Per region what it saw over the run, its `click` lines' net inflows summed, of one family."""
     saw = {name: 0 for name in regions}
-    crossings = {name: 0 for name in regions}
     for line in lines:
         if line.get("family") != family or line.get("detector") not in saw:
             continue
-        name = str(line["detector"])
-        if line.get("event") == "seen":
-            saw[name] += int(str(line["inflow"]))
-        elif line.get("event") == "click":
-            crossings[name] += 1
-    return saw, crossings
+        if line.get("event") == "click":
+            saw[str(line["detector"])] += int(str(line["inflow"]))
+    return saw
 
 
 def one_run(lines: list[dict[str, object]], expected: dict[str, Any]) -> dict[str, Any]:
-    """One run's totals: per side the seen and the whole crossings per region, and per setting the two ports' inflows (the regions the expectation names summed)."""
-    found: dict[str, Any] = {"seen": {}, "crossings": {}, "ports": {}}
+    """One run's totals: per side what each region saw, and per setting the two ports' inflows (the regions the expectation names summed)."""
+    found: dict[str, Any] = {"seen": {}, "ports": {}}
     for side, regions in expected["sides"].items():
-        saw, crossings = totals(lines, str(expected["family"]), list(regions))
+        saw = totals(lines, str(expected["family"]), list(regions))
         found["seen"][side] = saw
-        found["crossings"][side] = crossings
         found["ports"][side] = {
             setting: {port: sum(saw[name] for name in names) for port, names in ports.items()}
             for setting, ports in expected["ports"][side].items()
@@ -168,12 +161,6 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
         }
         for side in expected["sides"]
     }
-    crossings = {
-        side: {
-            name: sum(run["crossings"][side][name] for run in runs) for name in expected["sides"][side]
-        }
-        for side in expected["sides"]
-    }
     visibility = None
     if visibility_run is not None:
         visibility = {}
@@ -222,7 +209,6 @@ def reading(world: Path, outputs: list[Path], expectation: Path) -> dict[str, ob
         "efficiency": efficiency,
         "by_the_shares": {"correlation": by_the_shares},
         "patterns": patterns,
-        "crossings": crossings,
         "visibility": visibility,
         "blind": expected["blind"],
     }

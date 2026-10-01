@@ -1,10 +1,11 @@
-"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count conserved, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body writes a wave into the sign holder's own record, its count's total stays 0 within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the real body's chain goes back in time, MATCH over 400 intervals; the tension is Rule3's own conservation of the current; the sense is the Wronskian, booked by the line; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning."""
+"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count the record's share, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body writes a wave into the sign holder's own record, its share's total stays within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the real body's chain goes back in time, MATCH over 400 intervals; the tension is Rule3's own conservation of the current; the sense is the Wronskian's sign, read from the record; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning."""
 
 from __future__ import annotations
 
 import json
 import math
 import re
+from fractions import Fraction
 from itertools import permutations, product
 from pathlib import Path
 
@@ -12,12 +13,12 @@ import numpy as np
 import pytest
 
 import event_universe.world_files as world_files
-from event_universe import flow, lay, node
+from event_universe import flow, node, share
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients, rule3
+from event_universe.core.rule3 import coefficients, link_paces, rule3
 from event_universe.features.start import rest
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import CONTENT, family_rules
+from event_universe.loader.derived import CONTENT, count_wall, family_rules
 from event_universe.world_files import input_digest, load_world
 from tests.laws import CHAIN, PACKET, ROOT, UNIVERSE, chain_body_world, load_file, universe_beside
 
@@ -36,8 +37,7 @@ FAMILIES = family_rules(  # the tests' universe: gravity, charge, binding, polar
 )
 NAMES = [family.name for family in FAMILIES]
 MATTER, GRAVITY, CHARGE = (NAMES.index(name) for name in ("matter", "gravity", "charge"))
-GAMMA, T = 6000, 32768
-PROFILE = [0, 0, 0, 200, 400, 600, 800, 1000, 1000, 800, 600, 400, 200, 0, 0, 0]
+GAMMA, T, PROFILE = 6000, 32768, [0, 0, 0, 200, 400, 600, 800, 1000, 1000, 800, 600, 400, 200, 0, 0, 0]
 
 
 def by_hand(a: np.ndarray, node: tuple[int, int, int]) -> tuple[int, ...]:
@@ -52,14 +52,45 @@ def by_hand(a: np.ndarray, node: tuple[int, int, int]) -> tuple[int, ...]:
 
 
 def quanta_state(record: node.Record, shape: tuple[int, int, int]) -> node.NodeState:
-    """A NodeState of a family of quanta with a real record, its count 0 and its second pair 0."""
+    """A NodeState of a family of quanta with a real record and its second pair 0."""
     zero = node.zeros(shape)
-    return node.NodeState(record, zero, zero.copy(), None, [], None, node.empty_record(shape))
+    return node.NodeState(record, zero, [], None, node.empty_record(shape), zero.copy())
 
 
-def total_of(state: node.NodeState, wall: int) -> int:
-    """SUM (W_c c + r) of a family's count over the GameBoard."""
-    return int((wall * state.count.astype(object) + state.count_remainder).sum())
+def quanta_of(board: GameBoard, index: int) -> int:
+    """A family's share summed over the GameBoard in quanta over its wall, the books' reading."""
+    return int(board.books()[board.families[index].name]["quanta"])
+
+
+def within_the_reach(board: GameBoard, index: int) -> int:
+    """One step of the GameBoard: a family's share read at the start's paces changes by the net currents at the start pair plus two terms exact in rationals from the step's three levels and remainders, the paces' anisotropy term num (next - before) SUM_a (3 p_a^2 - P^2) arr_a(now) / P^2 (P^2 = SUM_a p_a^2; 0 where the three paces are equal) and Rule3's remainder term -3 (next - before) (r' - r) / (2 P^2), up to the division act's floor at every Node of each level pair, under one unit each (ALGEBRA.md #the-count-is-the-records-share); returned, the paces' own part of the change, read beside (the books' drift holds both)."""
+    family, state, gamma = board.families[index], board.states[index], board.world.node_clock
+    content, axis = node.signed_read(index, board.families, board.states, gamma, "now", board.shape)
+    paces = link_paces(gamma, content.astype(object), tuple(a.astype(object) for a in axis))
+    squares = [pace * pace for pace in paces]
+    total = squares[0] + squares[1] + squares[2]
+
+    def at_the_paces(pairs: tuple[node.Record, ...]) -> int:
+        return int(share.family_share(family, pairs, board.wrap, gamma, content, axis).sum(dtype=object))
+
+    def exact_terms(begun: node.Record, stepped: node.Record) -> Fraction:
+        moved = stepped.now.astype(object) - begun.before.astype(object)  # next - before
+        arrivals = [a.astype(object) for a in node.axis_sums(begun.now, board.wrap)]
+        carried = stepped.remainder.astype(object) - begun.remainder.astype(object)  # r' - r
+        skew = sum((3 * squares[a] - total) * arrivals[a] for a in range(3))
+        top, low = 2 * family.pair[0] * moved * skew - 3 * moved * carried, 2 * total
+        return sum(Fraction(int(n), int(d)) for n, d in zip(top.ravel(), low.ravel(), strict=True))
+
+    records = (state.levels, state.second)
+    start = at_the_paces(records)
+    net = int(sum(np.asarray(current, dtype=object).sum() for current in board.currents()[index]))
+    board.step()
+    after = (state.levels, state.second)
+    fixed = at_the_paces(after)
+    terms = sum(exact_terms(begun, stepped) for begun, stepped in zip(records, after, strict=True))
+    floors = len(records) * state.levels.now.size  # the division act's floor, under one unit per Node
+    assert abs(Fraction(fixed - start - net) - terms) < floors, (fixed - start - net, terms, floors)
+    return board.total_share(index) - fixed
 
 
 def drawn(draw: np.random.Generator, shape: tuple[int, int, int], size: int, top: int) -> node.Record:
@@ -69,7 +100,7 @@ def drawn(draw: np.random.Generator, shape: tuple[int, int, int], size: int, top
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand():
-    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the lay, the count's line, the well and the hold at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's); a held row with a gap steps by the same call at its own pair, the plain rule's reads num, self coefficient 0 and wall 3 den, and its hold is the same act as the row without one, back exact (the generic test of the two rows: no name and no branch); the tension's act is one carried division per axis at the wall E_s W_c from its origin, with no count in it."""
+    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the share and its reading in quanta, the currents, the well and the hold at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's); a held row with a gap steps by the same call at its own pair, the plain rule's reads num, self coefficient 0 and wall 3 den, and its hold is the same act as the row without one, back exact (the generic test of the two rows: no name and no branch); the tension's act is one carried division per axis at the wall E_s W_c from its origin, with no count in it."""
     draw, shape = np.random.default_rng(5), (3, 3, 3)
     for _ in range(20):
         levels, content = drawn(draw, shape, 900, 50), int(draw.integers(-40, 40))
@@ -80,20 +111,21 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         here = tuple(int(getattr(levels, k)[HERE]) for k in KEYS)
         expected = rule3(reads, sums, self_coefficient, wall, *here)
         assert (int(after.now[HERE]), int(after.remainder[HERE])) == expected
-        # the lay from the weighted share: [w (now^2 + before^2) - S now before] div (2 p^2) - num now S_6(before)
-        count_wall, now_here, before_here = 3 * 7 * 64, int(after.now[HERE]), int(after.before[HERE])
+        # the share, the count as a reading: [w (now^2 + before^2) - S now before] div (2 p^2) - num now S_6(before),
+        # in quanta (share + W_c div 2) div W_c
+        wall_c, now_here, before_here = 3 * 7 * 64, int(after.now[HERE]), int(after.before[HERE])
         node_term = wall * (now_here**2 + before_here**2) - self_coefficient * now_here * before_here
         near = sum(by_hand(after.before, HERE))
-        share = node_term // (2 * (100 - 2 * content) ** 2) - 5 * now_here * near
-        count, remainder = lay.lay(QUANTA, (after,), 64, WRAP, 100, content)
-        assert (int(count[HERE]), int(remainder[HERE])) == divmod(share + count_wall // 2, count_wall)
-        # the count's line: the six currents num (now_i before_j - before_i now_j), W_c c + r moved by their sum
-        state = node.NodeState(after, count, remainder, None, [], None)
-        written = node.count_line(QUANTA, state, 64, 1 << 20, WRAP)
+        share_here = node_term // (2 * (100 - 2 * content) ** 2) - 5 * now_here * near
+        read = share.family_share(QUANTA, (after,), WRAP, 100, content)
+        assert int(read[HERE]) == share_here
+        assert int(share.quanta_of(read, wall_c)[HERE]) == (share_here + wall_c // 2) // wall_c
+        # the currents, a detector's reading: F_ij = num (now_i before_j - before_i now_j) through each Port
+        state = node.NodeState(after, None, [], None)
+        through = node.currents_of(QUANTA, state, WRAP)
         now_j, before_j = by_hand(after.now, HERE), by_hand(after.before, HERE)
-        flux = sum(5 * (now_here * b - before_here * n) for n, b in zip(now_j, before_j, strict=True))
-        moved = divmod(count_wall * int(count[HERE]) + int(remainder[HERE]) + flux, count_wall)
-        assert (int(written.count[HERE]), int(written.remainder[HERE])) == moved
+        flux = [5 * (now_here * b - before_here * n) for n, b in zip(now_j, before_j, strict=True)]
+        assert [int(f[HERE]) for f in through] == flux
         # the well: (now^2 - next x before + r) div T
         carry = draw.integers(0, 64, shape)
         quanta, carried = node.well(node.form(levels, after), carry, 64)
@@ -102,7 +134,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         # the hold: a row without a gap gains (source + r) div E_s at its time part, its parts stepped before it
         part, source = drawn(draw, shape, 900, 12), draw.integers(0, 400, shape)
         parts = [part] + [node.empty_record(shape)] * 3
-        held = node.NodeState(None, None, None, None, parts, draw.integers(0, 7, shape))
+        held = node.NodeState(None, None, parts, draw.integers(0, 7, shape))
         parts, carry_after_hold, _flows = node.held_step(HELD, held, source)
         increment, carry_after = divmod(int(source[HERE]) + int(held.carry[HERE]), 7)
         found = (int(parts[0].now[HERE]), int(carry_after_hold[HERE]))
@@ -118,7 +150,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         held.parts = [part]
         gapped, gapped_carry, _flows = node.held_step(GAPPED, held, source)
         assert (int(gapped[0].now[HERE]), int(gapped_carry[HERE])) == found
-        stood = node.NodeState(None, None, None, None, gapped, gapped_carry)
+        stood = node.NodeState(None, None, gapped, gapped_carry)
         back, carry_back, _flows = node.held_step(GAPPED, stood, source, -1)
         assert np.array_equal(back[0].now, part.now) and np.array_equal(carry_back, held.carry)
     # the tension's act (w x T_aa + r) div (E_s W_c) per axis from its origin (E_s W_c) div 2 = 7, back exact
@@ -141,10 +173,10 @@ def written_world(folder: Path, name: str, world: dict, mode: dict) -> Path:
 
 
 def laid_count(folder: Path, name: str, world: dict, mode: dict) -> int:
-    """The count the lay makes for a hand-written body declared at 1, read from the gate's refusal by name."""
-    with pytest.raises(ValueError, match="declares the count 1 and its family's form lays") as refused:
-        GameBoard(load_world(written_world(folder, name, world, mode))).step()
-    return int(re.search(r"lays (\d+) quanta", str(refused.value)).group(1))
+    """The count the share reads for a hand-written body declared at 1, read from the gate's refusal by name."""
+    with pytest.raises(ValueError, match="declares the count 1 and its family's share reads") as refused:
+        GameBoard(load_world(written_world(folder, name, world, mode)))
+    return int(re.search(r"reads (\d+) quanta", str(refused.value)).group(1))
 
 
 def cube_world(folder: Path) -> Path:
@@ -172,7 +204,8 @@ def keeps_the_48(board: GameBoard) -> None:
         for state in board.states:
             scalars = [r for r in (state.levels, state.second) if r is not None] + state.parts[:1]
             arrays = [getattr(r, k) for r in scalars for k in KEYS]
-            arrays += [a for a in (state.count, state.count_remainder, state.carry) if a is not None]
+            kept = (state.well_remainder, state.wronskian_remainder, state.carry)
+            arrays += [a for a in kept if a is not None]
             assert all(np.array_equal(turned(a, axes, signs), a) for a in arrays)
             tensions = [list(carries) for carries in state.flows.values()]
             tensions += [[getattr(r, k) for r in state.parts[1:]] for k in KEYS if len(state.parts) > 1]
@@ -185,7 +218,7 @@ def keeps_the_48(board: GameBoard) -> None:
 def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48_and_returns(
     tmp_path, monkeypatch
 ):
-    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the weighted lay by name and admits the laid one; at the start every holder of the content with a level stands at an isotropic rest about the body, its level at the six neighbours of the centre one number below the centre's (the vector test of the two rows); each interval the matter's levels change and are Rule3 from the interval's start at every Node with every holder of the content read once as its stepped time part (a family of quanta with a gap steps; the guard on the gap that froze matter on main is gone with the laid row), SUM (W_c c + r) stands to the bit, and every part of every NodeState keeps the cube's 48 about the body; the back-in-time gate (tools/back_in_time.py) over twelve intervals forward and twelve back returns every array bit for bit, MATCH (the tension's act has no count in its divisor and dumps nothing)."""
+    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the share by name and admits the one it reads; at the start every holder of the content with a level stands at an isotropic rest about the body, its level at the six neighbours of the centre one number below the centre's (the vector test of the two rows); each interval the matter's levels change and are Rule3 from the interval's start at every Node with every holder of the content read once as its stepped time part (a family of quanta with a gap steps; the guard on the gap that froze matter on main is gone with the laid row), the share read at the start's paces changes by the net currents plus the paces' anisotropy term and Rule3's remainder term exactly up to the division act's floors while the paces' own change (the well breathing about the body) moves the books' total beside, and every part of every NodeState keeps the cube's 48 about the body; the back-in-time gate (tools/back_in_time.py) over twelve intervals forward and twelve back returns every array bit for bit, MATCH (the tension's act has no count in its divisor and dumps nothing)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = GameBoard(load_world(cube_world(tmp_path)))
     matter, gravity = board.states[MATTER], board.states[GRAVITY]
@@ -194,7 +227,7 @@ def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48
     for level in (holder.parts[0].now for holder in holders if holder.parts[0].now[centre] > 0):
         near = by_hand(level, centre)
         assert len(set(near)) == 1 and 0 < near[0] < int(level[centre]), near
-    wall, total = node.count_wall(board.families[MATTER], T), None
+    moved = []
     for _ in range(4):
         start = node.Record(*(getattr(matter.levels, k).copy() for k in KEYS))
         padded = np.pad(start.now, 1)
@@ -204,18 +237,17 @@ def test_the_interval_on_a_closed_cube_is_rule3_conserves_the_count_keeps_the_48
         read = content, tuple((gravity.parts[1 + a].now + 1) // 2 for a in range(3))
         reads, self_coefficient, rule_wall = coefficients(4000, 6000, GAMMA, *read)
         expected = rule3(reads, sums, self_coefficient, rule_wall, *(getattr(start, k) for k in KEYS))
-        board.step()
+        moved.append(within_the_reach(board, MATTER))
         assert not np.array_equal(matter.levels.now, start.now)  # a family of quanta with a gap steps
         assert np.array_equal(matter.levels.now, expected[0])
         assert np.array_equal(matter.levels.remainder, expected[1])
-        assert total is None or total_of(matter, wall) == total
-        total = total_of(matter, wall)
         keeps_the_48(board)
     back = BACK.verdict(board, 12)
     tensions = [(int(p.now.min()), int(p.now.max())) for p in gravity.parts[1:]]
-    print(f"GAMEBOARD the cube: the tensions' ranges {tensions}, the gate over 12 intervals {back}")
+    drifts = {name: book["drift"] for name, book in board.books().items()}
+    print(f"GAMEBOARD the cube: the tensions' ranges {tensions}, the gate over 12 intervals {back},")
+    print(f"  the shares' drifts {drifts}, the paces' part of matter's per interval {moved}")
     assert back["verdict"] == "MATCH" and board.tick == 5
-    assert all(book["balanced"] for book in board.books().values())
 
 
 def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
@@ -236,85 +268,88 @@ def chain_world_by_hand(folder: Path, envelope: list[int], turn: int) -> Path:
 
 
 def test_light_is_born_by_the_write_on_the_chain(tmp_path, monkeypatch):
-    """(c) On the chain, a breathing body rotating in the sense +1 writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's SUM (W_c c + r) stays to the bit and its count's total within the Nodes' rounding, no quantum changes family (the matter's SUM (W_c c + r) to the bit over 400 intervals), and every output line is a click of an end detector (none within 400 intervals at the sixteenth sense that stays lawful under the two rows: the wave's flux at the ends crosses no wall in that window); a real body (no sense) writes nothing into it and no light is born; both runs go back in time whole, the back-in-time gate MATCH over 400 intervals forward and 400 back, every held row a stepped record whose level at the interval's start the state after it still holds (ALGEBRA.md #what-is-open, item 21)."""
+    """(c) On the chain, a breathing body rotating in the sense +1 writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's share in quanta stays within the Nodes' rounding and the matter's share read at each interval's paces changes by the net currents plus the anisotropy and the remainder terms exactly up to the floors over 400 intervals (the well it digs moves the paces, and the share read at the moving paces with them, the paces' part printed beside; no quantum changes family), and every output line is a click of an end detector (the light's inflow there); a real body (no sense) writes nothing into it and no light is born; the real body's run goes back in time whole, the back-in-time gate MATCH over 400 intervals forward and 400 back, every held row a stepped record whose level at the interval's start the state after it still holds (ALGEBRA.md #what-is-open, item 21); the rotating body's run does not: the reader's q, sign W read from the record (`node.sense_sign`), differs between the pair the step started from and the pair it left where W passes 0 at a Node carrying a light level (the record's edge as it spreads), the step back reads the pair it left, and the gate MATCHes over every interval before the first such interval and MISSes at it, the finding of this round for the owner's word (ALGEBRA.md #the-count-is-the-records-share, the sense's inverse)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     envelope = [v * 4 // 5 for v in PROFILE[3:13]]
     for turn in (1, 0):
         lines: list[dict[str, object]] = []
         board = GameBoard(load_world(chain_world_by_hand(tmp_path, envelope, turn)), lines.append)
         states = [board.states[MATTER], board.states[CHARGE]]
-        walls = [node.count_wall(FAMILIES[index], T) for index in (MATTER, CHARGE)]
         board.step()
-        totals = [total_of(state, wall) for wall, state in zip(walls, states, strict=True)]
+        laid = quanta_of(board, MATTER)
         assert states[1].levels is states[1].parts[0]  # light is the sign holder's own record
         away = np.ones(board.shape, dtype=bool)
         away[CHAIN // 2 - 8 : CHAIN // 2 + 8] = False
-        born, counts = 0, []
+        born, counts, moved, flipped = 0, [], 0, 0
         for _ in range(399):
-            board.step()
+            q, light = node.sense_sign(states[0], board.shape), states[1].levels.now.copy()
+            moved += within_the_reach(board, MATTER)
+            turned = (q != node.sense_sign(states[0], board.shape)) & (light != 0)
+            flipped = flipped or (board.tick if turned.any() else 0)
             born = born or (board.tick if states[1].levels.now[away].any() else 0)
-            counts.append(int(states[0].count.sum()))
-            assert [total_of(s, w) for w, s in zip(walls, states, strict=True)] == totals
-            assert abs(int(states[1].count.sum())) <= CHAIN
+            counts.append(quanta_of(board, MATTER))
+            assert abs(quanta_of(board, CHARGE)) <= CHAIN
         clicks = [e for e in lines if e["family"] == "charge" and e["event"] == "click"]
         first = clicks[0]["tick"] if clicks else None
+        drifts = {name: book["drift"] for name, book in board.books().items()}
         print(f"DETECTOR the chain, sense {turn}: {len(clicks)} charge clicks, first at {first}")
-        print(f"GAMEBOARD light born at {born}, matter's count {min(counts)} to {max(counts)} over 400")
-        ends = (
-            "left",
-            "right",
-            "face",
-        )  # the chain's end detectors and the open faces' layer at the same Nodes
+        print(f"GAMEBOARD light born at {born}, matter's quanta {min(counts)} to {max(counts)} over 400")
+        print(f"  (laid {laid}; the paces' part of the change {moved}), the shares' drifts {drifts}")
+        ends = ("left", "right", "face")  # the end detectors and the open faces' layer at the same Nodes
         assert all(e["detector"] in ends for e in lines if e["event"] == "click")
         assert born > 0 if turn else (born == 0 and not clicks and not states[1].levels.now.any())
-        assert all(book["balanced"] and book["sense_balanced"] for book in board.books().values())
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
         print(f"GAMEBOARD the chain of the sense {turn}, the gate over 400 intervals: {back}")
-        assert back["verdict"] == "MATCH"
+        if not turn:
+            assert back["verdict"] == "MATCH" and flipped == 0
+            continue
+        before = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), flipped - 2)
+        at = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), flipped - 1)
+        print(
+            f"GAMEBOARD the first q flip under light at {flipped}: the gate before {before}, at it {at}"
+        )
+        assert before["verdict"] == "MATCH" and at == {**at, "verdict": "MISS", "interval": flipped - 1}
+        assert back["verdict"] == "MISS" and str(back["array"]).startswith("matter.")
 
 
 def test_a_static_bodys_write_stands_still_its_tail_is_tense_and_a_taker_reads_the_light(
     tmp_path, monkeypatch
 ):
-    """(c, d) The generator's body of 50 on the chain laid rotating, its fixed point: the Wronskian's quanta it writes into the sign holder each interval sum over its Nodes to a total that moves within the rounding over its period (a static body writes a static level); its count stays its family's over 400 intervals, to the bit; its tail carries a nonzero mean tension on x over its period; a second body, the taker, holds 64 quanta of the charge read by the detector `taker`, whose clicks are the charge's quanta entering its Nodes."""
+    """(c, d) The generator's body of 50 on the chain laid rotating, its fixed point, the gate admitting its declared count as the share's own reading: the Wronskian's quanta it writes into the sign holder each interval sum over its Nodes to a total that moves within the rounding over its period (a static body writes a static level); its share in quanta over the board, read at the paces of the read, is printed as the books' reading (the owner's word of 2026-10-01: the share stays the count, its drift under a moving well a reading and no line); its tail carries a nonzero mean tension on x over its period; a second body, the taker, is read by the detector `taker`, whose clicks are the charge's inflow into its Nodes, signed and never 0, the net light that entered it over the run printed as its reading (a bare region passes the light on)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = chain_body_world(
-        tmp_path, TOOL, at=(24, 40), holds={"charge": 64}, senses=(1, 0), taker=True
-    )
+    world = chain_body_world(tmp_path, TOOL, at=(24, 40), senses=(1, 0), taker=True)
     lines: list[dict[str, object]] = []
     board = GameBoard(load_world(world), lines.append)
-    matter, family, bound = board.states[MATTER], FAMILIES[MATTER], board.world.amplitude_bound
-    wall = node.count_wall(family, T)
+    matter, family = board.states[MATTER], FAMILIES[MATTER]
+    declared = [sum(row.counts) for row in board.world.bodies]
+    read = [int(board.quanta(MATTER)[board.mask(row.nodes)].sum()) for row in board.world.bodies]
+    assert all(((abs(c - r) - 1) // 2) ** 2 <= c for c, r in zip(declared, read, strict=True))
     board.step()
-    total = total_of(matter, wall)
-    assert board.contents()[1]["charge"] == 64
-    body, writes, counts, tensions = board.body_nodes(0), [], [], []
+    laid = quanta_of(board, MATTER)
+    body, writes, counts, tensions, totals = board.body_nodes(0), [], [], [], []
     tail = body & ~board.mask(((24, 0, 0),))
     for _ in range(399):
         turn = node.well(node.wronskian(matter.levels, matter.second), matter.wronskian_remainder, T)[0]
         writes.append(int(turn[body].sum()))
-        tensions.append(int(node.count_line(family, matter, T, bound, board.wrap).stress[0][tail].sum()))
-        board.step()
-        counts.append(int(matter.count[body].sum()))
-        assert total_of(matter, wall) == total
+        tensions.append(int(node.stresses_of(family, matter, board.wrap)[0][tail].sum()))
+        within_the_reach(board, MATTER)
+        counts.append(int(board.quanta(MATTER)[body].sum()))
+        totals.append(quanta_of(board, MATTER))
     mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
     span = mode["period"][0] // mode["period"][1] + 1
     swings = [max(writes[i : i + span]) - min(writes[i : i + span]) for i in range(100, 399 - span)]
     taken = [e for e in lines if e["detector"] == "taker" and e["family"] == "charge"]
-    seen = [e for e in taken if e["event"] == "seen"]
-    taken = [e for e in taken if e["event"] == "click"]
-    print(f"GAMEBOARD the static body of {int(body.sum())} Nodes: the write's swing over a period")
-    print(f"  at most {max(swings)} quanta (the write {min(writes)} to {max(writes)}),")
-    tension = sum(tensions[100 : 100 + span])
     print(
-        f"  its count {min(counts)} to {max(counts)}, its tail's tension on x over a period {tension};"
+        f"GAMEBOARD the static body of {int(body.sum())} Nodes, declared {declared} read {read}: the swing"
     )
-    print(f"  DETECTOR the taker's clicks {len(taken)}")
+    print(f"  over a period at most {max(swings)} quanta (the write {min(writes)} to {max(writes)}),")
+    pace = board.books()["matter"]["pace"]
+    print(f"  the share over the board {min(totals)} to {max(totals)} (laid {laid}, the pace {pace}),")
+    tension, entered = sum(tensions[100 : 100 + span]), sum(e["inflow"] for e in taken)
+    print(f"  its quanta {min(counts)} to {max(counts)}, the tail's x tension over a period {tension};")
+    print(f"  DETECTOR the taker's clicks {len(taken)}, the light that entered {entered}")
     assert max(swings) <= int(body.sum()) and tension != 0
-    books = board.books().values()
-    assert all(e["body"] == 1 for e in taken) and all(book["balanced"] for book in books)
-    assert seen and all(e["inflow"] != 0 for e in seen)  # the net front inflow, signed, never 0
-    assert sum(e["inflow"] for e in seen) > 0  # what the taker saw over the run, the light that entered
+    assert taken and all(e["event"] == "click" and e["inflow"] != 0 for e in taken)  # signed, never 0
 
 
 def stress_by_hand(now: np.ndarray, num: int) -> list[np.ndarray]:
@@ -354,17 +389,17 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         expected = right - remainder * difference(now, a) + now * difference(remainder, a)
         assert np.array_equal(left, expected)
         differences.append(int(np.abs(left - right).max()))
-    written = node.count_line(FAMILIES[MATTER], quanta_state(record, shape), T, 1 << 20, WRAP)
+    stresses = node.stresses_of(FAMILIES[MATTER], quanta_state(record, shape), WRAP)
     by_hand_stress = stress_by_hand(record.now, 4000)
-    assert all(np.array_equal(t, h) for t, h in zip(written.stress, by_hand_stress, strict=True))
+    assert all(np.array_equal(t, h) for t, h in zip(stresses, by_hand_stress, strict=True))
     print(f"GAMEBOARD the identity's remainders' term at most {max(differences)}, the wall {wall}")
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
     exact = family_rules([("exact", (1, 2), None, None, 0)])[0]
     plane = quanta_state(node.Record(wave, wave, node.zeros(shape)), shape)
-    tension = node.count_line(exact, plane, T, 1 << 20, WRAP).stress
+    tension = node.stresses_of(exact, plane, WRAP)
     assert (tension[0] == -3 * 2000 * 2000 // 2).all() and not tension[1].any() and not tension[2].any()
     flat = quanta_state(node.Record(0 * wave + 7, 0 * wave + 7, node.zeros(shape)), shape)
-    assert not any(t.any() for t in node.count_line(exact, flat, T, 1 << 20, WRAP).stress)
+    assert not any(t.any() for t in node.stresses_of(exact, flat, WRAP))
 
 
 def chain_record(now_turn: tuple[int, ...], before_turn: tuple[int, ...]) -> node.Record:
@@ -381,10 +416,10 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
     for moving in (True, False):
         turns = ((1, 0, -1, 0), (0, -1, 0, 1)) if moving else ((1,), (1,))
         record, zero = chain_record(*turns), node.empty_record(shape)
-        state = node.NodeState(record, None, None, None, [], None, zero)
-        state.count, state.count_remainder = lay.lay(matter, (record, zero), T, wrap, GAMMA)
-        stress = tuple(np.asarray(v) for v in node.count_line(matter, state, T, 1 << 20, wrap).stress)
-        held, wall = node.empty_state(gravity, shape), node.count_wall(matter, T)
+        state = node.NodeState(record, None, [], None, zero)
+        held, wall = node.empty_state(gravity, shape), count_wall(matter, T)
+        count = share.quanta_of(share.family_share(matter, (record, zero), wrap, GAMMA), wall)
+        stress = node.stresses_of(matter, state, wrap)
         held.flows = {MATTER: flow.flow_origins(gravity, wall, shape)}
         current = {MATTER: flow.Flow(1, (stress[0], stress[1], stress[2]), wall)}
         held.parts, held.carry, held.flows = node.held_step(gravity, held, node.zeros(shape), 1, current)
@@ -401,10 +436,10 @@ def test_a_moving_record_and_a_resting_one_source_the_tension_along_x_alone():
         content, axis = node.signed_read(MATTER, FAMILIES, states, GAMMA, "now", shape)
         assert np.array_equal(axis[0], (xx + 1) // 2) and not axis[1].any()
         assert np.array_equal(content, stepped)
-        contact = node.Record(state.count, state.count, node.zeros(shape))  # the bound charge's level
+        contact = node.Record(count, count, node.zeros(shape))  # the bound charge's level
         node.with_parts(states[NAMES.index("polarisation")], [contact])
         light, _axis = node.signed_read(CHARGE, FAMILIES, states, GAMMA, "now", shape)
-        assert np.array_equal(light, stepped + state.count)  # every reader reads the rows as they stand
+        assert np.array_equal(light, stepped + count)  # every reader reads the rows as they stand
 
 
 def test_a_static_source_gives_a_static_field_that_falls_with_the_range_of_the_rows_pair():
@@ -440,11 +475,11 @@ def test_a_static_source_gives_a_static_field_that_falls_with_the_range_of_the_r
     assert drift <= 2 * kicked
 
 
-def test_the_sense_is_the_wronskian_booked_by_the_line_and_a_real_record_is_neutral():
-    """(e) On a periodic cube of 6^3 at a fixed pace, a record rotating as e^(-i omega t) on the lowest wave number (two level pairs a quarter turn apart) has a Wronskian above 0 at every Node, its sense laid above 0 and read as q = +1; Rule3 steps both pairs with one rule and the sense's line moves the sense so SUM (W_c k + r) stays to the bit over 100 intervals; the opposite rotation has the opposite sense; a real record's Wronskian is 0 at every Node and its sense 0."""
+def test_the_sense_is_the_wronskians_sign_read_from_the_record_and_a_real_record_is_neutral():
+    """(e) On a periodic cube of 6^3 at a fixed pace, a record rotating as e^(-i omega t) on the lowest wave number (two level pairs a quarter turn apart) has a Wronskian above 0 at every Node and is read as q = +1 (`node.sense_sign`, from the record and nothing kept beside it); Rule3 steps both pairs with one rule and the sign stays +1 at every Node over 100 intervals; the opposite rotation has the opposite sense; a real record's Wronskian is 0 at every Node and its q 0."""
     shape, wrap = (6, 6, 6), WRAP
     matter = FAMILIES[MATTER]
-    rule, wall = node.quanta_rule(matter, GAMMA, 700), node.count_wall(matter, T)
+    rule = node.quanta_rule(matter, GAMMA, 700)
     x = np.indices(shape)[0]
     cosine = np.take([4000, 2000, -2000, -4000, -2000, 2000], x)  # 4000 cos(2 pi x / 6)
     turned = np.take([2800, 1400, -1400, -2800, -1400, 1400], x)  # an interval before, cos omega = 0.7
@@ -452,20 +487,16 @@ def test_the_sense_is_the_wronskian_booked_by_the_line_and_a_real_record_is_neut
     for sense in (1, -1):
         record = node.Record(cosine, turned, node.zeros(shape))
         second = node.Record(node.zeros(shape), sense * quarter, node.zeros(shape))
-        state = node.NodeState(record, None, None, None, [], None, second)
+        state = node.NodeState(record, None, [], None, second)
         assert (np.sign(node.wronskian(record, second)) == sense).all()
-        state.sense, state.sense_remainder = lay.lay_sense(matter, record, second, T, GAMMA, 700)
         assert (node.sense_sign(state, shape) == sense).all()
-        total = int((wall * state.sense.astype(object) + state.sense_remainder).sum())
         for _ in range(100):
             state.levels = node.step(state.levels, rule, wrap)
             state.second = node.step(state.second, rule, wrap)
-            written = node.sense_line(matter, state, T, 1 << 20, wrap)
-            state.sense, state.sense_remainder = np.asarray(written.count), np.asarray(written.remainder)
-            assert int((wall * state.sense.astype(object) + state.sense_remainder).sum()) == total
-    real = node.Record(cosine, turned, node.zeros(shape))
-    assert not node.wronskian(real, node.empty_record(shape)).any()
-    assert not lay.lay_sense(matter, real, node.empty_record(shape), T, GAMMA)[0].any()
+            assert (node.sense_sign(state, shape) == sense).all()
+    real = node.NodeState(node.Record(cosine, turned, node.zeros(shape)), None, [], None)
+    real.second = node.empty_record(shape)
+    assert not node.wronskian(real.levels, real.second).any() and not node.sense_sign(real, shape).any()
 
 
 def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: object) -> Path:
@@ -481,7 +512,7 @@ def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: 
 
 
 def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_returns(tmp_path, monkeypatch):
-    """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the GameBoard grows by 4 layers of zeros beyond a face whenever a level, a count or a sense stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes, the books balanced and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's count over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size, the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew."""
+    """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the GameBoard grows by 4 layers of zeros beyond a face whenever a level stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes, the books the same and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's share over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size, the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     both = {"x": {"sides": ["low", "high"], "largest": 64, "layers": 4}}
     for receding, reason in (
@@ -507,9 +538,9 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
         at, wide = slice(low - offset, low - offset + extent), BACK.snapshot(large)[0]
         assert all(np.array_equal(a, b[at]) for (_, a), (_, b) in zip(snapshot, wide, strict=True))
     books = grows.books()["charge"]
-    assert grows.ended == end and grows.tick == 28 and books["total"] == large.books()["charge"]["total"]
+    assert grows.ended == end and grows.tick == 28 and books["share"] == large.books()["charge"]["share"]
     assert grows.mask(((15, 0, 0),))[15 + low, 0, 0] and all("node" not in e for e in lines)
-    assert not grows.states[0].count[low : low + 16].any() and fixed.states[0].count.any()
+    assert not grows.quanta(0)[low : low + 16].any() and fixed.quanta(0).any()
     assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 28
     written = json.loads((tmp_path / "grows.output.json").read_text(encoding="utf-8"))
     look = RECORD.record(world, None)
@@ -521,14 +552,12 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
 
 
 def test_the_massless_row_rests_at_the_vacuum_content_up_to_every_face_and_beyond(tmp_path, monkeypatch):
-    """(h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, the count's line untouched), the layers grown before its front stand at 60 and the gate says MATCH; light's count over a region is its field line."""
+    """(h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, no count in it), the layers grown before its front stand at 60 and the gate says MATCH; light's share over a region is its field line."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     receding = {"x": {"sides": ["high"], "largest": 64, "layers": 4}}
     world = light_alone_world(tmp_path, "light", 24, 6, receding=receding)
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    universe["families"] = [
-        row for row in UNIVERSE_ROWS if row["name"] in ("gravity", "charge", "binding")
-    ]
+    universe["families"] = [r for r in UNIVERSE_ROWS if r["name"] in ("gravity", "charge", "binding")]
     for name in ("charge", "binding"):
         rows = json.loads(json.dumps(universe["families"]))
         next(row for row in rows if row["name"] == name)["held"]["rest"] = 60
@@ -562,14 +591,10 @@ def test_the_massless_row_rests_at_the_vacuum_content_up_to_every_face_and_beyon
         board.step()
     grown = board.states[gravity].parts[0].now[24:, 0, 0]
     assert board.shape[0] > 24 and (grown[-1] == 60) and (grown != 60).any()
-    readings = [
-        line["reading"] for line in lines if line["event"] == "field" and line["family"] == "gravity"
-    ]
+    readings = [x["reading"] for x in lines if x["event"] == "field" and x["family"] == "gravity"]
     assert max(readings) > 0
     assert BACK.verdict(GameBoard(load_world(tmp_path / "kick.json")), 40)["verdict"] == "MATCH"
     output = RUN.run_input(str(world), str(tmp_path))
     written = json.loads((tmp_path / "light.output.json").read_text(encoding="utf-8"))
-    readings = [
-        x["reading"] for x in written["lines"] if x["event"] == "field" and x["family"] == "charge"
-    ]
-    assert output["verdict"] == "LAWFUL" and readings and max(readings) > 0
+    lit = [x for x in written["lines"] if x["event"] == "field" and x["family"] == "charge"]
+    assert output["verdict"] == "LAWFUL" and lit and max(x["reading"] for x in lit) > 0

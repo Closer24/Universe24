@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from math import gcd
 
 from event_universe.core.rule3 import ISOTROPIC, coefficients, division_fixed_point, division_forward
-from event_universe.features.counts_line import LEVELS, PORTS, PRODUCTS
+from event_universe.features.currents import LEVELS, PORTS, PRODUCTS
 
 VACUUM_PAIR = (1, 1)  # the rule's own massless band, the band of the real field of the highest rank
 BY_PLAIN, BY_SIGN = "plain", "sign"  # a read of the level as it is, or by the reader's own sign q
@@ -39,7 +39,7 @@ class FamilyRule:
 
     @property
     def quanta(self) -> bool:
-        """Whether the family carries quanta: two levels, a count and its current (every family but the holders of the content)."""
+        """Whether the family carries quanta: two level pairs whose share is its count and whose currents a detector reads (every family but the holders of the content)."""
         return self.held != CONTENT
 
 
@@ -59,7 +59,7 @@ def rank_of(held: str | None, pair: tuple[int, int]) -> tuple[int, ...]:
 def family_rules(
     rows: list[tuple[str, tuple[int, int], str | None, int | None, int]],
 ) -> tuple[FamilyRule, ...]:
-    """Every family from its row (name, pair, held word, divisor, rest): the reads of a family of quanta are every holder of the content by plain and every other holder of the sign by its own sign, at the weight 1, in the file's order, and it sources what it reads at the same weight; a held family of the content reads nothing; no family gives another anything (ALGEBRA.md #the-counts-line, light is born by the write)."""
+    """Every family from its row (name, pair, held word, divisor, rest): the reads of a family of quanta are every holder of the content by plain and every other holder of the sign by its own sign, at the weight 1, in the file's order, and it sources what it reads at the same weight; a held family of the content reads nothing; no family gives another anything (ALGEBRA.md #the-count-is-the-records-share, light is born by the write)."""
     ranks = [rank_of(held, pair) for _name, pair, held, _divisor, _rest in rows]
     found = []
     for index, (name, pair, held, divisor, rest) in enumerate(rows):
@@ -75,7 +75,7 @@ def family_rules(
 
 
 def count_wall(family: FamilyRule, action: int) -> int:
-    """The count's wall W_c = 3 den T, the family's plain wall times the universe's quantum action (ALGEBRA.md #the-counts-line, the lay and the wall)."""
+    """The count's wall W_c = 3 den T, the family's plain wall times the universe's quantum action: the unit in which a share is read as quanta (ALGEBRA.md #the-count-is-the-records-share)."""
     return 3 * family.pair[1] * action
 
 
@@ -84,10 +84,8 @@ def largest_of(width: int) -> int:
     return int(2**width - 1)
 
 
-def amplitude_bound(
-    families: tuple[FamilyRule, ...], gamma: int, action: int, most: int, width: int
-) -> int:
-    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound), and at which the count's line's total 6 x 2 x 2 |num| A^2 + W_c (most + 2) of every family of quanta does too (the two products of each of the record's two level pairs; the largest A whose square fits, the fixed point of the division act) (ALGEBRA.md #the-counts-line, the bound), W_c = 3 den T and most the largest count a body declares at a Node; refused by name where no level fits."""
+def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, width: int) -> int:
+    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the levels 0, Gamma div 2 and Gamma - 1 (ALGEBRA.md #the-bound), and at which the currents' reading at a Node, 6 x 2 x 2 |num| A^2 for every family of quanta (the two products of each of the record's two level pairs through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents); refused by name where no level fits."""
     largest = largest_of(width)
     found = largest
     for family in families:
@@ -97,13 +95,12 @@ def amplitude_bound(
             room = 6 * abs(reads[0]) + abs(self_coefficient) + wall
             found = min(found, int(division_forward(largest - wall, room, 0)[0]))
         if family.quanta and num:
-            spare = max(largest - 3 * den * action * (most + 2), 0)
             room = PORTS * PRODUCTS * LEVELS * abs(num)
-            found = min(found, division_fixed_point(int(division_forward(spare, room, 0)[0])))
+            found = min(found, division_fixed_point(int(division_forward(largest, room, 0)[0])))
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "
-                f"Rule3 and of the count's line leave no level inside the width of {width} bits "
+                f"Rule3 and of the currents leave no level inside the width of {width} bits "
                 "(ALGEBRA.md #the-bound)"
             )
     return found
