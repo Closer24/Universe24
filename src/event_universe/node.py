@@ -9,7 +9,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.ports import Wrap, arrival
-from event_universe.core.rule3 import NO_READ, coefficients, link_paces, rule3
+from event_universe.core.rule3 import NO_READ, coefficients, division_forward, link_paces, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.hold import hold
 from event_universe.features.read import content_of, guard, link_contents
@@ -259,11 +259,20 @@ def step_family(
     return lines, (first, second)
 
 
-def momentum_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The momentum density of a record at every Node on each axis, a reading of its lines (ALGEBRA.md #the-rows-against-nature (b2); #what-is-open, item 15): P_a = (F_(+a) - F_(-a)) / num, the currents through the axis's two Ports with the weight 1 differing, every line's added, at the lines as they stand (the pair the step starts from, as the currents), odd under the time reversal with the current; the source of the holder of the sign's odd lines under the rotation, as the tension is of the content's axis lines."""
-    through = currents_of(1, lines, wrap)
-    x, y, z = (through[2 * axis] - through[2 * axis + 1] for axis in range(3))
-    return x, y, z
+def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
+    """The sign's current of a two-part record at every Node on each axis, the mean of the Node's two a-Links' Wronskian currents, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, and the source its mean over the two Links, (J_a + 1) div 2 by the division act rounded as the read rounds the Link's tension (`features/read`, `link_tension`), as the tension on an axis is the mean of its two Links' stresses (ALGEBRA.md #the-primitives, The tension); odd under the sense within that rounding unit (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation at the wall den T, J_a = (6 den / num) W v on a plane record, so that the magnetic over the electric force on a co-moving reader is 1 / gamma where J_a unhalved doubled the magnetic term (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word of 2026-10-01, 17:17, on the two hands, the mathematician's #1572 comment 5932451234 and the advisor's 5932831736 and 5933191332)."""
+    found: list[Any] = [0, 0, 0]
+    for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
+        re_at, im_at = ports(re_line.now, wrap), ports(im_line.now, wrap)
+        for axis in range(3):
+            plus, minus = 2 * axis, 2 * axis + 1
+            found[axis] = (
+                found[axis]
+                + re_line.now * (im_at[plus] - im_at[minus])
+                - im_line.now * (re_at[plus] - re_at[minus])
+            )
+    x, y, z = (division_forward(current, currents.AXIS_PORTS, 1)[0] for current in found)
+    return np.asarray(x), np.asarray(y), np.asarray(z)
 
 
 def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.ndarray, ...]:
@@ -326,7 +335,7 @@ def write_sources(
     stresses: dict[int, currents.Vector],
     write: HeldWrite,
 ) -> list[Any]:
-    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's sources name, the form D for a row sourced by the form and the Wronskian W for the holder of the sign (`bookings`); for each axis line SUM over the sources of w x factor x the axis booking of each, its tension T_aa for a row of the content and its momentum density P_a for the holder of the sign under the rotation (`stresses`, the readers' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
+    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x q, q the booking of each that the row's sources name, the form D for a row sourced by the form and the Wronskian W for the holder of the sign (`bookings`); for each axis line SUM over the sources of w x factor x the axis booking of each, its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the readers' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     time: Any = 0
     for index in readers_of(families, held):
         time = time + weight_of(held, families[index]) * bookings.get(index, 0)
