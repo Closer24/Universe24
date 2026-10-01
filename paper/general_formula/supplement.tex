@@ -27,6 +27,24 @@
 
 \noindent This supplement gives the algebraic steps of every result the paper marks \textsc{derived} or \textsc{computed} without a proof in its text, in the order of the paper's sections; the theorems proved in the paper are not repeated. Each derivation names its inputs from the paper, its steps, and, where a number was computed, the computation and its check. The notation is the paper's: Rule3's coefficients at a Node of clock pace $p_0$ and Link paces $p_a$ are $R_a = 2\,\num\,p_a^2$ on the two arrivals of the axis $a$, $S = 12\,\den\,\Gamma^2 - 12(\den - \num)\,p_0^2 - 4\,\num\sum_a p_a^2$ on the Node's own level, and the wall $w = 6\,\den\,\Gamma^2$; the content read at the Node is $x = c / \Gamma$, also written $U$; $g = (\den - \num) / \den = 1 - \cos\omega_0$.
 
+\section*{The path from Rule3 to each result}
+
+Every result of the paper is reached from Eq.~(1), Rule3's line with its one write and its three readings, by a chain of the derivations below; where a link of a chain is an assumption of the model, it is named in the chain, so that each path is closed in the algebra with its assumptions explicit.
+\begin{itemize}[leftmargin=1.4em]
+\item \emph{Light's speed and dispersion:} Eq.~(1) at the vacuum's pace $\to$ the band, S.1.
+\item \emph{Gravity as a slowed clock, light's index, the bending and Shapiro's delay:} Eq.~(1) $\to$ the paces, Eq.~(3) (the assumption: the level read once into the clock and twice into the Link) $\to$ the band at a pace, S.1 $\to$ the index, S.2 $\to$ the ray integral, Eq.~(15) and S.20.
+\item \emph{The redshift of a bound rotation:} Eq.~(1) $\to$ S.1 at $k = 0$ with the clock's pace $\to$ S.15.
+\item \emph{The fall, Kepler's potential and the post-Newtonian parameters:} Eq.~(1) $\to$ S.1 at small $k$ $\to$ the inertia and the ray equations, S.18 $\to$ S.19.
+\item \emph{Lorentz's factor to the second order:} Eq.~(1) $\to$ the exact band of a free record, S.1 $\to$ the rotation at the moving centre, S.21, closed in the algebra for a free quantum of any family; for a body, the body's own band from its fixed point, S.13, computed by the generator, enters the same S.21.
+\item \emph{De Broglie's relation:} Eq.~(1) $\to$ S.1 $\to$ S.22.
+\item \emph{From the Node to us, bodies, clusters and the observer:} Eq.~(1) with the write $\to$ the fixed point and the functional, S.13 $\to$ the stability, Theorem 4 $\to$ the cloud and the free fall (computed) $\to$ the clicks between bodies, S.9, S.14 to S.17 $\to$ the clusters and the observer as a cluster (Section 7.5, with the assumption that the universe is bound).
+\item \emph{The count:} Eq.~(1) $\to$ the conserved form, Theorem 3 $\to$ the share, S.5 and S.6 $\to$ the invariant and the drift, S.14.
+\item \emph{Light born by the write, absorption and emission:} Eq.~(1)'s write line $\to$ the Wronskian, S.9 $\to$ the resonance, S.16.
+\item \emph{Bell:} Eq.~(1) linear $\to$ the parts' determinism (Section 9.4) $\to$ the declared credit (the assumption) $\to$ S.10.
+\item \emph{The two slits:} Eq.~(1) stepped in real arithmetic on the declared world $\to$ S.23 and the computed numbers of Section 9.
+\item \emph{The constants and the bounds:} Eq.~(1) $\to$ S.1 $\to$ S.24 (the Link); the field's rest $\to$ S.25 (Newton's constant); S.11 (the reach), S.12 (the two speeds).
+\end{itemize}
+
 \section*{The model (Section 3 of the paper)}
 
 \begin{derivation}[the band at a pace, Eq.~(4) of the paper]
@@ -155,11 +173,15 @@ which in the gap $\epsilon = 1 - \cos\omega_0$ is $[(1 - \epsilon) / (3(1 - \eps
 \end{derivation}
 
 \begin{derivation}[the moving clock to the second order, Section 8 (e)]
-\emph{Inputs:} a bound band $\omega(k) = \omega_0 + \Delta(1 - \cos k)$; the rotation at the moving centre $\Omega(k) = \omega(k) - k\,\omega'(k)$; the velocity $v = \omega'(k) = \Delta\sin k$. \emph{Steps:} $\Omega = \omega_0 + \Delta(1 - \cos k - k\sin k) = \omega_0 - \Delta k^2 / 2 + \Delta k^4 / 8 + O(k^6)$, and from $v = \Delta(k - k^3 / 6 + \dots)$, $k^2 = v^2 / \Delta^2 + v^4 / (3\Delta^4) + \dots$ and $k^4 = v^4 / \Delta^4 + \dots$, so
+\emph{Inputs:} the exact band of a free record of the pair $[\num, \den]$ along an axis, from Eq.~(1) at the vacuum's pace (S.1): $\cos\omega = c_0(2 + \cos k)$ with $c_0 = \num / (3\,\den)$, $\cos\omega_0 = 3c_0$; the rotation at the moving centre, $\Omega(k) = \omega(k) - k\,\omega'(k)$, the phase rate less $k$ times the group velocity $v = \omega'(k)$, which is what a clock carried by the packet reads. \emph{Steps:} write $s = \sin\omega_0$, $c = \cos\omega_0$ and $u = 1 - \cos k = k^2 / 2 - k^4 / 24 + \dots$; then $\cos\omega = c - c_0 u$, and with $\omega = \omega_0 + \delta$, $\cos\omega = c - s\delta - c\delta^2 / 2 + \dots$, so $s\delta + c\delta^2 / 2 = c_0 u$ and
 \[
-f = \frac{\Omega}{\omega_0} = 1 - \frac{v^2}{2\Delta\omega_0} - \frac{v^4}{24\Delta^3\omega_0} + O(v^6) = 1 - \frac{v^2}{2c_b^2} - \frac{v^4}{24\Delta^3\omega_0} + \dots, \qquad c_b^2 = \Delta\,\omega_0,
+\omega(k) = \omega_0 + \alpha k^2 - \beta k^4 + O(k^6), \qquad \alpha = \frac{c_0}{2s}, \qquad \beta = \frac{c_0}{24s} + \frac{c\,c_0^2}{8s^3}.
 \]
-which agrees with $\sqrt{1 - v^2 / c_b^2} = 1 - v^2 / (2c_b^2) - v^4 / (8c_b^4) - \dots$ at the second order and differs at the fourth, where Lorentz's $-v^4 / (8\Delta^2\omega_0^2)$ equals the band's $-v^4 / (24\Delta^3\omega_0)$ only at $\Delta = \omega_0 / 3$. \emph{Check:} at $\Delta = 0.3$, $\omega_0 = 0.8$, $v = 0.05$ the residual $(f - 1 + v^2 / (2c_b^2)) / v^4$ is $-1.95$ against the formula's $-1.93$, the difference the sixth order.
+Hence $v = \omega' = 2\alpha k - 4\beta k^3$, $\Omega = \omega - k\omega' = \omega_0 - \alpha k^2 + 3\beta k^4$, and inverting $v(k)$, $k^2 = v^2 / (4\alpha^2) + \beta v^4 / (4\alpha^5) + \dots$, so
+\[
+\frac{\Omega}{\omega_0} = 1 - \frac{v^2}{4\alpha\omega_0} - \frac{\beta\,v^4}{16\alpha^4\omega_0} + O(v^6) = 1 - \frac{v^2}{2c_m^2} - \frac{2\omega_0}{\sin 2\omega_0}\cdot\frac{v^4}{8c_m^4} + O(v^6), \qquad c_m^2 = 2\alpha\omega_0 = \frac{c_0\,\omega_0}{s} = \frac{\omega_0}{3\tan\omega_0},
+\]
+where the fourth-order coefficient is $\beta / (16\alpha^4\omega_0)$ over Lorentz's $1 / (8c_m^4)$, which reduces with $3c_0 = c$ to $\omega_0(s / c + c / s) = \omega_0 / (\sin\omega_0\cos\omega_0) = 2\omega_0 / \sin 2\omega_0$. So the tick of a free quantum is Lorentz's factor at the family's own light speed $c_m$ to the second order in $v$ exactly, and at the fourth order it carries the factor $2\omega_0 / \sin 2\omega_0$, $1.69$ at $[2, 3]$ and $1$ as the gap closes: the full factor is reached only in the limit of a small rest rotation, the same limit in which the post-Newtonian parameters reach $1$ (S.19). \emph{Check:} with the exact band at $[2, 3]$ the residual $(f - 1 + v^2 / (2c_m^2)) / v^4$ at $v = 0.02$ is $-3.37$ against $1.6926$ times Lorentz's $-1.988$, that is $-3.365$. \emph{A body:} a bound body's centre moves on the body's own band, $\omega_b(k)$, whose rest rotation and curvature the generator computes from the fixed point (S.13); the same steps on that band give the same form with the body's $c_b^2 = \omega_b / m_b^*$, and the body's band is a computed input, not derived in closed form here.
 \end{derivation}
 
 \begin{derivation}[de Broglie's relation, Section 8 (h)]
