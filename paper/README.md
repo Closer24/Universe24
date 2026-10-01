@@ -108,17 +108,10 @@ the journal.
 
 These need the author's decision or hand:
 
-1. The title: the paper marks light's bending, its delay and the
-   perihelion as fitted, since the Link's factor two and the clock's second
-   order were chosen with them known; the title's "arrive at Einstein"
-   holds for the forms and not as predictions, and whether it stays is the
-   author's call.
-2. A fuller section on related work, if wanted beyond the paragraph in the
-   introduction.
-3. arXiv: the account, an endorser, the licence, and whether an earlier
+1. arXiv: the account, an endorser, the licence, and whether an earlier
    paper of the project was posted.
-4. The archive: a GitHub release of the paper's commit and its Zenodo
+2. The archive: a GitHub release of the paper's commit and its Zenodo
    version DOI.
-5. The cover letter, written for this paper.
-6. The journal: an Editorial Manager account; the preprint declared at
+3. The cover letter, written for this paper.
+4. The journal: an Editorial Manager account; the preprint declared at
    submission.
