@@ -13,8 +13,9 @@ import numpy as np
 
 import event_universe.world_files as world_files
 from event_universe import node, share
+from event_universe.core import paces
 from event_universe.core import rule3 as core
-from event_universe.core.rule3 import NO_READ, coefficients, form_term, rule3
+from event_universe.core.rule3 import NO_READ, coefficients, form_term, link_factor, rule3
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, TOOL, chain_body_world
@@ -23,40 +24,40 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
 
 
-def law_line(num, den, gamma, content, links=None, weak_field=True):  # type: ignore[no-untyped-def]
-    """The law's line at a Node, the oracle (ALGEBRA.md #the-line, #the-paces): p_0^2 = (Gamma - c)^2 + c^2, p_a(i, j) = Gamma - (2 c + t_a(i, j)) on each of the six Links, the Node's content twice and the Link's own tension (Gamma - 2 c with no Links' contents given), R_ij = 2 num p_a(i, j)^2, S = 12 den Gamma^2 - 12 (den - num) p_0^2 - SUM over the six Ports of R_ij, w = 6 den Gamma^2; or the plain first-order rule."""
-    if not weak_field:
-        return ((gamma - content) * num,) * 6, 6 * den * content, 3 * den * gamma
-    paces = [gamma - link for link in (links or [2 * content] * 6)]
-    clock_squared, reads = (gamma - content) ** 2 + content**2, tuple(2 * p**2 * num for p in paces)
-    self_coefficient = 12 * den * gamma**2 - 12 * (den - num) * clock_squared - sum(reads)
-    return reads, self_coefficient, 6 * den * gamma**2
+def law_line(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-untyped-def]
+    """The law's line at a Node, the oracle (ALGEBRA.md #the-line, #the-paces, The clock is the Node's, the tension is the Link's; The paces compose): p_0 the clock, p_i the Node's pace on its six Links, Q_ij the Link's factor in the unit G^2 (G^2 with no tension), R_ij = 2 num p_i^2 Q_ij the product, S = 12 (den Gamma^2 - (den - num) p_0^2) G^2 - SUM over the six Ports of R_ij, w = 6 den Gamma^2 G^2."""
+    square = unit * unit
+    reads = tuple(2 * num * pace**2 * q for q in (factors or [square] * 6))
+    self_coefficient = 12 * (den * gamma**2 - (den - num) * clock**2) * square - sum(reads)
+    return reads, self_coefficient, 6 * den * gamma**2 * square
 
 
 def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_contents():
-    """With no Links' contents the uniform level's six reads (R,) x 6, S, w term for term; with the six Links' contents the six Ports' reads, each from its Link's content, the Node's content twice and the Link's own tension, the same tension read from either end; `weak_field` False the plain rule; the vacuum 2 Gamma^2 times the plain rule; the band's rotation at k = 0 carries the clock's square and light's band on a chain the Link's pace squared, exact in rationals."""
+    """With no Links' factors the uniform level's six reads (R,) x 6, S, w term for term at the composed paces of a content (the clock and the Node's pace the module's two functions, core/paces.py), at the Link unit G the integers G^2 times the unit's; with the six Links' factors the six Ports' reads, each the Node's pace squared times its Link's factor, the same factor read from either end; the vacuum's paces 2 Gamma^2 times the plain rule; the Link's factor Q = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2, G^2 at no tension, 0 at the tension Gamma, 264 at G = 16 and the tension -153 at Gamma 10,000 (a hill above G^2), resolved to Gamma / (2 G^2); the band's rotation at k = 0 carries the clock's square and light's band on a chain the Node's pace squared, the level entering the Link twice, exact in rationals. The vacuum's paces give 2 Gamma^2 times the plain rule, the levels bit for bit; a factor on the +x Link alone changes that Port's read and the own term by 2 num p^2 (Q - 1); the band at k = 0 is 2 cos omega = (6 R + S) / w = 2 - 2 f (1 - num / den) with f = p_0^2 / Gamma^2 the clock's square (the Link's pace cancels at k = 0), and light on a chain cos omega = 1 - f_a (1 - cos k) / 3 with f_a = p_i^2 / Gamma^2, p_i = p_0^2 / Gamma to the unit, at cos k = 1, 0 and -1 (ALGEBRA.md #the-paces)."""
     rng = random.Random(3)
     for _ in range(500):
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, 100, GAMMA])
-        content = rng.randint(-gamma + 1, gamma - 1)
-        links = tuple(2 * content + rng.randint(-50, 50) for _ in range(6))
-        for weak_field in (True, False):
-            expected = law_line(num, den, gamma, content, weak_field=weak_field)
-            assert coefficients(num, den, gamma, content, weak_field=weak_field) == expected
-        assert coefficients(num, den, gamma, content, links) == law_line(num, den, gamma, content, links)
-        plain = coefficients(num, den, gamma, content)
-        assert coefficients(num, den, gamma, content, (2 * content,) * 6) == plain
-        # the vacuum c = 0: 2 Gamma^2 times the plain rule (the levels bit for bit)
-        assert coefficients(num, den, gamma, 0) == ((2 * gamma**2 * num,) * 6, 0, 6 * den * gamma**2)
-        # a content on the +x Link alone slows that Port's read and the own term by 2 num (p_link^2 - p^2), the uniform level's pace Gamma - 2 c on the other five
-        p, q, ((read, *_), self_iso, wall) = gamma - 2 * content, gamma - links[0], plain
-        along = (2 * q**2 * num,) + (read,) * 5, self_iso - 2 * num * (q**2 - p**2), wall
-        assert coefficients(num, den, gamma, content, (links[0],) + (2 * content,) * 5) == along
-    # the band at k = 0, 2 cos omega = (6 R + S) / w = 2 - 2 f (1 - num / den) with f = p_0^2 / Gamma^2 the clock's square (the Link's pace cancels at k = 0); light on a chain, cos omega = 1 - f_a (1 - cos k) / 3 with f_a = (Gamma - 2 c)^2 / Gamma^2, the level entering the Link twice, at cos k = 1, 0 and -1 (ALGEBRA.md #the-paces)
+        content, unit = rng.randint(-gamma + 1, gamma - 1), rng.choice([1, 2, 16])
+        factors = tuple(unit * unit + rng.randint(-50, 50) for _ in range(6))
+        clock, p = paces.node_paces(gamma, content)
+        assert coefficients(num, den, gamma, clock, p) == law_line(num, den, gamma, clock, p)
+        found = coefficients(num, den, gamma, clock, p, factors, unit)
+        assert found == law_line(num, den, gamma, clock, p, factors, unit)
+        plain = coefficients(num, den, gamma, clock, p, None, unit)
+        assert coefficients(num, den, gamma, clock, p, (unit * unit,) * 6, unit) == plain
+        (read, *_), self_iso, wall = coefficients(num, den, gamma, clock, p)
+        assert plain == ((read * unit * unit,) * 6, self_iso * unit * unit, wall * unit * unit)
+        vacuum = ((2 * gamma**2 * num,) * 6, 0, 6 * den * gamma**2)
+        assert coefficients(num, den, gamma, gamma, gamma) == vacuum
+        q = factors[0]
+        along = (2 * q * p**2 * num,) + (read,) * 5, self_iso - 2 * num * p**2 * (q - 1), wall
+        assert coefficients(num, den, gamma, clock, p, (q,) + (1,) * 5) == along
+    assert (link_factor(GAMMA, 16, 0), link_factor(GAMMA, 16, GAMMA)) == (256, 0)
+    assert link_factor(GAMMA, 16, -153) == 264 and link_factor(GAMMA, 16, GAMMA // 512) == 255
     for num, den, c in ((800, 809, 500), (3200, 3227, 2000), (1, 1, 0), (1, 1, 2000)):
-        (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, c)
-        clock = Fraction((GAMMA - c) ** 2 + c * c, GAMMA**2)
-        link = Fraction((GAMMA - 2 * c) ** 2, GAMMA**2)
+        p_0, p_i = paces.clock(GAMMA, c), paces.link_pace(GAMMA, c)
+        (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, p_0, p_i)
+        clock, link = Fraction(p_0 * p_0, GAMMA**2), Fraction(p_i * p_i, GAMMA**2)
         assert Fraction(6 * read + self_coefficient, wall) == 2 - 2 * clock * (1 - Fraction(num, den))
         for cosine in (1, 0, -1):
             band = Fraction(read * (2 * cosine + 4) + self_coefficient, 2 * wall)
@@ -69,8 +70,9 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     for _ in range(500):
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
-        links = tuple(2 * content + rng.randint(-30, 30) for _ in range(6))
-        reads, self_coefficient, wall = coefficients(num, den, gamma, content, links)
+        factors = tuple(16 * 16 - rng.randint(0, 30) for _ in range(6))
+        clock, pace = paces.node_paces(gamma, content)
+        reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, factors, 16)
         *arrivals, now, before = (rng.randint(-(10**6), 10**6) for _ in range(8))
         remainder = rng.randint(0, wall - 1)
         total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
@@ -84,7 +86,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
     arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(6))
     now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
-    reads, self_coefficient, wall = coefficients(num, den, GAMMA, content)
+    reads, self_coefficient, wall = coefficients(num, den, GAMMA, *paces.node_paces(GAMMA, content))
     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall
     nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
     total = reads[0] * sum(arrivals) + self_coefficient * now - wall * before + remainder
@@ -92,10 +94,10 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     assert np.array_equal(carried, total - wall * nxt)
     back = rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1)
     assert np.array_equal(back, (before, remainder))
-    reads, self_coefficient, wall = coefficients(800, 809, GAMMA, 250)
+    reads, self_coefficient, wall = coefficients(800, 809, GAMMA, *(own := paces.node_paces(GAMMA, 250)))
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
     bound = 6 * (1 << 20) * abs(reads[0]) + (1 << 20) * abs(self_coefficient) + wall * ((1 << 20) + 1)
-    assert core.rule_total_bound(800, 809, GAMMA, 250, 1 << 20, True) == bound
+    assert core.rule_total_bound(800, 809, GAMMA, *own, 1 << 20) == bound
 
 
 RULE_LINES = (r"self_coefficient \* now\b", r"wall \* other\b", r"direction \* total \+ carry")
@@ -105,18 +107,15 @@ RULE_ARITHMETIC += (r"wall \* now \+ remainder", r"direction \* carry\b")
 
 
 def test_no_other_file_of_src_writes_the_rules_arithmetic():
-    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the old two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own."""
+    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the old two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the GameBoard, core and the folders hold no split of their own."""
     offenders = []
-    for path in sorted(SOURCE.rglob("*.py")):
-        if path == SOURCE / "core" / "rule3.py":
-            continue
+    for path in sorted(p for p in SOURCE.rglob("*.py") if p.name != "rule3.py"):
         text = path.read_text(encoding="utf-8")
         for match in (m for pattern in RULE_ARITHMETIC for m in re.finditer(pattern, text)):
             line = text.count("\n", 0, match.start()) + 1
             offenders.append(f"{path.relative_to(ROOT)}:{line} {match.group(0)}")
     assert not offenders, offenders
-    own = (SOURCE / "core" / "rule3.py").read_text(encoding="utf-8")
-    assert all(re.search(pattern, own) for pattern in RULE_LINES)
+    assert all(re.search(p, (SOURCE / "core" / "rule3.py").read_text()) for p in RULE_LINES)
     SHIFT_HOME = {"src/event_universe/core/ports.py": {"shifted"}}
     SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
     found: dict[str, set[str]] = {}
@@ -130,10 +129,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
             line = text.count("\n", 0, match.start()) + 1
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
             found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
-    for home, functions in SHIFT_HOME.items():
-        assert found.pop(home) == functions
-    assert found == {}, found
-    # the Node, the GameBoard, core and the folders hold no split of their own
+    assert {home: found.pop(home) for home in SHIFT_HOME} == SHIFT_HOME and found == {}, found
     stepping = [SOURCE / "node.py", SOURCE / "game_board.py", *SOURCE.glob("core/*.py")]
     for path in stepping + list(SOURCE.glob("features/*/*.py")):
         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
@@ -192,15 +188,10 @@ TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState tab
 
 
 def call_kind(args: tuple) -> str | None:  # type: ignore[type-arg]
-    """What a call of Rule3 is: "write", the division act on the level 1 with the remainder kept at every Node (features/write, `carried`), no read and no other level; "step", the three reads with the level now and the other level as arrays (a reading's plain Link term reads with no other level); None otherwise."""
-    reads, _arrivals, _numerator, _wall, now, other, remainder = args[:7]
-    if (
-        reads is NO_READ
-        and type(now) is int
-        and now == 1
-        and other == 0
-        and isinstance(remainder, np.ndarray)
-    ):
+    """What a call of Rule3 is: "write", the division act on the level 1 at the row's one wall, an integer, with the remainder kept at every Node (features/write, `carried`), no read and no other level (the paces' roundings at a Node's own clock as the wall, an array, keep no remainder and are none); "step", the three reads with the level now and the other level as arrays (a reading's plain Link term reads with no other level); None otherwise."""
+    reads, _arrivals, _numerator, wall, now, other, remainder = args[:7]
+    plain = reads is NO_READ and type(now) is int and now == 1 and other == 0
+    if plain and type(wall) is int and isinstance(remainder, np.ndarray):
         return "write"
     arrays = isinstance(now, np.ndarray) and isinstance(other, np.ndarray)
     return "step" if reads is not NO_READ and arrays else None
@@ -216,12 +207,11 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
     assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 2, 4]
-    calls: list[tuple[tuple, tuple]] = []  # type: ignore[type-arg]
-    original = core.rule3
+    calls, original = [], core.rule3
 
     def counting(*args):  # type: ignore[no-untyped-def]
-        calls.append((args, found := original(*args)))
-        return found
+        calls.append((call_kind(args), id(args[4])))  # the call's kind and its level now, nothing kept
+        return original(*args)
 
     engine = [m for m in list(sys.modules.values()) if getattr(m, "__name__", "").startswith("event_")]
     for module in [m for m in engine if m.__dict__.get("rule3") is original]:
@@ -230,11 +220,10 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         calls.clear()
         act()
         records = [record for state in board.states for record in state.lines]
-        steps = [args for args, _found in calls if call_kind(args) == "step"]
+        steps = [begun for kind, begun in calls if kind == "step"]
         begun = {id(getattr(record, "before" if direction == 1 else "now")) for record in records}
-        assert len(steps) == len(records) and begun == {id(args[4]) for args in steps}  # one call each
-        writes = sum(call_kind(args) == "write" for args, _found in calls)
-        assert writes == sum(len(s.write_remainders) for s in board.states)
+        assert len(steps) == len(records) and begun == set(steps)  # one call each, on the level it began
+        assert sum(k == "write" for k, _ in calls) == sum(len(s.write_remainders) for s in board.states)
     kept = BACK.snapshot(board)
     calls.clear()
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
@@ -245,8 +234,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             node.wronskian(state.lines, family.plane)
             node.form(state.lines, state.lines)
             board.quanta(index)
-    board.books()
-    assert not any(call_kind(args) == "write" for args, _found in calls)  # the readings write nothing
+    assert board.books() and all(kind != "write" for kind, _ in calls)  # the readings write nothing
     assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands
     for _ in range(60):
         board.step()
@@ -257,7 +245,6 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
     table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
     assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     universe["integers"]["width"] = 127
@@ -281,3 +268,40 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
 
 
 INTEGER_KINDS = re.compile(r"np\.u?int(?:8|16|32|64|p)?\b|np\.iinfo|\"int64\"|dtype=np\.")
+
+
+def test_the_composed_paces_are_the_laws_two_functions_of_the_content_and_their_factors():
+    """The clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit, (Gamma - 1)^c over Gamma^(c - 1) rounded half up, floor(exact + 1 / 2) in exact fractions, the fraction turned over for a hill (c below 0), by the memo's running fraction and by the power alone bit for bit; the Link's pace the clock twice, p_0^2 over Gamma rounded once; both Gamma at the vacuum; the Link's pace rounds to 0 at the content 28,206 at Gamma 6,000 (the clock 54 there, `frozen_content`, by the power alone, the memo kept to the run's contents) and the clock at 56,352; the group law Gamma p(c_1 + c_2) = p(c_1) p(c_2) within the roundings' floor, (p_1 + p_2 + Gamma) div 2 + 1 on the clock and three times it on the Link's pace, and not to zero, most pairs differing; the vectorised entries give the memo's value at every Node in the array's kind, the hardware's integers and Python's, on a narrow range (one table) and a sparse spread (the distinct values), the same after the memo is cleared; the write's factor is the source at the vacuum's paces for a count (two proper-interval powers) and for a Wronskian (one) alike, and elsewhere ((D p_x div Gamma) p_y div Gamma) p_z div p_0 on a count and ((D p_x div Gamma) p_y div p_0) p_z div p_0 on a Wronskian, one axis at a time (every intermediate within A^2 Gamma, inside 63 bits where A^2 Gamma^3 is not), 0 at a frozen clock; the turn's factor the angle at the vacuum and angle p_0 div Gamma elsewhere."""
+    gamma, half, small = 6_000, Fraction(1, 2), range(-13, 1_300, 13)
+    spread, zeros = [*small, 3_000], (0, 28_206, 56_351, 56_352)
+    clocks = {c: paces.clock(gamma, c) for c in spread}
+    assert clocks == {c: int(Fraction(gamma) * Fraction(gamma - 1, gamma) ** c + half) for c in spread}
+    assert clocks == {c: paces.clock_alone(gamma, c) for c in spread}
+    assert all(paces.link_pace(gamma, c) == int(Fraction(clocks[c] ** 2, gamma) + half) for c in spread)
+    assert [paces.clock_alone(gamma, c) for c in zeros] == [gamma, 54, 1, 0]
+    links = [paces.rounded(paces.clock_alone(gamma, c) ** 2, gamma) for c in (0, 28_205, zeros[1])]
+    assert links == [gamma, 1, 0] and paces.frozen_content(gamma) == zeros[1]
+    for f, times in ((paces.clock, 1), (paces.link_pace, 3)):
+        off = [gamma * f(gamma, a + b) - f(gamma, a) * f(gamma, b) for a in small for b in small]
+        room = [times * ((clocks[a] + clocks[b] + gamma) // 2 + 1) for a in small for b in small]
+        assert all(abs(d) <= g for d, g in zip(off, room, strict=True))
+        assert 2 * sum(d != 0 for d in off) > len(off)
+    plain, entries = (paces.clock, paces.link_pace), (paces.clock_of, paces.link_pace_of)
+    narrow, sparse = np.arange(-7, 53).reshape(5, 4, 3), np.array(spread[-60:]).reshape(5, 4, 3)
+    for held in (narrow, sparse, narrow.astype(object), sparse.astype(object)):
+        found, flat = [f(gamma, held) for f in entries], held.ravel().tolist()
+        paces.clear_memo()
+        assert all(np.array_equal(a, f(gamma, held)) for a, f in zip(found, entries, strict=True))
+        assert all(a.dtype == held.dtype for a in found)
+        assert [a.ravel().tolist() for a in found] == [[f(gamma, c) for c in flat] for f in plain]
+    at, counts = np.full((2, 1, 1), gamma, dtype=np.int64), np.array([[[7]], [[2**40]]], dtype=np.int64)
+    one = [paces.write_factor(counts, at, at, at, at, gamma, k) for k in (2, 1)]
+    assert all(f.tolist() == counts.tolist() for f in [*one, paces.turn_factor(counts, at, gamma)])
+    p = [paces.link_pace(gamma, c) for c in (300, 400, 500)] + [paces.clock(gamma, 400)]
+    axis = (2**40 * p[0] + gamma // 2) // gamma * p[1]
+    count = ((axis + gamma // 2) // gamma * p[2] + p[3] // 2) // p[3]
+    wronskian = ((axis + p[3] // 2) // p[3] * p[2] + p[3] // 2) // p[3]
+    both = [paces.write_factor(2**40, *p, gamma, k) for k in (2, 1)]
+    assert both == [count, wronskian] and count != wronskian
+    assert [paces.write_factor(9, 0, 0, 0, 0, gamma, k) for k in (2, 1)] == [0, 0]
+    assert paces.turn_factor(gamma + 1, p[3], gamma) == ((gamma + 1) * p[3] + gamma // 2) // gamma

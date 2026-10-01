@@ -23,7 +23,7 @@ WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "tick
 WORLD_KEYS += ("measured", "messages", "detectors", "receding")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 UNIVERSE_KEYS = ("integers", "families")
-INTEGER_KEYS = ("node_clock", "quantum_action", "width")
+INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held"),
     ("name", "pair"),
@@ -88,6 +88,7 @@ class World:
     node_clock: int
     quantum_action: int
     width: int
+    link_unit: int
     kind: type
     amplitude_bound: int
     families: tuple[FamilyRule, ...]
@@ -143,6 +144,12 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
+    unit = integers["link_unit"]
+    if unit & (unit - 1):
+        raise ValueError(
+            f"integers.link_unit must be a power of two, the Link's unit G in which each Link's factor is one "
+            f"integer (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's), got {unit}"
+        )
     entries = universe["families"]
     if not isinstance(entries, list) or not entries:
         raise ValueError("families must be a list of the families' rows")
@@ -346,7 +353,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     beyond = faces_of(world["faces"], shape) if "faces" in world else ()
     gamma, action = integers["node_clock"], integers["quantum_action"]
     width = integers["width"]
-    bound = derived.amplitude_bound(families, gamma, action, width)
+    bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
@@ -366,6 +373,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         gamma,
         action,
         derived.largest_of(width),
+        integers["link_unit"],
         kind_of(width),
         bound,
         families,

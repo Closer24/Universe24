@@ -8,6 +8,7 @@ import numpy as np
 
 import event_universe.world_files as world_files
 from event_universe import node
+from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.features import rotation
@@ -19,11 +20,10 @@ from tests.laws import BACK, CHAIN, CHARGED, EVENTS, QUANTA, TOOL, chain_body_wo
 
 DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")
 BUILD = load_file("like_build", EVENTS / "like_or_unlike" / "build_world.py")
-LOOK = EVENTS / "like_or_unlike"
-GAMMA, T, PAIR, RING = 6000, 32768, (4000, 6000), Wrap(True, True, True)
-ONE, LEVEL, SHAPE = (1, 1, 1), 100_000, (24, 1, 1)
+LOOK, GAMMA, T, PAIR, RING = EVENTS / "like_or_unlike", 6000, 32768, (4000, 6000), Wrap(True, True, True)
+ONE, LEVEL, SHAPE, VACUUM = (1, 1, 1), 100_000, (24, 1, 1), (GAMMA, (GAMMA,) * 3)  # the rulers at rest
 OMEGA = math.acos(PAIR[0] / PAIR[1])  # the matter pair's rest rotation in the vacuum
-RULE, ZERO = coefficients(*PAIR, GAMMA, 0), np.zeros(SHAPE, dtype=np.int64)
+RULE, ZERO = coefficients(*PAIR, GAMMA, GAMMA, GAMMA), np.zeros(SHAPE, dtype=np.int64)
 TURNING = universe_of(json.loads((LOOK / "turning.json").read_text(encoding="utf-8")))[1]
 
 
@@ -53,7 +53,7 @@ def rate(re: node.Record, im: node.Record, angles, steps: int):  # type: ignore[
 
 
 def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_path, monkeypatch):
-    """The count is the record's share in quanta over the wall 3 den T, read at the start within the law's tolerance of the declared count, every Node of the body carrying a quantum; over a hundred intervals the share's total moves only by Rule3's own rounding (the books' drift, under a quantum per Node of the chain) and no quantum changes family, the quanta at the declared Nodes stay above 0 and the body's Nodes derived for a report are where its share stands; a declared count off the share beyond the rounding refuses the world by name. (a) Random pairs within a million turned at random tangent half-angles within 1 and turned back return bit for bit, the turned pair within two units of the real rotation by 2 arctan(n / w); a turned level is not within twice A (the audit's witness, #1583 B10: (-1, -1) at the tangent half-angle -1 / 4 turns to (-3, -1) at A = 1) but within 2 A + 3, exhaustively over small pairs and walls, and the turning universe's amplitude bound reads a turned record's rooms at A + 2 (the six arrivals and the level before it is stepped against both turned); (b) at one Node of the matter pair in the vacuum, every Port folded, a record of positive Wronskian (z_before = z_now e^(i omega), clockwise) under the time level L rotates at omega + L / Gamma within the half-angle's third order for L = 600 and -600 and at omega for 0, and the Wronskian read from the booking, the step's levels before the turn, stands over 400 intervals within the rounding while the plain one swings by the angle; (c) on a ring of 24 a plane wave at k = pi / 6 under the uniform odd level L_x rotates at the band's omega(k + theta_x) with tan(theta_x / 2) = L_x / (2 Gamma), the read through +x turned by the Link's angle and through -x by its opposite, and under -L_x at omega(k - theta_x); (d) the Wronskian's sign is the record's: the wave of either sense has W of that sign at every Node and keeps it over 100 plain intervals of Rule3 on both lines with one rule, and a real line has none; (e) a plane moving toward +x (z = A e^(i (k x - omega t)), positive Wronskian) has as its sign current the mean of its two x-Links' Wronskian currents, J_x / 2 with J_x = Im(conj(z_i) (z_(+x) - z_(-x))) = 2 A^2 sin k, above 0 at every Node and within the lay's rounding of A^2 sin k, and J_y = J_z = 0, its conjugate, the opposite sense moving alike, the opposite within the read's rounding unit (where the momentum density gave the two the same current; the owner's word of 2026-10-01, 17:17, on the two hands), and a real record, two equal real lines, 0; the holder of the sign under the rotation takes w x that mean of each plane reader into its odd line a by the one write with one remainder over the wall E_s den T (node.write_sources with the sign currents as the axis bookings, node.held_write), a real reader sourcing none of it, its time line W over E_s T, and the write back undoes it bit for bit. The act key of a held row: `rotation` on the holder of the sign gives it 1 + 3 lines, its record the time line, its odd lines' walls E_s den T against the tensions' E_s x 3 den T, the plane turned by it (derived.turns) and matter, one part, reading it not at all; `pace` or no key keeps one line and the plain read; an act by another word, and the rotation asked of a holder of the content, are refused by name; the two gates' universe files declare no act, and Bell's world run on its universe with the rotation declared on the holder gives the same lines and books bit for bit as on the file (light and the pair family, real lines, read nothing of the holder, whose odd lines nobody sources). The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world): the like, the unlike, the uncharged pair and the four single-body worlds read by tools/body_drift.py over their run: the like pair ends further apart than the unlike pair, the mutual effect's sign ((a - b) / 2 above 0, which no background enters), asserted; the blind's three lines against the background (the uncharged pair's change plus the image force read on the single bodies), like apart, unlike together and the same size to a third of the half-difference, read and printed yes or no beside the plain controls' changes (ENGINE.md, section 6, the looks' numbers: the bodies' response to their own angle is not additive between a pair and a lone body, so the three lines are not met by that background); the back-in-time gate MATCH on the three pairs over their run. The plain control of unlike senses (the dimension's table, ALGEBRA.md #a-familys-declaration): after one interval the two bodies carry the Wronskian of their senses at their Nodes, the holder's record (its one line, light's) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all; the plane reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, reads nothing of it and light does not read its own row."""
+    """The count is the record's share in quanta over the wall 3 den T, read at the start within the law's tolerance of the declared count, every Node of the body carrying a quantum; over a hundred intervals the share's total moves only by Rule3's own rounding (the books' drift, under a quantum per Node of the chain) and no quantum changes family, the quanta at the declared Nodes stay above 0 and the body's Nodes derived for a report are where its share stands; a declared count off the share beyond the rounding refuses the world by name. (a) Random pairs within a million turned at random tangent half-angles within 1 and turned back return bit for bit, the turned pair within two units of the real rotation by 2 arctan(n / w); a turned level is not within twice A (the audit's witness, #1583 B10: (-1, -1) at the tangent half-angle -1 / 4 turns to (-3, -1) at A = 1) but within 2 A + 3, exhaustively over small pairs and walls, and the turning universe's amplitude bound reads a turned record's rooms at A + 2 (the six arrivals and the level before it is stepped against both turned); (b) at one Node of the matter pair in the vacuum, every Port folded, a record of positive Wronskian (z_before = z_now e^(i omega), clockwise) under the time level L rotates at omega + L / Gamma within the half-angle's third order for L = 600 and -600 and at omega for 0, and the Wronskian read from the booking, the step's levels before the turn, stands over 400 intervals within the rounding while the plain one swings by the angle; (c) on a ring of 24 a plane wave at k = pi / 6 under the uniform odd level L_x rotates at the band's omega(k + theta_x) with tan(theta_x / 2) = L_x / (2 Gamma), the read through +x turned by the Link's angle and through -x by its opposite, and under -L_x at omega(k - theta_x); (d) the Wronskian's sign is the record's: the wave of either sense has W of that sign at every Node and keeps it over 100 plain intervals of Rule3 on both lines with one rule, and a real line has none; (e) a plane moving toward +x (z = A e^(i (k x - omega t)), positive Wronskian) has as its sign current the mean of its two x-Links' Wronskian currents, J_x / 2 with J_x = Im(conj(z_i) (z_(+x) - z_(-x))) = 2 A^2 sin k, above 0 at every Node and within the lay's rounding of A^2 sin k, and J_y = J_z = 0, its conjugate, the opposite sense moving alike, the opposite within the read's rounding unit (where the momentum density gave the two the same current; the owner's word of 2026-10-01, 17:17, on the two hands), and a real record, two equal real lines, 0; the holder of the sign under the rotation takes w x that mean of each plane reader into its odd line a by the one write with one remainder over the wall E_s den T (node.write_sources with the sign currents as the axis booked, node.held_write), a real reader sourcing none of it, its time line W over E_s T, and the write back undoes it bit for bit. The act key of a held row: `rotation` on the holder of the sign gives it 1 + 3 lines, its record the time line, its odd lines' walls E_s den T against the tensions' E_s x 3 den T, the plane turned by it (derived.turns) and matter, one part, reading it not at all; `pace` or no key keeps one line and the plain read; an act by another word, and the rotation asked of a holder of the content, are refused by name; the two gates' universe files declare no act, and Bell's world run on its universe with the rotation declared on the holder gives the same lines and books bit for bit as on the file (light and the pair family, real lines, read nothing of the holder, whose odd lines nobody sources). The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world): the like, the unlike, the uncharged pair and the four single-body worlds read by tools/body_drift.py over their run: the like pair ends further apart than the unlike pair, the mutual effect's sign ((a - b) / 2 above 0, which no background enters), asserted; the blind's three lines against the background (the uncharged pair's change plus the image force read on the single bodies), like apart, unlike together and the same size to a third of the half-difference, read and printed yes or no beside the plain controls' changes (ENGINE.md, section 6, the looks' numbers: the bodies' response to their own angle is not additive between a pair and a lone body, so the three lines are not met by that background); the back-in-time gate MATCH on the three pairs over their run. The plain control of unlike senses (the dimension's table, ALGEBRA.md #a-familys-declaration): after one interval the two bodies carry the Wronskian of their senses at their Nodes, the holder's record (its one line, light's) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all; the plane reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, reads nothing of it and light does not read its own row."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL)
     board = GameBoard(load_world(world))
@@ -67,8 +67,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         quanta, standing = board.quanta(index)[0], board.body_nodes(0)
         kept.append(int(quanta[standing].sum()))
         assert (quanta[standing] != 0).all() and (standing & declared).any()
-        books = board.books()["matter"]
-        drifts.append(books["drift"])
+        drifts.append((books := board.books()["matter"])["drift"])
         assert abs(books["quanta"] - laid) <= CHAIN  # Rule3's rounding, under a quantum per Node
     print(f"GAMEBOARD body {laid}: quanta {min(kept)}-{max(kept)}, drift {min(drifts)}-{max(drifts)}")
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0
@@ -79,13 +78,11 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     mode = {**json.loads(mode_path.read_text(encoding="utf-8")), "world_digest": input_digest(document)}
     mode_path.write_text(json.dumps(mode), encoding="utf-8")
     refused("a declared count is within the rounding of the share", lambda: GameBoard(load_world(world)))
-
     draw, shape = np.random.default_rng(1), (4, 3, 2)
     x, y = (draw.integers(-(10**6), 10**6, shape) for _ in range(2))
     numerator, wall = draw.integers(-2 * GAMMA, 2 * GAMMA, shape), 2 * GAMMA
     turned = rotation.turned(x, y, numerator, wall)
-    back = rotation.turned(*turned, numerator, wall, -1)
-    assert np.array_equal(back[0], x) and np.array_equal(back[1], y)
+    assert np.array_equal(rotation.turned(*turned, numerator, wall, -1), (x, y))
     angle = 2 * np.arctan(numerator / wall)
     real = (x * np.cos(angle) - y * np.sin(angle), x * np.sin(angle) + y * np.cos(angle))
     assert max(np.abs(turned[0] - real[0]).max(), np.abs(turned[1] - real[1]).max()) < 2
@@ -93,7 +90,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert rotation.turned(-1, -1, -1, 4) == (-3, -1) and bound > 0  # the witness, beyond twice A = 1
     for x, y, n, w in product(range(-3, 4), range(-3, 4), range(-6, 7), range(1, 7)):
         assert abs(n) > w or max(map(abs, rotation.turned(x, y, n, w))) <= 2 * max(abs(x), abs(y)) + 3
-    rules = (coefficients(*PAIR, GAMMA, level) for level in (0, GAMMA // 2, GAMMA - 1))
+    rules = (coefficients(*PAIR, GAMMA, *paces.node_paces(GAMMA, c)) for c in (0, GAMMA // 2, GAMMA - 1))
     assert all((sum(r) + w) * 2 * (bound + 2) + abs(s) * bound + w < 2**63 for r, s, w in rules)
     zero = np.zeros(ONE, dtype=np.int64)
     for level in (0, 600, -600):
@@ -105,8 +102,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert booked * 1000 < start and (level == 0 or plain > 10 * booked), (booked, plain)
     k = math.pi / 6
     for level in (600, -600):
-        odd = np.full(SHAPE, level, dtype=np.int64)
-        found = rate(*wave(k, band(k)), (ZERO, (odd, ZERO, ZERO)), 60)[0]
+        found = rate(*wave(k, band(k)), (ZERO, (np.full_like(ZERO, level), ZERO, ZERO)), 60)[0]
         assert abs(found + band(k + 2 * math.atan(level / (2 * GAMMA)))) < 1e-3, (level, found)
     for sense in (1, -1):
         lines = wave(k, band(k), sense)
@@ -115,29 +111,26 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
             lines = [node.step(line, RULE, RING) for line in lines]
     assert node.wronskian(lines[:1], False) == 0
     names = [family.name for family in TURNING]
-    charge, charged = names.index("charge"), names.index("charged")
-    moving = wave(math.pi / 4, OMEGA)
-    forward = node.sense_current_of(moving, RING)
-    assert np.abs(forward[0] - LEVEL * LEVEL * math.sin(math.pi / 4)).max() < 2 * LEVEL
-    assert (forward[0] > 0).all() and not forward[1].any() and not forward[2].any()
+    charge, charged, moving = names.index("charge"), names.index("charged"), wave(math.pi / 4, OMEGA)
+    flux = node.sense_current_of(moving, RING)
+    assert np.abs(flux[0] - LEVEL * LEVEL * math.sin(math.pi / 4)).max() < 2 * LEVEL
+    assert (flux[0] > 0).all() and not flux[1].any() and not flux[2].any()
     opposite = node.sense_current_of(wave(math.pi / 4, OMEGA, -1), RING)[0]
-    assert np.isin(opposite + forward[0], (0, 1)).all()  # the opposite within the read's rounding unit
+    assert np.isin(opposite + flux[0], (0, 1)).all()  # the opposite within the read's rounding unit
     assert not any(part.any() for part in node.sense_current_of([moving[0], moving[0]], RING))
-    write = held_write(TURNING, charge, T)
-    bookings = {charged: node.wronskian(moving, True)}
-    numerators = node.write_sources(charge, TURNING, bookings, {charged: forward}, write)
-    assert np.array_equal(numerators[1], forward[0]) and not numerators[2].any()
-    assert np.array_equal(numerators[0], bookings[charged])
+    write, sign = held_write(TURNING, charge, T), {charged: node.wronskian(moving, True)}
+    sources = node.write_sources(charge, TURNING, sign, {charged: flux}, write, {charged: VACUUM}, GAMMA)
+    assert np.array_equal(sources[1], flux[0]) and not sources[2].any()
+    assert np.array_equal(sources[0], sign[charged])
     held = node.empty_state(TURNING[charge], SHAPE, write.walls, np.int64)
-    lines, remainders = node.held_write(held.lines, numerators, write.walls, held.write_remainders)
-    expected = (forward[0] + 100 * PAIR[1] * T // 2) // (100 * PAIR[1] * T)
+    lines, remainders = node.held_write(held.lines, sources, write.walls, held.write_remainders)
+    expected = (flux[0] + 100 * PAIR[1] * T // 2) // (100 * PAIR[1] * T)
     assert np.array_equal(lines[1].now, expected) and not lines[2].now.any()
-    back_lines, before = node.held_write(lines, numerators, write.walls, remainders, -1)
+    back_lines, before = node.held_write(lines, sources, write.walls, remainders, -1)
     assert all(np.array_equal(a.now, b.now) for a, b in zip(back_lines, held.lines, strict=True))
     assert all(np.array_equal(a, b) for a, b in zip(before, held.write_remainders, strict=True))
     universe = json.loads((LOOK / "turning.json").read_text(encoding="utf-8"))
-    rows = {row["name"]: row for row in universe["families"]}
-    names = [family.name for family in TURNING]
+    rows, names = {row["name"]: row for row in universe["families"]}, [family.name for family in TURNING]
     charge, charged, matter, gravity = map(names.index, ("charge", "charged", "matter", "gravity"))
     assert (TURNING[charge].lines, TURNING[charge].record, TURNING[charge].rotation) == (4, 1, True)
     assert turns(TURNING, charged) and not turns(TURNING, matter)
@@ -195,12 +188,13 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert (turn[first] == 1).all() and (turn[second] == -1).all() and len(light.lines) == 1
     assert int(level[first].min()) >= 0 < int(level[first].sum()) and int(level[second].max()) <= 0
     assert int(level[second].sum()) < 0
-    hill = np.full(board.shape, 100, dtype=np.int64)
-    light.lines[0] = node.Record(hill, level, light.lines[0].remainder)
+    light.lines[0] = node.Record(np.full_like(level, 100), level, light.lines[0].remainder)
     held = [s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian]
     plain = sum(state.lines[0].now for state in held)  # every holder of the content, as it stands
-    content = node.read(charged, board.families, board.states, 1, board.wrap)[0]
+    gamma, unit = board.world.node_clock, board.unit
+    content = node.read(charged, board.families, board.states, 1, board.wrap, gamma, unit)[0]
     assert ((content - plain) == 100)[first | second].all()  # the plane reads the holder plainly
     for reader in (matter, charge):  # dimension one, and the holder's own record
         assert charge not in [read.family for read in board.families[reader].reads]
-        assert np.array_equal(node.read(reader, board.families, board.states, 1, board.wrap)[0], plain)
+        read = node.read(reader, board.families, board.states, 1, board.wrap, gamma, unit)[0]
+        assert np.array_equal(read, plain)

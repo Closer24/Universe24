@@ -82,7 +82,7 @@ def level_sums(nodes: np.ndarray, lines: Sequence[Record]) -> list[list[int]]:
 def book(
     share: int | None, quanta: int | None, drift: int | None, pace: int, frozen: int
 ) -> dict[str, int | None]:
-    """A family's books, a GameBoard diagnostic: its share summed over the GameBoard in the current's units, the same in quanta over W_c, the share's drift from the one the world started with (the three None where a Node is frozen: the share is not read there and no number is invented), the least Link pace of the final state and the count of the frozen Nodes."""
+    """A family's books, a GameBoard diagnostic: its share summed over the GameBoard in the current's units, the same in quanta over W_c, the share's drift from the one the world started with (the three None where a Node is frozen: the share is not read there and no number is invented), the least Node pace Gamma - 2 c_i of the final state and the count of the frozen Nodes."""
     return dict(zip(BOOKS, (share, quanta, drift, pace, frozen), strict=True))
 
 
