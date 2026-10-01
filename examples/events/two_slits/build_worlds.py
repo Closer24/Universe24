@@ -107,8 +107,14 @@ def rounded(row: list[float]) -> list[float]:
     return [round(value, 1) for value in row]
 
 
-def expectations(design: dict[str, Any]) -> dict[str, dict[str, object]]:
-    """The three blind expectation files, per region (DETECTOR, written before the run, as tools/click_counts.py reads them): the bright world's the advisor's per-Node row summed per region; the dilute world's the same shares over its own passing count (the laid count's ratio); the which-way world's the open gap's envelope summed per region, its total the open gap's half of the two gaps' passing count and no fringes, and the gap detector's blind credit about half the passing count."""
+def first_minima(blind: list[float], maxima: list[int], minima: list[int]) -> tuple[int, list[int]]:
+    """The blind central maximum, the maximum nearest the pattern's centre, and the two first minima about it, the minima nearest it on either side (the regions 4 and 8 of the bright row; the edge ripple's minima are no interference minima)."""
+    central = min(maxima, key=lambda at: abs(2 * at - (len(blind) - 1)))
+    return central, [max(at for at in minima if at < central), min(at for at in minima if at > central)]
+
+
+def expectations(design: dict[str, Any], laid: int) -> dict[str, dict[str, object]]:
+    """The three blind expectation files, per region (DETECTOR, written before the run, as tools/click_counts.py reads them): the bright world's the advisor's per-Node row summed per region, with the central maximum and the first minima about it, the blind visibility, the arrival wager in the engine's labels and the wings, `laid` the generator's count of the lay; the dilute world's the same shares over its own passing count (the laid count's ratio); the which-way world's the open gap's envelope summed per region, its total the open gap's half of the two gaps' passing count and no fringes, and the gap detector's blind credit about half the passing count."""
     rows = int(design["rows_per_region"])
     names = [detector["name"] for detector in screen_regions(design)]
     blind = per_region([float(v) for v in design["blind_per_node"]], rows)
@@ -144,16 +150,23 @@ def expectations(design: dict[str, Any]) -> dict[str, dict[str, object]]:
     shape = per_region(envelope(design, list(open_gap)), rows)
     one_gap = through / 2
     which = [value * one_gap / sum(shape) for value in shape]
+    central, first_two = first_minima(blind, maxima, minima)
+    most, low = blind[central], sum(blind[at] for at in first_two)
     return {
         "expectation": {
             **base,
-            "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, summed by four; ALGEBRA.md row (g)): the clicks per region N times the region's share, the fringes at the spacing 16 with the visibility 1, the total N the passing count, the draw's scatter sqrt(N p (1 - p)) per region; the credit by the shares of the seen inflows with the seed, the instrument's.",
+            "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the instrument's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (2.8 percent under the law's own real line, 280.8), the arrival and the wings computed from the law's line; fence: clicks.",
             "counts": rounded(blind),
             "through": through,
             "maxima": maxima,
-            "minima": minima,
+            "minima": first_two,
+            "central": central,
+            "visibility": [round(most * len(first_two) - low, 1), round(most * len(first_two) + low, 1)],
             "quanta": through,
-            "laid": int(design["laid"]["bright"]),
+            "counts_sum": round(sum(blind), 1),
+            "laid": laid,
+            "arrival": design["arrival"],
+            "wings": design["wings"],
             "aside": ["gap"],
         },
         "expectation_dilute": {
@@ -205,7 +218,11 @@ def main(argv: list[str] | None = None) -> None:
             cwd=ROOT,
         )
         print(json.dumps({"world": str(path), "detectors": len(document["detectors"])}))
-    for name, document in expectations(design).items():
+    mode = json.loads((args.folder / "two_slits.mode.json").read_text(encoding="utf-8"))
+    laid = sum(
+        int(message["count"]) for message in mode["messages"]
+    )  # the generator's reading of the lay
+    for name, document in expectations(design, laid).items():
         (args.folder / f"{name}.json").write_text(
             json.dumps(document, indent=1) + "\n", encoding="utf-8"
         )
