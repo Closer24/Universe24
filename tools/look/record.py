@@ -16,7 +16,6 @@ from typing import Any
 import numpy as np
 
 from event_universe import growth, node
-from event_universe.core.rule3 import link_paces
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.world import AXES, World
@@ -120,8 +119,9 @@ def frame(board: GameBoard, kept: dict[int, list[node.Record]] | None) -> dict[s
                 row["second"] = state.lines[1].now
             if kept is not None:
                 row["form"] = node.form(kept[index], state.lines)
-            content, axis = node.read(index, board.families, board.states, 1)
-            row["pace"] = min(int(np.min(pace)) for pace in link_paces(world.node_clock, content, axis))
+            row["pace"] = node.least_pace(
+                index, board.families, board.states, world.node_clock, board.wrap
+            )
         else:
             row = {"level": state.lines[0].now, "parts": [line.now for line in state.lines[1:]]}
         families[family.name] = row

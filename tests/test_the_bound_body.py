@@ -195,8 +195,8 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     light.lines[0] = node.Record(hill, level, light.lines[0].remainder)
     held = [s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian]
     plain = sum(state.lines[0].now for state in held)  # every holder of the content, as it stands
-    content = node.read(charged, board.families, board.states, 1)[0]
+    content = node.read(charged, board.families, board.states, 1, board.wrap)[0]
     assert ((content - plain) == 100)[first | second].all()  # the plane reads the holder plainly
     for reader in (matter, charge):  # dimension one, and the holder's own record
         assert charge not in [read.family for read in board.families[reader].reads]
-        assert np.array_equal(node.read(reader, board.families, board.states, 1)[0], plain)
+        assert np.array_equal(node.read(reader, board.families, board.states, 1, board.wrap)[0], plain)

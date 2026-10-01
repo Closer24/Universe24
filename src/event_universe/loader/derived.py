@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import gcd
 
-from event_universe.core.rule3 import ISOTROPIC, coefficients, division_fixed_point, division_forward
-from event_universe.features.currents import AXIS_PORTS, DIFFERENCE, PORTS, PRODUCTS
+from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
+from event_universe.features.currents import AXIS_PORTS, PORTS, PRODUCTS
 from event_universe.features.rotation import TURNED_REACH
 
 
@@ -155,7 +155,7 @@ def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) 
 
 
 def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) -> list[int]:
-    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`); for each axis part SUM over the sources of w x factor x lines x 2 x 2 |num| for a tension line (the tension per line of the source's record, two products of a level and a difference of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the momentum density, the bare currents through the axis's two Ports, two products each)."""
+    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the momentum density, the bare currents through the axis's two Ports, two products each)."""
     family = families[index]
     sources = readers_of(families, index)
     time = sum(
@@ -167,7 +167,7 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite) 
         * write.factors[other]
         * families[other].record
         * PRODUCTS
-        * (AXIS_PORTS if family.rotation else DIFFERENCE * abs(families[other].pair[0]))
+        * (AXIS_PORTS if family.rotation else abs(families[other].pair[0]))
         for other in sources
     )
     return [time] + [axis] * (family.lines - 1)
@@ -181,8 +181,8 @@ def amplitude_bound(families: tuple[FamilyRule, ...], gamma: int, action: int, w
         num, den = family.pair
         reach = TURNED_REACH if turns(families, index) else 1
         for level in (0, int(division_forward(gamma, 2, 0)[0]), gamma - 1):
-            reads, self_coefficient, wall = coefficients(num, den, gamma, level, ISOTROPIC, True)
-            room = 6 * abs(reads[0]) * reach + abs(self_coefficient) + wall
+            reads, self_coefficient, wall = coefficients(num, den, gamma, level)
+            room = sum(abs(read) for read in reads) * reach + abs(self_coefficient) + wall
             found = min(found, int(division_forward(largest - wall, room, 0)[0]))
         if reach > 1:
             link = 2 * 2 * gamma  # the Link's wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma)

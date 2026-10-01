@@ -26,7 +26,7 @@ def ring_sum(values: list[Fraction]) -> list[Fraction]:
 def test_the_share_changes_by_the_currents_at_the_pair_the_step_started_from(pair):
     """E_i / 2 = 3 den (now^2 + before^2) - num now S_6(before): its change over one interval of Rule3 (exact in rationals) is SUM_j F_ij with F_ij = num (now_i before_j - before_i now_j) at every Node, the currents at the pair the step started from (issue #1495 finding 6; the paper writer's finding, #1538 comment 5921398465), and not at the pair the step left."""
     num, den = pair
-    (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
+    (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
     draw = random.Random(3)
     now = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)]
     before, ring = [Fraction(draw.randint(-1000, 1000)) for _ in range(NODES)], ring_sum(now)
@@ -46,7 +46,7 @@ def test_the_share_changes_by_the_currents_at_the_pair_the_step_started_from(pai
 def test_the_exact_bands_turn_with_no_remainder(pair, period):
     """The exact bands: a Node at rest in the vacuum (its six reads its own level) turns by 2 cos omega = 2 num / den; the three integer rotations 1, 0 and -1 close in 6, 4 and 3 intervals with the remainder 0 at every step."""
     num, den = pair
-    (read, _, _), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
+    (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, 0)
     before, now = 0, 1_000
     for _ in range(1, period + 1):
         nxt, carry = rule3((read,) * 3, (2 * now,) * 3, self_coefficient, wall, now, before, 0)

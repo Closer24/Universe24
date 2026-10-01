@@ -14,7 +14,6 @@ import numpy as np
 
 from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import (
-    ISOTROPIC,
     NO_READ,
     coefficients,
     division_fixed_point,
@@ -26,7 +25,7 @@ from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES
 from event_universe.loader.world import universe_of
-from event_universe.node import Record, well, wronskian
+from event_universe.node import Record, ports, well, wronskian
 from event_universe.share import quanta_of, share
 from event_universe.world_files import input_digest, world_files
 
@@ -61,13 +60,11 @@ class Standing:
 def step(
     board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray, remainder: np.ndarray
 ) -> np.ndarray:
-    """One interval of Rule3 on the whole board, the loop's own isotropic form: the arrivals per axis the two neighbours' levels (0 beyond a face, the wrap on a periodic one), the coefficients from the paces at every Node (core.rule3, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
-    arrivals = tuple(
-        arrival(now, axis, 1, board.wrap, 0) + arrival(now, axis, -1, board.wrap, 0) for axis in range(3)
-    )
+    """One interval of Rule3 on the whole board, the engine's own form: the six arrivals through the Ports (0 beyond a face, the wrap on a periodic one, `node.ports`), the coefficients from the paces at every Node with no tension (core.rule3, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
     reads, self_coefficient, wall = coefficients(
-        board.pair[0], board.pair[1], board.gamma, content, ISOTROPIC, True
+        board.pair[0], board.pair[1], board.gamma, content, None, True
     )
+    arrivals = ports(now, board.wrap)
     nxt, remainder[...] = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
     return np.asarray(nxt, dtype=np.int64)
 
@@ -152,23 +149,15 @@ def purged(keep: np.ndarray, now: np.ndarray, before: np.ndarray) -> list[np.nda
 def top_mode(
     board: Board, content: np.ndarray, keep: np.ndarray, seed: np.ndarray, unit: int
 ) -> np.ndarray:
-    """The iteration of the generator (ALGEBRA.md #the-generator (b)): Rule3's read act with the before-coefficient 0, a <- (SUM_a R_a arr_a + S a) div w within the body's region and 0 outside it, then the division act to the amplitude unit (the level times the unit over its largest size): the power iteration of the symmetric form's top mode, the body's bound mode; the stop is the first repeat of the integer vector, exact, no tolerance."""
+    """The iteration of the generator (ALGEBRA.md #the-generator (b)): Rule3's read act with the before-coefficient 0, a <- (SUM over the Ports of R_ij arr_j + S a) div w within the body's region and 0 outside it, then the division act to the amplitude unit (the level times the unit over its largest size): the power iteration of the symmetric form's top mode, the body's bound mode; the stop is the first repeat of the integer vector, exact, no tolerance."""
     a = np.where(keep, seed, 0).astype(np.int64)
     seen: set[bytes] = set()
+    reads, self_coefficient, wall = coefficients(
+        board.pair[0], board.pair[1], board.gamma, content, None, True
+    )
     while True:
-        arrivals = tuple(
-            arrival(a, axis, 1, board.wrap, 0) + arrival(a, axis, -1, board.wrap, 0) for axis in range(3)
-        )
-        reads, self_coefficient, wall = coefficients(
-            board.pair[0], board.pair[1], board.gamma, content, ISOTROPIC, True
-        )
-        total = (
-            reads[0] * arrivals[0]
-            + reads[1] * arrivals[1]
-            + reads[2] * arrivals[2]
-            + self_coefficient * a
-        )
-        total = np.where(keep, np.asarray(division_forward(total, wall, 0)[0]), 0).astype(np.int64)
+        total = np.asarray(rule3(reads, ports(a, board.wrap), self_coefficient, wall, a, 0, 0)[0])
+        total = np.where(keep, total, 0).astype(np.int64)
         largest = int(np.abs(total).max())
         if largest == 0:
             return a

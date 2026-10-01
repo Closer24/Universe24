@@ -52,11 +52,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         away = abs(x - 5)
         e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
         assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1
-    refused(
-        f"{inner}: nothing stands there",
-        TOOL.pixel_mode,
-        {**SLIT, "measured": [{"family": "matter", "nodes": [at]}]},
-    )
+    body = {"family": "matter", "nodes": [at]}
+    refused(f"{inner}: nothing stands there", TOOL.pixel_mode, {**SLIT, "measured": [body]})
     tampered = json.loads(mode_file.read_text(encoding="utf-8"))
     tampered["messages"][0]["moving"]["now"]["at"].append(12 * 9)
     tampered["messages"][0]["moving"]["now"]["values"].append(5)
@@ -82,9 +79,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()
-    print(
-        f"GAMEBOARD slit: light beyond the wall per row {passed.tolist()}, before {int(level[:12].sum())} vs {int(free)}"
-    )
+    before = int(level[:12].sum())
+    print(f"GAMEBOARD slit: light beyond the wall per row {passed.tolist()}, before {before} vs {free}")
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)

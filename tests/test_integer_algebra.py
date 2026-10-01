@@ -172,25 +172,15 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     modules = {path.relative_to(SRC).as_posix() for path in files if path.name != "__init__.py"}
     assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
 
-    SOURCE_CHECKS = {
-        "x = 1.5\n": float_literals,
-        "x = 3 / 2\n": true_divisions,
-        "x /= 2\n": true_divisions,
-    }
+    SOURCE_CHECKS = {"x = 1.5\n": float_literals}
+    SOURCE_CHECKS.update({"x = 3 / 2\n": true_divisions, "x /= 2\n": true_divisions})
     IMPORT_CHECKS = ("import random\n", "from math import sqrt\n", "import math\ny = math.sqrt(4)\n")
     IMPORT_CHECKS += ("import math as m\n", "from math import isqrt as r\n")
-    NUMPY_CHECKS = (
-        "y = np.sqrt(x)\n",
-        "y = np.zeros(3, dtype=np.float64)\n",
-        "y = x.astype(np.int32)\n",
-    )
+    NUMPY_CHECKS = ("y = np.sqrt(x)\n", "y = np.zeros(3, dtype=np.float64)\n")
+    NUMPY_CHECKS += ("y = x.astype(np.int32)\n",)
     NUMPY_CHECKS += ("y = np.zeros(3, dtype=float)\n", "y = np.zeros(3)\n", "y = np.full(3, 0)\n")
-    NUMPY_CHECKS += (
-        "y = np.array([1.5, 2])\n",
-        "y = float(x)\n",
-        "y = x.mean()\n",
-        "y = x.astype(scale)\n",
-    )
+    NUMPY_CHECKS += ("y = np.array([1.5, 2])\n", "y = float(x)\n")
+    NUMPY_CHECKS += ("y = x.mean()\n", "y = x.astype(scale)\n")
     NUMPY_CHECKS += ("y = x.astype(dtype)\n", "y = np.linalg.norm(x)\n", "y = np.linspace(0, 1, 3)\n")
     NUMPY_CHECKS += ("y = np.random.default_rng()\n",)
 
