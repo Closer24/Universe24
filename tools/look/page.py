@@ -2,7 +2,9 @@
 
 The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the detectors' totals, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional, one bar per detector, what it saw over W_c up to the frame shown.
 
-    python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--out <world>.look.html]
+A gate's reading, optional: with `--gate <reading>.json`, the joint-share reader's file (`tools/bell_gate.py`'s output over the gate's worlds, the look's world among them), and the gate's blind as `--blind` (the expectation of the gate's form: `family`, `sides`, `order`, `runs`, `combination`, `blind`), the page adds the gate's panels, inserted at three markers of the template and absent without a reading (a page without one holds none of them): the board seen from above at the frame shown (frame 0 the input as laid, the record's counts at its Nodes and each side's region with its declared setting and pattern as the reader read them; the beams leaving the record and meeting the regions over the intervals; a region brighter the interval it clicks), labelled a GameBoard reading; the gate's family's `parts` lines per region over the intervals (the parts overlaid, one curve where they are equal) with the region's `click` lines marked, the instrument's read; and the reader's credit beside the blind: the 2^n joint shares as bars, the run filled and the blind outlined, the drawn combination (the click) named, E_n, the marginals, the sub-correlations and the three local credits of the look's world in one table against the blind, the combination over the gate's worlds (its formula from the blind's order and signs, the run's value beside the blind's) on a ruler from minus to plus the number of its terms (the algebraic maximum, one per term) with the fence the blind's theorem lines name ("at most") shaded and the local credits marked on it. `--beside <other>.json` adds one line with another gate's blind combination, read from that file and typed nowhere. Every number of the panels is the reader's file's, the blind's or the look's; the page compares them and sums nothing new.
+
+    python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--gate <reading>.json] [--beside <other>.json] [--out <world>.look.html]
 """
 
 from __future__ import annotations
@@ -130,8 +132,40 @@ def packed(value: object) -> str:
     return base64.b64encode(gzip.compress(data, compresslevel=9, mtime=0)).decode("ascii")
 
 
-def page(look: dict[str, Any], blind: dict[str, Any] | None) -> str:
-    """The page's HTML from the look and the blind expectation, if any."""
+GATE_FORM = ("family", "sides", "order", "runs", "combination", "blind")  # the keys of a gate's blind
+
+
+def gate(look: dict[str, Any], blind: dict[str, Any] | None, reading: dict[str, Any]) -> dict[str, Any]:
+    """The gate's reading for the page: the look's world named by its stem, its key in the blind's order (the combination of settings whose run it is) and the reader's file (tools/bell_gate.py's output over the gate's worlds) untouched; refused by name where the blind is not of the gate's form or the look's world is not among the reading's worlds and the blind's runs."""
+    world = str(look.get("world", "")).rsplit(".", 1)[0]
+    if blind is None or not all(key in blind for key in GATE_FORM):
+        raise ValueError(
+            f"a gate's reading needs the gate's blind beside it, with the keys {list(GATE_FORM)}"
+        )
+    keys = [key for key, run in blind["runs"].items() if run == world]
+    if not isinstance(reading, dict) or world not in reading.get("worlds", {}) or not keys:
+        raise ValueError(
+            f"the look's world {world!r} is not among the reading's worlds "
+            f"{sorted(reading.get('worlds', {})) if isinstance(reading, dict) else reading} and the blind's runs"
+        )
+    return {"world": world, "key": keys[0], "reading": reading}
+
+
+def beside(path: Path) -> dict[str, Any]:
+    """Another gate's blind for the one line beside the reading: the file's content with its path, its combination's name and value read there and typed nowhere."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or "combination" not in document or "blind" not in document:
+        raise ValueError(f"{path} is not a gate's blind: it holds no combination and blind")
+    return {"file": path.as_posix(), **document}
+
+
+def page(
+    look: dict[str, Any],
+    blind: dict[str, Any] | None,
+    reading: dict[str, Any] | None = None,
+    other: dict[str, Any] | None = None,
+) -> str:
+    """The page's HTML from the look and the blind expectation, if any; with a gate's reading, the gate's panels inserted at the template's three markers (`other` the line of another gate's blind)."""
     if not isinstance(look, dict) or "frames" not in look or "families" not in look:
         raise ValueError("the look file must hold the frames and the families (tools/look/record.py)")
     if blind is not None and not isinstance(blind, dict):
@@ -140,13 +174,19 @@ def page(look: dict[str, Any], blind: dict[str, Any] | None) -> str:
         )
     world = str(look.get("world", "world")).split(".")[0].replace("_", " ")
     title = f"{world[:1].upper()}{world[1:]} look"
+    gated = gate(look, blind, reading) if reading is not None else None
+    template = TEMPLATE
+    for marker, text in GATE_MARKERS.items():
+        template = template.replace(marker, text if gated else "")
     return (
-        TEMPLATE.replace("{{TITLE}}", title)
+        template.replace("{{TITLE}}", title)
         .replace("{{THREE}}", CDN_THREE)
         .replace("{{LOOK}}", packed(look))
         .replace("{{ROLES}}", embedded(roles(look["families"])))
         .replace("{{BLIND}}", embedded(blind))
         .replace("{{MEASURE}}", embedded(measurement(look, blind)))
+        .replace("{{GATE}}", embedded(gated))
+        .replace("{{BESIDE}}", embedded(other))
     )
 
 
@@ -154,12 +194,17 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("look", type=Path, help="the look file (<world>.look.json)")
     parser.add_argument("--blind", type=Path, default=None, help="the blind expectation file")
+    parser.add_argument("--gate", type=Path, default=None, help="a gate's reading (tools/bell_gate.py)")
+    parser.add_argument("--beside", type=Path, default=None, help="another gate's blind, for one line")
     parser.add_argument("--out", type=Path, default=None, help="the page (<world>.look.html)")
     args = parser.parse_args(argv)
     look = json.loads(args.look.read_text(encoding="utf-8"))
     blind = json.loads(args.blind.read_text(encoding="utf-8")) if args.blind else None
+    reading = json.loads(args.gate.read_text(encoding="utf-8")) if args.gate else None
     target: Path = args.out or args.look.with_suffix(".html")
-    target.write_text(page(look, blind), encoding="utf-8")
+    target.write_text(
+        page(look, blind, reading, beside(args.beside) if args.beside else None), encoding="utf-8"
+    )
     print(json.dumps({"look": args.look.name, "page": str(target), "bytes": target.stat().st_size}))
 
 
@@ -266,7 +311,7 @@ td.num { font-family: var(--font-mono); }
       <div class="frame" id="frame"></div>
     </div>
     <div class="lines" id="lines"></div>
-  </section>
+  </section>{{GATE_PANELS}}
   <section class="panel measure" id="measure-box">
     <h2>Measurement: the detectors' report</h2>
     <div class="picker" id="measure-picker"></div>
@@ -391,7 +436,7 @@ function fit() {
 const hemisphere = new THREE.HemisphereLight(0xffffff, 0x000000, 1), sun = new THREE.DirectionalLight(0xffffff, size('--sun'));
 sun.position.set(1, 2, 3);
 scene.add(hemisphere, sun);
-const position = i => { const [x, y, z] = nodeOf(i); return new THREE.Vector3(x - (X - 1) / 2, y - (Y - 1) / 2, z - (Z - 1) / 2); };
+const position = i => { const [x, y, z] = nodeOf(i); return new THREE.Vector3(x - LOW[0] - (X - 1) / 2, y - LOW[1] - (Y - 1) / 2, z - LOW[2] - (Z - 1) / 2); };  // the Node at its file coordinates within the box, the layers grown before the origin counted
 const matrix = new THREE.Matrix4(), quaternion = new THREE.Quaternion(), scale = new THREE.Vector3(), colour = new THREE.Color(), tint = new THREE.Color();
 const hidden = new THREE.Matrix4().makeScale(0, 0, 0);
 const layers = {};
@@ -571,7 +616,7 @@ function draw() {
   byId('lines').textContent = t === 0 ? 'The world as laid: the bodies\\' declared counts, the levels of the mode file, every held row at its start.'
     : Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? '' : 's')).join(', ') + (clicks.length ? ' (' + [...new Set(clicks)].join(', ') + ')' : '') || 'no line this interval';
   if (!MEASURE) drawMeasure();
-  moveCursors();
+  moveCursors();{{GATE_DRAW}}
 }
 
 /* The view: drag turns the board, the wheel and the two buttons bring it closer or farther. */
@@ -794,7 +839,7 @@ function numbers() {
     + Object.entries(books).map(([name, book]) => `<tr><td>${esc(name)}</td>` + keys.map(k => `<td class="num">${format(book[k])}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>' : '<p>No interval was run.</p>';
 }
 
-/* The start: the title, the verdict, the theme (the browser's, or the one the button set, remembered where the browser keeps it), frame 0. */
+{{GATE_SCRIPT}}/* The start: the title, the verdict, the theme (the browser's, or the one the button set, remembered where the browser keeps it), frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
 const scheme = window.matchMedia('(prefers-color-scheme: dark)'), themeButton = byId('theme');
@@ -812,6 +857,168 @@ start();
 })();
 </script>
 """
+
+# The gate's panels, inserted at the template's three markers with a reading and absent without one.
+GATE_PANELS = """
+<script id="gate" type="application/json">{{GATE}}</script>
+<script id="beside" type="application/json">{{BESIDE}}</script>
+  <section class="panel">
+    <h2>The gate's input and run, seen from above</h2>
+    <div class="graph" id="gate-above"></div>
+    <div id="gate-sides"></div>
+  </section>
+  <section class="panel">
+    <h2>The parts lines per region</h2>
+    <div class="stack" id="gate-parts"></div>
+  </section>
+  <section class="panel wide">
+    <h2>The gate's reading beside the blind</h2>
+    <div class="stack" id="gate-reading"></div>
+  </section>"""
+
+GATE_SCRIPT = r"""/* The gate's panels (the joint-share reader's file over the gate's worlds and the blind of the gate's form): the board from above at the frame shown, the parts lines per region and the reader's credit beside the blind; every number the look's, the reader's or the blind's, the page comparing them and summing nothing new. */
+const GATE = JSON.parse(byId('gate').textContent), BESIDE = JSON.parse(byId('beside').textContent);
+const READING = GATE.reading, WORLD = READING.worlds[GATE.world], KEY = GATE.key, EXPECTED = BLIND.blind || {};
+const SIDES = Object.keys(BLIND.sides), NAME = String(BLIND.combination.name), GATE_FAMILY = String(BLIND.family);
+const SIDE_TONES = ['--matter', '--light', '--field', '--flash', '--ring'], CREDITS = ['by_the_parts_shares', 'by_the_local_sums', 'by_the_sign'];
+const sideColour = k => token(SIDE_TONES[k % SIDE_TONES.length]), gateHex = () => ROLES[GATE_FAMILY] ? colourOf(GATE_FAMILY) : token('--fg');
+const frac = v => v === null || v === undefined ? 'none' : v[1] === 1 ? format(v[0]) : format(v[0]) + ' / ' + format(v[1]);
+const ratio = v => v === null || v === undefined ? NaN : v[0] / v[1];
+const same = (u, v) => u !== null && u !== undefined && v !== null && v !== undefined && u[0] === v[0] && u[1] === v[1];
+const verdictOf = (u, v) => same(u, v) ? 'MATCH' : 'differs';
+const port = key => String(key).split(' ').map(p => p === 'plus' ? '+' : p === 'minus' ? '\u2212' : p).join(' ');
+const regionOf = label => LOOK.detectors.find(d => d.name === BLIND.sides[label]) || { name: String(BLIND.sides[label]), nodes: [], body: null };
+const clickedAt = (frame, name) => frame.lines.some(line => line.event === 'click' && line.detector === name && line.family === GATE_FAMILY);
+const AT_MOST = /at most (\d+)/, boundOf = text => { const m = AT_MOST.exec(String(text || '')); return m ? Number(m[1]) : null; };
+const FENCE = CREDITS.map(f => boundOf((EXPECTED[f] || {}).status)).find(b => b !== null) ?? null;
+
+/* From above: the two unfolded axes (a chain with its folded neighbour), the third summed; the view the frame's own box, growing with it. */
+const UNFOLDED = [0, 1, 2].filter(a => !LOOK.folded[a]), U = UNFOLDED[0] ?? 0, V = UNFOLDED[1] ?? [0, 1, 2].find(a => a !== U);
+function drawAbove() {
+  const frame = LOOK.frames[t], row = frameOf(t)[GATE_FAMILY] || {}, count = row.count, cells = new Map();
+  const o = originOf(frame), s = shapeOf(frame), left = o[U], top = o[V] + s[V];
+  const px = u => u - left, py = v => top - 1 - v;
+  if (count) for (let i = 0; i < N; i++) if (count[i]) { const n = nodeOf(i), k = px(n[U]) * s[V] + py(n[V]); cells.set(k, (cells.get(k) || 0) + count[i]); }
+  const most = Math.sqrt(Math.max(0, ...Array.from(cells.values(), Math.abs))) || 1;
+  let body = `<rect x="0" y="0" width="${s[U]}" height="${s[V]}" fill="${token('--board')}" stroke="${token('--line')}" stroke-width="0.3"/>`;
+  for (const [k, c] of cells) {
+    const x = Math.floor(k / s[V]), y = k % s[V], strength = Math.min(1, Math.sqrt(Math.abs(c)) / most);
+    body += c > 0 ? `<rect x="${x}" y="${y}" width="1" height="1" fill="${gateHex()}" fill-opacity="${strength.toFixed(3)}"/>` : `<rect x="${x + 0.15}" y="${y + 0.15}" width="0.7" height="0.7" fill="none" stroke="${gateHex()}" stroke-width="0.2"/>`;
+  }
+  const letter = Math.max(2, Math.min(s[U], s[V]) / 16);
+  SIDES.forEach((label, k) => {
+    const region = regionOf(label), nodes = region.body === null ? region.nodes : frame.bodies[region.body], flashing = clickedAt(frame, region.name);
+    const stroke = flashing ? token('--flash') : sideColour(k);
+    for (const n of nodes) body += `<rect x="${px(n[U]) + 0.1}" y="${py(n[V]) + 0.1}" width="0.8" height="0.8" fill="none" stroke="${stroke}" stroke-width="${flashing ? 0.3 : 0.15}"/>`;
+    if (nodes.length) {
+      const cx = nodes.reduce((a, n) => a + px(n[U]) + 0.5, 0) / nodes.length, cy = nodes.reduce((a, n) => a + py(n[V]) + 0.5, 0) / nodes.length;
+      body += `<text x="${cx.toFixed(1)}" y="${(cy + letter * 0.35).toFixed(1)}" text-anchor="middle" font-size="${letter}" font-family="${esc(token('--font-mono'))}" font-weight="600" fill="${stroke}">${esc(label)}</text>`;
+    }
+  });
+  body += `<text x="${s[U] - 0.3}" y="${s[V] - 0.5}" text-anchor="end" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[U]}</text><text x="0.3" y="${letter}" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[V]}</text>`;
+  const title = t === 0 ? `The input as laid: ${esc(GATE_FAMILY)}'s record at its Nodes and the ${SIDES.length} regions` : `Interval ${t}: the beams of ${esc(GATE_FAMILY)} and the ${SIDES.length} regions`;
+  byId('gate-above').innerHTML = `<div class="caption"><b>${title}</b><span>GameBoard reading, a diagnostic</span></div><svg viewBox="0 0 ${s[U]} ${s[V]}" role="img" aria-label="the board from above" shape-rendering="crispEdges" style="max-height: var(--board-height)">${body}</svg><div class="caption"><span>${AXES[U]} across, ${AXES[V]} up; a Node's count of ${esc(GATE_FAMILY)} as the cell's depth against the frame's largest (a hollow cell a count below 0); the box the frame's own, ${s[U]} x ${s[V]} at the file's coordinates from (${left}, ${o[V]})</span></div>`;
+}
+function sidesList() {
+  const family = FAMILIES.find(f => f.name === GATE_FAMILY), rows = SIDES.map((label, k) => {
+    const region = regionOf(label), basis = WORLD.bases[label] || [], pattern = WORLD.patterns[label] || [];
+    return `<dt style="color:${sideColour(k)}">${esc(label)}</dt><dd>${esc(region.name)}, ${format(region.nodes.length)} Nodes: the setting (p, q) = (${basis.map(format).join(', ')}), the pattern ${pattern.map(part => '[' + part.map(format).join(', ') + ']').join(' ')}</dd>`;
+  });
+  byId('gate-sides').innerHTML = `<dl>${rows.join('')}<dt>record</dt><dd>${esc(GATE_FAMILY)}, ${family ? format(family.lines) + ' parts laid alike' : 'not in the look'}; frame 0 the world as laid</dd><dt>declared</dt><dd>the settings and the patterns are the world file's, read by the reader (${esc(WORLD.world)}) and by nothing in the engine; the regions' Nodes are the file's</dd></dl>`;
+}
+
+/* The parts lines: per region the parts' signed level sums (now) over the intervals, the parts overlaid, and a strip of its click lines. */
+const PARTS_AT = {};
+for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'parts' && line.family === GATE_FAMILY) (PARTS_AT[line.detector] || (PARTS_AT[line.detector] = {}))[line.tick] = line.levels;
+function drawParts() {
+  const box = byId('gate-parts'); box.innerHTML = '';
+  SIDES.forEach((label, k) => {
+    const region = regionOf(label), at = PARTS_AT[region.name] || {}, parts = Math.max(0, ...Object.values(at).map(levels => levels.length));
+    const series = Array.from({ length: parts }, (_, p) => ({ name: label + ' part ' + (p + 1), colour: sideColour(k), dashed: p > 0, values: Float64Array.from({ length: T + 1 }, (_, i) => at[i] && at[i][p] ? at[i][p][0] : 0) }));
+    const g = document.createElement('div'); g.className = 'graph'; box.append(g);
+    graph(g, `The parts at ${region.name} (${label}): ${parts} parts overlaid, the sums now`, series, "the parts lines, the instrument's read");
+    const clicks = (reportsAt[region.name] || {})[GATE_FAMILY] || [];
+    if (!g.dataset.px) return;
+    const [left, right, frames] = JSON.parse(g.dataset.px), W = size('--graph-width'), h = size('--graph-pad') * 3, px = i => left + (frames > 1 ? i / (frames - 1) : 0) * (right - left);
+    const marks = clicks.map(([tick, inflow]) => `<line x1="${px(tick).toFixed(1)}" x2="${px(tick).toFixed(1)}" y1="0" y2="${h - size('--small')}" stroke="${token('--flash')}" stroke-width="1"><title>click at interval ${tick}: the inflow ${format(inflow)}</title></line>`).join('');
+    g.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 ${W} ${h}" role="img" aria-label="the click lines of ${esc(region.name)}">${marks}${svgText(format(clicks.length) + ' click lines of ' + region.name + ' (the measurement)', right, h - 1, 'end')}</svg>`);
+  });
+  moveCursors();
+}
+
+/* The reading: the joint shares as shareBars beside the blind, the world's numbers in one table, the combination over the gate's worlds on its ruler, the otherGate gate's line. */
+function shareBars() {
+  const keys = Object.keys(WORLD.shares || {}), n = keys.length, blind = (EXPECTED.shares || {})[KEY] || {}, drawn = WORLD.drawn ? WORLD.drawn.join(' ') : null;
+  const W = size('--graph-width') * 1.5, H = size('--graph-height') * 2, pad = size('--graph-pad'), left = pad * 6, bottom = pad * 9, small = size('--small') * 0.75;
+  const slot = (W - left - pad) / Math.max(n, 1), py = v => pad + (1 - v) * (H - pad - bottom), w = Math.max(1, slot * 0.3);
+  let body = `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText('1', left - 3, pad + small * 0.4, 'end') + svgText('0', left - 3, py(0), 'end');
+  keys.forEach((key, k) => {
+    const x = left + slot * (k + 0.5), run = WORLD.shares[key], expected = blind[key], rv = run ? ratio(run) : 0;
+    body += `<rect x="${(x - w).toFixed(1)}" y="${py(rv).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(rv)).toFixed(1)}" fill="${gateHex()}"><title>${port(key)}: the run's share ${frac(run)}, J = ${frac(WORLD.joint[key])}</title></rect>`;
+    if (expected) body += `<rect x="${x.toFixed(1)}" y="${py(ratio(expected)).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(ratio(expected))).toFixed(1)}" fill="none" stroke="${token('--blind')}" stroke-dasharray="3 2"><title>${port(key)}: the blind's share ${frac(expected)}</title></rect>`;
+    body += svgText(port(key), x, H - bottom + small * 1.2, 'middle') + svgText(frac(run), x, H - bottom + small * 2.4, 'middle') + (expected ? svgText('blind ' + frac(expected), x, H - bottom + small * 3.6, 'middle') : '') + (key === drawn ? svgText('drawn: the click', x, H - bottom + small * 4.8, 'middle') : '');
+  });
+  const identical = n > 0 && keys.every(key => same(WORLD.shares[key], blind[key]));
+  const legend = `<span><i style="border-color:${gateHex()};border-top-width:6px"></i>the run's shares J over their sum (the reader's credit over the parts lines)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>the blind's shares</span><span>drawn: the combination of ports drawn by the shares with the declared seed, the click</span>`;
+  return `<div class="graph"><div class="caption"><b>The ${n} joint shares at (${esc(KEY)}): ${identical ? 'the blind\u2019s exactly' : 'the run beside the blind'}</b><span>the reader's credit over the parts lines</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the joint shares beside the blind" style="max-width: var(--measure-width)">${body}</svg></div>`;
+}
+function worldTable() {
+  const rows = [[`E_${SIDES.length}, the correlation over the ${SIDES.length} sides`, WORLD.correlation, (EXPECTED.correlation || {})[KEY]]];
+  for (const label of SIDES) rows.push([`the marginal P(+) of ${label} (${regionOf(label).name})`, (WORLD.marginals || {})[label], ((EXPECTED.marginals || {})[KEY] || {})[label]]);
+  for (const [subset, e] of Object.entries(WORLD.sub_correlations || {})) rows.push([`E over ${subset} alone`, e, ((EXPECTED.sub_correlations || {})[KEY] || {})[subset]]);
+  for (const f of CREDITS) rows.push([`E ${f.replace(/_/g, ' ')}, a local credit (the fence)`, WORLD[f], ((EXPECTED[f] || {}).correlation || {})[KEY]]);
+  const cells = rows.map(([what, run, expected]) => `<tr><td>${esc(what)}</td><td class="num">${frac(run)}</td><td class="num">${frac(expected)}</td><td>${verdictOf(run, expected)}</td></tr>`).join('');
+  const quanta = Object.entries(WORLD.quanta || {}).map(([label, [inflow, wall]]) => `${label} ${format(inflow)} over W_c ${format(wall)}, about ${format(Math.round(inflow / wall))} quanta`).join('; ');
+  const mismatch = WORLD.mismatch || {}, ratios = (mismatch.ratios || []).map(frac).join(', ');
+  return `<div class="scroll"><table><thead><tr><th>${esc(GATE_FAMILY)} at (${esc(KEY)}), the world ${esc(WORLD.world)}</th><th>the run (the reader's credit)</th><th>the blind</th><th></th></tr></thead><tbody>${cells}</tbody></table></div>`
+    + `<div class="totals">drawn ${WORLD.drawn ? port(WORLD.drawn.join(' ')) : 'nothing'} (the click, one combination by the shares with the seed ${format(BLIND.seed)}); ${format(WORLD.intervals_reported)} intervals reported within the window ${(BLIND.window || []).join(' to ')}; the sides' inflow: ${quanta}</div>`
+    + `<div class="watch">${esc(mismatch.label || 'GAMEBOARD')}, a diagnostic and no credit: the parts' cross-side products' ratios to the first part's ${ratios || 'none'}, rho ${frac(mismatch.rho)}</div>`;
+}
+function rulerOf(most) {
+  const run = READING[NAME], expected = EXPECTED[NAME], W = size('--graph-width') * 1.5, H = size('--graph-height'), pad = size('--graph-pad'), left = pad * 5, right = W - pad * 5, mid = H / 2, small = size('--small') * 0.75;
+  const px = v => left + (v + most) / (2 * most) * (right - left);
+  let body = FENCE === null ? '' : `<rect x="${px(-FENCE).toFixed(1)}" y="${pad}" width="${(px(FENCE) - px(-FENCE)).toFixed(1)}" height="${H - 2 * pad}" fill="${token('--window')}"><title>the fence: |${NAME}| at most ${FENCE}, the blind's theorem lines</title></rect>`;
+  body += `<line x1="${left}" x2="${right}" y1="${mid}" y2="${mid}" stroke="${token('--line')}"/>`;
+  for (let v = -most; v <= most; v++) body += `<line x1="${px(v)}" x2="${px(v)}" y1="${mid - 4}" y2="${mid + 4}" stroke="${token('--line')}"/>` + svgText(format(v), px(v), H - pad, 'middle');
+  CREDITS.forEach((f, k) => { const own = READING[NAME + '_' + f]; if (own) body += `<path d="M ${px(ratio(own)).toFixed(1)} ${mid - 2} l -5 -8 h 10 z" fill="${token('--muted')}"><title>the local credit ${f.replace(/_/g, ' ')}: ${NAME} = ${frac(own)} (the blind ${frac((EXPECTED[f] || {})[NAME])})</title></path>` + (k === 0 ? svgText('the local credits, the fence', px(ratio(own)), mid - 12, 'middle') : ''); });
+  if (expected) body += `<circle cx="${px(ratio(expected)).toFixed(1)}" cy="${mid}" r="8" fill="none" stroke="${token('--blind')}" stroke-dasharray="3 2"><title>the blind's ${NAME} = ${frac(expected)}</title></circle>`;
+  if (run) body += `<circle cx="${px(ratio(run)).toFixed(1)}" cy="${mid}" r="4.5" fill="${gateHex()}"><title>the run's ${NAME} = ${frac(run)}</title></circle>` + svgText(NAME + ' = ' + frac(run), px(ratio(run)), mid + 16 + small, 'middle');
+  body += svgText('the algebraic maximum, one per term', right, pad + small, 'end') + (FENCE === null ? '' : svgText('|' + NAME + '| at most ' + FENCE + ', local realism', px(0), pad + small, 'middle'));
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(NAME)} on its ruler" style="max-width: var(--measure-width)">${body}</svg>`;
+}
+function combinationBox() {
+  const order = BLIND.order, signs = BLIND.combination.signs.map(Number), most = signs.reduce((s, v) => s + Math.abs(v), 0);
+  const formula = NAME + ' = ' + order.map((key, i) => (signs[i] < 0 ? (i ? ' \u2212 ' : '\u2212 ') : (i ? ' + ' : '')) + 'E(' + key + ')').join('');
+  const rows = order.map(key => `<tr><td>${esc(key)}${key === KEY ? ' (this page)' : ''}</td><td>${esc(String(BLIND.runs[key]))}</td><td class="num">${frac((READING.correlation || {})[key])}</td><td class="num">${frac((EXPECTED.correlation || {})[key])}</td><td>${verdictOf((READING.correlation || {})[key], (EXPECTED.correlation || {})[key])}</td></tr>`).join('');
+  const credits = CREDITS.map(f => `${f.replace(/_/g, ' ')} ${frac(READING[NAME + '_' + f])} (the blind ${frac((EXPECTED[f] || {})[NAME])})`).join('; ');
+  const statuses = CREDITS.map(f => (EXPECTED[f] || {}).status).filter(Boolean).map(text => `<div class="watch">${esc(text)}</div>`).join('');
+  return `<div class="graph"><div class="caption"><b>${esc(formula)}</b><span>over the gate's ${format(order.length)} worlds, the reader's file beside the blind</span></div>`
+    + `<div class="scroll"><table><thead><tr><th>settings</th><th>world</th><th>E, the run</th><th>E, the blind</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>${rulerOf(most)}`
+    + `<div class="totals">${esc(NAME)} = ${frac(READING[NAME])} by the meeting, the run; the blind ${frac(EXPECTED[NAME])}, ${verdictOf(READING[NAME], EXPECTED[NAME])}; the algebraic maximum ${format(most)}, one per term; the local credits as the fence: ${esc(credits)}</div>${statuses}</div>`;
+}
+function otherGate() {
+  if (!BESIDE) return '';
+  const name = String(BESIDE.combination.name), fence = CREDITS.map(f => boundOf(((BESIDE.blind || {})[f] || {}).status)).find(b => b !== null);
+  return `<div class="totals">Beside it, the other gate's blind, ${esc(BESIDE.file)}: ${esc(name)} = ${frac((BESIDE.blind || {})[name])} for ${esc(String(BESIDE.family))} over ${format(Object.keys(BESIDE.sides || {}).length)} sides at the settings ${esc(JSON.stringify(BESIDE.settings || {}))}${fence === null || fence === undefined ? '' : ', its fence |' + esc(name) + '| at most ' + format(fence)}</div>`;
+}
+function drawReading() { byId('gate-reading').innerHTML = shareBars() + worldTable() + combinationBox() + otherGate(); }
+let gateTheme = '';
+function drawGate() {
+  drawAbove();
+  const frame = LOOK.frames[t], counts = {}, clicked = frame.lines.filter(line => line.event === 'click').map(line => line.detector + ': ' + line.family);
+  for (const line of frame.lines) counts[line.event] = (counts[line.event] || 0) + 1;
+  if (t) byId('lines').textContent = Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? ' line' : ' lines')).join(', ') + (clicked.length ? ' (' + [...new Set(clicked)].join(', ') + ')' : '') || 'no line this interval';
+  const theme = token('--fg') + token('--matter');
+  if (theme !== gateTheme) { gateTheme = theme; sidesList(); drawParts(); drawReading(); }
+}
+
+"""
+
+GATE_MARKERS = {
+    "{{GATE_PANELS}}": GATE_PANELS,
+    "{{GATE_SCRIPT}}": GATE_SCRIPT,
+    "{{GATE_DRAW}}": " drawGate();",
+}
 
 
 if __name__ == "__main__":
