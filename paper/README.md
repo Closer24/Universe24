@@ -24,6 +24,11 @@ their statuses.
 - `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
   twice; it needs only its figures.
 - `general_formula/main.pdf`: the compiled paper at the same commit.
+- `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
+  material, the algebraic steps of every derivation the paper states without
+  its proof, Derivations S.1 to S.23 in the order of the paper's sections,
+  cited in the paper as (S.n); submitted as supplementary material to the
+  journal and as an ancillary file to arXiv.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, none from a run and none by a
   generative tool, at its final size and included at it, 1:1 (at most 119 mm
