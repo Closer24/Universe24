@@ -1,18 +1,16 @@
 {
  "comment": "Seconds per test file from a junit record (tools/check.py --record-seconds); the CI shards balance on them.",
  "files": {
-  "tests/test_documents.py": 0.3,
-  "tests/test_feature_read.py": 0.0,
-  "tests/test_feature_start.py": 3.1,
-  "tests/test_feature_write.py": 0.0,
-  "tests/test_integer_algebra.py": 0.0,
-  "tests/test_look.py": 30.2,
-  "tests/test_pixel_mode.py": 116.9,
+  "tests/test_documents.py": 0.7,
+  "tests/test_integer_algebra.py": 0.1,
+  "tests/test_look.py": 51.9,
+  "tests/test_pixel_mode.py": 123.9,
   "tests/test_repository_language.py": 0.1,
-  "tests/test_rule3.py": 30.3,
-  "tests/test_the_bound_body.py": 61.5,
-  "tests/test_the_meeting.py": 14.0,
-  "tests/test_the_node.py": 80.4,
+  "tests/test_rule3.py": 74.1,
+  "tests/test_the_bound_body.py": 208.0,
+  "tests/test_the_features.py": 6.9,
+  "tests/test_the_meeting.py": 30.3,
+  "tests/test_the_node.py": 71.5,
   "tests/test_the_share.py": 0.0
  }
 }

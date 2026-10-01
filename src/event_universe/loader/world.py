@@ -27,7 +27,7 @@ INTEGER_KEYS = ("node_clock", "quantum_action", "width")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held"),
     ("name", "pair"),
-    ("sources", "level_weight", "rest"),
+    ("sources", "level_weight", "rest", "act"),
     ("sources", "level_weight"),
 )
 FORM, TENSIONS, WRONSKIAN = (
@@ -36,6 +36,11 @@ FORM, TENSIONS, WRONSKIAN = (
     "wronskian",
 )  # what sources a held row: one real line each
 SOURCES = ((FORM,), (FORM, TENSIONS), (WRONSKIAN,))  # the lists a held row may declare, in this order
+PACE, ROTATION = (
+    "pace",
+    "rotation",
+)  # how a held row acts on its readers: its level into their paces, or the turn of the two-part record
+ACTS = (PACE, ROTATION)
 PLANE = 2  # the dimension of a plane, re and im: charged matter; 1 one real line
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
@@ -92,19 +97,29 @@ class World:
     receding: tuple[RecedingFace, ...]
 
 
-def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool]:
-    """A family's shape from its row, (lines, parts, plane, wronskian): a family of quanta declares its `dimension`, 1 (one real line), 2 (a plane, re and im) or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), and no dimension, a held row never being a plane; refused by name otherwise."""
+def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, bool]:
+    """A family's shape from its row, (lines, parts, plane, wronskian, rotation): a family of quanta declares its `dimension`, 1 (one real line), 2 (a plane, re and im) or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), no dimension, a held row never being a plane, and optionally its `act` on its readers (`ACTS`): the plain read into their paces, every holder's without the key, or the rotation of the two-part record, the holder of the sign's alone (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record), under which the holder carries three odd axis lines beside its time line (1 + 3 lines); a holder of the content asking the rotation, and an act by another word, are refused by name."""
     if "held" in row:
         if "dimension" in row:
             raise ValueError(
                 f"{label} is a held row and declares no dimension: its shape is its sources' count"
             )
-        sources = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)["sources"]
+        held = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)
+        sources, act = held["sources"], held.get("act", PACE)
         if not isinstance(sources, list) or tuple(sources) not in SOURCES:
             raise ValueError(
                 f"{label}.held.sources is one of {[list(s) for s in SOURCES]}, got {sources!r}"
             )
-        return 1 + 3 * (TENSIONS in sources), 1, False, WRONSKIAN in sources
+        if act not in ACTS:
+            raise ValueError(f"{label}.held.act is one of {list(ACTS)}, got {act!r}")
+        rotation = act == ROTATION
+        if rotation and WRONSKIAN not in sources:
+            raise ValueError(
+                f"{label}.held.act {act!r}: a holder of the content, sourced by the form, acts on its readers' "
+                "paces; the rotation of the two-part record is the act of the holder of the sign, sourced by "
+                "the Wronskian (ALGEBRA.md #the-hypotheses-under-their-own-names)"
+            )
+        return 1 + 3 * (TENSIONS in sources or rotation), 1, False, WRONSKIAN in sources, rotation
     if "dimension" not in row:
         raise ValueError(
             f"{label} lacks the key 'dimension': a family of quanta declares 1, {PLANE} or [parts, dimension]"
@@ -115,7 +130,7 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool]:
     parts, lines = shape if isinstance(shape, list) else [1, shape]
     parts = integer(parts, f"{label}.dimension's parts", 1)
     lines = integer(lines, f"{label}.dimension", 1, PLANE)
-    return parts * lines, parts, lines == PLANE, False
+    return parts * lines, parts, lines == PLANE, False, False
 
 
 def kind_of(width: int) -> type:
@@ -124,7 +139,7 @@ def kind_of(width: int) -> type:
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its level weight and its rest (a held row; the level weight `level_weight`, the quanta of form that write one level of the row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22), everything else derived by the rule from the pair and the shape."""
+    """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its level weight, its rest and its act (a held row; the level weight `level_weight`, the quanta of form that write one level of the row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -147,7 +162,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
             raise ValueError(
                 f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
             )
-        lines, parts, plane, wronskian = shape_of(row, label)
+        lines, parts, plane, wronskian, rotation = shape_of(row, label)
         level_weight, rest = None, 0
         if "held" in row:
             holds = row["held"]
@@ -160,7 +175,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 rest = integer(
                     holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
                 )
-        rows.append(Row(name, (num, den), lines, parts, plane, wronskian, level_weight, rest))
+        rows.append(Row(name, (num, den), lines, parts, plane, wronskian, rotation, level_weight, rest))
     return integers, derived.family_rules(rows)
 
 

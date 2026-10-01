@@ -1,7 +1,5 @@
 """The documents gate (the owner's word of 2026-09-30): every markdown heading of the documents begins with a capital letter and is no run of capitals, and no run of three or more all-caps words stands in their prose or in the docstrings, comments and strings of src/, tools/ and tests/ (a code token such as LAWFUL is one word)."""
 
-from __future__ import annotations
-
 import ast
 import io
 import re
@@ -18,16 +16,9 @@ HEADING = re.compile(r"(\d+\.\s+)?[A-Z](?![A-Z0-9'-]*\s+[A-Z][A-Z0-9'-]+(\s|$))"
 
 def shouting(text: str) -> list[str]:
     """Every run of three or more all-caps words in a text, code spans aside."""
-    found, run = [], []
-    for word in re.sub(r"`[^`]*`", " ", text).split() + [""]:
-        bare = word.strip('.,;:()[]"!?*')
-        if CAPS.fullmatch(bare):
-            run.append(bare)
-            continue
-        if len(run) >= 3:
-            found.append(" ".join(run))
-        run = []
-    return found
+    words = [word.strip('.,;:()[]"!?*') for word in re.sub(r"`[^`]*`", " ", text).split()]
+    marked = " ".join(word if CAPS.fullmatch(word) else "\n" for word in words)  # a break between runs
+    return [run.group(0) for run in re.finditer(r"\S+(?: \S+){2,}", marked)]
 
 
 def prose(path: Path) -> list[str]:

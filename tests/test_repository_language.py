@@ -1,7 +1,5 @@
 """The repository's language (AGENTS.md, repository language: English): every tracked text file (.py, .md, .json, .toml, .txt, .yml) and every new one holds ASCII letters only, no Hebrew, Greek or Cyrillic letter in its prose, no directory exempt."""
 
-from __future__ import annotations
-
 import subprocess
 from pathlib import Path
 

@@ -244,13 +244,13 @@ def standing(
 def rows_read(
     universe: dict[str, Any], family: str, sign: bool
 ) -> list[tuple[str, tuple[int, int], int, int]]:
-    """The held rows a body's family reads that hold the sign (`sign`, sourced by the Wronskian) or the content (sourced by the form), (name, pair, level weight, rest), as the loader derives the reads from the pair and the dimension (ALGEBRA.md #the-paces)."""
+    """The held rows a body's family reads into its paces that hold the sign (`sign`, sourced by the Wronskian) or the content (sourced by the form), (name, pair, level weight, rest), as the loader derives the reads from the pair and the dimension (ALGEBRA.md #the-paces); a holder of the sign that declares the rotation is read by the turn of the record and not into the pace, so it is none of these (its turn leaves the record's share as it is)."""
     families = universe_of(universe)[1]
     reader = families[[row.name for row in families].index(family)]
     found = []
     for read in reader.reads:
         row = families[read.family]
-        if row.wronskian == sign:
+        if row.wronskian == sign and not row.rotation:
             found.append((row.name, row.pair, int(row.level_weight or 1), row.rest))
     return found
 
