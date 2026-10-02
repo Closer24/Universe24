@@ -1,4 +1,4 @@
-"""The atom's gate reader, GameBoard readings labelled so and no measurement (docs/ENGINE.md section 4, the folder atom_gate; the mathematician's 172, the rotation read summed over the body and over a window of whole periods): a world of the nucleus and the electron is loaded as tools/run_inputs.py loads it and stepped by the engine's own step over the window, and at every interval the electron's record (its two lines, re and im, at every Node where it stands) gives the pair (SUM_i a_(i,t) (a_(i,t+1) + a_(i,t-1)), SUM_i a_(i,t)^2) over both lines, exact integers; their quotient over the whole window is 2 cos omega_read in the windowed summed form, which for one rotating mode has no singular interval (a plane crosses 0 at no Node), and over successive windows of one period each its drift; omega_read is set beside the free record's omega_0 (2 cos omega_0 = num / den twice) as the binding omega_0 - omega_read in radians per interval and in levels of the sign row (times Gamma). Beside it: the nucleus's share in quanta at its Node and over the board at every tenth interval (a declaration's reading, the one-Node record spreading), the sign row's time level at the nucleus's Node and at the electron's declared Node at the start, the electron's share over the board, the cube's 48 images (tools/body_standing.py's read, the interval through which they hold) and the books at the end. The tool compares nothing, holds no number of the law and writes nothing to the engine; with an expectation file the blind's rows are printed beside the readings.
+"""The atom's gate reader, GameBoard readings labelled so and no measurement (docs/ENGINE.md section 4, the folder atom_gate; the mathematician's 172, the rotation read summed over the body and over a window of whole periods): a world of the nucleus and the electron is loaded as tools/run_inputs.py loads it and stepped by the engine's own step over the window, and at every interval the electron's record (its two lines, re and im, at every Node where it stands) gives the pair (SUM_i a_(i,t) (a_(i,t+1) + a_(i,t-1)), SUM_i a_(i,t)^2) over both lines, exact integers; their quotient over the whole window is 2 cos omega_read in the windowed summed form, which for one rotating mode has no singular interval (a plane crosses 0 at no Node), and over successive windows of one period each its drift; omega_read is set beside the free record's omega_0 (2 cos omega_0 = num / den twice) as the binding omega_0 - omega_read in radians per interval and in levels of the sign row (times Gamma). Beside it: the nucleus's share in quanta at its Node and over the board at every tenth interval (a declaration's reading, the one-Node record spreading), the sign row's time level at the nucleus's Node and at the electron's declared Node at the start, the electron's share over the board in quanta (the summed share over W_c), the cube's 48 images (per family the first interval at which one departs; the holder under the rotation departs at the lay, its odd lines' remainders at the origin and not complemented on the image side) (tools/body_standing.py's read, the interval through which they hold) and the books at the end. The tool compares nothing, holds no number of the law and writes nothing to the engine; with an expectation file the blind's rows are printed beside the readings.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -18,6 +18,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.game_board import GameBoard
+from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
 
 HERE = Path(__file__).resolve().parent
@@ -68,8 +69,8 @@ def binding(two_cos: Fraction, pair_of: tuple[int, int], gamma: int) -> dict[str
 def atom(path: Path, intervals: int | None) -> dict[str, Any]:
     """One world's readings over the window (the world's ticks, or `intervals`), every number exact but the arccosines, labelled."""
     board = GameBoard(load_world(path))
-    names = [family.name for family in board.families]
     nucleus, electron = (board.world.bodies[i] for i in (0, 1))
+    heavy, family = board.families[nucleus.family], board.families[electron.family]
     gamma, action = board.world.node_clock, board.world.quantum_action
     sign = next(i for i, f in enumerate(board.families) if f.held and f.wronskian)
     centre = tuple(int(v) for v in nucleus.nodes[0])
@@ -83,7 +84,13 @@ def atom(path: Path, intervals: int | None) -> dict[str, Any]:
         "electron_record_nodes": int((board.record(electron.family)[0].now != 0).sum()),
     }
     images_tool = body_standing()
-    images: dict[str, Any] = {"departed": images_tool.images_kept(board), "tick": 0}
+    departed: dict[str, int] = {}  # per family the first interval at which one of its 48 images departs
+
+    def imaged(tick: int) -> None:
+        for name in images_tool.images_kept(board):
+            departed.setdefault(name.split(" row ")[0], tick)
+
+    imaged(0)
     steps = board.world.ticks if intervals is None else intervals
     every = 2 * (2 + 3)  # every tenth interval
     series: list[tuple[int, int, int]] = []
@@ -98,23 +105,25 @@ def atom(path: Path, intervals: int | None) -> dict[str, Any]:
         after = [r.now for r in board.record(electron.family)]
         numerator, weight = summed(before, now, after)
         series.append((numerator, weight, board.tick))
-        if not images["departed"]:
-            images = {"departed": images_tool.images_kept(board), "tick": board.tick}
+        if len(departed) < len(board.families):
+            imaged(board.tick)
         if board.tick % every == 0 or board.tick == 1:
             quanta = board.quanta(nucleus.family)[0]
             nucleus_series[str(board.tick)] = {
                 "at_node": int(quanta[centre]),
                 "over_the_board": int(quanta.sum()),
                 "share_at_node_over_W_c": pair(
-                    Fraction(int(board.share_of(nucleus.family)[0][centre]), 3 * 6000 * action)
+                    Fraction(int(board.share_of(nucleus.family)[0][centre]), count_wall(heavy, action))
                 ),
             }
-            electron_quanta[str(board.tick)] = int(board.quanta(electron.family)[0].sum())
+            total, frozen = board.total_share(electron.family)
+            electron_quanta[str(board.tick)] = (
+                None if total is None else pair(Fraction(total, count_wall(family, action)))
+            )
     total_numerator = sum(n for n, _w, _t in series)
     total_weight = sum(w for _n, w, _t in series)
     accumulated = Fraction(total_numerator, total_weight) if total_weight else None
     per_interval = [Fraction(n, w) for n, w, _t in series if w]
-    family = board.families[names.index(electron.family)]
     period = max(1, round(2 * math.pi / math.acos(float(accumulated or 0) / 2))) if accumulated else 1
     windows = []
     for first in range(0, len(series) - period + 1, period):
@@ -138,12 +147,12 @@ def atom(path: Path, intervals: int | None) -> dict[str, Any]:
             "binding": binding(accumulated, family.pair, gamma) if accumulated else None,
         },
         "nucleus": nucleus_series,
-        "electron_quanta_over_the_board": electron_quanta,
+        "electron_share_over_the_board_in_quanta": electron_quanta,
         "images": {
-            "kept_to_the_bit_through": board.tick if not images["departed"] else images["tick"] - 1,
-            "first_departure": None
-            if not images["departed"]
-            else {"tick": images["tick"], "named": images["departed"][: 2 + 1]},
+            "first_departure_per_family": departed,
+            "kept_to_the_bit_through_the_run": sorted(
+                f.name for f in board.families if f.name not in departed
+            ),
         },
         "books": board.books(),
     }
