@@ -13,7 +13,14 @@ from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import NO_READ, PORTS, coefficients, division_forward, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.hold import hold
-from event_universe.features.read import axis_paces, content_of, guard, link_factors, link_tensions
+from event_universe.features.read import (
+    axis_paces,
+    content_of,
+    guard,
+    link_factors,
+    link_tensions,
+    plain,
+)
 from event_universe.features.write import carried
 from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, turns, weight_of
 
@@ -86,9 +93,11 @@ def level_at(record: Record, direction: int) -> np.ndarray:
 
 
 def read_lines(index: int, families: Families, states: States, direction: int) -> tuple[Any, list[Any]]:
-    """The lines a family's read takes at the interval's start in `direction` (ALGEBRA.md #the-paces, Every row reads the content): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`), a held row of the content reading its own level among them, and per read row carrying axis lines its weight and its three axis lines at the same level; the integer 0 and no axis lines where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`)."""
+    """The lines a family's read takes at the interval's start in `direction` (ALGEBRA.md #the-paces, Every row reads the content): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`), a held row of the content reading its own level among them and a holder of the sign under the act pace entering as the size of its level, a hollow whatever the reader's sense (`features.read.plain`), and per read row carrying axis lines its weight and its three axis lines at the same level; the integer 0 and no axis lines where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`)."""
     reads = [r for r in families[index].reads if not families[r.family].rotation]
-    content = content_of([(r.weight, level_at(states[r.family].lines[0], direction)) for r in reads])
+    held = [(states[r.family].lines[0], families[r.family].wronskian) for r in reads]
+    levels = [plain(level_at(line, direction), sign) for line, sign in held]
+    content = content_of([(r.weight, level) for r, level in zip(reads, levels, strict=True)])
     rows = [r for r in reads if families[r.family].axes]
     return content, [
         (r.weight, [level_at(states[r.family].lines[1 + a], direction) for a in range(3)]) for r in rows

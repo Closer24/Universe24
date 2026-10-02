@@ -102,9 +102,5 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     nodes, board = np.array([True, True, False]).reshape(3, 1, 1), np.ones((3, 1, 1), dtype=bool)
     wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
     inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port
-
-    def seen(port: int) -> int:
-        through = tuple(inward if p == port else zero for p in range(6))
-        return inflow(nodes, through, wrap, nodes, board)
-
-    assert [seen(port) for port in range(3)] == [40, 0, 0]
+    through = [tuple(inward if p == port else zero for p in range(6)) for port in range(3)]
+    assert [inflow(nodes, t, wrap, nodes, board) for t in through] == [40, 0, 0]

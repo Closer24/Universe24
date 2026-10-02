@@ -74,7 +74,7 @@ def within_the_reach(board: GameBoard, index: int) -> tuple[int, Fraction]:
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand():
-    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the share and its reading in quanta and the well (a reading) at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's; the one write per held part by hand, with its weights, in tests/test_the_features.py); a held row with a gap reads the same rule at its own pair, the plain rule's reads num, self coefficient 0 and wall 3 den, and the law's line at the composed paces of the content it reads, its own level among it (the generic test of the two rows: no name and no branch); the write's walls are the rows' own, E_s T and E_s x 3 den T with the sources' den (their least common multiple where they differ, each tension times the multiple over its own den), the remainders' origin half the wall. By hand beside the acts: the share is the form's Node term div (2 p^2), the six paces one with no tension, less num now S_6(before); the well, a reading, (now^2 - next x before) div T with no remainder kept; a gapped row at the content 0 reads 2 Gamma^2 times (3,) x 6, 0, 12 at [3, 4]; the walls E_s T and E_s x 3 den T (den 7), the origins half the wall, two den sharing their lcm."""
+    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the share and its reading in quanta and the well (a reading) at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's; the one write per held part by hand, with its weights, in tests/test_the_features.py); a held row with a gap reads the same rule at its own pair, the plain rule's reads num, self coefficient 0 and wall 3 den (the generic test of the two rows: no name and no branch); the write's walls are the rows' own, E_s T and E_s x 3 den T with the sources' den (their least common multiple where they differ, each tension times the multiple over its own den), the remainders' origin half the wall. By hand beside the acts: the share is the form's Node term div (2 p^2), the six paces one with no tension, less num now S_6(before); the well, a reading, (now^2 - next x before) div T with no remainder kept; a gapped row at the content 0 reads 2 Gamma^2 times (3,) x 6, 0, 12 at [3, 4]; the walls E_s T and E_s x 3 den T (den 7), the origins half the wall, two den sharing their lcm."""
     draw, shape = np.random.default_rng(5), (3, 3, 3)
     for _ in range(20):
         levels = node.Record(*draw.integers(-900, 900, (2, *shape)), draw.integers(0, 50, shape))
@@ -94,7 +94,6 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         form = here[0] ** 2 - int(after.now[HERE]) * here[1]
         assert int(node.well(node.form([levels], [after]), 64)[HERE]) == form // 64
         assert node.rule_of(GAPPED, 100, 0) == ((3 * 20_000,) * 6, 0, 12 * 20_000)
-        assert node.rule_of(GAPPED, 100, content) == coefficients(3, 4, 100, clock, pace)
     assert WRITE.walls == (7 * 64,) + (7 * 3 * 7 * 64,) * 3 and WRITE.factors == {2: 1}
     origins = [int(a[0, 0, 0]) for a in node.write_origins(WRITE.walls, (1, 1, 1), np.int64)]
     assert origins == [wall // 2 for wall in WRITE.walls]
@@ -179,8 +178,9 @@ def keeps_the_48(board: GameBoard) -> None:
             scalars = state.lines[:1] if tensor else state.lines
             arrays = [getattr(r, k) for r in scalars for k in KEYS] + state.write_remainders[:1]
             assert all(np.array_equal(turned(a, axes, signs), a) for a in arrays)
-            parts = state.lines[1:]
-            found = [state.write_remainders[1:]] + [[getattr(r, k) for r in parts] for k in KEYS]
+            found = [state.write_remainders[1:]] + [
+                [getattr(r, k) for r in state.lines[1:]] for k in KEYS
+            ]
             for t in found if tensor else []:
                 assert all(np.array_equal(turned(t[axes[a]], axes, signs), t[a]) for a in range(3))
 

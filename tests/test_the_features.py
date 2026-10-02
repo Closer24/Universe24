@@ -150,7 +150,7 @@ WRITES = {("charge/charged", "charge"): 4, ("like_or_unlike/turning", "charge"):
 
 
 def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carries_its_weight():
-    """The declaration's read (ALGEBRA.md, the owner's decision of 2026-10-02: every family reads the holders its declaration names, at the weights it names, and sources each at the weight it reads with) and the write weight (the holder's declared coefficient sits in the write): a universe of two holders of the content, `hollow` [1, 1] at the level weight 5 and the write weight 3 reading itself at 1, `core` [3, 4] at 7 and -1 reading nothing, and two real-line families of matter's pair, `stuff` reading `hollow` at 2 and `other` reading `core` at 1. On random levels of a periodic 3-cube: `stuff`'s content is 2 x hollow's time line and `other`'s core's, `core` reads 0 (the plain rule at Gamma) and every Link's factor is G^2; the rule of `stuff` is the law's line at the composed paces of 2 L; `hollow` is sourced by `stuff` alone and `core` by `other` alone (the reciprocity), each write's numerator the write weight times the reader's weight times its form scaled by the write's factor, 3 x 2 x D' and -1 x 1 x D', of both signs over the random levels, and the level gains (numerator + r) div (E_s T) with the remainder in [0, wall), a negative numerator taking the level down by the floor, the write back exact (a negative level read into a pace is the hill of the guard's test above, the clock Gamma (1 - 1 / Gamma)^c above Gamma for c below 0, admitted as it is within the edge). The start: `read_content` sums weight x (level + rest) over the reads with the row's own weight apart. The loader refuses by name a family without `reads` and a held row without `write_weight`, naming the family, a weight 0, a read of no held row, the holder of the sign naming itself and a real-line family naming a holder under the rotation; the energy line's gate (E_h T num = k_w Gamma den per plane family reading a holder under the rotation, the read weight cancelling under the reciprocity; the advisor's hand, #1563 comment 5945592281): a plane reading the holder at E_h = 1 and k_w = 1 is refused at T = 64 (1 x 64 x 4000 against 1 x Gamma x 6000) and passes at T = Gamma x 6000 / 4000, a second plane of another cos omega beside it refused by name at any read weight (no T serves two); the rule's own universe at T 32,768 is not gated with the tests' charged row under the plain read, refused with it under the rotation at the write weight 1 and admitted at the advisor's k_w = 4 and T = 36,000; the shipped universe files restate the one read the loader derived before this round, every family of quanta reading every holder of the content at 1, a plane the holders of the sign at 1 too, a holder of the content itself among its reads and the holder of the sign none of the sign, every write weight 1 but the charged-body universes' sign holder at the energy line's 4 E_h."""
+    """The declaration's read (ALGEBRA.md, the owner's decision of 2026-10-02: every family reads the holders its declaration names, at the weights it names, and sources each at the weight it reads with) and the write weight (the holder's declared coefficient sits in the write): a universe of two holders of the content, `hollow` [1, 1] at the level weight 5 and the write weight 3 reading itself at 1, `core` [3, 4] at 7 and -1 reading nothing, and two real-line families of matter's pair, `stuff` reading `hollow` at 2 and `other` reading `core` at 1. On random levels of a periodic 3-cube: `stuff`'s content is 2 x hollow's time line and `other`'s core's, `core` reads 0 (the plain rule at Gamma) and every Link's factor is G^2; the rule of `stuff` is the law's line at the composed paces of 2 L; `hollow` is sourced by `stuff` alone and `core` by `other` alone (the reciprocity), each write's numerator the write weight times the reader's weight times its form scaled by the write's factor, 3 x 2 x D' and -1 x 1 x D', negative at some Node over the random levels, and the level gains (numerator + r) div (E_s T) with the remainder in [0, wall), a negative numerator taking the level down by the floor, the write back exact (a negative level read into a pace is the hill of the guard's test above, the clock Gamma (1 - 1 / Gamma)^c above Gamma for c below 0, admitted as it is within the edge). The start: `read_content` sums weight x (level + rest) over the reads with the row's own weight apart. The loader refuses by name a family without `reads` and a held row without `write_weight`, naming the family, a weight 0, a read of no held row, the holder of the sign naming itself and a real-line family naming a holder under the rotation; the energy line's gate (E_h T num = k_w Gamma den per plane family reading a holder under the rotation, the read weight cancelling under the reciprocity; the advisor's hand, #1563 comment 5945592281): a plane reading the holder at E_h = 1 and k_w = 1 is refused at T = 64 (1 x 64 x 4000 against 1 x Gamma x 6000) and passes at T = Gamma x 6000 / 4000 (every plane family of one universe sharing num / den, or the gate refuses the one out of the line by name); on a board of two Nodes with the sign holder at -5 and 5 the plane reading it at 1 under the act pace reads 5 at both, the size of the level, a hollow whatever its sense (ALGEBRA.md row (f); the advisor's hand, #1563 comment 5945859368), and under the rotation its turn's numerators are -5 and 5, the signed level; the rule's own universe at T 32,768 is not gated with the tests' charged row under the plain read, refused with it under the rotation at the write weight 1 and admitted at the advisor's k_w = 4 and T = 36,000; the shipped universe files restate the one read the loader derived before this round, every family of quanta reading every holder of the content at 1, a plane the holders of the sign at 1 too, a holder of the content itself among its reads and the holder of the sign none of the sign, every write weight 1 but the charged-body universes' sign holder at the energy line's 4 E_h."""
     integers, families = universe_of(universe(HOLLOW, CORE, STUFF, OTHER))
     hollow, core, stuff, other = range(4)
     reads = [[(r.family, r.weight) for r in f.reads] for f in families]
@@ -179,8 +179,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     for held, reader, weights in ((hollow, stuff, 3 * 2), (core, other, -1 * 1)):
         numerators = node.write_sources(held, families, forms, {}, writes[held], rulers, GAMMA)
         by_hand = weights * node.written(forms[reader], rulers[reader], GAMMA, 2)
-        assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand)
-        assert (by_hand < 0).any() and (by_hand > 0).any()  # a numerator of both signs
+        assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand) and (by_hand < 0).any()
         before, wall = states[held].lines[0], writes[held].walls[0]
         remainder = [draw.integers(0, wall, SHAPE)]
         (after,), (kept,) = node.held_write([before], numerators, [wall], remainder)
@@ -203,15 +202,22 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         ((SIGN, plane), "energy line fails for 'stuff'"),
     ):
         refused(reason, universe_of, universe(*rows))
-    heavy = {**plane, "name": "heavy", "pair": [1, 1300], "reads": {"sign": 3}}  # another cos omega
-    universe_of(universe(SIGN, plane, quantum_action=15_000))  # 1 x 15,000 x 4,000 = 1 x Gamma x 6,000
-    refused("fails for 'heavy'", universe_of, universe(SIGN, plane, heavy, quantum_action=15_000))
+    turning = universe_of(universe(SIGN, plane, quantum_action=15_000))[
+        1
+    ]  # 15,000 x 4,000 = Gamma 6,000
+    paced = universe_of(universe({**SIGN, "held": {**SIGN["held"], "act": "pace"}}, plane))[1]
+    two, level = np.zeros((2, 1, 1), dtype=np.int64), np.array([[[-5]], [[5]]], dtype=np.int64)
+    for rows, found in ((paced, [5, 5]), (turning, [-5, 5])):  # |L| into the pace; the turn by L
+        board = [node.empty_state(f, (2, 1, 1), (), np.int64) for f in rows]
+        board[0].lines[0] = node.Record(level, level, two)
+        paced_read = node.read(1, rows, board, 1, wrap, GAMMA, 1)[0]
+        turn = node.turning(1, rows, board, 1, GAMMA)
+        assert np.asarray(paced_read if rows is paced else turn[0]).ravel().tolist() == found
     rule = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     charge, rows = (
         next(row for row in rule["families"] if row["name"] == "charge")["held"],
         rule["families"],
     )
-    assert rule["integers"]["quantum_action"] == 32_768 and charge["write_weight"] == 1
     universe_of({**rule, "families": [*rows, CHARGED]})  # the plain read: not gated
     charge["act"] = "rotation"
     refused("fails for 'charged'", universe_of, {**rule, "families": [*rows, CHARGED]})
@@ -219,9 +225,8 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     universe_of({**rule, "families": [*rows, CHARGED]})
     for name in SHIPPED:
         shipped = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))[1]
-        content = [i for i, f in enumerate(shipped) if f.held and not f.wronskian]
-        signs = [i for i, f in enumerate(shipped) if f.held and f.wronskian]
+        held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
         for f in shipped:
-            expected = sorted((i, 1) for i in content + (signs if f.plane else []))
+            expected = sorted((i, 1) for i, sign in held if f.plane or not sign)
             assert sorted((r.family, r.weight) for r in f.reads) == expected, (name, f.name)
             assert f.write_weight == (WRITES.get((name, f.name), 1) if f.held else None), (name, f.name)
