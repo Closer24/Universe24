@@ -312,6 +312,94 @@ A refusal of the lay by name is recorded verbatim and the reading stops at that 
 wide branch is the reading, stated by name, the world run and read as laid; the count is raised
 once at most (one more world at 20,000 only if this lay takes under 10 minutes) and never tuned.
 
+### The reading (the branch pixel-compact-two on the engine of main 337eac09)
+
+Every number below is a GameBoard reading (`tools/body_rest.py --reach 5 --expectation`, the
+books, the `click` lines of the open faces' layer); the world declares no detector. The lay:
+`tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact_14000.json`, 29 s on one
+core, the generator from the one-Node seed of 14,000 quanta at [5, 5, 5] on the open 11-cube:
+fourteen rounds, the content at the centre 1,770 to 885, the count at the centre 532 to 435 of
+13,999, the clock [9780, 6502] = 1.5042 to [5419, 3904] = 1.3881 (the generator's own lines,
+GameBoard), the lay check "stepped once in its start's content the rotation (next + before) / now
+reads 1.3883 (the median over 691 Nodes), at the centre 1.3881, the largest departure 1.16 of the
+rounding 1 / |now|"; the mode file's clock [5419, 3904], 691 declared Nodes carrying 13,999
+quanta, 435 at the centre Node and 289 at each of its six neighbours (2,169 over the seven Nodes,
+0.155 of the body), the rms radius 2.53 Links. So the generator reaches the wide branch again
+from the one-Node seed at 14,000 on the 11-cube, a bound body of 691 Nodes rotating 0.055 above
+the band's top 1.3333, and no compact pixel: the reading of line 1, by name. The run:
+`tools/run_inputs.py`, LAWFUL over the 400 intervals, 8 s, no frozen Node, the least Node pace
+4,526 of 6,000 at the end; the reader stepped the same world 401 intervals in 7 s.
+
+The generator's bracket of the 11-cube's own threshold (lays from the same one-Node seed on the
+same board at other counts, in a scratch folder and not committed; the generator's lines,
+GameBoard): 15,000 lays the wide branch too (31 s, fifteen rounds, the clock [6004, 4301] =
+1.3960, 667 Nodes carrying 15,000); 16,000, 17,000, 18,000, 19,000, 25,000 and 30,000 are refused
+by name in 1.5 to 4 s each, as 20,000 is below, "the record of the body of 16000 quanta about the
+Node [5, 5, 5] scaled at 9825 does not stand: the top mode of the read in this content is no one
+rotation across the region within the roundings of a step, or its centre's level never returns
+(the generator is Rule3)" (scaled at 8050 at 17,000, 7914 at 18,000, 8208 at 19,000, 10185 at
+25,000 and 10571 at 30,000). So on the open 11-cube from the one-Node seed, under the
+form-sourced start, the generator reaches the compact branch at no count: the wide branch up to
+15,000 and a refusal by name from 16,000 on; the threshold the law's line puts at about 13,000
+quanta in the engine's count is not found by the generator on this board, a finding by name (the
+line's table of compact bodies from 9,000 to 20,000 was read under the count-sourced start; the
+11-cube's faces at 5 Links pull the well; whether the compact fixed point stands under the write's
+factors at every count is the mathematician's hand, the advisor's (1)(c), #1563 comment
+5958624379, and no generator's reading).
+
+1. **The window.** The reading by name: at 14,000 the generator lays the wide branch (691 Nodes,
+   435 at the centre, 0.031 of the body at the centre Node and 0.155 over the seven Nodes against
+   the criterion's three quarters; the rms radius 2.53 Links against under one; the content at the
+   centre 885 against the edge 2,339 and the line's 3,025 to 3,798), and from 16,000 on it lays
+   no body at all. Lines 2, 3 and 5 are read on this wide body and name it.
+2. **The rest rotation.** 2 cos omega_b at the centre, the exact fraction 5419 / 3904 = 1.3881,
+   omega_b = 0.804 (the period 7.8 intervals) at the start; 1782 / 1289 = 1.3825, omega_b =
+   0.808 (7.8) after 400 intervals, the rotation moving down by 0.0056. Against the blind's
+   bracket [0.539, 0.636] (2 cos omega_b 1.609 to 1.716, the straight line's 0.622): MISS, the
+   reading a wide body's rotation near the band's top; the one-Node line is not read on this
+   body.
+3. **The tail.** The record's levels along +x from the centre at the start: 3904, 3294, 2147,
+   1205, 605, 244 at 0 to 5 Links (the three axes equal, the face at 5 reading 0 beyond), the
+   ratios 0.844, 0.652, 0.561, 0.502, 0.403, kappa per Link 0.17, 0.43, 0.58, 0.69, 0.91: at one
+   Link 0.17 against the blind's 1.3 to 1.9 (e^(-kappa) 0.844 against 0.27 to 0.15): MISS; no
+   steep tail, the fall the body's own width (the rms 2.5 Links) and the faces' pull; the chain
+   formula at the read rotation, acosh((9 / 2) cos omega_b - 2) = 0.49 (e^(-kappa) = 0.61),
+   against the read 0.43 to 0.69 at 2 to 4 Links. After 400 intervals 2578, 2180, 1444, 802,
+   419, 177 along +x (y and z within 2 percent of x to 4 Links, 152 to 177 at 5), the ratios
+   0.846, 0.662, 0.555, 0.522, 0.422.
+4. **The drift.** The books' drift of the matter share +31.6 quanta at tick 400 (the runner) and
+   +26.9 at tick 401 (the reader), 0.19 to 0.23 percent of the laid 13,999 (the books' share
+   14,097 and 14,092 quanta; the Nodes' rounded counts 13,999 to 14,012 over the region); the
+   open faces' layer reports 12.5 quanta of matter in all over 400 intervals (400 `click` lines,
+   0.09 percent); the centroid at the laid Node [5, 5, 5] exactly at both ends; the centre's
+   count 435 to 420, the rms radius 2.53 to 2.56 Links (+1.1 percent); the binding holder's rest
+   along +x 884, 780, 567, 366, 212, 95 at the start and 918, 794, 579, 382, 216, 70 at the end
+   (y and z within 15 levels of x); gravity's row at the law's weight 1,000 from 1, 1, 1, 0, 0, 0
+   at the start to -32, 6, 5, -4, 8, 4 along +x at the end (the breathing body's form written as
+   waves, -32 at the centre on every axis); no frozen Node. Against "0 to the rounding": the count
+   is kept to 0.2 percent and 12.5 quanta leave, but the record is not at rest (the rotation
+   drifting by -0.0056, the massless row carrying waves): the finding of the two readings before,
+   by name.
+5. **The form.** At the centre Node D = now^2 - next x before = 3904^2 - 2710 x 2709 =
+   7,899,826 from the three levels [2709, 3904, 2710], the well there c = D div T = 241 quanta;
+   the loaded b, the largest whose square is at most 241 x 32,768 x 3904 div 2389, is 3,592,
+   against B cos(omega_b / 2) = 3904 x cos(0.402) = 3,593 (B = now at the lay's phase, before =
+   next): 0.03 percent, the one-Node form's identity at the Node PASS to one percent (3,546
+   against 3,553, 0.2 percent, after 400 intervals from the levels [3862, 2578, -298], B =
+   3,864); but the well at the Node 241 quanta against the blind's 1,494 to 1,685: MISS by the
+   branch laid. The well over the board 10,005 quanta at the start and 10,034 at the end, over the
+   Nodes' 13,999: 0.715 (0.71 over the books' share), against the compact body's about 0.15 (the
+   bracket 0.085 to 0.293): MISS by the branch laid, the wide body's well over its count between
+   the two branches' numbers as in the two readings before (0.82 on the 25-cube, 0.85 at 8,000).
+
+Agreement with the blind: line 1 the reading by name (the wide branch at 14,000, and no body at all
+from 16,000 on); lines 2, 3 and 5 MISS by the branch laid (the form's identity at the Node PASS to
+one percent, the well's size MISS); line 4 the count kept to 0.2 percent, the record not static
+(a finding). No compact body is laid at any count the generator accepts on the 11-cube on this
+engine, so the law's line's threshold of about 13,000 is not reached by the generator there, a
+finding by name, and the compact pixel's defined numbers stay unread; the count is raised once, to
+20,000, below.
+
 ## The fourth reading, the count raised once (20,000, the line's own table point)
 
 The lay of `pixel_compact_14000.json` reached the wide branch again from the one-Node seed on the
@@ -349,3 +437,20 @@ and never edited after; the reading is appended below it.
 
 A refusal of the lay by name is recorded verbatim and the reading stops at that line; a lay on the
 wide branch is the reading, stated by name, the world run and read as laid, and no count follows.
+
+### The reading (the refusal, the branch pixel-compact-two on the engine of main 337eac09)
+
+The lay, `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact_20000.json`, 4 s
+on one core: one round (the content at the centre 2,332 to 1,528, the count at the centre 760 to
+3,162 of 15,000, the clock [13601, 8583] = 1.5846; the generator's line, GameBoard) and then the
+refusal by name, verbatim: "ValueError: the record of the body of 20000 quanta about the Node
+[5, 5, 5] scaled at 8209 does not stand: the top mode of the read in this content is no one
+rotation across the region within the roundings of a step, or its centre's level never returns
+(the generator is Rule3)". A refusal is the reading: the world stands declared with one Node and no
+mode file (the loader refuses it at load), nothing of it is run, lines 1 to 5 are not read at
+20,000, and no count follows. The same refusal at 16,000 to 19,000, 25,000 and 30,000 is the
+generator's bracket in the third reading above: on the open 11-cube from the one-Node seed the
+generator lays the wide branch up to 15,000 and no body from 16,000 on.
+
+Agreement with the blind: the lay refused by name, the compact pixel's lines 2, 3 and 5 unread at
+20,000 as at 14,000.
