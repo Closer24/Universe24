@@ -1,0 +1,127 @@
+# The atom's gate world: the blind and the reading
+
+The body round, part 2 (the owner's words of 2026-10-02, 17:38 to 17:55; HIGHLIGHTS.md): the
+atom's gate world of the mathematician's 163 (#1572 comment 5954802934) with the advisor's second
+hand (#1563 comments 5955171021 (2) and 5956456263), on the lay of part 1 (the integer fixed
+point under the body's own paces, `lay` of the kind `fixed_point`) and the law's lines as they
+stand on main (ALGEBRA.md, **The atom is a bound body of the holder of the sign**, **The law's
+alpha is a coefficient of the file**, **A body and its light keep one energy**). The blind below
+was written before any run and is never edited after; `expectation.json` beside it carries the
+same rows from `design.json`, byte for byte the builder's. Every number is a GameBoard reading
+labelled so where it is read; a reading that misses the blind is a finding, written as such and
+never adjusted. The reading section says what ran and what did not.
+
+## The universe, derived from the law's lines (design.json, `numbers`)
+
+The rule's rows with the charge under the rotation at the write weight k_w = 1036 and the level
+weight E_s = 1, and two plane families of matter's pair [4000, 6000], `electron` and `nucleus`,
+each reading gravity, the binding holder and the charge at the weight 1 (k_r = 1):
+
+- alpha_law = (3 sqrt 3 / 8 pi) k_w k_r / (Gamma E_s) = 0.20675 x 1036 / 6000 = 1 / 28.01;
+- the energy line E_s T num = k_w Gamma den holds exactly at T = 9,324,000 (1 x 9324000 x 4000 =
+  1036 x 6000 x 6000; the loader's gate `derived.energy_line`); at alpha_law = 1 / 28 the energy
+  line fixes T = 9.33 x 10^6 / k_r, no power of two, and T is a file's integer;
+- m* = 3 tan omega_0 = 3.354, a_0 = sqrt 3 / (m* alpha_law) = 14.47 Links, the free rest rotation
+  omega_0 = 0.8411 (2 cos omega_0 = 4 / 3), the 1s binding m* (alpha_law c)^2 / 2 = 7.12 x 10^-4
+  rad per interval and the 2s a quarter of it, 1.78 x 10^-4;
+- the sign row of one nucleus quantum: the source s = k_w / (2 E_s) = 518 per interval, the level
+  3 s / (4 pi r), 123.7 at 1 Link, 8.8 at 14 and 4.4 at 28, the angle k_r L / Gamma reproducing
+  alpha_law c / r at every r; one level is 1 / Gamma = 1.67 x 10^-4 rad, so the 1s binding is 4.3
+  levels of the row and the row's staircase bounds the bindings' ratio at about 6 percent beside
+  the walk;
+- the amplitude bound at this T is A = 4,963 (the loader's); the electron body of 30,000 quanta
+  has c_i = 3.2 at the centre, A = 4,440 and the walk sigma sqrt(n) / A = 1.1 x 10^-3 over 10^3
+  intervals, the budget's least T 2^22 at the tolerance [1, 100]; the count-1 electron has
+  c_i = 1.05 x 10^-4, A = 26, the walk 19 percent and the least T 2^24 at [1, 100], above the
+  energy line's T.
+
+## The blind (163 with the advisor's second hand), before any run
+
+1. **The bindings.** The 1s rotation read locally in the summed form, cos omega_read =
+   SUM z_t (z_(t + 1) + z_(t - 1)) / (2 SUM z_t^2) over the body's Nodes averaged over the window,
+   lies below the free record's omega_0 by m* (alpha_law c)^2 / 2 = 7.12 x 10^-4 rad per interval
+   to the band's order, the 2s by a quarter of it; the ratio of the two bindings 4 : 1 within the
+   budget's tolerance (1 to 4 percent at T = 2^15, four times tighter at 2^19; below 10^-3 for the
+   body of 30,000 quanta at this universe's T); the row's staircase bounds the ratio's resolution
+   at about 6 percent (fence: GameBoard).
+2. **The nucleus.** One Node, one quantum of the nucleus family, a declaration by name: the
+   world's holders give its six Link factors G^2 = 256 and not 0 (the tension lines start at 0 and
+   no holder's level reaches Gamma), and its Links' reads R = 2 num p_i^2 Q are not 0 at num =
+   4000, so the one-Node record is no exact rotating pixel and spreads at the band's group velocity
+   from the first interval; its reading is a declaration's: the share at the Node falling, the
+   rotation at the Node no one number. The exact rotating pixel (a_(t + 1) + a_(t - 1) =
+   2 cos omega a_t to the bit) needs a pair of num 0 (R = 0, 2 cos omega = 0, the period 4), which
+   the energy line refuses beside the electron's pair (the plane families of one world share
+   num / den), or the compact body of line 2 in the nuclear holder's well, not built (fence:
+   GameBoard).
+3. **The 48 images.** The electron's symmetric lay invariant to the bit under the cube's 48
+   images about the nucleus's Node at every interval, the odd lines of the charge signed with the
+   axis and their remainders complemented where signed (166's theorem, read by
+   `tools/body_standing.py`'s read (4) as the GameBoard diagnostic in place of the one-domain
+   step, which is not built) (fence: GameBoard).
+4. **The control.** The world with the nucleus a free record of count 1 reading the electron's
+   row: the 1s mode 6.5 percent above row 1's (163's gate (b), 154). In this engine the two are one
+   world, since a nucleus that sources the sign row reads it by the hold's reciprocity and the held
+   nucleus it controls is line 2's, not built; the row reads 0 by construction until then (fence:
+   GameBoard).
+
+What the short run does not test (163 (2), 165): the body's standing over long runs (the budget's
+1 / sqrt(T) law in the standing world, `examples/events/standing_body/`) and the line as a click.
+
+**A known cause outside the blind** (the advisor, #1563 comment 5958624379, carried by the Boss):
+the start's `rest` (features/start, `settled`) stops at the first state the act returns unchanged,
+so on the board's lowest mode it misses its own static line by up to one fine unit over (1 - rho),
+rho = (num / den) cos(pi / (n + 1)) on an open n-cube, 9 levels at the massless row's unit on the
+25-cube and 3.6 at the binding row's; a rest short of the fixed point rings at that mode's period,
+2 pi / omega_min. The holders' rests under the nucleus and the electron may be short by this miss
+on the 31-cube. The summed rotation read is insensitive to a uniform offset of a holder's rest to
+first order only as a difference: a uniform offset delta c of the content shifts cos omega by
+(1 - num / den) (p_0 / Gamma)^2 2 delta c / Gamma, about 10^-3 per 9 levels at the massless row,
+comparable to the 1s binding in cos (5.3 x 10^-4), so the bindings must be read as differences
+against a reference record in the same world (a free electron packet far from the nucleus, the
+control's), to which the miss is common; what remains sensitive is the miss's part that varies
+across the body, the lowest mode's profile cos(pi x / (n + 1)) over a_0 = 14 Links on the 31-cube,
+about a tenth of the miss, 10^-4 in cos omega, a fifth of the 1s binding. The stopping rule is not
+changed in this round (a round of its own: a stopping rule on the residual).
+
+## The reading
+
+**Not laid, not run, by name.** The electron's 1s mode is the standing record under the sign
+holder's angle; the generator (`tools/pixel_mode.py`) lays the standing record in the content
+holders' paces alone (a holder under the rotation enters no pace, `rows_read`), so the turned
+top mode, Rule3's read with the arrivals turned by the Link angles and the Node by the time
+angle, is not its act in this round and was not built in the time given (the owner's word of
+19:28, "whatever takes a lot of time, cut it"). The worlds `hydrogen_1s.json` and
+`hydrogen_2s.json` stand declared without their mode files, and the loader refuses them at load
+by name (the mode file beside the world, absent, "must be an object"), as
+`examples/events/matter_and_binding/pair.json` is shipped. The 2s mode is the second standing
+record under the angle, with one radial node, which the generator's power iteration (the top
+mode) does not reach without a deflation; not built.
+
+**The finding of the design, by name, from the law's lines together.** At alpha_law = 1 / 28 the
+energy line fixes T = 9.33 x 10^6 / k_r; at the law's count 1 the electron's amplitude at that T
+is 26 levels and its rounding walk 19 percent over 10^3 intervals, against the 1 to 4 percent the
+gate asks and the budget's least T of 2^24; a body of many electron quanta fits the budget but
+breaks the count-1 rule as the committed charged worlds do, its tail at one level reaches 121
+Links (a 243-cube, beyond the engine's hour), and its Wronskian turns the nucleus's record by an
+angle no atom has. The sign row's integer staircase, one level = 1 / Gamma rad against a 1s binding
+of 4.3 levels, bounds the bindings' ratio at about 6 percent beside the walk. So no admissible
+integer world of the engine reads 163's gate at alpha_law = 1 / 28 under the energy line, the
+budget, the amplitude bound and the count-1 rule together; the gate's numbers stand here for the
+round that builds the turned top mode and chooses, by the owner's word, which of the four lines
+yields (a larger alpha_law with a_0 of a few Links, where the band's order is no longer small;
+k_r above 1 with a coarser angle; a many-quanta electron body; or a longer run on a larger
+board).
+
+**What ran in this round for row 3.** The 48-images read (`tools/body_standing.py`, read (4)) ran
+on the standing world's neutral body (`examples/events/standing_body/standing_15.json`, the 25-cube,
+10,000 quanta of the matter family at the integer fixed point): every line of every family kept
+its 48 images to the bit, levels, remainders and write remainders, through the interval 515, and
+departed at 516 on gravity's row under the axes permutation (0, 2, 1) (y and z exchanged), with
+and without reflections: the tensions' lines, whose one write is scaled per proper volume by the
+three axes' paces divided one at a time in the order x, y, z (ENGINE.md section 3, act 5,
+`paces.write_factor`), so that the rounding of the scaled booking is not a symmetric function of
+the axes once the Links' paces differ by axis; 166's proof takes every act as a symmetric function
+of the Node's and its Ports' integers, and this booking is not. A finding by name for the engine's
+register and for the one-domain step, which would be exact only with the write's factor booked
+symmetrically in the axes; nothing patched.
