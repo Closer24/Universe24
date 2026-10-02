@@ -1,4 +1,4 @@
-"""The keys of the world's files as the loader reads them: an object with its allowed and required keys, an integer within its bounds, a Node inside the shape and on the board, a range of Nodes along an axis, and the document a world names by a repository path; every defect refused by name, no default written (ALGEBRA.md #a-familys-declaration)."""
+"""The keys of the world's files as the loader reads them: an object with its allowed and required keys, an integer within its bounds, a Node inside the shape and on the board, a range of Nodes along an axis, a family's declared reads by name and weight, and the document a world names by a repository path; every defect refused by name, no default written (ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
@@ -59,3 +59,16 @@ def document_at(files: Mapping[str, object], path: object, label: str) -> object
     if not isinstance(path, str) or path not in files:
         raise ValueError(f"{label} names {path!r}, and no file stands at that repository path")
     return files[path]
+
+
+def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:
+    """A family's declared reads (the universe file's key `reads`, `label` the row's): an object naming each holder it reads with the integer weight it reads with (and, by the hold's reciprocity, sources it with), a weight of 0 refused by name (a holder read at 0 is left out), an empty object where it reads none; the names resolved against the held rows once every row is read (`derived.read_of`)."""
+    if not isinstance(value, dict):
+        raise ValueError(f"{label} must be an object, each holder's name to the weight it is read with")
+    found = []
+    for name, weight in value.items():
+        at = f"{label}[{name!r}]"
+        if integer(weight, at, -MAX_WORK_INT) == 0:
+            raise ValueError(f"{at} is 0: a holder read at the weight 0 is no read, leave it out")
+        found.append((name, int(weight)))
+    return tuple(found)

@@ -14,15 +14,16 @@ EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
 CHAIN, QUANTA = 24, 50  # the shortest chain (x open) holding the body of 50 and the end detectors apart
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
+CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
 
 
-def real_row(name: str, pair: tuple[int, int], lines: int, level_weight: int | None) -> Row:
-    """A row of real lines as the loader reads it (loader.derived.Row), one part, no plane, sourced by the form where it is held, acting on the pace."""
-    return Row(name, pair, lines, 1, False, False, False, level_weight, 0)
+def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
+    """Rows of real lines as the loader reads them (loader.derived.Row), each (name, pair, lines, level weight): one part, no plane, sourced by the form where it is held at the write weight 1, acting on the pace, and every row reading every held row among them at the weight 1 (the tests' declaration)."""
+    held = tuple((name, 1) for name, _pair, _lines, weight in rows if weight is not None)
+    return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
 
 
-def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
-    """The module at `path` loaded under `name` and registered in sys.modules (a tool or a generator)."""
+def load_file(name: str, path: Path):
     spec = importlib.util.spec_from_file_location(name, path)
     assert spec is not None and spec.loader is not None
     sys.modules[name] = module = importlib.util.module_from_spec(spec)
@@ -30,8 +31,7 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-def refused(match: str, call, *args, **keys):  # type: ignore[no-untyped-def]
-    """The call on its arguments refused by name: a ValueError whose message matches `match`."""
+def refused(match: str, call, *args, **keys):
     with pytest.raises(ValueError, match=match) as refusal:
         call(*args, **keys)
     return refusal.value
@@ -43,12 +43,13 @@ RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the 
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
-    """The tests' universe copied beside a world as u.json (the families `drop` names left out, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`) with the engine's start file as e.json."""
+    """The tests' universe copied beside a world as u.json (the families `drop` names left out, of every family's reads too, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`) with the engine's start file as e.json."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"] = [family for family in universe["families"] if family["name"] not in drop]
-    universe["families"] += [dict(CHARGED)] if charged else []
+    universe["families"] += [json.loads(json.dumps(CHARGED))] if charged else []
     for family in universe["families"]:
         family["pair"] = pairs.get(family["name"], family["pair"])
+        family["reads"] = {name: w for name, w in family["reads"].items() if name not in drop}
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
@@ -79,7 +80,6 @@ PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0,
 
 
 def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
-    """The slit world, a wall across x with one gap at y = 4 on a board of 24 x 9 x 1 (z folded), the packet of light laid by the generator `tool`, in the tests' universe; `changes` replace the world's keys."""
     universe_beside(folder)
     path = folder / f"{name}.json"
     path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")

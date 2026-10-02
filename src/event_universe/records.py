@@ -140,7 +140,7 @@ def write_sources(
                         + weight_of(held, families[source[0]]) * write.factors.get(source[0], 0) * scaled
                     )
             found.append(total)
-    return found
+    return [family.write * numerator for numerator in found]  # the row's write weight k_w
 
 
 def largest(record: Record) -> int:

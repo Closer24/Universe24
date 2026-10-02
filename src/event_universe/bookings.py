@@ -87,5 +87,5 @@ def booked_sources(
         for reader, record in row_sources(families, index, row):
             source = source + weight_of(index, families[reader]) * bookings[(reader, record)]
         reads = tuple((content.index(r.family), r.weight) for r in family.reads if r.family in content)
-        found.append((source, family.pair, walls[(index, row)], family.rest, reads))
+        found.append((family.write * source, family.pair, walls[(index, row)], family.rest, reads))
     return found[: len(holders)], found[len(holders) :]
