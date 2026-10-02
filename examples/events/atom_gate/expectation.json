@@ -1,0 +1,95 @@
+{
+ "verdict": "GAMEBOARD",
+ "label": "GAMEBOARD",
+ "comment": "The atom's gate world of the body round, part 2 (the mathematician's 163, #1572 comment 5954802934, with the advisor's second hand, #1563 comments 5955171021 (2) and 5956456263; ALGEBRA.md, The atom is a bound body of the holder of the sign and The law's alpha is a coefficient of the file; HIGHLIGHTS.md, the owner's words of 2026-10-02, 17:38 to 17:55), declared with its blind before any run and NOT laid and NOT run in this round, by name: the electron's 1s mode is the standing record under the sign holder's angle, which the generator does not lay (tools/pixel_mode.py lays the standing record in the content holders' paces alone, the holder under the rotation entering no pace; the turned top mode is not built), so the worlds stand declared without their mode files and the loader refuses them at load, as examples/events/matter_and_binding/pair.json is shipped. The universe (atom.json): the rule's rows with the charge under the rotation at the write weight k_w = 1036 and the level weight E_s = 1, two plane families of matter's pair, `electron` and `nucleus`, each reading gravity, the binding holder and the charge at the weight 1 (k_r = 1), so that alpha_law = (3 sqrt 3 / 8 pi) k_w k_r / (Gamma E_s) = 0.20675 x 1036 / 6000 = 1 / 28.01 and the energy line E_s T num = k_w Gamma den holds exactly at T = 9,324,000 (1 x 9324000 x 4000 = 1036 x 6000 x 6000 = 3.7296 x 10^10; the loader's gate, loader/derived.py energy_line): at alpha_law = 1 / 28 the energy line fixes T = 9.33 x 10^6 / k_r, no power of two, and T is a file's integer. From them, the law's lines: a_0 = sqrt 3 / (m* alpha_law) = 14.47 Links with m* = 3 tan omega_0 = 3.354, the 1s binding m* (alpha_law c)^2 / 2 = 7.12 x 10^-4 rad per interval below the free rest rotation omega_0 = 0.8411 (2 cos omega_0 = 4 / 3), the 2s a quarter of it, 1.78 x 10^-4; the sign row's level of one nucleus quantum, 3 s / (4 pi r) with s = k_w / (2 E_s) = 518 per interval, 123.7 levels at 1 Link, 8.8 at 14 and 4.4 at 28, the angle k_r L / Gamma reproducing alpha_law c / r at every r (2.06 x 10^-2 rad at 1 Link, 1.47 x 10^-3 at 14), one level 1 / Gamma = 1.67 x 10^-4 rad, so the 1s binding is 4.3 levels of the row. The electron's count: the law's count 1 (one quantum over N_eff = pi a_0^3 = 9,510 Nodes, c_i = 1.05 x 10^-4 at the centre) gives the amplitude A = sqrt(T c_i / (2 sin omega_s)) = 26 levels, its tail at one level at r = a_0 ln A = 47 Links (a 95-cube) and the walk sigma sqrt(n) / A = 19 percent over 10^3 intervals against the 1 to 4 percent asked, the budget's least T 2^20 at [1, 25] and 2^24 at [1, 100] against the energy line's 9.3 x 10^6: the count-1 atom at alpha_law = 1 / 28 is not representable under the law's own lines together (the energy line fixing T, the budget asking a larger one), a finding by name; a body of 30,000 electron quanta in the 1s mode (c_i = 3.2 at the centre, A = 4,440 under this universe's bound A = 4,963, the loader's at T = 9.3 x 10^6, the walk 1.1 x 10^-3) fits the budget (the least T 2^22 at [1, 100]) but its tail at one level reaches 121 Links (a 243-cube, beyond the engine's hour) and its Wronskian, 3 x 10^4 quanta's, turns the nucleus's record by an angle no atom has, the count-1 rule broken by 3 x 10^4 as the committed charged worlds break it. The worlds are declared on the 31-cube (the Boss's estimate; the 1s tail cut at 15 Links = 1.04 a_0, where e^(-r / a_0) = 0.35 of the peak, so the open faces hold the mode and no 1s mode of the law stands on it; the least odd board holding the tail at one level is 95^3 at the count 1 and 243^3 at 30,000), with the electron body of 30,000 quanta and the lay `fixed_point` at the tolerance [1, 100]. THE NUCLEUS: one Node, one quantum of the nucleus family (matter's pair as a plane), a DECLARATION by name: the world's holders give its six Link factors G^2 = 256 and not 0 (the tension lines start at 0 and no holder's level reaches Gamma), and its Links' reads R = 2 num p_i^2 Q are not 0 (num = 4000), so the one-Node record is no exact rotating pixel and spreads at the band's group velocity from the first interval; the exact rotating pixel needs a pair of num 0 (R = 0, 2 cos omega = 0, the period 4, exact to the bit), which the energy line refuses beside the electron's pair (E_s T num = k_w Gamma den fails at num = 0; the plane families of one world share num / den), or the compact body of line 2 in the nuclear holder's well, not built. THE CONTROL (163's gate (b), the nucleus a free record of count 1 reading the electron's row) is this same declaration: a nucleus that sources the sign row reads it, by the hold's reciprocity, and the held nucleus it controls is line 2's, not built; so the two readings of the blind's row (4) are one world here.",
+ "family": "electron",
+ "nucleus": {
+  "family": "nucleus",
+  "quanta": 1,
+  "sense": -1,
+  "declaration": "one Node, one quantum, its Link factors G^2 under the holders' levels and its pair's num 4000: no exact rotating pixel, a spreading record"
+ },
+ "window": [
+  1,
+  1000
+ ],
+ "worlds": {
+  "hydrogen_1s": "hydrogen_1s",
+  "hydrogen_2s": "hydrogen_2s"
+ },
+ "numbers": {
+  "alpha_law": [
+   1,
+   28
+  ],
+  "alpha_law_computed": 0.0356985,
+  "k_w": 1036,
+  "k_r": 1,
+  "E_s": 1,
+  "T": 9324000,
+  "energy_line": "E_s T num = k_w Gamma den: 1 x 9324000 x 4000 = 1036 x 6000 x 6000",
+  "m_star": 3.3541,
+  "a_0_links": 14.47,
+  "omega_0": 0.84107,
+  "two_cos_omega_0": [
+   4,
+   3
+  ],
+  "binding_1s_rad_per_interval": 0.000712,
+  "binding_2s_rad_per_interval": 0.000178,
+  "binding_1s_in_levels_of_the_row": 4.27,
+  "angle_per_level": 0.0001667,
+  "sign_row_levels_at_links": {
+   "1": 123.7,
+   "2": 61.8,
+   "7": 17.7,
+   "14": 8.8,
+   "28": 4.4
+  },
+  "control_above_1s": 0.065,
+  "amplitude_bound": 4963,
+  "electron_body": {
+   "quanta": 30000,
+   "c_i_at_centre": 3.15,
+   "amplitude": 4440,
+   "tail_at_one_level_links": 121,
+   "walk_over_1000_intervals": 0.0011
+  },
+  "count_1_electron": {
+   "c_i_at_centre": 0.000105,
+   "amplitude": 26,
+   "tail_at_one_level_links": 47,
+   "walk_over_1000_intervals": 0.19,
+   "least_T_at_1_over_25": 1048576,
+   "least_T_at_1_over_100": 16777216
+  }
+ },
+ "reading": "per world (tools/body_standing.py, GameBoard), when a lay exists: (3) the rotation in the summed form over the body's Nodes, cos omega_read = SUM z_t (z_(t + 1) + z_(t - 1)) / (2 SUM z_t^2), averaged over the window (the accumulated ratio), the 1s and the 2s each against omega_0, the two bindings' ratio; (4) the cube's 48 images kept to the bit at every interval, the odd lines signed and their remainders complemented; the nucleus's record read by tools/body_rest.py at its Node, its three levels' ratio and its share's spread, a declaration's reading; the share's deviation and the centroid's drift as the standing world has them.",
+ "blind": {
+  "bindings": {
+   "reading": "the 1s and the 2s rotation read locally in the summed form, averaged over the window, against the free record's omega_0",
+   "blind": "the 1s below omega_0 by m* (alpha_law c)^2 / 2 = 7.12 x 10^-4 rad per interval to the band's order, the 2s by a quarter of it, 1.78 x 10^-4; the ratio of the two bindings 4 : 1 within the budget's tolerance, 1 to 4 percent at T = 2^15 and four times tighter at 2^19 (at this universe's T = 9.3 x 10^6 the walk's share is below 10^-3 for the body of 30,000 quanta and 19 percent for the count 1); the row's level staircase, one level 1.67 x 10^-4 rad against the 1s binding of 4.3 levels, bounds the ratio's resolution at about 6 percent beside the walk",
+   "status": "163 (1) and ALGEBRA.md, The atom is a bound body of the holder of the sign, step (4): Rule3's slow limit Schroedinger's with m* = 3 tan omega_0, the 1s binding m* (Z alpha)^2 / 6 per interval; a_0 = sqrt 3 / (m* Z alpha) Links; not run: the lay not built",
+   "fence": "GameBoard"
+  },
+  "nucleus": {
+   "reading": "the nucleus's record at its Node over the run, tools/body_rest.py",
+   "blind": "a declaration's reading: the one-Node record of matter's pair spreads at the band's group velocity, num p_i^2 / (3 den Gamma^2) sin k / sin omega per interval, its share at the Node falling from the first interval and its rotation read at the Node no one number; the exact rotating pixel (the rotation unchanged over the run to the bit, a_(t + 1) + a_(t - 1) = 2 cos omega a_t on an exact band) needs a pair of num 0 or the compact body of line 2, neither this world's",
+   "status": "163 (3) with the advisor's condition, 5955171021 (2) and 5956456263: exact only where the six Link factors are 0 by the world; here a declaration by name",
+   "fence": "GameBoard"
+  },
+  "images": {
+   "reading": "tools/body_standing.py's read (4): every line of every family against its 48 images about the centre Node at every interval",
+   "blind": "the electron's symmetric lay invariant to the bit under the 48 images at every interval, the levels signed on the odd lines and the remainders complemented where signed (166's theorem, the GameBoard diagnostic in place of the one-domain step, which is not built); the nucleus at the centre Node fixed by every image",
+   "status": "166 with the advisor's second hand, 5955658812 (C); read on the standing world's neutral body in this round (ENGINE.md section 5), not on the atom's",
+   "fence": "GameBoard"
+  },
+  "control": {
+   "reading": "the 1s rotation of the world with the nucleus a free record of count 1 reading the electron's row, against the held nucleus's",
+   "blind": "6.5 percent above the held nucleus's binding (163's gate (b), 154); in this engine the two are one world (the declaration above), so the row reads 0 by construction and tests nothing until line 2's compact nucleus is built",
+   "status": "163 (b); not run",
+   "fence": "GameBoard"
+  }
+ },
+ "not_tested_by_the_short_run": "the body's standing over long runs (the budget's 1 / sqrt(T) law in the standing world) and the line as a click (the giving or the absorption through a window), 163 (2) and 165"
+}
