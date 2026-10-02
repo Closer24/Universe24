@@ -142,3 +142,101 @@ percent on the books' share; line 3's outer kappa PASS against the chain formula
 rotation; line 7 PASS; lines 1, 2, 4 and 5 are read on a wide bound body where the blind
 describes a one-Node pixel (the count's drift 0.6 percent with a 6 percent spread of the record,
 a finding).
+
+## The second reading, as defined (the advisor's verdict, #1563 comment 5956767030)
+
+The advisor's verdict on the reading above (2026-10-02, 19:30): lines 1 to 5 were read on
+another body than the blind's, the world's 10,000 quanta being 0.53 Gamma in his unit, above the
+compact window's edge Gamma div 2, so the generator laid the wide top mode on the 25-cube; the
+defined experiment is the pixel world on the open 11-cube from the one-Node seed at a count inside
+the window, 8,000 quanta (0.43 Gamma in his unit), where lines 2, 3 and 5 are testable: not a new
+experiment, the one declared. The world is `pixel_compact.json`, the design's entry
+`pixel_compact` (`design.json`: the open 11-cube, the centre [5, 5, 5], 8,000 quanta, 400
+intervals), the builder writing the one-Node declaration and `expectation.json` anew with the
+blind entry `blind.pixel_compact`, and the generator (`tools/pixel_mode.py --input`) laying the
+body from that seed; the reader `tools/body_rest.py --reach 5` (the faces at 5 Links from the
+centre), every number a GameBoard reading and no click. This section's blind is written before
+the lay and the run of this world and never edited after; the reading is appended below it.
+
+### The blind (the advisor's numbers, comments 5928483084 and 5956767030)
+
+1. **The window.** 8,000 quanta in the engine's count, 0.43 Gamma in the advisor's unit, inside
+   [0.2255 Gamma, Gamma div 2): the body the one-Node compact pixel, its count at the centre Node
+   with a tail of a few Links.
+2. **The rest rotation.** 2 cos omega_b = 2 - 2 (den - num) (p_0 / Gamma)^2 at its own well:
+   omega_b = 0.464 at 0.451 Gamma (2 cos omega_b = 1.789) and 0.841 at the edge; the body at
+   0.43 Gamma between the two, nearer 0.464.
+3. **The tail.** kappa = acosh((9 / 2) cos omega_b - 2) per Link: 1.27 at 0.417 Gamma under the
+   Node pace (e^(-kappa) = 0.281 per Link along an axis), 0.45 at 0.25 Gamma.
+4. **The drift.** 0 to the rounding, the centroid where it was laid.
+5. **The form.** D = b^2 (2 - 2 cos omega_b) at the centre Node, b the largest whose square is at
+   most c T den div (2 den - a) for the clock pair [a, den]; the well over the count 0.70 at the
+   edge to 0.39 at the horizon.
+
+A refusal of the lay by name is recorded verbatim; a lay on the wide branch is a finding by name
+and the world is run and read as laid.
+
+### The reading (the branch families-two on the engine of the reading above)
+
+Every number below is a GameBoard reading (`tools/body_rest.py --reach 5`, the books, the
+`click` lines of the open faces' layer); the world declares no detector. The lay:
+`tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact.json`, 20 s on one core,
+the generator from the one-Node seed of 8,000 quanta at [5, 5, 5] on the open 11-cube: twelve
+rounds, the content at the centre 1,111 to 453, the count at the centre 304 to 101, the clock
+[5839, 4154] = 1.4056 to [2836, 2112] = 1.3428 (the generator's own lines, GAMEBOARD), the lay
+check "stepped once in its start's content the rotation (next + before) / now reads 1.3430 (the
+median over 823 Nodes), at the centre 1.3428, the largest departure 1.25 of the rounding
+1 / |now|"; the mode file's clock [2836, 2112], 823 declared Nodes carrying 7,999 quanta, 101 at
+the centre Node and 83 at each of its six neighbours, the rms radius 3.10 Links. So the generator
+reaches the wide branch again from the one-Node seed at 8,000 on the 11-cube, a bound body of 823
+Nodes rotating 0.0095 above the band's top 1.3333, and no one-Node pixel: the finding by name for
+line 1, the law's own line naming its cause (ALGEBRA.md, **The compact pixel under the composed
+paces**: under the form-sourced start the compact branch's threshold moves from about 9,300 to
+about 13,000 quanta in the engine's count, the number the generator's to find; the 8,000 of the
+advisor's unit is 0.43 Gamma by the count's unit of the quadratic forms, and the engine's lay at
+8,000 is the wide branch). The run: `tools/run_inputs.py`, LAWFUL over the 400 intervals, 10 s,
+no frozen Node, the least Node pace 5,077 of 6,000 at the end (the content at the centre 453 at
+the lay); the reader stepped the same world 401 intervals.
+
+1. **The window.** MISS by the branch laid: at 8,000 quanta in the engine's count the generator
+   lays the wide branch on the 11-cube (823 Nodes, 101 at the centre), not the one-Node compact
+   pixel; lines 2, 3 and 5 are read on this wide body and name it.
+2. **The rest rotation.** 2 cos omega_b at the centre, the exact fraction 709 / 528 = 1.3428,
+   omega_b = 0.835 (the period 7.53 intervals) at the start; 2560 / 1917 = 1.3354, omega_b =
+   0.840 after 400 intervals, the rotation moving down by 0.0074 to the band's top. Against the
+   blind's 0.464 at 0.451 Gamma (2 cos omega_b = 1.789): MISS, the reading a cloud's rotation at
+   the band's top; the one-Node line is not read on this body.
+3. **The tail.** The record's levels along +x from the centre at the start: 2112, 1933, 1506,
+   1025, 607, 274 at 0 to 5 Links (the three axes equal, the face at 5 reading 0 beyond), the
+   ratios 0.915, 0.779, 0.681, 0.592, 0.451, kappa per Link 0.09, 0.25, 0.38, 0.52, 0.80: no
+   single kappa and no steep tail, against the blind's 1.27 (e^(-kappa) = 0.281): MISS; the
+   chain formula at the read rotation, acosh((9 / 2) cos omega_b - 2) = 0.206 (e^(-kappa) =
+   0.814), against the read 0.25 to 0.52 at 2 to 4 Links: the fall is the body's own width (the
+   rms 3.1 Links) and the faces' pull, steeper than the chain's. After 400 intervals 1917, 1715,
+   1332, 916, 523, 262, the ratios 0.895, 0.777, 0.688, 0.571, 0.501.
+4. **The drift.** The books' drift of the matter share +29.1 quanta at tick 400 (the runner) and
+   +32.8 at tick 401 (the reader), 0.36 to 0.41 percent of the Nodes' 8,023 at the start (the
+   books' share 8,063 at the start and 8,092 at the end; the Nodes' rounded counts 8,023 to
+   7,962 over the region); the open faces' layer reports 1.75 quanta of matter in all over 400
+   intervals (400 `click` lines); the centroid at the laid Node [5, 5, 5] exactly at both ends;
+   the centre's count 101 to 106, the rms radius 3.10 to 3.11 Links (+0.4 percent, the faces at 5
+   Links holding what spread by 6 percent on the 25-cube); the binding holder's rest along +x
+   452, 419, 334, 233, 142, 67 at the start and 430, 448, 330, 246, 154, 66 at the end; gravity's
+   row at the law's weight 1,000 from 0 at the start to -2, 8, 22, 16, -1, 4 at the end (the
+   breathing body's form written as waves); no frozen Node. Against "0 to the rounding": the count
+   is kept to 0.4 percent and 1.75 quanta leave, but the record is not at rest (the rotation
+   drifting by -0.0074, the massless row carrying waves): the finding of the 25-cube again, by
+   name.
+5. **The form.** The well, D = now^2 - next x before summed over the board and divided by T, 6,816
+   quanta at the start and 6,809 at the end, over the Nodes' 8,023: 0.85 (0.84 over the books'
+   share); the one-Node form b^2 (2 - 2 cos omega_b) with b = 2112 and 2 cos omega_b = 709 / 528
+   gives 2,931,000 over T = 89.5 quanta at the centre Node against the centre's count 101 (0.89).
+   Against the blind's 0.70 at the edge to 0.39 at the horizon: MISS by the branch laid, the wide
+   body's well over its count between the two branches' numbers as on the 25-cube (0.82 there).
+
+Agreement with the blind: lines 1, 2, 3 and 5 MISS by the branch laid, the generator reaching the
+wide branch and no compact pixel from the one-Node seed at 8,000 on the 11-cube on this engine;
+line 4 the count kept to 0.4 percent, the record not static (a finding). The defined numbers are
+not read on a compact pixel because none is laid at this count: the compact branch's threshold on
+this engine stands above 8,000 quanta (the law's line, about 13,000 under the form-sourced start,
+the number the generator's to find), and a lay above it on the 11-cube is the run proposed.

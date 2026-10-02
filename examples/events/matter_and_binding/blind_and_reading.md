@@ -82,3 +82,13 @@ reading:
 
 Agreement with the blind: line 1 consistent and unresolved (the faces within R); lines 2 and 3
 not read.
+
+## The second reading, as defined (the advisor's verdict, #1563 comment 5956767030)
+
+Line 1, the range, is read in world (ii)'s folder, `examples/events/matter_and_gravity/blind_and_reading.md`,
+**The second reading, as defined: the binding holder stepped alone**: the start iterates the
+binding holder with its own gap (the lines of features/start quoted there), the holder stepped
+alone 200 intervals with the source held rings and does not relax toward the screened profile,
+and the screening at the start is about a third of the law's line's within 4 Links and absent
+beyond: unread, not passed, as the advisor's verdict has it. Lines 2 and 3 stand as above (the
+pair not laid).

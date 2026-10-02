@@ -104,3 +104,126 @@ Agreement with the blind: the clock's line PASS (sign and size within the body's
 static rest MISS by the one-Node formula (the body wide, the write scaled), the two holders'
 ratio PASS; the rest not static at the weight 10 (gravity's row carries the breathing body's
 waves), a finding; the fall not read.
+
+## The second reading, as defined: the binding holder stepped alone (the advisor's problem 1, #1563 comment 5956767030)
+
+The advisor's verdict on the reading above (2026-10-02, 19:30), problem 1 by name: the binding
+holder's rest shows no screening. In `well.json` gravity (the weight 10) and the binding holder
+(the weight 1) stand in the ratio of their weights at every r read, 1.000, 0.994, 0.998, 1.014,
+1.000 at 0 to 4 Links and 1.1 +- 0.1 to 12 Links, the binding holder never below gravity's; by
+the law the binding row [2400, 2401] has the gap's range R = 20 (ALGEBRA.md, the binding holder's
+kernel), so its rest about a source of rms 3.6 to 3.9 Links lies below the massless row's by about
+e^(-r / R) folded over the source, resolvable against levels of 57 and 570 (the rounding 2
+percent); the reading's "not resolved within 4 Links, PASS at this resolution" is not right: the
+screening is resolvable and absent at the start. Over 100 intervals the far tail fell (15 to 9 at
+12 Links, 91 to 84 at 8) while the centre held, which is what a rest laid without the gap does as
+the holder's own step relaxes it (the gap's time 1 / omega_g = 35 intervals). The check, no patch:
+whether the start's rest (features/start, "the lay and the rest of 2 holders") iterates the
+binding holder with its own gap in Rule3's S or with the massless kernel; the test, one holder
+stepped alone 200 intervals from its laid rest with the source held, the drift of its profile
+read at 4, 8 and 12 Links against e^(-r / 20). Until then (ii)'s line 7 and (iii)'s line 1 are
+unread, not passed. This section's blind is written before the test and never edited after; the
+reading is appended below it.
+
+### The blind (the advisor's numbers, comment 5956767030)
+
+1. **The screened rest.** The binding holder's rest about the laid body lies below the massless
+   row's (gravity's row times 10, the weights' ratio) by e^(-r / 20) folded over the source:
+   about 0.85 at the centre and 0.55 at 12 Links.
+2. **The holder stepped alone.** One holder stepped alone 200 intervals from its laid rest with
+   the source held (the body's record kept as laid, every other row kept at its rest, the row's
+   own step by Rule3 and the one write from the lay's bookings each interval): a rest laid with
+   the row's own gap is the step's fixed point and holds within the rounding walk; a rest laid
+   with the massless kernel drifts toward the screened profile, the far levels falling first
+   (the gap's time 35 intervals, so 200 intervals are about six of them), read at 4, 8 and 12
+   Links at the start and at the end against e^(-r / 20). The massless row stepped alone the same
+   way is the control: it holds.
+3. **The start's rest, by name.** Read from `src/event_universe/features/start/__init__.py`
+   (read-only) whether the rest's line carries the row's own pair, the gap (den - num) in Rule3's
+   S, or the massless pair; the lines quoted.
+
+The reader: `holder_alone.py` beside this file, a GameBoard diagnostic and no engine line, using
+GameBoard's own acts as `GameBoard.step` composes them for one row (`currents`, `stresses`,
+`rulers`, `stepped`, `hold`) on `well.json`; every number a GameBoard reading and no click.
+
+### The reading (the branch families-two on the engine of the reading above)
+
+Every number below is a GameBoard reading (`holder_alone.py` on `well.json`, 200 intervals, the
+binding holder stepped alone and, as the control, gravity's row stepped alone, about 70 s each on
+one core; the start's own `rest` called on one source; the world declares no detector).
+
+3. **The start's rest, by name: with its own gap.** `features/start/__init__.py`, `rest`, takes
+   the row's pair and builds Rule3's reads and wall from it, the gap (den - num) on the clock's
+   square: `num, den = pair`, then at every outer pass `reads = (num * pace * pace,) * 3` and
+   `line_wall = 6 * (den - num) * clock * clock + 6 * num * pace * pace`, the line
+   `(6 (den - num) p_0^2 + 6 num p_i^2) a = num p_i^2 S_6(a) + 3 den Gamma^2 sigma` of the
+   docstring; `settled_rows` passes each holder's own pair, `field = rest(counts, pair, wrap,
+   divisor, width, wall, gamma, others)` with `(counts, pair, divisor, own_rest, _reads)` the
+   row's `Sourced`, and `bookings.booked_sources` builds it from the family,
+   `found.append((source, family.pair, walls[(index, row)], family.rest, reads))`. So the start
+   iterates the binding holder [2400, 2401] with (den - num) = 1 in Rule3's S and not with the
+   massless kernel; the one-Node Green's function of that line has cosh kappa_b = 3 den / num - 2
+   = 1.00125, R = 20, the law's.
+2. **The holder stepped alone.** The binding holder's level along +x from the centre, the source
+   held: at the start 570, 538, 458, 365, 281, 213, 161, 122, 91, 67, 47, 30, 14 at 0 to 12
+   Links; after one interval 570, 537, 459, 365, 280, 213, 161, 121, 91, 67, 47, 29, 15 (one
+   level off at four Nodes: the hold's first write returns the start's rest within the rounding,
+   so the rest is the step's fixed point at the first interval); at 35 intervals 572, 547, 477,
+   367, 293, 221, 173, 135, 92, 75, 53, 34, 24; at 70, 572, 551, 465, 388, 291, 215, 173, 130,
+   104, 61, 52, 27, 30; at 105, 548, 542, 444, 369, 283, 205, 154, 134, 84, 79, 47, 31, 20; at
+   140, 575, 547, 461, 374, 293, 209, 171, 119, 93, 78, 54, 45, 32; at 200, 549, 544, 463, 368,
+   283, 224, 150, 136, 83, 64, 39, 25, -6. At 4 Links 281 to 280, 293, 291, 283, 293, 283 (within
+   +4 percent); at 8 Links 91 to 91, 92, 104, 84, 93, 83 (-9 to +14 percent); at 12 Links 14 to
+   15, 24, 30, 20, 32, -6; the centre 570 to 548 at the least and 575 at the most. The profile
+   rings about the start's rest with waves of 10 to 20 levels and no monotone drift, the far tail
+   swinging above the start as often as below: against the blind's screened line (0.85 at the
+   centre, 485, and 0.55 at 12 Links, 8) the relaxation is not seen, the centre within -4 and +1
+   percent of its rest at every reading. The control, gravity's row stepped alone with the source
+   held: 57, 54, 46, 36, 28, 21, 16, 12, 9, 6, 4, 3, 1 at the start; after one interval 57, 54,
+   46, 36, 28, 20, 15, 11, 8, 6, 4, 3, 1 (one level off at four Nodes); at 35, 47, 59, 53, 42, 34,
+   29, 20, 6, 13, 7, 7, 6, 6; at 105, 53, 55, 48, 47, 19, 34, 7, 8, 0, 2, 2, 1, -3; at 200, 67,
+   70, 71, 44, 45, 12, 26, 39, 14, 32, -7, 20, 20: the control does not hold, waves of 15 to 30
+   levels on a rest of 57, the same absolute size as the binding holder's on 570. The body's
+   quanta read at the paces of the read 10,113 to 10,168 (the binding holder's levels moving the
+   paces), the record itself kept as laid. So the first reading's "gravity's row not static (a
+   swing of up to 17 levels on a rest of 57)" and its far tail's fall (91 to 84 at 8 Links, 15 to
+   9 at 12) are the size of these waves with the source held and not the body's breathing: a
+   finding by name, the held rows' levels under the step from their laid rest carry waves of 10
+   to 30 levels growing over 200 intervals, the same for the row with the gap and the row
+   without, nothing of it the gap's relaxation; nothing patched, the cause not diagnosed here
+   (the hold's one write keeps its remainder, the row's own step by Rule3's division act does
+   not; the waves' size over 200 intervals is about the square root of the intervals in levels).
+1. **The screened rest.** The ratio of the two rests at the start stands as the first reading
+   has it, 1.000 at the centre and within 0.015 of 1 to 4 Links, the binding holder never below
+   gravity's by 10 beyond 1 percent. The blind's fold, read on the lattice as a diagnostic beside
+   it (the plain static line a - (num / (6 den)) S_6(a) = sigma / 2 of the two pairs at the
+   vacuum's paces, solved by conjugate gradients on the open 25-cube with zeros beyond the faces,
+   the body's own counts as the source): the screened over the massless 0.977 at the centre,
+   0.962 at 4 Links, 0.937 at 8 and 0.924 at 12 on this box, where the faces cut both rests
+   alike (0.948, 0.91, 0.838, 0.776 on a 61-box with the faces far); the advisor's 0.85 and 0.55
+   are the free fold's numbers, and on this box the screening the law's line resolves is 2 to 4
+   percent within 4 Links and 8 percent at 12. The start's own `rest` (features/start) called on
+   one source for both pairs at the divisor 1: with the body's counts as the source, 764, 715,
+   600, 469, 356, 267, 199, 149, 111, 81, 57, 36, 17 for [2400, 2401] against 771, 722, 606, 474,
+   360, 270, 201, 150, 111, 81, 56, 35, 17 for [6000, 6000], the ratio 0.991 at the centre, 0.989
+   at 1 to 5 Links and 1.00 to 1.03 at 8 to 12 against the line's 0.977, 0.962, 0.937, 0.924;
+   with a point source of 3,000 at one Node, 1674, 540, 247, 144, 95, 67, 49, 36, 27, 20, 14, 9,
+   4 against 1677, 543, 249, 145, 96, 67, 49, 36, 26, 19, 13, 8, 4, the ratio 0.998, 0.994,
+   0.992, 0.993, 0.990 at 0 to 4 Links, 1.00 at 5 to 7 and 1.04 to 1.13 at 8 to 11 (one level
+   each) against the line's 0.996, 0.99, 0.98, 0.97, 0.96, 0.952, 0.944, 0.938, 0.932, 0.928,
+   0.924, 0.922. So the start's rest of the binding row carries about a third of the screening its
+   own static line gives on this box within 4 Links (1 percent against 2 to 4) and none beyond 5
+   Links, where the gapped rest stands a level above the massless one's: the screening at the
+   start is weaker than the law's line by name, the gap written in the line and not read in the
+   levels at this resolution; MISS against the blind's fold and against the line's own numbers;
+   nothing patched, the cause not diagnosed here (the division act's floors in `settled`, which
+   the docstring names at the massless pair, and the fine unit, which differs between the pairs,
+   are the candidates to read in a fix round). In the engine's start both rows read one content,
+   so this ratio is the lines' alone.
+
+Agreement with the blind: the start iterates the binding holder with its own gap (the lines
+quoted), answering the check by name; the holder stepped alone neither holds nor relaxes toward
+the screened profile but rings with waves of 10 to 20 levels, and the massless control rings
+alike (a finding by name); the screening at the start is about a third of the law's line's within
+4 Links and absent beyond, a MISS against the blind and the line, read at the level of one to a
+few levels. (ii)'s line 7 and (iii)'s line 1 stand unread, not passed.
