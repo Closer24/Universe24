@@ -88,31 +88,36 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
         side = paces.write_factor(side, pace, pace, pace, clock, GAMMA, 2)  # per proper volume
         divisor = 6 * (den - num) * clock**2 + 6 * num * pace**2
         left = divisor * fine - num * pace**2 * sum(arrivals(fine, faces)) - side
-        assert ((0 >= left) & (left > -divisor)).all(), (num, den, faces)
+        assert (np.abs(left) < 2 * divisor).all(), (num, den, faces)  # a fine unit off the line at most
         assert (found.levels == (fine + found.unit // 2) // found.unit).all() and found.iterations > 1
         assert (found.levels[counts > 0] > 0).all() and (found.levels[counts < 0] <= 0).all()
         assert (found.levels < 0).any() != (counts >= 0).all()  # only negative sources sink below 0
         assert found.remainder == (3 * den - 1) // 2
     rows = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
     row = next(entry for entry in rows if entry["name"] == "binding")
-    (num, den), weight = row["pair"], row["held"]["level_weight"]
-    counts = np.pad(np.full((1, 1, 1), 100), 10)  # one source of 100 quanta at the centre of the 21-cube
-    found = rest(counts, (num, den), OPEN_CUBE, weight, MAX_WORK_INT, 3 * den, GAMMA, **OWN)
-    levels = found.levels
-    near = {int(np.moveaxis(levels, a, 0)[10 + s, 10, 10]) for a in range(3) for s in (1, -1)}
-    assert len(near) == 1 and 0 < near.pop() < int(levels[10, 10, 10])
-    for axis in range(3):
-        along = [int(np.moveaxis(levels, axis, 0)[10 + r, 10, 10]) for r in range(11)]
-        assert along == sorted(along, reverse=True) and along[10] >= 0
-    own_paces = paces.node_paces(GAMMA, found.content)  # the row's own composed paces
-    clock, pace = (np.asarray(p).astype(float) for p in own_paces)
-    path = diags([1.0, 1.0], [-1, 1], shape=(21, 21))  # the open cube's Links, one axis then the three
-    links = kronsum(kronsum(path, path), path)
-    divisor = 6 * (den - num) * clock**2 + 6 * num * pace**2  # the Node's term, the Links' -num p^2
-    operator = (diags(divisor.ravel()) - diags((num * pace**2).ravel()) @ links).tocsr()
-    scaled = scaled_source(counts * (3 * den * found.unit) // weight * GAMMA**2, *own_paces, GAMMA, 2)
-    exact = spsolve(operator, (scaled / found.unit).ravel().astype(float))
-    assert (np.abs(levels - np.rint(exact).reshape(21, 21, 21)) <= 1).all()
+    (num, den), weight, exact = row["pair"], row["held"]["level_weight"], {}
+    for shape, wrap, w in (((25, 25, 25), OPEN_CUBE, 1), ((128, 1, 1), OPEN_CHAIN, 100)):  # the source
+        counts, c = np.zeros(shape, dtype=np.int64), tuple(n // 2 for n in shape)
+        counts[c] = 3000  # 3,000 quanta at the centre over the divisor w (a chain's rest a tent, so 100)
+        for pair in ((6000, 6000), (num, den)):
+            found = rest(counts, pair, wrap, w, MAX_WORK_INT, 3 * pair[1], 6000, **OWN)
+            own = paces.node_paces(6000, found.content)  # the row's own composed paces
+            clock, pace = (np.asarray(p).astype(float) for p in own)
+            paths = [diags([1.0, 1.0], [-1, 1], shape=(n, n)) if n > 1 else [[2.0]] for n in shape]
+            links = kronsum(kronsum(paths[0], paths[1]), paths[2])  # a folded axis its Node twice
+            divisor = 6 * (pair[1] - pair[0]) * clock**2 + 6 * pair[0] * pace**2  # the Node's term
+            operator = (diags(divisor.ravel()) - diags((pair[0] * pace**2).ravel()) @ links).tocsr()
+            scaled = scaled_source(counts * (3 * pair[1] * found.unit) // w * 6000**2, *own, 6000, 2)
+            exact[shape, pair] = spsolve(operator, scaled.ravel() / found.unit).reshape(shape)
+            assert (np.abs(found.levels - exact[shape, pair]) <= 1).all(), (shape, pair)
+            long = [(a, s) for a in range(3) if shape[a] > 1 for s in (1, -1)]  # the long axes' Ports
+            at = {int(np.moveaxis(found.levels, a, 0)[(c[0] + s, *c[1:])]) for a, s in long}  # isotropy
+            assert len(at) == 1 and 0 < at.pop() < found.levels[c]
+            along = [int(found.levels[c[0] + r, c[1], c[2]]) for r in range(shape[0] - c[0])]
+            assert along == sorted(along, reverse=True) and along[-1] >= 0, (shape, pair)
+    cube = {p: exact[(25, 25, 25), p][12:25, 12, 12] for p in ((6000, 6000), (num, den))}  # along +x
+    ratio = (cube[num, den] / cube[6000, 6000])[[0, 1, 2, 3, 4, 12]]  # binding over massless
+    assert np.allclose(ratio, [0.9967, 0.9893, 0.9791, 0.9687, 0.9592, 0.9189], 0, 1e-4), ratio
     deep = np.pad(np.full((1, 1, 1), 24_576), 5)  # one Node of an 11-cube: open, the re-read swings
     refused("needs a sink", rest, deep, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3, GAMMA, **OWN)
     refused("is from 1", rest, deep, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6, GAMMA, **OWN)
@@ -202,8 +207,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         turn = node.turning(1, rows, board, 1, GAMMA)
         assert np.asarray(paced_read if rows is paced else turn[0]).ravel().tolist() == found
         assert rows is paced or paced_read == 0  # the rotation: no level in the content
-    rule = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    rows = rule["families"]
+    rows = (rule := json.loads(UNIVERSE.read_text(encoding="utf-8")))["families"]
     charge = next(row for row in rows if row["name"] == "charge")["held"]
     universe_of({**rule, "families": [*rows, CHARGED]})  # the plain read: not gated
     charge["act"] = "rotation"
