@@ -1,4 +1,4 @@
-"""The standing world of the body round (HIGHLIGHTS.md, the owner's words of 2026-10-02, 17:40 to 17:55; the mathematician's 167 and the advisor's second hand), from the design file beside this script: the same neutral body of the matter family at the centre of the open 25-cube, laid by the generator at the integer fixed point under its own paces (the world's `lay`) at T = 2^15 on the rule's own universe and at T = 2^19 on the universe file beside this design, each world declaring the tolerance from which the loader derives the least T; with --modes the two lays by tools/pixel_mode.py side by side, a refusal by name printed and the world left declared; and the blind expectation file, 167's three reads with their formulas and numbers written before any run and never touched after, the body's own expectations computed from the lay's profile in the mode file where it stands (the amplitude and the profile's sums, before any run). Every number is the design's and stands in the files, none in this script or the engine.
+"""The standing world of the body round (HIGHLIGHTS.md, the owner's words of 2026-10-02, 17:40 to 17:55; the mathematician's 167 and the advisor's second hand), from the design file beside this script: the same neutral body of the matter family at the centre of the open 25-cube, laid by the generator at the integer fixed point under its own paces (the world's `lay`) at T = 2^15 on the rule's own universe and at T = 2^19 on the universe file beside this design, each world declaring the tolerance from which the loader derives the least T; with --modes the worlds written anew and the two lays by tools/pixel_mode.py side by side, a refusal by name printed and the world left declared (without --modes a world that stands is left as the generator wrote it, its Nodes and counts the mode file's digest binds); and the blind expectation file, 167's three reads with their formulas and numbers written before any run and never touched after, the body's own expectations computed from the lay's profile in the mode file where it stands (the amplitude and the profile's sums, before any run). Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -131,8 +131,9 @@ def main(argv: list[str] | None = None) -> None:
     paths = []
     for name in design["worlds"]:
         path = args.folder / f"{name}.json"
-        path.write_text(json.dumps(world(design, name)) + "\n", encoding="utf-8")
-        print(json.dumps({"world": str(path)}))
+        if args.modes or not path.exists():  # a laid world stays as the generator left it (its digest)
+            path.write_text(json.dumps(world(design, name)) + "\n", encoding="utf-8")
+        print(json.dumps({"world": str(path), "written": args.modes or not path.exists()}))
         paths.append(path)
     if args.modes:
         laid(paths)
