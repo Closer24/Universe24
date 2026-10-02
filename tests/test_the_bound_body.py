@@ -89,9 +89,9 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         board.states[index].lines[0] = node.empty_record(board.shape, board.kind)
     board.start()
     rest = board.states[charge].lines[0]
-    assert now.any() and not np.array_equal(now, before) and np.array_equal(rest.now, rest.before)
+    assert now.any() and not np.array_equal(now, before) and (rest.remainder == light.remainder).all()
     assert np.array_equal(light.now - now, light.before - before)  # the message kept, its rest static
-    assert np.array_equal(light.remainder, rest.remainder) and rest.now[board.body_nodes(0)].min() > 0
+    assert not rest.now.any() and board.record(charge)[0].now[board.body_nodes(0)].min() > 0  # the rows
     draw, shape = np.random.default_rng(1), (4, 3, 2)
     x, y, numerator = (draw.integers(-size, size, shape) for size in (10**6, 10**6, 2 * GAMMA))
     turned, angle = rotation.turned(x, y, numerator, wall := 2 * GAMMA), 2 * np.arctan(numerator / wall)
@@ -121,32 +121,33 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
             assert (np.sign(node.wronskian(lines, True)) == sense).all()
             lines = [node.step(line, RULE, RING) for line in lines]
     assert node.wronskian(lines[:1], False) == 0
-    charge, charged = map([family.name for family in TURNING].index, ("charge", "charged"))
+    names = [f.name for f in TURNING]
+    charge, charged, matter, gravity = map(names.index, "charge charged matter gravity".split())
     flux = node.sense_current_of(moving := wave(math.pi / 4, OMEGA), RING)
     assert np.abs(flux[0] - LEVEL * LEVEL * math.sin(math.pi / 4)).max() < 2 * LEVEL
     assert (flux[0] > 0).all() and not flux[1].any() and not flux[2].any()
     assert np.isin(node.sense_current_of(wave(math.pi / 4, OMEGA, -1), RING)[0] + flux[0], (0, 1)).all()
     assert not any(part.any() for part in node.sense_current_of([moving[0], moving[0]], RING))
-    write, sign = held_write(TURNING, charge, T), {charged: node.wronskian(moving, True)}
-    sources = node.write_sources(charge, TURNING, sign, {charged: flux}, write, {charged: VACUUM}, GAMMA)
-    assert np.array_equal(sources[0], sign[charged]) and np.array_equal(sources[1], flux[0])
+    own, write = (charged, 0), held_write(TURNING, charge, T)  # the plane's one record owns the row 1
+    sign = {own: node.wronskian(moving, True)}
+    sources = node.write_sources(charge, TURNING, sign, {own: flux}, write, {own: VACUUM}, GAMMA)
+    assert np.array_equal(sources[4], sign[own]) and np.array_equal(sources[5], flux[0])
     held = node.empty_state(TURNING[charge], SHAPE, write.walls, np.int64)
     lines, remainders = node.held_write(held.lines, sources, write.walls, held.write_remainders)
     expected = (flux[0] + 100 * PAIR[1] * T // 2) // (100 * PAIR[1] * T)
-    assert np.array_equal(lines[1].now, expected) and not lines[2].now.any() and not sources[2].any()
+    assert np.array_equal(lines[5].now, expected) and not any(map(np.any, sources[:4] + sources[6:]))
     back_lines, before = node.held_write(lines, sources, write.walls, remainders, -1)
     assert all(np.array_equal(a.now, b.now) for a, b in zip(back_lines, held.lines, strict=True))
     assert all(np.array_equal(a, b) for a, b in zip(before, held.write_remainders, strict=True))
     universe = json.loads((LOOK / "turning.json").read_text(encoding="utf-8"))
-    rows, names = {row["name"]: row for row in universe["families"]}, [family.name for family in TURNING]
-    charge, charged, matter, gravity = map(names.index, ("charge", "charged", "matter", "gravity"))
-    assert (TURNING[charge].lines, TURNING[charge].record, TURNING[charge].rotation) == (4, 1, True)
+    rows = {row["name"]: row for row in universe["families"]}
+    assert (TURNING[charge].lines, TURNING[charge].record, TURNING[charge].rotation) == (8, 1, True)
     assert turns(TURNING, charged) and not turns(TURNING, matter)
     assert charge not in [read.family for read in TURNING[matter].reads]
-    assert held_write(TURNING, charge, T).walls == (100 * T,) + (100 * PAIR[1] * T,) * 3
+    assert write.walls == ((100 * T,) + (100 * PAIR[1] * T,) * 3) * 2  # the walls per row, two rows
     assert held_write(TURNING, gravity, T).walls[1] == 1000 * 3 * PAIR[1] * T
     rows["charge"]["held"]["act"] = "pace"
-    assert ((paced := universe_of(universe)[1][charge]).lines, paced.rotation) == (1, False)
+    assert ((paced := universe_of(universe)[1][charge]).lines, paced.rotation) == (2, False)
     rows["charge"]["held"]["act"] = "sideways"
     refused("act is one of", universe_of, universe)
     rows["gravity"]["held"]["act"], rows["charge"]["held"]["act"] = "rotation", "pace"
@@ -186,16 +187,13 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     plane, light = board.states[charged], board.states[charge]
     board.step()
     first, second = board.body_nodes(0), board.body_nodes(1)
-    turn, level = np.sign(node.wronskian(plane.lines, True)), light.lines[0].now
+    plain = sum(board.states[i].lines[0].now for i in board.held if i != charge)  # the content holders
+    rows, level = [line.now for line in light.lines], board.record(charge)[0].now  # the rows; light
+    turn = np.sign(node.wronskian(plane.lines, True))
     assert (turn[first] == 1).all() and (turn[second] == -1).all() and level[second].sum() < 0
     assert level[first].min() >= 0 < level[first].sum() and level[second].max() <= 0
-    light.lines[0] = node.Record(np.full_like(level, 100), level, light.lines[0].remainder)
-    held = [s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian]
-    plain = sum(state.lines[0].now for state in held)  # every holder of the content, as it stands
-    gamma, unit = board.world.node_clock, board.unit
-    content = node.read(charged, board.families, board.states, 1, board.wrap, gamma, unit)[0]
-    assert ((content - plain) == 100)[first | second].all() and len(light.lines) == 1
-    for reader in (matter, charge):  # dimension one, and the holder's own record
-        assert charge not in [read.family for read in board.families[reader].reads]
-        read = node.read(reader, board.families, board.states, 1, board.wrap, gamma, unit)[0]
-        assert np.array_equal(read, plain)
+    assert np.array_equal(level, sum(rows)) and not rows[0].any() and len(rows) == 3  # light: the sum
+    assert rows[1][first].min() > 0 and rows[2][second].max() < 0  # each record's own row, its write
+    assert all((board.read(charged, 1, k)[0] - plain == rows[0] + rows[2 - k]).all() for k in (0, 1))
+    assert all(charge not in [x.family for x in board.families[r].reads] for r in (matter, charge))
+    assert all(np.array_equal(board.read(r)[0], plain) for r in (matter, charge))  # the holder: content

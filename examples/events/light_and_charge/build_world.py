@@ -101,6 +101,7 @@ def expectation(design: dict[str, Any], laid: int | None) -> dict[str, object]:
         "delay": design["delay"],
         "worlds": {name: row["body"] for name, row in design["worlds"].items()},
         "body": {"family_per_world": {name: row["body"] for name, row in design["worlds"].items()}},
+        "lay": design["lay"],
     }
 
 
