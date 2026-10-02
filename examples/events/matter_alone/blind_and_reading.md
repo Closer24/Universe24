@@ -239,4 +239,75 @@ wide branch and no compact pixel from the one-Node seed at 8,000 on the 11-cube 
 line 4 the count kept to 0.4 percent, the record not static (a finding). The defined numbers are
 not read on a compact pixel because none is laid at this count: the compact branch's threshold on
 this engine stands above 8,000 quanta (the law's line, about 13,000 under the form-sourced start,
-the number the generator's to find), and a lay above it on the 11-cube is the run proposed.
+the number the generator's to find), and a lay above it on the 11-cube is the run proposed. The
+advisor's correction of the verdict (#1563 comment 5958925235, 2026-10-02, 18:39, taking the
+Boss's correction of his 5958624379 whole): the blind's window was written without the composed
+paces' factor the law's line carries (ALGEBRA.md, **The compact pixel under the composed paces**:
+the write's factor at the body's own paces e^(-4 U) = 0.72 of the count's well moves the compact
+branch's threshold from about 9,300 to about 13,000 quanta in the engine's count), so under the
+line 8,000 quanta lie below the compact threshold; the lay at 8,000 is the law's line's, the wide
+branch from the one-Node seed on the 11-cube is what the law's line says and not a miss of the
+engine; the MISS of lines 1, 2, 3 and 5 is the blind's, and the finding by name for this world is
+withdrawn. The numbers read above stand as read.
+
+## The third reading, above the threshold (the law's line; the advisor's correction, #1563 comment 5958925235)
+
+The defined experiment under the law's line (the advisor, 2026-10-02, 18:39, on the second
+reading above; the owner's words of 2026-10-02: only the defined experiments, run well by the
+morning, whatever takes a lot of time cut, a reading that misses its blind a finding by name and
+never adjusted): the pixel world on the open 11-cube from the one-Node seed above the compact
+branch's threshold, 14,000 quanta in the engine's count (the line's about 13,000 with the
+25-cube's own factor; on the 11-cube the faces at 5 Links pull the well, so the threshold there is
+the generator's to find), lines 2, 3 and 5 read on the compact body the line describes. The world
+is `pixel_compact_14000.json`, the design's entry `pixel_compact_14000` (`design.json`: the open
+11-cube, the centre [5, 5, 5], 14,000 quanta, 400 intervals), the builder writing the one-Node
+declaration and `expectation.json` anew with the blind entry `blind.pixel_compact_14000` (the
+builder lays only with `--modes`, which the committed-worlds gate of
+`tests/test_the_bound_body.py` does not pass, so no lay enters the tests' time), and the
+generator (`tools/pixel_mode.py --input`) laying the body from that seed; the reader
+`tools/body_rest.py --reach 5 --expectation`, every number a GameBoard reading and no click.
+This section's blind is written before the lay and the run of this world, from the law's line's
+own numbers (ALGEBRA.md, **The compact pixel under the composed paces**, the generator's table on
+the 11-cube under the count-sourced start, the threshold's shift under the form-sourced start),
+and never edited after; the reading is appended below it.
+
+### The blind (the law's line's numbers; lines 2, 3 and 5 the folder's, line 1 restated)
+
+1. **The window**, restated under the law's line: above the threshold of about 13,000 quanta in
+   the engine's count (the write's factor e^(-4 U) = 0.72 on the count's well moving the quadratic
+   forms' about 9,300 by 1 / 0.72 = 1.39) the generator reaches the compact branch from the
+   one-Node seed, the body compact by the line's criterion, its count on one Node or the few about
+   it: the centre Node carrying at least about three quarters of the body's share (the line's 0.74
+   of the vacuum share at the Node at 9,000, 0.98 over seven Nodes at 20,000, the body tightening
+   with the count), the rms radius under one Link, the content at the centre Node past the edge
+   0.39 Gamma = 2,339, between the line's 3,025 at 13,000 and 3,798 at 20,000 (3,135 by the
+   straight line between them); the 11-cube's own threshold is the generator's to find, the faces
+   at 5 Links pulling the well (the 15-cube moved the share at the Node by 5 percent at 10,000).
+2. **The rest rotation.** omega_b by the line's table: 0.636 at 13,000 (2 cos omega_b = 1.609,
+   U 0.50) and 0.539 at 20,000 (1.716, U 0.63); at 14,000 the bracket [0.539, 0.636], the straight
+   line between the two 0.622 (2 cos omega_b = 1.625, the period 10.1 intervals; the table's slope
+   from 12,000 to 13,000, 0.019 per thousand quanta, gives 0.617), read as the exact fraction
+   (next + before) / now at the centre and held over the window within the rounding.
+3. **The tail.** kappa 1.3 to 1.9 per Link near the Node from the levels at one Link (the level
+   at one Link over the centre's e^(-kappa), 0.27 to 0.15), the three-dimensional tail steeper
+   than the chain formula acosh((9 / 2) cos omega_b - 2) by 0.5 to 0.7 (the formula 1.06 at
+   0.636, 1.23 at 0.539 and 1.09 at the straight line's 0.622), flattening outward (the line's
+   level ratios 0.237, 0.241, 0.259, 0.345 and 0.40 per Link along an axis at 10,000 on the
+   15-cube; on the 11-cube the face at 5 Links reads 0 beyond).
+4. **The drift** (the folder's line, read as before): 0 to the rounding, the centroid where it was
+   laid.
+5. **The form.** The record obeys the one-Node form D = b^2 (2 - 2 cos omega_b) to one percent:
+   with c the well D div T at the centre Node (D = now^2 - next x before from the three levels
+   there) the loaded b, the largest whose square is at most c T den div (2 den - a) for the clock
+   pair [a, den] of 2 cos omega_b, is the level where now = before, B cos(omega_b / 2) with B the
+   amplitude at the centre, within one percent (the line's 9,749 against 9,752 at 9,000 and
+   13,586 against 13,547 at 20,000). The amplitude B between the line's 12,319 at 13,000 and
+   14,053 at 20,000 (12,567 by the straight line); the well at the Node between 1,494 and 1,685
+   quanta (B^2 sin^2 omega_b over T, about 1,640 at the straight line's numbers); the well over
+   the declared count between the line's 0.293 at 9,000 and 0.085 at 20,000, about 0.15 at 14,000
+   by the straight line between the vacuum shares (the count 5.5 to 12 times the well at the Node
+   along the branch).
+
+A refusal of the lay by name is recorded verbatim and the reading stops at that line; a lay on the
+wide branch is the reading, stated by name, the world run and read as laid; the count is raised
+once at most (one more world at 20,000 only if this lay takes under 10 minutes) and never tuned.
