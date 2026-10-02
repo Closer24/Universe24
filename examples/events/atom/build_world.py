@@ -20,6 +20,11 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 
 
+def span_of(value: Any) -> tuple[int, int]:
+    """A design's [first, last] as a pair of integers."""
+    return int(value[0]), int(value[1])
+
+
 def region(design: dict[str, Any], across: tuple[int, int]) -> list[list[int]]:
     """A region on the x high side's last layers, `screen` Nodes deep, over the y span given and the design's z span."""
     side, depth = int(design["side"]), int(design["screen"])
@@ -61,11 +66,11 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "detectors": [
             {
                 "name": design["photocathode"],
-                "positions": region(design, tuple(int(v) for v in design["photocathode_across"])),
+                "positions": region(design, span_of(design["photocathode_across"])),
             },
             {
                 "name": design["bolometer"],
-                "positions": region(design, tuple(int(v) for v in design["bolometer_across"])),
+                "positions": region(design, span_of(design["bolometer_across"])),
             },
         ],
         "receding": design["receding"],
@@ -79,7 +84,7 @@ def pair_of(value: Fraction) -> list[int]:
 
 def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind expectation file from the design's integers and the law's formulas: alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s), the electron's rest rotation omega_0 and its reduced Compton length 1 / (sqrt 3 omega_0) Links, the Bohr radius, the levels E_n = alpha_law^2 omega_0 / (2 n^2), the Lyman lines and their ratios 1 - 1 / n^2, the 1s + 2p line Omega with its period and sin Omega, the two detectors' wholes, the nucleus's inertia against the electron's, and every row's status and fence."""
-    gamma, action = int(design["node_clock"]), int(design["quantum_action"])
+    gamma = int(design["node_clock"])
     k, e_s = int(design["k"]), int(design["level_weight_E_s_intended"])
     num_e, den_e = (int(v) for v in design["electron_pair"])
     num_n, den_n = (int(v) for v in design["nucleus_pair"])
@@ -100,7 +105,11 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "world": design["world"],
         "status_of_the_world": "written and not run; the lay waits for the generator laying a plane record standing in an angle well under the rotation read (start-form-fix), and the sign holder's read weight k waits for its key in the engine (the number stands in the level weight slot, which today's engine reads as the write's divisor E_s)",
         "window": [int(v) for v in design["window"]],
-        "families": {"nucleus": design["nucleus_family"], "electron": design["electron_family"], "light": "charge"},
+        "families": {
+            "nucleus": design["nucleus_family"],
+            "electron": design["electron_family"],
+            "light": "charge",
+        },
         "detectors": {
             design["photocathode"]: {
                 "whole": "T sin Omega, one photon of the 1s + 2p line per click (The click's unit: the whole of a click is the detector's own transition)",
@@ -206,7 +215,14 @@ def main(argv: list[str] | None = None) -> None:
     senses = [str(int(design["senses"][body])) for body in ("nucleus", "electron")]
     if args.modes:
         subprocess.run(
-            [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path), "--sense", *senses],
+            [
+                sys.executable,
+                str(ROOT / "tools" / "pixel_mode.py"),
+                "--input",
+                str(path),
+                "--sense",
+                *senses,
+            ],
             check=True,
             cwd=ROOT,
             stdout=subprocess.DEVNULL,
