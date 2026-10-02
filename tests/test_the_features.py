@@ -202,9 +202,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         ((SIGN, plane), "energy line fails for 'stuff'"),
     ):
         refused(reason, universe_of, universe(*rows))
-    turning = universe_of(universe(SIGN, plane, quantum_action=15_000))[
-        1
-    ]  # 15,000 x 4,000 = Gamma 6,000
+    turning = universe_of(universe(SIGN, plane, quantum_action=15_000))[1]  # T 4,000 = Gamma 6,000
     paced = universe_of(universe({**SIGN, "held": {**SIGN["held"], "act": "pace"}}, plane))[1]
     two, level = np.zeros((2, 1, 1), dtype=np.int64), np.array([[[-5]], [[5]]], dtype=np.int64)
     for rows, found in ((paced, [5, 5]), (turning, [-5, 5])):  # |L| into the pace; the turn by L

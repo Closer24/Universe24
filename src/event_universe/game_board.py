@@ -131,9 +131,7 @@ class GameBoard:
         except ValueError as refusal:
             raise ValueError(f"the start of the held families: {refusal}") from refusal
         for index in rows:
-            self.states[index].lines[0] = messages[
-                index
-            ]  # the laid message back in place of the staging
+            self.states[index].lines[0] = messages[index]  # the laid message back from the staging
         for index, found in zip(holders + list(signs), fields, strict=True):
             remainder = node.full(self.shape, found.remainder, self.kind)
             message = self.states[index].lines[0]  # the laid message, every level 0 where none is laid
@@ -365,7 +363,7 @@ class GameBoard:
         stresses: Stresses,
         senses: Stresses,
     ) -> None:
-        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers), its tension's parts and a turned record's sign current from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done."""
+        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers; a turned plane's from z_now and the un-turned levels u and v alone, with no z_before in them), its tension's parts and a turned record's sign current from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done; a turned plane's level before comes back as u, the inverse's first stage (`node.step_plane`)."""
         family = self.families[index]
         lines, (first, second) = self.stepped(index, -1)
         forms[index] = node.form(first[: family.record], second[: family.record])
@@ -376,7 +374,7 @@ class GameBoard:
         books[index] = lines
 
     def step_inverse(self) -> None:
-        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): the write's rulers read first from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back; the lay is not taken back."""
+        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): the write's rulers read first from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every held row standing at the previous interval's start again, each turned plane's level before turned back by that interval's angle (`node.turned_before` at -1, the inverse's second stage around the holders' write back: the mathematician's 119); the lay is not taken back."""
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
         rulers = self.rulers(-1)  # the held rows' levels the interval started from, their `before`
         books: dict[int, list[node.Record]] = {}
@@ -393,10 +391,12 @@ class GameBoard:
             for held in ready:
                 self.hold(held, forms, turns, -1, stresses, senses, rulers)
             pending = [held for held in pending if held not in ready]
-        for index in self.held:
-            if index not in books:
-                books[index] = self.stepped(index, -1)[0]
+        for index in (held for held in self.held if held not in books):
+            books[index] = self.stepped(index, -1)[0]
         for index, lines in books.items():
+            self.states[index].lines = lines
+        for index in self.turning:
+            lines = node.turned_before(index, self.families, self.states, self.world.node_clock, -1)
             self.states[index].lines = lines
         self.tick, self.ended = self.tick - 1, None
         while self.growths and self.growths[-1][0] == self.tick + 1:
