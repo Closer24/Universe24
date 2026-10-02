@@ -63,6 +63,9 @@ quantum or more) 1,483 carrying 4,001 quanta with 9 at the Node of the largest c
 over the board 5,047 quanta by the Nodes' rounded counts and 5,930 by the books. The runs:
 `tools/run_inputs.py`, LAWFUL over the 400 intervals, no frozen Node; the back-in-time gate
 MATCH over 40 intervals on the pixel (the cloud's 400 intervals ran 448 s, its gate not run).
+The owner's word of 2026-10-02, 19:28 (cut what takes long): both worlds had run at their
+declared boards and intervals before the word, and no cut was made in this folder; the one
+thing left undone for time is the cloud's back-in-time gate, proposed.
 
 1. **The window.** The engine's declared count 10,000 is about 3,200 in the advisor's unit, 0.53
    Gamma, above the window's upper edge Gamma div 2 (the horizon of the quadratic forms, gone

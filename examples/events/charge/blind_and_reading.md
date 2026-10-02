@@ -63,8 +63,11 @@ record's (the mode file's clock [1248, 904]; ALGEBRA.md #the-generator)` (the fi
 in either world, before the second body is laid: the first of two bodies twelve Links apart on
 the 25-cube has no standing record of its own, the same finding as the first round's for the
 neutral pair; the charge builder's three lays took 3,991 s in all). The two pair worlds stand
-declared with one Node per body and no mode file, the loader refusing them at load, so the like-or-unlike reading
-under the plain read is not made in this round. The run of `charged_body.json`:
+declared with one Node per body and no mode file, the loader refusing them at load, so the
+like-or-unlike reading under the plain read is not made in this round: not run tonight, the run
+proposed (the owner's word of 2026-10-02, 19:28, cut what takes long: both refusals by name came
+before the word; `charged_body.json` ran at its declared board and intervals, 100 intervals of
+the 25-cube in about a minute, and no cut was made in this folder). The run of `charged_body.json`:
 `tools/run_inputs.py`, LAWFUL over the 100 intervals, no frozen Node; the back-in-time gate
 MATCH over 40 intervals.
 

@@ -52,7 +52,9 @@ quanta at the paces of the read, 111 at the centre Node, the rms radius 3.61 Lin
 file's clock [2967, 2142] (2 cos omega_b = 1.3852), a wide bound body and no one-Node pixel (the
 lay of the first round, 775 Nodes with 398 at the centre, stands no more: the start sources the
 form). The run: `tools/run_inputs.py`, LAWFUL over the 100 intervals, no frozen Node; the
-back-in-time gate MATCH over 40 intervals.
+back-in-time gate MATCH over 40 intervals. The owner's word of 2026-10-02, 19:28 (cut what takes
+long): the world had run at its declared board and intervals before the word, in about a minute;
+no cut was made in this folder.
 
 1. **The static rest.** Gravity's level at r = 0 through 12 Links along +x from the centre (the
    three axes equal), at the start: 57, 54, 46, 36, 28, 20, 15, 11, 8, 6, 4, 3, 1; the binding

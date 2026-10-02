@@ -51,8 +51,10 @@ first round's refusal, "the record of the body ... scaled at 80 does not stand",
 start's; the charged pairs of world (iv), the same bodies as planes, are refused by name on this
 engine at the first body's pass, `examples/events/charge/blind_and_reading.md`). The world stands declared
 with one Node per body and no mode file, the loader refusing it at load (`the mode file beside
-the world must be an object`), and nothing of it is run in this round; lines 2 and 3 are not
-read. Line 1, the range, is read on the single bodies of world (i), `examples/events/matter_alone/pixel.json`
+the world must be an object`), and nothing of it is run in this round: not run tonight, the run
+proposed (the owner's word of 2026-10-02, 19:28, cut what takes long: the pair's lay returned its
+refusal by name before the word, and no cut of a board or of intervals was made in this folder);
+lines 2 and 3 are not read. Line 1, the range, is read on the single bodies of world (i), `examples/events/matter_alone/pixel.json`
 (the open 25-cube, the faces at 12 Links from the centre) and `cloud.json` (the 41-cube, 20
 Links), by `tools/body_rest.py` with `--reach 12` and `--reach 20`, every number a GameBoard
 reading:

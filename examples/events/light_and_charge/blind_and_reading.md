@@ -60,7 +60,10 @@ own well is a cycle of two states three levels apart, which the start refuses by
 #1623's generator, 1,689 declared Nodes carrying 11,167 quanta, the clock [2452, 1718]) is
 admitted by this engine's gate at load (LAWFUL) and is the world run; `through_charged.json`
 stands declared without a mode file, the loader refusing it at load (`the mode file beside the
-world must be an object`), and the charged tube is not run in this round. The runs:
+world must be an object`), and the charged tube is not run in this round: not run tonight, the
+run proposed (the owner's word of 2026-10-02, 19:28, cut what takes long: the refusal by name
+came before the word; the free and the neutral tubes ran at their declared board and intervals,
+about three minutes each, and no cut was made in this folder). The runs:
 `tools/run_inputs.py`, both LAWFUL, the free tube ending at the x high face's largest size at
 the interval 194 and the neutral tube at the x low face's at 182 (the source's return), both
 within the window [1, 200]; the back-in-time gate MATCH over 40 intervals on both.
