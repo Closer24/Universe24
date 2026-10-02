@@ -26,6 +26,7 @@ PHYSICAL_MODULES: dict[str, str] = {
     "loader/messages.py": "the messages, laid records of a family of quanta: their keys and their levels from the mode file",
     "loader/derived.py": "the families from the rule and the amplitude bound A derived from the width",
     "loader/instrument.py": "the instrument's declaration on a detector, its setting and its parts' pattern, read by nothing in the engine",
+    "loader/lay.py": "the lay a world declares and the least quantum action its tolerance needs, the budget's gate at load",
     "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act, its fixed point iterated and the form's term (ALGEBRA.md #the-line, #the-direction)",
     "core/integer.py": "the working bound, the host's signed integer range",
     "core/paces.py": "the composed paces, the clock and the Link's pace of the content, and the factors",
@@ -145,12 +146,10 @@ def numpy_violations(tree: ast.AST) -> list[str]:
     return found
 
 
-def features_modules() -> list[str]:
-    """Every feature's module, found by its folder (no list to keep: record 2221 (3))."""
-    return sorted(path.relative_to(SRC).as_posix() for path in (SRC / "features").glob("*/__init__.py"))
+FEATURES = sorted(p.relative_to(SRC).as_posix() for p in (SRC / "features").glob("*/__init__.py"))
 
 
-@pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES) + features_modules())
+@pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES) + FEATURES)
 def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     """Every physical module, and every feature's folder under the same gate (issue #1154 cut 2), found by its folder and never listed."""
     source = (SRC / name).read_text(encoding="utf-8")

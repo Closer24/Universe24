@@ -1,0 +1,82 @@
+{
+ "comment": "The standing world of the body round (HIGHLIGHTS.md, the owner's words of 2026-10-02, 17:40, 17:48 and 17:55: the body worlds of one kind, the engine advancing with the defined experiments as the research's check; the mathematician's 167, #1572 comment 5955538687, the standing world's blind, with the advisor's second hand, #1563 comment 5955658812 (C); the lay at the integer fixed point, 162 (3) and 168 item 2 (1); the resolution from a declared tolerance, 162 (1) and 168 item 1): one neutral body of the matter family (a real-profile mode, no sign holder read, so no odd lines and nothing signed) at the centre of the open 25-cube (an odd board, its centre a Node), laid by the generator at the integer fixed point under its own paces (the world's `lay` of the kind `fixed_point`: the record and the content re-laid in each other's paces until both repeat within `stop` units at every Node, inside `passes` passes), the same body in quanta at T = 2^15 (the rule's own universe, examples/events/rule.json) and at T = 2^19 (rule_2_19.json beside this design, the same rows), run for the same n intervals, 1000 (the owner's word of 19:28: n = 10^3 at both T where the two runs together fit about an hour, else the largest n that does, the same at both). The tolerance each world declares is the share's deviation the run may read, from which the loader derives the least T by the budget's line, T >= 32 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i) (168 item 1), c_i the quanta per Node at the body's centre: [1, 32] at 2^15 and [1, 125] at 2^19 (at c_i = 79, the lay's quanta at the centre, the least T is 2^14 and 2^18, under the worlds' T; a tolerance a world cannot meet refuses it by name at load). The three reads, all GameBoard diagnostics by tools/body_standing.py (ENGINE.md section 5), the blind of each written here before any run and never edited after. What the short run does not test (163 (2), 165): the body's standing over long runs (the budget's 1 / sqrt(T) law is this world's own test, the standing beyond 10^3 intervals is not) and the line as a click (the giving or the absorption through a window, a round after this one). A ratio near 1 in read 2 instead of 4 is a T-free systematic, the lay's or the convention's (167): reported as a finding by name, never adjusted. The stop: the lay at the stop 1 (a fixed point to the unit) was asked first and refused by name at T = 2^15 after 30 passes, the map ending in a 2-cycle from the pass 16, the content's largest change 1 and the record's 2 at every pass with the count laid alternating 9,981 and 10,017 (the trajectory in the first lay's log, the finding of this world: the lay-and-rest map has no fixed point to the unit for this body in integers, the record's scale flipping between two neighbours); the stop declared here is the least the trajectory reached, 2 units at 2^15, and the same fraction of the amplitude at 2^19, 8 units, the levels there four times the 2^15 levels (A grows as sqrt T).",
+ "engine": "examples/events/engine_start.json",
+ "family": "matter",
+ "window": [
+  1,
+  1000
+ ],
+ "lay": {
+  "kind": "fixed_point",
+  "passes": 30
+ },
+ "worlds": {
+  "standing_15": {
+   "universe": "examples/events/rule.json",
+   "quantum_action": 32768,
+   "tolerance": [
+    1,
+    32
+   ],
+   "shape": [
+    25,
+    25,
+    25
+   ],
+   "centre": [
+    12,
+    12,
+    12
+   ],
+   "quanta": 10000,
+   "ticks": 1000,
+   "stop": 2
+  },
+  "standing_19": {
+   "universe": "examples/events/standing_body/rule_2_19.json",
+   "quantum_action": 524288,
+   "tolerance": [
+    1,
+    125
+   ],
+   "shape": [
+    25,
+    25,
+    25
+   ],
+   "centre": [
+    12,
+    12,
+    12
+   ],
+   "quanta": 10000,
+   "ticks": 1000,
+   "stop": 8
+  }
+ },
+ "sigma": {
+  "levels_per_interval": 0.157,
+  "formula": "sigma = (num / (3 den)) sqrt(6 / 12) levels per interval per Node at the vacuum's paces (S = 0 there), the rms of the six reads' fractions and the Node's own; at the body's own paces the same expression in the Node's R_ij, S and w, S / w of the order of U (167, 168)"
+ },
+ "reading": "per world (tools/body_standing.py, GameBoard): (1) the centroid of the body's share along each axis at the window's ends and its drift (the centroid tools/body_drift.py reads along a chain, here per axis with the density summed over the other two); (2) the share's deviation over the body's declared Nodes, rho_s^2 = SUM (s_n - s_0)^2 / SUM s_0^2 with s the share per Node at the paces of the read, at the quarters of the window, rho_s the fixed point of the division act at the scale T; (3) the rotation in the summed form, cos omega_read = SUM z_t (z_(t + 1) + z_(t - 1)) / (2 SUM z_t^2) over the body's Nodes at every interval (167's line as written; twice it is the clock pair's 2 cos omega), its least and largest over the intervals where the record's weight 2 SUM z_t^2 is at least half its largest (a real standing record passes through 0 at every Node at once twice a period, where the ratio is the rounding's alone, the summed form's condition for a rotating plane and not for a real mode) and the window's accumulated ratio; the books at the end.",
+ "blind": {
+  "drift": {
+   "reading": "read (1): the centroid's drift per axis at the window's ends, in Links",
+   "blind": "each |delta x_c| below 3 x its rms, 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)) with N_eff = SUM f^2 and rho_x^2 = SUM x^2 f^2 / SUM f^2 over the lay's profile f (A f the level per Node); the 2^15 drift larger than the 2^19 one in about 0.84 of the components; for 163's body (a_0 = 14 Links, N_eff = 8620) 1.8 x 10^-3 Links at n = 10^3 and 2^15 and 4.4 x 10^-4 at 2^19; a single centroid is one draw, so this read is loose by nature and no test",
+   "status": "167 (1), the formula from the remainder term's walk, sigma sqrt(n) levels after n intervals against the amplitude A; the body's own numbers under `from_the_lay` from the mode file's profile, before any run",
+   "fence": "GameBoard"
+  },
+  "share_deviation": {
+   "reading": "read (2): rho_s at n and at n / 4 in each world",
+   "blind": "rho_s = (2 sigma sqrt(n) / A) sqrt(SUM f^2 / SUM f^4), 5.66 sigma sqrt(n) / A for the exponential profile: 3.3 percent at n = 10^3 and T = 2^15 and 0.82 percent at 2^19 for 163's body (c_i about 33); the tests: rho_s(2^15) / rho_s(2^19) = 4 within 5 percent (between 3.8 and 4.2) at equal n, since A grows as sqrt(T) and sigma is T-free, and within one run rho_s(n) / rho_s(n / 4) = 2 within 5 percent, the sqrt(n) law; a ratio near 1 in either is a T-free systematic, the lay's (the body breathing about a fixed point it was not laid at) or the convention's, a finding by name",
+   "status": "167 (2) with the advisor's recomputation, 5955658812 (C): sigma^2 = 6 (2 / 9)^2 / 12 at [2, 3], sqrt(SUM f^2 / SUM f^4) = sqrt 8 for e^(-r / a_0), the scatter 1 / sqrt(2 N_eff) about 1 percent per read; the body's own expectation under `from_the_lay`",
+   "fence": "GameBoard"
+  },
+  "rotation": {
+   "reading": "read (3): cos omega_read in the summed form at every interval, its spread over the intervals of at least half the largest weight, and the accumulated ratio over the window",
+   "blind": "constant over the run to 10^-5 at both T away from the record's zero crossings: the noise per interval about 1 / (A sqrt(N_eff)), 1.3 x 10^-5 rad at 2^15 and 3.2 x 10^-6 at 2^19 for 163's body, against the binding to be seen in the atom's gate world, 7 x 10^-4 rad; for the real mode of this world the per-interval ratio is read where the record's weight is at least half its largest, the zero crossings excluded by construction",
+   "status": "167 (3) in the advisor's summed form (5955171021 (2)): Rule3 rearranged, the floor's noise at most 1 / (2 |z_t|) per Node and 1 / (A sqrt N) summed, never per Node where z_t crosses 0",
+   "fence": "GameBoard"
+  }
+ }
+}

@@ -68,7 +68,6 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert (quanta[standing] != 0).all() and (standing & declared).any()
         drifts.append((books := board.books()["matter"])["drift"])
         assert abs(books["quanta"] - laid) <= CHAIN  # Rule3's rounding, under a quantum per Node
-    print(f"GAMEBOARD body {laid}: quanta {min(kept)}-{max(kept)}, drift {min(drifts)}-{max(drifts)}")
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0
     mode_path, document = world.with_suffix(".mode.json"), json.loads(world.read_text(encoding="utf-8"))
     document["measured"][0]["nodes"] = [{**n, "count": 1} for n in document["measured"][0]["nodes"]]
@@ -177,10 +176,6 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert BACK.first_difference(loaded, BACK.snapshot(board)) is None and board.tick == 0, n
     readings = {n: DRIFT.drift(gated.get(n, LOOK / f"{n}.json"), None) for n in expected["worlds"]}
     against = DRIFT.compared(expected, readings)
-    changes = {name: DRIFT.change_of(reading) for name, reading in readings.items()}
-    a, b = against["a_like_less_background"], against["b_unlike_less_background"]
-    blind = {key: against[key] for key in ("like_apart", "unlike_together", "same_size")}
-    print(f"GAMEBOARD the look: changes {changes}, a {a}, b {b}, blind {blind}")
     assert against["like_further_than_unlike"] and against["half_difference"][0] > 0, against
     board, names = (b := GameBoard(load_world(LOOK / "unlike_plain.json"))), [f.name for f in b.families]
     charged, charge, matter = map(names.index, ("charged", "charge", "matter"))

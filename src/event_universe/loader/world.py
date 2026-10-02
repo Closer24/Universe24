@@ -14,13 +14,14 @@ from event_universe.loader.derived import FamilyRule, Row
 from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
 from event_universe.loader.instrument import Pattern, basis_of, pattern_of, patterns_of_the_law
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
+from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("measured", "messages", "detectors", "receding")
+WORLD_KEYS += ("measured", "messages", "detectors", "receding", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
@@ -77,7 +78,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors and the receding faces."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors, the receding faces and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -96,6 +97,7 @@ class World:
     messages: tuple[MessageRow, ...]
     detectors: tuple[DetectorRow, ...]
     receding: tuple[RecedingFace, ...]
+    lay: Lay | None  # the lay the world declares for its bodies and its tolerance (`loader/lay.py`)
 
 
 def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, bool]:
@@ -367,13 +369,16 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     # holder of the sign one row per charged record beside the free row (derived.with_records)
     counted = [body.family for body in bodies]
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
+    lay = lay_of(world["lay"], "lay") if "lay" in world else None
+    ticks, pairs = integer(world["ticks"], "ticks", 0), [families[b.family].pair for b in bodies]
+    budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
         (open_axes[0], open_axes[1], open_axes[2]),
         depth,
         beyond,
-        integer(world["ticks"], "ticks", 0),
+        ticks,
         gamma,
         action,
         derived.largest_of(width),
@@ -385,4 +390,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         messages,
         detectors,
         receding,
+        lay,
     )
