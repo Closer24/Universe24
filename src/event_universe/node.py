@@ -352,7 +352,7 @@ def write_sources(
     rulers: dict[int, Rulers],
     gamma: int,
 ) -> list[Any]:
-    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval, the factor by the source's kind; the integer 0 where nothing sources a line): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x the booking of each that the row's sources name scaled by the write's factor at that family's paces (`written`, `rulers` per source family), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over the sources of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's 70, #1572 comment 5935615659: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the readers' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
+    """The numerators of a held family's one write per line at every Node (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval, the factor by the source's kind; the integer 0 where nothing sources a line), each the row's write weight k_w times the sources' sum (the owner's decision of 2026-10-02: the holder's declared coefficient sits in the write, `FamilyRule.write`): for the time line SUM over the sourcing families (its readers, by the hold's reciprocity) of w x the booking of each that the row's sources name scaled by the write's factor at that family's paces (`written`, `rulers` per source family), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over the sources of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's 70, #1572 comment 5935615659: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the readers' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     time: Any = 0
     intervals = 1 if families[held].wronskian else 2
     for index in readers_of(families, held):
@@ -365,7 +365,7 @@ def write_sources(
             scaled = written(stress[axis], rulers[index], gamma, 2)
             total = total + weight_of(held, families[index]) * write.factors.get(index, 0) * scaled
         found.append(total)
-    return found
+    return [families[held].write * numerator for numerator in found]
 
 
 def held_write(
@@ -375,7 +375,7 @@ def held_write(
     remainders: Sequence[np.ndarray],
     direction: int = 1,
 ) -> tuple[list[Record], list[np.ndarray]]:
-    """A held family's one write per line (ALGEBRA.md #the-primitives, the row "the hold"), its lines already stepped by Rule3 in the interval's second act, with or without a gap: each line's level gains (numerator + r) div wall by the write's carried division (features/hold) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the lines and the remainders after."""
+    """A held family's one write per line (ALGEBRA.md #the-primitives, the row "the hold"), its lines already stepped by Rule3 in the interval's second act, with or without a gap: each line's level gains (numerator + r) div wall by the write's carried division (features/hold) with the one remainder kept at the Node, the numerator the write weight times the sources' sum (`write_sources`), of either sign (a negative numerator takes the level down, the quotient the floor and the remainder in [0, wall) as ever); backward the increments taken off and the remainders stepped back, exact; returns the lines and the remainders after."""
     written, after = [], []
     for line, numerator, wall, remainder in zip(lines, numerators, walls, remainders, strict=True):
         level, kept = hold(line.now, numerator, wall, remainder, direction)

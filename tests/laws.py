@@ -14,11 +14,13 @@ EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
 CHAIN, QUANTA = 24, 50  # the shortest chain (x open) holding the body of 50 and the end detectors apart
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
+CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
 
 
-def real_row(name: str, pair: tuple[int, int], lines: int, level_weight: int | None) -> Row:
-    """A row of real lines as the loader reads it (loader.derived.Row), one part, no plane, sourced by the form where it is held, acting on the pace."""
-    return Row(name, pair, lines, 1, False, False, False, level_weight, 0)
+def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
+    """Rows of real lines as the loader reads them (loader.derived.Row), each (name, pair, lines, level weight): one part, no plane, sourced by the form where it is held at the write weight 1, acting on the pace, and every row reading every held row among them at the weight 1 (the tests' declaration)."""
+    held = tuple((name, 1) for name, _pair, _lines, weight in rows if weight is not None)
+    return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
 
 
 def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
@@ -43,12 +45,13 @@ RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the 
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
-    """The tests' universe copied beside a world as u.json (the families `drop` names left out, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`) with the engine's start file as e.json."""
+    """The tests' universe copied beside a world as u.json (the families `drop` names left out, of every family's reads too, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`) with the engine's start file as e.json."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"] = [family for family in universe["families"] if family["name"] not in drop]
-    universe["families"] += [dict(CHARGED)] if charged else []
+    universe["families"] += [json.loads(json.dumps(CHARGED))] if charged else []
     for family in universe["families"]:
         family["pair"] = pairs.get(family["name"], family["pair"])
+        family["reads"] = {name: w for name, w in family["reads"].items() if name not in drop}
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 

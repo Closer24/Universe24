@@ -1,7 +1,7 @@
 {
  "integers": {
   "node_clock": 6000,
-  "quantum_action": 32768,
+  "quantum_action": 36000,
   "width": 63,
   "link_unit": 16
  },
@@ -12,12 +12,17 @@
     6000,
     6000
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "held": {
     "sources": [
      "form",
      "tensions"
     ],
-    "level_weight": 1000
+    "level_weight": 1000,
+    "write_weight": 1
    }
   },
   {
@@ -26,11 +31,16 @@
     6000,
     6000
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "held": {
     "sources": [
      "wronskian"
     ],
     "level_weight": 1000000,
+    "write_weight": 1,
     "act": "rotation"
    }
   },
@@ -40,11 +50,16 @@
     2400,
     2401
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "held": {
     "sources": [
      "form"
     ],
-    "level_weight": 1
+    "level_weight": 1,
+    "write_weight": 1
    }
   },
   {
@@ -53,6 +68,10 @@
     4000,
     6000
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "dimension": 1
   },
   {
@@ -61,6 +80,10 @@
     4000,
     6000
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "dimension": 2
   }
  ]

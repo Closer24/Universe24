@@ -1,4 +1,4 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate). PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, one line each why."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate). PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, each one's docstring saying why."""
 
 import ast
 import io
@@ -10,25 +10,17 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-PHYSICAL_MODULES: dict[str, str] = {
-    "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
-    "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
-    "share.py": "the share: the count as the record's reading at every Node, in quanta over the count's wall by Rule3's division act",
-    "reports.py": "the detectors' reports, the net inflow through a region's front boundary, and a body's Nodes derived for a report, readings of whole-board arrays",
-    "growth.py": "the receding face: the GameBoard grown by layers of zeros as the front reaches it, taken off on the way back",
-    "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
-    "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies, the messages and the detectors",
-    "loader/keys.py": "the keys of the files: an object, an integer, a Node on the board, a range along an axis",
-    "loader/mode.py": "the generator's mode file: every body's and message's levels within the amplitude bound and 0 beyond the board",
-    "loader/faces.py": "the inner faces of the board: the Nodes declared beyond it, read as 0 through every Port",
-    "loader/messages.py": "the messages, laid records of a family of quanta: their keys and their levels from the mode file",
-    "loader/derived.py": "the families from the rule and the amplitude bound A derived from the width",
-    "loader/instrument.py": "the instrument's declaration on a detector, its setting and its parts' pattern, read by nothing in the engine",
-    "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act, its fixed point iterated and the form's term (ALGEBRA.md #the-line, #the-direction)",
-    "core/integer.py": "the working bound, the host's signed integer range",
-    "core/paces.py": "the composed paces, the clock and the Link's pace of the content, and the factors",
-    "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port, the one shift across Nodes of the package",
-}
+PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "growth.py", "world_files.py")
+PHYSICAL_MODULES += tuple(
+    f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages", "derived")
+)
+PHYSICAL_MODULES += (
+    "loader/instrument.py",
+    "core/rule3.py",
+    "core/integer.py",
+    "core/paces.py",
+    "core/ports.py",
+)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}

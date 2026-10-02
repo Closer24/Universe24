@@ -13,7 +13,7 @@ from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule, Row
 from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
 from event_universe.loader.instrument import Pattern, basis_of, pattern_of, patterns_of_the_law
-from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
+from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, reads_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 
@@ -25,10 +25,10 @@ WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured"
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
-    ("name", "pair", "dimension", "held"),
+    ("name", "pair", "dimension", "held", "reads"),
     ("name", "pair"),
-    ("sources", "level_weight", "rest", "act"),
-    ("sources", "level_weight"),
+    ("sources", "level_weight", "write_weight", "rest", "act"),
+    ("sources", "level_weight", "write_weight"),
 )
 FORM, TENSIONS, WRONSKIAN = (
     "form",
@@ -140,7 +140,7 @@ def kind_of(width: int) -> type:
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its level weight, its rest and its act (a held row; the level weight `level_weight`, the quanta of form that write one level of the row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape."""
+    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta) or its sources with its level weight, its write weight, its rest and its act (a held row; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -160,6 +160,12 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         name = row["name"]
         if not isinstance(name, str) or not name or name in [found.name for found in rows]:
             raise ValueError(f"{label}.name must be a name of its own")
+        label = f"{label} ({name!r})"
+        if "reads" not in row:
+            raise ValueError(
+                f"{label} lacks the key 'reads': a family names the holders it reads, {{}} for none"
+            )
+        reads = reads_of(row["reads"], f"{label}.reads")
         pair = row["pair"]
         if not isinstance(pair, list) or len(pair) != 2:
             raise ValueError(f"{label}.pair must be [num, den]")
@@ -170,20 +176,25 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
             )
         lines, parts, plane, wronskian, rotation = shape_of(row, label)
-        level_weight, rest = None, 0
+        weight, writes, rest = None, None, 0
         if "held" in row:
             holds = row["held"]
-            level_weight = integer(holds["level_weight"], f"{label}.held.level_weight", 1)
+            weight = integer(holds["level_weight"], f"{label}.held.level_weight", 1)
+            writes = integer(holds["write_weight"], f"{label}.held.write_weight", -MAX_WORK_INT)
             if "rest" in holds:
                 if wronskian or num != den:
                     raise ValueError(
-                        f"{label}.held.rest: only the massless row holding the content rests at a level"
+                        f"{label}.held.rest: only the massless row of the content rests at a level"
                     )
                 rest = integer(
                     holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
                 )
-        rows.append(Row(name, (num, den), lines, parts, plane, wronskian, rotation, level_weight, rest))
-    return integers, derived.family_rules(rows)
+        rows.append(
+            Row(name, (num, den), lines, parts, plane, wronskian, rotation, weight, writes, rest, reads)
+        )
+    families = derived.family_rules(rows)
+    derived.energy_line(families, integers["node_clock"], integers["quantum_action"])
+    return integers, families
 
 
 def bodies_of(

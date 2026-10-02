@@ -12,12 +12,17 @@
     6000,
     6000
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "held": {
     "sources": [
      "form",
      "tensions"
     ],
-    "level_weight": 10
+    "level_weight": 10,
+    "write_weight": 1
    }
   },
   {
@@ -26,11 +31,16 @@
     6000,
     6000
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "held": {
     "sources": [
      "wronskian"
     ],
-    "level_weight": 1
+    "level_weight": 1,
+    "write_weight": 1
    }
   },
   {
@@ -39,11 +49,16 @@
     2400,
     2401
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "held": {
     "sources": [
      "form"
     ],
-    "level_weight": 1
+    "level_weight": 1,
+    "write_weight": 1
    }
   },
   {
@@ -52,6 +67,10 @@
     4000,
     6000
    ],
+   "reads": {
+    "gravity": 1,
+    "binding": 1
+   },
    "dimension": 1
   }
  ]
