@@ -1,4 +1,4 @@
-"""The start (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the paces its reads give it, its own level among the content (Every row reads the content, [the paces](#the-paces)), with the sum's sources per proper volume and per proper interval (The write per proper volume and per proper interval): the static condition of the row's own step and write, (6 (den - num) p_0^2 + 6 num p_i^2) a = num p_i^2 S_6(a) + 3 den Gamma^2 sigma with p_0 the clock and p_i = p_0^2 / Gamma the Node's pace at the content c the row reads (its own level among it; the composed paces, core/paces.py), sigma the source scaled by the write's factor at the same paces (`paces.write_factor`, two proper-interval powers on a count, one on a Wronskian, no tension at the start so the three axes' paces are the Node's), 6 den a = num S_6(a) + 3 den sigma where the content is 0, at a fine unit derived from the width, the division act iterated from nothing until the levels repeat (its first repeat its fixed point, the sources of either sign or both), the levels the nearest integers by the division act, the remainder at the half wall, the division's origin (the write's remainder starts at half its wall too); the Link unit cancels from the rest, so it is the same at every G."""
+"""The start (ALGEBRA.md #the-generator (g), the start): a held family's rest under its own line at the paces its reads give it, its own level among the content (Every row reads the content, [the paces](#the-paces)), with the sum's sources per proper volume and per proper interval (The write per proper volume and per proper interval): the static condition of the row's own step and write, (6 (den - num) p_0^2 + 6 num p_i^2) a = num p_i^2 S_6(a) + 3 den Gamma^2 sigma with p_0 the clock and p_i = p_0^2 / Gamma the Node's pace at the content c the row reads (its own level among it; the composed paces, core/paces.py), sigma the source scaled by the write's factor at the same paces (`paces.write_factor`, two proper-interval powers on a count, one on a Wronskian, no tension at the start so the three axes' paces are the Node's), 6 den a = num S_6(a) + 3 den sigma where the content is 0, at a fine unit derived from the width, the division act iterated from nothing until the levels repeat the state they were read at, its fixed point, or an earlier state one unit off at most, a rounding tie (a return to an earlier state further off, a cycle, refused by name; the sources of either sign or both), the levels the nearest integers by the division act, the remainder at the half wall, the division's origin (the write's remainder starts at half its wall too); the Link unit cancels from the rest, so it is the same at every G."""
 
 from __future__ import annotations
 
@@ -108,7 +108,7 @@ def rest(
     others: np.ndarray | int = 0,
     intervals: int = 2,
 ) -> FieldAtRest:
-    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (count x unit div E_s) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), E_s the row's level weight, the paces from the content the row reads, `others` the other holders' levels and the row's own level b div unit among them (Every row reads the content), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and the paces re-read from it until the levels repeat the content they were read at (a repeat of an earlier state a rounding tie, the content then one unit off at that Node), the remainder at the half of `wall`, the wall of the rule the row steps by; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, where the level weight is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
+    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (count x unit div E_s) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), E_s the row's level weight, the paces from the content the row reads, `others` the other holders' levels and the row's own level b div unit among them (Every row reads the content), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and the paces re-read from it until the levels repeat the content they were read at, the fixed point, or repeat an earlier state one unit off at most at every Node, a rounding tie (the content then one unit off at that Node; re-read levels that return to an earlier state further off, a cycle of two states or more, are no rest and are refused by name with the cycle's length and the two levels at the Node: about a deep enough source the self-read's swing is not damped), the remainder at the half of `wall`, the wall of the rule the row steps by; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, where the level weight is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
     num, den = pair
     if level_weight < 1:
         raise ValueError(f"the start's level weight is from 1, got {level_weight}")
@@ -122,7 +122,8 @@ def rest(
     unit = unit_of(counts, pair, level_weight, width, gamma)
     source = division(3 * den * unit, level_weight, counts) * gamma * gamma
     half = int(division(1, 2, unit))
-    fine, own, iterations, seen = np.zeros_like(counts), np.zeros_like(counts), 0, set()
+    fine, own, iterations = np.zeros_like(counts), np.zeros_like(counts), 0
+    seen: dict[bytes, int] = {}  # every state the paces were read from, by its outer pass
     while True:  # the outer pass: the paces from the row's own level as last rounded
         content = others + own
         clock, pace = paces.node_paces(gamma, content)
@@ -137,12 +138,21 @@ def rest(
         scaled = scaled_source(source, clock, pace, gamma, intervals)
         fine, iterations = settled(fine, reads, divisor, scaled, wrap, iterations)
         rounded = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0])
-        if np.array_equal(rounded, own) or (key := rounded.tobytes()) in seen:
-            break  # the levels repeat the content they were read at, or an earlier state: a rounding tie
-        seen.add(key)
+        if np.array_equal(rounded, own):
+            break  # the levels repeat the content they were read at: the fixed point
+        if (key := rounded.tobytes()) in seen:  # an earlier state: a rounding tie, or a cycle
+            node = np.unravel_index(int(np.abs(rounded - own).argmax()), rounded.shape)
+            if abs(int(rounded[node]) - int(own[node])) <= 1:
+                break  # a rounding tie: the levels one unit off the content they were read at, at most
+            raise ValueError(
+                f"the rest of the pair {list(pair)} finds no fixed point: the levels re-read from the row's own "
+                f"rounding return to an earlier state after {iterations} iterations, a cycle of length "
+                f"{len(seen) - seen[key]}, {int(own[node])} and {int(rounded[node])} at the Node "
+                f"{[int(index) for index in node]}"
+            )
+        seen[key] = len(seen)
         own = rounded
-    levels = rounded
-    return FieldAtRest(levels, fine, unit, iterations, int(division(1, 2, wall - 1)), own)
+    return FieldAtRest(rounded, fine, unit, iterations, int(division(1, 2, wall - 1)), own)
 
 
 def settled_rows(
