@@ -40,4 +40,43 @@ level along an axis from the centre `tools/body_rest.py` prints with `--reach`.
 
 ## The reading (main d924798b)
 
-Written after the run.
+The lay of `pair.json` on this engine (the builder with `--modes`, the generator laying two
+bodies in two passes beside four other folders' lays): refused by name by the generator after
+4,770 s (80 minutes on four cores shared with the other lays and another session's tests),
+verbatim: `ValueError: measured[1] and measured[0] share a Node in their regions: two bodies
+stand apart or are one body`. The first body's record on this engine is wide (the single pixel
+of world (i): the rms 3.9 Links, its record reaching about 12 Links), so two such bodies twelve
+Links apart on the 25-cube have regions that share a Node, and the generator lays no pair (the
+first round's refusal, "the record of the body ... scaled at 80 does not stand", was the old
+start's; the charged pairs of world (iv), the same bodies as planes, are refused by name on this
+engine at the first body's pass, `examples/events/charge/blind_and_reading.md`). The world stands declared
+with one Node per body and no mode file, the loader refusing it at load (`the mode file beside
+the world must be an object`), and nothing of it is run in this round; lines 2 and 3 are not
+read. Line 1, the range, is read on the single bodies of world (i), `examples/events/matter_alone/pixel.json`
+(the open 25-cube, the faces at 12 Links from the centre) and `cloud.json` (the 41-cube, 20
+Links), by `tools/body_rest.py` with `--reach 12` and `--reach 20`, every number a GameBoard
+reading:
+
+1. **The range.** The binding holder's level along +x from the pixel's centre at the start: 542,
+   514, 447, 363, 286, 220, 167, 127, 96, 70, 49, 32, 15 at 0 to 12 Links, the ratios of
+   successive levels 0.95, 0.87, 0.81, 0.79, 0.77, 0.76, 0.76, 0.76, 0.73, 0.70, 0.65, 0.47,
+   against Yukawa's e^(-1 / 20) r / (r + 1) = 0.48, 0.63, 0.71, 0.76, 0.79, 0.82, 0.83, 0.85,
+   0.86, 0.87, 0.87, 0.88 and a bare 1 / r's 0.50, 0.67, 0.75, 0.80, 0.83, 0.86, 0.88, 0.89, 0.90,
+   0.91, 0.92, 0.92: the fall is the body's own within 4 Links (the rms 3.9), steeper than both
+   lines beyond and steepest toward the face, which reads 0. From the cloud's centre on the
+   41-cube: 184, 189, 184, 175, 159, 140, 120, 102, 85, 69, 56, 45, 35, 28, 21, 16, 12, 8, 5, 3,
+   2 at 0 to 20 Links, the ratios 0.85, 0.83, 0.81, 0.81, 0.80, 0.78, 0.80 at 6 to 12 Links
+   against Yukawa's 0.82, 0.83, 0.85, 0.86, 0.87, 0.87, 0.88 and 1 / r's 0.86, 0.88, 0.89, 0.90,
+   0.91, 0.92, 0.92: steeper than 1 / r by e^(-0.09) per Link at 8 Links and e^(-0.14) at 12
+   against Yukawa's e^(-0.05), the excess growing toward the face at 20. So the range R = 20 is
+   not resolved on these boxes: the sources are wide (the rms 3.9 and 6.6 Links) and the faces
+   stand within one range of the centre, their images steepening the fall; what is read is a
+   held level falling faster than a bare 1 / r beyond the body, consistent with a screened line
+   of a range of the order of ten to twenty Links and not a measurement of it. A box of 61 or
+   more with a compact source would read the line (the blind's own "beyond a few Links").
+2. **The beat.** Not read (the pair not laid).
+3. **The join and the parting.** Not read (the pair not laid); the two declared regions report
+   nothing, the world not running.
+
+Agreement with the blind: line 1 consistent and unresolved (the faces within R); lines 2 and 3
+not read.

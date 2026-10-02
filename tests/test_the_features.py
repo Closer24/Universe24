@@ -144,8 +144,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     source = dstn(3 * den * counts.astype(float) / weight, type=1, norm="ortho")
     plain = idstn(source / denominator, type=1, norm="ortho")  # the line at the pace 1, the far limit
     own_paces = paces.node_paces(GAMMA, found.content)  # the row's own composed paces
-    clock, pace = (np.asarray(p).astype(float) for p in own_paces)
-    own = found.content.astype(float)
+    (clock, pace), own = (np.asarray(p).astype(float) for p in own_paces), found.content.astype(float)
     far = (np.abs(own) < GAMMA / 100) & (np.abs(plain) >= 8)  # outside the body: the plain line's shape
     scale = (own / plain)[far]  # one factor, the source per proper volume at the body
     centre = clock[10, 10, 10] / GAMMA  # N at the source: the well shallower by its order, U = U_0 / h
