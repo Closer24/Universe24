@@ -56,13 +56,12 @@ def centroids(board: GameBoard) -> list[Fraction | None]:
     return found
 
 
-def drift(path: Path, intervals: int | None) -> dict[str, Any]:
-    """One world's reading: the bodies' centroids at the start and after `intervals` intervals (the world's ticks without it), each body's drift and, for two bodies, the separation's change, exact fractions, labelled GAMEBOARD."""
-    board = GameBoard(load_world(path))
+def drift(source: Path | GameBoard, intervals: int | None) -> dict[str, Any]:
+    """One world's reading, from its path (loaded here) or from a GameBoard standing at its start: the bodies' centroids at the start and after `intervals` intervals (the world's ticks without it), each body's drift and, for two bodies, the separation's change, exact fractions, labelled GAMEBOARD."""
+    name = getattr(source, "name", "GameBoard")  # the file's name, or a board's
+    board = source if isinstance(source, GameBoard) else GameBoard(load_world(source))
     if len(board.world.bodies) not in (1, 2):
-        raise ValueError(
-            f"{path.name} declares {len(board.world.bodies)} bodies: the drift reads one or two"
-        )
+        raise ValueError(f"{name} declares {len(board.world.bodies)} bodies: the drift reads one or two")
     steps = board.world.ticks if intervals is None else intervals
     start = centroids(board)
     for _ in range(steps):
@@ -85,7 +84,7 @@ def drift(path: Path, intervals: int | None) -> dict[str, Any]:
         )
     found = {
         "label": LABEL,
-        "input": path.name,
+        "input": name,
         "intervals": board.tick,
         "split": split_of(board),
         "bodies": bodies,
