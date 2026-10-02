@@ -125,3 +125,10 @@ the axes once the Links' paces differ by axis; 166's proof takes every act as a 
 of the Node's and its Ports' integers, and this booking is not. A finding by name for the engine's
 register and for the one-domain step, which would be exact only with the write's factor booked
 symmetrically in the axes; nothing patched.
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (the write's factor as one rounding over the one wall, the
+start's rest refined to its line within one fine unit; ENGINE.md section 3) touches nothing
+here: `hydrogen_1s.json` and `hydrogen_2s.json` stand declared without mode files, refused at
+load by name as before, not laid and not run; the blind stands as written.
