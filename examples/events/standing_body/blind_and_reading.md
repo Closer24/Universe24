@@ -36,9 +36,11 @@ written as such and never adjusted.
 - At the stop 2 (the least the trajectory reached) the 2^15 lay converged at the pass 16: the
   amplitude 1,865 (the clock pair [2566, 1865], 2 cos omega_b = 1.3759), 9,987 quanta over 1,551
   Nodes, 79 at the centre, N_eff = SUM f^2 = 148, sqrt(SUM f^2 / SUM f^4) = 1.84, rho_x = 2.38 Links.
-  The 2^19 lay at the stop 8 (the same fraction of the amplitude) had not finished after 80 minutes
-  of machine time when this file was written, and its run is not in this reading; its world stands
-  declared with its tolerance [1, 125] and without a mode file (refused at load until laid).
+  The 2^19 lay at the stop 8 (the same fraction of the amplitude) was stopped at the Boss's deadline
+  of 22:15 Israel after 110 minutes of wall time and 89 minutes of CPU on a shared machine, unfinished
+  (the owner's word of 19:28, whatever takes a lot of time, cut it); its world is shipped declared with
+  its tolerance [1, 125] and without a mode file, refused at load by name, and the blind's ratio between
+  the two T stands unread until the lay is run to its end.
 - The budget's gate (`loader/lay.py`): at the lay's c_i = 79 over 1000 intervals the least T is
   2^14 at the tolerance [1, 32] and 2^18 at [1, 125], under the worlds' T; the gate refuses by name
   when the tolerance asks more (tests/test_pixel_mode.py).
