@@ -12,8 +12,9 @@ from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, PACKET, QUANTA, SLIT, TOOL, chain_body_world, refused, slit_world
 
 
-def dense(levels: dict[str, list[int]]) -> np.ndarray:
-    """A level of the mode file's sparse form as the slit board's array."""
+def dense(
+    levels: dict[str, list[int]],
+) -> np.ndarray:  # a level of the mode file's sparse form as the slit board's array
     return np.bincount(levels["at"], levels["values"], 24 * 9).astype(np.int64).reshape(24, 9, 1)
 
 

@@ -12,7 +12,15 @@ from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule, Row
 from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
-from event_universe.loader.instrument import Pattern, basis_of, pattern_of, patterns_of_the_law
+from event_universe.loader.instrument import (
+    Instrument,
+    Pattern,
+    basis_of,
+    instrument_of,
+    pattern_of,
+    patterns_of_the_law,
+    ports_of,
+)
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, reads_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
@@ -20,7 +28,7 @@ from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("measured", "messages", "detectors", "receding")
+WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
@@ -65,7 +73,7 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), the reader's and nothing of the engine's, each empty where none is declared."""
+    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), read by the reader and by the instrument's draw through the root in the run, each empty where none is declared."""
 
     name: str
     positions: tuple[Node, ...]
@@ -77,7 +85,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors and the receding faces."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors, the receding faces and the instrument's draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -96,6 +104,7 @@ class World:
     messages: tuple[MessageRow, ...]
     detectors: tuple[DetectorRow, ...]
     receding: tuple[RecedingFace, ...]
+    instrument: Instrument | None
 
 
 def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, bool]:
@@ -251,7 +260,7 @@ def detectors_of(
     beyond: tuple[Node, ...],
     layer: tuple[Node, ...],
 ) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration, read by nothing in the engine, `loader/instrument.py`; a pattern without a basis is refused by name), or the body it names by its number (no basis); after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the instrument's draw's through the root, `loader/instrument.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
@@ -267,6 +276,10 @@ def detectors_of(
         if "pattern" in row and not basis:
             raise ValueError(f"{label}.pattern reads the setting `basis` declares, and none is declared")
         pattern = pattern_of(row["pattern"], f"{label}.pattern", basis) if "pattern" in row else ()
+        if pattern:
+            ports_of(
+                basis, pattern
+            )  # the two ports orthogonal with equal norms, refused by name otherwise
         if "block" in row:
             if basis:
                 raise ValueError(
@@ -374,6 +387,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     regions_of_the_law(detectors, messages, shape, (periodic[0], periodic[1], periodic[2]), families)
     laid = [message.family for message in messages] + [body.family for body in bodies]
     patterns_of_the_law([(d.name, d.pattern) for d in detectors], laid, families)
+    instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
@@ -392,4 +406,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         messages,
         detectors,
         receding,
+        instrument,
     )

@@ -23,8 +23,7 @@ def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
     return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
 
 
-def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
-    """The module at `path` loaded under `name` and registered in sys.modules (a tool or a generator)."""
+def load_file(name: str, path: Path):
     spec = importlib.util.spec_from_file_location(name, path)
     assert spec is not None and spec.loader is not None
     sys.modules[name] = module = importlib.util.module_from_spec(spec)
@@ -32,8 +31,7 @@ def load_file(name: str, path: Path):  # type: ignore[no-untyped-def]
     return module
 
 
-def refused(match: str, call, *args, **keys):  # type: ignore[no-untyped-def]
-    """The call on its arguments refused by name: a ValueError whose message matches `match`."""
+def refused(match: str, call, *args, **keys):
     with pytest.raises(ValueError, match=match) as refusal:
         call(*args, **keys)
     return refusal.value
@@ -82,7 +80,6 @@ PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0,
 
 
 def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
-    """The slit world, a wall across x with one gap at y = 4 on a board of 24 x 9 x 1 (z folded), the packet of light laid by the generator `tool`, in the tests' universe; `changes` replace the world's keys."""
     universe_beside(folder)
     path = folder / f"{name}.json"
     path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")

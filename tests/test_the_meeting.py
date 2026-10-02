@@ -1,12 +1,12 @@
-"""The meeting's gates (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate): a record of several parts laid as one event and never summed at a Node, the instrument's read of the parts' signed level sums (the parts line) and the joint-share reader pairing the parts through the root across the sides (tools/bell_gate.py): the exact algebra at Bell's four settings and at the GHZ patterns, the local credits as the fence, the determinism of equal parts, and the two gates' four worlds each (examples/events/bell, examples/events/ghz) end to end with the back-in-time gate MATCH; Bell and the GHZ are gates and never results."""
-
-from __future__ import annotations
+"""The meeting's gates (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate): a record of several parts laid as one event and never summed at a Node, the instrument's read of the parts' signed level sums (the parts line) and the joint-share reader pairing the parts through the root across the sides (tools/bell_gate.py): the exact algebra at Bell's four settings and at the GHZ patterns, the local credits as the fence, the determinism of equal parts, and the two gates' four worlds each (examples/events/bell, examples/events/ghz) end to end with the back-in-time gate MATCH; Bell and the GHZ are gates and never results. The click written on the GameBoard (src/event_universe/credit.py, features/click): the instrument's draw inside the run and its write at one Node, the board exact between clicks."""
 
 import json
 from fractions import Fraction
 
+import numpy as np
+
 from event_universe.game_board import GameBoard
-from event_universe.loader.instrument import basis_of, pattern_of, patterns_of_the_law
+from event_universe.loader.instrument import basis_of, instrument_of, pattern_of, patterns_of_the_law
 from event_universe.loader.world import detectors_of, shape_of, universe_of
 from event_universe.world_files import load_world
 from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, load_file, refused
@@ -34,7 +34,6 @@ def credits(sides, order, patterns, form=GATE.joint):  # type: ignore[no-untyped
 
 
 def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
-    """A gate's four worlds built from its design into `folder` with the blind, laid, run by the runner (LAWFUL; every parts line's parts equal, labelled the detector's and naming no Node) and gated back in time over the run (MATCH), then read against the blind: the reading and the expectation."""
     build.main(["--design", str(build.HERE / "design.json"), "--folder", str(folder)])
     expected = json.loads((folder / "expectation.json").read_text(encoding="utf-8"))
     for name in expected["runs"].values():
@@ -43,11 +42,17 @@ def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
         lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
         parts = [line for line in lines if line["event"] == "parts"]
         equal = all(len(set(map(tuple, p["levels"]))) == 1 and p["label"] == "DETECTOR" for p in parts)
-        assert parts and equal
+        credits = [line for line in lines if line["event"] == "credit"]
+        assert parts and equal and credits and all(c["tick"] == c["window"][1] for c in credits)
         board = GameBoard(load_world(folder / f"{name}.json"))
-        assert BACK.verdict(board, board.world.ticks)["verdict"] == "MATCH"
+        assert BACK.verdict(board, board.world.ticks - 2)["verdict"] == "MATCH"  # exact before the click
     outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
-    return GATE.reading(folder / "expectation.json", outputs), expected
+    read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
+    assert (
+        read[name] == expected["blind"][name] and read["correlation"] == expected["blind"]["correlation"]
+    )
+    assert read["marginals"] == expected["blind"]["marginals"]
+    return read, expected
 
 
 def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_it_exactly(tmp_path):
@@ -57,8 +62,9 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     shares, found = credits([a, b], ORDER, (PAIR, PAIR))
     assert found == MEETING and GATE.combination(found, CHSH) == Fraction(478, 169)
     assert [GATE.marginal(s) for s in shares] == [Fraction(1, 2)] * 4
-    for form, value in FENCE.items():
-        assert GATE.combination(credits([a, b], ORDER, (PAIR, PAIR), form)[1], CHSH) == value
+    assert all(
+        GATE.combination(credits([a, b], ORDER, (PAIR, PAIR), f)[1], CHSH) == v for f, v in FENCE.items()
+    )
     unequal, mirrored = side((20, 20), (19, 19)), tuple((y, x) for x, y in ORDER)
     shares, found = credits([unequal, equal], mirrored, (PAIR, PAIR))
     assert GATE.combination(found, CHSH) == UNEQUAL[0]
@@ -70,9 +76,7 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     refused("setting", GATE.ports_of, (1,), PAIR)
     refused("orthogonal", GATE.ports_of, A, ((1, 1),))
     read, expected = gate_worlds(BELL, tmp_path)
-    assert read["S"] == [478, 169] == expected["blind"]["S"]
-    assert [Fraction(*read["correlation"][key]) for key in expected["order"]] == MEETING
-    assert all(found == {"a": [1, 2], "b": [1, 2]} for found in read["marginals"].values())
+    assert [Fraction(*read["correlation"][k]) for k in expected["order"]] == MEETING
     assert (read["S_by_the_parts_shares"], read["S_by_the_local_sums"]) == ([238, 169], [240, 169])
     assert read["S_by_the_sign"] == [2, 1] == expected["blind"]["by_the_sign"]["S"]
     for world in read["worlds"].values():
@@ -101,8 +105,9 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     assert found == [-1, -1, -1, 1] and GATE.combination(found, MERMIN[1]) == -4
     (joint,), (e_3,) = credits(three, ((B, X, X),), PATTERNS)
     assert e_3 == Fraction(119, 169) and joint[("plus",) * 3] / sum(joint.values()) == Fraction(36, 169)
-    for form in FENCE:
-        assert GATE.combination(credits(three, MERMIN[0], PATTERNS, form)[1], MERMIN[1]) == -1
+    assert all(
+        GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) == -1 for f in FENCE
+    )
     refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "detectors[0].pattern", (1, 0))
     row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]]}
     refused("none is declared", detectors_of, [row], (2, 1, 1), 0, (), ())
@@ -110,12 +115,55 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
     refused("no record of several parts", patterns_of_the_law, [("d", (P,) * 4)], [], families)
     read, expected = gate_worlds(GHZ, tmp_path)
-    assert read["M"] == [-4, 1] == expected["blind"]["M"]
-    assert [read["correlation"][key] for key in expected["order"]] == [[-1, 1]] * 3 + [[1, 1]]
-    for credit in ("M_by_the_parts_shares", "M_by_the_local_sums", "M_by_the_sign"):
-        assert read[credit] == [-1, 1]
+    assert read["M"] == [-4, 1] and list(read["correlation"].values()) == [[-1, 1]] * 3 + [[1, 1]]
+    assert all(
+        read[c] == [-1, 1] for c in ("M_by_the_parts_shares", "M_by_the_local_sums", "M_by_the_sign")
+    )
     worlds = [read["worlds"][name] for name in expected["runs"].values()]
     assert [w["shares"] for w in worlds] == list(expected["blind"]["shares"].values())
     assert all(len(w["drawn"]) == 3 and w["mismatch"]["ratios"] == [[1, 1]] * 3 for w in worlds)
-    assert read["marginals"] == dict.fromkeys(expected["order"], dict.fromkeys("abc", [1, 2]))
     assert all(w["sub_correlations"] == dict.fromkeys(("a b", "a c", "b c"), [0, 1]) for w in worlds)
+
+
+def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
+    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, the one Node beside as a GameBoard diagnostic; at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, though the inflow is the same; the `instrument` key refused by name with a window of 0 and without its seed."""
+    world = json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8"))
+    world["instrument"]["window"], draw = 40, dict(world["instrument"])
+    (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
+    world.pop("instrument")
+    (twin := tmp_path / "twin.json").write_text(json.dumps(world), encoding="utf-8")
+    TOOL.main(["--input", str(cut)]), TOOL.main(["--input", str(twin)])
+    board, plain = GameBoard(load_world(cut), (lines := []).append), GameBoard(load_world(twin))
+    kept = {}
+    for _ in range(100):
+        board.step()
+        kept[board.tick] = BACK.snapshot(board)
+        if board.tick <= 40:
+            plain.step()
+    credits = [line for line in lines if line["event"] == "credit"]
+    pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
+    at = [(c["tick"], c["detector"], c["count"], c["window"][0], c["left"]) for c in credits]
+    left = board.credit.counts[pair]
+    assert at == [(40, "left", 1, 1, left + 1), (40, "right", 1, 1, left + 1)] + at[2:]
+    assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
+    was, now = dict(p for f in kept[40] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
+    assert {c["node"]["label"] for c in credits} == {"GAMEBOARD"}  # the one Node a diagnostic beside
+    written = {tuple(np.add(c["node"]["at"], plain.offset)) for c in credits[:2]}
+    assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
+    w = tuple(np.add(credits[0]["node"]["at"], plain.offset))
+    keys = [k for k in was if "light_pair" in k]
+    assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]
+    assert all(was[k][w] == 0 for k in keys) and any(now[k][w] != 0 for k in keys)
+    for _ in range(20):
+        board.step_inverse()
+        assert BACK.first_difference(kept[board.tick], BACK.snapshot(board)) is None
+    board.step_inverse()
+    assert BACK.first_difference(kept[79], BACK.snapshot(board))  # forward only: the click is not undone
+    assert BACK.verdict(GameBoard(load_world(twin)), 39)["verdict"] == "MATCH"
+    empty = GameBoard(load_world(cut), (none := []).append)
+    empty.credit.counts[pair] = 0
+    for _ in range(40):
+        empty.step()
+    assert not [line for line in none if line["event"] == "credit"] and len(none) == len(lines) // 2 - 2
+    refused("window", instrument_of, {**draw, "window": 0}, "instrument")
+    refused("lacks", instrument_of, {"window": 1}, "instrument")

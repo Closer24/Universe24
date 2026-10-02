@@ -27,21 +27,20 @@ OMEGA, T = math.acos(PAIR[0] / PAIR[1]), INTEGERS["quantum_action"]  # the rest 
 RULE, ZERO = coefficients(*PAIR, GAMMA, GAMMA, GAMMA), np.zeros(SHAPE, dtype=np.int64)
 
 
-def band(k: float) -> float:
-    """The matter pair's rotation rate at the wave number k along x on a ring (y and z folded)."""
+def band(
+    k: float,
+) -> float:  # the matter pair's rotation rate at the wave number k along x on a ring (y and z folded)
     return math.acos(PAIR[0] / (3 * PAIR[1]) * (math.cos(k) + 2))
 
 
 def wave(k: float, omega: float, sense: int = 1) -> list[node.Record]:
-    """A plane's two lines on the ring, z = A e^(i (k x - omega t)) for the sense +1 (clockwise, the positive Wronskian) and its conjugate for -1, the level before one interval earlier."""
     at = k * np.arange(SHAPE[0]).reshape(SHAPE)
     re, im = (np.rint(LEVEL * f(at)).astype(np.int64) for f in (np.cos, np.sin))
     re_before, im_before = (np.rint(LEVEL * f(at + omega)).astype(np.int64) for f in (np.cos, np.sin))
     return [node.Record(re, re_before, ZERO), node.Record(sense * im, sense * im_before, ZERO)]
 
 
-def rate(re: node.Record, im: node.Record, angles, steps: int):  # type: ignore[no-untyped-def]
-    """A plane's rotation rate at the Node 0 over `steps` turned intervals, the phase unwrapped, with the swings of the Wronskian read from the booking and of the plain one over the run."""
+def rate(re: node.Record, im: node.Record, angles, steps: int):
     phases, booked, plain = [], [], []
     for _ in range(steps):
         (re, im), (_first, second) = node.step_plane(re, im, RULE, RING, angles, GAMMA)

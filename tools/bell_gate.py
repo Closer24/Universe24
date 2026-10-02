@@ -1,4 +1,4 @@
-"""Bell's gate and the GHZ gate, the joint-share reader (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment). Four worlds, one per combination of settings, each with one record of several parts laid equal (the pair family's two, the GHZ family's four), one beam to each side and one declared region per side whose `basis` (p, q) is the side's setting and whose `pattern`, one integer pair [alpha_k, beta_k] per part, says how each part reads it; the engine reports per interval the parts' signed level sums at each region (the `parts` lines, the instrument's read). The reader pairs each part with the same part through the root across every side: with e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p the ports of a side and c_k the product over the sides of e_k at their ports, the joint share of one combination of ports is accumulated over the window on both members of the level pair, J = SUM over the window of (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2 (the advisor, #1563 comment 5924731760; the mathematician, #1572 comments 5925374010 and 5927559738), a sum of squares and never negative, so no floor is needed; E_n is the sum of the shares signed by the product of the ports' signs over their sum (for two sides E(a, b) = (J_++ + J_-- - J_+- - J_-+) over the four), a side's marginal P(+) its + shares over the sum, a sub-correlation over a subset of the sides the same signed by that subset alone; the four worlds' E combined with the expectation's signs, S = E(a, b) - E(a, b') + E(a', b) + E(a', b') for two sides (CHSH) and M = E(a, b', c') + E(a', b, c') + E(a', b', c) - E(a, b, c) for three (Mermin); every combination of ports credited (the efficiency 1 by the draw's construction), one combination drawn per world by the shares with the declared seed (the click); every number an exact fraction. At equal parts the pair gives E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)), Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12); the GHZ patterns give the shares cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, E_3 = cos 2(a + b + c), M = -4 at x = (1, 0) and y = (1, 1). Beside it, from the same reports, the local credits as the fence: by the parts' shares (each part's share credited alone, no sum before the square; S = 238 / 169, M = -1), by the local sums (the product of the sides' own squared sums; S = 240 / 169, M = -1) and by the sign (each side's larger port, 0 at a tie; S = 2, M = -1), every one a product form, S at most 2 and |M| at most 2; and the diagnostics `mismatch` (the parts' accumulated cross-side products M_k, their ratios M_k / M_1 and the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2), the mismatch's one number, E = cos 2a cos 2b + rho sin 2a sin 2b for the pair, the mathematician, #1572 comment 5925175652), GAMEBOARD, never in the blind and never in the credit. The settings, the patterns, the window, the regions, the seed and the combination's signs are the files'; the tool holds no number; the builders derive the blind by the same algebra on equal parts (`at_equal_parts`).
+"""Bell's gate and the GHZ gate, the joint-share reader (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment). Four worlds, one per combination of settings, each with one record of several parts laid equal (the pair family's two, the GHZ family's four), one beam to each side and one declared region per side whose `basis` (p, q) is the side's setting and whose `pattern`, one integer pair [alpha_k, beta_k] per part, says how each part reads it; the engine reports per interval the parts' signed level sums at each region (the `parts` lines, the instrument's read). The reader pairs each part with the same part through the root across every side: with e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p the ports of a side and c_k the product over the sides of e_k at their ports, the joint share of one combination of ports is accumulated over the window on both members of the level pair, J = SUM over the window of (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2 (the advisor, #1563 comment 5924731760; the mathematician, #1572 comments 5925374010 and 5927559738), a sum of squares and never negative, so no floor is needed; E_n is the sum of the shares signed by the product of the ports' signs over their sum (for two sides E(a, b) = (J_++ + J_-- - J_+- - J_-+) over the four), a side's marginal P(+) its + shares over the sum, a sub-correlation over a subset of the sides the same signed by that subset alone; the four worlds' E combined with the expectation's signs, S = E(a, b) - E(a, b') + E(a', b) + E(a', b') for two sides (CHSH) and M = E(a, b', c') + E(a', b, c') + E(a', b', c) - E(a, b, c) for three (Mermin); every combination of ports credited (the efficiency 1 by the draw's construction); the combination realised per world is the instrument's own draw inside the run, read from the output's `credit` lines (the click written on the GameBoard, `src/event_universe/credit.py`; None for a world declaring no instrument), the reader drawing nothing; every number an exact fraction. At equal parts the pair gives E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)), Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12); the GHZ patterns give the shares cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, E_3 = cos 2(a + b + c), M = -4 at x = (1, 0) and y = (1, 1). Beside it, from the same reports, the local credits as the fence: by the parts' shares (each part's share credited alone, no sum before the square; S = 238 / 169, M = -1), by the local sums (the product of the sides' own squared sums; S = 240 / 169, M = -1) and by the sign (each side's larger port, 0 at a tie; S = 2, M = -1), every one a product form, S at most 2 and |M| at most 2; and the diagnostics `mismatch` (the parts' accumulated cross-side products M_k, their ratios M_k / M_1 and the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2), the mismatch's one number, E = cos 2a cos 2b + rho sin 2a sin 2b for the pair, the mathematician, #1572 comment 5925175652), GAMEBOARD, never in the blind and never in the credit. The settings, the patterns, the window, the regions, the seed and the combination's signs are the files'; the tool holds no number; the builders derive the blind by the same algebra on equal parts (`at_equal_parts`).
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import random
 from collections.abc import Iterable
 from fractions import Fraction
 from itertools import combinations, product
@@ -19,9 +18,10 @@ from pathlib import Path
 from typing import Any
 
 from event_universe.loader.derived import count_wall
+from event_universe.loader.instrument import ports_of as instrument_ports
+from event_universe.reports import PORT_NAMES as PORTS  # a side's two ports: at (p, q) and at (-q, p)
 from event_universe.world_files import load_world
 
-PORTS = ("plus", "minus")  # a side's two ports: the pattern at the setting (p, q) and at (-q, p)
 Levels = dict[int, list[list[int]]]  # per interval, per part [now, before] at a region
 Ports = dict[str, tuple[int, ...]]  # a side's two ports, each one coefficient per part
 Key = tuple[str, ...]  # one port per side
@@ -42,21 +42,8 @@ def fraction(value: object) -> Fraction | None:
 
 
 def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
-    """A side's two ports from its declared setting (p, q) and its parts' pattern [[alpha_k, beta_k], ...]: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, the - port the + port's with the setting turned a quarter (the pair's pattern [[1, 0], [0, 1]] gives (p, q) and (-q, p)); refused by name: a setting of other than two coefficients, no pattern, and two ports not orthogonal with equal norms, which is no instrument of two outcomes."""
-    if len(basis) != 2 or not pattern:
-        raise ValueError(
-            "a side declares its setting (p, q) as `basis` and one pair [alpha, beta] per part as "
-            f"`pattern`, got {basis} and {list(pattern)}"
-        )
-    p, q = basis
-    plus = tuple(alpha * p + beta * q for alpha, beta in pattern)
-    minus = tuple(beta * p - alpha * q for alpha, beta in pattern)
-    crossed = sum(u * v for u, v in zip(plus, minus, strict=True))
-    if crossed or sum(u * u for u in plus) != sum(v * v for v in minus):
-        raise ValueError(
-            f"the pattern {list(pattern)} at the setting {basis} gives the ports {plus} and {minus}, "
-            "not orthogonal with equal norms: no instrument of two outcomes"
-        )
+    """A side's two ports from its declared setting and its parts' pattern, the loader's own (`loader/instrument.py`, `ports_of`: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, refused by name where not orthogonal with equal norms), keyed by the ports' names."""
+    plus, minus = instrument_ports(basis, pattern)
     return {PORTS[0]: plus, PORTS[1]: minus}
 
 
@@ -236,17 +223,17 @@ def mismatch(sides: list[Levels], parts: int) -> dict[str, Any]:
     }
 
 
-def drawn(shares: Joint, seed: int) -> list[str] | None:
-    """One combination of ports drawn by the joint shares with the declared seed, the click of the world: the instrument's draw and no line of the law; None where nothing was credited."""
-    keys = sorted(shares)
-    weights = [shares[key] for key in keys]
-    if not sum(weights):
-        return None
-    scale = 1
-    for weight in weights:
-        scale *= weight.denominator
-    whole = [int(weight * scale) for weight in weights]
-    return list(random.Random(seed).choices(keys, weights=whole, k=1)[0])
+def realised(
+    lines: list[dict[str, object]], family: str, detectors: list[str], window: tuple[int, int]
+) -> list[str] | None:
+    """The combination of ports the instrument realised in the run, one port per side from the output's `credit` lines of the family at the sides' regions within the window (the last of a window per side), the click; None where a side has none (a world declaring no instrument)."""
+    found: dict[str, str] = {}
+    for line in lines:
+        if line.get("event") != "credit" or line.get("family") != family:
+            continue
+        if line.get("detector") in detectors and window[0] <= int(str(line["tick"])) <= window[1]:
+            found[str(line["detector"])] = str(line["realised"])
+    return [found[name] for name in detectors] if all(name in found for name in detectors) else None
 
 
 def inflow_of(
@@ -264,7 +251,7 @@ def inflow_of(
 
 
 def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, Any]) -> dict[str, Any]:
-    """One world's reading: its sides' declared settings and patterns, the 2^n joint shares, E_n, each side's marginal and every sub-correlation, the three local credits, the drawn combination, the mismatch and each side's inflow in quanta over the window; a pattern of other than the family's parts is refused by name."""
+    """One world's reading: its sides' declared settings and patterns, the 2^n joint shares, E_n, each side's marginal and every sub-correlation, the three local credits, the combination the instrument realised in the run (`drawn`, from the credit lines), the mismatch and each side's inflow in quanta over the window; a pattern of other than the family's parts is refused by name."""
     loaded = load_world(world)
     family = next(f for f in loaded.families if f.name == expected["family"])
     window = (int(expected["window"][0]), int(expected["window"][1]))
@@ -287,7 +274,7 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
         },
         "intervals_reported": len(ticks_of(*sides)),
         **written(credits_of(sides, ports), labels),
-        "drawn": drawn(joint(sides, ports), int(expected["seed"])),
+        "drawn": realised(lines, family.name, [row.name for row in rows], window),
         "mismatch": mismatch(sides, family.parts),
         "quanta": {
             label: [inflow_of(lines, family.name, row.name, window), wall]
@@ -327,7 +314,7 @@ def blind_of(
 
 
 def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
-    """The reading of the four worlds against the expectation: per world the shares, E_n, the marginals, the sub-correlations, the local credits, the drawn combination and the mismatch; the combination (S or M, named by the expectation with its signs) by the meeting and by each local credit; the blind row copied from the expectation."""
+    """The reading of the four worlds against the expectation: per world the shares, E_n, the marginals, the sub-correlations, the local credits, the combination realised in the run and the mismatch; the combination (S or M, named by the expectation with its signs) by the meeting and by each local credit; the blind row copied from the expectation."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     worlds: dict[str, dict[str, Any]] = {}
     for path in outputs:

@@ -10,16 +10,10 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "growth.py", "world_files.py")
+PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "credit.py", "world_files.py")
+PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(
-    f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages", "derived")
-)
-PHYSICAL_MODULES += (
-    "loader/instrument.py",
-    "core/rule3.py",
-    "core/integer.py",
-    "core/paces.py",
-    "core/ports.py",
+    f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages", "derived", "instrument")
 )
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
@@ -35,21 +29,20 @@ ROOT_NAMES = {"isqrt", "integer_root"}
 
 
 def float_literals(source: str) -> list[int]:
-    """The lines of every float literal token (a decimal point or an exponent outside a hexadecimal literal)."""
     tokens = tokenize.generate_tokens(io.StringIO(source).readline)
     numbers = [(t.start[0], t.string.lower()) for t in tokens if t.type == tokenize.NUMBER]
     decimal = [(line, text) for line, text in numbers if not text.startswith(("0x", "0o", "0b"))]
     return [line for line, text in decimal if "." in text or "e" in text or text.endswith("j")]
 
 
-def true_divisions(source: str) -> list[int]:
-    """The lines of every `/` operator token (`//` is one token, `//=` another)."""
+def true_divisions(
+    source: str,
+) -> list[int]:  # the lines of every `/` operator token (`//` is one token, `//=` another)
     tokens = tokenize.generate_tokens(io.StringIO(source).readline)
     return [t.start[0] for t in tokens if t.type == tokenize.OP and t.string in ("/", "/=")]
 
 
 def forbidden_imports(tree: ast.AST) -> list[str]:
-    """Every forbidden import, and every alias of `math`, `isqrt` or `integer_root` (an alias would hide a root, so aliasing them is itself a violation)."""
     found = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import | ast.ImportFrom):
@@ -74,7 +67,6 @@ METHODS_FORBIDDEN = {"mean", "std", "var"}
 
 
 def numpy_chain(node: ast.AST) -> list[str] | None:
-    """The attribute chain of an expression rooted at the name `np` (`np.linalg.norm` -> ["linalg", "norm"]), None when not rooted there."""
     chain: list[str] = []
     while isinstance(node, ast.Attribute):
         chain.append(node.attr)
@@ -84,8 +76,9 @@ def numpy_chain(node: ast.AST) -> list[str] | None:
     return None
 
 
-def is_integer_literal(node: ast.AST) -> bool:
-    """A literal that is an integer or a (nested) list or tuple of integers and booleans; anything else (a float, a string, a name) is not."""
+def is_integer_literal(
+    node: ast.AST,
+) -> bool:  # a literal that is an integer or a (nested) list or tuple of integers and booleans
     if isinstance(node, ast.Constant):
         return isinstance(node.value, (int, bool)) and not isinstance(node.value, float)
     if isinstance(node, (ast.List, ast.Tuple)):
@@ -96,7 +89,6 @@ def is_integer_literal(node: ast.AST) -> bool:
 
 
 def numpy_violations(tree: ast.AST) -> list[str]:
-    """Every `np.<chain>` that names a forbidden dtype, a function that leaves the integers or a forbidden family (`np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`, `np.polyfit`, `np.interp`); every allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` without a `dtype` keyword (float64 by default) and every `np.array` of a non-integer literal; every call of the builtin `float`; every method call `.mean`, `.std`, `.var`; every `dtype=` or `.astype(...)` argument that is not `np.int64` (the loader's one site), `bool`, `object`, `int` or the name `kind` (the loader's choice of the integers by the file's width)."""
     found = []
     for node in ast.walk(tree):
         chain = numpy_chain(node) if isinstance(node, ast.Attribute) else None
@@ -135,12 +127,10 @@ def numpy_violations(tree: ast.AST) -> list[str]:
     return found
 
 
-def features_modules() -> list[str]:
-    """Every feature's module, found by its folder (no list to keep: record 2221 (3))."""
-    return sorted(path.relative_to(SRC).as_posix() for path in (SRC / "features").glob("*/__init__.py"))
+FEATURES = sorted(p.relative_to(SRC).as_posix() for p in (SRC / "features").glob("*/__init__.py"))
 
 
-@pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES) + features_modules())
+@pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES) + FEATURES)
 def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     """Every physical module, and every feature's folder under the same gate (issue #1154 cut 2), found by its folder and never listed."""
     source = (SRC / name).read_text(encoding="utf-8")
