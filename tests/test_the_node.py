@@ -262,19 +262,19 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         board.step()
         laid = int(board.books()[board.families[body].name]["quanta"])
         reads = [r.family for r in board.families[body].reads]
-        assert len(states[1].lines) == 1 and (CHARGE in reads) == bool(turn)
+        assert len(states[1].lines) == 1 + bool(turn) and (CHARGE in reads) == bool(turn)
         away = np.ones(board.shape, dtype=bool)
         away[CHAIN // 2 - 8 : CHAIN // 2 + 8], born, moved = False, 0, 0
         for _ in range(399):
             moved += within_the_reach(board, body)[0]
-            born = born or (board.tick if states[1].lines[0].now[away].any() else 0)
+            born = born or (board.tick if board.record(CHARGE)[0].now[away].any() else 0)
             assert abs(int(board.books()[board.families[CHARGE].name]["quanta"])) <= CHAIN
         clicks = [e for e in lines if e["family"] == "charge" and e["event"] == "click"]
         first, drifts = clicks[0]["tick"] if clicks else 0, [b["drift"] for b in board.books().values()]
         print(f"DETECTOR the chain, sense {turn}: {len(clicks)} charge clicks, first at {first}")
         print(f"GAMEBOARD born {born}, laid {laid}, paces {moved}, drifts {drifts}")
         assert all(e["detector"] in ("left", "right", "face") for e in lines if e["event"] == "click")
-        assert born > 0 if turn else (born == 0 and not clicks and not states[1].lines[0].now.any())
+        assert born > 0 if turn else (born == 0 and not clicks and not board.record(CHARGE)[0].now.any())
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
         print(f"GAMEBOARD the chain of the sense {turn}, the gate over 400 intervals: {back}")
         assert back["verdict"] == "MATCH" and back["intervals"] == 400
@@ -364,9 +364,9 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         held = node.empty_state(FAMILIES[GRAVITY], shape, write.walls, np.int64)
         count = share.quanta_of(share.family_share(matter, (record,), wrap, GAMMA), wall, np.int64)
         stress = node.stresses_of(matter.pair[0], [record], wrap)
-        vacuum = {i: (GAMMA, (GAMMA, GAMMA, GAMMA)) for i in (CHARGE, MATTER)}  # the sources' rulers
-        numerators = node.write_sources(GRAVITY, FAMILIES, {}, {MATTER: stress}, write, vacuum, GAMMA)
-        written = node.held_write(held.lines, numerators, write.walls, held.write_remainders)
+        vacuum = {(i, 0): (GAMMA, (GAMMA, GAMMA, GAMMA)) for i in (CHARGE, MATTER)}  # the rulers
+        found = node.write_sources(GRAVITY, FAMILIES, {}, {(MATTER, 0): stress}, write, vacuum, GAMMA)
+        written = node.held_write(held.lines, found, write.walls, held.write_remainders)
         held.lines, held.write_remainders = written
         xx = held.lines[1].now
         low, high, part = int(stress[0].min()), int(stress[0].max()), (int(xx.min()), int(xx.max()))

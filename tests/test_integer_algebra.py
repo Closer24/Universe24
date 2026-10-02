@@ -14,6 +14,8 @@ PHYSICAL_MODULES: dict[str, str] = {
     "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
     "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
     "share.py": "the share: the count as the record's reading at every Node, in quanta over the count's wall by Rule3's division act",
+    "records.py": "the records' lines and the sign's rows: light the rows' sum, the sum of every row but the reader's own, the readings of the lines and the write's numerators row by row",
+    "bookings.py": "the bookings per record, light's form from its rows' sum, and the sources of the start row by row",
     "reports.py": "the detectors' reports, the net inflow through a region's front boundary, and a body's Nodes derived for a report, readings of whole-board arrays",
     "growth.py": "the receding face: the GameBoard grown by layers of zeros as the front reaches it, taken off on the way back",
     "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
