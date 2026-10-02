@@ -454,3 +454,112 @@ generator lays the wide branch up to 15,000 and no body from 16,000 on.
 
 Agreement with the blind: the lay refused by name, the compact pixel's lines 2, 3 and 5 unread at
 20,000 as at 14,000.
+
+## The fifth reading, the direct lay at the compact fixed point
+
+The experiment the advisor defined and seconded (#1563 comments 5958624379 (1)(c) and
+5958925235; the owner's words of 2026-10-03, 00:47 and 00:52 Israel, every defined experiment
+run well by the morning): the law's line puts the compact branch of the bound body above about
+13,000 quanta in the engine's count (ALGEBRA.md, **The compact pixel under the composed paces**:
+the write's factor at the body's own paces e^(-4 U) = 0.72 moving the quadratic forms' about
+9,300 by 1 / 0.72), and the generator from the one-Node seed reaches it at no count on the open
+11-cube (the third reading above: the wide branch at 14,000 and 15,000, a refusal by name from
+16,000 on). The test of the branch itself is the direct lay at the compact fixed point under its
+own paces: the fixed-point lay (the world's `lay` of the kind `fixed_point`, the record and the
+content re-laid in each other's paces until both repeat within the stop, `loader/lay.py`) seeded
+with the compact profile the law's line describes instead of the one-Node count, the key
+`lay.seed` `compact` with `lay.profile` [centre, neighbour], the count at the seed Node and at the
+Nodes of its six Ports in that proportion (`tools/pixel_mode.py`, `compact_seed`; numbers of the
+design file and none of the code: [76, 4] of a hundred parts, the line's 0.74 of the vacuum share
+at the Node at 9,000 with the six neighbours sharing the rest), the stop 8 units (the standing
+world's stop 2 at the wide amplitude 3,099, `examples/events/standing_body/design.json`, scaled to
+the line's compact amplitude 12,319 at 13,000) within 40 passes, the tolerance [1, 32] as the
+standing world declares it. Three worlds, the design's entries `pixel_direct_8000` and
+`pixel_direct_14000` on the open 11-cube (the centre [5, 5, 5]) and `pixel_direct_25cube_14000`
+on the open 25-cube (the centre [12, 12, 12], the line's own board, where the faces at 12 Links
+pull less), the builder writing the one-Node declarations with the `lay` key and
+`expectation.json` anew with the blind entries `blind.pixel_direct_8000`,
+`blind.pixel_direct_14000` and `blind.pixel_direct_25cube_14000`; the generator
+(`tools/pixel_mode.py --input`) laying each from the compact seed; where the lay converges the
+world is run 400 intervals and read by `tools/body_rest.py --reach 5 --expectation`, every number
+a GameBoard reading and no click: does the compact body stand or spread. This section's blind is
+written before any lay and never edited after; the reading is appended below it. A fourth world
+at 20,000, the line's own table point, is declared only if the 14,000 lay takes under 10 minutes,
+its blind written before its lay in the same way.
+
+### The blind (the law's line's numbers; written before any lay)
+
+**pixel_direct_8000**, the control below the threshold.
+
+1. **The branch.** Under the law's line 8,000 is below the compact branch's threshold of about
+   13,000 quanta in the engine's count (under the count-sourced start the compact fixed point
+   first stood between 8,000 and 9,000, 8,000 a cloud after fifteen rounds; the form-sourced
+   start moves the threshold by 1.39), so no compact fixed point stands at 8,000: the iteration
+   from the compact seed leaves the compact configuration, converging to the wide branch (the
+   one-Node seed's lay at 8,000 on this board, the second reading: 823 Nodes, 101 of 7,999 at the
+   centre, 1.3 percent, the rms radius 3.10 Links, the clock [2836, 2112] = 1.3428) or finding
+   no fixed point within the 40 passes, the trajectory's count at the centre falling from the
+   seed's 6,080. A convergence to a compact fixed point at 8,000 (the centre's share about three
+   quarters, the rms radius under one Link) is a finding against the line's threshold, by name.
+2. **The rest rotation.** On the wide branch near the band's top 1.3333, the one-Node seed's
+   1.3428 (omega_b 0.835); a compact fixed point, if one stands, above the table's lowest point,
+   omega_b above 0.734 (2 cos omega_b below 1.484).
+3. **The tail.** On the wide branch no single kappa and no steep tail (the second reading's 0.09,
+   0.25, 0.38, 0.52, 0.80 per Link outward); a compact fixed point, if one stands, kappa 1.3 to
+   1.9 at one Link.
+4. **The drift.** The count kept to the rounding and the centroid where it was laid on either
+   branch; on the wide branch the record not static (the second reading's rotation drifting by
+   -0.0074 over 400 intervals, a finding by name there).
+5. **The form.** On the wide branch the well over the count between the two branches' numbers
+   (the second reading's 0.85); a compact fixed point, if one stands, the one-Node form to one
+   percent with the well at the Node above the table's 1,494.
+
+**pixel_direct_14000**, above the threshold on the 11-cube.
+
+1. **The branch.** Above the threshold of about 13,000 the compact fixed point stands and the
+   iteration from the compact seed converges to it within the stop: the body compact by the
+   line's criterion, the centre Node carrying at least about three quarters of the body's share
+   (the line's 0.74 of the vacuum share at the Node at 9,000, tightening with the count to 0.98
+   over seven Nodes at 20,000), the rms radius under one Link, the content at the centre Node
+   past the edge 0.39 Gamma = 2,339, between the line's 3,025 at 13,000 and 3,798 at 20,000
+   (3,135 by the straight line); the 11-cube's faces at 5 Links pull the well by a few percent
+   (the 15-cube moved the share at the Node by 5 percent at 10,000). A convergence to the wide
+   branch (the one-Node seed's lay here: 691 Nodes, 435 of 13,999 at the centre, the rms radius
+   2.53 Links, the clock 1.3881) or no fixed point within the passes is the reading by name: the
+   compact fixed point not standing under the write's factors at this count on this board.
+2. **The rest rotation.** omega_b by the line's table 0.636 at 13,000 (2 cos omega_b = 1.609, U
+   0.50) and 0.539 at 20,000 (1.716, U 0.63): at 14,000 the bracket [0.539, 0.636], the straight
+   line 0.622 (2 cos omega_b = 1.625, the period 10.1 intervals), read as the exact fraction
+   (next + before) / now at the centre and held over the window within the rounding.
+3. **The tail.** kappa 1.3 to 1.9 per Link near the Node from the levels at one Link (the level at
+   one Link over the centre's e^(-kappa), 0.27 to 0.15), steeper than the chain formula
+   acosh((9 / 2) cos omega_b - 2) by 0.5 to 0.7 (the formula 1.06 at 0.636, 1.23 at 0.539),
+   flattening outward (the line's level ratios 0.237, 0.241, 0.259, 0.345 and 0.40 per Link along
+   an axis at 10,000 on the 15-cube; the face at 5 Links reads 0 beyond).
+4. **The drift**, the experiment's question: the compact body stands over the 400 intervals, the
+   count's drift 0 to the rounding, the centre's share kept within the rounding walk, the rms
+   radius under one Link at the window's end, the centroid where it was laid; a spread (the
+   centre's share falling, the rms radius growing toward the wide branch's 2.5 Links) is the
+   reading by name.
+5. **The form.** The record obeys the one-Node form D = b^2 (2 - 2 cos omega_b) to one percent:
+   with c the well D div T at the centre Node the loaded b, the largest whose square is at most
+   c T den div (2 den - a) for the clock pair [a, den] of 2 cos omega_b, is the level where now =
+   before, B cos(omega_b / 2) with B the amplitude at the centre, within one percent (the line's
+   9,749 against 9,752 at 9,000 and 13,586 against 13,547 at 20,000); the amplitude B between the
+   line's 12,319 at 13,000 and 14,053 at 20,000 (12,567 by the straight line); the well at the
+   Node between 1,494 and 1,685 quanta (about 1,640); the well over the declared count between
+   the line's 0.293 at 9,000 and 0.085 at 20,000, about 0.15 at 14,000.
+
+**pixel_direct_25cube_14000**, the line's own board.
+
+Lines 1 to 5 as the 11-cube's at 14,000; on this board the faces at 12 Links from the centre pull
+less than the 11-cube's at 5, so the numbers stand nearer the line's table than the 11-cube's, the
+two boards' fixed points apart by a few percent in the share at the Node (the 15-cube against the
+11-cube 5 percent at 10,000) and under one percent in the rotation (0.7 percent there); a
+convergence to the wide branch (the 25-cube's wide body at 10,000, the first reading: 85 at the
+centre, the rms radius 3.9 Links) or no fixed point within the passes is the reading by name.
+
+For every world: a refusal of the lay by name (no fixed point within the passes, a cloud, a
+collapse, a record that does not stand) is recorded verbatim with its trajectory and the reading
+stops at that line; a convergence to the wide branch is the reading by name and the world is run
+and read as laid; nothing is tuned.
