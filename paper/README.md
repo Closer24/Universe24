@@ -8,10 +8,14 @@ claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
-detector reports). Its title is "Universe24: one integer rule with the cube's 24 rotations gives
-the lattice Klein-Gordon and Poisson equations, with Schroedinger's as its slow
-limit", the equations alone and no experiment, by the owner's word; the earlier title, the meeting of the past with the future, stands in
-the introduction as the statement of what a click is. The paper is kept to 32 pages and to what is safe: the rule, its exact
+detector reports). Its title is "Universe24: one integer rule on a cubic lattice, read through
+clicks, gives the wave equation, the quantum of action and a weak-field metric
+as three readings of one line", the method and no experiment, by the owner's
+word; the meeting of the past with the future stands in the introduction as the
+statement of what a click is. The source carries a submission switch
+(`\submissiontrue` in the preamble of each document): the project's documents
+are then cited as [1], [2], [3] alone, without their line names, and the
+journal's name leaves the supplement's title. The paper is kept to 32 pages and to what is safe: the rule, its exact
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
