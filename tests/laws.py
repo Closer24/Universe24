@@ -1,4 +1,4 @@
-"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`)."""
+"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`); the chain is the shortest that holds the body of 50 quanta (about eleven Nodes about its centre) and the end detectors with their regions apart, since the lay's cost is the start's relaxation over the chain's length squared, and every bound the tests put on the chain is per Node, the same on any length."""
 
 import importlib.util
 import json
@@ -12,7 +12,7 @@ from event_universe.loader.derived import Row
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
-CHAIN, QUANTA = 48, 50  # a chain of 48 Nodes (x open) and a body of 50 quanta: seven Nodes
+CHAIN, QUANTA = 24, 50  # the shortest chain (x open) holding the body of 50 and the end detectors apart
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
 
 
@@ -53,19 +53,19 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
 
-def chain_body_world(tmp_path, tool, quanta=QUANTA, at=(CHAIN // 2,), senses=(), taker=False, mode=True):  # type: ignore[no-untyped-def]
-    """A chain of CHAIN Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
-    turning = [bool(senses[i]) if i < len(senses) else False for i in range(len(at))]
-    universe_beside(tmp_path, charged=any(turning))
+def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
+    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
+    turning = [bool(senses[i]) if i < len(senses) else False for i in range(len(at or (chain // 2,)))]
+    universe_beside(folder, charged=any(turning))
     families = [CHARGED["name"] if turns else "matter" for turns in turning]
-    nodes = [[dict(node=[x, 0, 0], count=quanta)] for x in at]
+    nodes = [[dict(node=[x, 0, 0], count=quanta)] for x in at or (chain // 2,)]
     measured = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
     ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
-    ends += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
+    ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
     detectors = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
-    world = dict(shape=[CHAIN, 1, 1], detectors=detectors, measured=measured, ticks=400, face_depth=1)
+    world = dict(shape=[chain, 1, 1], detectors=detectors, measured=measured, ticks=400, face_depth=1)
     world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
-    (path := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
+    (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     if mode:
         tool.main(["--input", str(path), "--sense", *(str(sense) for sense in senses)])
     return path
