@@ -563,3 +563,43 @@ For every world: a refusal of the lay by name (no fixed point within the passes,
 collapse, a record that does not stand) is recorded verbatim with its trajectory and the reading
 stops at that line; a convergence to the wide branch is the reading by name and the world is run
 and read as laid; nothing is tuned.
+
+### The blind in the law's words (the mathematician's 175 item 4, #1572 comment 5962582859, with the Boss's second hand; written after the three lays were refused by name and before any run)
+
+The direct lay is the law's experiment of the compact branch: the branch is a fixed point of the
+body's own lines (ALGEBRA.md, **The bound body is one Node**, its window [0.2255 Gamma, Gamma div 2)
+under the level weight 1) and not the generator's basin from a seed, so the generator's reaching the
+wide branch at every count from the one-Node seed is a reading of its own map's basin and not of the
+branch. The blind per count: inside the window the body stands (its count within one unit of the lay
+over the 400 intervals, 2 cos omega_b within the bracket of the line's table, the well's depth
+e^(-4 U) as the line gives it); above Gamma div 2 it spreads (the top mode no one rotation); below
+0.2255 Gamma no fixed point is found. The unit, by name: the window [1,353, 3,000) at Gamma 6,000
+is in the advisor's unit, the count c of the quadratic forms as written (the form D = c T under the
+level weight 1), and this folder's counts are the engine's (the record's share in quanta at the
+paces of the read); two conversions stand in the law's lines: (i) the folder's count's unit, the
+engine's count about 3.1 times the advisor's c along the compact branch (`design.json`, The count's
+unit; ALGEBRA.md, **The compact pixel under the composed paces**, the quadratic forms' about 9,300 =
+3.1 x Gamma div 2), by which the window is [4,200, 9,300) in the engine's count, 8,000 is 0.43 Gamma
+(inside, as the second reading's blind wrote it) and 14,000 is 0.75 Gamma (above Gamma div 2, as
+10,000 was 0.53 Gamma in the first reading); (ii) the line's vacuum share, the record's share at
+the vacuum's paces, 5,850 in all at the generator's declared 9,000 (0.65 of the engine's count), by
+which 8,000 is 0.87 Gamma and 14,000 is 1.5 Gamma, both above Gamma div 2. The blind takes (i), the
+folder's unit, as its two earlier readings did, and names (ii) beside it. Per world:
+
+- **pixel_direct_8000**: 0.43 Gamma by (i), inside the window: the body STANDS, its count within one
+  unit of the lay over 400 intervals, 2 cos omega_b within the bracket of the line's table (the
+  table's lowest point omega_b 0.734 at 9,000, 2 cos omega_b 1.484; the one-Node line's 0.841 at
+  the edge to 0.464 at 0.451 Gamma, 2 cos omega_b 1.333 to 1.789; the bracket per count the
+  mathematician's, cited here from the line's table since it had not landed), the well's depth
+  e^(-4 U) of the count's well as the line gives it; by (ii) 0.87 Gamma, above Gamma div 2, it
+  SPREADS.
+- **pixel_direct_14000**: 0.75 Gamma by (i) and 1.5 Gamma by (ii), above Gamma div 2 by both: the
+  body SPREADS, the top mode no one rotation (the generator's standing check reading a departure
+  beyond the roundings of a step across the region, or the record laid losing its count and its
+  centre's share over the 400 intervals).
+- **pixel_direct_25cube_14000**: as the 11-cube's at 14,000, above Gamma div 2 by both units: the
+  body SPREADS, the top mode no one rotation; the board does not move the count's unit.
+
+The two blinds stand side by side, the first (the line's threshold of about 13,000, 8,000 the control
+below it and 14,000 above it) and this one (the law's window, 8,000 inside it and 14,000 above it);
+a reading that misses either is a finding by name against it, never adjusted.
