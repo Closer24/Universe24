@@ -36,7 +36,7 @@ their statuses.
 - `general_formula/main.pdf`: the compiled paper at the same commit.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.57, numbered as added, each naming its section,
+  its proof, Derivations S.1 to S.58, numbered as added, each naming its section,
   cited in the paper as (S.n); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
