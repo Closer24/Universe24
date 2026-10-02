@@ -1,0 +1,32 @@
+{
+ "comment": "The toy atom (the mathematician's 105, The atom's clicks, and 106, item 2, at the owner's word of 2026-10-02, about 06:20 Israel, 'try it; the derivation says a great deal, because our model knows how to represent an atom and a nucleus'; ALGEBRA.md #a-familys-declaration, The atom is a bound body of the holder of the sign; #the-constants, The law's alpha; the owner's decision on alpha as a declared coefficient, the advisor's session, 5944698532: the sign holder carries one declared integer weight k in its read, alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s), k a number of the file like gravity's LW). Written and not run: the world waits for the generator laying a plane record standing in an angle well under the rotation read (the third defect of 5944286924; the branch start-form-fix), and every number of it is read by build_world.py from this file, which writes the world file and the blind expectation file from the law's lines before any lay and any run and never touched after; the lay (the generator, with --modes, the nucleus in the sense +1 and the electron in the sense -1 as 1s + 2p) and the run wait. The universe `universe` (examples/events/atom/hydrogen.json): the node clock Gamma `node_clock`, kept at the rule's 6,000, the one value at which the generator's bodies are known to stand (every shipped lay is at it) and the clock resolves a one-quantum body's well; the holder of the sign at the act `rotation` (the turn of the two-part records by its levels, the atom's binding, ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record) with the owner's declared weight k = `k` written in its `level_weight`, the one slot the sign holder's row has (the Boss's order of 2026-10-02: write the universe with the sign holder's level_weight as that k); said plainly: the engine on main reads `level_weight` as the write's divisor E_s (ENGINE.md section 4; ALGEBRA.md #the-primitives, the hold), under which alpha_law = 0.2067 / (Gamma E_s) falls by k rather than rising by it, so the number stands in the file for the read weight the owner's decision calls for and a run on today's engine would show no Bohr radius of 3.5 Links; the loader refuses an unknown key by name, so no `read_weight` key is written; no holder of the content, neither gravity's row nor the binding holder, the atom's binding being the sign's turn alone. k: the mathematician's 'Gamma E_s near 1' gives the Bohr radius of 3 to 4 Links, a_0 = lambda_bar_e / alpha_law with lambda_bar_e = 1 / (sqrt 3 omega_0) Links (ALGEBRA.md #the-constants, The units are the electron's: one Link is sqrt 3 omega_0 lambda_bar_e), 3.32 Links at k / (Gamma E_s) = 1 (the Boss's arithmetic a_0 = 1 / (omega_0 alpha_law), without light's sqrt 3, gives 5.75 there); `bohr_radius_asked` 3.5 Links gives k / (Gamma E_s) = 0.949 and k = 5,692 at E_s = 1, written 5,700: alpha_law = 0.19641, a_0 = 3.495 Links. The point nucleus `nucleus_family`, one quantum of a heavy family of dimension 2 at the pair `nucleus_pair` [60, 6000] (cos omega = 0.01, omega = 1.5608, the band's inertia m* = 3 tan omega 89.4 times the electron's 3 tan omega_0, so the reduced-mass correction is 1.1 percent and the nucleus stands still to that order), laid in the sense +1 at the centre Node; the electron `electron_family`, one quantum of [2, 3] over Gamma, the pair `electron_pair` [4000, 6000], a plane, laid in the sense -1 as 1s + 2p by the generator (the lay waits), declared on one Node `bohr_links` Links from the centre along x so that no Node is shared (the generator rewrites a body's Nodes and counts). Rydberg's levels from the law's slow limit (ALGEBRA.md, the atom, step (4)): E_n = alpha_law^2 omega_0 / (2 n^2) per interval below the free rotation omega_0, E_1 = 0.016223 (the binding 'about 0.02 per interval', 105); the lines the beats of two levels, Omega_n1 = E_1 (1 - 1 / n^2), the 1s + 2p line Omega = (3 / 4) alpha_law^2 omega_0 / 2 = 0.012167 per interval, the period 516 intervals, born as light by the Wronskian's breathing (ALGEBRA.md, Light is born by the write), so `ticks` holds several periods. The open cube of `side` Nodes (the 2p record out to about five Bohr radii, 17 Links, inside the half side), the x faces receding (`receding`) behind the two regions on the x high side's last layer, `screen` Nodes deep: the photocathode `photocathode` over `photocathode_across` (y) and `across_z` (z), declaring the whole W_d = T sin Omega, one photon of the 1s + 2p line per click (The click's unit: the whole of a click is the detector's own transition), and the bolometer `bolometer` beside it over `bolometer_across`, crediting the share over T (the engine's region as it is, sin Omega of a quantum per photon); the whole is the reader's divisor and no key of the engine. The blind: Rydberg's ratios 1 - 1 / n^2 between the lines of the Lyman series read at the photocathode (3 / 4, 8 / 9, 15 / 16 for n = 2, 3, 4, the 1s + 2p lay giving the first alone), the line Omega = (3 / 4) alpha_law^2 omega_0 / 2 as the photocathode's click rate's beat, one photon per click there and sin Omega as many at the bolometer (the bolometer's count over the photocathode's sin Omega = 0.012167), the far sign level 0 (the nucleus's W / T = +1 / 2 and the electron's -1 / 2 summing to 0, the atom neutral; a GameBoard reading), and the atom falling as a free quantum in a content gradient (106), not read here, this world holding no holder of the content.",
+ "universe": "examples/events/atom/hydrogen.json",
+ "engine": "examples/events/engine_start.json",
+ "world": "toy_atom",
+ "node_clock": 6000,
+ "quantum_action": 32768,
+ "k": 5700,
+ "level_weight_E_s_intended": 1,
+ "bohr_radius_asked": 3.5,
+ "nucleus_family": "nucleus",
+ "nucleus_pair": [60, 6000],
+ "electron_family": "electron",
+ "electron_pair": [4000, 6000],
+ "senses": {"nucleus": 1, "electron": -1},
+ "quanta": {"nucleus": 1, "electron": 1},
+ "side": 41,
+ "bohr_links": 3,
+ "screen": 2,
+ "photocathode": "photocathode",
+ "photocathode_across": [8, 20],
+ "bolometer": "bolometer",
+ "bolometer_across": [21, 33],
+ "across_z": [8, 32],
+ "receding": {
+  "x": {"sides": ["low", "high"], "largest": 400, "layers": 16}
+ },
+ "ticks": 3000,
+ "window": [1, 3000],
+ "lyman_n": [2, 3, 4],
+ "seed": 24
+}

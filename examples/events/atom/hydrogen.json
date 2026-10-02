@@ -1,0 +1,40 @@
+{
+ "integers": {
+  "node_clock": 6000,
+  "quantum_action": 32768,
+  "width": 63,
+  "link_unit": 16
+ },
+ "families": [
+  {
+   "name": "charge",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 5700,
+    "act": "rotation"
+   }
+  },
+  {
+   "name": "nucleus",
+   "pair": [
+    60,
+    6000
+   ],
+   "dimension": 2
+  },
+  {
+   "name": "electron",
+   "pair": [
+    4000,
+    6000
+   ],
+   "dimension": 2
+  }
+ ]
+}
