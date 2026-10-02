@@ -129,12 +129,8 @@ def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
 
 HELD = {"sources": ["form"], "level_weight": 5, "write_weight": 3}
 HOLLOW = {"name": "hollow", "pair": [1, 1], "reads": {"hollow": 1}, "held": HELD}  # reading itself at 1
-CORE = {
-    "name": "core",
-    "pair": [3, 4],
-    "reads": {},
-    "held": {**HELD, "level_weight": 7, "write_weight": -1},
-}
+CORE = {"name": "core", "pair": [3, 4], "reads": {}}
+CORE["held"] = {**HELD, "level_weight": 7, "write_weight": -1}
 STUFF = {"name": "stuff", "pair": [4000, 6000], "reads": {"hollow": 2}, "dimension": 1}
 OTHER = {"name": "other", "pair": [4000, 6000], "reads": {"core": 1}, "dimension": 1}
 SIGN = {"name": "sign", "pair": [1, 1], "reads": {}, "held": {**HELD, "sources": ["wronskian"]}}
@@ -155,9 +151,8 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     walls = [writes[i].walls if f.held else () for i, f in enumerate(families)]
     states = [node.empty_state(f, SHAPE, w, np.int64) for f, w in zip(families, walls, strict=True)]
     for state in states:
-        state.lines = [
-            node.Record(*draw.integers(1, 40, (2, *SHAPE)), 0 * SHAPE[0]) for _ in state.lines
-        ]
+        levels = [draw.integers(1, 40, (2, *SHAPE)) for _ in state.lines]
+        state.lines = [node.Record(*pair, 0 * SHAPE[0]) for pair in levels]
     levels = [states[i].lines[0].now for i in (hollow, core)]
     read = {i: node.read(i, families, states, 1, wrap, GAMMA, 1) for i in range(4)}
     assert np.array_equal(read[stuff][0], 2 * levels[0]) and np.array_equal(read[other][0], levels[1])
@@ -208,10 +203,8 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         assert np.asarray(paced_read if rows is paced else turn[0]).ravel().tolist() == found
         assert rows is paced or paced_read == 0  # the rotation: no level in the content
     rule = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    charge, rows = (
-        next(row for row in rule["families"] if row["name"] == "charge")["held"],
-        rule["families"],
-    )
+    rows = rule["families"]
+    charge = next(row for row in rows if row["name"] == "charge")["held"]
     universe_of({**rule, "families": [*rows, CHARGED]})  # the plain read: not gated
     charge["act"] = "rotation"
     refused("fails for 'charged'", universe_of, {**rule, "families": [*rows, CHARGED]})

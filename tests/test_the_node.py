@@ -43,7 +43,7 @@ def by_hand(a: np.ndarray, node: tuple[int, int, int]) -> tuple[int, ...]:
     return tuple(int(np.roll(a, -side, axis)[node]) for axis in range(3) for side in (1, -1))
 
 
-def within_the_reach(board: GameBoard, index: int) -> tuple[int, Fraction]:
+def within_the_reach(board: GameBoard, index: int, monkeypatch) -> tuple[int, Fraction]:  # type: ignore[no-untyped-def]
     """One step of the GameBoard: the share identity (ALGEBRA.md S.6) on the stepped levels before the click's write, within the floors, and the write outside it, the share form's change local to the holed Nodes and their six neighbours and exact, as the write stands outside the reversal (the advisor's line, #1563 comment 5954101082)."""
     growth.grow(board)  # the receding faces read first, as the step reads them
     family, state = board.families[index], board.states[index]
@@ -52,22 +52,18 @@ def within_the_reach(board: GameBoard, index: int) -> tuple[int, Fraction]:
     squares = np.asarray(paces.link_pace_of(gamma, content)).astype(object) ** 2
 
     def shares(pairs: tuple[node.Record, ...]) -> np.ndarray:  # the share form per Node
-        return share.family_share(family, pairs, board.wrap, gamma, content, factors, unit).astype(
-            object
-        )
+        found = share.family_share(family, pairs, board.wrap, gamma, content, factors, unit)
+        return found.astype(object)
 
     start = int(shares(records := tuple(state.lines)).sum())
     flow = [np.asarray(current, dtype=object) for current in board.currents()[index]]
     net = int(sum(current.sum() for current in flow))
     skew = [(np.asarray(q).astype(object) - unit * unit) * c for q, c in zip(factors, flow, strict=True)]
     terms = sum(Fraction(int(n), unit * unit) for found in skew for n in found.ravel())
-    stepped: list[tuple[node.Record, ...]] = []  # the lines after the hold, before the click's write
-    swapped = credit.windowed
-    credit.windowed = lambda b: (stepped.append(tuple(state.lines)), swapped(b))
-    try:
+    stepped, windowed = [], credit.windowed  # the lines after the hold, before the click's write
+    with monkeypatch.context() as swap:
+        swap.setattr(credit, "windowed", lambda b: (stepped.append(tuple(state.lines)), windowed(b)))
         board.step()
-    finally:
-        credit.windowed = swapped
     fixed, after = int(shares(stepped[0]).sum()), tuple(state.lines)
     for begun, moved in zip(records, stepped[0], strict=True):  # Rule3's remainder term per line
         next_level = moved.now.astype(object) - begun.before.astype(object)  # next - before
@@ -196,7 +192,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         factors, own = tuple(link_factor(GAMMA, UNIT, t) for t in tensions), paces.node_paces(GAMMA, c)
         reads, self_coefficient, rule_wall = coefficients(4000, 6000, GAMMA, *own, factors, UNIT)
         expected = rule3(reads, arrived, self_coefficient, rule_wall, *(getattr(start, k) for k in KEYS))
-        moved.append(within_the_reach(board, MATTER)[0])
+        moved.append(within_the_reach(board, MATTER, monkeypatch)[0])
         assert not np.array_equal(matter.lines[0].now, start.now)  # a family of quanta with a gap steps
         assert np.array_equal(matter.lines[0].now, expected[0])
         assert np.array_equal(matter.lines[0].remainder, expected[1])
@@ -239,7 +235,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         away = np.ones(board.shape, dtype=bool)
         away[CHAIN // 2 - 8 : CHAIN // 2 + 8], born, moved = False, 0, 0
         for _ in range(399):
-            moved += within_the_reach(board, body)[0]
+            moved += within_the_reach(board, body, monkeypatch)[0]
             born = born or (board.tick if board.record(CHARGE)[0].now[away].any() else 0)
             assert abs(int(board.books()[board.families[CHARGE].name]["quanta"])) <= CHAIN
         clicks = [e for e in lines if e["family"] == "charge" and e["event"] == "click"]
@@ -258,7 +254,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         turn = node.well(node.wronskian(matter.lines, True), T)
         writes.append(int(turn[body].sum()))
         tensions.append(int(node.stresses_of(family.pair[0], matter.lines, board.wrap)[0][tail].sum()))
-        within_the_reach(board, turning)
+        within_the_reach(board, turning, monkeypatch)
     mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
     span = mode["period"][0] // mode["period"][1] + 1
     swings = [max(writes[i : i + span]) - min(writes[i : i + span]) for i in range(100, 179 - span)]
@@ -269,9 +265,8 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     for name in ("bell/bell_a_b", "ghz/ghz_x_y_y"):  # the gates' worlds, the click at the window's end
         board = GameBoard(load_world(EVENTS / f"{name}.json"), (lines := []).append)
-        laid = board.world.messages[0].family
-        left = board.credit.counts[laid] - 1  # the credit's count after the one click of the window
-        steps = [within_the_reach(board, laid) for _ in range(board.world.ticks)]
+        left = board.credit.counts[laid := board.world.messages[0].family] - 1  # after the click
+        steps = [within_the_reach(board, laid, monkeypatch) for _ in range(board.world.ticks)]
         books, slack = board.books()[board.families[laid].name], sum(b + abs(m) for m, b in steps)
         assert books["drift"] is not None and abs(books["drift"]) <= slack
         lefts = [e["left"] for e in lines if e["event"] == "credit"]  # one write per side, one count
@@ -323,24 +318,17 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     shape, wrap, matter = (16, 1, 1), Wrap(False, True, True), FAMILIES[MATTER]
     for moving in (True, False):
         turns = ((1, 0, -1, 0), (0, -1, 0, 1)) if moving else ((1,), (1,))
-        record, write, wall = (
-            chain_record(*turns),
-            held_write(FAMILIES, GRAVITY, T),
-            count_wall(matter, T),
-        )
+        record, write = chain_record(*turns), held_write(FAMILIES, GRAVITY, T)
+        wall = count_wall(matter, T)
         held = node.empty_state(FAMILIES[GRAVITY], shape, write.walls, np.int64)
         count = share.quanta_of(share.family_share(matter, (record,), wrap, GAMMA), wall, np.int64)
         stress = node.stresses_of(matter.pair[0], [record], wrap)
-        vacuum = {
-            (i, 0): (GAMMA, (GAMMA, GAMMA, GAMMA)) for i in (CHARGE, MATTER)
-        }  # the sources' rulers
-        numerators = node.write_sources(
-            GRAVITY, FAMILIES, {}, {(MATTER, 0): stress}, write, vacuum, GAMMA
-        )
-        written = node.held_write(held.lines, numerators, write.walls, held.write_remainders)
+        vacuum = {(i, 0): (GAMMA, (GAMMA, GAMMA, GAMMA)) for i in (CHARGE, MATTER)}
+        found = node.write_sources(GRAVITY, FAMILIES, {}, {(MATTER, 0): stress}, write, vacuum, GAMMA)
+        written = node.held_write(held.lines, found, write.walls, held.write_remainders)
         (held.lines, held.write_remainders), xx = written, written[0][1].now
         assert not (moving and int(stress[0].min()) < 0) and bool((stress[0] != 0).any())
-        assert np.array_equal(held.write_remainders[1], write.walls[1] // 2 + numerators[1])
+        assert np.array_equal(held.write_remainders[1], write.walls[1] // 2 + found[1])
         assert not (stress[1].any() or stress[2].any() or held.lines[2].now.any() or xx.any())
         states = [node.empty_state(f, shape, w, np.int64) for f, w in zip(FAMILIES, WALLS, strict=True)]
         states[GRAVITY] = held

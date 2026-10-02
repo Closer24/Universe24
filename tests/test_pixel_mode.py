@@ -26,9 +26,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     mode = json.loads(mode_file.read_text(encoding="utf-8"))["messages"][0]
     now, before = (dense(mode["moving"][word]) for word in ("now", "before"))
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
-    envelope = [
-        (1 + math.cos(math.pi * abs(x - 5) / 4)) / 2 if abs(x - 5) <= 4 else 0 for x in range(24)
-    ]
+    away = [abs(x - 5) for x in range(24)]
+    envelope = [(1 + math.cos(math.pi * d / 4)) / 2 if d <= 4 else 0 for d in away]
     for x, e in enumerate(envelope):
         assert abs(now[x, 4, 0] - 1328 * e * math.cos(k * x)) <= 1
         assert abs(before[x, 4, 0] - 1328 * e * math.cos(k * x + omega)) <= 1

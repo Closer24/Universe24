@@ -141,9 +141,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert np.array_equal(sources[5], TURNING[CHARGE].write * flux[0])  # k_w x w x J_x / 2 at w = 1
     held = node.empty_state(TURNING[CHARGE], SHAPE, write.walls, np.int64)
     lines, remainders = node.held_write(held.lines, sources, write.walls, held.write_remainders)
-    assert write.walls == (100 * T,) * 8 and not any(
-        map(np.any, sources[:4] + sources[6:])
-    )  # E_s T, two rows
+    assert write.walls == (100 * T,) * 8 and not any(map(np.any, sources[:4] + sources[6:]))  # E_s T
     assert np.array_equal(lines[5].now, (sources[5] + 50 * T) // (100 * T))  # (k_w J / 2 + r) div wall
     speed = (band(k + 1e-6) - band(k - 1e-6)) / 2e-6  # the band's group velocity at k, the law's v
     assert abs(int(lines[5].now.sum()) / int(lines[4].now.sum()) - 3 * PAIR[1] * speed / PAIR[0]) < 1e-3
@@ -168,9 +166,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     BUILD.main(["--folder", str(tmp_path)])
     assert (tmp_path / "expectation.json").read_bytes() == (LOOK / "expectation.json").read_bytes()
     expected = json.loads((LOOK / "expectation.json").read_text(encoding="utf-8"))
-    charged = [
-        name for name in expected["worlds"] if "uncharged" not in name
-    ]  # six, no lay under the line
+    charged = [name for name in expected["worlds"] if "uncharged" not in name]
     for name in charged:  # declared without a mode file, refused at load by name
         refused("mode file beside the world must be an object", load_world, LOOK / f"{name}.json")
     for words in (

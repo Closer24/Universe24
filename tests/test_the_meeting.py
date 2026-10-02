@@ -49,9 +49,8 @@ def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
         assert BACK.verdict(board, board.world.ticks - 2)["verdict"] == "MATCH"  # exact before the click
     outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
     read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
-    assert (
-        read[name] == expected["blind"][name] and read["correlation"] == expected["blind"]["correlation"]
-    )
+    assert read[name] == expected["blind"][name]
+    assert read["correlation"] == expected["blind"]["correlation"]
     assert read["marginals"] == expected["blind"]["marginals"]
     return read, expected
 
@@ -63,9 +62,8 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     shares, found = credits([a, b], ORDER, (PAIR, PAIR))
     assert found == MEETING and GATE.combination(found, CHSH) == Fraction(478, 169)
     assert [GATE.marginal(s) for s in shares] == [Fraction(1, 2)] * 4
-    assert all(
-        GATE.combination(credits([a, b], ORDER, (PAIR, PAIR), f)[1], CHSH) == v for f, v in FENCE.items()
-    )
+    found = {f: GATE.combination(credits([a, b], ORDER, (PAIR, PAIR), f)[1], CHSH) for f in FENCE}
+    assert found == FENCE
     unequal, mirrored = side((20, 20), (19, 19)), tuple((y, x) for x, y in ORDER)
     shares, found = credits([unequal, equal], mirrored, (PAIR, PAIR))
     assert GATE.combination(found, CHSH) == UNEQUAL[0]
@@ -106,9 +104,9 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     assert found == [-1, -1, -1, 1] and GATE.combination(found, MERMIN[1]) == -4
     (joint,), (e_3,) = credits(three, ((B, X, X),), PATTERNS)
     assert e_3 == Fraction(119, 169) and joint[("plus",) * 3] / sum(joint.values()) == Fraction(36, 169)
-    assert all(
-        GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) == -1 for f in FENCE
-    )
+    assert {GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) for f in FENCE} == {
+        -1
+    }
     refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "detectors[0].pattern", (1, 0))
     row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]]}
     refused("none is declared", detectors_of, [row], (2, 1, 1), 0, (), ())
@@ -117,9 +115,8 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     refused("no record of several parts", patterns_of_the_law, [("d", (P,) * 4)], [], families)
     read, expected = gate_worlds(GHZ, tmp_path)
     assert read["M"] == [-4, 1] and list(read["correlation"].values()) == [[-1, 1]] * 3 + [[1, 1]]
-    assert all(
-        read[c] == [-1, 1] for c in ("M_by_the_parts_shares", "M_by_the_local_sums", "M_by_the_sign")
-    )
+    ms = ("M_by_the_parts_shares", "M_by_the_local_sums", "M_by_the_sign")
+    assert all(read[c] == [-1, 1] for c in ms)
     worlds = [read["worlds"][name] for name in expected["runs"].values()]
     assert [w["shares"] for w in worlds] == list(expected["blind"]["shares"].values())
     assert all(len(w["drawn"]) == 3 and w["mismatch"]["ratios"] == [[1, 1]] * 3 for w in worlds)

@@ -94,9 +94,7 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     real, second = (node.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
     through = node.currents_of(quanta.pair[0], [real, second], wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
-        rolled = [
-            (r, np.roll(r.now, -side, axis), np.roll(r.before, -side, axis)) for r in (real, second)
-        ]
+        rolled = [(r, *(np.roll(a, -side, axis) for a in (r.now, r.before))) for r in (real, second)]
         expected = sum(5 * (r.now * before - r.before * now) for r, now, before in rolled)
         assert np.array_equal(through[port], expected)
     nodes, board = np.array([True, True, False]).reshape(3, 1, 1), np.ones((3, 1, 1), dtype=bool)
