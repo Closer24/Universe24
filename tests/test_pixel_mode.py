@@ -22,8 +22,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
     path = slit_world(tmp_path, TOOL, detectors=[screen])
-    mode_file = path.with_suffix(".mode.json")
-    mode = json.loads(mode_file.read_text(encoding="utf-8"))["messages"][0]
+    mode = json.loads((mode_file := path.with_suffix(".mode.json")).read_text())["messages"][0]
     now, before = (dense(mode["moving"][word]) for word in ("now", "before"))
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
     away = [abs(x - 5) for x in range(24)]
@@ -78,8 +77,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
     world = chain_body_world(tmp_path, TOOL)
-    document = json.loads(world.read_text(encoding="utf-8"))
-    mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    document, mode = (json.loads(p.read_text()) for p in (world, world.with_suffix(".mode.json")))
     nodes = document["measured"][0]["nodes"]  # the one declared Node became the body's Nodes
     laid = sum(entry["count"] for entry in nodes)
     assert len(nodes) > 1 and all(entry["count"] >= 1 for entry in nodes)
