@@ -21,6 +21,7 @@ from event_universe.loader.instrument import (
     ports_of,
 )
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
+from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 from event_universe.loader.universe import universe_of
@@ -28,7 +29,7 @@ from event_universe.loader.universe import universe_of
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument")
+WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
@@ -65,7 +66,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors, the receding faces and the instrument's draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine)."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors, the receding faces, the instrument and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)'s draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -85,6 +86,7 @@ class World:
     detectors: tuple[DetectorRow, ...]
     receding: tuple[RecedingFace, ...]
     instrument: Instrument | None
+    lay: Lay | None  # the lay the world declares for its bodies and its tolerance (`loader/lay.py`)
 
 
 def kind_of(width: int) -> type:
@@ -278,13 +280,16 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     counted = [body.family for body in bodies]
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
+    lay = lay_of(world["lay"], "lay") if "lay" in world else None
+    ticks, pairs = integer(world["ticks"], "ticks", 0), [families[b.family].pair for b in bodies]
+    budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
         (open_axes[0], open_axes[1], open_axes[2]),
         depth,
         beyond,
-        integer(world["ticks"], "ticks", 0),
+        ticks,
         gamma,
         action,
         derived.largest_of(width),
@@ -297,4 +302,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         detectors,
         receding,
         instrument,
+        lay,
     )
