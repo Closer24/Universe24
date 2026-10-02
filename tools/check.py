@@ -29,8 +29,9 @@ def every_pull_request() -> list[str]:
 
 SECONDS = Path(__file__).with_name("test_seconds.json")
 # no world replays in CI (the owner's decision of 2026-09-27: the worlds recorded on the earlier
-# engine are no reference for this one); the plan is the test suite alone, in equal shards
-SUITE_SHARDS = 3
+# engine are no reference for this one); the plan is the test suite alone, its test functions in
+# equal shards (the owner's ceiling of 2026-10-02: every CI run ends under ten minutes)
+SUITE_SHARDS = 5
 UNRECORDED_SECONDS = 5.0
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 
@@ -46,24 +47,54 @@ def balanced(seconds, count):
 
 
 def shards():
-    """The CI jobs by name, each its pytest targets: the test suite in equal parts by their
-    recorded seconds; no world job."""
+    """The CI jobs by name, each its pytest arguments: the suite's test functions in equal parts by
+    their recorded seconds (`tests/<file>.py::<function>`, its parametrizations with it); a file runs
+    whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
+    a function the table does not hold, or holds under a name the file no longer has, runs with its
+    file; no world job."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
     files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob("test_*.py"))
-    suite = {f: table["files"].get(f, UNRECORDED_SECONDS) for f in files}
-    return {f"suite {i + 1}": group for i, group in enumerate(balanced(suite, SUITE_SHARDS))}
+    recorded = {}
+    for file in files:
+        text = (ROOT / file).read_text(encoding="utf-8")
+        for target, seconds in table["tests"].items():
+            if target.startswith(file + "::") and f"\ndef {target.partition('::')[2]}(" in text:
+                recorded[target] = seconds
+    whole = {file: UNRECORDED_SECONDS for file in files}  # the file's own target: its other tests
+    for target in sorted(recorded, key=lambda t: recorded[t]):
+        whole[target.partition("::")[0]] = target  # the file stands with its longest function
+    plain = {f: s for f, s in whole.items() if not isinstance(s, str)}
+    jobs = {}
+    for i, group in enumerate(balanced({**recorded, **plain}, SUITE_SHARDS)):
+        held = set(group)
+        arguments = []
+        for target in group:
+            file, _, name = target.partition("::")
+            if name and whole[file] in held and whole[file] != target:
+                continue  # the file runs whole in this part, this function with it
+            if name and whole[file] != target:
+                arguments.append(target)
+                continue
+            arguments.append(file)  # the file whole, less its functions placed in other parts
+            for other in sorted(recorded):
+                if other.startswith(file + "::") and other not in held:
+                    arguments += ["--deselect", other]
+        if arguments:
+            jobs[f"suite {i + 1}"] = arguments
+    return jobs
 
 
 def record_seconds(junit):
-    """The seconds per test file read from a junit file, written to the table."""
+    """The seconds per test function read from a junit file, written to the table."""
     import xml.etree.ElementTree as ElementTree
 
-    files = {}
+    tests = {}
     for case in ElementTree.parse(junit).getroot().iter("testcase"):
         path = case.get("classname", "").replace(".", "/") + ".py"
-        files[path] = round(files.get(path, 0.0) + float(case.get("time", 0)), 1)
+        target = path + "::" + case.get("name", "").partition("[")[0]  # the function, its parts summed
+        tests[target] = round(tests.get(target, 0.0) + float(case.get("time", 0)), 1)
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
-    table.update(files=dict(sorted(files.items())))
+    table.update(tests=dict(sorted(tests.items())))
     SECONDS.write_text(json.dumps(table, indent=1) + "\n", encoding="utf-8")
 
 

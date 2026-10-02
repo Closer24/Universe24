@@ -22,13 +22,11 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
     path = slit_world(tmp_path, TOOL, detectors=[screen])
-    mode_file = path.with_suffix(".mode.json")
-    mode = json.loads(mode_file.read_text(encoding="utf-8"))["messages"][0]
+    mode = json.loads((mode_file := path.with_suffix(".mode.json")).read_text())["messages"][0]
     now, before = (dense(mode["moving"][word]) for word in ("now", "before"))
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
     for x in range(24):
-        away = abs(x - 5)
-        e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
+        e = (1 + math.cos(math.pi * abs(x - 5) / 4)) / 2 if abs(x - 5) <= 4 else 0
         assert abs(now[x, 4, 0] - 1328 * e * math.cos(k * x)) <= 1
         assert abs(before[x, 4, 0] - 1328 * e * math.cos(k * x + omega)) <= 1
     assert (now[:, 4:5, :] == now).all() and mode["count"] > 0 and not now[12].any()
@@ -48,8 +46,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     mirrored = dense(before)
     tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
     for x in range(24):
-        away = abs(x - 5)
-        e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
+        e = (1 + math.cos(math.pi * abs(x - 5) / 4)) / 2 if abs(x - 5) <= 4 else 0
         assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1
     body = {"family": "matter", "nodes": [at]}
     refused(f"{inner}: nothing stands there", TOOL.pixel_mode, {**SLIT, "measured": [body]})
@@ -75,15 +72,13 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         for state in walled.states:
             assert not any(a[beyond].any() for r in state.lines for a in (r.now, r.before))
         assert walled.books()["charge"]["quanta"] > 0
-    level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
+    before = int((level := np.abs(walled.states[charge].lines[0].now[:, :, 0]))[:12].sum())
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()
-    before = int(level[:12].sum())
     print(f"GAMEBOARD slit: light beyond the wall per row {passed.tolist()}, before {before} vs {free}")
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
     world = chain_body_world(tmp_path, TOOL)
-    document = json.loads(world.read_text(encoding="utf-8"))
-    mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    document, mode = (json.loads(p.read_text()) for p in (world, world.with_suffix(".mode.json")))
     nodes = document["measured"][0]["nodes"]  # the one declared Node became the body's Nodes
     laid = sum(entry["count"] for entry in nodes)
     assert len(nodes) > 1 and all(entry["count"] >= 1 for entry in nodes)
