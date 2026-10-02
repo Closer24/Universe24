@@ -496,7 +496,9 @@ def body_fixed_point(
     name = f"the lay and the rest of the body of {quanta} quanta about the Node {list(centre)}"
     content = rests(rows, others[0] + counts, board)  # the seed, the first pass alone
     keep = own_board(board, others[0])
-    for round_number in range(1, 1 << 16):
+    round_number = 0
+    while True:
+        round_number += 1
         if int(content.max()) >= paces.frozen_content(board.gamma):
             raise ValueError(
                 f"the body of {quanta} quanta about the Node {list(centre)} collapses: its wells reach the pace 0 "
@@ -534,7 +536,6 @@ def body_fixed_point(
             return laid, record, region, found, pairs
         counts = (counts + laid) // 2  # the half step: the deep well overshoots under the whole step
         content = found
-    raise ValueError(f"{name} finds no fixed point within {1 << 16} rounds")
 
 
 def declared(

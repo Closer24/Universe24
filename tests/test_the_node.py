@@ -278,7 +278,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
         print(f"GAMEBOARD the chain of the sense {turn}, the gate over 400 intervals: {back}")
         assert back["verdict"] == "MATCH" and back["intervals"] == 400
-    world = laws.chain_body_world(tmp_path, TOOL, at=(24, 36), senses=(1, 0), taker=True)
+    world = laws.chain_body_world(tmp_path, TOOL, at=(20, 36), senses=(1, 0), taker=True)  # 16 apart
     board = GameBoard(load_world(world), (lines := []).append)
     turning = [f.name for f in board.families].index(CHARGED["name"])
     matter, family = board.states[turning], board.families[turning]
