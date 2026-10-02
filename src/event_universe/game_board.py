@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import replace
 from typing import Any
 
@@ -102,41 +102,37 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time line at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the share of the record's lines in quanta over the count's wall (a reading of the form that sources the fields) for a row sourced by the form and the Wronskian's quanta at the written moment, W div T (`node.well`, a reading), for the holder of the sign (its rest, of either sign), each at the weight with which the record's family reads the row, over the row's level weight (features/start), both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder; every held row's record at the start is its laid message plus its sourced rest, the level now and the level before alike (the rest the static solution of the row's line at the paces and the laid message a travelling one, the line linear at fixed paces, so their sum is the record), the laid levels 0 where nothing is laid and the record then the rest; a holder of the sign nothing sources stands as laid."""
-        forms: list[tuple[int, np.ndarray, np.ndarray]] = []
-        for row in self.laid_rows():
-            family = self.families[row.family]
-            if not family.quanta:
-                continue  # a kick on a holder of the content sources nothing: it is the row's own events
-            pairs = [(row.now, row.before), (row.im_now, row.im_before)][: family.width] * family.parts
-            zero = node.zeros(self.shape, self.kind)
-            records = [node.Record(self.board_array(a), self.board_array(b), zero) for a, b in pairs]
-            total = share.family_share(family, records, self.wrap, self.world.node_clock)
-            laid = share.quanta_of(total, count_wall(family, self.world.quantum_action), self.kind)
-            turn = node.well(node.wronskian(records, family.plane), self.world.quantum_action)
-            on = self.mask(row.nodes) if isinstance(row, BodyRow) else np.ones(self.shape, dtype=bool)
-            forms.append((row.family, np.where(on, laid, 0), np.where(on, turn, 0)))
+        """The start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, the four lines (a) and (c)): every held family's time line at the rest of its line, with or without a gap, under the sources the laid records write, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the form of the laid record as the hold's write books it, D_i = now^2 - next x before over the record's lines with next the step of Rule3 at the paces of the held rows' rests, for a row sourced by the form, and the Wronskian of the step's booking for the holder of the sign (`node.form`, `node.wronskian` on the booking of `stepped`), each at the weight with which the record's family reads the row (the hold's reciprocity, `readers_of`, `weight_of`), over the write's wall E_s T, scaled per proper volume and per proper interval at the paces of the rest as the write scales it (`rest`, `paces.write_factor`; no tension stands at the start); the lay and the rest iterated to the fixed point where the sources return themselves (features/start, `held_rests`): the rests laid, every record stepped once at their paces and booked as the hold books it, the rests solved again from those bookings, until the levels repeat (or repeat an earlier state one unit off at most, a rounding tie; a cycle refused by name), from nothing, so the hold's first write is the start's source within Rule3's rounding; both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder; every held row's record at the start its laid message plus its sourced rest, the level now and the level before alike (the rest the static solution of the row's line at the paces and the laid message a travelling one, so their sum is the record; the holder of the sign keeps its laid light where nothing sources it); the declared count stays the body's, read from the laid record by the gate."""
         holders = [i for i in self.held if not self.families[i].wronskian]
+        signs = [i for i in self.held if self.families[i].wronskian and self.sourced(i)]
+        rows, gamma = holders + signs, self.world.node_clock
 
-        def sourced(index: int) -> Sourced:  # the row's counts, pair, level weight, rest and reads
-            family, counts = self.families[index], node.zeros(self.shape, self.kind)
-            for source, form, turn in forms:  # each at the weight with which the record reads it
-                booking = turn if family.wronskian else form
-                counts = counts + weight_of(index, self.families[source]) * booking
-            reads = tuple(
-                (holders.index(r.family), r.weight) for r in family.reads if r.family in holders
+        walls = {index: self.walls(index)[0] for index in rows}
+        messages = {index: self.states[index].lines[0] for index in rows}  # the laid records, read once
+
+        def booked(levels: Sequence[np.ndarray]) -> tuple[list[Sourced], list[Sourced]]:
+            return booked_sources(
+                self.families,
+                self.states,
+                rows,
+                holders,
+                walls,
+                messages,
+                levels,
+                self.wrap,
+                gamma,
+                self.unit,
             )
-            return counts, family.pair, family.level_weight or 0, family.rest, reads
 
-        held = [i for i in self.held if self.families[i].wronskian]  # a holder's rest, on its message
-        signs = {i: kick for i in held if (kick := sourced(i))[0].any()}
+        seed = [node.zeros(self.shape, self.kind) for _ in rows]
         try:
-            rows, kicks = [sourced(i) for i in holders], list(signs.values())
-            fields = held_rests(
-                rows, kicks, self.wrap, self.world.width, self.world.node_clock, self.unit
-            )
+            fields = held_rests(booked, seed, self.wrap, self.world.width, gamma, self.unit)
         except ValueError as refusal:
             raise ValueError(f"the start of the held families: {refusal}") from refusal
+        for index in rows:
+            self.states[index].lines[0] = messages[
+                index
+            ]  # the laid message back in place of the staging
         for index, found in zip(holders + list(signs), fields, strict=True):
             remainder = node.full(self.shape, found.remainder, self.kind)
             message = self.states[index].lines[0]  # the laid message, every level 0 where none is laid
@@ -149,6 +145,13 @@ class GameBoard:
             if family.rest:
                 time = lines[0]
                 lines[0] = replace(time, now=time.now + family.rest, before=time.before + family.rest)
+
+    def sourced(self, index: int) -> bool:
+        """Whether anything sources a held row at the start: a reader's laid record with a Wronskian other than 0 at a Node for the holder of the sign (a real record sources none of it, so the holder keeps its laid record, light)."""
+        return any(
+            bool(np.asarray(node.wronskian(self.record(reader), self.families[reader].plane)).any())
+            for reader in readers_of(self.families, index)
+        )
 
     def gate(self) -> None:
         """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's share in quanta over its declared Nodes, ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
@@ -398,3 +401,40 @@ class GameBoard:
         self.tick, self.ended = self.tick - 1, None
         while self.growths and self.growths[-1][0] == self.tick + 1:
             growth.resize(self, *self.growths.pop()[1:], -1)
+
+
+def booked_sources(
+    families: node.Families,
+    states: node.States,
+    rows: Sequence[int],
+    holders: Sequence[int],
+    walls: dict[int, int],
+    messages: dict[int, node.Record],
+    levels: Sequence[np.ndarray],
+    wrap: Wrap,
+    gamma: int,
+    unit: int,
+) -> tuple[list[Sourced], list[Sourced]]:
+    """The sources of the start at the held rows' levels given, as the hold's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `GameBoard.start` and tools/pixel_mode.py): the levels laid into the held rows' time lines of `rows` (the holders of the content then the holders of the sign, each added to the row's laid record `messages`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every family of quanta stepped once at the paces its read gives it there (`node.read`, `node.rule_of`, `node.step_family`) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`node.form`, `node.wronskian`), each held row's source the sum over its readers of their bookings at the weight they read it with (the hold's reciprocity, `readers_of`, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the signs'."""
+    for index, level in zip(rows, levels, strict=True):
+        message, laid = messages[index], level + families[index].rest
+        states[index].lines[0] = replace(message, now=message.now + laid, before=message.before + laid)
+    forms, turns = Bookings(), Bookings()
+    for index, family in enumerate(families):
+        if not family.quanta:
+            continue
+        rule = node.rule_of(
+            family, gamma, *node.read(index, families, states, 1, wrap, gamma, unit), unit
+        )
+        _lines, (first, second) = node.step_family(index, families, states, rule, wrap, gamma)
+        forms[index] = node.form(first[: family.record], second[: family.record])
+        turns[index] = node.wronskian(second[: family.record], family.plane)
+    found: list[Sourced] = []
+    for index in rows:
+        family, source = families[index], np.zeros_like(states[index].lines[0].now)
+        bookings = turns if family.wronskian else forms
+        for reader in readers_of(families, index):
+            source = source + weight_of(index, families[reader]) * bookings[reader]
+        reads = tuple((holders.index(r.family), r.weight) for r in family.reads if r.family in holders)
+        found.append((source, family.pair, walls[index], family.rest, reads))
+    return found[: len(holders)], found[len(holders) :]

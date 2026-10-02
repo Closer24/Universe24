@@ -1,4 +1,4 @@
-"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count the record's share, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body of a plane writes a wave into the sign holder's own record, its share's total stays within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the chain goes back in time, MATCH over 400 intervals with the rotating body and with the real one; the tension is Rule3's own conservation of the current; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning."""
+"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count the record's share, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body of a plane writes a wave into the sign holder's own record, its share's total stays within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the chain goes back in time, MATCH over 400 intervals with the rotating body and with the real one; the tension is Rule3's own conservation of the current; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning. The static body of the chain is one charged body of the sense +1 at the Node 24 with the taker on it: the two-body world, a like-sense body laid beside a neutral body's tail under the plain read, finds no fixed point in the generator (a 20-unit cycle of period 7 at the body's own edge), the rotating construction's open defect, the integer wander of the record-to-content map with the body's own charge level as a second source of its well; not a tie, and not widened."""
 
 import json
 import math
@@ -278,7 +278,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
         print(f"GAMEBOARD the chain of the sense {turn}, the gate over 400 intervals: {back}")
         assert back["verdict"] == "MATCH" and back["intervals"] == 400
-    world = laws.chain_body_world(tmp_path, TOOL, at=(24, 36), senses=(1, 0), taker=True)
+    world = laws.chain_body_world(tmp_path, TOOL, at=(24,), senses=(1,), taker=True)  # one charged body
     board = GameBoard(load_world(world), (lines := []).append)
     turning = [f.name for f in board.families].index(CHARGED["name"])
     matter, family = board.states[turning], board.families[turning]
