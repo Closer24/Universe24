@@ -119,9 +119,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
             r[:20], records.complement(r, w)[::-1][:20]
         )
     assert all((w - 1 - u) // w == -(u // w) for u in range(-40, 40) for w in range(1, 9))
-    origins = records.write_origins(
-        (10, 11), (3, 1, 1), np.int64, (np.array([[[1]], [[0]], [[0]]]) > 0,)
-    )
+    origins = records.write_origins((10, 11), (3, 1, 1), np.int64, (np.arange(3).reshape(3, 1, 1) == 0,))
     assert [o.ravel().tolist() for o in origins] == [[4, 5, 5], [5, 5, 5]]
 
 

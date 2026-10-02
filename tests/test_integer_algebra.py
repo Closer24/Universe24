@@ -18,16 +18,10 @@ PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/univer
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
-NUMPY_DTYPES_FORBIDDEN = set(
-    "complex128 complex64 complex_ complexfloating float128 float16 float32".split()
-)
-NUMPY_DTYPES_FORBIDDEN |= set(
-    "float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
-)
-NUMPY_FORBIDDEN = set(
-    "arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power".split()
-)
-NUMPY_FORBIDDEN |= set("sin sqrt std tan true_divide var".split())
+FLOATS = "complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating"
+NUMPY_DTYPES_FORBIDDEN = {*FLOATS.split(), *"int16 int32 int8 uint16 uint32 uint64 uint8".split()}
+NUMPY_FORBIDDEN = set("arctan2 average cbrt cos divide exp float hypot log log10 log2 mean".split())
+NUMPY_FORBIDDEN |= set("power sin sqrt std tan true_divide var".split())
 BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int", "kind"}  # kind: the loader's choice by the width
 ROOT_NAMES = {"isqrt", "integer_root"}
 
@@ -135,8 +129,7 @@ FEATURES = sorted(p.relative_to(SRC).as_posix() for p in (SRC / "features").glob
 @pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES) + FEATURES)
 def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     """Every physical module, and every feature's folder under the same gate (issue #1154 cut 2), found by its folder and never listed."""
-    source = (SRC / name).read_text(encoding="utf-8")
-    tree = ast.parse(source)
+    tree = ast.parse(source := (SRC / name).read_text(encoding="utf-8"))
     assert float_literals(source) == [], (name, float_literals(source))
     assert true_divisions(source) == [], (name, true_divisions(source))
     assert forbidden_imports(tree) == [], (name, forbidden_imports(tree))

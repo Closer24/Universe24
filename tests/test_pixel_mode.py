@@ -117,9 +117,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     assert len(passes) > 1 and max(passes[-1][1:3]) <= 1 and load_world(lay_path).lay.stop == 1
     laid["lay"]["tolerance"] = [1, 1000]  # a tolerance the universe's T cannot meet: the budget's gate
     lay_path.write_text(json.dumps(laid), encoding="utf-8")
-    lay_path.with_suffix(".mode.json").write_text(
-        json.dumps({**laid_mode, "world_digest": input_digest(laid)})
-    )
+    laid_mode["world_digest"] = input_digest(laid)
+    lay_path.with_suffix(".mode.json").write_text(json.dumps(laid_mode))
     refused("below the least T", lambda: load_world(lay_path))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     del universe["integers"]["quantum_action"]
