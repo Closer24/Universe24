@@ -1,0 +1,78 @@
+{
+ "verdict": "DETECTOR",
+ "detector": [
+  "screen_0",
+  "screen_1",
+  "screen_2",
+  "screen_3"
+ ],
+ "family": "charge",
+ "window": [
+  1,
+  200
+ ],
+ "across": "y",
+ "pattern": [
+  1,
+  2
+ ],
+ "seed": 24,
+ "comment": "World (v) of the families round, light and charge (HIGHLIGHTS.md, Every family run on the engine and seen to work; the advisor's blinds, #1563 comment 5928483084; ALGEBRA.md rows (b), (f), (p), The content's index for every family, items 15 and 16): a packet of light, the holder of the sign's own record, along a tube past a body, its arrival on a screen the one measurement. The tube: x open with the faces' layer one Node deep and both x faces receding (`receding`, the source's return and what passes the screen leave the declared board), y and z periodic at `across` Nodes; the body at `centre`; one message of the charge family along +x at the wave number pi `wave`[0] / `wave`[1] per Link, the level `amplitude` at its top, the top the column x = `top` over the whole cross-section with a raised cosine of `edge` Nodes along x (the packet's own form sources the binding holder at the level weight 1, so its amplitude is kept under the two slits' 1,328: at 200 the lay's share rounds to no quantum at any Node and the count reads 0, at 600 about one quantum per Node of the top, the packet's own well a few hundred levels at the slab's centre, which slows the packet by its own index alike in the three worlds); the screen the column x = `screen` in `across` / `rows` regions of `rows` rows each across y and the whole ring across z (`screen_0` to `screen_3`, ordered along y; the loader's size rule, at least half the wavelength, q / p = 4 Nodes, across the beam on every axis of more than one Node, refuses a region of one row), backed by the receding face. Three worlds on the universe of world (iv), examples/events/charge/charged.json (the rule's rows with the charged family): `free`, no body, the arrival's reference; `through_neutral`, a compact pixel of the matter family of `quanta` quanta at the centre; `through_charged`, the same quanta of the charged family laid rotating in the sense +1 (the fence of its lay as in examples/events/charge/design.json). Light reads every holder of the content (gravity and the binding holder) and none of its own row: the body's content delays the packet by the index of The content's index for every family, 1 / (1 - 2 U) for light at every k, and the holder of the sign's level about the charged body enters no pace of light, so the charged and the neutral worlds read alike to the rounding, the 0 of a first-order force of the sign on light (row (f): no bending of light by a static charge). The Peierls phase of the odd line at the wall den T, lambda = W_c / (den T) = 3 = 1 / c^2, acts on the two-part record alone and is not read here; the magnetic force F_C / gamma and the Lorentz identity under the rotation with the odd line at the wall (items 15, 16) are the rotation round's blinds at its declared world, examples/events/parallel_charges/, to be run when the generator lays a moving body. The worlds are laid by the builder with --modes on the finished engine (on main 3fe40aeb's engine the free world laid 2,304 quanta of light at the amplitude 600; no world laid on the old engine is committed). Headless, `ticks` intervals; the reading by tools/click_counts.py against the blind, the clicks' arrival first (DETECTOR), and tools/body_rest.py for the body. The run is not performed in the round that prepares it.",
+ "counts": [
+  576.0,
+  576.0,
+  576.0,
+  576.0
+ ],
+ "counts_comment": "the blind row per region: the free world's packet covers the whole cross-section with no edge across y, so every region of four rows takes one fourth of what reaches the screen, the uniform row; the body worlds' rows gather at the two central regions by the lens (the delay's blind), the direction and not the number, the number the Huygens sum over the lay's levels, not computed here; the free world's lay of 2026-10-01: 2,304 quanta of light at the amplitude 600 (the mode file's count), so the uniform row is 576 per region",
+ "through": 2304,
+ "quanta": 2304,
+ "laid": 2304,
+ "arrival": {
+  "peak": 96,
+  "centroid": 96,
+  "span": [
+   85,
+   107
+  ],
+  "status": "the continuum's number from the band's group velocity at k = pi / 4 on [1, 1], cos omega = (2 + cos k) / 3, v_g = sin k / (3 sin omega) = 0.5468 Links per interval, the top at x = 8 and the screen at x = 60, 52 Links in 95.1 intervals, one more in the engine's labels (the click at tick t reports the state after t - 1 steps); the span the envelope's six Nodes each side at that speed; the lattice's own correction over this length (the two slits' real line read 68 against the continuum's 63 over 34 Links with the slits) is not computed here and is the finding's room; the packet's own well at the level weight 1 (light reads the content its form sources) slows it by its own index, the free world's arrival carrying that shift, the body worlds read against the free world's; unchanged by the composed paces: the band's group velocity at the vacuum's paces is the lattice's own, and the packet's own well is read alike in the three worlds",
+  "fence": "clicks"
+ },
+ "delay": {
+  "formula": {
+   "recomputed": "under the composed paces light's index of a content U = c / Gamma is e^(2 U) in the ray limit k to 0 (1 / (1 - 2 U) under the quadratic forms as written), exact in the law's own variable sin(k_in / 2) = sin(k / 2) / s with s = e^(-2 U), the phase index k_in / k = (2 / k) asin(sin(k / 2) / s), 1 / s + k^2 (1 / s^3 - 1 / s) / 24 at small k, at k = pi / 4 within 2 percent of e^(2 U) at U = 0.15; a set beyond reads the passage longer by the extra path SUM over the ray's Nodes of (e^(2 U) - 1) Links at the group speed v_g = 0.5469 Links per interval",
+   "from": "ALGEBRA.md row (b), The bending (the index e^(2 x)); row (p), The content's index for every family (the exact variable, two hands); The paces compose",
+   "as_first_written": "a light record through a content U = c / Gamma is slowed to the phase index 1 / (1 - 2 U) at every k and no chromatic dispersion (The content's index for every family; row (b), the index n = 1 / (1 - 2 x)); a set beyond reads the passage longer by l (1 / v_in - 1 / v_g) (row (p)), the extra path SUM over the ray's Nodes of (1 / (1 - 2 U) - 1) Links at the group speed"
+  },
+  "axial_ray": {
+   "recomputed": "through the body's centre with the lay's own content, read at tick 0 before any run (the neutral tube's body, the generator's lay of 2026-10-01 on main e938c3ea: a wide bound record of 2,361 Nodes, the clock pair 2398 / 1729 = 1.387, the content at the centre 869, U = 0.145, the binding holder's level along +x from the centre 868, 838, 775, 695, 615, 544, 483, 431, 387 and gravity's 1): the extra path SUM (e^(2 U) - 1) over the ray's Nodes with x >= 16 (beyond the packet's own slab) is 5.61 Links, 10.3 intervals at v_g (6.29 Links, 11.5 intervals under 1 / (1 - 2 U) as first written); the body's unbinding under the engine's two sources (world (i)'s finding, the start sourcing the held rows by the share and the hold by the form) lowers the content the packet meets at about the 40th interval, so the delay the run reads is read against this number and named",
+   "from": "ALGEBRA.md row (p); The content's index for every family; The paces compose",
+   "as_first_written": "through the body's centre, with the first look's field of the compact pixel (row (s), about 1,050 levels at the Node at 2,000 in the advisor's unit, the tail's levels about 500, 250, 150 and 80 at 1, 2, 3 and 5 Links), about 1.7 Links of extra path, about 3 intervals"
+  },
+  "screen": {
+   "recomputed": "the screen's inflow summed over its regions reads the cross-section's mean of the delay: with the lay's content at tick 0 the mean over the 16 x 16 cross-section of SUM over x >= 16 of (e^(2 U) - 1) is 4.70 Links, 8.6 intervals of the centroid against the free world's (5.12 Links, 9.4 intervals under 1 / (1 - 2 U) as first written), the body on the periodic tube being a sheet by its images and its content reaching the whole cross-section (the body's 2,361 Nodes); the two central regions read the lens, their credit above the free world's uniform row, the direction and not the number",
+   "from": "ALGEBRA.md row (p), the lens; The content's index for every family; The paces compose",
+   "as_first_written": "the screen's inflow summed over its regions reads the cross-section's mean of the delay, the body's content summed over the tube over (across^2 Gamma), under one interval of the centroid against the free world's; the two central regions read the lens (The content's index: a window thick in the middle delays the middle more, the rays converge and the record's share gathers at the focus), their credit above the free world's uniform row"
+  },
+  "charge": {
+   "recomputed": "the holder of the sign's level about the charged body enters no pace of light (light reads the content and never its own row): the charged tube's lay of 2026-10-01 on main e938c3ea (the body's standing record the neutral's, the clock pair 2398 / 1729, laid rotating in the sense +1, 1,811 Nodes declared at 15,047 quanta at the paces of the read with the sign holder's level among its content) gives the content light reads at tick 0, gravity and the binding holder, 860 at the centre against the neutral tube's 869, the binding holder's level along +x 859, 832, 769, 692, 614, 544, 484, 431, 387 against 868, 838, 775, 695, 615, 544, 483, 431, 387, the two lays' rounding alone, and the sign holder's rest 551, 534, 490, 436, 382, 334, 294, 259, 230 beside it, read by the plane and not by light; so the recomputed delay is the neutral's: the cross-section's mean of SUM (e^(2 U) - 1) over x >= 16 is 4.70 Links, 8.6 intervals (the neutral's 8.6), the axial ray 5.59 Links, 10.2 intervals (the neutral's 10.3); the two worlds' arrival and row equal to the rounding",
+   "from": "ALGEBRA.md, Every family has a dimension (light reads no holder of the sign); row (f); The content's index for every family",
+   "as_first_written": "the holder of the sign's level about the charged body enters no pace of light: the through_charged world's arrival and row equal the through_neutral world's to the rounding of the two lays (the bodies' own contents differ by the lays' rounding alone), the 0 of the first-order force on a neutral real line"
+  },
+  "status": "computed from the law's lines as they stand on main e938c3ea (the index e^(2 U) of the composed paces) with the lay's own content read at tick 0 before any run; the numbers as first written (the index 1 / (1 - 2 U), the first look's field) kept beside each recomputation",
+  "fence": "clicks for the arrival and the row; GameBoard for the body's levels",
+  "lays": "the lays of 2026-10-01 on main e938c3ea: free in under a second (2,304 quanta of light at the amplitude 600), through_neutral in 487 seconds and through_charged in 516 seconds (each body a wide bound record of 2,361 Nodes on the tube, the clock pair 2398 / 1729, the charged one rotating in the sense +1); every mode file holds the packet; at the load of through_charged the engine's start assigns the holder of the sign, sourced by the charged body's Wronskian, to its rest and the laid packet is not kept (ENGINE.md section 3: the holder keeps its laid record where nothing sources it), so light's share at tick 0 reads 1 quantum against the neutral tube's 2,560 and the charged tube's run carries no packet: the engine's start as it stands, named here and not patched, the two body worlds' comparison waiting on it"
+ },
+ "worlds": {
+  "free": null,
+  "through_neutral": "matter",
+  "through_charged": "charged"
+ },
+ "body": {
+  "family_per_world": {
+   "free": null,
+   "through_neutral": "matter",
+   "through_charged": "charged"
+  }
+ }
+}

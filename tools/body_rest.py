@@ -1,0 +1,328 @@
+"""The bodies' rest, a GameBoard reading labelled so and no measurement (docs/ENGINE.md #6-how-to-run-a-world; ALGEBRA.md #the-stable-body, #a-familys-declaration; the families round's worlds under examples/events/): a world of one or two bodies on any board is loaded as tools/run_inputs.py loads it and stepped by the engine's own step over the window; at the window's ends every body is read from its record and from the rows it sources. Per body: its centre (the declared Node of its largest count); the three levels of its record about one interval at the centre, [before, now, next], whose ratio (next + before) / now is 2 cos omega_b, the rest rotation of the standing record, an exact fraction (ALGEBRA.md #the-bound-body-is-one-node); its Wronskian at the centre where the body is a plane (its sense, the source of the holder of the sign); its share in quanta at the centre Node and summed over its region (the half of the board nearer its centre along the axis joining two bodies' centres, the whole board for a single body); the centroid of its share over its region and the share-weighted second moment about the centroid (the rms radius squared), exact fractions at the file's coordinates; its well over its region, the form D = now^2 - next x before summed over the region and divided by T, in quanta (the source of the rows holding the content); its record's level along each axis from the centre outward (the tail) with the ratios of successive levels (e^(-kappa) per Link where the tail is evanescent); and every held row's time level along the same axes (a holder of the content's rest about a body, 3 G(r) s on an open box; the holder of the sign's about a plane). For two bodies the separation of the centroids along the joining axis at the window's ends and its change; the books at the end. With a run's output file the `field` lines of the regions the expectation names (or of every region) are read over the window, each region's least and largest reading with their intervals and the count of its local maxima (a swinging count's beat). With an expectation file its blind is printed beside the readings. The tool compares nothing, holds no number of the law and writes nothing to the engine.
+
+Run with PYTHONPATH set to the checkout's src:
+
+    PYTHONPATH=src python tools/body_rest.py [--intervals N] [--reach R] [--expectation <expectation>.json] [--output <world>.output.json ...] <world>.json ...
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from fractions import Fraction
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+from event_universe import node
+from event_universe.game_board import GameBoard
+from event_universe.loader.keys import AXES
+from event_universe.world_files import load_world
+
+LABEL = "GAMEBOARD"
+Node = tuple[int, ...]
+
+
+def pair(value: Fraction | None) -> list[int] | None:
+    """A fraction as [numerator, denominator] for the output, None where there is none."""
+    return None if value is None else [value.numerator, value.denominator]
+
+
+def copied(record: node.Record) -> node.Record:
+    """A record's two levels copied, its remainder shared: the interval's start kept while the board steps."""
+    return node.Record(record.now.copy(), record.before.copy(), record.remainder)
+
+
+def centre_of(board: GameBoard, number: int) -> Node:
+    """A body's centre: the declared Node of its largest count (the first at a tie), at the file's coordinates."""
+    row = board.world.bodies[number]
+    at = max(range(len(row.nodes)), key=lambda i: (row.counts[i], -i))
+    return row.nodes[at]
+
+
+def joining_axis(centres: list[Node]) -> int:
+    """The axis joining two bodies' centres, the one along which they stand furthest apart (the first at a tie)."""
+    gaps = [abs(centres[1][axis] - centres[0][axis]) for axis in range(len(AXES))]
+    return gaps.index(max(gaps))
+
+
+def regions(board: GameBoard, centres: list[Node]) -> list[np.ndarray]:
+    """Each body's region as a mask over the board: the whole board for one body; for two, the half nearer its centre along the joining axis, split midway between the centres (the first body's half ends before the split)."""
+    if len(centres) == 1:
+        return [np.ones(board.shape, dtype=bool)]
+    axis = joining_axis(centres)
+    first, second = sorted(c[axis] for c in centres)
+    split = (first + second + 1) // 2 + board.offset[axis]
+    along = np.arange(board.shape[axis]).reshape([-1 if a == axis else 1 for a in range(len(AXES))])
+    low = np.broadcast_to(along < split, board.shape)
+    return [low, ~low] if centres[0][axis] <= centres[1][axis] else [~low, low]
+
+
+def moments(density: np.ndarray, region: np.ndarray, offset: Node) -> dict[str, object]:
+    """The centroid of a density over a region and its second moment about the centroid, exact fractions at the file's coordinates (`offset` the layers grown before the origin); None where the density sums to 0."""
+    weights = np.where(region, density, 0)
+    total = int(weights.sum(dtype=object))
+    if total == 0:
+        return {"total": 0, "centroid": None, "second_moment": None}
+    grids = np.indices(density.shape)
+    centroid = [
+        Fraction(int((weights * grids[axis]).sum(dtype=object)), total) - offset[axis]
+        for axis in range(len(AXES))
+    ]
+    second = Fraction(0)
+    for axis in range(len(AXES)):
+        coordinate = grids[axis].astype(object) - offset[axis]
+        second += Fraction(int((weights * coordinate * coordinate).sum(dtype=object)), total)
+        second -= centroid[axis] * centroid[axis]
+    return {"total": total, "centroid": [pair(c) for c in centroid], "second_moment": pair(second)}
+
+
+def along(array: np.ndarray, centre: Node, axis: int, reach: int, offset: Node) -> list[int]:
+    """An array's values at the Nodes from the centre outward along the + side of one axis, r = 0 through `reach`, at the file's coordinates, stopping at the board's edge."""
+    found = []
+    for r in range(reach + 1):
+        at = [c + o for c, o in zip(centre, offset, strict=True)]
+        at[axis] += r
+        if not 0 <= at[axis] < array.shape[axis]:
+            break
+        found.append(int(array[at[0], at[1], at[2]]))
+    return found
+
+
+def ratios(levels: list[int]) -> list[list[int] | None]:
+    """The ratio of each level to the one before it along a ray, [level(r + 1), level(r)], None where the level before is 0."""
+    return [None if a == 0 else [b, a] for a, b in zip(levels, levels[1:], strict=False)]
+
+
+def body_reading(
+    board: GameBoard,
+    number: int,
+    region: np.ndarray,
+    begun: list[node.Record],
+    share: np.ndarray,
+    quanta: np.ndarray,
+    reach: int,
+) -> dict[str, object]:
+    """One body's reading about one interval: the board has stepped once since `begun`, `share` and `quanta` were read, so its records' `now` is the next level; everything else is of the interval's start."""
+    row = board.world.bodies[number]
+    family, state = board.families[row.family], board.states[row.family]
+    centre = centre_of(board, number)
+    at = tuple(c + o for c, o in zip(centre, board.offset, strict=True))
+    before, now, after = (int(a[at]) for a in (begun[0].before, begun[0].now, state.lines[0].now))
+    form = node.form(begun, state.lines[: family.record])
+    well_sum = int(np.where(region, form, 0).sum(dtype=object))
+    wronskian = node.wronskian(begun, family.plane)
+    held = {
+        board.families[index].name: {
+            AXES[axis]: along(board.states[index].lines[0].now, centre, axis, reach, board.offset)
+            for axis in range(len(AXES))
+        }
+        for index in board.held
+    }
+    tails = {
+        AXES[axis]: along(begun[0].now, centre, axis, reach, board.offset) for axis in range(len(AXES))
+    }
+    return {
+        "family": family.name,
+        "centre": list(centre),
+        "levels_at_centre": [before, now, after],
+        "two_cos_omega": None if now == 0 else pair(Fraction(after + before, now)),
+        "wronskian_at_centre": None if not family.plane else int(np.asarray(wronskian)[at]),
+        "quanta_at_centre": int(quanta[at]),
+        "quanta_in_region": int(np.where(region, quanta, 0).sum(dtype=object)),
+        "share": moments(share, region, board.offset),
+        "well_in_quanta": well_sum // board.world.quantum_action,
+        "tail": {axis: {"levels": levels, "ratios": ratios(levels)} for axis, levels in tails.items()},
+        "held": held,
+    }
+
+
+def grown(array: np.ndarray, shape: tuple[int, ...], offset: Node, board: GameBoard) -> np.ndarray:
+    """An array kept before a step brought to the board's shape after it: where a receding face grew the GameBoard during the step (`growth.resize`), the layers grown before the origin (the offset's change) are prepended and the rest appended, as zeros, so that the interval's start and its end are read at the same Nodes."""
+    pads = []
+    for axis in range(len(AXES)):
+        low = board.offset[axis] - offset[axis]
+        pads.append((low, board.shape[axis] - shape[axis] - low))
+    return np.pad(array, pads) if any(pad != (0, 0) for pad in pads) else array
+
+
+def read_about_one_interval(
+    board: GameBoard, centres: list[Node], reach: int
+) -> list[dict[str, object]]:
+    """Every body's reading about the interval the board is at: the records, shares and quanta of the start are kept, the board steps once (grown at a receding face where the front reaches it, the kept arrays grown with it, `grown`), the regions are read at the board's shape after the step, and each body is read (`body_reading`)."""
+    shape, offset = tuple(board.shape), tuple(board.offset)
+    kept = {}
+    for number, row in enumerate(board.world.bodies):
+        begun = [
+            copied(line) for line in board.states[row.family].lines[: board.families[row.family].record]
+        ]
+        kept[number] = (begun, board.share_of(row.family)[0].copy(), board.quanta(row.family)[0].copy())
+    board.step()
+    masks = regions(board, centres)
+    found = []
+    for number in range(len(board.world.bodies)):
+        begun, share, quanta = kept[number]
+        begun = [
+            node.Record(
+                grown(line.now, shape, offset, board),
+                grown(line.before, shape, offset, board),
+                line.remainder,
+            )
+            for line in begun
+        ]
+        share, quanta = grown(share, shape, offset, board), grown(quanta, shape, offset, board)
+        found.append(body_reading(board, number, masks[number], begun, share, quanta, reach))
+    return found
+
+
+def separation(readings: list[dict[str, object]], centres: list[Node]) -> Fraction | None:
+    """Two bodies' separation along the joining axis, the second centroid less the first, None where a region read no share."""
+    axis = joining_axis(centres)
+    found = []
+    for reading in readings:
+        share = reading["share"]
+        assert isinstance(share, dict)
+        centroid = share["centroid"]
+        if centroid is None:
+            return None
+        value = centroid[axis]
+        found.append(Fraction(int(value[0]), int(value[1])))
+    return found[1] - found[0]
+
+
+def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
+    """One world's reading: the bodies at the start and after `intervals` intervals (the world's ticks without it), each read about one interval, so the board steps once more than the window; the separation for two bodies; the books at the end; labelled GAMEBOARD."""
+    board = GameBoard(load_world(path))
+    if len(board.world.bodies) not in (1, 2):
+        raise ValueError(
+            f"{path.name} declares {len(board.world.bodies)} bodies: the rest reads one or two"
+        )
+    steps = board.world.ticks if intervals is None else intervals
+    centres = [centre_of(board, number) for number in range(len(board.world.bodies))]
+    start = read_about_one_interval(board, centres, reach)
+    while board.tick < steps and board.ended is None:
+        board.step()
+    end = read_about_one_interval(board, centres, reach) if board.ended is None else None
+    found: dict[str, Any] = {
+        "label": LABEL,
+        "input": path.name,
+        "intervals": board.tick,
+        "ended": board.ended,
+        "amplitude_bound": board.world.amplitude_bound,
+        "largest_integer": board.world.width,
+        "arrays": board.kind.__name__,
+        "joining_axis": AXES[joining_axis(centres)] if len(centres) == 2 else None,
+        "start": start,
+        "end": end,
+        "books": board.books(),
+    }
+    if len(centres) == 2:
+        apart = [separation(readings, centres) if readings else None for readings in (start, end)]
+        change = None if apart[0] is None or apart[1] is None else apart[1] - apart[0]
+        found["separation"] = {"start": pair(apart[0]), "end": pair(apart[1]), "change": pair(change)}
+    return found
+
+
+def field_series(
+    lines: list[dict[str, object]], window: tuple[int, int]
+) -> dict[tuple[str, str], dict[int, int]]:
+    """The `field` lines of a run's output within the window, per (detector, family): the reading at each interval it was written (it is written where it differs from the last interval's)."""
+    found: dict[tuple[str, str], dict[int, int]] = {}
+    for line in lines:
+        if line.get("event") != "field" or line.get("reading") is None:
+            continue
+        tick = int(str(line["tick"]))
+        if window[0] <= tick <= window[1]:
+            key = (str(line["detector"]), str(line["family"]))
+            found.setdefault(key, {})[tick] = int(str(line["reading"]))
+    return found
+
+
+def swing(series: dict[int, int], window: tuple[int, int]) -> dict[str, object]:
+    """A region's reading over the window: carried forward where it was not rewritten, its least and largest with the first interval of each, and the count of its local maxima (above the reading before, at or above the one after)."""
+    filled, last = [], None
+    for tick in range(window[0], window[1] + 1):
+        last = series.get(tick, last)
+        if last is not None:
+            filled.append((tick, last))
+    if not filled:
+        return {"least": None, "largest": None, "maxima": 0}
+    values = [value for _tick, value in filled]
+    maxima = sum(
+        1 for i in range(1, len(values) - 1) if values[i] > values[i - 1] and values[i] >= values[i + 1]
+    )
+    least, largest = min(values), max(values)
+    return {
+        "least": {"tick": next(t for t, v in filled if v == least), "reading": least},
+        "largest": {"tick": next(t for t, v in filled if v == largest), "reading": largest},
+        "maxima": maxima,
+    }
+
+
+def fields_read(output: Path, expected: dict[str, Any] | None) -> dict[str, Any]:
+    """A run's `field` lines read over the window the expectation names (the whole run without one), for the regions and family it names under `field` (every region and family without them)."""
+    document = json.loads(output.read_text(encoding="utf-8"))
+    lines = [line for line in document.get("lines", []) if isinstance(line, dict)]
+    named = (expected or {}).get("field", {})
+    window = tuple(int(v) for v in (expected or {}).get("window", [0, int(document.get("ticks", 0))]))
+    series = field_series(lines, (window[0], window[1]))
+    wanted = [
+        key
+        for key in series
+        if (not named.get("detectors") or key[0] in named["detectors"])
+        and (not named.get("family") or key[1] == named["family"])
+    ]
+    return {
+        "label": LABEL,
+        "output": output.name,
+        "verdict": document.get("verdict"),
+        "window": list(window),
+        "regions": [
+            {
+                "detector": detector,
+                "family": family,
+                **swing(series[(detector, family)], (window[0], window[1])),
+            }
+            for detector, family in sorted(wanted)
+        ],
+    }
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument(
+        "worlds", type=Path, nargs="*", help="the world files, each with its mode file beside it"
+    )
+    parser.add_argument(
+        "--intervals", type=int, default=None, help="the intervals read (the world's ticks)"
+    )
+    parser.add_argument(
+        "--reach", type=int, default=6, help="the Links read along each axis from a centre"
+    )
+    parser.add_argument("--expectation", type=Path, default=None, help="the blind expectation file")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        action="append",
+        default=[],
+        help="a run's output file, its field lines read (the flag once per file)",
+    )
+    args = parser.parse_args(argv)
+    expected = (
+        json.loads(args.expectation.read_text(encoding="utf-8"))
+        if args.expectation is not None
+        else None
+    )
+    found: dict[str, Any] = {"label": LABEL}
+    if args.worlds:
+        found["worlds"] = {path.stem: rest(path, args.intervals, args.reach) for path in args.worlds}
+    if args.output:
+        found["fields"] = {path.stem: fields_read(path, expected) for path in args.output}
+    if expected is not None:
+        found["blind"] = {key: expected.get(key) for key in ("reading", "blind", "fence", "status")}
+    print(json.dumps(found, indent=1))
+
+
+if __name__ == "__main__":
+    main()
