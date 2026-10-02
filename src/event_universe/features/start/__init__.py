@@ -94,16 +94,20 @@ def settled(
 
 
 def returned(
-    found: Sequence[np.ndarray], own: Sequence[np.ndarray], seen: dict[bytes, int], name: str
+    found: Sequence[np.ndarray],
+    own: Sequence[np.ndarray],
+    seen: dict[bytes, int],
+    name: str,
+    acts: int = 1,
 ) -> bool:
-    """The one rule of a repeat for every iteration of the start, the levels re-read against the state they were read at: True at the fixed point (the levels repeat the state) and at a rounding tie (an earlier state returns, one unit off at most at every Node of every row); an earlier state returning further off, a cycle of two states or more, is no rest and is refused by name with the passes made, the cycle's length and the two levels at the Node (about a deep enough source the self-read's swing is not damped); a new state is recorded in `seen` by its pass and False returned."""
+    """The one rule of a repeat for every iteration of the start, the levels re-read against the state they were read at: True at the fixed point (the levels repeat the state) and at a rounding tie (an earlier state returns, one unit off at most per division act composed in the map, `acts`, at every Node of every row: the rest's own division alone in `rest`, the rest's and the booking's of the form over its wall in `held_rests`, so two units there, PR #1614's rule generalised to the composed map and no criterion of its own); an earlier state returning further off, a cycle of two states or more, is no rest and is refused by name with the passes made, the cycle's length and the two levels at the Node (about a deep enough source the self-read's swing is not damped); a new state is recorded in `seen` by its pass and False returned."""
     if all(np.array_equal(a, b) for a, b in zip(found, own, strict=True)):
         return True
     if (key := b"".join(level.tobytes() for level in found)) in seen:
         offs = [np.abs(a - b) for a, b in zip(found, own, strict=True)]
         row = max(range(len(offs)), key=lambda number: int(offs[number].max()))
         node = np.unravel_index(int(offs[row].argmax()), offs[row].shape)
-        if int(offs[row][node]) <= 1:
+        if int(offs[row][node]) <= acts:
             return True
         raise ValueError(
             f"{name} finds no fixed point: the levels re-read return to an earlier state after {len(seen)} "
@@ -200,7 +204,7 @@ def settled_rows(
 def held_rests(
     booked: Booked, seed: Sequence[np.ndarray], wrap: Wrap, width: int, gamma: int, unit: int
 ) -> list[FieldAtRest]:
-    """Every held row at its rest under the sources the laid records write at those rests, the engine's start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, (a) the body stands where the sources return themselves and (c) the well, D_i div T each interval, is the record's quanta as the fields' source): the lay and the rest iterated to the fixed point. `booked` books every held row's source at the held rows' levels it is given, the holders of the content first and then the holders of the sign, each the booking the hold's write takes at those paces (the form of every laid record for a row of the content and its Wronskian for the holder of the sign, scaled per proper volume and per proper interval at the sourcing family's paces, over the write's wall E_s T); the holders of the content rest together under it (`settled_rows`), then each holder of the sign at the rest of its line under the content it reads, its reads naming the content holders by their position with their weights, the rests among the levels, its Wronskian source carrying one proper-interval power where a count carries two; the levels found are booked again until they repeat the state they were booked at, the fixed point, or an earlier state one unit off at most at every Node, a rounding tie, a return further off refused by name as a cycle (`returned`, the one rule); `seed` the levels the first booking reads, nothing (0 at every Node) in the engine, never the result; the fields in the holders' order and then the signs'."""
+    """Every held row at its rest under the sources the laid records write at those rests, the engine's start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, (a) the body stands where the sources return themselves and (c) the well, D_i div T each interval, is the record's quanta as the fields' source): the lay and the rest iterated to the fixed point. `booked` books every held row's source at the held rows' levels it is given, the holders of the content first and then the holders of the sign, each the booking the hold's write takes at those paces (the form of every laid record for a row of the content and its Wronskian for the holder of the sign, scaled per proper volume and per proper interval at the sourcing family's paces, over the write's wall E_s T); the holders of the content rest together under it (`settled_rows`), then each holder of the sign at the rest of its line under the content it reads, its reads naming the content holders by their position with their weights, the rests among the levels, its Wronskian source carrying one proper-interval power where a count carries two; the levels found are booked again until they repeat the state they were booked at, the fixed point, or an earlier state two units off at most at every Node, a rounding tie of the composed map, one unit per division act, the rest's and the booking's (`returned`, the one rule), a return further off refused by name as a cycle; `seed` the levels the first booking reads, nothing (0 at every Node) in the engine, never the result; the fields in the holders' order and then the signs'."""
     levels = list(seed)
     seen: dict[bytes, int] = {}
     while True:
@@ -213,8 +217,9 @@ def held_rests(
             wall = coefficients(pair[0], pair[1], gamma, gamma, gamma, None, unit)[2]
             fields.append(rest(counts, pair, wrap, divisor, width, wall, gamma, content, 1))
         found = [field.levels for field in fields]
+        name = f"the lay and the rest of {len(holders)} holders and {len(signs)} signs"
         if returned(
-            found, levels, seen, f"the lay and the rest of {len(holders)} holders and {len(signs)} signs"
-        ):
+            found, levels, seen, name, 1 + 1
+        ):  # two division acts composed: the rest's and the booking's
             return fields
         levels = found

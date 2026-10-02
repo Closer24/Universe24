@@ -301,7 +301,7 @@ Others = tuple[
 def start_content(
     board: Board, families: tuple[FamilyRule, ...], index: int, pairs: Pairs, others: dict[int, Pairs]
 ) -> np.ndarray:
-    """The content a body's family reads at the engine's own start, by the engine's own act and no copy of it (`GameBoard.start`; `booked_sources` and `held_rests` are the one act, so the generator and the engine compute one fixed point and agree by construction): the body's level pairs laid on its family's lines and the other bodies' on theirs (the symmetric lay, the plane's second pair on its second line), every held row at the rest the lay and the rest return together from nothing, the holders of the content and the holders of the sign a laid plane sources (the form of every record and its Wronskian as the hold books them, over the write's wall E_s T, the fine form and no whole quanta), and the family's read of those rests (every holder of the content, and for a plane the holders of the sign plainly), the content the engine steps its record in."""
+    """The content a body's family reads at the engine's own start, by the engine's own act and no copy of it (`GameBoard.start`; `booked_sources` and `held_rests` are the one act, so the generator and the engine compute one fixed point and agree by construction): the body's level pairs laid on its family's lines and the other bodies' and the messages' on theirs (`others`; the symmetric lay, the plane's second pair on its second line), every held row at the rest the lay and the rest return together from nothing, the holders of the content and the holders of the sign a laid plane sources (the form of every record and its Wronskian as the hold books them, over the write's wall E_s T, the fine form and no whole quanta), and the family's read of those rests (every holder of the content, and for a plane the holders of the sign plainly), the content the engine steps its record in."""
     walls = {
         number: held_write(families, number, board.action).walls
         for number, f in enumerate(families)
@@ -735,6 +735,19 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
     all_counts = sum((counts for counts, _pairs, _centre, _quanta in lays), zero)
     families = universe_of(universe)[1]
     names = [family.name for family in families]
+    laid_messages: dict[int, Pairs] = {}  # every message's record on its family, as the engine lays it
+    for message in cast(list[dict[str, Any]], document.get("messages", [])):
+        family = str(message["family"])
+        board = Board(
+            shape,
+            wrap,
+            gamma,
+            int(integers["quantum_action"]),
+            pairs[family],
+            int(2 ** int(integers["width"]) - 1),
+            int(integers["link_unit"]),
+        )
+        laid_messages.setdefault(names.index(family), []).append(message_levels(board, message, beyond))
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
     # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its share);
@@ -745,8 +758,8 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
         for number, body in enumerate(bodies):
             counts, _pairs, centre, quanta = lays[number]
             index = names.index(str(body["family"]))
-            others: dict[int, Pairs] = {}  # the other bodies' laid records per family, as laid so far
-            for other, (_counts, laid_pairs, _centre, _quanta) in enumerate(lays):
+            others = {number: list(laid) for number, laid in laid_messages.items()}  # the messages, then
+            for other, (_counts, laid_pairs, _centre, _quanta) in enumerate(lays):  # the other bodies
                 if other != number and laid_pairs:
                     others.setdefault(names.index(str(bodies[other]["family"])), []).extend(laid_pairs)
             board = Board(

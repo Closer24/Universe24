@@ -129,6 +129,10 @@ class GameBoard:
             fields = held_rests(booked, seed, self.wrap, self.world.width, gamma, self.unit)
         except ValueError as refusal:
             raise ValueError(f"the start of the held families: {refusal}") from refusal
+        for index in rows:
+            self.states[index].lines[0] = messages[
+                index
+            ]  # the laid message back in place of the staging
         for index, found in zip(holders + list(signs), fields, strict=True):
             remainder = node.full(self.shape, found.remainder, self.kind)
             message = self.states[index].lines[0]  # the laid message, every level 0 where none is laid
