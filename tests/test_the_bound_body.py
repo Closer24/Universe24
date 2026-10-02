@@ -1,4 +1,4 @@
-"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the GameBoard admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands. The rotation round (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; #the-rows-against-nature (b2) and (f); HIGHLIGHTS.md, There is no sense): the turn is three exact shears, undone bit for bit and within two units of the real rotation; the angle is the holder's level over Gamma and the record of positive Wronskian rotates faster by it; the Wronskian read with the angle is the conserved one, and a record's Wronskian keeps its sign under Rule3; the odd line on the Link shifts the wave number by its angle with the Port's sign, is sourced by the sign's current, the mean of the Node's two a-Links' Wronskian currents, odd under the sense, and written at the wall den T; the act is the file's declaration, refused by name where it is not one of the two or asked of a holder of the content; a one-part reader and the two gates' worlds are untouched; the like-or-unlike look's like and unlike worlds, which have no lay under the energy line's integers, are refused at load by name with the start's cycle rule recorded in the blind, its lawful worlds (the uncharged pair, the uncharged single bodies and the plain controls) run the window whole with the back-in-time gate MATCH, and the plain control's two senses source the holder oppositely and read it plainly; the charged looks' drift and back-in-time wait for the re-design with the small charge (N_q at most about 400 on a neutral content), the engine round's open item."""
+"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the GameBoard admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands. The rotation round (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; #the-rows-against-nature (b2) and (f); HIGHLIGHTS.md, There is no sense): the turn is three exact shears, undone bit for bit and within two units of the real rotation; the angle is the holder's level over Gamma and the record of positive Wronskian rotates faster by it; the Wronskian read with the angle is the conserved one, and a record's Wronskian keeps its sign under Rule3; the odd line on the Link shifts the wave number by its angle with the Port's sign, is sourced by the sign's current, the mean of the Node's two a-Links' Wronskian currents, odd under the sense, and written at the wall den T; the act is the file's declaration, refused by name where it is not one of the two or asked of a holder of the content; a one-part reader and the two gates' worlds are untouched; the like-or-unlike look's four charged worlds (like, unlike and the two plain controls), which have no lay under the energy line's integers, are refused at load by name with the start's refusals recorded in the blind, and its three uncharged worlds run the window whole with the back-in-time gate MATCH; the charged looks' drift and back-in-time and the plain control's reading of the two senses (the holder sourced oppositely and read plainly) wait for the re-design with the small charge (N_q at most about 400 on a neutral content), the engine round's open item."""
 
 import json
 import math
@@ -151,34 +151,22 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     refused("a holder of the content, sourced by the form", universe_of, universe)
     for gate in (json.loads((EVENTS / f"{n}.json").read_bytes()) for n in ("light", "pair")):
         assert not any("act" in row.get("held", {}) for row in gate["families"])
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])  # the repository's worlds
     BUILD.main(["--folder", str(tmp_path)])
     assert (tmp_path / "expectation.json").read_bytes() == (LOOK / "expectation.json").read_bytes()
     expected = json.loads((LOOK / "expectation.json").read_text(encoding="utf-8"))
-    for name in ("like", "unlike"):  # no lay under the line's integers: declared without a mode file
+    for name in ("like", "unlike", "like_plain", "unlike_plain"):  # no lay under the line's integers
         refused("mode file beside the world must be an object", load_world, LOOK / f"{name}.json")
-    assert "a cycle of length 8, 12699 and -8253 at the Node [33, 0, 0]" in expected["comment"]
-    lawful = [name for name in expected["worlds"] if "uncharged" in name or "plain" in name]
+    for words in (
+        "length 8, 12699 and -8253 at the Node [33, 0, 0]",
+        "length 4, 531 and 539 at the Node [87, 0, 0]",
+        "declares the count 54 and its family's share reads 431 quanta",
+    ):
+        assert words in expected["comment"], words  # the start's refusals recorded in the blind by name
+    lawful = [name for name in expected["worlds"] if "uncharged" in name]
     readings = {name: DRIFT.drift(LOOK / f"{name}.json", None) for name in lawful}
-    changes = {name: DRIFT.change_of(reading) for name, reading in readings.items()}
     assert {reading["intervals"] for reading in readings.values()} == {expected["window"][1]}
-    print(f"GAMEBOARD the look's lawful worlds, the separation's or the body's change: {changes}")
-    for name in ("uncharged_pair", "like_plain", "unlike_plain"):
+    print(f"GAMEBOARD the look, the changes: {[(n, DRIFT.change_of(r)) for n, r in readings.items()]}")
+    for name in lawful:
         verdict = BACK.verdict(board := GameBoard(load_world(LOOK / f"{name}.json")), board.world.ticks)
         assert (verdict["verdict"], verdict["intervals"]) == ("MATCH", board.world.ticks), name
-    board = GameBoard(load_world(LOOK / "unlike_plain.json"))
-    names = [family.name for family in board.families]
-    charged, charge, matter = map(names.index, ("charged", "charge", "matter"))
-    plane, light = board.states[charged], board.states[charge]
-    board.step()
-    first, second = board.body_nodes(0), board.body_nodes(1)
-    turn, level = np.sign(node.wronskian(plane.lines, True)), light.lines[0].now
-    assert (turn[first] == 1).all() and (turn[second] == -1).all() and level[second].sum() < 0
-    assert level[first].min() >= 0 < level[first].sum() and level[second].max() <= 0
-    light.lines[0] = node.Record(np.full_like(level, 100), level, light.lines[0].remainder)
-    held = [s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian]
-    plain = sum(state.lines[0].now for state in held)  # every holder of the content, as it stands
-    gamma, unit = board.world.node_clock, board.unit
-    content = node.read(charged, board.families, board.states, 1, board.wrap, gamma, unit)[0]
-    assert ((content - plain) == 100)[first | second].all() and len(light.lines) == 1
-    read = node.read(matter, board.families, board.states, 1, board.wrap, gamma, unit)[0]
-    assert np.array_equal(read, plain)  # matter, real lines, names no holder of the sign
