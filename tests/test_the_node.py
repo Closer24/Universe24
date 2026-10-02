@@ -17,7 +17,7 @@ from event_universe.core.rule3 import coefficients, link_factor, rule3
 from event_universe.features.start import rest
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import HeldWrite, count_wall, family_rules, held_write
-from event_universe.loader.world import universe_of
+from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests import laws
 from tests.laws import CHAIN, CHARGED, EVENTS, PACKET, UNIVERSE, real_rows, refused, universe_beside
@@ -198,7 +198,9 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
                 for t in found if tensor else []:  # the tensions as the diagonal of a tensor
                     assert all(np.array_equal(turned(t[axes[a]], axes, signs), t[a]) for a in range(3))
     back = BACK.verdict(board, 12)
-    assert back["verdict"] == "MATCH" and board.tick == 5 and all(p.now.any() for p in gravity.lines[1:])
+    axis, carried = gravity.lines[1:], {int(r[centre]) for r in gravity.write_remainders[1:]}
+    assert (back["verdict"], board.tick) == ("MATCH", 5) and not any(p.now.any() for p in axis)
+    assert len(carried) == 1 and WALLS[GRAVITY][1] // 2 < carried.pop() < WALLS[GRAVITY][1]
     envelope = [v * 4 // 5 for v in PROFILE[3:13]]
     for turn in (1, 0):
         universe_beside(tmp_path, charged=turn != 0)  # a body by hand on the chain
@@ -314,10 +316,10 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         vacuum = {i: (GAMMA, (GAMMA, GAMMA, GAMMA)) for i in (CHARGE, MATTER)}  # the sources' rulers
         numerators = node.write_sources(GRAVITY, FAMILIES, {}, {MATTER: stress}, write, vacuum, GAMMA)
         written = node.held_write(held.lines, numerators, write.walls, held.write_remainders)
-        held.lines, held.write_remainders = written
-        xx = held.lines[1].now
-        assert not (moving and int(stress[0].min()) < 0) and bool((stress[0] != 0).any()) and xx.any()
-        assert not stress[1].any() and not stress[2].any() and not held.lines[2].now.any()
+        (held.lines, held.write_remainders), xx = written, written[0][1].now
+        assert not (moving and int(stress[0].min()) < 0) and bool((stress[0] != 0).any())
+        assert np.array_equal(held.write_remainders[1], write.walls[1] // 2 + numerators[1])
+        assert not (stress[1].any() or stress[2].any() or held.lines[2].now.any() or xx.any())
         states = [node.empty_state(f, shape, w, np.int64) for f, w in zip(FAMILIES, WALLS, strict=True)]
         states[GRAVITY] = held
         stepped = np.arange(16, dtype=np.int64).reshape(shape)  # the vacuum's row's stepped time part

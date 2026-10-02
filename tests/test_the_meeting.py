@@ -7,7 +7,8 @@ import numpy as np
 
 from event_universe.game_board import GameBoard
 from event_universe.loader.instrument import basis_of, instrument_of, pattern_of, patterns_of_the_law
-from event_universe.loader.world import detectors_of, shape_of, universe_of
+from event_universe.loader.universe import shape_of, universe_of
+from event_universe.loader.world import detectors_of
 from event_universe.world_files import load_world
 from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, load_file, refused
 

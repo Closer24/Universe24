@@ -14,9 +14,8 @@ CAPS = re.compile(r"[A-Z][A-Z0-9'-]+")
 HEADING = re.compile(r"(\d+\.\s+)?[A-Z](?![A-Z0-9'-]*\s+[A-Z][A-Z0-9'-]+(\s|$))")
 
 
-def shouting(
-    text: str,
-) -> list[str]:  # every run of three or more all-caps words in a text, code spans aside
+def shouting(text: str) -> list[str]:
+    """Every run of three or more all-caps words in a text, code spans aside."""
     words = [word.strip('.,;:()[]"!?*') for word in re.sub(r"`[^`]*`", " ", text).split()]
     marked = " ".join(word if CAPS.fullmatch(word) else "\n" for word in words)  # a break between runs
     return [run.group(0) for run in re.finditer(r"\S+(?: \S+){2,}", marked)]

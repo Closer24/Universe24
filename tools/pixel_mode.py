@@ -36,7 +36,7 @@ from event_universe.game_board import booked_sources
 from event_universe.loader.derived import FamilyRule, held_write
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES
-from event_universe.loader.world import universe_of
+from event_universe.loader.universe import universe_of
 from event_universe.node import Record, empty_state, ports, wronskian
 from event_universe.node import read as content_read
 from event_universe.share import quanta_of, share

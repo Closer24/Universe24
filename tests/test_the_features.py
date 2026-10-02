@@ -22,7 +22,7 @@ from event_universe.features.read import (
 from event_universe.features.start import arrivals, read_content, rest, scaled_source
 from event_universe.features.write import carried
 from event_universe.loader.derived import held_write, readers_of, weight_of
-from event_universe.loader.world import universe_of
+from event_universe.loader.universe import universe_of
 from tests.laws import CHARGED, UNIVERSE, refused
 
 GAMMA, SHAPE, OWN = 10_000, (3, 3, 3), {"own_weight": 1}  # a row reading its own level at 1

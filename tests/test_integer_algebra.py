@@ -12,9 +12,8 @@ SRC = ROOT / "src" / "event_universe"
 
 PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "credit.py", "world_files.py")
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
-PHYSICAL_MODULES += tuple(
-    f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages", "derived", "instrument")
-)
+PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages"))
+PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/universe.py")
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
@@ -35,9 +34,8 @@ def float_literals(source: str) -> list[int]:
     return [line for line, text in decimal if "." in text or "e" in text or text.endswith("j")]
 
 
-def true_divisions(
-    source: str,
-) -> list[int]:  # the lines of every `/` operator token (`//` is one token, `//=` another)
+def true_divisions(source: str) -> list[int]:
+    """The lines of every `/` operator token (`//` is one token, `//=` another)."""
     tokens = tokenize.generate_tokens(io.StringIO(source).readline)
     return [t.start[0] for t in tokens if t.type == tokenize.OP and t.string in ("/", "/=")]
 
@@ -76,9 +74,8 @@ def numpy_chain(node: ast.AST) -> list[str] | None:
     return None
 
 
-def is_integer_literal(
-    node: ast.AST,
-) -> bool:  # a literal that is an integer or a (nested) list or tuple of integers and booleans
+def is_integer_literal(node: ast.AST) -> bool:
+    """A literal that is an integer or a (nested) list or tuple of integers and booleans."""
     if isinstance(node, ast.Constant):
         return isinstance(node.value, (int, bool)) and not isinstance(node.value, float)
     if isinstance(node, (ast.List, ast.Tuple)):

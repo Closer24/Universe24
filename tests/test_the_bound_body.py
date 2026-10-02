@@ -14,7 +14,7 @@ from event_universe.core.rule3 import coefficients
 from event_universe.features import rotation
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write, turns
-from event_universe.loader.world import universe_of
+from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
 
@@ -29,9 +29,8 @@ OMEGA = math.acos(PAIR[0] / PAIR[1])  # the matter pair's rest rotation in the v
 RULE, ZERO, SIZE = coefficients(*PAIR, GAMMA, GAMMA, GAMMA), np.zeros(SHAPE, dtype=np.int64), 5_000
 
 
-def band(
-    k: float,
-) -> float:  # the matter pair's rotation rate at the wave number k along x on a ring (y and z folded)
+def band(k: float) -> float:
+    """The matter pair's rotation rate at the wave number k along x on a ring (y and z folded)."""
     return math.acos(PAIR[0] / (3 * PAIR[1]) * (math.cos(k) + 2))
 
 
