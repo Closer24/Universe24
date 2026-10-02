@@ -55,10 +55,10 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
 
 def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
     """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
-    turning = [bool(senses[i]) if i < len(senses) else False for i in range(len(at or (chain // 2,)))]
-    universe_beside(folder, charged=any(turning))
-    families = [CHARGED["name"] if turns else "matter" for turns in turning]
-    nodes = [[dict(node=[x, 0, 0], count=quanta)] for x in at or (chain // 2,)]
+    at = at or (chain // 2,)  # the chain's centre where no Node is named
+    families = [CHARGED["name"] if i < len(senses) and senses[i] else "matter" for i in range(len(at))]
+    universe_beside(folder, charged=CHARGED["name"] in families)
+    nodes = [[dict(node=[x, 0, 0], count=quanta)] for x in at]
     measured = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
     ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
     ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
