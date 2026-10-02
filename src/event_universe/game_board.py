@@ -102,7 +102,7 @@ class GameBoard:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time line at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the share of the record's lines in quanta over the count's wall (a reading of the form that sources the fields) for a row sourced by the form and the Wronskian's quanta at the written moment, W div T (`node.well`, a reading), for the holder of the sign (its rest, of either sign), each at the weight with which the record's family reads the row, over the row's level weight (features/start), both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder, the holder of the sign keeping its laid record where nothing sources it."""
+        """The start (ALGEBRA.md #the-generator (g), the start): every held family's time line at the rest of its line, with or without a gap, under the sources of the bodies at their Nodes and of the messages over the whole GameBoard, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the share of the record's lines in quanta over the count's wall (a reading of the form that sources the fields) for a row sourced by the form and the Wronskian's quanta at the written moment, W div T (`node.well`, a reading), for the holder of the sign (its rest, of either sign), each at the weight with which the record's family reads the row, over the row's level weight (features/start), both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder; every held row's record at the start is its laid message plus its sourced rest, the level now and the level before alike (the rest the static solution of the row's line at the paces and the laid message a travelling one, the line linear at fixed paces, so their sum is the record), the laid levels 0 where nothing is laid and the record then the rest; a holder of the sign nothing sources stands as laid."""
         forms: list[tuple[int, np.ndarray, np.ndarray]] = []
         for row in self.laid_rows():
             family = self.families[row.family]
@@ -128,7 +128,7 @@ class GameBoard:
             )
             return counts, family.pair, family.level_weight or 0, family.rest, reads
 
-        held = [i for i in self.held if self.families[i].wronskian]  # a holder keeps its laid record
+        held = [i for i in self.held if self.families[i].wronskian]  # a holder's rest, on its message
         signs = {i: kick for i in held if (kick := sourced(i))[0].any()}
         try:
             rows, kicks = [sourced(i) for i in holders], list(signs.values())
@@ -139,8 +139,9 @@ class GameBoard:
             raise ValueError(f"the start of the held families: {refusal}") from refusal
         for index, found in zip(holders + list(signs), fields, strict=True):
             remainder = node.full(self.shape, found.remainder, self.kind)
+            message = self.states[index].lines[0]  # the laid message, every level 0 where none is laid
             self.states[index].lines[0] = node.Record(
-                found.levels.copy(), found.levels.copy(), remainder
+                message.now + found.levels, message.before + found.levels, remainder
             )
             self.origins[index] = found.remainder
         for index in self.held:
