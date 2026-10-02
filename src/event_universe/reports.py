@@ -18,17 +18,21 @@ MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
     "GAMEBOARD",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, FIELD, PARTS, CREDIT = (
+CLICK, FIELD, PARTS, CREDIT, JUMP = (
     "click",
     "field",
     "parts",
     "credit",
-)  # the output's four lines: the detector's report, the GameBoard reading, the parts' levels, the click written
+    "jump",
+)  # the output's five lines: the detector's report, the GameBoard reading, the parts' levels, the click written, the body's click
 REPORT_KEYS = ("event", "label", "tick", "family", "detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 CREDIT_KEYS = ("window", "realised", "kept", "count", "left", "node")  # the credit line's own keys
+JUMP_OWN = ("left", "taken", "given")  # the jump line's own words beside the credit's
+JUMP_KEYS = ("window", "realised", *JUMP_OWN, "node")  # the jump line's keys
+MEASURED = "measured"  # a record at a Node that is an instrument in the output, by its number in the world's order
 AT = "at"  # the one Node written, a GameBoard diagnostic beside the credit's result
-OUTPUT = (*REPORT_KEYS, INFLOW, READING, WELL, LEVELS, *CREDIT_KEYS)  # the lines' keys, in their order
+OUTPUT = (*REPORT_KEYS, INFLOW, READING, WELL, LEVELS, *CREDIT_KEYS, *JUMP_OWN)  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
 BOOKS = ("share", "quanta", "drift", "pace", "frozen")  # the keys of a family's books, a diagnostic
@@ -84,6 +88,26 @@ def credit(
     line = dict(zip(REPORT_KEYS, (CREDIT, MEASUREMENT, tick, family, detector), strict=True))
     written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     line.update(zip(CREDIT_KEYS, (window, realised, kept, count, left, written), strict=True))
+    return line
+
+
+def jump(
+    tick: int,
+    family: str,
+    measured: int,
+    window: list[int],
+    realised: str,
+    left: str,
+    taken: str | None,
+    given: str | None,
+    node: list[int],
+) -> dict[str, object]:
+    """The jump line, the click of a record at a Node that is an instrument, written on the GameBoard at that one Node (features/click; ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the exchange at one Node), labelled DETECTOR: the interval, the record's family, the instrument by its number among the world's `measured` (`measured n`), the window [first, last] drawn over, the part realised and the part left (their declared names), the family whose arriving quantum was taken (the taking click; None otherwise) and the family of light a whole quantum was given to (the giving click; None otherwise); beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool."""
+    line = dict(
+        zip(REPORT_KEYS, (JUMP, MEASUREMENT, tick, family, f"{MEASURED} {measured}"), strict=True)
+    )
+    written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
+    line.update(zip(JUMP_KEYS, (window, realised, left, taken, given, written), strict=True))
     return line
 
 

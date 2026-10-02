@@ -107,7 +107,6 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     rows = ("row", (1, 1), 4, 5), ("a", (1, 4), 1, None), ("b", (5, 6), 1, None)
     mixed = family_rules(real_rows(*rows))
     assert held_write(mixed, 0, 10) == HeldWrite((50, 1800, 1800, 1800), {1: 3, 2: 2})
-
     rng, (reads, s, w) = np.random.default_rng(3), coefficients(2, 3, 1000, 1000, 1000)
     gap, chain = np.zeros((1, 1, 1), dtype=np.int64), Wrap(False, True, True)
     half = [rng.integers(-1000, 1000, (20, 1, 1)) for _ in range(3)]

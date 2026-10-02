@@ -9,10 +9,11 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe import growth, node, share
-from event_universe.features.click import drawn, taken
+from event_universe.features.click import drawn, hole
 from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import Instrument, Ports, ports_of
 from event_universe.loader.keys import Node
+from event_universe.meeting import NodeBooks, books_of
 from event_universe.reports import PORT_NAMES, credit
 
 if TYPE_CHECKING:
@@ -27,7 +28,7 @@ Sums = dict[str, list[list[int]]]  # per region the parts' level sums [now, befo
 
 @dataclass
 class Books:
-    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, and the sides, the regions declaring a pattern with their two ports, in the file's order."""
+    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, and the records at Nodes declared instruments with their own books (`meeting.NodeBooks`)."""
 
     declaration: Instrument | None
     elapsed: int
@@ -36,6 +37,7 @@ class Books:
     intake: dict[tuple[int, str], Intake]
     joints: dict[int, Joints]
     sides: list[tuple[str, Ports]]
+    bodies: list[NodeBooks]
 
     def window_of(self, tick: int) -> list[int]:
         """The window closing at `tick`, [first, last], the declaration's length of intervals."""
@@ -48,7 +50,8 @@ class Books:
         found = board.world.instrument
         counts = {index: counted(board, index, board.laid[index]) for index in board.order}
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.detectors if r.pattern]
-        return cls(found, 0, found.seed if found is not None else 0, counts, {}, {}, sides)
+        bodies = books_of(board)
+        return cls(found, 0, found.seed if found is not None else 0, counts, {}, {}, sides, bodies)
 
 
 def counted(board: GameBoard, index: int, total: int | None) -> int:
@@ -149,7 +152,7 @@ def credited(board: GameBoard) -> None:
 def written(
     board: GameBoard, index: int, name: str, book: Intake, realised: str | None, kept: list[int]
 ) -> None:
-    """The write of one click at one Node (features/click, `taken`): among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 (none where nothing entered: no write); there every line of the record, the parts kept and the parts the realised port reads with 0 alike, is set to 0 in its three arrays, the hole, exactly as the receding face removes a share; nothing is written at any other Node, the hole spreading by Rule3 alone; one credit line, its result the window, the region, the port realised and the parts kept, the count moved 1 and the record's count left, with the one Node at the file's coordinates beside it as a GameBoard diagnostic (the owner's word of 2026-10-02: the detector gives no result for one Node)."""
+    """The write of one click at one Node (features/click, `hole`): among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 (none where nothing entered: no write); there every line of the record, the parts kept and the parts the realised port reads with 0 alike, is set to 0 in its three arrays, the hole, exactly as the receding face removes a share; nothing is written at any other Node, the hole spreading by Rule3 alone; one credit line, its result the window, the region, the port realised and the parts kept, the count moved 1 and the record's count left, with the one Node at the file's coordinates beside it as a GameBoard diagnostic (the owner's word of 2026-10-02: the detector gives no result for one Node)."""
     nodes = list(book)
     weights = [max(book[at], 0) for at in nodes]
     if sum(weights) <= 0:
@@ -157,7 +160,7 @@ def written(
     at = nodes[draw(board, weights)]
     mask, family, state = board.mask((at,)), board.families[index], board.states[index]
     for number, line in enumerate(state.lines[: family.record]):
-        now, before, remainder = taken([line.now, line.before, line.remainder], mask)
+        now, before, remainder = hole([line.now, line.before, line.remainder], mask)
         state.lines[number] = node.Record(now, before, remainder)
     left, window = board.credit.counts[index] - 1, board.credit.window_of(board.tick)
     if board.observer is not None:

@@ -15,7 +15,8 @@
    "dimension": [
     3,
     2
-   ]
+   ],
+   "reads": {}
   },
   {
    "name": "strong_drive",
@@ -28,8 +29,10 @@
      "wronskian"
     ],
     "level_weight": 1,
-    "act": "rotation"
-   }
+    "act": "rotation",
+    "write_weight": 1
+   },
+   "reads": {}
   },
   {
    "name": "weak_drive",
@@ -42,8 +45,10 @@
      "wronskian"
     ],
     "level_weight": 1,
-    "act": "rotation"
-   }
+    "act": "rotation",
+    "write_weight": 1
+   },
+   "reads": {}
   },
   {
    "name": "fluorescence",
@@ -56,8 +61,10 @@
      "wronskian"
     ],
     "level_weight": 1,
-    "act": "rotation"
-   }
+    "act": "rotation",
+    "write_weight": 1
+   },
+   "reads": {}
   }
  ]
 }

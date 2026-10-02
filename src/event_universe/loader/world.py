@@ -12,10 +12,13 @@ from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
 from event_universe.loader.instrument import (
+    NODE_INSTRUMENT_KEYS,
     Instrument,
+    NodeInstrument,
     Pattern,
     basis_of,
     instrument_of,
+    node_instrument_of,
     pattern_of,
     patterns_of_the_law,
     ports_of,
@@ -32,7 +35,7 @@ WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "tick
 WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes"),
+    ("family", "nodes", *NODE_INSTRUMENT_KEYS),
     ("family", "nodes"),
     ("node", "count"),
 )
@@ -41,7 +44,7 @@ DETECTOR_KEYS, START_KEYS = ("name", "positions", "block", "basis", "pattern"), 
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`instrument`, `loader/instrument.py`: its parts the modes' labels with the count in one of them, and as an instrument its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the body is at a Node)."""
 
     family: int
     nodes: tuple[Node, ...]
@@ -50,6 +53,7 @@ class BodyRow:
     before: Levels
     im_now: Levels
     im_before: Levels
+    instrument: NodeInstrument | None = None
 
 
 @dataclass(frozen=True)
@@ -103,11 +107,13 @@ def bodies_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest; a body with no mode entry is refused by name."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`)."""
     names = {family.name: index for index, family in enumerate(families)}
+    quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
         raise ValueError("measured must be a list of bodies")
-    entries = mode_entries(mode, digest, "bodies") if value else []
+    laid = [entry for entry in value if not any(key in entry for key in NODE_INSTRUMENT_KEYS)]
+    entries = mode_entries(mode, digest, "bodies") if laid else []
     taken, found = set(), []
     for number, entry in enumerate(value):
         label = f"measured[{number}]"
@@ -118,6 +124,12 @@ def bodies_of(
         lines = body["nodes"]
         if not isinstance(lines, list) or not lines:
             raise ValueError(f"{label}.nodes must list the body's Nodes with their counts")
+        parted = entry not in laid
+        if parted and len(lines) != 1:
+            raise ValueError(
+                f"{label} is laid in its parts at one Node and declares {len(lines)}: a body that is an instrument "
+                "is one Node, its record there (the owner's word of 2026-10-03; ALGEBRA.md, The bound body is one Node)"
+            )
         nodes, counts = [], []
         for index, line in enumerate(lines):
             keyed(line, f"{label}.nodes[{index}]", NODE_KEYS, NODE_KEYS)
@@ -129,9 +141,14 @@ def bodies_of(
             taken.add(node)
             nodes.append(node)
             counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
+        if parted:
+            parts = node_instrument_of(body, label, families[family], family, quanta, sum(counts))
+            found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), parts))
+            continue
+        placed = laid.index(entry)
         now, before, im_now, im_before = levels_of(
-            entry_of(entries, number, label),
-            f"the mode file's bodies[{number}]",
+            entry_of(entries, placed, label),
+            f"the mode file's bodies[{placed}]",
             families[family],
             shape,
             bound,

@@ -67,8 +67,10 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   `design.json` (every integer with its reason) and its blind `expectation.json`
   (the counts per bin bimodal, the bright periods exponential at the Zeno-limited
   shelving rate, the dark periods at the declared return rate; the control
-  unimodal); its keys of the body as an instrument are refused by name by the
-  loader of `main` until the click round lands, and nothing of it has run.
+  unimodal); run on the night of 2026-10-03 with the ion a record declared an
+  instrument at its one Node (`src/event_universe/meeting.py`), both worlds
+  refused inside the run by the amplitude bound, the reading beside the blind in
+  its `blind_and_reading.md` (`tools/telegraph.py`), a finding by name.
 
 The three documents: [the law](docs/ALGEBRA.md), one algebraic line per rule;
 [the engine](docs/ENGINE.md), the input files, the interval, the output, how to
