@@ -738,3 +738,13 @@ lay. Whether a compact fixed point of the body's own lines stands at any count u
 factor e^(-4 U) at the body's own U (0.5 to 0.7 along the branch, the factor 0.14 to 0.06, where
 the line's 0.72 was the wide body's at U = 0.08) is the mathematician's hand still owed (175 item
 4); the generator here found none at 8,000, 11,000 and 14,000.
+
+5. **The 25-cube's rest at 14,000 wanders without a repeat.** The compact seed's rest on the open
+   25-cube converges at 8,000 in 18 s (the content at the centre 3,063, U = 0.51, 1,239 at one
+   Link; the 11-cube's 3,008 and 1,168, the faces at 12 Links against 5 deepening the well by 2
+   percent) and at 10,000 in 19 s (3,549, U = 0.59, 1,447), so the hour the 14,000 lay spent in
+   the seed's rest is not the inner iteration's cost but the outer re-read's: the levels re-read
+   from the last rounding neither repeat nor return to an earlier state exactly on the larger
+   board, where the 11-cube's re-read closed a 2-cycle in 2.3 s, and the start has no pass limit,
+   so it neither refuses nor returns. A finding by name for the fix round beside the 2-cycle: the
+   start's stopping rule can also fail to stop.
