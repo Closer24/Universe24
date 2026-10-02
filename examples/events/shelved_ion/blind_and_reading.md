@@ -44,17 +44,21 @@ as every detector of main does.
 Both worlds were laid and run as declared (the mends of `design.json` aside). `tools/telegraph.py`
 read the outputs; the numbers below are its, every one a click unless labelled a GameBoard reading.
 
-**The telegraph world, `shelved_ion.json`: REFUSED inside the run at interval 344**, "the family
-'strong_drive' reached the level 9487, above the world's amplitude bound A = 9266". The 344
-intervals before it: 81 jumps, 41 takings of the strong drive's quantum into P and 40 givings of
-one quantum to the fluorescence row (the spacing of the givings 8.44 intervals, its standard
-deviation over its mean 0.48; the blind's R = 1 / (2 tau_P) is one giving per 8 intervals), no
-shelving (the weak drive's share per window Omega_w^2 cos^2, about 4 x 10^-5, gives 0.01 shelvings
-in 344 intervals, none expected); the counter's bins: 19 and 18 counts in the two whole bins
-(row 1: the blind 20 +/- 4.5, PASS on two bins, the Poisson width unreadable from two), the third
-bin cut by the refusal; rows 2 to 7 unreadable, no period being complete (FINDING, below); the ion
-family credited never (row 9's click half PASS), its count 1 at every interval and one part at 1
-(a GameBoard reading of the books, PASS).
+**The telegraph world, `shelved_ion.json`: REFUSED inside the run at interval 452** (the round's
+final build, the credit's one draw over the records reading one arriving record), "the family
+'fluorescence' reached the level 9394, above the world's amplitude bound A = 9266"; the first build
+of the night, each record drawing alone over its parts, had been refused at 344 on the strong
+drive's row. The 452 intervals: 70 jumps, 35 takings of the strong drive's quantum into P and 35
+givings of one quantum to the fluorescence row (the spacing of the givings 12.3 intervals, its
+standard deviation over its mean 0.80; the first build 8.44 and 0.48 over 40 givings; the blind's R
+= 1 / (2 tau_P) is one giving per 8 intervals, the two runs 2 standard errors apart on 35 events),
+no shelving (the weak drive's share per window Omega_w^2 cos^2, about 4 x 10^-5, gives 0.02
+shelvings in 452 intervals, none expected); the counter's bins: 14 and 13 counts in the two whole
+bins (the first build 19 and 18; row 1: the blind 20 +/- 4.5, the final build's bins 1.3 and 1.6
+Poisson widths under it, the Poisson width itself unreadable from two bins), the third bin cut by
+the refusal; rows 2 to 7 unreadable, no period being complete (FINDING, below); the ion family
+credited never (row 9's click half PASS), its count 1 at every interval and one part at 1 (a
+GameBoard reading of the books, PASS).
 
 **The control, `shelved_ion_control.json`: REFUSED inside the run at interval 18,820**, "the
 family 'strong_drive' reached the level 9279, above the bound 9266"; 118 whole bins, every count
@@ -80,8 +84,9 @@ control's drift to the bound at 18,820 and the strong drive's `drift` of 10^11 i
 at the Node to 0 whatever they are, and for a travelling plane wave of amplitude 3,000 now and
 before differ there, so every hole kicks the uniform mode's velocity by (now - before) over the
 Nodes' number with a sign set by the wave's phase at that interval, a random walk of the velocity,
-about 41 holes in 344 intervals, the strong drive's mean level reaching 860 by the interval 200 and
-its largest level the bound at 344. The law's remedy for (a), the remainder at the lay's origin
+about 41 holes in 344 intervals in the first build, the strong drive's mean level reaching 860 by
+the interval 200 and its largest level the bound at 344; in the final build the fluorescence row's
+lays and the counter's holes reached the bound first, at 452. The law's remedy for (a), the remainder at the lay's origin
 (the mathematician's 174 (b)), is built for the record's own lays and the given quanta and would
 need the drives' rows laid at the half wall too (an edit of the mode file's lay or of the start,
 which this round does not make: the gate worlds' bits); (b) is the law's own line for the hole
@@ -95,11 +100,12 @@ shows here.
 settled it, the taking and the giving alternate at the blind's rates (one fluorescence quantum per
 8.4 intervals against 8, the bins 19 and 18 against 20), the arriving quantum's hole and the
 record's re-lay stand at one Node (the dedicated test's one-Node assertion), the counter credits
-the given quanta and nothing of the drives; the body's own Zeno clock is its declared window (1
+the given quanta and nothing of the drives (the fluorescence spacing 8.4 then 12.3 against 8, the
+bins 19 and 18 then 14 and 13 against 20); the body's own Zeno clock is its declared window (1
 interval), so the shelving rate the design wrote, R / Omega_w^2 with the resets at the fluorescence
 clicks, would read as Omega_w^2 cos^2 per interval, about 4 x 10^-5, under the null window's write
 every interval (the owner's "yes, both of them"), a bright mean of about 25,000 intervals and not
-1,602: a second finding by name, unread in 344 intervals and stated here before any longer run.
+1,602: a second finding by name, unread in 452 intervals and stated here before any longer run.
 
 **Not built this night, by name**: the record's own detector region around its Node (the
 mathematician's 180); the back-in-time tool's crossing of a jump from the jump line; the booking of
@@ -107,5 +113,6 @@ the share's difference T (sin omega_L - sin omega_e + sin omega_g) at the giving
 one pair); the beat's current in the giving's rate (0 for a one-part record at one Node, the
 declared floor alone); the phase phi_L of the arriving light added to the realised part's phase
 (the part's own phase alone, phi_L of a real line at one Node being undefined without its
-rotation); the anticoincidence world (S.57) and the Zeno world (S.59), to be declared and run on
-this engine next.
+rotation); the erasing front from the clicking record's Node (two hands at 04:30 Israel), the round's last
+act; the anticoincidence world (S.57) and the Zeno world (S.59) stand in their own folders with
+their readings.

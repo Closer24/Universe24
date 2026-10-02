@@ -176,7 +176,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
 
 
 def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_path, monkeypatch):
-    """The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/instrument.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's instrument. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0, a rate without the instrument and a record of two Nodes are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the instrument MATCH over 30 intervals back to the lay). (iii) The clicks: the first jump takes the drive's quantum into P at the Node, the drive's record 0 there in its three arrays (the hole) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later jump gives one quantum to the light row and the counter credits it at a window's end; every jump names the one Node as a GameBoard diagnostic."""
+    """The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/instrument.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's instrument. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0, a rate without the instrument and a record of two Nodes are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the instrument MATCH over 30 intervals back to the lay). (iii) The clicks: the first jump takes the drive's quantum into P at the Node, the drive's record 0 there in its three arrays (the hole) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later jump gives one quantum to the light row and the counter credits it at a window's end (the world of 30 intervals, the counter's window 15); every jump names the one Node as a GameBoard diagnostic."""
     universe = json.loads((EVENTS / "shelved_ion" / "mercury_ion.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
@@ -189,9 +189,9 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     drive = {"family": "strong_drive", "along": "x", "wave": [1, 2], "amplitude": 600}
     drive.update(top={"x": [0, 5], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
     counter = {"name": "counter", "positions": [[0, y, z] for y in range(6) for z in range(4)]}
-    world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=40)
+    world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=30)
     world.update(universe="u.json", engine="e.json", measured=[record], messages=[drive])
-    world.update(detectors=[counter], instrument={**draw, "window": 20, "seed": 24})
+    world.update(detectors=[counter], instrument={**draw, "window": 15, "seed": 24})
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     twin = {k: v for k, v in world.items() if k != "instrument"}
     twin["measured"] = [{k: v for k, v in record.items() if k in ("family", "nodes", "parts")}]
@@ -238,9 +238,9 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     assert board.credit.counts[drive_index] == other.credit.counts[drive_index] - 1
     in_s, in_p = (any(int(x.now[here]) for x in board.states[ion].lines[k : k + 2]) for k in (0, 2))
     assert int(board.quanta(ion)[0][here]) == 1 and in_p and not in_s
-    for _ in range(board.tick, 40):
+    for _ in range(board.tick, 30):
         board.step()
     given = [line for line in lines if line["event"] == "jump" and line["given"]]
     credits = [line for line in lines if line["event"] == "credit" and line["family"] == "fluorescence"]
-    assert given and given[0]["left"] == "P" and credits and credits[0]["tick"] in (20, 40)
+    assert given and given[0]["left"] == "P" and credits and credits[0]["tick"] in (15, 30)
     assert board.credit.counts[light] + len(credits) == len(given)

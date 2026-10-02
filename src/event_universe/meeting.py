@@ -248,41 +248,64 @@ def reported(
         )
 
 
-def closed(board: GameBoard, books: NodeBooks) -> None:
-    """An instrument's window closed (ALGEBRA.md, The click writes on the GameBoard (j): one draw per declared window over the record's parts, its outcomes, the drawn outcome written whichever it is): first the giving at the declared rate, the floor, for the givings out of the part the record stands in, the weights the window against the lifetime's rest in the labels' unit (the count's measure squared, so that the generator's low bits, which cycle, decide nothing), the quantum given on the first drawn; else the taking, the draw over the parts by the labels' squares (the two-mode line's shares; a part fed by a record whose count stands at 0 in the books has no share, one quantum one click), the transition into the drawn part taken, or, the record's own part drawn, the null window."""
+def gave(board: GameBoard, books: NodeBooks) -> bool:
+    """The giving drawn at a record's window's end (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act): for the givings out of the part the record stands in, the weights the window against the lifetime's rest in the labels' unit (the count's measure squared, so that the generator's low bits, which cycle, decide nothing), the quantum given on the first drawn; True where one was."""
     assert books.declared.draw is not None
-    window, wall = (
-        books.declared.draw.window,
-        count_wall(board.families[books.index], board.world.quantum_action),
-    )
-    unit = wall * wall  # the labels' unit, the count's measure squared: every share drawn in one unit
+    window = books.declared.draw.window
+    wall = count_wall(board.families[books.index], board.world.quantum_action)
+    unit = wall * wall
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             span = window if window <= rate.lifetime else rate.lifetime
             if node_draw(board, books, [span * unit, (rate.lifetime - span) * unit]) == 0:
                 given(board, books, rate)
-                return
-    weights = [label * label for label in books.labels]
-    for (
-        transition
-    ) in books.declared.transitions:  # a record whose count stands at 0 is taken from by none
-        if transition.leaves == books.part and board.credit.counts[transition.drive] <= 0:
-            weights[transition.enters] = 0
-    if sum(weights) <= 0:
-        return
-    drawn_part = node_draw(board, books, weights)
-    for transition in books.declared.transitions:
-        if transition.leaves == books.part and transition.enters == drawn_part:
+                return True
+    return False
+
+
+def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
+    """The takings drawn at the windows' end, one draw at a time per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the GameBoard (f): the credit draws once over all the instruments that read one record, so one quantum is one click, and a record of several quanta is drawn from quantum by quantum as the detector's credit draws N; the paper's S.57): the outcomes the transitions out of the parts the records stand in, each weighted by its record's label squared (the two-mode line's share), and the outcome that none takes weighted by the rest of the count's unit; the draw with the first closing record's generator; the record drawn takes (`taking`) and takes no more this window, the draw repeated while the arriving record's count stands above 0 in the books and a record has not taken, until none takes; returns the records' numbers that took."""
+    done: set[int] = set()
+    drives = sorted(
+        {t.drive for books in closing for t in books.declared.transitions if t.leaves == books.part}
+    )
+    for drive in drives:
+        while board.credit.counts[drive] > 0:
+            outcomes = [
+                (books, transition)
+                for books in closing
+                if books.number not in done
+                for transition in books.declared.transitions
+                if transition.leaves == books.part and transition.drive == drive
+            ]
+            if not outcomes:
+                break
+            weights = [books.labels[transition.enters] ** 2 for books, transition in outcomes]
+            unit = max(sum(label * label for label in books.labels) for books, _transition in outcomes)
+            rest = unit - sum(weights)
+            pick = node_draw(board, closing[0], [*weights, rest if rest > 0 else 0])
+            if pick >= len(outcomes):
+                break
+            books, transition = outcomes[pick]
             taking(board, books, transition)
-            return
-    null_window(board, books)
+            done.add(books.number)
+    return done
 
 
 def jumped(board: GameBoard) -> None:
-    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at its declared window's length its draw and its write (`closed`), its window beginning again."""
+    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at the windows' length the draws and the writes, the givings first record by record (`gave`), then the takings in one draw per arriving family over the records closing together (`took`), then the null window's write for every closing record that neither gave nor took (`null_window`), each window beginning again."""
     for books in board.credit.bodies:
         turned_labels(board, books)
         books.elapsed += 1
-        if books.elapsed == (books.declared.draw.window if books.declared.draw is not None else 0):
-            closed(board, books)
-            books.elapsed = 0
+    closing = [
+        books
+        for books in board.credit.bodies
+        if books.declared.draw is not None and books.elapsed == books.declared.draw.window
+    ]
+    quiet = [books for books in closing if not gave(board, books)]
+    done = took(board, quiet)
+    for books in quiet:
+        if books.number not in done:
+            null_window(board, books)
+    for books in closing:
+        books.elapsed = 0
