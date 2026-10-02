@@ -37,7 +37,7 @@ from event_universe.loader.derived import FamilyRule, held_write, with_records
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES
 from event_universe.loader.lay import FIXED_POINT, Lay, lay_of
-from event_universe.loader.world import universe_of
+from event_universe.loader.universe import universe_of
 from event_universe.node import Record, empty_state, ports, record_slice, wronskian
 from event_universe.node import read as content_read
 from event_universe.share import quanta_of, share
@@ -275,21 +275,22 @@ def standing(
     )
 
 
-def rows_read(
-    universe: dict[str, Any], family: str, sign: bool
-) -> list[tuple[str, tuple[int, int], int, int]]:
-    """The held rows a body's family reads into its paces that hold the sign (`sign`, sourced by the Wronskian) or the content (sourced by the form), (name, pair, level weight, rest), as the loader derives the reads from the pair and the dimension (ALGEBRA.md #the-paces); a holder of the sign that declares the rotation is read by the turn of the record and not into the pace, so it is none of these (its turn leaves the record's share as it is)."""
+def rows_read(universe: dict[str, Any], family: str, sign: bool) -> list[tuple[int, FamilyRule]]:
+    """The held rows a body's family reads into its paces that hold the sign (`sign`, sourced by the Wronskian) or the content (sourced by the form), each by its position among the universe's families with its rule, as the loader reads the family's declaration (ALGEBRA.md #the-paces); a holder of the sign that declares the rotation is read by the turn of the record and not into the pace, so it is none of these (its turn leaves the record's share as it is)."""
     families = universe_of(universe)[1]
     reader = families[[row.name for row in families].index(family)]
     found = []
     for read in reader.reads:
         row = families[read.family]
         if row.wronskian == sign and not row.rotation:
-            found.append((row.name, row.pair, int(row.level_weight or 1), row.rest))
+            found.append((read.family, row))
     return found
 
 
-def held_rows(universe: dict[str, Any], family: str) -> list[tuple[str, tuple[int, int], int, int]]:
+Rows = list[tuple[int, FamilyRule]]  # the held rows of the content a body's family reads, by position
+
+
+def held_rows(universe: dict[str, Any], family: str) -> Rows:
     """The held rows holding the content a body's family reads: the rows whose levels are the content its record reads, sourced by the plain share of its record; refused by name where there is none, a body needing a row to bind in."""
     found = rows_read(universe, family, False)
     if not found:
@@ -306,16 +307,24 @@ def family_of(universe: dict[str, Any], name: str) -> FamilyRule:
     return families[[row.name for row in families].index(name)]
 
 
-def rests(
-    rows: list[tuple[str, tuple[int, int], int, int]], counts: np.ndarray, board: Board
-) -> np.ndarray:
-    """Every held row's level under counts in quanta at the row's level weight, the seed of a lay and no result (the engine's start sources the form, `start_content`): every holder of the content at the rest of its own line, its own level and the others' among the content it reads (features/start, `settled_rows`: the division act iterated from nothing until it repeats, at the row's pair and level weight, with or without a gap, Every row reads the content), with its vacuum content added (the massless row's `rest`), summed into the content every record reads: the first lay's well, the shape a body's first record is seeded with."""
-    sourced = [(counts, pair, level_weight, vacuum, ()) for _name, pair, level_weight, vacuum in rows]
+def rests(rows: Rows, counts: np.ndarray, board: Board) -> np.ndarray:
+    """Every held row's level under counts in quanta at the row's level weight times its write weight, the seed of a lay and no result (the engine's start sources the form, `start_content`): every holder of the content at the rest of its own line, reading the holders among these rows its declaration names at their weights, its own level among them where it names itself (features/start, `settled_rows`: the division act iterated from nothing until it repeats, at the row's pair and level weight, with or without a gap), with its vacuum content added (the massless row's `rest`), summed into the content every record reads: the first lay's well, the shape a body's first record is seeded with."""
+    positions = [position for position, _row in rows]
+    sourced = [
+        (
+            row.write * counts,
+            row.pair,
+            int(row.level_weight or 0),
+            row.rest,
+            tuple((positions.index(r.family), r.weight) for r in row.reads if r.family in positions),
+        )
+        for _position, row in rows
+    ]
     fields = settled_rows(sourced, board.wrap, board.width, board.gamma, board.unit)
     return sum(
         (
             np.asarray(field.levels, dtype=np.int64) + row[3]
-            for field, row in zip(fields, rows, strict=True)
+            for field, row in zip(fields, sourced, strict=True)
         ),
         np.zeros(counts.shape, dtype=np.int64),
     )
@@ -406,7 +415,7 @@ def spread(
     first: np.ndarray,
     centre: Axis,
     board: Board,
-    rows: list[tuple[str, tuple[int, int], int, int]],
+    rows: Rows,
     others: np.ndarray,
 ) -> np.ndarray:
     """The first lay: a body declared on one Node is laid over the cube about its centre, its quanta shared alike, the cube widened one Link at a time until every pace is positive, the content below the Link's zero (no value of the law: the iteration moves it to the fixed point); a body declared on its Nodes is laid as declared."""
@@ -489,7 +498,7 @@ def body_fixed_point(
     families: tuple[FamilyRule, ...],
     index: int,
     slot: int,
-    rows: list[tuple[str, tuple[int, int], int, int]],
+    rows: Rows,
     others: Others,
     centre: Axis,
     quanta: int,

@@ -1,4 +1,4 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate). PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, one line each why."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate). PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, each one's docstring saying why."""
 
 import ast
 import io
@@ -10,43 +10,29 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-PHYSICAL_MODULES: dict[str, str] = {
-    "node.py": "the Node: every family's NodeState and the interval's acts on whole-board arrays, each a call of Rule3",
-    "game_board.py": "the GameBoard: the NodeStates, the bodies and the detectors, the interval forward and back",
-    "share.py": "the share: the count as the record's reading at every Node, in quanta over the count's wall by Rule3's division act",
-    "records.py": "the records' lines and the sign's rows: light the rows' sum, the sum of every row but the reader's own, the readings of the lines and the write's numerators row by row",
-    "bookings.py": "the bookings per record, light's form from its rows' sum, and the sources of the start row by row",
-    "reports.py": "the detectors' reports, the net inflow through a region's front boundary, and a body's Nodes derived for a report, readings of whole-board arrays",
-    "growth.py": "the receding face: the GameBoard grown by layers of zeros as the front reaches it, taken off on the way back",
-    "world_files.py": "the host's read of the world's files and their digest; no arithmetic",
-    "loader/world.py": "the world's files checked into the GameBoard's world: the keys, the bodies, the messages and the detectors",
-    "loader/keys.py": "the keys of the files: an object, an integer, a Node on the board, a range along an axis",
-    "loader/mode.py": "the generator's mode file: every body's and message's levels within the amplitude bound and 0 beyond the board",
-    "loader/faces.py": "the inner faces of the board: the Nodes declared beyond it, read as 0 through every Port",
-    "loader/messages.py": "the messages, laid records of a family of quanta: their keys and their levels from the mode file",
-    "loader/derived.py": "the families from the rule and the amplitude bound A derived from the width",
-    "loader/instrument.py": "the instrument's declaration on a detector, its setting and its parts' pattern, read by nothing in the engine",
-    "loader/lay.py": "the lay a world declares and the least quantum action its tolerance needs, the budget's gate at load",
-    "core/rule3.py": "the one rule in one place: its coefficients at a Node from the paces, the step in both directions, the division act, its fixed point iterated and the form's term (ALGEBRA.md #the-line, #the-direction)",
-    "core/integer.py": "the working bound, the host's signed integer range",
-    "core/paces.py": "the composed paces, the clock and the Link's pace of the content, and the factors",
-    "core/ports.py": "the six Ports of every Node: the arrival of an array through one Port, the one shift across Nodes of the package",
-}
+PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "credit.py", "world_files.py")
+PHYSICAL_MODULES += ("records.py", "bookings.py")
+PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
+PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages"))
+PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/universe.py", "loader/lay.py")
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
 NUMPY_DTYPES_FORBIDDEN = set(
-    "complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
+    "complex128 complex64 complex_ complexfloating float128 float16 float32".split()
+)
+NUMPY_DTYPES_FORBIDDEN |= set(
+    "float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
 )
 NUMPY_FORBIDDEN = set(
-    "arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power sin sqrt std tan true_divide var".split()
+    "arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power".split()
 )
+NUMPY_FORBIDDEN |= set("sin sqrt std tan true_divide var".split())
 BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int", "kind"}  # kind: the loader's choice by the width
 ROOT_NAMES = {"isqrt", "integer_root"}
 
 
 def float_literals(source: str) -> list[int]:
-    """The lines of every float literal token (a decimal point or an exponent outside a hexadecimal literal)."""
     tokens = tokenize.generate_tokens(io.StringIO(source).readline)
     numbers = [(t.start[0], t.string.lower()) for t in tokens if t.type == tokenize.NUMBER]
     decimal = [(line, text) for line, text in numbers if not text.startswith(("0x", "0o", "0b"))]
@@ -60,7 +46,6 @@ def true_divisions(source: str) -> list[int]:
 
 
 def forbidden_imports(tree: ast.AST) -> list[str]:
-    """Every forbidden import, and every alias of `math`, `isqrt` or `integer_root` (an alias would hide a root, so aliasing them is itself a violation)."""
     found = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Import | ast.ImportFrom):
@@ -85,7 +70,6 @@ METHODS_FORBIDDEN = {"mean", "std", "var"}
 
 
 def numpy_chain(node: ast.AST) -> list[str] | None:
-    """The attribute chain of an expression rooted at the name `np` (`np.linalg.norm` -> ["linalg", "norm"]), None when not rooted there."""
     chain: list[str] = []
     while isinstance(node, ast.Attribute):
         chain.append(node.attr)
@@ -96,7 +80,7 @@ def numpy_chain(node: ast.AST) -> list[str] | None:
 
 
 def is_integer_literal(node: ast.AST) -> bool:
-    """A literal that is an integer or a (nested) list or tuple of integers and booleans; anything else (a float, a string, a name) is not."""
+    """A literal that is an integer or a (nested) list or tuple of integers and booleans."""
     if isinstance(node, ast.Constant):
         return isinstance(node.value, (int, bool)) and not isinstance(node.value, float)
     if isinstance(node, (ast.List, ast.Tuple)):
@@ -107,7 +91,6 @@ def is_integer_literal(node: ast.AST) -> bool:
 
 
 def numpy_violations(tree: ast.AST) -> list[str]:
-    """Every `np.<chain>` that names a forbidden dtype, a function that leaves the integers or a forbidden family (`np.linalg.*`, `np.linspace`, `np.random.*`, `np.fft.*`, `np.polyfit`, `np.interp`); every allocation `np.zeros`, `np.ones`, `np.empty`, `np.full` without a `dtype` keyword (float64 by default) and every `np.array` of a non-integer literal; every call of the builtin `float`; every method call `.mean`, `.std`, `.var`; every `dtype=` or `.astype(...)` argument that is not `np.int64` (the loader's one site), `bool`, `object`, `int` or the name `kind` (the loader's choice of the integers by the file's width)."""
     found = []
     for node in ast.walk(tree):
         chain = numpy_chain(node) if isinstance(node, ast.Attribute) else None

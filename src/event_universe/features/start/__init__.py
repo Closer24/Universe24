@@ -14,7 +14,9 @@ from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import NO_READ, Reads, coefficients, rule3
 
 Pair = tuple[int, int]
-SignReads = tuple[tuple[int, int], ...]  # a holder of the sign's reads of the content holders
+SignReads = tuple[
+    tuple[int, int], ...
+]  # a held row's reads of the content holders by position, weighted
 # a row's source: its booking, its pair, the booking's wall (the row's level weight E_s on a count in
 # quanta, the write's wall E_s T on the hold's booking), its rest and its reads
 Sourced = tuple[np.ndarray, Pair, int, int, SignReads]
@@ -135,8 +137,10 @@ def rest(
     gamma: int,
     others: np.ndarray | int = 0,
     intervals: int = 2,
+    *,
+    own_weight: int,
 ) -> FieldAtRest:
-    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (source x unit div divisor) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), `divisor` the wall of the source's booking (the row's level weight E_s on a count in quanta, the write's wall E_s T on the form the hold books), the paces from the content the row reads, `others` the other holders' levels and the row's own level b div unit among them (Every row reads the content), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and the paces re-read from it until the levels repeat the content they were read at, the fixed point, or repeat an earlier state one unit off at most at every Node, a rounding tie (the content then one unit off at that Node; a return further off refused by name, `returned`), the remainder at the half of `wall`, the wall of the rule the row steps by; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, where the divisor is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
+    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (source x unit div divisor) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), `divisor` the wall of the source's booking (the row's level weight E_s on a count in quanta, the write's wall E_s T on the form the hold books), the paces from the content the row reads, `others` the other holders' weighted levels with their rests and `own_weight` x the row's own level b div unit among them (the weight its declaration names for itself, 0 where it does not read its own level: the holder of the sign), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and the paces re-read from it until the levels repeat the content they were read at, the fixed point, or repeat an earlier state one unit off at most at every Node, a rounding tie (the content then one unit off at that Node; a return further off refused by name, `returned`), the remainder at the half of `wall`, the wall of the rule the row steps by; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, where the divisor is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
     num, den = pair
     if divisor < 1:
         raise ValueError(
@@ -155,7 +159,7 @@ def rest(
     fine, own, iterations = np.zeros_like(counts), np.zeros_like(counts), 0
     seen: dict[bytes, int] = {}  # every state the paces were read from, by its outer pass
     while True:  # the outer pass: the paces from the row's own level as last rounded
-        content = others + own
+        content = others + own_weight * own
         clock, pace = paces.node_paces(gamma, content)
         if bool((pace <= 0).any()):
             raise RestCollapses(
@@ -174,22 +178,35 @@ def rest(
     return FieldAtRest(rounded, fine, unit, iterations, int(division(1, 2, wall - 1)), own)
 
 
+def read_content(
+    reads: SignReads, levels: Sequence[np.ndarray], rests: Sequence[int], own: int | None
+) -> tuple[Any, int]:
+    """A held row's content at the start from the content holders by position at the weights its reads name (ALGEBRA.md, every family reads the holders its declaration names, at the weights it names): the sum of weight x (the holder's level with its rest) over its reads, the row's own level left out and its weight returned apart (`own` its position among the holders, None for a holder of the sign, which stands outside them and reads none of itself), for the rest to iterate (`rest`); 0 and 0 where it reads nothing."""
+    content: Any = 0
+    weight = 0
+    for position, read in reads:
+        content = content + read * rests[position]
+        if position == own:
+            weight += read
+        else:
+            content = content + read * levels[position]
+    return content, weight
+
+
 def settled_rows(
     rows: Sequence[Sourced], wrap: Wrap, width: int, gamma: int, unit: int
 ) -> list[FieldAtRest]:
-    """Every holder of the content at its rest under its sources, each reading its own level and the other holders' among the content (Every row reads the content, ALGEBRA.md #the-paces): the rows' rests taken in turn, each at the others' levels as last found with their rests and its own rest among them (`rest`), until every row's levels repeat the state the pass began from, or the rows together repeat an earlier state one unit off at most, a rounding tie, a return further off refused by name as a cycle (`returned`, the one rule), the remainder of each at the half wall of the rule the row steps by, w = 6 den Gamma^2 G^2; the engine's start and the generator share it."""
+    """Every holder of the content at its rest under its sources, each reading the holders its declaration names at their weights, its own level among them where it names itself (`read_content`; ALGEBRA.md #the-paces): the rows' rests taken in turn, each at the others' levels as last found with their rests (`rest`), until every row's levels repeat the state the pass began from, or the rows together repeat an earlier state one unit off at most, a rounding tie, a return further off refused by name as a cycle (`returned`, the one rule), the remainder of each at the half wall of the rule the row steps by, w = 6 den Gamma^2 G^2; the engine's start and the generator share it."""
     levels = [np.zeros_like(row[0]) for row in rows]
     fields: list[FieldAtRest] = []
     seen: dict[bytes, int] = {}
+    rests = [row[3] for row in rows]
     while True:
         began, fields = list(levels), []
-        for number, (counts, pair, divisor, own_rest, _reads) in enumerate(rows):
-            others: Any = own_rest
-            for other, (level, row) in enumerate(zip(levels, rows, strict=True)):
-                if other != number:
-                    others = others + level + row[3]
+        for number, (counts, pair, divisor, _own_rest, reads) in enumerate(rows):
+            others, own_weight = read_content(reads, levels, rests, number)
             wall = coefficients(pair[0], pair[1], gamma, gamma, gamma, None, unit)[2]
-            field = rest(counts, pair, wrap, divisor, width, wall, gamma, others)
+            field = rest(counts, pair, wrap, divisor, width, wall, gamma, others, own_weight=own_weight)
             levels[number] = field.levels
             fields.append(field)
         if returned(
@@ -204,18 +221,19 @@ def settled_rows(
 def held_rests(
     booked: Booked, seed: Sequence[np.ndarray], wrap: Wrap, width: int, gamma: int, unit: int
 ) -> list[FieldAtRest]:
-    """Every held row at its rest under the sources the laid records write at those rests, the engine's start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, (a) the body stands where the sources return themselves and (c) the well, D_i div T each interval, is the record's quanta as the fields' source): the lay and the rest iterated to the fixed point. `booked` books every held row's source at the held rows' levels it is given, the holders of the content first and then the holders of the sign, each the booking the hold's write takes at those paces (the form of every laid record for a row of the content and its Wronskian for the holder of the sign, scaled per proper volume and per proper interval at the sourcing family's paces, over the write's wall E_s T); the holders of the content rest together under it (`settled_rows`), then each holder of the sign at the rest of its line under the content it reads, its reads naming the content holders by their position with their weights, the rests among the levels, its Wronskian source carrying one proper-interval power where a count carries two; the levels found are booked again until they repeat the state they were booked at, the fixed point, or an earlier state two units off at most at every Node, a rounding tie of the composed map, one unit per division act, the rest's and the booking's (`returned`, the one rule), a return further off refused by name as a cycle; `seed` the levels the first booking reads, nothing (0 at every Node) in the engine, never the result; the fields in the holders' order and then the signs'."""
+    """Every held row at its rest under the sources the laid records write at those rests, the engine's start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, (a) the body stands where the sources return themselves and (c) the well, D_i div T each interval, is the record's quanta as the fields' source): the lay and the rest iterated to the fixed point. `booked` books every held row's source at the held rows' levels it is given, the holders of the content first and then the holders of the sign, each the booking the hold's write takes at those paces (the form of every laid record for a row of the content and its Wronskian for the holder of the sign, scaled per proper volume and per proper interval at the sourcing family's paces, over the write's wall E_s T); the holders of the content rest together under it (`settled_rows`), then each holder of the sign at the rest of its line under the content it reads, its reads naming the content holders by their position with their weights, the rests among the levels and none of its own level (`read_content`), its Wronskian source carrying one proper-interval power where a count carries two; the levels found are booked again until they repeat the state they were booked at, the fixed point, or an earlier state two units off at most at every Node, a rounding tie of the composed map, one unit per division act, the rest's and the booking's (`returned`, the one rule), a return further off refused by name as a cycle; `seed` the levels the first booking reads, nothing (0 at every Node) in the engine, never the result; the fields in the holders' order and then the signs'."""
     levels = list(seed)
     seen: dict[bytes, int] = {}
     while True:
         holders, signs = booked(levels)
         fields = settled_rows(holders, wrap, width, gamma, unit)
-        for counts, pair, divisor, own_rest, reads in signs:
-            content: Any = own_rest
-            for position, weight in reads:
-                content = content + weight * (fields[position].levels + holders[position][3])
+        rests = [holder[3] for holder in holders]
+        for counts, pair, divisor, _own_rest, reads in signs:
+            content, own_weight = read_content(reads, [field.levels for field in fields], rests, None)
             wall = coefficients(pair[0], pair[1], gamma, gamma, gamma, None, unit)[2]
-            fields.append(rest(counts, pair, wrap, divisor, width, wall, gamma, content, 1))
+            fields.append(
+                rest(counts, pair, wrap, divisor, width, wall, gamma, content, 1, own_weight=own_weight)
+            )
         found = [field.levels for field in fields]
         name = f"the lay and the rest of {len(holders)} holders and {len(signs)} signs"
         if returned(
