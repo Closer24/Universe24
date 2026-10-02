@@ -183,7 +183,9 @@ def line_of(world: World, family: int) -> Line:
     """Rule3's coefficients for the family at the vacuum's paces (every content 0), as the engine
     derives them, over the wall."""
     num, den = world.families[family].pair
-    reads, self_coefficient, wall = coefficients(num, den, world.node_clock, 0)
+    reads, self_coefficient, wall = coefficients(
+        num, den, world.node_clock, world.node_clock, world.node_clock
+    )
     if len(set(reads)) != 1:
         raise ValueError(f"the vacuum's reads differ by axis: {reads}")
     return Line(reads[0] / wall, self_coefficient / wall, num)

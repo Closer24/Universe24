@@ -17,6 +17,7 @@ MODE_BODY_KEYS = (
     "clock",
     "profile",
     "moving",
+    "lay",
 )
 MOVING_KEYS = ("now", "before", "im_now", "im_before")
 LEVEL_KEYS, SENSE_KEYS = ("now", "before"), ("im_now", "im_before")

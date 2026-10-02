@@ -24,8 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
 
 
-def law_line(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-untyped-def]
-    """The law's line at a Node, the oracle (ALGEBRA.md #the-line, #the-paces, The clock is the Node's, the tension is the Link's; The paces compose): p_0 the clock, p_i the Node's pace on its six Links, Q_ij the Link's factor in the unit G^2 (G^2 with no tension), R_ij = 2 num p_i^2 Q_ij the product, S = 12 (den Gamma^2 - (den - num) p_0^2) G^2 - SUM over the six Ports of R_ij, w = 6 den Gamma^2 G^2."""
+def law_line(num, den, gamma, clock, pace, factors=None, unit=1):
     square = unit * unit
     reads = tuple(2 * num * pace**2 * q for q in (factors or [square] * 6))
     self_coefficient = 12 * (den * gamma**2 - (den - num) * clock**2) * square - sum(reads)
@@ -139,15 +138,10 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
 LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 6}), frozenset({4, 12})
 
 
-def tools_on_the_arrays() -> list[Path]:
-    """Every tool that touches the engine's arrays: a file of tools/ that imports the package (the generator, the runner, the back-in-time gate, the reading of the clicks, the bodies' drift), found by its import lines and never listed."""
-    texts = {p: p.read_text(encoding="utf-8") for p in sorted((ROOT / "tools").glob("*.py"))}
-    return [p for p, text in texts.items() if re.search(r"^(from|import) event_universe\b", text, re.M)]
-
-
 def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     """No integer literal in src/event_universe or in any tool that touches the engine's arrays (the owner, 2026-09-30: every coordinate, gap, wavelength, width, amplitude, count and window comes from the world's files) beyond the law's own (LAW_INTEGERS: 0 and 1, the identity and the direction, -1 the inverse and the hole; 2, the halves, W_c div 2, the half wall, the axis contents' rounding, two levels; 3, the three axes, 3 den; 6, the six Ports, 6 den; and in Rule3's own line, core/rule3.py alone, 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2, RULE_LINE_INTEGERS): every other number is a file's key or the rule's own act, so a number cannot enter the engine again. The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root. The names gate (HIGHLIGHTS.md **The engine works only with families of dimension one**; the owner, 2026-10-01, 03:25): no string literal stands in src/event_universe outside docstrings, the messages of `raise` and `assert` and f-strings, but in the loader (the files' key tables), in reports.py (the output's words), in world_files.py (the host's files) and in the package's version; so no act or reading of the engine names a family, a key or a kind, and a family name cannot enter the engine again."""
-    tools = tools_on_the_arrays()
+    texts = {p: p.read_text(encoding="utf-8") for p in sorted((ROOT / "tools").glob("*.py"))}
+    tools = [p for p, text in texts.items() if re.search(r"^(from|import) event_universe\b", text, re.M)]
     assert {"pixel_mode", "back_in_time", "run_inputs", "click_counts"} <= {p.stem for p in tools}
     found = []
     for path in [*sorted(SOURCE.rglob("*.py")), *tools]:
@@ -187,16 +181,6 @@ NODE_STATE = {"lines": "list[Record]", "write_remainders": "list[np.ndarray]"}
 TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState table, its first column
 
 
-def call_kind(args: tuple) -> str | None:  # type: ignore[type-arg]
-    """What a call of Rule3 is: "write", the division act on the level 1 at the row's one wall, an integer, with the remainder kept at every Node (features/write, `carried`), no read and no other level (the paces' roundings at a Node's own clock as the wall, an array, keep no remainder and are none); "step", the three reads with the level now and the other level as arrays (a reading's plain Link term reads with no other level); None otherwise."""
-    reads, _arrivals, _numerator, wall, now, other, remainder = args[:7]
-    plain = reads is NO_READ and type(now) is int and now == 1 and other == 0
-    if plain and type(wall) is int and isinstance(remainder, np.ndarray):
-        return "write"
-    arrays = isinstance(now, np.ndarray) and isinstance(other, np.ndarray)
-    return "step" if reads is not NO_READ and arrays else None
-
-
 def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     """The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per line, two levels and Rule3's remainder; per held line, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record; one shape of state for every family. (a) The NodeState holds lines (now, before, Rule3's remainder), as many as the loader derives for the family (a family of quanta's dimension, a held row's sources' count), and one write remainder per held line and nothing else, one shape for every family; (b) on the chain with a rotating body (every kind of family: a plane of two lines, a family of one line, the holder of the sign, two rows with a gap, the massless row with its axis lines) one interval forward and one back make exactly one Rule3 division per line, the level each line started from that call's own, and exactly one write per held line, and every reading the engine exposes leaves every line bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a). The width is the run's declaration (the owner, 2026-10-01, 02:35): the loader's one site maps `integers.width` to the arrays' kind, the hardware's 64-bit integers at or under the host's signed bits and Python's integers above them (`loader.world.kind_of`); the chain world run at the width 63 and at 127 over forty intervals gives the same click and field lines and the same books bit for bit, every array of the wider run an array of Python integers; no other file of src names an integer's kind."""
     assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
@@ -206,11 +190,16 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
-    assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 2, 4]
+    assert sorted(len(s.lines) for s in board.states) == [1, 1, 2, 2, 4]  # the sign: 2 rows
     calls, original = [], core.rule3
 
     def counting(*args):  # type: ignore[no-untyped-def]
-        calls.append((call_kind(args), id(args[4])))  # the call's kind and its level now, nothing kept
+        reads, _arrivals, _numerator, wall, now, other, remainder = args[:7]  # the call's kind, no state
+        plain = reads is NO_READ and type(now) is int and (now == 1) and (other == 0)
+        write = plain and type(wall) is int and isinstance(remainder, np.ndarray)
+        arrays = isinstance(now, np.ndarray) and isinstance(other, np.ndarray)  # a step: reads on arrays
+        kind = "write" if write else "step" if reads is not NO_READ and arrays else None
+        calls.append((kind, id(args[4])))  # the call's kind and its level now, nothing kept
         return original(*args)
 
     engine = [m for m in list(sys.modules.values()) if getattr(m, "__name__", "").startswith("event_")]

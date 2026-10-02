@@ -4,44 +4,33 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any
 
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
-from event_universe.loader.derived import FamilyRule, Row
+from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
-from event_universe.loader.instrument import Pattern, basis_of, pattern_of, patterns_of_the_law
+from event_universe.loader.instrument import (
+    Instrument,
+    Pattern,
+    basis_of,
+    instrument_of,
+    pattern_of,
+    patterns_of_the_law,
+    ports_of,
+)
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
+from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
+from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("measured", "messages", "detectors", "receding")
+WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
-UNIVERSE_KEYS = ("integers", "families")
-INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
-FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
-    ("name", "pair", "dimension", "held"),
-    ("name", "pair"),
-    ("sources", "level_weight", "rest", "act"),
-    ("sources", "level_weight"),
-)
-FORM, TENSIONS, WRONSKIAN = (
-    "form",
-    "tensions",
-    "wronskian",
-)  # what sources a held row: one real line each
-SOURCES = ((FORM,), (FORM, TENSIONS), (WRONSKIAN,))  # the lists a held row may declare, in this order
-PACE, ROTATION = (
-    "pace",
-    "rotation",
-)  # how a held row acts on its readers: its level into their paces, or the turn of the two-part record
-ACTS = (PACE, ROTATION)
-PLANE = 2  # the dimension of a plane, re and im: charged matter; 1 one real line
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
     ("family", "nodes"),
@@ -65,7 +54,7 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), the reader's and nothing of the engine's, each empty where none is declared."""
+    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), read by the reader and by the instrument's draw through the root in the run, each empty where none is declared."""
 
     name: str
     positions: tuple[Node, ...]
@@ -77,7 +66,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors and the receding faces."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors, the receding faces, the instrument and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)'s draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -96,94 +85,13 @@ class World:
     messages: tuple[MessageRow, ...]
     detectors: tuple[DetectorRow, ...]
     receding: tuple[RecedingFace, ...]
-
-
-def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, bool]:
-    """A family's shape from its row, (lines, parts, plane, wronskian, rotation): a family of quanta declares its `dimension`, 1 (one real line), 2 (a plane, re and im) or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), no dimension, a held row never being a plane, and optionally its `act` on its readers (`ACTS`): the plain read into their paces, every holder's without the key, or the rotation of the two-part record, the holder of the sign's alone (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record), under which the holder carries three odd axis lines beside its time line (1 + 3 lines); a holder of the content asking the rotation, and an act by another word, are refused by name."""
-    if "held" in row:
-        if "dimension" in row:
-            raise ValueError(
-                f"{label} is a held row and declares no dimension: its shape is its sources' count"
-            )
-        held = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)
-        sources, act = held["sources"], held.get("act", PACE)
-        if not isinstance(sources, list) or tuple(sources) not in SOURCES:
-            raise ValueError(
-                f"{label}.held.sources is one of {[list(s) for s in SOURCES]}, got {sources!r}"
-            )
-        if act not in ACTS:
-            raise ValueError(f"{label}.held.act is one of {list(ACTS)}, got {act!r}")
-        rotation = act == ROTATION
-        if rotation and WRONSKIAN not in sources:
-            raise ValueError(
-                f"{label}.held.act {act!r}: a holder of the content, sourced by the form, acts on its readers' "
-                "paces; the rotation of the two-part record is the act of the holder of the sign, sourced by "
-                "the Wronskian (ALGEBRA.md #the-hypotheses-under-their-own-names)"
-            )
-        return 1 + 3 * (TENSIONS in sources or rotation), 1, False, WRONSKIAN in sources, rotation
-    if "dimension" not in row:
-        raise ValueError(
-            f"{label} lacks the key 'dimension': a family of quanta declares 1, {PLANE} or [parts, dimension]"
-        )
-    shape = row["dimension"]
-    if isinstance(shape, list) and len(shape) != 2:
-        raise ValueError(f"{label}.dimension as a shape is [parts, dimension], got {shape!r}")
-    parts, lines = shape if isinstance(shape, list) else [1, shape]
-    parts = integer(parts, f"{label}.dimension's parts", 1)
-    lines = integer(lines, f"{label}.dimension", 1, PLANE)
-    return parts * lines, parts, lines == PLANE, False, False
+    instrument: Instrument | None
+    lay: Lay | None  # the lay the world declares for its bodies and its tolerance (`loader/lay.py`)
 
 
 def kind_of(width: int) -> type:
     """The kind of the run's arrays from the declared width, the one place the engine's integers are chosen (the owner, 2026-10-01, 02:35, "choose 64 or 128 bits outside the engine, at the start"): the host's 64-bit integers where the width is at or under the host's signed bits, Python's integers (arrays of objects, exact at any width and slow) above it; the amplitude bound A is derived at the declared width either way (ENGINE.md, the loader)."""
     return np.int64 if width <= MAX_WORK_INT.bit_length() else object
-
-
-def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair and its dimension (a family of quanta) or its sources with its level weight, its rest and its act (a held row; the level weight `level_weight`, the quanta of form that write one level of the row; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape."""
-    universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
-    raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
-    integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
-    unit = integers["link_unit"]
-    if unit & (unit - 1):
-        raise ValueError(
-            f"integers.link_unit must be a power of two, the Link's unit G in which each Link's factor is one "
-            f"integer (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's), got {unit}"
-        )
-    entries = universe["families"]
-    if not isinstance(entries, list) or not entries:
-        raise ValueError("families must be a list of the families' rows")
-    rows: list[Row] = []
-    for index, entry in enumerate(entries):
-        label = f"families[{index}]"
-        row = keyed(entry, label, FAMILY_KEYS, FAMILY_REQUIRED)
-        name = row["name"]
-        if not isinstance(name, str) or not name or name in [found.name for found in rows]:
-            raise ValueError(f"{label}.name must be a name of its own")
-        pair = row["pair"]
-        if not isinstance(pair, list) or len(pair) != 2:
-            raise ValueError(f"{label}.pair must be [num, den]")
-        den = integer(pair[1], f"{label}.pair's den", 1)
-        num = integer(pair[0], f"{label}.pair's num", -den, den)
-        if abs(num) == den and num != den:
-            raise ValueError(
-                f"{label}.pair [{num}, {den}]: a massive pair has den above |num| (ALGEBRA.md)"
-            )
-        lines, parts, plane, wronskian, rotation = shape_of(row, label)
-        level_weight, rest = None, 0
-        if "held" in row:
-            holds = row["held"]
-            level_weight = integer(holds["level_weight"], f"{label}.held.level_weight", 1)
-            if "rest" in holds:
-                if wronskian or num != den:
-                    raise ValueError(
-                        f"{label}.held.rest: only the massless row holding the content rests at a level"
-                    )
-                rest = integer(
-                    holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
-                )
-        rows.append(Row(name, (num, den), lines, parts, plane, wronskian, rotation, level_weight, rest))
-    return integers, derived.family_rules(rows)
 
 
 def bodies_of(
@@ -240,7 +148,7 @@ def detectors_of(
     beyond: tuple[Node, ...],
     layer: tuple[Node, ...],
 ) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration, read by nothing in the engine, `loader/instrument.py`; a pattern without a basis is refused by name), or the body it names by its number (no basis); after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the instrument's draw's through the root, `loader/instrument.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
@@ -256,6 +164,10 @@ def detectors_of(
         if "pattern" in row and not basis:
             raise ValueError(f"{label}.pattern reads the setting `basis` declares, and none is declared")
         pattern = pattern_of(row["pattern"], f"{label}.pattern", basis) if "pattern" in row else ()
+        if pattern:
+            ports_of(
+                basis, pattern
+            )  # the two ports orthogonal with equal norms, refused by name otherwise
         if "block" in row:
             if basis:
                 raise ValueError(
@@ -363,13 +275,21 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     regions_of_the_law(detectors, messages, shape, (periodic[0], periodic[1], periodic[2]), families)
     laid = [message.family for message in messages] + [body.family for body in bodies]
     patterns_of_the_law([(d.name, d.pattern) for d in detectors], laid, families)
+    # the world's records: a charged family's bodies each a record owning one row of the sign, every
+    # holder of the sign one row per charged record beside the free row (derived.with_records)
+    counted = [body.family for body in bodies]
+    families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
+    instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
+    lay = lay_of(world["lay"], "lay") if "lay" in world else None
+    ticks, pairs = integer(world["ticks"], "ticks", 0), [families[b.family].pair for b in bodies]
+    budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
         (open_axes[0], open_axes[1], open_axes[2]),
         depth,
         beyond,
-        integer(world["ticks"], "ticks", 0),
+        ticks,
         gamma,
         action,
         derived.largest_of(width),
@@ -381,4 +301,6 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         messages,
         detectors,
         receding,
+        instrument,
+        lay,
     )

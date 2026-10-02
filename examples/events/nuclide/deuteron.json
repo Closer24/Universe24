@@ -12,11 +12,13 @@
     6000,
     6000
    ],
+   "reads": {},
    "held": {
     "sources": [
      "wronskian"
     ],
-    "level_weight": 1
+    "level_weight": 1,
+    "write_weight": 1
    }
   },
   {
@@ -25,6 +27,9 @@
     4004,
     6000
    ],
+   "reads": {
+    "charge": 1
+   },
    "dimension": [
     2,
     2

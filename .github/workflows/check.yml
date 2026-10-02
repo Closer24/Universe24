@@ -18,6 +18,7 @@ jobs:
     # no run on a draft's pushes; marking it ready runs it
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       shards: ${{ steps.plan.outputs.shards }}
     steps:
@@ -33,6 +34,7 @@ jobs:
     needs: plan
     name: ${{ matrix.shard }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # the owner's ceiling (2026-10-02): a run over ten minutes fails by name
     strategy:
       fail-fast: false
       matrix:

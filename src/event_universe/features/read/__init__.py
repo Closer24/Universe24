@@ -12,6 +12,11 @@ from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import division_fixed_point, division_forward, link_factor
 
 
+def plain(level: Any, sign: bool) -> Any:
+    """A holder's level as the plain read takes it into a pace: a holder of the content's as it is, of either sign (a level below 0 a hill, the clock above the vacuum's), and a holder of the sign's as its size |L|, a hollow whatever the reader's sense, so that charge conjugation, the sense flipped and the level with it, leaves the physics (ALGEBRA.md row (f), The sign holder rotates the two-part record: a plane reads the holder of the sign plainly into its pace, a hollow whatever its sense, under the act pace; the advisor's hand, #1563 comment 5945859368); under the rotation the turn takes the signed level and this read is not made."""
+    return np.abs(level) if sign else level
+
+
 def content_of(reads: Sequence[tuple[int, Any]]) -> Any:
     """c = SUM over the reads of (weight x the read family's time line) at every Node, the reading row's own among them where it holds the content; 0 where a family reads nothing (the plain rule at Gamma)."""
     content: Any = 0

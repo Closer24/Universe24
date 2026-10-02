@@ -12,7 +12,7 @@ from event_universe.features.read import edge_squared, guard
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.reports import inflow
-from tests.laws import real_row
+from tests.laws import real_rows
 
 RING, HERE, GAMMA = Wrap(True, True, True), (1, 1, 1), 6000  # the witnesses at the rule's Gamma
 
@@ -88,23 +88,17 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board. On the chain of three with every Node declared and none grown: +x from Node 2 is outside the region; -x from Node 0 inside it is a hop, no entry; +y beyond the board has no boundary Port."""
-    (quanta,) = family_rules([real_row("quanta", (5, 7), 1, None)])
+    (quanta,) = family_rules(real_rows(("quanta", (5, 7), 1, None)))
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = node.zeros(shape, kind_of(63))
     real, second = (node.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
     through = node.currents_of(quanta.pair[0], [real, second], wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
-        rolled = [
-            (r, np.roll(r.now, -side, axis), np.roll(r.before, -side, axis)) for r in (real, second)
-        ]
+        rolled = [(r, *(np.roll(a, -side, axis) for a in (r.now, r.before))) for r in (real, second)]
         expected = sum(5 * (r.now * before - r.before * now) for r, now, before in rolled)
         assert np.array_equal(through[port], expected)
     nodes, board = np.array([True, True, False]).reshape(3, 1, 1), np.ones((3, 1, 1), dtype=bool)
     wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
     inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port
-
-    def seen(port: int) -> int:
-        through = tuple(inward if p == port else zero for p in range(6))
-        return inflow(nodes, through, wrap, nodes, board)
-
-    assert [seen(port) for port in range(3)] == [40, 0, 0]
+    through = [tuple(inward if p == port else zero for p in range(6)) for port in range(3)]
+    assert [inflow(nodes, t, wrap, nodes, board) for t in through] == [40, 0, 0]

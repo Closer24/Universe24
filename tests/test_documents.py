@@ -21,22 +21,12 @@ def shouting(text: str) -> list[str]:
     return [run.group(0) for run in re.finditer(r"\S+(?: \S+){2,}", marked)]
 
 
-def prose(path: Path) -> list[str]:
-    """A markdown file's lines outside its fenced blocks."""
+def prose(path: Path) -> list[str]:  # a markdown file's lines outside its fenced blocks
     lines, fenced = [], False
     for line in path.read_text(encoding="utf-8").splitlines():
         fenced ^= line.lstrip().startswith("```")
         lines.append("" if fenced or line.lstrip().startswith("```") else line)
     return lines
-
-
-def written(path: Path) -> list[str]:
-    """A Python file's comments and string literals (its docstrings among them)."""
-    source = path.read_text(encoding="utf-8")
-    constants = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Constant)]
-    nodes = [n for n in constants if isinstance(n.value, str)]
-    tokens = tokenize.generate_tokens(io.StringIO(source).readline)
-    return [n.value for n in nodes] + [t.string for t in tokens if t.type == tokenize.COMMENT]
 
 
 def test_every_heading_is_in_sentence_case_and_no_name_is_written_in_capitals():
@@ -45,7 +35,12 @@ def test_every_heading_is_in_sentence_case_and_no_name_is_written_in_capitals():
     heads = [(at, line) for at, line in lines if re.match(r"#+\s", line)]
     headings = [f"{at}: {line}" for at, line in heads if not HEADING.match(line.lstrip("#").strip())]
     assert not headings, headings
-    loud = [f"{at}: {run}" for at, line in lines for run in shouting(line)]
-    texts = [(path.relative_to(ROOT), text) for path in CODE for text in written(path)]
+    loud, texts = [f"{at}: {run}" for at, line in lines for run in shouting(line)], []
+    for path in CODE:  # every comment and string literal of the file, its docstrings among them
+        source = path.read_text(encoding="utf-8")
+        nodes = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Constant)]
+        tokens = tokenize.generate_tokens(io.StringIO(source).readline)
+        texts += [(path.relative_to(ROOT), n.value) for n in nodes if isinstance(n.value, str)]
+        texts += [(path.relative_to(ROOT), t.string) for t in tokens if t.type == tokenize.COMMENT]
     loud += [f"{at}: {run}" for at, text in texts for run in shouting(text)]
     assert not loud, loud
