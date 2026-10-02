@@ -27,11 +27,11 @@ def pair(value: Fraction | None) -> list[int] | None:
 
 
 def centroid(density: np.ndarray, first: int, last: int, offset: int) -> Fraction | None:
-    """The centroid along the chain of a density over the Nodes from `first` through `last` (the file's coordinates, `offset` the layers grown before the origin), an exact fraction; None where the density sums to 0."""
+    """The centroid along the chain of a density over the Nodes from `first` through `last` (the file's coordinates, `offset` the layers grown before the origin), an exact fraction, the density summed over the cross-section at each x (a chain's one Node; a box's plane, the body round's standing world), None where the density sums to 0."""
     total = Fraction(0)
     weighted = Fraction(0)
     for x in range(first, last + 1):
-        value = int(density[x + offset, 0, 0])
+        value = int(density[x + offset].sum(dtype=object))
         total += value
         weighted += x * value
     return None if total == 0 else weighted / total

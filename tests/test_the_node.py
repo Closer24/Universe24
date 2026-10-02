@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 
 import event_universe.world_files as world_files
-from event_universe import credit, growth, node, share
+from event_universe import credit, growth, node, records, share
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, link_factor, rule3
@@ -81,7 +81,7 @@ def within_the_reach(board: GameBoard, index: int, monkeypatch) -> tuple[int, Fr
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand():
-    """(a) On random NodeStates of a periodic board of 3^3: the levels' step, the share and its reading in quanta and the well (a reading) at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's; the one write per held part by hand, with its weights, in tests/test_the_features.py); a held row with a gap reads the same rule at its own pair, the plain rule's reads num, self coefficient 0 and wall 3 den (the generic test of the two rows: no name and no branch); the write's walls are the rows' own, E_s T and E_s x 3 den T with the sources' den (their least common multiple where they differ, each tension times the multiple over its own den), the remainders' origin half the wall. By hand beside the acts: the share is the form's Node term div (2 p^2), the six paces one with no tension, less num now S_6(before); the well, a reading, (now^2 - next x before) div T with no remainder kept; a gapped row at the content 0 reads 2 Gamma^2 times (3,) x 6, 0, 12 at [3, 4]; the walls E_s T and E_s x 3 den T (den 7), the origins half the wall, two den sharing their lcm."""
+    """The complement remainders (HIGHLIGHTS.md, the mathematician's 166 with the advisor's second hand): on a chain of 41 at [2, 3] and Gamma 1,000 an odd line mirrored about the centre with random levels within 1,000 and random remainders, the image's remainder the ones' complement w - 1 - r, steps mirrored to the bit, levels and remainders, over 200 intervals of Rule3 (floor((w - 1 - u) / w) = -floor(u / w) for every integer, checked over small walls), and the write's origins carry the complement of the half wall at a signed line's image Nodes (`records.write_origins`, 4 against 5 at the wall 10). (a) On random NodeStates of a periodic board of 3^3: the levels' step, the share and its reading in quanta and the well (a reading) at one Node equal Rule3 called by hand on that Node's integers (each act's direction -1 is the feature tests' and the back-in-time gate's; the one write per held part by hand, with its weights, in tests/test_the_features.py); a held row with a gap reads the same rule at its own pair, the plain rule's reads num, self coefficient 0 and wall 3 den (the generic test of the two rows: no name and no branch); the write's walls are the rows' own, E_s T and E_s x 3 den T with the sources' den (their least common multiple where they differ, each tension times the multiple over its own den), the remainders' origin half the wall. By hand beside the acts: the share is the form's Node term div (2 p^2), the six paces one with no tension, less num now S_6(before); the well, a reading, (now^2 - next x before) div T with no remainder kept; a gapped row at the content 0 reads 2 Gamma^2 times (3,) x 6, 0, 12 at [3, 4]; the walls E_s T and E_s x 3 den T (den 7), the origins half the wall, two den sharing their lcm."""
     draw, shape = np.random.default_rng(5), (3, 3, 3)
     for _ in range(20):
         levels = node.Record(*draw.integers(-900, 900, (2, *shape)), draw.integers(0, 50, shape))
@@ -107,6 +107,22 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     rows = ("row", (1, 1), 4, 5), ("a", (1, 4), 1, None), ("b", (5, 6), 1, None)
     mixed = family_rules(real_rows(*rows))
     assert held_write(mixed, 0, 10) == HeldWrite((50, 1800, 1800, 1800), {1: 3, 2: 2})
+
+    rng, (reads, s, w) = np.random.default_rng(3), coefficients(2, 3, 1000, 1000, 1000)
+    gap, chain = np.zeros((1, 1, 1), dtype=np.int64), Wrap(False, True, True)
+    half = [rng.integers(-1000, 1000, (20, 1, 1)) for _ in range(3)]
+    a, b = (np.concatenate([h, gap, -h[::-1]]) for h in half[:2])
+    r = np.concatenate([half[2] % w, gap, records.complement(half[2] % w, w)[::-1]])
+    for _ in range(200):  # the mirrored odd line steps mirrored to the bit with complement remainders
+        b, a, r = a, *(np.asarray(x) for x in rule3(reads, node.ports(a, chain), s, w, a, b, r))
+        assert np.array_equal(a, -a[::-1]) and np.array_equal(
+            r[:20], records.complement(r, w)[::-1][:20]
+        )
+    assert all((w - 1 - u) // w == -(u // w) for u in range(-40, 40) for w in range(1, 9))
+    origins = records.write_origins(
+        (10, 11), (3, 1, 1), np.int64, (np.array([[[1]], [[0]], [[0]]]) > 0,)
+    )
+    assert [o.ravel().tolist() for o in origins] == [[4, 5, 5], [5, 5, 5]]
 
 
 def test_every_act_of_the_interval_reaches_one_link(tmp_path, monkeypatch):

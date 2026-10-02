@@ -163,14 +163,31 @@ def empty_record(shape: tuple[int, int, int], kind: type) -> Record:
     return Record(zeros(shape, kind), zeros(shape, kind), zeros(shape, kind))
 
 
-def write_origins(walls: Sequence[int], shape: tuple[int, int, int], kind: type) -> list[np.ndarray]:
-    """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start)."""
-    return [full(shape, rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0], kind) for wall in walls]
+def complement(remainder: Any, wall: Any) -> Any:
+    """The ones' complement of a carried remainder under its wall, wall - 1 - r: the remainder a signed component carries at its image under a symmetry that negates it (the odd axis lines of a holder under the rotation across their axis's mirror), since (wall - 1 - u) div wall = -(u div wall) and (wall - 1 - u) mod wall = wall - 1 - (u mod wall) for every integer u, so a lay symmetric with its remainders complemented at the image is symmetric to the bit under every act of the step (HIGHLIGHTS.md, the mathematician's 166 with the advisor's second hand); the division's origin wall div 2 has the complement wall - 1 - wall div 2, one below it at an even wall."""
+    return wall - 1 - remainder
+
+
+def write_origins(
+    walls: Sequence[int], shape: tuple[int, int, int], kind: type, images: Sequence[Any] = ()
+) -> list[np.ndarray]:
+    """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start); a signed line carries the origin's complement at the Nodes its image mask names (`images`, per line the mask of the Nodes on the image side of the line's mirror, None or absent for a scalar line), so that a symmetric lay is symmetric to the bit (`complement`)."""
+    found = []
+    for line, wall in enumerate(walls):
+        origin = rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0]
+        image = images[line] if line < len(images) else None
+        plain = full(shape, origin, kind)
+        found.append(plain if image is None else np.where(image, complement(plain, wall), plain))
+    return found
 
 
 def empty_state(
-    family: FamilyRule, shape: tuple[int, int, int], walls: Sequence[int], kind: type
+    family: FamilyRule,
+    shape: tuple[int, int, int],
+    walls: Sequence[int],
+    kind: type,
+    images: Sequence[Any] = (),
 ) -> NodeState:
-    """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), and where it is held one write remainder per line at the origin (`walls` the write's wall per line)."""
+    """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), and where it is held one write remainder per line at the origin (`walls` the write's wall per line), complemented at a signed line's image Nodes (`images`, `write_origins`)."""
     lines = [empty_record(shape, kind) for _ in range(family.lines)]
-    return NodeState(lines, write_origins(walls, shape, kind) if family.held else [])
+    return NodeState(lines, write_origins(walls, shape, kind, images) if family.held else [])
