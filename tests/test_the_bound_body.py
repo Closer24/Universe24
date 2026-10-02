@@ -56,11 +56,10 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = GameBoard(load_world(world := chain_body_world(tmp_path, TOOL)))
     index, binding = ([f.name for f in board.families].index(n) for n in ("matter", "binding"))
-    source = board.states[binding].lines[0].now.copy()  # the start's rest, the source the hold writes
     declared, quanta = board.mask(board.world.bodies[0].nodes), board.quanta(index)[0]
     laid, wall = int(quanta[declared].sum()), count_wall(board.families[index], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(quanta[declared].min()) >= 1
-    kept, drifts = [], []
+    kept, drifts, source = [], [], board.states[binding].lines[0].now.copy()  # the start's rest
     for _ in range(100):
         board.step()
         assert kept or int(np.abs(board.states[binding].lines[0].now - source).max()) <= 2

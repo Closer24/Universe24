@@ -107,25 +107,22 @@ class GameBoard:
         signs = [i for i in self.held if self.families[i].wronskian and self.sourced(i)]
         rows, gamma = holders + signs, self.world.node_clock
 
+        walls = {index: self.walls(index)[0] for index in rows}
+        messages = {index: self.states[index].lines[0] for index in rows}  # the laid records, read once
+
         def booked(levels: Sequence[np.ndarray]) -> tuple[list[Sourced], list[Sourced]]:
-            for index, level in zip(rows, levels, strict=True):
-                self.states[index].lines[0] = self.resting(index, level)
-            forms, turns = Bookings(), Bookings()
-            for index in self.order:
-                family, (_lines, (first, second)) = self.families[index], self.stepped(index, 1)
-                forms[index] = node.form(first[: family.record], second[: family.record])
-                turns[index] = node.wronskian(second[: family.record], family.plane)
-            found: list[Sourced] = []
-            for index in rows:
-                family, source = self.families[index], node.zeros(self.shape, self.kind)
-                bookings = turns if family.wronskian else forms
-                for reader in readers_of(self.families, index):  # the hold's reciprocity
-                    source = source + weight_of(index, self.families[reader]) * bookings[reader]
-                reads = tuple(
-                    (holders.index(r.family), r.weight) for r in family.reads if r.family in holders
-                )
-                found.append((source, family.pair, self.walls(index)[0], family.rest, reads))
-            return found[: len(holders)], found[len(holders) :]
+            return booked_sources(
+                self.families,
+                self.states,
+                rows,
+                holders,
+                walls,
+                messages,
+                levels,
+                self.wrap,
+                gamma,
+                self.unit,
+            )
 
         seed = [node.zeros(self.shape, self.kind) for _ in rows]
         try:
@@ -151,11 +148,6 @@ class GameBoard:
             bool(np.asarray(node.wronskian(self.record(reader), self.families[reader].plane)).any())
             for reader in readers_of(self.families, index)
         )
-
-    def resting(self, index: int, levels: np.ndarray) -> node.Record:
-        """A held row's time line laid at a rest for a booking of the start: the levels with the row's vacuum content added (the massless row's `rest`, the level it rests at everywhere, 0 on every other row), both levels alike, the remainder as it stands."""
-        level = levels + self.families[index].rest
-        return replace(self.states[index].lines[0], now=level, before=level.copy())
 
     def gate(self) -> None:
         """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's share in quanta over its declared Nodes, ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
@@ -405,3 +397,40 @@ class GameBoard:
         self.tick, self.ended = self.tick - 1, None
         while self.growths and self.growths[-1][0] == self.tick + 1:
             growth.resize(self, *self.growths.pop()[1:], -1)
+
+
+def booked_sources(
+    families: node.Families,
+    states: node.States,
+    rows: Sequence[int],
+    holders: Sequence[int],
+    walls: dict[int, int],
+    messages: dict[int, node.Record],
+    levels: Sequence[np.ndarray],
+    wrap: Wrap,
+    gamma: int,
+    unit: int,
+) -> tuple[list[Sourced], list[Sourced]]:
+    """The sources of the start at the held rows' levels given, as the hold's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `GameBoard.start` and tools/pixel_mode.py): the levels laid into the held rows' time lines of `rows` (the holders of the content then the holders of the sign, each added to the row's laid record `messages`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every family of quanta stepped once at the paces its read gives it there (`node.read`, `node.rule_of`, `node.step_family`) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`node.form`, `node.wronskian`), each held row's source the sum over its readers of their bookings at the weight they read it with (the hold's reciprocity, `readers_of`, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the signs'."""
+    for index, level in zip(rows, levels, strict=True):
+        message, laid = messages[index], level + families[index].rest
+        states[index].lines[0] = replace(message, now=message.now + laid, before=message.before + laid)
+    forms, turns = Bookings(), Bookings()
+    for index, family in enumerate(families):
+        if not family.quanta:
+            continue
+        rule = node.rule_of(
+            family, gamma, *node.read(index, families, states, 1, wrap, gamma, unit), unit
+        )
+        _lines, (first, second) = node.step_family(index, families, states, rule, wrap, gamma)
+        forms[index] = node.form(first[: family.record], second[: family.record])
+        turns[index] = node.wronskian(second[: family.record], family.plane)
+    found: list[Sourced] = []
+    for index in rows:
+        family, source = families[index], np.zeros_like(states[index].lines[0].now)
+        bookings = turns if family.wronskian else forms
+        for reader in readers_of(families, index):
+            source = source + weight_of(index, families[reader]) * bookings[reader]
+        reads = tuple((holders.index(r.family), r.weight) for r in family.reads if r.family in holders)
+        found.append((source, family.pair, walls[index], family.rest, reads))
+    return found[: len(holders)], found[len(holders) :]
