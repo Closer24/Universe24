@@ -143,6 +143,33 @@
    "1": -15655,
    "14": -252,
    "note": "the toy's engine rest times k_w's ratio 126247 / 3000 (the rest linear in its source); the far kernel 47,860, 16,298 and 1,076"
+  },
+  "least_cube": {
+   "31": {
+    "two_cos_Omega_1s": 1.329824,
+    "above_the_band_top_by": -0.00351,
+    "omega_0_minus_Omega": -0.00235,
+    "levels": -1719
+   },
+   "41": {
+    "two_cos_Omega_1s": 1.332307,
+    "above_the_band_top_by": -0.00103,
+    "omega_0_minus_Omega": -0.00069,
+    "levels": -503
+   },
+   "61": {
+    "two_cos_Omega_1s": 1.334825,
+    "above_the_band_top_by": 0.00149,
+    "omega_0_minus_Omega": 0.001,
+    "levels": 731
+   },
+   "81": {
+    "two_cos_Omega_1s": 1.33773,
+    "above_the_band_top_by": 0.0044,
+    "omega_0_minus_Omega": 0.00295,
+    "levels": 2159
+   },
+   "note": "the law's line in reals on open cubes with the engine's own rest of the sign row (the faces' images in it), the turn's exact angle and the standing condition by the power iteration: the 1s at alpha_law = 1 / 28 and a_0 = 14.46 Links stands above the band's top from between the 41-cube and the 61-cube on, and its binding against omega_0 passes the continuum's 7.13 x 10^-4 rad between the 61-cube and the 81-cube, the box's compression still raising the Coulomb gain there; the 61-cube is 227,000 Nodes, 7.6 times the 31-cube, and the 81-cube 18 times"
   }
  },
  "numbers_toy": {
@@ -272,6 +299,65 @@
  "not_tested_by_the_short_run": "the body's standing over long runs (the budget's 1 / sqrt(T) law in the standing world) and the line as a click (the giving or the absorption through a window), 163 (2) and 165",
  "from_the_lay": {
   "hydrogen_1s_large": null,
-  "hydrogen_1s_toy": null
+  "hydrogen_1s_toy": {
+   "bodies": [
+    {
+     "family": "nucleus",
+     "count": 1,
+     "carried": 1,
+     "amplitude": 4255,
+     "clock": [
+      8000,
+      6000
+     ],
+     "period": [
+      0,
+      2
+     ],
+     "lay": {
+      "kind": "one_node",
+      "declaration": "The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (examples/events/atom_gate/design.json, the nucleus; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs."
+     }
+    },
+    {
+     "family": "electron",
+     "count": 1,
+     "carried": 1,
+     "amplitude": 342,
+     "clock": [
+      55762,
+      41693
+     ],
+     "period": [
+      16,
+      2
+     ],
+     "lay": {
+      "kind": "fixed_point",
+      "stop": 2,
+      "trajectory": [
+       [
+        1,
+        14,
+        null,
+        0
+       ],
+       [
+        2,
+        0,
+        5,
+        0
+       ],
+       [
+        3,
+        0,
+        0,
+        0
+       ]
+      ]
+     }
+    }
+   ]
+  }
  }
 }

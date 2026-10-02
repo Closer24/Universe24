@@ -525,7 +525,10 @@ def standing(
             (im, im_before, im_next),
             (2 * turned_clock[0], turned_clock[1]),
         )
-        window = turned_period(board, content, angles, pairs, node_at)
+        period = turned_period(board, content, angles, pairs, node_at)
+        window = (
+            None if period is None else 2 * period
+        )  # the period is [window, 2], as the real record's
     if window is None:
         return None
     total_share = sum(

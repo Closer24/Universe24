@@ -190,8 +190,13 @@ to a fifth at 14 Links; the large world's the same shape times k_w's ratio), the
   (-1,719 levels), below the top by 3.5 x 10^-3; both BELOW the band's top 4 / 3: the 1s is held by
   the faces and not by the nucleus, a cloud by the generator's rule (the standing rotation not
   above the band's top), so the lay is expected to be refused by name and no reading of row 1
-  stands on the 31-cube; the least open cube on which the law's 1s stands above the band's top is
-  read in design.json (`least_cube`) where the scan finished;
+  stands on the 31-cube; on larger open cubes by the same line (design.json, `least_cube`): the
+  41-cube below the top by 1.0 x 10^-3 (Omega = omega_0 + 6.9 x 10^-4), the 61-cube above it by
+  1.5 x 10^-3 with omega_0 - Omega = 1.0 x 10^-3 rad (731 levels) and the 81-cube above by
+  4.4 x 10^-3 with 2.95 x 10^-3 rad (2,159 levels), the box's compression still raising the
+  Coulomb gain over the continuum's 7.13 x 10^-4 there, so the law's 1s stands from about the
+  51-cube on and reads its continuum binding only on a far larger board (the 61-cube is 7.6 times
+  the 31-cube's Nodes, the 81-cube 18 times);
 - the toy (alpha_law = 0.103, a_0 = 5.0): 2 cos Omega = 1.338208 with the engine's rest, above the
   band's top by 4.9 x 10^-3 (1.343369 with the far kernel), Omega = 0.837794, omega_0 - Omega =
   3.28 x 10^-3 rad = 19.65 levels of the row (the continuum's 5.97 x 10^-3: the box's compression
