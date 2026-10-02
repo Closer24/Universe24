@@ -47,10 +47,12 @@ their statuses.
   definitions or from the documents' rows, none from a run and none by a
   generative tool, at its final size and included at it, 1:1 (at most 119 mm
   wide, 8 pt sans-serif lettering, fonts embedded, no transparency), with an
-  EPS beside each PDF for the journal. The paper uses two: `lattice.pdf` by
+  EPS beside each PDF for the journal. The paper uses three: `lattice.pdf` and `octahedron.pdf` (the two panels
+  of Fig. 1, the GameBoard and the octahedron of the Nodes one interval away
+  with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
   `python paper/general_formula/octahedron.py` and `meeting.pdf` (the click as
   the meeting of the future with the past, schematically) by
-  `python paper/general_formula/meeting.py`. The others, `octahedron.pdf`,
+  `python paper/general_formula/meeting.py`. The others,
   `band.pdf`, `channels.pdf` (by `band_and_channels.py`) and `branches.pdf`
   (by `branches.py`), belong to the long version of the paper, which stays in
   the branch's history (commit 5adef30), and are kept for it.
