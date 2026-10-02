@@ -748,3 +748,9 @@ the line's 0.72 was the wide body's at U = 0.08) is the mathematician's hand sti
    board, where the 11-cube's re-read closed a 2-cycle in 2.3 s, and the start has no pass limit,
    so it neither refuses nor returns. A finding by name for the fix round beside the 2-cycle: the
    start's stopping rule can also fail to stop.
+
+The 25-cube lay started again (02:22 Israel) stood in its seed's rest for 32 minutes of wall time
+and 17 of CPU without a pass line, as the first hour did, and was stopped by the worker at 02:55
+Israel so that the night's report could be written; the world stands declared with one Node and the
+`lay` key and no mode file, its direct lay unread on this engine until the start's stopping rule is
+fixed (finding 5), a stop by the clock and no reading of the branch.
