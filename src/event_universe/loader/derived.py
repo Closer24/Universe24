@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import gcd
 
 from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
@@ -27,6 +27,7 @@ class Row:
     write_weight: int | None
     rest: int
     declared: tuple[tuple[str, int], ...]
+    records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
 
 
 @dataclass(frozen=True)
@@ -41,7 +42,7 @@ class Read:
 class FamilyRule(Row):
     """A family as the rule resolves it from its row (`Row`) with its reads by position: the held rows whose time line it reads at the weights its declaration names, which by the hold's reciprocity it sources at the same weights; its rest the vacuum content of the massless row holding the content, the level at which the row rests everywhere, 0 for every other row (ALGEBRA.md #what-is-open, item 22)."""
 
-    reads: tuple[Read, ...]
+    reads: tuple[Read, ...] = ()
 
     @property
     def held(self) -> bool:
@@ -61,13 +62,13 @@ class FamilyRule(Row):
 
     @property
     def width(self) -> int:
-        """The lines of one part, the lines in all over the parts: one real line, or a plane's two (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
-        return self.lines // self.parts
+        """The lines of one part of one record, the lines in all over the parts and the records: one real line, or a plane's two; a held row's time line with its axis lines (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
+        return self.lines // (self.parts * self.records)
 
     @property
     def axes(self) -> bool:
-        """Whether the row carries three axis lines beside its time line: a held row sourced by the tensions (the massless row holding the content, read into the Link's paces), or the holder of the sign under the rotation (the odd lines, the phase on the Link)."""
-        return self.held and self.lines > 1
+        """Whether the row carries three axis lines beside its time line: a held row sourced by the tensions (the massless row holding the content, read into the Link's paces), or the holder of the sign under the rotation (the odd lines, the phase on the Link), every row of it alike."""
+        return self.held and self.width > 1
 
     @property
     def record(self) -> int:
@@ -79,6 +80,54 @@ def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
     """Whether a family's record is turned: a plane that reads a holder declaring the rotation (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record); a one-part family reads no holder of the sign and is untouched, as is a plane in a universe whose holders act on the pace."""
     family = families[index]
     return family.plane and any(families[read.family].rotation for read in family.reads)
+
+
+def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
+    """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
+    return families[index].quanta and any(
+        families[read.family].wronskian for read in families[index].reads
+    )
+
+
+def row_of(families: tuple[FamilyRule, ...], index: int, record: int) -> int | None:
+    """The row of every holder of the sign that the record `record` of the family `index` owns, the one its Wronskian is written into and the one its read leaves out: the row 0 is owned by no record (the free row, the laid light's), and the charged families' records take the rows after it in the file's order; None where the family reads no holder of the sign."""
+    if not charged(families, index):
+        return None
+    return (
+        1 + sum(families[other].records for other in range(index) if charged(families, other)) + record
+    )
+
+
+def with_records(families: tuple[FamilyRule, ...], laid: Sequence[int]) -> tuple[FamilyRule, ...]:
+    """The families with the world's records: a charged family's records are its bodies (`laid`, per family its bodies in the world's order; a message of such a family, a packet and no standing record, adds into its first record), one at least, each its own lines and its own row of the sign; every holder of the sign carries one row per charged record beside the row no record owns, its lines that many times its row's lines (the time line, with its three odd lines under the rotation); every other family as the universe declares it."""
+    rows = 1 + sum(max(1, laid[index]) for index in range(len(families)) if charged(families, index))
+    found = []
+    for index, family in enumerate(families):
+        if charged(families, index):
+            records = max(1, laid[index])
+            found.append(replace(family, lines=family.width * family.parts * records, records=records))
+        elif family.wronskian:
+            found.append(replace(family, lines=family.width * rows, records=rows))
+        else:
+            found.append(family)
+    return tuple(found)
+
+
+def quanta_records(families: tuple[FamilyRule, ...], index: int) -> range:
+    """The records of quanta of a family, each read, stepped and booked at its own paces: every record of a family that reads a holder of the sign (each its own lines and its own row of the sign), the one record of every other family of quanta, a holder of the sign's one record, light, among them (its rows are rows of the sign and no records of light)."""
+    return range(1 if families[index].wronskian else families[index].records)
+
+
+def row_sources(families: tuple[FamilyRule, ...], held: int, row: int) -> list[tuple[int, int]]:
+    """The records that source one row of a held family, (reader, record) pairs (ALGEBRA.md #the-primitives, the hold's reciprocity; No record reads its own write of the sign): every record of every reader for a holder of the content, whose one row is the sum of its readers' forms; for a holder of the sign the one record that owns the row, and none for the row 0, which no record writes."""
+    sources = [
+        (reader, record)
+        for reader in readers_of(families, held)
+        for record in quanta_records(families, reader)
+    ]
+    if not families[held].wronskian:
+        return sources
+    return [(reader, record) for reader, record in sources if row_of(families, reader, record) == row]
 
 
 @dataclass(frozen=True)
@@ -113,13 +162,14 @@ def read_of(rows: Sequence[Row], index: int, name: str, weight: int) -> Read:
 
 
 def family_rules(rows: Sequence[Row]) -> tuple[FamilyRule, ...]:
-    """Every family from its row with its declared reads resolved by name (`read_of`; ALGEBRA.md #a-familys-declaration): a family reads the holders its declaration names at the weights it names, nothing is derived and nothing defaulted (a family naming no holder reads none and steps at the plain rule), and by the hold's reciprocity a family of quanta sources each holder it reads at the weight it reads with, a plane with its Wronskian and real lines with their form and their tensions; no family gives another anything."""
-    return tuple(
+    """Every family from its row with its declared reads resolved by name (`read_of`; ALGEBRA.md #a-familys-declaration): a family reads the holders its declaration names at the weights it names, nothing derived from the pair or the dimension; then the world's records (`with_records`), one record per charged family until a world lays its bodies."""
+    found = tuple(
         FamilyRule(
             **vars(row), reads=tuple(read_of(rows, index, name, weight) for name, weight in row.declared)
         )
         for index, row in enumerate(rows)
     )
+    return with_records(found, [0] * len(found))
 
 
 def energy_line(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
@@ -167,7 +217,10 @@ def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> Hel
         den = families[other].pair[1]
         multiple = int(division_forward(multiple * den, gcd(multiple, den), 0)[0])
     measure = action if family.rotation else 3 * multiple * action
-    walls = [family.level_weight * action] + [family.level_weight * measure] * (family.lines - 1)
+    row = [family.level_weight * action] + [family.level_weight * measure] * (family.width - 1)
+    walls = (
+        row * family.records
+    )  # one wall per line of every row, the rows of a holder of the sign alike
     factors = {
         other: 1 if family.rotation else int(division_forward(multiple, families[other].pair[1], 0)[0])
         for other in sources
@@ -215,7 +268,7 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite, 
         * (AXIS_PORTS if family.rotation else abs(families[other].pair[0]))
         for other in sources
     )
-    return [abs(family.write) * room for room in [time] + [axis] * (family.lines - 1)]
+    return [abs(family.write) * room for room in ([time] + [axis] * (family.width - 1)) * family.records]
 
 
 def amplitude_bound(

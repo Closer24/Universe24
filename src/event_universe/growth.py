@@ -47,7 +47,7 @@ def reached(
     layer = -1 if side > 0 else 0
     for family, state in zip(families, states, strict=True):
         arrays = [
-            level - (family.rest if number == 0 else 0)
+            level - (family.rest if number % family.width == 0 else 0)
             for number, record in enumerate(state.lines)
             for level in (record.now, record.before)
         ]
@@ -72,16 +72,16 @@ def resized(
     direction: int,
     kind: type,
 ) -> None:
-    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line, the first, at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
+    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
 
     def grown(a: Any, value: int = 0) -> Any:
         return sized(a, axis, side, layers, direction, value)
 
     state.lines = [
         node.Record(
-            grown(record.now, family.rest if number == 0 else 0),
-            grown(record.before, family.rest if number == 0 else 0),
-            grown(record.remainder, origin if number == 0 else 0),
+            grown(record.now, family.rest if number % family.width == 0 else 0),
+            grown(record.before, family.rest if number % family.width == 0 else 0),
+            grown(record.remainder, origin if number % family.width == 0 else 0),
         )
         for number, record in enumerate(state.lines)
     ]

@@ -190,7 +190,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
-    assert sorted(len(s.lines) for s in board.states) == [1, 1, 1, 2, 4]
+    assert sorted(len(s.lines) for s in board.states) == [1, 1, 2, 2, 4]  # the sign: 2 rows
     calls, original = [], core.rule3
 
     def counting(*args):  # type: ignore[no-untyped-def]

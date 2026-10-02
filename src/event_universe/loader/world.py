@@ -273,6 +273,10 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     regions_of_the_law(detectors, messages, shape, (periodic[0], periodic[1], periodic[2]), families)
     laid = [message.family for message in messages] + [body.family for body in bodies]
     patterns_of_the_law([(d.name, d.pattern) for d in detectors], laid, families)
+    # the world's records: a charged family's bodies each a record owning one row of the sign, every
+    # holder of the sign one row per charged record beside the free row (derived.with_records)
+    counted = [body.family for body in bodies]
+    families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
     return World(
         shape,

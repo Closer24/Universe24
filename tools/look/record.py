@@ -114,11 +114,13 @@ def frame(board: GameBoard, kept: dict[int, list[node.Record]] | None) -> dict[s
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         row: dict[str, object]
         if family.quanta:
-            row = {"now": state.lines[0].now, "count": board.quanta(index)[0]}
-            if len(state.lines) > 1:
-                row["second"] = state.lines[1].now
+            lines = board.record(index)  # light the sum of the sign holder's rows, a record its lines
+            row = {"now": lines[0].now, "count": board.quanta(index)[0]}
+            if family.plane:
+                row["second"] = lines[1].now
             if kept is not None:
-                row["form"] = node.form(kept[index], state.lines)
+                began = [node.light_record(family, kept[index])] if family.wronskian else kept[index]
+                row["form"] = node.form(began, lines)
             row["pace"] = node.least_pace(
                 index, board.families, board.states, world.node_clock, board.wrap, world.link_unit
             )
