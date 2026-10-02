@@ -190,4 +190,3 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert BACK.first_difference(loaded, BACK.snapshot(board)) is None and board.tick == 0, n
     readings = {n: DRIFT.drift(gated[n], None) for n in lawful}
     assert {reading["intervals"] for reading in readings.values()} == {expected["window"][1]}
-    print(f"GAMEBOARD the look, the changes: {[(n, DRIFT.change_of(r)) for n, r in readings.items()]}")

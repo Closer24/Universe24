@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 
 import event_universe.world_files as world_files
-from event_universe import growth, node, share
+from event_universe import credit, growth, node, share
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, link_factor, rule3
@@ -44,31 +44,44 @@ def by_hand(a: np.ndarray, node: tuple[int, int, int]) -> tuple[int, ...]:
 
 
 def within_the_reach(board: GameBoard, index: int) -> tuple[int, Fraction]:
-    growth.grow(board)  # one step of the GameBoard, its receding faces read first as the step reads them
+    """One step of the GameBoard: the share identity (ALGEBRA.md S.6) on the stepped levels before the click's write, within the floors, and the write outside it, the share form's change local to the holed Nodes and their six neighbours and exact, as the write stands outside the reversal (the advisor's line, #1563 comment 5954101082)."""
+    growth.grow(board)  # the receding faces read first, as the step reads them
     family, state = board.families[index], board.states[index]
     gamma, unit = board.world.node_clock, board.unit
     content, factors = node.read(index, board.families, board.states, 1, board.wrap, gamma, unit)
     squares = np.asarray(paces.link_pace_of(gamma, content)).astype(object) ** 2
 
-    def at_the_paces(pairs: tuple[node.Record, ...]) -> int:  # the share at the start's paces
-        found = share.family_share(family, pairs, board.wrap, gamma, content, factors, unit)
-        return int(found.sum(dtype=object))
+    def shares(pairs: tuple[node.Record, ...]) -> np.ndarray:  # the share form per Node
+        return share.family_share(family, pairs, board.wrap, gamma, content, factors, unit).astype(
+            object
+        )
 
-    start = at_the_paces(records := tuple(state.lines))
+    start = int(shares(records := tuple(state.lines)).sum())
     flow = [np.asarray(current, dtype=object) for current in board.currents()[index]]
     net = int(sum(current.sum() for current in flow))
     skew = [(np.asarray(q).astype(object) - unit * unit) * c for q, c in zip(factors, flow, strict=True)]
     terms = sum(Fraction(int(n), unit * unit) for found in skew for n in found.ravel())
-    board.step()
-    fixed = at_the_paces(after := tuple(state.lines))
-    for begun, stepped in zip(records, after, strict=True):  # Rule3's remainder term per line
-        moved = stepped.now.astype(object) - begun.before.astype(object)  # next - before
-        carried = stepped.remainder.astype(object) - begun.remainder.astype(object)  # r' - r
-        pairs = zip((moved * carried).ravel(), squares.ravel(), strict=True)
+    stepped: list[tuple[node.Record, ...]] = []  # the lines after the hold, before the click's write
+    swapped = credit.windowed
+    credit.windowed = lambda b: (stepped.append(tuple(state.lines)), swapped(b))
+    try:
+        board.step()
+    finally:
+        credit.windowed = swapped
+    fixed, after = int(shares(stepped[0]).sum()), tuple(state.lines)
+    for begun, moved in zip(records, stepped[0], strict=True):  # Rule3's remainder term per line
+        next_level = moved.now.astype(object) - begun.before.astype(object)  # next - before
+        carried = moved.remainder.astype(object) - begun.remainder.astype(object)  # r' - r
+        pairs = zip((next_level * carried).ravel(), squares.ravel(), strict=True)
         terms += sum(Fraction(-int(n), 2 * int(d) * unit * unit) for n, d in pairs)
     floors = len(records) * records[0].now.size  # the division act's floor, under one unit per Node
     assert abs(Fraction(fixed - start - net) - terms) < floors, (fixed - start - net, terms, floors)
-    return board.total_share(index)[0] - fixed, abs(terms) + floors  # type: ignore[operator]
+    delta, holed = shares(after) - shares(stepped[0]), np.zeros(board.shape, dtype=bool)
+    for a, b in zip(stepped[0], after, strict=True):  # the holed Nodes
+        holed |= (a.now != b.now) | (a.before != b.before) | (a.remainder != b.remainder)
+    near = holed | np.logical_or.reduce([p != 0 for p in node.ports(holed.astype(np.int64), board.wrap)])
+    assert not delta[~near].any() and fixed + int(delta[near].sum()) == int(shares(after).sum())
+    return board.total_share(index)[0] - fixed - int(delta.sum()), abs(terms) + floors  # type: ignore[operator]
 
 
 def test_one_nodes_acts_are_rule3_called_by_hand():
@@ -254,11 +267,15 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     assert max(swings) <= size and tension != 0 and board.books()[family.name]["pace"] > 0
     assert taken and all(e["event"] == "click" and e["inflow"] != 0 for e in taken)  # signed, never 0
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    for name in ("bell/bell_a_b", "ghz/ghz_x_y_y"):  # the gates' committed worlds
-        laid = (board := GameBoard(load_world(EVENTS / f"{name}.json"))).world.messages[0].family
+    for name in ("bell/bell_a_b", "ghz/ghz_x_y_y"):  # the gates' worlds, the click at the window's end
+        board = GameBoard(load_world(EVENTS / f"{name}.json"), (lines := []).append)
+        laid = board.world.messages[0].family
+        left = board.credit.counts[laid] - 1  # the credit's count after the one click of the window
         steps = [within_the_reach(board, laid) for _ in range(board.world.ticks)]
         books, slack = board.books()[board.families[laid].name], sum(b + abs(m) for m, b in steps)
         assert books["drift"] is not None and abs(books["drift"]) <= slack
+        lefts = [e["left"] for e in lines if e["event"] == "credit"]  # one write per side, one count
+        assert lefts == [left] * len(board.credit.sides) and board.credit.counts[laid] == left
 
 
 def difference(a: np.ndarray, axis: int) -> np.ndarray:

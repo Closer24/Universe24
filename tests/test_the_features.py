@@ -12,13 +12,7 @@ from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.features.hold import hold
-from event_universe.features.read import (
-    content_of,
-    edge_squared,
-    guard,
-    link_tension,
-    stability_bound,
-)
+from event_universe.features.read import content_of, edge_squared, guard, link_tension, stability_bound
 from event_universe.features.start import arrivals, read_content, rest, scaled_source
 from event_universe.features.write import carried
 from event_universe.loader.derived import held_write, readers_of, weight_of
@@ -175,10 +169,11 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     for i in (stuff, other):
         own = node.rule_of(families[i], GAMMA, *read[i])
         _lines, (first, second) = node.step_family(i, families, states, own, wrap, GAMMA)
-        forms[i], rulers[i] = node.form(first, second), node.rulers(i, families, states, 1, wrap, GAMMA)
+        forms[i, 0] = node.form(first, second)  # the bookings per record, (family, record)
+        rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
     for held, reader, weights in ((hollow, stuff, 3 * 2), (core, other, -1 * 1)):
         numerators = node.write_sources(held, families, forms, {}, writes[held], rulers, GAMMA)
-        by_hand = weights * node.written(forms[reader], rulers[reader], GAMMA, 2)
+        by_hand = weights * node.written(forms[reader, 0], rulers[reader, 0], GAMMA, 2)
         assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand) and (by_hand < 0).any()
         before, wall = states[held].lines[0], writes[held].walls[0]
         remainder = [draw.integers(0, wall, SHAPE)]

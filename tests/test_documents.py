@@ -35,8 +35,7 @@ def test_every_heading_is_in_sentence_case_and_no_name_is_written_in_capitals():
     heads = [(at, line) for at, line in lines if re.match(r"#+\s", line)]
     headings = [f"{at}: {line}" for at, line in heads if not HEADING.match(line.lstrip("#").strip())]
     assert not headings, headings
-    loud = [f"{at}: {run}" for at, line in lines for run in shouting(line)]
-    texts = []
+    loud, texts = [f"{at}: {run}" for at, line in lines for run in shouting(line)], []
     for path in CODE:  # every comment and string literal of the file, its docstrings among them
         source = path.read_text(encoding="utf-8")
         nodes = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Constant)]
