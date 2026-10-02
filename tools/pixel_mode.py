@@ -157,6 +157,11 @@ def on_the_board(board: Board) -> np.ndarray:
     return np.ones(board.shape, dtype=bool) if board.wrap.beyond is None else ~board.wrap.beyond
 
 
+def own_board(board: Board, others: np.ndarray) -> np.ndarray:
+    """The board as declared less the other bodies' regions (their Nodes carrying a quantum and a Link around them, `others` their counts): the region a body's top mode is iterated on and its record written over. The power iteration finds the top mode of the read in the whole content, which sits in the deepest well; a second body laid in the first's sources needs its own mode, the top mode outside the first's region (laid on the whole board the second body's scale ran away to carry its quanta within its own region, its form collapsing the rest; the look's chain of two bodies, 2026-10-02); the bodies' regions never share a Node, and a body's mode is small at the other's region, so the cut costs it little."""
+    return np.asarray(on_the_board(board) & ~dilated(others > 0, board.wrap), dtype=bool)
+
+
 def dilated(mask: np.ndarray, wrap: Wrap) -> np.ndarray:
     """The mask and its six-neighbour surroundings (the wrap on a periodic axis, nothing beyond a face)."""
     grown = mask.copy()
@@ -229,10 +234,15 @@ def top_mode(
 
 
 def standing(
-    board: Board, content: np.ndarray, node: Axis, shape_seed: np.ndarray, scale: int, region: np.ndarray
+    board: Board,
+    content: np.ndarray,
+    node: Axis,
+    shape_seed: np.ndarray,
+    scale: int,
+    region: np.ndarray,
+    keep: np.ndarray,
 ) -> Standing | None:
-    """The standing record of the body in a content: the top mode of Rule3's read act on the board as declared (`top_mode` over `on_the_board`, the power iteration from the body's shape, scaled to `scale` at its largest level; a bound mode's eigenvalue stands above the band's top, so the iteration on the whole board finds it and no cut is needed), laid at its peak, the level before and the level next alike at half the mode's read (next + before = 2 cos omega x now at every Node of a standing record, so before = next = the read div 2 at the peak), the clock pair [the read, now] at the centre, the period read by Rule3 from that record (`period_reading`, the length from the centre's return upward through 0 to the next, the window twice it) and the share in quanta the record carries over the region at the paces of the content; None, no record, where the mode departs from one rotation across the region by more than the roundings of a step at a Node (`rotation_spread`, `ROUNDINGS_OF_A_STEP`: the mode is no eigenvector of the read in this content within the integers' rounding, a cloud's or a trapped iteration's), where the mode is 0 at the centre or where the centre's level never returns (a cloud, no period). The read act with the before-coefficient 0 is Rule3's own and the step a <- read - before keeps the record: a record stepped from this lay rotates at the mode's clock within the rounding."""
-    keep = on_the_board(board)
+    """The standing record of the body in a content: the top mode of Rule3's read act over `keep`, the board as declared outside the other bodies' regions (`own_board`; the power iteration from the body's shape, scaled to `scale` at its largest level; a bound mode's eigenvalue stands above the band's top, so the iteration on the board finds it, and the other bodies' regions are left out so that it is this body's mode and not the deeper well's), laid at its peak, the level before and the level next alike at half the mode's read (next + before = 2 cos omega x now at every Node of a standing record, so before = next = the read div 2 at the peak), the clock pair [the read, now] at the centre, the period read by Rule3 from that record (`period_reading`, the length from the centre's return upward through 0 to the next, the window twice it) and the share in quanta the record carries over the region at the paces of the content; None, no record, where the mode departs from one rotation across the region by more than the roundings of a step at a Node (`rotation_spread`, `ROUNDINGS_OF_A_STEP`: the mode is no eigenvector of the read in this content within the integers' rounding, a cloud's or a trapped iteration's), where the mode is 0 at the centre or where the centre's level never returns (a cloud, no period). The read act with the before-coefficient 0 is Rule3's own and the step a <- read - before keeps the record: a record stepped from this lay rotates at the mode's clock within the rounding."""
     now, total = top_mode(board, content, keep, shape_seed, scale)
     if not now[node]:
         return None
@@ -427,13 +437,14 @@ def scaled_record(
     region: np.ndarray,
     quanta: int,
     centre_count: int,
+    keep: np.ndarray,
 ) -> Standing:
     """The standing record scaled so its form over the region carries the body's quanta: the scale bracketed from the centre's own count (the form there is its count times T) by halving and doubling, a scale too large to stand halved back toward the last that stood, then bisected; the reading closest to the quanta; refused by name when no reading stands."""
     readings: dict[int, Standing] = {}
 
     def read(scale: int) -> Standing | None:
         if scale not in readings:
-            record = standing(board, content, centre, own, scale, region)
+            record = standing(board, content, centre, own, scale, region, keep)
             if record is None:
                 return None
             readings[scale] = record
@@ -478,12 +489,13 @@ def body_fixed_point(
     first: np.ndarray,
     sense: int = 0,
 ) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray, Pairs]:
-    """The body is the joint fixed point of its record and its content: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the record laid as the engine lays it (its level pair over the board as declared, `on_the_board`; with a sense its second pair the record a quarter period on, `rotating`, so that the holder of the sign rests inside the iteration and not after it), then the engine's own start on that lay (`start_content`: every held row at the rest its form and Wronskian return, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the record stands in next, and the counts the record's share in quanta at that content over the region; repeated until the content returns itself by the start's own rule (`returned`: the fixed point, or an earlier content one unit per division act composed at most, the record's scale, the booking's and the rest's, a rounding tie; a return further off a cycle, refused by name, the law's own answer at this count and sense and no defect) and the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record standing in the content returned, the region, the content and the laid level pairs, all of one round; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's and the content's together."""
+    """The body is the joint fixed point of its record and its content: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the record laid as the engine lays it (its level pair over the board as declared outside the other bodies' regions, `own_board`; with a sense its second pair the record a quarter period on, `rotating`, so that the holder of the sign rests inside the iteration and not after it), then the engine's own start on that lay (`start_content`: every held row at the rest its form and Wronskian return, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the record stands in next, and the counts the record's share in quanta at that content over the region; repeated until the content returns itself by the start's own rule (`returned`: the fixed point, or an earlier content one unit per division act composed at most, the record's scale, the booking's and the rest's, a rounding tie; a return further off a cycle, refused by name, the law's own answer at this count and sense and no defect) and the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record standing in the content returned, the region, the content and the laid level pairs, all of one round; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's and the content's together."""
     counts = first.copy()
     num, den = board.pair
     seen: dict[bytes, int] = {}
     name = f"the lay and the rest of the body of {quanta} quanta about the Node {list(centre)}"
     content = rests(rows, others[0] + counts, board)  # the seed, the first pass alone
+    keep = own_board(board, others[0])
     for round_number in range(1, 1 << 16):
         if int(content.max()) >= paces.frozen_content(board.gamma):
             raise ValueError(
@@ -494,7 +506,7 @@ def body_fixed_point(
             )
         region = region_of(counts, content, centre, board.wrap)
         own = np.where(region, content, 0)  # the shape of the seed: the well over the body's region
-        record = scaled_record(board, content, centre, own, region, quanta, int(counts[centre]))
+        record = scaled_record(board, content, centre, own, region, quanta, int(counts[centre]), keep)
         a, level = record.clock
         if not (2 * num * level < a * den < 2 * level * den):
             raise ValueError(
@@ -502,7 +514,6 @@ def body_fixed_point(
                 f"[{a}, {level}], not above the band's top 2 x {num} / {den} and below 2; its quanta are below its "
                 "binding row's window of mass (ALGEBRA.md #the-generator)"
             )
-        keep = on_the_board(board)
         pairs: Pairs = [(np.where(keep, record.now, 0), np.where(keep, record.before, 0))]
         if sense:
             levels = rotating(board, content, record, keep, sense)
