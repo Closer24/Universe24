@@ -2,6 +2,7 @@
 
 import json
 import math
+import shutil
 from itertools import product
 
 import numpy as np
@@ -19,7 +20,6 @@ from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
 
 DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")
-BUILD = load_file("like_build", EVENTS / "like_or_unlike" / "build_world.py")
 LOOK, GAMMA, PAIR, RING = EVENTS / "like_or_unlike", 6000, (4000, 6000), Wrap(True, True, True)
 INTEGERS, TURNING = universe_of(json.loads((LOOK / "turning.json").read_text(encoding="utf-8")))
 T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]  # the rule's rows, the plane
@@ -163,8 +163,10 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     for gate in (json.loads((EVENTS / f"{n}.json").read_bytes()) for n in ("light", "pair")):
         assert not any("act" in row.get("held", {}) for row in gate["families"])
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])  # the repository's worlds
-    BUILD.main(["--folder", str(tmp_path)])
-    assert (tmp_path / "expectation.json").read_bytes() == (LOOK / "expectation.json").read_bytes()
+    for folder in (LOOK, *(p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md")))):
+        build, out = load_file(f"{folder.name}_build", folder / "build_world.py"), tmp_path / folder.name
+        build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
+        assert (out / "expectation.json").read_bytes() == (folder / "expectation.json").read_bytes()
     expected = json.loads((LOOK / "expectation.json").read_text(encoding="utf-8"))
     charged = [name for name in expected["worlds"] if "uncharged" not in name]
     for name in charged:  # declared without a mode file, refused at load by name
