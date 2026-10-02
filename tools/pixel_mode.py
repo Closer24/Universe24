@@ -5,8 +5,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
+from fractions import Fraction
 from math import lcm
 from pathlib import Path
 from typing import Any, cast
@@ -14,6 +16,7 @@ from typing import Any, cast
 import numpy as np
 
 from event_universe.core import paces
+from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import (
     NO_READ,
@@ -22,7 +25,13 @@ from event_universe.core.rule3 import (
     division_forward,
     rule3,
 )
-from event_universe.features.start import RestCollapses, Sourced, held_rests, settled_rows
+from event_universe.features.start import (
+    RestCollapses,
+    Sourced,
+    held_rests,
+    returned,
+    settled_rows,
+)
 from event_universe.game_board import booked_sources
 from event_universe.loader.derived import FamilyRule, held_write
 from event_universe.loader.faces import faces_of
@@ -152,17 +161,32 @@ def dilated(mask: np.ndarray, wrap: Wrap) -> np.ndarray:
     return grown
 
 
-def purged(keep: np.ndarray, now: np.ndarray, before: np.ndarray) -> list[np.ndarray]:
-    """The purge: the record re-seeded from itself at the peak phase within `keep`, 0 elsewhere, the remainders 0: the waste of a reflecting board left behind (Cheshbon's line of 2026-09-28, 18:05 Israel)."""
-    return [np.where(keep, now, 0), np.where(keep, before, 0), np.zeros(now.shape, dtype=np.int64)]
+ROUNDINGS_OF_A_STEP = (
+    1 + 1 + 1 + 1
+)  # the acts composed in next + before - clock x now: now, before, next, the clock's level
+
+
+def rotation_spread(
+    now: np.ndarray, before: np.ndarray, nxt: np.ndarray, where: np.ndarray
+) -> tuple[Fraction, int, Fraction]:
+    """The one-step reading of a record in a content: the rotation (next + before) / now at every Node of `where` carrying a level, its median (the mode's clock as the body reads it), the number of Nodes read and the largest departure from the median in units of the Node's rounding 1 / |now|: next + before - clock x now is made of integers each rounded once, the two laid levels by the generator's scale act, next by the step's own act and the clock's level at the median's Node, so a record standing in the content departs at most one unit per act composed, `ROUNDINGS_OF_A_STEP`, at every Node (the power iteration's own integer fixed point at the pixel's amplitude departs up to 4.6 units in the rule's seed well, a GameBoard reading of 2026-10-02), and a record departing further is no mode of the step in that content."""
+    read = where & (now != 0)
+    sums, levels = (nxt + before)[read].tolist(), now[read].tolist()
+    ratios = sorted(Fraction(int(s), int(level)) for s, level in zip(sums, levels, strict=True))
+    if not ratios:
+        return Fraction(0), 0, Fraction(0)
+    median = ratios[len(ratios) // 2]
+    worst = max(
+        abs(Fraction(int(s), int(level)) - median) * abs(int(level))
+        for s, level in zip(sums, levels, strict=True)
+    )
+    return median, len(ratios), worst
 
 
 def top_mode(
     board: Board, content: np.ndarray, keep: np.ndarray, seed: np.ndarray, unit: int
-) -> np.ndarray:
-    """The iteration of the generator (ALGEBRA.md #the-generator (b)): Rule3's read act with the before-coefficient 0, a <- (SUM over the Ports of R_ij arr_j + S a) div w within the body's region and 0 outside it, then the division act to the amplitude unit (the level times the unit over its largest size): the power iteration of the symmetric form's top mode, the body's bound mode; the stop is the first repeat of the integer vector, exact, no tolerance."""
-    a = np.where(keep, seed, 0).astype(np.int64)
-    seen: set[bytes] = set()
+) -> tuple[np.ndarray, np.ndarray]:
+    """The iteration of the generator (ALGEBRA.md #the-generator (b)): Rule3's read act with the before-coefficient 0, a <- (SUM over the Ports of R_ij arr_j + S a) div w within the body's region and 0 outside it, then the division act to a fine unit (the level times the unit over its largest size): the power iteration of the symmetric form's top mode, the body's bound mode; the stop is the first repeat of the integer vector, exact, no tolerance. The fine unit is derived from the width and never written, the largest at which the read of a level stays inside the host's width (`MAX_WORK_INT` over twice the sum of the coefficients at a Node, as the start derives its own, `features.start.unit_of`), so that the rounding trap of the iteration is far below the amplitude's rounding; the mode is then rounded once to the amplitude `unit` by the division act and read once more: returns the mode at the amplitude and its read, (SUM over the Ports of R_ij arr_j + S a) div w, the mode times its rotation 2 cos omega within the step's one act."""
     reads, self_coefficient, wall = coefficients(
         board.pair[0],
         board.pair[1],
@@ -171,79 +195,67 @@ def top_mode(
         None,
         board.unit,
     )
-    while True:
+    reach = int((np.abs(np.asarray(self_coefficient)) + sum(np.asarray(read) for read in reads)).max())
+    fine = max(unit, int(division_forward(MAX_WORK_INT, 2 * reach, 0)[0]))
+
+    def read_of(a: np.ndarray) -> np.ndarray:
         total = np.asarray(rule3(reads, ports(a, board.wrap), self_coefficient, wall, a, 0, 0)[0])
-        total = np.where(keep, total, 0).astype(np.int64)
+        return np.where(keep, total, 0).astype(np.int64)
+
+    def scaled(total: np.ndarray, to: int) -> np.ndarray:
         largest = int(np.abs(total).max())
         if largest == 0:
-            return a
-        a = np.asarray(division_forward(total * unit, largest, 0)[0], dtype=np.int64)
+            return total
+        return np.asarray(division_forward(total * to, largest, 0)[0], dtype=np.int64)
+
+    a = scaled(np.where(keep, seed, 0).astype(np.int64), fine)
+    seen: set[bytes] = set()
+    while True:
+        total = read_of(a)
+        if not total.any():
+            break
+        a = scaled(total, fine)
         key = digest(a)
         if key in seen:
-            return a
+            break
         seen.add(key)
+    a = scaled(a, unit)
+    return a, read_of(a)
 
 
 def standing(
     board: Board, content: np.ndarray, node: Axis, shape_seed: np.ndarray, scale: int, region: np.ndarray
 ) -> Standing | None:
-    """Rule3 from the seed until the reading at the centre stands: the record seeded at both levels with the body's shape scaled to `scale` at the centre, read whole period by whole period at the centre until two consecutive periods agree (the same length within one interval, the amplitude within its rounding, the form over the region within its rounding); the purge keeps the record within the region and a Link around it after a span of periods, the span doubled at every purge; None when a purged record repeats, the fixed point's own stop."""
+    """The standing record of the body in a content: the top mode of Rule3's read act within the region and a Link around it (`top_mode`, the power iteration from the body's shape, scaled to `scale` at its largest level), laid at its peak, the level before and the level next alike at half the mode's read (next + before = 2 cos omega x now at every Node of a standing record, so before = next = the read div 2 at the peak), the clock pair [the read, now] at the centre, the period read by Rule3 from that record (`period_reading`, the length from the centre's return upward through 0 to the next, the window twice it) and the share in quanta the record carries over the region at the paces of the content; None, no record, where the mode departs from one rotation across the region by more than the roundings of a step at a Node (`rotation_spread`, `ROUNDINGS_OF_A_STEP`: the mode is no eigenvector of the read in this content within the integers' rounding, a cloud's or a trapped iteration's), where the mode is 0 at the centre or where the centre's level never returns (a cloud, no period). The read act with the before-coefficient 0 is Rule3's own and the step a <- read - before keeps the record: a record stepped from this lay rotates at the mode's clock within the rounding."""
     keep = dilated(region, board.wrap)
-    now = top_mode(board, content, keep, shape_seed, scale)
+    now, total = top_mode(board, content, keep, shape_seed, scale)
     if not now[node]:
         return None
-    state = [now.copy(), now.copy(), np.zeros(board.shape, dtype=np.int64)]
-    previous: tuple[int, int, int, tuple[int, int], np.ndarray, np.ndarray, np.ndarray] | None = None
-    purges: set[bytes] = set()
-    read, span = 0, 1
-    while True:
-        reading = period_reading(board, content, node, state)
-        if reading is None:
-            return None
-        length, largest, pair, now_at, before_at, next_at = reading
-        carried = int(
-            np.where(
-                region,
-                read_quanta(share_of(board, content, now_at, before_at), board.pair[1], board.action),
-                0,
-            ).sum()
-        )
-        if previous is not None:
-            length_before, carried_before, largest_before, pair_before, now_b, before_b, next_b = (
-                previous
-            )
-            if (
-                abs(length - length_before) <= 1
-                and agree(carried, carried_before)
-                and abs(largest - largest_before)
-                <= division_fixed_point(max(largest, largest_before)) + 1
-            ):
-                a, level = pair if largest >= largest_before else pair_before
-                now_at, before_at, next_at = (
-                    (now_at, before_at, next_at)
-                    if largest >= largest_before
-                    else (now_b, before_b, next_b)
-                )
-                if level < 0:
-                    a, level, now_at, before_at, next_at = -a, -level, -now_at, -before_at, -next_at
-                return Standing(
-                    max(carried, carried_before),
-                    length + length_before,
-                    max(largest, largest_before),
-                    (a, level),
-                    now_at,
-                    before_at,
-                    next_at,
-                )
-        previous = (length, carried, largest, pair, now_at, before_at, next_at)
-        read += 1
-        if read == span:  # the purge after a span of periods, the span doubled at each purge
-            state[:] = purged(keep, now_at, before_at)
-            key = digest(state[0], state[1])
-            if key in purges:
-                return None
-            purges.add(key)
-            previous, read, span = None, 0, 2 * span
+    if now[node] < 0:
+        now, total = -now, -total
+    if rotation_spread(now, np.zeros_like(now), total, region)[2] > ROUNDINGS_OF_A_STEP:
+        return None
+    before = np.asarray(division_forward(total, 2, 0)[0], dtype=np.int64)
+    nxt = total - before
+    carried = int(
+        np.where(
+            region, read_quanta(share_of(board, content, now, before), board.pair[1], board.action), 0
+        ).sum()
+    )
+    reading = period_reading(
+        board, content, node, [now.copy(), before.copy(), np.zeros(board.shape, dtype=np.int64)]
+    )
+    if reading is None:
+        return None
+    return Standing(
+        carried,
+        2 * reading[0],
+        int(np.abs(now).max()),
+        (int(total[node]), int(now[node])),
+        now,
+        before,
+        nxt,
+    )
 
 
 def rows_read(
@@ -427,8 +439,8 @@ def scaled_record(
         if record is None:
             raise ValueError(
                 f"the record of the body of {quanta} quanta about the Node {list(centre)} scaled at {scale} "
-                "does not stand: a purged record repeats before two consecutive whole periods of its reading "
-                "at its centre agree (the generator is Rule3)"
+                "does not stand: the top mode of the read in this content is no one rotation across the region "
+                "within the roundings of a step, or its centre's level never returns (the generator is Rule3)"
             )
         return record
 
@@ -459,14 +471,15 @@ def body_fixed_point(
     centre: Axis,
     quanta: int,
     first: np.ndarray,
-) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray]:
-    """The body is the fixed point of its binding row: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, then the engine's own start on that record (`start_content`: every held row at the rest its form returns, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the next record stands in, and the counts the record's share in quanta at that content over the region; repeated until the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record, the region and the content of the start under that record; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's."""
+    sense: int = 0,
+) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray, Pairs]:
+    """The body is the joint fixed point of its record and its content: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the record laid as the engine lays it (its level pair within the region and a Link around it; with a sense its second pair the record a quarter period on, `rotating`, so that the holder of the sign rests inside the iteration and not after it), then the engine's own start on that lay (`start_content`: every held row at the rest its form and Wronskian return, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the record stands in next, and the counts the record's share in quanta at that content over the region; repeated until the content returns itself by the start's own rule (`returned`: the fixed point, or an earlier content one unit per division act composed at most, the record's scale, the booking's and the rest's, a rounding tie; a return further off a cycle, refused by name, the law's own answer at this count and sense and no defect) and the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record standing in the content returned, the region, the content and the laid level pairs, all of one round; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's and the content's together."""
     counts = first.copy()
     num, den = board.pair
-    rounds: set[bytes] = set()
+    seen: dict[bytes, int] = {}
+    name = f"the lay and the rest of the body of {quanta} quanta about the Node {list(centre)}"
     content = rests(rows, others[0] + counts, board)  # the seed, the first pass alone
-    while (key := counts.tobytes()) not in rounds:
-        rounds.add(key)
+    for round_number in range(1, 1 << 16):
         if int(content.max()) >= paces.frozen_content(board.gamma):
             raise ValueError(
                 f"the body of {quanta} quanta about the Node {list(centre)} collapses: its wells reach the pace 0 "
@@ -484,28 +497,62 @@ def body_fixed_point(
                 f"[{a}, {level}], not above the band's top 2 x {num} / {den} and below 2; its quanta are below its "
                 "binding row's window of mass (ALGEBRA.md #the-generator)"
             )
-        content = start_content(board, families, index, [(record.now, record.before)], others[1])
-        laid = np.where(
-            region,
-            read_quanta(share_of(board, content, record.now, record.before), den, board.action),
-            0,
+        keep = dilated(region, board.wrap)
+        pairs: Pairs = [(np.where(keep, record.now, 0), np.where(keep, record.before, 0))]
+        if sense:
+            levels = rotating(board, content, record, keep, sense)
+            pairs = [(levels[0], levels[1]), (levels[2], levels[3])]
+        found = start_content(board, families, index, pairs, others[1])
+        zero = np.zeros(board.shape, dtype=np.int64)
+        total = sum((share_of(board, found, now, before) for now, before in pairs), zero)
+        laid = np.where(region, read_quanta(total, den, board.action), 0)
+        agreed = bool(np.all(within(laid - counts, np.maximum(laid, counts))))
+        print(
+            f"GAMEBOARD the body about {list(centre)}, round {round_number}: the content at the centre "
+            f"{int(content[centre])} -> {int(found[centre])}, the count {int(counts[centre])} -> {int(laid[centre])} "
+            f"of {int(laid.sum())}, the clock [{a}, {level}] = {a / level:.4f}",
+            file=sys.stderr,
+            flush=True,
         )
-        if bool(np.all(within(laid - counts, np.maximum(laid, counts)))):
-            return laid, record, region, content
+        if returned([found], [content], seen, name, 1 + 1 + 1) and agreed:
+            return laid, record, region, found, pairs
         counts = (counts + laid) // 2  # the half step: the deep well overshoots under the whole step
-    raise ValueError(
-        f"the body of {quanta} quanta about the Node {list(centre)} finds no fixed point: its counts repeat before they and its form return each other within the rounding (the generator is Rule3)"
-    )
+        content = found
+    raise ValueError(f"{name} finds no fixed point within {1 << 16} rounds")
 
 
-def declared(body: dict[str, Any], shape: Axis) -> tuple[np.ndarray, Axis, int]:
-    """A body's first lay from the world: its counts at its declared Nodes, its centre (the Node of its largest count) and its quanta (the sum)."""
+def declared(
+    body: dict[str, Any], shape: Axis, quanta: int | None = None
+) -> tuple[np.ndarray, Axis, int]:
+    """A body's first lay from the world: its counts at its declared Nodes, its centre (the Node of its largest count) and its quanta: the sum of the declared counts for a new body, one Node carrying its quanta, and for a body laid before (declared on its Nodes) the design's count where it is given (`quanta`, the input of every re-lay: the declared Nodes' counts are the engine's reading of the lay before, the output, and never the input)."""
     counts = np.zeros(shape, dtype=np.int64)
     for entry in cast(list[dict[str, Any]], body["nodes"]):
         node = (int(entry["node"][0]), int(entry["node"][1]), int(entry["node"][2]))
         counts[node] += int(entry["count"])
     centre = tuple(int(index) for index in np.unravel_index(int(counts.argmax()), shape))
-    return counts, (centre[0], centre[1], centre[2]), int(counts.sum())
+    return (
+        counts,
+        (centre[0], centre[1], centre[2]),
+        int(counts.sum()) if quanta is None or int(np.count_nonzero(counts)) <= 1 else int(quanta),
+    )
+
+
+def designed_quanta(world: Path, bodies: int) -> list[int | None]:
+    """The design's count of every body of a world file, the input of a re-lay: the folder's design file (`design.json` beside the world, its world's entry `quanta` or the design's own `quanta`, one count for every body of the world), else the mode file beside the world (`<world>.mode.json`, each body's `count`, the first lay's design), else none (the world's declared counts sum to a new body's quanta)."""
+    design = world.with_name("design.json")
+    if design.exists():
+        document = json.loads(design.read_text(encoding="utf-8"))
+        worlds = cast(dict[str, Any], document.get("worlds", {}))
+        entry = cast(dict[str, Any], worlds.get(world.stem, {}))
+        quanta = entry.get("quanta", document.get("quanta"))
+        if quanta is not None:
+            return [int(quanta)] * bodies
+    mode = world.with_suffix(".mode.json")
+    if mode.exists():
+        laid = cast(list[dict[str, Any]], json.loads(mode.read_text(encoding="utf-8")).get("bodies", []))
+        if len(laid) == bodies:
+            return [int(body["count"]) for body in laid]
+    return [None] * bodies
 
 
 def body_entry(
@@ -566,12 +613,45 @@ def read_at_the_start(
     others: dict[int, Pairs],
     region: np.ndarray,
     pairs: Pairs,
-) -> np.ndarray:
-    """The count the engine's gate reads at the start (ALGEBRA.md #the-count-is-the-records-share; `GameBoard.gate`): the record's share in quanta at the paces of its read at the engine's own start (`start_content`, the one act with `GameBoard.start`: every held row at the rest the laid records' forms and Wronskians return, the other bodies' laid records among them), over the body's region; the body's Nodes are where that share stands in quanta."""
+) -> tuple[np.ndarray, np.ndarray]:
+    """The count the engine's gate reads at the start (ALGEBRA.md #the-count-is-the-records-share; `GameBoard.gate`): the record's share in quanta at the paces of its read at the engine's own start (`start_content`, the one act with `GameBoard.start`: every held row at the rest the laid records' forms and Wronskians return, the other bodies' laid records among them), over the body's region, with the content of that start (the one-step standing check reads it); the body's Nodes are where that share stands in quanta."""
     content = start_content(board, families, index, pairs, others)
     zero = np.zeros(board.shape, dtype=np.int64)
     total = sum((share_of(board, content, now, before) for now, before in pairs), zero)
-    return np.where(region, read_quanta(total, board.pair[1], board.action), 0)
+    return np.where(region, read_quanta(total, board.pair[1], board.action), 0), content
+
+
+def standing_check(
+    board: Board,
+    content: np.ndarray,
+    pairs: Pairs,
+    nodes: np.ndarray,
+    centre: Axis,
+    clock: tuple[int, int],
+) -> None:
+    """The generator's one-step standing check of a lay (the advisor's hand, 5944220853 and 5944611538 section 3): the laid world stepped once by Rule3 in its own start's content (`read_at_the_start` builds it as `GameBoard.start` does), the rotation (next + before) / now read over the body's Nodes (`nodes`, the Nodes where its share stands in quanta) on every level pair of the lay alike, a real record's one and a plane's re and im; a lay standing in its content reads one rotation within the rounding 1 / |now| per act composed at every Node (`rotation_spread`, `ROUNDINGS_OF_A_STEP`), and a lay reading a spread beyond it is no mode of the step in the well the engine lays and is refused by name, printing the centre's rotation, the median read and the mode file's clock."""
+    for part, (now, before) in enumerate(pairs):
+        nxt = step(board, content, now, before, np.zeros(board.shape, dtype=np.int64))
+        median, read, worst = rotation_spread(now, before, nxt, nodes)
+        at_centre = (
+            Fraction(int(nxt[centre]) + int(before[centre]), int(now[centre])) if now[centre] else None
+        )
+        print(
+            f"GAMEBOARD the lay about {list(centre)}, level pair {part}: stepped once in its start's content the "
+            f"rotation (next + before) / now reads {float(median):.4f} (the median over {read} Nodes), at the centre "
+            f"{None if at_centre is None else float(at_centre):.4f}, the largest departure {float(worst):.2f} of the "
+            f"rounding 1 / |now|; the mode file's clock [{clock[0]}, {clock[1]}] = {clock[0] / clock[1]:.4f}",
+            file=sys.stderr,
+            flush=True,
+        )
+        if worst > ROUNDINGS_OF_A_STEP:
+            raise ValueError(
+                f"the lay of the body about the Node {list(centre)} does not stand in its own start: stepped once, "
+                f"its level pair {part} rotates at {float(median):.4f} in the median over {read} Nodes and at the "
+                f"centre at {None if at_centre is None else float(at_centre):.4f}, a Node departing {float(worst):.2f} "
+                f"roundings 1 / |now| where at most {ROUNDINGS_OF_A_STEP}, one per act composed, is a standing record's (the mode file's "
+                f"clock [{clock[0]}, {clock[1]}]; ALGEBRA.md #the-generator)"
+            )
 
 
 def turned(doubled: int, unit: int, steps: int) -> list[int]:
@@ -691,8 +771,10 @@ def nonzero(levels: np.ndarray) -> dict[str, list[int]]:
     return {"at": at.tolist(), "values": flat[at].tolist()}
 
 
-def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dict[str, Any]:
-    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's)."""
+def pixel_mode(
+    document: dict[str, Any], senses: list[int] | None = None, designed: list[int | None] | None = None
+) -> dict[str, Any]:
+    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's)."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
     integers = universe["integers"]
     if "quantum_action" not in integers:
@@ -716,7 +798,7 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
     lays: list[tuple[np.ndarray, Pairs, Axis, int]] = []
     zero = np.zeros(shape, dtype=np.int64)
     for number, body in enumerate(bodies):
-        counts, centre, quanta = declared(body, shape)
+        counts, centre, quanta = declared(body, shape, (designed or [None] * len(bodies))[number])
         if bool(counts[beyond].any()):
             raise ValueError(
                 f"measured[{number}] declares a Node beyond the board's inner face: nothing stands there"
@@ -772,16 +854,6 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
                 int(integers["link_unit"]),
             )
             rows = held_rows(universe, str(body["family"]))
-            try:
-                laid, record, region, content = body_fixed_point(
-                    board, families, index, rows, (all_counts - counts, others), centre, quanta, counts
-                )
-            except RestCollapses as refusal:
-                raise ValueError(
-                    f"the body of {quanta} quanta about the Node {list(centre)} collapses: its wells reach the "
-                    f"pace 0 ({refusal}; the rows reading their own levels, ALGEBRA.md #the-paces, Every row "
-                    "reads the content; a frozen clock, The paces compose)"
-                ) from refusal
             sense = (senses or [])[number] if number < len(senses or []) else 0
             if sense not in (-1, 0, 1):
                 raise ValueError(f"measured[{number}]: a sense is +1 or -1 (0: none), got {sense}")
@@ -790,19 +862,33 @@ def pixel_mode(document: dict[str, Any], senses: list[int] | None = None) -> dic
                     f"measured[{number}]: a body of {body['family']!r}, a family of dimension one, is laid with "
                     "no sense: a rotating record is a plane, dimension two (ALGEBRA.md #a-familys-declaration)"
                 )
-            keep = dilated(region, board.wrap)
-            levels: list[np.ndarray] = []
-            pairs_kept = [(np.where(keep, record.now, 0), np.where(keep, record.before, 0))]
-            if sense:
-                levels = rotating(board, content, record, keep, sense)
-                pairs_kept = [(levels[0], levels[1]), (levels[2], levels[3])]
             try:
-                weighted = read_at_the_start(board, families, index, others, region, pairs_kept)
+                laid, record, region, _content, pairs_kept = body_fixed_point(
+                    board,
+                    families,
+                    index,
+                    rows,
+                    (all_counts - counts, others),
+                    centre,
+                    quanta,
+                    counts,
+                    sense,
+                )
+            except RestCollapses as refusal:
+                raise ValueError(
+                    f"the body of {quanta} quanta about the Node {list(centre)} collapses: its wells reach the "
+                    f"pace 0 ({refusal}; the rows reading their own levels, ALGEBRA.md #the-paces, Every row "
+                    "reads the content; a frozen clock, The paces compose)"
+                ) from refusal
+            levels = [level for pair in pairs_kept for level in pair] if sense else []
+            try:
+                weighted, content = read_at_the_start(board, families, index, others, region, pairs_kept)
             except RestCollapses as refusal:
                 raise ValueError(
                     f"the body of {quanta} quanta about the Node {list(centre)} collapses at the start's read: "
                     f"{refusal} (a frozen clock; ALGEBRA.md #the-paces, The paces compose)"
                 ) from refusal
+            standing_check(board, content, pairs_kept, weighted > 0, centre, record.clock)
             for other, taken in enumerate(regions):
                 if bool(np.any(taken & region)):
                     raise ValueError(
@@ -866,7 +952,8 @@ def main(argv: list[str] | None = None) -> None:
     )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
-    mode = pixel_mode(document, list(args.sense))
+    designed = designed_quanta(args.input, len(cast(list[Any], document.get("measured", []))))
+    mode = pixel_mode(document, list(args.sense), designed)
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
     out.write_text(json.dumps(mode, separators=(",", ":")) + "\n", encoding="utf-8")
