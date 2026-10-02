@@ -2,6 +2,7 @@
 
 import json
 import math
+import shutil
 from itertools import product
 
 import numpy as np
@@ -19,7 +20,6 @@ from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
 
 DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")
-BUILD = load_file("like_build", EVENTS / "like_or_unlike" / "build_world.py")
 LOOK, GAMMA, T, PAIR, RING = EVENTS / "like_or_unlike", 6000, 32768, (4000, 6000), Wrap(True, True, True)
 ONE, LEVEL, SHAPE, VACUUM = (1, 1, 1), 100_000, (24, 1, 1), (GAMMA, (GAMMA,) * 3)  # the rulers at rest
 OMEGA = math.acos(PAIR[0] / PAIR[1])  # the matter pair's rest rotation in the vacuum
@@ -167,8 +167,10 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         holder = board.states[[f.name for f in board.families].index("charge")]
         runs.append((lines, board.books(), len(holder.lines)))
     assert runs[0][:2] == runs[1][:2] and runs[0][0] and (runs[0][2], runs[1][2]) == (1, 4)
-    BUILD.main(["--folder", str(tmp_path)])
-    assert (tmp_path / "expectation.json").read_bytes() == (LOOK / "expectation.json").read_bytes()
+    for folder in (LOOK, *(p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md")))):
+        build, out = load_file(f"{folder.name}_build", folder / "build_world.py"), tmp_path / folder.name
+        build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
+        assert (out / "expectation.json").read_bytes() == (folder / "expectation.json").read_bytes()
     expected = json.loads((LOOK / "expectation.json").read_text(encoding="utf-8"))
     gated = {n: GameBoard(load_world(LOOK / f"{n}.json")) for n in ("like", "unlike", "uncharged_pair")}
     for n, board in gated.items():  # the gate on a fresh load; a step back more: the drift's start
