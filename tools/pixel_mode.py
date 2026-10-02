@@ -171,6 +171,7 @@ def dilated(mask: np.ndarray, wrap: Wrap) -> np.ndarray:
     return grown
 
 
+ACTS_OF_A_HELD_ROW = 1 + 1  # the acts `held_rests` composes per held row: its rest's and its booking's
 ROUNDINGS_OF_A_STEP = (
     1 + 1 + 1 + 1
 )  # the acts composed in next + before - clock x now: now, before, next, the clock's level
@@ -489,11 +490,19 @@ def body_fixed_point(
     first: np.ndarray,
     sense: int = 0,
 ) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray, Pairs]:
-    """The body is the joint fixed point of its record and its content: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the record laid as the engine lays it (its level pair over the board as declared outside the other bodies' regions, `own_board`; with a sense its second pair the record a quarter period on, `rotating`, so that the holder of the sign rests inside the iteration and not after it), then the engine's own start on that lay (`start_content`: every held row at the rest its form and Wronskian return, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the record stands in next, and the counts the record's share in quanta at that content over the region; repeated until the content returns itself by the start's own rule (`returned`: the fixed point, or an earlier content one unit per division act composed at most, the record's scale, the booking's and the rest's, a rounding tie; a return further off a cycle, refused by name, the law's own answer at this count and sense and no defect) and the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record standing in the content returned, the region, the content and the laid level pairs, all of one round; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's and the content's together."""
+    """The body is the joint fixed point of its record and its content: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the record laid as the engine lays it (its level pair over the board as declared outside the other bodies' regions, `own_board`; with a sense its second pair the record a quarter period on, `rotating`, so that the holder of the sign rests inside the iteration and not after it), then the engine's own start on that lay (`start_content`: every held row at the rest its form and Wronskian return, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the record stands in next, and the counts the record's share in quanta at that content over the region; repeated until the content returns itself by the start's own rule (`returned`: the fixed point, or an earlier content one unit per division act composed at most, a rounding tie; the acts composed in the content are the record's scale, one, and per held row the family's declaration reads into its content, the content holders and the holders of the sign where a sense is laid, the acts the engine's own `held_rests` composes for that row, its rest's and its booking's, `ACTS_OF_A_HELD_ROW`, so 1 + 2 x 2 = 5 for matter reading the binding and gravity and 1 + 2 x 3 = 7 for a charged plane reading the charge too, counted from the family's reads at the call; a return further off a cycle, refused by name, the law's own answer at this count and sense and no defect) and the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record standing in the content returned, the region, the content and the laid level pairs, all of one round; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's and the content's together."""
     counts = first.copy()
     num, den = board.pair
     seen: dict[bytes, int] = {}
     name = f"the lay and the rest of the body of {quanta} quanta about the Node {list(centre)}"
+    read_rows = [  # the held rows the family's declaration reads into its content at this lay
+        r
+        for r in families[index].reads
+        if not families[r.family].rotation and (sense or not families[r.family].wronskian)
+    ]
+    acts = 1 + ACTS_OF_A_HELD_ROW * len(
+        read_rows
+    )  # the record's scale, then every row's rest and booking
     content = rests(rows, others[0] + counts, board)  # the seed, the first pass alone
     keep = own_board(board, others[0])
     round_number = 0
@@ -532,7 +541,7 @@ def body_fixed_point(
             file=sys.stderr,
             flush=True,
         )
-        if returned([found], [content], seen, name, 1 + 1 + 1) and agreed:
+        if returned([found], [content], seen, name, acts) and agreed:
             return laid, record, region, found, pairs
         counts = (counts + laid) // 2  # the half step: the deep well overshoots under the whole step
         content = found
