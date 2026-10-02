@@ -113,8 +113,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
         assert (found.levels[counts > 0] > 0).all() and (found.levels[counts < 0] <= 0).all()
         assert (found.levels < 0).any() != (counts >= 0).all()  # only negative sources sink below 0
         assert found.remainder == (3 * den - 1) // 2
-    counts = np.zeros((30, 1, 1), dtype=np.int64)
-    counts[14:16, 0, 0] = 3600
+    counts = np.pad(np.full((2, 1, 1), 3600), ((14, 14), (0, 0), (0, 0)))  # two sources on a chain of 30
     found = rest(counts, (1, 1), OPEN_CHAIN, 400, MAX_WORK_INT, 3, GAMMA)
     clock, pace = paces.node_paces(GAMMA, found.content)  # the row's own paces, the source at them
     scaled = scaled_source(counts * (3 * found.unit) // 400 * GAMMA**2, clock, pace, GAMMA, 2)
@@ -162,5 +161,5 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     print(f"GAMEBOARD the well at its paces: centre {int(levels[10, 10, 10])}, {span}")
     deep = np.pad(np.full((1, 1, 1), 24_576), 5)  # one Node of an 11-cube: open, the re-read swings
     refused("needs a sink", rest, deep, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3, GAMMA)
-    refused("level weight is from 1", rest, deep, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6, GAMMA)
+    refused("is from 1", rest, deep, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6, GAMMA)
     refused("no fixed point", rest, deep, (num, den), OPEN_CUBE, weight, MAX_WORK_INT, 3 * den, 6000)
