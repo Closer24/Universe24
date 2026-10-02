@@ -8,10 +8,9 @@ claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
-detector reports). Its title is "Universe24: one integer rule on a cubic lattice, read through
-clicks, gives the wave equation, the quantum of action and a weak-field metric
-as three readings of one line", the method and no experiment, by the owner's
-word; the meeting of the past with the future stands in the introduction as the
+detector reports). Its title is "Universe24: a cubic lattice of integers stepped by one rule and
+read through clicks", the method and no experiment, by the owner's word
+(2026-10-02, the short title chosen among three); the meeting of the past with the future stands in the introduction as the
 statement of what a click is. The source carries a submission switch
 (`\submissiontrue` in the preamble of each document): the project's documents
 are then cited as [1], [2], [3] alone, without their line names, and the
