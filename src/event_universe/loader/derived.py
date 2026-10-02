@@ -83,7 +83,7 @@ def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
 
 @dataclass(frozen=True)
 class HeldWrite:
-    """A held family's one write per line as the rule derives it from the rows (ALGEBRA.md #the-primitives, a family's write is one act): the walls, one per line, the time line's E_s T and each axis line's E_s times one measure of a current of the families that source it, the quantum's W_c = 3 den T for a tension line and one axis's den T for an odd line (ALGEBRA.md #the-rows-against-nature (b2), the wall den T; one den among the sources; with several, the least common multiple of their den in den's place), and per sourcing family the factor with which its tension or its momentum density enters the axis parts' numerator, the multiple over its own den (1 where one den serves every source), so that the sum of the sources' fractions is one fraction over one wall, exact."""
+    """A held family's one write per line as the rule derives it from the rows (ALGEBRA.md #the-primitives, a family's write is one act): the walls, one per line, the time line's E_s T and each axis line's E_s times one measure of a current of the families that source it: the quantum's W_c = 3 den T for a tension line (one den among the sources; with several, the least common multiple of their den in den's place) and the time line's own T for an odd line, the same wall as the time level's W, so that the odd level over the time level is (J_a / 2) / W = 3 (den_s / num_s) v = v / c_s^2 as the law's (b2) computes it (ALGEBRA.md #the-rows-against-nature (b2); the mathematician's 122 D, #1572 comment 5946560198, and the advisor's #1563 comments 5946186214 and 5946604467, two hands: over den T the engine's magnetic sector was 1 / den of the law's and the odd levels of the files' bodies rounded to 0), and per sourcing family the factor with which its tension enters the axis parts' numerator, the multiple over its own den (1 where one den serves every source, and 1 for every source of an odd line, whose wall carries no den), so that the sum of the sources' fractions is one fraction over one wall, exact."""
 
     walls: tuple[int, ...]
     factors: dict[int, int]
@@ -158,7 +158,7 @@ def count_wall(family: FamilyRule, action: int) -> int:
 
 
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
-    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and the den of the families that source its axis lines (its readers, whose tension or momentum density it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions, den T for the odd lines), and each source's factor, the multiple over its den."""
+    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for an odd line."""
     family = families[index]
     assert family.level_weight is not None
     sources = readers_of(families, index)
@@ -166,10 +166,11 @@ def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> Hel
     for other in sources:
         den = families[other].pair[1]
         multiple = int(division_forward(multiple * den, gcd(multiple, den), 0)[0])
-    measure = multiple * action if family.rotation else 3 * multiple * action
+    measure = action if family.rotation else 3 * multiple * action
     walls = [family.level_weight * action] + [family.level_weight * measure] * (family.lines - 1)
     factors = {
-        other: int(division_forward(multiple, families[other].pair[1], 0)[0]) for other in sources
+        other: 1 if family.rotation else int(division_forward(multiple, families[other].pair[1], 0)[0])
+        for other in sources
     }
     return HeldWrite(tuple(walls), factors)
 

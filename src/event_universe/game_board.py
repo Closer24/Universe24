@@ -245,7 +245,7 @@ class GameBoard:
         }
 
     def sense_currents(self) -> Stresses:
-        """Every turned record's sign current on each axis at every Node, the mean of the Node's two a-Links' Wronskian currents, J_a / 2 with J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its record as it stands at the interval's start (`node.sense_current_of`): the source the holder of the sign's odd lines take in their one write under the rotation at the wall den T."""
+        """Every turned record's sign current on each axis at every Node, the mean of the Node's two a-Links' Wronskian currents, J_a / 2 with J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its record as it stands at the interval's start (`node.sense_current_of`): the source the holder of the sign's odd lines take in their one write under the rotation over the time line's wall E_s T, the same wall as the time level's W (`loader.derived.held_write`)."""
         return {index: node.sense_current_of(self.record(index), self.wrap) for index in self.turning}
 
     def step(self) -> None:
