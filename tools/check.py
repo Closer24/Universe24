@@ -37,13 +37,14 @@ LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 
 
 def balanced(seconds, count):
-    """The names split into `count` groups of about equal seconds, the longest placed first."""
+    """The names split into `count` groups of about equal seconds, the longest placed first; the
+    groups from the heaviest to the lightest."""
     groups, loads = [[] for _ in range(count)], [0.0] * count
     for name in sorted(seconds, key=lambda n: (-seconds[n], n)):
         lightest = loads.index(min(loads))
         groups[lightest].append(name)
         loads[lightest] += seconds[name]
-    return [sorted(group) for group in groups]
+    return [sorted(group) for _, group in sorted(zip(loads, groups, strict=True), key=lambda x: -x[0])]
 
 
 def shards():
@@ -51,7 +52,7 @@ def shards():
     their recorded seconds (`tests/<file>.py::<function>`, its parametrizations with it); a file runs
     whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
     a function the table does not hold, or holds under a name the file no longer has, runs with its
-    file; no world job."""
+    file; the parts from the heaviest to the lightest, the lint in the last; no world job."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
     files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob("test_*.py"))
     recorded = {}
@@ -293,8 +294,8 @@ def main():
         if not (ROOT / target.split("::")[0]).exists():
             parser.error(f"additional test target does not exist: {target}")
     if args.shard:
-        targets = shards()[args.shard]
-        commands = (LINT if args.shard == "suite 1" else []) + [
+        targets = shards()[args.shard]  # the lint runs in the lightest part, the last
+        commands = (LINT if args.shard == list(shards())[-1] else []) + [
             ["pytest", "-n", "auto", *targets, "--junitxml=artifacts/junit.xml"]
         ]
         changed = []
