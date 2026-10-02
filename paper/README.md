@@ -141,7 +141,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "33 pages, 2 figures, 4 tables; supplementary material of 26 pages as an
+  "33 pages, 2 figures, 4 tables; supplementary material of 27 pages as an
   ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 250 words and about 1600
   characters.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
@@ -160,7 +160,7 @@ the journal.
   not be sent to a journal of either.
 - Endorsement: since 21 January 2026 an institutional email alone does
   not endorse; an author without accepted papers in the category needs a
-  personal endorser.
+  personal endorser; the author has one (2026-10-02).
 - The paper is complete in English, refereeable and written to scholarly
   standards, with references; the author answers for every word, and
   unchecked text from a language model (an invented reference, a
@@ -175,8 +175,8 @@ author confirms each of them in the submission system, and the paper and
 the supplement are uploaded under the author's own accounts at arXiv and at
 the journal.
 
-1. arXiv: the account, an endorser, the licence, and whether an earlier
-   paper of the project was posted.
+1. arXiv: the account, the licence, and whether an earlier paper of the
+   project was posted; the endorser is in hand (the author, 2026-10-02).
 2. The archive: a GitHub release of the paper's commit and its Zenodo
    version DOI.
 3. The cover letter, written for this paper.
