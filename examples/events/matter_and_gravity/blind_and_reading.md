@@ -190,9 +190,15 @@ one core; the start's own `rest` called on one source; the world declares no det
    9 at 12) are the size of these waves with the source held and not the body's breathing: a
    finding by name, the held rows' levels under the step from their laid rest carry waves of 10
    to 30 levels growing over 200 intervals, the same for the row with the gap and the row
-   without, nothing of it the gap's relaxation; nothing patched, the cause not diagnosed here
-   (the hold's one write keeps its remainder, the row's own step by Rule3's division act does
-   not; the waves' size over 200 intervals is about the square root of the intervals in levels).
+   without, nothing of it the gap's relaxation; nothing patched. The cause, by name (the
+   advisor, #1563 comment 5958624379, read-only on main 511cd71c): the start's rest is not the
+   fixed point of its own static line, by the inner solver's stopping rule; `settled` stops at the
+   first state the act returns unchanged, which on the board's lowest mode leaves up to one fine
+   unit over (1 - rho), rho = (num / den) cos(pi / 26) on this cube, 137 fine units (9 levels at
+   the massless row's unit 15, 3.6 at the binding row's unit 38), and a rest short of the fixed
+   point in that mode oscillates about the true rest at the mode's period of 52 intervals with the
+   miss's amplitude (the centre's reads above sit at the phases of cos(omega_min t), no growth).
+   The fix is a round's after the freeze, under the owner's rule (report, never patch).
 1. **The screened rest.** The ratio of the two rests at the start stands as the first reading
    has it, 1.000 at the centre and within 0.015 of 1 to 4 Links, the binding holder never below
    gravity's by 10 beyond 1 percent. The blind's fold, read on the lattice as a diagnostic beside
