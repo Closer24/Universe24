@@ -63,6 +63,20 @@
    ],
    "quanta": 14000,
    "ticks": 400
+  },
+  "pixel_compact_20000": {
+   "shape": [
+    11,
+    11,
+    11
+   ],
+   "centre": [
+    5,
+    5,
+    5
+   ],
+   "quanta": 20000,
+   "ticks": 400
   }
  },
  "reading": "per world (tools/body_rest.py, GameBoard): at the window's ends the body's three levels about one interval at its centre and their ratio (next + before) / now = 2 cos omega_b, its quanta at the centre Node and over the board, the centroid of its share and the second moment about it (the rms radius squared), its well over the board (D summed over T), its record's levels along each axis from the centre with the ratios of successive levels (e^(-kappa) per Link on the tail), every held row's level along the same axes, and the books (the share's drift from the lay).",
@@ -119,6 +133,16 @@
    "drift": "the folder's line 4: the count's drift at rest 0 to the rounding, the centroid where it was laid",
    "form": "the record obeying the one-Node form D = b^2 (2 - 2 cos omega_b) to one percent: with c the well D div T at the centre Node (D = now^2 - next x before from the three levels there) the loaded b, the largest whose square is at most c T den div (2 den - a) for the clock pair [a, den] of 2 cos omega_b, is the level where now = before, B cos(omega_b / 2) with B the amplitude at the centre, within one percent (the line's 9,749 against 9,752 at 9,000 and 13,586 against 13,547 at 20,000); the amplitude B between the line's 12,319 at 13,000 and 14,053 at 20,000, 12,567 by the straight line, the well at the Node between 1,494 and 1,685 quanta (B^2 sin^2 omega_b over T, about 1,640 at the straight line's numbers), the well over the declared count between the line's 0.293 at 9,000 and 0.085 at 20,000, about 0.15 at 14,000 by the straight line between the vacuum shares, the count 5.5 to 12 times the well at the Node along the branch",
    "reading": "tools/body_rest.py with --reach 5 and --expectation on pixel_compact_14000.json over the window [1, 400] (the 11-cube's faces at 5 Links from the centre): 2 cos omega_b at the centre as an exact fraction with the three levels there, the tail's levels and ratios along each axis, the quanta at the centre and over the board with the books' drift, the well over the board and at the Node from the three levels; every number a GameBoard reading and no click; the lay's time and its branch stated beside them",
+   "fence": "GameBoard"
+  },
+  "pixel_compact_20000": {
+   "defined": "the fourth reading, the count raised once (the owner's words of 2026-10-02: a lay on the wide branch at 14,000 is the reading, the count raised once at most, one more world at 20,000 only if the 14,000 lay took under 10 minutes, never tuned): the generator's lay of pixel_compact_14000 reached the wide branch from the one-Node seed on the 11-cube in 29 s (fourteen rounds, 435 quanta at the centre of 13,999, the content at the centre 885, the clock [5419, 3904] = 1.3881, GameBoard), so the one more world is the line's own table point 20,000 quanta in the engine's count on the same open 11-cube from the one-Node seed, where the line's numbers stand without interpolation (ALGEBRA.md, The compact pixel under the composed paces); a refusal by name recorded verbatim, a lay on the wide branch the reading by name, the world run and read as laid, no third count",
+   "window": "line 1 under the law's line: 20,000 is above the compact branch's threshold of about 13,000 in the engine's count by half again, the body compact by the line's criterion at this count: the centre Node and its six neighbours carrying 0.98 of the body's share (the line's 0.98 of the vacuum share over seven Nodes at 20,000), the rms radius under one Link, the content at the centre Node 3,798 (the line's table, the composed Node pace p_i 1,696 of Gamma 6,000, no Link closing), past the edge 0.39 Gamma = 2,339 and past Gamma div 2 standing; the 11-cube's own threshold the generator's to find, the faces at 5 Links pulling the well",
+   "rest_rotation": "omega_b 0.539 by the line's table at 20,000 (2 cos omega_b = 1.716, U 0.63), the period 11.7 intervals, read as the exact fraction (next + before) / now at the centre and held over the window within the rounding",
+   "tail": "kappa 1.3 to 1.9 per Link near the Node from the levels at one Link (e^(-kappa) 0.27 to 0.15), steeper than the chain formula acosh((9 / 2) cos omega_b - 2) = 1.23 at 0.539 by 0.5 to 0.7, flattening outward; on the 11-cube the face at 5 Links reads 0 beyond",
+   "drift": "the folder's line 4: the count's drift at rest 0 to the rounding, the centroid where it was laid",
+   "form": "the record obeying the one-Node form D = b^2 (2 - 2 cos omega_b) to one percent: with c the well D div T at the centre Node the loaded b, the largest whose square is at most c T den div (2 den - a) for the clock pair [a, den], is the level where now = before, B cos(omega_b / 2) with B the amplitude at the centre, within one percent (the line's 13,586 against 13,547 at 20,000, 0.3 percent); the amplitude B 14,053 by the line's table, the well at the Node 1,588 quanta (B^2 sin^2 omega_b over T; the line's range along the branch 1,494 to 1,685), the well over the vacuum share 0.169 and over the declared count 0.085 (the count 12 times the well at the Node)",
+   "reading": "tools/body_rest.py with --reach 5 and --expectation on pixel_compact_20000.json over the window [1, 400]: 2 cos omega_b at the centre as an exact fraction with the three levels there, the tail's levels and ratios along each axis, the quanta at the centre and over the board with the books' drift, the well over the board and at the Node from the three levels; every number a GameBoard reading and no click; the lay's time and its branch stated beside them",
    "fence": "GameBoard"
   }
  }

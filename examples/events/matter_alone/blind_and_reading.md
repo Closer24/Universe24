@@ -311,3 +311,41 @@ and never edited after; the reading is appended below it.
 A refusal of the lay by name is recorded verbatim and the reading stops at that line; a lay on the
 wide branch is the reading, stated by name, the world run and read as laid; the count is raised
 once at most (one more world at 20,000 only if this lay takes under 10 minutes) and never tuned.
+
+## The fourth reading, the count raised once (20,000, the line's own table point)
+
+The lay of `pixel_compact_14000.json` reached the wide branch again from the one-Node seed on the
+11-cube (the generator's own lines, GameBoard: fourteen rounds in 29 s, 435 quanta at the centre
+of 13,999, the content at the centre 885, the clock [5419, 3904] = 1.3881; its reading is the
+third reading's above), so the count is raised once, as the owner's words allow (the 14,000 lay
+under 10 minutes), to the line's own table point 20,000 quanta in the engine's count, where the
+line's numbers stand without interpolation (ALGEBRA.md, **The compact pixel under the composed
+paces**); never tuned, no third count. The world is `pixel_compact_20000.json`, the design's
+entry `pixel_compact_20000` (the open 11-cube, the centre [5, 5, 5], 20,000 quanta, 400
+intervals), the blind entry `blind.pixel_compact_20000`, the same builder, generator and reader
+as the third reading's. This section's blind is written before the lay and the run of this world
+and never edited after; the reading is appended below it.
+
+### The blind (the line's table at 20,000)
+
+1. **The window**, under the law's line: 20,000 is above the threshold of about 13,000 by half
+   again; the body compact by the line's criterion at this count, the centre Node and its six
+   neighbours carrying 0.98 of the body's share (the line's 0.98 of the vacuum share over seven
+   Nodes), the rms radius under one Link, the content at the centre Node 3,798 (the composed Node
+   pace p_i 1,696 of Gamma 6,000, no Link closing), past the edge 0.39 Gamma = 2,339 and past
+   Gamma div 2 standing; the 11-cube's own threshold is the generator's to find.
+2. **The rest rotation.** omega_b = 0.539 (2 cos omega_b = 1.716, U 0.63), the period 11.7
+   intervals, held over the window within the rounding.
+3. **The tail.** kappa 1.3 to 1.9 per Link near the Node (e^(-kappa) 0.27 to 0.15 at one Link),
+   steeper than the chain formula acosh((9 / 2) cos omega_b - 2) = 1.23 at 0.539 by 0.5 to 0.7,
+   flattening outward; the face at 5 Links reads 0 beyond.
+4. **The drift** (the folder's line, read as before): 0 to the rounding, the centroid where it was
+   laid.
+5. **The form.** D = b^2 (2 - 2 cos omega_b) to one percent at the centre Node, the loaded b
+   from c = D div T against B cos(omega_b / 2) (the line's 13,586 against 13,547, 0.3 percent);
+   the amplitude B 14,053, the well at the Node 1,588 quanta (B^2 sin^2 omega_b over T; the
+   line's range 1,494 to 1,685), the well over the vacuum share 0.169 and over the declared count
+   0.085.
+
+A refusal of the lay by name is recorded verbatim and the reading stops at that line; a lay on the
+wide branch is the reading, stated by name, the world run and read as laid, and no count follows.
