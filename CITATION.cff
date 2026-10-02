@@ -1,12 +1,13 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it using the metadata below."
-title: "Universe24: a discrete simulator of local physical laws (Reality Theory)"
+message: "If you use this software, please cite the paper below and the software's Zenodo record."
+title: "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks"
 type: software
-version: 0.3.1
-date-released: 2026-09-14
+version: 1.0.0
+date-released: 2026-10-02
 license: MIT
 doi: 10.5281/zenodo.22738746
 repository-code: "https://github.com/Closer24/Universe24"
+url: "https://github.com/Closer24/Universe24"
 identifiers:
   - type: doi
     value: 10.5281/zenodo.22738746
@@ -19,16 +20,31 @@ authors:
     given-names: Alon
     email: alon@defounder.ai
     orcid: https://orcid.org/0009-0008-2701-4599
+    affiliation: "Independent researcher, Haifa, Israel"
 keywords:
-  - event simulator
+  - cellular automaton
   - integer lattice
   - local causality
   - computational physics
-  - cellular automata
+  - measurement as a click
 abstract: >-
-  The reference implementation of Reality Theory (Universe24): a research
-  simulator in which physical content is expressed as configured
-  disturbances on a three-dimensional lattice with six-neighbor causal links,
-  bounded integer arithmetic and explicit local conservation checks. Field
-  laws, transport candidates and quantum event programs are supplied by
-  initialization data rather than inferred from physical names.
+  The implementation of the paper "Universe24: an integer cellular automaton
+  read through clicks, the world it computes, and the clicks of nature it
+  approaches" (Alon Gonen, 2026): a
+  GameBoard of Nodes holding bounded integers, stepped by one rule, Rule3,
+  from each Node's present, its past and its six neighbours, reversibly, and
+  read only through declared detectors' clicks. The engine holds no number of
+  physics, no formula and no family's name; every physical value comes from
+  the run's files, and every primitive is one folder found by its name. The
+  paper's documents, files and scripts are in the repository.
+preferred-citation:
+  type: article
+  title: "Universe24: an integer cellular automaton read through clicks, the world it computes, and the clicks of nature it approaches"
+  authors:
+    - family-names: Gonen
+      given-names: Alon
+      email: alon@defounder.ai
+      orcid: https://orcid.org/0009-0008-2701-4599
+  year: 2026
+  notes: "Submitted to arXiv (quant-ph; cross-lists gr-qc and nlin.CG) and to Foundations of Physics; the arXiv identifier and the journal reference are added here at publication. The paper's source is paper/general_formula/ in this repository."
+  url: "https://github.com/Closer24/Universe24/tree/main/paper/general_formula"
