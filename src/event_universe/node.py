@@ -23,60 +23,34 @@ from event_universe.features.read import (
 )
 from event_universe.loader.derived import FamilyRule, row_of, turns
 from event_universe.records import (  # the lines, their readings and their states, the Node's own
-    Booking,
-    Families,
-    NodeState,
-    Record,
-    Rulers,
-    Sourcing,
-    States,
-    empty_record,
-    empty_state,
-    form,
-    full,
-    largest,
-    level_at,
-    light_record,
-    record_slice,
-    row_levels,
-    turned_by,
-    well,
-    write_origins,
-    write_sources,
-    written,
-    wronskian,
-    zeros,
+    Booking as Booking,
 )
+from event_universe.records import Families as Families
+from event_universe.records import NodeState as NodeState
+from event_universe.records import Record as Record
+from event_universe.records import Rulers as Rulers
+from event_universe.records import Sourcing as Sourcing
+from event_universe.records import States as States
+from event_universe.records import empty_record as empty_record
+from event_universe.records import empty_state as empty_state
+from event_universe.records import form as form
+from event_universe.records import full as full
+from event_universe.records import largest as largest
+from event_universe.records import level_at as level_at
+from event_universe.records import light_record as light_record
+from event_universe.records import record_slice as record_slice
+from event_universe.records import row_levels as row_levels
+from event_universe.records import turned_by as turned_by
+from event_universe.records import well as well
+from event_universe.records import write_origins as write_origins
+from event_universe.records import write_sources as write_sources
+from event_universe.records import written as written
+from event_universe.records import wronskian as wronskian
+from event_universe.records import zeros as zeros
 
 Rule = tuple[tuple[Any, ...], Any, Any]  # Rule3's integers at every Node: the six Ports' R_ij, S, w
 Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order, in the unit G^2
 Angles = tuple[Any, tuple[Any, Any, Any]]  # the turn's numerators at every Node: the time's, each axis's
-
-__all__ = [  # the records' names re-exported: the Node is read through this module
-    "Booking",
-    "Families",
-    "NodeState",
-    "Record",
-    "Rulers",
-    "Sourcing",
-    "States",
-    "empty_record",
-    "empty_state",
-    "form",
-    "full",
-    "largest",
-    "level_at",
-    "light_record",
-    "record_slice",
-    "row_levels",
-    "turned_by",
-    "well",
-    "write_origins",
-    "write_sources",
-    "written",
-    "wronskian",
-    "zeros",
-]
 
 
 def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
@@ -167,12 +141,11 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
             guard(families[index].pair, gamma, unit, content, factors, families[index].name)
         angles, before = (turning(index, families, states, d, gamma, record) for d in (1, -1))
         if angles is not None and before is not None:  # a turned record turns at both of its levels
-            time, links = angles
-            rotation.guard(time, 2 * gamma, families[index].name, None)
+            rotation.guard(angles[0], 2 * gamma, families[index].name, None)
             rotation.guard(before[0], 2 * gamma, families[index].name, None)
             for a in range(3):
                 for side in (1, -1):
-                    link = links[a] + arrival(links[a], a, side, wrap)
+                    link = angles[1][a] + arrival(angles[1][a], a, side, wrap)
                     rotation.guard(link, 2 * 2 * gamma, families[index].name, a)
 
 
