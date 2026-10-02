@@ -26,9 +26,9 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     mode = json.loads(mode_file.read_text(encoding="utf-8"))["messages"][0]
     now, before = (dense(mode["moving"][word]) for word in ("now", "before"))
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
-    for x in range(24):
-        away = abs(x - 5)
-        e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
+    away = [abs(x - 5) for x in range(24)]
+    envelope = [(1 + math.cos(math.pi * d / 4)) / 2 if d <= 4 else 0 for d in away]
+    for x, e in enumerate(envelope):
         assert abs(now[x, 4, 0] - 1328 * e * math.cos(k * x)) <= 1
         assert abs(before[x, 4, 0] - 1328 * e * math.cos(k * x + omega)) <= 1
     assert (now[:, 4:5, :] == now).all() and mode["count"] > 0 and not now[12].any()
@@ -47,9 +47,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
     mirrored = dense(before)
     tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
-    for x in range(24):
-        away = abs(x - 5)
-        e = (1 + math.cos(math.pi * away / 4)) / 2 if away <= 4 else 0
+    for x, e in enumerate(envelope):
         assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1
     body = {"family": "matter", "nodes": [at]}
     refused(f"{inner}: nothing stands there", TOOL.pixel_mode, {**SLIT, "measured": [body]})
@@ -77,8 +75,6 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()
-    before = int(level[:12].sum())
-    print(f"GAMEBOARD slit: light beyond the wall per row {passed.tolist()}, before {before} vs {free}")
     assert passed[4] > passed[0] > 0 and level[:12].sum() > free and open_board.wrap.beyond is None
     assert BACK.verdict(GameBoard(load_world(path)), 24)["verdict"] == "MATCH"
     world = chain_body_world(tmp_path, TOOL)
@@ -108,7 +104,6 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     big = GameBoard(load_world(chain_body_world(tmp_path, TOOL, quanta=2 * QUANTA)))
     holders = [s for f, s in zip(big.families, big.states, strict=True) if f.held and not f.wronskian]
     deep = int(sum(s.lines[0].now for s in holders).max())
-    print(f"GAMEBOARD the body of {2 * QUANTA} on the chain: its content {deep}, U = {deep / 6000:.3f}")
     assert 0 < deep < paces.frozen_content(big.world.node_clock) and [e["count"] for e in two] == [1, 1]
     document = json.loads(chain_body_world(tmp_path, TOOL, mode=False).read_text(encoding="utf-8"))
     refused("a sense is \\+1 or -1", lambda: TOOL.pixel_mode(json.loads(json.dumps(document)), [2]))

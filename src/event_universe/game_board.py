@@ -1,4 +1,4 @@
-"""The GameBoard: every family's NodeState over the Nodes (node.py), a flat list of lines of dimension one per family, and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the read and Rule3 on every line, the detectors' reports, the one write per held line; `step_inverse` runs the same acts back. The GameBoard groups the lines into families for the readings and the sources as the loader derived them (loader/derived.py): the form D summed over a record's lines, the Wronskian W the bilinear of a plane's two, the share over every line, the axis lines of a holder read into the paces. The board's face rule (core/ports.py) is the file's: the wraps, the Nodes its inner faces declare beyond the board and its receding faces, beyond which it grows by layers of zeros as the front reaches them (growth.py), every declared coordinate staying the file's. No ledger of bodies is kept: a body's Nodes are where its family's share stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a region of Nodes declared in the file, a declared instrument, its click its report of the net current into it through its front boundary Ports, with the region's name and never a Node (ALGEBRA.md #the-count-is-the-records-share), the count of every family the share of its record, a reading, and every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval."""
+"""The GameBoard: every family's NodeState over the Nodes (node.py), a flat list of lines of dimension one per family, and the detectors, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the read and Rule3 on every line, the detectors' reports, the one write per held line; `step_inverse` runs the same acts back. The GameBoard groups the lines into families for the readings and the sources as the loader derived them (loader/derived.py): the form D summed over a record's lines, the Wronskian W the bilinear of a plane's two, the share over every line, the axis lines of a holder read into the paces. The board's face rule (core/ports.py) is the file's: the wraps, the Nodes its inner faces declare beyond the board and its receding faces, beyond which it grows by layers of zeros as the front reaches them (growth.py), every declared coordinate staying the file's. No record's count of bodies is kept: a body's Nodes are where its family's share stands about its declared Nodes, derived when a report needs them (reports.standing); a message is a laid record and no body; a detector is a region of Nodes declared in the file, a declared instrument, its click its report of the net current into it through its front boundary Ports, with the region's name and never a Node (ALGEBRA.md #the-count-is-the-records-share), the count of every family the share of its record, a reading, and every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval. Where the world declares the `instrument` (its window, its seed and its generator) the instrument draws inside the run at every window's end from the window's inflows the reports gathered and writes its click on the GameBoard at one Node (`credit.py`, features/click; HIGHLIGHTS.md, the owner's decision of 2026-10-02): the loop's act from outside the Node, as the lay and the receding face are, forward only; the Node knows nothing of it, and a world without the key runs as before bit for bit."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import growth, node, share
+from event_universe import credit, growth, node, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -20,7 +20,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
 from event_universe.loader.mode import Levels
 from event_universe.loader.world import BodyRow, World
-from event_universe.reports import Detector, book, click, field, inflow, level_sums, parts, standing
+from event_universe.reports import Detector, book, click, entering, field, level_sums, parts, standing
 
 Observer = Callable[[dict[str, object]], None]
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
@@ -68,6 +68,7 @@ class GameBoard:
         ]
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.gate()
+        self.credit = credit.Books.of(self)
 
     def walls(self, index: int) -> tuple[int, ...]:
         """The walls of a family's one write per line, none for a family that holds nothing."""
@@ -146,8 +147,7 @@ class GameBoard:
             self.states[row[0]].lines[line_of[row]] = messages[row]
         for row, found in zip(rows, fields, strict=True):
             remainder = node.full(self.shape, found.remainder, self.kind)
-            index, line = row[0], line_of[row]
-            message = self.states[index].lines[line]  # the laid message, 0 where none is laid
+            index, line, message = row[0], line_of[row], self.states[row[0]].lines[line_of[row]]
             self.states[index].lines[line] = node.Record(
                 message.now + found.levels, message.before + found.levels, remainder
             )
@@ -178,14 +178,6 @@ class GameBoard:
                     f"quanta at its Nodes at T = {self.world.quantum_action}: a declared count is within the "
                     "rounding of the share in quanta, ((|c - read| - 1) div 2)^2 <= c (ALGEBRA.md #the-count-is-the-records-share)"
                 )
-
-    def instrument(self) -> np.ndarray:
-        """The instrument: the union of the declared regions (every detector with its own positions, the faces' layer and the bodies' detectors aside, `Detector.declared`), whose boundary is where the reports are read (ALGEBRA.md #the-click-ends-nothing): what moves between two regions of one screen is not seen twice."""
-        found = np.zeros(self.shape, dtype=bool)
-        for detector in self.detectors:
-            if detector.declared and detector.nodes is not None:
-                found |= detector.nodes
-        return found
 
     def lines_of(self, index: int, record: int) -> list[node.Record]:
         """The lines of one record of a family of quanta as they stand (`bookings.record_lines`)."""
@@ -294,8 +286,7 @@ class GameBoard:
         self.tick += 1
         forms, turns = Bookings(), Bookings()
         currents, senses, stresses = self.currents(), self.sense_currents(), self.stresses()
-        rulers = self.rulers(1)
-        begun = [state.lines for state in self.states]
+        rulers, begun = self.rulers(1), [state.lines for state in self.states]
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
             family, state = self.families[index], self.states[index]
@@ -309,6 +300,7 @@ class GameBoard:
         self.report(currents, forms, begun)
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses, senses, rulers)
+        credit.windowed(self)
 
     def hold(
         self,
@@ -347,20 +339,26 @@ class GameBoard:
 
     def report(self, currents: Currents, forms: Bookings, begun: list[list[node.Record]]) -> None:
         """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family), per declared region one `parts` line where a sum is not 0: the signed sums of each part's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`)."""
-        own = self.declared_board()
+        own, union = self.declared_board(), credit.instrument_nodes(self)
+        sums: dict[int, dict[str, list[list[int]]]] = {}
         for index, through in currents.items():
             family = self.families[index]
             for detector in self.detectors:
                 nodes = self.body_nodes(detector.body) if detector.body is not None else detector.nodes
                 assert nodes is not None
-                boundary_of = self.instrument() if detector.declared else nodes
-                seen = inflow(nodes, through, self.wrap, boundary_of, own)
+                came = entering(nodes, through, self.wrap, union if detector.declared else nodes, own)
+                seen = int(came.sum(dtype=object))
                 if seen != 0 and self.observer is not None:
                     self.observer(click(self.tick, family.name, detector.name, seen))
+                if detector.declared:
+                    credit.booked(self, index, detector.name, came)
                 if family.parts > 1 and detector.declared:
                     levels = level_sums(nodes, begun[index])
                     if any(any(level) for level in levels) and self.observer is not None:
                         self.observer(parts(self.tick, family.name, detector.name, levels))
+                    sums.setdefault(index, {})[detector.name] = levels
+        for index, found in sums.items():
+            credit.joined(self, index, found)
         self.fields_read(forms)
 
     def fields_read(self, forms: Bookings) -> None:
@@ -397,7 +395,7 @@ class GameBoard:
         stresses: Stresses,
         senses: Stresses,
     ) -> None:
-        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers), its tension's parts and a turned record's sign current from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done."""
+        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers; a turned plane's from z_now and the un-turned levels u and v alone, with no z_before in them), its tension's parts and a turned record's sign current from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done; a turned plane's level before comes back as u, the inverse's first stage (`node.step_plane`)."""
         family = self.families[index]
         lines, bookings = self.stepped(index, -1)
         booked = booked_of(self.families, index, bookings)
@@ -411,11 +409,11 @@ class GameBoard:
         books[index] = lines
 
     def step_inverse(self) -> None:
-        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): the write's rulers read first from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back; the lay is not taken back."""
+        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): the write's rulers read first from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every held row standing at the previous interval's start again, each turned plane's level before turned back by that interval's angle (`node.turned_before` at -1, the inverse's second stage around the holders' write back: the mathematician's 119); the lay is not taken back."""
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
         rulers = self.rulers(-1)  # the held rows' levels the interval started from, their `before`
         books: dict[int, list[node.Record]] = {}
-        pending = list(self.held)
+        pending, gamma = list(self.held), self.world.node_clock
         while True:
             for index in self.order:
                 if index not in books and (index not in self.held or index not in pending):
@@ -428,11 +426,12 @@ class GameBoard:
             for held in ready:
                 self.hold(held, forms, turns, -1, stresses, senses, rulers)
             pending = [held for held in pending if held not in ready]
-        for index in self.held:
-            if index not in books:
-                books[index] = self.stepped(index, -1)[0]
+        for index in (held for held in self.held if held not in books):
+            books[index] = self.stepped(index, -1)[0]
         for index, lines in books.items():
             self.states[index].lines = lines
+        for index in self.turning:
+            self.states[index].lines = node.turned_back(index, self.families, self.states, gamma)
         self.tick, self.ended = self.tick - 1, None
         while self.growths and self.growths[-1][0] == self.tick + 1:
             growth.resize(self, *self.growths.pop()[1:], -1)

@@ -112,3 +112,11 @@ holds its count better than the neutral pixel (0.08 against 0.6 percent over the
 Agreement with the blind: lines 1 and 3 PASS (the sign, the magnitude A^2 sin omega_b, the well
 the content's kernel with the sign's source, positive about the sense +1 and held); line 2 read
 at the centre only; line 4 not read, the pair worlds refused by name.
+
+## On the merged engine (this pull request)
+
+The four engine rounds over the sign's rows; the generator run again on this folder's three worlds from their declared form, one line per world, each a GameBoard reading of the generator and no run of the window; the reading above stays the frozen engine's dated record.
+
+- `charged_body.json`, on the merged engine (this pull request): laid, the clock [3204, 2310] = 1.3870, 1,189 Nodes, 10,538 quanta declared of the design's 10,000 (9,993 carried, seed 2310), its mode file beside it; the rounds' engine before the sign's rows (main da487970) had refused it by name (`design.json`).
+- `like.json`, on the merged engine (this pull request): refused, "the lay of the body about the Node [6, 12, 12] does not stand in its own start: stepped once, its level pair 1 rotates at 1.4118 in the median over 1204 Nodes and at the centre at 1.4400, a Node departing 9.65 roundings 1 / |now| where at most 4, one per act composed, is a standing record's (the mode file's clock [1226, 885]; ALGEBRA.md #the-generator)" (91 rounds of the first body).
+- `unlike.json`, on the merged engine (this pull request): refused, the same words as `like.json`'s, its first body the same lay. The look's plain controls, `like_or_unlike/like_plain.json` and `unlike_plain.json`, on the merged engine (this pull request): refused, "the lay and the rest of 2 holders and 3 signs finds no fixed point: the levels re-read return to an earlier state after 7 passes, a cycle of length 2, 805 and 811 at the Node [32, 0, 0] of the row 1" and "the lay and the rest of 2 holders and 3 signs finds no fixed point: the levels re-read return to an earlier state after 15 passes, a cycle of length 10, 328 and 324 at the Node [16, 0, 0] of the row 1".

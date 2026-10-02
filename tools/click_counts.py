@@ -1,4 +1,4 @@
-"""The credit per detector over a window of intervals, read from a run's output file against an expectation file (DETECTOR, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the detector a declared instrument and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's detector (or detectors, a list) and one family within the window are summed per detector, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each detector saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the instrument's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders (a tie of remainders broken by the lower index), the expectation and no sample, and the clicks are one draw of N by the shares with the expectation's `seed` (the instrument draws, by Python's `random.Random(seed).choices`; no draw is in the law), one quantum to one detector by the draw's construction (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range (`extrema`, the one rule of the builder and the reader), the visibility at the blind central maximum (the expectation's `central`) against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over every interval of the window, the negative ones included, as an exact fraction and its half-maximum span, in the engine's interval labels (the click at tick t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the detectors, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
+"""The credit per detector over a window of intervals, read from a run's output file against an expectation file (DETECTOR, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the detector a declared instrument and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's detector (or detectors, a list) and one family within the window are summed per detector, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each detector saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the instrument's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders (a tie of remainders broken by the lower index), the expectation and no sample, and the clicks are the quanta the instrument credited inside the run, per region the `credit` lines' counts within the window (the click written on the GameBoard with the world's declared seed and generator, `src/event_universe/credit.py`; one quantum to one detector by the draw's construction; None for a world declaring no instrument), the tool drawing nothing (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range (`extrema`, the one rule of the builder and the reader), the visibility at the blind central maximum (the expectation's `central`) against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over every interval of the window, the negative ones included, as an exact fraction and its half-maximum span, in the engine's interval labels (the click at tick t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the detectors, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import random
 from collections.abc import Sequence
 from fractions import Fraction
 from pathlib import Path
@@ -81,13 +80,19 @@ def apportioned(quanta: int, shares: list[int]) -> list[int]:
     return floors
 
 
-def drawn(quanta: int, shares: list[int], seed: int) -> list[int]:
-    """One draw of N clicks by the shares, the instrument's, with the declared seed (Python's `random.Random(seed).choices`, the instrument's generator): each quantum credited to one detector and never two; the clicks."""
-    found = [0] * len(shares)
-    if sum(shares) and quanta > 0:
-        for index in random.Random(seed).choices(range(len(shares)), weights=shares, k=quanta):
-            found[index] += 1
-    return found
+def credited(
+    lines: list[dict[str, object]], detectors: list[str], family: str, window: tuple[int, int]
+) -> dict[str, int] | None:
+    """The quanta the instrument credited to each named detector inside the run, its `credit` lines' counts of one family within the window summed, the clicks; None where the output holds no credit line of the family (a world declaring no instrument)."""
+    found = {name: 0 for name in detectors}
+    seen = False
+    for line in lines:
+        if line.get("event") != "credit" or line.get("family") != family:
+            continue
+        seen = True
+        if line.get("detector") in found and window[0] <= int(str(line["tick"])) <= window[1]:
+            found[str(line["detector"])] += int(str(line["count"]))
+    return found if seen else None
 
 
 def deviation(found: list[int], blind: list[object]) -> list[int]:
@@ -137,7 +142,7 @@ def read_row(row: list[int], expected: dict[str, object]) -> dict[str, object]:
 
 
 def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
-    """The reading: what each detector of the expectation's detector (or detectors) and family saw over its window, ordered along its axis, floored at 0, N over the wall to the nearest whole, the rounded shares (the expectation) and the clicks (one draw by the seed), each row with its extrema, visibility and deviation, the arrival of the screen's inflow in the engine's labels, with the blind numbers beside."""
+    """The reading: what each detector of the expectation's detector (or detectors) and family saw over its window, ordered along its axis, floored at 0, N over the wall to the nearest whole, the rounded shares (the expectation) and the clicks (the quanta the instrument credited in the run, from the credit lines), each row with its extrema, visibility and deviation, the arrival of the screen's inflow in the engine's labels, with the blind numbers beside."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     document = json.loads(output.read_text(encoding="utf-8"))
     lines = document["lines"]
@@ -163,11 +168,11 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
     seen = [saw[name] for _at, name in placed]
     shares = [max(value, 0) for value in seen]  # the credit's floor, the instrument's declaration
     quanta = nearest(sum(shares), wall)
-    seed = expected.get("seed")
     aside = [str(name) for name in expected.get("aside", [])]  # bare regions read beside the screen
     aside_seen = inflows(lines, aside, str(expected["family"]), window)
     rounded = apportioned(quanta, shares)
-    clicks = drawn(quanta, shares, int(seed)) if seed is not None else None
+    credits = credited(lines, names, str(expected["family"]), window)
+    clicks = [credits[name] for _at, name in placed] if credits is not None else None
     blind_row = [Fraction(str(value)) for value in expected["counts"]]
     return {
         "verdict": "DETECTOR",
@@ -184,7 +189,7 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
         "elsewhere": int(expected["laid"]) - quanta if "laid" in expected else None,
         "rounded_shares": read_row(rounded, expected),
         "clicks": read_row(clicks, expected) if clicks is not None else None,
-        "seed": seed,
+        "seed": expected.get("seed"),
         "blind": {
             "counts": expected["counts"],
             "maxima": [int(at) for at in expected.get("maxima", [])],
