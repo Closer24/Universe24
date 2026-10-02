@@ -1,0 +1,63 @@
+{
+ "integers": {
+  "node_clock": 6000,
+  "quantum_action": 32768,
+  "width": 63,
+  "link_unit": 16
+ },
+ "families": [
+  {
+   "name": "ion",
+   "pair": [
+    1,
+    1299
+   ],
+   "dimension": [
+    3,
+    2
+   ]
+  },
+  {
+   "name": "strong_drive",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 1,
+    "act": "rotation"
+   }
+  },
+  {
+   "name": "weak_drive",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 1,
+    "act": "rotation"
+   }
+  },
+  {
+   "name": "fluorescence",
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 1,
+    "act": "rotation"
+   }
+  }
+ ]
+}

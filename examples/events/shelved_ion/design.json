@@ -1,0 +1,387 @@
+{
+ "comment": "The shelved ion's telegraph as the characterising experiment of the click's round (the owner's word of 2026-10-02, about 11:00 Israel, 'Yes to the experiment', on the Boss's proposal of 10:50; HIGHLIGHTS.md, the lines of 10:48, 11:00 and 11:20; the two hands' design: the mathematician's 138, #1572 comment 5947659375, the telegraph as three clicks under the owner's line of 131 to 137, and the advisor's blind, #1572 comment 5947666040 section 4, corrected by his 5948063089 section 1, the shelving rate Zeno-limited; nature: Bergquist, Hulet, Itano and Wineland 1986, the telegraph of one Hg+ ion, 30 or 0 counts per 10 ms with the dark mean 0.09 s, and Itano, Heinzen, Bollinger and Wineland 1990, the Zeno-limited rate). Every number of the two worlds and of the blind stands in this file; the engine reads none of it. The folder holds the universe file `mercury_ion.json`, the world `shelved_ion.json`, its control `shelved_ion_control.json` and the blind `expectation.json`, written before any lay and any run, and no builder: the world is laid by no generator of main (status below) and the files were written by hand from this design, every key a declaration. TWO HYPOTHESES OF THE TEST WORLD UNDER THEIR OWN NAMES, declarations of the files and nothing in the engine (the owner's word of 11:00): (1) THE MODES AS LABELS (the mathematician's 124, declaration 1, #1572 comment 5946705567): the ion's family has the parts shape [3, 2], three planes laid as one event and never summed at a Node, the part the body's label, S (the ground mode), P (the excited mode the strong drive feeds) and D (the metastable shelf the weak drive feeds); the three shapes are laid by the file at interval 0 (the `parts` key of the body, S with the count 1, P and D with 0), the parts sharing one pair and so one rest rotation, so that the energy of a transition is not the board's and the quantum a part gives is laid at the frequency of the drive that fed the transition (the lay's balance per branch, 126 (2): the given light's frequency is the drive's); the atom's spectrum is not solved by the labels (124, what it does not solve) and this world asks nothing of it. (2) THE GIVING AT A DECLARED RATE (the mathematician's 126 (1), the floor; 128 B, 'a fifth act under its own name'; the owner's decision of 10:20 and his word of 10:20 on the Node level, HIGHLIGHTS.md): a quantum standing in an excited part is given to the light at the declared rate 1 / lifetime per interval (the `rates` key of the body), the exponential by construction and the rate one number read from nature until a derivation; the fluorescence P -> S at 1 / tau_P and the return D -> S at 1 / tau_D. THE BODY AS AN INSTRUMENT (the act of branch click-ends, the advisor's form at the owner's word of 10:20, two hands with 138): the body takes a quantum of a drive at the two-mode line's share and is re-laid in the realised part over its own Nodes with its whole count, the other parts 0 there (the shelving: the weak drive's quantum taken, the ion re-laid in D); it gives a quantum at the declared rate, laying one whole quantum of light at its shell Node on the row the body names (`gives_to`) and re-laying itself in the lower part (the fluorescence: P -> S, the light on the row `fluorescence`; the return: D -> S, the light on the weak drive's own row, the frequency the drive's); every draw with the file's seed, the run deterministic per seed. THE WORLD: a periodic box of 12 x 12 x 8 Nodes on the universe `mercury_ion.json` (no holder of the content, as the nuclide's universe: the ion is one quantum and its content well is nothing); the ion one quantum of the family `ion` at the near-flat pair [1, 1299] (the toy atom's heavy family on branch toy-worlds, cos omega = 1 / 1299, the band's inertia m* = 3 tan omega = 3,897: nature's ion is 200 times a nucleon and held by its trap; here it is held by its inertia and re-laid at its declared Node at every click, spreading between clicks by t / (2 m*), 0.21 Links over the longest dark period) at the centre Node [6, 6, 4], one Node, its shell Node itself; two drives as two holders of the sign under the act `rotation` (ALGEBRA.md, The sign holder rotates the two-part record; The turn per proper interval), each a plane wave of its own row laid by the message lay over the whole box on a periodic axis, so that it circulates for the whole run with its amplitude at the ion constant: `strong_drive` along x at k = pi / 2 and the amplitude 3,000, the S <-> P drive, saturating, and `weak_drive` along y at k = pi / 2 and the amplitude 53, the S -> D drive; a third holder of the sign, `fluorescence`, carrying no drive, on which the P -> S quantum is laid, so that the counter reads the fluorescence apart from the drives (a counter reading the drive's own row would write its hole into the drive at every click); one counter, `fluorescence_counter`, every Node of the box but the ion's, so that every given quantum enters it within a few intervals through the ion's six Ports (nature's counter sees a solid angle of about 10^-4 of the fluorescence; here the whole of it, and the counts per bin are the quanta given per bin), with the `instrument` key as branch click-ends declares it (the window B = 160 intervals, the seed 24, the generator x <- (multiplier x + increment) mod 2^width with the gate worlds' two integers and the width the universe file's 63); no face recedes: a drain by a receding face grows the board at light's pace, 0.45 Links per interval at k = pi / 2, and ends the run at the axis's largest size within a few hundred intervals of a run of 96,000, so the box is periodic and a given quantum, once credited (the count down by one in the credit's accounting, the levels at one Node taken), stays on the board as an empty wave, uncreditable, its share at the ion's Node at most the accumulated share over the box's 1,152 Nodes (`fence`). THE BLIND in the law's names (expectation.json, written before any run): the fluorescence rate R = 1 / (2 tau_P) per interval under the saturating strong drive (the P part's mean share one half), so the counts per bin of B intervals in a bright period are Poisson with the mean B / (2 tau_P) = 20; the shelving rate Zeno-limited, Omega_w^2 / R, with Omega_w the weak drive's Rabi rate in the law's units, k_r ell_w / Gamma times the two modes' overlap (the weak light's level at the body, 53, over Gamma, the read weight 1 and the overlap 1 since the parts' shapes are alike), so the bright periods are exponential with the mean R / Omega_w^2 = 1,602 intervals; the return at 1 / tau_D, the dark periods exponential with the mean tau_D = 1,600; the dark fraction tau_D / (tau_D + R / Omega_w^2) = 0.4997; the counts per bin BIMODAL, two peaks, at 20 and at 0; the control, the same world on today's engine with no instrument and no body's click, unimodal (0 in every bin: a steady rotation writes no beat and no quantum is given without the act; the law as written before the write, the giving drawn from the shares without the re-lay, 128's verdict, unimodal Poisson at the mean rate). The ratios kept: tau_P much less than B (4 against 160), B much less than tau_D and than R / Omega_w^2 (160 against 1,600), tau_D about R / Omega_w^2 (1,600 against 1,602), the run 30 (tau_D + R / Omega_w^2) = 96,000 intervals, 600 bins, about 30 switches; the bin over the dark mean 0.10 as nature's 10 ms over 90 ms. Nothing is laid and nothing is run here: the loader of main refuses the world by the key `instrument` and past it the body's keys by name (`keys_the_loader_of_main_refuses`); the body as an instrument is the act of branch click-ends (`what_the_click_ends_act_must_provide`).",
+ "status": "declared, not laid, not run: the world file carries the click-ends round's `instrument` key and the body's four keys of the hypotheses (`parts`, `transitions`, `rates`, `instrument`), each refused by name by the loader of main (checked on main 6f0f356e, the refusals quoted below); the control carries main's keys alone and is refused at the mode file, the body's lay being the act's own (a one-quantum body of a plane family reading no holder of the content is below the generator's window of mass and the three parts' lay at interval 0 is 124's declaration); no builder, no mode file, no run",
+ "universe": "examples/events/shelved_ion/mercury_ion.json",
+ "engine": "examples/events/engine_start.json",
+ "worlds": {
+  "shelved_ion": "the telegraph world: the ion as an instrument with its parts and rates, the counter with the `instrument` key",
+  "shelved_ion_control": "the control: the same board, universe, drives, ion and counter with main's keys alone, no instrument, no body's click"
+ },
+ "integers": {
+  "node_clock": 6000,
+  "quantum_action": 32768,
+  "width": 63,
+  "link_unit": 16
+ },
+ "families": {
+  "ion": {
+   "pair": [
+    1,
+    1299
+   ],
+   "dimension": [
+    3,
+    2
+   ],
+   "what": "the ion, three planes as one event, the parts the labels S, P, D"
+  },
+  "strong_drive": {
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": [
+    "wronskian"
+   ],
+   "level_weight": 1,
+   "act": "rotation",
+   "what": "the S <-> P drive's row, its record the strong light"
+  },
+  "weak_drive": {
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": [
+    "wronskian"
+   ],
+   "level_weight": 1,
+   "act": "rotation",
+   "what": "the S -> D drive's row, its record the weak light; the return's quantum is laid on it"
+  },
+  "fluorescence": {
+   "pair": [
+    6000,
+    6000
+   ],
+   "held": [
+    "wronskian"
+   ],
+   "level_weight": 1,
+   "act": "rotation",
+   "what": "the fluorescence's row, carrying no drive; the P -> S quantum is laid on it and the counter reads it"
+  },
+  "no_holder_of_the_content": "the ion is one quantum; its content well is nothing (the nuclide's universe, examples/events/nuclide/deuteron.json, is the precedent)"
+ },
+ "amplitude_bound_read_from_the_loader": 9264,
+ "shape": [
+  12,
+  12,
+  8
+ ],
+ "boundary": {
+  "x": "periodic",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ion": {
+  "family": "ion",
+  "node": [
+   6,
+   6,
+   4
+  ],
+  "count": 1,
+  "pair": [
+   1,
+   1299
+  ],
+  "rest_rotation": {
+   "cos_omega": "1 / 1299",
+   "omega": 1.5700264,
+   "sin_omega": 0.9999997
+  },
+  "inertia": {
+   "formula": "m* = 3 tan omega",
+   "value": 3897,
+   "spread_over_a_dark_period_in_links": "tau_D / (2 m*) = 0.21",
+   "spread_over_a_window_in_links": "B / (2 m*) = 0.021"
+  },
+  "level_at_the_node": {
+   "formula": "one quantum's Wronskian W = T / 2 = A^2 sin omega",
+   "value": 128
+  },
+  "parts": [
+   {
+    "part": 0,
+    "name": "S",
+    "role": "ground",
+    "count_at_interval_0": 1
+   },
+   {
+    "part": 1,
+    "name": "P",
+    "role": "excited, fed by the strong drive, gives to the fluorescence at 1 / tau_P",
+    "count_at_interval_0": 0
+   },
+   {
+    "part": 2,
+    "name": "D",
+    "role": "metastable shelf, fed by the weak drive, gives to the weak drive's row at 1 / tau_D",
+    "count_at_interval_0": 0
+   }
+  ],
+  "shapes": "the three parts' shapes alike, the one Node's standing record of one quantum (the symmetric lay, GameBoard.lay), the labels alone telling them apart",
+  "overlap": {
+   "value": 1,
+   "why": "the two modes' overlap in Omega's formula; the shapes alike, the overlap is 1"
+  },
+  "shell_node": "the ion's one Node, [6, 6, 4], where the given quantum is laid",
+  "re_lay": "at every click the realised part is laid over the body's declared Node in the declared shape with the whole count, the other parts 0 there (138; the trap's hold)"
+ },
+ "drives": {
+  "strong_drive": {
+   "family": "strong_drive",
+   "along": "x",
+   "wave": [
+    1,
+    2
+   ],
+   "k": "pi / 2",
+   "wavelength_links": 4,
+   "amplitude": 3000,
+   "top": {
+    "x": [
+     0,
+     11
+    ],
+    "y": [
+     0,
+     11
+    ],
+    "z": [
+     0,
+     7
+    ]
+   },
+   "edge": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+   },
+   "level_at_the_body": 3000,
+   "turn_per_interval": {
+    "formula": "theta = 2 arctan((L p_0 / Gamma) / (2 Gamma)) at p_0 = Gamma",
+    "value": 0.49
+   },
+   "rabi_rate_per_interval": {
+    "formula": "Omega_s = k_r ell_s / Gamma x overlap",
+    "value": 0.5
+   },
+   "saturation": {
+    "formula": "s = 2 (Omega_s tau_P)^2; the P part's mean share s / (2 (1 + s)), one half at s much above 1",
+    "s": 8.0,
+    "share_P": 0.4444444444444444
+   },
+   "light_frequency": {
+    "cos_omega": "(cos k + 2) / 3 = 2 / 3",
+    "omega": 0.8411,
+    "period_intervals": 7.47
+   },
+   "pace_links_per_interval": {
+    "formula": "sin k / (3 sin omega)",
+    "value": 0.447
+   },
+   "quanta_laid_about": {
+    "formula": "2 A^2 (1 - cos omega) / T per Node, over the box",
+    "value": 210937
+   },
+   "taken_over_the_run_about": 6000,
+   "guards": "the level 3,000 under the rotation guard's 2 Gamma = 12,000 and the amplitude bound 9,264; the tangent half-angle 0.25"
+  },
+  "weak_drive": {
+   "family": "weak_drive",
+   "along": "y",
+   "wave": [
+    1,
+    2
+   ],
+   "k": "pi / 2",
+   "wavelength_links": 4,
+   "amplitude": 53,
+   "top": {
+    "x": [
+     0,
+     11
+    ],
+    "y": [
+     0,
+     11
+    ],
+    "z": [
+     0,
+     7
+    ]
+   },
+   "edge": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+   },
+   "level_at_the_body": 53,
+   "turn_per_interval": {
+    "formula": "theta = 2 arctan((L p_0 / Gamma) / (2 Gamma)) at p_0 = Gamma",
+    "value": 0.008833
+   },
+   "rabi_rate_per_interval": {
+    "formula": "Omega_w = k_r ell_w / Gamma x overlap, k_r = 1, overlap 1",
+    "value": 0.008833333333333334,
+    "squared": 7.802777777777777e-05
+   },
+   "quanta_laid_about": {
+    "formula": "2 A^2 (1 - cos omega) / T per Node, over the box",
+    "value": 65.8
+   },
+   "count_over_the_run": "down by one per shelving, up by one per return laid on this row, down by one where the counter credits the return: about 30 less at the end of about 66, so the drive is never exhausted and its level at the body falls by under 2 percent (the taken share leaves at one Node, 0.06 of a quantum)"
+  },
+  "why_plane_waves_on_periodic_axes": "a packet passes the ion in tens of intervals and the engine has no source; a plane wave on a periodic axis circulates for the run with its amplitude at the ion constant, and its net inflow through any region is 0 but for the rounding (the share of a plane wave is uniform and constant), so the counter credits none of it"
+ },
+ "rates": {
+  "P_to_S": {
+   "lifetime": 4,
+   "rate_per_interval": 0.25,
+   "gives_to": "fluorescence",
+   "what": "the fluorescence, the strong transition's; nature's 2P lifetime 2.3 ns"
+  },
+  "D_to_S": {
+   "lifetime": 1600,
+   "rate_per_interval": 0.000625,
+   "gives_to": "weak_drive",
+   "what": "the return from the shelf; nature's tau_D = 0.09 s (Bergquist 1986)"
+  }
+ },
+ "body_instrument": {
+  "window": 1,
+  "seed": 25,
+  "multiplier": 6364136223846793005,
+  "increment": 1442695040888963407,
+  "what": "the body's own draw per interval (the rates are per interval), the generator the gate worlds', its seed its own; the act may read the world's generator instead, named"
+ },
+ "counter": {
+  "name": "fluorescence_counter",
+  "positions": "every Node of the box but the ion's, 1,151 Nodes, one connected region (periodic), its front the ion's six Ports",
+  "reads": "every family of quanta, as every detector of main does; the blind reads its `fluorescence` lines and, beside them, its `weak_drive` lines (the returns)",
+  "distance_from_the_ion_links": 1,
+  "collection": "the whole of every given quantum within a few intervals (light's pace 0.45 Links per interval, the box wrapping at 6 Links along x and y and 4 along z)"
+ },
+ "instrument": {
+  "window": 160,
+  "seed": 24,
+  "multiplier": 6364136223846793005,
+  "increment": 1442695040888963407,
+  "width": "the universe file's 63 (the generator mod 2^width)"
+ },
+ "ticks": 96000,
+ "window": [
+  1,
+  96000
+ ],
+ "bin": 160,
+ "bins": 600,
+ "blind_numbers": {
+  "R_per_interval": {
+   "formula": "1 / (2 tau_P)",
+   "value": 0.125,
+   "at_the_declared_saturation": 0.1111111111111111
+  },
+  "counts_per_bright_bin": {
+   "formula": "B / (2 tau_P)",
+   "value": 20.0,
+   "at_the_declared_saturation": 17.77777777777778
+  },
+  "shelving_rate_per_interval": {
+   "formula": "Omega_w^2 / R, Zeno-limited (the advisor's 5948063089 section 1; Itano 1990)",
+   "value": 0.0006242222222222222
+  },
+  "bright_mean_intervals": {
+   "formula": "R / Omega_w^2",
+   "value": 1602.0,
+   "in_bins": 10.01
+  },
+  "dark_mean_intervals": {
+   "formula": "tau_D",
+   "value": 1600,
+   "in_bins": 10.0
+  },
+  "dark_fraction": {
+   "formula": "tau_D / (tau_D + R / Omega_w^2)",
+   "value": 0.4997
+  },
+  "switches_over_the_run": {
+   "formula": "ticks / (tau_D + R / Omega_w^2)",
+   "value": 29.98
+  },
+  "quanta_given_over_the_run_about": {
+   "formula": "ticks x (1 - dark fraction) x R",
+   "value": 6000
+  },
+  "peaks": [
+   20.0,
+   0
+  ]
+ },
+ "ratios": {
+  "tau_P_over_B": 0.025,
+  "B_over_tau_D": 0.1,
+  "B_over_bright_mean": 0.0999,
+  "tau_D_over_bright_mean": 0.9988,
+  "run_over_one_cycle": 29.98,
+  "asked": "tau_P much less than B, at least 20 counts per bright bin; B much less than tau_D and than R / Omega_w^2; tau_D about R / Omega_w^2; the run at least 30 (tau_D + R / Omega_w^2) (the advisor's 5947666040 section 4 and 5948063089 section 1)"
+ },
+ "choices_and_reasons": {
+  "tau_P = 4": "the smallest lifetime at which the strong drive saturates under the guards: Omega_s tau_P = 2 at the level 3,000 (s = 8); the Boss's example",
+  "B = 160": "40 tau_P, 20 counts per bright bin, the advisor's floor; 0.10 of tau_D as nature's 10 ms bin is 0.11 of 0.09 s; the Boss's example",
+  "tau_D = 1600": "equal to R / Omega_w^2 at the weak level 53, both periods seen; 10 bins",
+  "A_w = 53": "Omega_w = 53 / 6000 gives R / Omega_w^2 = 1,602, tau_D's value; and the weak drive's about 66 quanta over the box cover the run's about 30 shelvings",
+  "A_s = 3000": "half Gamma: the turn 0.49 per interval under the tangent half-angle guard, s = 8, the P share 0.444 against the saturated one half, both written",
+  "k = pi / 2": "the wavelength 4 Links divides the box's 12 and 8, so each plane wave wraps exactly on its periodic axis; the house's pi / 4 (the wavelength 8) would need a box of 16 and twice the cost, and the weak drive's count per Node, 2 A^2 (1 - cos omega) / T, is largest at a large k (1 - cos omega = 1 / 3 at pi / 2 against 0.098 at pi / 4), so the box holds about 66 weak quanta for the run's about 30 shelvings",
+  "ticks = 96000": "30 (tau_D + R / Omega_w^2); 600 bins; about 30 bright and 30 dark periods",
+  "shape = [12, 12, 8]": "1,152 Nodes, 1.1 x 10^8 Node-intervals, minutes at the engine's pace (the two slits' 2.8 x 10^5 in a few seconds); 12 and 8 multiples of the wavelength 4; the box wraps at 6 Links from the ion along x and y and at 4 along z",
+  "the ion's pair [1, 1299]": "the heaviest pair the house has laid (the toy atom's core): the ion spreads 0.21 Links over a dark period and 0.02 over a window, so its own share entering the adjacent counter per window, under 10^-3 of a quantum, credits nothing",
+  "one Node": "the shell Node is the body itself; the three shapes alike; the counter adjacent",
+  "no holder of the content": "one quantum's well is nothing; the nuclide's precedent",
+  "three holders of the sign": "the fluorescence apart from the drives, so the counter's hole is written on the fluorescence row alone; the ion reads all three under the rotation and sources each statically by its Wronskian (W = T / 2 per quantum, a static level around one Node, a fraction of a level at the level weight 1)",
+  "periodic, no receding face": "see the comment: a drain grows the board without bound over a long run; the accumulated empty waves are the fence of the bright bins' width",
+  "the window of the counter = the bin": "the credit draws at the window's end; a bin is a window"
+ },
+ "wave_fit": "a plane wave on a periodic axis wraps exactly where the axis's extent is a multiple of its wavelength: the wave [1, 2] has the wavelength 4 and the box is 12 x 12 x 8, so the strong drive along x (12), the weak drive along y (12) and the wraps along z (8) all fit",
+ "nature": {
+  "Bergquist_Hulet_Itano_Wineland_1986": "Phys. Rev. Lett. 57, 1699: one Hg+ ion, the 194 nm S-P fluorescence under a saturating drive, the 282 nm S-D weak drive, 30 or 0 counts per 10 ms bin, bright and dark periods, tau_D = 0.09 s",
+  "Itano_Heinzen_Bollinger_Wineland_1990": "Phys. Rev. A 41, 2295: the quantum Zeno effect, the weak transition's rate limited by the strong transition's resets, Omega_w^2 / R in form",
+  "Cook_Kimble_1985": "Phys. Rev. Lett. 54, 1023: the telegraph's statistics from rate equations, exponential periods",
+  "scaling": "the engine's intervals compress nature's: tau_P / B is 2.3 x 10^-7 in nature and 0.025 here; B / tau_D 0.11 and 0.10"
+ },
+ "keys_the_loader_of_main_refuses": {
+  "checked_on": "main 6f0f356e, src/event_universe/loader/world.py, the parser's refusals quoted",
+  "instrument on the world": "the world holds the unknown key 'instrument': its keys are ['shape', 'boundary', 'face_depth', 'faces', 'ticks', 'universe', 'engine', 'measured', 'messages', 'detectors', 'receding']",
+  "instrument on the body": "measured[0] holds the unknown key 'instrument': its keys are ['family', 'nodes']",
+  "parts on the body": "measured[0] holds the unknown key 'parts': its keys are ['family', 'nodes']",
+  "rates on the body": "measured[0] holds the unknown key 'rates': its keys are ['family', 'nodes']",
+  "transitions on the body": "measured[0] holds the unknown key 'transitions': its keys are ['family', 'nodes']",
+  "the control": "measured[0] has no entry in the mode file beside the world: its levels are the generator's (the body's lay the act's; everything else of the control, the universe of three holders of the sign and the ion's shape [3, 2], the periodic box, the two plane waves and the counter of 1,151 Nodes, is admitted by the loader of main)",
+  "order": "the world's keys are checked first, so `instrument` on the world is the first refusal; without it the mode file's, and with a mode file the body's keys in the order of the parser's sort"
+ },
+ "what_the_click_ends_act_must_provide": [
+  "the `instrument` key of the world as branch click-ends declares it (window, seed, multiplier, increment; the width the universe file's), the counter's draw at every window's end from its window inflows per family, N = (inflow + W_c div 2) div W_c at most the record's count, the write at the one front Node drawn, the credit line per quantum",
+  "the body's parts laid by the file at interval 0 (`parts`): the three planes of the shape [3, 2] at the one Node, S the one quantum's standing record, P and D 0; a lay of main's generator does not do it (a one-quantum body reading no content holder is a cloud to it)",
+  "the body's taking click from a drive's level and not from its net inflow: a plane wave's net inflow through the body's six Ports is 0, so the two-mode line's share is read from the drive's level at the body, the share after t intervals since the body's last re-lay (Omega t)^2 with Omega = k_r ell / Gamma x overlap, capped at 1 (the coherent build-up, 138; the advisor's 5948063089 section 1), one draw per interval with the body's seed; the taken quantum leaves the drive's record (its count down by one, the levels at the body's Node taken as the receding face takes a share) and the body is re-laid in the realised part (`transitions`: S -> P from `strong_drive`, S -> D from `weak_drive`)",
+  "the body's giving click at the declared rate (`rates`): a quantum in P given at 1 / tau_P per interval and one in D at 1 / tau_D, one draw per interval with the body's seed; the given quantum one whole quantum of light laid at the shell Node on the row `gives_to` (the fluorescence row for P -> S; the weak drive's row for D -> S), its frequency the drive's (the parts share one rotation), the row's count up by one, and the body re-laid in S",
+  "the re-lay in the declared shape at the declared Node (`nodes`), the other parts 0 there, so that the body does not walk over 96,000 intervals (nature's trap)",
+  "the saturated S <-> P exchange: the P part's mean share one half under the strong drive (the blind's R = 1 / (2 tau_P)); with the declared level the two-mode line's saturation s = 8 gives 0.444, the fence",
+  "the credit's count per family: the fluorescence row's count rises by one per giving and falls by one per credit, so an empty wave is credited by no counter and the dark bins read 0 whatever the accumulated levels show",
+  "the output: one `credit` line per credited quantum (family, region, window), read per window as the bin's count; the back-in-time gate exact between clicks and across a click from the click line"
+ ],
+ "sources_of_the_numbers": {
+  "the three modes as parts [3, 2], the labels": "the mathematician's 124, declaration 1 (#1572 comment 5946705567); the owner's word of 11:00 (HIGHLIGHTS.md)",
+  "the giving at a declared rate, 1 / tau_P and 1 / tau_D": "the mathematician's 126 (1) (#1572 comment 5946949403), the floor; 128 B; the owner's word of 11:00",
+  "the telegraph as three clicks, the Zeno-limited shelving Omega_w^2 / R": "the mathematician's 138 (#1572 comment 5947659375); the advisor's 5948063089 section 1",
+  "R = 1 / (2 tau_P), the Poisson bins, the dark fraction, the ratios": "the advisor's 5947666040 section 4",
+  "Omega = k_r ell / Gamma x overlap": "the advisor's 5948063089 section 1, the Rabi rate in the law's units; ALGEBRA.md, The turn per proper interval, theta = (level / Gamma) (p_0 / Gamma)",
+  "tau_P = 4, B = 160, tau_D about 2,000, the run about 1.2 x 10^5 on a small board": "the Boss's brief (tau_D and the run shortened to 1,600 and 96,000 at the weak level 53, the ratios kept)",
+  "the instrument key's four integers and the gate worlds' generator": "docs/ENGINE.md on branch click-ends, section 4 (the world's keys), and examples/events/bell/design.json there",
+  "the near-flat pair [1, 1299]": "examples/events/toy_atom/design.json on branch toy-worlds, the core's pair",
+  "the amplitude bound 9,264": "read once from the loader of main on this universe, a check and no declaration",
+  "nature's numbers": "Bergquist, Hulet, Itano and Wineland 1986; Itano, Heinzen, Bollinger and Wineland 1990; Cook and Kimble 1985"
+ },
+ "seed": 24
+}

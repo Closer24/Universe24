@@ -58,7 +58,17 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   interval, every click's inflow even and one whole nuclide per 2 T sin omega_N,
   the holder of the sign at 0), read from the run's `click` and `parts` lines;
   beside them `examples/events/parallel_charges/`, a design and a blind with no
-  world yet, to be run when the generator lays a moving body.
+  world yet, to be run when the generator lays a moving body;
+- and the shelved ion's telegraph, `examples/events/shelved_ion/`, the click
+  round's characterising experiment declared before any run: one ion of three
+  modes as the parts of one record (the shape [3, 2], the labels S, P and D), two
+  drives as two holders of the sign circulating as plane waves on a periodic box,
+  the two giving rates declared and one counter about the ion, with its
+  `design.json` (every integer with its reason) and its blind `expectation.json`
+  (the counts per bin bimodal, the bright periods exponential at the Zeno-limited
+  shelving rate, the dark periods at the declared return rate; the control
+  unimodal); its keys of the body as an instrument are refused by name by the
+  loader of `main` until the click round lands, and nothing of it has run.
 
 The three documents: [the law](docs/ALGEBRA.md), one algebraic line per rule;
 [the engine](docs/ENGINE.md), the input files, the interval, the output, how to
