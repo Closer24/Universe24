@@ -408,14 +408,14 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
 
 
 def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands():
-    """The hole of a dense record (the mathematician's 237 with the advisor's second, #1572 comments 5967012316 and 5967123679, two hands; features/click `hole_factor`, `target_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (s above W_rec), at the trial seed 2, beside its untouched twin. (i) The factor: None where the share is at most the unit; sqrt((s - W_rec) / s) within the root's own rounding above it, the numerator within the width's half. (ii) The taking at 24: the drive's two levels at the Node after the face's two intervals are the twin's scaled by the factor within one level, their ratio the twin's (the phase and the sense stand), not 0, the count down by one, no front begun. (iii) The back-in-time gate reads MATCH across the dense taking over the run, the face's inverse presenting the kept values whatever the target."""
+    """The hole of a dense record (the mathematician's 237 with the advisor's second, #1572 comments 5967012316 and 5967123679, two hands; features/click `hole_factor`, `target_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (s above W_rec), at the trial seed 2, beside its untouched twin. (i) The factor: None where the share is at most the unit; sqrt((s - W_rec) / s) within the root's own rounding above it, the numerator within the width's half and the scale m above 0 at the Zeno share against the width's largest integer (the advisor's second, #1572 comment 5967957083: the root taken with the carry). (ii) The taking at 24: the drive's two levels at the Node after the face's two intervals are the twin's scaled by the factor within one level, their ratio the twin's (the phase and the sense stand), not 0, the count down by one, no front begun. (iii) The back-in-time gate reads MATCH across the dense taking over the run, the face's inverse presenting the kept values whatever the target."""
     width, zeno = (1 << 63) - 1, EVENTS / "zeno" / "zeno_2.json"
     assert hole_factor(5, 5, width) is None and hole_factor(4, 5, width) is None
     numerator, denominator = hole_factor(1540 * 10**6, 440 * 10**6, width) or (0, 1)
     assert (
         abs(numerator / denominator - (1100 / 1540) ** 0.5) < 1e-4
     )  # the root's own rounding, 1 / isqrt(s)
-    assert numerator < 1 << 32 and hole_factor(7, 3, 7) == (2, 2)  # the root's argument within 7
+    assert numerator < 1 << 32 and denominator > 1 << 16 > 39243  # m = 16 > 0 at this share: scaled
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
     unit, at, count = board.credit.units[pulse], (4, 4, 2), board.credit.counts[pulse]
