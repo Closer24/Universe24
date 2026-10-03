@@ -81,3 +81,29 @@ atom has no rates); the worlds declare no region detector. Re-run by `tools/meet
 8382b8b9 over the 120 seeds: P(e at T_pi) 1.000, 0.508, 0.367, 0.233, 0.133 at n = 1, 2, 4, 8, 16, the
 jumps 120; 95 and 34; 62 and 18; 32 and 4; 16 and 0, bit for bit the readings through the one click
 act above. PASS against column A at every n and unchanged.
+
+## On the resonant act, 2026-10-03 (branch resonant-act)
+
+The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
+seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
+morning, #1572 comments 5966338551 and 5966387795; the form in `examples/events/resonance/blind_and_reading.md`)
+turns the labels once per window by k isqrt(X^2 + Y'^2) div R, A W / 2 at resonance, where the
+magnitude form it replaces accumulated (2 / pi) A W per window; the design's drive amplitude is
+rescaled once by 4 / pi, 308 to 392, a file number by name in `design.json` with the hands' ids, so
+that the pi pulse stands where T9 has it (48 x 392 / (2 x 6000) = 1.568 against pi / 2), the five
+worlds and their mode files rebuilt by `build_world.py --modes`, the blind's column untouched. Re-run
+by `tools/meeting_trials.py` over the 120 seeds:
+
+| n | window | trials ending in e | P(e at T_pi) | blind | the shipped act |
+| --- | --- | --- | --- | --- | --- |
+| 4 | 12 | 44 of 120 | 0.367 | 0.375 | 44 of 120 |
+
+PASS at n = 4 within one standard error of column A (0.045), the same count as the shipped act's 44
+of 120; the jumps 61 g to e and 17 e to g against 62 and 18. Named beside it, a GameBoard matter and
+no adjustment of the blind: the window's turn is now the plane's size over the window whatever the
+drive's phase at the window's start (the hands' A W / 2 at every arrival phase), so the angle per
+window no longer varies with that phase as the magnitude form's did; and the one turn per window
+passes through the engine's turn, 2 arctan of the numerator over 2 Gamma, so a window carrying a
+quarter turn in one application (n = 1, the numerator 9,408 against 12,000) turns by 1.33 and not
+1.57, a compression of the tangent half-angle at large turns, named here before the other probe
+counts are read.

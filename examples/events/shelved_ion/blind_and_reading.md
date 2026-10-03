@@ -179,3 +179,16 @@ shipped reading changed by name, the blind untouched. The ion instrument test of
 `tests/test_the_meeting.py`, whose counter is one plane of a 6 x 6 x 4 periodic box three Links from
 the ion, reads no credit under the same lay (the inflow below half a quantum in its window), the floor
 in a small box, named there.
+
+## On the resonant act, 2026-10-03 (branch resonant-act)
+
+The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
+seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
+morning, #1572 comments 5966338551 and 5966387795; the form in `examples/events/resonance/blind_and_reading.md`)
+leaves this world's reading as it was on 8382b8b9, number for number: REFUSED at the interval 434
+(the strong drive's row at 10,314 above 9,266), counts per bin 5, 9, 0, 43 takings `P by strong_drive`
+and 43 givings `S by fluorescence`, their spacing 9.69 +/- 6.2, the dark fraction 0.333, the returns
+422. The ion's window is one interval, the one window at which the two forms coincide: the plane's
+size over one interval is |a_t| R within the reference records' rounding, so the turn per window is
+k |a_t| as the magnitude form had it. The telegraph's bins move with every form of the giving and
+read nothing of the blind until the strong drive's row is fixed, as the advisor's second says.

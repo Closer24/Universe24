@@ -123,3 +123,36 @@ the lifetime 48 is the degenerate corner, 100 of 100 by the weights 48 against 0
 the resonant two-mode act has his line (a reference record at the declared pair, two quadratures, the
 plane's size over the window, the Zeno world's k rescaled once by 4 / pi) and is a round of its own,
 not this one's, cited with the advisor's 5965700585 at the findings 4 and 5 above.
+
+## On the resonant act, 2026-10-03 (branch resonant-act)
+
+The resonant two-mode act is built in the taker's act (`src/event_universe/meeting.py`, `gathered`,
+`window_turn`, `turned_labels`; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
+seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
+morning, #1572 comments 5966338551 and 5966387795): the taker keeps per transition two reference records at its
+declared pair, r_t = R cos(Omega_d t) and r'_t = R sin(Omega_d t), advanced by the giving's recurrence
+(`giving.advanced`), r' begun at (0, isqrt(R^2 (den^2 - num^2)) div den), one root at the declaration;
+over the window X = SUM a_t r_t and Y' = SUM a_t r'_t, and at the close the turn k isqrt(X^2 + Y'^2)
+div R once per window, R = 2^11 here (the largest power of two with 2 (R A W)^2 inside the width at
+A = 9,266 and W = 96), derived and never declared. Re-run by `tools/meeting_trials.py` over the
+design's 100 seeds, the blind above untouched:
+
+4. The resonant taker: 22 takings in 100 seeds (`measured 1 e by pulse` 22; the shipped act's 39).
+   Against the blind's share 1: a MISS as before and the same FINDING by name of the design's
+   coupling: the window's turn is k times the plane's size, A W_eff / 2 at resonance with W_eff the
+   intervals over which the wave stands at the Node 12, about 20 of the window's 96 (the front at the
+   group pace 0.447 reaching the Node 12 at about the interval 75), the share sin^2 of that turn about
+   0.2 here, and no pi pulse was tuned; the blind's "share 1" is S.43's sin^2(g tau) at g tau = pi / 2,
+   a condition the design did not set.
+5. The detuned taker at [1, 3]: 0 takings in 100 seeds (the shipped act's 39), the ratio detuned over
+   resonant 0 against 22 of 100. Against the blind's "fewer than one taking in a thousand of the
+   resonant record's": PASS at the resolution the 100 seeds give, one in a hundred, which cannot
+   resolve one in a thousand (a reading of 0 against 22 is consistent with the blind and excludes the
+   shipped act's ratio 1.00); the detuned turn is the resonant one times sinc(delta W_eff / 2), about
+   0.18 at W_eff of about 20 (0.007 at the blind's tau = 48), its share about 0.006 of the resonant
+   record's, below one taking in 100 seeds. Items 1 to 3 (the giving, the far Node's cosine, the
+   count) are the giver's and unchanged: the taker's act reads and does not write until its close.
+
+The giving's 100 of 100 at the window 48 equal to the lifetime 48 stands as the degenerate corner the
+mathematician's 223 (a) named; the per-interval hazard at the now (224 (2)(a)) is the window round's
+and not this one's.
