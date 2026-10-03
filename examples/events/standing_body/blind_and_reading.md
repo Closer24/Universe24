@@ -14,7 +14,7 @@ written as such and never adjusted.
 
 ## The blind (167 with the advisor's second hand)
 
-1. **The drift** (read 1, the centroid as `tools/body_drift.py` reads it): each component below
+1. **The drift** (read 1, the centroid of the share): each component below
    3 x its rms, 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)); for this body from the lay's profile
    1.0 x 10^-3 Links at n = 1000 and T = 2^15; one draw, loose, no test.
 2. **The share's deviation over the body** (read 2): rho_s = (2 sigma sqrt(n) / A) sqrt(SUM f^2 /

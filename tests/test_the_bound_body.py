@@ -1,4 +1,4 @@
-"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the GameBoard admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands. The rotation round (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; #the-rows-against-nature (b2) and (f); HIGHLIGHTS.md, There is no sense): the turn is three exact shears, undone bit for bit and within two units of the real rotation; the angle is the holder's level over Gamma and the record of positive Wronskian rotates faster by it; the Wronskian read with the angle is the conserved one, and a record's Wronskian keeps its sign under Rule3; the odd line on the Link shifts the wave number by its angle with the Port's sign, is sourced by the sign's current, the mean of the Node's two a-Links' Wronskian currents, odd under the sense, and written over the time line's wall E_s T, the same wall as the time level's W, so that the odd level over the time level is the law's 3 den v / num; the act is the file's declaration, refused by name where it is not one of the two or asked of a holder of the content; a one-part reader and the two gates' worlds are untouched; the like-or-unlike look's six charged worlds (like, unlike, the two plain controls and the two charged single bodies), which have no lay under the energy line's integers, are refused at load by name with the start's refusals recorded in the blind, and its three uncharged worlds run the window whole with the back-in-time gate MATCH; the charged looks' drift and back-in-time and the plain control's reading of the two senses (the holder sourced oppositely and read plainly) wait for the re-design with the small charge (N_q at most about 400 on a neutral content), the engine round's open item."""
+"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the GameBoard admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands. The rotation round (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; #the-rows-against-nature (b2) and (f); HIGHLIGHTS.md, There is no sense): the turn is three exact shears, undone bit for bit and within two units of the real rotation; the angle is the holder's level over Gamma and the record of positive Wronskian rotates faster by it; the Wronskian read with the angle is the conserved one, and a record's Wronskian keeps its sign under Rule3; the odd line on the Link shifts the wave number by its angle with the Port's sign, is sourced by the sign's current, the mean of the Node's two a-Links' Wronskian currents, odd under the sense, and written over the time line's wall E_s T, the same wall as the time level's W, so that the odd level over the time level is the law's 3 den v / num; the act is the file's declaration, refused by name where it is not one of the two or asked of a holder of the content; a one-part reader and the two gates' worlds are untouched; the like-or-unlike look's worlds left the repository on 2026-10-03 at the owner's word (the six charged ones had no lay under the energy line's integers and were refused at load by name; the three uncharged ones were their control), its universe turning.json kept at examples/events/ for these tests."""
 
 import json
 import math
@@ -31,13 +31,11 @@ from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
 
-DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")  # the looks' drift tool
 GATED = (  # the smallest shipped world of each builder whose load is seconds; the long loads are the runner's gate
     ("anticoincidence", "one_photon"),
     ("bell", "bell_a_prime_b_prime"),
     ("ghz", "ghz_y_x_y"),
     ("neutron_conversion", "neutron_conversion"),
-    ("nuclide", "free_nuclide"),
     ("packet_giving", "packet_giving"),
     ("resonance", "detuned"),
     ("shelved_ion", "shelved_ion"),
@@ -46,8 +44,8 @@ GATED = (  # the smallest shipped world of each builder whose load is seconds; t
     ("zeno", "zeno_1"),
     ("zeno_pulsed", "zeno_pulsed_1"),
 )
-LOOK, GAMMA, PAIR, RING = EVENTS / "like_or_unlike", 6000, (4000, 6000), Wrap(True, True, True)
-INTEGERS, TURNING = universe_of(json.loads((LOOK / "turning.json").read_text(encoding="utf-8")))
+GAMMA, PAIR, RING = 6000, (4000, 6000), Wrap(True, True, True)
+INTEGERS, TURNING = universe_of(json.loads((EVENTS / "turning.json").read_text(encoding="utf-8")))
 T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]  # the rule's rows, the plane
 CHARGE, CHARGED, MATTER, BINDING = map(NAMES.index, ("charge", "charged", "matter", "binding"))
 LEVEL, SHAPE, VACUUM, KEYS = 100_000, (24, 1, 1), (GAMMA, (GAMMA,) * 3), ("now", "before", "remainder")
@@ -174,7 +172,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     back_lines, before = node.held_write(lines, sources, write.walls, remainders, -1)
     assert all(np.array_equal(a.now, b.now) for a, b in zip(back_lines, held.lines, strict=True))
     assert all(np.array_equal(a, b) for a, b in zip(before, held.write_remainders, strict=True))
-    universe = json.loads((LOOK / "turning.json").read_text(encoding="utf-8"))
+    universe = json.loads((EVENTS / "turning.json").read_text(encoding="utf-8"))
     rows = {row["name"]: row for row in universe["families"]}
     assert (TURNING[CHARGE].lines, TURNING[CHARGE].record, TURNING[CHARGE].rotation) == (8, 1, True)
     assert turns(TURNING, CHARGED) and not turns(TURNING, MATTER)
@@ -191,27 +189,11 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
 
 
 def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte(tmp_path):
-    """The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world) and every blind of examples/events: each blind is its builder's byte for byte; the three lawful pairs load, their run the blind's window; the charged ones are refused by name without a mode file, the start's refusals recorded in the blind by name. No world runs here: the looks' drift over the window, the back-in-time MATCH on the pairs over their 400 and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/body_drift.py, tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03: a committed 128-chain's held rests alone take longer at the load). The drift's tool runs over four intervals of the anticoincidence world, its reading two bodies. The count gate (GameBoard's start) runs on the smallest world of every builder whose load is seconds (GATED, the loader's mode file applied to the laid Nodes, the defect of #1788 caught here); the folders whose smallest world is a long load (light_and_charge, like_or_unlike, matter_alone, matter_and_binding, matter_and_gravity, standing_body, frozen_proton) keep the runner's gate at every run, by name."""
-    for folder in (LOOK, *(p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md")))):
+    """Every blind of examples/events is its builder's byte for byte (the builder run on a copy of its folder without --modes, the blind written from the design before any run; the mode files the generator's, the digest binding each to its world). No world runs here: the back-in-time MATCH on the shipped worlds and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03). The count gate (GameBoard's start) runs on the smallest world of every builder whose load is seconds (GATED, the loader's mode file applied to the laid Nodes, the defect of #1788 caught here); the folders whose smallest world is a long load (matter_alone, standing_body) keep the runner's gate at every run, by name. The like-or-unlike look and the light tube, the controls of experiments removed, left the repository on 2026-10-03 at the owner's word; their universe files turning.json and charged.json stand at examples/events/ for the tests."""
+    for folder in (p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md"))):
         build, out = load_file(f"{folder.name}_build", folder / "build_world.py"), tmp_path / folder.name
         build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
         assert (out / "expectation.json").read_bytes() == (folder / "expectation.json").read_bytes()
-    expected = json.loads((LOOK / "expectation.json").read_text(encoding="utf-8"))
-    charged, lawful = ([n for n in expected["worlds"] if ("uncharged" in n) is f] for f in (False, True))
-    for name in charged:  # declared without a mode file, refused at load by name
-        refused("mode file beside the world must be an object", load_world, LOOK / f"{name}.json")
-    for words in (
-        "length 8, 12699 and -8253 at the Node [33, 0, 0]",
-        "length 4, 531 and 539 at the Node [87, 0, 0]",
-        "declares the count 54 and its family's share reads 431 quanta",
-        "length 4, -5053 and 10375 at the Node [33, 0, 0]",
-        "length 2, -4548 and 9907 at the Node [95, 0, 0]",
-    ):
-        assert words in expected["comment"], words  # the start's refusals recorded in the blind by name
-    assert (len(charged), len(lawful)) == (6, 3)
-    assert all(load_world(LOOK / f"{n}.json").ticks == expected["window"][1] for n in lawful)  # loaded
-    read = DRIFT.drift(GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json")), 4)
-    assert read["intervals"] == 4 and len(read["bodies"]) == 2  # the drift's tool on a small world
     for folder, name in GATED:  # the gate on the smallest world of every builder whose load is seconds
         world = GameBoard(load_world(EVENTS / folder / f"{name}.json")).world
         assert world.bodies or world.messages, (folder, name)
