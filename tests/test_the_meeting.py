@@ -111,9 +111,8 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     assert found == [-1, -1, -1, 1] and GATE.combination(found, MERMIN[1]) == -4
     (joint,), (e_3,) = credits(three, ((B, X, X),), PATTERNS)
     assert e_3 == Fraction(119, 169) and joint[("plus",) * 3] / sum(joint.values()) == Fraction(36, 169)
-    assert {GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) for f in FENCE} == {
-        -1
-    }
+    fenced = [GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) for f in FENCE]
+    assert fenced == [-1] * len(FENCE)
     refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "detectors[0].pattern", (1, 0))
     row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]]}
     refused("none is declared", detectors_of, [row], (2, 1, 1), 0, (), ())
