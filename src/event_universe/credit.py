@@ -35,7 +35,7 @@ Clock = list[int]  # a detector's own clock: its proper time in whole intervals 
 
 @dataclass
 class Books:
-    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked`) and the count of the windows closed, the detectors' event clock."""
+    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word of 2026-10-03, #1572 comment 5967247080; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked`) and the count of the windows closed, the detectors' event clock."""
 
     declaration: Instrument | None
     elapsed: int
@@ -49,6 +49,7 @@ class Books:
     faces: dict[int, list[Face]]
     sources: list[Source]
     units: dict[int, int] = field(default_factory=dict)
+    empty: set[int] = field(default_factory=set)
     clocks: dict[tuple[int, str], Clock] = field(default_factory=dict)
     windows: int = 0
 
@@ -59,7 +60,7 @@ class Books:
 
     @classmethod
     def of(cls, board: GameBoard) -> Books:
-        """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), its unit of one quantum from the same two numbers (`record_unit`, held through the run), the generator at the declared seed, every other book empty."""
+        """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), its unit of one quantum from the same two numbers (`record_unit`, held through the run; a record with no count at the origin named among `empty`, its unit set at its first lay), the generator at the declared seed, every other book empty."""
         found = board.world.instrument
         counts = {index: counted(board, index, board.laid[index]) for index in board.order}
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.detectors if r.pattern]
@@ -80,6 +81,7 @@ class Books:
             {},
             [],
             units,
+            {index for index in board.order if counts[index] <= 0},
         )
 
 
@@ -90,7 +92,7 @@ def counted(board: GameBoard, index: int, total: int | None) -> int:
 
 
 def record_unit(board: GameBoard, index: int, total: int | None, count: int) -> int:
-    """The unit of one quantum of a record, W_rec, read and not declared (the advisor's line of 2026-10-03 with the mathematician's second, #1572 comments 5966657866, 5966769056 and 5966780505, two hands; the count's line, Q(z) = count x W_c sin omega for a monochromatic record): the record's share over the board at the books' origin over its count there, (total + count div 2) div count by the division act, read once and held through the run (a face removes one quantum's share with one count, the ratio unchanged; the roundings' drift moves it not); W_c where the books hold no count or no reading (nothing to credit). For a record laid by share with its count the share over W_c it is W_c within the lay's own rounding; for a born quantum of count 1 at Omega it is W_c sin Omega, the detector counting in the record's own quantum with no transition declared on any region."""
+    """The unit of one quantum of a record, W_rec, read and not declared (the advisor's line of 2026-10-03 with the mathematician's second, #1572 comments 5966657866, 5966769056 and 5966780505, two hands; the count's line, Q(z) = count x W_c sin omega for a monochromatic record): the record's share over the board at the books' origin over its count there, (total + count div 2) div count by the division act, read once and held through the run (a face removes one quantum's share with one count, the ratio unchanged; the roundings' drift moves it not); W_c where the books hold no count or no reading (nothing to credit), until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`giving.given_quantum`, `born_unit`), so a born quantum below the half-top energy is credited 1 and not 0. For a record laid by share with its count the share over W_c it is W_c within the lay's own rounding; for a born quantum of count 1 at Omega it is W_c sin Omega, the detector counting in the record's own quantum with no transition declared on any region."""
     wall = count_wall(board.families[index], board.world.quantum_action)
     if total is None or count <= 0:
         return wall
