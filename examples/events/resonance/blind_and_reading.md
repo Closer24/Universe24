@@ -98,3 +98,20 @@ the guide reads the frequency (the plateau's 0.6682 above) and lays one quantum;
 holds, with the direction undrawn (a draw with no act is not declared). The beam's lay with the
 message lay's transverse envelope, or the guide declared, is a round of its own with two hands; a
 giving at a resonance above the axis band's top is refused by name at the loader (221 (2a)).
+
+## The hands' seconds on 221 (the advisor's #1572 comment 5965700585 and #1563 comment 5965700890)
+
+The two hands differ on the open board's form and the Boss's word stands: the source in time (B)
+inside the guide is what this folder tests and what the tree holds; the open board's giving is by name
+and not built. The advisor's three corrections by name: a source in time at one Node cannot feed a
+beam in the open (Rule3 spreads a one-Node write spherically), so the open board's giving would be the
+packet lay over L w^2 Nodes at one instant with the carry, a declaration of the lay's width; a beam of
+width w keeps its amplitude only to the Rayleigh length pi w^2 / lambda, the floor returning at
+0.78 w^2 A at lambda = 4 (6 Links at w = 1); the direction draw an assumption by name (nature's
+pattern a dipole's). His bound, the law's own: the one-level floor caps a quantum carried as a wave at
+T / (2 sin Omega) Nodes, 44,000 at T = 65,536 and [2, 3]; a single quantum of nature's light in the
+open is not on the integer board as written. On the takers' findings (4 and 5 above): the two-mode
+act passes the turn's size, |turn|, in `meeting.turned_labels`, so it reads no resonance; the signed
+form at the declared resonance is the mathematician's hand asked (the advisor's one token), and under
+it the shipped Zeno pi pulse would re-tune from 308 to about 392 with S.59's ratios unchanged, the
+advisor's number by name. The derivations' lines: the mathematician's 5965494847.
