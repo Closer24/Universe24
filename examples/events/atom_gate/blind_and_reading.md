@@ -543,6 +543,9 @@ time under the machine's load), row by row.**
 refined rest's room at the host's width (above); no run. `hydrogen_1s.json`: declared and not laid by
 the design (the body of 30,000 quanta). `hydrogen_2s.json` and `hydrogen_2s_large.json`: declared,
 not laid (no deflation). The 1s : 2s ratio: not read. The frozen row [0, den] as the nucleus: the
-next round. The run on the merged engine (main a1b12409 merged into this branch) over the same
-window from the same lay: started at 07:04 UTC beside the first and read below where it finished
-before the push, else named unfinished.
+next round. The run on the merged engine (main a1b12409, the detector's own quantum, merged
+into this branch) over the same window from the same lay, the world with the detector's transition
+key (07:04 to 07:36 UTC): every number above read again identical, the rotation's pairs, the
+deviations, the centroids, the rows, the holders, the detector's lines, the images and the books,
+so the reading stands on both engines; the committed-worlds gate (`tests/test_the_bound_body.py`)
+passed on the merged tree with the folder's files as committed.
