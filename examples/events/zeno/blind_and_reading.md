@@ -118,3 +118,22 @@ the tangent half-angle at large turns, 1.4 percent at n = 4 and 15 percent at n 
 number per world under that angle and the null window's write stands in the last column (0.943 at
 n = 1 against the read 0.942), so the n = 1 miss is the engine's turn form and not the draw. The
 jumps: n = 1, 113 g to e; n = 2, 91 and 24; n = 8, 38 and 6; n = 16, 15 and 0.
+## On the sub-turn form, 2026-10-03: the blind, written before the run
+
+The advisor's second on the first build (d12a4f51, read from the diff): the window's turn is an angle
+and the engine's turn (`features/rotation`, `turned`) takes a tangent half-angle, tan(theta / 2) = the
+numerator over 2 Gamma, so one shear of the whole window's sum compresses a large turn, 2 arctan(9,408
+/ 12,000) = 1.332 at n = 1 against 1.568, sin^2(1.332) = 0.9435, the 113 of 120 above exactly; at n = 2
+the per-window angle 2 arctan(0.392) = 0.744 against pi / 4 = 0.785. The misses at n = 1 and 2 and the
+passes at n = 4, 8 and 16 are one cause, the tangent, not statistics. The fix, one line of the act
+(`meeting.sheared`): the window's turn applied at the close as W equal sub-turns, each sub-turn's
+numerator (turn + carry) div W with the remainder carried across the W shears (the carried division,
+the write's own act), so the sub-turns sum to the turn exactly and the angles add as the proper
+intervals' did: 48 x 2 arctan(9,408 / (12,000 x 48)) = 1.5680 at n = 1 (pi / 2 = 1.5708, the 0.003 the
+design's rounding of 392), the per-window angle pi / (2 n) at every n within 0.001; the labels
+untouched inside the window, the resonance read by the plane's size, the root once per window; no
+amplitude recalibration (2 arctan is not linear in W, no one amplitude fits every n). The blind for the
+re-read, the advisor's, written here before the run: n = 1 at 1.000 (120 of 120); n = 2 at 0.500
+within one standard error (0.046); n = 4, 8 and 16 as read above (44, 32 and 15 of 120) within one
+standard error; the resonance world's detuned and four-phase readings unchanged (they read the turn's
+numerator, not the angle). A reading that misses this blind is a finding by name, not adjusted.
