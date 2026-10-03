@@ -252,11 +252,16 @@ band's top 4 / 3 by 4.1 x 10^-3 (the law's line in reals with the engine's rest 
 within 2.65 roundings at every Node, the count 1 standing at the declared Node (no Node carries a
 whole quantum); the loader admits the world and the gate its two declarations; the back-in-time
 gate MATCH over 40. The lay repeated bit for bit after the merge of main fb284717 (the seed by
-name, `one_node`). The large world (`hydrogen_1s_large.json`, the width 128): its lay attempt is
-the engine's cost at Gamma 7.3 x 10^5 (the Link's zero searched for above 25 minutes, the sign
-row's rest 8,132 Jacobi iterations in Python's integers, 10 minutes per rest); the attempt was
-started at 23:05 UTC, lost to the container's restart at 00:00 UTC and restarted at 00:05 UTC;
-its verdict stands below where it ended before this report, else by name as not finished.
+name, `one_node`). The large world (`hydrogen_1s_large.json`, the width 128): not laid and not run, by
+name. Its lay attempt is the engine's cost at Gamma 7.3 x 10^5 (the Link's zero searched for
+above 25 minutes of CPU in one call, the clock's own power to 10^7; the sign row's rest 8,132
+Jacobi iterations in Python's integers, 10 minutes per call): the attempt was started at 23:05
+UTC, lost to the container's restart at 00:00 UTC, restarted at 00:05 UTC, killed by a signal at
+00:31 UTC after 26 minutes under the machine's load (exit 137), restarted at 00:32 UTC and stopped
+by the clock at 01:04 UTC after 25 minutes of CPU with no line printed, at the owner's word that
+everything happens tonight; a stop by the clock is no reading, and the generator's refusal by name
+(the cloud rule, which the law's line in reals above says it must give on the 31-cube) was not
+reached. The world stands declared without a mode file, refused at load by name.
 
 **Row 1, the bindings: not read, a finding by name.** The electron's rotation in the windowed
 summed form over windows of 6 intervals (the period of the accumulated rotation) over both lines
@@ -295,8 +300,8 @@ intervals since the turned records carry the odd lines).
 
 **Row 4, the control: one world, 0 by construction**, as the folder's blind says.
 
-**What did not run, by name.** `hydrogen_1s_large.json`: the lay attempt at the width 128 (see
-above); no run. `hydrogen_2s_large.json`: declared, not laid (no deflation). The control world of
+**What did not run, by name.** `hydrogen_1s_large.json`: the lay attempt at the width 128 stopped
+by the clock before its verdict (above); no run. `hydrogen_2s_large.json`: declared, not laid (no deflation). The control world of
 163 (b) as a separate world: not declared (one world here). The 1s : 2s ratio: not read (no 2s).
 Every reading above is on the engine before the rest's fix (the caveat of 175 item 5: the sign
 row's rest short of its static line by up to 207 fine units on the 31-cube); the worlds are to be
