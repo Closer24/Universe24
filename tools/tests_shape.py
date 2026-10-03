@@ -64,6 +64,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
         "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
     ),
+    "tests/test_the_features.py::test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair": (
+        12,
+        "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
+        "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
+    ),
     "tests/test_the_meeting.py::test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row": (
         60,
         "the lay by the count with the sense (round F of the board, the Boss's brief at the owner's word of 2026-10-03, "
