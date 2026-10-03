@@ -1,4 +1,4 @@
-"""The standing world of the body round (HIGHLIGHTS.md, the owner's words of 2026-10-02, 17:40 to 17:55; the mathematician's 167 and the advisor's second hand), from the design file beside this script: the same neutral body of the matter family at the centre of the open 25-cube, laid by the generator at the integer fixed point under its own paces (the world's `lay`) at T = 2^15 on the rule's own universe and at T = 2^19 on the universe file beside this design, each world declaring the tolerance from which the loader derives the least T; with --modes the worlds written anew and the two lays by tools/pixel_mode.py side by side, a refusal by name printed and the world left declared (without --modes a world that stands is left as the generator wrote it, its Nodes and counts the mode file's digest binds); and the blind expectation file, 167's three reads with their formulas and numbers written before any run and never touched after, the body's own expectations computed from the lay's profile in the mode file where it stands (the amplitude and the profile's sums, before any run). Every number is the design's and stands in the files, none in this script or the engine.
+"""The standing world of the body round (HIGHLIGHTS.md, the owner's words of 2026-10-02, 17:40 to 17:55; the mathematician's 167 and the advisor's second hand), from the design file beside this script: the same neutral body of the matter family at the centre of the open 25-cube, laid by the generator at the integer fixed point under its own paces (the world's `lay`) at T = 2^15 on the rule's own universe and at T = 2^19 on the universe file beside this design, each world declaring the tolerance from which the loader derives the least T; with --modes the worlds written anew and the two lays by tools/pixel_mode.py side by side, a refusal by name printed and the world left declared (without --modes a world that stands is left as the generator wrote it, its Nodes and counts the mode file's digest binds); and the blind expectation file, 167's three reads with their formulas and numbers written before any run and never touched after, with reads 2 and 3 restated for a real mode by 172 with the advisor's second hand (the form's deviation rho_D and the rotation over windows of whole periods, their blind rows written before the re-run), the body's own expectations computed from the lay's profile in the mode file where it stands (the amplitude and the profile's sums, before any run). Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -45,7 +45,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
 
 
 def from_the_lay(design: dict[str, Any], name: str, mode: Path) -> dict[str, object] | None:
-    """The blind's numbers for the body as laid, from the mode file's profile alone (no run): the amplitude A, the quanta at the centre, N_eff = SUM f^2 and SUM f^2 / SUM f^4 over the profile f = level / A, rho_x the profile's rms radius along x, and from them 167's expectations at the window's length n and at n / 4: rho_s = (2 sigma sqrt(n) / A) sqrt(SUM f^2 / SUM f^4) and the centroid's rms shift 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)); None where the world has no mode file yet."""
+    """The blind's numbers for the body as laid, from the mode file's profile alone (no run): the amplitude A, the quanta at the centre, N_eff = SUM f^2 and SUM f^2 / SUM f^4 over the profile f = level / A, rho_x the profile's rms radius along x, and from them 167's expectations at the window's length n and at n / 4: rho_s = (2 sigma sqrt(n) / A) sqrt(SUM f^2 / SUM f^4) and the centroid's rms shift 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)); and 172's restatement with the advisor's second hand (5960096992): rho_D on the form D = now^2 - next x before, twice rho_s at each quarter of the window since D is quadratic in the levels (11.3 sigma sqrt(n) / A for the exponential profile), and read 3's noise over a window of n_W intervals, 1 / (A sqrt(N_eff n_W)), at the whole window; None where the world has no mode file yet."""
     if not mode.exists():
         return None
     body = json.loads(mode.read_text(encoding="utf-8"))["bodies"][0]
@@ -73,6 +73,11 @@ def from_the_lay(design: dict[str, Any], name: str, mode: Path) -> dict[str, obj
             str(n): 2 * sigma * math.sqrt(n) / amplitude * shape_factor,
             str(n // 4): 2 * sigma * math.sqrt(n // 4) / amplitude * shape_factor,
         },
+        "rho_d_expected": {
+            str(n * part // 4): 2 * (2 * sigma * math.sqrt(n * part // 4) / amplitude * shape_factor)
+            for part in (1, 2, 3, 4)
+        },
+        "rotation_window_noise": 1 / (amplitude * math.sqrt(f2 * n)),
         "centroid_rms_links": 2 * sigma * math.sqrt(n) * rho_x / (amplitude * math.sqrt(f2)),
         "lay": body.get("lay"),
     }
@@ -131,9 +136,12 @@ def main(argv: list[str] | None = None) -> None:
     paths = []
     for name in design["worlds"]:
         path = args.folder / f"{name}.json"
-        if args.modes or not path.exists():  # a laid world stays as the generator left it (its digest)
+        fresh = (
+            args.modes or not path.exists()
+        )  # a laid world stays as the generator left it (its digest)
+        if fresh:
             path.write_text(json.dumps(world(design, name)) + "\n", encoding="utf-8")
-        print(json.dumps({"world": str(path), "written": args.modes or not path.exists()}))
+        print(json.dumps({"world": str(path), "written": fresh}))
         paths.append(path)
     if args.modes:
         laid(paths)
