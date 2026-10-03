@@ -256,3 +256,34 @@ their ratio the twin's within 0.001, and the share at the Node reads 0.975 of a 
 twin's 2.674, more than one quantum gone at the Node itself, since the booked form's cross term with
 the six neighbours' levels scales by the factor alone and not by its square, Rule3 refilling the Node
 from 2.784 at the second interval after; a finding by name for the hands, no number adjusted.
+
+## On the quadratic factor, 2026-10-03 (branch partial-hole-quadratic)
+
+The mathematician's 244 (#1572 comment 5967913000, section 1, the advisor's second asked) derives the
+first pass's diagnostic (0.975 of a quantum left at the Node against the twin's 2.674): the Node's share
+as the form holds it is s = O + C, O = w (a^2 + b^2) - S a b the Node's own terms and C its Link terms
+with the six neighbours, which the face does not scale, so the exact factor is the root of
+f^2 O + f C = s - W_rec. Built: the first face by that root on its own interval's numbers, recording
+exactly what left by the booking identity's face term; the second face removing the rest of the quantum
+exactly (one factor for both faces took 1.95 quanta, the pair's own form O nearly doubling over the two
+intervals at this drive). The record's share drops by 0.9965 of a quantum at the seed 2 (the blind: one
+quantum within one level's share, met); the share the engine reads at the Node alone stays 1.85 against
+s - W_rec = 1.67, the Link terms landing on the neighbours, a finding by name.
+
+The blind (244): n = 2 at 0.500 within 0.023 and n = 4 at 0.375 within 0.022, both centred (the n = 4
+excess the hole's second order under this blind); the gates bit for bit.
+
+| world | ends in e | fraction | Itano | standard error | against the column | the first pass | the jumps g to e / e to g |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| n = 1 | 480 of 480 | 1.000 | 1.000 | 0.000 | the column exactly | 480 of 480 | 480 / 0 |
+| n = 2 | 251 of 480 | 0.523 | 0.500 | 0.023 | 1.00 standard errors, within the blind's 0.023, not centred | 0.523 | 381 / 130 |
+| n = 4 | 199 of 480 | 0.415 | 0.375 | 0.022 | 1.80 standard errors: MISS, named | 0.408 | 259 / 60 |
+| n = 8 | 108 of 480 | 0.225 | 0.235 | 0.019 | 0.52 standard errors | 0.227 | 121 / 13 |
+| n = 16 | 57 of 480 | 0.119 | 0.133 | 0.016 | 0.90 standard errors | 0.119 | 60 / 3 |
+
+The reading: n = 2 reads 0.523 as under the first pass (the same 381 and 130 jumps at these seeds), at
+one standard error of 0.500 and within the blind's 0.023 but not centred; n = 4 reads 0.415, 1.8 standard
+errors above 0.375 where the blind asked for the column centred, so the n = 4 excess is not the hole's
+second order: a finding by name, not adjusted (the exact removal of one quantum at the record moves it
+from 0.408 to 0.415, within the draw). The nine gate worlds are byte-identical to main's at 7033a6aa
+(the two slits, Bell x 4, GHZ x 4); the resonance world's reading stands in its own folder.

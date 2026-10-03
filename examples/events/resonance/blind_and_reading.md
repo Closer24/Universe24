@@ -362,3 +362,10 @@ share's weight 2 p^2 G^2, in the record's own unit (a GameBoard diagnostic besid
 0.667 T, a finding by name and not adjusted (the shipped resonance world's count stays 1 in both units,
 0.71 W_c reading 1 in W_c and 0.96 in its own unit reading 1). The resonance world's 100 trials are
 re-read below with the quadratic factor of the same branch.
+
+The resonance world's 100 trials (`tools/meeting_trials.py`, the design's seeds) on this branch against
+main at 7033a6aa: the giver's 83 givings and 1 taking unchanged; the resonant taker took 33 of 100
+against main's 37 (0.8 standard errors of 100 trials, within its statistics), the detuned taker's 1 of
+100 unchanged, its output identical line for line. What moved is recorded, not adjusted: the taker reads
+the born quantum, whose lay changed from 0.671 T to 0.667 T at [2, 3] on this branch, and its hole at
+the Node is the quadratic factor's where the share there exceeds W_rec.
