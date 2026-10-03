@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -128,6 +129,24 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "arrival": design["arrival"],
         "wings": design["wings"],
         "aside": [str(design["aside"]["name"])],
+        "photons": {
+            "label": "GAMEBOARD",
+            "per_count": round(
+                1
+                / math.sqrt(
+                    1 - ((math.cos(math.pi * design["wave"][0] / design["wave"][1]) + 2) / 3) ** 2
+                ),
+                4,
+            ),
+            "at_the_blind_N": round(
+                through
+                / math.sqrt(
+                    1 - ((math.cos(math.pi * design["wave"][0] / design["wave"][1]) + 2) / 3) ** 2
+                ),
+                1,
+            ),
+            "status": "the photon count at the light's own omega beside N, a GameBoard reading and no fence: the screen's regions declare the band's top [0, den], so N counts the energy in units of T, and one quantum of the laid light at k = pi / 4 (cos omega = (cos(pi / 4) + 2) / 3, sin omega = 0.4310) carries T sin omega; N over sin omega is the laid light's own quanta, 645 at N = 278 (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267; the shipped regions keep the band's top so that no gate number moves)",
+        },
     }
 
 

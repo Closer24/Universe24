@@ -8,15 +8,22 @@ from pathlib import Path
 import numpy as np
 
 from event_universe import node
-from event_universe.core.rule3 import division_forward, rule3
+from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
+from event_universe.loader.derived import count_wall, detector_wall
+from event_universe.loader.instrument import pair_of
+from event_universe.loader.universe import universe_of
+from event_universe.loader.world import bodies_of, detectors_of
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, RUN, load_file
+from tests.laws import EVENTS, ROOT, RUN, TOP, load_file, refused
 
-SLITS, WAY = (load_file(f"{n}_build", EVENTS / n / "build_world.py") for n in ("two_slits", "which_way"))
+SLITS, WAY, RESONANCE = (
+    load_file(f"{n}_build", EVENTS / n / "build_world.py")
+    for n in ("two_slits", "which_way", "resonance")
+)
 SRC = ROOT / "src" / "event_universe"
 GATE_ROW = [23, 18, 34, 13, 5, 35, 52, 19, 9, 27, 22, 21]  # the two slits' gate, N = 278, at the seed 24
 
@@ -182,3 +189,80 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
         and erased[:3] == [1, 2, 3]
         and [e for e in lines if e["event"] == "erasure"][0]["nodes"] == 2
     )
+
+
+def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum(
+    tmp_path,
+):
+    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): the detector's wall is its own transition's energy, W_d = isqrt(W_c^2 (den_d^2 - num_d^2)) div den_d, exactly W_c at the band's top and 2.23605 den T at [2, 3], the credit's conversion the identity at the top, and the loader refuses by name a region without its transition, a transition without its resonance and a giving with no transition between its parts; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the detector's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own."""
+    universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
+    families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
+    light = next(f for f in families if f.name == "pulse")
+    wall = count_wall(light, action)
+    assert detector_wall(light, action, (0, 6000)) == wall == detector_wall(light, action, (0, 1))
+    assert detector_wall(light, action, (2, 3)) == division_fixed_point(wall * wall * 5) // 3
+    assert abs(detector_wall(light, action, (2, 3)) / wall - 5**0.5 / 3) < 2 / wall  # the division act
+    refused("from -1 through 1", pair_of, [3, 2], "resonance")
+    refused("pair", pair_of, [1], "resonance")
+    row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]]}
+    refused("lacks the key 'transition'", detectors_of, [row], (2, 1, 1), 0, (), ())
+    refused(
+        "declared on a region",
+        detectors_of,
+        [{"name": "b", "block": 0, "transition": TOP}],
+        (2, 1, 1),
+        1,
+        (),
+        (),
+    )
+    RESONANCE.main(["--folder", str(tmp_path), "--modes"])
+    blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
+    assert blind == json.loads((EVENTS / "resonance" / "expectation.json").read_text(encoding="utf-8"))
+    world = json.loads((tmp_path / "resonant.json").read_text(encoding="utf-8"))
+    bare = {k: v for k, v in world["measured"][0]["transitions"][0].items() if k != "resonance"}
+    refused(
+        "resonance",
+        bodies_of,
+        [{**world["measured"][0], "transitions": [bare]}],
+        None,
+        "",
+        families,
+        (48, 1, 1),
+        9000,
+        (),
+    )
+    alone = {**world["measured"][0], "transitions": []}
+    refused("no transition between them", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, ())
+    board = GameBoard(load_world(tmp_path / "resonant.json"), (lines := []).append)
+    pulse = [f.name for f in board.families].index("pulse")
+    series = {}
+    for _ in range(96):
+        board.step()
+        series[board.tick] = int(board.states[pulse].lines[0].now[tuple(blind["cos_omega"]["node"])])
+    given = [
+        c for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR" and c["given"] == "pulse"
+    ]
+    lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
+    assert [g["tick"] for g in given] == [48] and [c["tick"] for c in lays] == list(range(48, 96))
+    assert all(
+        c["node"]["at"] == [0, 0, 0] and c["line"] == 0 and c["after"][1:] == c["before"][1:]
+        for c in lays
+    )
+    assert (
+        max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22 and board.credit.counts[pulse] == 1
+    )
+    total = board.total_share(pulse)[0]
+    assert total is not None and 0.7 < total / wall < 0.8  # sin Omega = 0.745 in the band's top's unit
+    for own in (
+        wall,
+        detector_wall(light, action, (2, 3)),
+    ):  # one quantum by the count's line, either unit
+        assert division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1
+    first, last = 76, 90
+    window = range(first, last + 1)
+    numerator = sum(series[t] * (series[t + 1] + series[t - 1]) for t in window)
+    read, far = (
+        numerator / (2 * sum(series[t] ** 2 for t in window)),
+        max(abs(series[t]) for t in window),
+    )
+    assert far > 20 and abs(read - 2 / 3) <= 2 / far, (read, far)
