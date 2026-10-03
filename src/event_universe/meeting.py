@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import itertools
-from dataclasses import dataclass, field, replace
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -11,88 +11,28 @@ import numpy as np
 from event_universe import front, node
 from event_universe.core import paces
 from event_universe.core.ports import arrival
-from event_universe.core.rule3 import division_fixed_point, division_forward
-from event_universe.features.click import Face, Hole, drawn, laid_pairs, spread, squared, standing
+from event_universe.core.rule3 import division_forward
+from event_universe.features.click import Face, Hole, laid_pairs, standing
 from event_universe.giving import given_lines, given_quantum, levels_of
-from event_universe.loader.derived import count_wall, row_of
-from event_universe.loader.instrument import Generator, Instrument, NodeInstrument
+from event_universe.loader.derived import count_wall
+from event_universe.loader.instrument import Generator, Instrument
 from event_universe.loader.keys import Node
-from event_universe.loader.world import BodyRow
+from event_universe.node_reader import (
+    NodeBooks,
+    arriving,
+    dark,
+    drawn_node,
+    hole_node,
+    own_clock,
+    picked,
+    reported,
+)
 from event_universe.plane import Faces
-from event_universe.reports import MEASURED, credit, face, lay
-from event_universe.resonance import Reference, gathered, references_of, scale_of, sheared, window_turn
+from event_universe.reports import face, lay
+from event_universe.resonance import gathered, sheared, window_turn
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
-
-
-@dataclass
-class NodeBooks:
-    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `measured`, the record's family and its record number, its Nodes with the lay's weights (the counts' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock."""
-
-    number: int
-    index: int
-    record: int
-    nodes: tuple[Node, ...]
-    weights: tuple[int, ...]
-    declared: NodeInstrument
-    part: int
-    counts: list[int]
-    labels: list[int]
-    elapsed: int
-    state: int
-    references: list[Reference]
-    windows: int = 0
-    clock: list[int] = field(default_factory=lambda: [0, 0])
-    amplitudes: tuple[
-        int, ...
-    ] = ()  # the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w)
-    norm: int = 1  # the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm
-    intake: dict[int, list[int]] = field(
-        default_factory=dict
-    )  # per arriving family, the window's inflow through each Node's front Ports, the taking's draw weights
-
-
-def books_of(board: GameBoard) -> list[NodeBooks]:
-    """The books of every record declared an instrument at a Node, in the world's order: its number among `measured`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units, the window begun and the generator at the declared seed; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
-    found = []
-    for number, (record, row) in enumerate(board.laid_rows()):
-        if not isinstance(row, BodyRow) or row.instrument is None or row.instrument.draw is None:
-            continue
-        parted = list(row.instrument.counts)
-        wall = count_wall(board.families[row.family], board.world.quantum_action)
-        part = max(range(len(parted)), key=lambda k: parted[k])
-        labels = [count * wall for count in parted]
-        draw = row.instrument.draw
-        longest = draw.window if isinstance(draw, Instrument) else max(board.world.ticks, 1)
-        scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
-        seed = draw.seed
-        references = references_of(scale, row.instrument.transitions)
-        square, total = (
-            squared(1, board.world.quantum_action, board.families[row.family].pair),
-            sum(row.counts),
-        )
-        amplitudes = tuple(spread(square, (weight, total)) for weight in row.counts)
-        norm = max(division_fixed_point(sum(a * a for a in amplitudes)), 1)
-        found.append(
-            NodeBooks(
-                number,
-                row.family,
-                record,
-                row.nodes,
-                row.counts,
-                row.instrument,
-                part,
-                parted,
-                labels,
-                0,
-                seed,
-                references,
-                amplitudes=amplitudes,
-                norm=norm,
-            )
-        )
-    return found
 
 
 def read(board: GameBoard, index: int, direction: int, record: int) -> tuple[Any, node.Factors]:
@@ -181,65 +121,6 @@ def levels_at(board: GameBoard, books: NodeBooks, part: int) -> tuple[int, int, 
     return int(re.now[at]), int(im.now[at]), int(re.before[at]), int(im.before[at])
 
 
-def arriving(board: GameBoard, books: NodeBooks, drive: int, direction: int = 1) -> int:
-    """The arriving record's level read into the reader's resonant turn: its level at each of the reader's Nodes, the level now (`direction` 1) or the level before (-1), projected on the reader's own normalised mode, SUM_i d_i A_i div A with A_i the lay's amplitude of one quantum at the Node and A = isqrt(SUM A_i^2) (`NodeBooks.amplitudes`, `norm`), rounded half up by the division act: the meeting is bilinear in the two records at each Node and the region's turn is the sum of the Nodes' meetings over the record's norm, the drive's level itself at one Node and (SUM_i d_i) / sqrt(n) over n Nodes in the equal lay (the mathematician's 299 section 2 with the advisor's second, #1572 comment 5969972693, two hands: the level sum over-weights by sqrt(n), the boundary inflow is quadratic in the drive and turns no phase); a drive whose phase runs along the region carries the form factor of a body of that size. A holder of the sign's time level is summed over every row but the record's own (`node.row_levels`, light), a family of quanta's first line's level otherwise."""
-    family, lines = board.families[drive], board.states[drive].lines
-    if family.wronskian:
-        own = row_of(board.families, books.index, books.record)
-        levels = np.asarray(node.row_levels(family, lines, 0, direction, own))
-    else:
-        levels = lines[0].now if direction == 1 else lines[0].before
-    total = sum(
-        int(levels[tuple(np.add(at, board.offset))]) * amplitude
-        for at, amplitude in zip(books.nodes, books.amplitudes, strict=True)
-    )
-    half = division_forward(books.norm, 2, 0)[0]
-    size = int(division_forward(abs(total), books.norm, half)[0])
-    return size if total >= 0 else -size
-
-
-def booked_inflow(board: GameBoard, books: NodeBooks, drive: int, came: Any) -> None:
-    """The reader's book of a window's inflows per Node (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's 299 section 3 with the advisor's second, two hands, one rule for the one kind): the arriving family's current through each of the reader's Nodes' front Ports this interval (`reports.entering`, the same read as the credit's `booked`) added to the window's sum at that Node, the weights the taking's Node is drawn by at the close, the Node the quantum entered through; emptied at the window's close (`jumped`)."""
-    book = books.intake.setdefault(drive, [0] * len(books.nodes))
-    for index, at in enumerate(books.nodes):
-        book[index] += int(came[tuple(np.add(at, board.offset))])
-
-
-def dark(board: GameBoard, books: NodeBooks) -> bool:
-    """A reader with no arriving record at its Nodes this interval: both levels, now and before, of every family its transitions name sum to 0 over the region at every Node, so no window stands and the giving\'s grain is the interval."""
-    turning = {t.drive for t in books.declared.transitions if t.leaves != t.enters}
-    for drive in sorted(turning):
-        family, lines = board.families[drive], board.states[drive].lines
-        own = row_of(board.families, books.index, books.record)
-        for side in (1, -1):
-            if family.wronskian:
-                levels = np.asarray(node.row_levels(family, lines, 0, side, own))
-            else:
-                levels = lines[0].now if side == 1 else lines[0].before
-            if any(int(levels[tuple(np.add(at, board.offset))]) for at in books.nodes):
-                return False
-    return True
-
-
-def own_clock(board: GameBoard, books: NodeBooks) -> int:
-    """The reader's own clock, the composed clock p_0 under its record's read of the content (`paces.clock_of`) at each of its Nodes, their mean by the division act with the half carry (as a region's clock is read, `credit.clocked`): Gamma in the vacuum and below it in a well, the number the turn per proper interval and the dark's hazard read."""
-    gamma = board.world.node_clock
-    content = board.read(books.index, 1, books.record)[0]
-    clocks = [
-        int(
-            paces.clock_of(
-                gamma,
-                int(np.asarray(content)[tuple(np.add(at, board.offset))])
-                if np.ndim(content)
-                else int(content),
-            )
-        )
-        for at in books.nodes
-    ]
-    count = len(clocks)
-    return int(division_forward(sum(clocks), count, division_forward(count, 2, 0)[0])[0])
-
-
 def clocked(board: GameBoard, books: NodeBooks) -> None:
     """The body's own clock, one interval (the advisor's derivation of 2026-10-03, #1572 comment 5966657866, the clock composed from the paces, with the mathematician's second; the two hands' click line of the pulsed gate, 5967698811 and 5967783614): its clock p_0 at its Node (`own_clock`) added to the carried remainder and divided once by Gamma, the whole intervals to its proper time and the remainder kept, as the credit keeps a region's (`credit.clocked`); the board's tick in the vacuum, slower in a well."""
     whole, rest = division_forward(books.clock[1] + own_clock(board, books), board.world.node_clock, 0)
@@ -296,17 +177,6 @@ class Item:
 
 Lists = list[list[Item]]  # the outcomes of one click, each the list written where it is drawn
 Phase = tuple[tuple[int, int], int]  # a part's direction (re, im) and its sense, its Wronskian's sign
-
-
-def picked(
-    board: GameBoard, state: int, generator: Generator | None, weights: list[int], outcomes: int
-) -> tuple[int, int]:
-    """The draw of the one click act, the outcome alone: with more than one outcome, one draw by the weights with the generator (its state carried in the books), the lower index on a tie; one outcome, no draw and the state kept. The Node of the realised write is drawn after it, for that write alone (the advisor's 5969944547 (a), the mathematician's 299 section 5, two hands: one draw per click, none for a candidate not realised)."""
-    pick, modulus = 0, board.world.width + 1
-    if outcomes > 1:
-        assert generator is not None  # a draw among outcomes is the declared generator's
-        pick, state = drawn(state, generator.multiplier, generator.increment, modulus, weights)
-    return pick, state
 
 
 def click(
@@ -414,26 +284,6 @@ def faces_reported(board: GameBoard) -> None:
         board.observer(face(board.tick, name, found.line, at, found.port, found.value))
 
 
-def drawn_node(board: GameBoard, books: NodeBooks, weights: list[int]) -> Node:
-    """The one Node of the region a write is laid at, drawn by `weights` over the reader's Nodes with its own generator (features/click, `drawn`; ALGEBRA.md, The NodeReader is one declaration kind for every experiment: the write of a click is at one Node of the region, the share at a Node a GameBoard reading and no measurement); the lay's weights where every weight is 0."""
-    assert books.declared.draw is not None
-    found = weights if sum(weights) > 0 else list(books.weights)
-    pick, books.state = drawn(
-        books.state,
-        books.declared.draw.multiplier,
-        books.declared.draw.increment,
-        board.world.width + 1,
-        found,
-    )
-    return books.nodes[pick]
-
-
-def hole_node(board: GameBoard, books: NodeBooks, drive: int) -> Node:
-    """The taking's Node: drawn by the arriving record's inflow booked through each of the reader's Nodes' front Ports over the window (`booked_inflow`, floored at 0), the Node the quantum entered through, as the credit draws it for a reader of the field's record, one rule for the one kind (the mathematician's 299 section 3, the advisor's 5969944547 (c), two hands); the lay's weights where nothing entered; the hole's two faces written there; drawn after the outcome, for the realised write alone."""
-    booked = books.intake.get(drive, [0] * len(books.nodes))
-    return drawn_node(board, books, [max(int(weight), 0) for weight in booked])
-
-
 def exchange(books: NodeBooks, leaves: int, enters: int) -> list[Item]:
     """The record's own half of a click's list: one quantum of its count from the part `leaves` to the part `enters` at its Node."""
     return [
@@ -450,42 +300,6 @@ def null_window(board: GameBoard, books: NodeBooks) -> None:
         reported(board, books, (books.part, books.part), (None, None), False)
 
 
-def reported(
-    board: GameBoard,
-    books: NodeBooks,
-    parts: tuple[int, int],
-    exchanged: tuple[int | None, int | None],
-    quantum: bool = True,
-) -> None:
-    """The click line of a record's click (`reports.credit`, the one click line kind of every reader; ALGEBRA.md, The NodeReader is one declaration kind for every experiment: never a Node): the reader `measured n` by its number, the `parts` realised and left by their declared names (`realised` the part after, `before` the part before), the families `exchanged`, the one taken from and the one given to (None where none), the count moved, 1 for a click and 0 for the null window's write, the count left in the books of the family exchanged (None where none), the window's intervals [first, last], the body's own proper time at the close and the index of the window closed (its books' clock and windows); labelled the detector's where a `quantum` passed and a diagnostic for the null window's write; the Node written stands in the `lay` and `face` lines beside it and here nowhere."""
-    if board.observer is None:
-        return
-    names, families = books.declared.names, board.families
-    window = [board.tick - books.elapsed + 1, board.tick]
-    taken, light = (families[k].name if k is not None else None for k in exchanged)
-    moved = next((k for k in exchanged if k is not None), None)
-    left = board.credit.counts[moved] if moved is not None else None
-    name, reader, own = families[books.index].name, f"{MEASURED} {books.number}", books.clock[0]
-    after, before = names[parts[0]], names[parts[1]]
-    line = credit(
-        board.tick,
-        name,
-        reader,
-        window,
-        own,
-        books.windows,
-        after,
-        None,
-        int(quantum),
-        left,
-        before,
-        taken,
-        light,
-        quantum,
-    )
-    board.observer(line)
-
-
 def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
     """The giving drawn at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act, and the giving's clock; the advisor's clause 5; the mathematician's 174 (c) and 223 (a), #1572 comment 5965727937, with the advisor's second 5965918924 (a), the per-interval draw at the now of 224 (2)(a), 5966081562, and his second 5966129376, two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights [span x p_0 x unit div Gamma, the rest of tau x unit] in the labels' unit (`hazard_weights`) with span the smaller of the grain and the lifetime tau and p_0 the body's own clock at its Node (`own_clock`), the lifetime's hazard 1 / tau per proper interval, [span x unit, (tau - span) x unit] in the vacuum (the beat's current of a one-part record at one Node is 0, so the hazard alone is the rate): the window at its close while a window stands, the one interval in the dark (`dark`), at the now and not a booked waiting time (a booked variate writes a future, which the click's line does not: the click implements the now, the mathematician's 208); the record's own generator; the first giving drawn is taken; one click line. Where the body stands in the open board and its rate declares a `width`, the given quantum is laid as a packet along a drawn direction, one list per direction the board holds, each at the giving's weight, the direction's draw the click's one draw with the record's own generator, an assumption by name (`giving.laid_packet`; the mathematician's 224 (1) and 229 with the advisor's seconds, two hands); inside a guide, or with no width declared, the source in time as built."""
     assert books.declared.draw is not None
@@ -500,9 +314,7 @@ def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
             pick, books.state = picked(
                 board, books.state, books.declared.draw, weights, len(directions) + 1
             )
-            if pick < len(
-                directions
-            ):  # realised: the giving's Node drawn now, by the record's own share
+            if pick < len(directions):
                 laid_at = drawn_node(board, books, list(books.weights))
                 given = Item(rate.light, None, None, 1, (laid_at,), None, rate.resonance, rate.lifetime)
                 items = exchange(books, rate.leaves, rate.enters)
@@ -538,9 +350,7 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
             )
             if pick >= len(outcomes):
                 break
-            books, transition = outcomes[
-                pick
-            ]  # realised: the hole's Node drawn now, by the inflow booked
+            books, transition = outcomes[pick]
             hole = Item(drive, None, None, -1, (hole_node(board, books, drive),))
             written(board, [hole, *exchange(books, transition.leaves, transition.enters)])
             reported(board, books, (transition.enters, transition.leaves), (drive, None))
@@ -569,9 +379,7 @@ def probe_click(board: GameBoard, books: NodeBooks) -> None:
     weighted = [*weights, rest if rest > 0 else 0]
     pick, books.state = picked(board, books.state, books.declared.draw, weighted, len(outcomes) + 1)
     if pick < len(outcomes):
-        taken = outcomes[
-            pick
-        ]  # realised: the hole's Node drawn now, by the inflow booked over the window
+        taken = outcomes[pick]
         if taken.leaves == taken.enters:
             written(board, [Item(books.index, books.number, taken.leaves, 0, books.nodes)])
         else:
@@ -626,4 +434,4 @@ def jumped(board: GameBoard) -> None:
             null_window(board, books)
     for books in closing:
         books.elapsed = 0
-        books.intake = {}  # the window's inflow book emptied with the window
+        books.intake = {}

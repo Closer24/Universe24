@@ -5,7 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from event_universe.loader.instrument import Instrument
-from event_universe.meeting import Item, NodeBooks, drawn_node, picked, written
+from event_universe.meeting import Item, written
+from event_universe.node_reader import NodeBooks, drawn_node, picked
 from event_universe.reports import conversion
 
 if TYPE_CHECKING:

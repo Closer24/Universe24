@@ -28,6 +28,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
 from event_universe.loader.mode import Levels
 from event_universe.loader.world import BodyRow, World
+from event_universe.node_reader import booked_inflows
 from event_universe.reports import Detector, book, click, entering, field, level_sums, parts, standing
 
 Observer = Callable[[dict[str, object]], None]
@@ -379,20 +380,10 @@ class GameBoard:
                     if any(any(level) for level in levels) and self.observer is not None:
                         self.observer(parts(self.tick, family.name, detector.name, levels))
                     sums.setdefault(index, {})[detector.name] = levels
-        for index, found in sums.items():
-            if (
-                self.families[index].parts > 1
-            ):  # the meeting through the root is a record of several parts'
+        for index, found in sums.items():  # the meeting through the root is several parts' record's
+            if self.families[index].parts > 1:
                 credit.joined(self, index, found)
-        for books in (
-            self.credit.bodies
-        ):  # a reader's own book: its drives' inflow through its Nodes' front Ports
-            drives = sorted({t.drive for t in books.declared.transitions if t.drive in currents})
-            if drives:
-                region = self.mask(books.nodes)
-                facing = reports.front(region, wrap, region, own)
-                for drive in drives:
-                    meeting.booked_inflow(self, books, drive, entering(facing, currents[drive]))
+        booked_inflows(self, currents, wrap, own)
         self.fields_read(forms, union)
 
     def fields_read(self, forms: Bookings, at: np.ndarray) -> None:

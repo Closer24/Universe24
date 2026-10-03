@@ -28,6 +28,7 @@ from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, 
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, WholeMessage, messages_of, wholes_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
+from event_universe.loader.node_reader_rows import reader_count
 from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
@@ -177,30 +178,7 @@ def bodies_of(
                     "region through the six Ports (ALGEBRA.md, The NodeReader is one declaration kind for every "
                     "experiment); its Nodes are {[list(n) for n in nodes]}"
                 )
-            # a reader's Nodes carry the lay's weights, A_i^2 = A^2 w_i / SUM w; the record's count is declared
-            # once, by its parts, or by `count` for a record converted whole (the mathematician's 299 section 4
-            # with the advisor's second, #1572, two hands)
-            declared = body.get("parts")
-            if isinstance(declared, list) and all(isinstance(p, dict) for p in declared):
-                if "count" in body:
-                    raise ValueError(
-                        f"{label} declares its count by its parts; `count` is a converted record's"
-                    )
-                count = sum(p.get("count", 0) for p in declared if isinstance(p.get("count"), int))
-            elif "count" in body:
-                count = integer(body["count"], f"{label}.count", 1)
-            else:
-                raise ValueError(
-                    f"{label} declares no count: a record converted whole declares `count`, the record's count "
-                    "over its region declared once; a record with parts declares it in its parts"
-                )
-            if derived.charged(families, family) and count > 1:
-                raise ValueError(
-                    f"{label} declares the count {count} of {body['family']!r}, a family that reads the holder of "
-                    "the sign: such a record is one quantum of its family, and many quanta are that many bodies "
-                    "of count 1, each its own record with its own row of the sign (ALGEBRA.md, No record reads "
-                    "its own write of the sign)"
-                )
+            count = reader_count(body, label, families, family)
             parts = node_instrument_of(body, label, families, family, quanta, count)
             parts = packet_form(parts, label, families, nodes[0], shape, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))

@@ -5,7 +5,7 @@ import json
 
 import numpy as np
 
-from event_universe import meeting, node, world_files
+from event_universe import meeting, node, node_reader, world_files
 from event_universe.features.click import amplitude, spread, squared
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import count_wall
@@ -127,7 +127,11 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         [],
         {},
     )  # the generator's draws, the write's Node draws, the inflow book
-    real_draw, real_node, real_book = meeting.drawn, meeting.drawn_node, meeting.booked_inflow
+    real_draw, real_node, real_book = (
+        node_reader.drawn,
+        node_reader.drawn_node,
+        node_reader.booked_inflow,
+    )
 
     def counted_draw(*args):  # type: ignore[no-untyped-def]
         draws.append(board.tick)
@@ -146,7 +150,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         ("drawn_node", noted_node),
         ("booked_inflow", kept_book),
     ):
-        monkeypatch.setattr(meeting, name, found)
+        monkeypatch.setattr(node_reader, name, found)
     while not (clicks := [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR"]):
         booked(board, monkeypatch, ion, drv, light), other.step()  # the booking identity at every act
     reader = board.credit.bodies[
