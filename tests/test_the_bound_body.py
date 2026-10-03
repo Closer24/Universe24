@@ -6,15 +6,20 @@ import shutil
 from itertools import product
 
 import numpy as np
+from scipy.sparse import diags, kronsum
+from scipy.sparse.linalg import spsolve
 
 import event_universe.world_files as world_files
 from event_universe import node
+from event_universe.bookings import booked_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients
+from event_universe.core.rule3 import coefficients, division_forward
 from event_universe.features import rotation
+from event_universe.features.start import scaled_source, unit_of
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import amplitude_bound, count_wall, held_write, turns
+from event_universe.loader.derived import amplitude_bound, count_wall, held_write, turns, weight_of
+from event_universe.loader.lay import least_action
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
@@ -191,3 +196,111 @@ def test_the_looks_committed_worlds_pass_the_gate_and_the_lawful_pairs_are_read(
         assert (v["verdict"], v["intervals"], board.step_inverse()) == ("MATCH", t, None), n
         assert BACK.first_difference(loaded, BACK.snapshot(board)) is None and board.tick == 0, n
     assert {DRIFT.drift(gated[n], None)["intervals"] for n in lawful} == {expected["window"][1]}
+
+
+HOLDER = {"name": "nuclear", "pair": [50, 51], "reads": {"gravity": 1, "binding": 1, "nuclear": 1}}
+HOLDER["held"] = {"sources": ["form"], "level_weight": 1, "write_weight": 300}  # E_n and W_1, the file's
+NUCLEON = {"name": "nucleon", "pair": list(PAIR), "dimension": ["plane"] * 3, "reads": HOLDER["reads"]}
+COMPACT = {"kind": "fixed_point", "stop": 2, "passes": 30, "seed": "compact", "profile": [1, 4]}
+NUCLEUS, CUBE = 25, 9  # the design's count, a few quanta, and the open cube's side
+
+
+def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads(
+    tmp_path, monkeypatch
+):
+    """The nucleon's fixed point in its own nuclear holder's well (ALGEBRA.md, The nucleon is a compact body of its family and The nuclear holder, a hypothesis by name with four declared integers, the file's and not the law's: the holder's pair [50, 51], its level weight E_n = 1, its write weight W_1 = 300 and the read weight 1, printed beside the numbers; the mathematician's 275 (b) with the advisor's second, #1572 comments 5969267087 and 5969197876): the rule's universe with a held row `nuclear` sourced by the form, reading the content holders and itself at 1 as every shipped holder does, and a `nucleon` family of three planes at matter's pair reading gravity 1, binding 1 and `nuclear` 1; one body of 25 quanta at the centre of an open 9-cube laid by `lay.kind` `fixed_point` with the compact seed at the profile [1, 4] (one part at the centre and four at each of the six Ports' Nodes), the stop 2 and 30 passes, the tolerance [1, den] at the largest den whose least T is the universe's 32,768 (the budget's line, loader/lay.py); no instrument and no detector: the body is read by its share and its standing. (i) The fixed point returns: the generator's passes end with the content and the record repeating within the stop at every Node under the passes (ten passes on the first run, the last within one unit); the engine's start then holds the rest, the hold's first write moving the nuclear row by at most two units at any Node (one on the first run), and the nuclear row's rest stands within 0.51 level of the row's exact line at its own composed paces, the source the laid record's form as the hold books it, scaled per proper volume and per proper interval over the wall E_n T and solved sparse in the test (0.30 at the body's Nodes on the first run; the check tests/test_the_features.py makes for the massless and binding rows). (ii) The count is the record's share: the world's declared counts (the generator's reading, 43 over 33 Nodes from the design's 25, the three planes' per-plane rounding scaling the record above the design's count) against the share read at those Nodes within the gate ((|c - read| - 1) div 2)^2 <= c, every plane's lines alike and the sense lines 0. (iii) The body stands: P = 2 pi / omega_b rounded, cos omega_b the level before over the level now at the centre of the laid record (8 intervals from the pair (227, 158)), and the form D_i = now^2 - next x before summed over the record's lines returns to itself within one quantum of form, |D_i(1 + P) - D_i(1)| < T, at every Node of the region whose form is above T div 100 (3,768 at most against 32,768 on the first run); the twin without the holder (the nucleon's read of `nuclear` dropped, the same lay under the same mode file) spreads: after P intervals its share over the body's Nodes is below the bound body's by more than the gate's rounding at the body's count (20.5 against 44.0 quanta on the first run, the numbers pinned in the assertion's comment) and its centre's share below the body's. (iv) The guard admits the start (the content below the Link's zero at every Node, the laid levels within the amplitude bound as main derives it with the hill's factor; C.14's tension room is not on main), the back-in-time gate MATCH over 2 P intervals, every write remainder at half its wall and every sourced held row's time line at its rest's half wall, the record's lines at one remainder over the board (the lay's origin, 0 as main lays it; every line born at the half wall is #1743's). Found and not asserted: deeper wells toward the compact branch (W_1 from 325 at this count, from 450 at 13 quanta seeded [1, 2]) are refused in the engine's own start, the lay and the rest of the holders returning to an earlier state three to five units apart at the centre, beyond the rounding tie's two, so the nucleon laid here stands on the wide branch, the content 1,217 = 0.20 Gamma at the centre and 2 cos omega_b = 1.392 above the band's top 1.333."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    rule = json.loads((EVENTS / "rule.json").read_text(encoding="utf-8"))
+    action, rows = rule["integers"]["quantum_action"], rule["families"]
+    rows = [r for r in rows if r["name"] != "matter"]
+    unread = {name: w for name, w in NUCLEON["reads"].items() if name != HOLDER["name"]}
+    for name, reads in (("u", NUCLEON["reads"]), ("t", unread)):  # the universe and the twin's
+        universe = {**rule, "families": [*rows, HOLDER, {**NUCLEON, "reads": reads}]}
+        (tmp_path / f"{name}.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    centre = (CUBE // 2,) * 3
+    world = dict(shape=[CUBE] * 3, boundary=dict(x="open", y="open", z="open"), face_depth=1, ticks=40)
+    world.update(universe="u.json", engine="e.json", detectors=[], lay=COMPACT)
+    world["measured"] = [{"family": "nucleon", "nodes": [{"node": list(centre), "count": NUCLEUS}]}]
+    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    mode = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    world = json.loads(path.read_text(encoding="utf-8"))  # the Nodes and counts the generator read
+    passes = mode["bodies"][0]["lay"][
+        "trajectory"
+    ]  # per pass the content's change, the record's, the count
+    assert len(passes) <= COMPACT["passes"] and max(passes[-1][1:3]) <= COMPACT["stop"]
+    nodes, ticks = world["measured"][0]["nodes"], world["ticks"]
+    declared, per_node = sum(n["count"] for n in nodes), max(n["count"] for n in nodes)
+    den = max(d for d in range(1, 1000) if least_action(PAIR, ticks, per_node, (1, d)) <= action)
+    assert least_action(PAIR, ticks, per_node, (1, den)) == action  # T the least power of two admitted
+    assert least_action(PAIR, ticks, per_node, (1, den + 1)) > action
+    world["lay"] = {**COMPACT, "tolerance": [1, den]}
+    for name, document in (("w", world), ("tw", {**world, "universe": "t.json"})):  # the twin's lay
+        (tmp_path / f"{name}.json").write_text(json.dumps(document), encoding="utf-8")
+        laid = {**mode, "world_digest": input_digest(document)}
+        (tmp_path / f"{name}.mode.json").write_text(json.dumps(laid), encoding="utf-8")
+    board, twin = (GameBoard(load_world(tmp_path / f"{n}.json")) for n in ("w", "tw"))  # the guard
+    names, families, gamma = [f.name for f in board.families], board.families, GAMMA
+    nucleon, nuclear = names.index("nucleon"), names.index("nuclear")
+    lines = board.states[nucleon].lines
+    mask = board.mask(tuple(tuple(n["node"]) for n in nodes))
+    off = abs(declared - int(board.quanta(nucleon)[0][mask].sum()))
+    assert off <= 1 or ((off - 1) // 2) ** 2 <= declared  # the gate, the count the record's share
+    assert all(np.array_equal(getattr(lines[0], k), getattr(lines[p], k)) for p in (2, 4) for k in KEYS)
+    assert not any(lines[p].now.any() or lines[p].before.any() for p in (1, 3, 5))  # no sense laid
+    assert int(board.read(nucleon)[0].max()) < paces.frozen_content(gamma)  # below the Link's zero
+    assert max(int(np.abs(line.now).max()) for line in lines) <= board.world.amplitude_bound
+    assert len({int(v) for x in lines for v in np.unique(x.remainder)}) == 1  # the lay's one origin
+    for index in (names.index(n) for n in ("gravity", "binding", "nuclear")):  # the sourced held rows
+        state, walls = board.states[index], board.walls(index)
+        assert all((r == w // 2).all() for r, w in zip(state.write_remainders, walls, strict=True))
+        half = (coefficients(*families[index].pair, gamma, gamma, gamma, None, board.unit)[2] - 1) // 2
+        assert board.origins[index] == half and (state.lines[0].remainder == half).all()  # the rest's
+    num, den_h = families[nuclear].pair  # the nuclear row's exact line at its own composed paces
+    levels = [board.states[r.family].lines[0].now.astype(object) for r in families[nuclear].reads]
+    content = sum(r.weight * level for r, level in zip(families[nuclear].reads, levels, strict=True))
+    form = np.asarray(booked_of(families, nucleon, board.stepped(nucleon, 1)[1])[0][(nucleon, 0)])
+    source = families[nuclear].write * weight_of(nuclear, families[nucleon]) * form.astype(object)
+    wall, (clock, pace) = board.walls(nuclear)[0], paces.node_paces(gamma, content)
+    unit = unit_of(source, (num, den_h), wall, board.world.width, gamma, board.wrap)
+    fine = division_forward(3 * den_h * unit * source, wall, 0)[0] * gamma * gamma  # the booked source
+    scaled = np.asarray(scaled_source(fine, clock, pace, gamma, 2), dtype=float).ravel() / unit
+    paths = [diags([1.0, 1.0], [-1, 1], shape=(n, n)) for n in board.shape]
+    links = kronsum(kronsum(paths[0], paths[1]), paths[2])  # the six Ports, zeros beyond the faces
+    line = np.asarray(6 * (den_h - num) * clock * clock + 6 * num * pace * pace, dtype=float).ravel()
+    operator = (diags(line) - diags(np.asarray(num * pace * pace, dtype=float).ravel()) @ links).tocsr()
+    exact = spsolve(operator, scaled).reshape(board.shape)
+    assert float(np.abs(board.states[nuclear].lines[0].now - exact)[mask].max()) <= 0.51
+    now, before = (int(getattr(lines[0], k)[centre]) for k in KEYS[:2])
+    period = round(2 * math.pi / math.acos(before / now))  # the record's own rotation at the centre
+    kept, hold_before = [[x.now.astype(object) for x in lines]], board.states[nuclear].lines[0].now
+    hold_before = hold_before.copy()
+    for tick in range(1, 2 * period + 3):
+        board.step()
+        kept.append([x.now.astype(object) for x in board.states[nucleon].lines])
+        if tick == 1:  # the hold's first write returns the start's rest within Rule3's rounding
+            assert int(np.abs(board.states[nuclear].lines[0].now - hold_before).max()) <= 2
+        if tick == period:
+            share = board.share_of(nucleon)[0]
+            standing, at_centre = int(share[mask].sum(dtype=object)), int(share[centre])
+
+    def form_at(t: int):  # type: ignore[no-untyped-def]
+        return sum(kept[t][k] * kept[t][k] - kept[t + 1][k] * kept[t - 1][k] for k in range(len(lines)))
+
+    first, later = form_at(1), form_at(1 + period)
+    region = first > action // 100  # the body's region, the Nodes above a hundredth of a quantum of form
+    assert region[centre] and mask[region].any() and int(np.abs(later - first)[region].max()) < action
+    for _ in range(period):
+        twin.step()
+    spread, wall_c = twin.share_of(nucleon)[0], count_wall(families[nucleon], action)
+    deficit = (standing - int(spread[mask].sum(dtype=object))) // wall_c  # 44.0 against 20.5 quanta
+    assert ((deficit - 1) // 2) ** 2 > declared and int(spread[centre]) < at_centre
+    print(
+        f"GAMEBOARD the nuclear holder's declared integers: the pair {HOLDER['pair']}, E_n "
+        f"{HOLDER['held']['level_weight']}, W_1 {HOLDER['held']['write_weight']}, the read weight "
+        f"{NUCLEON['reads']['nuclear']}; the lay {declared} quanta over {len(nodes)} Nodes in {len(passes)} "
+        f"passes, the period {period}, the body's share {standing / wall_c:.1f} and the twin's "
+        f"{int(spread[mask].sum(dtype=object)) / wall_c:.1f} over the body's Nodes after the period"
+    )
+    assert BACK.verdict(GameBoard(load_world(tmp_path / "w.json")), 2 * period)["verdict"] == "MATCH"
