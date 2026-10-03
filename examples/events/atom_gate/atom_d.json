@@ -1,7 +1,7 @@
 {
  "integers": {
-  "node_clock": 22500,
-  "quantum_action": 131118750,
+  "node_clock": 19500,
+  "quantum_action": 98484750,
   "width": 63,
   "link_unit": 1
  },
@@ -40,7 +40,7 @@
      "wronskian"
     ],
     "level_weight": 1,
-    "write_weight": 3885,
+    "write_weight": 3367,
     "act": "rotation"
    }
   },

@@ -863,3 +863,18 @@ by the folder's reader; every number below is the file's and the engine holds no
    k = <k> (<worker>, branch <branch>, <sha>, <time> UTC)`, the numbers of item 5 and PASS or the
    finding by name against the blind's rows, and posted on #1572 under the worker's name; the mean
    over the phases run so far (the walk's mean and its drift, the bias) in the Boss's hands.
+
+### (i) on the 41-cube: refused as a cloud by name (10:21 to 10:26 UTC)
+
+The lay of `hydrogen_1s_d.json` on the 41-cube at Gamma = 22,500 was refused by the generator's
+cloud rule in its first pass: "the body of 1 quanta about the Node [21, 20, 20] is a cloud: its
+standing reading rotates at [44912, 33744], not above the band's top 2 x 4000 / 6000 and below 2"
+(2 cos Omega = 1.330960, below 4 / 3 by 2.37 x 10^-3; the compressed line in reals of the blind
+1.332307 with the engine's rest before the fix, the lay 1.35 x 10^-3 below the line, as the toy's
+lay read 1.8 x 10^-3 below its own). So on the 41-cube the 1s at alpha = 1 / 28 is held by the faces
+and not by the nucleus, as the blind said it might be, and (i) moves to the 61-cube at the start's
+largest Gamma there, 19,500 (k_w = 3,367, T = 98,484,750, the bound 120,317, the nucleus's level
+4,051 per plane, the electron's level about 84 on the free atom, the walk 1.9 percent over 100
+intervals and 5.9 over 10^3; the compressed line in reals 1.334825 on the 61-cube, above the top by
+1.49 x 10^-3, the lay expected 1 to 2 x 10^-3 below it, so at the edge of the rule), the blind's
+rows unchanged in form; (ii) and (iii) laid beside it at the owner's word, (iii) in the background.
