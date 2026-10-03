@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import itertools
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -170,6 +170,10 @@ class Item:
     pair: tuple[int, int] | None = None
     resonance: tuple[int, int] | None = None
     span: int = 0
+    width: int | None = (
+        None  # the open board's packet: its Nodes across (`giving.laid_packet`), None for the source in time
+    )
+    direction: tuple[int, int] | None = None  # the packet's drawn direction, the axis and its sense
 
 
 Lists = list[list[Item]]  # the outcomes of one click, each the list written where it is drawn
@@ -192,7 +196,13 @@ def written(board: GameBoard, items: list[Item]) -> None:
     """The write step of the act, the one swappable step, item by item: a spread record's quantum taken by the face at every Node named (`faced`, every line of the record whatever their number) or given by the lay of one whole quantum there (`given_quantum`), its count in the credit's books moved; a record declared an instrument at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node of its items (`front.started`); every line a lay changed at a Node, levels or remainder, written as one `lay` line with the levels before and after (`laid_lines`, `levels_of`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's 195: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
     leaving = [item for item in items if item.measured is not None and item.delta < 0]
     phases = {item.measured: leaving_phase(board, item) for item in leaving}
-    laid = [(i.family, line, at) for i in items for line in laid_lines(board, i) for at in i.nodes]
+    laid = [
+        (i.family, line, at)
+        for i in items
+        if i.direction is None  # a packet writes its own lay lines at every Node it lays
+        for line in laid_lines(board, i)
+        for at in i.nodes
+    ]
     before = [levels_of(board, *entry) for entry in laid]
     touched: list[NodeBooks] = []
     for item in items:
@@ -307,7 +317,7 @@ def reported(
 
 
 def gave(board: GameBoard, books: NodeBooks) -> bool:
-    """The giving drawn at a record's window's end (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act; the advisor's clause 5; the mathematician's 174 (c), two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights the window against the lifetime's rest in the labels' unit (the declared floor; the beat's current of a one-part record at one Node is 0, so the floor alone is the rate), the record's own generator; the first giving drawn is taken and the window ends; one jump line."""
+    """The giving drawn at a record's window's end (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act; the advisor's clause 5; the mathematician's 174 (c), two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance inside a guide, `giving.given_quantum`, or, in the open board, as a packet along a drawn direction, one list per direction the board holds, each at the giving's weight, the direction's draw the click's one draw with the record's own generator, an assumption by name, `giving.laid_packet`; `click`) and nothing, the weights the window against the lifetime's rest in the labels' unit (the declared floor; the beat's current of a one-part record at one Node is 0, so the floor alone is the rate), the record's own generator; the first giving drawn is taken and the window ends; one jump line."""
     assert books.declared.draw is not None
     window = books.declared.draw.window
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
@@ -315,12 +325,14 @@ def gave(board: GameBoard, books: NodeBooks) -> bool:
         if rate.leaves == books.part:
             span = window if window <= rate.lifetime else rate.lifetime
             items = exchange(books, rate.leaves, rate.enters)
-            items.append(
-                Item(rate.light, None, None, 1, (books.at,), None, rate.resonance, rate.lifetime)
-            )
-            weights = [span * unit, (rate.lifetime - span) * unit]
-            pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
-            if pick == 0:
+            given = Item(rate.light, None, None, 1, (books.at,), None, rate.resonance, rate.lifetime)
+            outcomes = [
+                items + [replace(given, width=rate.width, direction=direction)]
+                for direction in (rate.directions or (None,))
+            ]
+            weights = [span * unit] * len(outcomes) + [len(outcomes) * (rate.lifetime - span) * unit]
+            pick, books.state = click(board, books.state, books.declared.draw, weights, [*outcomes, []])
+            if pick < len(outcomes):
                 reported(board, books, (rate.enters, rate.leaves), (None, rate.light))
                 return True
     return False

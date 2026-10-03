@@ -1,0 +1,19 @@
+{
+ "comment": "The packet giving world (the owner's word of 2026-10-03, 09:46 Israel, 'a new emitter detector also needs to enter'; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the open board's giving as a packet along a drawn axis, read in the engine. On the Zeno atom's universe (examples/events/zeno/zeno_atom.json, T = 32,768, the light `pulse` the massless holder of the sign) an open board of `width` Nodes across on y and z and long on x, the one board of this lay the machine runs in minutes: the giver, the resonance world's atom standing in its upper part e, its transition g to e by `pulse` at the resonance [2, 3] and its giving e to g at the lifetime 48 with the window 48 (drawn with certainty at the interval 48), declares the packet's width 4, the one new number; the loader finds the board open (three axes above one Node) and holds the packet along x alone (the train of L slices from the body's Node fits neither y nor z), so the giver draws between +x and -x with its own generator. The lay: the exact root S = isqrt((T den div 2)^2 div (den^2 - num^2)), the envelope in the energy form (a_t = isqrt((R_t div tau) div w^2), R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1), the wave number along x from the band's line with the transverse mode, cos k_x = 3 cos Omega - 2 cos(pi / (w + 1)), the top-hat of w across; the body at the centre of x with L + 1 Nodes on either side. The detector: a region of the band's top, the 4 x 4 slice across x at the derived reach from the body on the +x side, z_reach = (pi w / lambda) sqrt(S / L), its window the run (one draw at the end). The far reading: the light's level at the Node on the axis half way to the detector over the window of the passage, cos Omega as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2), a GameBoard reading labelled so. The blind in expectation.json, written by build_world.py from this design before any lay and never touched after; the reading in blind_and_reading.md, a miss a finding by name.",
+ "status": "designed and the blind written before any lay, 2026-10-03, 07:20 UTC; the board's transverse extent is the width itself so that the machine runs it in minutes, which confines the packet as a guide of w across would, so the open board's Rayleigh spreading is named and not read here",
+ "universe": "examples/events/zeno/zeno_atom.json",
+ "engine": "examples/events/engine_start.json",
+ "quantum_action": 32768,
+ "light": "pulse",
+ "light_pair": [6000, 6000],
+ "width": 4,
+ "margin": 1,
+ "boundary": {"x": "open", "y": "open", "z": "open"},
+ "face_depth": 1,
+ "giver": {"family": "atom", "resonance": [2, 3], "lifetime": 48, "window": 48, "seed": 11, "weight": 1},
+ "detector": {"name": "reach", "transition": [0, 6000], "seed": 24},
+ "passage_intervals": 120,
+ "reading_window_after_giving": [2, 17],
+ "generator": {"multiplier": 6364136223846793005, "increment": 1442695040888963407},
+ "seeds": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+}

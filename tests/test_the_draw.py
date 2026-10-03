@@ -1,4 +1,4 @@
-"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over four seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone."""
+"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over four seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's giving as a packet along a drawn axis (step 5 of the emitter/detector)."""
 
 import ast
 import json
@@ -9,6 +9,7 @@ import numpy as np
 
 from event_universe import node
 from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
+from event_universe.features.click import along_cosine, envelope, exact_total
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
@@ -20,9 +21,9 @@ from event_universe.share import quanta_of
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, RUN, TOP, load_file, refused
 
-SLITS, WAY, RESONANCE = (
+SLITS, WAY, RESONANCE, PACKET = (
     load_file(f"{n}_build", EVENTS / n / "build_world.py")
-    for n in ("two_slits", "which_way", "resonance")
+    for n in ("two_slits", "which_way", "resonance", "packet_giving")
 )
 SRC = ROOT / "src" / "event_universe"
 GATE_ROW = [23, 18, 34, 13, 5, 35, 52, 19, 9, 27, 22, 21]  # the two slits' gate, N = 278, at the seed 24
@@ -230,9 +231,10 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         (48, 1, 1),
         9000,
         (),
+        action,
     )
     alone = {**world["measured"][0], "transitions": []}
-    refused("no transition between them", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, ())
+    refused("no transition", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, (), action)
     board = GameBoard(load_world(tmp_path / "resonant.json"), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     series = {}
@@ -266,3 +268,86 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         max(abs(series[t]) for t in window),
     )
     assert far > 20 and abs(read - 2 / 3) <= 2 / far, (read, far)
+
+
+def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tmp_path):
+    """Step 5 of the emitter/detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the exact root and the envelope in the energy form carry one quantum within the deficit below tau per Node (S = 43,962 at T = 65,536 and [2, 3], a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, an open board without one, a width the band refuses and a board too short for the train; on an open board of 35^3 Nodes a giver of the lifetime 2 lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a detector's own unit at [2, 3]; the packet giving world's blind is the builder's byte for byte (examples/events/packet_giving)."""
+    total, train = exact_total(65536, (2, 3)), envelope(exact_total(65536, (2, 3)), 48, 1)
+    assert (total, train[0], len(train), total - sum(a * a for a in train)) == (43962, 30, 456, 47)
+    assert train == sorted(train, reverse=True) and train[-1] == 1
+    unit = (3 * 6000 * 32768) ** 2
+    doubled = along_cosine((6000, 6000), (2, 3), 4, unit)
+    assert doubled is not None and abs(doubled / (2 * unit) - (2 - 2 * math.cos(math.pi / 5))) < 1e-9
+    assert all(along_cosine((6000, 6000), (2, 3), w, unit) is None for w in (1, 2))
+    universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
+    families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
+    PACKET.main(["--folder", str(tmp_path), "--modes"])
+    blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
+    assert blind == json.loads(
+        (EVENTS / "packet_giving" / "expectation.json").read_text(encoding="utf-8")
+    )
+    world = json.loads((tmp_path / "packet_giving.json").read_text(encoding="utf-8"))
+    giver = world["measured"][0]
+
+    def body(at, **changes):  # the giver at a Node with its one giving changed
+        rate = {k: v for k, v in {**giver["rates"][0], **changes}.items() if v is not None}
+        return [{**giver, "nodes": [{"node": at, "count": 1}], "rates": [rate]}]
+
+    refused(
+        "inside a guide", bodies_of, body([0, 0, 0]), None, "", families, (48, 1, 1), 9000, (), action
+    )
+    bare = body([4, 4, 4], width=None)
+    refused("declares no `width`", bodies_of, bare, None, "", families, (9, 9, 9), 9000, (), action)
+    refused(
+        "cannot carry",
+        bodies_of,
+        body([4, 4, 4], width=2),
+        None,
+        "",
+        families,
+        (9, 9, 9),
+        9000,
+        (),
+        action,
+    )
+    short = body([4, 4, 4], width=3, lifetime=2)
+    refused("holds the packet", bodies_of, short, None, "", families, (9, 9, 9), 9000, (), action)
+    small = {
+        **world,
+        "shape": [35, 35, 35],
+        "ticks": 4,
+        "detectors": [],
+        "measured": body([17, 17, 17], width=3, lifetime=2),
+    }
+    small["measured"][0]["instrument"] = {**giver["instrument"], "window": 2}
+    del small["instrument"]
+    (tmp_path / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
+    load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py").main(
+        ["--input", str(tmp_path / "small.json")]
+    )
+    board = GameBoard(load_world(tmp_path / "small.json"), (lines := []).append)
+    pulse = [f.name for f in board.families].index("pulse")
+    for _ in range(4):
+        board.step()
+    given = [
+        c for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR" and c["given"] == "pulse"
+    ]
+    lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
+    assert [g["tick"] for g in given] == [2] and {c["tick"] for c in lays} == {2} and len(lays) > 100
+    nodes = {tuple(c["node"]["at"]) for c in lays}
+    spans = [sorted({at[a] for at in nodes}) for a in range(3)]
+    along = [a for a in range(3) if len(spans[a]) > 3]
+    assert len(along) == 1 and 17 in (
+        spans[along[0]][0],
+        spans[along[0]][-1],
+    )  # from the body's Node, one sense
+    assert all(spans[a] == [16, 17, 18] for a in range(3) if a not in along)  # the top-hat of 3 across
+    assert len(spans[along[0]]) == len(
+        envelope(exact_total(action, (2, 3)), 2, 9)
+    )  # L slices from tau and T
+    light, total = board.families[pulse], board.total_share(pulse)[0]
+    own = detector_wall(light, action, (2, 3))
+    assert board.credit.counts[pulse] == 1 and total is not None
+    assert (
+        division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1
+    )  # one quantum, its own unit
