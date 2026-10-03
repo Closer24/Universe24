@@ -114,4 +114,12 @@ open is not on the integer board as written. On the takers' findings (4 and 5 ab
 act passes the turn's size, |turn|, in `meeting.turned_labels`, so it reads no resonance; the signed
 form at the declared resonance is the mathematician's hand asked (the advisor's one token), and under
 it the shipped Zeno pi pulse would re-tune from 308 to about 392 with S.59's ratios unchanged, the
-advisor's number by name. The derivations' lines: the mathematician's 5965494847.
+advisor's number by name. The derivations' lines: the mathematician's 5965494847. The mathematician's
+223 (#1572 comment 5965727937): the exact root and the carried lay are two hands (his second on the
+advisor's W_d and S, his 220 (c) withdrawn for them; cited beside 5965316267 above); the giving's
+clock stays the engine's line, the hazard 1 / tau per interval drawn once per window in `meeting.gave`
+("once at tau" killed, the advisor's second asked), and this design's giving at the window 48 equal to
+the lifetime 48 is the degenerate corner, 100 of 100 by the weights 48 against 0, which tests no clock;
+the resonant two-mode act has his line (a reference record at the declared pair, two quadratures, the
+plane's size over the window, the Zeno world's k rescaled once by 4 / pi) and is a round of its own,
+not this one's, cited with the advisor's 5965700585 at the findings 4 and 5 above.
