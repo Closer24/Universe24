@@ -3,7 +3,7 @@
 The neutron's table and rate as the two hands declare them (the advisor's (c), #1572 comment
 5963954612, 01:15 UTC, and the mathematician's 204, 5964082980, 01:35 UTC, with the pair's number;
 the two hands' agreement on the one-Node lay, the mathematician's 205 item 3, 5964520368, and the
-advisor's second, 5964754600; the owner's words of 2026-10-03, 03:26 Israel, "likewise an option for
+advisor's second on the energy line and the rate's draw, 5964754600; the owner's words of 2026-10-03, 03:26 Israel, "likewise an option for
 dimension 3 in the families", and 00:52 UTC, "build and run tonight"; ALGEBRA.md, A family's
 declaration, item 5, The conversion's table and rate, and The click is the meeting, what the click's
 picture derives of the conversions): the row from `neutron` (three real lines, count 1, the pair
@@ -42,7 +42,8 @@ misses its blind is a finding by name, never adjusted.
    (5964082980) on the pair: the antineutrino carries the rest at the excess Omega_nu = omega_n -
    omega_p - omega_e, [-4800, 6000] giving omega_n = 2.498, the excess 0.086 and A_nu = 436 at a
    packet's amplitude against the electron's own 148 at count 1.
-4. The realised conversions over the run within sqrt(N p (1 - p)) of the declared rate (5963954612).
+4. The realised conversions over the run within sqrt(N p (1 - p)) of the declared rate (5963954612; the
+   advisor's second on the rate's draw, 5964754600).
 5. The booking identity per act (5963954612).
 6. The back-in-time tool crossing from the lines (5963954612).
 7. The share 1 per quantum at the Node, the books and the share agreeing: a one-Node lay of an
