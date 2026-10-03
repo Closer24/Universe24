@@ -156,6 +156,19 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
     assert {c["node"]["label"] for c in credits} == {"GAMEBOARD"}  # the one Node a diagnostic beside
+    report = {
+        "event",
+        "label",
+        "tick",
+        "family",
+        "detector",
+        "window",
+        "realised",
+        "kept",
+        "count",
+        "left",
+    }
+    assert all(set(c) == report | {"node"} and c["label"] == "DETECTOR" for c in credits)  # never a Node
     written = {tuple(np.add(c["node"]["at"], plain.offset)) for c in credits[:2]}
     assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
     w, keys = (

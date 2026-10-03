@@ -148,3 +148,11 @@ lifetime's floor, PASS within the spread); no shelving, no bright or dark period
 about 30 of each over the full run; not read, the run too short, a FINDING by name and no adjustment
 of the blind); 422 returns of `strong_drive` (the blind none: a FINDING, the telegraph reader counting
 the drive's own `credit` lines at the counter as returns).
+
+**The giving's frequency, by name** (the advisor's second on the massless lay, #1572 comment 5963954612):
+the born quantum belongs to light's record and is massless, but its rotation should be the
+transition's resonance Omega with A^2 = T div (2 sin Omega) and the phase phi_e - phi_g; the engine's
+declarations hold no resonance for a rate (a `Rate` is `from`, `to`, `lifetime`, `gives_to`), so the
+quantum is laid at light's own pair, the two levels alike, and the telegraph's counter, reading the
+inflow whatever the rotation, cannot see the difference; a second body at resonance would. Not built
+this night: the rate's declared resonance as a key of the file and the lay at it, with its assertion.

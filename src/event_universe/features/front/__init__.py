@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 
 
@@ -12,7 +14,7 @@ def shell(
     periodic: tuple[bool, bool, bool],
 ) -> np.ndarray:
     """The mask of the Nodes at Link-metric distance exactly `distance` from `origin` over the board: per axis the distance |d| along the axis, or on a periodic axis the lesser of |d| and the extent less |d| (the way round the wrap), summed over the three axes; empty beyond the board's diameter."""
-    total = np.zeros(shape, dtype=np.int64)
+    total: Any = 0
     for axis, (extent, at) in enumerate(zip(shape, origin, strict=True)):
         along = np.abs(np.arange(extent) - at)
         if periodic[axis]:
