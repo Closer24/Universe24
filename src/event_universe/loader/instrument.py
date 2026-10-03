@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 
 from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.rule3 import division_forward
 from event_universe.features.click import SCALE_OF, along_cosine, envelope, line_total
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import integer, keyed
@@ -298,7 +299,8 @@ def packet_form(
         length = len(
             envelope(line_total(action, rate.resonance), rate.lifetime, rate.width * rate.width)
         )
-        low, high = rate.width // 2, rate.width - 1 - rate.width // 2
+        low = int(division_forward(rate.width, 2, 0)[0])  # w div 2 by the division act, an index
+        high = rate.width - 1 - low
         directions = tuple(
             (axis, sense)
             for axis in range(3)

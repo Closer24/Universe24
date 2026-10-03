@@ -173,7 +173,8 @@ def laid_packet(board: GameBoard, item: Item) -> None:
 
 def _offsets(axis: int, width: int, at: Node, shape: Node) -> list[tuple[int, int, int]]:
     """The cross-section's offsets from the body's Node on the two axes across the packet's axis, the top-hat of `width` Nodes around the Node, -(w div 2) through w - 1 - (w div 2) on each, kept where the Node stands on the board (the loader admitted the whole section, so every one is)."""
-    span = range(-(width // 2), width - width // 2)
+    half = int(division_forward(width, 2, 0)[0])  # w div 2 by the division act, an index
+    span = range(-half, width - half)
     found: list[tuple[int, int, int]] = []
     for first in span:
         for second in span:
