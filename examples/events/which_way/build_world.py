@@ -29,11 +29,23 @@ def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
         if channel and low <= first <= high:
             continue
         positions = [[column, row, 0] for row in range(first, first + rows)]
-        found.append({"name": f"screen_{index}", "positions": positions})
+        found.append(
+            {
+                "name": f"screen_{index}",
+                "transition": design["detector_transition"],
+                "positions": positions,
+            }
+        )
     if channel:
         first, last = (int(c) for c in design["channel"]["columns"])
         positions = [[x, y, 0] for x in range(first, last + 1) for y in range(low, high + 1)]
-        found.append({"name": str(design["channel"]["name"]), "positions": positions})
+        found.append(
+            {
+                "name": str(design["channel"]["name"]),
+                "transition": design["detector_transition"],
+                "positions": positions,
+            }
+        )
     return found
 
 

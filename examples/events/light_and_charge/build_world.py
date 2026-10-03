@@ -24,6 +24,7 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
     return [
         {
             "name": f"screen_{number}",
+            "transition": design["detector_transition"],
             "positions": [
                 [column, y, z] for y in range(number * rows, (number + 1) * rows) for z in range(across)
             ],

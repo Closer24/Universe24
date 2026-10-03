@@ -156,3 +156,33 @@ declarations hold no resonance for a rate (a `Rate` is `from`, `to`, `lifetime`,
 quantum is laid at light's own pair, the two levels alike, and the telegraph's counter, reading the
 inflow whatever the rotation, cannot see the difference; a second body at resonance would. Not built
 this night: the rate's declared resonance as a key of the file and the lay at it, with its assertion.
+
+## On the own quantum, 2026-10-03 (branch own-quantum, 8382b8b9)
+
+The round of the detector's own quantum (the mathematician's 213, 214, 220, 221 and 223, #1572 comments
+5965054791, 5965082449, 5965303134, 5965498522 and 5965727937; the advisor's seconds, #1563 comments
+5965316267 and 5965700890, #1572 comments 5965312353 and 5965700585) changed the giving: the born
+quantum is laid as a source in time at the ion's Node over the rate's lifetime at the transition's
+declared resonance ([2, 3], the drive's rotation at k = pi / 2), with the exact root and the carried
+lay, in place of the one-instant massless lay; the counter declares the band's top [0, 6000], so its
+wall is W_c as before. Re-run and read by `tools/telegraph.py` on 8382b8b9, beside the reading of the
+one click act above (84f0352d): REFUSED at the interval 434 as before (the strong drive's row at
+10,314 above 9,266, the uniform mode pumped by the takings' holes, named above), 43 takings
+`P by strong_drive` and 43 givings `S by fluorescence` as before, their spacing 9.69 +/- 6.2 as
+before; the counter's credits changed, counts per bin 5, 9, 0 against 8, 0, 0 (14 of the 43 given
+quanta credited in 434 intervals against 8; the blind 20 per bright bin, a FINDING as before), the
+dark fraction 0.333 against 0.667, the returns 422 the same. The counter still reads: its Nodes stand
+beside the ion (the whole box but the ion's Node, the nearest within one Link), inside the floor's
+reach of about 0.28 A_source Links (221), so the source in time at the ion's Node is credited where a
+one-Node source in a large open board would not be; the credits per bin moved by the lay's form, a
+shipped reading changed by name, the blind untouched. The ion instrument test of
+`tests/test_the_meeting.py`, whose counter is one plane of a 6 x 6 x 4 periodic box three Links from
+the ion, reads no credit under the same lay (the inflow below half a quantum in its window), the floor
+in a small box, named there.
+The mathematician's line on the change (#1572 comment 5966081562, one hand; the advisor's word
+pending): the counter's change is a finding by name moved by the lay's form in the expected direction,
+since a source in time over tau = 48 holds the given quantum beside the ion for 48 intervals (A_t =
+isqrt(S / tau) = 30, the floor's reach 0.28 A_t about 8 Links) where the one-instant lay passed the
+counter in one transit, so a counter within that reach credits more of the 43 (14 against 8) and the
+bins fill nearer the givings; the condition it states by name: the counter's Nodes within 0.28 A_t of
+the ion, else nothing is credited.

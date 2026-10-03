@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import conversion, credit, front, growth, meeting, node, share
+from event_universe import conversion, credit, front, giving, growth, meeting, node, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -71,10 +71,8 @@ class GameBoard:
         self.fields: dict[tuple[int, str], tuple[int | None, int | None]] = {}  # the last field readings
         for index in self.order:
             node.guarded(index, self.families, self.states, self.world.node_clock, self.wrap, self.unit)
-        self.detectors = [
-            Detector(r.name, None if r.body is not None else self.mask(r.positions), r.body, r.declared)
-            for r in world.detectors
-        ]
+        rows = ((r, self.mask(r.positions) if r.body is None else None) for r in world.detectors)
+        self.detectors = [Detector(r.name, at, r.body, r.declared, r.transition) for r, at in rows]
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.gate()
         self.credit = credit.Books.of(self)
@@ -310,6 +308,7 @@ class GameBoard:
         credit.windowed(self)
         meeting.jumped(self)
         conversion.windowed(self)
+        giving.sourced(self)
         front.advanced(self)
 
     def hold(

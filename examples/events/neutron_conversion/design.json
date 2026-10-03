@@ -12,6 +12,7 @@
   4,
   4
  ],
+ "detector_transition": [0, 6000],
  "around": [
   [
    5,

@@ -28,7 +28,11 @@ def world_of(design: dict[str, Any], weights: list[int]) -> dict[str, Any]:
         "edge": {"x": int(design["edge"]), "y": 0, "z": 0},
         "weights": list(weights),
     }
-    counter = {"name": "counter", "positions": [[int(x), 0, 0] for x in design["counter_nodes"]]}
+    counter = {
+        "name": "counter",
+        "transition": design["detector_transition"],
+        "positions": [[int(x), 0, 0] for x in design["counter_nodes"]],
+    }
     return {
         "shape": [length, 1, 1],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
