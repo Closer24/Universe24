@@ -137,3 +137,27 @@ re-read, the advisor's, written here before the run: n = 1 at 1.000 (120 of 120)
 within one standard error (0.046); n = 4, 8 and 16 as read above (44, 32 and 15 of 120) within one
 standard error; the resonance world's detuned and four-phase readings unchanged (they read the turn's
 numerator, not the angle). A reading that misses this blind is a finding by name, not adjusted.
+
+### The reading under the sub-turn form (branch resonant-act, 2026-10-03, about 07:35 UTC, 120 trials per world)
+
+| n | window | trials ending in e | P(e at T_pi) | the blind above | the first build |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 48 | 120 of 120 | 1.000 | 1.000 (120 of 120) | 113 of 120 |
+| 2 | 24 | 68 of 120 | 0.567 | 0.500 within 0.046 | 67 of 120 |
+| 4 | 12 | 45 of 120 | 0.375 | 0.375, as read (44) | 44 of 120 |
+| 8 | 6 | 33 of 120 | 0.275 | 0.235, as read (32) | 32 of 120 |
+| 16 | 3 | 15 of 120 | 0.125 | 0.133, as read (15) | 15 of 120 |
+
+PASS at n = 1 (120 of 120, the blind's), at n = 4 (0.375, the column exactly), at n = 8 and at n = 16
+(as read, within one count). n = 2 reads 0.567 against 0.500, 0.067 off, 1.46 standard errors, beyond
+the blind's one standard error: a MISS by name, not adjusted; the same 120 seeds read 0.558 on the
+first build at the per-window angle 0.747 and 0.567 here at 0.784 (pi / 4 = 0.785, the form's own
+number 0.500), so the excess is the seeds' draw and not the angle, named and left standing. The
+jumps: n = 1, 120 g to e; n = 2, 95 and 27; n = 4, 63 and 18; n = 8, 39 and 6; n = 16, 15 and 0.
+The one shear's angle at n = 1 is 2 arctan(9,408 / 12,000) = 1.3298 exactly, the blind's 1.332 its
+rounding; the sub-turn form's 48 x 2 arctan(196 / 12,000) = 1.5679. The resonance world's detuned and
+four-phase readings: the four-phase turns are the dedicated test's and unchanged (they read the turn's
+numerator); the detuned taker is read on the tree that also holds main's dark grain, which moved the
+givings, so its number stands in `examples/events/resonance/blind_and_reading.md` against the blinds
+there and not against this line. The function named `meeting.sheared` in the blind lives in
+`src/event_universe/resonance.py` as `sheared`, called by `meeting.turned_labels`.

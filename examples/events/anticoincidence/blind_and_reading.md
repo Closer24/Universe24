@@ -80,28 +80,31 @@ region detector. Re-run by `tools/meeting_trials.py` on 8382b8b9 over the 200 se
 101, B only 99, both 0, neither 0, alpha 0; two photons 24, 47, 28, 101, alpha 56 / 39; bit for bit the
 readings above. PASS and unchanged.
 
-## On the resonant act, 2026-10-03 (branch resonant-act)
+## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)
 
-The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
-seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
-morning, #1572 comments 5966338551 and 5966387795; the form in `examples/events/resonance/blind_and_reading.md`)
-changes the records' turn here: the window's turn is k isqrt(X^2 + Y'^2) div R with X and Y' the
+The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and
+5966081562; the advisor's seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands'
+precisions of the morning, #1572 comments 5966338551 and 5966387795; the form in
+`examples/events/resonance/blind_and_reading.md`, the window's turn applied as W sub-turns with the
+carry) changes the records' turn here: the window's turn is k isqrt(X^2 + Y'^2) div R with X and Y' the
 arriving level summed over the window against the records' reference records at [5414, 6000], so a
-standing level (the uniform mode's drift of about -145 named above) sums to a bounded residue and
-the records read the passing packet alone, the transfer over a passage the design intended. Re-run
-by `tools/meeting_trials.py` over the 200 seeds, the blind untouched, every number changed by name:
+standing level (the uniform mode's drift of about -145 named above) sums to a bounded residue and the
+records read the passing packet alone, the transfer over a passage the design intended. Re-run by
+`tools/meeting_trials.py` over the 200 seeds on the tree holding main's dark grain (no giving here, so
+the grain changes nothing), the blind untouched, every number changed by name:
 
 | world | A only | B only | both | neither | alpha |
 | --- | --- | --- | --- | --- | --- |
-| one_photon | 92 of 200 | 89 of 200 | 0 of 200 | 19 of 200 | 0 |
-| two_photons | 19 of 200 | 19 of 200 | 162 of 200 | 0 of 200 | 32400 / 32761 = 0.99 |
+| one_photon | 99 of 200 | 97 of 200 | 0 of 200 | 4 of 200 | 0 |
+| two_photons | 21 of 200 | 17 of 200 | 162 of 200 | 0 of 200 | 10800 / 10919 = 0.99 |
 
-One photon: P(both) = 0 exactly and alpha = 0, the blind's (PASS, by the count as before); P(A only)
-= 0.46 and P(B only) = 0.445, equal within the standard error (PASS on the symmetry), each at most
-1 / 2 with a "neither" of 0.095 (PASS on the bound's meaning this time: the records' shares at the
-window's end read about 0.45 each from the packet's passage, and the draw's complement carries the
-rest). Two photons: P(both) = 0.81 above 0 (PASS); alpha = 0.99, the value of two independent
-sequential takings at one share (the records' shares at the window's end about 0.9 each under the
-control's larger amplitude) and not S.57 (c)'s 1 / 2 (a FINDING by name, as before in kind: the one
-draw with the complement outcome is not S.57 (c)'s form). The finding named above, the standing
-level read as a turn, is lifted by the resonant form.
+One photon: P(both) = 0 exactly and alpha = 0, the blind's (PASS, by the count as before); P(A only) =
+0.495 and P(B only) = 0.485, equal within the standard error (PASS on the symmetry), each at most 1 / 2
+with a "neither" of 0.02 (PASS on the bound's meaning: the records' shares at the window's end read
+about 0.49 each from the packet's passage, and the draw's complement carries the rest). Two photons:
+P(both) = 0.81 above 0 (PASS); alpha = 0.99, the value of two independent sequential takings at one
+share (the records' shares at the window's end about 0.9 each under the control's larger amplitude)
+and not S.57 (c)'s 1 / 2 (a FINDING by name, as before in kind: the one draw with the complement
+outcome is not S.57 (c)'s form). The finding named above, the standing level read as a turn, is lifted
+by the resonant form. The first build of the act (one shear of the window's sum) read 92, 89, 0 and
+19 with alpha 0 and 19, 19, 162 and 0 with alpha 0.99; its numbers are replaced by this table's.

@@ -203,35 +203,43 @@ runs the first 25 seeds, asserts one draw per interval in the dark and none at t
 48 (the generator's state), the givings at distinct intervals and within the lifetime in 8 to 24 of 25,
 each seed's lay lines, cosine and count as above, and that with the light laid on the chain a window
 stands and the window's draw at 48 stands as it is.
-## On the resonant act, 2026-10-03 (branch resonant-act)
+## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)
 
-The resonant two-mode act is built in the taker's act (`src/event_universe/resonance.py`, `gathered`
-and `window_turn`, with `meeting.turned_labels`; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
-seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
-morning, #1572 comments 5966338551 and 5966387795): the taker keeps per transition two reference records at its
-declared pair, r_t = R cos(Omega_d t) and r'_t = R sin(Omega_d t), advanced by the giving's recurrence
-(`giving.advanced`), r' begun at (0, isqrt(R^2 (den^2 - num^2)) div den), one root at the declaration;
-over the window X = SUM a_t r_t and Y' = SUM a_t r'_t, and at the close the turn k isqrt(X^2 + Y'^2)
-div R once per window, R = 2^11 here (the largest power of two with 2 (R A W)^2 inside the width at
-A = 9,266 and W = 96), derived and never declared. Re-run by `tools/meeting_trials.py` over the
-design's 100 seeds, the blind above untouched:
+The resonant two-mode act is built in the taker's act (`src/event_universe/resonance.py`, `gathered`,
+`window_turn` and `sheared`, with `meeting.turned_labels`; the mathematician's 223 (c) and 224 (2)(c),
+#1572 comments 5965727937 and 5966081562; the advisor's seconds, 5965918924 and 5966129376 with #1563
+comment 5966129628; the hands' precisions of the morning, #1572 comments 5966338551 and 5966387795): the
+taker keeps per transition two reference records at its declared pair, r_t = R cos(Omega_d t) and
+r'_t = R sin(Omega_d t), advanced by the giving's recurrence (`giving.advanced`), r' begun at (0,
+isqrt(R^2 (den^2 - num^2)) div den), one root at the declaration; over the window X = SUM a_t r_t and
+Y' = SUM a_t r'_t, and at the close the turn k isqrt(X^2 + Y'^2) div R once per window, applied as W
+equal sub-turns with the carry so that the angles add as the proper intervals' did (the advisor's second
+on the first build); R = 2^11 here (the largest power of two with 2 (R A W)^2 inside the width at
+A = 9,266 and W = 96), derived and never declared. Read by `read_world.py` over the design's 100 seeds on
+the tree holding main's dark grain (the section above), the blinds untouched:
 
-4. The resonant taker: 22 takings in 100 seeds (`measured 1 e by pulse` 22; the shipped act's 39).
-   Against the blind's share 1: a MISS as before and the same FINDING by name of the design's
-   coupling: the window's turn is k times the plane's size, A W_eff / 2 at resonance with W_eff the
-   intervals over which the wave stands at the Node 12, about 20 of the window's 96 (the front at the
-   group pace 0.447 reaching the Node 12 at about the interval 75), the share sin^2 of that turn about
-   0.2 here, and no pi pulse was tuned; the blind's "share 1" is S.43's sin^2(g tau) at g tau = pi / 2,
-   a condition the design did not set.
-5. The detuned taker at [1, 3]: 0 takings in 100 seeds (the shipped act's 39), the ratio detuned over
-   resonant 0 against 22 of 100. Against the blind's "fewer than one taking in a thousand of the
-   resonant record's": PASS at the resolution the 100 seeds give, one in a hundred, which cannot
-   resolve one in a thousand (a reading of 0 against 22 is consistent with the blind and excludes the
-   shipped act's ratio 1.00); the detuned turn is the resonant one times sinc(delta W_eff / 2), about
-   0.18 at W_eff of about 20 (0.007 at the blind's tau = 48), its share about 0.006 of the resonant
-   record's, below one taking in 100 seeds. Items 1 to 3 (the giving, the far Node's cosine, the
-   count) are the giver's and unchanged: the taker's act reads and does not write until its close.
-
-The giving's 100 of 100 at the window 48 equal to the lifetime 48 stands as the degenerate corner the
-mathematician's 223 (a) named; the per-interval hazard at the now (224 (2)(a)) is the window round's
-and not this one's.
+1 to 3. The giver's items are the dark grain's and unchanged by the taker's act: 59 of 100 givings
+   within the lifetime and 83 within the run, the cosine 0.6682 on every plateau read (66 of 66), the
+   count at the span's end 1 in every seed read (23 of 23 in the resonant world and 58 of 58 in the
+   detuned one, more seeds read than the dark grain's 8 since fewer takings empty the record).
+4. The resonant taker: 37 takings in 100 seeds (`measured 1 e by pulse` 37; the dark grain's 50 on the
+   magnitude form, the first build's 39). Against the first blind's share 1: a MISS as before and the
+   same FINDING by name of the design's coupling: the window's turn is k times the plane's size,
+   A W_eff / 2 at resonance with W_eff the intervals over which the train stands at the Node 12 inside
+   the taker's window of 96, which varies with the giving's interval under the dark grain (the mean 32),
+   the share sin^2 of that turn, and no pi pulse was tuned; the blind's "share 1" is S.43's sin^2(g tau)
+   at g tau = pi / 2, a condition the design did not set.
+5. The detuned taker at [1, 3]: 1 taking in 100 seeds (the dark grain's 50 on the magnitude form, the
+   first build's 39), the ratio detuned over resonant 1 to 37, 0.027. Against the first blind's "fewer
+   than one taking in a thousand of the resonant record's": a MISS by the count and a FINDING by name
+   of the blind's presumption and not of the act: the blind's sinc^2(delta tau / 2) at tau = 48 takes
+   the whole train of 48 intervals inside the taker's window, where under the dark grain the overlap
+   W_eff runs from the whole train to a few intervals (a giving late in the run), and the detuned turn is
+   the resonant one times sinc(delta W_eff / 2), 0.007 at 48 but 0.31 at 12 and above 0.6 below 6, so a
+   seed with a late giving can take detuned; the 100 seeds resolve one in a hundred and not one in a
+   thousand. The act reads the resonance: 1 against 37 where the magnitude form read 50 against 50.
+6. Beside the blind, by name: the giver takes its own light back in 1 of 100 seeds of each world
+   (`measured 0 e by pulse` 1, the dark grain's 3 on the magnitude form), the one-in-flight limit and a
+   record's reading of the light it gave not built, as ENGINE.md names them. The first build of this
+   act (one shear of the window's sum, before the dark grain) read 22 and 0 of 100; its numbers are
+   replaced by this section's, read on the tree that ships.

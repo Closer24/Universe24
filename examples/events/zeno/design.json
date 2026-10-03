@@ -179,7 +179,7 @@
   "n = 8": 0.2346,
   "n = 16": 0.1334
  },
- "status": "declared, laid and run on the night of 2026-10-03 (branch ion-world, 120 trials per probe count): P(e at T_pi) 1.000, 0.408, 0.292, 0.217, 0.125 at n = 1, 2, 4, 8, 16 against Itano's 1, 0.5, 0.375, 0.235, 0.133; the reading in blind_and_reading.md; the drive amplitude rescaled once by 4 / pi to 392 under the resonant two-mode act, 2026-10-03, and zeno_4 re-read, 44 of 120 against 0.375, in blind_and_reading.md",
+ "status": "declared, laid and run on the night of 2026-10-03 (branch ion-world, 120 trials per probe count): P(e at T_pi) 1.000, 0.408, 0.292, 0.217, 0.125 at n = 1, 2, 4, 8, 16 against Itano's 1, 0.5, 0.375, 0.235, 0.133; the reading in blind_and_reading.md; the drive amplitude rescaled once by 4 / pi to 392 under the resonant two-mode act, 2026-10-03, the window's turn as W sub-turns with the carry, and the five worlds re-read, 120, 68, 45, 33 and 15 of 120 against the column, in blind_and_reading.md",
  "resonance": [
   2,
   3
