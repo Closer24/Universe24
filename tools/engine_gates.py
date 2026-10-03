@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -32,7 +33,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from merge_base import base_ref, carried, resolved, tree_at  # noqa: E402
+from merge_base import base_ref, carried, on_pull_request, resolved, tree_at  # noqa: E402
 
 PACKAGE = Path("src/event_universe")
 CORE = PACKAGE / "core"
@@ -219,8 +220,11 @@ def core_approval(new: list[str], body: str | None) -> list[str]:
 
 
 def main() -> None:
-    """Print every count above the merge base's; exit 1 when there is one."""
-    found = ratchet(ROOT, record_at(ROOT))
+    """Print every count above the merge base's and every new module of `core/` without the approval line; exit 1 when there is one."""
+    ref = base_ref()
+    found = ratchet(ROOT, record_at(ROOT, ref))
+    if on_pull_request(dict(os.environ)):
+        found += core_approval(new_core_modules(ROOT, ref), os.environ.get("PR_BODY"))
     print("\n".join(found) or "the engine gates hold against the merge base")
     sys.exit(1 if found else 0)
 
