@@ -205,8 +205,8 @@ class GameBoard:
             for s in sources_of(self.families, self.order)
         }
 
-    def share_of(self, index: int, direction: int = 1) -> tuple[np.ndarray, np.ndarray]:
-        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
+    def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
+        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
         family, gamma = self.families[index], self.world.node_clock
         found: Any = 0
         frozen = np.zeros(self.shape, dtype=bool)
@@ -214,14 +214,14 @@ class GameBoard:
             content, factors = self.read(index, direction, record)
             lines = self.lines_of(index, record)
             found = found + share.family_share(
-                family, lines, self.wrap, gamma, content, factors, self.unit
+                family, lines, self.wrap, gamma, content, factors, self.unit, at
             )
             frozen |= np.broadcast_to(share.frozen(gamma, content), self.shape)
         return np.asarray(found), frozen
 
-    def quanta(self, index: int) -> tuple[np.ndarray, np.ndarray]:
-        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, with the mask of its frozen Nodes, where it is not read."""
-        found, frozen = self.share_of(index)
+    def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
+        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
+        found, frozen = self.share_of(index, 1, at)
         return share.quanta_of(
             found, count_wall(self.families[index], self.world.quantum_action), self.kind
         ), frozen
@@ -372,14 +372,14 @@ class GameBoard:
                 self.families[index].parts > 1
             ):  # the meeting through the root is a record of several parts'
                 credit.joined(self, index, found)
-        self.fields_read(forms)
+        self.fields_read(forms, union)
 
-    def fields_read(self, forms: Bookings) -> None:
-        """A GameBoard reading, no measurement, labelled so (`reports.field`): per family and declared region, the family's density over the region this interval, one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
+    def fields_read(self, forms: Bookings, at: np.ndarray) -> None:
+        """A GameBoard reading, no measurement, labelled so (`reports.field`): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the instrument's Nodes), one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
         for index, (family, state) in enumerate(zip(self.families, self.states, strict=True)):
             frozen, well = np.zeros(self.shape, dtype=bool), None
             if family.quanta:
-                density, frozen = self.quanta(index)
+                density, frozen = self.quanta(index, at)
                 form: Any = sum(
                     forms[(index, record)] for record in quanta_records(self.families, index)
                 )
