@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from event_universe.core.ports import PORTS, SIDES
+from event_universe.core.rule3 import division_forward
 from event_universe.loader.keys import integer, keyed
 
 LAY_KEYS = ("kind", "stop", "passes", "tolerance", "confidence", "seed", "profile")
@@ -100,7 +102,8 @@ def least_action(
     num, den = pair
     e_num, e_den = tolerance
     k2_num, k2_den = confidence
-    sigma_wall = 3 * den  # Rule3's 3 den, the wall of the remainder's step
+    # the vacuum's R_a / w, Rule3's 3 den, the Ports over the sides: the wall of the remainder's step
+    sigma_wall = division_forward(PORTS * den, SIDES, 0)[0]
     left = (
         (sigma_wall * sigma_wall * den) ** 2 * (e_num * e_num) ** 2 * quanta * quanta
     )  # 81 den^6 e_num^4 c_i^2
