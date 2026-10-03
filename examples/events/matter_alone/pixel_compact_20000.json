@@ -1,1 +1,0 @@
-{"shape": [11, 11, 11], "boundary": {"x": "open", "y": "open", "z": "open"}, "face_depth": 1, "ticks": 400, "universe": "examples/events/rule.json", "engine": "examples/events/engine_start.json", "bodies": [{"family": "matter", "nodes": [{"node": [5, 5, 5], "count": 20000}]}], "node_readers": []}
