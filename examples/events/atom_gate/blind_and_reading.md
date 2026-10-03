@@ -411,13 +411,16 @@ is attempted once more under a cut at 30 minutes of wall time; a cut is no readi
    the record's two levels about 0; the nucleus's one-Node record first reports at the region from
    the interval 2 or 3 on (two and three Links from its Node at the band's group velocity); under
    the spreading nucleus the electron's net inflow over the window is not 0, following the growth of
-   its share the round before read, a finding by name. The transition at the band's top [0, den]
-   and the window read from the arrival are G's declarations (own-quantum, pull request #1703) and
-   not main 35ff462c's; they, the seed and tau are the next round's, by name (fence: DETECTOR for
-   the click lines, GameBoard for the field lines).
+   its share the round before read, a finding by name. The region declares its `transition`
+   [0, 6000], the band's top, as every shipped region declares since main a1b12409 (#1703, the
+   detector's own quantum, merged into this branch after the first lay on main 35ff462c, which stood
+   without the key: the loader requires it on every region, and at the band's top the detector's
+   wall is W_c exactly, so no number of this blind moves); the window read from the arrival, the
+   seed and tau are the next round's, by name (fence: DETECTOR for the click lines, GameBoard for
+   the field lines).
 
 Not tested here: the 2s (no deflation) and the 1s : 2s ratio; the frozen row [0, den] as the
-nucleus (the next round, 219 (2)); the detector's transition [0, den], its window read from the
-arrival, its seed and tau (G's declarations, not on main); the Zeno test by name on the atom world
+nucleus (the next round, 219 (2)); the detector's window read from the arrival, its seed and tau;
+the Zeno test by name on the atom world
 (the pulsed drive with the window read from the arrival at the body's Nodes, Itano's column the
 gate), which waits on the standing 1s.
