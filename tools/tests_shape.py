@@ -89,6 +89,19 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
         "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
     ),
+    "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
+        48,
+        "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
+        "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
+        "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
+    ),
+    "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
+        70,
+        "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
+        "window bounded by the probe's lays, the lay by the count at the declared tick, the probe's click and the "
+        "drive's taking by the labels' squares, the body's clock and the window's index on the jump line, the "
+        "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
