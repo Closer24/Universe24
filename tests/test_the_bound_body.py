@@ -188,5 +188,4 @@ def test_the_looks_committed_worlds_pass_the_gate_and_the_lawful_pairs_are_read(
         loaded, v, t = BACK.snapshot(board), BACK.verdict(board, board.world.ticks), board.world.ticks
         assert (v["verdict"], v["intervals"], board.step_inverse()) == ("MATCH", t, None), n
         assert BACK.first_difference(loaded, BACK.snapshot(board)) is None and board.tick == 0, n
-    readings = {n: DRIFT.drift(gated[n], None) for n in lawful}
-    assert {reading["intervals"] for reading in readings.values()} == {expected["window"][1]}
+    assert {DRIFT.drift(gated[n], None)["intervals"] for n in lawful} == {expected["window"][1]}

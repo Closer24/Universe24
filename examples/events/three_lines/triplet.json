@@ -1,0 +1,6 @@
+{
+ "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+ "families": [
+  {"name": "triplet", "pair": [6000, 6000], "reads": {}, "dimension": 3}
+ ]
+}

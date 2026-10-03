@@ -27,8 +27,7 @@ def shown(world, monkeypatch, at, blind):
                 line = {"event": "click", "tick": self.tick, "family": "charge", "detector": name}
                 self.observer({**line, "inflow": wall})
 
-    monkeypatch.setattr(RECORD, "GameBoard", Clicking)
-    RECORD.main([str(world), "--ticks", "3"])
+    monkeypatch.setattr(RECORD, "GameBoard", Clicking), RECORD.main([str(world), "--ticks", "3"])
     world.with_suffix(".blind.json").write_text(json.dumps(blind), encoding="utf-8")
     PAGE.main([str(world.with_suffix(".look.json")), "--blind", str(world.with_suffix(".blind.json"))])
     look = json.loads(world.with_suffix(".look.json").read_text(encoding="utf-8"))
