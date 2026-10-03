@@ -419,8 +419,23 @@ is attempted once more under a cut at 30 minutes of wall time; a cut is no readi
    seed and tau are the next round's, by name (fence: DETECTOR for the click lines, GameBoard for
    the field lines).
 
+**The owner's decision of 09:59 Israel, by name** (relayed by the Boss; design.json,
+`owner_decision_09_59`): the atom's experiment is a bound body of Rule3 on which a detector is placed
+on one of its Nodes, the generic emitter detector, which receives only its seed and the Nodes it
+sits on (its window the arrival's, its transition read from the body's modes, nothing else
+declared); the engine does not yet have that detector, the hands derive its lines. The detector on
+one of the body's Nodes, the generic emitter detector receiving only its seed and its Nodes: not
+declared tonight, the loader refusing a one-Node region by name (`loader/world.py`,
+`regions_of_the_law`, tried on the body's declared Node [16, 15, 15] before any run: "detector
+'on_the_body' is one Node: a detector is a region of Nodes, never one Node (no click names a
+Node)"), and the 1s standing run without it. The region `beside` of two Nodes stands as the
+ordinary region detector of the word of 09:38 with today's keys (positions, the band's top
+transition; no seed, no `instrument`, no write), a stand-in beside the body and not the owner's
+detector, reporting the one measurement and moving nothing: the engine steps the same with it or
+without it, so the standing read is the standing read without a detector.
+
 Not tested here: the 2s (no deflation) and the 1s : 2s ratio; the frozen row [0, den] as the
-nucleus (the next round, 219 (2)); the detector's window read from the arrival, its seed and tau;
-the Zeno test by name on the atom world
+nucleus (the next round, 219 (2)); the detector on one of the body's Nodes (the generic emitter
+detector, its seed and its Nodes, its window the arrival's); the Zeno test by name on the atom world
 (the pulsed drive with the window read from the arrival at the body's Nodes, Itano's column the
 gate), which waits on the standing 1s.
