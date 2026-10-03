@@ -92,3 +92,22 @@ alone 200 intervals with the source held rings and does not relax toward the scr
 and the screening at the start is about a third of the law's line's within 4 Links and absent
 beyond: unread, not passed, as the advisor's verdict has it. Lines 2 and 3 stand as above (the
 pair not laid).
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (on main fb284717): the write's factor booked as one rounding
+of the count times p_x p_y p_z over the one wall, the product exact beyond the width
+(`paces.write_factor`; the advisor's and the mathematician's lines, #1563 comments 5959617991
+and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
+line within one fine unit at every Node by the scaled residual in integers (`features/start`,
+`refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
+number below a GameBoard reading labelled so unless a detector clicked; a miss against the
+blind is a finding by name, never adjusted; a world refused by name is recorded verbatim.
+
+- **The lay**: `pair.json`, two bodies twelve Links apart, refused by the generator by name on the
+  engines before this round and declared without a mode file; not laid anew tonight (two bodies
+  in two passes on the 25-cube, beyond the night's budget of one lay at a time on a shared box),
+  so the folder stands as it was, `pair.json` REFUSED at load by name, verbatim: "the mode file
+  beside the world must be an object".
+- **The blind**: unread on this engine, by name; the second reading's lines stand as the last
+  reading of this world.
