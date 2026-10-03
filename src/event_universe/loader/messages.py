@@ -5,16 +5,26 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.keys import AXES, Node, integer, keyed, node_of, span_of
+from event_universe.loader.keys import AXES, Node, integer, keyed, node_of, span_of, weights_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 
-MESSAGE_KEYS = ("family", "along", "wave", "amplitude", "top", "edge", "phase", "transverse", "whole")
+MESSAGE_KEYS: tuple[str, ...] = (
+    "family",
+    "along",
+    "wave",
+    "amplitude",
+    "top",
+    "edge",
+    "phase",
+    "transverse",
+)
+MESSAGE_KEYS += ("whole", "weights")
 MESSAGE_REQUIRED = ("family", "along", "wave", "amplitude", "top", "edge")
 
 
 @dataclass(frozen=True)
 class MessageRow:
-    """A laid record as declared, a packet of a family of quanta and no body (or a kick on a holder of the content, laid on the row's rest): its family, the axis it travels along, its wave number as a fraction of pi per Link [p, q] (p below 0: the packet travels toward the axis's lower side), its amplitude (the level at the envelope's top), per axis the Nodes [first, last] of its flat top and the half-width of the raised cosine beyond them, its phase as a fraction of the turn [r, s] ((0, 1) without the key), its wave number per axis across the beam as a fraction of pi per Link ((0, 1) where none; `transverse`), and its two level pairs from the mode file, each the nonzero Nodes' flat x-major indexes with their levels (the second pair 0, a real packet)."""
+    """A laid record as declared, a packet of a family of quanta and no body (or a kick on a holder of the content, laid on the row's rest): its family, the axis it travels along, its wave number as a fraction of pi per Link [p, q] (p below 0: the packet travels toward the axis's lower side), its amplitude (the level at the envelope's top), per axis the Nodes [first, last] of its flat top and the half-width of the raised cosine beyond them, its phase as a fraction of the turn [r, s] ((0, 1) without the key), its wave number per axis across the beam as a fraction of pi per Link ((0, 1) where none; `transverse`), its two level pairs from the mode file, each the nonzero Nodes' flat x-major indexes with their levels (the second pair 0, a real packet), and the weight of the laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     along: int
@@ -28,6 +38,7 @@ class MessageRow:
     before: Levels
     im_now: Levels
     im_before: Levels
+    weights: tuple[int, ...] = ()
 
 
 def messages_of(
@@ -39,7 +50,7 @@ def messages_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[MessageRow, ...]:
-    """The messages: each its family (a family of quanta, or a holder of the content: a kick laid on the row's rest, the row's own travelling events with no count, the advisor's lay, #1563 comment 5916154126), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q and not 0, refused by name at 0, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), and its levels from the mode file; a message with no mode entry is refused by name; `whole`, a Node at which the message's count would be laid whole with its levels spread as they are, is refused by name, since no family's line lays a count whole today (the lay is the share's; the key waits for the light family's line)."""
+    """The messages: each its family (a family of quanta, or a holder of the content: a kick laid on the row's rest, the row's own travelling events with no count, the advisor's lay, #1563 comment 5916154126), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q and not 0, refused by name at 0, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines': a record of three real lines laid at (a, b, c) over its lines), and its levels from the mode file; a message with no mode entry is refused by name; `whole`, a Node at which the message's count would be laid whole with its levels spread as they are, is refused by name, since no family's line lays a count whole today (the lay is the share's; the key waits for the light family's line)."""
     names = {family.name: index for index, family in enumerate(families)}
     if not isinstance(value, list):
         raise ValueError("messages must be a list of laid records")
@@ -112,6 +123,12 @@ def messages_of(
                 (turned, whole_turn),
                 (across[0], across[1], across[2]),
                 *levels,
+                weights_of(
+                    message.get("weights"),
+                    f"{label}.weights",
+                    families[family].width,
+                    families[family].plane,
+                ),
             )
         )
     return tuple(found)

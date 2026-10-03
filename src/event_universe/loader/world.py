@@ -20,7 +20,7 @@ from event_universe.loader.instrument import (
     patterns_of_the_law,
     ports_of,
 )
-from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
+from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
@@ -32,7 +32,7 @@ WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "tick
 WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes"),
+    ("family", "nodes", "weights"),
     ("family", "nodes"),
     ("node", "count"),
 )
@@ -41,7 +41,7 @@ DETECTOR_KEYS, START_KEYS = ("name", "positions", "block", "basis", "pattern"), 
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels, and the weight of the laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     nodes: tuple[Node, ...]
@@ -50,6 +50,7 @@ class BodyRow:
     before: Levels
     im_now: Levels
     im_before: Levels
+    weights: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -103,7 +104,7 @@ def bodies_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest; a body with no mode entry is refused by name."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board), its two levels from the mode file beside the world, which stands for this world by its digest, and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines'); a body with no mode entry is refused by name."""
     names = {family.name: index for index, family in enumerate(families)}
     if not isinstance(value, list):
         raise ValueError("measured must be a list of bodies")
@@ -137,7 +138,12 @@ def bodies_of(
             bound,
             beyond,
         )
-        found.append(BodyRow(family, tuple(nodes), tuple(counts), now, before, im_now, im_before))
+        weights = weights_of(
+            body.get("weights"), f"{label}.weights", families[family].width, families[family].plane
+        )
+        found.append(
+            BodyRow(family, tuple(nodes), tuple(counts), now, before, im_now, im_before, weights)
+        )
     return tuple(found)
 
 

@@ -1,4 +1,4 @@
-"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: one real line, or a plane of two) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the hold's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
+"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the hold's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK
 
 @dataclass(frozen=True)
 class Row:
-    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, 1 or 2, times its parts; a held row's sources' count, one real line per source, and the three odd axis lines of a holder of the sign under the rotation), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), whether it acts on its readers by the rotation of the two-part record (the holder of the sign's declared act; else by the plain read into their paces), its level weight where it is held (the quanta of form that write one level of the row), its write weight where it is held (the signed multiplier of its one write per line, the files' key `write_weight`: the sign holder's k_w, a nuclear holder's W_1 or -W_2), its rest, and the holders its declaration names with the weight it reads each with (`declared`, the files' key `reads`, by name; empty where it reads none)."""
+    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, any integer from 1, times its parts; a held row's sources' count, one real line per source, and the three odd axis lines of a holder of the sign under the rotation), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (the dimension 2, re and im: charged matter, the one dimension with a Wronskian and a turn; every other dimension real lines, which read none of the sign), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), whether it acts on its readers by the rotation of the two-part record (the holder of the sign's declared act; else by the plain read into their paces), its level weight where it is held (the quanta of form that write one level of the row), its write weight where it is held (the signed multiplier of its one write per line, the files' key `write_weight`: the sign holder's k_w, a nuclear holder's W_1 or -W_2), its rest, and the holders its declaration names with the weight it reads each with (`declared`, the files' key `reads`, by name; empty where it reads none)."""
 
     name: str
     pair: tuple[int, int]
@@ -62,8 +62,13 @@ class FamilyRule(Row):
 
     @property
     def width(self) -> int:
-        """The lines of one part of one record, the lines in all over the parts and the records: one real line, or a plane's two; a held row's time line with its axis lines (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
+        """The lines of one part of one record, the lines in all over the parts and the records: a family of quanta's dimension, one real line, a plane's two or the three of a record of three real lines; a held row's time line with its axis lines (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
         return self.lines // (self.parts * self.records)
+
+    @property
+    def several(self) -> bool:
+        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `GameBoard.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported."""
+        return self.parts > 1 or (self.width > 1 and not self.plane)
 
     @property
     def axes(self) -> bool:
@@ -83,7 +88,7 @@ def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
 
 
 def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
-    """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
+    """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family, a plane (`read_of` admits no family of real lines naming one), owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
     return families[index].quanta and any(
         families[read.family].wronskian for read in families[index].reads
     )
@@ -139,7 +144,7 @@ class HeldWrite:
 
 
 def read_of(rows: Sequence[Row], index: int, name: str, weight: int) -> Read:
-    """One declared read resolved to the held row's position (ALGEBRA.md, every family reads the holders its declaration names, at the weights it names), refused by name where the name is no held row of the universe file, where the holder of the sign names its own level (light reads none of the sign) and where a family of real lines names a holder under the rotation, which turns a two-part record and nothing else."""
+    """One declared read resolved to the held row's position (ALGEBRA.md, every family reads the holders its declaration names, at the weights it names), refused by name where the name is no held row of the universe file, where the holder of the sign names its own level (light reads none of the sign) and where a family of real lines, one or three, names a holder of the sign: a plane reads the holder of the sign, plainly into its pace or as the turn of its two lines, and writes it by its Wronskian, and a real line does not, neutral by itself (ALGEBRA.md #a-familys-declaration, Every family has a dimension; the advisor's second hand, #1572 comment 5963681796)."""
     names = [row.name for row in rows]
     row = rows[index]
     if name not in names or rows[names.index(name)].level_weight is None:
@@ -153,10 +158,11 @@ def read_of(rows: Sequence[Row], index: int, name: str, weight: int) -> Read:
             f"{row.name!r} reads its own level: the holder of the sign never reads its own level, light "
             "reads none of the sign (ALGEBRA.md #a-familys-declaration)"
         )
-    if rows[other].rotation and not row.plane:
+    if rows[other].wronskian and not row.plane:
         raise ValueError(
-            f"{row.name!r} reads {name!r}, a holder under the rotation, with lines that are no plane: the "
-            "rotation turns a two-part record and nothing else (ALGEBRA.md, The sign holder rotates the two-part record)"
+            f"{row.name!r} reads {name!r}, a holder of the sign, with lines that are no plane: a plane reads the "
+            "holder of the sign, plainly or as the turn of its two lines, and a real line does not (ALGEBRA.md "
+            "#a-familys-declaration, Every family has a dimension)"
         )
     return Read(other, weight)
 
