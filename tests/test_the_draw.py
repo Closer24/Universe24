@@ -9,10 +9,11 @@ import numpy as np
 
 from event_universe import node
 from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
-from event_universe.credit import record_unit
+from event_universe.credit import quanta_through, record_unit
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
+from event_universe.giving import born_unit
 from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import pair_of
 from event_universe.loader.universe import universe_of
@@ -349,3 +350,39 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
             books.state = seed * len(board.credit.bodies) + books.number
         [board.step() for _ in range(48)]
         assert [c["tick"] for c in lines if c["event"] == "jump" and c["given"] == "pulse"] == [48]
+
+
+def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path):
+    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic detector's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The finding by name beside it (this test's own reading, 2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at this seed; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit reads 2; the premise that a born quantum below the half-top energy is credited 0 is not what the engine reads on the chain, left to the hands, and the count asserted here is the credit's own reading, at least 1 in either unit."""
+    world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
+    giver = {**world["measured"][0], "transitions": [{**world["measured"][0]["transitions"][0]}]}
+    giver["transitions"][0]["resonance"], giver["instrument"] = (
+        [9, 10],
+        {**giver["instrument"], "window": 240},
+    )
+    (path := tmp_path / "low.json").write_text(json.dumps({**world, "measured": [giver], "ticks": 240}))
+    TOOL.main(["--input", str(path)])
+    for seed in (1, 2, 3, 4):  # the first trial whose giving leaves the whole span inside the run
+        board, series = GameBoard(load_world(path), (lines := []).append), {}
+        pulse = [f.name for f in board.families].index("pulse")
+        wall, books = count_wall(board.families[pulse], board.world.quantum_action), board.credit
+        assert books.units[pulse] == wall and pulse in books.empty and books.counts[pulse] == 0
+        board.credit.bodies[0].state = seed
+        for _ in range(240):
+            board.step()
+            series[board.tick] = board.total_share(pulse)[0]
+        jumps = [
+            (c["tick"], c["given"]) for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR"
+        ]
+        if jumps and jumps[0][1] == "pulse" and jumps[0][0] <= 192:
+            break
+    assert jumps and jumps[0][1] == "pulse" and jumps[0][0] <= 192 and pulse not in books.empty
+    assert (
+        books.units[pulse] == born_unit(board, pulse, (9, 10))
+        and abs(books.units[pulse] / wall - 0.436) < 0.002
+    )
+    total = series[jumps[0][0] + 48]  # the span's end, before any taking (the window closes at 240)
+    assert total is not None and all(tick == 240 for tick, given in jumps[1:] if given is None)
+    assert 0.7 < total / wall < 1.2  # the finding by name: about W_c, not sin Omega = 0.436, at [9, 10]
+    assert division_forward(total, wall, division_forward(wall, 2, 0)[0])[0] == 1  # in W_c
+    assert quanta_through(books, pulse, total) >= 1  # in the record's own unit, 2 as read: named
