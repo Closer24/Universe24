@@ -1,139 +1,16 @@
-"""The instrument's declaration (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, the owner's decision of 2026-10-02, after a click the paths are cancelled on the GameBoard): on a node_reader's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the instrument's draw through the root in the run; and on the world the `instrument`, the draw's declaration (`Instrument`): the window in intervals after which the instrument draws and writes, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's; a body with a probe among its transitions (a transition of a part into itself, `Transition`) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03, #1572 comments 5967783614 and 5967913000); every defect refused by name and no default written."""
+"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the giving at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `instrument` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
 
-from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
 from event_universe.loader.derived import FamilyRule, count_wall
+from event_universe.loader.draw import Generator, draw_of, generator_of
 from event_universe.loader.keys import integer, keyed
 
-Pattern = tuple[tuple[int, int], ...]  # per part [alpha_k, beta_k], the part's read of the setting
-Ports = tuple[tuple[int, ...], tuple[int, ...]]  # a side's two ports, + then -, one coefficient per part
-GENERATOR_KEYS = (
-    "seed",
-    "multiplier",
-    "increment",
-)  # a draw's generator: the keys of a body whose window is bounded by its probe's lays
-INSTRUMENT_KEYS = (
-    "window",
-    *GENERATOR_KEYS,
-)  # the draw with its window: the world's and a body's without a probe
-
-
-@dataclass(frozen=True)
-class Generator:
-    """A draw's generator as the files declare it: the seed and the generator's multiplier and increment, x <- (multiplier x + increment) mod 2^width (features/click); a body with a probe among its transitions declares this alone under `instrument`, its window bounded by the probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03)."""
-
-    seed: int
-    multiplier: int
-    increment: int
-
-
-@dataclass(frozen=True)
-class Instrument(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_reader's window closes and the instrument draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
-
-    window: int
-
-
-def generator_of(value: object, label: str) -> Generator:
-    """A body's `instrument` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03, #1572 comments 5967783614 and 5967913000); every other key refused by name."""
-    if isinstance(value, dict) and "window" in value:
-        raise ValueError(
-            f"{label} declares a window beside a probe, and the window of a body with a probe is bounded by the "
-            f"probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate); its keys are "
-            f"{list(GENERATOR_KEYS)}"
-        )
-    found = keyed(value, label, GENERATOR_KEYS, GENERATOR_KEYS)
-    return Generator(
-        integer(found["seed"], f"{label}.seed", 0),
-        integer(found["multiplier"], f"{label}.multiplier", 1),
-        integer(found["increment"], f"{label}.increment", 0),
-    )
-
-
-def instrument_of(value: object, label: str) -> Instrument:
-    """The world's `instrument`, and a body's without a probe: its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1, every other key refused by name."""
-    found = keyed(value, label, INSTRUMENT_KEYS, INSTRUMENT_KEYS)
-    return Instrument(
-        integer(found["seed"], f"{label}.seed", 0),
-        integer(found["multiplier"], f"{label}.multiplier", 1),
-        integer(found["increment"], f"{label}.increment", 0),
-        integer(found["window"], f"{label}.window", 1),
-    )
-
-
-def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
-    """A side's two ports from its declared setting (p, q) and its parts' pattern [[alpha_k, beta_k], ...]: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, the - port the + port's with the setting turned a quarter (the pair's pattern [[1, 0], [0, 1]] gives (p, q) and (-q, p)); refused by name: a setting of other than two coefficients, no pattern, and two ports not orthogonal with equal norms, which is no instrument of two outcomes."""
-    if len(basis) != 2 or not pattern:
-        raise ValueError(
-            "a side declares its setting (p, q) as `basis` and one pair [alpha, beta] per part as "
-            f"`pattern`, got {basis} and {list(pattern)}"
-        )
-    p, q = basis
-    plus = tuple(alpha * p + beta * q for alpha, beta in pattern)
-    minus = tuple(beta * p - alpha * q for alpha, beta in pattern)
-    crossed = sum(u * v for u, v in zip(plus, minus, strict=True))
-    if crossed or sum(u * u for u in plus) != sum(v * v for v in minus):
-        raise ValueError(
-            f"the pattern {list(pattern)} at the setting {basis} gives the ports {plus} and {minus}, "
-            "not orthogonal with equal norms: no instrument of two outcomes"
-        )
-    return plus, minus
-
-
-def basis_of(value: object, label: str) -> tuple[int, ...]:
-    """A node_reader's declared basis, its setting: a list of integers not all 0 (the pair's (p, q)); refused by name otherwise."""
-    if not isinstance(value, list) or not value or not any(value):
-        raise ValueError(f"{label} must be a list of integers, the setting's coefficients, not all 0")
-    return tuple(integer(v, f"{label}[{i}]", -MAX_WORK_INT) for i, v in enumerate(value))
-
-
-def pattern_of(value: object, label: str, basis: tuple[int, ...]) -> Pattern:
-    """A node_reader's declared pattern: a list of integer pairs [alpha_k, beta_k], one per part of the record it reads, none [0, 0] (a part read with no coefficient at either port is no part of the read), on a setting of two coefficients (p, q); refused by name otherwise."""
-    if len(basis) != 2:
-        raise ValueError(
-            f"{label} reads the setting (p, q) of two coefficients into the parts, and the basis has {len(basis)}"
-        )
-    if not isinstance(value, list) or not value:
-        raise ValueError(f"{label} must list one pair [alpha, beta] per part of the record it reads")
-    found = []
-    for index, entry in enumerate(value):
-        if not isinstance(entry, list) or len(entry) != 2:
-            raise ValueError(
-                f"{label}[{index}] must be a pair [alpha, beta]: e(+) = alpha p + beta q, e(-) = alpha (-q) + beta p"
-            )
-        alpha = integer(entry[0], f"{label}[{index}][0]", -MAX_WORK_INT)
-        beta = integer(entry[1], f"{label}[{index}][1]", -MAX_WORK_INT)
-        if alpha == 0 and beta == 0:
-            raise ValueError(
-                f"{label}[{index}] is [0, 0]: a part read with no coefficient at either port is no part of the read"
-            )
-        found.append((alpha, beta))
-    return tuple(found)
-
-
-def patterns_of_the_law(
-    patterns: list[tuple[str, Pattern]], laid: list[int], families: tuple[FamilyRule, ...]
-) -> None:
-    """A declared pattern reads one record of several parts, one pair per part: its length is the parts of a family of several parts the world lays (its messages' and its bodies' families, `laid`, by their indexes); refused by name where the lengths differ or the world lays no such record."""
-    parts = sorted({families[index].parts for index in laid if families[index].parts > 1})
-    for name, pattern in patterns:
-        if pattern and len(pattern) not in parts:
-            raise ValueError(
-                f"node_reader {name!r} declares a pattern of {len(pattern)} parts, and the world lays "
-                + (
-                    f"records of {parts} parts, one pair per part"
-                    if parts
-                    else "no record of several parts"
-                )
-            )
-
-
-NODE_INSTRUMENT_KEYS = (
+READER_RECORD_KEYS = (
     "parts",
     "transitions",
     "rates",
@@ -206,7 +83,7 @@ class Conversion:
 
 @dataclass(frozen=True)
 class NodeReaderDeclaration:
-    """A body as an instrument as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its givings, its own draw (the generator with its window, `Instrument`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
+    """A body as an instrument as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its givings, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
 
     names: tuple[str, ...]
     counts: tuple[int, ...]
@@ -424,7 +301,7 @@ def node_reader_of(
     quanta: dict[str, int],
     count: int,
 ) -> NodeReaderDeclaration:
-    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw: with its window, `instrument_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `instrument` to draw it; refused by name otherwise."""
+    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `instrument` to draw it; refused by name otherwise."""
     family = families[own]
     if "conversion" in body:
         if "parts" in body or "transitions" in body or "rates" in body:
@@ -432,7 +309,7 @@ def node_reader_of(
         if "instrument" not in body:
             raise ValueError(f"{label} declares a conversion and no `instrument` to draw it with")
         table, sense = conversion_of(body["conversion"], f"{label}.conversion", families, own, quanta)
-        own_draw = instrument_of(body["instrument"], f"{label}.instrument")
+        own_draw = draw_of(body["instrument"], f"{label}.instrument")
         return NodeReaderDeclaration((family.name,), (count,), (), (), own_draw, (table,), sense)
     if "parts" not in body:
         raise ValueError(
@@ -448,7 +325,7 @@ def node_reader_of(
     probed = any(transition.leaves == transition.enters for transition in transitions)
     draw: Generator | None = None
     if "instrument" in body:
-        read = generator_of if probed else instrument_of
+        read = generator_of if probed else draw_of
         draw = read(body["instrument"], f"{label}.instrument")
     if draw is None and ("transitions" in body or "rates" in body):
         raise ValueError(f"{label} declares transitions or rates and no `instrument` to draw them with")

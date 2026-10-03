@@ -1,4 +1,4 @@
-"""The credit, the click written on the GameBoard (features/click; ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept): where the world declares the `instrument` (its window in intervals, its seed, its generator's multiplier and increment, `loader/instrument.py`) the instrument keeps the books of a window from the node_readers' reports, the inflow through each boundary Node's front Ports summed over the window per family and region and, for a family of several parts, the joint share J per combination of the sides' ports accumulated from the parts' sums (the same numbers the click and parts lines carry), and at the window's end draws with its declared generator and writes its click at one Node, the loop's act from outside the Node as the lay and the receding face are, forward only; the record's count goes down by one per credited quantum, the run's accounting in the output, and at 0 the record is uncreditable, whatever its levels still show. The books are the instrument's and stand at no Node; the Node knows no click and no family of clicks; a world without the key keeps empty books and runs as before bit for bit."""
+"""The credit, the click written on the GameBoard (features/click; ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept): where the world declares the `draw` (its window in intervals, its seed, its generator's multiplier and increment, `loader/draw.py`) the instrument keeps the books of a window from the node_readers' reports, the inflow through each boundary Node's front Ports summed over the window per family and region and, for a family of several parts, the joint share J per combination of the sides' ports accumulated from the parts' sums (the same numbers the click and parts lines carry), and at the window's end draws with its declared generator and writes its click at one Node, the loop's act from outside the Node as the lay and the receding face are, forward only; the record's count goes down by one per credited quantum, the run's accounting in the output, and at 0 the record is uncreditable, whatever its levels still show. The books are the instrument's and stand at no Node; the Node knows no click and no family of clicks; a world without the key keeps empty books and runs as before bit for bit."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, drawn
 from event_universe.giving import Source
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import Instrument, Ports, ports_of
+from event_universe.loader.draw import Draw, Ports, ports_of
 from event_universe.loader.keys import Node
 from event_universe.meeting import Item, click
 from event_universe.node_reader import NodeBooks, books_of
@@ -40,7 +40,7 @@ Clock = list[
 class Books:
     """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word of 2026-10-03, #1572 comment 5967247080; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked`) and the count of the windows closed, the node_readers' event clock."""
 
-    declaration: Instrument | None
+    declaration: Draw | None
     elapsed: int
     state: int
     counts: dict[int, int]
@@ -64,7 +64,7 @@ class Books:
     @classmethod
     def of(cls, board: GameBoard) -> Books:
         """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), its unit of one quantum from the same two numbers (`record_unit`, held through the run; a record with no count at the origin named among `empty`, its unit set at its first lay), the generator at the declared seed, every other book empty."""
-        found = board.world.instrument
+        found = board.world.draw
         counts = {index: counted(board, index, board.laid[index]) for index in board.order}
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.node_readers if r.pattern]
         bodies = books_of(board)

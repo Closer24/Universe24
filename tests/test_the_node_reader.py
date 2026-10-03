@@ -9,7 +9,7 @@ from event_universe import meeting, node, node_reader, world_files
 from event_universe.features.click import amplitude, spread, squared
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import node_reader_of
+from event_universe.loader.node_reader_declaration import node_reader_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
@@ -44,9 +44,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     }
     world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
     world.update(universe="u.json", engine="e.json", bodies=[record], messages=[drive])
-    world.update(node_readers=[counter], instrument={**draw, "window": 18, "seed": 24})
+    world.update(node_readers=[counter], draw={**draw, "window": 18, "seed": 24})
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
-    twin = {k: v for k, v in world.items() if k != "instrument"}
+    twin = {k: v for k, v in world.items() if k != "draw"}
     twin["bodies"] = [{k: v for k, v in record.items() if k in ("family", "nodes", "parts")}]
     (plain := tmp_path / "t.json").write_text(json.dumps(twin), encoding="utf-8")
     TOOL.main(["--input", str(path)]), TOOL.main(["--input", str(plain)])

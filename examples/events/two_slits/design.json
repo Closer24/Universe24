@@ -151,7 +151,7 @@
   "status": "computed from the law's real line with the source side absorbing over the whole passage, the window [45, 130] (the reviewer's 16.37 and 12.37, read over the same passage as the run; 16.1 and 12.1 over the window [45, 120] of the meeting round, which cut the tail; the advisor's 16.2 and 12.2 against 22.6 and 19.2 with the open face): a lattice effect and no window artefact, the second lattice number of the same world",
   "fence": "clicks"
  },
- "instrument": {
+ "draw": {
   "window": 130,
   "seed": 24,
   "multiplier": 6364136223846793005,

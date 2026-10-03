@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import ports_of as instrument_ports
+from event_universe.loader.draw import ports_of as loader_ports
 from event_universe.reports import PORT_NAMES as PORTS  # a side's two ports: at (p, q) and at (-q, p)
 from event_universe.world_files import load_world
 
@@ -42,8 +42,8 @@ def fraction(value: object) -> Fraction | None:
 
 
 def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
-    """A side's two ports from its declared setting and its parts' pattern, the loader's own (`loader/instrument.py`, `ports_of`: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, refused by name where not orthogonal with equal norms), keyed by the ports' names."""
-    plus, minus = instrument_ports(basis, pattern)
+    """A side's two ports from its declared setting and its parts' pattern, the loader's own (`loader/draw.py`, `ports_of`: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, refused by name where not orthogonal with equal norms), keyed by the ports' names."""
+    plus, minus = loader_ports(basis, pattern)
     return {PORTS[0]: plus, PORTS[1]: minus}
 
 

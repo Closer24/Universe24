@@ -10,34 +10,36 @@ import numpy as np
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
-from event_universe.loader.instrument import (
-    NODE_INSTRUMENT_KEYS,
-    Instrument,
-    NodeReaderDeclaration,
+from event_universe.loader.draw import (
+    Draw,
     Pattern,
     basis_of,
-    instrument_of,
-    node_reader_of,
-    packet_form,
+    draw_of,
     pattern_of,
     patterns_of_the_law,
     ports_of,
 )
+from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, WholeMessage, messages_of, wholes_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
+from event_universe.loader.node_reader_declaration import (
+    READER_RECORD_KEYS,
+    NodeReaderDeclaration,
+    node_reader_of,
+    packet_form,
+)
 from event_universe.loader.node_reader_rows import reader_count
 from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_reader of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("bodies", "messages", "node_readers", "receding", "instrument", "lay")
+WORLD_KEYS += ("bodies", "messages", "node_readers", "receding", "draw", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "bodies", "node_readers")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes", "weights", "count", *NODE_INSTRUMENT_KEYS),
+    ("family", "nodes", "weights", "count", *READER_RECORD_KEYS),
     ("family", "nodes"),
     ("node", "count", "weight"),
 )
@@ -54,7 +56,7 @@ START_KEYS = ("mode",)
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`instrument`, `loader/instrument.py`: its parts the modes' labels with the count in one of them, and as an instrument its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`reader`, `loader/node_reader_declaration.py`: its parts the modes' labels with the count in one of them, and as an instrument its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     nodes: tuple[Node, ...]
@@ -64,12 +66,12 @@ class BodyRow:
     im_now: Levels
     im_before: Levels
     weights: tuple[int, ...] = ()
-    instrument: NodeReaderDeclaration | None = None
+    reader: NodeReaderDeclaration | None = None
 
 
 @dataclass(frozen=True)
 class NodeReaderRow:
-    """A node_reader: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's node_reader nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), read by the reader and by the instrument's draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name)."""
+    """A node_reader: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's node_reader nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/draw.py`), read by the reader and by the draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name)."""
 
     name: str
     positions: tuple[Node, ...]
@@ -81,7 +83,7 @@ class NodeReaderRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the node_readers, the receding faces, the instrument and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)'s draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate)."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the node_readers, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeReaders' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -100,7 +102,7 @@ class World:
     messages: tuple[MessageRow, ...]
     node_readers: tuple[NodeReaderRow, ...]
     receding: tuple[RecedingFace, ...]
-    instrument: Instrument | None
+    draw: Draw | None
     lay: Lay | None  # the lay the world declares for its bodies and its tolerance (`loader/lay.py`)
     wholes: tuple[
         WholeMessage, ...
@@ -128,7 +130,7 @@ def bodies_of(
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
         raise ValueError("bodies must be a list of bodies")
-    laid = [entry for entry in value if not any(key in entry for key in NODE_INSTRUMENT_KEYS)]
+    laid = [entry for entry in value if not any(key in entry for key in READER_RECORD_KEYS)]
     entries = mode_entries(mode, digest, "bodies") if laid else []
     taken, found = set(), []
     for number, entry in enumerate(value):
@@ -201,7 +203,7 @@ def node_readers_of(
     beyond: tuple[Node, ...],
     layer: tuple[Node, ...],
 ) -> tuple[NodeReaderRow, ...]:
-    """The node_readers: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the instrument's draw's through the root, `loader/instrument.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line of 2026-10-03 with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
+    """The node_readers: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the draw's through the root, `loader/draw.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line of 2026-10-03 with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
     if not isinstance(value, list):
         raise ValueError("node_readers must be a list")
     found: list[NodeReaderRow] = []
@@ -352,7 +354,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     # holder of the sign one row per charged record beside the free row (derived.with_records)
     counted = [body.family for body in bodies]
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
-    instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
+    draw = draw_of(world["draw"], "draw") if "draw" in world else None
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)
@@ -374,7 +376,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         messages,
         node_readers,
         receding,
-        instrument,
+        draw,
         lay,
         wholes,
     )

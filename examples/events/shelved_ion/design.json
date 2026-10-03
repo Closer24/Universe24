@@ -264,7 +264,7 @@
   "distance_from_the_ion_links": 1,
   "collection": "the whole of every given quantum within a few intervals (light's pace 0.45 Links per interval, the box wrapping at 6 Links along x and y and 4 along z)"
  },
- "instrument": {
+ "draw": {
   "window": 160,
   "seed": 24,
   "multiplier": 6364136223846793005,

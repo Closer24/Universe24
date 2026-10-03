@@ -1338,7 +1338,7 @@ def pixel_mode(
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
-    # a body declaring its parts, or converted whole, is laid by the engine at its one Node (loader/instrument.py)
+    # a body declaring its parts, or converted whole, is laid by the engine at its one Node (loader/node_reader_declaration.py)
     kept = [n for n, body in enumerate(rows) if not any(k in body for k in ("parts", "conversion"))]
     bodies = [rows[number] for number in kept]
     lay = lay_of(document["lay"], "lay") if "lay" in document else None  # the lay by name

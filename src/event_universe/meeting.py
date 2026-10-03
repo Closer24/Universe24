@@ -15,7 +15,7 @@ from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, Hole, laid_pairs, standing
 from event_universe.giving import given_lines, given_quantum, levels_of
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import Generator, Instrument
+from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
 from event_universe.node_reader import (
     NodeBooks,
@@ -59,7 +59,7 @@ def cut(board: GameBoard, index: int) -> node.Factors | None:
     regions = [
         board.mask(row.nodes)
         for row in board.world.bodies
-        if row.family == index and row.instrument is not None
+        if row.family == index and row.reader is not None
     ]
     if not regions:
         return None
@@ -102,13 +102,11 @@ def relaid(
 
 
 def laid_record(board: GameBoard, number: int, record: int) -> None:
-    """A record laid in its parts at its one Node at the start (`loader/instrument.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
+    """A record laid in its parts at its one Node at the start (`loader/node_reader_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
     row = board.world.bodies[number]
-    assert row.instrument is not None
-    books = NodeBooks(
-        number, row.family, record, row.nodes, row.counts, row.instrument, 0, [], [], 0, 0, []
-    )
-    for part, count in enumerate(row.instrument.counts):
+    assert row.reader is not None
+    books = NodeBooks(number, row.family, record, row.nodes, row.counts, row.reader, 0, [], [], 0, 0, [])
+    for part, count in enumerate(row.reader.counts):
         relaid(board, books, part, count, (1, 0), 1)
 
 
@@ -410,7 +408,7 @@ def jumped(board: GameBoard) -> None:
         if b.declared.draw is not None
         and (
             probe_arrived(b, laid)
-            or (isinstance(b.declared.draw, Instrument) and b.elapsed == b.declared.draw.window)
+            or (isinstance(b.declared.draw, Draw) and b.elapsed == b.declared.draw.window)
         )
     ]
     for books in closing:

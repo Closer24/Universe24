@@ -13,8 +13,9 @@ from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features.click import drawn, spread, squared
 from event_universe.loader.derived import count_wall, row_of
-from event_universe.loader.instrument import Generator, Instrument, NodeReaderDeclaration
+from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
+from event_universe.loader.node_reader_declaration import NodeReaderDeclaration
 from event_universe.loader.world import BodyRow
 from event_universe.reports import BODY, credit, entering, front
 from event_universe.resonance import Reference, references_of, scale_of
@@ -52,17 +53,17 @@ def books_of(board: GameBoard) -> list[NodeBooks]:
     """The books of every record declared an instrument at a Node, in the world's order: its number among `bodies`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units, the window begun and the generator at the declared seed; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
     found = []
     for number, (record, row) in enumerate(board.laid_rows()):
-        if not isinstance(row, BodyRow) or row.instrument is None or row.instrument.draw is None:
+        if not isinstance(row, BodyRow) or row.reader is None or row.reader.draw is None:
             continue
-        parted = list(row.instrument.counts)
+        parted = list(row.reader.counts)
         wall = count_wall(board.families[row.family], board.world.quantum_action)
         part = max(range(len(parted)), key=lambda k: parted[k])
         labels = [count * wall for count in parted]
-        draw = row.instrument.draw
-        longest = draw.window if isinstance(draw, Instrument) else max(board.world.ticks, 1)
+        draw = row.reader.draw
+        longest = draw.window if isinstance(draw, Draw) else max(board.world.ticks, 1)
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
         seed = draw.seed
-        references = references_of(scale, row.instrument.transitions)
+        references = references_of(scale, row.reader.transitions)
         square, total = (
             squared(1, board.world.quantum_action, board.families[row.family].pair),
             sum(row.counts),
@@ -76,7 +77,7 @@ def books_of(board: GameBoard) -> list[NodeBooks]:
                 record,
                 row.nodes,
                 row.counts,
-                row.instrument,
+                row.reader,
                 part,
                 parted,
                 labels,

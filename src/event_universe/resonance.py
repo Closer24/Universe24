@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features import rotation
 from event_universe.giving import advanced
-from event_universe.loader.instrument import Transition
+from event_universe.loader.node_reader_declaration import Transition
 
 
 @dataclass

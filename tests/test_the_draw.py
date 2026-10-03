@@ -16,7 +16,7 @@ from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
 from event_universe.giving import born_unit, radiated_total
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import pair_of
+from event_universe.loader.node_reader_declaration import pair_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of, node_readers_of, regions_of_the_law
 from event_universe.meeting import hazard_weights
@@ -71,7 +71,7 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_pa
     names, found = [f"screen_{k}" for k in range(12)], []
     for seed in (24, 25):  # two independent draws of the design (a test runs under 30 seconds)
         (folder := tmp_path / f"seed_{seed}").mkdir()
-        seeded = {**design, "seed": seed, "instrument": {**design["instrument"], "seed": seed}}
+        seeded = {**design, "seed": seed, "draw": {**design["draw"], "seed": seed}}
         (folder / "design.json").write_text(json.dumps(seeded), encoding="utf-8")
         SLITS.main(["--design", str(folder / "design.json"), "--folder", str(folder)])
         assert RUN.run_input(str(folder / "two_slits.json"), str(folder))["verdict"] == "LAWFUL"
@@ -420,7 +420,7 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
         "bodies": body([17, 17, 17], width=3, lifetime=2),
     }
     small["bodies"][0]["instrument"] = {**giver["instrument"], "window": 2}
-    del small["instrument"]
+    del small["draw"]
     (tmp_path / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
     load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py").main(
         ["--input", str(tmp_path / "small.json")]

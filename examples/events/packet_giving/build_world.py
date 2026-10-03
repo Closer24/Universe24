@@ -115,7 +115,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "bodies": [giver],
         "messages": [],
         "node_readers": [node_reader],
-        "instrument": {
+        "draw": {
             **design["generator"],
             "window": ticks,
             "seed": int(design["node_reader"]["seed"]),

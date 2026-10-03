@@ -44,7 +44,7 @@
   }
  },
  "ticks": 130,
- "instrument": {
+ "draw": {
   "window": 130,
   "seed": 24,
   "multiplier": 6364136223846793005,
