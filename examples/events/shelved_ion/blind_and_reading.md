@@ -215,3 +215,19 @@ strong drive's row at 10,314 above the bound, the uniform mode's drift) are Game
 every number of the finding on the uniform mode. The refusal's interval is the run's verdict. The
 lines carry the board's `tick` and the `window` in board intervals (the ion's window 1, the counter's
 160); the ion's own clock enters only the two-mode turn at its Node and no line carries it.
+
+the ion, else nothing is credited.
+
+## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)
+
+The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
+seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
+morning, #1572 comments 5966338551 and 5966387795; the form in `examples/events/resonance/blind_and_reading.md`)
+with the window's turn as W sub-turns, read on the tree holding main's dark grain, leaves this world's
+reading as it was on 8382b8b9 and under the dark grain, number for number: REFUSED at the interval 434
+(the strong drive's row at 10,314 above 9,266), counts per bin 5, 9, 0, 43 takings `P by strong_drive`
+and 43 givings `S by fluorescence`, their spacing 9.69 +/- 6.2, the dark fraction 0.333, the returns
+422. The ion's window is one interval, the one window at which the two forms coincide: the plane's
+size over one interval is |a_t| R within the reference records' rounding and one sub-turn is one shear,
+so the turn per window is k |a_t| as the magnitude form had it. The telegraph's bins move with every form of the giving and
+read nothing of the blind until the strong drive's row is fixed, as the advisor's second says.
