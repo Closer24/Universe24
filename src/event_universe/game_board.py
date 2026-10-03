@@ -39,7 +39,7 @@ Rulers = dict[
 
 
 class GameBoard:
-    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines (`reports.py`: `click`, `parts`, `credit` and `jump` the detectors', `field`, `erasure`, `lay` and `face` the GameBoard's diagnostics)."""
+    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines (`reports.py`: `click`, `parts` and `credit` the detectors', `field`, `erasure`, `lay` and `face` the GameBoard's diagnostics)."""
 
     def __init__(self, world: World, observer: Observer | None = None) -> None:
         paces.clear_memo()  # the paces computed once per content value within this run, kept between none

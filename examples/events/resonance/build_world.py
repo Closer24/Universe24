@@ -90,7 +90,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         },
         "resonant": {
             "share": 1.0,
-            "reading": "the fraction of the seeds with a taking at the taker (the jump lines, DETECTOR), gate sqrt(N p (1 - p)) over the seeds",
+            "reading": "the fraction of the seeds with a taking at the taker (the record's click lines, DETECTOR), gate sqrt(N p (1 - p)) over the seeds",
             "status": "the mathematician's 220: the resonant record's share 1 at delta = 0",
         },
         "detuned": {

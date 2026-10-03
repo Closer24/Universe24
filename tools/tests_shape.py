@@ -108,7 +108,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         70,
         "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
         "window bounded by the probe's lays, the lay by the count at the declared tick, the probe's click and the "
-        "drive's taking by the labels' squares, the body's clock and the window's index on the jump line, the "
+        "drive's taking by the labels' squares, the body's clock and the window's index on the click line, the "
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
     "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (

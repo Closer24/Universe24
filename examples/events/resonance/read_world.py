@@ -1,4 +1,4 @@
-"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the giving's interval from the jump lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a GameBoard reading), the light's count at the span's end where the whole span lies in the run and no taking emptied the record (a GameBoard reading), and the takings (clicks); the counts over the seeds beside the blind.
+"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the giving's interval from the record's click lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a GameBoard reading), the light's count at the span's end where the whole span lies in the run and no taking emptied the record (a GameBoard reading), and the takings (clicks); the counts over the seeds beside the blind.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -39,9 +39,9 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
     for _ in range(intervals):
         board.step()
         series[board.tick] = int(board.states[light].lines[0].now[far])
-    jumps = [c for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR"]
-    given = [c["tick"] for c in jumps if c["given"] == design["light"]]
-    taken = [f"{c['detector']} {c['realised']} by {c['taken']}" for c in jumps if c["taken"]]
+    clicks = [c for c in lines if c["event"] == "credit" and (c["taken"] or c["given"])]
+    given = [c["tick"] for c in clicks if c["given"] == design["light"]]
+    taken = [f"{c['detector']} {c['realised']} by {c['taken']}" for c in clicks if c["taken"]]
     found: dict[str, Any] = {"given": given[0] if given else None, "takings": taken}
     found["lay_lines"] = len(
         [c for c in lines if c["event"] == "lay" and c["family"] == design["light"]]

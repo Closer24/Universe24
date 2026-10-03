@@ -158,7 +158,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
     assert [(c["proper"], c["windows"]) for c in credits] == [(40, 1), (40, 1), (80, 2), (80, 2)]
     report = set(
-        "event label tick family detector window proper windows realised kept count left".split()
+        "event label tick family detector window proper windows before realised kept count left taken given".split()
     )
     assert all(set(c) == report and c["label"] == "DETECTOR" for c in credits)  # never a Node
     holes = [
@@ -305,8 +305,8 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     line, wall = board.states[probed].lines[0], books.labels[0]
     assert (int(line.now[here]), int(line.before[here])) == (128, 128)
     assert (board.credit.counts[probed], int(board.quanta(probed)[0][here])) == (1, 1)
-    jumps = [x for x in lines if x["event"] == "jump"]
-    keys = ("label", "tick", "window", "proper", "windows", "realised", "left", "taken", "given")
+    jumps = [x for x in lines if x["event"] == "credit"]
+    keys = ("label", "tick", "window", "proper", "windows", "realised", "before", "taken", "given")
     click = ("DETECTOR", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
     assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
     laid = [(x["family"], x["tick"]) for x in lines if x["event"] == "lay"]
@@ -317,7 +317,7 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     books.labels, state = [0, wall], books.state  # the labels carried to e by hand: cos^2 0
     for _ in range(4):
         board.step()
-    jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
+    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR"]
     taking = ("DETECTOR", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
     assert [tuple(x[k] for k in keys) for x in jumps[1:]] == [taking] and state != books.state
     assert (books.part, board.credit.counts[pulse], board.credit.counts[probed]) == (1, 0, 2)
@@ -341,7 +341,7 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
     leaving = int(twin.states[pulse].lines[0].now[at])  # b, standing as before at the first face
     for _ in range(2):
         board.step(), twin.step()
-    jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
+    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR" and x["taken"]]
     assert [x["tick"] for x in jumps] == [24] and jumps[0]["taken"] == "pulse"
     hole = board.credit.faces[25][0].hole
     assert hole is not None and hole.factor == (1, 1)  # the identity's faces: the share above a quantum
