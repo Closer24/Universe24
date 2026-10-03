@@ -38,11 +38,13 @@ is session_01DXbtJzhXfiWcGmXp7cfcDW. The shared way of working is
 ## The worker pattern
 
 One worker per round: a subagent inside the Boss's session, one per build,
-measurement or document rewrite.
+measurement or document rewrite; workers run in parallel on branches with
+disjoint file sets, the engine's branches one at a time (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposal 6).
 
 1. **The brief.** Precise: the files to read and the files to change, the base
    commit, the law's line, the blind number with its band, the three verdicts,
-   the dedicated test, the bound in time and the report's form. The brief
+   the dedicated test, the tests' ratchet's room for the round, "this round adds N
+   test lines" (234, proposal 7), the bound in time and the report's form. The brief
    carries the state, never the history of how the Boss got there.
 2. **The blind numbers first.** No run and no build without the expected number
    written in the brief. A difference is a defect of the engine, never a
@@ -50,9 +52,12 @@ measurement or document rewrite.
 3. **The report.** The worker reports the numbers, labelled DETECTOR or
    GAMEBOARD, the head commit, the gates' results and every sentence it removed
    or rewrote in the documents: a summary, never a log.
-4. **The review.** The Boss reads the diff: the files against the brief, the
-   test, no number and no name in the engine, English and sentence case, the
-   deletions named, nothing kept "for the record".
+4. **The review.** For the engine's rounds and `core/` the Boss reads the diff
+   against the law's lines: the files against the brief, the test, no number and
+   no name in the engine, English and sentence case, the deletions named, nothing
+   kept "for the record". For a documents, tests or paper pull request the Boss
+   checks each pasted paragraph against the hands' comment id, a diff of two
+   texts, and does not read the whole fill (234, proposal 3).
 5. **The full check.** `python tools/check.py` on the head; `--full` once when
    the shared core changes.
 6. **The commit.** The Boss commits with the attribution lines (`Co-Authored-By`
@@ -61,10 +66,15 @@ measurement or document rewrite.
 7. **The pull request.** Opened by the Boss, ready, to `main`. The body carries
    "HANDED BY Boss: <files>", the session link, the problem, the change, the
    validation, the lines added and deleted in `src/` and `tests/`, and what was
-   deleted from the documents. The Boss subscribes to its activity.
-8. **The merge.** On green CI with `main` merged in (a merge, never a rebase),
-   one pull request at a time, its base `main`; the branch deleted; the next
-   branch restarted from `main`.
+   deleted from the documents. Documents and paper fills are batched, one pull
+   request of each per hour or per three closures (234, proposal 4); on a
+   documents, tests or paper pull request the Boss arms auto-merge on green after
+   the check (234, proposal 5). The Boss subscribes to its activity.
+8. **The merge.** The engine's rounds and `core/` on green CI with `main` merged
+   in (a merge, never a rebase), one at a time, its base `main`; documents, tests
+   and paper by auto-merge on green with the up-to-date base enforced by the
+   branch rule, branches on disjoint file sets merging independently (234,
+   proposals 5 and 6); the branch deleted; the next branch restarted from `main`.
 
 A brief that asks a worker for a blind number or a derivation names the method
 of derivation of [skills/workflow.md](../workflow.md); a worker's number without
@@ -98,11 +108,14 @@ A Routine carries no order and no content beyond the pointer.
 
 ## Check-ins while a pull request is open
 
-While a pull request is open the Boss sets a check-in by send_later, about
-fifteen minutes ahead. At each one it reads the pull request's checks and
+While any ask to a hand is open, the hands' cadence is 15 minutes and the Boss
+fires the hands' triggers the moment the ask is posted, never waiting for a
+check-in; the 45-minute check-in is the fallback only (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposal 1). While an engine pull request is open the Boss
+sets a check-in by send_later, about fifteen minutes ahead, reads its checks and
 comments, merges on green with `main` merged in, or sends the red shard back to
-the worker with the failing line. No blocking wait on CI longer than two
-minutes, so that the owner's message is seen.
+the worker with the failing line; a documents, tests or paper pull request merges
+by auto-merge on green and needs no check-in (234, proposal 5). No blocking wait
+on CI longer than two minutes, so that the owner's message is seen.
 
 ## What the Boss never does
 

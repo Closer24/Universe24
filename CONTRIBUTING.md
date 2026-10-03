@@ -11,7 +11,8 @@ the short procedure of [the shared workflow](skills/workflow.md).
 1. `main` is the one version that works; no one pushes to it directly and no one
    force-pushes a shared branch. Every task is one short branch from `origin/main`
    (`feature/...`, `core/...`, `exp/...`), merged within days and deleted after the
-   merge. Check `git status`, fetch `origin` and record the base commit; never
+   merge. Workers run on parallel branches by disjoint file set; the engine's
+   branches merge one at a time (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068). Check `git status`, fetch `origin` and record the base commit; never
    overwrite local work of the user or another conversation; use a separate
    worktree for concurrent work.
 2. The core (`src/event_universe/core/`, `src/event_universe/node.py` and
@@ -38,12 +39,16 @@ the short procedure of [the shared workflow](skills/workflow.md).
 6. Open a pull request to `main` stating the problem, the change, the validation,
    the lines it adds and deletes in `src/` and `tests/`, what it deleted from the
    documents, and which tests were not run. If `main` advances, merge it in (a merge
-   commit, never a rebase) and recheck.
+   commit, never a rebase) and recheck. Documents fills and paper fills are batched:
+   one documents pull request and one paper pull request per hour or per three
+   closures, the hands' final paragraphs pasted from the closures' comments (234).
 7. Only the Boss merges into `main`, only on green CI and with `main` merged in;
-   never bypass a failing check. The Boss reads every diff before the merge, and
-   reads a change to the law, a physics folder or `core/` against the law's lines;
-   everything else merges on green CI. Every result names the `main` commit it ran
-   on; there are no tags.
+   never bypass a failing check. The Boss reads a change to the engine's rounds, a
+   physics folder or `core/` against the law's lines before the merge; a documents,
+   tests or paper pull request carries the hands' final paragraphs pasted, which the
+   Boss checks against their comment ids, and merges by auto-merge on green CI with
+   the branch rule enforcing an up-to-date base (234). Every result names the `main`
+   commit it ran on; there are no tags.
 8. One owner per area (`tools/owners.json`): the Boss owns every area and the
    advisor writes nothing. A pull request from a session that is not the Boss's
    carries the line `HANDED BY Boss: <files>` in its body, covering any area;
@@ -54,7 +59,8 @@ the short procedure of [the shared workflow](skills/workflow.md).
 - A test exercises one generic rule alone on a minimal GameBoard, its expected
   integers written before the first run, with an edge case; no test pins the
   numbers of an example world. `tests/` may not grow, only shrink, until it is below
-  `src/`. Shared test builders live in focused helper modules under `tests/`.
+  `src/`, the ratchet's room for a round granted in its brief, "this round adds N
+  test lines" (234). Shared test builders live in focused helper modules under `tests/`.
 - Runs and tests are headless; inspect a run's output and events, never a frame.
 - A change to a document replaces what it touches and deletes what no longer holds
   in the same pull request; no history note or record number stays. A decision of

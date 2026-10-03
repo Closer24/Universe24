@@ -260,3 +260,11 @@ blind is a finding by name, never adjusted; a world refused by name is recorded 
   cause the advisor named for the holder's ringing, the rest short of its line in the board's
   lowest mode, is closed by the refined rest (ENGINE.md section 3; on world (i)'s pixel, read on
   this engine, gravity's level at the body still moves over the run, the finding named there).
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Every number of every reading in this file is a GameBoard reading (`tools/body_rest.py`: the held
+rows along the axes, the three levels at the centre, the well, the books; `holder_alone.py`: one row
+stepped alone). The world declares no detector but the open faces' layer, whose `click` lines are read
+only as the total of matter that left the board (0.364 quanta); no verdict rests on them. The
+intervals are the board's.
