@@ -114,13 +114,9 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     r = np.concatenate([half[2] % w, gap, records.complement(half[2] % w, w)[::-1]])
     for _ in range(200):  # the mirrored odd line steps mirrored to the bit with complement remainders
         b, a, r = a, *(np.asarray(x) for x in rule3(reads, node.ports(a, chain), s, w, a, b, r))
-        assert np.array_equal(a, -a[::-1]) and np.array_equal(
-            r[:20], records.complement(r, w)[::-1][:20]
-        )
+        assert np.array_equal(a, -a[::-1]) and (r[:20] == records.complement(r, w)[::-1][:20]).all()
     assert all((w - 1 - u) // w == -(u // w) for u in range(-40, 40) for w in range(1, 9))
-    origins = records.write_origins(
-        (10, 11), (3, 1, 1), np.int64, (np.array([[[1]], [[0]], [[0]]]) > 0,)
-    )
+    origins = records.write_origins((10, 11), (3, 1, 1), np.int64, (np.indices((3, 1, 1))[0] == 0,))
     assert [o.ravel().tolist() for o in origins] == [[4, 5, 5], [5, 5, 5]]
 
 

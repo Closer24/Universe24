@@ -69,8 +69,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         risen = [x for x in lines if x["tick"] == walled.tick and x["detector"] == "screen"]
         assert all(x["event"] in ("click", "field") and not {"node", "ports"} & x.keys() for x in risen)
         assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")
-        for state in walled.states:
-            assert not any(a[beyond].any() for r in state.lines for a in (r.now, r.before))
+        assert not np.any([a[beyond] for s in walled.states for r in s.lines for a in (r.now, r.before)])
         assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()
@@ -112,14 +111,20 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     fixed["lay"] = {"kind": "fixed_point", "stop": 1, "passes": 30, "tolerance": [1, 4]}
     lay_path.write_text(json.dumps(fixed), encoding="utf-8")
     TOOL.main(["--input", str(lay_path)])
-    laid_mode = json.loads(lay_path.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    laid_mode = json.loads((mode_path := lay_path.with_suffix(".mode.json")).read_text(encoding="utf-8"))
     passes, laid = laid_mode["bodies"][0]["lay"]["trajectory"], json.loads(lay_path.read_text())
     assert len(passes) > 1 and max(passes[-1][1:3]) <= 1 and load_world(lay_path).lay.stop == 1
+    lay_path.write_text(json.dumps(dict(fixed, lay=dict(fixed["lay"], seed="compact", profile=[76, 4]))))
+    TOOL.main(["--input", str(lay_path)])  # the compact seed's lay by name (loader/lay.py)
+    seeded = json.loads(mode_path.read_text(encoding="utf-8"))["bodies"][0]
+    assert seeded["lay"]["seed"] == "compact" and load_world(lay_path).lay.profile == (76, 4)
+    first = TOOL.compact_seed(100, (12, 0, 0), (24, 1, 1), TOOL.Wrap(False, True, True), (76, 4))
+    assert first[11:14, 0, 0].tolist() == [4, 92, 4] and first.sum() == 100  # folded Ports: the centre
+    for words, lay in (("seed is one", {"seed": "wide"}), ("profile .* seed", {"seed": "compact"})):
+        refused(words, TOOL.lay_of, {"kind": "repeat", **lay}, "lay")
     laid["lay"]["tolerance"] = [1, 1000]  # a tolerance the universe's T cannot meet: the budget's gate
     lay_path.write_text(json.dumps(laid), encoding="utf-8")
-    lay_path.with_suffix(".mode.json").write_text(
-        json.dumps({**laid_mode, "world_digest": input_digest(laid)})
-    )
+    mode_path.write_text(json.dumps({**laid_mode, "world_digest": input_digest(laid)}))
     refused("below the least T", lambda: load_world(lay_path))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     del universe["integers"]["quantum_action"]
