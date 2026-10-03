@@ -30,8 +30,12 @@ matplotlib.rcParams.update(
         "font.size": 8,
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
+        "mathtext.fontset": "custom",
+        "mathtext.rm": "Liberation Sans",
+        "mathtext.it": "Liberation Sans:italic",
+        "mathtext.bf": "Liberation Sans:bold",
     }
-)  # the journal's lettering: 8 pt at the final size, the figure drawn 1:1, fonts embedded
+)  # the journal's lettering: 8 pt at the final size, one typeface for the words and the symbols, the figure drawn 1:1 at the page's width of 174 mm at most, fonts embedded
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.axes import Axes  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
@@ -62,7 +66,7 @@ def band(ax: Axes) -> None:
     ax.text(
         0.99,
         0.95 / math.sqrt(3) - 0.035,
-        "$\\omega = k / \\sqrt{3}$, light's speed",
+        "$\\omega = k\\,/\\,3^{1/2}$, light's speed",
         ha="left",
         va="center",
         fontsize=7,

@@ -46,9 +46,11 @@ their statuses.
   source.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, none from a run and none by a
-  generative tool, at its final size and included at it, 1:1 (at most 119 mm
-  wide, 8 pt sans-serif lettering, fonts embedded, no transparency), with an
-  EPS beside each PDF for the journal. The paper uses three: `lattice.pdf` and `octahedron.pdf` (the two panels
+  generative tool, at its final size and included at it, 1:1, within the
+  journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
+  in one sans-serif typeface for the words and the symbols, fonts embedded,
+  every line at least 0.3 pt, black and grey, no transparency), with an EPS
+  beside each PDF for the journal. The paper uses six: `lattice.pdf` and `octahedron.pdf` (the two panels
   of Fig. 1, the GameBoard and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
   `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 2,

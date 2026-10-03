@@ -30,8 +30,12 @@ matplotlib.rcParams.update(
         "font.size": 8,
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
+        "mathtext.fontset": "custom",
+        "mathtext.rm": "Liberation Sans",
+        "mathtext.it": "Liberation Sans:italic",
+        "mathtext.bf": "Liberation Sans:bold",
     }
-)  # the journal's lettering: 8 pt at the final size, the figure drawn 1:1, fonts embedded
+)  # the journal's lettering: 8 pt at the final size, one typeface for the words and the symbols, the figure drawn 1:1 at the page's width of 174 mm at most, fonts embedded
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.axes import Axes  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
@@ -170,7 +174,7 @@ def rows(ax: Axes) -> None:
 
 
 def two_slits_rows(output: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(7.1, 2.9), gridspec_kw={"width_ratios": (1.0, 1.55)})
+    fig, axes = plt.subplots(1, 2, figsize=(6.85, 2.9), gridspec_kw={"width_ratios": (1.0, 1.55)})
     world(axes[0])
     rows(axes[1])
     fig.subplots_adjust(left=0.01, right=0.995, top=0.95, bottom=0.17, wspace=0.18)

@@ -28,8 +28,12 @@ matplotlib.rcParams.update(
         "font.size": 8,
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
+        "mathtext.fontset": "custom",
+        "mathtext.rm": "Liberation Sans",
+        "mathtext.it": "Liberation Sans:italic",
+        "mathtext.bf": "Liberation Sans:bold",
     }
-)  # the journal's lettering: 8 pt at the final size, the figure drawn 1:1, fonts embedded
+)  # the journal's lettering: 8 pt at the final size, one typeface for the words and the symbols, the figure drawn 1:1 at the page's width of 174 mm at most, fonts embedded
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.axes import Axes  # noqa: E402
 from matplotlib.figure import Figure  # noqa: E402
@@ -243,7 +247,7 @@ def method(ax: Axes) -> None:
 
 
 def method_figure(output: Path) -> None:
-    fig, ax = plt.subplots(figsize=(7.1, 2.3))
+    fig, ax = plt.subplots(figsize=(6.85, 2.3))
     method(ax)
     fig.subplots_adjust(left=0.0, right=1.0, top=1.0, bottom=0.0)
     output.mkdir(parents=True, exist_ok=True)
