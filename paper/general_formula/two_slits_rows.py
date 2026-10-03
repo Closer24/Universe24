@@ -3,7 +3,7 @@
 (a) The world as the file declares it (examples/events/two_slits/two_slits.json, read through
 design.json): the flat GameBoard of 45 x 48 Nodes, the packet of light at the wavelength 8 Links
 laid over the columns 4 to 16, the wall at the column 20 with its two gaps of three rows 12 Links
-apart, the screen at the column 44, twelve declared detectors of four rows each. (b) The screen's
+apart, the screen at the column 44, twelve declared NodeReaders of four rows each. (b) The screen's
 row per region: the Huygens blind written before the run (expectation.json, N = 273, with the
 draw's scatter sqrt(N p (1 - p)) per region) beside the law's real line stepped on the same
 world by the paper's script two_slits_real_line.py (N = 277.85 in the engine's labels). The
@@ -102,7 +102,7 @@ def world(ax: Axes) -> None:
             )
         )
     ax.text(
-        SCREEN_X + 0.5, -1.2, "the screen:\n12 detectors\nof 4 rows", ha="center", va="top", fontsize=7
+        SCREEN_X + 0.5, -1.2, "the screen:\n12 NodeReaders\nof 4 rows", ha="center", va="top", fontsize=7
     )
     ax.annotate(
         "",

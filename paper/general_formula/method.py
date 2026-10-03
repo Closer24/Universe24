@@ -1,10 +1,10 @@
 """The method's three layers and the way from nature's clicks to the paper's row, by no run.
 
-Drawn from the paper's words (Section 1.1, the three layers; Section 5.3, the detector's
+Drawn from the paper's words (Section 1.1, the three layers; Section 5.3, the NodeReader's
 declaration; Section 10.1, the calibration series; Section 2.4, the implementation): the clicks of
 nature on bound bodies are read, one click per coefficient, into the files' integers; the files
 declare the world; the GameBoard is stepped by Rule3, one interval of acts, and writes the
-detectors' click lines; the reader prints the run's row beside the blind row written before the
+NodeReaders' click lines; the reader prints the run's row beside the blind row written before the
 run; and only there the computed world meets the clicks it approaches. What is fixed and what is
 free is written at each layer as the paper states it. Nothing here is a number of a run.
 
@@ -135,7 +135,7 @@ def method(ax: Axes) -> None:
         w,
         h,
         "the click lines",
-        "the only measurement:\nregion, the detector's clock\nand window, family, count;\nthe instrument's draw by\nthe shares, its declared seed",
+        "the only measurement:\nregion, the NodeReader's clock\nand window, family, count;\nthe NodeReader's draw by\nthe shares, its declared seed",
     )
     box(
         ax,
@@ -172,7 +172,7 @@ def method(ax: Axes) -> None:
     ax.text(
         xs[2] + w + gap / 2,
         y + h + 0.1,
-        "the detector's\nwindow closes",
+        "the NodeReader's\nwindow closes",
         ha="center",
         va="bottom",
         fontsize=6.5,

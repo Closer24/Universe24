@@ -8,7 +8,7 @@ claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
-detector reports). Its title is "Universe24: an integer cellular automaton read through clicks,
+a NodeReader reports). Its title is "Universe24: an integer cellular automaton read through clicks,
 the setups it computes, and the clicks of nature it approaches", the method, the
 setup it computes and the comparison, by the owner's word (2026-10-03, the
 title chosen in the writer's session; "cellular automaton" the literature's name
@@ -28,7 +28,7 @@ every setup, taken by the owner's word of 2026-10-01 ("if there is a run of
 the reversal that looks good and agrees with nature, take it"), and the two
 slits', Bell's and GHZ's gates, the blind written first and the run identical
 to it, the engine's check of the algebra and no experiment against nature;
-only a detector's click is a measurement, and a number read off the GameBoard
+only a NodeReader's click is a measurement, and a number read off the GameBoard
 is a diagnostic. Table 1 of the paper lists every result with its
 kind, its fence and what it rests on, and Table 2 the formulas of clicks with
 their statuses.
