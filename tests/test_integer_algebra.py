@@ -70,22 +70,17 @@ METHODS_FORBIDDEN = {"mean", "std", "var"}
 def numpy_chain(node: ast.AST) -> list[str] | None:
     chain: list[str] = []
     while isinstance(node, ast.Attribute):
-        chain.append(node.attr)
-        node = node.value
-    if isinstance(node, ast.Name) and node.id == "np":
-        return list(reversed(chain))
-    return None
+        chain, node = [node.attr, *chain], node.value
+    return chain if isinstance(node, ast.Name) and node.id == "np" else None
 
 
 def is_integer_literal(node: ast.AST) -> bool:
     """A literal that is an integer or a (nested) list or tuple of integers and booleans."""
-    if isinstance(node, ast.Constant):
-        return isinstance(node.value, (int, bool)) and not isinstance(node.value, float)
     if isinstance(node, (ast.List, ast.Tuple)):
         return all(is_integer_literal(item) for item in node.elts)
     if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
         return is_integer_literal(node.operand)
-    return True  # a name or a call: judged where it is made
+    return not isinstance(node, ast.Constant) or isinstance(node.value, (int, bool))  # a name, a call
 
 
 def numpy_violations(tree: ast.AST) -> list[str]:

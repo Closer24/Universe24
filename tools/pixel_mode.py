@@ -38,7 +38,7 @@ from event_universe.features.start import (
 )
 from event_universe.loader.derived import FamilyRule, held_write, turns, with_records
 from event_universe.loader.faces import faces_of
-from event_universe.loader.keys import AXES
+from event_universe.loader.keys import AXES, weights_of
 from event_universe.loader.lay import COMPACT, FIXED_POINT, Lay, lay_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import kind_of
@@ -738,14 +738,15 @@ def scaled_record(
     centre_count: int,
     keep: np.ndarray,
     sense: int = 0,
+    squares: int = 1,
 ) -> Standing:
     """The standing record scaled so its form over the region carries the body's quanta: the scale bracketed from the centre's own count (the form there is its count times T) by halving and doubling, a scale too large to stand halved back toward the last that stood, then bisected on the quanta carried at the Nodes (each Node's share rounded, summed, the counts as laid) or, for a record a holder turns, on the summed share against the quanta's wall W_c = 3 den T (the share itself and not its rounding to whole quanta, so that a record of count 1, whose share at every Node is below a quantum, is scaled to one quantum over its region); the reading closest to the quanta; refused by name when no reading stands. The mode is iterated once per fine unit in this content and scaled to each trial amplitude (`Modes`)."""
     readings: dict[int, Standing] = {}
     modes: Modes = {}
     target = quanta if angles is None else quanta * 3 * board.pair[1] * board.action
 
-    def measure(found: Standing) -> int:
-        return found.carried if angles is None else found.share
+    def measure(found: Standing) -> int:  # the share over the lines the pair is laid on at their weights
+        return found.carried * squares if angles is None else found.share
 
     def read(scale: int) -> Standing | None:
         if scale not in readings:
@@ -822,6 +823,7 @@ def body_fixed_point(
     quanta: int,
     first: np.ndarray,
     sense: int = 0,
+    weights: tuple[int, ...] = (1,),
 ) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray, Pairs]:
     """The body is the joint fixed point of its record and its content: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the record laid as the engine lays it (its level pair over the board as declared outside the other bodies' regions, `own_board`; with a sense its second pair the record a quarter period on, `rotating`, so that the holder of the sign rests inside the iteration and not after it), then the engine's own start on that lay (`start_content`: every held row at the rest its form and Wronskian return, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the record stands in next, and the counts the record's share in quanta at that content over the region; repeated until the content returns itself by the start's own rule (`returned`: the fixed point, or an earlier content one unit per division act composed at most, a rounding tie; the acts composed in the content are the record's scale, one, and per held row the family's declaration reads into its content, the content holders and the holders of the sign where a sense is laid, the acts the engine's own `held_rests` composes for that row, its rest's and its booking's, `ACTS_OF_A_HELD_ROW`, so 1 + 2 x 2 = 5 for matter reading the binding and gravity and 1 + 2 x 3 = 7 for a charged plane reading the charge too, counted from the family's reads at the call; a return further off a cycle, refused by name, the law's own answer at this count and sense and no defect) and the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record standing in the content returned, the region, the content and the laid level pairs, all of one round; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's and the content's together."""
     counts = first.copy()
@@ -841,7 +843,19 @@ def body_fixed_point(
     while True:
         round_number += 1
         record, pairs, found, turned = one_pass(
-            board, families, index, slot, others, centre, quanta, counts, content, angles, keep, sense
+            board,
+            families,
+            index,
+            slot,
+            others,
+            centre,
+            quanta,
+            counts,
+            content,
+            angles,
+            keep,
+            sense,
+            weights,
         )
         region = keep if angles is not None else region_of(counts, content, centre, board.wrap)
         a, level = record.clock
@@ -896,6 +910,7 @@ def one_pass(
     angles: Angles,
     keep: np.ndarray,
     sense: int,
+    weights: tuple[int, ...] = (1,),
 ) -> tuple[Standing, Pairs, np.ndarray, Angles]:
     """One pass of the lay-and-rest map, the act both lays share: refused by name where the content reaches the Link's zero (a collapse, a frozen clock); the body's region from its counts (the board as kept for a record a holder turns, which binds in the angle over every Node where it stands), its standing record in the content and the angles scaled to carry its quanta (`scaled_record`), refused by name as a cloud where its rotation is not above the band's top and below 2; the record's level pairs over the board as declared outside the other bodies' regions (with a sense its second pair, `rotating`; a turned record's two lines the turned mode's own, laid with a sense, refused by name without one); and the content and the angles the engine's own start returns under that lay (`start_content`), the paces the record stands in next."""
     num, den = board.pair
@@ -916,8 +931,10 @@ def one_pass(
     own = np.where(region, content, 0)  # the shape of the seed: the well over the body's region
     if angles is not None:  # the seed the angle's well too, the sign row's size about its source
         own = own + np.where(region, np.abs(np.asarray(angles[0])), 0)
+    laid = (1,) if families[index].plane else weights  # a plane's second line is its sense, no weight
+    squares = sum(weight * weight for weight in laid)  # the share's multiplier over the weighted lines
     record = scaled_record(
-        board, content, angles, centre, own, region, quanta, int(counts[centre]), keep, sense
+        board, content, angles, centre, own, region, quanta, int(counts[centre]), keep, sense, squares
     )
     a, level = record.clock
     if not (2 * num * level < a * den < 2 * level * den):
@@ -926,7 +943,9 @@ def one_pass(
             f"[{a}, {level}], not above the band's top 2 x {num} / {den} and below 2; its quanta are below its "
             "binding row's window of mass (ALGEBRA.md #the-generator)"
         )
-    pairs: Pairs = [(np.where(keep, record.now, 0), np.where(keep, record.before, 0))]
+    pairs: Pairs = [
+        (np.where(keep, w * record.now, 0), np.where(keep, w * record.before, 0)) for w in laid
+    ]
     if record.second is not None:
         pairs.append((np.where(keep, record.second[0], 0), np.where(keep, record.second[1], 0)))
     elif sense:
@@ -953,6 +972,7 @@ def unit_fixed_point(
     first: np.ndarray,
     sense: int,
     lay: Lay,
+    weights: tuple[int, ...] = (1,),
 ) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray, Pairs, Trajectory]:
     """The lay at the integer fixed point under the body's own paces (the world's `lay` of the kind `fixed_point`, loader/lay.py; HIGHLIGHTS.md, the mathematician's 162 (3) and 168 item 2 (1), the owner's word of 2026-10-02, 17:40): the same map as `body_fixed_point`, one pass the standing record in the content and the engine's own start under that record (`one_pass`), iterated with the design's count the input of every pass and no half step on the counts, until the record's two levels and the content repeat the pass before within the declared `stop` units at every Node (0 the exact repeat), inside the declared `passes`; the record of the last pass is laid in the content it returned to within the stop, so the start the engine lays under the mode file's record gives the paces the record was laid in to the unit declared, the body standing exact by construction and the reads' walk alone remaining; the trajectory, per pass the content's largest change, the record's and the count laid, printed as a GameBoard reading and written to the mode file; where the passes run out the body is refused by name with its trajectory, the law's own answer at this count and no defect. Returns the counts, the record, the region, the content and the laid level pairs of the last pass, and the trajectory."""
     counts = first.copy()
@@ -962,7 +982,19 @@ def unit_fixed_point(
     trajectory: Trajectory = []
     for number in range(1, lay.passes + 1):
         record, pairs, found, turned_by = one_pass(
-            board, families, index, slot, others, centre, quanta, counts, content, angles, keep, sense
+            board,
+            families,
+            index,
+            slot,
+            others,
+            centre,
+            quanta,
+            counts,
+            content,
+            angles,
+            keep,
+            sense,
+            weights,
         )
         region = keep if angles is not None else region_of(counts, content, centre, board.wrap)
         zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
@@ -1236,17 +1268,24 @@ def message_levels(
     return found[0], found[1]
 
 
+def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[int, ...]:
+    """The weights a body's or a message's laid pair takes on the lines of its record, the world file's key `weights` as the loader reads it (`keys.weights_of`): 1 on every line without the key, a plane's two lines its real pair and its sense."""
+    return weights_of(row.get("weights"), f"{label}.weights", family.width, family.plane)
+
+
 def message_entry(
-    board: Board, message: dict[str, Any], beyond: np.ndarray, parts: int
+    board: Board, message: dict[str, Any], beyond: np.ndarray, family: FamilyRule, label: str
 ) -> dict[str, Any]:
-    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading, over every part of the family, the one event laid on each part alike) and its two levels as their nonzero Nodes."""
+    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading, over every part of the family and over the lines of a part as the engine lays them, the one event laid on each part alike and on each real line at its weight, `laid_weights`, the share summed over the lines before it is read in quanta, as the engine's books read it) and its two levels as their nonzero Nodes."""
     now, before = message_levels(board, message, beyond)
-    laid = read_quanta(share_of(board, 0, now, before), board.pair[1], board.action)
+    weights = (1,) if family.plane else laid_weights(message, label, family)
+    total = sum(share_of(board, 0, w * now, w * before) for w in weights)
+    laid = read_quanta(total, board.pair[1], board.action)
     return {
         "family": message["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(laid.sum()) * parts,
+        "count": int(laid.sum()) * family.parts,
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 
@@ -1391,15 +1430,16 @@ def pixel_mode(
                 entries.append(entry)
                 continue
             arguments = (board, families, index, records[number], rows, (all_counts - counts, others))
+            weights = laid_weights(body, f"measured[{number}]", families[index])  # the lines' weights
             trajectory: Trajectory = []
             try:
                 if lay is not None and lay.kind == FIXED_POINT:
                     laid, record, region, _content, pairs_kept, trajectory = unit_fixed_point(
-                        *arguments, centre, quanta, counts, sense, lay
+                        *arguments, centre, quanta, counts, sense, lay, weights
                     )
                 else:
                     laid, record, region, _content, pairs_kept = body_fixed_point(
-                        *arguments, centre, quanta, counts, sense
+                        *arguments, centre, quanta, counts, sense, weights
                     )
             except RestCollapses as refusal:
                 raise ValueError(
@@ -1458,9 +1498,10 @@ def pixel_mode(
             board_of(shape, wrap, gamma, integers, pairs[str(message["family"])]),
             message,
             beyond,
-            family_of(universe, str(message["family"])).parts,
+            family_of(universe, str(message["family"])),
+            f"messages[{number}]",
         )
-        for message in cast(list[dict[str, Any]], document.get("messages", []))
+        for number, message in enumerate(cast(list[dict[str, Any]], document.get("messages", [])))
     ]
     return {"world_digest": input_digest(document), "bodies": entries, "messages": messages}
 
