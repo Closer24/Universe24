@@ -50,3 +50,14 @@ worlds, `LAWFUL`, 60 intervals each, no lawful end (the receding faces not reach
 The books at the end of either run (a GameBoard diagnostic): `triplet` share 60,438,000 in the
 current's units, 0 quanta, the drift -544,278,000 from the laid share (the one quantum taken and
 the front's erasures), the least pace 6,000, no frozen Node.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Rows 1, 3 and 6 are the detector's: the `credit` lines (one at the interval 30, `count` 1, `left` 0,
+`kept` [0]; none after) and, after the click, the `click`, `parts` and `erasure` lines
+(`read_world.py`). Row 2's verdict rests on a GameBoard reading, the three lines' levels and
+remainders at the Node [22, 0, 0] after the interval 32. Rows 4 and 5 carry two readings: the verdict
+is stated on the form per line summed over the board (`line_shares`, a GameBoard reading), and the
+`parts` line's signed sums over the window stand beside it (the detector's line, reading a : b : c,
+its squares 0.0616, 0.2815 and 0.6569). The `credit` line carries the board's `tick` and the `window`
+[1, 30] in board intervals and nothing of the counter's own clock.

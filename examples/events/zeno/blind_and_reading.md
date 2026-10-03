@@ -82,6 +82,16 @@ atom has no rates); the worlds declare no region detector. Re-run by `tools/meet
 jumps 120; 95 and 34; 62 and 18; 32 and 4; 16 and 0, bit for bit the readings through the one click
 act above. PASS against column A at every n and unchanged.
 
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+P(e at T_pi) is the part the record stands in at the trial's end, read by `tools/meeting_trials.py`
+from the instrument's own books on the board object (`meeting.NodeBooks.part`, the detector's own
+content, not a written line; the same part is the last `jump` line's `realised`). The jumps per kind
+are the `jump` lines labelled by the detector. The pulse's count of 413 in the books, the turn per
+window named beside the blind and the pi pulse's tuning are GameBoard matters. The lines carry the
+board's `tick` and the `window` in board intervals; the turn itself is taken per proper interval at the
+record's Node (`meeting.turned_labels`) and no line carries that clock.
+
 ## On the resonant act, 2026-10-03 (branch resonant-act)
 
 The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's

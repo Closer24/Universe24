@@ -813,3 +813,12 @@ and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine 
   until they repeat (`rest`, `returned`), where the inner solve is now exact to the fine unit:
   a self-consistent integer map whose rounding can alternate between two neighbours or walk
   without a repeat at a steep well; no run added for them tonight.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Every line of every world in this file is a GameBoard reading (`tools/body_rest.py`: the three
+levels at the centre, the tail along the axes, the share and its centroid and second moment, the
+well, the held rows, the books; the generator's own lines for the lays and the refusals). The worlds
+declare no detector but the open faces' layer, whose `click` lines (labelled the detector's by the
+engine) are read only as the total of matter that left the board (0.018, 1.75, 12.5 and 0.47
+quanta); no verdict rests on them. The intervals are the board's.

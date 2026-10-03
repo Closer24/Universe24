@@ -203,6 +203,17 @@ runs the first 25 seeds, asserts one draw per interval in the dark and none at t
 48 (the generator's state), the givings at distinct intervals and within the lifetime in 8 to 24 of 25,
 each seed's lay lines, cosine and count as above, and that with the light laid on the chain a window
 stands and the window's draw at 48 stands as it is.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Rows 1, 4 and 5 are the detector's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
+test's `jump` lines). The 48 `lay` lines of row 1 are labelled a GameBoard diagnostic by the engine.
+Rows 2 and 3 are GameBoard readings and their verdicts rest on them: the far Node's cosine is read
+from the light's levels at the Node [8, 0, 0] per interval (`tests/test_the_draw.py`, the levels
+series) and the count at the span's end from the share over the board. The lines carry the board's
+`tick` and the `window` in board intervals; the giver's window 48 and the lifetime 48 are board
+intervals, and no line carries a record's own clock.
+
 ## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)
 
 The resonant two-mode act is built in the taker's act (`src/event_universe/resonance.py`, `gathered`,

@@ -202,6 +202,20 @@ per bin 5, 9, 0, REFUSED at the interval 434), since the ion's window is 1, so i
 already one draw per interval at the hazard with the weights [1, tau - 1] in the labels' unit, and its
 two drives, plane waves, stand at its Node at every interval, never both levels 0, so the ion is never
 in the dark.
+
+the ion, else nothing is credited.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Rows 1 to 8 are the detector's: the counter's `credit` lines per bin and the ion's `jump` lines, read
+by `tools/telegraph.py`; so are row 9's absence of an ion credit and row 10's inflows (the 422 returns
+of the strong drive). Row 9's count half (the ion's count 1 at every interval, one part at 1) is the
+books' and the parts' counts, a GameBoard reading as the blind's own fence says; row 10's levels (the
+strong drive's row at 10,314 above the bound, the uniform mode's drift) are GameBoard readings, as is
+every number of the finding on the uniform mode. The refusal's interval is the run's verdict. The
+lines carry the board's `tick` and the `window` in board intervals (the ion's window 1, the counter's
+160); the ion's own clock enters only the two-mode turn at its Node and no line carries it.
+
 the ion, else nothing is credited.
 
 ## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)

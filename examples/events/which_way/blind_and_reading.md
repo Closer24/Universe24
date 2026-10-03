@@ -93,3 +93,12 @@ fenced by nothing.
 A which-way detector that absorbs without a channel (the engine's only absorber is a receding face);
 the Huygens row by the law's own real line (the two slits' design has the advisor's row from it); a
 second seed's reading (one seed, the design's).
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Every number of the reading above is the detector's: the clicks are the `credit` lines' counts per
+region and the shares are the `click` lines' window inflows over 3 den T, both lines the detector's
+report by the engine's label (ENGINE.md section 5, `reports.click` and `reports.credit`; the folder's
+own words call the shares a GameBoard reading beside the clicks, a stricter label than the engine's).
+No number is read from a Node. The lines carry the board's `tick` and the `window` in board intervals
+and nothing of the detector's own clock. The crude Huygens rows of item 4 are the design's.

@@ -80,6 +80,14 @@ region detector. Re-run by `tools/meeting_trials.py` on 8382b8b9 over the 200 se
 101, B only 99, both 0, neither 0, alpha 0; two photons 24, 47, 28, 101, alpha 56 / 39; bit for bit the
 readings above. PASS and unchanged.
 
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+The table's numbers (A only, B only, both, neither, alpha) are the detector's: the `jump` lines'
+`taken` per trial, read by `tools/meeting_trials.py`. The finding's levels at the two records' Nodes
+(-98 and -157 at 8, -146 and -149 at 28, -141 and -141 at 32) are a GameBoard reading of one trial,
+labelled so, and no number of the blind. The lines carry the board's `tick` and the `window` in board
+intervals and nothing of the records' own clocks.
+
 ## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)
 
 The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and
