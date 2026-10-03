@@ -149,7 +149,7 @@ def arriving(board: GameBoard, books: NodeBooks, drive: int) -> int:
 
 
 def turned_labels(board: GameBoard, books: NodeBooks) -> None:
-    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation), the plane's size over the wall and not a turn per interval; the labels' squares are the parts' shares the window's draw reads, sin^2 of the turn, the Rabi form; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
+    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation) as W equal sub-turns with the carry (`sheared`, W the window's intervals, so the angles add as the proper intervals' did), the plane's size over the wall read once and not a turn per interval; the labels' squares are the parts' shares the window's draw reads, sin^2 of the turn, the Rabi form; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
     gamma = board.world.node_clock
     content = board.read(books.index, 1, books.record)[0]
     at = tuple(np.add(books.at, board.offset))
@@ -158,9 +158,18 @@ def turned_labels(board: GameBoard, books: NodeBooks) -> None:
         if transition.leaves == books.part:
             turn = int(node.turned_by(window_turn(reference, transition.weight), clock, gamma))
             u, v = books.labels[transition.leaves], books.labels[transition.enters]
-            u, v = rotation.turned(u, v, turn, 2 * gamma)
-            books.labels[transition.leaves], books.labels[transition.enters] = int(u), int(v)
+            u, v = sheared(u, v, turn, books.elapsed, gamma)
+            books.labels[transition.leaves], books.labels[transition.enters] = u, v
         reference.in_phase, reference.quadrature = 0, 0
+
+
+def sheared(u: int, v: int, turn: int, pieces: int, gamma: int) -> tuple[int, int]:
+    """The window's turn applied as `pieces` equal sub-turns, the window's intervals (the advisor's second on the first build, 2026-10-03): the engine's turn is a tangent half-angle (features/rotation, tan(theta / 2) = the numerator over 2 Gamma), under which one shear of a whole window's sum compresses a large turn (2 arctan(9,408 / 12,000) = 1.330 against 1.568 at the Zeno world's n = 1), so each sub-turn's numerator is (turn + carry) div pieces with the remainder carried across the shears (the carried division, the write's own act), the sub-turns summing to the turn exactly and the angles adding as the proper intervals' did (48 x 2 arctan(9,408 / (12,000 x 48)) = 1.5680 at n = 1); the labels untouched inside the window, the resonance read by the plane's size, the root once per window."""
+    carry = 0
+    for _ in range(pieces):
+        piece, carry = division_forward(turn, pieces, carry)
+        u, v = rotation.turned(u, v, int(piece), 2 * gamma)
+    return int(u), int(v)
 
 
 @dataclass(frozen=True)

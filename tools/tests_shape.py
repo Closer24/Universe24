@@ -47,10 +47,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
     ),
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
-        30,
+        33,
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
         "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
-        "detuned sinc, the root once per window on the shipped Zeno world",
+        "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

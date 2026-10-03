@@ -51,7 +51,7 @@
   }
  },
  "pi_pulse": {
-  "formula": "48 x 392 / (2 x 6000)",
+  "formula": "48 x 2 arctan((392 x 48 / 2) / (48 x 2 x 6000)), the window's turn as 48 sub-turns",
   "value": 1.568,
   "wanted": 1.5708
  }
