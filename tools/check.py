@@ -25,6 +25,9 @@ SECONDS = Path(__file__).with_name("test_seconds.json")
 # equal shards (the owner's ceiling of 2026-10-02: every CI run ends under ten minutes)
 SUITE_SHARDS = 5
 UNRECORDED_SECONDS = 5.0
+# the suite's bound (the owner's word of 2026-10-03: a test runs under 30 seconds): a test function above
+# it fails the plan by name, on the recorded table at --plan and on the run's own junit after every pytest
+TEST_SECONDS_BOUND = 30.0
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 # the ratchets against the merge base (CHECK_BASE, the `--base` revision), each one script of
 # tools/ run by its path and failing with its own message: on every selection, with --full and
@@ -48,12 +51,9 @@ def balanced(seconds, count):
     return [sorted(group) for _, group in sorted(zip(loads, groups, strict=True), key=lambda x: -x[0])]
 
 
-def shards():
-    """The CI jobs by name, each its pytest arguments: the suite's test functions in equal parts by
-    their recorded seconds (`tests/<file>.py::<function>`, its parametrizations with it); a file runs
-    whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
-    a function the table does not hold, or holds under a name the file no longer has, runs with its
-    file; the parts from the heaviest to the lightest, the lint in the last; no world job."""
+def recorded_seconds():
+    """The test files and the table's seconds per test function the files still hold
+    (`tests/<file>.py::<function>`; a name a file no longer has is left out)."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
     files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob("test_*.py"))
     recorded = {}
@@ -62,6 +62,16 @@ def shards():
         for target, seconds in table["tests"].items():
             if target.startswith(file + "::") and f"\ndef {target.partition('::')[2]}(" in text:
                 recorded[target] = seconds
+    return files, recorded
+
+
+def shards():
+    """The CI jobs by name, each its pytest arguments: the suite's test functions in equal parts by
+    their recorded seconds (`tests/<file>.py::<function>`, its parametrizations with it); a file runs
+    whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
+    a function the table does not hold, or holds under a name the file no longer has, runs with its
+    file; the parts from the heaviest to the lightest, the lint in the last; no world job."""
+    files, recorded = recorded_seconds()
     whole = {file: UNRECORDED_SECONDS for file in files}  # the file's own target: its other tests
     for target in sorted(recorded, key=lambda t: recorded[t]):
         whole[target.partition("::")[0]] = target  # the file stands with its longest function
@@ -86,8 +96,9 @@ def shards():
     return jobs
 
 
-def record_seconds(junit):
-    """The seconds per test function read from a junit file, written to the table."""
+def seconds_of(junit):
+    """The seconds per test function read from a junit file (`tests/<file>.py::<function>`, its
+    parametrizations summed)."""
     import xml.etree.ElementTree as ElementTree
 
     tests = {}
@@ -95,9 +106,24 @@ def record_seconds(junit):
         path = case.get("classname", "").replace(".", "/") + ".py"
         target = path + "::" + case.get("name", "").partition("[")[0]  # the function, its parts summed
         tests[target] = round(tests.get(target, 0.0) + float(case.get("time", 0)), 1)
+    return tests
+
+
+def record_seconds(junit):
+    """The seconds per test function read from a junit file, written to the table."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
-    table.update(tests=dict(sorted(tests.items())))
+    table.update(tests=dict(sorted(seconds_of(junit).items())))
     SECONDS.write_text(json.dumps(table, indent=1) + "\n", encoding="utf-8")
+
+
+def above_the_bound(seconds, clock):
+    """The test functions above the suite's bound on the `clock` named, each with its seconds, the
+    slowest first; the message that fails the plan by name, or None."""
+    slow = sorted(((n, s) for n, s in seconds.items() if s > TEST_SECONDS_BOUND), key=lambda x: -x[1])
+    if not slow:
+        return None
+    names = ", ".join(f"{name} ({seconds:.1f} s)" for name, seconds in slow)
+    return f"above the bound of {TEST_SECONDS_BOUND:.0f} seconds per test on {clock}: {names}"
 
 
 def git(*args):
@@ -290,6 +316,9 @@ def main():
         record_seconds(args.record_seconds)
         return
     if args.plan:
+        slow = above_the_bound(recorded_seconds()[1], "the recorded clock of tools/test_seconds.json")
+        if slow:
+            sys.exit(slow)
         print("shards=" + json.dumps(list(shards())))
         return
     for target in args.tests:
@@ -357,6 +386,10 @@ def main():
                 else [sys.executable, "-m", *command]
             )
             subprocess.run(run, cwd=ROOT, env=environment, check=True)
+            if command[0] == "pytest":  # the suite's bound on this run's own clock, by name
+                slow = above_the_bound(seconds_of(ROOT / "artifacts/junit.xml"), "this run's clock")
+                if slow:
+                    sys.exit(slow)
 
 
 if __name__ == "__main__":
