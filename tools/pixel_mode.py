@@ -784,18 +784,22 @@ def scaled_record(
     return readings[min(readings, key=lambda found: (abs(measure(readings[found]) - target), found))]
 
 
-def pixel_record(board: Board, counts: np.ndarray, centre: Axis, sense: int) -> tuple[Standing, Pairs]:
-    """The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (examples/events/atom_gate/design.json, the nucleus; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs."""
+def pixel_record(
+    board: Board, counts: np.ndarray, centre: Axis, sense: int, planes: int = 1
+) -> tuple[Standing, Pairs]:
+    """The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (examples/events/atom_gate/design.json, the nucleus; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs; `planes` the planes of the record's part, every plane laid alike at A_l^2 = count T den / (2 sin omega_0 x planes), the planes summing to the invariant (the two hands of 2026-10-03, the proton's row of three planes at A_l^2 = T / 6 at [0, den])."""
     num, den = board.pair
     sine = division_fixed_point(den * den - num * num)
     quanta = int(counts.sum())
-    amplitude = division_fixed_point(int(division_forward(quanta * board.action * den, 2 * sine, 0)[0]))
+    amplitude = division_fixed_point(
+        int(division_forward(quanta * board.action * den, 2 * sine * planes, 0)[0])
+    )
     zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
     re_now, re_before, im_before = zero.copy(), zero.copy(), zero.copy()
     re_now[centre] = amplitude
     re_before[centre] = int(division_forward(amplitude * num, den, 0)[0])
     im_before[centre] = sense * int(division_forward(amplitude * sine, den, 0)[0])
-    pairs: Pairs = [(re_now, re_before), (zero.copy(), im_before)]
+    pairs: Pairs = [(re_now, re_before), (zero.copy(), im_before)] * planes
     total = sum((share_of(board, 0, a, b) for a, b in pairs), zero.copy())
     summed = int(total.sum(dtype=object))
     record = Standing(
@@ -931,8 +935,8 @@ def one_pass(
     own = np.where(region, content, 0)  # the shape of the seed: the well over the body's region
     if angles is not None:  # the seed the angle's well too, the sign row's size about its source
         own = own + np.where(region, np.abs(np.asarray(angles[0])), 0)
-    laid = (1,) if families[index].plane else weights  # a plane's second line is its sense, no weight
-    squares = sum(weight * weight for weight in laid)  # the share's multiplier over the weighted lines
+    laid = weights  # one per real line at its weight, one per plane at 1 (`laid_weights`)
+    squares = sum(weight * weight for weight in laid)  # the share's multiplier over the laid lines
     record = scaled_record(
         board, content, angles, centre, own, region, quanta, int(counts[centre]), keep, sense, squares
     )
@@ -946,11 +950,16 @@ def one_pass(
     pairs: Pairs = [
         (np.where(keep, w * record.now, 0), np.where(keep, w * record.before, 0)) for w in laid
     ]
-    if record.second is not None:
-        pairs.append((np.where(keep, record.second[0], 0), np.where(keep, record.second[1], 0)))
-    elif sense:
-        levels = rotating(board, content, record, keep, sense)
-        pairs = [(levels[0], levels[1]), (levels[2], levels[3])]
+    if families[index].plane:  # every plane alike: its first pair, and its sense where there is one
+        first, second = pairs[0], None
+        if record.second is not None:
+            second = (np.where(keep, record.second[0], 0), np.where(keep, record.second[1], 0))
+        elif sense:
+            levels = rotating(board, content, record, keep, sense)
+            first, second = (levels[0], levels[1]), (levels[2], levels[3])
+        zero = (np.zeros_like(record.now), np.zeros_like(record.before))
+        pairs = [pair for _ in laid for pair in (first, second if second is not None else zero)]
+        pairs = pairs if second is not None else pairs[:-1]  # the last sense unlaid where there is none
     found, turned = start_content(board, families, index, slot, pairs, others[1])
     return record, pairs, found, turned
 
@@ -1270,7 +1279,7 @@ def message_levels(
 
 def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[int, ...]:
     """The weights a body's or a message's laid pair takes on the lines of its record, the world file's key `weights` as the loader reads it (`keys.weights_of`): 1 on every line without the key, a plane's two lines its real pair and its sense."""
-    return weights_of(row.get("weights"), f"{label}.weights", family.width, family.plane)
+    return weights_of(row.get("weights"), f"{label}.weights", family.laid, family.plane)
 
 
 def message_entry(
@@ -1406,7 +1415,7 @@ def pixel_mode(
                         f"measured[{number}] is laid as a one-Node record with no sense: the declaration is one "
                         "quantum of a plane, its Wronskian sense x T / 2 (ALGEBRA.md, the quantum of a family)"
                     )
-                record, pairs_kept = pixel_record(board, counts, centre, sense)
+                record, pairs_kept = pixel_record(board, counts, centre, sense, families[index].planes)
                 region, laid = dilated(counts > 0, wrap), counts
                 lays[number] = (laid, pairs_kept, centre, quanta)
                 entry = body_entry(record, board, region, body, quanta, record.amplitude)
@@ -1422,7 +1431,7 @@ def pixel_mode(
                     file=sys.stderr,
                     flush=True,
                 )
-                levels = [level for pair in pairs_kept for level in pair]
+                levels = [level for pair in pairs_kept[: len(("now", "before"))] for level in pair]
                 words = ("now", "before", "im_now", "im_before")
                 entry["moving"] = {
                     word: level.ravel().tolist() for word, level in zip(words, levels, strict=True)
@@ -1447,7 +1456,7 @@ def pixel_mode(
                     f"pace 0 ({refusal}; the rows reading their own levels, ALGEBRA.md #the-paces, Every row "
                     "reads the content; a frozen clock, The paces compose)"
                 ) from refusal
-            levels = [level for pair in pairs_kept for level in pair] if sense else []
+            levels = [level for pair in pairs_kept[:2] for level in pair] if sense else []  # one plane
             try:
                 weighted, content, angles = read_at_the_start(
                     board, families, index, records[number], others, region, pairs_kept

@@ -15,7 +15,14 @@ from event_universe.core.ports import Wrap
 from event_universe.features.currents import Vector
 from event_universe.features.start import Sourced, held_rests
 from event_universe.features.write import carried
-from event_universe.loader.derived import count_wall, held_write, quanta_records, readers_of, turns
+from event_universe.loader.derived import (
+    PLANE,
+    count_wall,
+    held_write,
+    quanta_records,
+    readers_of,
+    turns,
+)
 from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
 from event_universe.loader.mode import Levels
@@ -85,14 +92,16 @@ class GameBoard:
         return found + [(0, message) for message in self.world.messages]
 
     def lay(self, row: BodyRow | MessageRow, record: int = 0) -> None:
-        """A body's or a message's levels from the mode file added to its family's lines of the record `record` (`node.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting) and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the message, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, its second pair, the sense, to the part's second line where the family is a plane (the loader admits none otherwise), the generator's lay (tools/pixel_mode.py, `one_pass`) the same."""
+        """A body's or a message's levels from the mode file added to its family's lines of the record `record` (`node.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting) and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the message, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same."""
         family, lines = self.families[row.family], self.states[row.family].lines
-        span = node.record_slice(family, record)
+        span, step = node.record_slice(family, record), PLANE if family.plane else 1
         for first in range(span.start, span.stop, family.width):
-            for line, weight in zip(range(first, first + family.width), row.weights, strict=True):
-                sense = family.plane and line > first  # a plane's second line is its sense
-                levels = (row.im_now, row.im_before) if sense else (row.now, row.before)
-                lines[line] = self.added(lines[line], *levels, weight)
+            for line, weight in zip(range(first, first + family.width, step), row.weights, strict=True):
+                lines[line] = self.added(lines[line], row.now, row.before, weight)
+                if (
+                    family.plane
+                ):  # the plane's second line is its sense, the second pair, every plane alike
+                    lines[line + 1] = self.added(lines[line + 1], row.im_now, row.im_before, weight)
 
     def added(self, record: node.Record, now: Levels, before: Levels, weight: int) -> node.Record:
         """A line with a body's or a message's two levels from the mode file, times the line's weight, added over the GameBoard."""
