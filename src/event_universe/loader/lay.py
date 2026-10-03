@@ -1,4 +1,4 @@
-"""The lay a world declares for its bodies and the resolution the integer budget derives from a declared tolerance (the body round at the owner's words of 2026-10-02, 17:40 and 17:55: the body worlds of one kind, the lay at the integer fixed point under the body's own paces and the resolution derived from a declared tolerance; HIGHLIGHTS.md, the mathematician's 162 (1) and (3) and 168 items 1 and 2 with the advisor's second hand): the world file's key `lay`, its `kind` the generator's lay by name (`repeat`, the lay-and-rest map iterated to the start's own rule of the repeat with the counts' half step, the lay of every world without the key; `fixed_point`, the record and the content re-laid in each other's paces until the levels repeat within `stop` units at every Node inside `passes` passes, the stop and the passes the file's numbers and none the engine's), and its `tolerance` [num, den], the relative deviation of the body's share the run may read, from which the least quantum action T follows by the budget's line, T >= 4 (5.66 / 2)^2 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i) with n the run's intervals, c_i the quanta per Node of the body and sin omega_s the family's gap, written as integers with no root, (5.66 / 2)^2 = 8 and sin^2 omega_s = (den^2 - num^2) / den^2: a world whose T is below the least power of two meeting it is refused by name, the least T printed; nothing physical depends on T, the unit of action, and the engine reads none of these keys."""
+"""The lay a world declares for its bodies and the resolution the integer budget derives from a declared tolerance (the body round at the owner's words of 2026-10-02, 17:40 and 17:55: the body worlds of one kind, the lay at the integer fixed point under the body's own paces and the resolution derived from a declared tolerance; HIGHLIGHTS.md, the mathematician's 162 (1) and (3) and 168 items 1 and 2 with the advisor's second hand): the world file's key `lay`, its `kind` the generator's lay by name (`repeat`, the lay-and-rest map iterated to the start's own rule of the repeat with the counts' half step, the lay of every world without the key; `fixed_point`, the record and the content re-laid in each other's paces until the levels repeat within `stop` units at every Node inside `passes` passes, the stop and the passes the file's numbers and none the engine's), its `seed`, the first pass's lay by name (`one_node`, the declared count at the seed Node, the seed of every world without the key; `compact`, the count at the seed Node and the Nodes of its six Ports in the proportion `profile` [centre, neighbour] declares, two integers of the file, the compact branch's profile the law's line names at that count), and its `tolerance` [num, den], the relative deviation of the body's share the run may read, from which the least quantum action T follows by the budget's line, T >= 4 (5.66 / 2)^2 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i) with n the run's intervals, c_i the quanta per Node of the body and sin omega_s the family's gap, written as integers with no root, (5.66 / 2)^2 = 8 and sin^2 omega_s = (den^2 - num^2) / den^2: a world whose T is below the least power of two meeting it is refused by name, the least T printed; nothing physical depends on T, the unit of action, and the engine reads none of these keys."""
 
 from __future__ import annotations
 
@@ -6,23 +6,27 @@ from dataclasses import dataclass
 
 from event_universe.loader.keys import integer, keyed
 
-LAY_KEYS, LAY_REQUIRED = ("kind", "stop", "passes", "tolerance"), ("kind",)
+LAY_KEYS, LAY_REQUIRED = ("kind", "stop", "passes", "tolerance", "seed", "profile"), ("kind",)
 REPEAT, FIXED_POINT = "repeat", "fixed_point"  # the generator's two lays, by name
 KINDS = (REPEAT, FIXED_POINT)
+ONE_NODE, COMPACT = "one_node", "compact"  # the first pass's two seeds, by name
+SEEDS = (ONE_NODE, COMPACT)
 
 
 @dataclass(frozen=True)
 class Lay:
-    """The lay as declared: its kind by name, the stop (the largest change of a level between two passes at which the fixed-point lay repeats, in units; 0 the exact repeat), the passes allowed to it, and the tolerance epsilon as [num, den], None where the world declares none and the budget gates nothing."""
+    """The lay as declared: its kind by name, the stop (the largest change of a level between two passes at which the fixed-point lay repeats, in units; 0 the exact repeat), the passes allowed to it, the tolerance epsilon as [num, den], None where the world declares none and the budget gates nothing, the seed of the first pass by name (`one_node` where the world declares none) and the compact seed's profile [centre, neighbour], None with the one-Node seed."""
 
     kind: str
     stop: int
     passes: int
     tolerance: tuple[int, int] | None
+    seed: str
+    profile: tuple[int, int] | None
 
 
 def lay_of(value: object, label: str) -> Lay:
-    """The key `lay` read: `kind` one of the generator's lays by name; `stop` (from 0) and `passes` (from 1) required with the fixed-point lay and refused with the repeat, which has the start's own rule; `tolerance` [num, den] with num and den from 1 and num at most den, optional; every other key refused by name."""
+    """The key `lay` read: `kind` one of the generator's lays by name; `stop` (from 0) and `passes` (from 1) required with the fixed-point lay and refused with the repeat, which has the start's own rule; `tolerance` [num, den] with num and den from 1 and num at most den, optional; `seed` one of the first pass's seeds by name, `one_node` without the key, and `profile` [centre, neighbour] (the centre's parts from 1, a neighbour's from 0) required with the compact seed and refused with the one-Node seed; every other key and every other word refused by name."""
     lay = keyed(value, label, LAY_KEYS, LAY_REQUIRED)
     kind = lay["kind"]
     if kind not in KINDS:
@@ -45,7 +49,28 @@ def lay_of(value: object, label: str) -> Lay:
             raise ValueError(f"{label}.tolerance must be [num, den], the relative deviation epsilon")
         den = integer(pair[1], f"{label}.tolerance's den", 1)
         tolerance = (integer(pair[0], f"{label}.tolerance's num", 1, den), den)
-    return Lay(kind, stop, passes, tolerance)
+    seed = lay.get("seed", ONE_NODE)
+    if seed not in SEEDS:
+        raise ValueError(
+            f"{label}.seed is one of {list(SEEDS)}, the first pass's seeds by name, got {seed!r}"
+        )
+    if ("profile" in lay) != (seed == COMPACT):
+        raise ValueError(
+            f"{label}.profile [centre, neighbour] is declared with the seed {COMPACT!r} and not with "
+            f"{ONE_NODE!r}, the declared count at the seed Node (ALGEBRA.md #the-generator)"
+        )
+    profile = None
+    if seed == COMPACT:
+        parts = lay["profile"]
+        if not isinstance(parts, list) or len(parts) != 2:
+            raise ValueError(
+                f"{label}.profile must be [centre, neighbour], the seed's parts at the Node and at each of its six Ports' Nodes"
+            )
+        profile = (
+            integer(parts[0], f"{label}.profile's centre", 1),
+            integer(parts[1], f"{label}.profile's neighbour", 0),
+        )
+    return Lay(kind, stop, passes, tolerance, seed, profile)
 
 
 def least_action(pair: tuple[int, int], intervals: int, quanta: int, tolerance: tuple[int, int]) -> int:
