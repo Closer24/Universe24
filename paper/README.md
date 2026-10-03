@@ -50,7 +50,7 @@ their statuses.
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
   every line at least 0.3 pt, black and grey, no transparency), with an EPS
-  beside each PDF for the journal. The paper uses six: `lattice.pdf` and `octahedron.pdf` (the two panels
+  beside each PDF for the journal. The paper uses seven: `lattice.pdf` and `octahedron.pdf` (the two panels
   of Fig. 1, the GameBoard and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
   `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 2,
@@ -64,7 +64,9 @@ their statuses.
   the numbers typed from those two files) by
   `python paper/general_formula/two_slits_rows.py`; and `method.pdf` (the
   method's three layers, from nature's clicks to the paper's reading) by
-  `python paper/general_formula/method.py`. The others,
+  `python paper/general_formula/method.py`; and `moving_clock.pdf` (the moving
+  clock's factor from the band against Lorentz's) by
+  `python paper/general_formula/moving_clock.py`. The others,
   `band.pdf`, `channels.pdf` (by `band_and_channels.py`) and `branches.pdf`
   (by `branches.py`), belong to the long version of the paper, which stays in
   the branch's history (commit 5adef30), and are kept for it.
