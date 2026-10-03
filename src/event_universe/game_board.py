@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import credit, front, giving, growth, meeting, node, share
+from event_universe import conversion, credit, front, giving, growth, meeting, node, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -103,11 +103,8 @@ class GameBoard:
 
     def added(self, record: node.Record, now: Levels, before: Levels, weight: int) -> node.Record:
         """A line with a body's or a message's two levels from the mode file, times the line's weight, added over the GameBoard."""
-        added = (
-            record.now + weight * self.board_array(now),
-            record.before + weight * self.board_array(before),
-        )
-        return replace(record, now=added[0], before=added[1])
+        now_added = record.now + weight * self.board_array(now)
+        return replace(record, now=now_added, before=record.before + weight * self.board_array(before))
 
     def board_array(self, values: Levels) -> np.ndarray:
         """The levels the mode file lays as an array over the GameBoard: the nonzero Nodes' flat x-major indexes with their levels, 0 elsewhere."""
@@ -310,6 +307,7 @@ class GameBoard:
             self.hold(index, forms, turns, 1, stresses, senses, rulers)
         credit.windowed(self)
         meeting.jumped(self)
+        conversion.windowed(self)
         giving.sourced(self)
         front.advanced(self)
 

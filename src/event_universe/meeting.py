@@ -1,4 +1,4 @@
-"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words of 2026-10-02 and 2026-10-03; the owner's word of 03:15 Israel, 2026-10-03, the click the heart): a detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the detector's own transition's quantum read back from the realised click, the click their meeting; a detector always receives two quanta, the arriving one and its own, a region detector's own quantum implicit in its declared window and whole, and for a record declared an instrument at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence of 2026-10-03 with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an instrument's window at the Node named, 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the two-mode line: the arriving level read into the record's phase at the transition's declared weight, the turn per proper interval, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there: the arriving record's levels and remainder to 0 (the hole) and its count in the books down by one, the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn per window at the declared floor (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid at the born rotation, the resonance omega_e - omega_g (`features/click.born`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the jump line, the window, the instrument, the family and the parts, the Node a GameBoard diagnostic beside it. The record declared an instrument is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the detector's region is), its books the instrument's own and at no Node; the Node knows no click."""
+"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words of 2026-10-02 and 2026-10-03; the owner's word of 03:15 Israel, 2026-10-03, the click the heart): a detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the detector's own transition's quantum read back from the realised click, the click their meeting; a detector always receives two quanta, the arriving one and its own, a region detector's own quantum implicit in its declared window and whole, and for a record declared an instrument at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence of 2026-10-03 with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an instrument's window at the Node named, 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the two-mode line: the arriving level read into the record's phase at the transition's declared weight, the turn per proper interval, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there: the arriving record's levels and remainder to 0 (the hole) and its count in the books down by one, the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn per window at the declared floor (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid as a source in time at that Node over the giving's lifetime at the transition's declared resonance (`giving.given_quantum`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the jump line, the window, the instrument, the family and the parts, the Node a GameBoard diagnostic beside it. The record declared an instrument is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the detector's region is), its books the instrument's own and at no Node; the Node knows no click."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features import rotation
-from event_universe.features.click import Face, drawn, standing
+from event_universe.features.click import Face, drawn, laid_pairs, standing
 from event_universe.giving import given_quantum, levels_of
 from event_universe.loader.derived import count_wall, row_of
 from event_universe.loader.instrument import Instrument, NodeInstrument
@@ -94,18 +94,18 @@ def cut(board: GameBoard, index: int) -> node.Factors | None:
 def relaid(
     board: GameBoard, books: NodeBooks, part: int, count: int, phase: tuple[int, int], sense: int
 ) -> None:
-    """The lay of one part of the record at the instrument's one Node (features/click, `standing`; the owner's word of 2026-10-03, the body is at a Node; the mathematician's 174 (a) and (b)): the part's two lines at the Node set to the levels of `count` quanta of the family's pair standing there in the direction `phase` and the sense given, the level before the level now turned by the rest rotation, the remainder at the lay's origin, the half wall of the rule the record steps by; every other Node as it stands."""
+    """The lay of one part of the record at the instrument's one Node (features/click, `standing`; the owner's word of 2026-10-03, the body is at a Node; the mathematician's 174 (a) and (b)): the part's two lines at the Node set to the levels of `count` quanta of the family's pair standing there in the direction `phase` and the sense given, the level before the level now turned by the rest rotation, the remainder at the lay's origin, the half wall of the rule the record steps by; every other Node as it stands. A record converted whole (its declaration's `conversions`, src/event_universe/conversion.py) is laid whole instead, every line of its record at the Node by the invariant at its declared sense (features/click, `laid_pairs`, the two hands' lay of 2026-10-03; at the count 0 every line 0, the hole), the phase its lay's own."""
     family, state = board.families[books.index], board.states[books.index]
-    gamma, unit = board.world.node_clock, board.unit
-    (re, im), (re_before, im_before) = standing(
-        count, board.world.quantum_action, family.pair, phase, sense
-    )
+    gamma, unit, action = board.world.node_clock, board.unit, board.world.quantum_action
+    if books.declared.conversions:
+        pairs = laid_pairs(count, action, family.pair, books.declared.sense, family.plane, family.laid)
+    else:
+        (re, im), (re_before, im_before) = standing(count, action, family.pair, phase, sense)
+        pairs = [(re, re_before), (im, im_before)]
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
     first = node.record_slice(family, books.record).start + part * family.width
     at = board.mask((books.at,))
-    for number, (now, before) in zip(
-        (first, first + 1), ((re, re_before), (im, im_before)), strict=True
-    ):
+    for number, (now, before) in zip(range(first, first + len(pairs)), pairs, strict=True):
         line = state.lines[number]
         state.lines[number] = node.Record(
             np.where(at, now, line.now),
@@ -128,7 +128,7 @@ def levels_at(board: GameBoard, books: NodeBooks, part: int) -> tuple[int, int, 
     family, state = board.families[books.index], board.states[books.index]
     first = node.record_slice(family, books.record).start + part * family.width
     at = tuple(np.add(books.at, board.offset))
-    re, im = state.lines[first], state.lines[first + 1]
+    re, im = state.lines[first], state.lines[first + 1 if family.plane else first]
     return int(re.now[at]), int(im.now[at]), int(re.before[at]), int(im.before[at])
 
 
@@ -160,13 +160,14 @@ def turned_labels(board: GameBoard, books: NodeBooks) -> None:
 
 @dataclass(frozen=True)
 class Item:
-    """One entry of a click's list (the mathematician's 192 with the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, one generic implementation the detector operates): the record by its family and, for a record declared an instrument at one Node, its number among `measured` (None for a record spread over the board), the part (None for every line of a spread record, no line alone), the change of its count, +1, -1 or 0 (the null window moves no count), and the Nodes written at, the file's coordinates."""
+    """One entry of a click's list (the mathematician's 192 with the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, one generic implementation the detector operates): the record by its family and, for a record declared an instrument at one Node, its number among `measured` (None for a record spread over the board), the part (None for every line of a spread record, no line alone), the change of its count, +1, -1 or 0 (the null window moves no count), the Nodes written at, the file's coordinates, and for a spread record given whole quanta the form of its lay (`giving.given_quantum`): the pair its lay stands at where the list names one (the conversion's records out at their family's massless pair [den, den], the lay by the count at one Node, the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600), else the resonance and the span of a source in time (the giving's, the transition's declared resonance and the lifetime, the mathematician's 213 (B) and 220 with the advisor's second, #1572 comments 5965054791 and 5965303134, #1563 comment 5965316267)."""
 
     family: int
     measured: int | None
     part: int | None
     delta: int
     nodes: tuple[Node, ...]
+    pair: tuple[int, int] | None = None
     resonance: tuple[int, int] | None = None
     span: int = 0
 
@@ -178,7 +179,7 @@ Phase = tuple[tuple[int, int], int]  # a part's direction (re, im) and its sense
 def click(
     board: GameBoard, state: int, generator: Instrument | None, weights: list[int], outcomes: Lists
 ) -> tuple[int, int]:
-    """The one click act, the detector's, of every list alike (the owner's words of 2026-10-03, 03:22 and 03:24 Israel; the mathematician's 192 and 197, the advisor's second, two hands): with more than one outcome, one draw by the weights with the generator from `state` (features/click, `drawn`, the modulus 2^width; with one outcome no draw and the state untouched), then the drawn outcome's list written (`written`); returns the outcome's index and the generator's state after. The five lists through it: the region detector's credit (the arriving record at the Nodes drawn, -1), the taking (the arriving record -1, the present record's part entered +1 and left -1), the giving (the part left -1, the part entered +1, light's record +1), the null window (the part the record stands in at 0) and the conversion (the record in at -1 and records of other families out at +1, declared in a world's table and rate, no code path of its own); no family name and no branch on a record's lines or dimension anywhere in it."""
+    """The one click act, the detector's, of every list alike (the owner's words of 2026-10-03, 03:22 and 03:24 Israel; the mathematician's 192 and 197, the advisor's second, two hands): with more than one outcome, one draw by the weights with the generator from `state` (features/click, `drawn`, the modulus 2^width; with one outcome no draw and the state untouched), then the drawn outcome's list written (`written`); returns the outcome's index and the generator's state after. The five lists through it: the region detector's credit (the arriving record at the Nodes drawn, -1), the taking (the arriving record -1, the present record's part entered +1 and left -1), the giving (the part left -1, the part entered +1, light's record +1), the null window (the part the record stands in at 0) and the conversion (the record whole at -1 at its Node and records of other families out at +1 there, each one whole quantum laid by the count at its family's massless pair, declared in a world's table and rate and drawn at the rate, src/event_universe/conversion.py); no family name and no branch on a record's lines or dimension anywhere in it."""
     pick, modulus = 0, board.world.width + 1
     if len(outcomes) > 1:
         assert generator is not None  # a draw among outcomes is the declared generator's
@@ -300,28 +301,23 @@ def reported(
     names, families = books.declared.names, board.families
     window = [board.tick - books.elapsed + 1, board.tick]
     taken, light = (families[k].name if k is not None else None for k in exchanged)
-    realised, left, name, at = (
-        names[parts[0]],
-        names[parts[1]],
-        families[books.index].name,
-        list(books.at),
-    )
-    board.observer(
-        jump(board.tick, name, books.number, window, realised, left, taken, light, at, quantum)
-    )
+    words = (names[parts[0]], names[parts[1]], taken, light)
+    name, at = families[books.index].name, list(books.at)
+    board.observer(jump(board.tick, name, books.number, window, *words, at, quantum))
 
 
 def gave(board: GameBoard, books: NodeBooks) -> bool:
-    """The giving drawn at a record's window's end (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act; the advisor's clause 5; the mathematician's 174 (c), two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid at the born rotation, the resonance of the two parts of one pair being 0, light's own; `click`) and nothing, the weights the window against the lifetime's rest in the labels' unit (the declared floor; the beat's current of a one-part record at one Node is 0, so the floor alone is the rate), the record's own generator; the first giving drawn is taken and the window ends; one jump line."""
+    """The giving drawn at a record's window's end (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act; the advisor's clause 5; the mathematician's 174 (c), two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights the window against the lifetime's rest in the labels' unit (the declared floor; the beat's current of a one-part record at one Node is 0, so the floor alone is the rate), the record's own generator; the first giving drawn is taken and the window ends; one jump line."""
     assert books.declared.draw is not None
     window = books.declared.draw.window
-    wall = count_wall(board.families[books.index], board.world.quantum_action)
-    unit = wall * wall
+    unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             span = window if window <= rate.lifetime else rate.lifetime
             items = exchange(books, rate.leaves, rate.enters)
-            items.append(Item(rate.light, None, None, 1, (books.at,), rate.resonance, rate.lifetime))
+            items.append(
+                Item(rate.light, None, None, 1, (books.at,), None, rate.resonance, rate.lifetime)
+            )
             weights = [span * unit, (rate.lifetime - span) * unit]
             pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
             if pick == 0:
@@ -365,19 +361,15 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
 
 
 def jumped(board: GameBoard) -> None:
-    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at the windows' length the draws and the writes, the givings first record by record (`gave`), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record that neither gave nor took (`null_window`), every write the one act's (`click`); the windows begun again."""
+    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at the windows' length the draws and the writes, the givings first record by record (`gave`), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record of several parts that neither gave nor took (`null_window`; a record of one part reads no part of itself and has none; a record converted whole is drawn after the jumps, src/event_universe/conversion.py), every write the one act's (`click`); the windows begun again."""
     for books in board.credit.bodies:
         turned_labels(board, books)
         books.elapsed += 1
-    closing = [
-        books
-        for books in board.credit.bodies
-        if books.declared.draw is not None and books.elapsed == books.declared.draw.window
-    ]
+    closing = [b for b in board.credit.bodies if b.declared.draw and b.elapsed == b.declared.draw.window]
     quiet = [books for books in closing if not gave(board, books)]
     done = took(board, quiet)
     for books in quiet:
-        if books.number not in done:
+        if books.number not in done and len(books.counts) > 1:  # a record of one part reads none
             null_window(board, books)
     for books in closing:
         books.elapsed = 0

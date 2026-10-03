@@ -380,8 +380,7 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     while grows.ended is None:
         grows.step()
         if grows.ended is None:
-            fixed.step()
-            history.append((grows.shape[0], grows.offset[0], BACK.snapshot(grows)[0]))
+            fixed.step(), history.append((grows.shape[0], grows.offset[0], BACK.snapshot(grows)[0]))
     low, end = grows.offset[0], {"interval": 28, "axis": "x", "side": "high", "largest": 64}
     large = GameBoard(load_world(light_alone_world(tmp_path, "large", 64, 8 + low)))
     for extent, offset, snapshot in history:
@@ -454,12 +453,10 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
 
 def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_path, monkeypatch):
     """The dimension generic (the Boss's line, #1572 comment 5963599079 (B), with the two hands' amendments, the advisor's 5963681796 and the mathematician's 5963662072 part C): a family of quanta declares any dimension from 1, its record that many real lines but for 2, the one plane (3 three real lines, [2, 5] ten real lines in two parts, 0 refused by name); a family of real lines names no holder of the sign, refused by name as no plane (the sign a plane's, read plainly or by the turn and written by the Wronskian), so the sign holder keeps its one row beside it; on a periodic 5-cube of the rule's universe with a family of three real lines beside it, random levels on every line and every write remainder, each of the cube's 48 signed axis permutations commutes with the interval line by line (every real line imaged as a scalar, gravity's axis lines as a tensor's diagonal: Rule3 mixes lines never and a rotation of the cube maps each line to itself), the inverse returning every array; the record's NodeState is its three lines and nothing else, its form the plain sum of the three lines' forms and its share the sum of theirs, one quantum one unit of the form over every line (the dimension adds no mass); a body or a message is laid at its declared weights over the three lines (`weights`), the pair times each line's weight."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_beside(tmp_path)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path), universe_beside(tmp_path)
     rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     triple = {**CHARGED, "name": "triple", "reads": {"gravity": 1, "binding": 1}, "dimension": 3}
-    rows["families"].append(triple)
-    (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
+    rows["families"].append(triple), (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
     families, vector = universe_of(rows)[1], len(rows["families"]) - 1
     assert (families[vector].lines, families[vector].plane, families[CHARGE].records) == (3, False, 1)
     assert shape_of({"dimension": [2, 5]}, "x")[:2] == (10, 2) and shape_of({"dimension": 2}, "x")[2]
