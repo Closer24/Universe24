@@ -130,3 +130,21 @@ declared floor alone); the phase phi_L of the arriving light added to the realis
 (the part's own phase alone, phi_L of a real line at one Node being undefined without its
 rotation); the erasing front from the clicking record's Node is built (two hands at 04:30 Israel; above); the anticoincidence world (S.57) and the Zeno world (S.59) stand in their own folders with
 their readings.
+
+## The reading through the one click act with the face (the tree at 84f0352d and after)
+
+The run is refused by name at the interval 434 (the family `strong_drive` reached the level 10,314 above
+the bound 9,266), 3.3 bins of 160 intervals read, against 166 and 452 on the earlier builds. The
+giving is now massless, one quantum of light at A^2 = T div 2 (the earlier build laid the light at the
+ion pair's born rotation, a massive pair from the root's rounding, about 325 times one quantum's share:
+a FINDING of the build, mended in `meeting.given_quantum`), so the fluorescence row no longer ends the
+run; the strong drive's row does, pumped by its own holes at the ion's Node (43 takings in 434
+intervals, every taking the face at one Node of a plane wave of the massless pair, the uniform mode's
+drift named above). Read in the 434 intervals: counts per bin 8, 0, 0 (the blind 20 +/- 4.5 per bright
+bin, so the one bright bin is a FINDING, the counter's window of 160 reading the second and third bins
+as dark while 43 quanta of fluorescence were given, 8 credited); 43 takings `P by strong_drive` and 43
+givings `S by fluorescence`, their spacing 9.69 +/- 6.2 intervals (the blind 8, the declared
+lifetime's floor, PASS within the spread); no shelving, no bright or dark period, no switch (the blind
+about 30 of each over the full run; not read, the run too short, a FINDING by name and no adjustment
+of the blind); 422 returns of `strong_drive` (the blind none: a FINDING, the telegraph reader counting
+the drive's own `credit` lines at the counter as returns).

@@ -50,6 +50,21 @@ holds 3.2 or 1.6 periods, so the angle per window varies with the drive's phase 
 start; Itano's formula takes the angle per window as pi / (2 n) exactly; the pi pulse itself is
 tuned to 1.568 against 1.571.
 
+## The reading through the one click act with the face (the tree at 84f0352d and after, 120 trials per world)
+
+| n | window | trials ending in e | P(e at T_pi) | blind | column B | column C |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 48 | 120 of 120 | 1.000 | 1.000 | 1 | 1 |
+| 2 | 24 | 61 of 120 | 0.508 | 0.500 | 0.625 | 1 |
+| 4 | 12 | 44 of 120 | 0.367 | 0.375 | 0.154 | 1 |
+| 8 | 6 | 28 of 120 | 0.233 | 0.235 | 0.005 | 1 |
+| 16 | 3 | 16 of 120 | 0.133 | 0.133 | 0.000 | 1 |
+
+PASS at every n within one standard error of column A (0.045 at the middle, 0.03 at the ends); columns
+B and C excluded as above. The jumps: n = 2, 95 g to e and 34 e to g; n = 4, 62 and 18; n = 8, 32 and
+4; n = 16, 16 and 0. The generic act writes the taking as its list (the pulse's record at -1 by the
+face, the atom's parts at +1 and -1 by the lay) and the null window as its list at the change 0.
+
 ## What is not built, by name
 
 The record's own detector region around its Node (the mathematician's 180); the booking of the

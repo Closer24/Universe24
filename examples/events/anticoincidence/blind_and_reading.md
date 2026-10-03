@@ -58,6 +58,11 @@ in the output; the window has closed by then and the second record's outcome has
 the levels show, so the clicks do not move; in the two-photon world the count reaches 0 at the
 second taking, at the window's end, with the same effect.
 
+**Through the one click act with the face** (the tree at 84f0352d and after, 200 trials per world): the
+same table number for number (one photon: 101, 99, 0, 0, alpha 0, PASS; two photons: 24, 47, 28,
+101, alpha 56 / 39), the photon's quantum taken by the face at the taker's Node over two intervals and
+the record's parts laid; the front's faces on the chain after the count reaches 0.
+
 ## What is not built, by name
 
 The record's own detector region around its Node (the mathematician's 180); the one draw's

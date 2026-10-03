@@ -1,11 +1,13 @@
 """The meeting's gates (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate): a record of several parts laid as one event and never summed at a Node, the instrument's read of the parts' signed level sums (the parts line) and the joint-share reader pairing the parts through the root across the sides (tools/bell_gate.py): the exact algebra at Bell's four settings and at the GHZ patterns, the local credits as the fence, the determinism of equal parts, and the two gates' four worlds each (examples/events/bell, examples/events/ghz) end to end with the back-in-time gate MATCH; Bell and the GHZ are gates and never results. The click written on the GameBoard (src/event_universe/credit.py, features/click): the instrument's draw inside the run and its write at one Node, the board exact between clicks."""
 
+import ast
 import json
 from fractions import Fraction
 
 import numpy as np
 
-from event_universe import world_files
+from event_universe import node, world_files
+from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
 from event_universe.loader.instrument import (
     basis_of,
@@ -141,10 +143,11 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     board, plain = GameBoard(load_world(cut), (lines := []).append), GameBoard(load_world(twin))
     kept = {}
     for _ in range(100):
-        board.step()
-        kept[board.tick] = BACK.snapshot(board)
-        if board.tick <= 41:
-            plain.step()
+        (
+            board.step(),
+            kept.__setitem__(board.tick, BACK.snapshot(board)),
+            board.tick <= 41 and plain.step(),
+        )
     credits = [line for line in lines if line["event"] == "credit"]
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
     at = [(c["tick"], c["detector"], c["count"], c["window"][0], c["left"]) for c in credits]
@@ -160,11 +163,9 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
         [k for k in was if "light_pair" in k],
     )
     assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]
-    levels = [
-        k for k in keys if k.endswith("now") or k.endswith("before")
-    ]  # the face: now 0 at 41, both at 42
+    levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 41
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
-    assert all(dict(p for f in kept[42] for p in f)[k][w] == 0 for k in levels)
+    assert all(dict(p for f in kept[42] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 42
     for _ in range(99):
         board.step_inverse()  # the faces presented again: the inverse crosses the clicks bit for bit
         assert BACK.first_difference(kept[board.tick], BACK.snapshot(board)) is None
@@ -213,12 +214,8 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     refused("one Node", bodies_of, [two], None, "", families, (6, 6, 4), 9000, ())
     board, other = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(plain))
     names = [f.name for f in board.families]
-    ion, drive_index, light, here = (
-        names.index("ion"),
-        names.index("strong_drive"),
-        names.index("fluorescence"),
-        tuple(at),
-    )
+    ion, drv, light = (names.index(n) for n in ("ion", "strong_drive", "fluorescence"))
+    here, gamma, unit = tuple(at), board.world.node_clock, board.unit
     assert int(board.quanta(ion)[0][here]) == 1 == int(board.quanta(ion)[0].sum())
     assert all(int(line.now[here]) == 0 for line in board.states[ion].lines[2:])
     assert BACK.verdict(GameBoard(load_world(plain)), 30)["verdict"] == "MATCH"
@@ -226,47 +223,39 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     while not clicks:
         board.step(), other.step()
         clicks = [line for line in lines if line["event"] == "jump" and line["label"] == "DETECTOR"]
-    first = clicks[0]
-    assert (first["realised"], first["left"], first["taken"], first["given"]) == (
-        "P",
-        "S",
-        "strong_drive",
-        None,
-    )
+    first, click = clicks[0], ("P", "S", "strong_drive", None)
+    assert (first["realised"], first["left"], first["taken"], first["given"]) == click
     assert first["node"] == {"label": "GAMEBOARD", "at": at} and first["tick"] == board.tick
-    was, now = (
-        dict(p for f in BACK.snapshot(other) for p in f),
-        dict(p for f in BACK.snapshot(board) for p in f),
-    )
+    was = dict(p for f in BACK.snapshot(other) for p in f)
+    now = dict(p for f in BACK.snapshot(board) for p in f)
     assert {tuple(map(int, w)) for k in was for w in np.argwhere(was[k] != now[k])} == {here}
-    assert board.credit.counts[drive_index] == other.credit.counts[drive_index] - 1
+    assert board.credit.counts[drv] == other.credit.counts[drv] - 1
     in_s, in_p = (any(int(x.now[here]) for x in board.states[ion].lines[k : k + 2]) for k in (0, 2))
     assert int(board.quanta(ion)[0][here]) == 1 and in_p and not in_s
-    (
-        board.step(),
-        board.step(),
-    )  # the face: the arriving record's levels at the Node 0 after two intervals
-    hole = board.states[drive_index].lines[0]
-    assert (int(hole.now[here]), int(hole.before[here])) == (0, 0) and int(hole.remainder[here]) >= 0
-    still = GameBoard(
-        load_world(path)
-    )  # the same run without the front: its fronts dropped each interval
+    p_re, p_im = (int(now[f"ion.lines[{k}].now"][here]) for k in (2, 3))  # the part entered, after
+    size = amplitude(1, board.world.quantum_action, board.families[ion].pair)  # one quantum laid in P
+    assert abs(p_re * p_re + p_im * p_im - size * size) <= 2 * size and (p_re, p_im) != (size, 0)
+    walls = {k: node.rule_of(board.families[k], gamma, 0, None, unit)[2] for k in (ion, drv)}
+    assert int(now["ion.lines[2].remainder"][here]) == walls[ion] // 2  # the taker at the lay's origin
+    board.step(), board.step()  # the face: the arriving record's levels at the Node 0 after two steps
+    hole = board.states[drv].lines[0]
+    assert (int(hole.now[here]), int(hole.before[here])) == (0, 0)
+    assert 0 <= int(hole.remainder[here]) < walls[drv]  # the giver's remainder Rule3's own
+    still = GameBoard(load_world(path))  # the same run without the front: its fronts dropped each step
     for _ in range(still.tick, board.tick):
         still.step()
     for _ in range(board.tick, 23):
-        board.step(), still.step()
-        still.credit.fronts.clear()
+        board.step(), still.step(), still.credit.fronts.clear()
         for index, origin, since in board.credit.fronts:  # the theorem: nothing differs beyond the ball
             far = np.abs(np.indices(board.shape) - np.reshape(origin, (3, 1, 1, 1)))
-            far = (
-                np.minimum(far, np.reshape(board.shape, (3, 1, 1, 1)) - far).sum(axis=0)
-                > board.tick - since
-            )
-            lines_now = zip(board.states[index].lines, still.states[index].lines, strict=True)
-            assert all(
+            far = np.minimum(far, np.reshape(board.shape, (3, 1, 1, 1)) - far).sum(axis=0)
+            far = far > board.tick - since
+            pairs = zip(board.states[index].lines, still.states[index].lines, strict=True)
+            same = (
                 (a.now[far] == b.now[far]).all() and (a.before[far] == b.before[far]).all()
-                for a, b in lines_now
+                for a, b in pairs
             )
+            assert all(same)
     given = [line for line in lines if line["event"] == "jump" and line["given"]]
     nulls = [line for line in lines if line["event"] == "jump" and line["label"] == "GAMEBOARD"]
     assert all(n["realised"] == n["left"] and len(n["node"]["levels"]) == 2 for n in nulls)
@@ -274,9 +263,18 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     erased = [line for line in lines if line["event"] == "erasure"]
     assert given and given[0]["left"] == "P" and credits and credits[0]["tick"] == 18
     assert board.credit.counts[light] + len(credits) == len(given)
-    assert erased and [e["distance"] for e in erased if e["origin"] == erased[0]["origin"]] == list(
-        range(1, 6)
-    )
-    assert all(
-        e["family"] == "fluorescence" and e["label"] == "GAMEBOARD" and e["nodes"] > 0 for e in erased
-    )
+    first_front = [e["distance"] for e in erased if e["origin"] == erased[0]["origin"]]
+    assert erased and first_front == list(range(1, 6))
+    assert all(e["family"] == "fluorescence" and e["label"] == "GAMEBOARD" for e in erased)
+    assert all(e["nodes"] > 0 for e in erased)
+    writers = set()  # every function of the engine that assigns a record's lines
+    for module in (ROOT / "src" / "event_universe").rglob("*.py"):
+        for f in ast.walk(ast.parse(module.read_text(encoding="utf-8"))):
+            for n in (n for n in ast.walk(f) if isinstance(n, (ast.Assign, ast.AugAssign))):
+                targets = n.targets if isinstance(n, ast.Assign) else [n.target]
+                if isinstance(f, ast.FunctionDef) and any(".lines" in ast.unparse(t) for t in targets):
+                    writers.add((module.stem, f.name))
+    rule3 = {("game_board", "step"), ("game_board", "step_inverse"), ("game_board", "hold")}
+    lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
+    lay |= {("meeting", "relaid"), ("meeting", "given_quantum")}
+    assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face

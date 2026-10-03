@@ -245,10 +245,8 @@ def given_quantum(board: GameBoard, item: Item) -> None:
     """A spread record given whole quanta at the Nodes named, the lay (features/click, `standing`): the levels of `delta` quanta standing there at the born rotation, the resonance omega_e - omega_g of the giving parts' pairs (`born`, the one place of the choice), 0 for the parts of one pair, the massless pair, the two levels alike, A^2 = count T div 2 added to the record's first line, the free row, its remainder at the lay's origin, the half wall; the record's count in the books up by the change."""
     family, state = board.families[item.family], board.states[item.family]
     gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
-    pair = born(family.pair, family.pair)  # the resonance of the giving parts' pairs, 0 for one pair
-    (level, _im), (before, _im_before) = standing(
-        item.delta, board.world.quantum_action, pair, (1, 0), 1
-    )
+    pair, action = born(family.pair, family.pair), board.world.quantum_action  # 0 for one pair
+    (level, _im), (before, _im_before) = standing(item.delta, action, pair, (1, 0), 1)
     origin, line = (
         division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0],
         state.lines[0],
