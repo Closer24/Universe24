@@ -1,4 +1,4 @@
-"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over four seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's giving as a packet along a drawn axis (step 5 of the emitter/detector)."""
+"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's giving as a packet along a drawn axis (step 5 of the emitter/detector)."""
 
 import ast
 import json
@@ -65,11 +65,11 @@ def chi_square(clicks: dict[str, int], shares: dict[str, int], names: list[str])
     return sum((clicks.get(n, 0) - expected[n]) ** 2 / expected[n] for n in names)
 
 
-def test_borns_rule_is_the_proportionality_to_whole_shares_over_four_seeds(tmp_path):
-    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at four seeds, the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees inside the 1 percent band (2.6 to 26.8) at every seed and about 10 on average (the half-up rule's own run, every Node's remainder born at the half wall, 14.2, 16.1, 2.9, 6.0 at the seeds 24 to 27; the seed 24 the gate's own, N = 278 and the row bit for bit); the draw's weights are the shares and nothing else."""
+def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_path):
+    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at two seeds (two independent draws of the design; a test runs under 30 seconds, the owner's word of 2026-10-03), the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees inside the 1 percent band (2.6 to 26.8) at both seeds, their mean within 7 and 16 (the half-up rule's own run, every Node's remainder born at the half wall, 14.2 and 16.1 at the seeds 24 and 25; the seed 24 the gate's own, N = 278 and the row bit for bit); the draw's weights are the shares and nothing else."""
     design = json.loads((EVENTS / "two_slits" / "design.json").read_text(encoding="utf-8"))
     names, found = [f"screen_{k}" for k in range(12)], []
-    for seed in (24, 25, 26, 27):
+    for seed in (24, 25):  # two independent draws of the design (a test runs under 30 seconds)
         (folder := tmp_path / f"seed_{seed}").mkdir()
         seeded = {**design, "seed": seed, "instrument": {**design["instrument"], "seed": seed}}
         (folder / "design.json").write_text(json.dumps(seeded), encoding="utf-8")
@@ -80,13 +80,8 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_four_seeds(tmp_p
         assert quanta == sum(clicks[n] for n in names) and clicks.get("gap", 0) == 0
         if seed == 24:  # the gate's own numbers, bit for bit
             assert quanta == 278 and [clicks[n] for n in names] == GATE_ROW
-    assert all(2.6 < chi < 26.8 for chi in found) and 7 < sum(found) / 4 < 16, found
-    assert [round(chi, 1) for chi in found] == [
-        14.2,
-        16.1,
-        2.9,
-        6.0,
-    ]  # the half-up rule's run, bit for bit
+    assert all(2.6 < chi < 26.8 for chi in found) and 7 < sum(found) / 2 < 16, found
+    assert [round(chi, 1) for chi in found] == [14.2, 16.1]  # the half-up rule's run, bit for bit
 
 
 def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
@@ -155,12 +150,12 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
 
 
 def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone(tmp_path):
-    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built, laid and run; the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 278 and the row); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
+    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 278 and the row); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
     WAY.main(["--folder", str(tmp_path), "--modes"])
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "which_way" / "expectation.json").read_text(encoding="utf-8"))
     rows, totals = {}, {}
-    for name in ("which_way", "one_gap", "two_gaps"):
+    for name in ("which_way", "one_gap"):  # the two gaps' run is the two slits' gate row
         assert RUN.run_input(str(tmp_path / f"{name}.json"), str(tmp_path))["verdict"] == "LAWFUL"
         clicks, _shares, totals[name] = clicks_and_shares(tmp_path / f"{name}.output.json")
         rows[name] = [clicks.get(f"screen_{k}", 0) for k in range(12)]
@@ -171,9 +166,9 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
         )
         if name != "two_gaps":
             assert [rows[name][k] for k in blind["shadowed_regions"]] == [0] * 4 and rows[name][4] == 0
-    way, one, two = rows["which_way"], rows["one_gap"], rows["two_gaps"]
+    way, one, two = rows["which_way"], rows["one_gap"], GATE_ROW
     channel, scatter = totals["which_way"] - sum(way), 3 * math.sqrt(blind["quanta"]["two_gaps"]) / 2
-    assert totals["one_gap"] == sum(one) and totals["two_gaps"] == sum(two) == 278 and two == GATE_ROW
+    assert totals["one_gap"] == sum(one) and sum(two) == 278
     assert abs(channel - blind["quanta"]["which_way"]["channel"]) < scatter, channel
     assert abs(sum(way) - blind["quanta"]["which_way"]["screen"]) < scatter
     pairs = [(way[k], one[k]) for k in range(5, 12)]

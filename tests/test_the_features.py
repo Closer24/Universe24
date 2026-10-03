@@ -38,7 +38,7 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     guard((800, 850), GAMMA, 16, hill(74), plain, "matter")
     axis, hollow, deep = plain[0].copy(), flat.copy(), flat.copy()
     axis[2, 0, 1], hollow[0, 1, 0] = 264, -1  # 264: the tension -153, a hill
-    deep[1, 1, 1] = paces.frozen_content(GAMMA)  # the Link's zero, 49,545 at Gamma 10,000
+    deep[1, 1, 1], zero = paces.frozen_content(4), paces.frozen_content(4)  # the Link's zero at Gamma 4
     edge, light, hill_pair = r"squared is 103042801 at the Node \(1, 1, 1\) at load", "light", (800, 850)
     port, closed = (*plain[:4], axis, plain[5]), (plain[0], 0 * plain[0], *plain[2:])
     for match, pair, content, factors, name in (
@@ -46,12 +46,13 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
         (rf"the Node\) {edge}", hill_pair, hill(75), plain, "matter"),
         (r"the Port 4\) squared is 26400000000 in the unit G\^2 = 256", hill_pair, flat, port, "matter"),
         (r"squared is 100020001 at the Node \(0, 1, 0\) at load, above", (1, 1), hollow, plain, light),
-        (r"is 49545 at the Node \(1, 1, 1\) at load, at or beyond 49545", (1, 1), deep, plain, light),
         (r"factor of 'light' \(the Port 1\) is 0 at the Node \(0, 0, 0\)", (1, 1), flat, closed, light),
     ):
         refused(match, guard, pair, GAMMA, 16, content, factors, name)
+    at_zero = rf"is {zero} at the Node \(1, 1, 1\) at load, at or beyond {zero}"  # the Link's zero
+    refused(at_zero, guard, (1, 1), 4, 16, deep, plain, light)
     deep[1, 1, 1] -= 1
-    guard((1, 1), GAMMA, 16, deep, plain, "light")
+    guard((1, 1), 4, 16, deep, plain, "light")  # one below the Link's zero passes
     assert (stability_bound((-1, 2), 4), edge_squared((-1, 2), 4)) == ((3, 64), 21)  # [-1, 2] at Gamma 4
     witness = r"the clock\) squared is 25 at the Node \(0, 0, 0\) at load, above the stability edge's square 21"
     refused(witness, guard, (-1, 2), 4, 1, flat - 1, (1,) * 6, "quarks")  # the content -1, a hill

@@ -1,5 +1,6 @@
 """The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count the record's share, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body of a plane writes a wave into the sign holder's own record, its share's total stays within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the chain goes back in time, MATCH over 400 intervals with the rotating body and with the real one; the tension is Rule3's own conservation of the current; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning. The static body of the chain is one charged body of the sense +1 at the chain's centre Node with the taker on it: the two-body world, a like-sense body laid beside a neutral body's tail under the plain read, finds no fixed point in the generator (a 20-unit cycle of period 7 at the body's own edge), the rotating construction's open defect, the integer wander of the record-to-content map with the body's own charge level as a second source of its well; not a tie, and not widened."""
 
+import copy
 import json
 import math
 import re
@@ -486,8 +487,9 @@ def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_pat
         return [BACK.arrays_of(str(k), s) for k, s in enumerate(states)]
 
     (stepped := random_state(cube, 11)).step()
+    loaded = random_state(cube, 11)  # one load, copied per image: the load's guard is the cost
     for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):
-        other = random_state(cube, 11)
+        other = copy.deepcopy(loaded)
         other.states = imaged(other, axes, signs)
         other.step()
         assert BACK.first_difference(arrays(imaged(stepped, axes, signs)), arrays(other.states)) is None

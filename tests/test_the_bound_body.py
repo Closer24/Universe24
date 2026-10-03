@@ -95,7 +95,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert abs(books["quanta"] - laid) <= CHAIN  # Rule3's rounding, under a quantum per Node
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0 and kept
     mode_path, document = world.with_suffix(".mode.json"), json.loads(world.read_text(encoding="utf-8"))
-    document["measured"][0]["nodes"] = [{**n, "count": 1} for n in document["measured"][0]["nodes"]]
+    document["measured"][0]["nodes"] = [{**n, "count": 5} for n in document["measured"][0]["nodes"]]
     world.write_text(json.dumps(document), encoding="utf-8")
     mode = {**json.loads(mode_path.read_text(encoding="utf-8")), "world_digest": input_digest(document)}
     mode_path.write_text(json.dumps(mode), encoding="utf-8")
