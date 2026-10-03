@@ -23,7 +23,7 @@ def started(board: GameBoard, index: int, nodes: list[Node]) -> None:
 
 def inward(mask: np.ndarray, inner: np.ndarray, board: GameBoard) -> np.ndarray:
     """Per shell Node the first Port in Port order whose neighbour lies on the inner shell (the arrival of the inner shell's mask through that Port), 0 where none does."""
-    found = np.full(board.shape, -1)
+    found = np.full(board.shape, -1, dtype=object)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
         there = (
             mask & (found < 0) & np.asarray(arrival(inner, axis, side, board.wrap, False), dtype=bool)
