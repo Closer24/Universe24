@@ -1,4 +1,4 @@
-"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements, #the-click-is-the-meeting; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. For a record of several parts (the pair family) the instrument reports beside it the parts' signed level sums over its region each interval, the read the credit pairs through the root (the parts line). A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The credit line is the click proper (features/click; HIGHLIGHTS.md, the owner's decision of 2026-10-02): the instrument's draw written on the GameBoard at one Node, the credited quantum's share leaving the record there; its result the interval, the window, the family, the region, the port realised and the parts kept, the count moved and the record's count left, the count conserved and read by the credit, never a Node, the one Node written beside it as a GameBoard diagnostic for the host's tool. The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, the parts line and the credit line, labelled the detector's, the field line, labelled a GameBoard reading, and the run's end."""
+"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements, #the-click-is-the-meeting; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. For a record of several parts (the pair family) the instrument reports beside it the parts' signed level sums over its region each interval, the read the credit pairs through the root (the parts line). A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The credit line is the click proper (features/click; HIGHLIGHTS.md, the owner's decision of 2026-10-02): the instrument's draw written on the GameBoard at one Node, the credited quantum's share leaving the record there; its result the interval, the window, the family, the region, the port realised and the parts kept, the count moved and the record's count left, the count conserved and read by the credit, never a Node, the one Node written beside it as a GameBoard diagnostic for the host's tool. The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, the parts line, the credit line and the jump line, labelled the detector's, the field line, the erasure line, the lay line and the face line, labelled a GameBoard reading, and the run's end."""
 
 from __future__ import annotations
 
@@ -18,15 +18,17 @@ MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
     "GAMEBOARD",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE, CONVERSION = (
+CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE, LAY, FACE, CONVERSION = (
     "click",
     "field",
     "parts",
     "credit",
     "jump",
     "erasure",
+    "lay",
+    "face",
     "conversion",
-)  # the output's seven lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell, a record converted whole at its Node
+)  # the output's nine lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell, one line laid at one Node, one value presented at one Port, a record converted whole at its Node
 REPORT_KEYS = ("event", "label", "tick", "family", "detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 CREDIT_KEYS = ("window", "realised", "kept", "count", "left", "node")  # the credit line's own keys
@@ -35,6 +37,19 @@ ERASURE_KEYS = ("origin", "distance", "nodes", "taken")  # the erasure line's ow
 JUMP_KEYS = ("window", "realised", *JUMP_OWN, "node")  # the jump line's keys
 INTO = "into"  # the conversion line's own key, the families of the records out
 CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
+LINE, BEFORE, AFTER, PORT, VALUE = ("line", "before", "after", "port", "value")  # the two acts' words
+LAY_KEYS = (
+    LINE,
+    BEFORE,
+    AFTER,
+    "node",
+)  # the lay line's own keys: the line laid, its levels before and after
+FACE_KEYS = (
+    LINE,
+    PORT,
+    VALUE,
+    "node",
+)  # the face line's own keys: the line, the Port and the value presented
 MEASURED = "measured"  # a record at a Node that is an instrument in the output, by its number in the world's order
 AT = "at"  # the one Node written, a GameBoard diagnostic beside the credit's result
 OUTPUT = (
@@ -46,6 +61,9 @@ OUTPUT = (
     *CREDIT_KEYS,
     *JUMP_OWN,
     *ERASURE_KEYS,
+    *LAY_KEYS[:3],
+    PORT,
+    VALUE,
     INTO,
 )  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
@@ -116,14 +134,12 @@ def jump(
     taken: str | None,
     given: str | None,
     node: list[int],
-    levels: list[list[int]] | None = None,
+    quantum: bool = True,
 ) -> dict[str, object]:
-    """The jump line, the click of a record at a Node that is an instrument, written on the GameBoard at that one Node (features/click; ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the exchange at one Node), labelled DETECTOR: the interval, the record's family, the instrument by its number among the world's `measured` (`measured n`), the window [first, last] drawn over, the part realised and the part left (their declared names), the family whose arriving quantum was taken (the taking click; None otherwise) and the family of light a whole quantum was given to (the giving click; None otherwise); beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the null window's write, where its re-lay changed a level, the same line labelled GAMEBOARD throughout (no quantum passed, no measurement) with the part's levels before and after under `node.levels`, the diagnostic the host's tool crosses from."""
-    label = MEASUREMENT if levels is None else DIAGNOSTIC
+    """The jump line, the click of a record at a Node that is an instrument, written on the GameBoard at that one Node (features/click; ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the exchange at one Node), labelled DETECTOR: the interval, the record's family, the instrument by its number among the world's `measured` (`measured n`), the window [first, last] drawn over, the part realised and the part left (their declared names), the family whose arriving quantum was taken (the taking click; None otherwise) and the family of light a whole quantum was given to (the giving click; None otherwise); beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the null window's write, where its re-lay changed a level, the same line labelled GAMEBOARD throughout (no `quantum` passed, no measurement), the levels laid standing in the `lay` lines beside it."""
+    label = MEASUREMENT if quantum else DIAGNOSTIC
     line = dict(zip(REPORT_KEYS, (JUMP, label, tick, family, f"{MEASURED} {measured}"), strict=True))
     written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
-    if levels is not None:
-        written[LEVELS] = levels
     line.update(zip(JUMP_KEYS, (window, realised, left, taken, given, written), strict=True))
     return line
 
@@ -131,13 +147,32 @@ def jump(
 def conversion(
     tick: int, family: str, measured: int, window: list[int], into: list[str], node: list[int]
 ) -> dict[str, object]:
-    """The conversion line, the click of a record converted whole at its one Node (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03), labelled DETECTOR: the interval, the record's family (the record in, its count down by one), the instrument by its number among the world's `measured`, the window [first, last] drawn over and `into`, the families of the records out in the table's order, each up by one whole quantum laid at the Node at its declared rotation; beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool."""
+    """The conversion line, the click of a record converted whole at its one Node (the fifth list of the act, ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03; src/event_universe/conversion.py), labelled DETECTOR: the interval, the record's family (the record in, its count down by one), the instrument by its number among the world's `measured`, the window [first, last] drawn over and `into`, the families of the records out in the table's order, each up by one whole quantum laid at the Node by the count; beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the lay lines of the write beside it."""
     line = dict(
         zip(REPORT_KEYS, (CONVERSION, MEASUREMENT, tick, family, f"{MEASURED} {measured}"), strict=True)
     )
     written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     line.update(zip(CONVERSION_KEYS, (window, into, written), strict=True))
     return line
+
+
+def lay(
+    tick: int, family: str, line: int, node: list[int], before: list[int], after: list[int]
+) -> dict[str, object]:
+    """The lay line, one line of a record laid at one Node by an act from outside the Node (src/event_universe/meeting.py, `written`: the taking's and the giving's lays of the record's parts, the given quantum's lay on light's record, the null window's re-lay; the mathematician's 195, the lay's part crossed from its line), labelled GAMEBOARD, a diagnostic for the host's tool and no result: the interval, the record's family, no detector, the line's number among the family's lines, its levels [now, before, remainder] at the Node before the lay and after it, and the one Node under `node`; written where the lay changed one of the three, so that `tools/back_in_time.py` sets the line back before its step back and Rule3's inverse crosses the lay."""
+    found: dict[str, object] = dict(zip(REPORT_KEYS, (LAY, DIAGNOSTIC, tick, family, None), strict=True))
+    written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
+    found.update(zip(LAY_KEYS, (line, before, after, written), strict=True))
+    return found
+
+
+def face(tick: int, family: str, line: int, node: list[int], port: int, value: int) -> dict[str, object]:
+    """The face line, one value presented at one Port of one Node for one interval's step (features/click, `Face`; the mathematician's 193 and 195 with the advisor's second, the face value logged per line per interval), labelled GAMEBOARD, a diagnostic for the host's tool and no result: the interval at whose step it is presented, the record's family, no detector, the line, the Port in Port order and the value Rule3 read there in the place of the neighbour's level (the click's hole and the front's shells alike), the one Node under `node`; the inverse presents the same value, so the tool crosses the click from the lines and not from the books' log."""
+    found: dict[str, object] = dict(
+        zip(REPORT_KEYS, (FACE, DIAGNOSTIC, tick, family, None), strict=True)
+    )
+    found.update(zip(FACE_KEYS, (line, port, value, {OUTPUT[1]: DIAGNOSTIC, AT: node}), strict=True))
+    return found
 
 
 def erasure(
