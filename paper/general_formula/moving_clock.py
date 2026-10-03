@@ -110,7 +110,7 @@ def figure(ax: Axes) -> None:
     ax.text(
         b23[-1] + 0.02,
         f23[-1],
-        "the band's largest group\nspeed along the axis at $[2, 3]$,\n$v = 1/4$ Link per interval",
+        "the band's largest group\nspeed along the axis at $[2, 3]$,\n$v$ about $0.2501$ Link per interval",
         ha="left",
         va="center",
         fontsize=7,

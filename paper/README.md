@@ -71,10 +71,8 @@ their statuses.
   method's three layers, from nature's measurements to the paper's reading) by
   `python paper/general_formula/method.py`; and `moving_clock.pdf` (the moving
   clock's factor from the band against Lorentz's) by
-  `python paper/general_formula/moving_clock.py`. The others,
-  `band.pdf`, `channels.pdf` (by `band_and_channels.py`) and `branches.pdf`
-  (by `branches.py`), belong to the long version of the paper, which stays in
-  the branch's history (commit 5adef30), and are kept for it.
+  `python paper/general_formula/moving_clock.py`. The folder holds
+  these seven figures and nothing else.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.
@@ -97,8 +95,13 @@ their statuses.
   screen regions, reading what the engine's click lines report, the net current
   through each region's front boundary Ports over the expectation's window over
   the count wall, so that the integer run is checked against it to the rounding.
-  Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`;
-  its printed output stands beside it as `two_slits_real_line.txt`, every
+  Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`
+  at the implementation's commit the paper names (Section 3.7), where its
+  reader's import holds; on `main` after the NodeReader's rename the reader it
+  imports is restored by the engine's closing list (#1745, step 2) before the
+  two slits run again, and until then `two_slits_real_line.txt` is the
+  recording of that commit. Its printed output stands beside it as
+  `two_slits_real_line.txt`, every
   number with its definition: the total over the whole passage, the twelve
   regions' quanta and shares, the visibility, the wings and the arrival (in the
   engine's interval labels and in the physical ones), the meeting round's file

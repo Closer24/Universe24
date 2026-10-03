@@ -156,10 +156,6 @@ for open_faces in (True, False):
 
 # (D) THE OUTWARD CURRENT AT THE SHELL: the count's line's own flux F through the Link at the body's edge, quadratic in the
 #     record (the form's flux), for the standing mode against the cloud; its swing is the beat of the bound modes
-def shell_current(a_b, a_n, a_x, i):
-    """The form's flux through the Link i -> i + 1 over one interval: D_i changes by the flux alone in a static well."""
-    D_now = a_n * a_n - a_x * a_b
-    return D_now[i]
 
 
 def current_trace(start, steps=3000):
