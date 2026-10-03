@@ -1,4 +1,4 @@
-"""The atom's gate worlds (the mathematician's 163 with the advisor's second hand; ALGEBRA.md, The atom is a bound body of the holder of the sign), from the design file beside this script: the part-2 worlds hydrogen_1s and hydrogen_2s on atom.json (the electron body of 30,000 quanta, declared and not laid), and the round's worlds at the law's count 1, hydrogen_1s_large and hydrogen_2s_large on atom_large.json (the advisor's line, Gamma 730,838 at the width 128) and hydrogen_1s_toy on atom_toy.json (ALGEBRA.md's toy atom, Gamma 6,000 at the width 63), each one electron quantum beside the nucleus's one quantum at the centre of the open 31-cube, declaring the lay `fixed_point` with its tolerance; with --modes the worlds the design marks `laid` are laid by tools/pixel_mode.py side by side (the nucleus as the one-Node record, `--pixel`, the senses the design's), a refusal by name printed and the world left declared; and the blind expectation file, 163's rows and the round's restated rows with the law's numbers, written from the design alone before any run and never touched after, byte for byte the builder's (the committed-worlds gate of tests/test_the_bound_body.py), the one number taken from a file the lay's own readings in the mode file where it stands. Every number is the design's and stands in the files, none in this script or the engine.
+"""The atom's gate worlds (the mathematician's 163 with the advisor's second hand; ALGEBRA.md, The atom is a bound body of the holder of the sign), from the design file beside this script: the part-2 worlds hydrogen_1s and hydrogen_2s on atom.json (the electron body of 30,000 quanta, declared and not laid), and the round's worlds at the law's count 1, hydrogen_1s_large and hydrogen_2s_large on atom_large.json (the advisor's line, Gamma 730,838 at the width 128) and hydrogen_1s_toy on atom_toy.json (ALGEBRA.md's toy atom, Gamma 6,000 at the width 63), each one electron quantum beside the nucleus's one quantum at the centre of the open 31-cube, declaring the lay `fixed_point` with its tolerance; with --modes the worlds the design marks `laid` are laid by tools/pixel_mode.py side by side (the nucleus as the one-Node record, `--pixel`, the senses the design's), a refusal by name printed and the world left declared; and the blind expectation file, 163's rows and the round's restated rows with the law's numbers and the derived atom's run's rows (218 and 219), written from the design alone before any run and never touched after, byte for byte the builder's (the committed-worlds gate of tests/test_the_bound_body.py), the one number taken from a file the lay's own readings in the mode file where it stands. Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -19,10 +19,14 @@ ROOT = HERE.parents[2]
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world: the open box, the nucleus's one quantum at the centre and the electron body declared with one Node carrying its quanta at the centre's neighbour along x (two bodies share no Node; the generator's lay moves a many-quanta electron's quanta about the nucleus, and the count-1 electron's declaration stays, admitted by the gate within its rounding), no declared detector, the universe the world's row names (the design's where it names none), the lay of the row (the design's where it names none)."""
+    """One world: the open box, the nucleus's one quantum at the centre and the electron body declared with one Node carrying its quanta at the centre's neighbour along x (two bodies share no Node; the generator's lay moves a many-quanta electron's quanta about the nucleus, and the count-1 electron's declaration stays, admitted by the gate within its rounding), the region detector of two Nodes beside the body where the derived atom's run names the world (`blind_derived_run`, the owner's decision of 2026-10-03, 09:38 Israel) and no detector otherwise, the universe the world's row names (the design's where it names none), the lay of the row (the design's where it names none)."""
     row = design["worlds"][name]
     centre = [int(v) for v in row["centre"]]
     beside = [centre[0] + 1, centre[1], centre[2]]
+    derived = design.get(
+        "blind_derived_run", {}
+    )  # the derived atom's run: its region detector beside the body
+    detectors = [dict(derived["detector"])] if derived.get("world") == name else []
     return {
         "shape": [int(v) for v in row["shape"]],
         "boundary": {"x": "open", "y": "open", "z": "open"},
@@ -45,7 +49,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
                 ],
             },
         ],
-        "detectors": [],
+        "detectors": detectors,
         "lay": dict(row.get("lay", design["lay"])),
     }
 
@@ -77,6 +81,7 @@ def expectation(design: dict[str, Any], folder: Path) -> dict[str, object]:
         "reading": design["reading"],
         "blind": design["blind"],
         "blind_large": design["blind_large"],
+        "blind_derived_run": design["blind_derived_run"],
         "not_tested_by_the_short_run": design["not_tested_by_the_short_run"],
         "from_the_lay": {
             name: from_the_lay(folder / f"{name}.mode.json")
