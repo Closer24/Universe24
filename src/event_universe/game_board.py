@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import credit, growth, meeting, node, share
+from event_universe import credit, front, growth, meeting, node, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -300,6 +300,7 @@ class GameBoard:
             self.hold(index, forms, turns, 1, stresses, senses, rulers)
         credit.windowed(self)
         meeting.jumped(self)
+        front.advanced(self)
 
     def hold(
         self,

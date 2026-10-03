@@ -21,7 +21,8 @@ LINES = (
     "parts",
     "credit",
     "jump",
-)  # the lines written: the clicks, the field readings, the parts' levels, the clicks written, the records' clicks
+    "erasure",
+)  # the lines written: the clicks, the field readings, the parts' levels, the clicks written, the records' clicks, the fronts' shells
 
 
 def run_input(path: str, out_dir: str) -> dict[str, object]:

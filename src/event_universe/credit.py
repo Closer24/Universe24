@@ -8,17 +8,20 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import growth, node, share
-from event_universe.features.click import drawn, hole
+from event_universe import growth, share
+from event_universe.features.click import Face, drawn
 from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import Instrument, Ports, ports_of
 from event_universe.loader.keys import Node
-from event_universe.meeting import NodeBooks, books_of
+from event_universe.meeting import Item, NodeBooks, books_of, click
 from event_universe.reports import PORT_NAMES, credit
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
 
+Front = tuple[
+    int, Node, int
+]  # a front: the record's family, the click's Node (the file's coordinates), the click's interval
 Intake = dict[Node, int]  # per boundary Node of a region, at the file's coordinates, the window's inflow
 Joints = dict[
     tuple[int, ...], int
@@ -28,7 +31,7 @@ Sums = dict[str, list[list[int]]]  # per region the parts' level sums [now, befo
 
 @dataclass
 class Books:
-    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, and the records at Nodes declared instruments with their own books (`meeting.NodeBooks`)."""
+    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), and the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again."""
 
     declaration: Instrument | None
     elapsed: int
@@ -38,6 +41,8 @@ class Books:
     joints: dict[int, Joints]
     sides: list[tuple[str, Ports]]
     bodies: list[NodeBooks]
+    fronts: list[Front]
+    faces: dict[int, list[Face]]
 
     def window_of(self, tick: int) -> list[int]:
         """The window closing at `tick`, [first, last], the declaration's length of intervals."""
@@ -51,7 +56,9 @@ class Books:
         counts = {index: counted(board, index, board.laid[index]) for index in board.order}
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.detectors if r.pattern]
         bodies = books_of(board)
-        return cls(found, 0, found.seed if found is not None else 0, counts, {}, {}, sides, bodies)
+        return cls(
+            found, 0, found.seed if found is not None else 0, counts, {}, {}, sides, bodies, [], {}
+        )
 
 
 def counted(board: GameBoard, index: int, total: int | None) -> int:
@@ -123,45 +130,52 @@ def windowed(board: GameBoard) -> None:
 
 
 def credited(board: GameBoard) -> None:
-    """The click written on the GameBoard at a window's end, per family of quanta from the window's books, then the books emptied: for a record of several parts the one draw through the root over the combinations of the sides' ports by the joint shares J (as the reader draws its combination), then at each side's one arrival Node the write (`written`) with the port realised and the parts it reads with a coefficient other than 0 named as kept in the result, the record's count down by one; for a record of one part the regions' window inflows floored at 0 are the shares, N = (their sum + W_c div 2) div W_c whole quanta, at most the count left, each drawn to a region by the shares and written at one Node of it; a record whose count stands at 0 is uncreditable and nothing draws from it, whatever its levels still show (the empty wave, a diagnostic); the draw and the write are the instrument's and no act of Rule3."""
+    """The click written on the GameBoard at a window's end, per family of quanta from the window's books, then the books emptied, the region detector's list of the one act (`meeting.click`, the first of its five lists): for a record of several parts the one draw through the root over the combinations of the sides' ports by the joint shares J (as the reader draws its combination), then at each side's one arrival Node (`written`, the Node drawn by the window's inflows per Node, the port realised and the parts it reads with a coefficient other than 0 named as kept in the credit line) the record at -1 as one item over the Nodes drawn, one quantum; for a record of one part the regions' window inflows floored at 0 are the shares, N = (their sum + W_c div 2) div W_c whole quanta, at most the count left, each drawn to a region by the shares and to one Node of it, one item each; the window's items written by the act in one list, the record's count down by one per quantum and its erasing front begun from every Node written where the count reaches 0; a record whose count stands at 0 is uncreditable and nothing draws from it, whatever its levels still show (the empty wave, a diagnostic, until the front reaches it); the draw and the write are the instrument's and no act of Rule3."""
     books = board.credit
     names = [detector.name for detector in board.detectors if detector.declared]
     for index in board.order:
         family = board.families[index]
         intake = {name: books.intake.pop((index, name), {}) for name in names}
+        items: list[Item] = []
         if family.parts > 1:
             joint = books.joints.pop(index, {})
             if sum(joint.values()) <= 0 or books.counts[index] <= 0 or not books.sides:
                 continue
             keys = sorted(joint)
             combination = keys[draw(board, [joint[key] for key in keys])]
+            nodes: list[Node] = []
             for (name, ports), port in zip(books.sides, combination, strict=True):
                 kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != 0]
-                written(board, index, name, intake[name], PORT_NAMES[port], kept)
-            books.counts[index] -= 1
-            continue
-        shares = [max(sum(intake[name].values()), 0) for name in names]
-        if sum(shares) <= 0:
-            continue
-        for _ in range(min(counted(board, index, sum(shares)), books.counts[index])):
-            name = names[draw(board, shares)]
-            written(board, index, name, intake[name], None, [0])
-            books.counts[index] -= 1
+                nodes += written(board, index, name, intake[name], PORT_NAMES[port], kept, 1)
+            items.append(Item(index, None, None, -1, tuple(nodes)))
+        else:
+            shares = [max(sum(intake[name].values()), 0) for name in names]
+            if sum(shares) <= 0:
+                continue
+            for quantum in range(min(counted(board, index, sum(shares)), books.counts[index])):
+                name = names[draw(board, shares)]
+                at = written(board, index, name, intake[name], None, [0], quantum + 1)
+                items.append(Item(index, None, None, -1, tuple(at)))
+        click(board, books.state, None, [1], [items])
 
 
 def written(
-    board: GameBoard, index: int, name: str, book: Intake, realised: str | None, kept: list[int]
-) -> None:
-    """The write of one click at one Node (features/click, `hole`): among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 (none where nothing entered: no write); there every line of the record, the parts kept and the parts the realised port reads with 0 alike, is set to 0 in its three arrays, the hole, exactly as the receding face removes a share; nothing is written at any other Node, the hole spreading by Rule3 alone; one credit line, its result the window, the region, the port realised and the parts kept, the count moved 1 and the record's count left, with the one Node at the file's coordinates beside it as a GameBoard diagnostic (the owner's word of 2026-10-02: the detector gives no result for one Node)."""
+    board: GameBoard,
+    index: int,
+    name: str,
+    book: Intake,
+    realised: str | None,
+    kept: list[int],
+    quantum: int,
+) -> list[Node]:
+    """The Node of one click at a region and its credit line: among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 (none where nothing entered: no Node, no write); one credit line, its result the window, the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, with the one Node at the file's coordinates beside it as a GameBoard diagnostic (the owner's word of 2026-10-02: the detector gives no result for one Node); the write itself the act's (`meeting.click`, the face at that Node); returns the Node, none where nothing entered."""
     nodes = list(book)
     weights = [max(book[at], 0) for at in nodes]
     if sum(weights) <= 0:
-        return
+        return []
     at = nodes[draw(board, weights)]
-    mask, family, state = board.mask((at,)), board.families[index], board.states[index]
-    for number, line in enumerate(state.lines[: family.record]):
-        now, before, remainder = hole([line.now, line.before, line.remainder], mask)
-        state.lines[number] = node.Record(now, before, remainder)
-    left, window = board.credit.counts[index] - 1, board.credit.window_of(board.tick)
+    left, window = board.credit.counts[index] - quantum, board.credit.window_of(board.tick)
     if board.observer is not None:
-        board.observer(credit(board.tick, family.name, name, window, realised, kept, 1, left, list(at)))
+        family = board.families[index].name
+        board.observer(credit(board.tick, family, name, window, realised, kept, 1, left, list(at)))
+    return [at]

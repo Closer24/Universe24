@@ -50,8 +50,17 @@ world 0.26 and 0.375), not the transfer over a passage; the same mechanism that 
 telegraph's run (examples/events/shelved_ion/blind_and_reading.md). The structure the blind tests,
 one quantum one click, holds whatever the shares: P(both) = 0 is the count's, read in 200 trials.
 
+**With the erasing front in the tree** (`front.py`, the round's last act): the same 200 trials per
+world read the same table, number for number (one photon: 101, 99, 0, 0, alpha 0; two photons: 24,
+47, 28, 101, alpha 56 / 39). In the one-photon world the light's count reaches 0 at the one taking
+and its front begins from the taker's Node, one shell per interval along the chain, its erasure lines
+in the output; the window has closed by then and the second record's outcome has no share whatever
+the levels show, so the clicks do not move; in the two-photon world the count reaches 0 at the
+second taking, at the window's end, with the same effect.
+
 ## What is not built, by name
 
-The record's own detector region around its Node (the mathematician's 180); the erasing front from
-the clicking record's Node (two hands at 04:30 Israel; the round's last act, below in the report);
-the one draw's generator the first closing record's (the world has no instrument of its own).
+The record's own detector region around its Node (the mathematician's 180); the one draw's
+generator the first closing record's (the world has no instrument of its own); the face form of the
+hole (the mathematician's 193, 195 and 197, the advisor's second in #1572 comment 5963391333), the
+morning's unless the gate worlds read MATCH across the click with it tonight.

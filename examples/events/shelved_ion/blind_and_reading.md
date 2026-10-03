@@ -60,6 +60,21 @@ the refusal; rows 2 to 7 unreadable, no period being complete (FINDING, below); 
 credited never (row 9's click half PASS), its count 1 at every interval and one part at 1 (a
 GameBoard reading of the books, PASS).
 
+**The telegraph world with the erasing front (the round's last act, two hands at 04:30 Israel):
+REFUSED inside the run at interval 166**, "the family 'fluorescence' reached the level 9668", six
+intervals after the counter's first window. The 166 intervals: 15 takings and 14 givings (the
+spacing 9.6 against the blind's 8), the counter's first bin 14 counts (the blind 20 +/- 4.5, 1.3
+widths under), the second bin cut; at the window's end 14 credits took the fluorescence row's count
+to 0 and 14 fronts began from the 14 entry Nodes, the six neighbours of the ion among them: 70
+erasure lines over the intervals 161 to 166, the first shells of 6 Nodes each taking up to 6,089
+in the sizes of the row's two levels (the row's levels already drifted to thousands by the
+uniform mode, below), and the row's largest level passing the bound at 166. The front erases what
+it reaches, as the two hands state it; on this lattice the erasure of a drifted light row shell by
+shell is a further kick to the row's marginal modes inside the ball, and the run ends sooner than
+without it (452): the same finding, the front named as its third source beside the lay's
+remainders and the holes. No number of a click moved by the front before the refusal (the first
+window's 14 counts, the 15 takings and 14 givings are the run's own up to 160).
+
 **The control, `shelved_ion_control.json`: REFUSED inside the run at interval 18,820**, "the
 family 'strong_drive' reached the level 9279, above the bound 9266"; 118 whole bins, every count
 0, the histogram {0: 118}, no jump (row 8 PASS over its prefix, unimodal at 0).
@@ -113,6 +128,5 @@ the share's difference T (sin omega_L - sin omega_e + sin omega_g) at the giving
 one pair); the beat's current in the giving's rate (0 for a one-part record at one Node, the
 declared floor alone); the phase phi_L of the arriving light added to the realised part's phase
 (the part's own phase alone, phi_L of a real line at one Node being undefined without its
-rotation); the erasing front from the clicking record's Node (two hands at 04:30 Israel), the round's last
-act; the anticoincidence world (S.57) and the Zeno world (S.59) stand in their own folders with
+rotation); the erasing front from the clicking record's Node is built (two hands at 04:30 Israel; above); the anticoincidence world (S.57) and the Zeno world (S.59) stand in their own folders with
 their readings.
