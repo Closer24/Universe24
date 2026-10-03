@@ -1,0 +1,45 @@
+name: Delete branches
+# Deletes the named remote branches on demand, because the team's sessions cannot delete a branch through their proxy.
+# It runs only by hand (workflow_dispatch); main, paper and any branch with an open pull request are refused.
+on:
+  workflow_dispatch:
+    inputs:
+      branches:
+        description: Comma-separated branch names to delete; main, paper and any branch with an open pull request are refused
+        type: string
+        required: true
+permissions:
+  contents: write
+  pull-requests: read
+jobs:
+  delete:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      BRANCHES: ${{ inputs.branches }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Delete the requested branches
+        run: |
+          set -euo pipefail
+          open_pulls=$(gh api "repos/${GITHUB_REPOSITORY}/pulls?state=open&per_page=100" --jq '.[].head.ref')
+          deleted=0; absent=0; refused=0
+          IFS=',' read -ra names <<< "$BRANCHES"
+          for raw in "${names[@]}"; do
+            name=$(printf '%s' "$raw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            [ -n "$name" ] || continue
+            if [ "$name" = main ] || [ "$name" = paper ]; then
+              echo "refused: $name is protected"; refused=$((refused + 1)); continue
+            fi
+            if grep -qxF -- "$name" <<< "$open_pulls"; then
+              echo "refused: $name has an open pull request"; refused=$((refused + 1)); continue
+            fi
+            if ! git ls-remote --exit-code --heads origin "refs/heads/$name" > /dev/null; then
+              echo "absent: $name"; absent=$((absent + 1)); continue
+            fi
+            git push origin --delete "$name"
+            echo "deleted: $name"; deleted=$((deleted + 1))
+          done
+          echo "deleted $deleted, absent $absent, refused $refused"
