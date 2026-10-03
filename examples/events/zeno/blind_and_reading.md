@@ -94,16 +94,27 @@ that the pi pulse stands where T9 has it (48 x 392 / (2 x 6000) = 1.568 against 
 worlds and their mode files rebuilt by `build_world.py --modes`, the blind's column untouched. Re-run
 by `tools/meeting_trials.py` over the 120 seeds:
 
-| n | window | trials ending in e | P(e at T_pi) | blind | the shipped act |
-| --- | --- | --- | --- | --- | --- |
-| 4 | 12 | 44 of 120 | 0.367 | 0.375 | 44 of 120 |
+| n | window | trials ending in e | P(e at T_pi) | blind | the shipped act | the form's own number |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 48 | 113 of 120 | 0.942 | 1.000 | 120 of 120 | 0.943 (the angle 1.330 per window) |
+| 2 | 24 | 67 of 120 | 0.558 | 0.500 | 61 of 120 | 0.497 (the angle 0.747 per window) |
+| 4 | 12 | 44 of 120 | 0.367 | 0.375 | 44 of 120 | 0.369 (the angle 0.387 per window) |
+| 8 | 6 | 32 of 120 | 0.267 | 0.235 | 28 of 120 | 0.233 (the angle 0.195 per window) |
+| 16 | 3 | 15 of 120 | 0.125 | 0.133 | 16 of 120 | 0.133 (the angle 0.098 per window) |
 
 PASS at n = 4 within one standard error of column A (0.045), the same count as the shipped act's 44
-of 120; the jumps 61 g to e and 17 e to g against 62 and 18. Named beside it, a GameBoard matter and
-no adjustment of the blind: the window's turn is now the plane's size over the window whatever the
-drive's phase at the window's start (the hands' A W / 2 at every arrival phase), so the angle per
-window no longer varies with that phase as the magnitude form's did; and the one turn per window
-passes through the engine's turn, 2 arctan of the numerator over 2 Gamma, so a window carrying a
-quarter turn in one application (n = 1, the numerator 9,408 against 12,000) turns by 1.33 and not
-1.57, a compression of the tangent half-angle at large turns, named here before the other probe
-counts are read.
+of 120, the jumps 61 g to e and 17 e to g against 62 and 18; PASS at n = 16 (0.125 against 0.133)
+and at n = 8 (0.267 against 0.235, 0.032 off, within one standard error of 0.039); n = 2 reads 0.558
+against 0.500, 0.058 off, within two standard errors (0.046) and not one; n = 1 reads 0.942 against
+1.000, 113 of 120, 7 trials ending in g where the blind and the shipped act had none: a MISS and a
+FINDING by name, named in this section before the four other probe counts were run and read as
+predicted. Named, a GameBoard matter and
+no adjustment of the blind: the window's turn is the plane's size over the window whatever the drive's
+phase at the window's start (the hands' A W / 2 at every arrival phase), so the angle per window no
+longer varies with that phase as the magnitude form's did; and the one turn per window passes through
+the engine's turn, 2 arctan of the numerator over 2 Gamma, so a window carrying a quarter turn in one
+application (n = 1, the numerator 9,408 against 12,000) turns by 1.33 and not 1.57, a compression of
+the tangent half-angle at large turns, 1.4 percent at n = 4 and 15 percent at n = 1; the form's own
+number per world under that angle and the null window's write stands in the last column (0.943 at
+n = 1 against the read 0.942), so the n = 1 miss is the engine's turn form and not the draw. The
+jumps: n = 1, 113 g to e; n = 2, 91 and 24; n = 8, 38 and 6; n = 16, 15 and 0.
