@@ -22,22 +22,24 @@ def shifted(a: Any, axis: int, sigma: int, periodic: bool, fill: Any) -> Any:
     if periodic:
         return a.take([(index + sigma) % extent for index in range(extent)], axis=axis)
     out = a.copy()
-    out[...] = fill
     lower = [slice(None)] * 3
     upper = [slice(None)] * 3
+    face = [slice(None)] * 3
     if sigma > 0:
-        lower[axis], upper[axis] = slice(None, -1), slice(1, None)
+        lower[axis], upper[axis], face[axis] = slice(None, -1), slice(1, None), slice(-1, None)
     else:
-        lower[axis], upper[axis] = slice(1, None), slice(None, -1)
+        lower[axis], upper[axis], face[axis] = slice(1, None), slice(None, -1), slice(None, 1)
     out[tuple(lower)] = a[tuple(upper)]
+    out[tuple(face)] = fill  # the one layer beyond the face, the rest the shifted levels
     return out
 
 
 def arrival(a: Any, axis: int, sigma: int, wrap: Wrap, fill: Any = 0) -> Any:
-    """The level arriving through the Port toward `sigma` on `axis`, out[i] = a[i + sigma] (`shifted`), and `fill` at every Node beyond the board and through every Port whose far Node is beyond it (the inner face's rule, the same 0 as beyond an open face); the dtype the array's."""
+    """The level arriving through the Port toward `sigma` on `axis`, out[i] = a[i + sigma] (`shifted`), and `fill` at every Node beyond the board and through every Port whose far Node is beyond it (the inner face's rule, the same 0 as beyond an open face); the dtype the array's; the array copied once, where the folded axis returned it as it is."""
     out = shifted(a, axis, sigma, wrap[axis], fill)
     if wrap.beyond is None:
         return out
-    out = out.copy()
+    if out is a:
+        out = out.copy()
     out[wrap.beyond | shifted(wrap.beyond, axis, sigma, wrap[axis], False)] = fill
     return out
