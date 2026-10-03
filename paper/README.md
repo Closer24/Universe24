@@ -9,7 +9,7 @@ experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
 a NodeReader reports). Its title is "Universe24: an integer cellular automaton read through clicks,
-and the clicks of nature it approaches", the method, the
+set beside the clicks of nature", the method, the
 Universe24 it computes and the comparison, by the owner's word (2026-10-03, the
 title chosen in the writer's session; "cellular automaton" the literature's name
 for a lattice of integers stepped by one local rule); the meeting of the past with the future stands in the introduction as the
