@@ -93,7 +93,7 @@ their statuses.
   (`examples/events/two_slits/two_slits.json` with its mode file, the universe
   file it names and the blind `expectation.json` beside it) and steps Rule3's
   line for light at the vacuum's paces in floating point, with no integer
-  division and no remainder, on the same declared board, wall, gaps, emitter and
+  division and no remainder, on the same declared board, wall, gaps, laid message and
   screen regions, reading what the engine's click lines report, the net current
   through each region's front boundary Ports over the expectation's window over
   the count wall, so that the integer run is checked against it to the rounding.
@@ -178,7 +178,7 @@ the journal.
   measurement and Bell, with `gr-qc` (the weak-field forms) and `nlin.CG`
   (a reversible cellular automaton) as cross-lists; the moderators may move
   a foundational lattice model to `physics.gen-ph`, which is their call.
-- The field: foundations of physics, the journal's own scope; the paper is
+- The discipline: foundations of physics, the journal's own scope; the paper is
   not a general-relativity paper (its gravity stands against the tests at
   the rule's own matter pair) and not a particle-physics paper, and should
   not be sent to a journal of either.
