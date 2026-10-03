@@ -38,7 +38,7 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     guard((800, 850), GAMMA, 16, hill(74), plain, "matter")
     axis, hollow, deep = plain[0].copy(), flat.copy(), flat.copy()
     axis[2, 0, 1], hollow[0, 1, 0] = 264, -1  # 264: the tension -153, a hill
-    deep[1, 1, 1] = paces.frozen_content(GAMMA)  # the Link's zero, 49,545 at Gamma 10,000
+    deep[1, 1, 1], zero = paces.frozen_content(4), paces.frozen_content(4)  # the Link's zero at Gamma 4
     edge, light, hill_pair = r"squared is 103042801 at the Node \(1, 1, 1\) at load", "light", (800, 850)
     port, closed = (*plain[:4], axis, plain[5]), (plain[0], 0 * plain[0], *plain[2:])
     for match, pair, content, factors, name in (
@@ -46,12 +46,13 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
         (rf"the Node\) {edge}", hill_pair, hill(75), plain, "matter"),
         (r"the Port 4\) squared is 26400000000 in the unit G\^2 = 256", hill_pair, flat, port, "matter"),
         (r"squared is 100020001 at the Node \(0, 1, 0\) at load, above", (1, 1), hollow, plain, light),
-        (r"is 49545 at the Node \(1, 1, 1\) at load, at or beyond 49545", (1, 1), deep, plain, light),
         (r"factor of 'light' \(the Port 1\) is 0 at the Node \(0, 0, 0\)", (1, 1), flat, closed, light),
     ):
         refused(match, guard, pair, GAMMA, 16, content, factors, name)
+    at_zero = rf"is {zero} at the Node \(1, 1, 1\) at load, at or beyond {zero}"  # the Link's zero
+    refused(at_zero, guard, (1, 1), 4, 16, deep, plain, light)
     deep[1, 1, 1] -= 1
-    guard((1, 1), GAMMA, 16, deep, plain, "light")
+    guard((1, 1), 4, 16, deep, plain, "light")  # one below the Link's zero passes
     assert (stability_bound((-1, 2), 4), edge_squared((-1, 2), 4)) == ((3, 64), 21)  # [-1, 2] at Gamma 4
     witness = r"the clock\) squared is 25 at the Node \(0, 0, 0\) at load, above the stability edge's square 21"
     refused(witness, guard, (-1, 2), 4, 1, flat - 1, (1,) * 6, "quarks")  # the content -1, a hill
@@ -71,14 +72,14 @@ OPEN_CHAIN, OPEN_CUBE = Wrap(False, True, True), Wrap(False, False, False)
 
 
 def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
-    """On a chain and a box, at [1, 1], at the binding holder's pair [2400, 2401] (a periodic box too, the screening its sink) and at short-range pairs, with sources of one sign and of both (a box with one open face, its sink): one more act of the line returns the fine levels (the first repeat is a fixed point), the line's residual at the row's own composed paces, (6 (den - num) p_0^2 + 6 num p_i^2) b - num p_i^2 S_6(b) - 3 den Gamma^2 sigma with sigma scaled per proper volume and per proper interval, is within one act's floor (0 to the divisor), and the levels are the fine levels over the unit to the nearest integer, of the sources' sign at the sources (a negative source beside a positive one at 0 at most) and, with one sign, never below 0. The binding holder's pair of the tests' universe at its level weight on a closed box of 21^3 with one source of 100 quanta per interval at the centre (the fine unit 485; at 1,000 the unit 48 leaves the floored iteration two levels off the exact line): the level at the six neighbours is one number (an isotropic rest, the vector test of the two rows), the level falls along each axis all the way to the face (the screened well of the six Ports, whose reach is the pair's, ALGEBRA.md #the-well), and at every Node, the far ones among them, the level is within one unit of the self-consistent line at the row's own composed paces with the source scaled as the write scales it, solved sparse. A board periodic on its every axis at [1, 1] gives the sources no sink; a level weight below 1 is refused. The self-consistent line at the row's own paces, solved sparse at those paces, returns the levels. A one-Node source of 24,576 quanta on an open 11-cube at Gamma 6,000 under the binding pair: the levels re-read from their own rounding swing between two states 10,071 apart at the Node, no fixed point and no rounding tie, refused by name."""
+    """On a chain and a box, at [1, 1], at the binding holder's pair [2400, 2401] and at short-range pairs (a periodic box too, at [24, 25], the screening its sink: the sink's rule is any screened pair's, and the long range converges in 170,000 passes), with sources of one sign and of both (a box with one open face, its sink): one more act of the line returns the fine levels (the first repeat is a fixed point), the line's residual at the row's own composed paces, (6 (den - num) p_0^2 + 6 num p_i^2) b - num p_i^2 S_6(b) - 3 den Gamma^2 sigma with sigma scaled per proper volume and per proper interval, is within one act's floor (0 to the divisor), and the levels are the fine levels over the unit to the nearest integer, of the sources' sign at the sources (a negative source beside a positive one at 0 at most) and, with one sign, never below 0. A point source of 3,000 quanta at the centre of the open 11-cube and of 30 at the centre of the open chain of 49 Nodes (odd, so the centre is centred), the massless row and the binding holder's pair of the tests' universe: the level at the six neighbours is one number (an isotropic rest, the vector test of the two rows), the level falls along each axis all the way to the face (the screened well of the six Ports, whose reach is the pair's, ALGEBRA.md #the-well), at every Node, the far ones among them, the level is within one unit of the self-consistent line at the row's own composed paces with the source scaled as the write scales it, solved sparse, and the exact line's ratio binding over massless at 0 to 4 Links, the pair's reach, is pinned; the ratio at 12 Links is the 25-cube's reading in ENGINE.md, section 8, and no assertion (a test runs under 30 seconds, the owner's word of 2026-10-03). A board periodic on its every axis at [1, 1] gives the sources no sink; a level weight below 1 is refused. The self-consistent line at the row's own paces, solved sparse at those paces, returns the levels. A one-Node source of 24,576 quanta on an open 11-cube at Gamma 6,000 under the binding pair: the levels re-read from their own rounding swing between two states 10,071 apart at the Node, no fixed point and no rounding tie, refused by name."""
     chain, box = np.zeros((40, 1, 1), dtype=np.int64), np.zeros((6, 5, 4), dtype=np.int64)
     chain[10:13, 0, 0], chain[25, 0, 0], box[1:3, 1:3, 1] = 30, 12, 9
     mixed = box.copy()
     mixed[4, 2:4, 2], mixed[1, 1, 1] = -13, -9  # sources of both signs, the tension and the senses
     cases = [(chain, OPEN_CHAIN, pair, 7) for pair in ((1, 1), (2400, 2401), (1, 4))]
     cases += [(box, OPEN_CHAIN, (1, 1), 7)] + [(mixed, OPEN_CHAIN, pair, 7) for pair in ((1, 1), (1, 2))]
-    cases += [(box, Wrap(True, True, True), (2400, 2401), 1), (box, Wrap(True, True, True), (3, 4), 7)]
+    cases += [(box, Wrap(True, True, True), (24, 25), 1), (box, Wrap(True, True, True), (3, 4), 7)]
     for counts, faces, (num, den), level_weight in cases:
         found = rest(counts, (num, den), faces, level_weight, MAX_WORK_INT, 3 * den, GAMMA, **OWN)
         fine, own = found.fine.astype(object), found.content.astype(object)
@@ -95,7 +96,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     rows = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
     row = next(entry for entry in rows if entry["name"] == "binding")
     (num, den), weight, exact = row["pair"], row["held"]["level_weight"], {}
-    for shape, wrap, q in (((25, 25, 25), OPEN_CUBE, 3000), ((128, 1, 1), OPEN_CHAIN, 30)):  # the source
+    for shape, wrap, q in (((11, 11, 11), OPEN_CUBE, 3000), ((49, 1, 1), OPEN_CHAIN, 30)):  # the source
         counts, c = np.zeros(shape, dtype=np.int64), tuple(n // 2 for n in shape)
         counts[c] = q  # q quanta at the centre at the divisor 1 (a chain's rest a tent, so a hundredth)
         for pair in ((6000, 6000), (num, den)):
@@ -112,8 +113,8 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
             at = {int(np.moveaxis(found.levels, a, 0)[(c[0] + s, *c[1:])]) for a, s in long}  # isotropy
             assert len(at) == 1 and 0 < at.pop() < found.levels[c]
             assert (np.diff(fall := found.levels[c[0] :, c[1], c[2]]) <= 0).all() and fall[-1] >= 0
-    ratio = (exact[25, (num, den)] / exact[25, (6000, 6000)])[12:, 12, 12][[0, 1, 2, 3, 4, 12]]
-    assert np.allclose(ratio, [0.9967, 0.9893, 0.9791, 0.9687, 0.9592, 0.9189], 0, 1e-4), ratio
+    ratio = (exact[11, (num, den)] / exact[11, (6000, 6000)])[5:10, 5, 5]  # 0 to 4 Links
+    assert np.allclose(ratio, [0.9982, 0.9949, 0.9907, 0.9869, 0.9841], 0, 1e-4), ratio
     deep = np.pad(np.full((1, 1, 1), 24_576), 5)  # one Node of an 11-cube: open, the re-read swings
     refused("needs a sink", rest, deep, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3, GAMMA, **OWN)
     refused("is from 1", rest, deep, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6, GAMMA, **OWN)
