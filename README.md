@@ -78,6 +78,10 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   one light quantum, each with its design, its blind written before any run and
   its `blind_and_reading.md`, read by `tools/meeting_trials.py` over the
   design's seeds.
+- the which-way world, `examples/events/which_way/`, the experiment of the heart:
+  the two slits with a declared region at one gap backed by a face, three worlds
+  from one design with the blind written before any lay, read beside it in its
+  `blind_and_reading.md` and asserted by `tests/test_the_draw.py`.
 
 The three documents: [the law](docs/ALGEBRA.md), one algebraic line per rule;
 [the engine](docs/ENGINE.md), the input files, the interval, the output, how to
