@@ -92,6 +92,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
         "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
     ),
+    "tests/test_the_meeting.py::test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row": (
+        60,
+        "the lay by the count with the sense (round F of the board, the Boss's brief at the owner's word of 2026-10-03, "
+        "everything now and in parallel): the conversion table's sense per record out and its refusals, the given "
+        "planes laid alike at the quarter turn on the committed neutron conversion world, the Wronskians and the shares "
+        "at the Node, the twelve lay lines and the crossing, the sign rows' first write",
+    ),
     "tests/test_the_bound_body.py::test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads": (
         104,
         "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
