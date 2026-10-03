@@ -246,7 +246,7 @@ def clock_of(path: Path) -> Fraction:
     return Fraction(int(clock[0]), int(clock[1]))
 
 
-def standing(path: Path, intervals: int | None, beat: int | None) -> dict[str, Any]:
+def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict[str, Any]:
     """One world's reads over the window (the world's ticks, or `intervals`; `beat` the beat's period in intervals for the Fourier line, None for none): the body's declared Nodes read, the lay's share and form kept, the board stepped interval by interval with the record's level before each step kept as z_(t - 1); the rotation's pair at every interval, the form's and the share's deviations at the quarters of the window and at every interval, the centroids at its ends, the 48 images after every interval, labelled GAMEBOARD."""
     board = GameBoard(load_world(path))
     if len(board.world.bodies) != 1:
