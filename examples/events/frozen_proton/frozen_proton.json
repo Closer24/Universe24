@@ -1,0 +1,1 @@
+{"shape": [9, 9, 9], "boundary": {"x": "open", "y": "open", "z": "open"}, "face_depth": 1, "ticks": 40, "universe": "examples/events/frozen_proton/proton.json", "engine": "examples/events/engine_start.json", "bodies": [{"family": "proton", "nodes": [{"node": [4, 4, 4], "count": 1}]}], "node_readers": [{"name": "around", "positions": [[5, 4, 4], [6, 4, 4]]}]}

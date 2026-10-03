@@ -64,9 +64,9 @@ def world_of(design: dict, n: int) -> dict:
         "ticks": design["intervals"],
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [record],
+        "bodies": [record],
         "messages": [message],
-        "detectors": [],
+        "node_readers": [],
     }
 
 
@@ -97,7 +97,7 @@ def main(argv: list[str] | None = None) -> None:
             "fence": "clicks",
         }
     expectation = {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": "The quantum Zeno world (S.59; the mathematician's 146 and 148, the advisor's second hand, the owner's word of 2026-10-02, 12:38, 'Yes, both of them'): one record of two parts declared an instrument at one Node, a drive whose accumulated turn over the run is a pi pulse in the labels, the record reading its own parts n times over the run; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],

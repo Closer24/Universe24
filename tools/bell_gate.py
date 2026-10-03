@@ -48,14 +48,14 @@ def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
 
 
 def reports(
-    lines: list[dict[str, object]], family: str, detector: str, window: tuple[int, int]
+    lines: list[dict[str, object]], family: str, node_reader: str, window: tuple[int, int]
 ) -> Levels:
     """The `parts` lines of one region and family within the window, per interval the parts' [now, before] sums (an interval with no line reported nothing but zeros)."""
     found: Levels = {}
     for line in lines:
         if line.get("event") != "parts" or line.get("family") != family:
             continue
-        if line.get("detector") == detector and window[0] <= int(str(line["tick"])) <= window[1]:
+        if line.get("node_reader") == node_reader and window[0] <= int(str(line["tick"])) <= window[1]:
             levels = line["levels"]
             assert isinstance(levels, list)
             found[int(str(line["tick"]))] = [[int(v) for v in part] for part in levels]
@@ -107,7 +107,7 @@ def parts_shares(sides: list[Levels], ports: list[Ports]) -> Joint:
 
 
 def side_sums(levels: Levels, ports: Ports) -> dict[str, Fraction]:
-    """A side's local shares per port, the square of its own sum over the parts accumulated over the window on both members: what one detector could read alone."""
+    """A side's local shares per port, the square of its own sum over the parts accumulated over the window on both members: what one node_reader could read alone."""
     parts = len(ports[PORTS[0]])
     found = {port: Fraction(0) for port in PORTS}
     for tick in ticks_of(levels):
@@ -224,20 +224,22 @@ def mismatch(sides: list[Levels], parts: int) -> dict[str, Any]:
 
 
 def realised(
-    lines: list[dict[str, object]], family: str, detectors: list[str], window: tuple[int, int]
+    lines: list[dict[str, object]], family: str, node_readers: list[str], window: tuple[int, int]
 ) -> list[str] | None:
     """The combination of ports the instrument realised in the run, one port per side from the output's `credit` lines of the family at the sides' regions within the window (the last of a window per side), the click; None where a side has none (a world declaring no instrument)."""
     found: dict[str, str] = {}
     for line in lines:
         if line.get("event") != "credit" or line.get("family") != family:
             continue
-        if line.get("detector") in detectors and window[0] <= int(str(line["tick"])) <= window[1]:
-            found[str(line["detector"])] = str(line["realised"])
-    return [found[name] for name in detectors] if all(name in found for name in detectors) else None
+        if line.get("node_reader") in node_readers and window[0] <= int(str(line["tick"])) <= window[1]:
+            found[str(line["node_reader"])] = str(line["realised"])
+    return (
+        [found[name] for name in node_readers] if all(name in found for name in node_readers) else None
+    )
 
 
 def inflow_of(
-    lines: list[dict[str, object]], family: str, detector: str, window: tuple[int, int]
+    lines: list[dict[str, object]], family: str, node_reader: str, window: tuple[int, int]
 ) -> int:
     """A region's `click` lines' inflows of one family summed over the window, in the current's units."""
     return sum(
@@ -245,7 +247,7 @@ def inflow_of(
         for line in lines
         if line.get("event") == "click"
         and line.get("family") == family
-        and line.get("detector") == detector
+        and line.get("node_reader") == node_reader
         and window[0] <= int(str(line["tick"])) <= window[1]
     )
 
@@ -256,11 +258,13 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
     family = next(f for f in loaded.families if f.name == expected["family"])
     window = (int(expected["window"][0]), int(expected["window"][1]))
     labels = list(expected["sides"])
-    rows = [next(d for d in loaded.detectors if d.name == expected["sides"][label]) for label in labels]
+    rows = [
+        next(d for d in loaded.node_readers if d.name == expected["sides"][label]) for label in labels
+    ]
     for row in rows:
         if len(row.pattern) != family.parts:
             raise ValueError(
-                f"detector {row.name!r} declares a pattern of {len(row.pattern)} parts, and the family "
+                f"node_reader {row.name!r} declares a pattern of {len(row.pattern)} parts, and the family "
                 f"{family.name!r} has {family.parts}"
             )
     ports = [ports_of(row.basis, row.pattern) for row in rows]
@@ -331,7 +335,7 @@ def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
         return pair(combination((fraction(world[field]) for world in ordered), signs))
 
     return {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "rule": expected["rule"],
         "worlds": {name: worlds[name] for name in sorted(worlds)},
         "correlation": {

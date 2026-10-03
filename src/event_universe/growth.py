@@ -10,7 +10,7 @@ from event_universe import node
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
-from event_universe.reports import Detector, end
+from event_universe.reports import NodeReader, end
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
@@ -94,15 +94,17 @@ def resized(
     ]
 
 
-def resized_detector(detector: Detector, axis: int, side: int, layers: int, direction: int) -> Detector:
-    """A detector's declared Nodes over the grown GameBoard (none grown: nothing is declared there), a body's derived each interval."""
-    if detector.nodes is None:
-        return detector
-    return Detector(
-        detector.name,
-        sized(detector.nodes, axis, side, layers, direction, False),
-        detector.body,
-        detector.declared,
+def resized_node_reader(
+    node_reader: NodeReader, axis: int, side: int, layers: int, direction: int
+) -> NodeReader:
+    """A node_reader's declared Nodes over the grown GameBoard (none grown: nothing is declared there), a body's derived each interval."""
+    if node_reader.nodes is None:
+        return node_reader
+    return NodeReader(
+        node_reader.name,
+        sized(node_reader.nodes, axis, side, layers, direction, False),
+        node_reader.body,
+        node_reader.declared,
     )
 
 
@@ -121,7 +123,7 @@ def grow(board: GameBoard) -> bool:
 
 
 def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) -> None:
-    """The GameBoard grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the detectors' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
+    """The GameBoard grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the node_readers' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         kind = board.world.kind
         resized(
@@ -136,7 +138,9 @@ def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) 
             kind,
             board.half_wall(index),
         )
-    board.detectors = [resized_detector(d, axis, side, layers, direction) for d in board.detectors]
+    board.node_readers = [
+        resized_node_reader(d, axis, side, layers, direction) for d in board.node_readers
+    ]
     if board.wrap.beyond is not None:
         beyond = sized(board.wrap.beyond, axis, side, layers, direction, False)
         board.wrap = board.wrap._replace(beyond=beyond)

@@ -1,4 +1,4 @@
-"""The frozen proton's builder, the proton's row of three planes at the pair [0, 6000] (the two hands of 2026-10-03, the advisor's (b), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md #a-familys-declaration, Every family has a dimension): from `design.json` beside it this script writes the world `frozen_proton.json`, one body of the proton family of count 1 at the centre of an open cube with a region detector of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it lays the body by the generator's one-Node declaration (tools/pixel_mode.py --pixel 0 --sense -1, `pixel_record`, every plane alike). Every number is the design's and the engine reads none of it.
+"""The frozen proton's builder, the proton's row of three planes at the pair [0, 6000] (the two hands of 2026-10-03, the advisor's (b), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md #a-familys-declaration, Every family has a dimension): from `design.json` beside it this script writes the world `frozen_proton.json`, one body of the proton family of count 1 at the centre of an open cube with a region node_reader of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it lays the body by the generator's one-Node declaration (tools/pixel_mode.py --pixel 0 --sense -1, `pixel_record`, every plane alike). Every number is the design's and the engine reads none of it.
 
 PYTHONPATH=src python examples/events/frozen_proton/build_world.py --modes [--folder <folder>]
 """
@@ -26,10 +26,10 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [
+        "bodies": [
             {"family": design["family"], "nodes": [{"node": centre, "count": int(design["count"])}]}
         ],
-        "detectors": [
+        "node_readers": [
             {
                 "name": "around",
                 "positions": [[int(v) for v in node] for node in design["around"]],

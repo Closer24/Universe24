@@ -227,14 +227,14 @@ def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
 def field_series(
     lines: list[dict[str, object]], window: tuple[int, int]
 ) -> dict[tuple[str, str], dict[int, int]]:
-    """The `field` lines of a run's output within the window, per (detector, family): the reading at each interval it was written (it is written where it differs from the last interval's)."""
+    """The `field` lines of a run's output within the window, per (node_reader, family): the reading at each interval it was written (it is written where it differs from the last interval's)."""
     found: dict[tuple[str, str], dict[int, int]] = {}
     for line in lines:
-        if line.get("event") != "field" or line.get("reading") is None:
+        if line.get("event") != "density" or line.get("reading") is None:
             continue
         tick = int(str(line["tick"]))
         if window[0] <= tick <= window[1]:
-            key = (str(line["detector"]), str(line["family"]))
+            key = (str(line["node_reader"]), str(line["family"]))
             found.setdefault(key, {})[tick] = int(str(line["reading"]))
     return found
 
@@ -260,17 +260,17 @@ def swing(series: dict[int, int], window: tuple[int, int]) -> dict[str, object]:
     }
 
 
-def fields_read(output: Path, expected: dict[str, Any] | None) -> dict[str, Any]:
+def densities_read(output: Path, expected: dict[str, Any] | None) -> dict[str, Any]:
     """A run's `field` lines read over the window the expectation names (the whole run without one), for the regions and family it names under `field` (every region and family without them)."""
     document = json.loads(output.read_text(encoding="utf-8"))
     lines = [line for line in document.get("lines", []) if isinstance(line, dict)]
-    named = (expected or {}).get("field", {})
+    named = (expected or {}).get("density", {})
     window = tuple(int(v) for v in (expected or {}).get("window", [0, int(document.get("ticks", 0))]))
     series = field_series(lines, (window[0], window[1]))
     wanted = [
         key
         for key in series
-        if (not named.get("detectors") or key[0] in named["detectors"])
+        if (not named.get("node_readers") or key[0] in named["node_readers"])
         and (not named.get("family") or key[1] == named["family"])
     ]
     return {
@@ -280,11 +280,11 @@ def fields_read(output: Path, expected: dict[str, Any] | None) -> dict[str, Any]
         "window": list(window),
         "regions": [
             {
-                "detector": detector,
+                "node_reader": node_reader,
                 "family": family,
-                **swing(series[(detector, family)], (window[0], window[1])),
+                **swing(series[(node_reader, family)], (window[0], window[1])),
             }
-            for detector, family in sorted(wanted)
+            for node_reader, family in sorted(wanted)
         ],
     }
 
@@ -318,7 +318,7 @@ def main(argv: list[str] | None = None) -> None:
     if args.worlds:
         found["worlds"] = {path.stem: rest(path, args.intervals, args.reach) for path in args.worlds}
     if args.output:
-        found["fields"] = {path.stem: fields_read(path, expected) for path in args.output}
+        found["densities"] = {path.stem: densities_read(path, expected) for path in args.output}
     if expected is not None:
         found["blind"] = {key: expected.get(key) for key in ("reading", "blind", "fence", "status")}
     print(json.dumps(found, indent=1))

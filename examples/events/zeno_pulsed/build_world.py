@@ -67,9 +67,9 @@ def world_of(design: dict, n: int) -> dict:
         "ticks": design["intervals"],
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [record],
+        "bodies": [record],
         "messages": messages,
-        "detectors": [],
+        "node_readers": [],
     }
 
 
@@ -116,7 +116,7 @@ def main(argv: list[str] | None = None) -> None:
             pixel_mode.main(["--input", str(path)])
         blind[f"zeno_pulsed_{n}"] = {**blind_of(n, len(design["seeds"])), "ticks": ticks_of(design, n)}
     expectation = {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": "The pulsed quantum Zeno gate with the probe laid (S.59; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): the shipped Zeno body at the Node clock 96,000 under the continuous drive, the pi pulse 768 ticks, a probe laid whole by the count at its Node n times over the pi time, the body's window bounded by the probe's lays and its write at every close; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],

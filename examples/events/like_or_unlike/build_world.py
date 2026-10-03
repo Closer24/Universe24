@@ -20,8 +20,8 @@ ROOT = HERE.parents[2]
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world: the chain, the bodies of the plane family declared one Node each at the design's Nodes or the world's own (a single body's), the generator laying them rotating in the senses the world names, no declared detector, the universe the world names."""
-    measured = [
+    """One world: the chain, the bodies of the plane family declared one Node each at the design's Nodes or the world's own (a single body's), the generator laying them rotating in the senses the world names, no declared node_reader, the universe the world names."""
+    bodies = [
         {
             "family": design["families"]["plane"],
             "nodes": [{"node": [int(x), 0, 0], "count": int(design["quanta"])}],
@@ -35,8 +35,8 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universes"][design["worlds"][name]["universe"]],
         "engine": design["engine"],
-        "measured": measured,
-        "detectors": [],
+        "bodies": bodies,
+        "node_readers": [],
     }
 
 

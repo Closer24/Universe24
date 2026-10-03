@@ -11,8 +11,8 @@
  "worlds": {
   "pair": "pair"
  },
- "field": {
-  "detectors": [
+ "density": {
+  "node_readers": [
    "first",
    "second"
   ],

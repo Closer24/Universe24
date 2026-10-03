@@ -350,6 +350,6 @@ that reading ran on (the branch before its squash), by name; every number below 
 
 Every number of every reading in this file is a GameBoard reading (`tools/body_standing.py`: the
 centroids of the share, the deviations of the share and of the form over the body's Nodes, the
-rotation from the levels, the 48 images of every line, the books). The world declares no detector,
-so no number is a detector's line and no verdict rests on one. Nothing here is stamped by a
-detector's clock; the intervals are the board's.
+rotation from the levels, the 48 images of every line, the books). The world declares no NodeReader,
+so no number is a NodeReader's line and no verdict rests on one. Nothing here is stamped by a
+NodeReader's clock; the intervals are the board's.

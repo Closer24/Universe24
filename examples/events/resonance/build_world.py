@@ -47,7 +47,7 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world of the design: the chain, no message (the light born by the giving alone), the giver and the taker at the world's resonance, no region detector."""
+    """One world of the design: the chain, no message (the light born by the giving alone), the giver and the taker at the world's resonance, no region node_reader."""
     taker = record(design, "taker", list(design["worlds"][name]["resonance"]))
     return {
         "shape": list(design["shape"]),
@@ -55,9 +55,9 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [record(design, "giver", list(design["giver"]["resonance"])), taker],
+        "bodies": [record(design, "giver", list(design["giver"]["resonance"])), taker],
         "messages": [],
-        "detectors": [],
+        "node_readers": [],
     }
 
 
@@ -65,7 +65,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind, from the design alone: the source's total and amplitudes, the far Node's cosine with its gate, the light's count at the span's end, the resonant taker's share and the detuned one's ratio, and the dark grain's chances (`dark_grain`); written before any lay and re-derived before any run under the dark grain."""
     num, den = design["giver"]["resonance"]
     return {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": design["comment"],
         "family": design["light"],
         "giving": {
@@ -91,7 +91,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         },
         "resonant": {
             "share": 1.0,
-            "reading": "the fraction of the seeds with a taking at the taker (the record's click lines, DETECTOR), gate sqrt(N p (1 - p)) over the seeds",
+            "reading": "the fraction of the seeds with a taking at the taker (the record's click lines, NODEREADER), gate sqrt(N p (1 - p)) over the seeds",
             "status": "the mathematician's 220: the resonant record's share 1 at delta = 0",
         },
         "detuned": {

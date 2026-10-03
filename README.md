@@ -3,7 +3,7 @@
 Universe24 is a three-dimensional event simulator, the implementation of Reality
 Theory: a GameBoard of Nodes joined by Links, bounded integer arithmetic and one
 local rule, Rule3. Every family of the universe file is a record stepped by Rule3
-from its own levels and its six neighbours'; only a detector's click is a
+from its own levels and its six neighbours'; only a NodeReader's click is a
 measurement, and every other number a run writes is a GameBoard reading labelled so.
 
 The repository holds the engine (`src/event_universe/`), the tools that lay, run,

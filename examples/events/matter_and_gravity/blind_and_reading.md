@@ -6,8 +6,8 @@ on the engine and seen to work**). The blind below is the advisor's, GitHub issu
 5928483084 (2026-10-01, 12:19), its formulas and numbers restated here before any run of this
 round and never edited after; `expectation.json` beside it carries the same blind with the
 design's restatements under the law's lines as they stand. The reading is appended after the
-run, every number a GameBoard reading labelled so (only a detector's click is a measurement,
-and this world declares no detector); a reading that misses the blind is a finding, written as
+run, every number a GameBoard reading labelled so (only a NodeReader's click is a measurement,
+and this world declares no NodeReader); a reading that misses the blind is a finding, written as
 such and never adjusted.
 
 ## The blind (the advisor, #1563 comment 5928483084)
@@ -45,7 +45,7 @@ same axes, and the books.
 ## The reading (main d924798b)
 
 Every number below is a GameBoard reading (`tools/body_rest.py`, the books, the `click` lines of
-the open faces' layer); the world declares no detector. The lay: `well.json` laid anew by the
+the open faces' layer); the world declares no NodeReader. The lay: `well.json` laid anew by the
 builder on this engine (the generator 548 s on one core, two folders laying beside it): the
 body of 10,000 quanta stands as one bound record over 1,189 declared Nodes carrying 10,113
 quanta at the paces of the read, 111 at the centre Node, the rms radius 3.61 Links, the mode
@@ -150,7 +150,7 @@ GameBoard's own acts as `GameBoard.step` composes them for one row (`currents`, 
 
 Every number below is a GameBoard reading (`holder_alone.py` on `well.json`, 200 intervals, the
 binding holder stepped alone and, as the control, gravity's row stepped alone, about 70 s each on
-one core; the start's own `rest` called on one source; the world declares no detector).
+one core; the start's own `rest` called on one source; the world declares no NodeReader).
 
 3. **The start's rest, by name: with its own gap.** `features/start/__init__.py`, `rest`, takes
    the row's pair and builds Rule3's reads and wall from it, the gap (den - num) on the clock's
@@ -242,7 +242,7 @@ of the count times p_x p_y p_z over the one wall, the product exact beyond the w
 and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
 line within one fine unit at every Node by the scaled residual in integers (`features/start`,
 `refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
-number below a GameBoard reading labelled so unless a detector clicked; a miss against the
+number below a GameBoard reading labelled so unless a NodeReader clicked; a miss against the
 blind is a finding by name, never adjusted; a world refused by name is recorded verbatim.
 
 - **The lay**: `well.json`, the same body as world (i)'s pixel on the rows with gravity at the
@@ -265,6 +265,6 @@ blind is a finding by name, never adjusted; a world refused by name is recorded 
 
 Every number of every reading in this file is a GameBoard reading (`tools/body_rest.py`: the held
 rows along the axes, the three levels at the centre, the well, the books; `holder_alone.py`: one row
-stepped alone). The world declares no detector but the open faces' layer, whose `click` lines are read
+stepped alone). The world declares no NodeReader but the open faces' layer, whose `click` lines are read
 only as the total of matter that left the board (0.364 quanta); no verdict rests on them. The
 intervals are the board's.

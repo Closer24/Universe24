@@ -64,9 +64,9 @@ def world_of(design: dict, amplitude: int) -> dict:
         "ticks": design["intervals"],
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": records,
+        "bodies": records,
         "messages": messages,
-        "detectors": [],
+        "node_readers": [],
         "receding": {
             "x": {"sides": ["low", "high"], "largest": design["largest"], "layers": design["layers"]}
         },
@@ -89,7 +89,7 @@ def main(argv: list[str] | None = None) -> None:
 
             pixel_mode.main(["--input", str(path)])
     expectation = {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": "One photon on two bodies, the anticoincidence (the paper's S.57; ALGEBRA.md (h2); the mathematician's 144 and 145, two hands by the law as it stands): one light record of one whole quantum laid between two records declared instruments at one Node each, equidistant, each reading the light into its e part over one window, the run; the credit's count per record, one quantum one click; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],

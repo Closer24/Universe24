@@ -12,7 +12,7 @@ Node 0 over the intervals 48 to 95 (`src/event_universe/giving.py`); a taker at 
 same resonance (`resonant.json`) or detuned at [1, 3] (`detuned.json`), its window 96, one draw at
 the run's end. The blind `expectation.json` was written by `build_world.py` from `design.json` before
 any lay and never touched after; the readings are `tools/meeting_trials.py`'s over the design's 100
-seeds (the takings, clicks labelled DETECTOR) and one run's GameBoard readings (the far Node's levels,
+seeds (the takings, clicks labelled NODEREADER) and one run's GameBoard readings (the far Node's levels,
 the light's share), labelled so; a miss is a finding by name and never an adjustment of the blind.
 
 ## The blind (expectation.json)
@@ -36,7 +36,7 @@ the light's share), labelled so; a miss is a finding by name and never an adjust
 ## The reading (branch own-quantum, 2026-10-03, about 05:30 UTC)
 
 1. The giving: in every one of the 100 seeds of both worlds the giver gives at the interval 48
-   (`measured 0 g by pulse`, 100 of 100); 48 `lay` lines at the intervals 48 to 95 on `pulse`'s
+   (`body 0 g by pulse`, 100 of 100); 48 `lay` lines at the intervals 48 to 95 on `pulse`'s
    line 0 at the Node [0, 0, 0], the level now alone changed, the largest increment 22, the first
    six increments 21, 14, -2, -17, -20, -11 (the phasor at Omega = 0.8411). PASS.
 2. The far Node's cosine at the Node 8: over the design's own window 62 to 70 the read is 0.8194
@@ -51,11 +51,11 @@ the light's share), labelled so; a miss is a finding by name and never an adjust
    own, or nothing would have reached the Node 8).
 3. The light's count at the span's end: the share over the board at the interval 96 is 0.752 W_c,
    sin Omega = 0.745 of a quantum at the band's top, 1 by the count's line in the top's unit
-   (0.752 + 0.5 rounded down) and 1 in the detector's own unit at [2, 3] (W_d = 0.7454 W_c, the
+   (0.752 + 0.5 rounded down) and 1 in the NodeReader's own unit at [2, 3] (W_d = 0.7454 W_c, the
    share 1.009 of it). PASS. A check made before the lay entered and named: adding the phasor's
    previous value to the level before as well, beside the level now, doubled the action (the share
    read 1.63); the lay adds the source's level to the level now alone.
-4. The resonant taker: 39 takings in 100 seeds (`measured 1 e by pulse` 39, the record ending in e
+4. The resonant taker: 39 takings in 100 seeds (`body 1 e by pulse` 39, the record ending in e
    39 of 100). Against the blind's share 1: a MISS, a FINDING by name of the design's coupling and of
    the blind's presumption: the two-mode line's share at the window's end is sin^2 of the
    accumulated turn, the weight 6 times the wave's levels at the Node 12 over its passage, about
@@ -179,7 +179,7 @@ worlds (the giver's generator at the same state per seed in both, so the givings
 4. The light's count at the span's end: read in the 8 seeds whose whole span lies in the run and whose
    record no taking emptied, 1 by the count's line in every one. PASS, 8 of 8.
 5. The takers: 50 takings in 100 seeds in the resonant world and 50 in the detuned world, the same
-   seeds (`measured 1 e by pulse`), against the first reading's 39 and 39. The two-mode act still reads
+   seeds (`body 1 e by pulse`), against the first reading's 39 and 39. The two-mode act still reads
    no resonance, the finding by name of the first reading. The blind above said the fractions would
    fall below 39 where the light's train reaches the Node 12 late; they rose to 50: a MISS of the
    blind's direction, a FINDING by name of the blind and not of the lay: given a giving in the run, the
@@ -188,7 +188,7 @@ worlds (the giver's generator at the same state per seed in both, so the givings
    the taker's labels before its window closes at 96; the share rose with the turn. The blind's
    direction was reasoned from the late givings alone and stands corrected by name, not adjusted.
 6. A reading beside the blind, by name: in 3 of 100 seeds of each world the giver, standing in g after
-   its giving, takes its own light back at its window's close (`measured 0 e by pulse` 3), the light
+   its giving, takes its own light back at its window's close (`body 0 e by pulse` 3), the light
    on the free row read at the giver's Node as an arriving record; the one-in-flight limit and a
    record's reading of the light it gave are not built, as ENGINE.md names them.
 7. The telegraph (`examples/events/shelved_ion/`), the anticoincidence and the Zeno worlds, the two
@@ -206,7 +206,7 @@ stands and the window's draw at 48 stands as it is.
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Rows 1, 4 and 5 are the detector's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
+Rows 1, 4 and 5 are the NodeReader's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
 test's `jump` lines). The 48 `lay` lines of row 1 are labelled a GameBoard diagnostic by the engine.
 Rows 2 and 3 are GameBoard readings and their verdicts rest on them: the far Node's cosine is read
 from the light's levels at the Node [8, 0, 0] per interval (`tests/test_the_draw.py`, the levels
@@ -233,7 +233,7 @@ the tree holding main's dark grain (the section above), the blinds untouched:
    within the lifetime and 83 within the run, the cosine 0.6682 on every plateau read (66 of 66), the
    count at the span's end 1 in every seed read (23 of 23 in the resonant world and 58 of 58 in the
    detuned one, more seeds read than the dark grain's 8 since fewer takings empty the record).
-4. The resonant taker: 37 takings in 100 seeds (`measured 1 e by pulse` 37; the dark grain's 50 on the
+4. The resonant taker: 37 takings in 100 seeds (`body 1 e by pulse` 37; the dark grain's 50 on the
    magnitude form, the first build's 39). Against the first blind's share 1: a MISS as before and the
    same FINDING by name of the design's coupling: the window's turn is k times the plane's size,
    A W_eff / 2 at resonance with W_eff the intervals over which the train stands at the Node 12 inside
@@ -250,7 +250,7 @@ the tree holding main's dark grain (the section above), the blinds untouched:
    seed with a late giving can take detuned; the 100 seeds resolve one in a hundred and not one in a
    thousand. The act reads the resonance: 1 against 37 where the magnitude form read 50 against 50.
 6. Beside the blind, by name: the giver takes its own light back in 1 of 100 seeds of each world
-   (`measured 0 e by pulse` 1, the dark grain's 3 on the magnitude form), the one-in-flight limit and a
+   (`body 0 e by pulse` 1, the dark grain's 3 on the magnitude form), the one-in-flight limit and a
    record's reading of the light it gave not built, as ENGINE.md names them. The first build of this
    act (one shear of the window's sum, before the dark grain) read 22 and 0 of 100; its numbers are
    replaced by this section's, read on the tree that ships.
@@ -264,7 +264,7 @@ the blind by the counter-rotating residue's order) is re-read at 480 seeds, the 
 before the run and never touched after; examples only, no engine change. The run: `read_world.py
 --seeds 480` over both worlds of the design on the tree holding main at 7033a6aa, the seeds 1 to 480 with
 every record's generator at its own state from the seed as before (the design's 100 are the first 100 of
-them); a taking is the detector's click, `measured 1 e by pulse` on the jump lines labelled DETECTOR; a
+them); a taking is the NodeReader's click, `body 1 e by pulse` on the click lines labelled NODEREADER; a
 GameBoard reading is a diagnostic and labelled so.
 
 1. The detuned taker at [1, 3]: at most 2 takings in 480 seeds. The hands' number: the window's sum
@@ -292,15 +292,15 @@ sha after the squash, which re-reads these numbers and replaces this section's v
 480, on the branch's tree (main at 7033a6aa with the reader's one change): 273 seconds for the two worlds
 on one core, the design's own 100 seeds run beside as the check of the tree (58 seconds). The reader's
 `--seeds N` is the one change to the folder's script, reading the seeds 1 to N in place of the design's
-list. The takings are the clicks, the jump lines labelled DETECTOR; the giver's cosine and count are
+list. The takings are the clicks, the click lines labelled NODEREADER; the giver's cosine and count are
 GameBoard readings and labelled so.
 
-1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`measured 1 e by pulse` 1), the share 0.0021
+1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`body 1 e by pulse` 1), the share 0.0021
    with the standard error 0.0021 (1.0 taking), against the blind's at most 2. PASS. The one taking is
    the first reading's own: the design's 100 seeds, run beside, read 1 of 100 as before, so the 380 fresh
    seeds read 0 of 380. The ratio detuned over resonant is 1 to 155, 0.0065, against the first reading's
    1 to 37.
-2. The resonant taker at [2, 3]: 155 takings in 480 seeds (`measured 1 e by pulse` 155), the share 0.323
+2. The resonant taker at [2, 3]: 155 takings in 480 seeds (`body 1 e by pulse` 155), the share 0.323
    with the standard error 0.021 (10.2 takings), against the blind's 177.6 and its band 156 to 199: one
    taking below the band's floor, 2.1 of the blind's standard errors (10.6) below 177.6. A MISS of the
    blind's band by one count and a FINDING by name of the blind's form and not of the act: the blind took
@@ -319,7 +319,7 @@ GameBoard readings and labelled so.
    mean 33.3; 301 seeds holding the whole span against 309.1 +/- 10.5 (0.8 below); the cosine on the
    plateau 0.6682 in 316 of 316 seeds read, within the gate 2 / A_far = 0.051; the count at the span's end
    1 in every seed read, 149 of 149 in the resonant world and 299 of 299 in the detuned one; the giver
-   takes its own light back in 4 of 480 seeds of each world (`measured 0 e by pulse` 4; the first 100's
+   takes its own light back in 4 of 480 seeds of each world (`body 0 e by pulse` 4; the first 100's
    1), the one-in-flight limit not built, as before.
 
 ### The reading on main at the merged sha e62b6651 (2026-10-03, 10:19Z)
@@ -329,13 +329,13 @@ squash of the round (#1726), its reading appended here beside the blind, which s
 `PYTHONPATH=src python examples/events/resonance/read_world.py --seeds 480`, both worlds, the seeds 1 to
 480, on the tree of `main` at e62b6651 and nothing else: 854 seconds for the two worlds on one core at a
 load average of about 30 on four cores (the branch's diagnostic, 273 seconds at low load). The takings
-are the clicks, the jump lines labelled DETECTOR; the giver's cosine and count are GameBoard readings and
+are the clicks, the click lines labelled NODEREADER; the giver's cosine and count are GameBoard readings and
 labelled so; the standard error of a count c of N is sqrt(c (N - c) / N), the blind's item 3.
 
-1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`measured 1 e by pulse` 1), the share 0.0021 with
+1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`body 1 e by pulse` 1), the share 0.0021 with
    the standard error 0.0021 (1.0 taking), against the blind's at most 2. PASS; the branch's diagnostic
    read 1 of 480 beside. The ratio detuned over resonant is 1 to 155, 0.0065.
-2. The resonant taker at [2, 3]: 155 takings in 480 seeds (`measured 1 e by pulse` 155), the share 0.323
+2. The resonant taker at [2, 3]: 155 takings in 480 seeds (`body 1 e by pulse` 155), the share 0.323
    with the standard error 0.021 (10.2 takings), against the blind's 177.6 and its band 156 to 199: one
    taking below the band's floor, 2.1 of the blind's standard errors (10.6) below 177.6. A MISS of the
    blind's band by one count and a FINDING by name of the blind's form and not of the act, as the blind
@@ -350,7 +350,7 @@ labelled so; the standard error of a count c of N is sqrt(c (N - c) / N), the bl
    (0.8 below); the cosine on the plateau 0.6682 in 316 of 316 seeds read, within the gate 2 / A_far =
    0.051 (a GameBoard reading); the count at the span's end 1 in every seed read, 149 of 149 in the
    resonant world and 299 of 299 in the detuned one (a GameBoard reading); the giver takes its own light
-   back in 4 of 480 seeds of each world (`measured 0 e by pulse` 4, the standard error 2.0), the
+   back in 4 of 480 seeds of each world (`body 0 e by pulse` 4, the standard error 2.0), the
    one-in-flight limit not built, as before. The design's own 100 seeds were not run apart in this
    reading; the branch's diagnostic read them at 37 and 1.
 

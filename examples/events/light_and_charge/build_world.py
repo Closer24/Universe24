@@ -35,7 +35,7 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
     """One world: the tube (x open with both faces receding, y and z periodic), the body the world names at the centre or none, the message of light along +x over the whole cross-section, the screen's regions, the universe the design names."""
     row, across = design["worlds"][name], int(design["across"])
-    measured = (
+    bodies = (
         []
         if row["body"] is None
         else [
@@ -52,7 +52,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": measured,
+        "bodies": bodies,
         "messages": [
             {
                 "family": design["light"],
@@ -67,7 +67,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
                 "edge": {"x": int(design["edge"]), "y": 0, "z": 0},
             }
         ],
-        "detectors": screen_regions(design),
+        "node_readers": screen_regions(design),
         "receding": {
             "x": {
                 "sides": ["low", "high"],
@@ -79,13 +79,13 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
 
 
 def expectation(design: dict[str, Any], laid: int | None) -> dict[str, object]:
-    """The blind expectation file (DETECTOR, as tools/click_counts.py reads it): the screen's regions ordered along y, the family of light, the window, the pattern's range, the seed of the instrument's draw, the uniform blind row of the free world (every region one share, the lay's count over the regions where the lay stands), the arrival wager, `laid` the generator's count of the lay, and the delay's blind with the sign's 0 beside it."""
-    names = [str(detector["name"]) for detector in screen_regions(design)]
+    """The blind expectation file (NODEREADER, as tools/click_counts.py reads it): the screen's regions ordered along y, the family of light, the window, the pattern's range, the seed of the instrument's draw, the uniform blind row of the free world (every region one share, the lay's count over the regions where the lay stands), the arrival wager, `laid` the generator's count of the lay, and the delay's blind with the sign's 0 beside it."""
+    names = [str(node_reader["name"]) for node_reader in screen_regions(design)]
     regions = len(names)
     share = round(laid / regions, 1) if laid is not None else 1.0
     return {
-        "verdict": "DETECTOR",
-        "detector": names,
+        "verdict": "NODEREADER",
+        "node_reader": names,
         "family": design["light"],
         "window": [int(v) for v in design["window"]],
         "across": "y",

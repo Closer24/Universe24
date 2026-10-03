@@ -224,10 +224,10 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands
     for _ in range(60):
         board.step()
-    regions = {row.name for row in board.world.detectors} | {"face"}
-    assert lines and {str(line["event"]) for line in lines} <= {"click", "field"}
+    regions = {row.name for row in board.world.node_readers} | {"face"}
+    assert lines and {str(line["event"]) for line in lines} <= {"click", "density"}
     clicks = [line for line in lines if line["event"] == "click"]
-    assert clicks and all(line["detector"] in regions and "node" not in line for line in clicks)
+    assert clicks and all(line["node_reader"] in regions and "node" not in line for line in clicks)
     engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
     table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
     assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)

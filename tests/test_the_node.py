@@ -1,4 +1,4 @@
-"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count the record's share, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body of a plane writes a wave into the sign holder's own record, its share's total stays within the rounding, a static body's write stands still within the rounding, and the click at the end detector is the measurement; the whole run of the chain goes back in time, MATCH over 400 intervals with the rotating body and with the real one; the tension is Rule3's own conservation of the current; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning. The static body of the chain is one charged body of the sense +1 at the chain's centre Node with the taker on it: the two-body world, a like-sense body laid beside a neutral body's tail under the plain read, finds no fixed point in the generator (a 20-unit cycle of period 7 at the body's own edge), the rotating construction's open defect, the integer wander of the record-to-content map with the body's own charge level as a second source of its well; not a tie, and not widened."""
+"""The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count the record's share, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body of a plane writes a wave into the sign holder's own record, its share's total stays within the rounding, a static body's write stands still within the rounding, and the click at the end node_reader is the measurement; the whole run of the chain goes back in time, MATCH over 400 intervals with the rotating body and with the real one; the tension is Rule3's own conservation of the current; a receding face grows the GameBoard before the front, the run the larger chain's bit for bit, ending at the largest size and returning. The static body of the chain is one charged body of the sense +1 at the chain's centre Node with the taker on it: the two-body world, a like-sense body laid beside a neutral body's tail under the plain read, finds no fixed point in the generator (a 20-unit cycle of period 7 at the body's own edge), the rotating construction's open defect, the integer wander of the record-to-content map with the body's own charge level as a second source of its well; not a tie, and not widened."""
 
 import json
 import math
@@ -92,7 +92,7 @@ def test_every_act_of_the_interval_reaches_one_link(tmp_path, monkeypatch):
     charge["act"], charge["write_weight"], rows["integers"]["quantum_action"] = "rotation", 4, 36_000
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")  # the energy line's T and k_w
     world = dict(shape=[9, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
-    world.update(ticks=2, universe="u.json", engine="e.json", measured=[], detectors=[])
+    world.update(ticks=2, universe="u.json", engine="e.json", bodies=[], node_readers=[])
     (reach := tmp_path / "reach.json").write_text(json.dumps(world), encoding="utf-8")
 
     def centre(board: GameBoard) -> list[int]:
@@ -127,8 +127,8 @@ def hand_world(
     """A world of one body by hand with its mode entry: declared at the count 1, the gate's refusal read for the count the share reads at its Node and the body re-declared at it; one quantum of charge (`quantum`, the count-1 gate) stands at the count 1 as declared."""
     path, read = folder / f"{name}.json", 1
     for count in (1, 0):
-        measured = [{**body, "nodes": [{**body["nodes"][0], "count": count or read}]}]
-        path.write_text(json.dumps(document := {**world, "measured": measured}), encoding="utf-8")
+        bodies = [{**body, "nodes": [{**body["nodes"][0], "count": count or read}]}]
+        path.write_text(json.dumps(document := {**world, "bodies": bodies}), encoding="utf-8")
         beside = {"world_digest": input_digest(document), "bodies": [mode]}
         path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
         if quantum:
@@ -144,11 +144,11 @@ def turned(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.n
 
 
 def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(tmp_path, monkeypatch):
-    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the share by name and admits the one it reads; at the start every holder of the content with a level stands at an isotropic rest about the body, its level at the six neighbours of the centre one number below the centre's (the vector test of the two rows); each interval the matter's levels change and are Rule3 from the interval's start at every Node with every holder of the content read once as its stepped time part (a family of quanta with a gap steps; the guard on the gap that froze matter on main is gone with the laid row), the share read at the start's paces changes by the net currents plus the paces' anisotropy term and Rule3's remainder term exactly up to the division act's floors while the paces' own change (the well breathing about the body) moves the books' total beside, and every part of every NodeState keeps the cube's 48 about the body; the back-in-time gate (tools/back_in_time.py) over twelve intervals forward and twelve back returns every array bit for bit, MATCH (the tension's act has no count in its divisor and dumps nothing). (c) On the chain, one quantum of the charged family by hand (a plane rotating in the sense +1 at the band's rest rotation, the level now the envelope L over ten Nodes with the level before (L cos omega, L sin omega) and 2 SUM L^2 sin omega = T, the law's one quantum, its Wronskian T / 2 within the rounding, declared at the count 1 and admitted as declared: the count-1 gate, ALGEBRA.md, No record reads its own write of the sign) writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's share in quanta stays within the Nodes' rounding and the body's share read at each interval's paces changes by the net currents plus the anisotropy and the remainder terms exactly up to the floors over 400 intervals (the well it digs moves the paces, and the share read at the moving paces with them, the paces' part printed beside; no quantum changes family), the body reads the light it writes plainly into its paces (its family a plane; ALGEBRA.md #the-paces, the dimension's table) and every output line is a click of an end detector (the light's inflow there); a real body of matter writes nothing into it and no light is born; both runs go back in time whole, the back-in-time gate MATCH over 400 intervals forward and 400 back, every held row a stepped record whose level at the interval's start the state after it still holds and no coefficient read from a Node's own state (ALGEBRA.md #what-is-open, item 21). (c, d) The generator's one quantum of the charged family on the chain (a plane rotating in the sense +1, the one-Node record of its quantum, `--pixel`, admitted at the count 1 as declared, the count-1 gate): the Wronskian's quanta it writes into the sign holder each interval move within the rounding over its period at its Node (a static record writes a static level); its share in quanta over the board, read at the paces of the read, is printed as the books' reading (the owner's word of 2026-10-01: the share stays the count, its drift under a moving well a reading and no line), over 180 intervals (the world once ended at the interval 318 in the share's division by 0 at a frozen Node under the signed read; it passes 400 with no frozen Node since); the tail's mean tension on x, a reading of the 50-quanta body that #43 (1) no longer declares, is not read (one Node, no tail); a second body, the taker, a real body of matter, is read by the detector `taker`, whose clicks are the charge's inflow into its Nodes, signed and never 0, the net light that entered it over the run printed as its reading (a bare region passes the light on). (e) The gate runs (#1579): on the committed worlds bell_a_b and ghz_x_y_y over their runs the laid family's drift (the books') stays within the sum over the intervals of Rule3's remainder terms, the paces' parts and the floors, the bound the share's identity gives, asserted as a bound and never as exactness. On the chain every click names an end detector or the open faces' layer at the same Nodes."""
+    """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the share by name and admits the one it reads; at the start every holder of the content with a level stands at an isotropic rest about the body, its level at the six neighbours of the centre one number below the centre's (the vector test of the two rows); each interval the matter's levels change and are Rule3 from the interval's start at every Node with every holder of the content read once as its stepped time part (a family of quanta with a gap steps; the guard on the gap that froze matter on main is gone with the laid row), the share read at the start's paces changes by the net currents plus the paces' anisotropy term and Rule3's remainder term exactly up to the division act's floors while the paces' own change (the well breathing about the body) moves the books' total beside, and every part of every NodeState keeps the cube's 48 about the body; the back-in-time gate (tools/back_in_time.py) over twelve intervals forward and twelve back returns every array bit for bit, MATCH (the tension's act has no count in its divisor and dumps nothing). (c) On the chain, one quantum of the charged family by hand (a plane rotating in the sense +1 at the band's rest rotation, the level now the envelope L over ten Nodes with the level before (L cos omega, L sin omega) and 2 SUM L^2 sin omega = T, the law's one quantum, its Wronskian T / 2 within the rounding, declared at the count 1 and admitted as declared: the count-1 gate, ALGEBRA.md, No record reads its own write of the sign) writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's share in quanta stays within the Nodes' rounding and the body's share read at each interval's paces changes by the net currents plus the anisotropy and the remainder terms exactly up to the floors over 400 intervals (the well it digs moves the paces, and the share read at the moving paces with them, the paces' part printed beside; no quantum changes family), the body reads the light it writes plainly into its paces (its family a plane; ALGEBRA.md #the-paces, the dimension's table) and every output line is a click of an end node_reader (the light's inflow there); a real body of matter writes nothing into it and no light is born; both runs go back in time whole, the back-in-time gate MATCH over 400 intervals forward and 400 back, every held row a stepped record whose level at the interval's start the state after it still holds and no coefficient read from a Node's own state (ALGEBRA.md #what-is-open, item 21). (c, d) The generator's one quantum of the charged family on the chain (a plane rotating in the sense +1, the one-Node record of its quantum, `--pixel`, admitted at the count 1 as declared, the count-1 gate): the Wronskian's quanta it writes into the sign holder each interval move within the rounding over its period at its Node (a static record writes a static level); its share in quanta over the board, read at the paces of the read, is printed as the books' reading (the owner's word of 2026-10-01: the share stays the count, its drift under a moving well a reading and no line), over 180 intervals (the world once ended at the interval 318 in the share's division by 0 at a frozen Node under the signed read; it passes 400 with no frozen Node since); the tail's mean tension on x, a reading of the 50-quanta body that #43 (1) no longer declares, is not read (one Node, no tail); a second body, the taker, a real body of matter, is read by the node_reader `taker`, whose clicks are the charge's inflow into its Nodes, signed and never 0, the net light that entered it over the run printed as its reading (a bare region passes the light on). (e) The gate runs (#1579): on the committed worlds bell_a_b and ghz_x_y_y over their runs the laid family's drift (the books') stays within the sum over the intervals of Rule3's remainder terms, the paces' parts and the floors, the bound the share's identity gives, asserted as a bound and never as exactness. On the chain every click names an end node_reader or the open faces' layer at the same Nodes."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)  # the closed cube of 9^3, one body of matter at its centre
     world = dict(shape=[9, 9, 9], boundary=dict(x="closed", y="closed", z="closed"), ticks=8)
-    world.update(universe="u.json", engine="e.json", detectors=[])
+    world.update(universe="u.json", engine="e.json", node_readers=[])
     d = np.abs(np.indices((9, 9, 9)) - 4).sum(axis=0)
     levels = np.select([d == 0, d == 1, d == 2], [1200, 600, 200], 0).ravel().tolist()
     mode = {"family": "matter", "pair": [4000, 6000], "moving": {"now": levels, "before": levels}}
@@ -204,7 +204,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
         ends += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
         world = dict(shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), ticks=400)
-        world.update(face_depth=1, universe="u.json", engine="e.json", detectors=ends)
+        world.update(face_depth=1, universe="u.json", engine="e.json", node_readers=ends)
         body = {"family": family, "nodes": [{"node": [CHAIN // 2, 0, 0], "count": 1}]}
         world = hand_world(tmp_path, "hand", world, body, mode, quantum=turn != 0)
         board = GameBoard(load_world(world), (lines := []).append)
@@ -221,7 +221,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
             born = born or (board.tick if board.record(CHARGE)[0].now[away].any() else 0)
             assert abs(int(board.books()[board.families[CHARGE].name]["quanta"])) <= CHAIN
         clicks = [e for e in lines if e["family"] == "charge" and e["event"] == "click"]
-        assert all(e["detector"] in ("left", "right", "face") for e in lines if e["event"] == "click")
+        assert all(e["node_reader"] in ("left", "right", "face") for e in lines if e["event"] == "click")
         assert born > 0 if turn else (born == 0 and not clicks and not board.record(CHARGE)[0].now.any())
         back = BACK.verdict(GameBoard(load_world(tmp_path / "hand.json")), 400)
         assert back["verdict"] == "MATCH" and back["intervals"] == 400 and laid > 0 and moved is not None
@@ -238,7 +238,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
     span = mode["period"][0] // mode["period"][1] + 1
     swings = [max(writes[i : i + span]) - min(writes[i : i + span]) for i in range(100, 179 - span)]
-    taken = [e for e in lines if e["detector"] == "taker" and e["family"] == "charge"]
+    taken = [e for e in lines if e["node_reader"] == "taker" and e["family"] == "charge"]
     assert max(swings) <= body.sum() and board.books()[family.name]["pace"] > 0
     assert taken and all(e["event"] == "click" and e["inflow"] != 0 for e in taken)  # signed, never 0
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
@@ -361,9 +361,9 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
 def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: object) -> Path:
     universe_beside(folder, drop=tuple(name for name in NAMES if name != "charge"))
     world = dict(shape=[extent, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
-    world.update(ticks=200, universe="u.json", engine="e.json", measured=[], **keys)
+    world.update(ticks=200, universe="u.json", engine="e.json", bodies=[], **keys)
     world["messages"] = [{**PACKET, "top": {"x": [first, first], "y": [0, 0], "z": [0, 0]}}]
-    world["detectors"] = [{"name": "post", "positions": [[14, 0, 0], [15, 0, 0]]}]
+    world["node_readers"] = [{"name": "post", "positions": [[14, 0, 0], [15, 0, 0]]}]
     (path := folder / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     return path
@@ -426,15 +426,17 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     for _ in range(30):
         board.step()
     assert (board.states[gravity].lines[0].now == 60).all() and board.shape[0] == 24
-    assert all(line["reading"] == 0 for line in lines if line["event"] == "field")
+    assert all(line["reading"] == 0 for line in lines if line["event"] == "density")
     well, post = board.states[gravity].lines[0], board.mask(((14, 0, 0), (15, 0, 0), (16, 0, 0)))
     well.now[post] = well.before[post] = paces.frozen_content(GAMMA)  # a frozen clock at three Nodes
     for axis_level in (board.states[gravity].lines[1].now, board.states[gravity].lines[1].before):
         axis_level[19:21, 0, 0] = GAMMA - 2 * 60  # a standing tension on xx: the Link 19-20's factor 0
     assert board.books() == {"charge": dict(share=None, quanta=None, drift=None, pace=0, frozen=3)}
     board.step()
-    cold = [line for line in lines if line["event"] == "field" and line["reading"] is None]
-    assert len(cold) == 1 and cold[0]["detector"] == "post" and cold[0]["well"] == 0 and board.tick == 31
+    cold = [line for line in lines if line["event"] == "density" and line["reading"] is None]
+    assert (
+        len(cold) == 1 and cold[0]["node_reader"] == "post" and cold[0]["well"] == 0 and board.tick == 31
+    )
     kick = json.loads((tmp_path / "still.json").read_text(encoding="utf-8"))
     packet = {**PACKET, "family": "gravity", "amplitude": 12, "edge": {"x": 3, "y": 0, "z": 0}}
     packet["top"] = {"x": [4, 4], "y": [0, 0], "z": [0, 0]}
@@ -447,11 +449,11 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
         board.step()
     grown = board.states[gravity].lines[0].now[24:, 0, 0]
     assert board.shape[0] > 24 and (grown[-1] == 60) and (grown != 60).any()
-    assert max(x["reading"] for x in lines if x["event"] == "field" and x["family"] == "gravity") > 0
+    assert max(x["reading"] for x in lines if x["event"] == "density" and x["family"] == "gravity") > 0
     assert BACK.verdict(GameBoard(load_world(tmp_path / "kick.json")), 40)["verdict"] == "MATCH"
     output = RUN.run_input(str(world), str(tmp_path))
     written = json.loads((tmp_path / "light.output.json").read_text(encoding="utf-8"))
-    lit = [x for x in written["lines"] if x["event"] == "field" and x["family"] == "charge"]
+    lit = [x for x in written["lines"] if x["event"] == "density" and x["family"] == "charge"]
     assert output["verdict"] == "LAWFUL" and lit and max(x["reading"] for x in lit) > 0
 
 
@@ -467,8 +469,8 @@ def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_pat
     refused("from 1", shape_of, {"dimension": 0}, "x")
     triple["reads"]["charge"] = 1  # three real lines naming the holder of the sign: no plane
     refused("no plane", universe_of, rows)
-    world = dict(shape=[5] * 3, boundary=dict.fromkeys("xyz", "periodic"), ticks=1, measured=[])
-    world.update(universe="u.json", engine="e.json", detectors=[])
+    world = dict(shape=[5] * 3, boundary=dict.fromkeys("xyz", "periodic"), ticks=1, bodies=[])
+    world.update(universe="u.json", engine="e.json", node_readers=[])
     (cube := tmp_path / "cube.json").write_text(json.dumps(world))
 
     def imaged(board: GameBoard, axes, signs) -> list[node.NodeState]:  # the state under one of the 48

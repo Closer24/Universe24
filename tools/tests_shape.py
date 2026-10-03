@@ -70,9 +70,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "record empty at the books' origin set at its first lay to the giving's own W_c sin Omega, a born quantum "
         "below the half-top energy credited 1 and not 0",
     ),
-    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum": (
+    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_counts_in_its_own_quantum": (
         90,
-        "the generic detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
+        "the generic node_reader round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
@@ -141,7 +141,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
         281,
-        "the NodeReader round (the owner's word of 2026-10-03, a detector is never on one Node; the Boss's brief): the "
+        "the NodeReader round (the owner's word of 2026-10-03, a node_reader is never on one Node; the Boss's brief): the "
         "ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, the share credited 1, "
         "the one-Node, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "
         "uniform mode's recurrence to the bit, the drive projected on the reader's normalised mode, one draw per click "

@@ -38,14 +38,14 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "ticks": int(row["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [
+        "bodies": [
             {
                 "family": design["family"],
                 "nodes": [{"node": [int(v) for v in centre], "count": int(row["quanta"])}],
             }
             for centre in row["centres"]
         ],
-        "detectors": [
+        "node_readers": [
             {"name": str(label), "positions": region(box)} for label, box in row["regions"].items()
         ],
     }
@@ -62,7 +62,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "row": design["row"],
         "window": [int(v) for v in design["window"]],
         "worlds": {name: name for name in design["worlds"]},
-        "field": {"detectors": regions, "family": design["family"]},
+        "density": {"node_readers": regions, "family": design["family"]},
         "reading": design["reading"],
         "blind": design["blind"],
     }

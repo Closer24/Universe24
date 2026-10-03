@@ -5,7 +5,7 @@ works in the engine; the advisor's matrix, #1563 comment 5964151108, T2): the tw
 `examples/events/two_slits` with a declared region at one gap backed by a face. Behind the lower gap
 (the rows 17 to 19) a channel of the rows 16 to 19 runs from the wall's far side to the screen's
 column between two inner faces across y at the rows 15 and 20 (the channel's walls, over the columns
-21 to 43), and the whole channel is one declared detector, `which_way`, whose far end is the screen's
+21 to 43), and the whole channel is one declared NodeReader, `which_way`, whose far end is the screen's
 column before the receding face: everything that passes the lower gap leaves the declared board
 through the channel and is credited there, and nothing of it reaches the rest of the screen, which is
 read in regions of four rows as the two slits' screen is (`screen_0` to `screen_11`, the channel's
@@ -14,7 +14,7 @@ rows left to the channel). Three worlds from one design (`design.json`), built, 
 `one_gap.json` (the lower gap closed, the channel's walls standing) and `two_gaps.json` (both gaps
 open, no channel: the two slits as shipped). The blind `expectation.json` was written by the builder
 from the design before any lay and never touched after; the reading below is `tools/run_inputs.py`'s
-output read per region (the `credit` lines, the clicks, labelled DETECTOR; the shares the `click`
+output read per region (the `credit` lines, the clicks, labelled NODEREADER; the shares the `click`
 lines' window inflows, a GameBoard reading beside them, labelled so); a miss is a finding by name and
 never an adjustment of the blind.
 
@@ -90,15 +90,15 @@ fenced by nothing.
 
 ## What is not built, by name
 
-A which-way detector that absorbs without a channel (the engine's only absorber is a receding face);
+A which-way NodeReader that absorbs without a channel (the engine's only absorber is a receding face);
 the Huygens row by the law's own real line (the two slits' design has the advisor's row from it); a
 second seed's reading (one seed, the design's).
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Every number of the reading above is the detector's: the clicks are the `credit` lines' counts per
-region and the shares are the `click` lines' window inflows over 3 den T, both lines the detector's
+Every number of the reading above is the NodeReader's: the clicks are the `credit` lines' counts per
+region and the shares are the `click` lines' window inflows over 3 den T, both lines the NodeReader's
 report by the engine's label (ENGINE.md section 5, `reports.click` and `reports.credit`; the folder's
 own words call the shares a GameBoard reading beside the clicks, a stricter label than the engine's).
 No number is read from a Node. The lines carry the board's `tick` and the `window` in board intervals
-and nothing of the detector's own clock. The crude Huygens rows of item 4 are the design's.
+and nothing of the NodeReader's own clock. The crude Huygens rows of item 4 are the design's.

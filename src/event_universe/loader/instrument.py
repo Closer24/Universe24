@@ -1,4 +1,4 @@
-"""The instrument's declaration (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, the owner's decision of 2026-10-02, after a click the paths are cancelled on the GameBoard): on a detector's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the instrument's draw through the root in the run; and on the world the `instrument`, the draw's declaration (`Instrument`): the window in intervals after which the instrument draws and writes, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's; a body with a probe among its transitions (a transition of a part into itself, `Transition`) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03, #1572 comments 5967783614 and 5967913000); every defect refused by name and no default written."""
+"""The instrument's declaration (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, the owner's decision of 2026-10-02, after a click the paths are cancelled on the GameBoard): on a node_reader's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the instrument's draw through the root in the run; and on the world the `instrument`, the draw's declaration (`Instrument`): the window in intervals after which the instrument draws and writes, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's; a body with a probe among its transitions (a transition of a part into itself, `Transition`) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03, #1572 comments 5967783614 and 5967913000); every defect refused by name and no default written."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ class Generator:
 
 @dataclass(frozen=True)
 class Instrument(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every detector's window closes and the instrument draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
+    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_reader's window closes and the instrument draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
 
     window: int
 
@@ -86,14 +86,14 @@ def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
 
 
 def basis_of(value: object, label: str) -> tuple[int, ...]:
-    """A detector's declared basis, its setting: a list of integers not all 0 (the pair's (p, q)); refused by name otherwise."""
+    """A node_reader's declared basis, its setting: a list of integers not all 0 (the pair's (p, q)); refused by name otherwise."""
     if not isinstance(value, list) or not value or not any(value):
         raise ValueError(f"{label} must be a list of integers, the setting's coefficients, not all 0")
     return tuple(integer(v, f"{label}[{i}]", -MAX_WORK_INT) for i, v in enumerate(value))
 
 
 def pattern_of(value: object, label: str, basis: tuple[int, ...]) -> Pattern:
-    """A detector's declared pattern: a list of integer pairs [alpha_k, beta_k], one per part of the record it reads, none [0, 0] (a part read with no coefficient at either port is no part of the read), on a setting of two coefficients (p, q); refused by name otherwise."""
+    """A node_reader's declared pattern: a list of integer pairs [alpha_k, beta_k], one per part of the record it reads, none [0, 0] (a part read with no coefficient at either port is no part of the read), on a setting of two coefficients (p, q); refused by name otherwise."""
     if len(basis) != 2:
         raise ValueError(
             f"{label} reads the setting (p, q) of two coefficients into the parts, and the basis has {len(basis)}"
@@ -124,7 +124,7 @@ def patterns_of_the_law(
     for name, pattern in patterns:
         if pattern and len(pattern) not in parts:
             raise ValueError(
-                f"detector {name!r} declares a pattern of {len(pattern)} parts, and the world lays "
+                f"node_reader {name!r} declares a pattern of {len(pattern)} parts, and the world lays "
                 + (
                     f"records of {parts} parts, one pair per part"
                     if parts
@@ -205,7 +205,7 @@ class Conversion:
 
 
 @dataclass(frozen=True)
-class NodeInstrument:
+class NodeReaderDeclaration:
     """A body as an instrument as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its givings, its own draw (the generator with its window, `Instrument`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
 
     names: tuple[str, ...]
@@ -307,13 +307,13 @@ def rates_of(
 
 
 def packet_form(
-    found: NodeInstrument,
+    found: NodeReaderDeclaration,
     label: str,
     families: tuple[FamilyRule, ...],
     at: tuple[int, int, int],
     shape: tuple[int, int, int],
     action: int,
-) -> NodeInstrument:
+) -> NodeReaderDeclaration:
     """The loader's decision on each giving's lay by the board's shape against the width, no flag (the mathematician's 224 (1) and 229 with the advisor's seconds, two hands; the owner's word of 2026-10-03, 09:46 Israel): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`giving.given_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`giving.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
     guide = sum(1 for extent in shape if extent > 1) <= 1
     rates = []
@@ -416,14 +416,14 @@ def conversion_of(
     return Conversion(rate, tuple(outs), tuple(senses)), own_sense
 
 
-def node_instrument_of(
+def node_reader_of(
     body: dict[str, object],
     label: str,
     families: tuple[FamilyRule, ...],
     own: int,
     quanta: dict[str, int],
     count: int,
-) -> NodeInstrument:
+) -> NodeReaderDeclaration:
     """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw: with its window, `instrument_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `instrument` to draw it; refused by name otherwise."""
     family = families[own]
     if "conversion" in body:
@@ -433,7 +433,7 @@ def node_instrument_of(
             raise ValueError(f"{label} declares a conversion and no `instrument` to draw it with")
         table, sense = conversion_of(body["conversion"], f"{label}.conversion", families, own, quanta)
         own_draw = instrument_of(body["instrument"], f"{label}.instrument")
-        return NodeInstrument((family.name,), (count,), (), (), own_draw, (table,), sense)
+        return NodeReaderDeclaration((family.name,), (count,), (), (), own_draw, (table,), sense)
     if "parts" not in body:
         raise ValueError(
             f"{label} declares its parts, the modes it is laid in, before any instrument, transition or rate"
@@ -453,4 +453,4 @@ def node_instrument_of(
     if draw is None and ("transitions" in body or "rates" in body):
         raise ValueError(f"{label} declares transitions or rates and no `instrument` to draw them with")
     rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own, transitions)
-    return NodeInstrument(names, counts, transitions, rates, draw)
+    return NodeReaderDeclaration(names, counts, transitions, rates, draw)

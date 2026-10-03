@@ -1,4 +1,4 @@
-"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table (the records out, a plane family with the sense of its lay as the design declares it) and rate and its own instrument, with a region detector of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
+"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table (the records out, a plane family with the sense of its lay as the design declares it) and rate and its own instrument, with a region node_reader of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
 
 PYTHONPATH=src python examples/events/neutron_conversion/build_world.py --modes [--folder <folder>]
 """
@@ -42,8 +42,8 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [body],
-        "detectors": [
+        "bodies": [body],
+        "node_readers": [
             {
                 "name": "around",
                 "positions": [[int(v) for v in node] for node in design["around"]],

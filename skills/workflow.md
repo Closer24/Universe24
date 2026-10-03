@@ -87,8 +87,8 @@ outside its band with no defect found names the missing law, as a hypothesis
 under its own name. No expectation is rewritten after a look, and no body's
 number is tuned to a result.
 
-Only a detector's click is a measurement. Every number reported is labelled
-DETECTOR or GAMEBOARD; a GameBoard reading is a diagnostic, never compared with
+Only a NodeReader's click is a measurement. Every number reported is labelled
+NODEREADER or GAMEBOARD; a GameBoard reading is a diagnostic, never compared with
 nature and never a result on its own.
 
 ## The method of derivation (the owner, 2026-10-01)
@@ -104,10 +104,10 @@ the paper explains it as its own:
 3. The bridge to nature is a body's clicks and nothing else: a bound body's
    rotation reading the content once is the clock; its click rate against
    nature's identifies the law's level with nature's potential. The source is a
-   body's well, the clock a body, the detector a body, an orbit a body's chain
+   body's well, the clock a body, the NodeReader a body, an orbit a body's chain
    of clicks. The body enters through its clicks, never through its generator's
    equations.
-4. Every observable is a click formula: the instrument's form over the
+4. Every observable is a click formula: the NodeReader's form over the
    quantum's measure on the forward orbit, or a ratio of two such. Every other
    formula is of the GameBoard, a diagnostic, and is labelled so beside its
    status (the fence: GameBoard or clicks).
@@ -124,7 +124,7 @@ the paper explains it as its own:
 Every experiment, rule, folder and file is called by its plain name: "the two
 slits", "the moving lamp's redshift", "the signed read". No code letter or
 number stands for a thing, not even in parentheses after its name. A block is
-named by what it is on the GameBoard (an emitter, a body, a detector, a clock);
+named by what it is on the GameBoard (a source, a body, a NodeReader, a clock);
 the laboratory's word for it may be said once to explain what it models. A new
 word enters the words of docs/ENGINE.md with its one definition before it is
 used; a word already taken is not reused.
@@ -160,7 +160,7 @@ unread or wrong if it is not done; (5) the decisions: which lines of
 docs/HIGHLIGHTS.md the item keeps, and whether one should now change, a change
 being a proposal made on the owner's word; (6) the implementation: what changes
 in the tree, the time end to end, and what it can break. The evidence follows the
-six lines. Every number in them is labelled DETECTOR or GAMEBOARD.
+six lines. Every number in them is labelled NODEREADER or GAMEBOARD.
 
 ## Writing to the owner (the owner, 2026-09-30)
 
@@ -218,8 +218,11 @@ precise; every message to the owner is in Hebrew (AGENTS.md, the language rule).
 Every heading and every name is in sentence case: a capital first letter, never
 all caps (the owner, 2026-09-30). The words of the engine are the words of
 docs/ENGINE.md: a Node, a Link, a Port, an Event, the GameBoard, a Family, a
-Record, a Body, a Detector, a Click, a Primitive, an Interval, and no other noun
-for them.
+Record, a Body, a NodeReader, a Click, a Primitive, an Interval, and no other noun
+for them. The old nouns detector, instrument, emitter, absorber, observer and
+measurer have left (the owner's word of 2026-10-03, "no field, only events"): a
+NodeReader with Nodes alone or with a record of its own is the one declaration
+kind, and none of them returns.
 
 ## The short procedure: from the owner's word to the merge
 
