@@ -74,7 +74,7 @@
    "reading": "every `parts` line of the three counters over the window: the two parts' [now, before] sums",
    "blind": "bit-identical at every interval and every counter, the parts' mismatch ratios 1 and every squares ratio 1",
    "status": "theorem: the two parts are laid equal by the symmetric lay and stepped by one deterministic Rule3 on one board with no holder telling them apart (the holder of the sign reads the Wronskian, 0 on both), so they stay equal bit for bit; the GHZ gate's own equal-parts theorem with two parts and the holders removed (106, item 1)",
-   "fence": "clicks (the instrument's read); the arrays' equality a GameBoard reading beside it"
+   "fence": "clicks (the NodeReader's read); the arrays' equality a GameBoard reading beside it"
   },
   "whole_clicks": {
    "reading": "every `click` line's inflow on the three counters over the window, and each counter's inflow summed",

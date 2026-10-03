@@ -2,7 +2,7 @@
 
 The paper's S.57 (the mathematician's 144 and 145, two hands by the law as it stands; the owner's
 word of 2026-10-03, 03:25): a chain of 24 Nodes open on x with both faces receding, y and z folded;
-two records of two parts (g, e) of the pair [1, 1299] declared instruments at one Node each, the
+two records of two parts (g, e) of the pair [1, 1299] declared NodeReaders at one Node each, the
 Nodes 6 and 17, equidistant from the centre, their six Link factors 0 so that they stay; one light
 record of the family `photon` (light's pair, one real line) laid at the centre as two packets toward
 both at k = pi / 4, its laid share one whole quantum (the books' count 1 read from the loaded
@@ -66,7 +66,7 @@ the record's parts laid; the front's faces on the chain after the count reaches 
 ## What is not built, by name
 
 The record's own NodeReader region around its Node (the mathematician's 180); the one draw's
-generator the first closing record's (the world has no instrument of its own); the face form of the
+generator the first closing record's (the world has no draw of its own); the face form of the
 hole (the mathematician's 193, 195 and 197, the advisor's second in #1572 comment 5963391333), the
 morning's unless the gate worlds read MATCH across the click with it tonight.
 

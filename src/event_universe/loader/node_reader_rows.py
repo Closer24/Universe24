@@ -1,4 +1,4 @@
-"""A reader's count, declared once (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's 299 section 4 with the advisor's second, #1572, two hands): a reader's Nodes carry the lay's weights, A_i^2 = A^2 w_i / SUM w, and the record's count is declared once, by its `parts` or by `count` for a record converted whole; a charged record's count is 1 (ALGEBRA.md, No record reads its own write of the sign)."""
+"""A reader's count, declared once (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands): a reader's Nodes carry the lay's weights, A_i^2 = A^2 w_i / SUM w, and the record's count is declared once, by its `parts` or by `count` for a record converted whole; a charged record's count is 1 (ALGEBRA.md, No record reads its own write of the sign)."""
 
 from __future__ import annotations
 

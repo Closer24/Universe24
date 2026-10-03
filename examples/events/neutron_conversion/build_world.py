@@ -1,4 +1,4 @@
-"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table (the records out, a plane family with the sense of its lay as the design declares it) and rate and its own instrument, with a region node_reader of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
+"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table (the records out, a plane family with the sense of its lay as the design declares it) and rate and its own NodeReader, with a region node_reader of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
 
 PYTHONPATH=src python examples/events/neutron_conversion/build_world.py --modes [--folder <folder>]
 """
@@ -34,7 +34,7 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
         "count": int(design["neutron"]["count"]),  # the record's count, declared once over its region
     }
     body["conversion"] = {"rate": int(table["rate"]), "to": outs}
-    body["instrument"] = {k: int(v) for k, v in design["generator"].items()}
+    body["node_reader"] = {k: int(v) for k, v in design["generator"].items()}
     return {
         "shape": [int(v) for v in design["shape"]],
         "boundary": {"x": "open", "y": "open", "z": "open"},

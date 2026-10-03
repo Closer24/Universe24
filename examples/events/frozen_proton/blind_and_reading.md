@@ -77,4 +77,4 @@ of the family `charge` into `around` (`read_world.py`, the lines kept beside the
 are GameBoard readings and their verdicts rest on them: the six lines' levels and remainders at the
 Node (row 1), the books' quanta (row 2), the Wronskian at the Node (row 3), the holders' levels at the
 Node and its neighbours (row 4) and the lines' support (row 5). The `click` lines carry the board's
-`tick` alone; this world declares no instrument and writes no window.
+`tick` alone; this world declares no draw and writes no window.

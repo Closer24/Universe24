@@ -83,12 +83,13 @@ def levels_of(
                 f"{list(outside[laid[0]])}, beyond the board's inner face: nothing is laid there"
             )
         found.append(pairs)
-    if (found[2] or found[3]) and not (found[0] or found[1]):
+    now, before, second_now, second_before = found
+    if (second_now or second_before) and not (now or before):
         raise ValueError(
             f"{label}.moving carries a sense without a rotation: its second level pair stands on real "
             "levels at 0 at every Node (ALGEBRA.md #the-paces, the sign is the rotation sense)"
         )
-    return found[0], found[1], found[2], found[3]
+    return now, before, second_now, second_before
 
 
 def mode_entries(mode: object, digest: str, key: str) -> list[object]:

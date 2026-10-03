@@ -52,7 +52,7 @@ def record_slice(family: FamilyRule, record: int) -> slice:
     return slice(record * span, (record + 1) * span)
 
 
-def light_record(family: FamilyRule, lines: Sequence[Record], direction: int = 1) -> Record:
+def rows_total(family: FamilyRule, lines: Sequence[Record], direction: int = 1) -> Record:
     """A holder of the sign's record, light: the sum of its rows' time lines at every Node, both levels (a node_reader or a body reads the sum of all rows, ALGEBRA.md, No record reads its own write of the sign), the remainder the free row's; the row's own line where it has one row, bit for bit."""
     rows = [lines[row * family.width] for row in range(family.records)]
     if len(rows) == 1:
@@ -96,8 +96,8 @@ def well(booking: Any, action: int) -> np.ndarray:
     return np.asarray(carried(booking, action, 0)[0])
 
 
-def written(count: Any, rulers: Rulers, gamma: int, intervals: int) -> Any:
-    """The write's factor, one place (ALGEBRA.md, The write per proper volume and per proper interval): a source's booking scaled per proper volume and per proper interval at the source family's paces, N^intervals p_x p_y p_z / p_0^3 with N = p_0 / Gamma, one rounding over the one wall (`paces.write_factor`), `intervals` the proper-interval powers of the held row's source, 2 on a count (the form) and 1 on the Wronskian, which carries one N of its own; the booking itself at the vacuum's paces."""
+def rulers_write_factor(count: Any, rulers: Rulers, gamma: int, intervals: int) -> Any:
+    """The write's factor at a record's rulers (ALGEBRA.md, The write per proper volume and per proper interval): a source's booking scaled per proper volume and per proper interval at the source family's paces, N^intervals p_x p_y p_z / p_0^3 with N = p_0 / Gamma, one rounding over the one wall (`paces.write_factor`), `intervals` the proper-interval powers of the held row's source, 2 on a count (the form) and 1 on the Wronskian, which carries one N of its own; the booking itself at the vacuum's paces."""
     clock, (p_x, p_y, p_z) = rulers
     return paces.write_factor(count, p_x, p_y, p_z, clock, gamma, intervals)
 
@@ -119,7 +119,7 @@ def write_sources(
     rulers: dict[Sourcing, Rulers],
     gamma: int,
 ) -> list[Any]:
-    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's 70, #1572 comment 5935615659: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
+    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's hand: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     family = families[held]
     intervals = paces.WRONSKIAN_POWER if family.wronskian else paces.COUNT_POWER
     found: list[Any] = []
@@ -127,14 +127,14 @@ def write_sources(
         sources = row_sources(families, held, row)
         time: Any = 0
         for source in sources:
-            scaled = written(bookings.get(source, 0), rulers[source], gamma, intervals)
+            scaled = rulers_write_factor(bookings.get(source, 0), rulers[source], gamma, intervals)
             time = time + weight_of(held, families[source[0]]) * scaled
         found.append(time)
         for axis in range(family.width - 1):
             total: Any = 0
             for source in sources:
                 if source in stresses:
-                    scaled = written(stresses[source][axis], rulers[source], gamma, 2)
+                    scaled = rulers_write_factor(stresses[source][axis], rulers[source], gamma, 2)
                     total = (
                         total
                         + weight_of(held, families[source[0]]) * write.factors.get(source[0], 0) * scaled
@@ -159,12 +159,12 @@ def full(shape: tuple[int, int, int], value: Any, kind: type) -> np.ndarray:
 
 
 def empty_record(shape: tuple[int, int, int], kind: type, origin: Any = 0) -> Record:
-    """A line at 0 with its remainder at `origin` at every Node, the half wall of the rule the line steps by where the caller gives it: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root); 0 where no wall is given (a line read for its levels alone)."""
+    """A line at 0 with its remainder at `origin` at every Node, the half wall of the rule the line steps by where the caller gives it: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root); 0 where no wall is given (a line read for its levels alone)."""
     return Record(zeros(shape, kind), zeros(shape, kind), full(shape, origin, kind))
 
 
 def complement(remainder: Any, wall: Any) -> Any:
-    """The ones' complement of a carried remainder under its wall, wall - 1 - r: the remainder a signed component carries at its image under a symmetry that negates it (the odd axis lines of a holder under the rotation across their axis's mirror), since (wall - 1 - u) div wall = -(u div wall) and (wall - 1 - u) mod wall = wall - 1 - (u mod wall) for every integer u, so a lay symmetric with its remainders complemented at the image is symmetric to the bit under every act of the step (HIGHLIGHTS.md, the mathematician's 166 with the advisor's second hand); the division's origin wall div 2 has the complement wall - 1 - wall div 2, one below it at an even wall."""
+    """The ones' complement of a carried remainder under its wall, wall - 1 - r: the remainder a signed component carries at its image under a symmetry that negates it (the odd axis lines of a holder under the rotation across their axis's mirror), since (wall - 1 - u) div wall = -(u div wall) and (wall - 1 - u) mod wall = wall - 1 - (u mod wall) for every integer u, so a lay symmetric with its remainders complemented at the image is symmetric to the bit under every act of the step (HIGHLIGHTS.md, the mathematician's hand with the advisor's second hand); the division's origin wall div 2 has the complement wall - 1 - wall div 2, one below it at an even wall."""
     return wall - 1 - remainder
 
 

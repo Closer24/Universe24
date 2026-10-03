@@ -15,7 +15,7 @@ from event_universe.node import Record, ports
 
 
 def frozen(gamma: int, content: Any) -> Any:
-    """Where a Node is frozen: its pace p_0^2 / Gamma rounds to 0, the content at or beyond `paces.frozen_content(gamma)` (about (Gamma div 2) ln(2 Gamma), beyond the width's reach of any body under the composed paces, ALGEBRA.md #the-paces, The paces compose), every one of its six coefficients 0 with it, so the Node is cut from its six neighbours and its share is not a number (the advisor, #1563 comment 5923771616; ALGEBRA.md #the-count-is-the-records-share, the frozen Node); a Link whose factor is 0 closes alone and its Nodes keep their shares; a reading never stops a run."""
+    """Where a Node is frozen: its pace p_0^2 / Gamma rounds to 0, the content at or beyond `paces.frozen_content(gamma)` (about (Gamma div 2) ln(2 Gamma), beyond the width's reach of any body under the composed paces, ALGEBRA.md #the-paces, The paces compose), every one of its six coefficients 0 with it, so the Node is cut from its six neighbours and its share is not a number (the advisor; ALGEBRA.md #the-count-is-the-records-share, the frozen Node); a Link whose factor is 0 closes alone and its Nodes keep their shares; a reading never stops a run."""
     return paces.link_pace_of(gamma, content) == 0
 
 

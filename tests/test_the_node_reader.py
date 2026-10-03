@@ -1,4 +1,4 @@
-"""The NodeReader (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the owner's words of 2026-10-03, a reader with Nodes alone is never on one Node and a reader with a record of its own may stand on one; src/event_universe/meeting.py, loader/instrument.py, loader/world.py): a record declared a reader over a connected region, laid in the weights' proportion, its outer Links cut and its inner Links open, taking and giving at one drawn Node of the region, every click a click line naming the reader and never a Node, the write's Node in the GAMEBOARD lay and face lines beside it."""
+"""The NodeReader (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the owner's words of 2026-10-03, a reader with Nodes alone is never on one Node and a reader with a record of its own may stand on one; src/event_universe/meeting.py, loader/node_reader_declaration.py, loader/world.py): a record declared a reader over a connected region, laid in the weights' proportion, its outer Links cut and its inner Links open, taking and giving at one drawn Node of the region, every click a click line naming the reader and never a Node, the write's Node in the GAMEBOARD lay and face lines beside it."""
 
 import ast
 import json
@@ -9,7 +9,7 @@ from event_universe import meeting, node, node_reader, world_files
 from event_universe.features.click import amplitude, spread, squared
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import node_reader_of
+from event_universe.loader.node_reader_declaration import node_reader_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
@@ -19,7 +19,7 @@ TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
 
 
 def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_path, monkeypatch):
-    """The reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the owner's words of 2026-10-03): the ion's three-part record declared over two adjacent Nodes in equal counts, the lay A_n^2 = A^2 / n at each, the share credited 1 by the count's rounding, the loader admitting it and refusing a region in pieces by name, the outer Links cut and the inner Link open (`meeting.cut`), the uniform mode at cos omega_0 = num / den to the bit over one window, the taking's hole at the Node drawn by the drive's share, the giving laid at the Node drawn by the record's share. The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/instrument.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's instrument. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0 and a rate without the instrument are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the instrument MATCH over 30 intervals back to the lay). (iii) The clicks: the first click takes the drive's quantum into P at the Node, the drive's record there after the face's two intervals the twin's two levels scaled below themselves and not 0 (the hole of a dense record, the drive at 55 quanta per Node, 2026-10-03) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later click gives one quantum to the light row and the counter credits it at a window's end (the world of 20 intervals, the counter's window 15), and where the credit took the row's count to 0 the erasing front begins at the entry Node: one erasure line per interval at the distances 1 to 5, and the same run without the front (its fronts dropped each interval) holds every level beyond the ball, the Link-metric distance above the intervals since the click, bit for bit (the front invisible ahead of itself); every click of the reader is one credit line, the one click line kind (the taking's and the giving's alike: the reader `body 0`, the family, the part before and after, the count moved and left, the family taken from or given to, the reader's clock and the window), carrying no Node, the Node written read from the GAMEBOARD lay lines of the write and the face books of the hole; the null window's re-lays that changed a level leave the same line labelled GAMEBOARD at the count 0. (iv) The acts from outside the Node as lines (the mathematician's 193 and 195 with the advisor's second, two hands): every line a lay changed at the Node writes one GAMEBOARD-labelled `lay` line with its levels and remainder before and after (the taking's four ion lines, the giving's light line, the null windows'), every face presented writes one `face` line carrying the value the books hold; the back-in-time gate (tools/back_in_time.py) reads MATCH over the whole run across the takings, the givings, the null windows, the credit and the fronts, the faces presented from the lines and the lays undone from theirs, and on the shipped Zeno and anticoincidence worlds, one step more returning the start. (v) The booking identity per act at every step on the ion, the drive and the light (tests/laws.py, `booked`): the share identity within the floors plus the face term at the hole's two intervals and at every shell of the front, and the lays' change of the share form local to the Node and its six neighbours, exact. (vi) The conversion's list through the one act: the drive at -1 and two other rows at +1 at the Node, no draw and the generator's state untouched, the counts moved by the row, one whole quantum laid on each row at the massless rotation, the two levels alike, and the dense drive's partial hole after two intervals, its levels standing below themselves and not 0. (vii) The generator consumed the same whether or not a count-0 record's inflow is booked: the anticoincidence world with the first record's window at 10, run with the front and without it, gives the same one taking and the same generator states, the second record's its seed (its open window after the click draws nothing), while the light's level at its Node is erased in the one run and stands in the other. (viii) The one-in-flight limit is not built, by name: the light row's count rises by one per giving before the counter's window and no giving is refused; the Zeno world gives nothing and its drive's count stands above 1."""
+    """The reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the owner's words of 2026-10-03): the ion's three-part record declared over two adjacent Nodes in equal counts, the lay A_n^2 = A^2 / n at each, the share credited 1 by the count's rounding, the loader admitting it and refusing a region in pieces by name, the outer Links cut and the inner Link open (`meeting.cut`), the uniform mode at cos omega_0 = num / den to the bit over one window, the taking's hole at the Node drawn by the drive's share, the giving laid at the Node drawn by the record's share. The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/node_reader_declaration.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's draw. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0 and a rate without the draw are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the draw MATCH over 30 intervals back to the lay). (iii) The clicks: the first click takes the drive's quantum into P at the Node, the drive's record there after the face's two intervals the twin's two levels scaled below themselves and not 0 (the hole of a dense record, the drive at 55 quanta per Node, 2026-10-03) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later click gives one quantum to the light row and the counter credits it at a window's end (the world of 20 intervals, the counter's window 15), and where the credit took the row's count to 0 the erasing front begins at the entry Node: one erasure line per interval at the distances 1 to 5, and the same run without the front (its fronts dropped each interval) holds every level beyond the ball, the Link-metric distance above the intervals since the click, bit for bit (the front invisible ahead of itself); every click of the reader is one credit line, the one click line kind (the taking's and the giving's alike: the reader `body 0`, the family, the part before and after, the count moved and left, the family taken from or given to, the reader's clock and the window), carrying no Node, the Node written read from the GAMEBOARD lay lines of the write and the face books of the hole; the null window's re-lays that changed a level leave the same line labelled GAMEBOARD at the count 0. (iv) The acts from outside the Node as lines (the mathematician's 193 and 195 with the advisor's second, two hands): every line a lay changed at the Node writes one GAMEBOARD-labelled `lay` line with its levels and remainder before and after (the taking's four ion lines, the giving's light line, the null windows'), every face presented writes one `face` line carrying the value the books hold; the back-in-time gate (tools/back_in_time.py) reads MATCH over the whole run across the takings, the givings, the null windows, the credit and the fronts, the faces presented from the lines and the lays undone from theirs, and on the shipped Zeno and anticoincidence worlds, one step more returning the start. (v) The booking identity per act at every step on the ion, the drive and the light (tests/laws.py, `booked`): the share identity within the floors plus the face term at the hole's two intervals and at every shell of the front, and the lays' change of the share form local to the Node and its six neighbours, exact. (vi) The conversion's list through the one act: the drive at -1 and two other rows at +1 at the Node, no draw and the generator's state untouched, the counts moved by the row, one whole quantum laid on each row at the massless rotation, the two levels alike, and the dense drive's partial hole after two intervals, its levels standing below themselves and not 0. (vii) The generator consumed the same whether or not a count-0 record's inflow is booked: the anticoincidence world with the first record's window at 10, run with the front and without it, gives the same one taking and the same generator states, the second record's its seed (its open window after the click draws nothing), while the light's level at its Node is erased in the one run and stands in the other. (viii) The one-in-flight limit is not built, by name: the light row's count rises by one per giving before the counter's window and no giving is refused; the Zeno world gives nothing and its drive's count stands above 1."""
     universe = json.loads((EVENTS / "shelved_ion" / "mercury_ion.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
@@ -31,7 +31,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         {"node": at, "weight": 1},
         {"node": beside, "weight": 1},
     ]  # the lay's weights, the count once
-    record = {"family": "ion", "nodes": nodes, "parts": parts, "instrument": draw}
+    record = {"family": "ion", "nodes": nodes, "parts": parts, "node_reader": draw}
     record["transitions"] = [
         {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
     ]
@@ -44,9 +44,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     }
     world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
     world.update(universe="u.json", engine="e.json", bodies=[record], messages=[drive])
-    world.update(node_readers=[counter], instrument={**draw, "window": 18, "seed": 24})
+    world.update(node_readers=[counter], draw={**draw, "window": 18, "seed": 24})
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
-    twin = {k: v for k, v in world.items() if k != "instrument"}
+    twin = {k: v for k, v in world.items() if k != "draw"}
     twin["bodies"] = [{k: v for k, v in record.items() if k in ("family", "nodes", "parts")}]
     (plain := tmp_path / "t.json").write_text(json.dumps(twin), encoding="utf-8")
     TOOL.main(["--input", str(path)]), TOOL.main(["--input", str(plain)])
@@ -55,7 +55,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     wrong = {"one part": {**record, "parts": [{**p, "count": 1} for p in parts]}}
     wrong["parts are"] = {**record, "transitions": [{**record["transitions"][0], "to": "X"}]}
     wrong["weight"] = {**record, "transitions": [{**record["transitions"][0], "weight": 0}]}
-    wrong["no `instrument`"] = {k: v for k, v in record.items() if k != "instrument"}
+    wrong["no `node_reader`"] = {k: v for k, v in record.items() if k != "node_reader"}
     edge = {**record["transitions"][0], "resonance": [1, 4]}  # cos Omega below 1 / 3: cos k below -1
     wrong["above the axis band's top"] = {**record, "transitions": [edge]}
     for word, body in wrong.items():
@@ -257,7 +257,10 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     fresh = GameBoard(load_world(path), (conv := []).append)  # the conversion's list through the one act
     counts, items = dict(fresh.credit.counts), [meeting.Item(drv, None, None, -1, (here,))]
     items += [meeting.Item(k, None, None, 1, (here,), TOP_PAIR, 1) for k in (weak, light)]
-    assert meeting.click(fresh, 7, None, [1], [items]) == (0, 7)  # one outcome: no draw, the state kept
+    assert meeting.click_act(fresh, 7, None, [1], [items]) == (
+        0,
+        7,
+    )  # one outcome: no draw, the state kept
     moved = {k: fresh.credit.counts[k] - counts[k] for k in (drv, weak, light)}  # the counts by the row
     assert moved == {drv: -1, weak: 1, light: 1} and int(fresh.quanta(light)[0].sum()) == 1
     laid = [(x["family"], x["line"], [x["after"][k] - x["before"][k] for k in (0, 1)]) for x in conv]
@@ -269,7 +272,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert all(
         0 < abs(int(getattr(fresh.states[drv].lines[0], k)[here])) for k in ("now", "before")
     )  # dense
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped instrument worlds
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped reader worlds
     zeno, photon = EVENTS / "zeno" / "zeno_4.json", EVENTS / "anticoincidence" / "one_photon.json"
     loaded = BACK.snapshot(z := GameBoard(load_world(zeno), (zlines := []).append))
     assert BACK.verdict(z, 48)["verdict"] == "MATCH" and z.step_inverse() is None  # the lays, the start
@@ -282,7 +285,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )  # the drive's record of many quanta, no giving in this world
     assert BACK.verdict(GameBoard(load_world(photon)), 40)["verdict"] == "MATCH"
     world = json.loads(photon.read_text(encoding="utf-8"))  # a window open after the click
-    world["bodies"][0]["instrument"]["window"], runs = 10, []
+    world["bodies"][0]["node_reader"]["window"], runs = 10, []
     (split := tmp_path / "split.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(split)])
     for front in (True, False):  # the count-0 record's inflow erased by the front, or standing
@@ -293,7 +296,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         level = int(b.states[ph].lines[0].now[tuple(np.add(b_at, b.offset))])
         runs.append((took, [k.state for k in b.credit.bodies], b.credit.counts[ph], level))
     assert runs[0][:3] == runs[1][:3] and len(runs[0][0]) == 1  # one taking, the generators alike
-    assert runs[0][1][1] == world["bodies"][1]["instrument"]["seed"] and runs[0][2] == 0  # no draw
+    assert runs[0][1][1] == world["bodies"][1]["node_reader"]["seed"] and runs[0][2] == 0  # no draw
     assert runs[0][3] == 0 != runs[1][3]  # the count-0 wave erased, or standing
     writers = set()  # every function of the engine that assigns a record's lines
     for module in (ROOT / "src" / "event_universe").rglob("*.py"):

@@ -69,7 +69,7 @@ def numbers(design: dict[str, Any]) -> dict[str, Any]:
 
 
 def world(design: dict[str, Any]) -> dict[str, object]:
-    """The world of the design: the board long on x and `width` across, the giver at the centre with its packet's width, the region node_reader of the band's top across x at the reach on the +x side, the instrument's window the run."""
+    """The world of the design: the board long on x and `width` across, the giver at the centre with its packet's width, the region node_reader of the band's top across x at the reach on the +x side, the draw's window the run."""
     found, row, light = numbers(design), design["giver"], design["light"]
     ticks = int(row["window"]) + int(design["passage_intervals"])
     giver = {
@@ -97,7 +97,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
                 "width": int(design["width"]),
             }
         ],
-        "instrument": {**design["generator"], "window": int(row["window"]), "seed": int(row["seed"])},
+        "node_reader": {**design["generator"], "window": int(row["window"]), "seed": int(row["seed"])},
     }
     width = int(design["width"])
     positions = [[found["node_reader_x"], y, z] for y in range(width) for z in range(width)]
@@ -115,7 +115,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "bodies": [giver],
         "messages": [],
         "node_readers": [node_reader],
-        "instrument": {
+        "draw": {
             **design["generator"],
             "window": ticks,
             "seed": int(design["node_reader"]["seed"]),

@@ -1,4 +1,4 @@
-"""The erasing front, the loop's act beside the receding face (the owner's word of 2026-10-03, 03:25 Israel, "it starts erasing at the speed of light"; the mathematician's 182 and 197 with the advisor's second, #1563 comment 5963124874 and #1572 comment 5963391333, two hands; ALGEBRA.md, The click writes on the GameBoard; features/front): when a record's count reaches 0 in the books, from every Node written in that draw, at every interval t after it the loop presents the face (features/click, `Face`) to that record alone on the shell of Nodes at Link-metric distance exactly t from the Node, one shell per interval from the interval after the click, the shells one interval behind the causal bound and inside the click's light cone (`features/front.shell`, the periodic axes wrapped as the receding face handles them), at each shell Node's inward Port, the one whose neighbour on the inner shell is already erased, for the next two intervals, so that Rule3 writes 0 for the level now and then for the level before and the Node's free step keeps (0, 0) with its remainder below one read coefficient, its inner neighbours at 0 since the shell before, its outer since the shell after; the ball of distance at most t is empty of the record, the past going out from the click at the causal bound, what stands beyond the ball holds the whole NodeState bit for bit as the run without the front holds it (the dependency radius one Link, the front invisible ahead of itself), and the inverse presents the same faces, so the back-in-time gate reads MATCH across every erasure interval; every other record untouched, a record whose count stays above 0 after a click has no front, nothing in the Node, nothing assigned at any Node; one erasure line per front per interval while its shell holds a Node, a GameBoard diagnostic beside the click line for the host's tool (the shell's Nodes and the levels standing there, the faces' take), and one last line with no Node where the shell leaves the declared board, the front's end. The fronts stand in the credit's books and at no Node."""
+"""The erasing front, the loop's act beside the receding face (the owner's word, "it starts erasing at the speed of light"; the mathematician's hand with the advisor's second, two hands; ALGEBRA.md, The click writes on the GameBoard; features/front): when a record's count reaches 0 in the books, from every Node written in that draw, at every interval t after it the loop presents the face (features/click, `Face`) to that record alone on the shell of Nodes at Link-metric distance exactly t from the Node, one shell per interval from the interval after the click, the shells one interval behind the causal bound and inside the click's light cone (`features/front.shell`, the periodic axes wrapped as the receding face handles them), at each shell Node's inward Port, the one whose neighbour on the inner shell is already erased, for the next two intervals, so that Rule3 writes 0 for the level now and then for the level before and the Node's free step keeps (0, 0) with its remainder below one read coefficient, its inner neighbours at 0 since the shell before, its outer since the shell after; the ball of distance at most t is empty of the record, the past going out from the click at the causal bound, what stands beyond the ball holds the whole NodeState bit for bit as the run without the front holds it (the dependency radius one Link, the front invisible ahead of itself), and the inverse presents the same faces, so the back-in-time gate reads MATCH across every erasure interval; every other record untouched, a record whose count stays above 0 after a click has no front, nothing in the Node, nothing assigned at any Node; one erasure line per front per interval while its shell holds a Node, a GameBoard diagnostic beside the click line for the host's tool (the shell's Nodes and the levels standing there, the faces' take), and one last line with no Node where the shell leaves the declared board, the front's end. The fronts stand in the credit's books and at no Node."""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ def inward(mask: np.ndarray, inner: np.ndarray, board: GameBoard) -> np.ndarray:
     return np.where(found < 0, 0, found)
 
 
-def advanced(board: GameBoard) -> None:
+def advanced_fronts(board: GameBoard) -> None:
     """Every front one shell further at the end of an interval: the faces of the record's every line at the shell at the Link-metric distance of the intervals since the click, for the next two intervals at each Node's inward Port, the shell wrapped on the periodic axes and read at the file's coordinates by the offset of the layers grown before the origin; a front whose shell lies beyond the board ends; one erasure line per front where the shell holds a Node."""
     kept = []
     for index, origin, since in board.credit.fronts:
@@ -44,8 +44,8 @@ def advanced(board: GameBoard) -> None:
         mask = shell(board.shape, (at[0], at[1], at[2]), distance, board.world.periodic)
         family, state = board.families[index], board.states[index]
         if not bool(mask.any()):  # the shell beyond the declared board: the front ends, one line
-            if board.observer is not None:
-                board.observer(erasure(board.tick, family.name, list(origin), distance, 0, 0))
+            if board.output is not None:
+                board.output(erasure(board.tick, family.name, list(origin), distance, 0, 0))
             continue
         ports = inward(
             mask, shell(board.shape, (at[0], at[1], at[2]), distance - 1, board.world.periodic), board
@@ -68,8 +68,8 @@ def advanced(board: GameBoard) -> None:
                         Face(index, line, node_at, port, tick)
                     )
         kept.append((index, origin, since))
-        if board.observer is not None:
-            board.observer(
+        if board.output is not None:
+            board.output(
                 erasure(board.tick, family.name, list(origin), distance, int(mask.sum()), standing)
             )
     board.credit.fronts = kept

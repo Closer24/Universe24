@@ -76,7 +76,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         ],
         "node_readers": node_readers,
         "receding": design["receding"],
-        "instrument": design["instrument"],
+        "draw": design["draw"],
     }
 
 
@@ -115,7 +115,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "pattern": [first, last],
         "spacing": design["spacing"],
         "seed": design["seed"],
-        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the instrument's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks.",
+        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the draw's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks.",
         "counts": rounded(blind),
         "through": through,
         "maxima": maxima,

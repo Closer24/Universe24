@@ -1,4 +1,4 @@
-"""The back-in-time gate (the owner's word of 2026-09-30: a check that the board can be taken back in time): a world is run N intervals forward after its first interval and N back by the GameBoard's own inverse, and every array of every family (every line's levels now and before and its remainder, every held line's write remainder) and the interval counter are compared bit for bit with the state at the same interval on the way forward: the verdict MATCH, or MISS naming the first interval, the family, the array and the first Node that differ; a GameBoard with a receding face is compared at the shape it had at that interval, the layers a step grew taken off by its inverse, and a run that ends at the largest size before N intervals goes back over the intervals it ran, the end named. The instruments' acts from outside the Node are crossed from the GAMEBOARD-labelled lines the forward run wrote (ENGINE.md, section 3, act 6; the mathematician's 193 and 195 with the advisor's second, two hands): the faces presented at the clicks' Nodes and on the fronts' shells are rebuilt from the `face` lines into the books' log, emptied first, so the inverse presents the lines' values and nothing the books kept (`faces_from`), and before each step back every line a lay changed at that interval (the taking's and the giving's lays, the given quantum's, the null window's re-lay) is set back to its levels before the lay from the `lay` lines (`crossed`), the lay's line the crossing, so that Rule3's inverse runs through the click; the start is the loaded state, which one step back from the first interval returns. A host tool and no state of the law.
+"""The back-in-time gate (the owner's word of 2026-09-30: a check that the board can be taken back in time): a world is run N intervals forward after its first interval and N back by the GameBoard's own inverse, and every array of every family (every line's levels now and before and its remainder, every held line's write remainder) and the interval counter are compared bit for bit with the state at the same interval on the way forward: the verdict MATCH, or MISS naming the first interval, the family, the array and the first Node that differ; a GameBoard with a receding face is compared at the shape it had at that interval, the layers a step grew taken off by its inverse, and a run that ends at the largest size before N intervals goes back over the intervals it ran, the end named. The NodeReaders' acts from outside the Node are crossed from the GAMEBOARD-labelled lines the forward run wrote (ENGINE.md, section 3, act 6; the mathematician's 193 and 195 with the advisor's second, two hands): the faces presented at the clicks' Nodes and on the fronts' shells are rebuilt from the `face` lines into the books' log, emptied first, so the inverse presents the lines' values and nothing the books kept (`faces_from`), and before each step back every line a lay changed at that interval (the taking's and the giving's lays, the given quantum's, the null window's re-lay) is set back to its levels before the lay from the `lay` lines (`crossed`), the lay's line the crossing, so that Rule3's inverse runs through the click; the start is the loaded state, which one step back from the first interval returns. A host tool and no state of the law.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -19,7 +19,7 @@ from event_universe.node import NodeState, Record
 from event_universe.world_files import load_world
 
 Snapshot = list[tuple[str, np.ndarray]]
-Lines = list[dict[str, object]]  # the output lines of a run, as the GameBoard's observer receives them
+Lines = list[dict[str, object]]  # the output lines of a run, as the GameBoard's output receives them
 
 
 def arrays_of(name: str, state: NodeState) -> Snapshot:
@@ -85,14 +85,14 @@ def crossed(board: GameBoard, lines: Lines) -> None:
 
 def verdict(board: GameBoard, intervals: int) -> dict[str, object]:
     """The gate on a loaded GameBoard: the first interval, then `intervals` forward with a snapshot after each (fewer where the run ends at a receding face's largest size, `ended`) and the output lines kept, then as many back, the faces presented from the `face` lines and each interval's lays undone from its `lay` lines (`faces_from`, `crossed`), each step back compared with the snapshot of its interval; MATCH, or MISS with the first interval, array and Node that differ."""
-    kept, lines = board.observer, []
+    kept, lines = board.output, []
 
     def observed(line: dict[str, object]) -> None:
         lines.append(line)
         if kept is not None:
             kept(line)
 
-    board.observer = observed
+    board.output = observed
     board.step()
     snapshots, run = {board.tick: snapshot(board)}, 0
     for _ in range(intervals):
@@ -110,7 +110,7 @@ def verdict(board: GameBoard, intervals: int) -> dict[str, object]:
         if found is not None:
             label, at = found
             return {"verdict": "MISS", "interval": board.tick, "array": label, "node": at}
-    board.observer = kept
+    board.output = kept
     return {"verdict": "MATCH", "intervals": run, "interval": board.tick, "ended": ended}
 
 

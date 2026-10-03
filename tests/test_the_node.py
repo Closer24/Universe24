@@ -16,7 +16,7 @@ from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, link_factor, rule3
 from event_universe.features.start import rest
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import HeldWrite, count_wall, family_rules, held_write
+from event_universe.loader.derived import HeldWrite, count_wall, family_rules, held_write_of
 from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import BodyRow
 from event_universe.world_files import input_digest, load_world
@@ -29,7 +29,7 @@ WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remaind
 ROWS = ("held", (4, 4), 4, 7), ("gapped", (3, 4), 1, 7), ("quanta", (5, 7), 1, None)
 BOX = (slice(1, -1),) * 3  # the inner Nodes of an array padded by one Node on every side
 HELD, GAPPED, QUANTA = family_rules(real_rows(*ROWS))
-WRITE = held_write((HELD, GAPPED, QUANTA), 0, 64)  # the massless row's one write per part at T = 64
+WRITE = held_write_of((HELD, GAPPED, QUANTA), 0, 64)  # the massless row's one write per part at T = 64
 UNIVERSE_ROWS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
 INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))  # the tests' universe
 UNIT = INTEGERS["link_unit"]  # the Link's unit G of the tests' universe
@@ -37,7 +37,7 @@ NAMES = [family.name for family in FAMILIES]
 MATTER, GRAVITY, CHARGE = (NAMES.index(name) for name in ("matter", "gravity", "charge"))
 GAMMA, T = INTEGERS["node_clock"], INTEGERS["quantum_action"]
 PROFILE = [0, 0, 0, 200, 400, 600, 800, 1000, 1000, 800, 600, 400, 200, 0, 0, 0]
-WALLS = [held_write(FAMILIES, i, T).walls if f.held else () for i, f in enumerate(FAMILIES)]
+WALLS = [held_write_of(FAMILIES, i, T).walls if f.held else () for i, f in enumerate(FAMILIES)]
 
 
 def by_hand(a: np.ndarray, node: tuple[int, int, int]) -> tuple[int, ...]:
@@ -70,7 +70,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     assert origins == [wall // 2 for wall in WRITE.walls]
     rows = ("row", (1, 1), 4, 5), ("a", (1, 4), 1, None), ("b", (5, 6), 1, None)
     mixed = family_rules(real_rows(*rows))
-    assert held_write(mixed, 0, 10) == HeldWrite((50, 1800, 1800, 1800), {1: 3, 2: 2})
+    assert held_write_of(mixed, 0, 10) == HeldWrite((50, 1800, 1800, 1800), {1: 3, 2: 2})
     rng, (reads, s, w) = np.random.default_rng(3), coefficients(2, 3, 1000, 1000, 1000)
     gap, chain = np.zeros((1, 1, 1), dtype=np.int64), Wrap(False, True, True)
     half = [rng.integers(-1000, 1000, (20, 1, 1)) for _ in range(3)]
@@ -300,7 +300,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     shape, wrap, matter = (16, 1, 1), Wrap(False, True, True), FAMILIES[MATTER]
     for moving in (True, False):
         turns = ((1, 0, -1, 0), (0, -1, 0, 1)) if moving else ((1,), (1,))
-        record, write = chain_record(*turns), held_write(FAMILIES, GRAVITY, T)
+        record, write = chain_record(*turns), held_write_of(FAMILIES, GRAVITY, T)
         wall = count_wall(matter, T)
         held = node.empty_state(FAMILIES[GRAVITY], shape, write.walls, np.int64)
         count = share.quanta_of(share.family_share(matter, (record,), wrap, GAMMA), wall, np.int64)
@@ -342,7 +342,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
 
     def scaled(now: np.ndarray) -> np.ndarray:  # the write per proper volume at the row's own paces
         clock, pace = paces.node_paces(GAMMA, now)
-        return np.asarray(node.written(source * T, (clock, (pace, pace, pace)), GAMMA, 2))
+        return np.asarray(node.rulers_write_factor(source * T, (clock, (pace, pace, pace)), GAMMA, 2))
 
     reads, self_coefficient, rule_wall = node.rule_of(binding, GAMMA, levels)  # the integer line at rest
     numerator = sum(r * a for r, a in zip(reads, node.ports(levels, wrap), strict=True))
