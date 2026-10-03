@@ -486,8 +486,7 @@ def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_pat
     begun, state = list(stepped.states[vector].lines), stepped.states[vector]
     stepped.step_inverse()
     assert BACK.first_difference(BACK.snapshot(random_state(cube, 11)), BACK.snapshot(stepped)) is None
-    content, factors = stepped.read(vector)
-    pair, wrap = families[vector].pair, stepped.wrap
+    (content, factors), pair, wrap = stepped.read(vector), families[vector].pair, stepped.wrap
     own = sum(share.share(pair, line, wrap, GAMMA, content, factors, UNIT) for line in state.lines)
     forms = sum(node.form([a], [b]) for a, b in zip(state.lines, begun, strict=True))
     assert len(state.lines) == 3 and not state.write_remainders and len(begun) == 3

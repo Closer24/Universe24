@@ -233,3 +233,30 @@ the screened profile but rings with waves of 10 to 20 levels, and the massless c
 alike (a finding by name); the screening at the start is about a third of the law's line's within
 4 Links and absent beyond, a MISS against the blind and the line, read at the level of one to a
 few levels. (ii)'s line 7 and (iii)'s line 1 stand unread, not passed.
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (on main fb284717): the write's factor booked as one rounding
+of the count times p_x p_y p_z over the one wall, the product exact beyond the width
+(`paces.write_factor`; the advisor's and the mathematician's lines, #1563 comments 5959617991
+and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
+line within one fine unit at every Node by the scaled residual in integers (`features/start`,
+`refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
+number below a GameBoard reading labelled so unless a detector clicked; a miss against the
+blind is a finding by name, never adjusted; a world refused by name is recorded verbatim.
+
+- **The lay**: `well.json`, the same body as world (i)'s pixel on the rows with gravity at the
+  level weight 10, was re-laid by the generator on this engine from 00:44Z and stopped by the
+  worker at 00:58Z at its round 6 of about sixteen (the night's budget, the owner's word of
+  03:39 Israel: the report at 05:00; the pixel's lay beside it took 23 minutes and sixteen rounds),
+  its files restored to the committed lay (the clock [2967, 2142] = 1.3851, 10,000 quanta, the
+  record over 9,693 Nodes), laid under the three ordered roundings and the stop alone: a re-lay
+  that did not finish, by name, and no reading of the lay on this engine.
+- **The committed world loaded on the fixed engine**: `well.json` LAWFUL at load in 130 s (the start of
+  the two holders at the body's own paces under the refined rest), the gate admitting its declared
+  count against the share read at those paces, 10,417 quanta of matter by the books.
+- **The blind**: the well's line 7 (the massless row's rest about the body, the lattice constants)
+  stands unread on this engine, by name; the second reading's lines are the last reading. The
+  cause the advisor named for the holder's ringing, the rest short of its line in the board's
+  lowest mode, is closed by the refined rest (ENGINE.md section 3; on world (i)'s pixel, read on
+  this engine, gravity's level at the body still moves over the run, the finding named there).

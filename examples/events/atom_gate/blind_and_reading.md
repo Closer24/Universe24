@@ -306,3 +306,13 @@ by the clock before its verdict (above); no run. `hydrogen_2s_large.json`: decla
 Every reading above is on the engine before the rest's fix (the caveat of 175 item 5: the sign
 row's rest short of its static line by up to 207 fine units on the 31-cube); the worlds are to be
 re-laid once when the scaled-residual correction lands.
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (the write's factor as one rounding over the one wall, the
+start's rest refined to its line within one fine unit; ENGINE.md section 3) lays nothing here:
+the atom gate's round above (#1683) landed after this round's lays, its toy world's mode file
+was laid by main's generator on the engine before the two fixes and is not laid anew tonight, by
+name (the start's rest under it differs at the rounding, as every world's does); the large worlds
+and `hydrogen_1s.json` and `hydrogen_2s.json` stand declared without mode files, refused at load
+by name as before; the blind stands as written.

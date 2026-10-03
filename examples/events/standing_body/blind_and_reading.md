@@ -99,3 +99,52 @@ solve to one level on a point source, both pairs).
 
 What the short run does not test (163 (2), 165): the body's standing over long runs and the line
 as a click.
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (on main 3f2cc9bd): the write's factor booked as one rounding
+of the count times p_x p_y p_z over the one wall, the product exact beyond the width
+(`paces.write_factor`; the advisor's and the mathematician's lines, #1563 comments 5959617991
+and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
+line within one fine unit at every Node by the scaled residual in integers (`features/start`,
+`refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). The
+world re-laid by the generator on this engine and the blind rebuilt byte for byte by the
+builder; every number below a GameBoard reading labelled so (`tools/body_standing.py`); a miss
+against the blind is a finding by name, never adjusted.
+
+- **The lay** (`standing_15`, the stop 2, the generator's reading before any run): converged at
+  the pass 8 (16 on the engine before; the trajectory in the mode file: the content's largest
+  change 96, 17, 16, 9, 3, 2, 1, 1 and the record's 131, 79, 47, 24, 9, 4, 2 from the pass 2),
+  the amplitude 1,885 (the clock pair [2596, 1885], 2 cos omega_b = 1.3772, against 1,865 and
+  [2566, 1865] = 1.3759 before), 9,992 quanta over 1,527 Nodes, 82 at the centre (9,987 over
+  1,551 Nodes, 79 at the centre, before), the mode file's record over 11,249 Nodes (11,441);
+  62 minutes of wall time on a shared box (about 9 minutes of CPU). `standing_19` stays
+  declared without a mode file, refused at load by name.
+- **The reading at T = 2^15, n = 1000** (`tools/body_standing.py`, 11.6 minutes of wall time on
+  the shared box): **read 1**, the centroid 12, 12, 12 at the start and at the end on every
+  axis, the drift exactly 0 (the blind's 3 x 10^-3 Links: pass). **Read 2**, rho_s 1.83 percent at
+  n = 250, 3.82 at 500, 4.18 at 750, 3.61 at 1000 (1.58, 2.07, 5.20 and 3.94 on the engine
+  before) against the lay's expected 0.49 and 0.98 percent: a finding by name, as before; the
+  ratio rho_s(1000) / rho_s(250) = 1.97, within the blind's 2 by 5 percent (2.49 before), but the
+  series is no sqrt(n) walk: the deviation rises to 9.3 percent at the interval 130, falls to 1.3
+  at 240 and swings between 1.5 and 7.6 after, the local maxima 4.2 intervals apart on the mean
+  (half the rotation's period, the real mode's own breathing, as the second reading named it) and
+  no line at the lowest mode's period of 52; the 2^19 world not laid, the ratio between the two T
+  unread. **Read 3**, cos omega_read over the 495 intervals of at least half the record's largest
+  weight: least 0.68826 at the interval 121, largest 0.69490 at 879, the spread 6.6 x 10^-3 against
+  the blind's 10^-5 (7.2 x 10^-3 before), a finding by name as before (the mathematician's 172 and
+  the advisor's second hand name it the real mode's near-singular intervals, the restated read 3
+  being another worker's); the accumulated ratio 0.69062; the first interval's 2 cos omega 1.37715
+  against the lay's clock pair 1.3772. **Read 4, the 48 images**: every line of every family kept
+  its 48 images about the centre to the bit, levels, remainders and write remainders, through the
+  interval 1000, the whole run, no departure (515 and the departure at 516 on gravity's tension
+  lines before): the finding of the body round's read 4 is closed by the write's one rounding
+  (`tests/test_the_bound_body.py` asserts it on this world). **The books at the end**: the share
+  6,222,824,121,666, 10,550 quanta, the drift +156,330,765,293 in the current's units (+265 quanta
+  over 1000 intervals, 2.6 percent of the count; +332 before), the least pace 4,938, no frozen Node.
+- **The known cause above, closed**: the start's rest is refined to the row's static line within
+  one fine unit at every Node (ENGINE.md section 3; on the point source of 3,000 quanta at this
+  cube's centre the massless row's rest stands at 1682 against the exact line's 1682.19 and the
+  binding row's at 1677 against 1676.55, where the stop alone left them 1677 and 1674,
+  `tests/test_the_features.py`); the body's holders rest on that line, so no ringing at the lowest
+  mode's period is left to find in this series, and none is read.
