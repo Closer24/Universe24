@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
+        79,
+        "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
+        "the band's line with the transverse mode, the loader's three refusals, the lay on an open board with the "
+        "carrier's phase at Omega, the blind",
+    ),
     "tests/test_the_meeting.py::test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands": (
         36,
         "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the hole of a "
@@ -81,6 +87,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the sign, item 43 (1)): two charged records of count 1 on a chain, each its own record and its own row "
         "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
         "self-read 0 to the bit over three intervals, a count above 1 refused by name",
+    ),
+    "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
+        70,
+        "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
+        "window bounded by the probe's lays, the lay by the count at the declared tick, the probe's click and the "
+        "drive's taking by the labels' squares, the body's clock and the window's index on the jump line, the "
+        "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

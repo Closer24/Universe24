@@ -19,13 +19,14 @@ from event_universe.loader.instrument import (
     basis_of,
     instrument_of,
     node_instrument_of,
+    packet_form,
     pattern_of,
     patterns_of_the_law,
     ports_of,
 )
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
-from event_universe.loader.messages import MessageRow, messages_of
+from event_universe.loader.messages import MessageRow, WholeMessage, messages_of, wholes_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 from event_universe.loader.universe import universe_of
 
@@ -75,7 +76,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors, the receding faces, the instrument and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)'s draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine)."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the detectors, the receding faces, the instrument and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)'s draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -96,6 +97,9 @@ class World:
     receding: tuple[RecedingFace, ...]
     instrument: Instrument | None
     lay: Lay | None  # the lay the world declares for its bodies and its tolerance (`loader/lay.py`)
+    wholes: tuple[
+        WholeMessage, ...
+    ] = ()  # the messages laid whole at a tick of the run (`loader/messages.py`)
 
 
 def kind_of(width: int) -> type:
@@ -111,8 +115,9 @@ def bodies_of(
     shape: Node,
     bound: int,
     beyond: tuple[Node, ...],
+    action: int,
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board; a body of a family that reads a holder of the sign, `derived.charged`, is one quantum of its family, one Node with the count 1, and a count above it is refused by name with the way to declare many quanta, that many bodies of count 1, each its own record and its own row of the sign, ALGEBRA.md, No record reads its own write of the sign) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board; a body of a family that reads a holder of the sign, `derived.charged`, is one quantum of its family, one Node with the count 1, and a count above it is refused by name with the way to declare many quanta, that many bodies of count 1, each its own record and its own row of the sign, ALGEBRA.md, No record reads its own write of the sign) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`; its givings' lay decided by the board's shape against the declared width at the quantum action T, `packet_form`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
@@ -156,6 +161,7 @@ def bodies_of(
             )
         if parted:
             parts = node_instrument_of(body, label, families, family, quanta, sum(counts))
+            parts = packet_form(parts, label, families, nodes[0], shape, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed = laid.index(entry)
@@ -305,13 +311,16 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     width = integers["width"]
     bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
-    bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
+    bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond, action)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
+    ticks = integer(world["ticks"], "ticks", 0)
+    wholes = wholes_of(world.get("messages", []), families, shape, beyond, ticks)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
     detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, layer)
     regions_of_the_law(detectors, messages, shape, (periodic[0], periodic[1], periodic[2]), families)
     laid = [message.family for message in messages] + [body.family for body in bodies]
+    laid += [whole.family for whole in wholes]
     patterns_of_the_law([(d.name, d.pattern) for d in detectors], laid, families)
     # the world's records: a charged family's bodies each a record owning one row of the sign, every
     # holder of the sign one row per charged record beside the free row (derived.with_records)
@@ -319,7 +328,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
-    ticks, pairs = integer(world["ticks"], "ticks", 0), [families[b.family].pair for b in bodies]
+    pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)
     return World(
         shape,
@@ -341,4 +350,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         receding,
         instrument,
         lay,
+        wholes,
     )
