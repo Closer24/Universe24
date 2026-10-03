@@ -142,7 +142,7 @@ STUFF = {"name": "stuff", "pair": [4000, 6000], "reads": {"hollow": 2}, "dimensi
 OTHER = {"name": "other", "pair": [4000, 6000], "reads": {"core": 1}, "dimension": 1}
 SIGN = {"name": "sign", "pair": [1, 1], "reads": {}, "held": {**HELD, "sources": ["wronskian"]}}
 SIGN["held"].update(level_weight=1, write_weight=1, act="rotation")
-TUBE, TURN = "light_and_charge/charged", "like_or_unlike/turning"  # the charged universes
+TUBE, TURN = "charged", "turning"  # the charged universes at examples/events/, the tests' alone
 WRITES = {(TUBE, "charge"): 4, (TURN, "charge"): 400}  # k_w = 4 E_h
 
 

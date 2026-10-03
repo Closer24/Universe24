@@ -22,11 +22,6 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   `pattern`, the blind `expectation.json` beside them (M = -4 exactly, local
   realism at most 2), read by the same `tools/bell_gate.py`; the back-in-time
   gate, `tools/back_in_time.py`, says MATCH on every world;
-- and the rotation round's look, `examples/events/like_or_unlike/`: two bodies of
-  the charged family on a chain, like or unlike senses, under the holder of the
-  sign's declared act `rotation`, with the neutral and the plain controls and the
-  blind `expectation.json` written first, a GameBoard reading of the bodies'
-  drifts by `tools/body_drift.py` and no measurement;
 - and the families round's worlds, each one family's act on the rule's own
   rows, each folder its `design.json`, its `build_world.py` and its blind
   `expectation.json` written first from the advisor's numbers:
@@ -34,9 +29,7 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   25-cube and the cloud on the 41-cube, the rest rotation, the
   tail and the drift), `examples/events/matter_and_gravity/` (the massless row's
   rest about a pixel in levels, 3 G(r) s, on its own universe with gravity at the
-  level weight 10) and `examples/events/light_and_charge/` (a packet of light along
-  a tube past no body onto a screen of regions, the arrival read by
-  `tools/click_counts.py`, on its universe file `charged.json`); the bodies' worlds are read by `tools/body_rest.py`, a
+  level weight 10); the bodies' worlds are read by `tools/body_rest.py`, a
   GameBoard reading of a body's rotation, tail, centroid and well and of every
   held row's level along the axes from its centre, and of the regions' field lines
   from a run's output;
@@ -102,11 +95,9 @@ PYTHONPATH=src python tools/bell_gate.py --expectation examples/events/ghz/expec
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json
 PYTHONPATH=src python tools/run_inputs.py --out runs/nuclide examples/events/nuclide/free_nuclide.json
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/nuclide/free_nuclide.json
-PYTHONPATH=src python tools/body_drift.py --expectation examples/events/like_or_unlike/expectation.json examples/events/like_or_unlike/uncharged_pair.json examples/events/like_or_unlike/uncharged_alone_first.json examples/events/like_or_unlike/uncharged_alone_second.json
-for f in matter_alone matter_and_gravity light_and_charge; do PYTHONPATH=src python examples/events/$f/build_world.py --modes; done
+for f in matter_alone matter_and_gravity; do PYTHONPATH=src python examples/events/$f/build_world.py --modes; done
 PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_alone/expectation.json examples/events/matter_alone/pixel.json examples/events/matter_alone/cloud.json
 PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_and_gravity/expectation.json examples/events/matter_and_gravity/well.json
-PYTHONPATH=src python tools/run_inputs.py --out runs/light examples/events/light_and_charge/free.json && PYTHONPATH=src python tools/click_counts.py --world examples/events/light_and_charge/free.json --output runs/light/free.output.json --expectation examples/events/light_and_charge/expectation.json
 ```
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and
