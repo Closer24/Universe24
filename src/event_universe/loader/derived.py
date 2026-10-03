@@ -11,6 +11,13 @@ from event_universe.features.currents import AXIS_PORTS, PORTS, PRODUCTS
 from event_universe.features.read import edge_of
 from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK
 
+PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
+REAL_LINE, PLANE_LINE = (
+    "real",
+    "plane",
+)  # the kinds of a record's lines, the shape by name (the two hands of 2026-10-03)
+KINDS = (REAL_LINE, PLANE_LINE)
+
 
 @dataclass(frozen=True)
 class Row:
@@ -64,6 +71,16 @@ class FamilyRule(Row):
     def width(self) -> int:
         """The lines of one part of one record, the lines in all over the parts and the records: a family of quanta's dimension, one real line, a plane's two or the three of a record of three real lines; a held row's time line with its axis lines (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
         return self.lines // (self.parts * self.records)
+
+    @property
+    def planes(self) -> int:
+        """The planes of one part of one record, half its lines where its lines are planes (re and im, `PLANE`), 0 for real lines: one for charged matter, three for a record declared as three planes."""
+        return self.width // PLANE if self.plane else 0
+
+    @property
+    def laid(self) -> int:
+        """The lines of one part the laid pair goes to, one per real line and one per plane (its first line, the second line its sense): the count of a body's or a message's `weights` (`keys.weights_of`, `GameBoard.lay`)."""
+        return self.planes if self.plane else self.width
 
     @property
     def several(self) -> bool:
@@ -240,10 +257,12 @@ def largest_of(width: int) -> int:
 
 
 def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) -> int:
-    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products, or the form's two per line of its record (now^2 and next x before); where the source's record is turned (`turns`) the booking is read from the step's levels before the turn, each within twice A once A is read as A + 2 (features/rotation, `TURNED_REACH`, `TURNED_SLACK`; `amplitude_bound`): the Wronskian's two products of a turned level and a level, the form's now^2 and the two turned levels' product per line."""
+    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products per plane of the part (three planes thrice), or the form's two per line of its record (now^2 and next x before); where the source's record is turned (`turns`) the booking is read from the step's levels before the turn, each within twice A once A is read as A + 2 (features/rotation, `TURNED_REACH`, `TURNED_SLACK`; `amplitude_bound`): the Wronskian's two products of a turned level and a level, the form's now^2 and the two turned levels' product per line."""
     reach = TURNED_REACH if turns(families, index) else 1
     if wronskian:
-        return PRODUCTS * reach
+        return (
+            PRODUCTS * reach * (families[index].planes or 1)
+        )  # every plane of the part its two products
     return families[index].record * (1 + reach * reach if reach > 1 else PRODUCTS)
 
 

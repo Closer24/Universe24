@@ -126,7 +126,7 @@ def messages_of(
                 weights_of(
                     message.get("weights"),
                     f"{label}.weights",
-                    families[family].width,
+                    families[family].laid,
                     families[family].plane,
                 ),
             )

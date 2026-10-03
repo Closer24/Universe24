@@ -22,7 +22,7 @@ from event_universe.features.read import (
     link_tensions,
     plain,
 )
-from event_universe.loader.derived import FamilyRule, row_of, turns
+from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns
 from event_universe.plane import NO_FACE, Angles, Faces, Rule, step_plane
 from event_universe.records import (  # the lines, their readings and their states, the Node's own
     Booking as Booking,
@@ -252,7 +252,7 @@ def step_family(
     lines: list[Record] = []
     first: list[Record] = []
     second: list[Record] = []
-    for start in range(0, len(own), family.width):
+    for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
         pair = planes[start], planes[start + 1]
         at = faced.get(span.start + start, NO_FACE), faced.get(span.start + start + 1, NO_FACE)
         found, (begun, left) = step_plane(*pair, rule, wrap, angles, gamma, direction, at)
