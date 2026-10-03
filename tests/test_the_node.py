@@ -107,7 +107,6 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     rows = ("row", (1, 1), 4, 5), ("a", (1, 4), 1, None), ("b", (5, 6), 1, None)
     mixed = family_rules(real_rows(*rows))
     assert held_write(mixed, 0, 10) == HeldWrite((50, 1800, 1800, 1800), {1: 3, 2: 2})
-
     rng, (reads, s, w) = np.random.default_rng(3), coefficients(2, 3, 1000, 1000, 1000)
     gap, chain = np.zeros((1, 1, 1), dtype=np.int64), Wrap(False, True, True)
     half = [rng.integers(-1000, 1000, (20, 1, 1)) for _ in range(3)]
@@ -115,11 +114,9 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     r = np.concatenate([half[2] % w, gap, records.complement(half[2] % w, w)[::-1]])
     for _ in range(200):  # the mirrored odd line steps mirrored to the bit with complement remainders
         b, a, r = a, *(np.asarray(x) for x in rule3(reads, node.ports(a, chain), s, w, a, b, r))
-        assert np.array_equal(a, -a[::-1]) and np.array_equal(
-            r[:20], records.complement(r, w)[::-1][:20]
-        )
+        assert np.array_equal(a, -a[::-1]) and (r[:20] == records.complement(r, w)[::-1][:20]).all()
     assert all((w - 1 - u) // w == -(u // w) for u in range(-40, 40) for w in range(1, 9))
-    origins = records.write_origins((10, 11), (3, 1, 1), np.int64, (np.arange(3).reshape(3, 1, 1) == 0,))
+    origins = records.write_origins((10, 11), (3, 1, 1), np.int64, (np.indices((3, 1, 1))[0] == 0,))
     assert [o.ravel().tolist() for o in origins] == [[4, 5, 5], [5, 5, 5]]
 
 

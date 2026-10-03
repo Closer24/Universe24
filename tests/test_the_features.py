@@ -96,34 +96,29 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     rows = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
     row = next(entry for entry in rows if entry["name"] == "binding")
     (num, den), weight, exact = row["pair"], row["held"]["level_weight"], {}
-    for shape, wrap, w in (((25, 25, 25), OPEN_CUBE, 1), ((128, 1, 1), OPEN_CHAIN, 100)):  # the source
+    for shape, wrap, q in (((25, 25, 25), OPEN_CUBE, 3000), ((128, 1, 1), OPEN_CHAIN, 30)):  # the source
         counts, c = np.zeros(shape, dtype=np.int64), tuple(n // 2 for n in shape)
-        counts[c] = 3000  # 3,000 quanta at the centre over the divisor w (a chain's rest a tent, so 100)
+        counts[c] = q  # q quanta at the centre at the divisor 1 (a chain's rest a tent, so a hundredth)
         for pair in ((6000, 6000), (num, den)):
-            found = rest(counts, pair, wrap, w, MAX_WORK_INT, 3 * pair[1], 6000, **OWN)
-            own = paces.node_paces(6000, found.content)  # the row's own composed paces
-            clock, pace = (np.asarray(p).astype(float) for p in own)
+            found = rest(counts, pair, wrap, 1, MAX_WORK_INT, 3 * pair[1], 6000, **OWN)
+            clock, pace = paces.node_paces(6000, found.content)  # the row's own composed paces
             paths = [diags([1.0, 1.0], [-1, 1], shape=(n, n)) if n > 1 else [[2.0]] for n in shape]
             links = kronsum(kronsum(paths[0], paths[1]), paths[2])  # a folded axis its Node twice
             divisor = 6 * (pair[1] - pair[0]) * clock**2 + 6 * pair[0] * pace**2  # the Node's term
             operator = (diags(divisor.ravel()) - diags((pair[0] * pace**2).ravel()) @ links).tocsr()
-            scaled = scaled_source(counts * (3 * pair[1] * found.unit) // w * 6000**2, *own, 6000, 2)
-            exact[shape, pair] = spsolve(operator, scaled.ravel() / found.unit).reshape(shape)
-            assert (np.abs(found.levels - exact[shape, pair]) <= 1).all(), (shape, pair)
+            scaled = scaled_source(counts * 3 * pair[1] * found.unit * 6000**2, clock, pace, 6000, 2)
+            exact[shape[0], pair] = spsolve(operator, scaled.ravel() / found.unit).reshape(shape)
+            assert (np.abs(found.levels - exact[shape[0], pair]) <= 1).all(), (shape, pair)
             long = [(a, s) for a in range(3) if shape[a] > 1 for s in (1, -1)]  # the long axes' Ports
             at = {int(np.moveaxis(found.levels, a, 0)[(c[0] + s, *c[1:])]) for a, s in long}  # isotropy
             assert len(at) == 1 and 0 < at.pop() < found.levels[c]
-            along = [int(found.levels[c[0] + r, c[1], c[2]]) for r in range(shape[0] - c[0])]
-            assert along == sorted(along, reverse=True) and along[-1] >= 0, (shape, pair)
-    cube = {p: exact[(25, 25, 25), p][12:25, 12, 12] for p in ((6000, 6000), (num, den))}  # along +x
-    ratio = (cube[num, den] / cube[6000, 6000])[[0, 1, 2, 3, 4, 12]]  # binding over massless
+            assert (np.diff(fall := found.levels[c[0] :, c[1], c[2]]) <= 0).all() and fall[-1] >= 0
+    ratio = (exact[25, (num, den)] / exact[25, (6000, 6000)])[12:, 12, 12][[0, 1, 2, 3, 4, 12]]
     assert np.allclose(ratio, [0.9967, 0.9893, 0.9791, 0.9687, 0.9592, 0.9189], 0, 1e-4), ratio
     deep = np.pad(np.full((1, 1, 1), 24_576), 5)  # one Node of an 11-cube: open, the re-read swings
     refused("needs a sink", rest, deep, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3, GAMMA, **OWN)
     refused("is from 1", rest, deep, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6, GAMMA, **OWN)
-    refused(
-        "no fixed point", rest, deep, (num, den), OPEN_CUBE, weight, MAX_WORK_INT, 3 * den, 6000, **OWN
-    )
+    refused("a cycle", rest, deep, (num, den), OPEN_CUBE, weight, MAX_WORK_INT, 3 * den, 6000, **OWN)
 
 
 def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
