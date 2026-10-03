@@ -267,7 +267,7 @@ def packet_form(
     shape: tuple[int, int, int],
     action: int,
 ) -> NodeInstrument:
-    """The loader's decision on each giving's lay by the board's shape against the width, no flag (the mathematician's 224 (1) and 229 with the advisor's seconds, two hands; the owner's word of 2026-10-03, 09:46 Israel): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`giving.given_quantum`) and a declared `width` is refused by name; in the open board the giving is the packet along a drawn direction (`giving.laid_packet`), so `width` is required, the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name."""
+    """The loader's decision on each giving's lay by the board's shape against the width, no flag (the mathematician's 224 (1) and 229 with the advisor's seconds, two hands; the owner's word of 2026-10-03, 09:46 Israel): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`giving.given_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`giving.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
     guide = sum(1 for extent in shape if extent > 1) <= 1
     rates = []
     for index, rate in enumerate(found.rates):
@@ -280,11 +280,11 @@ def packet_form(
                 )
             rates.append(rate)
             continue
-        if rate.width is None:
-            raise ValueError(
-                f"{name} gives in the open board (two axes or more above one Node) and declares no `width`: the open "
-                "board's giving is a packet of `width` Nodes across along a drawn axis"
-            )
+        if (
+            rate.width is None
+        ):  # no width declared: the source in time as built, every shipped world as it is
+            rates.append(rate)
+            continue
         light, (num, den) = families[rate.light], rate.resonance
         if (
             along_cosine(light.pair, rate.resonance, rate.width, count_wall(light, action) ** SCALE_OF)

@@ -57,7 +57,7 @@ levels GameBoard readings, labelled so); a miss is a finding by name and never a
 
 The test `tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry`
 holds the exact root and the envelope (456 slices at T = 65,536, SUM a^2 = 43,915 of 43,962, the
-mathematician's numbers), the band's line at w = 4 and its refusals at w = 1 and 2, the loader's four
+mathematician's numbers), the band's line at w = 4 and its refusals at w = 1 and 2, the loader's three
 refusals, a packet laid on an open board of 35^3 Nodes with the lifetime 2 (one lay line per Node, the
 count 1 by the count's line in a detector's own unit at [2, 3]) and this blind byte for byte.
 

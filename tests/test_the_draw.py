@@ -271,7 +271,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
 
 
 def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tmp_path):
-    """Step 5 of the emitter/detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the exact root and the envelope in the energy form carry one quantum within the deficit below tau per Node (S = 43,962 at T = 65,536 and [2, 3], a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, an open board without one, a width the band refuses and a board too short for the train; on an open board of 35^3 Nodes a giver of the lifetime 2 lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a detector's own unit at [2, 3]; the packet giving world's blind is the builder's byte for byte (examples/events/packet_giving)."""
+    """Step 5 of the emitter/detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the exact root and the envelope in the energy form carry one quantum within the deficit below tau per Node (S = 43,962 at T = 65,536 and [2, 3], a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 35^3 Nodes a giver of the lifetime 2 lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a detector's own unit at [2, 3]; the packet giving world's blind is the builder's byte for byte (examples/events/packet_giving)."""
     total, train = exact_total(65536, (2, 3)), envelope(exact_total(65536, (2, 3)), 48, 1)
     assert (total, train[0], len(train), total - sum(a * a for a in train)) == (43962, 30, 456, 47)
     assert train == sorted(train, reverse=True) and train[-1] == 1
@@ -296,8 +296,6 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     refused(
         "inside a guide", bodies_of, body([0, 0, 0]), None, "", families, (48, 1, 1), 9000, (), action
     )
-    bare = body([4, 4, 4], width=None)
-    refused("declares no `width`", bodies_of, bare, None, "", families, (9, 9, 9), 9000, (), action)
     refused(
         "cannot carry",
         bodies_of,
