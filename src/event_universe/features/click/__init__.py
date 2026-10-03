@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.rule3 import division_fixed_point, division_forward
+from event_universe.core.rule3 import division_fixed_point, division_forward, form_term
 
 
 def drawn(
@@ -73,12 +73,12 @@ def target_of(face: Face, untouched: int, self_term: int, wall: int) -> int:
     return int(division_forward(found, wall, 0)[0])
 
 
-def rest_of(hole: Hole, numerator: int, before: int, wall: int) -> int:
+def rest_of(hole: Hole, numerator: int, wall_term: int, wall: int) -> int:
     """The second face's target, the level x that removes the rest of the quantum exactly (the mathematician's 244 read with the booking identity's face term): writing x in place of the level v = numerator div w Rule3 would write from the pair as it stands changes the record's form by (x - before) (w x - numerator) within Rule3's floors, so x is the root of w x^2 - (numerator + w before) x + before x numerator + R = 0 with R = W_rec less what the first face removed, x = ((numerator + w before) +/- isqrt((numerator - w before)^2 - 2 x 2 x w R)) div (2 w), the root toward v (the smaller change, the sense standing); where R is at most 0 nothing more leaves, x = v; where no real root removes R (the pair too small), the level midway, (numerator + w before) div (2 w), removes the most it can and the shortfall stands by name."""
     rest = hole.unit - hole.removed
     if rest <= 0:
         return int(division_forward(numerator, wall, 0)[0])
-    middle, gap = numerator + wall * before, numerator - wall * before
+    middle, gap = numerator + wall_term, numerator - wall_term  # `wall_term` the step's own w x before
     square = gap * gap - 2 * 2 * wall * rest
     if square < 0:
         return int(division_forward(middle, 2 * wall, 0)[0])
@@ -116,16 +116,21 @@ def presented(
                 np.asarray(self_coefficient)[at] if np.ndim(self_coefficient) else self_coefficient
             )
             level, before, self_term = int(now[at]), int(other[at]), coefficient * int(now[at])
-            rest = -int(wall) * before + int(carry[at])
+            wall_term = int(wall) * before  # the step's own term on the level before
+            rest = -wall_term + int(carry[at])
             rest += sum(here[p] * int(found[p][at]) for p in range(len(here)) if p != face.port)
             own = here[face.port] * int(found[face.port][at])  # the face Port's arrival untouched
             if face.hole is not None and face.scaled:  # the second face: the rest of the quantum
-                target = rest_of(face.hole, self_term + rest + own, before, int(wall))
+                target = (  # the hole to 0 (the share at most one quantum): the level before 0 as well
+                    0
+                    if face.hole.factor == (0, 1)
+                    else rest_of(face.hole, self_term + rest + own, wall_term, int(wall))
+                )
             else:
                 if face.hole is not None:  # the first face: the factor from the Node's own form
                     arrivals = sum(here[p] * int(found[p][at]) for p in range(len(here)))
                     arrived_before = sum(here[p] * int(befores[p][at]) for p in range(len(here)))
-                    form = int(wall) * (level * level + before * before) - coefficient * level * before
+                    form = form_term(coefficient, int(wall), level, before)  # the Node's own terms
                     links = -(level * arrived_before + before * arrivals)
                     face.hole.factor = hole_factor(form, links, face.hole.unit)
                 target = target_of(face, rest + own, self_term, int(wall))
