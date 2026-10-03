@@ -5,7 +5,10 @@ on a chain of Nodes in an external well, in floats (the identities are exact in 
     D = |a_t|^2 - <a_{t+1}, a_{t-1}>; a well deepening slowly lowers the form of the standing mode while the adiabatic
     invariant A^2 sin omega stands: the count (flux alone, no flux at rest) stays, the form falls: the mass defect.
 (B) THE FREE PART: at a Node the local rotation 2 cos omega_i = (next_i + before_i) / now_i against the band's top at the
-    Node's pace; the standing mode has no free Node; a cloud twice too wide has free Nodes at its outskirts.
+    Node's own pace, the local top; this is the script's criterion and not the law's binding row, which names the vacuum's
+    top 4/3 (at [4000, 6000]) and against which every Node of the standing mode is bound. Against the local top the well's
+    centre lies above the mode's 2 cos omega_b by construction, so the script counts those Nodes free (7 of 400 in the well
+    of 600); a cloud twice too wide has free Nodes at its outskirts as well.
 (C) THE SETTLING IS THE OPEN FACES': the same cloud on a chain with open faces (what leaves does not return: a sponge at the
     faces) against a closed chain (periodic); the width over time, the form kept inside the body, the free Nodes.
 """
