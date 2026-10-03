@@ -153,12 +153,23 @@ def dark(board: GameBoard, books: NodeBooks) -> bool:
     return all(arriving(board, books, drive, side) == 0 for drive in drives for side in (1, -1))
 
 
-def turned_labels(board: GameBoard, books: NodeBooks) -> None:
-    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation) as W equal sub-turns with the carry (`resonance.sheared`, W the window's intervals, so the angles add as the proper intervals' did), the plane's size over the wall read once and not a turn per interval; the labels' squares are the parts' shares the window's draw reads, sin^2 of the turn, the Rabi form; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
+def own_clock(board: GameBoard, books: NodeBooks) -> int:
+    """The composed clock p_0 at the instrument's one Node under its record's read of the content (`paces.clock_of`): the body's own clock, Gamma in the vacuum and below it in a well, the number the turn per proper interval and the dark's hazard read (the advisor's derivation of 2026-10-03, #1572 comment 5966657866, the clock composed from the paces, with the mathematician's second, 5966769056: nature's lifetime is a proper time)."""
     gamma = board.world.node_clock
     content = board.read(books.index, 1, books.record)[0]
     at = tuple(np.add(books.at, board.offset))
-    clock = paces.clock_of(gamma, int(np.asarray(content)[at]) if np.ndim(content) else int(content))
+    return int(paces.clock_of(gamma, int(np.asarray(content)[at]) if np.ndim(content) else int(content)))
+
+
+def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) -> list[int]:
+    """The dark's draw between the giving and nothing over `span` board intervals at the lifetime tau, a proper time (the mathematician's 235, #1572 comment 5966769056, with the advisor's second, 5966780505, two hands): the hazard 1 / tau per proper interval, the body's proper intervals per board tick p_0 / Gamma, so the giving's weight is span x p_0 x unit div Gamma by the division act (half up) against the rest of tau x unit, [span x unit, (tau - span) x unit] exactly in the vacuum where p_0 = Gamma, and in a well the body gives slower by p_0 / Gamma."""
+    given = int(division_forward(span * clock * unit, gamma, division_forward(gamma, 2, 0)[0])[0])
+    return [given, lifetime * unit - given]
+
+
+def turned_labels(board: GameBoard, books: NodeBooks) -> None:
+    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation) as W equal sub-turns with the carry (`resonance.sheared`, W the window's intervals, so the angles add as the proper intervals' did), the plane's size over the wall read once and not a turn per interval; the labels' squares are the parts' shares the window's draw reads, sin^2 of the turn, the Rabi form; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
+    gamma, clock = board.world.node_clock, own_clock(board, books)
     for transition, reference in zip(books.declared.transitions, books.references, strict=True):
         if transition.leaves == books.part:
             turn = int(node.turned_by(window_turn(reference, transition.weight), clock, gamma))
@@ -317,9 +328,10 @@ def reported(
 
 
 def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
-    """The giving drawn at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act, and the giving's clock; the advisor's clause 5; the mathematician's 174 (c) and 223 (a), #1572 comment 5965727937, with the advisor's second 5965918924 (a), the per-interval draw at the now of 224 (2)(a), 5966081562, and his second 5966129376, two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights [span x unit, (tau - span) x unit] in the labels' unit with span the smaller of the grain and the lifetime tau, the lifetime's hazard 1 / tau per interval (the beat's current of a one-part record at one Node is 0, so the hazard alone is the rate): the window at its close while a window stands, the one interval in the dark (`dark`), at the now and not a booked waiting time (a booked variate writes a future, which the click's line does not: the click implements the now, the mathematician's 208); the record's own generator; the first giving drawn is taken; one jump line."""
+    """The giving drawn at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act, and the giving's clock; the advisor's clause 5; the mathematician's 174 (c) and 223 (a), #1572 comment 5965727937, with the advisor's second 5965918924 (a), the per-interval draw at the now of 224 (2)(a), 5966081562, and his second 5966129376, two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights [span x p_0 x unit div Gamma, the rest of tau x unit] in the labels' unit (`hazard_weights`) with span the smaller of the grain and the lifetime tau and p_0 the body's own clock at its Node (`own_clock`), the lifetime's hazard 1 / tau per proper interval, [span x unit, (tau - span) x unit] in the vacuum (the beat's current of a one-part record at one Node is 0, so the hazard alone is the rate): the window at its close while a window stands, the one interval in the dark (`dark`), at the now and not a booked waiting time (a booked variate writes a future, which the click's line does not: the click implements the now, the mathematician's 208); the record's own generator; the first giving drawn is taken; one jump line."""
     assert books.declared.draw is not None
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
+    clock = own_clock(board, books)
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             span = grain if grain <= rate.lifetime else rate.lifetime
@@ -327,7 +339,7 @@ def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
             items.append(
                 Item(rate.light, None, None, 1, (books.at,), None, rate.resonance, rate.lifetime)
             )
-            weights = [span * unit, (rate.lifetime - span) * unit]
+            weights = hazard_weights(span, rate.lifetime, clock, board.world.node_clock, unit)
             pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
             if pick == 0:
                 reported(board, books, (rate.enters, rate.leaves), (None, rate.light))

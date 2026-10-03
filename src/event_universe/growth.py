@@ -100,7 +100,6 @@ def resized_detector(detector: Detector, axis: int, side: int, layers: int, dire
         sized(detector.nodes, axis, side, layers, direction, False),
         detector.body,
         detector.declared,
-        detector.transition,
     )
 
 

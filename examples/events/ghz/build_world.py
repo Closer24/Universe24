@@ -56,7 +56,6 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
         detectors.append(
             {
                 "name": design["sides"][label],
-                "transition": design["detector_transition"],
                 "positions": [
                     [u if along == "x" else v, v if along == "x" else u, 0]
                     for u in deep

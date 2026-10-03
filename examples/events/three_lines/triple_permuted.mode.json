@@ -1,1 +1,1 @@
-{"world_digest":"68d294b1e314abc39a6ebc8503cac1f823acec4d8beceb9bbcab3d2234300340","bodies":[],"messages":[{"family":"triplet","pair":[6000,6000],"amplitude":73,"count":1,"moving":{"now":{"at":[7,8,9],"values":[39,73,39]},"before":{"at":[6,7,8,9,10],"values":[8,52,66,18,-8]}}}]}
+{"world_digest":"ac880290af36611911f61667adc9f805b683f84b9779c4fcb8fef8fb6276cd6c","bodies":[],"messages":[{"family":"triplet","pair":[6000,6000],"amplitude":73,"count":1,"moving":{"now":{"at":[7,8,9],"values":[39,73,39]},"before":{"at":[6,7,8,9,10],"values":[8,52,66,18,-8]}}}]}

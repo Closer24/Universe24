@@ -9,13 +9,15 @@ import numpy as np
 
 from event_universe import node
 from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
+from event_universe.credit import record_unit
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import count_wall, detector_wall
+from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import pair_of
 from event_universe.loader.universe import universe_of
-from event_universe.loader.world import bodies_of, detectors_of
+from event_universe.loader.world import bodies_of, detectors_of, regions_of_the_law
+from event_universe.meeting import hazard_weights
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, RUN, TOOL, TOP, load_file, refused
@@ -96,22 +98,33 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
 
 
 def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
-    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click that carries a Node (the records' jump lines and the counter's credit lines, labelled DETECTOR, the Node a GAMEBOARD diagnostic beside) lies inside the cone of the click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
+    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click (the records' jump lines, the Node a GAMEBOARD diagnostic beside, and the counter's credit lines, no Node, the hole's Nodes read from the face lines after them) lies inside the cone of the click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
     board = GameBoard(load_world(EVENTS / "shelved_ion" / "shelved_ion.json"), (lines := []).append)
     for _ in range(200):
         board.step()
     shape = board.world.shape
 
+    def nodes_of(
+        c: dict,
+    ) -> list:  # a jump's one Node; a credit's the hole's Nodes in the face lines after it
+        if c["event"] == "jump":
+            return [c["node"]["at"]]
+        holes = (f for f in lines if f["event"] == "face" and f["tick"] == c["tick"] + 1)
+        return [f["node"]["at"] for f in holes if f["family"] == c["family"]]
+
     def inside(a: dict, b: dict) -> bool:  # the click b inside the cone of the click a
-        apart = sum(
-            min(abs(x - y), n - abs(x - y))
-            for x, y, n in zip(a["node"]["at"], b["node"]["at"], shape, strict=True)
+        return all(
+            sum(min(abs(x - y), n - abs(x - y)) for x, y, n in zip(p, q, shape, strict=True))
+            <= b["tick"] - a["tick"]
+            for p in nodes_of(a)
+            for q in nodes_of(b)
         )
-        return apart <= b["tick"] - a["tick"]
 
     clicks = [c for c in lines if c["event"] in ("jump", "credit") and c["label"] == "DETECTOR"]
     clicks.sort(key=lambda c: int(c["tick"]))
-    assert len(clicks) > 30 and {c["node"]["label"] for c in clicks} == {"GAMEBOARD"}
+    assert len(clicks) > 30 and all(
+        nodes_of(c) and ("node" in c) == (c["event"] == "jump") for c in clicks
+    )
     assert all(inside(a, b) for a, b in zip(clicks, clicks[1:], strict=False) if b["tick"] > a["tick"])
     givings = [c for c in clicks if c["event"] == "jump" and c["given"] == "fluorescence"]
     credits = [c for c in clicks if c["event"] == "credit" and c["family"] == "fluorescence"]
@@ -194,25 +207,25 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
 def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum(
     tmp_path,
 ):
-    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): the detector's wall is its own transition's energy, W_d = isqrt(W_c^2 (den_d^2 - num_d^2)) div den_d, exactly W_c at the band's top and 2.23605 den T at [2, 3], the credit's conversion the identity at the top, and the loader refuses by name a region without its transition, a transition without its resonance and a giving with no transition between its parts; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the detector's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `meeting.gave`): the giver is in the dark until it gives, so over the trials' first 25 seeds its giving is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the givings at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
+    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): a region's unit of one quantum is its record's own share per quantum read once at the books' origin (`credit.record_unit`, the advisor's line of 2026-10-03 with the mathematician's second, two hands), W_c for a record laid by share with its count and W_c sin Omega = 2.23605 den T for one quantum at [2, 3], and the loader refuses by name a region declaring a `transition`, a one-Node region (a region of a travelling wave), a transition without its resonance and a giving with no transition between its parts; the dark's hazard is per proper interval (`meeting.hazard_weights`): the weights [span x unit, (tau - span) x unit] in the vacuum and half the giving's weight at p_0 = Gamma / 2; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the detector's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `meeting.gave`): the giver is in the dark until it gives, so over the trials' first 25 seeds its giving is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the givings at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
     light = next(f for f in families if f.name == "pulse")
     wall = count_wall(light, action)
-    assert detector_wall(light, action, (0, 6000)) == wall == detector_wall(light, action, (0, 1))
-    assert detector_wall(light, action, (2, 3)) == division_fixed_point(wall * wall * 5) // 3
-    assert abs(detector_wall(light, action, (2, 3)) / wall - 5**0.5 / 3) < 2 / wall  # the division act
     refused("from -1 through 1", pair_of, [3, 2], "resonance")
     refused("pair", pair_of, [1], "resonance")
     row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]]}
-    refused("lacks the key 'transition'", detectors_of, [row], (2, 1, 1), 0, (), ())
     refused(
-        "declared on a region",
-        detectors_of,
-        [{"name": "b", "block": 0, "transition": TOP}],
-        (2, 1, 1),
-        1,
+        "holds the key 'transition'", detectors_of, [{**row, "transition": TOP}], (2, 1, 1), 0, (), ()
+    )
+    one = [{"name": "d", "positions": [[0, 0, 0]]}]
+    refused(
+        "a region of a travelling wave",
+        regions_of_the_law,
+        detectors_of(one, (2, 1, 1), 0, (), ()),
         (),
+        (2, 1, 1),
+        (False,) * 3,
         (),
     )
     RESONANCE.main(["--folder", str(tmp_path), "--modes"])
@@ -243,6 +256,24 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         1, 26
     ):  # the trials' seeds, every record's generator at its own state (tools/meeting_trials.py)
         board = GameBoard(load_world(path), (lines := []).append)
+        light_at = [f.name for f in board.families].index("pulse")
+        gamma, own = (
+            board.world.node_clock,
+            division_fixed_point(wall * wall * 5) // 3,
+        )  # one quantum at [2, 3]
+        assert (
+            record_unit(board, light_at, 7 * wall, 7) == wall
+            and record_unit(board, light_at, own, 1) == own
+        )  # W_rec
+        assert abs(own / wall - 5**0.5 / 3) < 2 / wall and record_unit(board, light_at, None, 0) == wall
+        assert hazard_weights(1, 48, gamma, gamma, 9) == [
+            9,
+            47 * 9,
+        ]  # the vacuum: the hazard per board tick
+        assert hazard_weights(2, 48, gamma // 2, gamma, 9) == [
+            9,
+            47 * 9,
+        ]  # a well at p_0 = Gamma / 2: half the rate
         for books in board.credit.bodies:
             books.state = seed * len(board.credit.bodies) + books.number
         pulse = [f.name for f in board.families].index("pulse")
@@ -276,8 +307,8 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
             assert (
                 total is not None and 0.7 < total / wall < 0.8
             )  # sin Omega = 0.745 in the band's top's unit
-            for own in (wall, detector_wall(light, action, (2, 3))):
-                assert division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1
+            for unit in (wall, record_unit(board, pulse, total, 1)):  # W_c and the record's own unit
+                assert division_forward(total, unit, division_forward(unit, 2, 0)[0])[0] == 1
         if t <= 53:  # the plateau after the front and before the stop, inside the run
             window = range(t + 28, t + 43)
             numerator = sum(series[k] * (series[k + 1] + series[k - 1]) for k in window)
@@ -296,6 +327,24 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
     TOOL.main(["--input", str(path)])
     for seed in (1, 2, 3):  # the light at its Node: a window stands and its draw at 48 stands as it is
         board = GameBoard(load_world(path), (lines := []).append)
+        light_at = [f.name for f in board.families].index("pulse")
+        gamma, own = (
+            board.world.node_clock,
+            division_fixed_point(wall * wall * 5) // 3,
+        )  # one quantum at [2, 3]
+        assert (
+            record_unit(board, light_at, 7 * wall, 7) == wall
+            and record_unit(board, light_at, own, 1) == own
+        )  # W_rec
+        assert abs(own / wall - 5**0.5 / 3) < 2 / wall and record_unit(board, light_at, None, 0) == wall
+        assert hazard_weights(1, 48, gamma, gamma, 9) == [
+            9,
+            47 * 9,
+        ]  # the vacuum: the hazard per board tick
+        assert hazard_weights(2, 48, gamma // 2, gamma, 9) == [
+            9,
+            47 * 9,
+        ]  # a well at p_0 = Gamma / 2: half the rate
         for books in board.credit.bodies:
             books.state = seed * len(board.credit.bodies) + books.number
         [board.step() for _ in range(48)]

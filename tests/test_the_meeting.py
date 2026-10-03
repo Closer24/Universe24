@@ -119,7 +119,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     fenced = [GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) for f in FENCE]
     assert fenced == [-1] * len(FENCE)
     refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "detectors[0].pattern", (1, 0))
-    row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]], "transition": TOP}
+    row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]]}
     refused("none is declared", detectors_of, [row], (2, 1, 1), 0, (), ())
     families = universe_of(json.loads((EVENTS / "ghz.json").read_text(encoding="utf-8")))[1]
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
@@ -135,7 +135,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, the one Node beside as a GameBoard diagnostic; at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `instrument` key refused by name with a window of 0 and without its seed."""
+    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the detector's proper time at the close (the board's tick in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `instrument` key refused by name with a window of 0 and without its seed."""
     world = json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8"))
     world["instrument"]["window"], draw = 40, dict(world["instrument"])
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
@@ -154,15 +154,17 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     assert at == [(40, "left", 1, 1, left + 1), (40, "right", 1, 1, left + 1)] + at[2:]
     assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
-    assert {c["node"]["label"] for c in credits} == {"GAMEBOARD"}  # the one Node a diagnostic beside
-    report = set("event label tick family detector window realised kept count left".split())
-    assert all(set(c) == report | {"node"} and c["label"] == "DETECTOR" for c in credits)  # never a Node
-    written = {tuple(np.add(c["node"]["at"], plain.offset)) for c in credits[:2]}
-    assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
-    w, keys = (
-        tuple(np.add(credits[0]["node"]["at"], plain.offset)),
-        [k for k in was if "light_pair" in k],
+    assert [(c["proper"], c["windows"]) for c in credits] == [(40, 1), (40, 1), (80, 2), (80, 2)]
+    report = set(
+        "event label tick family detector window proper windows realised kept count left".split()
     )
+    assert all(set(c) == report and c["label"] == "DETECTOR" for c in credits)  # never a Node
+    holes = [
+        f for f in lines if f["event"] == "face" and f["tick"] == 41
+    ]  # the hole's Nodes, the tool's
+    written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
+    assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
+    w, keys = sorted(written)[0], [k for k in was if "light_pair" in k]
     assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]
     levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 41
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
@@ -199,7 +201,6 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     counter = {
         "name": "counter",
         "positions": [[0, y, z] for y in range(6) for z in range(4)],
-        "transition": TOP,
     }
     world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
     world.update(universe="u.json", engine="e.json", measured=[record], messages=[drive])

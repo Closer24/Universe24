@@ -30,7 +30,6 @@ def world_of(design: dict[str, Any], weights: list[int]) -> dict[str, Any]:
     }
     counter = {
         "name": "counter",
-        "transition": design["detector_transition"],
         "positions": [[int(x), 0, 0] for x in design["counter_nodes"]],
     }
     return {
