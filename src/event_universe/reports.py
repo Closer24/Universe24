@@ -155,8 +155,7 @@ def face(tick: int, family: str, line: int, node: list[int], port: int, value: i
     found: dict[str, object] = dict(
         zip(REPORT_KEYS, (FACE, DIAGNOSTIC, tick, family, None), strict=True)
     )
-    written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
-    found.update(zip(FACE_KEYS, (line, port, value, written), strict=True))
+    found.update(zip(FACE_KEYS, (line, port, value, {OUTPUT[1]: DIAGNOSTIC, AT: node}), strict=True))
     return found
 
 

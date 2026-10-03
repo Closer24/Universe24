@@ -276,13 +276,12 @@ class GameBoard:
         }
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking, the faces the instruments presented at the step written as `face` lines (`meeting.faces_reported`); the detectors' reports; the one write per held line from the bookings of the start; then the instruments' acts from outside the Node (`credit.windowed`, `meeting.jumped`, `front.advanced`)."""
+        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the detectors' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the instruments' acts from outside the Node (`credit.windowed`, `meeting.jumped`, `front.advanced`)."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.tick}: {self.ended}")
         if not growth.grow(self):
             return
-        self.tick += 1
-        forms, turns = Bookings(), Bookings()
+        self.tick, forms, turns = self.tick + 1, Bookings(), Bookings()
         currents, senses, stresses = self.currents(), self.sense_currents(), self.stresses()
         rulers, begun = self.rulers(1), [state.lines for state in self.states]
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
@@ -295,7 +294,6 @@ class GameBoard:
                 for held, gained in zip((forms, turns), booked, strict=True):
                     held.update(gained)
             state.lines = lines
-        meeting.faces_reported(self)
         self.report(currents, forms, begun)
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses, senses, rulers)
@@ -339,7 +337,8 @@ class GameBoard:
         return found
 
     def report(self, currents: Currents, forms: Bookings, begun: list[list[node.Record]]) -> None:
-        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family), per declared region one `parts` line where a sum is not 0: the signed sums of each part's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`)."""
+        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family), per declared region one `parts` line where a sum is not 0: the signed sums of each part's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`); first the faces the instruments presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
+        meeting.faces_reported(self)
         own, union = self.declared_board(), credit.instrument_nodes(self)
         sums: dict[int, dict[str, list[list[int]]]] = {}
         for index, through in currents.items():

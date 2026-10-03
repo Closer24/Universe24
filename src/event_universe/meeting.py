@@ -100,10 +100,8 @@ def relaid(
         count, board.world.quantum_action, family.pair, phase, sense
     )
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
-    first, at = (
-        node.record_slice(family, books.record).start + part * family.width,
-        board.mask((books.at,)),
-    )
+    first = node.record_slice(family, books.record).start + part * family.width
+    at = board.mask((books.at,))
     for number, (now, before) in zip(
         (first, first + 1), ((re, re_before), (im, im_before)), strict=True
     ):
@@ -131,16 +129,6 @@ def levels_at(board: GameBoard, books: NodeBooks, part: int) -> tuple[int, int, 
     at = tuple(np.add(books.at, board.offset))
     re, im = state.lines[first], state.lines[first + 1]
     return int(re.now[at]), int(im.now[at]), int(re.before[at]), int(im.before[at])
-
-
-def node_draw(board: GameBoard, books: NodeBooks, weights: list[int]) -> int:
-    """One draw of a record's own instrument by its declared generator (features/click, `drawn`), its state kept in its books."""
-    assert books.declared.draw is not None
-    found = books.declared.draw
-    pick, books.state = drawn(
-        books.state, found.multiplier, found.increment, board.world.width + 1, weights
-    )
-    return pick
 
 
 def arriving(board: GameBoard, books: NodeBooks, drive: int) -> int:
@@ -181,9 +169,7 @@ class Item:
 
 
 Lists = list[list[Item]]  # the outcomes of one click, each the list written where it is drawn
-Phase = tuple[
-    tuple[int, int], int
-]  # a part's direction (re, im) and its sense, the sign of its Wronskian
+Phase = tuple[tuple[int, int], int]  # a part's direction (re, im) and its sense, its Wronskian's sign
 
 
 def click(
@@ -216,9 +202,7 @@ def written(board: GameBoard, items: list[Item]) -> None:
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]
     for family in sorted({i.family for i in items if i.measured is None and i.delta < 0}):
-        if (
-            board.credit.counts[family] <= 0
-        ):  # the record's count at 0: its front from every Node written
+        if board.credit.counts[family] <= 0:  # the count at 0: its front from every Node written
             front.started(board, family, [at for i in items if i.family == family for at in i.nodes])
     for (index, line, at), was in zip(laid, before, strict=True):
         now = levels_of(board, index, line, at)
@@ -269,10 +253,8 @@ def given_quantum(board: GameBoard, item: Item) -> None:
     gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
     pair, action = born(family.pair, family.pair), board.world.quantum_action  # 0 for one pair
     (level, _im), (before, _im_before) = standing(item.delta, action, pair, (1, 0), 1)
-    origin, line = (
-        division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0],
-        state.lines[0],
-    )
+    origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
+    line = state.lines[0]
     now, was = line.now + np.where(at, level, 0), line.before + np.where(at, before, 0)
     state.lines[0] = node.Record(now, was, np.where(at, origin, line.remainder))
     board.credit.counts[item.family] += item.delta
@@ -318,39 +300,31 @@ def null_window(board: GameBoard, books: NodeBooks) -> None:
     before = levels_at(board, books, books.part)
     click(board, books.state, None, [1], [[Item(books.index, books.number, books.part, 0, (books.at,))]])
     if levels_at(board, books, books.part) != before:  # a level changed: its line, the lay lines beside
-        reported(board, books, books.part, books.part, None, None, False)
+        reported(board, books, (books.part, books.part), (None, None), False)
 
 
 def reported(
     board: GameBoard,
     books: NodeBooks,
-    realised: int,
-    left: int,
-    taken: int | None,
-    light: int | None,
+    parts: tuple[int, int],
+    exchanged: tuple[int | None, int | None],
     quantum: bool = True,
 ) -> None:
-    """The jump line of a record's click (`reports.jump`): the part realised and the part left by name, the family taken from or the family given to, the window's intervals [first, last], the one Node beside as a GameBoard diagnostic, labelled the detector's where a `quantum` passed and a diagnostic for the null window's write."""
+    """The jump line of a record's click (`reports.jump`): the `parts` realised and left by name, the families `exchanged`, the one taken from and the one given to (None where none), the window's intervals [first, last], the one Node beside as a GameBoard diagnostic, labelled the detector's where a `quantum` passed and a diagnostic for the null window's write."""
     if board.observer is None:
         return
     names, families = books.declared.names, board.families
     window = [board.tick - books.elapsed + 1, board.tick]
-    taken_name = families[taken].name if taken is not None else None
-    given_name = families[light].name if light is not None else None
-    at = list(books.at)
-    line = jump(
-        board.tick,
+    taken, light = (families[k].name if k is not None else None for k in exchanged)
+    realised, left, name, at = (
+        names[parts[0]],
+        names[parts[1]],
         families[books.index].name,
-        books.number,
-        window,
-        names[realised],
-        names[left],
-        taken_name,
-        given_name,
-        at,
-        quantum,
+        list(books.at),
     )
-    board.observer(line)
+    board.observer(
+        jump(board.tick, name, books.number, window, realised, left, taken, light, at, quantum)
+    )
 
 
 def gave(board: GameBoard, books: NodeBooks) -> bool:
@@ -367,7 +341,7 @@ def gave(board: GameBoard, books: NodeBooks) -> bool:
             weights = [span * unit, (rate.lifetime - span) * unit]
             pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
             if pick == 0:
-                reported(board, books, rate.enters, rate.leaves, None, rate.light)
+                reported(board, books, (rate.enters, rate.leaves), (None, rate.light))
                 return True
     return False
 
@@ -396,18 +370,12 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
                 [Item(drive, None, None, -1, (books.at,)), *exchange(books, t.leaves, t.enters)]
                 for books, t in outcomes
             ]
-            first = closing[0]
-            pick, first.state = click(
-                board,
-                first.state,
-                first.declared.draw,
-                [*weights, rest if rest > 0 else 0],
-                [*lists, []],
-            )
+            first, weighted = closing[0], [*weights, rest if rest > 0 else 0]
+            pick, first.state = click(board, first.state, first.declared.draw, weighted, [*lists, []])
             if pick >= len(outcomes):
                 break
             books, transition = outcomes[pick]
-            reported(board, books, transition.enters, transition.leaves, drive, None)
+            reported(board, books, (transition.enters, transition.leaves), (drive, None))
             done.add(books.number)
     return done
 
