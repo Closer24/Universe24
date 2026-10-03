@@ -485,10 +485,6 @@
      15,
      15
     ]
-   ],
-   "transition": [
-    0,
-    6000
    ]
   },
   "detector_reading": {
@@ -497,6 +493,303 @@
    "status": "the owner's decision of 09:38 Israel relayed by the advisor, #1563 comment 5966429178; the region detector's click ALGEBRA.md's one measurement; the transition [0, 6000] declared as main a1b12409 requires; the arrival's window, the seed and tau the next round's, by name",
    "fence": "DETECTOR for the click lines, GameBoard for the field lines"
   },
-  "owner_decision_09_59": "The owner's words of 2026-10-03, 09:59 Israel, relayed by the Boss: the atom's experiment is a bound body of Rule3 on which a detector is placed on one of its Nodes, the generic emitter detector, which receives only its seed and the Nodes it sits on (its window the arrival's, its transition read from the body's modes, nothing else declared); the engine does not yet have that detector (the hands derive its lines). The detector on one of the body's Nodes, the generic emitter detector receiving only its seed and its Nodes: not declared tonight, the loader refusing a one-Node region by name (loader/world.py, regions_of_the_law, tried on the body's declared Node [16, 15, 15] before any run: \"detector 'on_the_body' is one Node: a detector is a region of Nodes, never one Node (no click names a Node)\"), and the 1s standing run without it. The region `beside` of two Nodes stands as the ordinary region detector of the word of 09:38 with today's keys (positions, the band's top transition [0, 6000]; no seed, no instrument, no write), a stand-in beside the body and not the owner's detector, reporting the one measurement and moving nothing: the engine steps the same with it or without it, so the standing read is the standing read without a detector."
+  "owner_decision_09_59": "The owner's words of 2026-10-03, 09:59 Israel, relayed by the Boss: the atom's experiment is a bound body of Rule3 on which a detector is placed on one of its Nodes, the generic emitter detector, which receives only its seed and the Nodes it sits on (its window the arrival's, its transition read from the body's modes, nothing else declared); the engine does not yet have that detector (the hands derive its lines). The detector on one of the body's Nodes, the generic emitter detector receiving only its seed and its Nodes: not declared tonight, the loader refusing a one-Node region by name (loader/world.py, regions_of_the_law, tried on the body's declared Node [16, 15, 15] before any run: \"detector 'on_the_body' is one Node: a detector is a region of Nodes, never one Node (no click names a Node)\"), and the 1s standing run without it. The region `beside` of two Nodes stands as the ordinary region detector of the word of 09:38 with today's keys (positions, the band's top transition [0, 6000]; no seed, no instrument, no write), a stand-in beside the body and not the owner's detector, reporting the one measurement and moving nothing: the engine steps the same with it or without it, so the standing read is the standing read without a detector.",
+  "detector_transition_key": "the key `transition` the region declared when this blind was written ([0, 6000], the band's top) is refused by name on every region since the generic detector's merge (#1717, the record's own unit read from the books), so the builder writes the region without it and the toy world is re-laid, its levels the lay's own as before; nothing of the blind moves"
+ },
+ "round_d": {
+  "comment": "Round D of 2026-10-03 (the owner's word, 12:1x Israel, everything now and in parallel; the Boss's brief on the mathematician's 241 (A), the advisor's second 5967698811 and the mathematician's 242 and 243, two hands): the atom world along the energy line at nature's alpha, the 1s standing as the gate. The integers of the world (atom_d.json): the rule's rows as atom.json declares them, the charge under the rotation at the write weight k_w and the level weight E_h = 1, Gamma the lever of the integer floor along the line (241: T = 0.259 Gamma^2 at fixed alpha, the per-Node level of the count-1 electron a = 26 Gamma / 6000, the walk sqrt(t) sigma / a with sigma = 0.157 levels per interval per Node), the Link unit G = 1 and the width 63. The hands' (A) is Gamma = 96,000, k_w = 16,576, T = 2,386,944,000 (the loader's bound 4,962 on the real rows, the level 416, the walk 1.2 percent), but the frozen nucleus of one quantum is laid at the invariant 2 A^2 sin omega = T with sin omega = 1 at [0, den], sqrt(T / 6) = 19,945 per plane on the frozen proton's three planes (sqrt(T / 2) = 34,545 on one plane), which the loader refuses above the bound by name (loader/mode.py); the nucleus's level grows as Gamma and the bound falls as Gamma^-2, so the largest Gamma at which the frozen row fits the width is 60,000 (numbers_d): k_w = 10,360, T = 932,400,000, alpha^-1 = 28.01, the bound 12,706 against the nucleus's 12,465 per plane and the electron's level about 260, the walk 1.9 percent, inside the gate's 1 to 4 percent, the lever and the tie standing (the brief: lower Gamma to the largest that fits, by name). The nucleus is the frozen row [0, 6000] of three planes (the frozen proton's row of examples/events/frozen_proton, 201 C and 205 as the law has them, the advisor's row D), laid by the generator's one-Node declaration (--pixel 0) in the sense -1, the electron the turned top mode under the sign row's angle in the sense +1 (the design's senses, unlike), the 2s by one deflation of the turned power iteration (--deflate, the generator's act of this round), the loader's energy line exempting the frozen row (num = 0, the one engine change of the round, two hands). The board: the engine's step costs about 3 microseconds per Node-line under the day's load (3.0 s per interval on the 41-cube with 13 lines), so 242's 420-cube (7 x 10^7 Nodes) and the 0.1-percent-of-the-share cube (a 175-cube at a_0 = 14.5 Links) are beyond the host by orders; the worlds stand on the smallest open cube on which the generator lays the 1s above the band's top (numbers_large's least_cube puts it between the 41-cube and the 61-cube), tried from the 41-cube up, each refusal a reading by name; the faces are declared closed (read as 0 exactly as the open faces are, with no face layer reporting every interval, 40 percent of the step's cost on the open 41-cube; the step checked bit for bit against the open board). The gate's mean is over lays, not seeds (236, 242): the electron's phase at the lay advanced by one K-th of a turn per lay by the engine's three shears before the run (build_world.py --lays K), each run 10^3 intervals, as many as the time allows.",
+  "universe": "examples/events/atom_gate/atom_d.json",
+  "engine": "examples/events/engine_start.json",
+  "nucleus": {
+   "family": "nucleus",
+   "quanta": 1,
+   "sense": -1,
+   "pair": [
+    0,
+    6000
+   ],
+   "shape": [
+    "plane",
+    "plane",
+    "plane"
+   ],
+   "declaration": "the frozen row at one Node by the generator's one-Node declaration (--pixel 0): every plane alike at A_l^2 = T / 6, 12,465 levels, the Wronskian sum -T / 2, R_ij = 0 on every Link so the record never moves"
+  },
+  "electron": {
+   "family": "electron",
+   "quanta": 1,
+   "sense": 1
+  },
+  "senses": {
+   "nucleus": -1,
+   "electron": 1
+  },
+  "pixel": [
+   0
+  ],
+  "boundary": "closed",
+  "lay": {
+   "kind": "fixed_point",
+   "stop": 2,
+   "passes": 30,
+   "tolerance": [
+    1,
+    100
+   ]
+  },
+  "worlds": {
+   "hydrogen_1s_d": {
+    "shape": [
+     41,
+     41,
+     41
+    ],
+    "centre": [
+     20,
+     20,
+     20
+    ],
+    "ticks": 100,
+    "mode": "1s",
+    "deflations": 0,
+    "laid": true,
+    "universe": "examples/events/atom_gate/atom_d.json",
+    "world": "(i) the compressed atom at alpha = 1 / 28 on the 41-cube (the owner's word, 246)"
+   },
+   "hydrogen_2s_d": {
+    "shape": [
+     41,
+     41,
+     41
+    ],
+    "centre": [
+     20,
+     20,
+     20
+    ],
+    "ticks": 100,
+    "mode": "2s",
+    "deflations": 1,
+    "laid": true,
+    "universe": "examples/events/atom_gate/atom_d.json",
+    "world": "(i), the 2s by one deflation"
+   },
+   "hydrogen_1s_seven": {
+    "shape": [
+     41,
+     41,
+     41
+    ],
+    "centre": [
+     20,
+     20,
+     20
+    ],
+    "ticks": 100,
+    "mode": "1s",
+    "deflations": 0,
+    "laid": true,
+    "universe": "examples/events/atom_gate/atom_d_seven.json",
+    "world": "(ii) the atom at alpha about 1 / 7 on the 41-cube, a_0 = 3.6 Links by the chain, the free atom inside the cube, a hypothesis under its own name (245, 246)"
+   },
+   "hydrogen_2s_seven": {
+    "shape": [
+     41,
+     41,
+     41
+    ],
+    "centre": [
+     20,
+     20,
+     20
+    ],
+    "ticks": 100,
+    "mode": "2s",
+    "deflations": 1,
+    "laid": true,
+    "universe": "examples/events/atom_gate/atom_d_seven.json",
+    "world": "(ii), the 2s by one deflation"
+   },
+   "hydrogen_1s_free": {
+    "shape": [
+     90,
+     90,
+     90
+    ],
+    "centre": [
+     45,
+     45,
+     45
+    ],
+    "ticks": 100,
+    "mode": "1s",
+    "deflations": 0,
+    "laid": true,
+    "universe": "examples/events/atom_gate/atom_d_free.json",
+    "world": "(iii) the free atom at alpha = 1 / 28 on the 90-cube, six a_0 across (247), the background lay the owner's word started (246); its centre a Node of the even cube's inner eight, the images about it not the cube's"
+   }
+  },
+  "lays": {
+   "count": 100,
+   "note": "the 1s lay's electron turned by k / count of a turn, k = 0 to count - 1, by the engine's three shears at the tangent half-angle n / (2 Gamma) with n = round(2 Gamma tan(pi k / count)) after the half-turn's sign where |angle| is above a quarter turn; the nucleus and the digest alike; build_world.py --lays count --into <folder>; the run's folder is never committed"
+  },
+  "numbers_d": {
+   "Gamma": 22500,
+   "k_w": 3885,
+   "E_h": 1,
+   "T": 131118750,
+   "G": 1,
+   "width": 63,
+   "cube": 41,
+   "alpha_law": "1 / 28, the law's",
+   "alpha_law_inverse": 28.0123,
+   "T_over_Gamma_squared": 0.259,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 131118750 x 4000 = 3885 x 22500 x 6000 = 524475000000",
+   "amplitude_bound_at_load": 90373,
+   "nucleus_amplitude_per_plane": 4674,
+   "start_rest_fine_unit_one_node_source": 1,
+   "a_0_links_chain": 14.47,
+   "omega_0": 0.84107,
+   "binding_1s_rad_per_interval_free_atom": 0.0005359231471970779,
+   "two_cos_Omega_1s_free_atom": 1.334132,
+   "beat_1s_2s_rad_per_interval_free_atom": 0.0004019423603978084,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 97.5,
+   "note_level": "26 at Gamma 6000 and alpha 1 / 28 (the design), scaled as Gamma and as alpha^(3 / 2) (N_eff falls as a_0^3); the lay's own amplitude is the number read",
+   "walk_over_1000_intervals": 0.0509,
+   "walk_over_100_intervals": 0.0161,
+   "hands_A_refused": {
+    "Gamma": 96000,
+    "k_w": 16576,
+    "T": 2386944000,
+    "amplitude_bound_at_load": 4962,
+    "nucleus_amplitude_per_plane": 19945,
+    "nucleus_amplitude_one_plane": 34545,
+    "electron_level": 416,
+    "walk": 0.012,
+    "refusal": "the mode file's level above the amplitude bound A = 4962 (loader/mode.py)"
+   },
+   "gamma_60000_refused_by_the_start": {
+    "Gamma": 60000,
+    "k_w": 10360,
+    "T": 932400000,
+    "amplitude_bound_at_load": 12706,
+    "nucleus_amplitude_per_plane": 12465,
+    "refusal": "the width 9223372036854775807 leaves no fine unit for the rest of the pair [6000, 6000] under a source of 4829093073000 at Gamma = 60000 (features/start, unit_of: the tent 3 k_w (L + 1) / 4 of the whole source over the wall times 24 |num| Gamma^2 beyond 2^63)"
+   },
+   "start_room": "the start's fine unit (features/start, unit_of) admits k_w (L + 1) Gamma^2 up to 2^63 / 108000 for the sign row under one frozen quantum: Gamma^3 (L + 1) about 4.95 x 10^14 at alpha = 1 / 28; the largest Gamma a multiple of 1500 with a unit: 24,000 on the 31-cube, 22,500 on the 41-cube, 19,500 on the 61-cube, 16,500 on the 90-cube; at alpha = 1 / 7: 15,000, 13,500, 12,000, and on the 90-cube 10,500",
+   "step_cost": "about 3 microseconds per Node-line under the day's load (3.0 s per interval on the open 41-cube with 13 lines, the frozen proton's universe; the atom's world 25 lines)"
+  },
+  "g_check": {
+   "reading": "the toy world (atom_toy.json, Gamma = 6000, the 31-cube, the one-Node nucleus of matter's pair, the shipped G = 8) laid and run at G = 1, 8 and 16: the lay's clock pair and amplitude per G; over 100 intervals the electron's share over the board and the accumulated 2 cos omega_read; the same lay (the G = 8 mode file under the G = 1 universe) run at both G, bit for bit or not (GameBoard, labelled so)",
+   "blind": "the engine's step at zero tension is the same at every G (every coefficient of Rule3 carries G^2 and the Link factor is G^2 exactly at t = 0, so the quotients and the levels agree to the bit); the gravity row's tension lines stay 0 through the window (the atom's tension sources are far below one level per interval at the level weight 1000); the generator's lay may differ with G through its fine unit (the room over twice the coefficients' sum, which carries G^2)",
+   "status": "the advisor's 5967698811 section 1 and the mathematician's 243, before the choice of G",
+   "fence": "GameBoard"
+  },
+  "blind_d": {
+   "walk_of_Q_1s": {
+    "reading": "the mode's invariant Q_1s(t) = |u|^2 + |v|^2 - 2 cos Omega Re(conj(u) v) from the complex projections u, v of the electron's two time levels on the lay's own mode (the mathematician's 230 B), exact integers, over the window [1, 1000], as Q_1s(t) / Q_1s(0) (read_atom.py, `invariant`)",
+    "blind": "the walk's share sqrt(t) sigma / a with sigma = 0.157 and a the lay's own amplitude: 1.9 +/- 0.6 percent over 10^3 intervals at a = 260 (the free atom's level), smaller on a cut cube where a is larger; the mean over the lays drifting within a tenth of one lay's walk, the bias below 0.3 percent of the share (242); a reading beyond it is the integer floor by name, the walk's randomness failing or a cause named",
+    "status": "241 and 242 with the advisor's second, two hands; sigma the toy's reading",
+    "fence": "GameBoard"
+   },
+   "rotation": {
+    "reading": "172's windowed summed form over both lines and every Node against the lay's own clock pair (read_atom.py, `standing`)",
+    "blind": "a standing 1s holds the lay's clock pair over every period within the walk; the lay's clock itself on the cube reads the box's compression beside the Coulomb gain, so 242's free-atom binding omega_0 - omega_g = alpha^2 omega_0 / 2 = 5.36 x 10^-4 rad per interval (2 cos Omega_1s = 1.33413) within 1 percent is the free atom's number and a cut cube's lay reads above it by the box (numbers_large, least_cube: the 41-cube below the band's top by 1.0 x 10^-3 with the engine's rest before the fix, the 61-cube above by 1.5 x 10^-3), named before the lay as the cause of a miss; the toy's 1.3364 of the row D table is the toy's number at alpha = 0.103 and not this world's",
+    "status": "242 with the advisor's second; the board the folder's finding by name",
+    "fence": "GameBoard"
+   },
+   "beat": {
+    "reading": "the 1s and the 2s clocks at the lay (the mode file's clock pairs), the beat omega_g - omega_e in radians per interval",
+    "blind": "the free atom's (3 / 4) alpha^2 omega_0 / 2 = 4.02 x 10^-4 rad per interval, the bindings' ratio 4 : 1 within the budget; on the cube the 2s (its radius about 4 a_0 = 58 Links) is held by the faces and not by the nucleus, so the beat reads the box's and the ratio misses by name",
+    "status": "242; the design's note on the 2s",
+    "fence": "GameBoard"
+   },
+   "share_in_2s": {
+    "reading": "the 1s run's record projected on the 2s lay's mode, Q_2s(t) / Q_1s(0) over the window",
+    "blind": "0 within the walk",
+    "status": "242",
+    "fence": "GameBoard"
+   },
+   "loader": {
+    "reading": "the loader's amplitude bound and the energy line as read from atom_d.json at load (read_atom.py, `amplitude_bound`, `sign_holder_as_loaded`)",
+    "blind": "the bound 12,706 (the hands' 576 or above at Gamma = 96,000 restated at the Gamma that fits the frozen row), the energy line exact, the frozen row outside it, nothing of these numbers in the engine",
+    "status": "241, the advisor's 5967698811, the loader on the real file",
+    "fence": "GameBoard"
+   },
+   "drift": {
+    "reading": "the centroid of the electron's share over the board at the window's ends (read_atom.py, `centroid`)",
+    "blind": "at the centre Node by the lay's symmetry while the 48 images hold; a drift below 3 x 2 sigma sqrt(n) rho_x / (a sqrt(N_eff)), of the order of 10^-3 Links",
+    "status": "167 (1) applied to the atom's electron",
+    "fence": "GameBoard"
+   },
+   "detector_on_the_body": {
+    "reading": "line 1's detector on the body's Nodes (branch body-node-detector) reading the 1s share at W >= 32",
+    "blind": "p_1s = 1 within the walk, the Node off the 2s's node",
+    "status": "242; the branch not on the remote at 09:50Z, the GameBoard projection stands in for it by name",
+    "fence": "DETECTOR when it lands, GameBoard until then"
+   },
+   "nucleus": {
+    "reading": "the frozen row's levels and its share at its Node over the window, and the sign row's level at the nucleus's Node",
+    "blind": "the record at its one Node throughout (R = 0 on every Link), its count 1 at every interval, the period-4 cycle to the rounding of S A over w (205), the sign well static",
+    "status": "201 C and 205, the frozen proton's reading on main",
+    "fence": "GameBoard"
+   }
+  },
+  "numbers_seven": {
+   "Gamma": 13500,
+   "k_w": 9328,
+   "E_h": 1,
+   "T": 188892000,
+   "G": 1,
+   "width": 63,
+   "cube": 41,
+   "alpha_law": "about 1 / 7, a hypothesis under its own name (245, 246)",
+   "alpha_law_inverse": 7.0001,
+   "T_over_Gamma_squared": 1.0364,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 188892000 x 4000 = 9328 x 13500 x 6000 = 755568000000",
+   "amplitude_bound_at_load": 251048,
+   "nucleus_amplitude_per_plane": 5610,
+   "start_rest_fine_unit_one_node_source": 1,
+   "a_0_links_chain": 3.61,
+   "omega_0": 0.84107,
+   "binding_1s_rad_per_interval_free_atom": 0.008582129093587592,
+   "two_cos_Omega_1s_free_atom": 1.346078,
+   "beat_1s_2s_rad_per_interval_free_atom": 0.006436596820190694,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 468.3,
+   "note_level": "26 at Gamma 6000 and alpha 1 / 28 (the design), scaled as Gamma and as alpha^(3 / 2) (N_eff falls as a_0^3); the lay's own amplitude is the number read",
+   "walk_over_1000_intervals": 0.0106,
+   "walk_over_100_intervals": 0.0033
+  },
+  "numbers_free": {
+   "Gamma": 16500,
+   "k_w": 2849,
+   "E_h": 1,
+   "T": 70512750,
+   "G": 1,
+   "width": 63,
+   "cube": 90,
+   "alpha_law": "1 / 28, the law's; the free atom's cube (247)",
+   "alpha_law_inverse": 28.0123,
+   "T_over_Gamma_squared": 0.259,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 70512750 x 4000 = 2849 x 16500 x 6000 = 282051000000",
+   "amplitude_bound_at_load": 168060,
+   "nucleus_amplitude_per_plane": 3428,
+   "start_rest_fine_unit_one_node_source": 1,
+   "a_0_links_chain": 14.47,
+   "omega_0": 0.84107,
+   "binding_1s_rad_per_interval_free_atom": 0.0005359231471970777,
+   "two_cos_Omega_1s_free_atom": 1.334132,
+   "beat_1s_2s_rad_per_interval_free_atom": 0.00040194236039780824,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 71.5,
+   "note_level": "26 at Gamma 6000 and alpha 1 / 28 (the design), scaled as Gamma and as alpha^(3 / 2) (N_eff falls as a_0^3); the lay's own amplitude is the number read",
+   "walk_over_1000_intervals": 0.0694,
+   "walk_over_100_intervals": 0.0219
+  },
+  "universes": {
+   "one": "examples/events/atom_gate/atom_d.json",
+   "two": "examples/events/atom_gate/atom_d_seven.json",
+   "three": "examples/events/atom_gate/atom_d_free.json"
+  },
+  "ticks_note": "100 intervals per run (the advisor's cut, #1563 comment 5968100104 (2): the binding read at the lay from the mode's own clock, the walk over 100 intervals a reading in its own right, the 10^3-interval walk in the background from the same lay); the world's ticks 100, read_atom.py --intervals 1000 for the long walk"
  }
 }

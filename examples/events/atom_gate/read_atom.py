@@ -93,6 +93,51 @@ def rows_read(
     return {"rows": holder.records, "lines_per_row": holder.width, "levels": rows, "records": owned}
 
 
+def lay_mode(path: Path, family: str) -> tuple[list[np.ndarray], Fraction] | None:
+    """The lay's own mode of a family's body from the mode file beside the world: its two lines at the lay (`moving`'s now and im_now, one integer per Node or the nonzero Nodes alone) as object arrays over the board, and cos Omega of the lay's clock pair [2 cosine, fine]; None where no body of the family is laid with a sense."""
+    bodies = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"]
+    for body in bodies:
+        if body["family"] == family and body.get("clock") and "im_now" in body["moving"]:
+            lines = []
+            for key in ("now", "im_now"):
+                given = body["moving"][key]
+                if isinstance(given, dict):  # the nonzero Nodes alone
+                    full = np.zeros(len(body["profile"]), dtype=object)
+                    full[np.asarray(given["at"], dtype=np.int64)] = given["values"]
+                    lines.append(full)
+                else:
+                    lines.append(np.asarray(given, dtype=object))
+            return lines, Fraction(int(body["clock"][0]), 2 * int(body["clock"][1]))
+    return None
+
+
+def invariant(
+    mode: tuple[list[np.ndarray], Fraction], lines: list[Any], shape: tuple[int, ...]
+) -> Fraction:
+    """The mode's own invariant from the record's two time levels (the mathematician's 230 B, #1572 comment 5966473119, with the advisor's #1572 comment 5966449801, two hands; the ledger's line 27): the complex projections u = <phi, z_now> and v = <phi, z_before> of the plane record z = re + i im on the lay's mode phi = p + i q, <phi, z> = SUM (p re + q im) + i SUM (p im - q re) over the Nodes, exact integers, and Q = |u|^2 + |v|^2 - 2 cos Omega Re(conj(u) v) at the lay's own cos Omega, phase-free (for the standing mode z = c phi e^(-i Omega t) it is |c|^2 |phi|^4 2 sin^2 Omega at every interval), a GameBoard reading of the record and nothing kept beside it; Q(t) / Q(0) over the window is the mode's walk, the share in the mode within the rounding."""
+    (p, q), cosine = mode
+    size = shape[0] * shape[1] * shape[2]
+    found = []
+    for z_re, z_im in ((lines[0].now, lines[1].now), (lines[0].before, lines[1].before)):
+        re, im = (np.asarray(level, dtype=object).reshape(size) for level in (z_re, z_im))
+        found.append((int((p * re + q * im).sum()), int((p * im - q * re).sum())))
+    (u_re, u_im), (v_re, v_im) = found
+    return (
+        u_re * u_re + u_im * u_im + v_re * v_re + v_im * v_im - 2 * cosine * (u_re * v_re + u_im * v_im)
+    )
+
+
+def rms_radius(density: np.ndarray, centre: tuple[int, ...]) -> float | None:
+    """The root mean square radius of a density about a Node in Links, a float diagnostic of the share's extent (the Bohr radius read as the lay has it); None where the density sums to 0."""
+    weights = np.where(density > 0, density, 0).astype(float)
+    total = float(weights.sum())
+    if total == 0:
+        return None
+    grids = np.indices(density.shape)
+    squared = sum((grids[axis] - centre[axis]) ** 2 for axis in range(len(centre)))
+    return math.sqrt(float((weights * squared).sum()) / total)
+
+
 def lay_clock(path: Path, family: str) -> Fraction | None:
     """The lay's own clock pair of a family's body from the mode file beside the world, [next + before, now] at the largest level, as 2 cos omega of the lay, the one number taken from a file; None where no body of the family is laid."""
     bodies = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"]
@@ -129,10 +174,25 @@ def clicks(lines: list[dict[str, object]], board: GameBoard) -> dict[str, Any]:
     return found
 
 
-def atom(path: Path, intervals: int | None) -> dict[str, Any]:
-    """One world's readings over the window (the world's ticks, or `intervals`), every number exact but the arccosines, labelled."""
+def atom(path: Path, intervals: int | None, second: Path | None = None) -> dict[str, Any]:
+    """One world's readings over the window (the world's ticks, or `intervals`), every number exact but the arccosines and the root mean square radius, labelled; `second` another world of the folder whose lay is the next mode (the 2s), on which the record is projected beside its own lay's mode (`invariant`)."""
     lines: list[dict[str, object]] = []  # the run's click and field lines, the observer's
     board = GameBoard(load_world(path), lines.append)
+    own_mode = lay_mode(path, board.families[board.world.bodies[1].family].name)
+    other_mode = (
+        None if second is None else lay_mode(second, board.families[board.world.bodies[1].family].name)
+    )
+    modes = {"own": own_mode, "second": other_mode}
+    invariants: dict[str, list[Fraction]] = {key: [] for key, mode in modes.items() if mode is not None}
+
+    def projected() -> None:
+        record = board.record(board.world.bodies[1].family)
+        for key, series in invariants.items():
+            mode = modes[key]
+            assert mode is not None
+            series.append(invariant(mode, record, board.shape))
+
+    projected()  # the lay's own invariant before any step, Q(0)
     nucleus, electron = (board.world.bodies[i] for i in (0, 1))
     heavy, family = board.families[nucleus.family], board.families[electron.family]
     gamma, action = board.world.node_clock, board.world.quantum_action
@@ -168,6 +228,22 @@ def atom(path: Path, intervals: int | None) -> dict[str, Any]:
     }
     laid = board.share_of(electron.family)[0]
     stands = laid != 0  # the Nodes where the lay's share stands, the deviation's Nodes
+    tensioned = [i for i, f in enumerate(board.families) if f.held and not f.wronskian and f.axes]
+    frozen_lines = board.states[nucleus.family].lines  # the nucleus's record, line by line
+    nucleus_levels: dict[str, Any] = {}
+
+    def frozen_read(tick: int) -> None:
+        nucleus_levels[str(tick)] = {
+            "levels_at_node": [
+                [int(line.now[centre]), int(line.before[centre])] for line in frozen_lines
+            ],
+            "nodes_not_zero": int(
+                sum((line.now != 0) | (line.before != 0) for line in frozen_lines).astype(bool).sum()
+            ),
+        }
+
+    frozen_read(0)
+    radius_start = rms_radius(laid, centre)
     everywhere = np.ones(board.shape, dtype=bool)
     images_tool = body_standing()
     departed: dict[str, int] = {}  # per family the first interval at which one of its 48 images departs
@@ -194,6 +270,9 @@ def atom(path: Path, intervals: int | None) -> dict[str, Any]:
         after = [r.now for r in board.record(electron.family)]
         numerator, weight = summed(before, now, after)
         series.append((numerator, weight, board.tick))
+        projected()
+        if board.tick % (every * every) == 0:
+            frozen_read(board.tick)
         if len(departed) < len(board.families):
             imaged(board.tick)
         if board.tick in quarters:
@@ -226,7 +305,40 @@ def atom(path: Path, intervals: int | None) -> dict[str, Any]:
         windows.append(pair(Fraction(sum(n for n, _w, _t in block), sum(w for _n, w, _t in block))))
     centroid_end = images_tool.centroids(board.share_of(electron.family)[0], everywhere)
     clock = lay_clock(path, board.families[electron.family].name)
+    walks: dict[str, Any] = {}
+    origin = invariants["own"][0] if "own" in invariants and invariants["own"][0] else None
+    for key, found in invariants.items():
+        if origin is None:
+            continue
+        ratios = [value / origin for value in found]
+        off = [ratio - 1 for ratio in ratios] if key == "own" else ratios
+        squares = sum(float(o) * float(o) for o in off[1:]) / max(1, len(off) - 1)
+        walks[key] = {
+            "label": "the mode's invariant over the window as Q(t) / Q_own(0), a GameBoard reading (230 B)",
+            "at_every_hundredth": {
+                str(t): float(ratios[t]) for t in range(0, len(ratios), every * every)
+            },
+            "last": {"interval": len(ratios) - 1, "ratio": float(ratios[-1]), "exact": pair(ratios[-1])},
+            "largest_departure": float(max(abs(o) for o in off[1:])) if len(off) > 1 else None,
+            "rms_departure": math.sqrt(squares),
+        }
     return {
+        "invariant": walks,
+        "rms_radius_links": {
+            "label": "the root mean square radius of the electron's share about the nucleus's Node, a float diagnostic",
+            "start": radius_start,
+            "end": rms_radius(board.share_of(electron.family)[0], centre),
+        },
+        "tension_lines_largest_level": {
+            board.families[i].name: int(
+                max(
+                    int(np.abs(line.now).max())
+                    for line in board.states[i].lines[1 : board.families[i].width]
+                )
+            )
+            for i in tensioned
+        },
+        "nucleus_record": nucleus_levels,
         "label": LABEL,
         "input": path.name,
         "intervals": board.tick,
@@ -284,9 +396,15 @@ def main(argv: list[str] | None = None) -> None:
         "--intervals", type=int, default=None, help="the intervals read (the world's ticks)"
     )
     parser.add_argument("--expectation", type=Path, default=None, help="the blind expectation file")
+    parser.add_argument(
+        "--second",
+        type=Path,
+        default=None,
+        help="the world whose lay is the next mode (the 2s), on which every world's record is projected too",
+    )
     args = parser.parse_args(argv)
     found: dict[str, Any] = {"label": LABEL}
-    found["worlds"] = {path.stem: atom(path, args.intervals) for path in args.worlds}
+    found["worlds"] = {path.stem: atom(path, args.intervals, args.second) for path in args.worlds}
     if args.expectation is not None:
         expected = json.loads(args.expectation.read_text(encoding="utf-8"))
         found["blind"] = {

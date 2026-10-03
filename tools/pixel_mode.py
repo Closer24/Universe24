@@ -281,7 +281,9 @@ def rotation_spread(
     return median, len(ratios), worst
 
 
-Modes = dict[int, Any]  # the fine modes found in one content, by the fine unit they were iterated at
+Modes = dict[
+    tuple[int, int], Any
+]  # the fine modes found in one content, by the fine unit they were iterated at and the modes deflated before them (0 the top mode)
 
 
 def scaled(board: Board, total: np.ndarray, to: int, largest: int | None = None) -> np.ndarray:
@@ -328,9 +330,9 @@ def top_mode(
     """The top mode at the amplitude `unit` and its read (`fine_mode` once per fine unit in one content, `modes`, the iteration not depending on the amplitude it is read at). The fine unit is derived from the width and never written, the largest at which the read of a level stays inside the room (`Board.room`, the host's width or the file's, over twice the sum of the coefficients at a Node, as the start derives its own, `features.start.unit_of`), so that the rounding trap of the iteration is far below the amplitude's rounding; the mode is then rounded once to the amplitude `unit` by the division act and read once more: returns the mode at the amplitude and its read, (SUM over the Ports of R_ij arr_j + S a) div w, the mode times its rotation 2 cos omega within the step's one act."""
     reads, self_coefficient, wall = rule = rule_of(board, content)
     fine = max(unit, int(division_forward(board.room, 2 * reach_of(rule), 0)[0]))
-    if fine not in modes:
-        modes[fine] = fine_mode(board, content, keep, seed, fine)
-    a = scaled(board, modes[fine], unit)
+    if (fine, 0) not in modes:
+        modes[fine, 0] = fine_mode(board, content, keep, seed, fine)
+    a = scaled(board, modes[fine, 0], unit)
     total = np.asarray(rule3(reads, ports(a, board.wrap), self_coefficient, wall, a, 0, 0)[0])
     return a, np.where(keep, total, 0).astype(board.kind)
 
@@ -347,10 +349,53 @@ def time_factor(time: Any, cosine: int, sine: int, fine: int, gamma: int) -> tup
     return 2 * (cosine * (square - time * time) + 2 * sine * time * h), fine * (square + time * time)
 
 
+Planes = list[tuple[np.ndarray, np.ndarray]]  # turned modes found in one content, each its two lines
+
+
+def deflated(board: Board, levels: list[np.ndarray], modes: Planes) -> list[np.ndarray]:
+    """One deflation per turned mode found before (ALGEBRA.md, the engine's derivation ledger, line 27, the modes as the start's own readings; the advisor's #1572 comment 5966449801 and the mathematician's 230 B, two hands: the next standing solution is the iteration on the part of the record orthogonal to the modes found, one deflation per pass): the plane (x, y) less its projection on each mode (p, q) under the complex inner product, c = SUM (p x + q y) + i SUM (p y - q x) over the Nodes and N = SUM (p^2 + q^2), x <- x - (c_re p - c_im q) div N and y <- y - (c_re q + c_im p) div N by the division act, the modes of the turned recurrence being orthogonal to the order of the angle's own smallness (the standing condition's weight cos(Omega - theta_i) within 10^-6 of one across the atom); the sums and the products are formed in Python's integers where the host's room would not hold the largest level cubed times the Nodes (no silent overflow, the kind chosen once per deflation)."""
+    x, y = levels
+    for p, q in modes:
+        size = max(int(np.abs(a).max()) for a in (p, q, x, y))
+        kind = board.kind if 2 * size * size * size * x.size < board.room else object
+        p_, q_, x_, y_ = (np.asarray(a, dtype=kind) for a in (p, q, x, y))
+        norm = int((p_ * p_).sum()) + int((q_ * q_).sum())
+        if norm == 0:
+            continue
+        c_re = int((p_ * x_).sum()) + int((q_ * y_).sum())
+        c_im = int((p_ * y_).sum()) - int((q_ * x_).sum())
+        x = (x_ - np.asarray(division_forward(c_re * p_ - c_im * q_, norm, 0)[0])).astype(board.kind)
+        y = (y_ - np.asarray(division_forward(c_re * q_ + c_im * p_, norm, 0)[0])).astype(board.kind)
+    return [x, y]
+
+
 def turned_mode(
-    board: Board, content: np.ndarray, angles: node.Angles, keep: np.ndarray, seed: np.ndarray, fine: int
+    board: Board,
+    content: np.ndarray,
+    angles: node.Angles,
+    keep: np.ndarray,
+    seed: np.ndarray,
+    fine: int,
+    deflations: int = 0,
 ) -> tuple[np.ndarray, np.ndarray, tuple[int, int]]:
-    """The turned top mode at the fine unit (ALGEBRA.md, The atom is a bound body of the holder of the sign, step (4); The sign holder rotates the two-part record): the power iteration of Rule3's read with the arrivals turned by the Link angles (`turned_arrivals`, the odd lines' numerators as `node.turned_ports` turns them) and the Node by the time angle, z <- F(z) with F(z)_i = (M z)_i wall_i div numerator_i, M z = (S z + SUM over the Ports of R_ij e^(+-i theta_a) z_j) div w the turned read and numerator_i / wall_i = 2 cos(Omega - theta_i) the standing condition at the clock pair (`time_factor`), shifted by the unit, z <- F(z) + z, so that the band's bottom modes, whose eigenvalue under F has nearly the top's size with the opposite sign, fall near 0 while the top stands near 2 (the real top mode needs no shift, a hollow's S above 0 lifting its whole spectrum), then the division act to the fine unit by one factor on both lines (the mode's own scale; the rotation's phase free): the top mode of the standing condition in the content holders' paces, the holder under the rotation entering no pace, an unlike sign binding it below the free rest rotation; the inner stop the first repeat of the integer pair or a return within the roundings of one iteration at every Node (`ROUNDINGS_OF_THE_TURNED_READ`, the start's own rule of the repeat, one unit per division act composed), the clock then re-read from the mode's own ratio, cosine <- cosine x (the largest of F(z) + z less fine) div fine (F(z) = z exactly at the clock the mode stands at), the outer pass repeated until the clock pair returns itself; the first clock the free rest's, cos omega_0 = num / den. Returns the two lines at the fine unit and the clock pair (cosine, fine), cos Omega = cosine / fine."""
+    """The turned mode at the fine unit after `deflations` modes (0 the top mode, the 1s; 1 the next standing solution, the 2s, by one deflation of the iteration, `deflated`; the atom round of 2026-10-03, the mathematician's 242): the modes before it are iterated first in the same content (`turned_iteration`), each deflated from the next. Returns the two lines at the fine unit and the clock pair (cosine, fine), cos Omega = cosine / fine."""
+    earlier: Planes = []
+    for _number in range(deflations + 1):
+        re, im, clock = turned_iteration(board, content, angles, keep, seed, fine, earlier)
+        earlier.append((re, im))
+    return re, im, clock
+
+
+def turned_iteration(
+    board: Board,
+    content: np.ndarray,
+    angles: node.Angles,
+    keep: np.ndarray,
+    seed: np.ndarray,
+    fine: int,
+    earlier: Planes,
+) -> tuple[np.ndarray, np.ndarray, tuple[int, int]]:
+    """The turned top mode at the fine unit (ALGEBRA.md, The atom is a bound body of the holder of the sign, step (4); The sign holder rotates the two-part record): the power iteration of Rule3's read with the arrivals turned by the Link angles (`turned_arrivals`, the odd lines' numerators as `node.turned_ports` turns them) and the Node by the time angle, z <- F(z) with F(z)_i = (M z)_i wall_i div numerator_i, M z = (S z + SUM over the Ports of R_ij e^(+-i theta_a) z_j) div w the turned read and numerator_i / wall_i = 2 cos(Omega - theta_i) the standing condition at the clock pair (`time_factor`), shifted by the unit, z <- F(z) + z, so that the band's bottom modes, whose eigenvalue under F has nearly the top's size with the opposite sign, fall near 0 while the top stands near 2 (the real top mode needs no shift, a hollow's S above 0 lifting its whole spectrum), less its projection on every mode found before it in this content (`earlier`, `deflated`: the top mode of what is left, the 2s after the 1s), then the division act to the fine unit by one factor on both lines (the mode's own scale; the rotation's phase free): the top mode of the standing condition in the content holders' paces, the holder under the rotation entering no pace, an unlike sign binding it below the free rest rotation; the inner stop the first repeat of the integer pair or a return within the roundings of one iteration at every Node (`ROUNDINGS_OF_THE_TURNED_READ`, the start's own rule of the repeat, one unit per division act composed), the clock then re-read from the mode's own ratio, cosine <- cosine x (the largest of F(z) + z less fine) div fine (F(z) = z exactly at the clock the mode stands at), the outer pass repeated until the clock pair returns itself; the first clock the free rest's, cos omega_0 = num / den. Returns the two lines at the fine unit and the clock pair (cosine, fine), cos Omega = cosine / fine."""
     reads, self_coefficient, wall = rule_of(board, content)
     time, links = angles
     cosine = int(division_forward(board.pair[0] * fine, board.pair[1], 0)[0])
@@ -376,6 +421,7 @@ def turned_mode(
                 np.asarray(rule3(NO_READ, NO_READ, t * denominator, numerator, 1, 0, 0)[0]) + z
                 for t, z in zip(total, (re, im), strict=True)
             ]  # F(z) + z: the shift by one unit, the band's bottom modes near 0 and the top near 2
+            found = deflated(board, found, earlier)  # less the modes found before: the next one
             largest = max(int(np.abs(found[0]).max()), int(np.abs(found[1]).max()))
             if largest == 0:
                 break
@@ -400,8 +446,9 @@ def turned_top_mode(
     seed: np.ndarray,
     unit: int,
     modes: Modes,
+    deflations: int = 0,
 ) -> tuple[tuple[np.ndarray, np.ndarray], tuple[int, int]]:
-    """The turned top mode at the amplitude `unit` with its clock pair (cosine, fine), cos Omega = cosine / fine (`turned_mode` once per fine unit in one content, `modes`). The fine unit is derived from the width and never written: the largest at which the turned read of a level stays inside the room (`Board.room` over twice the sum of the coefficients at a Node) and the time factor's product, twice the read times the fine unit times the wall's 2 h^2, h = 2 Gamma, does too (the fixed point of the division act on the room over 4 h^2), at least the amplitude; the mode is then rounded once to the amplitude by one factor on both lines."""
+    """The turned mode after `deflations` modes (0 the top mode) at the amplitude `unit` with its clock pair (cosine, fine), cos Omega = cosine / fine (`turned_mode` once per fine unit and deflation count in one content, `modes`). The fine unit is derived from the width and never written: the largest at which the turned read of a level stays inside the room (`Board.room` over twice the sum of the coefficients at a Node) and the time factor's product, twice the read times the fine unit times the wall's 2 h^2, h = 2 Gamma, does too (the fixed point of the division act on the room over 4 h^2), at least the amplitude; the mode is then rounded once to the amplitude by one factor on both lines."""
     h = 2 * board.gamma
     fine = max(
         unit,
@@ -410,9 +457,9 @@ def turned_top_mode(
             division_fixed_point(int(division_forward(board.room, 2 * 2 * h * h, 0)[0])),
         ),
     )
-    if fine not in modes:
-        modes[fine] = turned_mode(board, content, angles, keep, seed, fine)
-    re, im, clock = modes[fine]
+    if (fine, deflations) not in modes:
+        modes[fine, deflations] = turned_mode(board, content, angles, keep, seed, fine, deflations)
+    re, im, clock = modes[fine, deflations]
     largest = max(int(np.abs(re).max()), int(np.abs(im).max()))
     return (scaled(board, re, unit, largest), scaled(board, im, unit, largest)), clock
 
@@ -493,9 +540,16 @@ def standing(
     keep: np.ndarray,
     modes: Modes,
     sense: int = 0,
+    deflations: int = 0,
 ) -> Standing | None:
     """The standing record of the body in a content: the top mode of Rule3's read act over `keep`, the board as declared outside the other bodies' regions (`own_board`; the power iteration from the body's shape, scaled to `scale` at its largest level; a bound mode's eigenvalue stands above the band's top, so the iteration on the board finds it, and the other bodies' regions are left out so that it is this body's mode and not the deeper well's), laid at its peak, the level before and the level next alike at half the mode's read (next + before = 2 cos omega x now at every Node of a standing record, so before = next = the read div 2 at the peak), the clock pair [the read, now] at the centre, the period read by Rule3 from that record (`period_reading`, the length from the centre's return upward through 0 to the next, the window twice it) and the share the record carries over the region at the paces of the content, the sum in the current's units and once rounded to quanta; None, no record, where the mode departs from one rotation across the region by more than the roundings of a step at a Node (`rotation_spread`, `ROUNDINGS_OF_A_STEP`: the mode is no eigenvector of the read in this content within the integers' rounding, a cloud's or a trapped iteration's), where the mode is 0 at the centre or where the centre's level never returns (a cloud, no period). The read act with the before-coefficient 0 is Rule3's own and the step a <- read - before keeps the record: a record stepped from this lay rotates at the mode's clock within the rounding. Where a holder of the sign turns the record (`angles`, the time numerators and the odd lines of every sign row but the body's own) the record is the turned top mode (`turned_top_mode`), the two lines laid rotating in the body's sense at the mode's own clock, z_before = e^(i sense Omega) z and z_next = e^(-i sense Omega) z (`quarter_turned`), the clock pair [2 cosine, fine] = 2 cos Omega, the period by the engine's turned step (`turned_period`) and the departure of the standing condition at a Node (`turned_spread`) within the roundings of a step, else None."""
     if angles is None:
+        if deflations:
+            raise ValueError(
+                f"the body about the Node {list(node_at)} is laid after {deflations} deflation(s) and no holder "
+                "turns it: the deflation is the turned iteration's act, the next standing solution under the "
+                "sign row's angle (ALGEBRA.md, the engine's derivation ledger, line 27)"
+            )
         now, total = top_mode(board, content, keep, shape_seed, scale, modes)
         if not now[node_at]:
             return None
@@ -511,7 +565,9 @@ def standing(
         )
         window = None if reading is None else 2 * reading[0]
     else:
-        (now, im), turned_clock = turned_top_mode(board, content, angles, keep, shape_seed, scale, modes)
+        (now, im), turned_clock = turned_top_mode(
+            board, content, angles, keep, shape_seed, scale, modes, deflations
+        )
         if not now[node_at] and not im[node_at]:
             return None
         if now[node_at] < 0:
@@ -739,6 +795,7 @@ def scaled_record(
     keep: np.ndarray,
     sense: int = 0,
     squares: int = 1,
+    deflations: int = 0,
 ) -> Standing:
     """The standing record scaled so its form over the region carries the body's quanta: the scale bracketed from the centre's own count (the form there is its count times T) by halving and doubling, a scale too large to stand halved back toward the last that stood, then bisected on the quanta carried at the Nodes (each Node's share rounded, summed, the counts as laid) or, for a record a holder turns, on the summed share against the quanta's wall W_c = 3 den T (the share itself and not its rounding to whole quanta, so that a record of count 1, whose share at every Node is below a quantum, is scaled to one quantum over its region); the reading closest to the quanta; refused by name when no reading stands. The mode is iterated once per fine unit in this content and scaled to each trial amplitude (`Modes`)."""
     readings: dict[int, Standing] = {}
@@ -750,7 +807,9 @@ def scaled_record(
 
     def read(scale: int) -> Standing | None:
         if scale not in readings:
-            record = standing(board, content, angles, centre, own, scale, region, keep, modes, sense)
+            record = standing(
+                board, content, angles, centre, own, scale, region, keep, modes, sense, deflations
+            )
             if record is None:
                 return None
             readings[scale] = record
@@ -828,6 +887,7 @@ def body_fixed_point(
     first: np.ndarray,
     sense: int = 0,
     weights: tuple[int, ...] = (1,),
+    deflations: int = 0,
 ) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray, Pairs]:
     """The body is the joint fixed point of its record and its content: from a first lay of its quanta the count's rest, the seed of the first pass alone (the other bodies' counts among it), the body's region from its well, its standing record seeded with the well's shape and scaled until its weighted share over the region carries its quanta, the record laid as the engine lays it (its level pair over the board as declared outside the other bodies' regions, `own_board`; with a sense its second pair the record a quarter period on, `rotating`, so that the holder of the sign rests inside the iteration and not after it), then the engine's own start on that lay (`start_content`: every held row at the rest its form and Wronskian return, the fine form over the write's wall as the hold books it, the other bodies' laid records among the sources), the content the record stands in next, and the counts the record's share in quanta at that content over the region; repeated until the content returns itself by the start's own rule (`returned`: the fixed point, or an earlier content one unit per division act composed at most, a rounding tie; the acts composed in the content are the record's scale, one, and per held row the family's declaration reads into its content, the content holders and the holders of the sign where a sense is laid, the acts the engine's own `held_rests` composes for that row, its rest's and its booking's, `ACTS_OF_A_HELD_ROW`, so 1 + 2 x 2 = 5 for matter reading the binding and gravity and 1 + 2 x 3 = 7 for a charged plane reading the charge too, counted from the family's reads at the call; a return further off a cycle, refused by name, the law's own answer at this count and sense and no defect) and the counts return within the rounding at every Node, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); returns the counts over the region, the record standing in the content returned, the region, the content and the laid level pairs, all of one round; refused by name as a cloud (the rotation not above the band's top) or a collapse (a pace not positive). The seed is the count and the fixed point is the form's and the content's together."""
     counts = first.copy()
@@ -860,6 +920,7 @@ def body_fixed_point(
             keep,
             sense,
             weights,
+            deflations,
         )
         region = keep if angles is not None else region_of(counts, content, centre, board.wrap)
         a, level = record.clock
@@ -915,6 +976,7 @@ def one_pass(
     keep: np.ndarray,
     sense: int,
     weights: tuple[int, ...] = (1,),
+    deflations: int = 0,
 ) -> tuple[Standing, Pairs, np.ndarray, Angles]:
     """One pass of the lay-and-rest map, the act both lays share: refused by name where the content reaches the Link's zero (a collapse, a frozen clock); the body's region from its counts (the board as kept for a record a holder turns, which binds in the angle over every Node where it stands), its standing record in the content and the angles scaled to carry its quanta (`scaled_record`), refused by name as a cloud where its rotation is not above the band's top and below 2; the record's level pairs over the board as declared outside the other bodies' regions (with a sense its second pair, `rotating`; a turned record's two lines the turned mode's own, laid with a sense, refused by name without one); and the content and the angles the engine's own start returns under that lay (`start_content`), the paces the record stands in next."""
     num, den = board.pair
@@ -938,7 +1000,18 @@ def one_pass(
     laid = weights  # one per real line at its weight, one per plane at 1 (`laid_weights`)
     squares = sum(weight * weight for weight in laid)  # the share's multiplier over the laid lines
     record = scaled_record(
-        board, content, angles, centre, own, region, quanta, int(counts[centre]), keep, sense, squares
+        board,
+        content,
+        angles,
+        centre,
+        own,
+        region,
+        quanta,
+        int(counts[centre]),
+        keep,
+        sense,
+        squares,
+        deflations,
     )
     a, level = record.clock
     if not (2 * num * level < a * den < 2 * level * den):
@@ -982,6 +1055,7 @@ def unit_fixed_point(
     sense: int,
     lay: Lay,
     weights: tuple[int, ...] = (1,),
+    deflations: int = 0,
 ) -> tuple[np.ndarray, Standing, np.ndarray, np.ndarray, Pairs, Trajectory]:
     """The lay at the integer fixed point under the body's own paces (the world's `lay` of the kind `fixed_point`, loader/lay.py; HIGHLIGHTS.md, the mathematician's 162 (3) and 168 item 2 (1), the owner's word of 2026-10-02, 17:40): the same map as `body_fixed_point`, one pass the standing record in the content and the engine's own start under that record (`one_pass`), iterated with the design's count the input of every pass and no half step on the counts, until the record's two levels and the content repeat the pass before within the declared `stop` units at every Node (0 the exact repeat), inside the declared `passes`; the record of the last pass is laid in the content it returned to within the stop, so the start the engine lays under the mode file's record gives the paces the record was laid in to the unit declared, the body standing exact by construction and the reads' walk alone remaining; the trajectory, per pass the content's largest change, the record's and the count laid, printed as a GameBoard reading and written to the mode file; where the passes run out the body is refused by name with its trajectory, the law's own answer at this count and no defect. Returns the counts, the record, the region, the content and the laid level pairs of the last pass, and the trajectory."""
     counts = first.copy()
@@ -1004,6 +1078,7 @@ def unit_fixed_point(
             keep,
             sense,
             weights,
+            deflations,
         )
         region = keep if angles is not None else region_of(counts, content, centre, board.wrap)
         zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
@@ -1316,6 +1391,7 @@ def pixel_mode(
     senses: list[int] | None = None,
     designed: list[int | None] | None = None,
     pixels: Sequence[int] = (),
+    deflations: Sequence[int] = (),
 ) -> dict[str, Any]:
     """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
@@ -1440,15 +1516,18 @@ def pixel_mode(
                 continue
             arguments = (board, families, index, records[number], rows, (all_counts - counts, others))
             weights = laid_weights(body, f"measured[{number}]", families[index])  # the lines' weights
+            deflated_by = int(deflations[number]) if number < len(deflations) else 0  # 0 the top mode
+            if deflated_by < 0:
+                raise ValueError(f"measured[{number}]: the deflations are 0 or more, got {deflated_by}")
             trajectory: Trajectory = []
             try:
                 if lay is not None and lay.kind == FIXED_POINT:
                     laid, record, region, _content, pairs_kept, trajectory = unit_fixed_point(
-                        *arguments, centre, quanta, counts, sense, lay, weights
+                        *arguments, centre, quanta, counts, sense, lay, weights, deflated_by
                     )
                 else:
                     laid, record, region, _content, pairs_kept = body_fixed_point(
-                        *arguments, centre, quanta, counts, sense, weights
+                        *arguments, centre, quanta, counts, sense, weights, deflated_by
                     )
             except RestCollapses as refusal:
                 raise ValueError(
@@ -1490,6 +1569,8 @@ def pixel_mode(
                 entry["lay"] = {"kind": lay.kind, "seed": lay.seed}
                 if trajectory:
                     entry["lay"].update(stop=lay.stop, trajectory=trajectory)
+                if deflated_by:  # the mode laid after that many deflations, the 2s after one
+                    entry["lay"].update(deflations=deflated_by)
             entry["nodes"] = [
                 {"node": [int(x), int(y), int(z)], "count": int(weighted[x, y, z])}
                 for x, y, z in zip(*np.nonzero(weighted), strict=True)
@@ -1542,10 +1623,17 @@ def main(argv: list[str] | None = None) -> None:
         default=[],
         help="the numbers of the bodies laid as the one-Node record of their quanta at their declared Node, a declaration by name (the atom's nucleus)",
     )
+    parser.add_argument(
+        "--deflate",
+        type=int,
+        nargs="*",
+        default=[],
+        help="per body in the world's order, the turned modes deflated before the one laid: 0 the top mode (the 1s), 1 the next standing solution (the 2s); a body a holder of the sign turns alone",
+    )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
     designed = designed_quanta(args.input, len(cast(list[Any], document.get("measured", []))))
-    mode = pixel_mode(document, list(args.sense), designed, tuple(args.pixel))
+    mode = pixel_mode(document, list(args.sense), designed, tuple(args.pixel), tuple(args.deflate))
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
     out.write_text(json.dumps(mode, separators=(",", ":")) + "\n", encoding="utf-8")
