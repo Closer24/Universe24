@@ -9,7 +9,7 @@ import event_universe.world_files as world_files
 from event_universe.core import paces
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, CHAIN, PACKET, SLIT, TOOL, chain_body_world, refused, slit_world
+from tests.laws import BACK, CHAIN, EVENTS, PACKET, SLIT, TOOL, chain_body_world, refused, slit_world
 
 
 def dense(levels: dict[str, list[int]]) -> np.ndarray:
@@ -134,3 +134,21 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     del universe["integers"]["quantum_action"]
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     refused("declares no quantum_action T", lambda: TOOL.pixel_mode(plain))
+
+
+def test_a_messages_mode_count_is_the_books_count_read_once_over_the_board(tmp_path, monkeypatch):
+    """The generator's `count` of a message is the books' count of its record at the lay (`GameBoard.credit.counts`; the mathematician's finding of 2026-10-03): the lines the books count summed over the board and the total read in quanta once, never per Node, so the shipped two slits' 1,998 and the Zeno world's 667 are the books' own, and a dilute wave below half a quantum at every Node reads its one quantum over the board while the per-Node reading sums to 0."""
+    for folder, name in (("two_slits", "two_slits"), ("zeno", "zeno_1")):
+        world = EVENTS / folder / f"{name}.json"
+        entries = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"]
+        board = GameBoard(load_world(world))
+        names = [family.name for family in board.families]
+        assert [entry["count"] for entry in entries] == [
+            board.credit.counts[names.index(e["family"])] for e in entries
+        ]
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    dilute = slit_world(tmp_path, TOOL, "dilute", messages=[{**PACKET, "amplitude": 60}])
+    entry = json.loads(dilute.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"][0]
+    board = GameBoard(load_world(dilute))
+    charge = [family.name for family in board.families].index("charge")
+    assert entry["count"] == board.credit.counts[charge] == 1 and not board.quanta(charge)[0].any()

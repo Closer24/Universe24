@@ -1285,16 +1285,21 @@ def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[i
 def message_entry(
     board: Board, message: dict[str, Any], beyond: np.ndarray, family: FamilyRule, label: str
 ) -> dict[str, Any]:
-    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading, over every part of the family and over the lines of a part as the engine lays them, the one event laid on each part alike and on each real line at its weight, `laid_weights`, the share summed over the lines before it is read in quanta, as the engine's books read it) and its two levels as their nonzero Nodes."""
+    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `GameBoard.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes."""
     now, before = message_levels(board, message, beyond)
     weights = (1,) if family.plane else laid_weights(message, label, family)
-    total = sum(share_of(board, 0, w * now, w * before) for w in weights)
-    laid = read_quanta(total, board.pair[1], board.action)
+    counted = (
+        weights[:1] if family.wronskian else weights
+    )  # the books read a sign holder's time line alone
+    total = sum(share_of(board, 0, w * now, w * before) for w in counted)
+    whole = (
+        int(np.asarray(total, dtype=object).sum()) * family.parts
+    )  # the board's total, the parts laid alike
     return {
         "family": message["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(laid.sum()) * family.parts,
+        "count": int(read_quanta(whole, board.pair[1], board.action, object)),
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 
