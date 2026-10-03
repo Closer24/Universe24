@@ -252,9 +252,7 @@ def test_the_rests_room_is_the_sources_own_bound_where_the_tent_leaves_no_unit()
     by_the_bound = rest(
         counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], refused_by_the_tent, own_weight=0
     )
-    assert (
-        by_the_bound.unit >= 1 and by_the_tent.unit >= 1
-    )  # the bound's unit stands where the tent's does not
+    assert by_the_bound.unit >= 1 and by_the_tent.unit >= 1  # the bound's unit where the tent's is none
     assert int(np.abs(by_the_bound.levels - by_the_tent.levels).max()) <= 1
     assert int(by_the_bound.levels.max()) < source_bound(counts, 1) < tent_of(counts, 1)
     with pytest.raises(ValueError, match="no fine unit"):
@@ -265,3 +263,53 @@ def test_the_rests_room_is_the_sources_own_bound_where_the_tent_leaves_no_unit()
     tube[0, 0, 20] = 1000
     with pytest.raises(ValueError, match="no fine unit"):  # the slab's rest above the bound (260)
         unit_of(tube, pair, 1, width, refused_by_the_tent, Wrap(True, True, False))
+
+
+def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions():
+    """The register's room under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's 268 and the advisor's second with one precision, #1572 comments 5969128707 and 5969197876, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q = Gamma - t, so under a negative tension q exceeds Gamma, up to q_max = Gamma + W A, the sum of W_a A over the held rows with axis lines a source reads, and the write's factor in a hollow reaches (P / Gamma)^3 sqrt(q_max / P) on a count and (P / Gamma)^3 q_max / P on a Wronskian, beyond the hill's room (P / Gamma)^3 rounded up. At the rule's universe (Gamma 6,000, W 1, the hill's own bound A_1 = 9,266, q_max 15,266) the law's ceilings are 3 on a count and 4 on a Wronskian for matter's pair (P 6,572; the register's values 2.003 and 3.053 against the hill's room 2) and 2 and 3 for the three massless pairs (P 6,000; 1.595 and 2.544 against 1): `tension_room` returns them and exceeds `hill_scale` exactly where the register's values exceed it; the four shipped universes' bound stays 9,266, the write's total not their binding term; a universe where it is, a holder of the massless pair with axis lines at the write weight 10^6 read by one real line at 1 (Gamma 10,000, T 64, the width 63), has the hill's bound 2,147,483, isqrt((2^63 - 1 - 64) div (10^6 x 2 x 1)), and under the rooms 554,477, the tension's room 15 at q_max = 10,000 + 2,147,483, smaller by name."""
+    from fractions import Fraction
+    from math import ceil, isqrt
+
+    from event_universe.loader import derived
+
+    gamma, hill_bound = 6000, 9266
+    q_max = gamma + 1 * hill_bound  # W = 1: every shipped family reads gravity's axis lines at 1
+    for row in json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]:
+        pair, matter = tuple(row["pair"]), row["name"] == "matter"
+        edge = isqrt(2 * pair[1] * gamma**2 // (pair[1] + pair[0]))  # the hill's edge pace P
+        assert edge**2 <= edge_squared(pair, gamma) < (edge + 1) ** 2 and edge == (
+            6572 if matter else 6000
+        )
+        hill = ceil(Fraction(edge**3, gamma**3))
+        count = ceil(Fraction(edge**2 * (isqrt(q_max * edge) + 1), gamma**3))
+        wronskian = ceil(Fraction(edge**2 * q_max, gamma**3))
+        values = ((edge / gamma) ** 3 * (q_max / edge) ** 0.5, (edge / gamma) ** 3 * q_max / edge)
+        assert [round(v, 3) for v in values] == ([2.003, 3.053] if matter else [1.595, 2.544])
+        assert (hill, count, wronskian) == ((2, 3, 4) if matter else (1, 2, 3))
+        assert all(value > hill for value in values) and derived.hill_scale(pair, gamma) == hill
+        assert derived.tension_room(pair, gamma, q_max, False) == count > hill
+        assert derived.tension_room(pair, gamma, q_max, True) == wronskian > hill
+    for name in ("rule", "light", "ghz", "pair"):
+        integers, families = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))
+        keys = ("node_clock", "quantum_action", "width", "link_unit")
+        assert derived.amplitude_bound(families, *(integers[key] for key in keys)) == hill_bound, name
+    axes = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 10**6}
+    well = {"name": "well", "pair": [1, 1], "reads": {"well": 1}, "held": axes}
+    deep = {**well, "name": "deep", "reads": {"deep": 1}, "held": {**axes, "write_weight": 1}}
+    line = {"name": "line", "pair": [1, 1], "reads": {"well": 1}, "dimension": 1}
+    families = universe_of(universe(well, line))[1]
+    largest, wall, room = (
+        2**63 - 1,
+        1 * 64,
+        10**6 * 1 * 2 * 1,
+    )  # E_s T; k_w x W x two products x the hill's 1
+    under_the_hill = isqrt((largest - wall) // room)
+    tension = ceil(Fraction(GAMMA**2 * (isqrt((GAMMA + under_the_hill) * GAMMA) + 1), GAMMA**3))
+    under_the_rooms = isqrt((largest - wall) // (room * tension))
+    assert (under_the_hill, tension, under_the_rooms) == (2_147_483, 15, 554_477)
+    assert derived.bound_under_rooms(families, GAMMA, 64, 63, 1, None) == under_the_hill
+    assert derived.amplitude_bound(families, GAMMA, 64, 63) == under_the_rooms < under_the_hill
+    two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}))[1]
+    assert (
+        derived.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7
+    )  # the sum over the two rows read
