@@ -534,10 +534,10 @@ const ringCapacity = LOOK.node_readers.reduce((n, d) => n + (d.body === null ? d
 const rings = new THREE.InstancedMesh(new THREE.TorusGeometry(size('--ring-radius'), size('--ring-tube'), 8, 32), new THREE.MeshBasicMaterial({ color: 0xffffff }), Math.max(ringCapacity, 1));
 scene.add(rings);
 layers['node_reader rings (the declared regions)'] = { on: true, objects: [rings] };
-/* The inner faces the world declares: the plane's Nodes across the axis at the coordinate, its gaps left open, drawn as dark cubes; the Nodes are the file's declaration and nothing is read there. */
+/* The inner faces the world declares: the plane's Nodes across the axis at the coordinate, its gaps left open, drawn as cubes within the declared board alone (the layers a receding face grew are not in the frame); the Nodes are the file's declaration and nothing is read there. */
 const beyond = new Set();
 for (const face of LOOK.faces || []) {
-  const a = AXES.indexOf(face.axis), others = [0, 1, 2].filter(k => k !== a), extents = [X, Y, Z];
+  const a = AXES.indexOf(face.axis), others = [0, 1, 2].filter(k => k !== a), extents = LOOK.shape;
   for (let u = 0; u < extents[others[0]]; u++) for (let v = 0; v < extents[others[1]]; v++) {
     const open = face.gaps.some(gap => { const [p, q] = gap[AXES[others[0]]], [r, s] = gap[AXES[others[1]]]; return p <= u && u <= q && r <= v && v <= s; });
     if (open) continue;
