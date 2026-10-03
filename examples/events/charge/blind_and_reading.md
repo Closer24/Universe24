@@ -120,3 +120,29 @@ The four engine rounds over the sign's rows; the generator run again on this fol
 - `charged_body.json`, on the merged engine (this pull request): laid, the clock [3204, 2310] = 1.3870, 1,189 Nodes, 10,538 quanta declared of the design's 10,000 (9,993 carried, seed 2310), its mode file beside it; the rounds' engine before the sign's rows (main da487970) had refused it by name (`design.json`).
 - `like.json`, on the merged engine (this pull request): refused, "the lay of the body about the Node [6, 12, 12] does not stand in its own start: stepped once, its level pair 1 rotates at 1.4118 in the median over 1204 Nodes and at the centre at 1.4400, a Node departing 9.65 roundings 1 / |now| where at most 4, one per act composed, is a standing record's (the mode file's clock [1226, 885]; ALGEBRA.md #the-generator)" (91 rounds of the first body).
 - `unlike.json`, on the merged engine (this pull request): refused, the same words as `like.json`'s, its first body the same lay. The look's plain controls, `like_or_unlike/like_plain.json` and `unlike_plain.json`, on the merged engine (this pull request): refused, "the lay and the rest of 2 holders and 3 signs finds no fixed point: the levels re-read return to an earlier state after 7 passes, a cycle of length 2, 805 and 811 at the Node [32, 0, 0] of the row 1" and "the lay and the rest of 2 holders and 3 signs finds no fixed point: the levels re-read return to an earlier state after 15 passes, a cycle of length 10, 328 and 324 at the Node [16, 0, 0] of the row 1".
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (on main fb284717): the write's factor booked as one rounding
+of the count times p_x p_y p_z over the one wall, the product exact beyond the width
+(`paces.write_factor`; the advisor's and the mathematician's lines, #1563 comments 5959617991
+and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
+line within one fine unit at every Node by the scaled residual in integers (`features/start`,
+`refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
+number below a GameBoard reading labelled so unless a detector clicked; a miss against the
+blind is a finding by name, never adjusted; a world refused by name is recorded verbatim.
+
+- **The lays**: `charged_body.json` is not re-laid tonight, by name: its lay, one body of 10,000
+  quanta of the charged family rotating in the sense +1 with three held rows at rest under it,
+  is the generator's longest on the 25-cube, and the night's budget on a shared box (one lay at
+  a time, the standing world's 62 minutes and the pixel's 23 before it) ends before it; its
+  committed mode file, laid under the three ordered roundings and the stop alone, is loaded on
+  the fixed engine below. `like.json` and `unlike.json` stand declared without a mode file,
+  refused by name before this round and not laid anew.
+- **The committed world loaded on the fixed engine**: `charged_body.json` LAWFUL at load in 67 s, the
+  gate admitting its declared 10,538 quanta against the share read at the refined rest's paces,
+  10,946 quanta of the charged family by the books (10,538 declared, 9,993 carried by the lay)
+  and 749 quanta of light on the holder of the sign's record; `like.json` and `unlike.json`
+  REFUSED at load by name, verbatim: "the mode file beside the world must be an object".
+- **The run and the reading**: not run again tonight; the blind's rows stand with the reading
+  above, unread on this engine, by name.
