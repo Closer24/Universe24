@@ -58,6 +58,7 @@ def step_plane(
     before = (re.before, im.before)  # u forward (`turned_before`); v = e^(i theta_t) z_next backward
     other = before if direction == 1 else rotation.turned(re.now, im.now, -time, half, -1)
     if faces[0][0] or faces[1][0]:  # the faces presented to each part's line
+        befores = turned_ports(other, links, 2 * half, wrap)  # the levels before through the same Ports
         faced = [
             presented(
                 at,
@@ -69,6 +70,7 @@ def step_plane(
                 (re, im)[k].remainder,
                 *faces[k],
                 direction,
+                befores[k],
             )
             if faces[k][0]
             else at

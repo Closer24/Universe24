@@ -35,16 +35,21 @@ def share(
     content: Any = 0,
     factors: tuple[Any, ...] | None = None,
     unit: int = 1,
+    nodes: np.ndarray | None = None,
 ) -> np.ndarray:
-    """One level pair's weighted share at every Node in the current's units: the conserved form's term at the Node, w (now^2 + before^2) - S now before less now x SUM over the six Ports of R_ij x the neighbour's before by the read act, over 2 p_i^2 G^2 by the division act (`over_pace`); Rule3's integers at the paces of the read (the Node's content and its Links' factors, None no tension), exact at any size."""
+    """One level pair's weighted share at every Node in the current's units: the conserved form's term at the Node, w (now^2 + before^2) - S now before less now x SUM over the six Ports of R_ij x the neighbour's before by the read act, over 2 p_i^2 G^2 by the division act (`over_pace`); Rule3's integers at the paces of the read (the Node's content and its Links' factors, None no tension), exact at any size in Python's integers, computed at the Nodes `nodes` names (a mask; None: every Node where the pair holds a level, the term being 0 at a Node whose two levels are 0 whatever its neighbours hold) and 0 at every other Node."""
     num, den = pair
-    now, before = record.now.astype(object), record.before.astype(object)
-    clock, pace = paces.node_paces(gamma, content)
-    reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, factors, unit)
-    arrived = tuple(value.astype(object) for value in ports(record.before, wrap))
+    at = (record.now != 0) | (record.before != 0) if nodes is None else nodes
+    now, before = record.now[at].astype(object), record.before[at].astype(object)
+    clock, pace = paces.node_paces(gamma, paces.at_nodes(content, at))
+    links = None if factors is None else tuple(paces.at_nodes(factor, at) for factor in factors)
+    reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, links, unit)
+    arrived = tuple(value[at].astype(object) for value in ports(record.before, wrap))
     link = rule3(reads, arrived, 0, 1, 0, 0, 0)[0]
     found = form_term(self_coefficient, wall, now, before) - now * link
-    return over_pace(found, gamma, content, unit)
+    everywhere = np.zeros(record.now.shape, dtype=object)
+    everywhere[at] = over_pace(found, gamma, paces.at_nodes(content, at), unit)
+    return everywhere
 
 
 def family_share(
@@ -55,11 +60,12 @@ def family_share(
     content: Any = 0,
     factors: tuple[Any, ...] | None = None,
     unit: int = 1,
+    nodes: np.ndarray | None = None,
 ) -> np.ndarray:
-    """A family's share at every Node, its level pairs' shares summed (the form of (re, im) is the sum of the two forms), at the paces of the read."""
+    """A family's share at every Node, its level pairs' shares summed (the form of (re, im) is the sum of the two forms), at the paces of the read, computed at the Nodes `nodes` names (`share`; None: where a level stands) and 0 elsewhere."""
     total: Any = 0
     for record in records:
-        total = total + share(family.pair, record, wrap, gamma, content, factors, unit)
+        total = total + share(family.pair, record, wrap, gamma, content, factors, unit, nodes)
     return np.asarray(total)
 
 
