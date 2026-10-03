@@ -9,8 +9,8 @@ experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
 a NodeReader reports). Its title is "Universe24: an integer cellular automaton read through clicks,
-the setups it computes, and the clicks of nature it approaches", the method, the
-setup it computes and the comparison, by the owner's word (2026-10-03, the
+and the clicks of nature it approaches", the method, the
+Universe24 it computes and the comparison, by the owner's word (2026-10-03, the
 title chosen in the writer's session; "cellular automaton" the literature's name
 for a lattice of integers stepped by one local rule); the meeting of the past with the future stands in the introduction as the
 statement of what a click is. The source carries a submission switch
@@ -21,10 +21,10 @@ properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
 hypotheses by name where they stand (Sections 7.5 and 10.2), and the three
-setups derived and read by the gates, whose runs Section 3.7 reports; the
+files derived and read by the gates, whose runs Section 3.7 reports; the
 compact pixel's numbers stand only in the long version. The runs the
 paper reports are the gates' (Section 3.7): the back-in-time gate's MATCH on
-every setup, taken by the owner's word of 2026-10-01 ("if there is a run of
+every file, taken by the owner's word of 2026-10-01 ("if there is a run of
 the reversal that looks good and agrees with nature, take it"), and the two
 slits', Bell's and GHZ's gates, the blind written first and the run identical
 to it, the engine's check of the algebra and no experiment against nature;
@@ -63,7 +63,7 @@ their statuses.
   in black and grey) by `python paper/general_formula/click_body.py`;
   `bands.pdf` (light's and matter's bands along one axis, from the law's line)
   by `python paper/general_formula/bands.py`; `two_slits_rows.pdf` (the two
-  slits' declared setup and its screen's row, the Huygens blind of the
+  slits' declared file and its screen's row, the Huygens blind of the
   expectation file beside the law's real line of `two_slits_real_line.txt`,
   the numbers typed from those two files) by
   `python paper/general_formula/two_slits_rows.py`; and `method.pdf` (the
@@ -88,7 +88,7 @@ their statuses.
 - `general_formula/two_slits_real_line.py`: the two slits' row by the law's
   real line, the reference computation Sections 3.7, 9.1 and 9.2 and Table 2
   cite (`docs/ALGEBRA.md` row (g) and item 1 of the click formulas), by no run
-  of the engine. It reads the two slits' setup as the engine's loader reads it
+  of the engine. It reads the two slits' file as the engine's loader reads it
   (`examples/events/two_slits/two_slits.json` with its mode file, the universe
   file it names and the blind `expectation.json` beside it) and steps Rule3's
   line for light at the vacuum's paces in floating point, with no integer
@@ -100,17 +100,17 @@ their statuses.
   its printed output stands beside it as `two_slits_real_line.txt`, every
   number with its definition: the total over the whole passage, the twelve
   regions' quanta and shares, the visibility, the wings and the arrival (in the
-  engine's interval labels and in the physical ones), the meeting round's setup
+  engine's interval labels and in the physical ones), the meeting round's file
   with its source face open, the Huygens blind of the expectation file, the
   central maximum against the first minima in the draw's scatter, the arrival's
-  spread sigma_t from the band and the lay's widths, and the same setup scaled
+  spread sigma_t from the band and the lay's widths, and the same file scaled
   toward the continuum.
 
 The paper carries no experiment: until a run has worked and the advisor and
 the reviewer have confirmed it, no click count of a run stands in it beside
 nature's, the gates' runs above being the engine's check of the algebra; the
 implementation's three gates, the two slits, Bell and GHZ, stand as the engine's
-setups and the law's derivations of what each must give. The derivations of
+files and the law's derivations of what each must give. The derivations of
 the bodies' clicks, the two potentials (the clock's share and Kepler's) and
 the magnetic force enter with their statuses as the mathematician derived
 them and the advisor checked them, never as results. The paper's outline, its
