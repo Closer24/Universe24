@@ -44,13 +44,12 @@ def levels_of(board: GameBoard, index: int, line: int, at: Node) -> list[int]:
 
 
 def given_quantum(board: GameBoard, item: Item) -> None:
-    """A spread record given `delta` whole quanta at the Nodes named, each a source in time (the mathematician's 213 (B), #1572 comment 5965054791, and 220, 5965303134, with the advisor's second, #1563 comment 5965316267, two hands; ALGEBRA.md, The click writes on the GameBoard (j), the giving): the quantum is laid at the one Node over the span tau the item carries (the giving's declared lifetime, the frequency's width 1 / tau), the source's level A_t r_t div R added to the record's level now each interval, the reference phasor r advanced by the declared resonance Omega (the pair at the Node then (A_t r_t, A_(t-1) r_(t-1)) by Rule3's own step), the total of the squared amplitudes S = isqrt(T^2 den^2 div (4 (den^2 - num^2))), the exact root of the invariant 2 S sin Omega = T, one quantum's action, laid with the carry, A_t = isqrt((S t) div tau - SUM_(u < t) A_u^2), so that the cumulative sum tracks S t / tau within one level squared and the amplitudes differ by one level now and then; the first interval's level added to the record's first line at once, the following by `sourced` at each interval with their own lay lines; the record's count in the books up by the change at once."""
+    """A spread record given `delta` whole quanta at the Nodes named, each a source in time (the mathematician's 213 (B), #1572 comment 5965054791, and 220, 5965303134, with the advisor's second, #1563 comment 5965316267, two hands; ALGEBRA.md, The click writes on the GameBoard (j), the giving): the quantum is laid at the one Node over the span tau the item carries (the giving's declared lifetime, the frequency's width 1 / tau), the source's level A_t r_t div R added to the record's level now each interval, the reference phasor r advanced by the declared resonance Omega (the pair at the Node then (A_t r_t, A_(t-1) r_(t-1)) by Rule3's own step), the total of the squared amplitudes S = isqrt(T^2 den^2 div (4 (den^2 - num^2))), the exact root of the invariant 2 S sin Omega = T, one quantum's action (computed as isqrt((T den div 2)^2 div (den^2 - num^2)), the same number for the file's T, a power of two), laid with the carry, A_t = isqrt((S t) div tau - SUM_(u < t) A_u^2), so that the cumulative sum tracks S t / tau within one level squared and the amplitudes differ by one level now and then; the first interval's level added to the record's first line at once, the following by `sourced` at each interval with their own lay lines; the record's count in the books up by the change at once."""
     assert item.resonance is not None and item.span > 0  # a lay names its resonance and its span
     num, den = item.resonance
     action = board.world.quantum_action
-    total = division_fixed_point(
-        division_forward(action * action * den * den, 4 * (den * den - num * num), 0)[0]
-    )
+    half = division_forward(action * den, 2, 0)[0]  # T den div 2, exact for the file's T, a power of two
+    total = division_fixed_point(division_forward(half * half, den * den - num * num, 0)[0])
     scale = count_wall(board.families[item.family], action) ** SCALE_OF
     previous = int(division_forward(scale * num, den, division_forward(den, 2, 0)[0])[0])
     for at in item.nodes:

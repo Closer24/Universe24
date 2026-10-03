@@ -9,10 +9,11 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from collections.abc import Sequence
 from fractions import Fraction
 from pathlib import Path
+
+import numpy as np
 
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import AXES
@@ -148,10 +149,11 @@ def photons(loaded: World, family: str, quanta: int, blind: object) -> dict[str,
     if not waves:
         return {"label": "GAMEBOARD", "value": None}
     p, q = waves[0]
-    sine = math.sqrt(1 - ((math.cos(math.pi * p / q) + 2) / 3) ** 2)
+    cosine = (float(np.cos(np.pi * p / q)) + 2) / 3  # light's dispersion along the axis
+    sine = (1 - cosine * cosine) ** (1 / 2)
     return {
         "label": "GAMEBOARD",
-        "sin_omega": round(sine, 4),
+        "sin_omega": round(sine, 3),
         "value": round(quanta / sine, 1),
         "blind": blind,
     }
