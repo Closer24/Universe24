@@ -25,6 +25,7 @@ import io
 import os
 import re
 import subprocess
+import sys
 import tokenize
 from pathlib import Path
 
@@ -146,7 +147,7 @@ def duplicate_groups(snapshot: Snapshot) -> dict[str, list[str]]:
         for node in ast.walk(ast.parse(text)):
             if (
                 isinstance(node, ast.FunctionDef)
-                and node.end_lineno - node.lineno + 1 >= DUPLICATE_LINES
+                and (node.end_lineno or node.lineno) - node.lineno + 1 >= DUPLICATE_LINES
             ):
                 copy = ast.parse(ast.unparse(node)).body[0]
                 digest = hashlib.sha256(ast.dump(Abstracted().visit(copy)).encode()).hexdigest()[:16]
@@ -203,3 +204,15 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
 
 def base_ref() -> str:
     return os.environ.get("CHECK_BASE") or "origin/main"
+
+
+def main() -> None:
+    """Print every way tests/ has grown against the merge base and exit 1 where it has; nothing printed and exit 0 where the shape holds."""
+    root = Path(__file__).resolve().parents[1]
+    found = violations(working_tree(root), at_ref(root, base_ref()))
+    print("\n".join(found) or "the shape of tests/ holds against the merge base")
+    sys.exit(1 if found else 0)
+
+
+if __name__ == "__main__":
+    main()

@@ -18,6 +18,7 @@ from tests.laws import EVENTS, ROOT, RUN, load_file
 
 SLITS, WAY = (load_file(f"{n}_build", EVENTS / n / "build_world.py") for n in ("two_slits", "which_way"))
 SRC = ROOT / "src" / "event_universe"
+GATE_ROW = [23, 18, 34, 13, 5, 35, 52, 19, 9, 27, 22, 21]  # the two slits' gate, N = 278, at the seed 24
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -26,12 +27,11 @@ def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int
     clicks: dict[str, int] = {}
     shares: dict[str, int] = {}
     for line in lines:
-        if line["event"] == "credit":
-            clicks[line["detector"]] = clicks.get(line["detector"], 0) + 1
-        if line["event"] == "click":
-            shares[line["detector"]] = shares.get(line["detector"], 0) + int(line["inflow"])
-    shares = {name: max(value, 0) for name, value in shares.items()}
-    return clicks, shares, sum(clicks.values())
+        kind, at = line["event"], line["detector"]
+        if kind in ("credit", "click"):
+            book, gain = (clicks, 1) if kind == "credit" else (shares, int(line["inflow"]))
+            book[at] = book.get(at, 0) + gain
+    return clicks, {name: max(value, 0) for name, value in shares.items()}, sum(clicks.values())
 
 
 def chi_square(clicks: dict[str, int], shares: dict[str, int], names: list[str]) -> float:
@@ -44,68 +44,43 @@ def chi_square(clicks: dict[str, int], shares: dict[str, int], names: list[str])
 def test_borns_rule_is_the_proportionality_to_whole_shares_over_four_seeds(tmp_path):
     """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at four seeds, the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees inside the 1 percent band (2.6 to 26.8) at every seed and about 11 on average (the advisor's run 8.9, 10.5, 9.5, 12.1 at the seeds 24 to 27; the seed 24 the gate's own, N = 278 and the row bit for bit); the draw's weights are the shares and nothing else."""
     design = json.loads((EVENTS / "two_slits" / "design.json").read_text(encoding="utf-8"))
-    worlds = []
+    names, found = [f"screen_{k}" for k in range(12)], []
     for seed in (24, 25, 26, 27):
-        folder = tmp_path / f"seed_{seed}"
-        folder.mkdir()
+        (folder := tmp_path / f"seed_{seed}").mkdir()
         seeded = {**design, "seed": seed, "instrument": {**design["instrument"], "seed": seed}}
         (folder / "design.json").write_text(json.dumps(seeded), encoding="utf-8")
         SLITS.main(["--design", str(folder / "design.json"), "--folder", str(folder)])
-        worlds.append(folder / "two_slits.json")
-    found = []
-    for world in worlds:
-        assert RUN.run_input(str(world), str(world.parent))["verdict"] == "LAWFUL"
-        clicks, shares, quanta = clicks_and_shares(world.parent / "two_slits.output.json")
-        names = [f"screen_{k}" for k in range(12)]
+        assert RUN.run_input(str(folder / "two_slits.json"), str(folder))["verdict"] == "LAWFUL"
+        clicks, shares, quanta = clicks_and_shares(folder / "two_slits.output.json")
         found.append(chi_square(clicks, shares, names))
         assert quanta == sum(clicks[n] for n in names) and clicks.get("gap", 0) == 0
-        if world.parent.name == "seed_24":  # the gate's own numbers, bit for bit
-            assert quanta == 278 and [clicks[n] for n in names] == [
-                23,
-                18,
-                34,
-                13,
-                5,
-                35,
-                52,
-                19,
-                9,
-                27,
-                22,
-                21,
-            ]
+        if seed == 24:  # the gate's own numbers, bit for bit
+            assert quanta == 278 and [clicks[n] for n in names] == GATE_ROW
     assert all(2.6 < chi < 26.8 for chi in found) and 7 < sum(found) / 4 < 16, found
     assert [round(chi, 1) for chi in found] == [8.9, 10.5, 9.5, 12.1]  # the advisor's run reproduced
 
 
 def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
     """T6 (the mathematician's 189, two hands; the advisor's matrix row 9, one act at three storeys): the hold's write (`features/hold.hold`), the write's carried division (`features/write.carried`) and the credit's count (`share.quanta_of`, the credit's `counted`) compute by Rule3's division act and by nothing else, their modules naming no floor division, remainder or divmod of their own (the engine's gate on hand division beside it) and each equal to `division_forward` on the same integers: the hold (numerator + r) div wall with the remainder kept, the count (share + W_c div 2) div W_c."""
-    sources = {
-        n: (SRC / n).read_text(encoding="utf-8")
-        for n in ("features/hold/__init__.py", "features/write/__init__.py", "share.py", "credit.py")
-    }
-    for name, text in sources.items():
-        tree = ast.parse(text)
+    acts = {"division_forward", "division_back", "rule3", "quanta_of"}
+    for name in ("features/hold/__init__.py", "features/write/__init__.py", "share.py", "credit.py"):
+        nodes = list(ast.walk(ast.parse((SRC / name).read_text(encoding="utf-8"))))
         hands = [
             n
-            for n in ast.walk(tree)
+            for n in nodes
             if isinstance(n, (ast.BinOp, ast.AugAssign)) and isinstance(n.op, (ast.FloorDiv, ast.Mod))
         ]
-        names = {getattr(n, "id", None) or getattr(n, "attr", None) for n in ast.walk(tree)}
-        assert not hands and "divmod" not in names, name
-        assert names & {"division_forward", "division_back", "rule3", "quanta_of"}, name
+        names = {getattr(n, "id", None) or getattr(n, "attr", None) for n in nodes}
+        assert not hands and "divmod" not in names and names & acts, name
     for numerator, wall, remainder in ((7, 3, 2), (-11, 4, 3), (0, 5, 4), (123456789, 1000, 999)):
         level, kept = hold(10, numerator, wall, remainder)
-        assert (
-            (level - 10, kept)
-            == division_forward(numerator, wall, remainder)
-            == carried(numerator, wall, remainder)
-        )
-        back, origin = hold(level, numerator, wall, kept, -1)
-        assert (back, origin) == (10, remainder) and 0 <= kept < wall
+        act = division_forward(numerator, wall, remainder)
+        assert (level - 10, kept) == act == carried(numerator, wall, remainder) and 0 <= kept < wall
+        assert hold(level, numerator, wall, kept, -1) == (10, remainder)
     shares, wall = np.array([0, 5, 6, 7, 11, 12, 13, -1, 24], dtype=object), 12
+    half = division_forward(wall, 2, 0)[0]
     assert list(quanta_of(shares, wall, object)) == [
-        division_forward(int(s) + wall // 2, wall, 0)[0] for s in shares
+        division_forward(int(s) + half, wall, 0)[0] for s in shares
     ]
     assert rule3((0,) * 6, (0,) * 6, 1, wall, 7, 0, 0) == (
         0,
@@ -120,27 +95,23 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
         board.step()
     shape = board.world.shape
 
-    def apart(a: list[int], b: list[int]) -> int:
-        return sum(min(abs(x - y), n - abs(x - y)) for x, y, n in zip(a, b, shape, strict=True))
+    def inside(a: dict, b: dict) -> bool:  # the click b inside the cone of the click a
+        apart = sum(
+            min(abs(x - y), n - abs(x - y))
+            for x, y, n in zip(a["node"]["at"], b["node"]["at"], shape, strict=True)
+        )
+        return apart <= b["tick"] - a["tick"]
 
     clicks = [c for c in lines if c["event"] in ("jump", "credit") and c["label"] == "DETECTOR"]
     clicks.sort(key=lambda c: int(c["tick"]))
     assert len(clicks) > 30 and {c["node"]["label"] for c in clicks} == {"GAMEBOARD"}
-    for before, after in zip(clicks, clicks[1:], strict=False):
-        if after["tick"] > before["tick"]:
-            assert apart(before["node"]["at"], after["node"]["at"]) <= after["tick"] - before["tick"], (
-                before,
-                after,
-            )
+    assert all(inside(a, b) for a, b in zip(clicks, clicks[1:], strict=False) if b["tick"] > a["tick"])
     givings = [c for c in clicks if c["event"] == "jump" and c["given"] == "fluorescence"]
     credits = [c for c in clicks if c["event"] == "credit" and c["family"] == "fluorescence"]
-    assert givings and credits
-    for credit in credits:
-        born = [g for g in givings if g["tick"] < credit["tick"]]
-        assert (
-            born
-            and apart(born[0]["node"]["at"], credit["node"]["at"]) <= credit["tick"] - born[0]["tick"]
-        )
+    assert givings and credits and all(inside(givings[0], c) for c in credits)
+    assert all(
+        g["tick"] < c["tick"] for g in givings[:1] for c in credits
+    )  # the first giving precedes every credit
 
 
 def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone(tmp_path):
@@ -160,19 +131,13 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
         )
         if name != "two_gaps":
             assert [rows[name][k] for k in blind["shadowed_regions"]] == [0] * 4 and rows[name][4] == 0
-    channel = totals["which_way"] - sum(rows["which_way"])
-    assert channel + sum(rows["which_way"]) == totals["which_way"] and totals["one_gap"] == sum(
-        rows["one_gap"]
-    )
-    scatter = 3 * math.sqrt(blind["quanta"]["two_gaps"]) / 2
+    way, one, two = rows["which_way"], rows["one_gap"], rows["two_gaps"]
+    channel, scatter = totals["which_way"] - sum(way), 3 * math.sqrt(blind["quanta"]["two_gaps"]) / 2
+    assert totals["one_gap"] == sum(one) and totals["two_gaps"] == sum(two) == 278 and two == GATE_ROW
     assert abs(channel - blind["quanta"]["which_way"]["channel"]) < scatter, channel
-    assert abs(sum(rows["which_way"]) - blind["quanta"]["which_way"]["screen"]) < scatter
-    pairs = [(rows["which_way"][k], rows["one_gap"][k]) for k in range(5, 12)]
-    assert sum((a - b) ** 2 / (a + b) for a, b in pairs if a + b) < 18.5, (
-        pairs
-    )  # chi-square, 7 degrees, 1 percent
-    two, way = rows["two_gaps"], rows["which_way"]
-    assert totals["two_gaps"] == 278 and two == [23, 18, 34, 13, 5, 35, 52, 19, 9, 27, 22, 21]
+    assert abs(sum(way) - blind["quanta"]["which_way"]["screen"]) < scatter
+    pairs = [(way[k], one[k]) for k in range(5, 12)]
+    assert sum((a - b) ** 2 / (a + b) for a, b in pairs if a + b) < 18.5, pairs  # chi-square, 7 degrees
     assert way[8] > two[8] + 3 * math.sqrt(two[8] + 1)  # the two slits' minimum filled
     assert (way[6] - way[8]) * (two[6] + two[8]) * 2 < (two[6] - two[8]) * (
         way[6] + way[8]
@@ -191,27 +156,29 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
     since, origin = 40, jumps[0]["node"]["at"]
     assert board.credit.fronts == [(light, tuple(origin), since)]
     checked = 0
+
+    def ball(
+        tick: int,
+    ) -> tuple[np.ndarray, list]:  # the ball's mask at the board's offset now, the record's lines
+        at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
+        inside = np.abs(np.indices(board.shape) - at).sum(axis=0) <= tick - since - 3
+        return inside, board.states[light].lines[: board.families[light].record]
+
     for tick in range(since + 4, since + 16):
         while board.tick < tick:
             board.step()
-        at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
-        inside = np.abs(np.indices(board.shape) - at).sum(axis=0) <= tick - since - 3
-        own = board.states[light].lines[: board.families[light].record]
+        inside, own = ball(tick)
         kept = [line.remainder[inside].copy() for line in own]
         for line in own:
             assert not line.now[inside].any() and not line.before[inside].any()
             assert (line.remainder[inside] >= 0).all() and (line.remainder[inside] < read).all()
         board.step()  # the board may grow at a receding face: the ball read again at the new offset
-        at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
-        inside = np.abs(np.indices(board.shape) - at).sum(axis=0) <= tick - since - 3
-        after = [
-            line.remainder[inside] for line in board.states[light].lines[: board.families[light].record]
-        ]
-        assert all((a == b).all() for a, b in zip(kept, after, strict=True))
+        inside, own = ball(tick)
+        assert all((a == line.remainder[inside]).all() for a, line in zip(kept, own, strict=True))
         checked += int(inside.sum())
-    erased = [e for e in lines if e["event"] == "erasure"]
+    erased = [e["tick"] - since for e in lines if e["event"] == "erasure"]
     assert (
         checked > 100
-        and [e["tick"] - since for e in erased][:3] == [1, 2, 3]
-        and erased[0]["nodes"] == 2
+        and erased[:3] == [1, 2, 3]
+        and [e for e in lines if e["event"] == "erasure"][0]["nodes"] == 2
     )
