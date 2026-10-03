@@ -293,3 +293,55 @@ against the blind is a finding by name, never adjusted.
   binding row's at 1677 against 1676.55, where the stop alone left them 1677 and 1674,
   `tests/test_the_features.py`); the body's holders rest on that line, so no ringing at the lowest
   mode's period is left to find in this series, and none is read.
+
+## The restated reads on the fixed engine (main 7c9a170e), T = 2^15, n = 1000
+
+The restated reads (`tools/body_standing.py --beat-period 185`, 6.1 minutes) on the lay the fix round
+made (the section above: the amplitude 1,885, the clock pair [2596, 1885] = 1.37719, 9,992 quanta
+over 1,527 Nodes, 82 at the centre; N_eff = 145, the shape factor 1.84; the blind's own numbers
+rebuilt by the builder: rho_D's walk 0.97, 1.37, 1.68 and 1.94 percent at the quarters, read 3's
+noise 1.4 x 10^-6 over the run and 1.6 x 10^-5 per window of 8) on the engine of main 7c9a170e
+as squashed. The books of this run differ from the fix round's reading above (the share
+6,258,897,615,428, 10,611 quanta, the drift +192,560,448,685, +326 quanta, the least pace 4,960,
+against 6,222,824,121,666, +265 quanta and 4,938 there), so the engine read here is not the one
+that reading ran on (the branch before its squash), by name; every number below is of 7c9a170e.
+
+- **Read 1:** the centroid 12, 12, 12 at both ends, the drift exactly 0 on every axis: pass.
+- **Read 2 restated, rho_D at the quarters** (the centres 250, 500, 750, 999): 2.36, 4.13, 3.18
+  and 4.07 percent against the walk's 0.97, 1.37, 1.68 and 1.94 (2.4, 3.0, 1.9 and 2.1 times);
+  rho_D(999) / rho_D(250) = 1.73 against 2 within 5 percent: a finding by name. The window-mean
+  envelope: 0.25 percent at the centre 1, rising to 8.8 at 129, falling to 1.8 at 273, 5.9 at 409,
+  3.8 at 457, 4.3 at 489, 2.6 at 521, 4.3 at 561 to 585, 2.5 at 641, 3.3 at 721, 2.7 at 769, 6.6 at
+  825, 4.3 at 873, 5.6 at 897, 2.7 at 969: the crests at 129, 409 and 825, spaced 280 and 416, with
+  lesser maxima 16 to 104 apart; no one beat period and no spacing at 52. The Fourier line at 1 / 185:
+  the components -0.8 x 10^-4 and -6.1 x 10^-4, the weight 6.1 x 10^-4 in rho_D^2 (the series' mean
+  1.83 x 10^-3, rho_D's rms 4.3 percent); the series less the line at the quarters, the walk's part
+  by 175 (3): 3.16, 3.31, 3.59 and 4.42 percent, 3.3, 2.4, 2.1 and 2.3 times the walk's blind,
+  within 5 percent at none, the residual's ratio 999 / 250 = 1.40 against 2: read 2 does not pass;
+  the third part, by name, is the swing whose crests stand 280 and 416 apart, not a line at 1 / 185
+  and not the walk, with the rest refined and the 48 images kept (read 4): the lay's, or the step's
+  under the well's drift (the books +3.3 percent). At the interval scale the maxima are 3.98 apart on
+  the mean (250 of them, half the period 7.74), the one interval's rounding in the form as noted
+  above. rho_s beside it, 167's convention: 2.15, 3.19, 2.91 and 4.68 percent, its maxima 4.0 apart.
+- **Read 3 restated, the windows** (the period 8 from [2596, 1885]; 125 windows): the whole run's
+  2 cos omega_read 1.381235 against the clock pair 1.37719 (+4.0 x 10^-3); the windows' least
+  1.376655 (from the centre 120) and largest 1.390098 (from 872), the spread 1.34 x 10^-2 against
+  the blind's 10^-5 and the lay's noise 1.6 x 10^-5 per window: a finding by name. The series holds
+  within 1.3767 to 1.3781 over the first 190 intervals, then rises, 1.379 at 240, 1.380 at 300,
+  1.381 at 420 to 470, 1.382 at 500 to 550, 1.385 at 600, 1.387 at 712, 1.388 at 816, 1.390 at 872,
+  1.385 at 984, about +7.5 x 10^-3 between the means of the first and the last ten windows, the
+  rotation slowing while the books' share drifts +326 quanta; and on the rise a swing absent in the
+  first 300 intervals and growing to about 3 x 10^-3 by the end, its maxima at the windows from 496,
+  552, 608, 664, 712, 768, 816, 872, 920 and 976, spaced 56, 56, 56, 48, 56, 48, 56, 48 and 56,
+  about 53 intervals, the board's lowest mode's period: the line the blind said must vanish with the
+  rest's fix is here, but not from the start (the start's rest is refined to the line, the section
+  above) and growing through the run, so it is not the start's miss but a ringing of the lowest
+  mode fed during the run, by name; the Fourier line at 1 / 185 on this series 1.4 x 10^-4, at the
+  noise. The per-interval read: least 0.68831 at 118, largest 0.69551 at 876, the spread
+  7.2 x 10^-3 over 493 intervals, the accumulated 0.69062, the first interval's 2 cos omega 1.37711
+  against the clock pair 1.37719.
+- **Read 4, the 48 images:** every line of every family kept its 48 images to the bit, levels,
+  remainders and write remainders, through the interval 1000, the whole run, no departure: the
+  engine worker's claim read and confirmed on 7c9a170e; pass.
+- **The T ratio** stands unread: standing_17 declared and not laid (the Boss's word of 09:10 Israel,
+  not tonight), standing_19 not laid.
