@@ -156,7 +156,7 @@ def bodies_of(
             beyond,
         )
         weights = weights_of(
-            body.get("weights"), f"{label}.weights", families[family].width, families[family].plane
+            body.get("weights"), f"{label}.weights", families[family].laid, families[family].plane
         )
         found.append(
             BodyRow(family, tuple(nodes), tuple(counts), now, before, im_now, im_before, weights)
