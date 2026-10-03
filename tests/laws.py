@@ -19,8 +19,9 @@ EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
 CHAIN, QUANTA = (
     24,
-    50,
-)  # the shortest chain (x open) holding the body of 50 and the end node_readers apart
+    6,
+)  # the shortest chain (x open) holding the body apart from the end node_readers; the
+# smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
 TOP = [
     0,

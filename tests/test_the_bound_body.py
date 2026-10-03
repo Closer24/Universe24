@@ -31,7 +31,7 @@ from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
 
-DRIFT, STANDING = (load_file(p.stem, p) for p in sorted(EVENTS.parents[1].glob("tools/body_[ds]*")))
+DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")  # the looks' drift tool
 LOOK, GAMMA, PAIR, RING = EVENTS / "like_or_unlike", 6000, (4000, 6000), Wrap(True, True, True)
 INTEGERS, TURNING = universe_of(json.loads((LOOK / "turning.json").read_text(encoding="utf-8")))
 T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]  # the rule's rows, the plane
@@ -95,7 +95,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert abs(books["quanta"] - laid) <= CHAIN  # Rule3's rounding, under a quantum per Node
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0 and kept
     mode_path, document = world.with_suffix(".mode.json"), json.loads(world.read_text(encoding="utf-8"))
-    document["bodies"][0]["nodes"] = [{**n, "count": 1} for n in document["bodies"][0]["nodes"]]
+    document["bodies"][0]["nodes"] = [{**n, "count": 5} for n in document["bodies"][0]["nodes"]]
     world.write_text(json.dumps(document), encoding="utf-8")
     mode = {**json.loads(mode_path.read_text(encoding="utf-8")), "world_digest": input_digest(document)}
     mode_path.write_text(json.dumps(mode), encoding="utf-8")
@@ -176,14 +176,12 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert not any("act" in row.get("held", {}) for row in gate["families"])
 
 
-def test_the_looks_committed_worlds_pass_the_gate_and_the_lawful_pairs_are_read(tmp_path):
-    """The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world): the like, the unlike, the uncharged pair and the four single-body worlds read by tools/body_drift.py over their run: the like pair ends further apart than the unlike pair, the mutual effect's sign ((a - b) / 2 above 0, which no background enters), asserted; the blind's three lines against the background (the uncharged pair's change plus the image force read on the single bodies), like apart, unlike together and the same size to a third of the half-difference, read and printed yes or no beside the plain controls' changes (ENGINE.md, section 6, the looks' numbers: the bodies' response to their own angle is not additive between a pair and a lone body, so the three lines are not met by that background); the back-in-time gate MATCH on the three pairs over their run, each on its own fresh load, and one inverse step more returns its board to the loaded state bit for bit, the state the drift then reads (one load of each pair instead of two: the reading is the fresh load's by that check). The standing world (examples/events/standing_body, the body round) read by tools/body_standing.py over its whole run of 1000 intervals: every line of every family keeps its 48 images about the centre to the bit, levels, remainders and write remainders, through the last interval (166's theorem under the write's factor booked as one rounding, the fix round of 2026-10-03; under the three roundings in the order x, y, z the tension lines departed at the interval 516)."""
+def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte(tmp_path):
+    """The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world) and every blind of examples/events: each blind is its builder's byte for byte; the three lawful pairs load, their run the blind's window; the charged ones are refused by name without a mode file, the start's refusals recorded in the blind by name. No world runs here: the looks' drift over the window, the back-in-time MATCH on the pairs over their 400 and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/body_drift.py, tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03: a committed 128-chain's held rests alone take longer at the load). The drift's tool runs over four intervals of the anticoincidence world, its reading two bodies."""
     for folder in (LOOK, *(p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md")))):
         build, out = load_file(f"{folder.name}_build", folder / "build_world.py"), tmp_path / folder.name
         build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
         assert (out / "expectation.json").read_bytes() == (folder / "expectation.json").read_bytes()
-    images = STANDING.standing(EVENTS / "standing_body" / "standing_15.json", None)["images"]
-    assert images == {"kept_to_the_bit_through": 1000, "first_departure": None}, images  # the 48
     expected = json.loads((LOOK / "expectation.json").read_text(encoding="utf-8"))
     charged, lawful = ([n for n in expected["worlds"] if ("uncharged" in n) is f] for f in (False, True))
     for name in charged:  # declared without a mode file, refused at load by name
@@ -197,12 +195,9 @@ def test_the_looks_committed_worlds_pass_the_gate_and_the_lawful_pairs_are_read(
     ):
         assert words in expected["comment"], words  # the start's refusals recorded in the blind by name
     assert (len(charged), len(lawful)) == (6, 3)
-    gated = {n: GameBoard(load_world(LOOK / f"{n}.json")) for n in lawful}
-    for n, board in gated.items():  # the gate on a fresh load; a step back more: the drift's start
-        loaded, v, t = BACK.snapshot(board), BACK.verdict(board, board.world.ticks), board.world.ticks
-        assert (v["verdict"], v["intervals"], board.step_inverse()) == ("MATCH", t, None), n
-        assert BACK.first_difference(loaded, BACK.snapshot(board)) is None and board.tick == 0, n
-    assert {DRIFT.drift(gated[n], None)["intervals"] for n in lawful} == {expected["window"][1]}
+    assert all(load_world(LOOK / f"{n}.json").ticks == expected["window"][1] for n in lawful)  # loaded
+    read = DRIFT.drift(GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json")), 4)
+    assert read["intervals"] == 4 and len(read["bodies"]) == 2  # the drift's tool on a small world
 
 
 def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused(

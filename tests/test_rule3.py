@@ -222,6 +222,8 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             board.quanta(index)
     assert board.books() and all(kind != "write" for kind, _ in calls)  # the readings write nothing
     assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands
+    for module in [m for m in engine if m.__dict__.get("rule3") is counting]:
+        monkeypatch.setattr(module, "rule3", original)  # the count is taken; the runs below plain
     for _ in range(60):
         board.step()
     regions = {row.name for row in board.world.node_readers} | {"face"}

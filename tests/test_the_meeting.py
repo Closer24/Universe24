@@ -62,7 +62,7 @@ def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
         credits = [line for line in lines if line["event"] == "credit"]
         assert parts and equal and credits and all(c["tick"] == c["window"][1] for c in credits)
         board = GameBoard(load_world(folder / f"{name}.json"))
-        assert BACK.verdict(board, board.world.ticks - 2)["verdict"] == "MATCH"  # exact before the click
+        assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
     outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
     read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
     assert read[name] == expected["blind"][name]
