@@ -15,6 +15,7 @@ PHYSICAL_MODULES += ("records.py", "bookings.py", "meeting.py", "front.py", "pla
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/universe.py", "loader/lay.py")
+PHYSICAL_MODULES += ("resonance.py",)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}

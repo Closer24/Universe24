@@ -7,13 +7,10 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import meeting, node, world_files
+from event_universe import meeting, node, resonance, world_files
 from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
-from event_universe.giving import advanced
 from event_universe.loader.instrument import (
-    Instrument,
-    NodeInstrument,
     Transition,
     basis_of,
     instrument_of,
@@ -339,27 +336,21 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
 
 
 def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
-    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/meeting.py, `scale_of`, `references_of`, `gathered`, `window_turn`, `turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the giving's one recurrence (giving.advanced) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the instrument's act."""
+    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/resonance.py and `meeting.turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the giving's one recurrence (giving.advanced, through `gathered` at the level 0) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the instrument's act."""
     omega, detuned, bound, room = math.acos(2 / 3), math.acos(1 / 3), 9266, 2**63 - 1
-    assert [meeting.scale_of(room, bound, w) for w in (48, 96, 12)] == [2**12, 2**11, 2**14]
-    scale, transitions = meeting.scale_of(room, bound, 48), (Transition(0, 1, 1, 1, (2, 3)),)
-    declared = NodeInstrument(("g", "e"), (1, 0), transitions, (), Instrument(48, 25, 1, 0))
-    reference = meeting.references_of(scale, transitions)[0]
-    cosine, sine = reference.cosine, reference.sine
+    assert [resonance.scale_of(room, bound, w) for w in (48, 96, 12)] == [2**12, 2**11, 2**14]
+    scale, transitions = resonance.scale_of(room, bound, 48), (Transition(0, 1, 1, 1, (2, 3)),)
+    references = resonance.references_of(scale, transitions)
     for t in range(1, 101):
-        cosine, sine = advanced(*cosine, (2, 3)), advanced(*sine, (2, 3))
-        assert (
-            abs(cosine[0] - scale * math.cos(omega * t))
-            <= 7
-            >= abs(sine[0] - scale * math.sin(omega * t))
-        )
+        resonance.gathered(references, transitions, {1: 0})
+        cosine, sine = references[0].cosine[0], references[0].sine[0]
+        assert abs(cosine - scale * math.cos(omega * t)) <= 7 >= abs(sine - scale * math.sin(omega * t))
 
     def turn(frequency: float, phase: float, window: int) -> int:
-        references = meeting.references_of(scale, transitions)
-        books = meeting.NodeBooks(0, 0, 0, (0, 0, 0), declared, 0, [1, 0], [1, 0], 0, 0, references)
+        fresh = resonance.references_of(scale, transitions)
         for t in range(window):
-            meeting.gathered(books, {1: round(1000 * math.cos(frequency * t + phase))})
-        return meeting.window_turn(books.references[0], 1)
+            resonance.gathered(fresh, transitions, {1: round(1000 * math.cos(frequency * t + phase))})
+        return resonance.window_turn(fresh[0], 1)
 
     phases = (0, 0.7, math.pi / 2, 2.5)
     assert all(abs(turn(omega, phi, 48) - 24000) <= 480 for phi in phases)  # A W / 2 at every phase

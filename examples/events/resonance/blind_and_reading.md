@@ -126,8 +126,8 @@ not this one's, cited with the advisor's 5965700585 at the findings 4 and 5 abov
 
 ## On the resonant act, 2026-10-03 (branch resonant-act)
 
-The resonant two-mode act is built in the taker's act (`src/event_universe/meeting.py`, `gathered`,
-`window_turn`, `turned_labels`; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
+The resonant two-mode act is built in the taker's act (`src/event_universe/resonance.py`, `gathered`
+and `window_turn`, with `meeting.turned_labels`; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
 seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
 morning, #1572 comments 5966338551 and 5966387795): the taker keeps per transition two reference records at its
 declared pair, r_t = R cos(Omega_d t) and r'_t = R sin(Omega_d t), advanced by the giving's recurrence
