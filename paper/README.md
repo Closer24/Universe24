@@ -16,7 +16,7 @@ for a lattice of integers stepped by one local rule); the meeting of the past wi
 statement of what a click is. The source carries a submission switch
 (`\submissiontrue` in the preamble of each document): the project's documents
 are then cited as [1], [2], [3] alone, without their line names, and the
-journal's name leaves the supplement's title. The paper is kept to about 33 pages and to what is safe: the rule, its exact
+journal's name leaves the supplement's title. The paper is kept to about 34 pages and to what is safe: the rule, its exact
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
@@ -49,13 +49,14 @@ their statuses.
   asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
   source.
 - `general_formula/figures/`: the figures, each drawn by a script from the
-  definitions or from the documents' rows, none from a run and none by a
+  definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
+  engine's own look of the shipped two-slits file, labelled a GameBoard reading, and none by a
   generative tool, with 8 pt lettering at the drawn size (Figs. 1 and 2 are
   included at that size, the other four at 0.66 to 0.75 of the text width), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
   every line at least 0.3 pt, black and grey, no transparency), with an EPS
-  beside each PDF for the journal. The paper uses seven: `lattice.pdf` and `octahedron.pdf` (the two panels
+  beside each PDF for the journal. The paper uses eight: `lattice.pdf` and `octahedron.pdf` (the two panels
   of Fig. 2, the GameBoard and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
   `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 4,
@@ -72,8 +73,13 @@ their statuses.
   method's three layers, from nature's measurements to the paper's reading) by
   `python paper/general_formula/method.py`; and `moving_clock.pdf` (the moving
   clock's factor from the band against Lorentz's) by
-  `python paper/general_formula/moving_clock.py`. The folder holds
-  these seven figures and nothing else.
+  `python paper/general_formula/moving_clock.py`; and `two_slits_frames.pdf` (Fig. 7,
+  the two slits mid-run: the light record's level at the intervals 18, 40 and 62
+  of the 130, a GameBoard reading and no measurement, from the three frames
+  recorded in `figures/two_slits_frames.json` by `python paper/general_formula/two_slits_frames.py --look <world>.look.json`
+  after `PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --ticks 130`)
+  by `python paper/general_formula/two_slits_frames.py`. The folder holds
+  these eight figures, that recording and nothing else.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.
@@ -172,7 +178,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "33 pages, 6 figures, 4 tables; supplementary material of 34 pages as an
+  "34 pages, 7 figures, 4 tables; supplementary material of 34 pages as an
   ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 327 words and 1917
   characters counted with its TeX signs, below the cap.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
