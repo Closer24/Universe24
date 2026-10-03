@@ -113,3 +113,14 @@ three real lines), while the instrument's count is the declared 1: the invariant
 night, by name: a packet's lay of the records out with a wave number and a sense; the booking of the
 sines' difference in the books; the world of a plane converted whole; the recoil (the write conserves
 no momentum, the body cut).
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Row 4, the rate, is the detector's: the `conversion` lines' ticks per seed (`read_world.py`,
+`trials`). Row 9's six `click` lines into `around` are the detector's and enter no verdict. Every
+other row is read on the GameBoard or in the books and its verdict rests there: row 1 on the
+instrument's and the credit's books and the books' quanta (the `conversion` line the act's evidence),
+rows 2, 3, 5, 7 and 8 on the levels, the Wronskian and the share at the Node, row 6 on the
+back-in-time gate over the arrays. The `conversion` line carries the board's `tick` and the `window`
+[28, 28] in board intervals; the rate 30 is a count of board intervals, and no line carries the
+record's own clock.
