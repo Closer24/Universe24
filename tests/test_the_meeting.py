@@ -424,7 +424,7 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
 
 
 def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands():
-    """The hole of a dense record (the mathematician's 237 and 265 with the advisor's seconds, #1572 comments 5967012316, 5967123679 and 5969040401, two hands; features/click `Hole`, `rest_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (the booked share above W_rec), at the trial seed 2, beside its untouched twin. (i) The faces: the identity's, (1, 1), the booked share above one quantum (266). (ii) The taking at 24: the first face writes the root nearest v of w (x - v)(x - b) = -W_rec, between the twin's level v and the leaving level b, and 0.9993 of the quantum leaves at it; the second face writes the rest's root; the levels at the Node not 0 and the count down by one; the hole's second face marked, no front (the count stands above 0); the back-in-time gate MATCH across the two faces."""
+    """The hole of a dense record (the mathematician's 237 and 265 with the advisor's seconds, #1572 comments 5967012316, 5967123679 and 5969040401, two hands; features/click `Hole`, `rest_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (the booked share above W_rec), at the trial seed 2, beside its untouched twin. (i) The faces: the identity's, (1, 1), the booked share above one quantum (266). (ii) The taking at 24: the first face writes the root nearest v of w (x - v)(x - b) = -W_rec, between the twin's level v and the leaving level b, and 0.9985 of the quantum leaves at it (the remainder born at the half wall, 255); the second face writes the rest's root; the levels at the Node not 0 and the count down by one; the hole's second face marked, no front (the count stands above 0); the back-in-time gate MATCH across the two faces."""
     zeno = EVENTS / "zeno" / "zeno_2.json"
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
@@ -441,7 +441,7 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
     mine, its = board.states[pulse].lines[0], twin.states[pulse].lines[0]
     now, before = (int(mine.now[at]), int(mine.before[at])), (int(its.now[at]), int(its.before[at]))
     assert min(before[1], leaving) < now[1] < max(before[1], leaving)  # the root between v and b
-    assert round(hole.removed / hole.unit, 4) == 0.9993  # the first face's root real: one quantum
+    assert round(hole.removed / hole.unit, 4) == 0.9985  # the first face's root real: one quantum
     assert (
         0 < abs(now[0]) <= abs(before[0]) and board.credit.counts[pulse] == count - 1
     )  # the rest's root
