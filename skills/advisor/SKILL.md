@@ -71,13 +71,13 @@ are the acts of [the interval](../../docs/ALGEBRA.md#the-interval):
 | --- | --- | --- | --- |
 | The read | B's time line at the Node and its axis lines at the Link's two ends (the content and the Link's tension); under the rotation the holder's time level and odd lines as angles | Multiplies: the level enters A's paces, the clock once and the Link twice; the angles turn A's two-part record and its arrivals through the Ports | (i) |
 | The write | A's form D (its Wronskian W for the holder of the sign) and its tension's part -num h_a at the Node, at the weight A reads B with | Adds: one write per line of B over the wall E_s T (E_s W_c for an axis line), the one remainder carried at the Node | (iv) |
-| The click | Nothing: the detector's report of the net current into its region through its front boundary Ports, the one measurement | Ends nothing and writes no state; no quantum changes family, and the credit of quanta to detectors is the host's reading by the shares | (iii) |
+| The click | One whole quantum, at the one Node the credit's draw picked: the arriving record's levels and remainder there to 0 (the hole) and its count down by one, the record present there raised by one (the taking) or, at the giving, lowered by one with one whole quantum of light laid at that Node; the one measurement | Writes at that one Node and nowhere else in the click's interval, Rule3 carrying the change one Link per interval; the draw the instrument's, inside the run, with its declared seed, once per window over all the Nodes that read one record, through the root | (iii) |
 
 No composition of Rule3's acts writes a product of two levels (the theorem of
 [the four acts](../../docs/ALGEBRA.md#the-four-acts)); whoever reads with w
-writes with w; the click is a reading of the record and couples nothing, and
-the credit by the shares is the one non-local place of the description, in the
-instrument's declaration. Whatever a proposal needs beyond a pace, a source or
+writes with w; the click writes at the one Node of the exchange and couples nothing
+beyond Rule3's reach from it, and the credit's one draw through the root is the one
+non-local place of the description, in the instrument's declaration. Whatever a proposal needs beyond a pace, a source or
 a click is a hypothesis under its own name.
 
 ## How to answer "does it fit Rule3"
