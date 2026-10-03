@@ -55,6 +55,87 @@
    "ticks": 1000,
    "mode": "2s",
    "note": "the second standing record under the angle, with one radial node; its tail at one level beyond the 1s's by the factor of its radius, about 4 a_0: no board of the engine holds it"
+  },
+  "hydrogen_1s_large": {
+   "shape": [
+    31,
+    31,
+    31
+   ],
+   "centre": [
+    15,
+    15,
+    15
+   ],
+   "ticks": 1000,
+   "mode": "1s",
+   "universe": "examples/events/atom_gate/atom_large.json",
+   "electron_quanta": 1,
+   "lay": {
+    "kind": "fixed_point",
+    "stop": 2,
+    "passes": 30,
+    "tolerance": [
+     1,
+     100
+    ]
+   },
+   "laid": true,
+   "note": "the advisor's line: the count-1 electron as the turned top mode about the one-Node nucleus at Gamma 730,838 and the width 128; the law's line in reals reads it below the band's top on the 31-cube (comment_large), so the generator's cloud rule is expected to refuse it by name"
+  },
+  "hydrogen_2s_large": {
+   "shape": [
+    31,
+    31,
+    31
+   ],
+   "centre": [
+    15,
+    15,
+    15
+   ],
+   "ticks": 1000,
+   "mode": "2s",
+   "universe": "examples/events/atom_gate/atom_large.json",
+   "electron_quanta": 1,
+   "lay": {
+    "kind": "fixed_point",
+    "stop": 2,
+    "passes": 30,
+    "tolerance": [
+     1,
+     100
+    ]
+   },
+   "laid": false,
+   "note": "the second standing record under the angle, with one radial node, needs a deflation of the 1s from the power iteration, not built in this round; declared without a mode file, refused at load by name"
+  },
+  "hydrogen_1s_toy": {
+   "shape": [
+    31,
+    31,
+    31
+   ],
+   "centre": [
+    15,
+    15,
+    15
+   ],
+   "ticks": 1000,
+   "mode": "1s",
+   "universe": "examples/events/atom_gate/atom_toy.json",
+   "electron_quanta": 1,
+   "lay": {
+    "kind": "fixed_point",
+    "stop": 2,
+    "passes": 30,
+    "tolerance": [
+     1,
+     100
+    ]
+   },
+   "laid": true,
+   "note": "the toy atom of ALGEBRA.md, alpha_law = 0.10337 and a_0 = 5.0 Links at Gamma 6,000, T = 27,000,000 and the width 63: the world the 31-cube holds, laid and run on the engine before the rest's fix"
   }
  },
  "numbers": {
@@ -131,5 +212,215 @@
    "fence": "GameBoard"
   }
  },
- "not_tested_by_the_short_run": "the body's standing over long runs (the budget's 1 / sqrt(T) law in the standing world) and the line as a click (the giving or the absorption through a window), 163 (2) and 165"
+ "not_tested_by_the_short_run": "the body's standing over long runs (the budget's 1 / sqrt(T) law in the standing world) and the line as a click (the giving or the absorption through a window), 163 (2) and 165",
+ "comment_large": "The gate at Gamma about 7 x 10^5, the advisor's line (#1563 comment 5959617991 (4), the mathematician's second hand 175 item 5, #1572 comment 5962582859: the integer the law leaves open is Gamma, with the width): the same rows as atom.json with Gamma = 730,838 (at least 7.2 x 10^5, where the budget at the count 1 with c_i = 1 / N_eff meets the energy line's T), k_w = 126,247, k_r = 1, E_s = 1, so alpha_law = (3 sqrt 3 / 8 pi) k_w k_r / (Gamma E_s) = 1 / 27.9999999949 (the nearest integer pair to 1 / 28 between 7.2 x 10^5 and 7.4 x 10^5) and the energy line E_s T num = k_w Gamma den exact at T = 138,399,157,479 (1 x 138399157479 x 4000 = 126247 x 730838 x 6000 = 553,596,629,916,000), the width 128 (Rule3's totals w A about 6 den Gamma^2 G^2 A = 7 x 10^18 at G = 16, past 63 bits; every array Python's integers, exact and slow). The electron one quantum of its family (the law's count 1), laid by the generator as the turned top mode in the content holders' paces under the nucleus's sign row at its rest (tools/pixel_mode.py, `turned_mode`, built in this round: the power iteration of Rule3's read with the arrivals turned by the Link angles and the Node by the time angle, the standing condition (M z)_i = 2 cos(Omega - theta_i) z_i); the nucleus one quantum of its family as the one-Node record at the centre, a declaration by name (`--pixel`, the generator's `pixel_record`: the level pair of the band's rest rotation in the sense -1 with 2 A^2 sin omega_s = T, its Wronskian -T / 2 to 7 x 10^-6, its share at the Node 1 / sin omega_s = 1.34 quanta, which the gate admits; its Link factors G^2 and its num 4000, so it spreads from the first interval, the folder's row 2). THE FINDING BEFORE ANY LAY, from the law's lines computed in reals (the band on the open 31-cube, 0 beyond the faces; the sign row's rest of one nucleus quantum, the lattice Green's function 3 G(r) s with s = k_w / (2 E_s), the far kernel 3 s / (4 pi r) beyond 5 Links; the turn's exact angle 2 arctan(L / (2 Gamma)); the top mode of the standing condition by the power iteration in floats, Gamma-free since theta = alpha_law c / r): the free record's top mode on the open 31-cube rotates at 2 cos omega_box = (4 / 3) cos(pi / 32) = 1.326913, omega_box = omega_0 + 4.30 x 10^-3 rad (the box's confinement, k = pi / 32 per axis), and with the nucleus's angle the 1s stands at 2 cos Omega = 1.331427, Omega = omega_0 + 1.28 x 10^-3 rad (the Coulomb gain 4.51 x 10^-3 in 2 cos against the box's drop 6.42 x 10^-3), BELOW the band's top 4 / 3 by 1.906 x 10^-3: on the 31-cube the law's 1s at a_0 = 14.46 Links is held by the faces and not by the nucleus, a cloud by the generator's rule (the standing rotation not above the band's top), which refuses the lay by name; the least open cube on which the 1s stands above the band's top is read in `least_cube` below. The toy atom of ALGEBRA.md (The atom is a bound body of the holder of the sign, the design: Gamma = 6,000, E_s = 1, k_w = 3,000, alpha_law = 0.10337 = 1 / 9.674, T = 27,000,000 by the line of one energy, a_0 = 5.0 Links, the 31-cube holding the tail, the width 63 with the Link unit 8 so that the nucleus's one-Node amplitude 4,255 stands under the bound A = 19,859) is declared beside it as the world the 31-cube holds: the same lines in reals give 2 cos Omega = 1.343369 above the band's top by 1.00 x 10^-2, Omega = omega_0 - 6.75 x 10^-3 rad (40.5 levels of the row; the continuum's 1s binding m* (alpha_law c)^2 / 2 = 5.97 x 10^-3, 35.8 levels, the lattice's a_0 of 5 Links and the box's compression the difference). THE CAVEAT, by name (175 item 5): at the one-Node nucleus the electron's well is the sign holder's rest about one Node, and the start's rest on today's engine stops short of its own static line by up to 1 / (1 - rho) fine units in the board's lowest mode, rho = cos(pi / 32) on the 31-cube, 207 fine units (the engine's rest read at the large Gamma: the row's level -44,021 at the Node, -14,482 at 1 Link and -175 at 14 Links on the open 31-cube against the far kernel's 1,007 at 14 Links, the faces' images cutting the tail), which would move the 1s : 2s ratio by more than the budget; every reading of this round is on the engine before the rest's fix (the scaled-residual correction, two hands, 175 item 1), to be re-laid once when it lands.",
+ "universes": {
+  "atom": "examples/events/atom_gate/atom.json",
+  "atom_large": "examples/events/atom_gate/atom_large.json",
+  "atom_toy": "examples/events/atom_gate/atom_toy.json"
+ },
+ "senses": {
+  "nucleus": -1,
+  "electron": 1
+ },
+ "pixel": [
+  0
+ ],
+ "numbers_large": {
+  "Gamma": 730838,
+  "k_w": 126247,
+  "k_r": 1,
+  "E_s": 1,
+  "T": 138399157479,
+  "width": 128,
+  "link_unit": 16,
+  "alpha_law": 0.0357142857208,
+  "alpha_law_inverse": 27.9999999949,
+  "alpha_law_off_1_over_28": 6.5e-12,
+  "energy_line": "E_s T num = k_w Gamma den: 1 x 138399157479 x 4000 = 126247 x 730838 x 6000 = 553596629916000",
+  "derivation": "k_w / E_s = Gamma / (28 x 0.20674834) = Gamma / 5.78895 rounded to the integer, Gamma even between 7.2 x 10^5 and 7.4 x 10^5 with the least |alpha_law - 1 / 28|; T = 3 k_w Gamma / (2 E_s) from the energy line at num / den = 2 / 3",
+  "m_star": 3.3541,
+  "a_0_links": 14.46,
+  "omega_0": 0.84107,
+  "two_cos_omega_0": [
+   4,
+   3
+  ],
+  "binding_1s_rad_per_interval": 0.000713,
+  "binding_2s_rad_per_interval": 0.000178,
+  "binding_1s_in_levels_of_the_row": 521.1,
+  "binding_2s_in_levels_of_the_row": 130.3,
+  "angle_per_level": 1.368e-06,
+  "sign_row_source_s": 63123.5,
+  "sign_row_levels_far_kernel": {
+   "0": 47860,
+   "1": 16298,
+   "14": 1076
+  },
+  "N_eff_4_pi_a0_cubed_over_3": 12662,
+  "c_i_at_centre": 7.9e-05,
+  "amplitude_at_count_1": 2708,
+  "walk_over_1000_intervals": 0.0018,
+  "budget_least_T_at_c_i": 149000000000.0,
+  "budget_least_T_at_c_i_11500": 135000000000.0,
+  "loader_least_T_at_count_1": 16777216,
+  "nucleus_one_node": {
+   "amplitude": 304702,
+   "wronskian_over_T_half": 0.99999,
+   "share_quanta_at_node": 1.34
+  },
+  "amplitude_bound_width_128": 4208320377553062,
+  "line_in_reals_on_the_31_cube": {
+   "two_cos_omega_box": 1.326913,
+   "omega_box_minus_omega_0": 0.0043,
+   "box_drop_in_two_cos": 0.00642,
+   "with_the_far_kernel": {
+    "two_cos_Omega_1s": 1.331427,
+    "Omega_1s_minus_omega_0": 0.00128,
+    "levels": -874,
+    "below_the_band_top_by": 0.001906,
+    "coulomb_gain_in_two_cos": 0.00451
+   },
+   "with_the_engine_rest": {
+    "two_cos_Omega_1s": 1.329824,
+    "Omega_1s_minus_omega_0": 0.00235,
+    "levels": -1719,
+    "below_the_band_top_by": 0.00351,
+    "N_eff": 6813
+   },
+   "note": "the law's line computed in reals before any lay, as the toy's; the blind's number is the one with the engine's own rest"
+  },
+  "rest_shortfall_fine_units": 207,
+  "rho": "cos(pi / 32) = 0.99518",
+  "sign_row_rest_on_the_31_cube_engine": {
+   "0": -47216,
+   "1": -15655,
+   "14": -252,
+   "note": "the toy's engine rest times k_w's ratio 126247 / 3000 (the rest linear in its source); the far kernel 47,860, 16,298 and 1,076"
+  },
+  "least_cube": {
+   "31": {
+    "two_cos_Omega_1s": 1.329824,
+    "above_the_band_top_by": -0.00351,
+    "omega_0_minus_Omega": -0.00235,
+    "levels": -1719
+   },
+   "41": {
+    "two_cos_Omega_1s": 1.332307,
+    "above_the_band_top_by": -0.00103,
+    "omega_0_minus_Omega": -0.00069,
+    "levels": -503
+   },
+   "61": {
+    "two_cos_Omega_1s": 1.334825,
+    "above_the_band_top_by": 0.00149,
+    "omega_0_minus_Omega": 0.001,
+    "levels": 731
+   },
+   "81": {
+    "two_cos_Omega_1s": 1.33773,
+    "above_the_band_top_by": 0.0044,
+    "omega_0_minus_Omega": 0.00295,
+    "levels": 2159
+   },
+   "note": "the law's line in reals on open cubes with the engine's own rest of the sign row (the faces' images in it), the turn's exact angle and the standing condition by the power iteration: the 1s at alpha_law = 1 / 28 and a_0 = 14.46 Links stands above the band's top from between the 41-cube and the 61-cube on, and its binding against omega_0 passes the continuum's 7.13 x 10^-4 rad between the 61-cube and the 81-cube, the box's compression still raising the Coulomb gain there; the 61-cube is 227,000 Nodes, 7.6 times the 31-cube, and the 81-cube 18 times"
+  }
+ },
+ "numbers_toy": {
+  "Gamma": 6000,
+  "k_w": 3000,
+  "k_r": 1,
+  "E_s": 1,
+  "T": 27000000,
+  "width": 63,
+  "link_unit": 8,
+  "alpha_law": 0.10337,
+  "alpha_law_inverse": 9.674,
+  "energy_line": "E_s T num = k_w Gamma den: 1 x 27000000 x 4000 = 3000 x 6000 x 6000 = 108000000000",
+  "a_0_links": 4.995,
+  "binding_1s_rad_per_interval": 0.005974,
+  "binding_1s_in_levels_of_the_row": 35.8,
+  "angle_per_level": 0.0001667,
+  "sign_row_source_s": 1500,
+  "sign_row_levels_far_kernel": {
+   "0": 1137,
+   "1": 387
+  },
+  "angle_at_1_link": 0.0646,
+  "N_eff": 392,
+  "amplitude_at_count_1": 215,
+  "walk_over_1000_intervals": 0.023,
+  "share_deviation_5_66_sigma_sqrt_n_over_A": 0.13,
+  "tail_at_one_level_links": 26.8,
+  "nucleus_one_node": {
+   "amplitude": 4255
+  },
+  "amplitude_bound_width_63_G_8": 19859,
+  "loader_least_T_at_count_1": 16777216,
+  "budget_least_T_at_c_i": 4600000000.0,
+  "line_in_reals_on_the_31_cube": {
+   "two_cos_omega_box": 1.326913,
+   "with_the_far_kernel": {
+    "two_cos_Omega_1s": 1.343369,
+    "omega_0_minus_Omega_1s": 0.00675,
+    "levels": 40.5
+   },
+   "with_the_engine_rest": {
+    "two_cos_Omega_1s": 1.338208,
+    "above_the_band_top_by": 0.004875,
+    "Omega_1s": 0.837794,
+    "omega_0_minus_Omega_1s": 0.003275,
+    "levels": 19.65,
+    "N_eff": 1996,
+    "rms_radius_links": 6.99,
+    "profile_ratio_at_1_link": 0.78,
+    "at_5_links": 0.31,
+    "at_the_face": 0.012
+   },
+   "note": "the law's line computed in reals before any lay: the band on the open 31-cube (0 beyond the faces), the turn's angle 2 arctan(L / (2 Gamma)) from the sign row's level, the standing condition (M phi)_i = 2 cos(Omega - theta_i) phi_i by the power iteration with the shift; the blind's number is the one with the engine's own rest, the far kernel's beside it"
+  },
+  "rest_shortfall_fine_units": 207,
+  "sign_row_rest_on_the_31_cube_engine": {
+   "0": -1122,
+   "1": -372,
+   "2": -177,
+   "5": -57,
+   "10": -19,
+   "14": -6,
+   "iterations": 741,
+   "note": "the engine's own rest (features/start, rest) of the sign row under one nucleus quantum, the open faces' images cutting the far kernel's 3 s / (4 pi r) (358 / r: 36 at 10 Links, 26 at 14) to a fifth at 14 Links; the sign the nucleus's sense -1"
+  }
+ },
+ "blind_large": {
+  "bindings": {
+   "reading": "the 1s rotation of the electron's record in the windowed summed form of 172, 2 cos omega_read = SUM over whole periods of SUM_i a_(i,t) (a_(i,t+1) + a_(i,t-1)) / SUM SUM a_(i,t)^2 over both lines and every Node where the record stands (the folder's reader, read_atom.py), against the free record's omega_0 (2 cos omega_0 = 4 / 3)",
+   "blind": "the law's 1s on an unbounded board below omega_0 by m* (alpha_law c)^2 / 2 = 7.13 x 10^-4 rad per interval (521 levels of the row at Gamma 730,838), the 2s a quarter (130 levels), the ratio 4 : 1 to 0.8 percent; on the open 31-cube the law's line in reals before any lay gives 2 cos Omega = 1.331427, Omega = omega_0 + 1.28 x 10^-3 rad, below the band's top by 1.906 x 10^-3 (the box's drop 6.42 x 10^-3 against the Coulomb gain 4.51 x 10^-3), so the generator's cloud rule refuses the lay by name and no reading stands on this board; where a lay stands (the toy atom: 2 cos Omega = 1.343369, omega_0 - Omega = 6.75 x 10^-3 rad, 40.5 levels, the continuum's 5.97 x 10^-3) the run's accumulated reading agrees with the computed line to the band's order and the lay's rounding, its noise about 1 / (A sqrt(N_eff n)), 7 x 10^-6 rad for the toy",
+   "status": "163 (1), the advisor's line (4) of 5959617991 and 175 item 5 for the integers; the box's and the Coulomb's numbers an exact computation in reals from the law's lines before any lay (the band on the open cube, the lattice Green's function, the exact turn); the 2s not laid (no deflation)",
+   "fence": "GameBoard"
+  },
+  "nucleus": {
+   "reading": "the nucleus's record at its Node over the run, tools/body_rest.py",
+   "blind": "a declaration's reading: the one-Node record of matter's pair spreads at the band's group velocity, num p_i^2 / (3 den Gamma^2) sin k / sin omega per interval, its share at the Node falling from the first interval and its rotation read at the Node no one number; the exact rotating pixel (the rotation unchanged over the run to the bit, a_(t + 1) + a_(t - 1) = 2 cos omega a_t on an exact band) needs a pair of num 0 or the compact body of line 2, neither this world's",
+   "status": "163 (3) with the advisor's condition, 5955171021 (2) and 5956456263: exact only where the six Link factors are 0 by the world; here a declaration by name",
+   "fence": "GameBoard"
+  },
+  "images": {
+   "reading": "tools/body_standing.py's read (4): every line of every family against its 48 images about the centre Node at every interval",
+   "blind": "the electron's symmetric lay invariant to the bit under the 48 images at every interval, the levels signed on the odd lines and the remainders complemented where signed (166's theorem, the GameBoard diagnostic in place of the one-domain step, which is not built); the nucleus at the centre Node fixed by every image; the electron's declared Node beside the centre is a declaration (the count 1 the gate admits) and enters no act, the lay symmetric about the centre",
+   "status": "166 with the advisor's second hand, 5955658812 (C); read on the standing world's neutral body in this round (ENGINE.md section 5), not on the atom's",
+   "fence": "GameBoard"
+  },
+  "control": {
+   "reading": "the 1s rotation of the world with the nucleus a free record of count 1 reading the electron's row, against the held nucleus's",
+   "blind": "6.5 percent above the held nucleus's binding (163's gate (b), 154); in this engine the two are one world (the declaration above), so the row reads 0 by construction and tests nothing until line 2's compact nucleus is built",
+   "status": "163 (b); not run",
+   "fence": "GameBoard"
+  },
+  "caveat": {
+   "reading": "every reading of this round",
+   "blind": "on the engine before the rest's fix: the start's rest stops short of its static line by up to 207 fine units in the board's lowest mode on the 31-cube (rho = cos(pi / 32)), the electron's well the sign holder's rest about one Node, so the 1s : 2s ratio and the binding carry that shortfall until the scaled-residual correction lands (175 item 1, two hands) and the worlds are re-laid once",
+   "status": "175 item 5, the mathematician's caveat; the Boss's word of 2026-10-03",
+   "fence": "GameBoard"
+  }
+ }
 }
