@@ -50,8 +50,9 @@ def hole_factor(share: int, unit: int, width: int) -> tuple[int, int] | None:
     """The partial hole's factor at a Node where the arriving record's share `share` exceeds its own quantum `unit` (the mathematician's 237, precision 2, with the advisor's second): the numerator isqrt((share - unit) x 2^(2m)) and the denominator isqrt(share) x 2^m, their ratio sqrt((share - unit) / share) in one carried rounding, the lay's own root, with 2^(2m) the largest power of four under which the root's argument stays within the run's width, `width` its largest integer (so the numerator stays within the width's half); None where the share is at most the unit, the hole to 0."""
     if share <= unit:
         return None
-    scale = max(int(width).bit_length() - int(share).bit_length(), 0) // 2
-    numerator = division_fixed_point((share - unit) * 4**scale)
+    bits = max(int(width).bit_length() - int(share).bit_length(), 0)
+    scale = int(division_forward(bits, 2, 0)[0])
+    numerator = division_fixed_point((share - unit) * 2 ** (2 * scale))
     return numerator, division_fixed_point(share) * 2**scale
 
 
