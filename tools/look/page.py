@@ -1,10 +1,10 @@
-"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; the view fixed, the board seen along one axis and never turned (a folded axis is the one seen along, the board the plane it is; a board of three axes is seen along z one layer at a time, the layer picked beside the board, the first body's layer or the middle one first), the declared board alone in the frame and never the layers a receding face grew, the wheel and two buttons bringing it closer or farther; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the declared node_readers' Nodes as rings (the open faces' layer reports but is drawn as no ring), seen at rest and brighter and larger the interval they click; the node_readers' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw and the sums its bars draw, and draws no curve, surface or interpolation between Nodes. The blind's numbers stand in a table of their own (every number and short list of the expectation file a row, a nested object's rows named key.subkey, its words under a fold) and never as a raw dump; with an expectation across an axis the NodeReaders' arrival over the intervals is drawn beside the bars, the reporters' inflow per interval in quanta over the family's wall and the quanta gathered within the window up to each interval, the blind's peak, centroid, span and total marked where the blind names them. The page is dark, one theme and no switch. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
+"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; the view fixed, the board seen along one axis and never turned (a folded axis is the one seen along, the board the plane it is; a board of three axes is seen along z one layer at a time, the layer picked beside the board, the first body's layer or the middle one first), the declared board alone in the frame and never the layers a receding face grew, the wheel and two buttons bringing it closer or farther; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the declared node_readers' Nodes as rings (the open faces' layer reports but is drawn as no ring), seen at rest and brighter and larger the interval they click; the node_readers' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw and the sums its bars draw, and draws no curve, surface or interpolation between Nodes. The blind's numbers stand in a table of their own (every number and short list of the expectation file a row, a nested object's rows named key.subkey, its words under a fold) and never as a raw dump; with an expectation across an axis the NodeReaders' arrival over the intervals is drawn beside the bars, the reporters' inflow per interval in quanta over the family's wall and the quanta gathered within the window up to each interval, the blind's peak, centroid, span and total marked where the blind names them. With `--output <world>.output.json` (tools/run_inputs.py's file, the run's own output) the page's measurement is the output file's: its `click` lines feed the bars and the arrival, its `credit` lines the clicks credited up to each interval, its `density` lines the GameBoard density over the reporters' regions, and the header says whether the look's click lines are the output's (they are the same engine lines; a difference is named); with `--reading <reading>.json` (tools/click_counts.py's file, the output file read against the blind) the bars are the reading's rounded shares beside the clicks the draw credited and the blind curve, and one table holds every row the reader compares, read against blind with the difference. The page is dark, one theme and no switch; the moving quanta of light are green; a cube glows by the record's form D at its Node where the look holds it, the wave's own intensity, else by its level. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
 
 The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"node_reader": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the node_reader, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the node_readers' totals, `{"expected": {node_reader name: count, ...} or [one count per node_reader in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"node_reader": name, "count": the one number to watch}}`, every key optional, one bar per node_reader, what it saw over W_c up to the frame shown.
 
 A gate's reading, optional: with `--gate <reading>.json`, the joint-share reader's file (`tools/bell_gate.py`'s output over the gate's worlds, the look's world among them), and the gate's blind as `--blind` (the expectation of the gate's form: `family`, `sides`, `order`, `runs`, `combination`, `blind`), the page adds the gate's panels, inserted at three markers of the template and absent without a reading (a page without one holds none of them): the board seen from above at the frame shown (frame 0 the input as laid, the record's counts at its Nodes and each side's region with its declared setting and pattern as the reader read them; the beams leaving the record and meeting the regions over the intervals; a region brighter the interval it clicks), labelled a GameBoard reading; the gate's family's `parts` lines per region over the intervals (the parts overlaid, one curve where they are equal) with the region's `click` lines marked, the NodeReader's read; and the reader's credit beside the blind: the 2^n joint shares as bars, the run filled and the blind outlined, the drawn combination (the click) named, E_n, the marginals, the sub-correlations and the three local credits of the look's world in one table against the blind, the combination over the gate's worlds (its formula from the blind's order and signs, the run's value beside the blind's) on a ruler from minus to plus the number of its terms (the algebraic maximum, one per term) with the fence the blind's theorem lines name ("at most") shaded and the local credits marked on it. `--beside <other>.json` adds one line with another gate's blind combination, read from that file and typed nowhere. Every number of the panels is the reader's file's, the blind's or the look's; the page compares them and sums nothing new.
 
-    python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--gate <reading>.json] [--beside <other>.json] [--out <world>.look.html]
+    python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--output <world>.output.json] [--reading <reading>.json] [--gate <reading>.json] [--beside <other>.json] [--out <world>.look.html]
 """
 
 from __future__ import annotations
@@ -151,6 +151,27 @@ def gate(look: dict[str, Any], blind: dict[str, Any] | None, reading: dict[str, 
     return {"world": world, "key": keys[0], "reading": reading}
 
 
+OUTPUT_LINES = ("click", "credit", "density")  # the output file's lines the page draws
+
+
+def trimmed(output: dict[str, Any]) -> dict[str, Any]:
+    """The run's output file as the page embeds it: its verdict, intervals, end and books, and its click, credit and density lines alone, untouched; refused by name where it is not a run's output."""
+    if not isinstance(output, dict) or not isinstance(output.get("lines"), list):
+        raise ValueError("the output file must be tools/run_inputs.py's, with its lines")
+    kept = {key: output.get(key) for key in ("input", "verdict", "ticks", "ended", "books")}
+    kept["lines"] = [line for line in output["lines"] if line.get("event") in OUTPUT_LINES]
+    return kept
+
+
+def checked_reading(read: dict[str, Any]) -> dict[str, Any]:
+    """tools/click_counts.py's reading as the page embeds it, untouched; refused by name where it is not of that format."""
+    if not isinstance(read, dict) or "rounded_shares" not in read or "quanta" not in read:
+        raise ValueError(
+            "the reading file must be tools/click_counts.py's, with its rounded shares and quanta"
+        )
+    return read
+
+
 def beside(path: Path) -> dict[str, Any]:
     """Another gate's blind for the one line beside the reading: the file's content with its path, its combination's name and value read there and typed nowhere."""
     document = json.loads(path.read_text(encoding="utf-8"))
@@ -164,8 +185,10 @@ def page(
     blind: dict[str, Any] | None,
     reading: dict[str, Any] | None = None,
     other: dict[str, Any] | None = None,
+    output: dict[str, Any] | None = None,
+    read: dict[str, Any] | None = None,
 ) -> str:
-    """The page's HTML from the look and the blind expectation, if any; with a gate's reading, the gate's panels inserted at the template's three markers (`other` the line of another gate's blind)."""
+    """The page's HTML from the look and the blind expectation, if any; with a gate's reading, the gate's panels inserted at the template's three markers (`other` the line of another gate's blind); with the run's output file and tools/click_counts.py's reading of it, the measurement from them."""
     if not isinstance(look, dict) or "frames" not in look or "families" not in look:
         raise ValueError("the look file must hold the frames and the families (tools/look/record.py)")
     if blind is not None and not isinstance(blind, dict):
@@ -185,6 +208,8 @@ def page(
         .replace("{{ROLES}}", embedded(roles(look["families"])))
         .replace("{{BLIND}}", embedded(blind))
         .replace("{{MEASURE}}", embedded(measurement(look, blind)))
+        .replace("{{OUTPUT}}", embedded(trimmed(output) if output is not None else None))
+        .replace("{{READ}}", embedded(checked_reading(read) if read is not None else None))
         .replace("{{GATE}}", embedded(gated))
         .replace("{{BESIDE}}", embedded(other))
     )
@@ -196,6 +221,15 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--blind", type=Path, default=None, help="the blind expectation file")
     parser.add_argument("--gate", type=Path, default=None, help="a gate's reading (tools/bell_gate.py)")
     parser.add_argument("--beside", type=Path, default=None, help="another gate's blind, for one line")
+    parser.add_argument(
+        "--output", type=Path, default=None, help="the run's output file (tools/run_inputs.py)"
+    )
+    parser.add_argument(
+        "--reading",
+        type=Path,
+        default=None,
+        help="the output read against the blind (tools/click_counts.py)",
+    )
     parser.add_argument("--out", type=Path, default=None, help="the page (<world>.look.html)")
     args = parser.parse_args(argv)
     look = json.loads(args.look.read_text(encoding="utf-8"))
@@ -203,25 +237,34 @@ def main(argv: list[str] | None = None) -> None:
     reading = json.loads(args.gate.read_text(encoding="utf-8")) if args.gate else None
     target: Path = args.out or args.look.with_suffix(".html")
     target.write_text(
-        page(look, blind, reading, beside(args.beside) if args.beside else None), encoding="utf-8"
+        page(
+            look,
+            blind,
+            reading,
+            beside(args.beside) if args.beside else None,
+            output=json.loads(args.output.read_text(encoding="utf-8")) if args.output else None,
+            read=json.loads(args.reading.read_text(encoding="utf-8")) if args.reading else None,
+        ),
+        encoding="utf-8",
     )
     print(json.dumps({"look": args.look.name, "page": str(target), "bytes": target.stat().st_size}))
 
 
-TEMPLATE = """<title>{{TITLE}}</title>
+TEMPLATE = """<meta charset="utf-8">
+<title>{{TITLE}}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* The page's own layout: every colour and size of the page stands in this one block and nowhere else. */
 :root {
   --bg: #0f1114; --panel: #171a20; --fg: #e9e7df; --muted: #9a9ea8; --line: #2e323a; --board: #07080a;
-  --cube: #1a1d24; --matter: #6ea1f0; --light: #ffc24a; --field: #a3a7ae; --wall: #d7dae0; --ring: #c9c7c0;
+  --cube: #1a1d24; --matter: #6ea1f0; --light: #4ade80; --field: #a3a7ae; --wall: #d7dae0; --ring: #c9c7c0;
   --flash: #ff5a1f; --blind: #b4b8c0; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2);
   --font-body: "IBM Plex Sans", system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --text: 14px; --small: 12px; --title: 20px; --gap: 12px; --pad: 14px; --radius: 6px; --gutter: 16px;
   --sky: #ffffff; --ground: #5a5a5a; --sun: 0.3;
   --side-min: 300px; --board-height: min(76vh, 900px); --graph-width: 360; --graph-height: 84; --graph-pad: 6;
   --bar-slot: 12; --measure-width: 960px; --blind-words: 100; --blind-list: 48; --blind-rows: 24; --arrival-width: 2.6; --arrival-height: 1.6;
-  --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-offset: 0.22; --glow: 1; --glow-power: 0.35; --glow-tint: 0;
+  --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-offset: 0.22; --glow: 1; --glow-power: 0.5; --glow-tint: 0;
   --mist-size: 1.02; --mist-opacity: 0.3; --mist-power: 0.5; --bar-length: 0.9; --bar-thickness: 0.07;
   --wall-size: 1; --wall-depth: 0.6; --ring-radius: 0.6; --ring-tube: 0.09; --flash-scale: 1.2; --plane-opacity: 0.12;
   --view-margin: 1; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
@@ -280,9 +323,12 @@ td.num { font-family: var(--font-mono); }
 <script id="roles" type="application/json">{{ROLES}}</script>
 <script id="blind" type="application/json">{{BLIND}}</script>
 <script id="measurement" type="application/json">{{MEASURE}}</script>
+<script id="output" type="application/json">{{OUTPUT}}</script>
+<script id="reading" type="application/json">{{READ}}</script>
 <header>
   <h1 id="title"></h1>
   <span class="verdict" id="verdict"></span>
+  <span class="verdict" id="source"></span>
 </header>
 <div class="page">
   <section class="panel wide">
@@ -345,6 +391,8 @@ const LOOK = await inflated('look');
 const ROLES = JSON.parse(document.getElementById('roles').textContent);
 const BLIND = JSON.parse(document.getElementById('blind').textContent) || {};
 const MEASURE = JSON.parse(document.getElementById('measurement').textContent);
+const OUTPUT = JSON.parse(document.getElementById('output').textContent);
+const READ = JSON.parse(document.getElementById('reading').textContent);
 const root = document.documentElement;
 const token = name => getComputedStyle(root).getPropertyValue(name).trim();
 const size = name => parseFloat(token(name));
@@ -382,7 +430,7 @@ function frameOf(t) {
   const frame = LOOK.frames[t], out = {};
   for (const f of FAMILIES) {
     const row = frame.families[f.name] || {}, a = {};
-    if (f.quanta) { for (const key of ['now', 'second', 'count', 'form']) if (row[key] !== undefined) a[key] = arrayOf(row[key], frame); a.pace = row.pace; }
+    if (f.quanta) { for (const key of ['now', 'second', 'count', 'form']) if (row[key] !== undefined) a[key] = arrayOf(row[key], frame); a.pace = row.pace; a.peakForm = a.form ? peak(a.form) : 0; a.peakNow = Math.max(peak(a.now), a.second ? peak(a.second) : 0); }
     else { a.level = arrayOf(row.level, frame); a.parts = (row.parts || []).map(part => arrayOf(part, frame)); }
     out[f.name] = a;
   }
@@ -392,22 +440,31 @@ function frameOf(t) {
 const peak = a => { let m = 0; for (let i = 0; i < a.length; i++) { const v = Math.abs(a[i]); if (v > m) m = v; } return m; };
 const sum = a => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i]; return s; };
 const MOST = {}, TOTALS = {};
-for (const f of FAMILIES) { MOST[f.name] = { now: 0, count: 0, level: 0, part: 0 }; if (f.quanta) TOTALS[f.name] = new Float64Array(T + 1); }
+for (const f of FAMILIES) { MOST[f.name] = { now: 0, count: 0, level: 0, part: 0, form: 0 }; if (f.quanta) TOTALS[f.name] = new Float64Array(T + 1); }
 for (let t = 0; t <= T; t++) {
   const fr = frameOf(t);
   for (const f of FAMILIES) {
     const a = fr[f.name], m = MOST[f.name];
-    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); TOTALS[f.name][t] = sum(a.count); }
+    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); m.form = Math.max(m.form, a.form ? peak(a.form) : 0); TOTALS[f.name][t] = sum(a.count); }
     else { m.level = Math.max(m.level, peak(a.level)); for (const p of a.parts) m.part = Math.max(m.part, peak(p)); }
   }
 }
 const indexOf = (x, y, z) => ((x - LOW[0]) * Y + (y - LOW[1])) * Z + (z - LOW[2]);
 const nodeOf = i => [Math.floor(i / (Y * Z)) + LOW[0], Math.floor(i / Z) % Y + LOW[1], i % Z + LOW[2]];
-const reportsAt = {};
-for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'click') {
+/* The click lines the measurement is drawn from: the output file's where it is given (the run's own output), the look's otherwise; the two are the same engine lines, and the header says so or names the difference. The output file's credit lines (the clicks the draw credited) and density lines (a GameBoard reading per declared region) beside them. */
+const LOOK_CLICKS = [], reportsAt = {}, CREDITS_AT = {}, DENSITY_AT = {};
+for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'click') LOOK_CLICKS.push(line);
+const CLICKS = OUTPUT ? OUTPUT.lines.filter(line => line.event === 'click') : LOOK_CLICKS;
+for (const line of CLICKS) {
   const byFamily = reportsAt[line.node_reader] || (reportsAt[line.node_reader] = {});
   (byFamily[line.family] || (byFamily[line.family] = [])).push([line.tick, line.inflow]);
 }
+if (OUTPUT) for (const line of OUTPUT.lines) {
+  if (line.event === 'credit') (CREDITS_AT[line.node_reader] || (CREDITS_AT[line.node_reader] = [])).push([line.tick, line.count || 0]);
+  if (line.event === 'density') ((DENSITY_AT[line.family] || (DENSITY_AT[line.family] = {}))[line.node_reader] || (DENSITY_AT[line.family][line.node_reader] = [])).push([line.tick, line.reading]);
+}
+const key = line => [line.tick, line.node_reader, line.family, line.inflow].join('|');
+const SAME_LINES = OUTPUT ? CLICKS.length === LOOK_CLICKS.length && CLICKS.map(key).sort().join(';') === LOOK_CLICKS.map(key).sort().join(';') : null;
 const WALL = {};
 for (const f of FAMILIES) if (f.quanta) WALL[f.name] = f.wall;
 const WINDOW = Array.isArray(BLIND.window) && BLIND.window.length === 2 ? BLIND.window : null;
@@ -555,7 +612,9 @@ function draw() {
     colour.copy(base);
     for (const f of QUANTA) {
       if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
-      const a = fr[f.name], strength = glow * Math.pow(Math.max(Math.abs(a.now[i]), a.second ? Math.abs(a.second[i]) : 0) / MOST[f.name].now, glowPower);
+      const a = fr[f.name];  // the glow by the form D at the Node (the wave's intensity, phase-free) against the frame's own largest, where the look holds it, else by the level against the frame's own largest; the dots carry the absolute count
+      if (!(a.peakForm || a.peakNow)) continue;
+      const strength = glow * Math.pow(a.peakForm && a.form ? Math.abs(a.form[i]) / a.peakForm : Math.max(Math.abs(a.now[i]), a.second ? Math.abs(a.second[i]) : 0) / a.peakNow, glowPower);
       colour.lerp(tint.set(colourOf(f.name)).lerp(base, glowTint), Math.min(1, strength));  // the glow a tint of the family's colour, the dots the colour itself
     }
     cubes.setColorAt(i, colour);
@@ -676,7 +735,7 @@ for (const [name, layer] of Object.entries(layers)) {
   input.addEventListener('change', () => { layer.on = input.checked; draw(); });
   label.append(input);
   if (family) { const swatch = document.createElement('i'); swatch.className = 'swatch' + (ROLES[family.name].dashed ? ' dashed' : ''); swatch.style.borderColor = colourOf(family.name); swatch.style.background = name.endsWith(' dots') ? colourOf(family.name) : 'transparent'; label.append(swatch); }
-  label.append(' ' + name + (family ? ' (' + ROLES[family.name].role + ')' : ''));
+  label.append(' ' + name + (family ? ' (' + ROLES[family.name].role + (name.endsWith(' glow') ? ', the form D against the frame\\'s own largest' : name.endsWith(' dots') ? ', the count' : '') + ')' : ''));
   layerBox.append(label);
 }
 
@@ -852,9 +911,63 @@ function blindTable() {
     + (words.length ? '<details><summary>the blind file, its words: ' + esc(words.map(([k]) => k).join(', ')) + '</summary>' + words.map(([k, v]) => `<p><b>${esc(k)}</b> ${esc(v)}</p>`).join('') + '</details>' : '');
 }
 
+/* The reading of the output file against the blind (tools/click_counts.py's file): one bar per reporter for the rounded shares (N by the shares, the expectation), one beside it for the clicks the draw credited (the measurement), the dashed blind curve, the totals, and one table of every row the reader compares, read against blind with the difference. */
+function drawReading() {
+  const r = READ, rs = r.rounded_shares, n = rs.row.length, family = r.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg'), flash = token('--flash');
+  byId('measure-box').classList.add('wide');
+  measurePicker.textContent = `${r.node_reader.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}, the seed ${format(r.seed)}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
+  const slot = size('--bar-slot') * 1.8, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const clicks = r.clicks ? r.clicks.row : null, blind = (r.blind.counts || []).map(v => typeof v === 'number' ? v : null);
+  const W = Math.max(size('--graph-width'), left + slot * n + pad), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
+  const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom), w = Math.max(1, slot * 0.3);
+  let body = '';
+  if (Array.isArray(BLIND.pattern) && BLIND.pattern.length === 2 && n) {
+    const [first, last] = BLIND.pattern.map(v => Math.max(0, Math.min(n - 1, v)));
+    body += `<rect x="${(px(first) - slot / 2).toFixed(1)}" y="${pad}" width="${(slot * (last - first + 1)).toFixed(1)}" height="${(H - pad - bottom).toFixed(1)}" fill="${token('--window')}"><title>the pattern's range: ${r.across} ${r.at[first]} to ${r.at[last]}</title></rect>`;
+  }
+  body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
+  const every = Math.max(1, Math.ceil(n / 16));
+  rs.row.forEach((v, k) => {
+    body += `<rect x="${(px(k) - w).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(r.node_reader[k])}: ${format(v)} by the shares, saw ${format(r.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    if (clicks) body += `<rect x="${px(k).toFixed(1)}" y="${py(clicks[k]).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(clicks[k])).toFixed(1)}" fill="${flash}"><title>${esc(r.node_reader[k])}: ${format(clicks[k])} clicks credited by the draw</title></rect>`;
+    if (k % every === 0 || k === n - 1) body += svgText(r.at[k], px(k), H - pad, 'middle');
+  });
+  if (blind.some(v => v !== null)) {
+    const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
+    body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  }
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)}, the rounded shares per reporter (N by the shares of the output file's click lines, the expectation)</span>` + (clicks ? `<span><i style="border-color:${flash};border-top-width:6px"></i>the clicks the draw credited (the credit lines, the measurement)</span>` : '') + `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(BLIND.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  box.innerHTML = `<div class="caption"><b>The output file's credit of ${esc(family)} at ${format(n)} reporters across ${esc(r.across)}, beside the blind</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the reading's bars beside the blind">${body}</svg>`;
+  const credited = clicks ? clicks.reduce((a, b) => a + b, 0) : null;
+  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw with the seed ${format(r.seed)}` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
+  byId('watch').innerHTML = readingTable();
+}
+function readingTable() {
+  const r = READ, rs = r.rounded_shares, b = r.blind || {}, a = r.arrival || {}, ba = r.blind_arrival || {}, rows = [];
+  const text = v => v === null || v === undefined ? 'none' : Array.isArray(v) ? (v.some(x => x && typeof x === 'object') ? JSON.stringify(v) : v.map(text).join(', ')) : typeof v === 'object' ? JSON.stringify(v) : format(v);
+  const signed = v => (v > 0 ? '+' : '') + format(Math.round(v * 100) / 100);
+  const numbers = v => Array.isArray(v) && v.length && v.every(x => typeof x === 'number');
+  const diff = (x, y) => typeof x === 'number' && typeof y === 'number' ? (x - y === 0 ? 'the same' : signed(x - y)) : numbers(x) && numbers(y) && x.length === y.length ? (x.every((v, k) => v === y[k]) ? 'the same' : x.map((v, k) => signed(v - y[k])).join(', ')) : x === null || x === undefined || y === null || y === undefined ? '' : JSON.stringify(x) === JSON.stringify(y) ? 'the same' : 'differs';
+  const put = (what, x, y) => rows.push([what, text(x), text(y), diff(x, y)]);
+  put('N, the screen\u2019s inflow over W_c, to the nearest whole', r.quanta, r.blind_quanta);
+  put('laid by the generator; elsewhere, laid less N', [r.laid, r.elsewhere], [r.laid, 0]);
+  put('maxima within the pattern, by the shares', rs.maxima, b.maxima);
+  put('minima, by the shares (the blind its first minima)', rs.minima, b.minima);
+  put('visibility at the central maximum, by the shares [most - least, most + least]', rs.visibility, b.visibility);
+  put('wings, by the shares (the blind the lattice\u2019s; the continuum\u2019s beside)', rs.wings, b.wings && b.wings.lattice ? b.wings.lattice : b.wings);
+  if (b.wings && b.wings.continuum) put('wings, the continuum\u2019s number', rs.wings, b.wings.continuum);
+  put('deviation from the blind row\u2019s shares, [numerator, denominator]', rs.deviation, [0, rs.deviation ? rs.deviation[1] : 1]);
+  if (r.clicks) { put('maxima, the clicks the draw credited', r.clicks.maxima, b.maxima); put('minima, the clicks', r.clicks.minima, b.minima); put('visibility, the clicks', r.clicks.visibility, b.visibility); put('deviation, the clicks', r.clicks.deviation, [0, r.clicks.deviation ? r.clicks.deviation[1] : 1]); }
+  if (a.peak !== undefined) put('arrival: the peak interval', a.peak, ba.peak);
+  if (Array.isArray(a.centroid)) put('arrival: the centroid interval', Math.round(a.centroid[0] / a.centroid[1] * 100) / 100, ba.centroid);
+  if (a.span) put('arrival: the half-maximum span', a.span, ba.span);
+  for (const [name, seen] of Object.entries(r.aside || {})) put(`the bare region ${name}: seen, quanta`, [seen.seen, seen.quanta], 'nothing');
+  return '<div class="scroll"><table><thead><tr><th>what tools/click_counts.py compares</th><th>read from the output file</th><th>the blind, written first</th><th>the difference</th></tr></thead><tbody>' + rows.map(cells => '<tr>' + cells.map((c, k) => `<td${k ? ' class="num"' : ''}>${esc(c)}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>';
+}
+
 /* The arrival: with an expectation across an axis, the reporters' inflow per interval (their click lines summed, the negative ones included, in quanta over the family's wall) and the quanta gathered within the window up to each interval; the blind's peak, centroid and span marked where the blind names an arrival, the blind's total where it names one; the measurement over the intervals. */
 function drawArrival() {
-  const m = MEASURE, box = byId('arrival'); box.innerHTML = ''; byId('arrival-box').hidden = false;
+  const m = READ ? { labels: READ.node_reader, family: READ.family, window: READ.window } : MEASURE, box = byId('arrival'); box.innerHTML = ''; byId('arrival-box').hidden = false;
   const wall = WALL[m.family] || 1, per = new Float64Array(T + 1), gathered = new Float64Array(T + 1), hex = ROLES[m.family] ? colourOf(m.family) : token('--fg');
   for (const name of m.labels) for (const [tick, inflow] of (reportsAt[name] || {})[m.family] || []) if (tick <= T) per[tick] += inflow / wall;
   let sum = 0;
@@ -871,13 +984,24 @@ function drawArrival() {
   const add = (title, name, values, extra) => { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, title, [{ name, values, colour: hex, dashed: false }], 'measurement', extra, [size('--arrival-width'), size('--arrival-height')]); };
   add(`The inflow of ${m.family} at the ${m.labels.length} reporters per interval, in quanta over W_c ${format(wall)}`, "the reporters' click lines summed", per, marks);
   add(`The quanta gathered within the window ${m.window[0]} to ${m.window[1]}, up to each interval`, 'N so far, the inflow over W_c', gathered, line);
+  if (OUTPUT) {
+    const credited = new Float64Array(T + 1);
+    for (const name of m.labels) for (const [tick, count] of CREDITS_AT[name] || []) if (tick <= T) credited[tick] += count;
+    for (let k = 1; k <= T; k++) credited[k] += credited[k - 1];
+    if (credited[T]) add(`The clicks the draw credited at the ${m.labels.length} reporters, up to each interval (the credit lines)`, 'clicks credited so far', credited, line);
+    const density = new Float64Array(T + 1), at = DENSITY_AT[m.family] || {};
+    for (const name of m.labels) { let last = 0, next = 0; const changes = at[name] || []; for (let k = 0; k <= T; k++) { while (next < changes.length && changes[next][0] <= k) { last = changes[next][1] === null ? last : changes[next][1]; next++; } density[k] += last; } }
+    const g = document.createElement('div'); g.className = 'graph'; box.append(g);
+    graph(g, `The density of ${m.family} over the ${m.labels.length} reporters\u2019 Nodes per interval, in quanta (the density lines)`, [{ name: 'GAMEBOARD, the share at the regions, a diagnostic and no click', values: density, colour: token('--field'), dashed: true }], 'GameBoard reading', null, [size('--arrival-width'), size('--arrival-height')]);
+  }
   moveCursors();
 }
 
 {{GATE_SCRIPT}}/* The start: the title, the verdict, frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
-function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
+byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.ticks)} intervals, ${format(CLICKS.length)} click lines` + (SAME_LINES ? ', the look\u2019s click lines the same' : `, the look\u2019s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look\u2019s own lines';
+function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
 start();
 })();
 </script>
