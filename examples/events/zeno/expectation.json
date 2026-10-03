@@ -51,8 +51,8 @@
   }
  },
  "pi_pulse": {
-  "formula": "48 x (2 / pi) x 308 / 6000",
-  "value": 1.5686,
+  "formula": "48 x 392 / (2 x 6000)",
+  "value": 1.568,
   "wanted": 1.5708
  }
 }
