@@ -19,7 +19,7 @@ from event_universe.loader.instrument import Instrument, NodeInstrument
 from event_universe.loader.keys import Node
 from event_universe.loader.world import BodyRow
 from event_universe.plane import Faces
-from event_universe.reports import jump
+from event_universe.reports import face, jump, lay
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
@@ -100,10 +100,8 @@ def relaid(
         count, board.world.quantum_action, family.pair, phase, sense
     )
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
-    first, at = (
-        node.record_slice(family, books.record).start + part * family.width,
-        board.mask((books.at,)),
-    )
+    first = node.record_slice(family, books.record).start + part * family.width
+    at = board.mask((books.at,))
     for number, (now, before) in zip(
         (first, first + 1), ((re, re_before), (im, im_before)), strict=True
     ):
@@ -131,16 +129,6 @@ def levels_at(board: GameBoard, books: NodeBooks, part: int) -> tuple[int, int, 
     at = tuple(np.add(books.at, board.offset))
     re, im = state.lines[first], state.lines[first + 1]
     return int(re.now[at]), int(im.now[at]), int(re.before[at]), int(im.before[at])
-
-
-def node_draw(board: GameBoard, books: NodeBooks, weights: list[int]) -> int:
-    """One draw of a record's own instrument by its declared generator (features/click, `drawn`), its state kept in its books."""
-    assert books.declared.draw is not None
-    found = books.declared.draw
-    pick, books.state = drawn(
-        books.state, found.multiplier, found.increment, board.world.width + 1, weights
-    )
-    return pick
 
 
 def arriving(board: GameBoard, books: NodeBooks, drive: int) -> int:
@@ -181,9 +169,7 @@ class Item:
 
 
 Lists = list[list[Item]]  # the outcomes of one click, each the list written where it is drawn
-Phase = tuple[
-    tuple[int, int], int
-]  # a part's direction (re, im) and its sense, the sign of its Wronskian
+Phase = tuple[tuple[int, int], int]  # a part's direction (re, im) and its sense, its Wronskian's sign
 
 
 def click(
@@ -199,9 +185,11 @@ def click(
 
 
 def written(board: GameBoard, items: list[Item]) -> None:
-    """The write step of the act, the one swappable step, item by item: a spread record's quantum taken by the face at every Node named (`faced`, every line of the record whatever their number) or given by the lay of one whole quantum there (`given_quantum`), its count in the credit's books moved; a record declared an instrument at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node of its items (`front.started`)."""
+    """The write step of the act, the one swappable step, item by item: a spread record's quantum taken by the face at every Node named (`faced`, every line of the record whatever their number) or given by the lay of one whole quantum there (`given_quantum`), its count in the credit's books moved; a record declared an instrument at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node of its items (`front.started`); every line a lay changed at a Node, levels or remainder, written as one `lay` line with the levels before and after (`laid_lines`, `levels_of`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's 195: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
     leaving = [item for item in items if item.measured is not None and item.delta < 0]
     phases = {item.measured: leaving_phase(board, item) for item in leaving}
+    laid = [(i.family, line, at) for i in items for line in laid_lines(board, i) for at in i.nodes]
+    before = [levels_of(board, *entry) for entry in laid]
     touched: list[NodeBooks] = []
     for item in items:
         if item.measured is None:
@@ -214,10 +202,28 @@ def written(board: GameBoard, items: list[Item]) -> None:
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]
     for family in sorted({i.family for i in items if i.measured is None and i.delta < 0}):
-        if (
-            board.credit.counts[family] <= 0
-        ):  # the record's count at 0: its front from every Node written
+        if board.credit.counts[family] <= 0:  # the count at 0: its front from every Node written
             front.started(board, family, [at for i in items if i.family == family for at in i.nodes])
+    for (index, line, at), was in zip(laid, before, strict=True):
+        now = levels_of(board, index, line, at)
+        if now != was and board.observer is not None:
+            board.observer(lay(board.tick, board.families[index].name, line, list(at), was, now))
+
+
+def laid_lines(board: GameBoard, item: Item) -> list[int]:
+    """The lines of a record an item lays at its Nodes: the lines of the part of a record declared an instrument at one Node (`parted`), the first line of a spread record given whole quanta (`given_quantum`), none for a quantum taken by the face."""
+    if item.measured is None:
+        return [0] if item.delta > 0 else []
+    assert item.part is not None
+    family, books = board.families[item.family], books_named(board, item.measured)
+    first = node.record_slice(family, books.record).start + item.part * family.width
+    return list(range(first, first + family.width))
+
+
+def levels_of(board: GameBoard, index: int, line: int, at: Node) -> list[int]:
+    """One line's [now, before, remainder] at a Node named at the file's coordinates, read from its arrays."""
+    record, here = board.states[index].lines[line], tuple(np.add(at, board.offset))
+    return [int(record.now[here]), int(record.before[here]), int(record.remainder[here])]
 
 
 def books_named(board: GameBoard, measured: int) -> NodeBooks:
@@ -247,10 +253,8 @@ def given_quantum(board: GameBoard, item: Item) -> None:
     gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
     pair, action = born(family.pair, family.pair), board.world.quantum_action  # 0 for one pair
     (level, _im), (before, _im_before) = standing(item.delta, action, pair, (1, 0), 1)
-    origin, line = (
-        division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0],
-        state.lines[0],
-    )
+    origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
+    line = state.lines[0]
     now, was = line.now + np.where(at, level, 0), line.before + np.where(at, before, 0)
     state.lines[0] = node.Record(now, was, np.where(at, origin, line.remainder))
     board.credit.counts[item.family] += item.delta
@@ -267,10 +271,20 @@ def parted(board: GameBoard, books: NodeBooks, item: Item, phase: Phase | None) 
 def faces_of(board: GameBoard, index: int) -> dict[int, Faces]:
     """The faces presented to a family's lines at this interval's step, per line, with the board's offset (the layers grown before the origin), forward and back alike (`node.step_records`)."""
     found: dict[int, Faces] = {}
-    for face in board.credit.faces.get(board.tick, []):
-        if face.family == index:
-            found.setdefault(face.line, ([], board.offset))[0].append(face)
+    for presented in board.credit.faces.get(board.tick, []):
+        if presented.family == index:
+            found.setdefault(presented.line, ([], board.offset))[0].append(presented)
     return found
+
+
+def faces_reported(board: GameBoard) -> None:
+    """The faces presented at this interval's step, one `face` line each (`reports.face`): the family, the line, the Node, the Port and the value Rule3 read there, written after the step computed them, for the host's tool, which presents them again on the way back from the lines and not from the books' log (`tools/back_in_time.py`)."""
+    if board.observer is None:
+        return
+    for found in board.credit.faces.get(board.tick, []):
+        assert found.value is not None  # computed at this interval's step
+        name, at = board.families[found.family].name, list(found.at)
+        board.observer(face(board.tick, name, found.line, at, found.port, found.value))
 
 
 def exchange(books: NodeBooks, leaves: int, enters: int) -> list[Item]:
@@ -282,43 +296,35 @@ def exchange(books: NodeBooks, leaves: int, enters: int) -> list[Item]:
 
 
 def null_window(board: GameBoard, books: NodeBooks) -> None:
-    """The window with no click (the owner's words of 2026-10-02, "Yes, both of them", and of 2026-10-03, "I approve the four things"; the mathematician's 148; the advisor's clause 8): the record's own reading of itself written at its one Node, the one list of the act with the part it stands in at the change 0 (`click`): the record laid again in the complement of its outcome set, the part it stands in, at its whole count, in that part's own direction and sense (the levels of what stands there within the lay's rounding, the remainder at the lay's origin), the parts' counts unchanged, and the labels' coherence ended; where the re-lay changed a level, a write outside Rule3, one jump line labelled GAMEBOARD with the levels before and after at the Node, for the host's tool (a null window that changes nothing writes none); one function, the act's one place."""
+    """The window with no click (the owner's words of 2026-10-02, "Yes, both of them", and of 2026-10-03, "I approve the four things"; the mathematician's 148; the advisor's clause 8): the record's own reading of itself written at its one Node, the one list of the act with the part it stands in at the change 0 (`click`): the record laid again in the complement of its outcome set, the part it stands in, at its whole count, in that part's own direction and sense (the levels of what stands there within the lay's rounding, the remainder at the lay's origin), the parts' counts unchanged, and the labels' coherence ended; where the re-lay changed a level, a write outside Rule3, one jump line labelled GAMEBOARD, the `lay` lines beside it carrying the levels before and after at the Node for the host's tool (a null window that changes nothing writes none); one function, the act's one place."""
     before = levels_at(board, books, books.part)
     click(board, books.state, None, [1], [[Item(books.index, books.number, books.part, 0, (books.at,))]])
-    if (after := levels_at(board, books, books.part)) != before:  # a level changed: its line
-        reported(board, books, books.part, books.part, None, None, [list(before), list(after)])
+    if levels_at(board, books, books.part) != before:  # a level changed: its line, the lay lines beside
+        reported(board, books, (books.part, books.part), (None, None), False)
 
 
 def reported(
     board: GameBoard,
     books: NodeBooks,
-    realised: int,
-    left: int,
-    taken: int | None,
-    light: int | None,
-    levels: list[list[int]] | None = None,
+    parts: tuple[int, int],
+    exchanged: tuple[int | None, int | None],
+    quantum: bool = True,
 ) -> None:
-    """The jump line of a record's click (`reports.jump`): the part realised and the part left by name, the family taken from or the family given to, the window's intervals [first, last], the one Node beside as a GameBoard diagnostic, and for the null window's write the levels before and after."""
+    """The jump line of a record's click (`reports.jump`): the `parts` realised and left by name, the families `exchanged`, the one taken from and the one given to (None where none), the window's intervals [first, last], the one Node beside as a GameBoard diagnostic, labelled the detector's where a `quantum` passed and a diagnostic for the null window's write."""
     if board.observer is None:
         return
     names, families = books.declared.names, board.families
     window = [board.tick - books.elapsed + 1, board.tick]
-    taken_name = families[taken].name if taken is not None else None
-    given_name = families[light].name if light is not None else None
-    at = list(books.at)
-    line = jump(
-        board.tick,
+    taken, light = (families[k].name if k is not None else None for k in exchanged)
+    realised, left, name, at = (
+        names[parts[0]],
+        names[parts[1]],
         families[books.index].name,
-        books.number,
-        window,
-        names[realised],
-        names[left],
-        taken_name,
-        given_name,
-        at,
-        levels,
+        list(books.at),
     )
-    board.observer(line)
+    board.observer(
+        jump(board.tick, name, books.number, window, realised, left, taken, light, at, quantum)
+    )
 
 
 def gave(board: GameBoard, books: NodeBooks) -> bool:
@@ -335,7 +341,7 @@ def gave(board: GameBoard, books: NodeBooks) -> bool:
             weights = [span * unit, (rate.lifetime - span) * unit]
             pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
             if pick == 0:
-                reported(board, books, rate.enters, rate.leaves, None, rate.light)
+                reported(board, books, (rate.enters, rate.leaves), (None, rate.light))
                 return True
     return False
 
@@ -364,18 +370,12 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
                 [Item(drive, None, None, -1, (books.at,)), *exchange(books, t.leaves, t.enters)]
                 for books, t in outcomes
             ]
-            first = closing[0]
-            pick, first.state = click(
-                board,
-                first.state,
-                first.declared.draw,
-                [*weights, rest if rest > 0 else 0],
-                [*lists, []],
-            )
+            first, weighted = closing[0], [*weights, rest if rest > 0 else 0]
+            pick, first.state = click(board, first.state, first.declared.draw, weighted, [*lists, []])
             if pick >= len(outcomes):
                 break
             books, transition = outcomes[pick]
-            reported(board, books, transition.enters, transition.leaves, drive, None)
+            reported(board, books, (transition.enters, transition.leaves), (drive, None))
             done.add(books.number)
     return done
 
