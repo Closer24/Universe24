@@ -38,13 +38,11 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   apart, Yukawa's range, the beat and the parting, the field lines of two regions)
   and `examples/events/light_and_charge/` (a packet of light along a tube past no
   body and past a neutral pixel onto a screen of regions, the arrival and the
-  delay by the content's index, read by `tools/click_counts.py`; the charged tube
-  and the three charge worlds of `examples/events/charge/`, whose universe file
-  `charged.json` the tube keeps, left the repository with the count-1 gate at the
-  owner's word of 2026-10-03, 16:20 Israel); the
-  bodies' worlds are read by `tools/body_rest.py`, a GameBoard reading of a body's
-  rotation, tail, centroid and well and of every held row's level along the axes
-  from its centre, and of the regions' field lines from a run's output; the pair
+  delay by the content's index, read by `tools/click_counts.py`, on its universe
+  file `charged.json`); the bodies' worlds are read by `tools/body_rest.py`, a
+  GameBoard reading of a body's rotation, tail, centroid and well and of every
+  held row's level along the axes from its centre, and of the regions' field lines
+  from a run's output; the pair
   of `examples/events/matter_and_binding/pair.json` stands declared without a mode
   file, refused by the generator by name, so the single bodies' worlds alone run;
 - and the nuclide as one event, `examples/events/nuclide/`: the deuteron's
@@ -57,8 +55,6 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   `expectation.json` written before the run (the two parts bit-identical at every
   interval, every click's inflow even and one whole nuclide per 2 T sin omega_N,
   the holder of the sign at 0), read from the run's `click` and `parts` lines;
-  beside them `examples/events/parallel_charges/`, a design and a blind with no
-  world yet, to be run when the generator lays a moving body;
 - and the shelved ion's telegraph, `examples/events/shelved_ion/`, the click
   round's characterising experiment declared before any run: one ion of three
   modes as the parts of one record (the shape [3, 2], the labels S, P and D), two

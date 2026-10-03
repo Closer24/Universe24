@@ -133,6 +133,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "drive's taking by the labels' squares, the body's clock and the window's index on the click line, the "
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
+    "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
+        159,
+        "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
+        "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
+        "budget's least T, the faces and the open faces' layer, the messages, the universe",
+    ),
     "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
         281,
         "the NodeReader round (the owner's word of 2026-10-03, a detector is never on one Node; the Boss's brief): the "
@@ -240,9 +246,7 @@ def test_imports(snapshot: Snapshot) -> list[str]:
             modules = [a.name for a in node.names] if isinstance(node, ast.Import) else [module or ""]
             for imported in modules:
                 if imported.split(".")[-1].startswith("test_"):
-                    found.append(
-                        f"{name} imports {imported}: move the helper to tests/worlds.py or tests/running.py"
-                    )
+                    found.append(f"{name} imports {imported}: move the helper to tests/laws.py")
     return found
 
 
@@ -313,9 +317,7 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
     base_groups = duplicate_groups(base)
     for digest, names in duplicate_groups(head).items():
         if len(names) > len(base_groups.get(digest, [])):
-            found.append(
-                f"copied setup: {', '.join(names)} share one body; keep one in tests/worlds.py or tests/running.py"
-            )
+            found.append(f"copied setup: {', '.join(names)} share one body; keep one in tests/laws.py")
     for name in sorted(uncalled(head) - uncalled(base)):
         found.append(f"{name} is called nowhere in src/, tools/ or examples/: delete it with its tests")
     return found

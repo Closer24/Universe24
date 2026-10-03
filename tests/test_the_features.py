@@ -134,8 +134,8 @@ STUFF = {"name": "stuff", "pair": [4000, 6000], "reads": {"hollow": 2}, "dimensi
 OTHER = {"name": "other", "pair": [4000, 6000], "reads": {"core": 1}, "dimension": 1}
 SIGN = {"name": "sign", "pair": [1, 1], "reads": {}, "held": {**HELD, "sources": ["wronskian"]}}
 SIGN["held"].update(level_weight=1, write_weight=1, act="rotation")
-SHIPPED = ("rule", "light", "pair", "nuclide/deuteron", "charge/charged", "like_or_unlike/turning")
-WRITES = {("charge/charged", "charge"): 4, ("like_or_unlike/turning", "charge"): 400}  # k_w = 4 E_h
+TUBE, TURN = "light_and_charge/charged", "like_or_unlike/turning"  # the charged universes
+WRITES = {(TUBE, "charge"): 4, (TURN, "charge"): 400}  # k_w = 4 E_h
 
 
 def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carries_its_weight():
@@ -208,7 +208,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     refused("fails for 'charged'", universe_of, {**rule, "families": [*rows, CHARGED]})
     charge["write_weight"], rule["integers"]["quantum_action"] = 4, 36_000  # the advisor's one line
     universe_of({**rule, "families": [*rows, CHARGED]})
-    for name in SHIPPED:
+    for name in ("rule", "light", "pair", "nuclide/deuteron", TUBE, TURN):
         shipped = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))[1]
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
         for f in shipped:

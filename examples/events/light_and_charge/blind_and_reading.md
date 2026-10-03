@@ -12,7 +12,7 @@ reading that misses the blind is a finding, written as such and never adjusted.
 
 ## The blind (the advisor, #1563 comment 5928483084)
 
-The numbers are at Gamma = 6,000, on the universe of world (iv) (`examples/events/charge/charged.json`,
+The numbers are at Gamma = 6,000, on the universe of world (iv) (`examples/events/light_and_charge/charged.json`,
 the holder of the sign at the level weight 1 under the plain read).
 
 1. **The Peierls phase.** The odd line on the Link at the wall den T for the two-part record:

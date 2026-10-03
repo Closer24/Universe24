@@ -9,17 +9,7 @@ import event_universe.world_files as world_files
 from event_universe.core import paces
 from event_universe.game_board import GameBoard
 from event_universe.world_files import input_digest, load_world
-from tests.laws import (
-    BACK,
-    CHAIN,
-    PACKET,
-    QUANTA,
-    SLIT,
-    TOOL,
-    chain_body_world,
-    refused,
-    slit_world,
-)
+from tests.laws import BACK, CHAIN, PACKET, QUANTA, SLIT, TOOL, chain_body_world, refused, slit_world
 
 
 def dense(levels: dict[str, list[int]]) -> np.ndarray:
