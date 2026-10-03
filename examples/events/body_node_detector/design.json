@@ -1,0 +1,64 @@
+{
+ "comment": "The one-Node detector on a bound body, line 1 of the generic emitter/detector (ALGEBRA.md, The emitter/detector is one declaration kind for every experiment; the mathematician's 235, #1572 comment 5966769056, with the advisor's seconds, 5966657866 and 5966780505, two hands): a toy two-level body realised on a periodic chain of 48 Nodes of one family of quanta at the pair [5, 6] reading no holder, as two standing rotations in time at every Node: the level g the wave at k = pi / 3 and the level e the wave at k = 2 pi / 3 (the chain's band at the vacuum's paces, cos omega = (num / den) (2 + cos k) / 3, gives cos omega_g = 25 / 36 and cos omega_e = 5 / 12, omega_g = 0.8039 and omega_e = 1.1410), each a message laid over the whole chain with no envelope, so that at every Node the record is a_g cos(omega_g t + alpha) + a_e cos(omega_e t + beta) with |a_g| = 300 and |a_e| = 540 and every Node carries both levels (no node of a read mode). The advisor's toy at [2, 3] against [1, 3] was tried first and is replaced by name: two messages at those rotations stand only on the massless pair, whose uniform mode is a repeated root and collects the rounding's walk linearly, the levels at a Node wandering by hundreds over 3200 intervals (the g wave alone 300 to 799, the e wave alone 539 to 1074 in the largest level), so the toy stands at the nearest massive pair, the level pairs [25, 36] and [5, 12]. The detector `reader` stands on the one Node 12 and declares the two levels by their labels, pairs and weights at the Node, 1 / 48 each (the modulus of either wave is the same at every Node of the chain); the world's instrument closes a window every 32 intervals (2 pi / (omega_e - omega_g) = 18.6 intervals, so the window of 18 is refused by name and 32 resolves the beat) and the detector draws once per window by the exact solve's shares, 100 windows over 3200 intervals at the seed 24. The blind: p_e = Q_e / (Q_g + Q_e) with Q_n = a_n^2 sin^2(omega_n) / weight_n and the weights equal, sin^2(omega_g) = 671 / 1296 and sin^2(omega_e) = 119 / 144: p_e = 0.8380, the amplitudes chosen so that the number is the mathematician's own for his 21-Node well, 0.8378; the clicks the credit lines' realised level over the 100 windows, 83.8 +/- 3.7 of them e. The reference check beside it, a GameBoard reading: the solve on the first window's level sequence at the Node reads p_e within the rounding, the blind within 0.002, as 235 reads 0.838 at W = 32.",
+ "universe": "examples/events/body_node_detector/two_levels.json",
+ "engine": "examples/events/engine_start.json",
+ "family": "toy",
+ "shape": [
+  48,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "periodic",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "node": [
+  12,
+  0,
+  0
+ ],
+ "levels": [
+  {
+   "name": "g",
+   "pair": [
+    25,
+    36
+   ],
+   "wave": [
+    1,
+    3
+   ],
+   "amplitude": 300,
+   "weight": [
+    1,
+    48
+   ]
+  },
+  {
+   "name": "e",
+   "pair": [
+    5,
+    12
+   ],
+   "wave": [
+    2,
+    3
+   ],
+   "amplitude": 540,
+   "weight": [
+    1,
+    48
+   ]
+  }
+ ],
+ "window": 32,
+ "refused_window": 18,
+ "windows": 100,
+ "generator": {
+  "multiplier": 6364136223846793005,
+  "increment": 1442695040888963407
+ },
+ "seed": 24,
+ "world": "two_level_body"
+}

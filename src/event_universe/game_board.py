@@ -72,7 +72,7 @@ class GameBoard:
         for index in self.order:
             node.guarded(index, self.families, self.states, self.world.node_clock, self.wrap, self.unit)
         rows = ((r, self.mask(r.positions) if r.body is None else None) for r in world.detectors)
-        self.detectors = [Detector(r.name, at, r.body, r.declared) for r, at in rows]
+        self.detectors = [Detector(r.name, at, r.body, r.declared, r.levels) for r, at in rows]
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.gate()
         self.credit = credit.Books.of(self)
@@ -358,7 +358,7 @@ class GameBoard:
                 assert nodes is not None
                 came = entering(nodes, through, self.wrap, union if detector.declared else nodes, own)
                 seen = int(came.sum(dtype=object))
-                if seen != 0 and self.observer is not None:
+                if seen != 0 and self.observer is not None and not detector.levels:
                     self.observer(click(self.tick, family.name, detector.name, seen))
                 if detector.declared:
                     credit.booked(self, index, detector.name, came)

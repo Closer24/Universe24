@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from event_universe.body_node import references_over, resolves_the_beat, scale_of_the_width
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule
@@ -14,6 +15,7 @@ from event_universe.loader.faces import RecedingFace, faces_of, layer_of, recedi
 from event_universe.loader.instrument import (
     NODE_INSTRUMENT_KEYS,
     Instrument,
+    Level,
     NodeInstrument,
     Pattern,
     basis_of,
@@ -22,6 +24,7 @@ from event_universe.loader.instrument import (
     pattern_of,
     patterns_of_the_law,
     ports_of,
+    read_levels_of,
 )
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
@@ -39,7 +42,7 @@ BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
     ("node", "count"),
 )
-DETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern")  # a detector's keys
+DETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern", "levels")  # a detector's keys
 TRANSITION = (
     "transition"  # a region's own quantum, declared by no region: its unit is its record's own share
 )
@@ -63,7 +66,7 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), read by the reader and by the instrument's draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name)."""
+    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`), or one Node of a bound body with the `levels` it reads there (the one-Node detector on a body, ALGEBRA.md, The emitter/detector is one declaration kind for every experiment, line 1; `loader/instrument.py`, `Level`; `body_node`), exempt from the region's size rule since it reads a beat in time and no travelling wave; `declared` where it is a region of the declared instrument, and not for a body's detector, a one-Node detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), read by the reader and by the instrument's draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name)."""
 
     name: str
     positions: tuple[Node, ...]
@@ -71,6 +74,7 @@ class DetectorRow:
     declared: bool
     basis: tuple[int, ...]
     pattern: Pattern
+    levels: tuple[Level, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -200,6 +204,12 @@ def detectors_of(
             ports_of(
                 basis, pattern
             )  # the two ports orthogonal with equal norms, refused by name otherwise
+        levels = read_levels_of(row["levels"], f"{label}.levels") if "levels" in row else ()
+        if levels and (basis or "block" in row):
+            raise ValueError(
+                f"{label} reads a body's levels at one Node and declares a basis or a block: the levels "
+                "stand on `positions` of one Node alone"
+            )
         if "block" in row:
             if basis:
                 raise ValueError(f"{label}: a basis is declared on a region, not on a body's detector")
@@ -212,7 +222,12 @@ def detectors_of(
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(DetectorRow(name, nodes, None, True, basis, pattern))
+        if levels and len(nodes) != 1:
+            raise ValueError(
+                f"{label} reads a body's levels and declares {len(nodes)} Nodes: a bound body's detector "
+                "is one Node by design, the beat in time its resolution"
+            )
+        found.append(DetectorRow(name, nodes, None, not levels, basis, pattern, levels))
     if layer:
         found.append(DetectorRow(FACE_NAME, layer, None, False, (), ()))
     return tuple(found)
@@ -243,7 +258,7 @@ def regions_of_the_law(
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyRule, ...],
 ) -> None:
-    """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words of 2026-09-30 and of 2026-10-01, 03:20, the uncertainty principle upheld): a declared region is one connected region of Nodes, never one Node, and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a detector reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
+    """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words of 2026-09-30 and of 2026-10-01, 03:20, the uncertainty principle upheld): a declared region is one connected region of Nodes, never one Node, and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a detector reading a body declares no region, a one-Node detector reading a body's levels is no region of a travelling wave (the uncertainty rule's other form, a beat in time, `levels_of_the_law`) and the open faces' layer is the board's own; the depth along the beam is not gated."""
     for detector in detectors:
         if not detector.declared:
             continue
@@ -269,6 +284,31 @@ def regions_of_the_law(
                         f"detector {detector.name!r} is {extent} Node(s) across the {AXES[axis]} axis, under half "
                         f"the wavelength of the {families[message.family].name!r} message's wave [{p}, {q}], "
                         f"{q} / {abs(p)} Nodes: no click names a position finer than the amplitudes carry"
+                    )
+
+
+def levels_of_the_law(
+    detectors: tuple[DetectorRow, ...], instrument: Instrument | None, room: int
+) -> None:
+    """The window rule of a one-Node detector on a bound body (the mathematician's 235 with the advisor's second, two hands; ALGEBRA.md, line 1 of the generic emitter/detector): its window, the world's instrument's, is at least 2 pi / (omega_e - omega_g) for every two of the levels it reads, read in the engine's own integers as the beat's sine crossing 0 twice within the window at the scale the solve runs at (`body_node.resolves_the_beat`, `body_node.scale_of_the_width`), refused by name otherwise; a one-Node detector in a world declaring no instrument has no window and is refused by name."""
+    for detector in detectors:
+        if not detector.levels:
+            continue
+        if instrument is None:
+            raise ValueError(
+                f"detector {detector.name!r} reads a body's levels and the world declares no `instrument`: "
+                "the window the levels are read over is the instrument's"
+            )
+        window = instrument.window
+        pairs = tuple(level.pair for level in detector.levels)
+        references = references_over(scale_of_the_width(room), pairs, window + 1)
+        for i, lower in enumerate(detector.levels):
+            for j, upper in enumerate(detector.levels[i + 1 :], i + 1):
+                if not resolves_the_beat(references[2 * i : 2 * i + 2], references[2 * j : 2 * j + 2]):
+                    raise ValueError(
+                        f"detector {detector.name!r}: the window does not resolve the beat of the levels "
+                        f"{lower.name!r} at {list(lower.pair)} and {upper.name!r} at {list(upper.pair)} "
+                        f"within {window} intervals: the window is at least 2 pi / (omega_e - omega_g)"
                     )
 
 
@@ -310,6 +350,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     counted = [body.family for body in bodies]
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
+    levels_of_the_law(detectors, instrument, derived.largest_of(width))
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     ticks, pairs = integer(world["ticks"], "ticks", 0), [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)

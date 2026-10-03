@@ -47,6 +47,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
+    "tests/test_the_draw.py::test_a_one_node_detector_on_a_bound_body_reads_the_levels_by_the_exact_solve": (
+        90,
+        "line 1 of the generic emitter/detector (the Boss's brief, 2026-10-03): the exact solve on the four "
+        "reference sequences recovering known amplitudes, the Gram condition's two refusals and the one-Node "
+        "exemption, the toy two-level body's folder read over three windows",
+    ),
     "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
         36,
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "

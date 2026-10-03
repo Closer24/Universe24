@@ -7,24 +7,31 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import node
+from event_universe import growth, node
+from event_universe.body_node import (
+    references_over,
+    resolves_the_beat,
+    scale_of_the_width,
+    shares,
+    solved,
+)
 from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
 from event_universe.credit import record_unit
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import pair_of
+from event_universe.loader.instrument import Instrument, pair_of, read_levels_of
 from event_universe.loader.universe import universe_of
-from event_universe.loader.world import bodies_of, detectors_of, regions_of_the_law
+from event_universe.loader.world import bodies_of, detectors_of, levels_of_the_law, regions_of_the_law
 from event_universe.meeting import hazard_weights
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, RUN, TOOL, TOP, load_file, refused
 
-SLITS, WAY, RESONANCE = (
+SLITS, WAY, RESONANCE, BODY = (
     load_file(f"{n}_build", EVENTS / n / "build_world.py")
-    for n in ("two_slits", "which_way", "resonance")
+    for n in ("two_slits", "which_way", "resonance", "body_node_detector")
 )
 SRC = ROOT / "src" / "event_universe"
 GATE_ROW = [23, 18, 34, 13, 5, 35, 52, 19, 9, 27, 22, 21]  # the two slits' gate, N = 278, at the seed 24
@@ -349,3 +356,114 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
             books.state = seed * len(board.credit.bodies) + books.number
         [board.step() for _ in range(48)]
         assert [c["tick"] for c in lines if c["event"] == "jump" and c["given"] == "pulse"] == [48]
+
+
+def test_a_one_node_detector_on_a_bound_body_reads_the_levels_by_the_exact_solve(tmp_path):
+    """Line 1 of the generic emitter/detector (ALGEBRA.md, The emitter/detector is one declaration kind for every experiment; the mathematician's 235, #1572 comment 5966769056, with the advisor's seconds, 5966657866 and 5966780505, two hands; `body_node`, `credit.read_levels`, `loader.world.levels_of_the_law`): on a synthetic level sequence that is exactly a combination of the four reference sequences the solve returns the four amplitudes exactly, D_i = a_i D, at the toy's pairs [2, 3] against [1, 3] and at the 21-Node well's pairs of 235 (cos 0.2206 and cos 0.3824 to five places) alike, and with the levels rounded to integers the shares' ratio p_e reads 235's 0.8378 within the rounding's amplification at W = 32 and W = 40; the Gram determinant is 0 at W = 3; the window resolves the beat at 17 and not at 16 for the toy, at 39 and not at 38 for the well (2 pi / delta = 16.1 and 38.8); the loader refuses by name a weight 0 ("the Node is a node of a read mode"), a window short of the beat ("the window does not resolve the beat"), a one-Node detector with levels on two Nodes and one in a world without the instrument, and admits one Node with levels where the same Node without them is a region of a travelling wave; the committed folder's blind is the builder's byte for byte, and over three windows of the toy world the detector's credit lines name a level realised with its index kept, the count moved 0, the proper time the board's tick and the window index counting, the solve on the first window within 0.02 of the blind (0.832 read against 0.838, the lay's own rounding, a finding named in the folder); a receding face's growth keeps the detector's levels (`growth.resized_detector`)."""
+    room, toy = 2**63 - 1, ((2, 3), (1, 3))
+    well, scale = ((97577, 100000), (92776, 100000)), scale_of_the_width(room)
+    weights = {toy: ((1, 48), (1, 48)), well: ((51076, 1000000), (152881, 1000000))}
+    amplitudes = {toy: [300, 0, 0, 539], well: [226, 0, 0, -521]}
+    for pairs, window in ((toy, 32), (well, 40)):
+        references = references_over(scale, pairs, window)
+        exact = [
+            sum(a * r[t] for a, r in zip(amplitudes[pairs], references, strict=True))
+            for t in range(window)
+        ]
+        gram, found = solved(references, exact)
+        assert gram > 0 and found == [a * gram for a in amplitudes[pairs]]  # Cramer's rule exact
+        rounded = [int(division_forward(z, scale, division_forward(scale, 2, 0)[0])[0]) for z in exact]
+        read = shares(solved(references, rounded)[1], pairs, weights[pairs])
+        blind = [
+            a * a * (d * d - n * n) * w[1] / (d * d * w[0])
+            for a, (n, d), w in zip(amplitudes[pairs][::3], pairs, weights[pairs], strict=True)
+        ]
+        assert (
+            abs(read[1] / sum(read) - blind[1] / sum(blind)) < 0.002
+            and abs(blind[1] / sum(blind) - 0.8378) < 0.001
+        )
+    assert (
+        solved(references_over(scale, toy, 3), [1, 2, 3])[0] == 0
+    )  # below four values no Gram determinant
+    for pairs, short in ((toy, 16), (well, 38)):
+        for window, resolved in ((short, False), (short + 1, True)):
+            references = references_over(scale, pairs, window + 1)
+            assert resolves_the_beat(references[:2], references[2:]) is resolved, (pairs, window)
+    levels = [
+        {"name": "g", "pair": [2, 3], "weight": [1, 48]},
+        {"name": "e", "pair": [1, 3], "weight": [1, 48]},
+    ]
+    refused(
+        "a node of a read mode", read_levels_of, [{**levels[0], "weight": [0, 48]}, levels[1]], "levels"
+    )
+    refused(
+        "two levels at one rotation",
+        read_levels_of,
+        [levels[0], {**levels[1], "pair": [2, 3]}],
+        "levels",
+    )
+    one = [{"name": "d", "positions": [[0, 0, 0]], "levels": levels}]
+    rows = detectors_of(one, (2, 1, 1), 0, (), ())
+    regions_of_the_law(
+        rows, (), (2, 1, 1), (False,) * 3, ()
+    )  # one Node with levels: no region, admitted
+    assert not rows[0].declared and [v.name for v in rows[0].levels] == ["g", "e"]
+    refused(
+        "a region of a travelling wave",
+        regions_of_the_law,
+        detectors_of([{"name": "d", "positions": [[0, 0, 0]]}], (2, 1, 1), 0, (), ()),
+        (),
+        (2, 1, 1),
+        (False,) * 3,
+        (),
+    )
+    refused(
+        "one Node by design",
+        detectors_of,
+        [{**one[0], "positions": [[0, 0, 0], [1, 0, 0]]}],
+        (2, 1, 1),
+        0,
+        (),
+        (),
+    )
+    refused("declares no `instrument`", levels_of_the_law, rows, None, room)
+    refused(
+        "the window does not resolve the beat", levels_of_the_law, rows, Instrument(16, 0, 1, 0), room
+    )
+    levels_of_the_law(rows, Instrument(17, 0, 1, 0), room)
+    BODY.main(["--folder", str(tmp_path), "--modes"])
+    blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
+    assert blind == json.loads(
+        (EVENTS / "body_node_detector" / "expectation.json").read_text(encoding="utf-8")
+    )
+    world = load_world(tmp_path / "two_level_body.json")
+    refused(
+        "does not resolve the beat",
+        levels_of_the_law,
+        world.detectors,
+        Instrument(blind["refused_window"]["window"], 0, 1, 0),
+        room,
+    )
+    board = GameBoard(world, (lines := []).append)
+    reader = next(d for d in board.detectors if d.levels)
+    assert growth.resized_detector(reader, 0, 1, 1, 1).levels == reader.levels  # kept through a growth
+    sequence = []
+    for _ in range(3 * blind["window"]):
+        board.step()
+        if len(sequence) < blind["window"]:
+            sequence.append(int(board.record(board.order[0])[0].now[reader.nodes][0]))
+    pairs = tuple(v.pair for v in reader.levels)
+    read = shares(
+        solved(references_over(scale, pairs, blind["window"]), sequence)[1],
+        pairs,
+        tuple(v.weight for v in reader.levels),
+    )
+    assert abs(read[1] / sum(read) - blind["reference"]["blind"]) < 0.02
+    credits = [c for c in lines if c["event"] == "credit"]
+    assert [c["windows"] for c in credits] == [1, 2, 3] and all(
+        c["proper"] == c["tick"] == c["window"][1] for c in credits
+    )
+    assert all(c["realised"] == reader.levels[c["kept"][0]].name and c["count"] == 0 for c in credits)
+    assert all(
+        c["label"] == "DETECTOR" and c["detector"] == reader.name and "node" not in c for c in credits
+    )

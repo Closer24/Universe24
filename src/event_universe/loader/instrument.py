@@ -142,6 +142,53 @@ def pair_of(value: object, label: str) -> tuple[int, int]:
     return num, den
 
 
+LEVEL_KEYS = ("name", "pair", "weight")  # a level of a bound body a one-Node detector reads
+
+
+@dataclass(frozen=True)
+class Level:
+    """A level of a bound body as a one-Node detector declares it (ALGEBRA.md, The emitter/detector is one declaration kind for every experiment, line 1; the mathematician's 235 with the advisor's second, two hands): its name, the mode's label, its pair [num, den] with cos omega_n = num / den, the level's rotation in time, and its weight at the detector's Node, phi_n(x_0)^2 / (phi_n . phi_n), as a pair [num, den]; the engine reads the pairs into the reference sequences of the exact solve (`body_node`) and holds no number of its own."""
+
+    name: str
+    pair: tuple[int, int]
+    weight: tuple[int, int]
+
+
+def weight_of(value: object, label: str) -> tuple[int, int]:
+    """A level's weight at the detector's Node, phi_n(x_0)^2 / (phi_n . phi_n), a pair [num, den] with den from 1 and num from 1 through den; a weight 0 is a node of the mode, where the level is unreadable (the read's error scales as 1 / |phi_n(x_0)|, the mathematician's 235), refused by name."""
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{label} is a pair [num, den], the level's weight at the Node, got {value!r}")
+    den = integer(value[1], f"{label}[1]", 1)
+    num = integer(value[0], f"{label}[0]", 0, den)
+    if num == 0:
+        raise ValueError(
+            f"{label} is 0: the Node is a node of a read mode, where that level has no amplitude to read"
+        )
+    return num, den
+
+
+def read_levels_of(value: object, label: str) -> tuple[Level, ...]:
+    """A one-Node detector's `levels`, the two levels or more of the bound body it reads: each `name` (its own, the mode's label), `pair` (its rotation, `pair_of`) and `weight` (its weight at the Node, `weight_of`); two levels at one pair are refused by name, the solve on equal rotations having no Gram determinant."""
+    if not isinstance(value, list) or len(value) < 2:
+        raise ValueError(
+            f"{label} lists the two levels or more a one-Node detector reads, each its name, pair and weight"
+        )
+    found: list[Level] = []
+    for index, entry in enumerate(value):
+        row = keyed(entry, f"{label}[{index}]", LEVEL_KEYS, LEVEL_KEYS)
+        name = row["name"]
+        if not isinstance(name, str) or not name or name in [level.name for level in found]:
+            raise ValueError(f"{label}[{index}].name must be a name of its own, the mode's label")
+        pair = pair_of(row["pair"], f"{label}[{index}].pair")
+        if pair in [level.pair for level in found]:
+            raise ValueError(
+                f"{label}[{index}] rotates at the pair {list(pair)} as another level does: two levels at "
+                "one rotation are one level to the solve, its Gram determinant 0"
+            )
+        found.append(Level(name, pair, weight_of(row["weight"], f"{label}[{index}].weight")))
+    return tuple(found)
+
+
 @dataclass(frozen=True)
 class Rate:
     """A giving of a body as an instrument (the fifth act, the giving click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions."""

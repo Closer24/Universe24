@@ -92,7 +92,7 @@ def resized(
 
 
 def resized_detector(detector: Detector, axis: int, side: int, layers: int, direction: int) -> Detector:
-    """A detector's declared Nodes over the grown GameBoard (none grown: nothing is declared there), a body's derived each interval."""
+    """A detector's declared Nodes over the grown GameBoard (none grown: nothing is declared there), a body's derived each interval; the levels a one-Node detector reads kept with it."""
     if detector.nodes is None:
         return detector
     return Detector(
@@ -100,6 +100,7 @@ def resized_detector(detector: Detector, axis: int, side: int, layers: int, dire
         sized(detector.nodes, axis, side, layers, direction, False),
         detector.body,
         detector.declared,
+        detector.levels,
     )
 
 

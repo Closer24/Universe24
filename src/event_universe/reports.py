@@ -9,6 +9,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.ports import Wrap, arrival
+from event_universe.loader.instrument import Level
 from event_universe.node import Record
 
 PORTS = tuple((axis, side) for axis in range(3) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
@@ -81,12 +82,13 @@ BOOKS = ("share", "quanta", "drift", "pace", "frozen")  # the keys of a family's
 
 @dataclass(frozen=True)
 class Detector:
-    """A detector: its name, its Nodes (None: the Nodes of the body it names, derived each interval), that body's number, and whether it is a region of the declared instrument (the faces' layer and a body's detector are not: each reads its own boundary and takes no field line); it declares no quantum of its own, counting in the record's own unit (`credit.record_unit`)."""
+    """A detector: its name, its Nodes (None: the Nodes of the body it names, derived each interval), that body's number, whether it is a region of the declared instrument (the faces' layer, a body's detector and a one-Node detector on a body are not: each reads its own boundary and takes no field line), and the levels of a bound body it reads where it stands on one Node of it (`loader/instrument.py`, `Level`; `credit.read_levels`, the exact solve of `body_node`; empty for a region); it declares no quantum of its own, counting in the record's own unit (`credit.record_unit`)."""
 
     name: str
     nodes: np.ndarray | None
     body: int | None
     declared: bool
+    levels: tuple[Level, ...] = ()
 
 
 def click(tick: int, family: str, detector: str, inflow: int) -> dict[str, object]:
@@ -126,7 +128,7 @@ def credit(
     count: int,
     left: int,
 ) -> dict[str, object]:
-    """The credit line, the click written on the GameBoard (features/click), labelled DETECTOR, the experiment's reading and nothing else (the owner's word of 2026-10-03: we read only the detector's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record), the region credited, the window [first, last] it was drawn over in the board's intervals, `proper`, the detector's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's ticks, `credit.clocked`; the board's `tick` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the detector's event clock, the port realised for a record of several parts (None for one part) with the parts kept (the others ended), the count moved (one quantum) and the record's count left, the count conserved and read by the credit; no Node (the owner's word of 2026-10-02: the detector writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `face` lines, the host's tool's)."""
+    """The credit line, the click written on the GameBoard (features/click), labelled DETECTOR, the experiment's reading and nothing else (the owner's word of 2026-10-03: we read only the detector's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record), the region credited, the window [first, last] it was drawn over in the board's intervals, `proper`, the detector's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's ticks, `credit.clocked`; the board's `tick` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the detector's event clock, the port realised for a record of several parts (None for one part) with the parts kept (the others ended), the count moved (one quantum) and the record's count left, the count conserved and read by the credit; for a one-Node detector on a bound body (`credit.read_levels`) the level realised by name with its index kept, the count moved 0 and the record's count as it stands; no Node (the owner's word of 2026-10-02: the detector writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `face` lines, the host's tool's)."""
     line = dict(zip(REPORT_KEYS, (CREDIT, MEASUREMENT, tick, family, detector), strict=True))
     line.update(zip(CREDIT_KEYS, (window, proper, windows, realised, kept, count, left), strict=True))
     return line

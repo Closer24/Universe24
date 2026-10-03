@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe import growth, share
+from event_universe.body_node import references_over, scale_of_the_width, shares, solved
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, drawn
@@ -35,7 +36,7 @@ Clock = list[int]  # a detector's own clock: its proper time in whole intervals 
 
 @dataclass
 class Books:
-    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked`) and the count of the windows closed, the detectors' event clock."""
+    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked`), the count of the windows closed, the detectors' event clock, and per family and one-Node detector on a bound body the window's level sequence at its Node (`listened`, read at the close by the exact solve, `read_levels`)."""
 
     declaration: Instrument | None
     elapsed: int
@@ -51,6 +52,7 @@ class Books:
     units: dict[int, int] = field(default_factory=dict)
     clocks: dict[tuple[int, str], Clock] = field(default_factory=dict)
     windows: int = 0
+    sequences: dict[tuple[int, str], list[int]] = field(default_factory=dict)
 
     def window_of(self, tick: int) -> list[int]:
         """The window closing at `tick`, [first, last], the declaration's length of intervals."""
@@ -104,7 +106,7 @@ def quanta_through(books: Books, index: int, inflow: int) -> int:
 
 
 def clocked(board: GameBoard) -> None:
-    """The detectors' own clocks, one interval (the advisor's derivation of 2026-10-03, #1572 comment 5966657866, the clock composed from the paces, with the mathematician's second: the clock is the Node's, a detector's proper interval per board tick at a Node of content c is p_0(c) / Gamma): per family of quanta and declared region, p_0 the mean of the region's Nodes' clocks under that family's read of the content, rounded once, (SUM p_0 + n div 2) div n, added to the carried remainder and divided once by Gamma, the whole intervals to the proper time and the remainder kept in the books; at a region in the vacuum p_0 = Gamma and the proper time is the board's tick, in a well it runs slower."""
+    """The detectors' own clocks, one interval (the advisor's derivation of 2026-10-03, #1572 comment 5966657866, the clock composed from the paces, with the mathematician's second: the clock is the Node's, a detector's proper interval per board tick at a Node of content c is p_0(c) / Gamma): per family of quanta and declared region, and per one-Node detector on a bound body alike, p_0 the mean of the region's Nodes' clocks under that family's read of the content, rounded once, (SUM p_0 + n div 2) div n, added to the carried remainder and divided once by Gamma, the whole intervals to the proper time and the remainder kept in the books; at a region in the vacuum p_0 = Gamma and the proper time is the board's tick, in a well it runs slower."""
     books, gamma = board.credit, board.world.node_clock
     if books.declaration is None:
         return
@@ -112,7 +114,7 @@ def clocked(board: GameBoard) -> None:
         content = board.read(index, 1, 0)[0]
         clock = paces.clock_of(gamma, content)
         for detector in board.detectors:
-            if not detector.declared or detector.nodes is None:
+            if detector.nodes is None or not (detector.declared or detector.levels):
                 continue
             at = detector.nodes
             count = int(at.sum())
@@ -121,6 +123,69 @@ def clocked(board: GameBoard) -> None:
             own = books.clocks.setdefault((index, detector.name), [0, 0])
             whole, rest = division_forward(own[1] + mean, gamma, 0)
             own[0], own[1] = own[0] + int(whole), int(rest)
+
+
+def listened(board: GameBoard) -> None:
+    """The one-Node detectors' read of one interval, a read and no write (ALGEBRA.md, line 1 of the generic emitter/detector; the mathematician's 235 with the advisor's second, two hands): per family of quanta the record's first line's level now at the detector's Node (light the sum of its rows, `GameBoard.record`) appended to the window's level sequence in the books, the sequence the exact solve reads at the close (`read_levels`); nothing where the world declares no instrument."""
+    books = board.credit
+    if books.declaration is None:
+        return
+    for detector in board.detectors:
+        if not detector.levels or detector.nodes is None:
+            continue
+        for index in board.order:
+            level = int(board.record(index)[0].now[detector.nodes][0])
+            books.sequences.setdefault((index, detector.name), []).append(level)
+
+
+def read_levels(board: GameBoard) -> None:
+    """The one-Node detectors' draw at the window's close (ALGEBRA.md, line 1 of the generic emitter/detector: the exact solve on the four reference sequences, the Gram determinants exact in Python's integers, the draw once at the window's close by the levels' shares; the mathematician's 235 with the advisor's second, two hands): per family of quanta whose level at the Node was not 0 throughout the window, the reference sequences at the declared pairs over the window at the scale derived from the width (`body_node.references_over`, `body_node.scale_of_the_width`), Cramer's rule on their Gram matrix (`body_node.solved`), the levels' shares as integer weights (`body_node.shares`: (a_n^2 + b_n^2) sin^2(omega_n) over the level's declared weight at the Node, the common factors cancelling) brought into the labels' unit (`in_the_unit`) and one draw of the instrument's generator among them; the credit line names the level realised with its index kept, the count moved 0 (the body's record stands; its re-lay in the realised level is by name) and the record's count as it stands, the detector's proper time and window index beside the board's tick; the sequences begin again."""
+    books = board.credit
+    for detector in board.detectors:
+        if not detector.levels or detector.nodes is None:
+            continue
+        pairs = tuple(level.pair for level in detector.levels)
+        weights = tuple(level.weight for level in detector.levels)
+        for index in board.order:
+            sequence = books.sequences.pop((index, detector.name), [])
+            if not any(sequence):
+                continue
+            scale = scale_of_the_width(board.world.width)
+            found = shares(
+                solved(references_over(scale, pairs, len(sequence)), sequence)[1], pairs, weights
+            )
+            if sum(found) <= 0:
+                continue
+            unit = count_wall(board.families[index], board.world.quantum_action) ** 2
+            pick = draw(board, in_the_unit(found, unit))
+            if board.observer is None:
+                continue
+            name, left = board.families[index].name, books.counts[index]
+            proper, window = (
+                books.clocks.get((index, detector.name), [0, 0])[0],
+                books.window_of(board.tick),
+            )
+            realised, kept = detector.levels[pick].name, [pick]
+            board.observer(
+                credit(
+                    board.tick,
+                    name,
+                    detector.name,
+                    window,
+                    proper,
+                    books.windows,
+                    realised,
+                    kept,
+                    0,
+                    left,
+                )
+            )
+
+
+def in_the_unit(weights: list[int], unit: int) -> list[int]:
+    """The levels' shares brought into the labels' unit for the draw, W_c^2 as the giving's draw uses it (`meeting.gave`), (Q_n x unit + total div 2) div total by the division act: the shares' ratios within the rounding of one part in the unit, their total within the width where the generator's state lives (the Gram determinants' squares stand beyond it)."""
+    total = sum(weights)
+    return [int(division_forward(w * unit, total, division_forward(total, 2, 0)[0])[0]) for w in weights]
 
 
 def instrument_nodes(board: GameBoard) -> np.ndarray:
@@ -175,15 +240,17 @@ def draw(board: GameBoard, weights: list[int]) -> int:
 
 
 def windowed(board: GameBoard) -> None:
-    """The window's count at the end of an interval: where the world declares the instrument, the detectors' own clocks advanced (`clocked`), one more interval elapsed, and at the window's length the instrument's draw and its click written (`credited`), the window counted among the closed and the count beginning again."""
+    """The window's count at the end of an interval: where the world declares the instrument, the detectors' own clocks advanced (`clocked`), the one-Node detectors' level read (`listened`), one more interval elapsed, and at the window's length the instrument's draw and its click written (`credited`) and the one-Node detectors' draw by the exact solve (`read_levels`), the window counted among the closed and the count beginning again."""
     books = board.credit
     if books.declaration is None:
         return
     clocked(board)
+    listened(board)
     books.elapsed += 1
     if books.elapsed == books.declaration.window:
         books.windows += 1
         credited(board)
+        read_levels(board)
         books.elapsed = 0
 
 
