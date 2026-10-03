@@ -28,7 +28,7 @@ SLITS, WAY, RESONANCE = (
     for n in ("two_slits", "which_way", "resonance")
 )
 SRC = ROOT / "src" / "event_universe"
-GATE_ROW = [16, 17, 33, 12, 13, 42, 44, 10, 11, 21, 32, 27]  # the two slits' gate, N = 278, at the seed 24, the half-up rule's own
+GATE_ROW = [16, 17, 33, 12, 13, 42, 44, 10, 11, 21, 32, 27]  # the two slits' gate, N = 278, at the seed 24
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -67,7 +67,7 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_four_seeds(tmp_p
         if seed == 24:  # the gate's own numbers, bit for bit
             assert quanta == 278 and [clicks[n] for n in names] == GATE_ROW
     assert all(2.6 < chi < 26.8 for chi in found) and 7 < sum(found) / 4 < 16, found
-    assert [round(chi, 1) for chi in found] == [14.2, 16.1, 2.9, 6.0]  # the half-up rule's own run reproduced
+    assert [round(chi, 1) for chi in found] == [14.2, 16.1, 2.9, 6.0]  # the half-up rule's run, bit for bit
 
 
 def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
