@@ -296,6 +296,77 @@
    "fence": "GameBoard"
   }
  },
+ "blind_derived_run": {
+  "comment": "The derived atom's run on main's engine after the fix round (the owner's word of 2026-10-03, 09:27 Israel, the needed experiments in parallel; ALGEBRA.md, the mathematician's 218 and 219, #1572 comments 5965243006 and 5965276053, at the owner's words of 06:50 and 06:53 Israel, and the advisor's second, #1563 comment 5965495006, with the derivations #1572 comment 5965494847; two hands). 219 keeps three things apart: (1) the atom derived by hand from Rule3 and the law's lines, (2) the atom running, worker D's atom world, the derived atom run directly, its 1s not yet stood, the frozen row [0, den] as the nucleus the next round, and (3) the instrument body, the one-Node image, run by the Zeno gate and not here. This blind is (2)'s: the world the engine lays and runs is hydrogen_1s_toy.json on atom_toy.json (the toy atom of ALGEBRA.md, the one world of the folder the 31-cube holds), re-laid by the folder's builder's act (tools/pixel_mode.py, the nucleus the one-Node record by `--pixel`, the senses the design's, the lay `fixed_point` at the tolerance [1, 100]) on main 35ff462c, the engine with the write's factor as one rounding and the start's rest refined (the fix round, #1704), as the caveat of blind_large asked, and run over the window [1, 1000] by read_atom.py; hydrogen_1s.json on atom.json stands declared and not laid by the design (the body of 30,000 quanta, the count-1 rule broken by name); hydrogen_1s_large.json's lay is attempted once more under a cut at 30 minutes of wall time, a cut no reading. Written before any lay or run of this round and never adjusted; a reading that misses its row is a finding by name. The owner's decision relayed by the advisor (#1563 comment 5966429178, 09:38 Israel), \"Put it in as a body. Put a detector beside it.\": the atom a body of Rule3 laid at the start, no labels, no declared resonance, no cut Links, its two bound modes and their beat a reading of the run, and the detector that reports its clicks an ordinary region detector declared on the body's Nodes, two or more, reading the body's own records through their Ports; the first gate the 1s standing, the second Itano's column on the body (218's test, a later round). So the world declares beside its two bodies one region detector of two Nodes, `beside`, [17, 15, 15] and [18, 15, 15], on the electron's record beside its declared Node, with no `instrument` (no draw and no write, so that nothing disturbs the standing the first gate reads): its `click` lines the net current of each family into the region per interval, the one measurement; the transition at the band's top [0, den] and the window read from the arrival are declarations of G's round (own-quantum, pull request #1703) and not of main 35ff462c, named by name as the next round's with the seed and tau.",
+  "world": "hydrogen_1s_toy",
+  "universe": "examples/events/atom_gate/atom_toy.json",
+  "window": [
+   1,
+   1000
+  ],
+  "constants": {
+   "reading": "the sign holder's write weight k and its level weight E_s as the loader read them from the universe file, with Gamma and the ratio k / (Gamma E_s) as an exact pair (read_atom.py, `sign_holder_as_loaded`); nothing of them in the engine",
+   "blind": "the file's by name: k = 3000 (`write_weight` of the charge row of atom_toy.json), E_s = 1 (`level_weight`), Gamma = 6,000, k / (Gamma E_s) = [1, 2], so that alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s) = 0.10337 (numbers_toy), the well's depth and so every eV set by k and E_s (219 with the advisor's correction: the sign holder's write weight and its divisor are the two declarations beside the pairs and the nucleus); the same read gives [259, 1500] on atom.json (k = 1036) and [126247, 730838] on atom_large.json, alpha_law = 1 / 28 at both",
+   "status": "219 (1) with the advisor's correction, #1563 comment 5965495006; two hands",
+   "fence": "GameBoard"
+  },
+  "standing": {
+   "rotation_against_the_lay_clock": {
+    "reading": "the electron's rotation in 172's windowed summed form over both lines and every Node, accumulated over the window and over successive whole periods (read_atom.py), against the lay's own clock pair of the mode file, [next + before, now] at the largest level, 2 cos Omega_lay (`standing`, `lay_clock_two_cos_omega`, `accumulated_minus_lay_clock`, `first_period_minus_lay_clock`)",
+    "blind": "a standing 1s holds 2 cos omega_read at the lay's clock pair over every period to the band's order and the lay's rounding, its noise about 1 / (A sqrt(N_eff n)), 10^-5 rad and below (blind_large), and the lay's clock itself within 10^-3 of the line in reals with the engine's rest, 2 cos Omega = 1.338208 (numbers_toy), the refined rest moving the lay's clock by its rounding alone; 219 (2) by name, its 1s not yet stood: with the nucleus the one-Node record of row 2, which spreads from the first interval at the band's group velocity (its share at the Node below 10^-2 quanta within ten intervals as the round before read it), the sign well is gone within about ten intervals and the electron's record stands in no stationary angle, so the law's line before this run says the rotation leaves the lay's clock pair in the first periods and no standing 1s is read over the window, the standing waiting on the frozen row [0, den] as the nucleus (the next round, 219); the first period's reading beside the lay's clock is the one number the standing condition is read by here",
+    "status": "219 (2) with the advisor's second; the one-Node nucleus the folder's row 2; 175 item 5's caveat lifted by the fix round",
+    "fence": "GameBoard"
+   },
+   "share_deviation": {
+    "reading": "the electron's share deviation over the Nodes where the lay's share stands, rho_s^2 = SUM (s_n - s_0)^2 / SUM s_0^2 at the quarters of the window, rho_s by the fixed point of the division act at the scale T (tools/body_standing.py's read (2) taken by read_atom.py, `standing`, `share_deviation`)",
+    "blind": "for a standing 1s rho_s = 5.66 sigma sqrt(n) / A with sigma = 0.157 levels per interval per Node: 13 percent at n = 1000 at the design's amplitude 215 (numbers_toy) and 8.2 percent at the lay's amplitude 342 as the round before laid it, the re-lay's own amplitude read under from_the_lay, and the sqrt(n) law rho_s(n) / rho_s(n / 4) = 2 within 5 percent; under the spreading nucleus (above) the deviation stands above it and no sqrt(n) law holds, the electron's share itself growing under the time-varying turn (the round before read 1.00 to 3.92 quanta over the board; the form not conserved under a changing angle, ALGEBRA.md, A body and its light keep one energy), a finding by name and no pass",
+    "status": "167 (2) with the advisor's recomputation, 5955658812 (C), applied to the atom's electron; 219 (2)",
+    "fence": "GameBoard"
+   },
+   "drift": {
+    "reading": "the centroid of the electron's share over the board along each axis at the window's ends and its change in Links (tools/body_standing.py's read (1) taken by read_atom.py, `standing`, `centroid`)",
+    "blind": "for a standing 1s each |delta x_c| below 3 x its rms, 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)) with N_eff = 1996 and rho_x = 7.0 / sqrt 3 = 4.0 Links (numbers_toy): the rms 2.6 x 10^-3 Links at A = 342, three times it 8 x 10^-3 Links; by the lay's symmetry about the centre the centroid stands at the centre Node [15, 15, 15] exactly while the 48 images hold, and the charge's rows depart them at the lay (the folder's row 3 as read), so the drift reads the departure's growth over the window, a diagnostic and no gate; a single centroid is one draw",
+    "status": "167 (1) applied to the atom's electron; 166 for the images",
+    "fence": "GameBoard"
+   }
+  },
+  "two_reading_lines": {
+   "own_write_of_the_sign": {
+    "reading": "the sign holder's rows at the start: the rows' count and the lines per row, per row its time level at the nucleus's Node [15, 15, 15] and at the electron's declared Node [16, 15, 15], and per charged record the row it owns and the rows its read and its turn take (read_atom.py, `sign_rows`)",
+    "blind": "No record reads its own write of the sign (ALGEBRA.md, the first of the atom's two lines, 219 (1)): three rows (the row 0 free, no record's; the row 1 the nucleus's; the row 2 the electron's), four lines each under the rotation (the time line and the three odd lines); the electron owns the row 2 and reads the rows [0, 1], the nucleus owns the row 1 and reads [0, 2]; the row 0 reads 0 at both Nodes (no laid light); the row 1 at the nucleus's Node the engine's rest under one nucleus quantum in the sense -1, near -1,122 as the engine before the fix read it and -372 at the declared Node a Link away (numbers_toy), the refined rest moving them by less than the stop's miss the caveat names, 207 fine units in the lowest mode; the row 2 not 0 at both Nodes, in the electron's sense +1 and smaller in size than the row 1's at the nucleus's Node (one quantum over about 2,000 Nodes against one at one Node), read by the nucleus's turn and never by the electron's",
+    "status": "the owner's decision of 2026-10-02 (ALGEBRA.md, No record reads its own write of the sign); 219 (1) with the advisor's correction; two hands",
+    "fence": "GameBoard"
+   },
+   "self_read_of_the_content": {
+    "reading": "the content holders' time levels at the two Nodes at the start against their rests, and the books' least pace at the lay (read_atom.py, `content_holders`, `least_pace`)",
+    "blind": "the content holders keep the self-read (219 (1), the second of the atom's two lines): gravity and the binding holder are sourced by the form of every record's sum, the reader's own included, so at the nucleus's Node they stand off their rest 0 by the nucleus's own form, the books' least pace at the lay Gamma - 2 = 5,998 as the round before read it (one level of content at a Node), and at the electron's declared Node within one level of the rest (the count-1 electron's form per Node far below one level at gravity's weight 1,000)",
+    "status": "219 (1) with the advisor's correction; two hands",
+    "fence": "GameBoard"
+   }
+  },
+  "not_tested_here": "the 2s (no deflation) and the 1s : 2s ratio; the frozen row [0, den] as the nucleus (the next round, 219 (2)); the Zeno test by name on the atom world (the pulsed drive with the window read from the arrival at the body's Nodes, Itano's column the gate), which waits on the standing 1s; the detector's transition at the band's top [0, den] and its window read from the arrival (G's declarations on own-quantum, not on main), its seed and tau, and Itano's column on the body (the second gate)",
+  "detector": {
+   "name": "beside",
+   "positions": [
+    [
+     17,
+     15,
+     15
+    ],
+    [
+     18,
+     15,
+     15
+    ]
+   ]
+  },
+  "detector_reading": {
+   "reading": "the region detector `beside`'s click lines over the window, per family the count of its lines, the net inflow summed over the window in the current's units and in quanta over W_c, the first interval reported and the largest inflow in size with its interval (read_atom.py, `clicks`), beside its field lines' first and last readings (the family's share over the region, a GameBoard diagnostic)",
+   "blind": "for a standing 1s the electron's net inflow summed over whole periods is 0 within the rounding's walk, below 10^-2 quanta over W_c over the window, its per-interval inflow oscillating with the record's two levels about 0 (a standing record has no net current into a region); the nucleus's one-Node record, spreading at the band's group velocity, first reports at the region from the interval 2 or 3 on (two and three Links from its Node); under the spreading nucleus the electron's net inflow over the window is not 0, following the growth of its share the round before read, a finding by name; no credit and no write, the `instrument` not declared",
+   "status": "the owner's decision of 09:38 Israel relayed by the advisor, #1563 comment 5966429178; the region detector's click ALGEBRA.md's one measurement; the transition [0, den], the arrival's window, the seed and tau the next round's, by name",
+   "fence": "DETECTOR for the click lines, GameBoard for the field lines"
+  }
+ },
  "not_tested_by_the_short_run": "the body's standing over long runs (the budget's 1 / sqrt(T) law in the standing world) and the line as a click (the giving or the absorption through a window), 163 (2) and 165",
  "from_the_lay": {
   "hydrogen_1s_large": null,
