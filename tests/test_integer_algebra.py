@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
 PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "credit.py", "world_files.py")
-PHYSICAL_MODULES += ("records.py", "bookings.py")
+PHYSICAL_MODULES += ("records.py", "bookings.py", "meeting.py", "front.py", "plane.py")
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/universe.py", "loader/lay.py")
