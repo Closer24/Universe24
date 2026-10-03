@@ -42,10 +42,10 @@ HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum": (
-        36,
-        "the dark grain's dedicated test (the Boss, 2026-10-03): the giving drawn per interval at the hazard in the "
-        "dark over the trials' seeds, one draw per interval and none at the window's close, the window's draw "
-        "standing with the light present, the far Node's cosine on every seed's plateau",
+        90,
+        "the generic detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
+        "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
+        "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
     "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
         36,

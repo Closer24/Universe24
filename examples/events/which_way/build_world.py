@@ -32,7 +32,6 @@ def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
         found.append(
             {
                 "name": f"screen_{index}",
-                "transition": design["detector_transition"],
                 "positions": positions,
             }
         )
@@ -42,7 +41,6 @@ def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
         found.append(
             {
                 "name": str(design["channel"]["name"]),
-                "transition": design["detector_transition"],
                 "positions": positions,
             }
         )

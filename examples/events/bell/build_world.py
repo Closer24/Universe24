@@ -47,14 +47,12 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
     detectors = [
         {
             "name": design["sides"]["a"],
-            "transition": design["detector_transition"],
             "positions": [[x, 0, 0] for x in range(depth)],
             "basis": [int(v) for v in design["settings"][a]],
             "pattern": design["patterns"]["a"],
         },
         {
             "name": design["sides"]["b"],
-            "transition": design["detector_transition"],
             "positions": [[x, 0, 0] for x in range(length - depth, length)],
             "basis": [int(v) for v in design["settings"][b]],
             "pattern": design["patterns"]["b"],

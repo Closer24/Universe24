@@ -3,16 +3,17 @@
 from __future__ import annotations
 
 import itertools
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
 import numpy as np
 
 from event_universe import growth, share
+from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, drawn
 from event_universe.giving import Source
-from event_universe.loader.derived import count_wall, detector_wall
+from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import Instrument, Ports, ports_of
 from event_universe.loader.keys import Node
 from event_universe.meeting import Item, NodeBooks, books_of, click
@@ -29,11 +30,12 @@ Joints = dict[
     tuple[int, ...], int
 ]  # per combination of the sides' ports (0 the +, 1 the -) the window's J
 Sums = dict[str, list[list[int]]]  # per region the parts' level sums [now, before] of one interval
+Clock = list[int]  # a detector's own clock: its proper time in whole intervals and the remainder carried
 
 
 @dataclass
 class Books:
-    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), and the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again."""
+    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked`) and the count of the windows closed, the detectors' event clock."""
 
     declaration: Instrument | None
     elapsed: int
@@ -46,6 +48,9 @@ class Books:
     fronts: list[Front]
     faces: dict[int, list[Face]]
     sources: list[Source]
+    units: dict[int, int] = field(default_factory=dict)
+    clocks: dict[tuple[int, str], Clock] = field(default_factory=dict)
+    windows: int = 0
 
     def window_of(self, tick: int) -> list[int]:
         """The window closing at `tick`, [first, last], the declaration's length of intervals."""
@@ -54,13 +59,27 @@ class Books:
 
     @classmethod
     def of(cls, board: GameBoard) -> Books:
-        """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), the generator at the declared seed, every other book empty."""
+        """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), its unit of one quantum from the same two numbers (`record_unit`, held through the run), the generator at the declared seed, every other book empty."""
         found = board.world.instrument
         counts = {index: counted(board, index, board.laid[index]) for index in board.order}
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.detectors if r.pattern]
         bodies = books_of(board)
+        units = {
+            index: record_unit(board, index, board.laid[index], counts[index]) for index in board.order
+        }
         return cls(
-            found, 0, found.seed if found is not None else 0, counts, {}, {}, sides, bodies, [], {}, []
+            found,
+            0,
+            found.seed if found is not None else 0,
+            counts,
+            {},
+            {},
+            sides,
+            bodies,
+            [],
+            {},
+            [],
+            units,
         )
 
 
@@ -70,12 +89,38 @@ def counted(board: GameBoard, index: int, total: int | None) -> int:
     return 0 if total is None else int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
 
 
-def own_units(board: GameBoard, index: int, name: str, inflow: int) -> int:
-    """A region's window inflow read in the detector's own quantum (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267, two hands: a detector counts in its own quantum, its wall its own transition's energy T sin Omega_d, `loader/derived.detector_wall`): (inflow W_c + W_d div 2) div W_d by the division act, the identity at the band's top [0, den], where every shipped region stands; a quantum of light at the detector's resonance is then one click, above it one click and the excess no click, below it the rounding's (half up), the detuned share a body's reading and not a region's."""
-    family, action = board.families[index], board.world.quantum_action
-    transition = next(d.transition for d in board.detectors if d.name == name)
-    wall, own = count_wall(family, action), detector_wall(family, action, transition)
-    return int(division_forward(inflow * wall, own, division_forward(own, 2, 0)[0])[0])
+def record_unit(board: GameBoard, index: int, total: int | None, count: int) -> int:
+    """The unit of one quantum of a record, W_rec, read and not declared (the advisor's line of 2026-10-03 with the mathematician's second, #1572 comments 5966657866, 5966769056 and 5966780505, two hands; the count's line, Q(z) = count x W_c sin omega for a monochromatic record): the record's share over the board at the books' origin over its count there, (total + count div 2) div count by the division act, read once and held through the run (a face removes one quantum's share with one count, the ratio unchanged; the roundings' drift moves it not); W_c where the books hold no count or no reading (nothing to credit). For a record laid by share with its count the share over W_c it is W_c within the lay's own rounding; for a born quantum of count 1 at Omega it is W_c sin Omega, the detector counting in the record's own quantum with no transition declared on any region."""
+    wall = count_wall(board.families[index], board.world.quantum_action)
+    if total is None or count <= 0:
+        return wall
+    return int(division_forward(total, count, division_forward(count, 2, 0)[0])[0])
+
+
+def quanta_through(books: Books, index: int, inflow: int) -> int:
+    """The clicks a window's inflow is worth in the record's own unit, (inflow + W_rec div 2) div W_rec by the division act (`record_unit`), the share's own rounding; the cap by the count is the credit's."""
+    unit = books.units[index]
+    return int(division_forward(inflow, unit, division_forward(unit, 2, 0)[0])[0])
+
+
+def clocked(board: GameBoard) -> None:
+    """The detectors' own clocks, one interval (the advisor's derivation of 2026-10-03, #1572 comment 5966657866, the clock composed from the paces, with the mathematician's second: the clock is the Node's, a detector's proper interval per board tick at a Node of content c is p_0(c) / Gamma): per family of quanta and declared region, p_0 the mean of the region's Nodes' clocks under that family's read of the content, rounded once, (SUM p_0 + n div 2) div n, added to the carried remainder and divided once by Gamma, the whole intervals to the proper time and the remainder kept in the books; at a region in the vacuum p_0 = Gamma and the proper time is the board's tick, in a well it runs slower."""
+    books, gamma = board.credit, board.world.node_clock
+    if books.declaration is None:
+        return
+    for index in board.order:
+        content = board.read(index, 1, 0)[0]
+        clock = paces.clock_of(gamma, content)
+        for detector in board.detectors:
+            if not detector.declared or detector.nodes is None:
+                continue
+            at = detector.nodes
+            count = int(at.sum())
+            total = int(np.sum(np.broadcast_to(clock, board.shape)[at], dtype=object))
+            mean = int(division_forward(total, count, division_forward(count, 2, 0)[0])[0])
+            own = books.clocks.setdefault((index, detector.name), [0, 0])
+            whole, rest = division_forward(own[1] + mean, gamma, 0)
+            own[0], own[1] = own[0] + int(whole), int(rest)
 
 
 def instrument_nodes(board: GameBoard) -> np.ndarray:
@@ -130,18 +175,20 @@ def draw(board: GameBoard, weights: list[int]) -> int:
 
 
 def windowed(board: GameBoard) -> None:
-    """The window's count at the end of an interval: where the world declares the instrument, one more interval elapsed, and at the window's length the instrument's draw and its click written (`credited`), the count beginning again."""
+    """The window's count at the end of an interval: where the world declares the instrument, the detectors' own clocks advanced (`clocked`), one more interval elapsed, and at the window's length the instrument's draw and its click written (`credited`), the window counted among the closed and the count beginning again."""
     books = board.credit
     if books.declaration is None:
         return
+    clocked(board)
     books.elapsed += 1
     if books.elapsed == books.declaration.window:
+        books.windows += 1
         credited(board)
         books.elapsed = 0
 
 
 def credited(board: GameBoard) -> None:
-    """The click written on the GameBoard at a window's end, per family of quanta from the window's books, then the books emptied, the region detector's list of the one act (`meeting.click`, the first of its five lists): for a record of several parts the one draw through the root over the combinations of the sides' ports by the joint shares J (as the reader draws its combination), then at each side's one arrival Node (`written`, the Node drawn by the window's inflows per Node, the port realised and the parts it reads with a coefficient other than 0 named as kept in the credit line) the record at -1 as one item over the Nodes drawn, one quantum; for a record of one part the regions' window inflows floored at 0 are the shares, N = (their sum + W_c div 2) div W_c whole quanta, at most the count left, each drawn to a region by the shares and to one Node of it, one item each; the window's items written by the act in one list, the record's count down by one per quantum and its erasing front begun from every Node written where the count reaches 0; a record whose count stands at 0 is uncreditable and nothing draws from it, whatever its levels still show (the empty wave, a diagnostic, until the front reaches it); the draw and the write are the instrument's and no act of Rule3."""
+    """The click written on the GameBoard at a window's end, per family of quanta from the window's books, then the books emptied, the region detector's list of the one act (`meeting.click`, the first of its five lists): for a record of several parts the one draw through the root over the combinations of the sides' ports by the joint shares J (as the reader draws its combination), then at each side's one arrival Node (`written`, the Node drawn by the window's inflows per Node, the port realised and the parts it reads with a coefficient other than 0 named as kept in the credit line) the record at -1 as one item over the Nodes drawn, one quantum; for a record of one part the regions' window inflows floored at 0 are the shares, N = (their sum + W_rec div 2) div W_rec whole quanta in the record's own unit (`quanta_through`, `record_unit`), at most the count left, each drawn to a region by the shares and to one Node of it, one item each; the window's items written by the act in one list, the record's count down by one per quantum and its erasing front begun from every Node written where the count reaches 0; a record whose count stands at 0 is uncreditable and nothing draws from it, whatever its levels still show (the empty wave, a diagnostic, until the front reaches it); the draw and the write are the instrument's and no act of Rule3."""
     books = board.credit
     names = [detector.name for detector in board.detectors if detector.declared]
     for index in board.order:
@@ -160,12 +207,10 @@ def credited(board: GameBoard) -> None:
                 nodes += written(board, index, name, intake[name], PORT_NAMES[port], kept, 1)
             items.append(Item(index, None, None, -1, tuple(nodes)))
         else:
-            shares = [
-                own_units(board, index, name, max(sum(intake[name].values()), 0)) for name in names
-            ]
+            shares = [max(sum(intake[name].values()), 0) for name in names]
             if sum(shares) <= 0:
                 continue
-            for quantum in range(min(counted(board, index, sum(shares)), books.counts[index])):
+            for quantum in range(min(quanta_through(books, index, sum(shares)), books.counts[index])):
                 name = names[draw(board, shares)]
                 at = written(board, index, name, intake[name], None, [0], quantum + 1)
                 items.append(Item(index, None, None, -1, tuple(at)))
@@ -181,14 +226,17 @@ def written(
     kept: list[int],
     quantum: int,
 ) -> list[Node]:
-    """The Node of one click at a region and its credit line: among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 (none where nothing entered: no Node, no write); one credit line, its result the window, the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, with the one Node at the file's coordinates beside it as a GameBoard diagnostic (the owner's word of 2026-10-02: the detector gives no result for one Node); the write itself the act's (`meeting.click`, the face at that Node); returns the Node, none where nothing entered."""
+    """The Node of one click at a region and its credit line: among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 (none where nothing entered: no Node, no write); one credit line, its result the window, the detector's own proper time at the close and the index of the window closed (`clocked`, the detector's two clocks beside the board's tick, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, and no Node (the owner's words of 2026-10-02 and 2026-10-03: the detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`meeting.click`, the face at that Node); returns the Node, none where nothing entered."""
     nodes = list(book)
     weights = [max(book[at], 0) for at in nodes]
     if sum(weights) <= 0:
         return []
     at = nodes[draw(board, weights)]
-    left, window = board.credit.counts[index] - quantum, board.credit.window_of(board.tick)
+    books = board.credit
+    left, window = books.counts[index] - quantum, books.window_of(board.tick)
     if board.observer is not None:
-        family = board.families[index].name
-        board.observer(credit(board.tick, family, name, window, realised, kept, 1, left, list(at)))
+        family, proper = board.families[index].name, books.clocks.get((index, name), [0, 0])[0]
+        board.observer(
+            credit(board.tick, family, name, window, proper, books.windows, realised, kept, 1, left)
+        )
     return [at]

@@ -230,13 +230,6 @@ def count_wall(family: FamilyRule, action: int) -> int:
     return 3 * family.pair[1] * action
 
 
-def detector_wall(family: FamilyRule, action: int, transition: tuple[int, int]) -> int:
-    """The detector's wall, its own quantum's energy T sin Omega_d in the count's units (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267, two hands: a detector counts in its own quantum): W_d = isqrt(W_c^2 (den_d^2 - num_d^2)) div den_d, one root of the whole product by the fixed point of the division act and one division, so that the floor root of sin Omega_d alone (10.6 percent off at [2, 3]) never enters; exactly W_c = 3 den T at the band's top [0, den], where every shipped region stands."""
-    wall, (num, den) = count_wall(family, action), transition
-    root = division_fixed_point(wall * wall * (den * den - num * num))
-    return int(division_forward(root, den, 0)[0])
-
-
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
     """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for an odd line."""
     family = families[index]
