@@ -1230,7 +1230,7 @@ def message_levels(
 ) -> tuple[np.ndarray, np.ndarray]:
     """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a, sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board."""
     along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
-    turned, whole_turn = message.get("phase", [0, 1])
+    turned, whole_turn = message["phase"]
     sideways = {
         AXES.index(str(name)): (int(r), int(s)) for name, (r, s) in message.get("transverse", {}).items()
     }

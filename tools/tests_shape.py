@@ -119,6 +119,18 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
         "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
     ),
+    "tests/test_integer_algebra.py::test_a_composed_product_of_literals_is_refused_outside_core_rule3": (
+        11,
+        "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
+        "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
+    ),
+    "tests/test_the_features.py::test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names": (
+        51,
+        "PR D, no number in the engine (the owner's word, the Boss's brief of 2026-10-03): the start's fine unit from "
+        "the six reads twice, the tent against the discrete parabola's top on three chains, the miss bound from the "
+        "six reads over the axis's two Ports on a chain, a slab and a cube, the rest's two powers by name and its "
+        "keyword-only `intervals`, the radiated total against (2 / 3) T sin k at two T, one PORTS under src/",
+    ),
     "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
         48,
         "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
@@ -140,13 +152,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
-        159,
+        172,
         "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
         "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
         "budget's least T, the faces and the open faces' layer, the messages, the universe",
     ),
     "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
-        281,
+        289,
         "the NodeReader round (the owner's word of 2026-10-03, a reader with Nodes alone is never on one Node; the "
         "Boss's brief): the ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, "
         "the share credited 1, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "

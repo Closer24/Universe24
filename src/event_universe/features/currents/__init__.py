@@ -6,8 +6,6 @@ from dataclasses import dataclass
 from typing import Any
 
 Vector = tuple[Any, Any, Any]
-PORTS = 6  # a Node's six Ports, the lattice's own integer (Rule3's 6)
-AXIS_PORTS = 2  # the two Ports of one axis, +a and -a: the sign's current is the mean of their Links'
 PRODUCTS = 2  # the current's two products, now_i before_j and before_i now_j
 
 

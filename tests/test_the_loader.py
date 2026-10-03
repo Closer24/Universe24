@@ -14,8 +14,8 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     families = universe.universe_of(document)[1]
     matter, charged = (next(f for f in families if f.name == name) for name in ("matter", "charged"))
     shape, zeros, beside = (4, 2, 1), [0] * 8, {"world_digest": "d", "bodies": [], "messages": []}
-    held, one = {"sources": ["form"], "level_weight": 1, "write_weight": 1}, [1, *[0] * 7]
-    packet = {"family": "matter", "along": "x", "wave": [1, 2], "amplitude": 1}
+    held, one = {"sources": ["form"], "level_weight": 1, "write_weight": 1, "act": "pace"}, [1, *[0] * 7]
+    packet = {"family": "matter", "along": "x", "wave": [1, 2], "phase": [0, 1], "amplitude": 1}
     packet.update(top={"x": [0, 0], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0})
     pulse = {"family": "gravity", "whole": [0, 0, 0], "count": 1, "tick": 1}  # a holder, no quanta
     face = {"sides": ["low"], "largest": 9, "layers": 1}
@@ -27,7 +27,7 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         return mode.levels_of(entry, "m", read or family, shape, 10, beyond)
 
     def laid(**keys):
-        return lay.lay_of({"kind": "repeat", **keys}, "lay")
+        return lay.lay_of({"kind": "repeat", "seed": "one_node", **keys}, "lay")
 
     def receding(boundary="open", **keys):
         return faces.receding_of({"x": {**face, **keys}}, shape, {"x": boundary})
@@ -37,6 +37,13 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
 
     def sent(**keys):
         return messages.messages_of([{**packet, **keys}], beside, "d", families, shape, 10, ())
+
+    def unphased():  # a message without its phase: refused by name, no phase by omission
+        bare = {k: v for k, v in packet.items() if k != "phase"}
+        return messages.messages_of([bare], beside, "d", families, shape, 10, ())
+
+    def unacted():  # a held row without its act: refused by name, no act by omission
+        return universe.shape_of({"held": {k: v for k, v in held.items() if k != "act"}}, "r")
 
     refusals = [
         ("must be an object", lambda: keys.keyed(3, "k", ("a",), ())),
@@ -79,7 +86,9 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         (r"profile must be \[centre, neighbour\]", lambda: laid(seed="compact", profile=[1])),
         (
             "below the least T",
-            lambda: lay.budget_gate(laid(tolerance=[1, 100]), [(2, 3)], [50], 400, 32768),
+            lambda: lay.budget_gate(
+                laid(tolerance=[1, 100], confidence=[32, 1]), [(2, 3)], [50], 400, 32768
+            ),
         ),
         ("stands on an open or closed axis", lambda: receding("periodic")),
         ("sides lists", lambda: receding(sides=[])),
@@ -107,6 +116,10 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         (r"wave must be \[p, q\]", lambda: sent(wave=[1])),
         ("wave's p is 0", lambda: sent(wave=[0, 2])),
         (r"phase must be \[r, s\]", lambda: sent(phase=[1])),
+        ("lacks the key 'phase'", unphased),
+        ("lacks the key 'seed'", lambda: lay.lay_of({"kind": "repeat"}, "lay")),
+        ("confidence, the budget's confidence", lambda: laid(tolerance=[1, 100])),
+        ("lacks the key 'act'", unacted),
         (r"transverse.y must be \[r, s\]", lambda: sent(transverse={"y": [1]})),
         (
             "is a held row and declares no dimension",
@@ -159,10 +172,10 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     ]
     for match, call in refusals:
         refused(match, call)
-    least, left = lay.least_action((2, 3), 400, 50, (1, 100)), 81 * 3**6 * 50**2  # e_num = 1
+    least, left = lay.least_action((2, 3), 400, 50, (1, 100), (32, 1)), 81 * 3**6 * 50**2  # e_num = 1
     right = 1024 * 2**4 * 400**2 * 100**4 * (3 * 3 - 2 * 2)  # the law's inequality, T a power of two
     assert least & (least - 1) == 0 and left * least * least >= right > left * least * least // 4
-    fixed = lay.lay_of({"kind": "fixed_point", "stop": 2, "passes": 30}, "lay")
-    assert fixed == lay.Lay("fixed_point", 2, 30, None, "one_node", None)
+    fixed = lay.lay_of({"kind": "fixed_point", "stop": 2, "passes": 30, "seed": "one_node"}, "lay")
+    assert fixed == lay.Lay("fixed_point", 2, 30, None, None, "one_node", None)
     layer = faces.layer_of(shape, (True, False, False), 1, (faces.RecedingFace(0, 1, 9, 1),))
     assert layer == ((0, 0, 0), (0, 1, 0))  # the high side recedes: the low face's two Nodes alone

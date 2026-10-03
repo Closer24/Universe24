@@ -19,7 +19,7 @@ MESSAGE_KEYS: tuple[str, ...] = (
     "transverse",
 )
 MESSAGE_KEYS += ("whole", "weights", "count", "tick")
-MESSAGE_REQUIRED = ("family", "along", "wave", "amplitude", "top", "edge")
+MESSAGE_REQUIRED = ("family", "along", "wave", "amplitude", "top", "edge", "phase")
 WHOLE_KEYS = (
     "family",
     "whole",
@@ -126,7 +126,7 @@ def messages_of(
                 f"{label}.wave's p is 0: a message has a wave number pi p / q per Link, p not 0, its sign "
                 "the direction along the axis (a node_reader's region is read against it)"
             )
-        phase = message.get("phase", [0, 1])
+        phase = message["phase"]  # required: the file states its phase, [0, 1] for none
         if not isinstance(phase, list) or len(phase) != 2:
             raise ValueError(f"{label}.phase must be [r, s], the phase 2 pi r / s")
         whole_turn = integer(phase[1], f"{label}.phase's s", 1)

@@ -47,6 +47,7 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
                 "family": design["family"],
                 "along": along,
                 "wave": [toward * p, q],
+                "phase": [0, 1],
                 "amplitude": int(design["amplitude"]),
                 "top": {along: [source, source], across: [first, last], "z": [0, 0]},
                 "edge": {along: int(design["edge_along"]), across: int(design["edge_across"]), "z": 0},

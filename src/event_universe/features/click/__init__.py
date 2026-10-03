@@ -7,6 +7,7 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import NO_READ, division_fixed_point, division_forward, form_term, rule3
 
 SCALE_OF = 2  # the giving's reference scale, the count's wall times itself: its rounding below one level
@@ -63,7 +64,7 @@ def rest_of(hole: Hole, numerator: int, wall_term: int, wall: int) -> int:
     if rest <= 0:
         return int(division_forward(numerator, wall, 0)[0])
     middle, gap = numerator + wall_term, numerator - wall_term  # `wall_term` the step's own w x before
-    square = gap * gap - 2 * 2 * wall * rest
+    square = gap * gap - 2 * wall * 2 * rest  # the quadratic formula's b^2 - 4 a c, the 4 as 2 x 2
     if square < 0:
         return int(division_forward(middle, 2 * wall, 0)[0])
     root = division_fixed_point(square)
@@ -246,7 +247,13 @@ def transverse_cosine(width: int, unit: int) -> int:
             lower = middle
         else:
             upper = middle
-    return rotated(unit, int(division_forward(lower, 2, 0)[0]), lower, unit, 3)[2]
+    seeds = 2  # the recurrence's two seeds; the level after them is the cosine's
+    return rotated(unit, int(division_forward(lower, 2, 0)[0]), lower, unit, seeds + 1)[seeds]
+
+
+def below_the_band(num: int, den: int) -> bool:
+    """Whether a resonance [num, den] lies below the width-one guide's band, no axis carrying the quantum: den cos k = (PORTS num - (PORTS - SIDES) den) div SIDES below -den, that is PORTS num below (PORTS - 2 SIDES) den (the guide of `giving.radiated_total`; the mathematician's 221)."""
+    return PORTS * num < (PORTS - SIDES - SIDES) * den
 
 
 def along_cosine(
@@ -255,7 +262,7 @@ def along_cosine(
     """The doubled cosine 2 unit cos k_z of a packet's wave number along its axis, from the light family's band with the transverse mode of its width (the mathematician's 224, #1572 comment 5966081562, the advisor's second, 5966129376, two hands): cos Omega = (num_l / (3 den_l)) (cos k_z + 2 cos k_perp) with k_perp = pi / (width + 1) the lowest mode of the top-hat across, so 2 unit cos k_z = (6 unit den_l num) div (num_l den) - 2 x (2 unit cos k_perp), the two transverse axes each at the doubled cosine, every cosine at the unit by the rotation act; None where the width cannot carry Omega, cos k_z not strictly inside (-1, 1) (the band's edge k_z = 0, a wave of no wave number, refused with the outside; the top-hat's spectrum spreads the frequency by about (num_l / (3 den_l)) k_perp^2 / sin Omega, the open board's tolerance)."""
     (num_l, den_l), (num, den) = light, resonance
     across = 2 * transverse_cosine(width, unit)  # 2 unit cos k_perp, one transverse axis
-    doubled = int(division_forward(6 * unit * den_l * num, num_l * den, 0)[0]) - 2 * across
+    doubled = int(division_forward(PORTS * unit * den_l * num, num_l * den, 0)[0]) - (AXES - 1) * across
     return doubled if -2 * unit < doubled < 2 * unit else None
 
 

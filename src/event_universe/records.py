@@ -121,7 +121,7 @@ def write_sources(
 ) -> list[Any]:
     """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's 70, #1572 comment 5935615659: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     family = families[held]
-    intervals = 1 if family.wronskian else 2
+    intervals = paces.WRONSKIAN_POWER if family.wronskian else paces.COUNT_POWER
     found: list[Any] = []
     for row in range(family.records):
         sources = row_sources(families, held, row)

@@ -38,6 +38,7 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
             "family": design["family"],
             "along": "x",
             "wave": [sign * p, q],
+            "phase": [0, 1],
             "amplitude": int(design["amplitude"]),
             "top": {"x": [source, source], "y": [0, 0], "z": [0, 0]},
             "edge": {"x": int(design["edge_along"]), "y": 0, "z": 0},

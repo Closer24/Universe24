@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe import node
+from event_universe.core.ports import PORTS, SIDES
 from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features.click import (
     SCALE_OF,
@@ -80,10 +81,10 @@ def given_quantum(board: GameBoard, item: Item) -> None:
 
 
 def radiated_total(action: int, resonance: tuple[int, int]) -> int:
-    """The total of the squared amplitudes S = SUM_t A_t^2 of a source in time laying one quantum (the mathematician's 245, #1572 comment 5968047484, with the advisor's second, 5968075799, two hands): the source in time puts into the record the form it radiates, not its increments' squares; on a guide of width one a point source at Omega radiates two outgoing waves of amplitude 3 A / (2 sin k), the form (3 / 2) S sin Omega / sin k, so one quantum is laid at S = (2 / 3) T sin k, k the guide's wave number at the resonance for massless light in a width-one guide, cos k = (3 num - 2 den) / den; in integers the root on the large number, isqrt((2 T div 3)^2 (den^2 - (3 num - 2 den)^2) div den^2), the fixed point of the division act, (2 / 3) T exactly at [2, 3] (where the invariant's S = T / (2 sin Omega) = 0.671 T already read one quantum within the rounding), 0.533 T at [4, 5] and 0.467 T at [9, 10], where the invariant's S read 1.36 and 2.41 quanta on the chain; on a guide of width w the sum over its transverse modes with their k and weights at the Node, and on the open board the packet lay, both by name and not built."""
+    """The total of the squared amplitudes S = SUM_t A_t^2 of a source in time laying one quantum (ALGEBRA.md, The giving: one quantum is laid at SUM A_t^2 = (2 / 3) T sin k, the law's line this function reads, closed; the mathematician's 245, #1572 comment 5968047484, with the advisor's second, 5968075799, two hands; the integers written from the Ports' names: on the width-one guide the four folded reads fall on the Node itself and two Ports stay open, so den cos k = (6 num - 4 den) / 2 = 3 num - 2 den and the two outgoing waves carry 2 T over Rule3's 3 den): the source in time puts into the record the form it radiates, not its increments' squares; on a guide of width one a point source at Omega radiates two outgoing waves of amplitude 3 A / (2 sin k), the form (3 / 2) S sin Omega / sin k, so one quantum is laid at S = (2 / 3) T sin k, k the guide's wave number at the resonance for massless light in a width-one guide, cos k = (3 num - 2 den) / den; in integers the root on the large number, isqrt((2 T div 3)^2 (den^2 - (3 num - 2 den)^2) div den^2), the fixed point of the division act, (2 / 3) T exactly at [2, 3] (where the invariant's S = T / (2 sin Omega) = 0.671 T already read one quantum within the rounding), 0.533 T at [4, 5] and 0.467 T at [9, 10], where the invariant's S read 1.36 and 2.41 quanta on the chain; on a guide of width w the sum over its transverse modes with their k and weights at the Node, and on the open board the packet lay, both by name and not built."""
     num, den = resonance
-    guide = 3 * num - 2 * den  # den cos k, the guide's wave number at the resonance
-    third = division_forward(2 * action, 3, 0)[0]  # 2 T div 3
+    guide = division_forward(PORTS * num - (PORTS - SIDES) * den, SIDES, 0)[0]  # den cos k on the guide
+    third = division_forward(SIDES * action, 3, 0)[0]  # 2 T div 3: the two open Ports over Rule3's 3 den
     return division_fixed_point(
         int(division_forward(third * third * (den * den - guide * guide), den * den, 0)[0])
     )

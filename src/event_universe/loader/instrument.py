@@ -6,7 +6,7 @@ from dataclasses import dataclass, replace
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
-from event_universe.features.click import SCALE_OF, along_cosine, envelope, line_total
+from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import integer, keyed
 
@@ -297,7 +297,7 @@ def rates_of(
                 "between them declares the resonance the light is born at"
             )
         num, den = between[0].resonance
-        if 3 * num < den:  # cos Omega below 1 / 3: no axis carries the quantum (the mathematician's 221)
+        if below_the_band(num, den):  # the guide's cos k below -1 (the mathematician's 221)
             raise ValueError(
                 f"{label}[{index}] gives at the resonance [{num}, {den}], above the axis band's top (cos Omega "
                 "below 1 / 3): no axis carries the quantum, and the diagonals' lay is not built"

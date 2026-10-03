@@ -8,11 +8,8 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.ports import Wrap, arrival
+from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
 from event_universe.node import Record
-
-PORTS = tuple((axis, side) for axis in range(3) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
-
 
 MEASUREMENT, DIAGNOSTIC = (
     "NODEREADER",
@@ -129,10 +126,9 @@ def credit(
     before: str | None = None,
     taken: str | None = None,
     given: str | None = None,
-    quantum: bool = True,
 ) -> dict[str, object]:
     """The credit line, the one click line kind of every reader (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; features/click), labelled NODEREADER, the experiment's reading and nothing else (the owner's word of 2026-10-03: we read only the node_reader's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record: the region's credited record, or the clicking record's own for a record declared a reader), the reader credited or clicking by name (a declared region's, or `body n` for a record declared a reader, by its number in the world's order), the window [first, last] it was drawn over in the board's intervals, `proper`, the reader's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's ticks, `credit.clocked`, `meeting.clocked`; the board's `tick` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the reader's event clock, the part before and after where the record has parts (`before` and `realised` by their declared names for a record's taking, giving or probe's click; for a region's credit of a record of several parts `realised` is the port realised with the parts `kept`, the others ended; None for one part), the count moved (one quantum; 0 at the null window's re-lay) and the count left in the books of the record moved (the credited record's; the family `taken` from or `given` to for a record's click; None where none), the count conserved and read by the credit, and the families exchanged, `taken` (the arriving family whose quantum was taken, or the probe's at its click) and `given` (the light a whole quantum was given to, or the probe's given back), None where none; no Node (the owner's word of 2026-10-02: the reader writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `lay` and `face` lines, the host's tool's). The null window's re-lay that changed a level writes the same line labelled GAMEBOARD (no `quantum` passed, no measurement), the levels laid in the `lay` lines beside it."""
-    label = MEASUREMENT if quantum else DIAGNOSTIC
+    label = MEASUREMENT if count else DIAGNOSTIC  # the null window's line (count 0) is the board's
     line = dict(zip(REPORT_KEYS, (CREDIT, label, tick, family, node_reader), strict=True))
     own = (window, proper, windows, before, realised, kept, count, left, taken, given)
     line.update(zip(CREDIT_KEYS, own, strict=True))
@@ -222,7 +218,7 @@ def front(
     """Per Port, the Nodes of the region at which that Port is a front boundary Port of the instrument: it leads in from a Node of the declared board outside the instrument (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
     return [
         nodes & ~arrival(instrument, axis, side, wrap, True) & arrival(declared, axis, side, wrap, False)
-        for axis, side in PORTS
+        for axis, side in PORT_SIDES
     ]
 
 
@@ -237,7 +233,7 @@ def region_of(node_reader: NodeReader, body_nodes: Callable[[int], np.ndarray]) 
 def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarray:
     """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per node_reader and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the node_reader's report per boundary Node, the shares of the instrument's draw of the one Node it writes (features/click)."""
     seen: Any = 0
-    for port in range(len(PORTS)):
+    for port in range(PORTS):
         seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
     return np.asarray(seen)
 

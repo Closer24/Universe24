@@ -23,7 +23,8 @@
     ],
     "level_weight": 1000000,
     "write_weight": 1,
-    "rest": 0
+    "rest": 0,
+    "act": "pace"
    }
   },
   {
@@ -41,7 +42,8 @@
      "wronskian"
     ],
     "level_weight": 1,
-    "write_weight": 1
+    "write_weight": 1,
+    "act": "pace"
    }
   },
   {
@@ -59,7 +61,8 @@
      "form"
     ],
     "level_weight": 1000000,
-    "write_weight": 1
+    "write_weight": 1,
+    "act": "pace"
    }
   },
   {

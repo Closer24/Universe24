@@ -90,7 +90,7 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
 SLIT = dict(shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, ticks=24)
 SLIT.update(universe="u.json", engine="e.json", bodies=[], node_readers=[])
 SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
-PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "amplitude": 1328}
+PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "phase": [0, 1], "amplitude": 1328}
 PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
 
 

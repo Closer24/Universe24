@@ -4,11 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from event_universe.core.ports import PORTS
+
 # the rule's reads, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij on
 # the Link to that neighbour; the arrivals through the same Ports; integers or the loop's integer arrays
 Reads = tuple[Any, ...]
 
-PORTS = 6  # a Node's six Ports, the three axes twice (Rule3's 6)
 NO_READ: tuple[int, ...] = (0,) * PORTS
 
 

@@ -51,6 +51,7 @@ def world_of(design: dict, amplitude: int) -> dict:
             "family": design["light"]["family"],
             "along": "x",
             "wave": [sign, design["light"]["quarters"]],
+            "phase": [0, 1],
             "amplitude": amplitude,
             "top": {"x": [centre[k], centre[k]], "y": [0, 0], "z": [0, 0]},
             "edge": {"x": edge, "y": 0, "z": 0},

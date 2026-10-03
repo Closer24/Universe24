@@ -185,7 +185,7 @@ def reported(
     books: NodeBooks,
     parts: tuple[int, int],
     exchanged: tuple[int | None, int | None],
-    quantum: bool = True,
+    count: int = 1,
 ) -> None:
     """The click line of a record's click (`reports.credit`, the one click line kind of every reader; ALGEBRA.md, The NodeReader is one declaration kind for every experiment: never a Node): the reader `body n` by its number, the `parts` realised and left by their declared names (`realised` the part after, `before` the part before), the families `exchanged`, the one taken from and the one given to (None where none), the count moved, 1 for a click and 0 for the null window's write, the count left in the books of the family exchanged (None where none), the window's intervals [first, last], the body's own proper time at the close and the index of the window closed (its books' clock and windows); labelled the node_reader's where a `quantum` passed and a diagnostic for the null window's write; the Node written stands in the `lay` and `face` lines beside it and here nowhere."""
     if board.observer is None:
@@ -206,12 +206,11 @@ def reported(
         books.windows,
         after,
         None,
-        int(quantum),
+        count,
         left,
         before,
         taken,
         light,
-        quantum,
     )
     board.observer(line)
 

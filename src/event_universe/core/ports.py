@@ -4,6 +4,11 @@ from __future__ import annotations
 
 from typing import Any, NamedTuple
 
+AXES = 3  # the lattice's three axes
+SIDES = 2  # the two Ports of one axis, +a and -a
+PORTS = AXES * SIDES  # a Node's six Ports, the one definition of Rule3's 6
+PORT_SIDES = tuple((axis, side) for axis in range(AXES) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
+
 
 class Wrap(NamedTuple):
     """The board's face rule: which of the three axes wrap (the others read 0 beyond their two faces), and the Nodes declared beyond the board inside it (`beyond`, a mask over the GameBoard, None where the file declares none): a Node beyond the board reads 0 through every Port and is read as 0 through every Port, so no level, current or source crosses its Links."""
