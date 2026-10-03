@@ -4,20 +4,12 @@ import argparse
 import ast
 import io
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-# These consumers build resource paths at runtime rather than importing modules.
-# Every row names a kept test; main() still skips a selected test that does not exist.
-RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
-    # The registers, worlds and generators a living test reads by path (the ray law's
-    # rows were deleted with their tests on 2026-09-26, docs/CANCELLED_WORLDS.md).
-    # The law document's words and links (#1198, gate 5).
-}
-
-
 EVERY_PULL_REQUEST = Path(__file__).with_name("every_pull_request.txt")
 
 
@@ -34,6 +26,15 @@ SECONDS = Path(__file__).with_name("test_seconds.json")
 SUITE_SHARDS = 5
 UNRECORDED_SECONDS = 5.0
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
+# the ratchets against the merge base (CHECK_BASE, the `--base` revision), each one script of
+# tools/ run by its path and failing with its own message: on every selection, with --full and
+# in the lint shard
+RATCHETS = [
+    ["tools/engine_gates.py"],
+    ["tools/record_code_shape.py"],
+    ["tools/tests_shape.py"],
+    ["tools/ownership.py"],
+]
 
 
 def balanced(seconds, count):
@@ -235,7 +236,6 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
-        tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.startswith("src/") and path.endswith(".py"):
             # The algebra gate reads the physical modules by their path.
             tests.add("tests/test_integer_algebra.py")
@@ -267,7 +267,9 @@ def select(changed, sources):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--base", default="origin/main", help="Compare against the merge base of this Git revision"
+        "--base",
+        default=os.environ.get("CHECK_BASE") or "origin/main",
+        help="Compare against the merge base of this Git revision (CHECK_BASE, else origin/main)",
     )
     parser.add_argument(
         "--tests", nargs="*", default=[], help="Additional related pytest paths or node IDs"
@@ -294,18 +296,13 @@ def main():
         if not (ROOT / target.split("::")[0]).exists():
             parser.error(f"additional test target does not exist: {target}")
     if args.shard:
-        targets = shards()[args.shard]  # the lint runs in the lightest part, the last
-        commands = (LINT if args.shard == list(shards())[-1] else []) + [
+        targets = shards()[args.shard]  # the lint and the ratchets run in the lightest part, the last
+        commands = (LINT + RATCHETS if args.shard == list(shards())[-1] else []) + [
             ["pytest", "-n", "auto", *targets, "--junitxml=artifacts/junit.xml"]
         ]
         changed = []
     elif args.full:
-        commands = [
-            ["ruff", "check", "."],
-            ["ruff", "format", "--check", "."],
-            ["mypy"],
-            ["pytest", "-n", "auto", "--junitxml=artifacts/junit.xml"],
-        ]
+        commands = [*LINT, *RATCHETS, ["pytest", "-n", "auto", "--junitxml=artifacts/junit.xml"]]
         changed = []
     else:
         base = git("merge-base", args.base, "HEAD")
@@ -335,6 +332,8 @@ def main():
             commands += [["ruff", "check", *python], ["ruff", "format", "--check", *python]]
         if typed:
             commands.append(["mypy", "--follow-imports=silent", *typed])
+        if changed:
+            commands += RATCHETS  # the gates every pull request runs, whatever it changes
         if tests:
             commands.append(["pytest", "-n", "auto", *tests, "--junitxml=artifacts/junit.xml"])
         if {"pyproject.toml", "MANIFEST.in"} & set(changed):
@@ -349,8 +348,15 @@ def main():
         report_path = ROOT / "artifacts/check-scope.json"
         report_path.parent.mkdir(exist_ok=True)
         report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        environment = {**os.environ, "CHECK_BASE": args.base}
         for command in commands:
-            subprocess.run([sys.executable, "-m", *command], cwd=ROOT, check=True)
+            # a script of tools/ runs by its path, a package by its module name
+            run = (
+                [sys.executable, *command]
+                if command[0].endswith(".py")
+                else [sys.executable, "-m", *command]
+            )
+            subprocess.run(run, cwd=ROOT, env=environment, check=True)
 
 
 if __name__ == "__main__":

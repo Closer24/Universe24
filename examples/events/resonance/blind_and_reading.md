@@ -402,3 +402,5 @@ against main's 37 (0.8 standard errors of 100 trials, within its statistics), th
 100 unchanged, its output identical line for line. What moved is recorded, not adjusted: the taker reads
 the born quantum, whose lay changed from 0.671 T to 0.667 T at [2, 3] on this branch, and its hole at
 the Node is the quadratic factor's where the share there exceeds W_rec.
+
+The design's `seeds` stay the 100 of the first read; the 480 of this re-read are the re-read's own (`--seeds 480`), a reading beside the design and no change of it.
