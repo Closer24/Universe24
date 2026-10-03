@@ -54,3 +54,18 @@ number below is the reader's, a GameBoard reading unless named a detector's line
 
 Books at the end (a GameBoard diagnostic): `proton` share 576,450,978, 1 quantum, drift 535,104,
 pace 5,996, no frozen Node; `charge` share 21,708,120, 0 quanta, drift 21,708,120, pace 5,996.
+
+## The two hands on the reading (2026-10-03, after the run; the blind above stands as written)
+
+The advisor (#1572 comment 5964484844): (1) the period-4 cycle holds to the rounding of S A over w,
+the body reading its own well (cos omega = 1 - (p_0 / Gamma)^2 = 3.3 x 10^-4), exact to the bit at the
+vacuum's paces alone, the law's own and not a defect; (2) a count-1 charge writes 1 / (2 E_s) of a
+level per interval, so its Poisson rest in whole levels rounds to 0 and the carried write radiates a
+staircase: a finding by name against the holder's whole-level unit, the blind's "one unit" wrong for
+this file (the remedies are the morning's: his finer unit F = 2^7, the mathematician's write weight 2
+at count 1); (3) the law's lay 2 A^2 sin omega = T and the engine's lay by the share coincide only at
+pi / 2; lay by the law's line and report the share beside the count. The mathematician (#1572 comment
+5964520368, item 3) corrects (3): at one Node the lay is by the count, A^2 = T / 2 for any open-Link
+family, the share then 1; A^2 = T / (2 sin Omega) is a packet's amplitude and at one Node reads the
+share 1 / sin Omega; only a packet (several Nodes along the emission's direction) carries a frequency;
+the frozen taker (R = 0) unchanged. The advisor's second on the correction is asked.

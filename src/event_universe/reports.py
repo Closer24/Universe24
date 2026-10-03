@@ -18,7 +18,7 @@ MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
     "GAMEBOARD",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE, LAY, FACE = (
+CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE, LAY, FACE, CONVERSION = (
     "click",
     "field",
     "parts",
@@ -27,13 +27,16 @@ CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE, LAY, FACE = (
     "erasure",
     "lay",
     "face",
-)  # the output's eight lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell, one line laid at one Node, one value presented at one Port
+    "conversion",
+)  # the output's nine lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell, one line laid at one Node, one value presented at one Port, a record converted whole at its Node
 REPORT_KEYS = ("event", "label", "tick", "family", "detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 CREDIT_KEYS = ("window", "realised", "kept", "count", "left", "node")  # the credit line's own keys
 JUMP_OWN = ("left", "taken", "given")  # the jump line's own words beside the credit's
 ERASURE_KEYS = ("origin", "distance", "nodes", "taken")  # the erasure line's own keys
 JUMP_KEYS = ("window", "realised", *JUMP_OWN, "node")  # the jump line's keys
+INTO = "into"  # the conversion line's own key, the families of the records out
+CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
 LINE, BEFORE, AFTER, PORT, VALUE = ("line", "before", "after", "port", "value")  # the two acts' words
 LAY_KEYS = (
     LINE,
@@ -61,6 +64,7 @@ OUTPUT = (
     *LAY_KEYS[:3],
     PORT,
     VALUE,
+    INTO,
 )  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
@@ -137,6 +141,18 @@ def jump(
     line = dict(zip(REPORT_KEYS, (JUMP, label, tick, family, f"{MEASURED} {measured}"), strict=True))
     written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     line.update(zip(JUMP_KEYS, (window, realised, left, taken, given, written), strict=True))
+    return line
+
+
+def conversion(
+    tick: int, family: str, measured: int, window: list[int], into: list[str], node: list[int]
+) -> dict[str, object]:
+    """The conversion line, the click of a record converted whole at its one Node (the fifth list of the act, ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 and 5964082980 on the table and the rate, 5964520368 and 5964754600 on the lay; src/event_universe/conversion.py), labelled DETECTOR: the interval, the record's family (the record in, its count down by one), the instrument by its number among the world's `measured`, the window [first, last] drawn over and `into`, the families of the records out in the table's order, each up by one whole quantum laid at the Node by the count; beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the lay lines of the write beside it."""
+    line = dict(
+        zip(REPORT_KEYS, (CONVERSION, MEASUREMENT, tick, family, f"{MEASURED} {measured}"), strict=True)
+    )
+    written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
+    line.update(zip(CONVERSION_KEYS, (window, into, written), strict=True))
     return line
 
 

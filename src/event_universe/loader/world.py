@@ -108,7 +108,7 @@ def bodies_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
@@ -143,7 +143,7 @@ def bodies_of(
             nodes.append(node)
             counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
         if parted:
-            parts = node_instrument_of(body, label, families[family], family, quanta, sum(counts))
+            parts = node_instrument_of(body, label, families, family, quanta, sum(counts))
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed = laid.index(entry)

@@ -13,7 +13,7 @@ from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features import rotation
-from event_universe.features.click import Face, born, drawn, standing
+from event_universe.features.click import Face, born, drawn, laid_pairs, standing
 from event_universe.loader.derived import count_wall, row_of
 from event_universe.loader.instrument import Instrument, NodeInstrument
 from event_universe.loader.keys import Node
@@ -93,18 +93,18 @@ def cut(board: GameBoard, index: int) -> node.Factors | None:
 def relaid(
     board: GameBoard, books: NodeBooks, part: int, count: int, phase: tuple[int, int], sense: int
 ) -> None:
-    """The lay of one part of the record at the instrument's one Node (features/click, `standing`; the owner's word of 2026-10-03, the body is at a Node; the mathematician's 174 (a) and (b)): the part's two lines at the Node set to the levels of `count` quanta of the family's pair standing there in the direction `phase` and the sense given, the level before the level now turned by the rest rotation, the remainder at the lay's origin, the half wall of the rule the record steps by; every other Node as it stands."""
+    """The lay of one part of the record at the instrument's one Node (features/click, `standing`; the owner's word of 2026-10-03, the body is at a Node; the mathematician's 174 (a) and (b)): the part's two lines at the Node set to the levels of `count` quanta of the family's pair standing there in the direction `phase` and the sense given, the level before the level now turned by the rest rotation, the remainder at the lay's origin, the half wall of the rule the record steps by; every other Node as it stands. A record converted whole (its declaration's `conversions`, src/event_universe/conversion.py) is laid whole instead, every line of its record at the Node by the invariant at its declared sense (features/click, `laid_pairs`, the two hands' lay of 2026-10-03; at the count 0 every line 0, the hole), the phase its lay's own."""
     family, state = board.families[books.index], board.states[books.index]
-    gamma, unit = board.world.node_clock, board.unit
-    (re, im), (re_before, im_before) = standing(
-        count, board.world.quantum_action, family.pair, phase, sense
-    )
+    gamma, unit, action = board.world.node_clock, board.unit, board.world.quantum_action
+    if books.declared.conversions:
+        pairs = laid_pairs(count, action, family.pair, books.declared.sense, family.plane, family.laid)
+    else:
+        (re, im), (re_before, im_before) = standing(count, action, family.pair, phase, sense)
+        pairs = [(re, re_before), (im, im_before)]
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
     first = node.record_slice(family, books.record).start + part * family.width
     at = board.mask((books.at,))
-    for number, (now, before) in zip(
-        (first, first + 1), ((re, re_before), (im, im_before)), strict=True
-    ):
+    for number, (now, before) in zip(range(first, first + len(pairs)), pairs, strict=True):
         line = state.lines[number]
         state.lines[number] = node.Record(
             np.where(at, now, line.now),
@@ -127,7 +127,7 @@ def levels_at(board: GameBoard, books: NodeBooks, part: int) -> tuple[int, int, 
     family, state = board.families[books.index], board.states[books.index]
     first = node.record_slice(family, books.record).start + part * family.width
     at = tuple(np.add(books.at, board.offset))
-    re, im = state.lines[first], state.lines[first + 1]
+    re, im = state.lines[first], state.lines[first + 1 if family.plane else first]
     return int(re.now[at]), int(im.now[at]), int(re.before[at]), int(im.before[at])
 
 
@@ -159,13 +159,14 @@ def turned_labels(board: GameBoard, books: NodeBooks) -> None:
 
 @dataclass(frozen=True)
 class Item:
-    """One entry of a click's list (the mathematician's 192 with the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, one generic implementation the detector operates): the record by its family and, for a record declared an instrument at one Node, its number among `measured` (None for a record spread over the board), the part (None for every line of a spread record, no line alone), the change of its count, +1, -1 or 0 (the null window moves no count), and the Nodes written at, the file's coordinates."""
+    """One entry of a click's list (the mathematician's 192 with the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, one generic implementation the detector operates): the record by its family and, for a record declared an instrument at one Node, its number among `measured` (None for a record spread over the board), the part (None for every line of a spread record, no line alone), the change of its count, +1, -1 or 0 (the null window moves no count), the Nodes written at, the file's coordinates, and for a spread record given whole quanta the pair its lay stands at where the list names one (the conversion's records out at their family's massless pair [den, den], the lay by the count at one Node, the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600; None, the born rotation of the giving's parts, otherwise)."""
 
     family: int
     measured: int | None
     part: int | None
     delta: int
     nodes: tuple[Node, ...]
+    pair: tuple[int, int] | None = None
 
 
 Lists = list[list[Item]]  # the outcomes of one click, each the list written where it is drawn
@@ -175,7 +176,7 @@ Phase = tuple[tuple[int, int], int]  # a part's direction (re, im) and its sense
 def click(
     board: GameBoard, state: int, generator: Instrument | None, weights: list[int], outcomes: Lists
 ) -> tuple[int, int]:
-    """The one click act, the detector's, of every list alike (the owner's words of 2026-10-03, 03:22 and 03:24 Israel; the mathematician's 192 and 197, the advisor's second, two hands): with more than one outcome, one draw by the weights with the generator from `state` (features/click, `drawn`, the modulus 2^width; with one outcome no draw and the state untouched), then the drawn outcome's list written (`written`); returns the outcome's index and the generator's state after. The five lists through it: the region detector's credit (the arriving record at the Nodes drawn, -1), the taking (the arriving record -1, the present record's part entered +1 and left -1), the giving (the part left -1, the part entered +1, light's record +1), the null window (the part the record stands in at 0) and the conversion (the record in at -1 and records of other families out at +1, declared in a world's table and rate, no code path of its own); no family name and no branch on a record's lines or dimension anywhere in it."""
+    """The one click act, the detector's, of every list alike (the owner's words of 2026-10-03, 03:22 and 03:24 Israel; the mathematician's 192 and 197, the advisor's second, two hands): with more than one outcome, one draw by the weights with the generator from `state` (features/click, `drawn`, the modulus 2^width; with one outcome no draw and the state untouched), then the drawn outcome's list written (`written`); returns the outcome's index and the generator's state after. The five lists through it: the region detector's credit (the arriving record at the Nodes drawn, -1), the taking (the arriving record -1, the present record's part entered +1 and left -1), the giving (the part left -1, the part entered +1, light's record +1), the null window (the part the record stands in at 0) and the conversion (the record whole at -1 at its Node and records of other families out at +1 there, each one whole quantum laid by the count at its family's massless pair, declared in a world's table and rate and drawn at the rate, src/event_universe/conversion.py); no family name and no branch on a record's lines or dimension anywhere in it."""
     pick, modulus = 0, board.world.width + 1
     if len(outcomes) > 1:
         assert generator is not None  # a draw among outcomes is the declared generator's
@@ -248,11 +249,13 @@ def faced(board: GameBoard, item: Item) -> None:
 
 
 def given_quantum(board: GameBoard, item: Item) -> None:
-    """A spread record given whole quanta at the Nodes named, the lay (features/click, `standing`): the levels of `delta` quanta standing there at the born rotation, the resonance omega_e - omega_g of the giving parts' pairs (`born`, the one place of the choice), 0 for the parts of one pair, the massless pair, the two levels alike, A^2 = count T div 2 added to the record's first line, the free row, its remainder at the lay's origin, the half wall; the record's count in the books up by the change."""
+    """A spread record given whole quanta at the Nodes named, the lay (features/click, `standing`): the levels of `delta` quanta standing there at the born rotation, the resonance omega_e - omega_g of the giving parts' pairs (`born`, the one place of the choice), 0 for the parts of one pair, the massless pair, the two levels alike, A^2 = count T div 2 added to the record's first line, the free row, its remainder at the lay's origin, the half wall; the record's count in the books up by the change; where the item names the lay's pair, the conversion's records out at their family's massless pair [den, den], the same lay by the count, A^2 = count T div 2 whatever the family (the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum)."""
     family, state = board.families[item.family], board.states[item.family]
     gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
-    pair, action = born(family.pair, family.pair), board.world.quantum_action  # 0 for one pair
-    (level, _im), (before, _im_before) = standing(item.delta, action, pair, (1, 0), 1)
+    pair = item.pair if item.pair is not None else born(family.pair, family.pair)  # 0 for one pair
+    (level, _im), (before, _im_before) = standing(
+        item.delta, board.world.quantum_action, pair, (1, 0), 1
+    )
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
     line = state.lines[0]
     now, was = line.now + np.where(at, level, 0), line.before + np.where(at, before, 0)
@@ -316,23 +319,16 @@ def reported(
     names, families = books.declared.names, board.families
     window = [board.tick - books.elapsed + 1, board.tick]
     taken, light = (families[k].name if k is not None else None for k in exchanged)
-    realised, left, name, at = (
-        names[parts[0]],
-        names[parts[1]],
-        families[books.index].name,
-        list(books.at),
-    )
-    board.observer(
-        jump(board.tick, name, books.number, window, realised, left, taken, light, at, quantum)
-    )
+    words = (names[parts[0]], names[parts[1]], taken, light)
+    name, at = families[books.index].name, list(books.at)
+    board.observer(jump(board.tick, name, books.number, window, *words, at, quantum))
 
 
 def gave(board: GameBoard, books: NodeBooks) -> bool:
     """The giving drawn at a record's window's end (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act; the advisor's clause 5; the mathematician's 174 (c), two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid at the born rotation, the resonance of the two parts of one pair being 0, light's own; `click`) and nothing, the weights the window against the lifetime's rest in the labels' unit (the declared floor; the beat's current of a one-part record at one Node is 0, so the floor alone is the rate), the record's own generator; the first giving drawn is taken and the window ends; one jump line."""
     assert books.declared.draw is not None
     window = books.declared.draw.window
-    wall = count_wall(board.families[books.index], board.world.quantum_action)
-    unit = wall * wall
+    unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             span = window if window <= rate.lifetime else rate.lifetime
@@ -381,19 +377,15 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
 
 
 def jumped(board: GameBoard) -> None:
-    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at the windows' length the draws and the writes, the givings first record by record (`gave`), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record that neither gave nor took (`null_window`), every write the one act's (`click`); the windows begun again."""
+    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at the windows' length the draws and the writes, the givings first record by record (`gave`), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record of several parts that neither gave nor took (`null_window`; a record of one part reads no part of itself and has none; a record converted whole is drawn after the jumps, src/event_universe/conversion.py), every write the one act's (`click`); the windows begun again."""
     for books in board.credit.bodies:
         turned_labels(board, books)
         books.elapsed += 1
-    closing = [
-        books
-        for books in board.credit.bodies
-        if books.declared.draw is not None and books.elapsed == books.declared.draw.window
-    ]
+    closing = [b for b in board.credit.bodies if b.declared.draw and b.elapsed == b.declared.draw.window]
     quiet = [books for books in closing if not gave(board, books)]
     done = took(board, quiet)
     for books in quiet:
-        if books.number not in done:
+        if books.number not in done and len(books.counts) > 1:  # a record of one part reads none
             null_window(board, books)
     for books in closing:
         books.elapsed = 0
