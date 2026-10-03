@@ -255,6 +255,72 @@ the tree holding main's dark grain (the section above), the blinds untouched:
    act (one shear of the window's sum, before the dark grain) read 22 and 0 of 100; its numbers are
    replaced by this section's, read on the tree that ships.
 
+## The detuned taker re-read at 480 seeds, the blind before the run (branch detuned-reread, 2026-10-03, 09:06 UTC)
+
+The mathematician's 240, item 5 (#1572 comment 5967367372, under the owner's word of the same comment,
+"keep arranging everything; there is no freeze"): the detuned taker's 1 of 100 on the resonant act (item
+5 of the section above, named at the first reading as the row to re-read at 480 seeds, the count above
+the blind by the counter-rotating residue's order) is re-read at 480 seeds, the hands' blind written here
+before the run and never touched after; examples only, no engine change. The run: `read_world.py
+--seeds 480` over both worlds of the design on the tree holding main at 7033a6aa, the seeds 1 to 480 with
+every record's generator at its own state from the seed as before (the design's 100 are the first 100 of
+them); a taking is the detector's click, `measured 1 e by pulse` on the jump lines labelled DETECTOR; a
+GameBoard reading is a diagnostic and labelled so.
+
+1. The detuned taker at [1, 3]: at most 2 takings in 480 seeds. The hands' number: the window's sum
+   against the two reference records at the declared pair keeps, off resonance, the counter-rotating
+   residue alone, below 2 / W of the resonant sum (ALGEBRA.md, the turn's line and row 14 of the
+   table of the lines; W = 96 the taker's window, 2 / W = 0.021), the share sin^2 of half the turn, so
+   the detuned taker takes only where a late giving leaves the train a few intervals inside the window;
+   the mathematician's bound, 240 item 5: "the counter-rotating residue below 2 / W of the resonant sum
+   predicts at most 2 of 480". Three takings or more is a MISS and a finding by name of the bound, never
+   an adjustment of the blind or of the world.
+2. The resonant taker at [2, 3]: the first reading's share, 37 of 100 = 0.37, over 480 seeds, 177.6
+   takings with the standard error sqrt(480 x 0.37 x 0.63) = 10.6, the band of two standard errors 156
+   to 199; a count outside the band is a MISS and a finding by name.
+3. Beside the blind, no number blind: the first 100 seeds are the first reading's own, their counts read
+   beside the first reading's 37 and 1 as a check of the tree since #1714; the giver's items (the givings
+   within the lifetime and the run, the cosine on the plateau, the count at the span's end) and the
+   giver's taking back of its own light read as before; the standard error of every count c of N is
+   sqrt(c (N - c) / N).
+
+### The reading at 480 seeds on the branch, a diagnostic by name (branch detuned-reread on main at 7033a6aa, 2026-10-03, 09:11 UTC)
+
+A reading on a branch is a diagnostic by name; the experiment's reading is the run on main at the merged
+sha after the squash, which re-reads these numbers and replaces this section's verdicts with its own.
+`PYTHONPATH=src python examples/events/resonance/read_world.py --seeds 480`, both worlds, the seeds 1 to
+480, on the branch's tree (main at 7033a6aa with the reader's one change): 273 seconds for the two worlds
+on one core, the design's own 100 seeds run beside as the check of the tree (58 seconds). The reader's
+`--seeds N` is the one change to the folder's script, reading the seeds 1 to N in place of the design's
+list. The takings are the clicks, the jump lines labelled DETECTOR; the giver's cosine and count are
+GameBoard readings and labelled so.
+
+1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`measured 1 e by pulse` 1), the share 0.0021
+   with the standard error 0.0021 (1.0 taking), against the blind's at most 2. PASS. The one taking is
+   the first reading's own: the design's 100 seeds, run beside, read 1 of 100 as before, so the 380 fresh
+   seeds read 0 of 380. The ratio detuned over resonant is 1 to 155, 0.0065, against the first reading's
+   1 to 37.
+2. The resonant taker at [2, 3]: 155 takings in 480 seeds (`measured 1 e by pulse` 155), the share 0.323
+   with the standard error 0.021 (10.2 takings), against the blind's 177.6 and its band 156 to 199: one
+   taking below the band's floor, 2.1 of the blind's standard errors (10.6) below 177.6. A MISS of the
+   blind's band by one count and a FINDING by name of the blind's form and not of the act: the blind took
+   the first reading's share, 37 of 100, as the exact share and left out that reading's own standard
+   error, 0.048 at 100 seeds; the two readings differ by 0.047, 0.9 of their combined standard error
+   sqrt(0.048^2 + 0.021^2) = 0.052. The first 100 seeds repeat the first reading's 37 of 100; the 380
+   fresh seeds read 118 of 380, 0.311 with the standard error 0.024. The design's coupling stands as the
+   first reading found it, the share sin^2 of half the window's turn with no pi pulse tuned, 0.32 at
+   480 seeds; the blind stands as written.
+3. Beside the blind: the first 100 seeds read 37 and 1 as at the first reading, the givings 59 within the
+   lifetime and 83 within the run, the cosine 0.6682 in 66 of 66, the count 1 in 23 of 23 and 58 of 58,
+   the giver's taking back 1 and 1, so the tree since #1714 reads the first reading number for number on
+   this folder. Over the 480 seeds the giver's items beside the dark grain's chances: 300 givings within
+   the lifetime against 305.3 +/- 10.5 (0.5 deviations below) and 409 within the run against 416.4 +/- 7.4
+   (1.0 below), the same intervals in both worlds; the giving's intervals from 2 to 96, 88 distinct, their
+   mean 33.3; 301 seeds holding the whole span against 309.1 +/- 10.5 (0.8 below); the cosine on the
+   plateau 0.6682 in 316 of 316 seeds read, within the gate 2 / A_far = 0.051; the count at the span's end
+   1 in every seed read, 149 of 149 in the resonant world and 299 of 299 in the detuned one; the giver
+   takes its own light back in 4 of 480 seeds of each world (`measured 0 e by pulse` 4; the first 100's
+   1), the one-in-flight limit not built, as before.
 ## On the source in time's energy, 2026-10-03 (branch partial-hole-quadratic): the blind, written before the build
 
 The finding this answers (Worker HOLE's reading on branch partial-hole, 2026-10-03): a born quantum's
