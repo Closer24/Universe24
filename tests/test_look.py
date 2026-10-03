@@ -18,7 +18,6 @@ BLIND.update(pattern=[0, 1], counts=[1.5, 2], through=10, watch={"4": 2, "0": 1.
 
 
 def shown(world, monkeypatch, at, blind):
-
     class Clicking(RECORD.GameBoard):
         def step(self) -> None:
             super().step()

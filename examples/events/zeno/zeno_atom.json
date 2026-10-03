@@ -1,0 +1,7 @@
+{
+ "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+ "families": [
+  {"name": "atom", "pair": [1, 1299], "dimension": [2, 2], "reads": {}},
+  {"name": "pulse", "pair": [6000, 6000], "reads": {}, "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1, "act": "rotation"}}
+ ]
+}

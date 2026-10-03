@@ -99,3 +99,143 @@ def patterns_of_the_law(
                     else "no record of several parts"
                 )
             )
+
+
+NODE_INSTRUMENT_KEYS = ("parts", "transitions", "rates", "instrument")  # a body as an instrument
+PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count"), ("part", "name", "count")
+TRANSITION_KEYS, RATE_KEYS = ("from", "to", "drive", "weight"), ("from", "to", "lifetime", "gives_to")
+
+
+@dataclass(frozen=True)
+class Transition:
+    """A transition of a record at a Node that is an instrument (ALGEBRA.md, The click writes on the GameBoard (j), the taking click): the part the record leaves, the part it enters, the family whose arriving quantum it takes, by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r)."""
+
+    leaves: int
+    enters: int
+    drive: int
+    weight: int
+
+
+@dataclass(frozen=True)
+class Rate:
+    """A giving of a body as an instrument (the fifth act, the giving click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions."""
+
+    leaves: int
+    enters: int
+    lifetime: int
+    light: int
+
+
+@dataclass(frozen=True)
+class NodeInstrument:
+    """A body as an instrument as the world declares it: its parts' names (the modes' labels), the count in each part at the start, its transitions, its givings and its own draw (the window, the seed and the generator)."""
+
+    names: tuple[str, ...]
+    counts: tuple[int, ...]
+    transitions: tuple[Transition, ...]
+    rates: tuple[Rate, ...]
+    draw: Instrument | None
+
+
+def parts_of(
+    value: object, label: str, parts: int, count: int
+) -> tuple[tuple[str, ...], tuple[int, ...]]:
+    """A body's `parts`: one entry per part of its family in order, each `part` (its position), `name` (its own) and `count` (from 0), optionally `role`, a word read by nothing; the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other); refused by name otherwise."""
+    if not isinstance(value, list) or len(value) != parts:
+        raise ValueError(f"{label} lists one entry per part of the body's family, {parts} parts")
+    names, counts = [], []
+    for index, entry in enumerate(value):
+        part = keyed(entry, f"{label}[{index}]", PART_KEYS, PART_REQUIRED)
+        integer(part["part"], f"{label}[{index}].part", index, index)
+        if not isinstance(part["name"], str) or not part["name"] or part["name"] in names:
+            raise ValueError(f"{label}[{index}].name must be a name of its own, the mode's label")
+        names.append(part["name"])
+        counts.append(integer(part["count"], f"{label}[{index}].count", 0))
+    if sum(counts) != count or sum(1 for c in counts if c) > 1:
+        raise ValueError(
+            f"{label} holds the counts {counts}: the body's count {count} stands in one part at the start, a lay "
+            "in one mode having no amplitude in any other (ALGEBRA.md, The click writes on the GameBoard (j))"
+        )
+    return tuple(names), tuple(counts)
+
+
+def transitions_of(
+    value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int
+) -> tuple[Transition, ...]:
+    """A record's `transitions`: each `from` and `to`, two of its parts' names, `drive`, a family of quanta other than the record's own whose arriving quantum it takes, and `weight` from 1, the coupling the arriving level is read with; refused by name otherwise."""
+    if not isinstance(value, list):
+        raise ValueError(f"{label} must be a list of the body's transitions")
+    found = []
+    for index, entry in enumerate(value):
+        row = keyed(entry, f"{label}[{index}]", TRANSITION_KEYS, TRANSITION_KEYS)
+        leaves, enters = (
+            part_named(row["from"], f"{label}[{index}].from", names),
+            part_named(row["to"], f"{label}[{index}].to", names),
+        )
+        drive = family_named(row["drive"], f"{label}[{index}].drive", quanta, own)
+        found.append(
+            Transition(leaves, enters, drive, integer(row["weight"], f"{label}[{index}].weight", 1))
+        )
+    return tuple(found)
+
+
+def rates_of(
+    value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int
+) -> tuple[Rate, ...]:
+    """A body's `rates`: each `from` and `to`, two of its parts' names, `lifetime` from 1 (the giving at 1 / lifetime per interval, the declared floor) and `gives_to`, the family of quanta other than the body's own on which the given quantum is laid; refused by name otherwise."""
+    if not isinstance(value, list):
+        raise ValueError(f"{label} must be a list of the body's givings")
+    found = []
+    for index, entry in enumerate(value):
+        row = keyed(entry, f"{label}[{index}]", RATE_KEYS, RATE_KEYS)
+        leaves, enters = (
+            part_named(row["from"], f"{label}[{index}].from", names),
+            part_named(row["to"], f"{label}[{index}].to", names),
+        )
+        lifetime = integer(row["lifetime"], f"{label}[{index}].lifetime", 1)
+        found.append(
+            Rate(
+                leaves,
+                enters,
+                lifetime,
+                family_named(row["gives_to"], f"{label}[{index}].gives_to", quanta, own),
+            )
+        )
+    return tuple(found)
+
+
+def part_named(value: object, label: str, names: tuple[str, ...]) -> int:
+    """A part by its declared name, its position; refused by name where no part has it."""
+    if value not in names:
+        raise ValueError(f"{label} names {value!r}, and the body's parts are {list(names)}")
+    return names.index(str(value))
+
+
+def family_named(value: object, label: str, quanta: dict[str, int], own: int) -> int:
+    """A family of quanta by name, not the body's own, its position; refused by name otherwise."""
+    if value not in quanta or quanta[str(value)] == own:
+        raise ValueError(
+            f"{label} names {value!r}: a family of quanta other than the body's own, of {sorted(quanta)}"
+        )
+    return quanta[str(value)]
+
+
+def node_instrument_of(
+    body: dict[str, object], label: str, family: FamilyRule, own: int, quanta: dict[str, int], count: int
+) -> NodeInstrument:
+    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw, `instrument_of`) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; refused by name otherwise."""
+    if "parts" not in body:
+        raise ValueError(
+            f"{label} declares its parts, the modes it is laid in, before any instrument, transition or rate"
+        )
+    if not family.plane or family.parts < 2:
+        raise ValueError(
+            f"{label}: a body laid in its parts is a plane of several parts, and {family.name!r} is not"
+        )
+    names, counts = parts_of(body["parts"], f"{label}.parts", family.parts, count)
+    draw = instrument_of(body["instrument"], f"{label}.instrument") if "instrument" in body else None
+    if draw is None and ("transitions" in body or "rates" in body):
+        raise ValueError(f"{label} declares transitions or rates and no `instrument` to draw them with")
+    transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
+    rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own)
+    return NodeInstrument(names, counts, transitions, rates, draw)

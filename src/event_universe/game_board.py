@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import credit, growth, node, share
+from event_universe import credit, front, growth, meeting, node, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -52,8 +52,10 @@ class GameBoard:
             for index, family in enumerate(self.families)
         ]
         self.origins = [0] * len(self.families)  # the remainder the start gave each held row
-        for record, row in self.laid_rows():
-            if self.families[row.family].quanta:
+        for number, (record, row) in enumerate(self.laid_rows()):
+            if isinstance(row, BodyRow) and row.instrument is not None:
+                meeting.laid_record(self, number, record)
+            elif self.families[row.family].quanta:
                 self.lay(row, record)  # a kick on a holder of the content is laid after the start
         self.start()
         for record, row in self.laid_rows():
@@ -188,9 +190,8 @@ class GameBoard:
         return record_lines(self.families, index, record, self.states[index].lines)
 
     def read(self, index: int, direction: int = 1, record: int = 0) -> tuple[Any, node.Factors]:
-        """A record's read at the interval's start in `direction`: the content and its six Links' factors (`node.read`, every sign row but the record's own)."""
-        gamma, unit = self.world.node_clock, self.unit
-        return node.read(index, self.families, self.states, direction, self.wrap, gamma, unit, record)
+        """A record's read at the interval's start in `direction`: the content and its six Links' factors (`meeting.read`, every sign row but the record's own, the Links the world cuts at 0 among them)."""
+        return meeting.read(self, index, direction, record)
 
     def rulers(self, direction: int) -> Rulers:
         """Every record of quanta's paces at the interval's start in `direction`, the clock and the three axes' paces of its read at every Node (`node.rulers`), the write's factor's rulers for the bookings it sources (ALGEBRA.md, The write per proper volume and per proper interval); read from the held rows' levels the step in `direction` starts from, the same numbers forward and back."""
@@ -248,11 +249,8 @@ class GameBoard:
         return found
 
     def stepped(self, index: int, direction: int) -> tuple[list[node.Record], list[node.Booking]]:
-        """Every record of a family stepped by Rule3 in `direction` with the rule of its own read (from the held rows' levels the step starts from, the Node's content and its six Links' contents, the Node's twice with each Link's own tension, every sign row but the record's own), every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face, a turned record's planes under the rotation (`node.step_records`), with one booking per record its form and its Wronskian are read from."""
-        gamma = self.world.node_clock
-        return node.step_records(
-            index, self.families, self.states, self.wrap, gamma, self.unit, direction
-        )
+        """Every record of a family stepped by Rule3 in `direction` with the rule of its own read (from the held rows' levels the step starts from, the Node's content and its six Links' contents, the Node's twice with each Link's own tension, every sign row but the record's own, the Links the world cuts at 0), every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face, a turned record's planes under the rotation (`meeting.stepped`, `node.step_records`), with one booking per record its form and its Wronskian are read from."""
+        return meeting.stepped(self, index, direction)
 
     def record(self, index: int) -> list[node.Record]:
         """A family's record, the lines its share, its currents, its tension, its form and its Wronskian are read from: every line of a family of quanta (every record's), the time line of a held row of the content, and for a holder of the sign its light, the sum of its rows (`node.light_record`)."""
@@ -305,6 +303,8 @@ class GameBoard:
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses, senses, rulers)
         credit.windowed(self)
+        meeting.jumped(self)
+        front.advanced(self)
 
     def hold(
         self,

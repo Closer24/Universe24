@@ -687,8 +687,8 @@ def designed_quanta(world: Path, bodies: int) -> list[int | None]:
     if design.exists():
         document = json.loads(design.read_text(encoding="utf-8"))
         worlds = cast(dict[str, Any], document.get("worlds", {}))
-        entry = cast(dict[str, Any], worlds.get(world.stem, {}))
-        quanta = entry.get("quanta", document.get("quanta"))
+        entry = worlds.get(world.stem, {})  # a design may name its world in prose alone
+        quanta = (entry if isinstance(entry, dict) else {}).get("quanta", document.get("quanta"))
         if quanta is not None:
             return [int(quanta)] * bodies
     mode = world.with_suffix(".mode.json")
@@ -945,12 +945,17 @@ def pixel_mode(
         *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
-    bodies = cast(list[dict[str, Any]], document.get("measured", []))
+    measured = cast(list[dict[str, Any]], document.get("measured", []))
+    # a body declaring its parts is laid by the engine at its one Node (loader/instrument.py), not here
+    kept = [number for number, body in enumerate(measured) if "parts" not in body]
+    bodies = [measured[number] for number in kept]
     lay = lay_of(document["lay"], "lay") if "lay" in document else None  # the lay by name
     lays: list[tuple[np.ndarray, Pairs, Axis, int]] = []
     zero = np.zeros(shape, dtype=np.int64)
     for number, body in enumerate(bodies):
-        counts, centre, quanta = declared(body, shape, (designed or [None] * len(bodies))[number])
+        counts, centre, quanta = declared(
+            body, shape, (designed or [None] * len(measured))[kept[number]]
+        )
         if bool(counts[beyond].any()):
             raise ValueError(
                 f"measured[{number}] declares a Node beyond the board's inner face: nothing stands there"
