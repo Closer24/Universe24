@@ -110,11 +110,22 @@ def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any) -> int:
     return min(bounds)
 
 
+Correction = tuple[np.ndarray, int]  # a refinement's correction and the scale F it stands at
+
+
 def refined(
-    fine: np.ndarray, reads: Reads, divisor: Any, source: Any, wrap: Wrap, largest: int, iterations: int
-) -> tuple[np.ndarray, int]:
-    """The rest refined to its line within one fine unit at every Node (the law's rest is the static solution of the row's line, ALGEBRA.md, The start; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991, the mathematician's 172 beside it: the floored iteration stops below the line by up to K fine units, `bound_of`, in the board's lowest mode, 137 on the open 25-cube at the massless pair, 9 levels at the row's unit 15 there): the line's residual is read exactly in integers at the stop, rho = SUM over the Ports of read x arrival + source - divisor x b, in [0, divisor) at every Node, the same line is solved for the correction with F rho as its source by the same act to its own stop (`settled` from nothing), delta within K of F times the miss, and the correction is added rounded half up, b + (delta + F div 2) div F; F a power of two, the least at or above 2 K the width admits for the round, else the largest it admits (the act's numerator at most 6 R (2 F B + K) + F |rho| inside half the width's largest integer, B the miss's bound in fine units, K before the first round and 1 + K div F after a round at F), the rounds repeated while F is below 2 K, after which the miss lies in [-1 / 2, 1 / 2 + K / F), within one fine unit; one round on the 25-cube and three on the chain of 128 at the width 63, each round's passes about ln(F K) over 1 - rho (a Richardson refinement in integers, nothing of the law, every number the width's and the board's); refused by name where the width leaves no room for a round."""
+    fine: np.ndarray,
+    reads: Reads,
+    divisor: Any,
+    source: Any,
+    wrap: Wrap,
+    largest: int,
+    iterations: int,
+    seed: Correction | None = None,
+) -> tuple[np.ndarray, int, Correction]:
+    """The rest refined to its line within one fine unit at every Node (the law's rest is the static solution of the row's line, ALGEBRA.md, The start; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991, the mathematician's 172 beside it: the floored iteration stops below the line by up to K fine units, `bound_of`, in the board's lowest mode, 137 on the open 25-cube at the massless pair, 9 levels at the row's unit 15 there): the line's residual is read exactly in integers at the stop, rho = SUM over the Ports of read x arrival + source - divisor x b, in [0, divisor) at every Node, the same line is solved for the correction with F rho as its source by the same act to its own stop (`settled` from nothing), delta within K of F times the miss, and the correction is added rounded half up, b + (delta + F div 2) div F; F a power of two, the least at or above 2 K the width admits for the round, else the largest it admits (the act's numerator at most 6 R (2 F B + K) + F |rho| inside half the width's largest integer, B the miss's bound in fine units, K before the first round and 1 + K div F after a round at F), the rounds repeated while F is below 2 K, after which the miss lies in [-1 / 2, 1 / 2 + K / F), within one fine unit; one round on the 25-cube and three on the chain of 128 at the width 63, each round's passes about ln(F K) over 1 - rho from nothing (a Richardson refinement in integers, nothing of the law, every number the width's and the board's); the first round's correction is returned with its scale and seeds the first round of the next call (`seed`, the pass before's correction brought to this round's scale: the floored stop lies the same K below the line at every pass, so the correction barely moves and the act from it stops in a fraction of the passes, the same fixed-point property at the stop whatever the start); refused by name where the width leaves no room for a round."""
     bound = bound_of(fine, wrap, reads, divisor)
+    found: Correction | None = None
     miss, six = bound, 2 * sum(int(np.asarray(read).max()) for read in reads)  # 6 R at the largest pace
     while True:
         total = rule3(reads, arrivals(fine, wrap), 0, 1, fine, 0, source)[0]  # the numerator, the wall 1
@@ -130,12 +141,12 @@ def refined(
         scale = 1 << min(
             scales.bit_length() - 1, (2 * bound - 1).bit_length()
         )  # the least at 2 K or above
-        delta, iterations = settled(
-            np.zeros_like(fine), reads, divisor, scale * residual, wrap, iterations
-        )
+        start = np.zeros_like(fine) if seed is None else division(scale, seed[1], seed[0])
+        delta, iterations = settled(start, reads, divisor, scale * residual, wrap, iterations)
         fine = fine + division(1, scale, delta + int(division(1, 2, scale)))
+        found, seed = found or (delta, scale), None  # the later rounds correct another residual
         if scale >= 2 * bound:
-            return fine, iterations
+            return fine, iterations, found
         miss = 1 + int(division(1, scale, bound))
 
 
@@ -200,6 +211,7 @@ def rest(
     source = division(3 * den * unit, divisor, counts) * gamma * gamma
     half = int(division(1, 2, unit))
     fine, own, iterations = np.zeros_like(counts), np.zeros_like(counts), 0
+    correction: Correction | None = None  # the pass before's refinement, the seed of the next
     if seed is not None:
         fine, own = division(unit, seed.unit, seed.fine), seed.content.copy()
     seen: dict[bytes, int] = {}  # every state the paces were read from, by its outer pass
@@ -216,7 +228,9 @@ def rest(
         line_wall = 6 * (den - num) * clock * clock + 6 * num * pace * pace
         scaled = scaled_source(source, clock, pace, gamma, intervals)
         fine, iterations = settled(fine, reads, line_wall, scaled, wrap, iterations)
-        fine, iterations = refined(fine, reads, line_wall, scaled, wrap, largest, iterations)
+        fine, iterations, correction = refined(
+            fine, reads, line_wall, scaled, wrap, largest, iterations, correction
+        )
         rounded = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0])
         if returned([rounded], [own], seen, f"the rest of the pair {list(pair)}"):
             break
