@@ -112,11 +112,3 @@ def standing(
     re_before = int(division_forward(re * num - im * sine, den, 0)[0])
     im_before = int(division_forward(im * num + re * sine, den, 0)[0])
     return (re, im), (re_before, im_before)
-
-
-def born(upper: tuple[int, int], lower: tuple[int, int]) -> tuple[int, int]:
-    """The pair of the born quantum's rotation, the resonance omega_L = omega_e - omega_g (the mathematician's 174 (c), the advisor's second; the one place of the choice between the resonance and the share's rotation sin omega_L = sin omega_e - sin omega_g): cos omega_L = cos omega_e cos omega_g + sin omega_e sin omega_g as [num_e num_g + s_e s_g, den_e den_g] with s the fixed point of den^2 - num^2 (sin omega den); the massless pair for parts of one pair, whose transition has no rotation, so the quantum is laid by its count alone; the giving's lay (`meeting.given_quantum`) calls it with light's own pair and lays at light's own pair, the two levels alike: the giving's frequency (T4) waits on the packet lay; a one-Node lay carries no frequency (the mathematician's 205, #1572 comment 5964520368)."""
-    (n_e, d_e), (n_g, d_g) = upper, lower
-    s_e, s_g = division_fixed_point(d_e * d_e - n_e * n_e), division_fixed_point(d_g * d_g - n_g * n_g)
-    num, den = n_e * n_g + s_e * s_g, d_e * d_g
-    return (den, den) if num >= den else (num, den)

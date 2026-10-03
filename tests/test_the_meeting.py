@@ -7,7 +7,7 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import meeting, node, world_files
-from event_universe.features.click import amplitude, born
+from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
 from event_universe.loader.instrument import (
     basis_of,
@@ -20,6 +20,8 @@ from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import bodies_of, detectors_of
 from event_universe.world_files import load_world
 from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, booked, load_file, refused
+
+TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
 
 GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")
 BELL, GHZ = (load_file(f"{n}_build", EVENTS / n / "build_world.py") for n in ("bell", "ghz"))
@@ -283,13 +285,15 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     assert BACK.verdict(GameBoard(load_world(path)), 23)["verdict"] == "MATCH"  # every act crossed
     fresh = GameBoard(load_world(path), (conv := []).append)  # the conversion's list through the one act
     counts, items = dict(fresh.credit.counts), [meeting.Item(drv, None, None, -1, (here,))]
-    items += [meeting.Item(k, None, None, 1, (here,)) for k in (weak, light)]
+    items += [meeting.Item(k, None, None, 1, (here,), TOP_PAIR, 1) for k in (weak, light)]
     assert meeting.click(fresh, 7, None, [1], [items]) == (0, 7)  # one outcome: no draw, the state kept
     moved = {k: fresh.credit.counts[k] - counts[k] for k in (drv, weak, light)}  # the counts by the row
     assert moved == {drv: -1, weak: 1, light: 1} and int(fresh.quanta(light)[0].sum()) == 1
     laid = [(x["family"], x["line"], [x["after"][k] - x["before"][k] for k in (0, 1)]) for x in conv]
-    glow = amplitude(1, fresh.world.quantum_action, born(*(fresh.families[light].pair,) * 2))
-    assert laid == [("weak_drive", 0, [glow, glow]), ("fluorescence", 0, [glow, glow])]
+    glow = amplitude(
+        1, fresh.world.quantum_action, TOP_PAIR
+    )  # one quantum at the band's top in one interval
+    assert laid == [("weak_drive", 0, [glow, 0]), ("fluorescence", 0, [glow, 0])]
     fresh.step(), fresh.step()
     assert all(int(getattr(fresh.states[drv].lines[0], k)[here]) == 0 for k in ("now", "before"))
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped instrument worlds
@@ -326,5 +330,5 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
                     writers.add((module.stem, f.name))
     rule3 = {("game_board", "step"), ("game_board", "step_inverse"), ("game_board", "hold")}
     lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
-    lay |= {("meeting", "relaid"), ("meeting", "given_quantum")}
+    lay |= {("meeting", "relaid"), ("giving", "laid_increment")}
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face

@@ -230,18 +230,11 @@ def count_wall(family: FamilyRule, action: int) -> int:
     return 3 * family.pair[1] * action
 
 
-def own_quantum(transition: tuple[int, int]) -> tuple[int, int]:
-    """A declared resonance's sine as the pair (s, den) with s the fixed point of den^2 - num^2 (sin Omega den, as `features/click.born` computes it): the detector's own quantum's energy over T is s / den (the mathematician's 214, the advisor's second: a detector counts in its own quantum); (den, den) at the band's top [0, den]."""
-    num, den = transition
-    return division_fixed_point(den * den - num * num), den
-
-
 def detector_wall(family: FamilyRule, action: int, transition: tuple[int, int]) -> int:
-    """The detector's wall W_d = T sin Omega_d in the count's units, (3 den T s_d + den_d div 2) div den_d by the division act, the energy of its own transition's quantum (the mathematician's 214 (2b)): exactly W_c = 3 den T at the band's top, where the shipped worlds' regions stand."""
-    sine, den_d = own_quantum(transition)
-    return int(
-        division_forward(count_wall(family, action) * sine, den_d, division_forward(den_d, 2, 0)[0])[0]
-    )
+    """The detector's wall, its own quantum's energy T sin Omega_d in the count's units (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267, two hands: a detector counts in its own quantum): W_d = isqrt(W_c^2 (den_d^2 - num_d^2)) div den_d, one root of the whole product by the fixed point of the division act and one division, so that the floor root of sin Omega_d alone (10.6 percent off at [2, 3]) never enters; exactly W_c = 3 den T at the band's top [0, den], where every shipped region stands."""
+    wall, (num, den) = count_wall(family, action), transition
+    root = division_fixed_point(wall * wall * (den * den - num * num))
+    return int(division_forward(root, den, 0)[0])
 
 
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:

@@ -13,7 +13,8 @@ from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features import rotation
-from event_universe.features.click import Face, born, drawn, standing
+from event_universe.features.click import Face, drawn, standing
+from event_universe.giving import given_quantum, levels_of
 from event_universe.loader.derived import count_wall, row_of
 from event_universe.loader.instrument import Instrument, NodeInstrument
 from event_universe.loader.keys import Node
@@ -166,6 +167,8 @@ class Item:
     part: int | None
     delta: int
     nodes: tuple[Node, ...]
+    resonance: tuple[int, int] | None = None
+    span: int = 0
 
 
 Lists = list[list[Item]]  # the outcomes of one click, each the list written where it is drawn
@@ -220,12 +223,6 @@ def laid_lines(board: GameBoard, item: Item) -> list[int]:
     return list(range(first, first + family.width))
 
 
-def levels_of(board: GameBoard, index: int, line: int, at: Node) -> list[int]:
-    """One line's [now, before, remainder] at a Node named at the file's coordinates, read from its arrays."""
-    record, here = board.states[index].lines[line], tuple(np.add(at, board.offset))
-    return [int(record.now[here]), int(record.before[here]), int(record.remainder[here])]
-
-
 def books_named(board: GameBoard, measured: int) -> NodeBooks:
     """The books of the record declared an instrument numbered `measured` among the world's `measured`."""
     return next(books for books in board.credit.bodies if books.number == measured)
@@ -244,19 +241,6 @@ def faced(board: GameBoard, item: Item) -> None:
     for at, line, tick in itertools.product(item.nodes, lines, ticks):
         node_at = (int(at[0]), int(at[1]), int(at[2]))
         board.credit.faces.setdefault(tick, []).append(Face(item.family, line, node_at, 0, tick))
-    board.credit.counts[item.family] += item.delta
-
-
-def given_quantum(board: GameBoard, item: Item) -> None:
-    """A spread record given whole quanta at the Nodes named, the lay (features/click, `standing`): the levels of `delta` quanta standing there at the born rotation, the resonance omega_e - omega_g of the giving parts' pairs (`born`, the one place of the choice), 0 for the parts of one pair, the massless pair, the two levels alike, A^2 = count T div 2 added to the record's first line, the free row, its remainder at the lay's origin, the half wall; the record's count in the books up by the change."""
-    family, state = board.families[item.family], board.states[item.family]
-    gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
-    pair, action = born(family.pair, family.pair), board.world.quantum_action  # 0 for one pair
-    (level, _im), (before, _im_before) = standing(item.delta, action, pair, (1, 0), 1)
-    origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
-    line = state.lines[0]
-    now, was = line.now + np.where(at, level, 0), line.before + np.where(at, before, 0)
-    state.lines[0] = node.Record(now, was, np.where(at, origin, line.remainder))
     board.credit.counts[item.family] += item.delta
 
 
@@ -337,7 +321,7 @@ def gave(board: GameBoard, books: NodeBooks) -> bool:
         if rate.leaves == books.part:
             span = window if window <= rate.lifetime else rate.lifetime
             items = exchange(books, rate.leaves, rate.enters)
-            items.append(Item(rate.light, None, None, 1, (books.at,)))
+            items.append(Item(rate.light, None, None, 1, (books.at,), rate.resonance, rate.lifetime))
             weights = [span * unit, (rate.lifetime - span) * unit]
             pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
             if pick == 0:

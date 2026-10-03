@@ -11,7 +11,8 @@ import numpy as np
 from event_universe import growth, share
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, drawn
-from event_universe.loader.derived import count_wall, own_quantum
+from event_universe.giving import Source
+from event_universe.loader.derived import count_wall, detector_wall
 from event_universe.loader.instrument import Instrument, Ports, ports_of
 from event_universe.loader.keys import Node
 from event_universe.meeting import Item, NodeBooks, books_of, click
@@ -44,6 +45,7 @@ class Books:
     bodies: list[NodeBooks]
     fronts: list[Front]
     faces: dict[int, list[Face]]
+    sources: list[Source]
 
     def window_of(self, tick: int) -> list[int]:
         """The window closing at `tick`, [first, last], the declaration's length of intervals."""
@@ -58,7 +60,7 @@ class Books:
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.detectors if r.pattern]
         bodies = books_of(board)
         return cls(
-            found, 0, found.seed if found is not None else 0, counts, {}, {}, sides, bodies, [], {}
+            found, 0, found.seed if found is not None else 0, counts, {}, {}, sides, bodies, [], {}, []
         )
 
 
@@ -68,10 +70,12 @@ def counted(board: GameBoard, index: int, total: int | None) -> int:
     return 0 if total is None else int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
 
 
-def own_units(board: GameBoard, name: str, inflow: int) -> int:
-    """A region's window inflow read in the detector's own quantum (the mathematician's 214 with the advisor's second, two hands: a detector counts in its own quantum, its wall its own transition's energy T sin Omega_d): the inflow times den_d over s_d by the division act, rounded to the nearest, so that the count N = (the sum + W_c div 2) div W_c reads one click per quantum of the detector's resonance and the detuned share sin omega / sin Omega_d off it; the inflow itself at the band's top [0, den], where every shipped region stands."""
-    sine, den = own_quantum(next(d.transition for d in board.detectors if d.name == name))
-    return int(division_forward(inflow * den, sine, division_forward(sine, 2, 0)[0])[0])
+def own_units(board: GameBoard, index: int, name: str, inflow: int) -> int:
+    """A region's window inflow read in the detector's own quantum (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267, two hands: a detector counts in its own quantum, its wall its own transition's energy T sin Omega_d, `loader/derived.detector_wall`): (inflow W_c + W_d div 2) div W_d by the division act, the identity at the band's top [0, den], where every shipped region stands; a quantum of light at the detector's resonance is then one click, above it one click and the excess no click, below it the rounding's (half up), the detuned share a body's reading and not a region's."""
+    family, action = board.families[index], board.world.quantum_action
+    transition = next(d.transition for d in board.detectors if d.name == name)
+    wall, own = count_wall(family, action), detector_wall(family, action, transition)
+    return int(division_forward(inflow * wall, own, division_forward(own, 2, 0)[0])[0])
 
 
 def instrument_nodes(board: GameBoard) -> np.ndarray:
@@ -156,7 +160,9 @@ def credited(board: GameBoard) -> None:
                 nodes += written(board, index, name, intake[name], PORT_NAMES[port], kept, 1)
             items.append(Item(index, None, None, -1, tuple(nodes)))
         else:
-            shares = [own_units(board, name, max(sum(intake[name].values()), 0)) for name in names]
+            shares = [
+                own_units(board, index, name, max(sum(intake[name].values()), 0)) for name in names
+            ]
             if sum(shares) <= 0:
                 continue
             for quantum in range(min(counted(board, index, sum(shares)), books.counts[index])):
