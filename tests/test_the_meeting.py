@@ -8,7 +8,8 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import meeting, node, resonance, world_files
-from event_universe.features.click import amplitude, hole_factor
+from event_universe.core import paces
+from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
 from event_universe.giving import laid_by_count
 from event_universe.loader.instrument import (
@@ -187,7 +188,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
 
 
 def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_path, monkeypatch):
-    """The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/instrument.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's instrument. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0, a rate without the instrument and a record of two Nodes are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the instrument MATCH over 30 intervals back to the lay). (iii) The clicks: the first jump takes the drive's quantum into P at the Node, the drive's record there after the face's two intervals the twin's two levels scaled below themselves and not 0 (the hole of a dense record, the drive at 55 quanta per Node, 2026-10-03) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later jump gives one quantum to the light row and the counter credits it at a window's end (the world of 20 intervals, the counter's window 15), and where the credit took the row's count to 0 the erasing front begins at the entry Node: one erasure line per interval at the distances 1 to 5, and the same run without the front (its fronts dropped each interval) holds every level beyond the ball, the Link-metric distance above the intervals since the click, bit for bit (the front invisible ahead of itself); every jump names the one Node as a GameBoard diagnostic, and the null window's re-lays that changed a level leave their own GAMEBOARD-labelled jump lines. (iv) The acts from outside the Node as lines (the mathematician's 193 and 195 with the advisor's second, two hands): every line a lay changed at the Node writes one GAMEBOARD-labelled `lay` line with its levels and remainder before and after (the taking's four ion lines, the giving's light line, the null windows'), every face presented writes one `face` line carrying the value the books hold; the back-in-time gate (tools/back_in_time.py) reads MATCH over the whole run across the takings, the givings, the null windows, the credit and the fronts, the faces presented from the lines and the lays undone from theirs, and on the shipped Zeno and anticoincidence worlds, one step more returning the start. (v) The booking identity per act at every step on the ion, the drive and the light (tests/laws.py, `booked`): the share identity within the floors plus the face term at the hole's two intervals and at every shell of the front, and the lays' change of the share form local to the Node and its six neighbours, exact. (vi) The conversion's list through the one act: the drive at -1 and two other rows at +1 at the Node, no draw and the generator's state untouched, the counts moved by the row, one whole quantum laid on each row at the massless rotation, the two levels alike, and the dense drive's partial hole after two intervals, its levels standing below themselves and not 0. (vii) The generator consumed the same whether or not a count-0 record's inflow is booked: the anticoincidence world with the first record's window at 10, run with the front and without it, gives the same one taking and the same generator states, the second record's its seed (its open window after the click draws nothing), while the light's level at its Node is erased in the one run and stands in the other. (viii) The one-in-flight limit is not built, by name: the light row's count rises by one per giving before the counter's window and no giving is refused; the Zeno world gives nothing and its drive's count stands above 1."""
+    """The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/instrument.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's instrument. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0, a rate without the instrument and a record of two Nodes are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the instrument MATCH over 30 intervals back to the lay). (iii) The clicks: the first jump takes the drive's quantum into P at the Node, the drive's record there after the face's two intervals both levels moved toward the leaving level and not 0, the two faces removing 0.81 of the quantum's form and the rest standing by name (the mathematician's 265 and 266: the booked share 12 quanta above W_rec, the stake negative so a hole to 0 would add form, the drive at 55 quanta per Node, 2026-10-03) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later jump gives one quantum to the light row and the counter credits it at a window's end (the world of 20 intervals, the counter's window 15), and where the credit took the row's count to 0 the erasing front begins at the entry Node: one erasure line per interval at the distances 1 to 5, and the same run without the front (its fronts dropped each interval) holds every level beyond the ball, the Link-metric distance above the intervals since the click, bit for bit (the front invisible ahead of itself); every jump names the one Node as a GameBoard diagnostic, and the null window's re-lays that changed a level leave their own GAMEBOARD-labelled jump lines. (iv) The acts from outside the Node as lines (the mathematician's 193 and 195 with the advisor's second, two hands): every line a lay changed at the Node writes one GAMEBOARD-labelled `lay` line with its levels and remainder before and after (the taking's four ion lines, the giving's light line, the null windows'), every face presented writes one `face` line carrying the value the books hold; the back-in-time gate (tools/back_in_time.py) reads MATCH over the whole run across the takings, the givings, the null windows, the credit and the fronts, the faces presented from the lines and the lays undone from theirs, and on the shipped Zeno and anticoincidence worlds, one step more returning the start. (v) The booking identity per act at every step on the ion, the drive and the light (tests/laws.py, `booked`): the share identity within the floors plus the face term at the hole's two intervals and at every shell of the front, and the lays' change of the share form local to the Node and its six neighbours, exact. (vi) The conversion's list through the one act: the drive at -1 and two other rows at +1 at the Node, no draw and the generator's state untouched, the counts moved by the row, one whole quantum laid on each row at the massless rotation, the two levels alike, and the dense drive's partial hole after two intervals, its levels moved and not 0. (vii) The generator consumed the same whether or not a count-0 record's inflow is booked: the anticoincidence world with the first record's window at 10, run with the front and without it, gives the same one taking and the same generator states, the second record's its seed (its open window after the click draws nothing), while the light's level at its Node is erased in the one run and stands in the other. (viii) The one-in-flight limit is not built, by name: the light row's count rises by one per giving before the counter's window and no giving is refused; the Zeno world gives nothing and its drive's count stands above 1."""
     universe = json.loads((EVENTS / "shelved_ion" / "mercury_ion.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
@@ -258,10 +259,12 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     assert int(now["ion.lines[2].remainder"][here]) == walls[ion] // 2  # the taker at the lay's origin
     [booked(board, monkeypatch, ion, drv, light) for _ in (0, 1)]  # the hole: the face's two intervals
     hole, twin = board.states[drv].lines[0], (other.step(), other.step(), other.states[drv].lines[0])[2]
-    assert all(
-        0 < abs(int(getattr(hole, k)[here])) < abs(int(getattr(twin, k)[here]))
+    assert all(  # the two faces moved both levels toward the leaving level, neither to 0 (265)
+        0 < abs(int(getattr(hole, k)[here])) != abs(int(getattr(twin, k)[here]))
         for k in ("now", "before")
     )
+    drop = int(other.total_share(drv)[0]) - int(board.total_share(drv)[0])
+    assert 0 < drop <= board.credit.units[drv] and abs(drop / board.credit.units[drv] - 0.808) < 0.005
     assert 0 <= int(hole.remainder[here]) < walls[drv]  # the giver's remainder Rule3's own
     still = GameBoard(load_world(path))  # the same run without the front: its fronts dropped each step
     [still.step() for _ in range(still.tick, board.tick)]
@@ -495,35 +498,27 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
 
 
 def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands():
-    """The hole of a dense record (the mathematician's 237 with the advisor's second, #1572 comments 5967012316 and 5967123679, two hands; features/click `hole_factor`, `target_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (s above W_rec), at the trial seed 2, beside its untouched twin. (i) The factor: None where the share is at most the unit; sqrt((s - W_rec) / s) within the root's own rounding above it, the numerator within the width's half and the scale m above 0 at the Zeno share against the width's largest integer (the advisor's second, #1572 comment 5967957083: the root taken with the carry). (ii) The taking at 24: the drive's two levels at the Node after the face's two intervals are the twin's scaled by the factor within one level, their ratio the twin's (the phase and the sense stand), not 0, the count down by one, no front begun. (iii) The back-in-time gate reads MATCH across the dense taking over the run, the face's inverse presenting the kept values whatever the target."""
-    width, zeno = (1 << 63) - 1, EVENTS / "zeno" / "zeno_2.json"
-    assert hole_factor(5, 5, width) is None and hole_factor(4, 5, width) is None
-    numerator, denominator = hole_factor(1540 * 10**6, 440 * 10**6, width) or (0, 1)
-    assert (
-        abs(numerator / denominator - (1100 / 1540) ** 0.5) < 1e-4
-    )  # the root's own rounding, 1 / isqrt(s)
-    assert numerator < 1 << 32 and denominator > 1 << 16 > 39243  # m = 16 > 0 at this share: scaled
+    """The hole of a dense record (the mathematician's 237 and 265 with the advisor's seconds, #1572 comments 5967012316, 5967123679 and 5969040401, two hands; features/click `Hole`, `rest_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (the booked share above W_rec), at the trial seed 2, beside its untouched twin. (i) The faces: the identity's, (1, 1), the booked share above one quantum (266). (ii) The taking at 24: the first face writes the root nearest v of w (x - v)(x - b) = -W_rec, between the twin's level v and the leaving level b, and 0.9985 of the quantum leaves at it (the remainder born at the half wall, 255); the second face writes the rest's root; the levels at the Node not 0 and the count down by one; the hole's second face marked, no front (the count stands above 0); the back-in-time gate MATCH across the two faces."""
+    zeno = EVENTS / "zeno" / "zeno_2.json"
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
-    unit, at, count = board.credit.units[pulse], (4, 4, 2), board.credit.counts[pulse]
+    at, count = (4, 4, 2), board.credit.counts[pulse]
     for _ in range(24):
         board.step(), twin.step()
-    share = int(
-        twin.share_of(pulse)[0][at]
-    )  # the share at the click, dense at the Node, above a quantum
-    factor = hole_factor(share, unit, width)
-    assert factor is not None and share > unit
-    board.step(), twin.step(), board.step(), twin.step()  # the face's two intervals
+    leaving = int(twin.states[pulse].lines[0].now[at])  # b, standing as before at the first face
+    for _ in range(2):
+        board.step(), twin.step()
     jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
     assert [x["tick"] for x in jumps] == [24] and jumps[0]["taken"] == "pulse"
+    hole = board.credit.faces[25][0].hole
+    assert hole is not None and hole.factor == (1, 1)  # the identity's faces: the share above a quantum
     mine, its = board.states[pulse].lines[0], twin.states[pulse].lines[0]
     now, before = (int(mine.now[at]), int(mine.before[at])), (int(its.now[at]), int(its.before[at]))
-    assert 0 not in now and all(
-        abs(a - b * factor[0] / factor[1]) <= 1.5 for a, b in zip(now, before, strict=True)
-    )
+    assert min(before[1], leaving) < now[1] < max(before[1], leaving)  # the root between v and b
+    assert round(hole.removed / hole.unit, 4) == 0.9985  # the first face's root real: one quantum
     assert (
-        abs(now[0] / now[1] - before[0] / before[1]) < 0.01 and board.credit.counts[pulse] == count - 1
-    )
+        0 < abs(now[0]) <= abs(before[0]) and board.credit.counts[pulse] == count - 1
+    )  # the rest's root
     assert (
         not board.credit.fronts
         and board.credit.faces[26][0].scaled
@@ -532,6 +527,40 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
     gate = GameBoard(load_world(zeno))
     gate.credit.bodies[0].state = 2
     assert BACK.verdict(gate, 47)["verdict"] == "MATCH"  # across the dense taking's two faces
+
+
+def test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record():
+    """The exact removal (the mathematician's 244, section 1, with the booking identity's face term, tests/laws.py: a face changes the record's form by (a* - before) R_face (value - arrival)): the Zeno n = 2 world at the seed 2 beside its twin. (i) The Node's stake O + C on the Node's own numbers at the first face's interval, O = w (a^2 + b^2) - S a b and C = -a SUM_j R_j b_j - b SUM_j R_j a_j with the neighbours' levels through the Ports, recomputed here from the twin at the click, is above W_rec in the form's own units at the Node, 2 p_i^2 G^2 W_rec (the booked share O + C / 2 above it too), so the faces are the identity's, (1, 1), and the first removes at most the quantum (the mathematician's 265 and 266). (ii) After the two faces the record's share over the board is the twin's less one quantum within one level's share at the Node (0.9965 of W_rec at this seed, the second face removing exactly the rest); the share the engine reads at the Node alone is above s - W_rec (1.85 against 1.67 quanta), the Link terms with the six neighbours landing on them, a finding by name beside the record's own number."""
+    zeno = EVENTS / "zeno" / "zeno_2.json"
+    board, twin = GameBoard(load_world(zeno)), GameBoard(load_world(zeno))
+    board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
+    family, gamma, at = board.families[pulse], board.world.node_clock, (4, 4, 2)
+    unit = board.credit.units[pulse]
+    for _ in range(24):
+        board.step(), twin.step()
+    record, (content, factors) = twin.states[pulse].lines[0], twin.read(pulse, 1, 0)
+    reads, coefficient, wall = node.rule_of(family, gamma, content, factors, twin.unit)
+    here, pick = (
+        [int(np.asarray(r)[at]) if np.ndim(r) else int(r) for r in reads],
+        lambda v: int(np.asarray(v)[at]) if np.ndim(v) else int(v),
+    )
+    a, b = int(record.now[at]), int(record.before[at])
+    arrivals = sum(here[p] * int(node.ports(record.now, twin.wrap)[p][at]) for p in range(6))
+    befores = sum(here[p] * int(node.ports(record.before, twin.wrap)[p][at]) for p in range(6))
+    own = int(wall) * (a * a + b * b) - pick(coefficient) * a * b
+    links = -(a * befores + b * arrivals)
+    pace = int(paces.link_pace_of(gamma, pick(content)))
+    weight = 2 * pace * pace * twin.unit * twin.unit  # the share's weight at the Node
+    assert (own + links) > unit * weight > 0  # dense: the form's share at the Node above a quantum
+    board.step(), twin.step(), board.step(), twin.step()
+    hole = board.credit.faces[25][0].hole
+    assert hole is not None and hole.unit == unit * weight
+    assert hole.factor == (1, 1) and 0 < hole.removed <= hole.unit
+    totals = [int(x.total_share(pulse)[0]) for x in (twin, board)]
+    level = int(wall) * (2 * abs(int(board.states[pulse].lines[0].now[at])) + 1)  # one level's share
+    assert abs(totals[0] - totals[1] - unit) <= level / weight + 1  # one quantum left the record
+    left = int(board.share_of(pulse)[0][at]) / unit
+    assert 1.6 < left < 2.0 and left > int(twin.share_of(pulse)[0][at]) / unit - 1  # the Node alone
 
 
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):
