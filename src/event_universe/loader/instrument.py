@@ -222,6 +222,12 @@ def rates_of(
                 f"{label}[{index}] gives between {names[leaves]!r} and {names[enters]!r}, and no transition "
                 "between them declares the resonance the light is born at"
             )
+        num, den = between[0].resonance
+        if 3 * num < den:  # cos Omega below 1 / 3: no axis carries the quantum (the mathematician's 221)
+            raise ValueError(
+                f"{label}[{index}] gives at the resonance [{num}, {den}], above the axis band's top (cos Omega "
+                "below 1 / 3): no axis carries the quantum, and the diagonals' lay is not built"
+            )
         found.append(Rate(leaves, enters, lifetime, light, between[0].resonance))
     return tuple(found)
 

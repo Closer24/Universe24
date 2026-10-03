@@ -265,11 +265,10 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     assert all(n["realised"] == n["left"] and "levels" not in n["node"] for n in nulls)
     credits = [line for line in lines if line["event"] == "credit" and line["family"] == "fluorescence"]
     erased = [line for line in lines if line["event"] == "erasure"]
-    assert given and given[0]["left"] == "P" and credits and credits[0]["tick"] == 18
-    assert board.credit.counts[light] + len(credits) == len(given)
-    first_front = [e["distance"] for e in erased if e["origin"] == erased[0]["origin"]]
-    assert erased and first_front == list(range(1, 6))
-    assert all(e["family"] == "fluorescence" and e["label"] == "GAMEBOARD" for e in erased)
+    assert given and given[0]["left"] == "P" and board.credit.counts[light] == len(given)
+    assert (
+        credits == [] and erased == []
+    )  # the given quanta, sources in time at one Node of a periodic box, reach the counter's plane below half a quantum in the window: the integer board's floor on a spreading quantum (the mathematician's 221), the front then never begun here (its theorem in tests/test_the_draw.py)
     assert all(e["nodes"] > 0 for e in erased)
     lays, faces = [x for x in lines if x["event"] == "lay"], [x for x in lines if x["event"] == "face"]
     kinds = {

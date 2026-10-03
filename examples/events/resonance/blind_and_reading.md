@@ -82,3 +82,19 @@ The resonant two-mode line (the taking's share at the declared resonance); the b
 from the arrival (216, 217: the giving stays drawn at the window's end against the lifetime); a pi
 pulse tuned for the taker; the design's reading window set by the group pace (the number stands as
 written).
+
+## The beam form of 221, tried and named (the mathematician's 221, #1572 comment 5965498522)
+
+The mathematician's T10 found the frequency travels with the message in a guide and dies in the open
+board below one level per Node within about 0.28 A_source Links, and asked for the born quantum as a
+beam from the body's Node along a drawn axis. Tried in this chain before the push, at the owner's
+word: the source's head moving one Link per interval along a drawn axis with the on-shell phase
+k - Omega per interval (cos k = 3 cos Omega - 2, k = pi / 2 at [2, 3]), the level now alone laid at
+the head, read 0.337 of a quantum's share at the span's end and cos Omega 0.76 to 0.98 along the beam
+against 0.667; the travelling pair (the level before the wave one interval earlier at the head) read
+0.678 of the share and 0.73 to 0.99: the head at one Link per interval outruns the wave's phase pace
+Omega / k = 0.535 and the increments do not add in one wave. The standing source at the Node inside
+the guide reads the frequency (the plateau's 0.6682 above) and lays one quantum; it is what the tree
+holds, with the direction undrawn (a draw with no act is not declared). The beam's lay with the
+message lay's transverse envelope, or the guide declared, is a round of its own with two hands; a
+giving at a resonance above the axis band's top is refused by name at the loader (221 (2a)).
