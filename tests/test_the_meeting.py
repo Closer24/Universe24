@@ -2,14 +2,16 @@
 
 import ast
 import json
+import math
 from fractions import Fraction
 
 import numpy as np
 
-from event_universe import meeting, node, world_files
+from event_universe import meeting, node, resonance, world_files
 from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
 from event_universe.loader.instrument import (
+    Transition,
     basis_of,
     instrument_of,
     node_instrument_of,
@@ -362,3 +364,38 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     board.step(), board.step()
     assert [x["event"] for x in lines if x["event"] not in ("click", "lay", "field")] == ["conversion"]
     assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
+
+
+def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
+    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/resonance.py and `meeting.turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the giving's one recurrence (giving.advanced, through `gathered` at the level 0) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the instrument's act; (vi) the window's turn is applied as W equal sub-turns with the carry (`resonance.sheared`), so the labels' angle at the Zeno world's n = 1 is 48 x 2 arctan(9,408 / (12,000 x 48)) = 1.568 and not the one shear's 1.330, the tangent half-angle's compression the advisor's second found on the first build."""
+    omega, detuned, bound, room = math.acos(2 / 3), math.acos(1 / 3), 9266, 2**63 - 1
+    assert [resonance.scale_of(room, bound, w) for w in (48, 96, 12)] == [2**12, 2**11, 2**14]
+    scale, transitions = resonance.scale_of(room, bound, 48), (Transition(0, 1, 1, 1, (2, 3)),)
+    references = resonance.references_of(scale, transitions)
+    for t in range(1, 101):
+        resonance.gathered(references, transitions, {1: 0})
+        cosine, sine = references[0].cosine[0], references[0].sine[0]
+        assert abs(cosine - scale * math.cos(omega * t)) <= 7 >= abs(sine - scale * math.sin(omega * t))
+
+    def turn(frequency: float, phase: float, window: int) -> int:
+        fresh = resonance.references_of(scale, transitions)
+        for t in range(window):
+            resonance.gathered(fresh, transitions, {1: round(1000 * math.cos(frequency * t + phase))})
+        return resonance.window_turn(fresh[0], 1)
+
+    phases = (0, 0.7, math.pi / 2, 2.5)
+    assert all(abs(turn(omega, phi, 48) - 24000) <= 480 for phi in phases)  # A W / 2 at every phase
+    assert all(turn(detuned, phi, 48) < 480 for phi in phases)  # sinc(delta W / 2), the residue
+    sinc = abs(math.sin((detuned - omega) * 6) / ((detuned - omega) * 6))
+    assert all(abs(turn(detuned, phi, 12) / 6000 - sinc) <= 0.02 for phi in phases)
+    board = GameBoard(load_world(EVENTS / "zeno" / "zeno_4.json"))
+    books = board.credit.bodies[0]
+    start, gathered = list(books.labels), books.references[0]
+    for _ in range(11):
+        board.step()
+        assert books.labels == start and (gathered.in_phase, gathered.quadrature) != (0, 0)
+    board.step()
+    assert (gathered.in_phase, gathered.quadrature) == (0, 0) and books.elapsed == 0
+    turned = [resonance.sheared(10**6, 0, 9408, pieces, 6000) for pieces in (48, 1)]
+    angles = [math.atan2(v, u) for u, v in turned]
+    assert abs(angles[0] - 1.5680) <= 0.002 and abs(angles[1] - 1.330) <= 0.002  # the sub-turns add
