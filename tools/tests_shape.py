@@ -96,7 +96,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         104,
         "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
         "2026-10-03, C.15): the fixed-point lay with the compact seed in its own nuclear holder's well at the four "
-        "declared integers, the rest within 0.51 level of the row's exact line, the count the record's share within "
+        "declared integers, the hold's first write returning the start's rest within one unit at every Node, the deviation from the exact line a GAMEBOARD reading, the count the record's share within "
         "the gate, the standing read over one period against the twin without the holder, the remainders at the "
         "half wall and the back-in-time gate across two periods",
     ),
