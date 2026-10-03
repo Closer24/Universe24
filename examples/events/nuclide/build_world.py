@@ -26,7 +26,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
     length, source, depth = int(design["length"]), int(design["source"]), int(design["screen"])
     p, q = (int(v) for v in design["wave"])
     first, last = (int(v) for v in design["top_across"])
-    messages, detectors = [], []
+    messages, node_readers = [], []
     for name, counter in design["counters"].items():
         along, toward = str(counter["beam"][0]), int(counter["beam"][1])
         across = next(axis for axis in AXES[:2] if axis != along)
@@ -41,7 +41,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
             }
         )
         deep = range(depth) if toward < 0 else range(length - depth, length)
-        detectors.append(
+        node_readers.append(
             {
                 "name": name,
                 "positions": [
@@ -58,9 +58,9 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [],
+        "bodies": [],
         "messages": messages,
-        "detectors": detectors,
+        "node_readers": node_readers,
         "receding": design["receding"],
     }
 
@@ -86,7 +86,7 @@ def expectation(design: dict[str, Any], laid: list[int] | None) -> dict[str, obj
         for name, whole in design["wholes"].items()
     }
     return {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],
@@ -109,7 +109,7 @@ def expectation(design: dict[str, Any], laid: list[int] | None) -> dict[str, obj
         },
         "laid": laid,
         "seed": int(design["seed"]),
-        "rule": "a counter's inflow over the window is the nuclide family's net current through its front, summed over the two parts, in the current's units; its share is the inflow over W_c = 3 den T; its count N is the share over the declared whole over T, 2 sin omega_N for the nuclide counters and sin omega_N for the part counter (The click's unit: the whole of a click is the detector's own transition; the energy of one quantum of a family T sin omega by the families reading); the parts lines give the two parts' signed level sums per interval and region",
+        "rule": "a counter's inflow over the window is the nuclide family's net current through its front, summed over the two parts, in the current's units; its share is the inflow over W_c = 3 den T; its count N is the share over the declared whole over T, 2 sin omega_N for the nuclide counters and sin omega_N for the part counter (The click's unit: the whole of a click is the node_reader's own transition; the energy of one quantum of a family T sin omega by the families reading); the parts lines give the two parts' signed level sums per interval and region",
         "blind": {
             "equal_parts": {
                 "reading": "every `parts` line of the three counters over the window: the two parts' [now, before] sums",
@@ -120,7 +120,7 @@ def expectation(design: dict[str, Any], laid: list[int] | None) -> dict[str, obj
             "whole_clicks": {
                 "reading": "every `click` line's inflow on the three counters over the window, and each counter's inflow summed",
                 "blind": "every inflow is an even integer, twice one part's current, so a counter reading with the nuclide's whole 2 T sin omega_N credits whole nuclides and never a half; the part counter's count by T sin omega_N is exactly twice the same inflow's count by 2 T sin omega_N, and the part counter clicks nothing the nuclide counters' whole does not credit whole",
-                "status": "theorem under equal parts: the inflow is the family's current summed over its two lines pairs, each part's current the same integer; derived from the law's lines (the count is the record's share; the click's unit the detector's own transition)",
+                "status": "theorem under equal parts: the inflow is the family's current summed over its two lines pairs, each part's current the same integer; derived from the law's lines (the count is the record's share; the click's unit the node_reader's own transition)",
                 "fence": "clicks",
             },
             "equal_shares": {

@@ -65,24 +65,24 @@ the record's parts laid; the front's faces on the chain after the count reaches 
 
 ## What is not built, by name
 
-The record's own detector region around its Node (the mathematician's 180); the one draw's
+The record's own NodeReader region around its Node (the mathematician's 180); the one draw's
 generator the first closing record's (the world has no instrument of its own); the face form of the
 hole (the mathematician's 193, 195 and 197, the advisor's second in #1572 comment 5963391333), the
 morning's unless the gate worlds read MATCH across the click with it tonight.
 
 ## On the own quantum, 2026-10-03 (branch own-quantum, 8382b8b9)
 
-The round of the detector's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
+The round of the NodeReader's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
 advisor's seconds, the ids in `examples/events/resonance/blind_and_reading.md`) declares the atoms'
 transition at the resonance [5414, 6000] (the photon's rotation at k = pi / 4, cos omega =
 (cos(pi / 4) + 2) / 3) and lays no light here (the atoms have no rates); the two worlds declare no
-region detector. Re-run by `tools/meeting_trials.py` on 8382b8b9 over the 200 seeds: one photon A only
+region NodeReader. Re-run by `tools/meeting_trials.py` on 8382b8b9 over the 200 seeds: one photon A only
 101, B only 99, both 0, neither 0, alpha 0; two photons 24, 47, 28, 101, alpha 56 / 39; bit for bit the
 readings above. PASS and unchanged.
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-The table's numbers (A only, B only, both, neither, alpha) are the detector's: the `jump` lines'
+The table's numbers (A only, B only, both, neither, alpha) are the NodeReader's: the `jump` lines'
 `taken` per trial, read by `tools/meeting_trials.py`. The finding's levels at the two records' Nodes
 (-98 and -157 at 8, -146 and -149 at 28, -141 and -141 at 32) are a GameBoard reading of one trial,
 labelled so, and no number of the blind. The lines carry the board's `tick` and the `window` in board

@@ -1,4 +1,4 @@
-"""The packet giving world's builder (examples/events/packet_giving; the open board's giving as a packet along a drawn axis, the mathematician's 224 (1) and 229 with the advisor's seconds, two hands): one world from the design, its board's length, the detector's place and the blind `expectation.json` derived from the design's numbers by the engine's own pure functions (the one-line packet's root T / sin Omega, the envelope, the band's line with the transverse mode; `features/click`) and the reach's line, written before any lay and byte for byte the same on every run of this script; `--modes` writes the mode file by the generator; `--read` runs the world over the design's seeds and prints the readings beside the blind (the detector's clicks, the drawn directions from the lay lines, the far Node's cosine, a GameBoard reading labelled so).
+"""The packet giving world's builder (examples/events/packet_giving; the open board's giving as a packet along a drawn axis, the mathematician's 224 (1) and 229 with the advisor's seconds, two hands): one world from the design, its board's length, the node_reader's place and the blind `expectation.json` derived from the design's numbers by the engine's own pure functions (the one-line packet's root T / sin Omega, the envelope, the band's line with the transverse mode; `features/click`) and the reach's line, written before any lay and byte for byte the same on every run of this script; `--modes` writes the mode file by the generator; `--read` runs the world over the design's seeds and prints the readings beside the blind (the node_reader's clicks, the drawn directions from the lay lines, the far Node's cosine, a GameBoard reading labelled so).
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -23,7 +23,7 @@ ROOT = HERE.parents[2]
 
 
 def numbers(design: dict[str, Any]) -> dict[str, Any]:
-    """The derived numbers of the design: the one-line packet's root T / sin Omega (`line_total`; the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), the envelope's amplitudes and length L, cos k_x and the wavelength along x, the reach, the board's length and the body's and the detector's Nodes."""
+    """The derived numbers of the design: the one-line packet's root T / sin Omega (`line_total`; the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), the envelope's amplitudes and length L, cos k_x and the wavelength along x, the reach, the board's length and the body's and the node_reader's Nodes."""
     num, den = design["giver"]["resonance"]
     action, width, lifetime = (
         int(design["quantum_action"]),
@@ -60,16 +60,16 @@ def numbers(design: dict[str, Any]) -> dict[str, Any]:
         "reach_node": int(round(reach)),
         "shape": shape,
         "body": [centre, across, across],
-        "detector_x": centre + int(round(reach)),
+        "node_reader_x": centre + int(round(reach)),
         "reading_node": [centre + int(round(reach)) // 2, across, across],
         "group_pace": math.sin(wave_number) / (3 * math.sqrt(1 - (num / den) ** 2)),
         "directions_held": ["+x", "-x"],
-        "directions_meeting_the_detector": ["+x"],
+        "directions_meeting_the_node_reader": ["+x"],
     }
 
 
 def world(design: dict[str, Any]) -> dict[str, object]:
-    """The world of the design: the board long on x and `width` across, the giver at the centre with its packet's width, the region detector of the band's top across x at the reach on the +x side, the instrument's window the run."""
+    """The world of the design: the board long on x and `width` across, the giver at the centre with its packet's width, the region node_reader of the band's top across x at the reach on the +x side, the instrument's window the run."""
     found, row, light = numbers(design), design["giver"], design["light"]
     ticks = int(row["window"]) + int(design["passage_intervals"])
     giver = {
@@ -100,9 +100,9 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "instrument": {**design["generator"], "window": int(row["window"]), "seed": int(row["seed"])},
     }
     width = int(design["width"])
-    positions = [[found["detector_x"], y, z] for y in range(width) for z in range(width)]
-    detector = {
-        "name": design["detector"]["name"],
+    positions = [[found["node_reader_x"], y, z] for y in range(width) for z in range(width)]
+    node_reader = {
+        "name": design["node_reader"]["name"],
         "positions": positions,
     }
     return {
@@ -112,22 +112,26 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "ticks": ticks,
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [giver],
+        "bodies": [giver],
         "messages": [],
-        "detectors": [detector],
-        "instrument": {**design["generator"], "window": ticks, "seed": int(design["detector"]["seed"])},
+        "node_readers": [node_reader],
+        "instrument": {
+            **design["generator"],
+            "window": ticks,
+            "seed": int(design["node_reader"]["seed"]),
+        },
     }
 
 
 def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind, from the design alone: the count 1 read by the detector in its own unit within the window of the passage, the share at the lay in the top's unit (sin Omega times the top-hat's excess, the hands' derivation), the far reading of cos Omega within 2 / A_far of the resonance over the window after the giving's tick, and the fraction of seeds whose drawn direction meets the detector; written before any lay, rewritten at two hands on the one-line root (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands) before the re-run."""
+    """The blind, from the design alone: the count 1 read by the node_reader in its own unit within the window of the passage, the share at the lay in the top's unit (sin Omega times the top-hat's excess, the hands' derivation), the far reading of cos Omega within 2 / A_far of the resonance over the window after the giving's tick, and the fraction of seeds whose drawn direction meets the node_reader; written before any lay, rewritten at two hands on the one-line root (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands) before the re-run."""
     found = numbers(design)
     num, den = design["giver"]["resonance"]
     first, last = design["reading_window_after_giving"]
     sine, excess = math.sqrt(1 - (num / den) ** 2), float(design["top_hat_excess"])
-    held, meeting = found["directions_held"], found["directions_meeting_the_detector"]
+    held, meeting = found["directions_held"], found["directions_meeting_the_node_reader"]
     return {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": design["comment"],
         "family": design["light"],
         "lay": {
@@ -147,7 +151,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "reach": found["reach"],
             "shape": found["shape"],
             "body": found["body"],
-            "detector_x": found["detector_x"],
+            "node_reader_x": found["node_reader_x"],
         },
         "share": {
             "value": sine * excess,
@@ -158,8 +162,8 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         },
         "count": {
             "value": 1,
-            "reading": "the detector's credit lines (DETECTOR) in its own unit, the record's own share per quantum read from the books, over its window, the run, the packet's passage",
-            "status": "one quantum one click by the count's line (the advisor's clause (iii)); read over the seeds whose drawn direction meets the detector; re-read on the one-line root, half of the detector's inflow at the half root having been the lay's (242 section 1)",
+            "reading": "the node_reader's credit lines (NODEREADER) in its own unit, the record's own share per quantum read from the books, over its window, the run, the packet's passage",
+            "status": "one quantum one click by the count's line (the advisor's clause (iii)); read over the seeds whose drawn direction meets the node_reader; re-read on the one-line root, half of the node_reader's inflow at the half root having been the lay's (242 section 1)",
         },
         "cos_omega": {
             "value": num / den,
@@ -173,7 +177,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "fraction": [len(meeting), len(held)],
             "held": held,
             "meeting": meeting,
-            "reading": "the fraction of seeds whose lay lines extend from the body toward the detector (the equivalent directions the board holds, each at the giving's weight)",
+            "reading": "the fraction of seeds whose lay lines extend from the body toward the node_reader (the equivalent directions the board holds, each at the giving's weight)",
             "gate": "within sqrt(N p (1 - p)) of N p over the seeds",
         },
         "seeds": len(design["seeds"]),
@@ -182,7 +186,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
 
 
 def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
-    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the record's click line, the drawn direction from the lay lines, the detector's clicks, the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
+    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the record's click line, the drawn direction from the lay lines, the node_reader's clicks, the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
     from event_universe.game_board import GameBoard
     from event_universe.world_files import load_world
 
@@ -252,7 +256,7 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
         "share_at_lay": [t["share_at_lay"] for t in trials],
         "cos_omega_where_meeting": [t["cos_omega_read"] for t in meeting],
         "blind": blind,
-        "label": "clicks DETECTOR; the cosine, the share and the directions GAMEBOARD readings",
+        "label": "clicks NODEREADER; the cosine, the share and the directions GAMEBOARD readings",
     }
 
 

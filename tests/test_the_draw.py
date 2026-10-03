@@ -1,4 +1,4 @@
-"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's giving as a packet along a drawn axis (step 5 of the emitter/detector)."""
+"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's giving as a packet along a drawn axis (step 5 of the emitter/node_reader)."""
 
 import ast
 import json
@@ -18,7 +18,7 @@ from event_universe.giving import born_unit, radiated_total
 from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import pair_of
 from event_universe.loader.universe import universe_of
-from event_universe.loader.world import bodies_of, detectors_of, regions_of_the_law
+from event_universe.loader.world import bodies_of, node_readers_of, regions_of_the_law
 from event_universe.meeting import hazard_weights
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
@@ -51,7 +51,7 @@ def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int
     clicks: dict[str, int] = {}
     shares: dict[str, int] = {}
     for line in lines:
-        kind, at = line["event"], line["detector"]
+        kind, at = line["event"], line["node_reader"]
         if kind in ("credit", "click"):
             book, gain = (clicks, 1) if kind == "credit" else (shares, int(line["inflow"]))
             book[at] = book.get(at, 0) + gain
@@ -135,7 +135,7 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
             for q in nodes_of(b)
         )
 
-    clicks = [c for c in lines if c["event"] == "credit" and c["label"] == "DETECTOR"]
+    clicks = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER"]
     clicks = [
         c for c in clicks if c["tick"] < board.tick
     ]  # the last interval's hole faces after the run
@@ -187,7 +187,7 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
         board.step()
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     read = node.rule_of(board.families[light], board.world.node_clock, 0, None, board.unit)[0][0]
-    jumps = [c for c in lines if c["event"] == "credit" and c["label"] == "DETECTOR" and c["taken"]]
+    jumps = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
     assert len(jumps) == 1 and jumps[0]["tick"] == 40 and board.credit.counts[light] == 0
     holes = {
         f.at for f in board.credit.faces[41] if f.family == light
@@ -224,10 +224,10 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
     )
 
 
-def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum(
+def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_counts_in_its_own_quantum(
     tmp_path,
 ):
-    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): a region's unit of one quantum is its record's own share per quantum read once at the books' origin (`credit.record_unit`, the advisor's line of 2026-10-03 with the mathematician's second, two hands), W_c for a record laid by share with its count and W_c sin Omega = 2.23605 den T for one quantum at [2, 3], and the loader refuses by name a region declaring a `transition`, a one-Node region (a region of a travelling wave), a transition without its resonance and a giving with no transition between its parts; the dark's hazard is per proper interval (`meeting.hazard_weights`): the weights [span x unit, (tau - span) x unit] in the vacuum and half the giving's weight at p_0 = Gamma / 2; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the detector's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `meeting.gave`): the giver is in the dark until it gives, so over the trials' first 25 seeds its giving is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the givings at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
+    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): a region's unit of one quantum is its record's own share per quantum read once at the books' origin (`credit.record_unit`, the advisor's line of 2026-10-03 with the mathematician's second, two hands), W_c for a record laid by share with its count and W_c sin Omega = 2.23605 den T for one quantum at [2, 3], and the loader refuses by name a region declaring a `transition`, a one-Node region (a region of a travelling wave), a transition without its resonance and a giving with no transition between its parts; the dark's hazard is per proper interval (`meeting.hazard_weights`): the weights [span x unit, (tau - span) x unit] in the vacuum and half the giving's weight at p_0 = Gamma / 2; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the node_reader's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `meeting.gave`): the giver is in the dark until it gives, so over the trials' first 25 seeds its giving is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the givings at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
     light = next(f for f in families if f.name == "pulse")
@@ -236,13 +236,13 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
     refused("pair", pair_of, [1], "resonance")
     row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]]}
     refused(
-        "holds the key 'transition'", detectors_of, [{**row, "transition": TOP}], (2, 1, 1), 0, (), ()
+        "holds the key 'transition'", node_readers_of, [{**row, "transition": TOP}], (2, 1, 1), 0, (), ()
     )
     one = [{"name": "d", "positions": [[0, 0, 0]]}]
     refused(
         "a region of a travelling wave",
         regions_of_the_law,
-        detectors_of(one, (2, 1, 1), 0, (), ()),
+        node_readers_of(one, (2, 1, 1), 0, (), ()),
         (),
         (2, 1, 1),
         (False,) * 3,
@@ -252,11 +252,11 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "resonance" / "expectation.json").read_text(encoding="utf-8"))
     world = json.loads((tmp_path / "resonant.json").read_text(encoding="utf-8"))
-    bare = {k: v for k, v in world["measured"][0]["transitions"][0].items() if k != "resonance"}
+    bare = {k: v for k, v in world["bodies"][0]["transitions"][0].items() if k != "resonance"}
     refused(
         "resonance",
         bodies_of,
-        [{**world["measured"][0], "transitions": [bare]}],
+        [{**world["bodies"][0], "transitions": [bare]}],
         None,
         "",
         families,
@@ -265,11 +265,11 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         (),
         action,
     )
-    alone = {**world["measured"][0], "transitions": []}
+    alone = {**world["bodies"][0], "transitions": []}
     refused("no transition", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, (), action)
     path, draw, at = (
         tmp_path / "resonant.json",
-        world["measured"][0]["instrument"],
+        world["bodies"][0]["instrument"],
         tuple(blind["cos_omega"]["node"]),
     )
     given_at: list[int] = []
@@ -380,7 +380,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
 
 
 def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tmp_path):
-    """Step 5 of the emitter/detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the one-line packet's root T / sin Omega, twice S (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), and the envelope in the energy form carry one quantum within the deficit below tau per Node (43,962 at T = 32,768 and [2, 3], 87,925 at T = 65,536, the root rounded once; a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 35^3 Nodes a giver of the lifetime 2 in the dark (its giving drawn per interval at the hazard 1 / 2) lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a detector's own unit at [2, 3], the carrier's phase at Omega by the rotation's invariant over the lay lines, den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2 per Node within 2 percent, the floor root of the sine 6 percent off; the packet giving world's blind is the builder's byte for byte (examples/events/packet_giving)."""
+    """Step 5 of the emitter/node_reader (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the one-line packet's root T / sin Omega, twice S (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), and the envelope in the energy form carry one quantum within the deficit below tau per Node (43,962 at T = 32,768 and [2, 3], 87,925 at T = 65,536, the root rounded once; a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 35^3 Nodes a giver of the lifetime 2 in the dark (its giving drawn per interval at the hazard 1 / 2) lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a node_reader's own unit at [2, 3], the carrier's phase at Omega by the rotation's invariant over the lay lines, den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2 per Node within 2 percent, the floor root of the sine 6 percent off; the packet giving world's blind is the builder's byte for byte (examples/events/packet_giving)."""
     total, train = line_total(32768, (2, 3)), envelope(line_total(32768, (2, 3)), 48, 1)
     assert (total, train[0], len(train), total - sum(a * a for a in train)) == (43962, 30, 456, 47)
     assert train[::-1] == sorted(train) and train[-1] == 1 and total == 2 * exact_total(32768, (2, 3))
@@ -397,7 +397,7 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
         (EVENTS / "packet_giving" / "expectation.json").read_text(encoding="utf-8")
     )
     world = json.loads((tmp_path / "packet_giving.json").read_text(encoding="utf-8"))
-    giver = world["measured"][0]
+    giver = world["bodies"][0]
 
     def body(at, **changes):  # the giver at a Node with its one giving changed
         rate = {k: v for k, v in {**giver["rates"][0], **changes}.items() if v is not None}
@@ -415,10 +415,10 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
         **world,
         "shape": [35, 35, 35],
         "ticks": 4,
-        "detectors": [],
-        "measured": body([17, 17, 17], width=3, lifetime=2),
+        "node_readers": [],
+        "bodies": body([17, 17, 17], width=3, lifetime=2),
     }
-    small["measured"][0]["instrument"] = {**giver["instrument"], "window": 2}
+    small["bodies"][0]["instrument"] = {**giver["instrument"], "window": 2}
     del small["instrument"]
     (tmp_path / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
     load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py").main(
@@ -429,7 +429,9 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     for _ in range(4):
         board.step()
     given = [
-        c for c in lines if c["event"] == "credit" and c["label"] == "DETECTOR" and c["given"] == "pulse"
+        c
+        for c in lines
+        if c["event"] == "credit" and c["label"] == "NODEREADER" and c["given"] == "pulse"
     ]
     lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
     assert len(given) == 1 and {c["tick"] for c in lays} == {given[0]["tick"]} and len(lays) > 100
@@ -461,14 +463,14 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
 
 
 def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path):
-    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic detector's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
+    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_reader's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
     world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
-    giver = {**world["measured"][0], "transitions": [{**world["measured"][0]["transitions"][0]}]}
+    giver = {**world["bodies"][0], "transitions": [{**world["bodies"][0]["transitions"][0]}]}
     giver["transitions"][0]["resonance"], giver["instrument"] = (
         [9, 10],
         {**giver["instrument"], "window": 240},
     )
-    (path := tmp_path / "low.json").write_text(json.dumps({**world, "measured": [giver], "ticks": 240}))
+    (path := tmp_path / "low.json").write_text(json.dumps({**world, "bodies": [giver], "ticks": 240}))
     TOOL.main(["--input", str(path)])
     for seed in (1, 2, 3, 4):  # the first trial whose giving leaves the whole span inside the run
         board, series = GameBoard(load_world(path), (lines := []).append), {}
@@ -482,7 +484,7 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
         jumps = [
             (c["tick"], c["given"])
             for c in lines
-            if c["event"] == "credit" and c["label"] == "DETECTOR" and (c["taken"] or c["given"])
+            if c["event"] == "credit" and c["label"] == "NODEREADER" and (c["taken"] or c["given"])
         ]
         if jumps and jumps[0][1] == "pulse" and jumps[0][0] <= 192:
             break

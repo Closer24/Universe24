@@ -124,7 +124,7 @@ def messages_of(
         if turns == 0:
             raise ValueError(
                 f"{label}.wave's p is 0: a message has a wave number pi p / q per Link, p not 0, its sign "
-                "the direction along the axis (a detector's region is read against it)"
+                "the direction along the axis (a node_reader's region is read against it)"
             )
         phase = message.get("phase", [0, 1])
         if not isinstance(phase, list) or len(phase) != 2:

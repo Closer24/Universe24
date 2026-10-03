@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
+        25,
+        "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
+        "after #1788's lay defect in the committed worlds that the test without a board did not catch): one GameBoard per "
+        "folder, no interval, the long-loading folders the runner's gate by name",
+    ),
     "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
         79,
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
@@ -70,9 +76,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "record empty at the books' origin set at its first lay to the giving's own W_c sin Omega, a born quantum "
         "below the half-top energy credited 1 and not 0",
     ),
-    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum": (
+    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_counts_in_its_own_quantum": (
         90,
-        "the generic detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
+        "the generic node_reader round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
