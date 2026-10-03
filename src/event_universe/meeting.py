@@ -103,10 +103,8 @@ def relaid(
         (re, im), (re_before, im_before) = standing(count, action, family.pair, phase, sense)
         pairs = [(re, re_before), (im, im_before)]
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
-    first, at = (
-        node.record_slice(family, books.record).start + part * family.width,
-        board.mask((books.at,)),
-    )
+    first = node.record_slice(family, books.record).start + part * family.width
+    at = board.mask((books.at,))
     for number, (now, before) in zip(range(first, first + len(pairs)), pairs, strict=True):
         line = state.lines[number]
         state.lines[number] = node.Record(
@@ -216,9 +214,7 @@ def written(board: GameBoard, items: list[Item]) -> None:
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]
     for family in sorted({i.family for i in items if i.measured is None and i.delta < 0}):
-        if (
-            board.credit.counts[family] <= 0
-        ):  # the record's count at 0: its front from every Node written
+        if board.credit.counts[family] <= 0:  # the count at 0: the front from every Node written
             front.started(board, family, [at for i in items if i.family == family for at in i.nodes])
 
 
@@ -247,13 +243,12 @@ def given_quantum(board: GameBoard, item: Item) -> None:
     """A spread record given whole quanta at the Nodes named, the lay (features/click, `standing`): the levels of `delta` quanta standing there at the born rotation, the resonance omega_e - omega_g of the giving parts' pairs (`born`, the one place of the choice), 0 for the parts of one pair, the massless pair, the two levels alike, A^2 = count T div 2 added to the record's first line, the free row, its remainder at the lay's origin, the half wall; the record's count in the books up by the change; where the item names the lay's pair, the conversion's records out at their family's massless pair, the lay by the count at the one Node, A^2 = count T div 2 whatever the family (the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum; `born` of one massive pair with itself is not the massless pair by the fixed point's rounding of sin omega den, a finding by name for the giving)."""
     family, state = board.families[item.family], board.states[item.family]
     gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
-    pair, action = born(family.pair, family.pair), board.world.quantum_action  # 0 for one pair
-    pair = item.pair if item.pair is not None else pair
-    (level, _im), (before, _im_before) = standing(item.delta, action, pair, (1, 0), 1)
-    origin, line = (
-        division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0],
-        state.lines[0],
+    pair = item.pair if item.pair is not None else born(family.pair, family.pair)  # 0 for one pair
+    (level, _im), (before, _im_before) = standing(
+        item.delta, board.world.quantum_action, pair, (1, 0), 1
     )
+    origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
+    line = state.lines[0]
     now, was = line.now + np.where(at, level, 0), line.before + np.where(at, before, 0)
     state.lines[0] = node.Record(now, was, np.where(at, origin, line.remainder))
     board.credit.counts[item.family] += item.delta
@@ -306,30 +301,17 @@ def reported(
         return
     names, families = books.declared.names, board.families
     window = [board.tick - books.elapsed + 1, board.tick]
-    taken_name = families[taken].name if taken is not None else None
-    given_name = families[light].name if light is not None else None
-    at = list(books.at)
-    line = jump(
-        board.tick,
-        families[books.index].name,
-        books.number,
-        window,
-        names[realised],
-        names[left],
-        taken_name,
-        given_name,
-        at,
-        levels,
-    )
-    board.observer(line)
+    taken_name, given_name = (families[f].name if f is not None else None for f in (taken, light))
+    words = (names[realised], names[left], taken_name, given_name)
+    name, at = families[books.index].name, list(books.at)
+    board.observer(jump(board.tick, name, books.number, window, *words, at, levels))
 
 
 def gave(board: GameBoard, books: NodeBooks) -> bool:
     """The giving drawn at a record's window's end (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act; the advisor's clause 5; the mathematician's 174 (c), two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid at the born rotation, the resonance of the two parts of one pair being 0, light's own; `click`) and nothing, the weights the window against the lifetime's rest in the labels' unit (the declared floor; the beat's current of a one-part record at one Node is 0, so the floor alone is the rate), the record's own generator; the first giving drawn is taken and the window ends; one jump line."""
     assert books.declared.draw is not None
     window = books.declared.draw.window
-    wall = count_wall(board.families[books.index], board.world.quantum_action)
-    unit = wall * wall
+    unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             span = window if window <= rate.lifetime else rate.lifetime
@@ -352,20 +334,16 @@ def converted(board: GameBoard, books: NodeBooks) -> bool:
             return False
         span = window if window <= table.rate else table.rate
         items = [Item(books.index, books.number, books.part, -1, (books.at,))]
-        items += [
-            Item(out, None, None, 1, (books.at,), (board.families[out].pair[1],) * 2)
-            for out in table.outs
-        ]
+        for out in table.outs:
+            den = board.families[out].pair[1]
+            items.append(Item(out, None, None, 1, (books.at,), (den, den)))
         weights = [span, table.rate - span]
         pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
         if pick == 0:
             if board.observer is not None:
-                into = [board.families[out].name for out in table.outs]
-                window_of = [board.tick - books.elapsed + 1, board.tick]
-                family = board.families[books.index].name
-                board.observer(
-                    conversion_report(board.tick, family, books.number, window_of, into, list(books.at))
-                )
+                name, *into = [board.families[i].name for i in (books.index, *table.outs)]
+                over, at = [board.tick - books.elapsed + 1, board.tick], list(books.at)
+                board.observer(conversion_report(board.tick, name, books.number, over, into, at))
             return True
     return False
 
@@ -394,13 +372,9 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
                 [Item(drive, None, None, -1, (books.at,)), *exchange(books, t.leaves, t.enters)]
                 for books, t in outcomes
             ]
-            first = closing[0]
+            first, outcome_weights = closing[0], [*weights, rest if rest > 0 else 0]
             pick, first.state = click(
-                board,
-                first.state,
-                first.declared.draw,
-                [*weights, rest if rest > 0 else 0],
-                [*lists, []],
+                board, first.state, first.declared.draw, outcome_weights, [*lists, []]
             )
             if pick >= len(outcomes):
                 break
@@ -415,11 +389,7 @@ def jumped(board: GameBoard) -> None:
     for books in board.credit.bodies:
         turned_labels(board, books)
         books.elapsed += 1
-    closing = [
-        books
-        for books in board.credit.bodies
-        if books.declared.draw is not None and books.elapsed == books.declared.draw.window
-    ]
+    closing = [b for b in board.credit.bodies if b.declared.draw and b.elapsed == b.declared.draw.window]
     quiet = [books for books in closing if not converted(board, books) and not gave(board, books)]
     done = took(board, quiet)
     for books in quiet:
