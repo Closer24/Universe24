@@ -31,7 +31,7 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   rows, each folder its `design.json`, its `build_world.py` and its blind
   `expectation.json` written first from the advisor's numbers:
   `examples/events/matter_alone/` (matter alone: the compact pixel on the open
-  25-cube and the cloud on the 41-cube, the rest rotation, the
+  25-cube, the rest rotation, the
   tail and the drift), `examples/events/matter_and_gravity/` (the massless row's
   rest about a pixel in levels, 3 G(r) s, on its own universe with gravity at the
   level weight 10), `examples/events/matter_and_binding/` (two pixels twelve Links
@@ -109,7 +109,7 @@ PYTHONPATH=src python tools/run_inputs.py --out runs/nuclide examples/events/nuc
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/nuclide/free_nuclide.json
 PYTHONPATH=src python tools/body_drift.py --expectation examples/events/like_or_unlike/expectation.json examples/events/like_or_unlike/like.json examples/events/like_or_unlike/unlike.json examples/events/like_or_unlike/uncharged_pair.json examples/events/like_or_unlike/alone_first.json examples/events/like_or_unlike/alone_second.json examples/events/like_or_unlike/uncharged_alone_first.json examples/events/like_or_unlike/uncharged_alone_second.json examples/events/like_or_unlike/like_plain.json examples/events/like_or_unlike/unlike_plain.json
 for f in matter_alone matter_and_gravity matter_and_binding light_and_charge; do PYTHONPATH=src python examples/events/$f/build_world.py --modes; done
-PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_alone/expectation.json examples/events/matter_alone/pixel.json examples/events/matter_alone/cloud.json
+PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_alone/expectation.json examples/events/matter_alone/pixel.json
 PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_and_gravity/expectation.json examples/events/matter_and_gravity/well.json
 PYTHONPATH=src python tools/run_inputs.py --out runs/light examples/events/light_and_charge/free.json examples/events/light_and_charge/through_neutral.json && for w in free through_neutral; do PYTHONPATH=src python tools/click_counts.py --world examples/events/light_and_charge/$w.json --output runs/light/$w.output.json --expectation examples/events/light_and_charge/expectation.json; done
 ```
