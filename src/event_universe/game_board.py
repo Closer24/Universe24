@@ -12,6 +12,7 @@ from event_universe import conversion, credit, front, giving, growth, meeting, n
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
+from event_universe.core.rule3 import coefficients, division_forward
 from event_universe.features.currents import Vector
 from event_universe.features.start import Sourced, held_rests
 from event_universe.features.write import carried
@@ -55,10 +56,14 @@ class GameBoard:
         action = self.world.quantum_action
         self.writes = {index: held_write(self.families, index, action) for index in self.held}
         self.states = [
-            node.empty_state(family, self.shape, self.walls(index), self.kind)
+            node.empty_state(
+                family, self.shape, self.walls(index), self.kind, origin=self.half_wall(index)
+            )
             for index, family in enumerate(self.families)
         ]
-        self.origins = [0] * len(self.families)  # the remainder the start gave each held row
+        self.origins = [
+            self.half_wall(index) for index in range(len(self.families))
+        ]  # every line's remainder at birth, the half wall; the start gives each held row's time line its rest's own
         for number, (record, row) in enumerate(self.laid_rows()):
             if isinstance(row, BodyRow) and row.instrument is not None:
                 meeting.laid_record(self, number, record)
@@ -76,6 +81,13 @@ class GameBoard:
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.gate()
         self.credit = credit.Books.of(self)
+
+    def half_wall(self, index: int) -> int:
+        """The half wall of the rule a family's lines step by, w div 2 with w = 6 den Gamma^2 G^2 (`coefficients`), the remainder every line is born with: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root)."""
+        num, den = self.families[index].pair
+        clock = self.world.node_clock
+        wall = coefficients(num, den, clock, clock, clock, None, self.unit)[2]
+        return int(division_forward(wall, 2, 0)[0])
 
     def walls(self, index: int) -> tuple[int, ...]:
         """The walls of a family's one write per line, none for a family that holds nothing."""

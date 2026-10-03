@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.loader.derived import FamilyRule
+from event_universe.core.rule3 import division_forward
+from event_universe.features.click import SCALE_OF, along_cosine, envelope, line_total
+from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import integer, keyed
 
 Pattern = tuple[tuple[int, int], ...]  # per part [alpha_k, beta_k], the part's read of the setting
@@ -116,6 +118,9 @@ RATE_KEYS = (
     "lifetime",
     "gives_to",
 )  # a giving's keys; its resonance the transition's between the parts
+RATE_OPTIONAL = (
+    "width",
+)  # the open board's packet's Nodes across, the one declared number of its shape
 CONVERSION_KEYS, CONVERSION_REQUIRED = (
     ("rate", "to", "sense"),
     ("rate", "to"),
@@ -144,13 +149,15 @@ def pair_of(value: object, label: str) -> tuple[int, int]:
 
 @dataclass(frozen=True)
 class Rate:
-    """A giving of a body as an instrument (the fifth act, the giving click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions."""
+    """A giving of a body as an instrument (the fifth act, the giving click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions; in the open board the packet's `width`, its Nodes across (None inside a guide, the source in time), and the directions the board holds for its lay from the body's Node, (axis, sense) each, drawn by the giver (`packet_form`; `giving.laid_packet`)."""
 
     leaves: int
     enters: int
     lifetime: int
     light: int
     resonance: tuple[int, int]
+    width: int | None = None
+    directions: tuple[tuple[int, int], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -224,12 +231,13 @@ def rates_of(
     own: int,
     transitions: tuple[Transition, ...],
 ) -> tuple[Rate, ...]:
-    """A body's `rates`: each `from` and `to`, two of its parts' names, `lifetime` from 1 (the giving at 1 / lifetime per interval, the declared floor) and `gives_to`, the family of quanta other than the body's own on which the given quantum is laid; refused by name otherwise."""
+    """A body's `rates`: each `from` and `to`, two of its parts' names, `lifetime` from 1 (the giving at 1 / lifetime per interval, the declared floor), `gives_to`, the family of quanta other than the body's own on which the given quantum is laid, and optionally `width` from 1, the open board's packet's Nodes across (`packet_form` decides its use by the board's shape); refused by name otherwise."""
     if not isinstance(value, list):
         raise ValueError(f"{label} must be a list of the body's givings")
     found = []
     for index, entry in enumerate(value):
-        row = keyed(entry, f"{label}[{index}]", RATE_KEYS, RATE_KEYS)
+        row = keyed(entry, f"{label}[{index}]", RATE_KEYS + RATE_OPTIONAL, RATE_KEYS)
+        width = integer(row["width"], f"{label}[{index}].width", 1) if "width" in row else None
         leaves, enters = (
             part_named(row["from"], f"{label}[{index}].from", names),
             part_named(row["to"], f"{label}[{index}].to", names),
@@ -248,8 +256,66 @@ def rates_of(
                 f"{label}[{index}] gives at the resonance [{num}, {den}], above the axis band's top (cos Omega "
                 "below 1 / 3): no axis carries the quantum, and the diagonals' lay is not built"
             )
-        found.append(Rate(leaves, enters, lifetime, light, between[0].resonance))
+        found.append(Rate(leaves, enters, lifetime, light, between[0].resonance, width))
     return tuple(found)
+
+
+def packet_form(
+    found: NodeInstrument,
+    label: str,
+    families: tuple[FamilyRule, ...],
+    at: tuple[int, int, int],
+    shape: tuple[int, int, int],
+    action: int,
+) -> NodeInstrument:
+    """The loader's decision on each giving's lay by the board's shape against the width, no flag (the mathematician's 224 (1) and 229 with the advisor's seconds, two hands; the owner's word of 2026-10-03, 09:46 Israel): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`giving.given_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`giving.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
+    guide = sum(1 for extent in shape if extent > 1) <= 1
+    rates = []
+    for index, rate in enumerate(found.rates):
+        name = f"{label}.rates[{index}]"
+        if guide:
+            if rate.width is not None:
+                raise ValueError(
+                    f"{name} declares the width {rate.width} inside a guide (a board of one Node across): the guide "
+                    "carries the source in time, and the width is the open board's packet's"
+                )
+            rates.append(rate)
+            continue
+        if (
+            rate.width is None
+        ):  # no width declared: the source in time as built, every shipped world as it is
+            rates.append(rate)
+            continue
+        light, (num, den) = families[rate.light], rate.resonance
+        if (
+            along_cosine(light.pair, rate.resonance, rate.width, count_wall(light, action) ** SCALE_OF)
+            is None
+        ):
+            raise ValueError(
+                f"{name}: the width {rate.width} cannot carry the resonance [{num}, {den}]: cos k_z = 3 (den_l / num_l) "
+                "cos Omega - 2 cos(pi / (w + 1)) leaves (-1, 1), no wave number along an axis (the band with the "
+                "transverse mode)"
+            )
+        length = len(
+            envelope(line_total(action, rate.resonance), rate.lifetime, rate.width * rate.width)
+        )
+        low = int(division_forward(rate.width, 2, 0)[0])  # w div 2 by the division act, an index
+        high = rate.width - 1 - low
+        directions = tuple(
+            (axis, sense)
+            for axis in range(3)
+            if shape[axis] > 1
+            and all(at[a] - low >= 0 and at[a] + high < shape[a] for a in range(3) if a != axis)
+            for sense in (1, -1)
+            if 0 <= at[axis] + sense * (length - 1) < shape[axis]
+        )
+        if not directions:
+            raise ValueError(
+                f"{name}: no axis of the board {list(shape)} holds the packet of {length} slices and {rate.width} "
+                f"across from the Node {list(at)}"
+            )
+        rates.append(replace(rate, directions=directions))
+    return replace(found, rates=tuple(rates))
 
 
 def part_named(value: object, label: str, names: tuple[str, ...]) -> int:
