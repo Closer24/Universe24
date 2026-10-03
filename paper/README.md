@@ -57,10 +57,11 @@ their statuses.
   beside each PDF for the journal. The paper uses seven: `lattice.pdf` and `octahedron.pdf` (the two panels
   of Fig. 1, the GameBoard and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
-  `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 2,
-  the click at a bound body: space and time at the body's Node, the past
-  meeting the future, and the Node before and after the write, schematically,
-  in black and grey) by `python paper/general_formula/click_body.py`;
+  `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 4,
+  the click at a NodeReader: space and time with the NodeReader's region of
+  two Nodes, the past meeting the future, the region before the close and
+  after the write at the drawn Node, the hole by the faces' identity, and
+  the ledger, schematically, in black and grey) by `python paper/general_formula/click_body.py`;
   `bands.pdf` (light's and matter's bands along one axis, from the law's line)
   by `python paper/general_formula/bands.py`; `two_slits_rows.pdf` (the two
   slits' declared file and its screen's row, the Huygens blind of the
