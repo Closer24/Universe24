@@ -297,7 +297,7 @@ def null_window(board: GameBoard, books: NodeBooks) -> None:
     before = levels_at(board, books, books.part)
     click(board, books.state, None, [1], [[Item(books.index, books.number, books.part, 0, books.nodes)]])
     if levels_at(board, books, books.part) != before:  # a level changed: its line, the lay lines beside
-        reported(board, books, (books.part, books.part), (None, None), False)
+        reported(board, books, (books.part, books.part), (None, None), 0)
 
 
 def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:

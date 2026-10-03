@@ -128,7 +128,7 @@ def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
     return {"integers": integers, "families": [dict(row) for row in rows]}
 
 
-HELD = {"sources": ["form"], "level_weight": 5, "write_weight": 3}
+HELD = {"sources": ["form"], "level_weight": 5, "write_weight": 3, "act": "pace"}
 HOLLOW = {"name": "hollow", "pair": [1, 1], "reads": {"hollow": 1}, "held": HELD}  # reading itself at 1
 CORE = {"name": "core", "pair": [3, 4], "reads": {}}
 CORE["held"] = {**HELD, "level_weight": 7, "write_weight": -1}
@@ -181,7 +181,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     found, own_weight = read_content(((0, 1), (1, 3)), levels, [0, 60], 1)
     assert np.array_equal(found, levels[0] + 3 * 60) and own_weight == 3
     missing = {k: v for k, v in STUFF.items() if k != "reads"}
-    unweighted = {**HOLLOW, "held": {"sources": ["form"], "level_weight": 5}}
+    unweighted = {**HOLLOW, "held": {"sources": ["form"], "level_weight": 5, "act": "pace"}}
     plane = {**STUFF, "dimension": 2, "reads": {"sign": 1}}
     for rows, reason in (
         ((HOLLOW, missing), r"families\[1\] \('stuff'\) lacks the key 'reads'"),
@@ -294,7 +294,7 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         integers, families = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))
         keys = ("node_clock", "quantum_action", "width", "link_unit")
         assert derived.amplitude_bound(families, *(integers[key] for key in keys)) == hill_bound, name
-    axes = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 10**6}
+    axes = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 10**6, "act": "pace"}
     well = {"name": "well", "pair": [1, 1], "reads": {"well": 1}, "held": axes}
     deep = {**well, "name": "deep", "reads": {"deep": 1}, "held": {**axes, "write_weight": 1}}
     line = {"name": "line", "pair": [1, 1], "reads": {"well": 1}, "dimension": 1}
@@ -320,6 +320,7 @@ def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
     """No number in the engine (ENGINE.md, the start; ALGEBRA.md, the ledger's row 5 and The giving): the start's fine unit under a bound equals the former 2 x 2 x |num| x 6 x L x Gamma^2 form, the six reads at the vacuum's paces taken twice for the two levels; on three open chains the rest of a point source peaks at the discrete parabola's top 3 S c (n + 1 - c) / (n + 1) within one level, under the tent; the miss bound is (6 div 2) ((n + 2) div 2)^2 + 1 on a chain, a slab and a cube of the same extent, the six reads over the axis's two Ports and no three of the axes; the rest's `intervals` is keyword-only, the two powers by name in its two callers, 2 on a count and 1 on a Wronskian, the write's factor p^3 / (p_0 Gamma^2) and p^3 / (p_0^2 Gamma); the radiated total within one of (2 / 3) T sin k at two T and two resonances; and `PORTS` is defined once under src/, in core/ports.py."""
     from event_universe.features.start import bound_of, tent_of, unit_from_bound
     from event_universe.giving import radiated_total
+    from event_universe.loader.lay import least_action
 
     gamma, width, source = 6000, MAX_WORK_INT, 1000
     former = width // (2 * 2 * 3 * 6 * source * gamma * gamma)  # 24 |num| L Gamma^2 at num = 3, L = 1000
@@ -355,6 +356,10 @@ def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
     for action, (num, den) in ((32768, (2, 3)), (15000, (2, 3)), (32768, (4, 5)), (15000, (4, 5))):
         cos_k = (3 * num - 2 * den) / den  # the guide's wave number at the resonance
         assert abs(radiated_total(action, (num, den)) - 2 * action * (1 - cos_k**2) ** 0.5 / 3) <= 1
+    budget = [least_action((2, 3), 400, 50, (1, 100), k2) for k2 in ((32, 1), (8, 1), (32, 4))]
+    assert (
+        budget[0] == 4 * budget[1] == 4 * budget[2] and budget[0] & (budget[0] - 1) == 0
+    )  # T grows with k^2
     sources = (ROOT / "src").rglob("*.py")
     defined = [
         p.name

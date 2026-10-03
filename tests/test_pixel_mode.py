@@ -91,7 +91,8 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     near = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 10}]} for x in (12, 14)]
     refused("share a Node|does not stand", TOOL.pixel_mode, {**plain, "bodies": near})
     fixed = json.loads((world := chain_body_world(tmp_path, TOOL, 6, mode=False)).read_text())
-    fixed["lay"] = {"kind": "fixed_point", "stop": 1, "passes": 30, "tolerance": [1, 4]}
+    fixed["lay"] = {"kind": "fixed_point", "stop": 1, "passes": 30, "seed": "one_node"}
+    fixed["lay"].update(tolerance=[1, 4], confidence=[32, 1])
     world.write_text(json.dumps(fixed), encoding="utf-8"), TOOL.main(["--input", str(world)])
     mode_path = world.with_suffix(".mode.json")
     document, mode = (json.loads(p.read_text(encoding="utf-8")) for p in (world, mode_path))

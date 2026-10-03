@@ -40,6 +40,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
             **design["lay"],
             "stop": int(row["stop"]),
             "tolerance": [int(v) for v in row["tolerance"]],
+            "confidence": [32, 1],
         },
     }
 

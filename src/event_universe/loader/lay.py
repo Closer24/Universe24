@@ -6,7 +6,8 @@ from dataclasses import dataclass
 
 from event_universe.loader.keys import integer, keyed
 
-LAY_KEYS, LAY_REQUIRED = ("kind", "stop", "passes", "tolerance", "seed", "profile"), ("kind",)
+LAY_KEYS = ("kind", "stop", "passes", "tolerance", "confidence", "seed", "profile")
+LAY_REQUIRED = ("kind", "seed")  # the file states the lay's seed; no seed by omission
 REPEAT, FIXED_POINT = "repeat", "fixed_point"  # the generator's two lays, by name
 KINDS = (REPEAT, FIXED_POINT)
 ONE_NODE, COMPACT = "one_node", "compact"  # the first pass's two seeds, by name
@@ -21,12 +22,13 @@ class Lay:
     stop: int
     passes: int
     tolerance: tuple[int, int] | None
+    confidence: tuple[int, int] | None
     seed: str
     profile: tuple[int, int] | None
 
 
 def lay_of(value: object, label: str) -> Lay:
-    """The key `lay` read: `kind` one of the generator's lays by name; `stop` (from 0) and `passes` (from 1) required with the fixed-point lay and refused with the repeat, which has the start's own rule; `tolerance` [num, den] with num and den from 1 and num at most den, optional; `seed` one of the first pass's seeds by name, `one_node` without the key, and `profile` [centre, neighbour] (the centre's parts from 1, a neighbour's from 0) required with the compact seed and refused with the one-Node seed; every other key and every other word refused by name."""
+    """The key `lay` read: `kind` one of the generator's lays by name; `stop` (from 0) and `passes` (from 1) required with the fixed-point lay and refused with the repeat, which has the start's own rule; `tolerance` [num, den] with num and den from 1 and num at most den, optional, and with it `confidence` [num, den], the budget's confidence multiple squared k^2 (the two together or neither); `seed`, required, one of the first pass's seeds by name, and `profile` [centre, neighbour] (the centre's parts from 1, a neighbour's from 0) required with the compact seed and refused with the one-Node seed; every other key and every other word refused by name."""
     lay = keyed(value, label, LAY_KEYS, LAY_REQUIRED)
     kind = lay["kind"]
     if kind not in KINDS:
@@ -49,7 +51,21 @@ def lay_of(value: object, label: str) -> Lay:
             raise ValueError(f"{label}.tolerance must be [num, den], the relative deviation epsilon")
         den = integer(pair[1], f"{label}.tolerance's den", 1)
         tolerance = (integer(pair[0], f"{label}.tolerance's num", 1, den), den)
-    seed = lay.get("seed", ONE_NODE)
+    confidence = None
+    if ("confidence" in lay) != ("tolerance" in lay):
+        raise ValueError(
+            f"{label}.confidence, the budget's confidence multiple squared k^2 as [num, den], is declared with "
+            "the tolerance and not without it (ALGEBRA.md, The integer budget of a derived row)"
+        )
+    if "confidence" in lay:
+        pair = lay["confidence"]
+        if not isinstance(pair, list) or len(pair) != 2:
+            raise ValueError(
+                f"{label}.confidence must be [num, den], the confidence multiple squared k^2"
+            )
+        den = integer(pair[1], f"{label}.confidence's den", 1)
+        confidence = (integer(pair[0], f"{label}.confidence's num", 1), den)
+    seed = lay["seed"]
     if seed not in SEEDS:
         raise ValueError(
             f"{label}.seed is one of {list(SEEDS)}, the first pass's seeds by name, got {seed!r}"
@@ -70,17 +86,28 @@ def lay_of(value: object, label: str) -> Lay:
             integer(parts[0], f"{label}.profile's centre", 1),
             integer(parts[1], f"{label}.profile's neighbour", 0),
         )
-    return Lay(kind, stop, passes, tolerance, seed, profile)
+    return Lay(kind, stop, passes, tolerance, confidence, seed, profile)
 
 
-def least_action(pair: tuple[int, int], intervals: int, quanta: int, tolerance: tuple[int, int]) -> int:
-    """The least quantum action T the budget admits, a power of two (HIGHLIGHTS.md, 168 item 1's last line): the share's deviation over the body, 5.66 sigma sqrt(n) / A with sigma = (num / (3 den)) sqrt(6 / 12) levels per interval and A = sqrt(T c_i / (2 sin omega_s)), within epsilon = e_num / e_den gives T >= 32 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i); squared, with sin^2 omega_s = (den^2 - num^2) / den^2, the integer line 81 den^6 e_num^4 c_i^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), 1024 = (4 x 8)^2 with 4 x 8 = 4 (5.66 / 2)^2 and 81 = (3 x 3)^2, and T the least power of two whose square meets it, by doubling from 1; 1 where the pair has no gap (a massless family's deviation has no quantum to read)."""
+def least_action(
+    pair: tuple[int, int],
+    intervals: int,
+    quanta: int,
+    tolerance: tuple[int, int],
+    confidence: tuple[int, int],
+) -> int:
+    """The least quantum action T the budget admits, a power of two (HIGHLIGHTS.md, 168 item 1's last line): the share's deviation over the body, 5.66 sigma sqrt(n) / A with sigma = (num / (3 den)) sqrt(6 / 12) levels per interval and A = sqrt(T c_i / (2 sin omega_s)), within epsilon = e_num / e_den gives T >= 32 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i); squared, with sin^2 omega_s = (den^2 - num^2) / den^2, the integer line 81 den^6 e_num^4 c_i^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), the confidence multiple squared k^2 = 32 the file's key `confidence` as a pair [num, den] (5.66 sigma: k = 4 sqrt 2, k^4 = 1024, the shipped lays' [32, 1]), both sides scaled by its den and num, and 81 = (3 den)^4 over den^2, Rule3's 3 den squared twice, every other number the file's; T the least power of two whose square meets it, by doubling from 1; 1 where the pair has no gap (a massless family's deviation has no quantum to read)."""
     num, den = pair
     e_num, e_den = tolerance
-    left = (3 * den * 3 * den * den) ** 2 * e_num ** (2 + 2) * quanta * quanta  # 81 den^6 e_num^4 c_i^2
+    k2_num, k2_den = confidence
+    sigma_wall = 3 * den  # Rule3's 3 den, the wall of the remainder's step
+    left = (
+        (sigma_wall * sigma_wall * den) ** 2 * (e_num * e_num) ** 2 * quanta * quanta
+    )  # 81 den^6 e_num^4 c_i^2
+    left *= k2_den * k2_den
     right = (
-        (2 * 2 * num * 2 * 2 * 2 * num) ** 2 * intervals * intervals * e_den ** (2 + 2)
-    )  # 1024 num^4 n^2 e_den^4
+        (k2_num * num * num) ** 2 * intervals * intervals * (e_den * e_den) ** 2
+    )  # k^4 num^4 n^2 e_den^4
     right *= den * den - num * num  # den^2 sin^2 omega_s
     action = 1
     while left * action * action < right:
@@ -95,11 +122,13 @@ def budget_gate(
     if lay is None or lay.tolerance is None:
         return
     for pair, quanta in zip(pairs, counts, strict=True):
-        least = least_action(pair, intervals, quanta, lay.tolerance)
+        assert lay.confidence is not None  # declared with the tolerance
+        least = least_action(pair, intervals, quanta, lay.tolerance, lay.confidence)
         if action < least:
             raise ValueError(
                 f"the universe's quantum action T = {action} is below the least T = {least} the lay's tolerance "
                 f"{list(lay.tolerance)} needs for a body of the pair {list(pair)} with {quanta} quanta per Node "
-                f"over {intervals} intervals: T >= 32 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i), the "
-                "share's deviation 5.66 sigma sqrt(n) / A within epsilon (HIGHLIGHTS.md, the integer budget)"
+                f"over {intervals} intervals: T >= k^2 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i) at the "
+                f"declared confidence k^2 = {list(lay.confidence)}, the share's deviation k sigma sqrt(n) / A within "
+                "epsilon (HIGHLIGHTS.md, the integer budget)"
             )

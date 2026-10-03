@@ -9,7 +9,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import PORTS, SIDES, Wrap, arrival
+from event_universe.core.ports import AXES, PORTS, SIDES, Wrap, arrival
 from event_universe.core.rule3 import coefficients, division_forward, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.click import presented
@@ -133,7 +133,7 @@ def turning(
                 for r in reads
             ]
         )
-        for line in range(1 + 3)
+        for line in range(1 + AXES)  # the time line and the three axis lines
     ]
     clock = paces.clock_of(gamma, read_lines(index, families, states, direction, record)[0])
     return turned_by(levels[0], clock, gamma), (levels[1], levels[2], levels[3])
@@ -152,7 +152,7 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
             for a in range(3):
                 for side in (1, -1):
                     link = angles[1][a] + arrival(angles[1][a], a, side, wrap)
-                    rotation.guard(link, 2 * 2 * gamma, families[index].name, a)
+                    rotation.guard(link, rotation.link_wall(gamma), families[index].name, a)
 
 
 def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:

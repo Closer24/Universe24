@@ -64,6 +64,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "family": design["family"],
         "along": "x",
         "wave": list(design["wave"]),
+        "phase": [0, 1],
         "amplitude": int(design["amplitude"]),
         "top": {"x": [packet["column"], packet["column"]], "y": list(packet["across"]), "z": [0, 0]},
         "edge": {"x": int(packet["edge_along"]), "y": int(packet["edge_across"]), "z": 0},

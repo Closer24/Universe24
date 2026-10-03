@@ -36,7 +36,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
     ]
     record["rates"] = [{"from": "P", "to": "S", "lifetime": 2, "gives_to": "fluorescence"}]
-    drive = {"family": "strong_drive", "along": "x", "wave": [1, 2], "amplitude": 600}
+    drive = {"family": "strong_drive", "along": "x", "wave": [1, 2], "phase": [0, 1], "amplitude": 600}
     drive.update(top={"x": [0, 5], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
     counter = {
         "name": "counter",
@@ -56,8 +56,13 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     wrong["parts are"] = {**record, "transitions": [{**record["transitions"][0], "to": "X"}]}
     wrong["weight"] = {**record, "transitions": [{**record["transitions"][0], "weight": 0}]}
     wrong["no `instrument`"] = {k: v for k, v in record.items() if k != "instrument"}
+    edge = {**record["transitions"][0], "resonance": [1, 4]}  # cos Omega below 1 / 3: cos k below -1
+    wrong["above the axis band's top"] = {**record, "transitions": [edge]}
     for word, body in wrong.items():
         refused(word, node_reader_of, body, "bodies[0]", families, 0, quanta, 1)
+    node_reader_of(
+        {**record, "transitions": [{**edge, "resonance": [1, 3]}]}, "bodies[0]", families, 0, quanta, 1
+    )  # 3 num = den: the band's edge, cos k = -1, admitted
     apart = {**record, "nodes": [nodes[0], {"node": [3, 5, 2], "weight": 1}]}  # in pieces
     action = universe["integers"]["quantum_action"]
     counted = {**record, "nodes": [{"node": at, "count": 1}, nodes[1]]}  # a count on a reader's Node

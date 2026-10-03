@@ -10,7 +10,7 @@ from event_universe.core.ports import PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
 from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
-from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK
+from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK, link_wall
 
 PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
 REAL_LINE, PLANE_LINE = (
@@ -351,7 +351,7 @@ def bound_under_rooms(
             room = (sum(abs(read) for read in reads) + wall) * reach + abs(self_coefficient)
             found = min(found, int(division_forward(largest - wall, room, 0)[0]) - slack)
         if reach > 1:
-            link = 2 * 2 * gamma  # the Link's wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma)
+            link = link_wall(gamma)  # the Link's wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma)
             product = int(division_forward(largest, 2 * link * link, 0)[0])  # 2 n w x1 at n = w
             found = min(found, int(division_forward(product - 1, reach, 0)[0]) - slack)
         if family.quanta and num:

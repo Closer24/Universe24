@@ -22,7 +22,8 @@
      "tensions"
     ],
     "level_weight": 1000,
-    "write_weight": 1
+    "write_weight": 1,
+    "act": "pace"
    }
   },
   {
@@ -40,7 +41,8 @@
      "wronskian"
     ],
     "level_weight": 1,
-    "write_weight": 4
+    "write_weight": 4,
+    "act": "pace"
    }
   },
   {
@@ -58,7 +60,8 @@
      "form"
     ],
     "level_weight": 1,
-    "write_weight": 1
+    "write_weight": 1,
+    "act": "pace"
    }
   },
   {

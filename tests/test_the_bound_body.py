@@ -187,7 +187,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     rows["gravity"]["held"]["act"], rows["charge"]["held"]["act"] = "rotation", "pace"
     refused("a holder of the content, sourced by the form", universe_of, universe)
     for gate in (json.loads((EVENTS / f"{n}.json").read_bytes()) for n in ("light", "pair")):
-        assert not any("act" in row.get("held", {}) for row in gate["families"])
+        assert all(row["held"]["act"] == "pace" for row in gate["families"] if "held" in row)  # stated
 
 
 def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte(tmp_path):
@@ -223,7 +223,12 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
     """The count-1 gate and the lay of each quantum of charge as its own record (ALGEBRA.md, No record reads its own write of the sign; what is open, item 43 (1)): a universe of a holder of the content at a level weight so large that its rest is 0 at every Node (the paces Gamma, the write's factor 1 and the turn's numerator the level itself), the holder of the sign under the rotation at E_s = 1 and k_w by the energy line (k_w Gamma den = E_s T num, 4 at T = 36,000) and the charged plane of matter's pair; a chain of ten Nodes (x open) with two bodies of the charged family of count 1 in the senses +1 and -1, each laid by the generator as the one-Node record of its quantum (`--pixel`: one unit of the invariant 2 A^2 sin omega = T, A = isqrt(T den div (2 sine)) with sine = isqrt(den^2 - num^2), its Wronskian A x (A sine div den) at its Node and 0 elsewhere, sense x T / 2 within 2 A of the rounding) and admitted by the gate at the start: each body its own record, the holder three rows of four lines (the free row 0 and one per record), each row sourced by its own record alone (`row_sources`), the free row 0 at every Node (nothing sources it, no light laid) and each record's row at the start of the sign of its own sense; over three intervals, for each record, the turn's time numerator is bit for bit the other record's row's time line and its odd angles the other row's odd lines, the same bit for bit with the record's own row zeroed (the self-read 0 to the bit), and the row's time line after the step is Rule3's plain step of the row (the massless pair at the vacuum's paces) plus (k_w x W + r) div (E_s T) with W the record's own Wronskian booking and r the write's remainder before, the other record's Wronskian entering nowhere; a body of count 2, and a body of two Nodes of count 1, of the charged family are refused by name as one quantum of its family."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     k_w = T * PAIR[0] // (GAMMA * PAIR[1])  # the energy line at E_s = 1: k_w Gamma den = E_s T num
-    content = {"sources": ["form"], "level_weight": 10**12, "write_weight": 1}  # a rest of 0 levels
+    content = {
+        "sources": ["form"],
+        "level_weight": 10**12,
+        "write_weight": 1,
+        "act": "pace",
+    }  # a rest of 0
     sign = {"sources": ["wronskian"], "level_weight": 1, "write_weight": k_w, "act": "rotation"}
     rows = [
         {"name": "binding", "pair": [2400, 2401], "reads": {"binding": 1}, "held": content},
@@ -284,9 +289,10 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
 
 
 HOLDER = {"name": "nuclear", "pair": [50, 51], "reads": {"gravity": 1, "binding": 1, "nuclear": 1}}
-HOLDER["held"] = {"sources": ["form"], "level_weight": 1, "write_weight": 300}  # E_n and W_1, the file's
+HOLDER["held"] = {"sources": ["form"], "level_weight": 1, "write_weight": 300, "act": "pace"}  # E_n, W_1
 NUCLEON = {"name": "nucleon", "pair": list(PAIR), "dimension": ["plane"] * 3, "reads": HOLDER["reads"]}
 COMPACT = {"kind": "fixed_point", "stop": 2, "passes": 30, "seed": "compact", "profile": [1, 4]}
+K2 = (32, 1)  # the budget's confidence multiple squared, the shipped lays' key
 NUCLEUS, CUBE = 25, 9  # the design's count, a few quanta, and the open cube's side
 
 
@@ -317,10 +323,12 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
     assert len(passes) <= COMPACT["passes"] and max(passes[-1][1:3]) <= COMPACT["stop"]
     nodes, ticks = world["bodies"][0]["nodes"], world["ticks"]
     declared, per_node = sum(n["count"] for n in nodes), max(n["count"] for n in nodes)
-    den = max(d for d in range(1, 1000) if least_action(PAIR, ticks, per_node, (1, d)) <= action)
-    assert least_action(PAIR, ticks, per_node, (1, den)) == action  # T the least power of two admitted
-    assert least_action(PAIR, ticks, per_node, (1, den + 1)) > action
-    world["lay"] = {**COMPACT, "tolerance": [1, den]}
+    den = max(d for d in range(1, 1000) if least_action(PAIR, ticks, per_node, (1, d), K2) <= action)
+    assert (
+        least_action(PAIR, ticks, per_node, (1, den), K2) == action
+    )  # T the least power of two admitted
+    assert least_action(PAIR, ticks, per_node, (1, den + 1), K2) > action
+    world["lay"] = {**COMPACT, "tolerance": [1, den], "confidence": list(K2)}
     for name, document in (("w", world), ("tw", {**world, "universe": "t.json"})):  # the twin's lay
         (tmp_path / f"{name}.json").write_text(json.dumps(document), encoding="utf-8")
         laid = {**mode, "world_digest": input_digest(document)}

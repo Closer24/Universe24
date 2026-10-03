@@ -8,7 +8,8 @@
  ],
  "lay": {
   "kind": "fixed_point",
-  "passes": 30
+  "passes": 30,
+  "seed": "one_node"
  },
  "worlds": {
   "standing_15": {

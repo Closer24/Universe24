@@ -363,7 +363,7 @@ def held_rests(
         found = [field.levels for field in fields]
         name = f"the lay and the rest of {len(holders)} holders and {len(signs)} signs"
         if returned(
-            found, levels, seen, name, 1 + 1
+            found, levels, seen, name, 2
         ):  # two division acts composed: the rest's and the booking's
             return fields
         levels = found

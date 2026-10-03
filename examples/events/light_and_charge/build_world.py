@@ -58,6 +58,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
                 "family": design["light"],
                 "along": "x",
                 "wave": [int(v) for v in design["wave"]],
+                "phase": [0, 1],
                 "amplitude": int(design["amplitude"]),
                 "top": {
                     "x": [int(design["top"]), int(design["top"])],

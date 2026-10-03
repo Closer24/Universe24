@@ -348,6 +348,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
         given_at
     )  # not the degenerate corner's one interval
     lit = {**world, "messages": [{"family": "pulse", "along": "x", "wave": [1, 2], "amplitude": 308}]}
+    lit["messages"][0]["phase"] = [0, 1]
     lit["messages"][0].update(
         top={"x": [0, 47], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0}
     )

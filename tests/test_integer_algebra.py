@@ -156,6 +156,31 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
 
 
 RULE3, DIVISIONS = "core/rule3.py", {ast.FloorDiv, ast.Mod}
+
+
+def literal_products(tree: ast.AST) -> list[int]:
+    """Every product, sum, difference or power of two integer literals (`2 * 2`, `1 + 3`, `2 ** 10`), by line: a number composed in the engine and named nowhere."""
+    return [
+        node.lineno
+        for node in ast.walk(tree)
+        if isinstance(node, ast.BinOp)
+        and all(isinstance(x, ast.Constant) and type(x.value) is int for x in (node.left, node.right))
+    ]
+
+
+def test_a_composed_product_of_literals_is_refused_outside_core_rule3() -> None:
+    """No number in the engine (the owner's word of 2026-10-03, "where there are numbers, throw them out or close them"; PR D): outside core/rule3.py no two integer literals are multiplied, added, subtracted or raised to each other, since the product would be a number the engine should take from a name of the Ports and the levels or from the run's files; Rule3's own 2, 3, 6 and 12 stand in its home."""
+    offenders = [
+        f"{path.relative_to(SRC).as_posix()}:{line}"
+        for path in sorted(SRC.rglob("*.py"))
+        if path.relative_to(SRC).as_posix() != RULE3
+        for line in literal_products(ast.parse(path.read_text(encoding="utf-8")))
+    ]
+    assert offenders == [], offenders
+    assert literal_products(ast.parse("x = 2 * 2\ny = 1 + 3\nz = 2**10\n")) == [1, 2, 3]
+    assert literal_products(ast.parse("x = 2 * a\ny = -3\nz = (1, 2)\n")) == []
+
+
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
     ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),

@@ -15,7 +15,7 @@ FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held", "reads"),
     ("name", "pair"),
     ("sources", "level_weight", "write_weight", "rest", "act"),
-    ("sources", "level_weight", "write_weight"),
+    ("sources", "level_weight", "write_weight", "act"),
 )
 FORM, TENSIONS, WRONSKIAN = (
     "form",
@@ -38,7 +38,7 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, boo
                 f"{label} is a held row and declares no dimension: its shape is its sources' count"
             )
         held = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)
-        sources, act = held["sources"], held.get("act", PACE)
+        sources, act = held["sources"], held["act"]  # required: the file states the row's act
         if not isinstance(sources, list) or tuple(sources) not in SOURCES:
             raise ValueError(
                 f"{label}.held.sources is one of {[list(s) for s in SOURCES]}, got {sources!r}"

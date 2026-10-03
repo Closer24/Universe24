@@ -54,6 +54,7 @@ def world_of(design: dict, n: int) -> dict:
         "family": drive["family"],
         "along": "x",
         "wave": drive["wave"],
+        "phase": [0, 1],
         "amplitude": drive["amplitude"],
         "top": {"x": [0, shape[0] - 1], "y": [0, shape[1] - 1], "z": [0, shape[2] - 1]},
         "edge": {"x": 0, "y": 0, "z": 0},
