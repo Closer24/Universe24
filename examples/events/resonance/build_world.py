@@ -35,7 +35,10 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
     draw = {**design["generator"], "window": int(row["window"]), "seed": int(row["seed"])}
     return {
         "family": row["family"],
-        "nodes": [{"node": list(row["node"]), "count": 1}],
+        "nodes": [
+            {"node": list(row["node"]), "count": 1},
+            {"node": [int(row["node"][0]) + 1, *row["node"][1:]], "count": 1},
+        ],
         "parts": parts,
         "transitions": transitions,
         "rates": rates,

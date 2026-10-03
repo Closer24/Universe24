@@ -24,7 +24,10 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
     ]  # the families out, the design's other words aside
     body = {
         "family": design["neutron"]["family"],
-        "nodes": [{"node": centre, "count": int(design["neutron"]["count"])}],
+        "nodes": [
+            {"node": centre, "count": int(design["neutron"]["count"])},
+            {"node": [centre[0] + 1, *centre[1:]], "count": int(design["neutron"]["count"])},
+        ],
     }
     body["conversion"] = {"rate": int(table["rate"]), "to": outs}
     body["instrument"] = {k: int(v) for k, v in design["generator"].items()}

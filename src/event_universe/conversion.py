@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from event_universe.loader.instrument import Instrument
-from event_universe.meeting import Item, NodeBooks, click
+from event_universe.meeting import Item, NodeBooks, click, drawn_node
 from event_universe.reports import conversion
 
 if TYPE_CHECKING:
@@ -20,16 +20,19 @@ def converted(board: GameBoard, books: NodeBooks) -> bool:
         if books.counts[books.part] <= 0:
             return False
         span = window if window <= table.rate else table.rate
-        items = [Item(books.index, books.number, books.part, -1, (books.at,))]
+        items = [Item(books.index, books.number, books.part, -1, books.nodes)]
+        laid_at = drawn_node(
+            board, books, list(books.weights)
+        )  # the records out at one Node by the share
         for out in table.outs:
             den = board.families[out].pair[1]
-            items.append(Item(out, None, None, 1, (books.at,), (den, den)))
+            items.append(Item(out, None, None, 1, (laid_at,), (den, den)))
         weights = [span, table.rate - span]
         pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
         if pick == 0:
             if board.observer is not None:
                 name, *into = [board.families[i].name for i in (books.index, *table.outs)]
-                over, at = [board.tick - window + 1, board.tick], list(books.at)
+                over, at = [board.tick - window + 1, board.tick], list(laid_at)
                 board.observer(conversion(board.tick, name, books.number, over, into, at))
             return True
     return False

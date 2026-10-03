@@ -94,6 +94,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "drive's taking by the labels' squares, the body's clock and the window's index on the jump line, the "
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
+    "tests/test_the_meeting.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
+        22,
+        "the NodeReader round (the owner's word of 2026-10-03, a detector is never on one Node; the Boss's brief): the "
+        "ion's record declared over two adjacent Nodes in equal counts, the lay A_n^2 = A^2 / n, the share credited 1, "
+        "the one-Node and the in-pieces refusals, the boundary cut with the inner Link open, the uniform mode's "
+        "recurrence to the bit, the taking's and the giving's Nodes drawn by the shares",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

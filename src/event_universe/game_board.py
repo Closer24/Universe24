@@ -190,7 +190,7 @@ class GameBoard:
     def gate(self) -> None:
         """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's share in quanta over its declared Nodes, ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
         for number, row in enumerate(self.world.bodies):
-            declared = sum(row.counts)
+            declared = sum(row.instrument.counts if row.instrument is not None else row.counts)
             read = int(self.quanta(row.family)[0][self.mask(row.nodes)].sum())
             off = abs(declared - read)
             half = int(carried(off - 1, 2, 0)[0])  # (|c - read| - 1) div 2, the division act
