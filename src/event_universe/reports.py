@@ -1,4 +1,4 @@
-"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements, #the-click-is-the-meeting; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. For a record of several parts (the pair family) the instrument reports beside it the parts' signed level sums over its region each interval, the read the credit pairs through the root (the parts line). A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The credit line is the click proper (features/click; HIGHLIGHTS.md, the owner's decision of 2026-10-02): the instrument's draw written on the GameBoard at one Node, the credited quantum's share leaving the record there; its result the window, the detector's own proper time at the close and the index of its window, the family, the region, the port realised and the parts kept, the count moved and the record's count left, the count conserved and read by the credit, never a Node (the board's tick beside it a diagnostic). The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, the parts line, the credit line and the jump line, labelled the detector's, the field line, the erasure line, the lay line and the face line, labelled a GameBoard reading, and the run's end."""
+"""The detectors' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements, #the-click-is-the-meeting; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): a detector is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to detectors is the host's reading by the shares. For a record of several parts (the pair family) the instrument reports beside it the parts' signed level sums over its region each interval, the read the credit pairs through the root (the parts line). A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The credit line is the click proper (features/click; HIGHLIGHTS.md, the owner's decision of 2026-10-02): the instrument's draw written on the GameBoard at one Node, the credited quantum's share leaving the record there; its result the window, the detector's own proper time at the close and the index of its window, the family, the region, the port realised and the parts kept, the count moved and the record's count left, the count conserved and read by the credit, never a Node (the board's tick beside it a diagnostic). The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, the parts line and the credit line, one line kind for every click of every reader (the region's credit, a record's taking and giving alike, never a Node), labelled the detector's, the field line, the erasure line, the lay line and the face line, labelled a GameBoard reading, and the run's end."""
 
 from __future__ import annotations
 
@@ -18,31 +18,31 @@ MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
     "GAMEBOARD",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE, LAY, FACE, CONVERSION = (
+CLICK, FIELD, PARTS, CREDIT, ERASURE, LAY, FACE, CONVERSION = (
     "click",
     "field",
     "parts",
     "credit",
-    "jump",
     "erasure",
     "lay",
     "face",
     "conversion",
-)  # the output's nine lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell, one line laid at one Node, one value presented at one Port, a record converted whole at its Node
+)  # the output's eight lines: the detector's report, the GameBoard reading, the parts' levels, the click written (every reader's, the region's credit and a record's taking and giving alike), the front's shell, one line laid at one Node, one value presented at one Port, a record converted whole at its Node
 REPORT_KEYS = ("event", "label", "tick", "family", "detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
+EXCHANGED = ("taken", "given")  # the families a record's click exchanged a quantum with, None where none
 CREDIT_KEYS = (
     "window",
     "proper",
     "windows",
+    "before",
     "realised",
     "kept",
     "count",
     "left",
-)  # the credit line's own keys
-JUMP_OWN = ("left", "taken", "given")  # the jump line's own words beside the credit's
+    *EXCHANGED,
+)  # the credit line's own keys, the one click line kind's
 ERASURE_KEYS = ("origin", "distance", "nodes", "taken")  # the erasure line's own keys
-JUMP_KEYS = ("window", "proper", "windows", "realised", *JUMP_OWN, "node")  # the jump line's keys
 INTO = "into"  # the conversion line's own key, the families of the records out
 CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
 LINE, BEFORE, AFTER, PORT, VALUE = ("line", "before", "after", "port", "value")  # the two acts' words
@@ -67,7 +67,6 @@ OUTPUT = (
     WELL,
     LEVELS,
     *CREDIT_KEYS,
-    *JUMP_OWN,
     *ERASURE_KEYS,
     *LAY_KEYS[:3],
     PORT,
@@ -122,36 +121,19 @@ def credit(
     proper: int,
     windows: int,
     realised: str | None,
-    kept: list[int],
+    kept: list[int] | None,
     count: int,
-    left: int,
-) -> dict[str, object]:
-    """The credit line, the click written on the GameBoard (features/click), labelled DETECTOR, the experiment's reading and nothing else (the owner's word of 2026-10-03: we read only the detector's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record), the region credited, the window [first, last] it was drawn over in the board's intervals, `proper`, the detector's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's ticks, `credit.clocked`; the board's `tick` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the detector's event clock, the port realised for a record of several parts (None for one part) with the parts kept (the others ended), the count moved (one quantum) and the record's count left, the count conserved and read by the credit; no Node (the owner's word of 2026-10-02: the detector writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `face` lines, the host's tool's)."""
-    line = dict(zip(REPORT_KEYS, (CREDIT, MEASUREMENT, tick, family, detector), strict=True))
-    line.update(zip(CREDIT_KEYS, (window, proper, windows, realised, kept, count, left), strict=True))
-    return line
-
-
-def jump(
-    tick: int,
-    family: str,
-    measured: int,
-    window: list[int],
-    realised: str,
-    left: str,
-    taken: str | None,
-    given: str | None,
-    node: list[int],
+    left: int | None,
+    before: str | None = None,
+    taken: str | None = None,
+    given: str | None = None,
     quantum: bool = True,
-    proper: int = 0,
-    windows: int = 0,
 ) -> dict[str, object]:
-    """The jump line, the click of a record at a Node that is an instrument, written on the GameBoard at that one Node (features/click; ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the exchange at one Node), labelled DETECTOR: the interval, the record's family, the instrument by its number among the world's `measured` (`measured n`), the window [first, last] drawn over, the body's own proper time at the close in whole intervals (`proper`, the carried sum of its clock p_0 over Gamma, `meeting.NodeBooks.clock`; the board's tick in the vacuum) and the index of the window closed (`windows`, the body's windows closed so far, its event clock; the two hands of 2026-10-03, #1572 comments 5967698811 and 5967783614, the click line's index and clock), the part realised and the part left (their declared names), the family whose arriving quantum was taken (the taking click; None otherwise) and the family of light a whole quantum was given to (the giving click; None otherwise); beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the null window's write, where its re-lay changed a level, the same line labelled GAMEBOARD throughout (no `quantum` passed, no measurement), the levels laid standing in the `lay` lines beside it."""
+    """The credit line, the one click line kind of every reader (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; features/click), labelled DETECTOR, the experiment's reading and nothing else (the owner's word of 2026-10-03: we read only the detector's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record: the region's credited record, or the clicking record's own for a record declared a reader), the reader credited or clicking by name (a declared region's, or `measured n` for a record declared a reader, by its number in the world's order), the window [first, last] it was drawn over in the board's intervals, `proper`, the reader's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's ticks, `credit.clocked`, `meeting.clocked`; the board's `tick` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the reader's event clock, the part before and after where the record has parts (`before` and `realised` by their declared names for a record's taking, giving or probe's click; for a region's credit of a record of several parts `realised` is the port realised with the parts `kept`, the others ended; None for one part), the count moved (one quantum; 0 at the null window's re-lay) and the count left in the books of the record moved (the credited record's; the family `taken` from or `given` to for a record's click; None where none), the count conserved and read by the credit, and the families exchanged, `taken` (the arriving family whose quantum was taken, or the probe's at its click) and `given` (the light a whole quantum was given to, or the probe's given back), None where none; no Node (the owner's word of 2026-10-02: the reader writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `lay` and `face` lines, the host's tool's). The null window's re-lay that changed a level writes the same line labelled GAMEBOARD (no `quantum` passed, no measurement), the levels laid in the `lay` lines beside it."""
     label = MEASUREMENT if quantum else DIAGNOSTIC
-    line = dict(zip(REPORT_KEYS, (JUMP, label, tick, family, f"{MEASURED} {measured}"), strict=True))
-    written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
-    own = (window, proper, windows, realised, left, taken, given, written)
-    line.update(zip(JUMP_KEYS, own, strict=True))
+    line = dict(zip(REPORT_KEYS, (CREDIT, label, tick, family, detector), strict=True))
+    own = (window, proper, windows, before, realised, kept, count, left, taken, given)
+    line.update(zip(CREDIT_KEYS, own, strict=True))
     return line
 
 

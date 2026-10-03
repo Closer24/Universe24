@@ -16,7 +16,8 @@ from event_universe.giving import Source
 from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import Instrument, Ports, ports_of
 from event_universe.loader.keys import Node
-from event_universe.meeting import Item, NodeBooks, books_of, click
+from event_universe.meeting import Item, click
+from event_universe.node_reader import NodeBooks, books_of
 from event_universe.reports import PORT_NAMES, credit
 
 if TYPE_CHECKING:

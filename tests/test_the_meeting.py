@@ -1,6 +1,5 @@
 """The meeting's gates (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate): a record of several parts laid as one event and never summed at a Node, the instrument's read of the parts' signed level sums (the parts line) and the joint-share reader pairing the parts through the root across the sides (tools/bell_gate.py): the exact algebra at Bell's four settings and at the GHZ patterns, the local credits as the fence, the determinism of equal parts, and the two gates' four worlds each (examples/events/bell, examples/events/ghz) end to end with the back-in-time gate MATCH; Bell and the GHZ are gates and never results. The click written on the GameBoard (src/event_universe/credit.py, features/click): the instrument's draw inside the run and its write at one Node, the board exact between clicks."""
 
-import ast
 import json
 import math
 from fractions import Fraction
@@ -9,7 +8,6 @@ import numpy as np
 
 from event_universe import meeting, node, resonance, world_files
 from event_universe.core import paces
-from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
 from event_universe.giving import laid_by_count
 from event_universe.loader.derived import row_of
@@ -24,9 +22,9 @@ from event_universe.loader.instrument import (
     patterns_of_the_law,
 )
 from event_universe.loader.universe import shape_of, universe_of
-from event_universe.loader.world import bodies_of, detectors_of
+from event_universe.loader.world import detectors_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, booked, load_file, refused
+from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, load_file, refused
 
 TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
 
@@ -161,7 +159,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
     assert [(c["proper"], c["windows"]) for c in credits] == [(40, 1), (40, 1), (80, 2), (80, 2)]
     report = set(
-        "event label tick family detector window proper windows realised kept count left".split()
+        "event label tick family detector window proper windows before realised kept count left taken given".split()
     )
     assert all(set(c) == report and c["label"] == "DETECTOR" for c in credits)  # never a Node
     holes = [
@@ -188,171 +186,6 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     refused("lacks", instrument_of, {"window": 1}, "instrument")
 
 
-def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_path, monkeypatch):
-    """The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/instrument.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's instrument. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0, a rate without the instrument and a record of two Nodes are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the instrument MATCH over 30 intervals back to the lay). (iii) The clicks: the first jump takes the drive's quantum into P at the Node, the drive's record there after the face's two intervals both levels moved toward the leaving level and not 0, the two faces removing 0.81 of the quantum's form and the rest standing by name (the mathematician's 265 and 266: the booked share 12 quanta above W_rec, the stake negative so a hole to 0 would add form, the drive at 55 quanta per Node, 2026-10-03) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later jump gives one quantum to the light row and the counter credits it at a window's end (the world of 20 intervals, the counter's window 15), and where the credit took the row's count to 0 the erasing front begins at the entry Node: one erasure line per interval at the distances 1 to 5, and the same run without the front (its fronts dropped each interval) holds every level beyond the ball, the Link-metric distance above the intervals since the click, bit for bit (the front invisible ahead of itself); every jump names the one Node as a GameBoard diagnostic, and the null window's re-lays that changed a level leave their own GAMEBOARD-labelled jump lines. (iv) The acts from outside the Node as lines (the mathematician's 193 and 195 with the advisor's second, two hands): every line a lay changed at the Node writes one GAMEBOARD-labelled `lay` line with its levels and remainder before and after (the taking's four ion lines, the giving's light line, the null windows'), every face presented writes one `face` line carrying the value the books hold; the back-in-time gate (tools/back_in_time.py) reads MATCH over the whole run across the takings, the givings, the null windows, the credit and the fronts, the faces presented from the lines and the lays undone from theirs, and on the shipped Zeno and anticoincidence worlds, one step more returning the start. (v) The booking identity per act at every step on the ion, the drive and the light (tests/laws.py, `booked`): the share identity within the floors plus the face term at the hole's two intervals and at every shell of the front, and the lays' change of the share form local to the Node and its six neighbours, exact. (vi) The conversion's list through the one act: the drive at -1 and two other rows at +1 at the Node, no draw and the generator's state untouched, the counts moved by the row, one whole quantum laid on each row at the massless rotation, the two levels alike, and the dense drive's partial hole after two intervals, its levels moved and not 0. (vii) The generator consumed the same whether or not a count-0 record's inflow is booked: the anticoincidence world with the first record's window at 10, run with the front and without it, gives the same one taking and the same generator states, the second record's its seed (its open window after the click draws nothing), while the light's level at its Node is erased in the one run and stands in the other. (viii) The one-in-flight limit is not built, by name: the light row's count rises by one per giving before the counter's window and no giving is refused; the Zeno world gives nothing and its drive's count stands above 1."""
-    universe = json.loads((EVENTS / "shelved_ion" / "mercury_ion.json").read_text(encoding="utf-8"))
-    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    at, parts = [3, 3, 2], [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
-    draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
-    record = {"family": "ion", "nodes": [{"node": at, "count": 1}], "parts": parts, "instrument": draw}
-    record["transitions"] = [
-        {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
-    ]
-    record["rates"] = [{"from": "P", "to": "S", "lifetime": 2, "gives_to": "fluorescence"}]
-    drive = {"family": "strong_drive", "along": "x", "wave": [1, 2], "amplitude": 600}
-    drive.update(top={"x": [0, 5], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
-    counter = {
-        "name": "counter",
-        "positions": [[0, y, z] for y in range(6) for z in range(4)],
-    }
-    world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
-    world.update(universe="u.json", engine="e.json", measured=[record], messages=[drive])
-    world.update(detectors=[counter], instrument={**draw, "window": 18, "seed": 24})
-    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
-    twin = {k: v for k, v in world.items() if k != "instrument"}
-    twin["measured"] = [{k: v for k, v in record.items() if k in ("family", "nodes", "parts")}]
-    (plain := tmp_path / "t.json").write_text(json.dumps(twin), encoding="utf-8")
-    TOOL.main(["--input", str(path)]), TOOL.main(["--input", str(plain)])
-    assert json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"] == []
-    families, quanta = universe_of(universe)[1], {"ion": 0, "strong_drive": 1, "fluorescence": 3}
-    wrong = {"one part": {**record, "parts": [{**p, "count": 1} for p in parts]}}
-    wrong["parts are"] = {**record, "transitions": [{**record["transitions"][0], "to": "X"}]}
-    wrong["weight"] = {**record, "transitions": [{**record["transitions"][0], "weight": 0}]}
-    wrong["no `instrument`"] = {k: v for k, v in record.items() if k != "instrument"}
-    for word, body in wrong.items():
-        refused(word, node_instrument_of, body, "measured[0]", families, 0, quanta, 1)
-    two = {**record, "nodes": record["nodes"] + [{"node": [3, 4, 2], "count": 1}]}
-    refused(
-        "one Node",
-        bodies_of,
-        [two],
-        None,
-        "",
-        families,
-        (6, 6, 4),
-        9000,
-        (),
-        universe["integers"]["quantum_action"],
-    )
-    board, other = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(plain))
-    names = [f.name for f in board.families]
-    ion, drv, light = (names.index(n) for n in ("ion", "strong_drive", "fluorescence"))
-    here, gamma, unit, weak = tuple(at), board.world.node_clock, board.unit, names.index("weak_drive")
-    assert int(board.quanta(ion)[0][here]) == 1 == int(board.quanta(ion)[0].sum())
-    assert all(int(line.now[here]) == 0 for line in board.states[ion].lines[2:])
-    assert BACK.verdict(GameBoard(load_world(plain)), 30)["verdict"] == "MATCH"
-    while not (clicks := [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]):
-        booked(board, monkeypatch, ion, drv, light), other.step()  # the booking identity at every act
-    first, click = clicks[0], ("P", "S", "strong_drive", None)
-    assert (first["realised"], first["left"], first["taken"], first["given"]) == click
-    assert first["node"] == {"label": "GAMEBOARD", "at": at} and first["tick"] == board.tick
-    was, now = (dict(p for f in BACK.snapshot(b) for p in f) for b in (other, board))
-    assert {tuple(map(int, w)) for k in was for w in np.argwhere(was[k] != now[k])} == {here}
-    assert board.credit.counts[drv] == other.credit.counts[drv] - 1
-    in_s, in_p = (any(int(x.now[here]) for x in board.states[ion].lines[k : k + 2]) for k in (0, 2))
-    assert int(board.quanta(ion)[0][here]) == 1 and in_p and not in_s
-    p_re, p_im = (int(now[f"ion.lines[{k}].now"][here]) for k in (2, 3))  # the part entered, after
-    size = amplitude(1, board.world.quantum_action, board.families[ion].pair)  # one quantum laid in P
-    assert abs(p_re * p_re + p_im * p_im - size * size) <= 2 * size and (p_re, p_im) != (size, 0)
-    walls = {k: node.rule_of(board.families[k], gamma, 0, None, unit)[2] for k in (ion, drv)}
-    assert int(now["ion.lines[2].remainder"][here]) == walls[ion] // 2  # the taker at the lay's origin
-    [booked(board, monkeypatch, ion, drv, light) for _ in (0, 1)]  # the hole: the face's two intervals
-    hole, twin = board.states[drv].lines[0], (other.step(), other.step(), other.states[drv].lines[0])[2]
-    assert all(  # the two faces moved both levels toward the leaving level, neither to 0 (265)
-        0 < abs(int(getattr(hole, k)[here])) != abs(int(getattr(twin, k)[here]))
-        for k in ("now", "before")
-    )
-    drop = int(other.total_share(drv)[0]) - int(board.total_share(drv)[0])
-    assert 0 < drop <= board.credit.units[drv] and abs(drop / board.credit.units[drv] - 0.808) < 0.005
-    assert 0 <= int(hole.remainder[here]) < walls[drv]  # the giver's remainder Rule3's own
-    still = GameBoard(load_world(path))  # the same run without the front: its fronts dropped each step
-    [still.step() for _ in range(still.tick, board.tick)]
-    for _ in range(board.tick, 23):
-        booked(board, monkeypatch, ion, drv, light), still.step(), still.credit.fronts.clear()
-        for index, origin, since in board.credit.fronts:  # the theorem: nothing differs beyond the ball
-            gap = np.abs(np.indices(board.shape) - np.reshape(origin, (3, 1, 1, 1)))
-            far = (
-                np.minimum(gap, np.reshape(board.shape, (3, 1, 1, 1)) - gap).sum(0) > board.tick - since
-            )
-            for a, b in zip(board.states[index].lines, still.states[index].lines, strict=True):
-                assert (a.now[far] == b.now[far]).all() and (a.before[far] == b.before[far]).all()
-    given = [line for line in lines if line["event"] == "jump" and line["given"]]
-    nulls = [line for line in lines if line["event"] == "jump" and line["label"] == "GAMEBOARD"]
-    assert all(n["realised"] == n["left"] and "levels" not in n["node"] for n in nulls)
-    credits = [line for line in lines if line["event"] == "credit" and line["family"] == "fluorescence"]
-    erased = [line for line in lines if line["event"] == "erasure"]
-    assert given and given[0]["left"] == "P" and board.credit.counts[light] == len(given)
-    assert (
-        credits == [] and erased == []
-    )  # the given quanta, sources in time at one Node of a periodic box, reach the counter's plane below half a quantum in the window: the integer board's floor on a spreading quantum (the mathematician's 221), the front then never begun here (its theorem in tests/test_the_draw.py)
-    assert all(e["nodes"] > 0 for e in erased)
-    lays, faces = [x for x in lines if x["event"] == "lay"], [x for x in lines if x["event"] == "face"]
-    kinds = {
-        t: {(x["family"], x["line"]) for x in lays if x["tick"] == t} for t in {x["tick"] for x in lays}
-    }
-    assert kinds[first["tick"]] == {("ion", k) for k in range(4)}  # the taking: two parts, four lines
-    assert all(("fluorescence", 0) in kinds[g["tick"]] for g in given)  # every giving laid its quantum
-    assert {x["label"] for x in lays} == {"GAMEBOARD"} and board.credit.counts[light] > 1  # none refused
-    key, kept = ("line", "port", "tick", "value"), sum(board.credit.faces.values(), [])
-    faced = {(f.family, f.at, *(getattr(f, k) for k in key)) for f in kept}
-    logged = {(names.index(x["family"]), tuple(x["node"]["at"]), *(x[k] for k in key)) for x in faces}
-    assert logged == {f for f in faced if f[4] <= board.tick} and logged  # the lines the books' values
-    assert BACK.verdict(GameBoard(load_world(path)), 23)["verdict"] == "MATCH"  # every act crossed
-    fresh = GameBoard(load_world(path), (conv := []).append)  # the conversion's list through the one act
-    counts, items = dict(fresh.credit.counts), [meeting.Item(drv, None, None, -1, (here,))]
-    items += [meeting.Item(k, None, None, 1, (here,), TOP_PAIR, 1) for k in (weak, light)]
-    assert meeting.click(fresh, 7, None, [1], [items]) == (0, 7)  # one outcome: no draw, the state kept
-    moved = {k: fresh.credit.counts[k] - counts[k] for k in (drv, weak, light)}  # the counts by the row
-    assert moved == {drv: -1, weak: 1, light: 1} and int(fresh.quanta(light)[0].sum()) == 1
-    laid = [(x["family"], x["line"], [x["after"][k] - x["before"][k] for k in (0, 1)]) for x in conv]
-    glow = amplitude(
-        1, fresh.world.quantum_action, TOP_PAIR
-    )  # one quantum at the band's top in one interval
-    assert laid == [("weak_drive", 0, [glow, 0]), ("fluorescence", 0, [glow, 0])]
-    fresh.step(), fresh.step()
-    assert all(
-        0 < abs(int(getattr(fresh.states[drv].lines[0], k)[here])) for k in ("now", "before")
-    )  # dense
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped instrument worlds
-    zeno, photon = EVENTS / "zeno" / "zeno_4.json", EVENTS / "anticoincidence" / "one_photon.json"
-    loaded = BACK.snapshot(z := GameBoard(load_world(zeno), (zlines := []).append))
-    assert BACK.verdict(z, 48)["verdict"] == "MATCH" and z.step_inverse() is None  # the lays, the start
-    assert BACK.first_difference(loaded, BACK.snapshot(z)) is None and z.tick == 0
-    assert any(x["event"] == "jump" for x in zlines) and not any(x.get("given") for x in zlines)
-    assert (
-        max(z.credit.counts.values()) > 1
-    )  # the drive's record of many quanta, no giving in this world
-    assert BACK.verdict(GameBoard(load_world(photon)), 40)["verdict"] == "MATCH"
-    world = json.loads(photon.read_text(encoding="utf-8"))  # a window open after the click
-    world["measured"][0]["instrument"]["window"], runs = 10, []
-    (split := tmp_path / "split.json").write_text(json.dumps(world), encoding="utf-8")
-    TOOL.main(["--input", str(split)])
-    for front in (True, False):  # the count-0 record's inflow erased by the front, or standing
-        b = GameBoard(load_world(split), (sl := []).append)
-        [(b.step(), front or b.credit.fronts.clear()) for _ in range(40)]
-        ph, b_at = [f.name for f in b.families].index("photon"), world["measured"][1]["nodes"][0]["node"]
-        took = [(x["tick"], x["detector"]) for x in sl if x["event"] == "jump" and x["taken"]]
-        level = int(b.states[ph].lines[0].now[tuple(np.add(b_at, b.offset))])
-        runs.append((took, [k.state for k in b.credit.bodies], b.credit.counts[ph], level))
-    assert runs[0][:3] == runs[1][:3] and len(runs[0][0]) == 1  # one taking, the generators alike
-    assert runs[0][1][1] == world["measured"][1]["instrument"]["seed"] and runs[0][2] == 0  # no draw
-    assert runs[0][3] == 0 != runs[1][3]  # the count-0 wave erased, or standing
-    writers = set()  # every function of the engine that assigns a record's lines
-    for module in (ROOT / "src" / "event_universe").rglob("*.py"):
-        for f in ast.walk(ast.parse(module.read_text(encoding="utf-8"))):
-            for n in (n for n in ast.walk(f) if isinstance(n, (ast.Assign, ast.AugAssign))):
-                targets = n.targets if isinstance(n, ast.Assign) else [n.target]
-                if isinstance(f, ast.FunctionDef) and any(".lines" in ast.unparse(t) for t in targets):
-                    writers.add((module.stem, f.name))
-    rule3 = {("game_board", "step"), ("game_board", "step_inverse"), ("game_board", "hold")}
-    lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
-    lay |= {("meeting", "relaid"), ("giving", "laid_increment"), ("giving", "laid_by_count")}
-    lay |= {("giving", "laid_packet")}  # the open board's packet, the lay (A) along a drawn direction
-    assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
-
-
 def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_path):
     """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c), 5964082980, 5964520368 and 5964754600; src/event_universe/conversion.py, loader/instrument.py `conversion_of`): the neutron conversion's committed world (examples/events/neutron_conversion) at the rate 1 and the window 2, so the first window, closing at the second interval, draws it. (i) The loader: a rate of 0, a record out of the body's own family, an empty table, a sense on a record of real lines, a conversion beside parts and one without the instrument are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the instrument's count 1. (iii) The click: one conversion line naming the instrument, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; each record out given one whole quantum by the count on every laid line alike, A_l^2 = T div (2 laid): the antineutrino's real line (128, 128), the electron's plane (128, 0) and (0, 128) and the proton's three planes (73, 0) and (0, -73) each at the senses the table declares (`giving.laid_by_count`), the credit's counts 1 each and the share 1 per quantum at the Node (the two hands; the proton's 0.976 rounding to 1); one lay line per line the write changed, the record's three, the proton's six, the electron's two and the antineutrino's one, and the back-in-time gate MATCH across the conversion from them; no second conversion, no front (the body cut) and no null window of a record of one part."""
     folder = EVENTS / "neutron_conversion"
@@ -372,22 +205,45 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     board = GameBoard(load_world(path), (lines := []).append)
     n, p, e, nu = map(quanta.__getitem__, names := ("neutron", "proton", "electron", "antineutrino"))
 
-    def levels(k):
-        return [(int(r.now[4, 4, 4]), int(r.before[4, 4, 4])) for r in board.states[k].lines]
+    region = [(4, 4, 4), (5, 4, 4)]  # the record's two Nodes, the lay in equal weights
 
-    assert levels(n) == [(95, -76)] * 3 and board.credit.bodies[0].counts == [1]
+    def levels(k, at=(4, 4, 4)):
+        return [(int(r.now[at]), int(r.before[at])) for r in board.states[k].lines]
+
+    for at in (
+        region
+    ):  # the three lines at each Node by the invariant over two, A_l^2 = T den div (2 s x 3 x 2)
+        assert levels(n, at) == [(67, -54)] * 3
+    assert board.credit.bodies[0].counts == [1]
     board.step(), board.step()
     [first] = [line for line in lines if line["event"] == "conversion"]  # one conversion line
-    assert first["window"] == [1, 2] and first["node"] == {"label": "GAMEBOARD", "at": [4, 4, 4]}
+    assert first["window"] == [1, 2] and first["node"]["label"] == "GAMEBOARD"
+    drawn = tuple(first["node"]["at"])  # the records out at the one Node of the region the draw picked
+    assert drawn in region and (other := next(at for at in region if at != drawn))
     assert (first["into"], first["detector"], first["label"]) == ([*names[1:]], "measured 0", "DETECTOR")
-    assert levels(n) == [(0, 0)] * 3 and board.credit.bodies[0].counts == [0]
-    assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(128, 0), (0, 128)]
-    assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
-    assert [int(board.quanta(k)[0][4, 4, 4]) for k in (p, e, nu)] == [1, 1, 1]
-    laid = [(x["family"], x["line"]) for x in lines if x["event"] == "lay"]
-    assert laid == [(f, k) for f, m in zip(names, (3, 6, 2, 1), strict=True) for k in range(m)]
+    assert all(levels(n, at) == [(0, 0)] * 3 for at in region) and board.credit.bodies[0].counts == [0]
+    assert levels(p, drawn) == [(73, 0), (0, -73)] * 3 and levels(e, drawn) == [(128, 0), (0, 128)]
+    assert levels(nu, drawn) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [
+        1,
+        1,
+        1,
+    ]
+    assert all(
+        levels(k, other)[0] == (0, 0) for k in (p, e, nu)
+    )  # the other Node of the region untouched
+    assert [int(board.quanta(k)[0][drawn]) for k in (p, e, nu)] == [1, 1, 1]
+    laid = [(line["family"], line["line"]) for line in lines if line["event"] == "lay"]
+    assert laid == [("neutron", k) for k in range(3) for _ in region] + [
+        (f, k) for f, m in zip(names[1:], (6, 2, 1), strict=True) for k in range(m)
+    ]  # the record's lines once per Node of its region, the records out at the drawn Node
     board.step(), board.step()
-    assert [x["event"] for x in lines if x["event"] not in ("click", "lay", "field")] == ["conversion"]
+    others = (
+        "click",
+        "lay",
+        "field",
+        "parts",
+    )  # the region `around` holds the record's second Node: its parts read
+    assert [x["event"] for x in lines if x["event"] not in others] == ["conversion"]
     assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
 
 
@@ -399,7 +255,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
-    body, at = world["measured"][0], (4, 4, 4)
+    body, region = world["measured"][0], [(4, 4, 4), (5, 4, 4)]  # the record's two Nodes
     proton, electron, antineutrino = table = body["conversion"]["to"]
     assert (proton["sense"], electron["sense"], antineutrino) == (-1, 1, "antineutrino")
     wrong = {
@@ -418,15 +274,23 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     p, e, nu = outs = [quanta[row["family"] if isinstance(row, dict) else row] for row in table]
     sign = next(k for k, f in enumerate(board.families) if f.wronskian)
 
+    at = (
+        4,
+        4,
+        4,
+    )  # the records out at the one Node of the region the conversion's draw picks, read below
+
     def levels(k):
         return [(int(r.now[at]), int(r.before[at])) for r in board.states[k].lines]
 
     def sign_rows():
         return [int(line.now[at]) for line in board.states[sign].lines[: board.families[sign].records]]
 
-    assert sign_rows() == [0, 0, 0]
+    assert all(sign_rows() == [0, 0, 0] for at in region)
     board.step()  # the first window closes at the first interval and the conversion is drawn
-    assert [x["tick"] for x in lines if x["event"] == "conversion"] == [1] and sign_rows() == [0, 0, 0]
+    [converted] = [x for x in lines if x["event"] == "conversion"]
+    at = tuple(converted["node"]["at"])  # the drawn Node, a diagnostic of the line
+    assert converted["tick"] == 1 and at in region and sign_rows() == [0, 0, 0]
     assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(128, 0), (0, 128)]
     assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in outs] == [1, 1, 1]
     wronskians = [int(np.asarray(node.wronskian(board.states[k].lines, True))[at]) for k in (p, e)]
@@ -440,9 +304,9 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
         1,
     ]  # the count's unit, the share rounded
     laid = [(x["family"], x["line"]) for x in lines if x["event"] == "lay"]
-    assert laid[:3] == [(body["family"], k) for k in range(3)] and len(laid) == 12
-    assert laid[3:9] == [(proton["family"], k) for k in range(6)]
-    assert laid[9:] == [(electron["family"], 0), (electron["family"], 1), (antineutrino, 0)]
+    assert laid[:6] == [(body["family"], k) for k in range(3) for _ in region] and len(laid) == 15
+    assert laid[6:12] == [(proton["family"], k) for k in range(6)]  # the records out at the drawn Node
+    assert laid[12:] == [(electron["family"], 0), (electron["family"], 1), (antineutrino, 0)]
     first = {row_of(board.families, k, 0): 0 for k in (p, e)}  # the rows the two records own
     for _ in range(4):
         board.step()
@@ -501,7 +365,8 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
     turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
     probe["drive"] = "probe"
-    record = {"family": "atom", "nodes": [{"node": [1, 1, 1], "count": 1}], "parts": parts}
+    region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
+    record = {"family": "atom", "nodes": region, "parts": parts}
     record.update(transitions=[*turns, probe], rates=[], instrument=draw)
     lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
     world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
@@ -534,19 +399,23 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     line, wall = board.states[probed].lines[0], books.labels[0]
     assert (int(line.now[here]), int(line.before[here])) == (128, 128)
     assert (board.credit.counts[probed], int(board.quanta(probed)[0][here])) == (1, 1)
-    jumps = [x for x in lines if x["event"] == "jump"]
-    keys = ("label", "tick", "window", "proper", "windows", "realised", "left", "taken", "given")
+    jumps = [x for x in lines if x["event"] == "credit"]
+    keys = ("label", "tick", "window", "proper", "windows", "realised", "before", "taken", "given")
     click = ("DETECTOR", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
     assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
     laid = [(x["family"], x["tick"]) for x in lines if x["event"] == "lay"]
-    assert laid == [("probe", 3), ("atom", 3)]  # the probe's lay, then the body's re-lay in g
+    assert laid == [
+        ("probe", 3),
+        ("atom", 3),
+        ("atom", 3),
+    ]  # the probe's lay, then the re-lay in g at both Nodes
     assert not board.credit.faces and (books.elapsed, books.windows, books.part) == (0, 1, 0)
     assert books.state != 25
     board.credit.counts[pulse] = 1  # one quantum of the drive in the books
     books.labels, state = [0, wall], books.state  # the labels carried to e by hand: cos^2 0
     for _ in range(4):
         board.step()
-    jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
+    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR"]
     taking = ("DETECTOR", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
     assert [tuple(x[k] for k in keys) for x in jumps[1:]] == [taking] and state != books.state
     assert (books.part, board.credit.counts[pulse], board.credit.counts[probed]) == (1, 0, 2)
@@ -570,7 +439,7 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
     leaving = int(twin.states[pulse].lines[0].now[at])  # b, standing as before at the first face
     for _ in range(2):
         board.step(), twin.step()
-    jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
+    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR" and x["taken"]]
     assert [x["tick"] for x in jumps] == [24] and jumps[0]["taken"] == "pulse"
     hole = board.credit.faces[25][0].hole
     assert hole is not None and hole.factor == (1, 1)  # the identity's faces: the share above a quantum

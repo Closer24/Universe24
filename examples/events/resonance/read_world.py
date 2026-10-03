@@ -1,4 +1,4 @@
-"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the giving's interval from the jump lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a GameBoard reading), the light's count at the span's end where the whole span lies in the run and no taking emptied the record (a GameBoard reading), and the takings (clicks); the counts over the seeds beside the blind.
+"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the giving's interval from the record's click lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a GameBoard reading), the light's count at the span's end where the whole span lies in the run and no taking emptied the record (a GameBoard reading), and the takings (clicks); the counts over the seeds beside the blind.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -34,14 +34,15 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
     for books in board.credit.bodies:
         books.state = seed * len(board.credit.bodies) + books.number
     light = [f.name for f in board.families].index(design["light"])
-    far, series = tuple(np.add(design["reading_node"], board.offset)), {}
+    far, levels = tuple(np.add(design["reading_node"], board.offset)), {}
+    beyond = (far[0] + 1, *far[1:])  # the reading Node eight Nodes from either Node of the reader
     intervals, lifetime = int(design["ticks"]), int(design["giver"]["lifetime"])
     for _ in range(intervals):
         board.step()
-        series[board.tick] = int(board.states[light].lines[0].now[far])
-    jumps = [c for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR"]
-    given = [c["tick"] for c in jumps if c["given"] == design["light"]]
-    taken = [f"{c['detector']} {c['realised']} by {c['taken']}" for c in jumps if c["taken"]]
+        levels[board.tick] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
+    clicks = [c for c in lines if c["event"] == "credit" and (c["taken"] or c["given"])]
+    given = [c["tick"] for c in clicks if c["given"] == design["light"]]
+    taken = [f"{c['detector']} {c['realised']} by {c['taken']}" for c in clicks if c["taken"]]
     found: dict[str, Any] = {"given": given[0] if given else None, "takings": taken}
     found["lay_lines"] = len(
         [c for c in lines if c["event"] == "lay" and c["family"] == design["light"]]
@@ -49,6 +50,9 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
     if not given:
         return found
     t = given[0]
+    lays = [c for c in lines if c["event"] == "lay" and c["family"] == design["light"]]
+    read_at = lays[0]["node"]["at"][0] - int(design["giver"]["node"][0])  # the lay's Node, 0 or 1
+    series = {k: pair[read_at] for k, pair in levels.items()}
     if t + AFTER + PLATEAU <= intervals:
         window = range(t + AFTER, t + AFTER + PLATEAU)
         numerator = sum(series[k] * (series[k + 1] + series[k - 1]) for k in window)

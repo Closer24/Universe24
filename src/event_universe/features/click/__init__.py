@@ -136,14 +136,24 @@ def presented(
     return tuple(found)
 
 
-def amplitude(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
-    """The amplitude A of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): A^2 = count T den^2 div (2 laid (den^2 - num^2)), the share 6 den A^2 sin^2 omega per line over W_c = 3 den T the count, by the fixed point of the division act; for the massless pair, whose one-Node record has no rotation, A^2 = count T div (2 laid), the two levels alike (the lay by the count, `giving.laid_by_count`: every laid line of the record alike, the symmetric lay, the mathematician's 244 item 2, #1572 comment 5967913000)."""
+def squared(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
+    """A^2 of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part), count T den^2 div (2 laid (den^2 - num^2)) by the division act (count T div (2 laid) for the massless pair), the number `amplitude` takes the root of."""
     num, den = pair
     gap = den * den - num * num
-    square = division_forward(count * action * den * den, 2 * laid * gap, 0)[0] if gap else None
-    return division_fixed_point(
-        int(square if square is not None else division_forward(count * action, 2 * laid, 0)[0])
-    )
+    if gap:
+        return int(division_forward(count * action * den * den, 2 * laid * gap, 0)[0])
+    return int(division_forward(count * action, 2 * laid, 0)[0])
+
+
+def spread(square: int, share: tuple[int, int]) -> int:
+    """A region's Node's amplitude from the record's A^2 and the Node's share (weight, total) of the lay, isqrt(A^2 weight div total): A_n^2 = A^2 / n over n Nodes in equal counts (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's 288 section 2)."""
+    weight, total = share
+    return division_fixed_point(int(division_forward(square * weight, total, 0)[0]))
+
+
+def amplitude(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
+    """The amplitude A of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): A^2 = count T den^2 div (2 laid (den^2 - num^2)), the share 6 den A^2 sin^2 omega per line over W_c = 3 den T the count, by the fixed point of the division act; for the massless pair, whose one-Node record has no rotation, A^2 = count T div (2 laid), the two levels alike (the lay by the count, `giving.laid_by_count`: every laid line of the record alike, the symmetric lay, the mathematician's 244 item 2, #1572 comment 5967913000)."""
+    return division_fixed_point(squared(count, action, pair, laid))
 
 
 def direction(re: int, im: int, size: int) -> tuple[int, int]:
@@ -155,34 +165,47 @@ def direction(re: int, im: int, size: int) -> tuple[int, int]:
 
 
 def standing(
-    count: int, action: int, pair: tuple[int, int], phase: tuple[int, int], sense: int
+    count: int,
+    action: int,
+    pair: tuple[int, int],
+    phase: tuple[int, int],
+    sense: int,
+    share: tuple[int, int] = (1, 1),
 ) -> tuple[tuple[int, int], tuple[int, int]]:
     """The levels of `count` quanta of a plane standing at one Node, ((re_now, im_now), (re_before, im_before)): the amplitude `amplitude` in the direction `phase`, the level before the level now turned by the rest rotation in the record's sense, re_b = (re num - sense im s) div den and im_b = (im num + sense re s) div den with s = the fixed point of den^2 - num^2 (sin omega den), so the Wronskian re_now im_before - im_now re_before is sense x A^2 sin omega; both 0 at the count 0."""
     if count <= 0:
         return (0, 0), (0, 0)
     num, den = pair
-    re, im = direction(phase[0], phase[1], amplitude(count, action, pair))
+    re, im = direction(phase[0], phase[1], spread(squared(count, action, pair), share))
     sine = sense * division_fixed_point(den * den - num * num)
     re_before = int(division_forward(re * num - im * sine, den, 0)[0])
     im_before = int(division_forward(im * num + re * sine, den, 0)[0])
     return (re, im), (re_before, im_before)
 
 
-def invariant(count: int, action: int, pair: tuple[int, int], laid: int) -> int:
+def invariant(
+    count: int, action: int, pair: tuple[int, int], laid: int, share: tuple[int, int] = (1, 1)
+) -> int:
     """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands of 2026-10-03, the advisor's (b) and (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the fixed point of den^2 - num^2, sin omega den; the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`meeting.relaid`); the share form of `amplitude` beside it, the instrument's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands, #1572 comments 5964520368 and 5964754600); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
     num, den = pair
     sine = division_fixed_point(den * den - num * num)
     if count <= 0 or sine == 0:
         return 0
-    return division_fixed_point(int(division_forward(count * action * den, 2 * sine * laid, 0)[0]))
+    return spread(int(division_forward(count * action * den, 2 * sine * laid, 0)[0]), share)
 
 
 def laid_pairs(
-    count: int, action: int, pair: tuple[int, int], sense: int, plane: bool, laid: int
+    count: int,
+    action: int,
+    pair: tuple[int, int],
+    sense: int,
+    plane: bool,
+    laid: int,
+    share: tuple[int, int] = (1, 1),
 ) -> list[tuple[int, int]]:
     """The level pairs (now, before) of `count` whole quanta on every line of a record at one Node, the lay of a record converted whole at the start (the two hands of 2026-10-03; the generator's one-Node declaration, equal phases): per real line or plane the amplitude `invariant` on the level now and the level before turned by the pair's rest rotation, (A, A num div den), and for a plane its second line's pair, the sense, (0, sense A s div den) with s the fixed point of den^2 - num^2, so that its Wronskian is sense x A^2 sin omega; `laid` pairs for real lines, 2 `laid` for planes, every one alike; every level 0 at the count 0."""
     num, den = pair
-    size, sine = invariant(count, action, pair, laid), division_fixed_point(den * den - num * num)
+    size, sine = invariant(count, action, pair, laid, share), division_fixed_point(den * den - num * num)
     real = (size, int(division_forward(size * num, den, 0)[0]))
     turned = (0, sense * int(division_forward(size * sine, den, 0)[0]))
     return [pair for _ in range(laid) for pair in ((real, turned) if plane else (real,))]

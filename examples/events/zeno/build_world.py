@@ -21,7 +21,7 @@ def world_of(design: dict, n: int) -> dict:
     shape, at = design["shape"], design["record"]["node"]
     record = {
         "family": design["record"]["family"],
-        "nodes": [{"node": at, "count": 1}],
+        "nodes": [{"node": at, "weight": 1}, {"node": [at[0] + 1, at[1], at[2]], "weight": 1}],
         "parts": [
             {"part": 0, "name": "g", "role": "ground", "count": 1},
             {"part": 1, "name": "e", "role": "excited", "count": 0},

@@ -130,7 +130,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         70,
         "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
         "window bounded by the probe's lays, the lay by the count at the declared tick, the probe's click and the "
-        "drive's taking by the labels' squares, the body's clock and the window's index on the jump line, the "
+        "drive's taking by the labels' squares, the body's clock and the window's index on the click line, the "
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
@@ -138,6 +138,15 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
         "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
         "budget's least T, the faces and the open faces' layer, the messages, the universe",
+    ),
+    "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
+        281,
+        "the NodeReader round (the owner's word of 2026-10-03, a detector is never on one Node; the Boss's brief): the "
+        "ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, the share credited 1, "
+        "the one-Node, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "
+        "uniform mode's recurrence to the bit, the drive projected on the reader's normalised mode, one draw per click "
+        "with the write's Node drawn after the outcome by the window's inflow booked per Node, the giving's Node by "
+        "the record's share (the mathematician's 299 with the advisor's second, two hands)",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")
