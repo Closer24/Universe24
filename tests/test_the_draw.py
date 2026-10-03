@@ -13,7 +13,7 @@ from event_universe.credit import record_unit
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
-from event_universe.giving import born_unit
+from event_universe.giving import born_unit, radiated_total
 from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import pair_of
 from event_universe.loader.universe import universe_of
@@ -353,7 +353,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
 
 
 def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path):
-    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic detector's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 is not what the engine reads on the chain, left to the hands (the mathematician's 245 answers it: the source in time's energy on the chain)."""
+    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic detector's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
     world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
     giver = {**world["measured"][0], "transitions": [{**world["measured"][0]["transitions"][0]}]}
     giver["transitions"][0]["resonance"], giver["instrument"] = (
@@ -383,3 +383,16 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
     )
     taken = sum(given is None for _t, given in jumps[1:])  # the window's close at 240 may take it back
     assert books.counts[pulse] + taken == 1  # one quantum given, kept or taken back, the books' number
+
+
+def test_the_source_in_time_lays_the_form_it_radiates():
+    """The source in time's energy (the mathematician's 245, #1572 comment 5968047484, with the advisor's second, 5968075799, two hands; `giving.radiated_total`): a point source on a guide of width one radiates (3 / 2) S sin Omega / sin k, so one quantum is laid at SUM A_t^2 = (2 / 3) T sin k, cos k = (3 num - 2 den) / den, the root on the large number: (2 / 3) T exactly at [2, 3], and within two of (2 / 3) T sin k at [4, 5], [9, 10] and [7, 8], the floors of 2 T div 3 and of the root (where the invariant's S = T / (2 sin Omega) laid 1.36 and 2.41 quanta on the chain at the first two); the integer root of the small number alone, isqrt(21) = 4 at [4, 5], would miss by 13 percent, named; at the band's top [1, 3] the guide's wave number is pi and the total 0, the lay refused at the loader before it."""
+    action = 1 << 15  # the shipped T
+    assert radiated_total(action, (2, 3)) == division_forward(2 * action, 3, 0)[0]  # (2 / 3) T exactly
+    for num, den in ((4, 5), (9, 10), (7, 8)):
+        sine = math.sqrt(1 - ((3 * num - 2 * den) / den) ** 2)  # sin k at the resonance
+        assert abs(radiated_total(action, (num, den)) - 2 / 3 * action * sine) <= 2  # the two floors
+    assert (
+        abs(radiated_total(action, (4, 5)) / (2 / 3 * action * 4 / 5) - 1) > 0.1
+    )  # isqrt(21) = 4 misses
+    assert radiated_total(action, (1, 3)) == 0 and radiated_total(action, (3, 3)) == 0

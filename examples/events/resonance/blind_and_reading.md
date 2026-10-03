@@ -254,3 +254,45 @@ the tree holding main's dark grain (the section above), the blinds untouched:
    record's reading of the light it gave not built, as ENGINE.md names them. The first build of this
    act (one shear of the window's sum, before the dark grain) read 22 and 0 of 100; its numbers are
    replaced by this section's, read on the tree that ships.
+
+## On the source in time's energy, 2026-10-03 (branch partial-hole-quadratic): the blind, written before the build
+
+The finding this answers (Worker HOLE's reading on branch partial-hole, 2026-10-03): a born quantum's
+share over the chain read 0.75, 0.84 and 1.06 W_c at [2, 3], [4, 5] and [9, 10], where the count's
+line W_c sin Omega reads 0.745, 0.600 and 0.436, so in the record's own unit the quantum read 1.0,
+1.4 and 2.43. The mathematician's 245 (#1572 comment 5968047484) with the advisor's second
+(5968075799), two hands: a point source on a guide of width one radiates (3 / 2) S sin Omega / sin k,
+so the born quantum reads 3 / (4 sin k sin Omega) quanta, 1.007, 1.364 and 2.407 at the three pairs,
+the chain's own; the fix one root at the lay and no act: one quantum is laid at SUM A_t^2 =
+(2 / 3) T sin k in place of S = T / (2 sin Omega), k the guide's wave number at Omega for massless
+light in a width-one guide, cos k = (3 num - 2 den) / den, (2 / 3) T exactly at [2, 3] where today's
+S = 0.671 T already was one quantum within the rounding. The unit stands as the law's (`born_unit`).
+
+The blind, before any run: the born quantum 1.00 within 0.01 quanta in the record's own unit at every
+pair, [2, 3], [4, 5] and [9, 10] (the three readings 1.0, 1.4 and 2.43 falling to 1.0); the resonance
+world's count 1 in both units; the gate worlds bit for bit (they lay by messages, no giving); the Zeno
+worlds re-read (no giving there, unmoved by construction; the resonance and Zeno numbers may move within
+their blinds under the quadratic factor of the same branch: what moves is recorded); the injected form
+summed at the lay as delta^2 + delta (a_t - a_(t-2)) kept beside as a GameBoard diagnostic labelled so.
+
+### The reading under the radiated total (branch partial-hole-quadratic, 2026-10-03, about 10:20 UTC)
+
+The giver alone on the shipped chain (resonant.json with the second record out, its window 240 so
+that nothing is taken back before the run's end, 240 intervals, the trial seed 1, the giving at the
+interval 6), the born quantum's share over the board in the record's own unit (`born_unit`, W_c sin
+Omega) at the span's end and after, a GameBoard reading labelled so:
+
+| pair | sin Omega | S laid, in T | at t + 48 | t + 60 | t + 80 | t + 100 | the invariant's S before | the blind |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [2, 3] | 0.745 | 0.667 (21845) | 0.962 | 0.955 | 0.952 | 0.953 | 1.01 | 1.00 within 0.01: MISS by 0.04, named |
+| [4, 5] | 0.600 | 0.611 (20021) | 0.997 | 0.994 | 0.990 | 0.985 | 1.4 | PASS |
+| [9, 10] | 0.436 | 0.476 (15600) | 1.010 | 1.008 | 1.009 | 1.013 | 2.43 | PASS at the edge |
+
+The injected form summed at the lay as delta^2 + delta (a_t - a_(t-2)) over the span, times w over the
+share's weight 2 p^2 G^2, in the record's own unit (a GameBoard diagnostic beside the reading): 0.971,
+0.991 and 1.002 at the three pairs, the lay's own carry at [2, 3] (A_t about 21.3 levels, floored to
+21 or 22 per interval) the larger part of its 0.04. The two readings that were 1.4 and 2.43 fall to
+1.0 as the blind asked; [2, 3], which was 1.01 under the invariant's S = 0.671 T, reads 0.955 under
+0.667 T, a finding by name and not adjusted (the shipped resonance world's count stays 1 in both units,
+0.71 W_c reading 1 in W_c and 0.96 in its own unit reading 1). The resonance world's 100 trials are
+re-read below with the quadratic factor of the same branch.
