@@ -1,4 +1,4 @@
-"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words of 2026-10-02 and 2026-10-03; the owner's word of 03:15 Israel, 2026-10-03, the click the heart): a detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the detector's own transition's quantum read back from the realised click, the click their meeting; a detector always receives two quanta, the arriving one and its own, a region detector's own quantum implicit in its declared window and whole, and for a record declared an instrument at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence of 2026-10-03 with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an instrument's window at the Node named, 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the two-mode line: the arriving level read into the record's phase at the transition's declared weight, the turn per proper interval, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there: the arriving record's levels and remainder to 0 (the hole) and its count in the books down by one, the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn per window at the declared floor (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid at the born rotation, the resonance omega_e - omega_g (`features/click.born`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the jump line, the window, the instrument, the family and the parts, the Node a GameBoard diagnostic beside it. The record declared an instrument is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the detector's region is), its books the instrument's own and at no Node; the Node knows no click."""
+"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words of 2026-10-02 and 2026-10-03; the owner's word of 03:15 Israel, 2026-10-03, the click the heart): a detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the detector's own transition's quantum read back from the realised click, the click their meeting; a detector always receives two quanta, the arriving one and its own, a region detector's own quantum implicit in its declared window and whole, and for a record declared an instrument at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence of 2026-10-03 with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an instrument's window at the Node named, 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the resonant two-mode act, the two-quadrature form: the arriving level summed over the window against the record's two reference records at the transition's declared resonance, the plane's size over the scale the window's turn at the declared weight, applied once at the window's close, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form, `gathered`, `window_turn`, `turned_labels`); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there: the arriving record's levels and remainder to 0 (the hole) and its count in the books down by one, the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn per window at the declared floor (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid at the born rotation, the resonance omega_e - omega_g (`features/click.born`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the jump line, the window, the instrument, the family and the parts, the Node a GameBoard diagnostic beside it. The record declared an instrument is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the detector's region is), its books the instrument's own and at no Node; the Node knows no click."""
 
 from __future__ import annotations
 
@@ -11,12 +11,12 @@ import numpy as np
 from event_universe import front, node
 from event_universe.core import paces
 from event_universe.core.ports import arrival
-from event_universe.core.rule3 import division_forward
+from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features import rotation
 from event_universe.features.click import Face, drawn, standing
-from event_universe.giving import given_quantum, levels_of
+from event_universe.giving import advanced, given_quantum, levels_of
 from event_universe.loader.derived import count_wall, row_of
-from event_universe.loader.instrument import Instrument, NodeInstrument
+from event_universe.loader.instrument import Instrument, NodeInstrument, Transition
 from event_universe.loader.keys import Node
 from event_universe.loader.world import BodyRow
 from event_universe.plane import Faces
@@ -27,8 +27,20 @@ if TYPE_CHECKING:
 
 
 @dataclass
+class Reference:
+    """A transition's two reference records at the taker's Node and its window's two sums, the two-quadrature form (ALGEBRA.md #what-is-open, item 50; the mathematician's 224 (2)(c), #1572 comment 5966081562, and the advisor's second, #1572 comment 5966129376 with #1563 comment 5966129628, two hands): the transition's resonance pair (num, den), the scale R (`scale_of`, derived and never declared), the cosine record (r_t, r_(t-1)) begun at (R, R num div den), so that r_t = R cos(Omega_d t), the sine record (r'_t, r'_(t-1)) begun at r'_0 = 0 and r'_1 = isqrt(R^2 (den^2 - num^2)) div den, one root at the declaration as the detector's wall's is, so that r'_t = R sin(Omega_d t), both advanced by the recurrence the giving's phasor uses (`giving.advanced`), and the window's two sums over the arriving level a_t at the Node, X = SUM a_t r_t and Y' = SUM a_t r'_t, so that X^2 + Y'^2 = R^2 |SUM a_t e^(i Omega_d t)|^2; the books' and at no Node."""
+
+    resonance: tuple[int, int]
+    scale: int
+    cosine: tuple[int, int]
+    sine: tuple[int, int]
+    in_phase: int
+    quadrature: int
+
+
+@dataclass
 class NodeBooks:
-    """The books of a record at a Node that is an instrument, the instrument's own and at no Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03, one thinks of a Node): the declaration's number among the world's `measured`, the record's family and its record number, its one Node at the file's coordinates, its declaration, the part the record stands in as its last write left it (its own transition read back, the past), its count per part, per part the two-mode line's amplitude in the count's units since its last write (the parts' coherence, turned by the arriving records' levels), the intervals elapsed in its window and its generator's state."""
+    """The books of a record at a Node that is an instrument, the instrument's own and at no Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03, one thinks of a Node): the declaration's number among the world's `measured`, the record's family and its record number, its one Node at the file's coordinates, its declaration, the part the record stands in as its last write left it (its own transition read back, the past), its count per part, per part the two-mode line's amplitude in the count's units since its last write (the parts' coherence, turned at the window's close by the window's plane), the intervals elapsed in its window, its generator's state and per transition its two reference records with the window's two sums (`Reference`)."""
 
     number: int
     index: int
@@ -40,6 +52,7 @@ class NodeBooks:
     labels: list[int]
     elapsed: int
     state: int
+    references: list[Reference]
 
 
 def books_of(board: GameBoard) -> list[NodeBooks]:
@@ -53,9 +66,34 @@ def books_of(board: GameBoard) -> list[NodeBooks]:
         part = max(range(len(parted)), key=lambda k: parted[k])
         labels = [count * wall for count in parted]
         at, seed = row.nodes[0], row.instrument.draw.seed
+        scale = scale_of(board.world.width, board.world.amplitude_bound, row.instrument.draw.window)
+        references = references_of(scale, row.instrument.transitions)
         found.append(
-            NodeBooks(number, row.family, record, at, row.instrument, part, parted, labels, 0, seed)
+            NodeBooks(
+                number, row.family, record, at, row.instrument, part, parted, labels, 0, seed, references
+            )
         )
+    return found
+
+
+def scale_of(room: int, bound: int, window: int) -> int:
+    """The reference records' scale R, derived from the file's numbers and never declared (the mathematician's 224 (2)(c), #1572 comment 5966081562, the advisor's second, 5966129376): |X| and |Y'| stay at or below R A W with A the file's amplitude bound and W the record's window, so R is the largest power of two at which the plane's size squared X^2 + Y'^2, at most 2 (R A W)^2, stays inside the width's largest integer `room` (R A W below 2^31 at the width 63, at every pair, [1, 1299] included)."""
+    scale = 1
+    while 2 * (2 * scale * bound * window) ** 2 <= room:
+        scale *= 2
+    return scale
+
+
+def references_of(scale: int, transitions: tuple[Transition, ...]) -> list[Reference]:
+    """One `Reference` per transition at the scale: the cosine record at (R, R num div den rounded half up, the giving's own start), the sine record at (0, -r'_1) with r'_1 = isqrt(R^2 (den^2 - num^2)) div den, the one root at the declaration, and the window's sums at 0."""
+    found = []
+    for transition in transitions:
+        num, den = transition.resonance
+        cosine = int(division_forward(scale * num, den, division_forward(den, 2, 0)[0])[0])
+        sine = int(
+            division_forward(division_fixed_point(scale * scale * (den * den - num * num)), den, 0)[0]
+        )
+        found.append(Reference(transition.resonance, scale, (scale, cosine), (0, -sine), 0, 0))
     return found
 
 
@@ -118,7 +156,7 @@ def laid_record(board: GameBoard, number: int, record: int) -> None:
     """A record laid in its parts at its one Node at the start (`loader/instrument.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
     row = board.world.bodies[number]
     assert row.instrument is not None
-    books = NodeBooks(number, row.family, record, row.nodes[0], row.instrument, 0, [], [], 0, 0)
+    books = NodeBooks(number, row.family, record, row.nodes[0], row.instrument, 0, [], [], 0, 0, [])
     for part, count in enumerate(row.instrument.counts):
         relaid(board, books, part, count, (1, 0), 1)
 
@@ -142,20 +180,35 @@ def arriving(board: GameBoard, books: NodeBooks, drive: int) -> int:
     return int(lines[0].now[at])
 
 
+def gathered(books: NodeBooks, levels: dict[int, int]) -> None:
+    """One interval of the taker's read inside its window, a read and no write, no root and no draw (the two-quadrature form, ALGEBRA.md item 50; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's second, 5966129376, two hands): for every transition of the record the arriving family's level a_t at the Node (`levels`, per drive family, `arriving`) times each reference record is added to the window's two sums, X += a_t r_t and Y' += a_t r'_t, and both records advance by the transition's resonance (`giving.advanced`, the recurrence the giving's phasor uses, one rounding half up); nothing reads the labels inside the window."""
+    for transition, reference in zip(books.declared.transitions, books.references, strict=True):
+        level = levels[transition.drive]
+        reference.in_phase += level * reference.cosine[0]
+        reference.quadrature += level * reference.sine[0]
+        reference.cosine = advanced(*reference.cosine, reference.resonance)
+        reference.sine = advanced(*reference.sine, reference.resonance)
+
+
+def window_turn(reference: Reference, weight: int) -> int:
+    """The window's turn in the labels' numerator, theta_W = k isqrt(X^2 + Y'^2) div R, the plane's size over the scale at the transition's declared weight k (the mathematician's 224 (2)(c), the advisor's second, two hands; the advisor's derivation, #1572 comment 5966387795: the first-order change of the labels over a window is k times |SUM a_t e^(i Omega_d t)|, A W / 2 at resonance at every arrival phase and A W sinc(delta W / 2) / 2 detuned by delta, the counter-rotating residue below 2 / W, where the magnitude form the engine ran before accumulated (2 / pi) k A W at every frequency and read no resonance). The root once per window is the instrument's own act, as the lay's root is (`features/click.amplitude`), and no act of Rule3, which takes none (the advisor's precision (iii), #1572 comment 5965918924)."""
+    size = division_fixed_point(reference.in_phase**2 + reference.quadrature**2)
+    return int(division_forward(weight * size, reference.scale, 0)[0])
+
+
 def turned_labels(board: GameBoard, books: NodeBooks) -> None:
-    """The two-mode line at the instrument's Node, one interval (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; the advisor's Omega = k_r ell / Gamma): for every transition out of the part the record stands in, the arriving record's level at the Node read into the record's phase at the weight the transition declares, the turn per proper interval (`node.turned_by`, the tangent half-angle over 2 Gamma), turns the two parts' labels into each other by the engine's own three shears (features/rotation), the turn's size added at the resonance the transition declares; the labels' squares are the parts' shares the window's draw reads, sin^2 of the accumulated turn, the Rabi form."""
+    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`window_turn`) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation), the plane's size over the wall and not a turn per interval; the labels' squares are the parts' shares the window's draw reads, sin^2 of the turn, the Rabi form; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
     gamma = board.world.node_clock
     content = board.read(books.index, 1, books.record)[0]
     at = tuple(np.add(books.at, board.offset))
     clock = paces.clock_of(gamma, int(np.asarray(content)[at]) if np.ndim(content) else int(content))
-    for transition in books.declared.transitions:
-        if transition.leaves != books.part:
-            continue
-        level = transition.weight * arriving(board, books, transition.drive)
-        turn = int(node.turned_by(level, clock, gamma))
-        u, v = books.labels[transition.leaves], books.labels[transition.enters]
-        u, v = rotation.turned(u, v, turn if turn >= 0 else -turn, 2 * gamma)
-        books.labels[transition.leaves], books.labels[transition.enters] = int(u), int(v)
+    for transition, reference in zip(books.declared.transitions, books.references, strict=True):
+        if transition.leaves == books.part:
+            turn = int(node.turned_by(window_turn(reference, transition.weight), clock, gamma))
+            u, v = books.labels[transition.leaves], books.labels[transition.enters]
+            u, v = rotation.turned(u, v, turn, 2 * gamma)
+            books.labels[transition.leaves], books.labels[transition.enters] = int(u), int(v)
+        reference.in_phase, reference.quadrature = 0, 0
 
 
 @dataclass(frozen=True)
@@ -365,15 +418,18 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
 
 
 def jumped(board: GameBoard) -> None:
-    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at the windows' length the draws and the writes, the givings first record by record (`gave`), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record that neither gave nor took (`null_window`), every write the one act's (`click`); the windows begun again."""
+    """The records at Nodes that are instruments at the end of an interval: each gathers the records arriving at its Node into its window's sums (`gathered`, the arriving level per drive family read once, `arriving`), one more interval elapsed, and at the windows' length the window's turn of the labels (`turned_labels`, once per window), then the draws and the writes, the givings first record by record (`gave`), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record that neither gave nor took (`null_window`), every write the one act's (`click`); the windows begun again."""
     for books in board.credit.bodies:
-        turned_labels(board, books)
+        drives = {transition.drive for transition in books.declared.transitions}
+        gathered(books, {drive: arriving(board, books, drive) for drive in drives})
         books.elapsed += 1
     closing = [
         books
         for books in board.credit.bodies
         if books.declared.draw is not None and books.elapsed == books.declared.draw.window
     ]
+    for books in closing:
+        turned_labels(board, books)
     quiet = [books for books in closing if not gave(board, books)]
     done = took(board, quiet)
     for books in quiet:
