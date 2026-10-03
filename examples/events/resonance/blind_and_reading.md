@@ -123,3 +123,13 @@ the lifetime 48 is the degenerate corner, 100 of 100 by the weights 48 against 0
 the resonant two-mode act has his line (a reference record at the declared pair, two quadratures, the
 plane's size over the window, the Zeno world's k rescaled once by 4 / pi) and is a round of its own,
 not this one's, cited with the advisor's 5965700585 at the findings 4 and 5 above.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Rows 1, 4 and 5 are the detector's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
+test's `jump` lines). The 48 `lay` lines of row 1 are labelled a GameBoard diagnostic by the engine.
+Rows 2 and 3 are GameBoard readings and their verdicts rest on them: the far Node's cosine is read
+from the light's levels at the Node [8, 0, 0] per interval (`tests/test_the_draw.py`, the levels
+series) and the count at the span's end from the share over the board. The lines carry the board's
+`tick` and the `window` in board intervals; the giver's window 48 and the lifetime 48 are board
+intervals, and no line carries a record's own clock.

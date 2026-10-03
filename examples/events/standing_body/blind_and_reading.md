@@ -345,3 +345,11 @@ that reading ran on (the branch before its squash), by name; every number below 
   engine worker's claim read and confirmed on 7c9a170e; pass.
 - **The T ratio** stands unread: standing_17 declared and not laid (the Boss's word of 09:10 Israel,
   not tonight), standing_19 not laid.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Every number of every reading in this file is a GameBoard reading (`tools/body_standing.py`: the
+centroids of the share, the deviations of the share and of the form over the body's Nodes, the
+rotation from the levels, the 48 images of every line, the books). The world declares no detector,
+so no number is a detector's line and no verdict rests on one. Nothing here is stamped by a
+detector's clock; the intervals are the board's.
