@@ -31,7 +31,7 @@ Rulers = dict[
 
 
 class GameBoard:
-    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines `click`, `parts` and `field`."""
+    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines (`reports.py`: `click`, `parts`, `credit` and `jump` the detectors', `field`, `erasure`, `lay` and `face` the GameBoard's diagnostics)."""
 
     def __init__(self, world: World, observer: Observer | None = None) -> None:
         paces.clear_memo()  # the paces computed once per content value within this run, kept between none
@@ -276,7 +276,7 @@ class GameBoard:
         }
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the detectors' reports; the one write per held line from the bookings of the start."""
+        """One interval forward, each act one loop over the families or the detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking, the faces the instruments presented at the step written as `face` lines (`meeting.faces_reported`); the detectors' reports; the one write per held line from the bookings of the start; then the instruments' acts from outside the Node (`credit.windowed`, `meeting.jumped`, `front.advanced`)."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.tick}: {self.ended}")
         if not growth.grow(self):
@@ -295,6 +295,7 @@ class GameBoard:
                 for held, gained in zip((forms, turns), booked, strict=True):
                     held.update(gained)
             state.lines = lines
+        meeting.faces_reported(self)
         self.report(currents, forms, begun)
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses, senses, rulers)
