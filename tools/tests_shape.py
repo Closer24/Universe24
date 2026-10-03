@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
+        25,
+        "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
+        "after #1788's lay defect in the committed worlds that the test without a board did not catch): one GameBoard per "
+        "folder, no interval, the long-loading folders the runner's gate by name",
+    ),
     "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
         79,
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "

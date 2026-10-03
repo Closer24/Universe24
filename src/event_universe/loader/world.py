@@ -127,7 +127,7 @@ def bodies_of(
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
-        raise ValueError("measured must be a list of bodies")
+        raise ValueError("bodies must be a list of bodies")
     laid = [entry for entry in value if not any(key in entry for key in NODE_INSTRUMENT_KEYS)]
     entries = mode_entries(mode, digest, "bodies") if laid else []
     taken, found = set(), []

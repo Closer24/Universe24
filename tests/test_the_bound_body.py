@@ -32,6 +32,20 @@ from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
 
 DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")  # the looks' drift tool
+GATED = (  # the smallest shipped world of each builder whose load is seconds; the long loads are the runner's gate
+    ("anticoincidence", "one_photon"),
+    ("bell", "bell_a_prime_b_prime"),
+    ("ghz", "ghz_y_x_y"),
+    ("neutron_conversion", "neutron_conversion"),
+    ("nuclide", "free_nuclide"),
+    ("packet_giving", "packet_giving"),
+    ("resonance", "detuned"),
+    ("shelved_ion", "shelved_ion"),
+    ("two_slits", "two_slits"),
+    ("which_way", "one_gap"),
+    ("zeno", "zeno_1"),
+    ("zeno_pulsed", "zeno_pulsed_1"),
+)
 LOOK, GAMMA, PAIR, RING = EVENTS / "like_or_unlike", 6000, (4000, 6000), Wrap(True, True, True)
 INTEGERS, TURNING = universe_of(json.loads((LOOK / "turning.json").read_text(encoding="utf-8")))
 T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]  # the rule's rows, the plane
@@ -177,7 +191,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
 
 
 def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte(tmp_path):
-    """The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world) and every blind of examples/events: each blind is its builder's byte for byte; the three lawful pairs load, their run the blind's window; the charged ones are refused by name without a mode file, the start's refusals recorded in the blind by name. No world runs here: the looks' drift over the window, the back-in-time MATCH on the pairs over their 400 and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/body_drift.py, tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03: a committed 128-chain's held rests alone take longer at the load). The drift's tool runs over four intervals of the anticoincidence world, its reading two bodies."""
+    """The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world) and every blind of examples/events: each blind is its builder's byte for byte; the three lawful pairs load, their run the blind's window; the charged ones are refused by name without a mode file, the start's refusals recorded in the blind by name. No world runs here: the looks' drift over the window, the back-in-time MATCH on the pairs over their 400 and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/body_drift.py, tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03: a committed 128-chain's held rests alone take longer at the load). The drift's tool runs over four intervals of the anticoincidence world, its reading two bodies. The count gate (GameBoard's start) runs on the smallest world of every builder whose load is seconds (GATED, the loader's mode file applied to the laid Nodes, the defect of #1788 caught here); the folders whose smallest world is a long load (light_and_charge, like_or_unlike, matter_alone, matter_and_binding, matter_and_gravity, standing_body, frozen_proton) keep the runner's gate at every run, by name."""
     for folder in (LOOK, *(p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md")))):
         build, out = load_file(f"{folder.name}_build", folder / "build_world.py"), tmp_path / folder.name
         build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
@@ -198,6 +212,9 @@ def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte
     assert all(load_world(LOOK / f"{n}.json").ticks == expected["window"][1] for n in lawful)  # loaded
     read = DRIFT.drift(GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json")), 4)
     assert read["intervals"] == 4 and len(read["bodies"]) == 2  # the drift's tool on a small world
+    for folder, name in GATED:  # the gate on the smallest world of every builder whose load is seconds
+        world = GameBoard(load_world(EVENTS / folder / f"{name}.json")).world
+        assert world.bodies or world.messages, (folder, name)
 
 
 def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused(
