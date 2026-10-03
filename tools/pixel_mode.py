@@ -902,15 +902,16 @@ def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[i
 def message_entry(
     board: Board, message: dict[str, Any], beyond: np.ndarray, family: FamilyRule, label: str
 ) -> dict[str, Any]:
-    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading, over every part of the family and, for a record of real lines, the sum of the squared weights of its lines, the one event laid on each part alike and on each line at its weight, `laid_weights`) and its two levels as their nonzero Nodes."""
+    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading, over every part of the family and over the lines of a part as the engine lays them, the one event laid on each part alike and on each real line at its weight, `laid_weights`, the share summed over the lines before it is read in quanta, as the engine's books read it) and its two levels as their nonzero Nodes."""
     now, before = message_levels(board, message, beyond)
-    laid = read_quanta(share_of(board, 0, now, before), board.pair[1], board.action)
-    squares = 1 if family.plane else sum(w * w for w in laid_weights(message, label, family))
+    weights = (1,) if family.plane else laid_weights(message, label, family)
+    total = sum(share_of(board, 0, w * now, w * before) for w in weights)
+    laid = read_quanta(total, board.pair[1], board.action)
     return {
         "family": message["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(laid.sum()) * family.parts * squares,
+        "count": int(laid.sum()) * family.parts,
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 
