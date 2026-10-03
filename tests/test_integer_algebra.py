@@ -19,10 +19,8 @@ PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/univer
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
 NUMPY_DTYPES_FORBIDDEN = set(
-    "complex128 complex64 complex_ complexfloating float128 float16 float32".split()
-)
-NUMPY_DTYPES_FORBIDDEN |= set(
-    "float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
+    "complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating "
+    "int16 int32 int8 uint16 uint32 uint64 uint8".split()
 )
 NUMPY_FORBIDDEN = set(
     "arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power".split()

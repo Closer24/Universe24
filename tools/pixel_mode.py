@@ -39,7 +39,7 @@ from event_universe.features.start import (
 from event_universe.loader.derived import FamilyRule, held_write, turns, with_records
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES
-from event_universe.loader.lay import FIXED_POINT, Lay, lay_of
+from event_universe.loader.lay import COMPACT, FIXED_POINT, Lay, lay_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import kind_of
 from event_universe.node import Record, empty_state, ports, record_slice, wronskian
@@ -713,6 +713,20 @@ def spread(
     )
 
 
+def compact_seed(
+    quanta: int, centre: Axis, shape: Axis, wrap: Wrap, profile: tuple[int, int]
+) -> np.ndarray:
+    """The first lay of the compact seed (the world's `lay.seed` `compact`, loader/lay.py; ALGEBRA.md, The compact pixel under the composed paces): the body's quanta at its seed Node and at the Nodes of its six Ports in the proportion the world's `profile` [centre, neighbour] declares, each Port's Node read through the Port as the engine reads it (`ports.arrival`: the Node itself on a folded axis, nothing beyond a face), every Node's count the parts' quotient of the quanta by the division act and the remainder at the centre: the compact branch's shape as the law's line names it, the seed of the first pass alone and no result (the iteration moves it to the fixed point, or away from the branch)."""
+    parts, one = np.zeros(shape, dtype=np.int64), np.zeros(shape, dtype=np.int64)
+    parts[centre], one[centre] = profile
+    for axis in range(3):
+        for sense in (1, -1):
+            parts += np.asarray(arrival(one, axis, sense, wrap, 0))
+    counts = np.asarray(division_forward(parts * quanta, int(parts.sum()), 0)[0], dtype=np.int64)
+    counts[centre] += quanta - int(counts.sum())
+    return counts
+
+
 def scaled_record(
     board: Board,
     content: np.ndarray,
@@ -1244,7 +1258,9 @@ def nonzero(levels: np.ndarray) -> dict[str, list[int]]:
     return {"at": at.tolist(), "values": flat[at].tolist()}
 
 
-ONE_NODE = "one_node"  # the lay of a body named by --pixel, a declaration by name (`pixel_record`)
+DECLARATION = (
+    "declaration"  # the lay of a body named by --pixel, the one-Node record by name (`pixel_record`)
+)
 
 
 def pixel_mode(
@@ -1253,7 +1269,7 @@ def pixel_mode(
     designed: list[int | None] | None = None,
     pixels: Sequence[int] = (),
 ) -> dict[str, Any]:
-    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
+    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
     integers = universe["integers"]
     if "quantum_action" not in integers:
@@ -1285,8 +1301,13 @@ def pixel_mode(
             )
         board = board_of(shape, wrap, gamma, integers, pairs[body["family"]])
         rows = held_rows(universe, str(body["family"]))
-        spread_counts = counts if number in pixels else spread(counts, centre, board, rows, zero)
-        lays.append((spread_counts, [], centre, quanta))
+        if number in pixels:  # the one-Node record's declaration, its own seed
+            first = counts
+        elif lay is not None and lay.seed == COMPACT and lay.profile is not None:
+            first = compact_seed(quanta, centre, shape, wrap, lay.profile)
+        else:  # the declared count's cube
+            first = spread(counts, centre, board, rows, zero)
+        lays.append((first, [], centre, quanta))
     all_counts = sum(
         (
             counts
@@ -1345,7 +1366,7 @@ def pixel_mode(
                 region, laid = dilated(counts > 0, wrap), counts
                 lays[number] = (laid, pairs_kept, centre, quanta)
                 entry = body_entry(record, board, region, body, quanta, record.amplitude)
-                entry["lay"] = {"kind": ONE_NODE, "declaration": pixel_record.__doc__}
+                entry["lay"] = {"kind": DECLARATION, "declaration": pixel_record.__doc__}
                 entry["nodes"] = [
                     {"node": [int(x), int(y), int(z)], "count": int(counts[x, y, z])}
                     for x, y, z in zip(*np.nonzero(counts), strict=True)
@@ -1411,8 +1432,10 @@ def pixel_mode(
             all_counts = all_counts - counts + laid
             lays[number] = (laid, pairs_kept, centre, quanta)
             entry = body_entry(record, board, region, body, quanta, int(record.clock[1]))
-            if trajectory and lay is not None:
-                entry["lay"] = {"kind": lay.kind, "stop": lay.stop, "trajectory": trajectory}
+            if lay is not None:  # the lay as declared, its seed by name, the fixed-point trajectory
+                entry["lay"] = {"kind": lay.kind, "seed": lay.seed}
+                if trajectory:
+                    entry["lay"].update(stop=lay.stop, trajectory=trajectory)
             entry["nodes"] = [
                 {"node": [int(x), int(y), int(z)], "count": int(weighted[x, y, z])}
                 for x, y, z in zip(*np.nonzero(weighted), strict=True)
