@@ -56,7 +56,7 @@ def tent_of(counts: np.ndarray, divisor: int) -> int:
 
 
 def source_bound(counts: np.ndarray, divisor: int) -> int:
-    """A bound on a rest's levels on a board with no folded axis, the source total over its wall plus one, no number of the engine in it: on the cubic lattice the rest of a point source peaks at 3 G(0) of its source over the wall, G(0) the lattice Green's function at the origin, 0.2527 (Watson's integral), below one third; a screened row (num below den), a face read as 0 and a sink lower it; so the rest of any source at the vacuum's paces stands below the sum of its sources over the wall (the mathematician's 249 with the advisor's second, two hands). On a board with a folded axis the rest is a chain's or a slab's and grows with the extent, and the tent is its bound (`tent_of`)."""
+    """A bound on a rest's levels on a board open on every axis of more than one Node, the source total over its wall plus one, no number of the engine in it: on the cubic lattice the rest of a point source peaks at 3 G(0) of its source over the wall, G(0) the lattice Green's function at the origin, 0.2527 (Watson's integral), below one third; a screened row (num below den), a face read as 0 and a sink lower it; so the rest of any source at the vacuum's paces stands below the sum of its sources over the wall (the mathematician's 249 with the advisor's second, two hands). On a board with a folded axis the rest is a chain's or a slab's and grows with the extent, and the tent is its bound (`tent_of`)."""
     return int(division(1, divisor, int(np.abs(counts).sum()))) + 1
 
 
@@ -66,10 +66,14 @@ def unit_from_bound(largest_level: int, pair: Pair, width: int, gamma: int) -> i
     return int(division(1, bound, min(width, MAX_WORK_INT))) or int(division(1, bound, width))
 
 
-def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int, gamma: int) -> int:
-    """The fine unit of a row's rest: under the tent where the tent leaves a unit (`tent_of`, every shipped world bit for bit), else, on a board with no folded axis, under the source's own bound (`source_bound`, the room the tent over-bounds by 2 (L + 1), which held the Node clock of the atom's world at a fiftieth of its reach); refused by name where both leave none."""
+def unit_of(
+    counts: np.ndarray, pair: Pair, divisor: int, width: int, gamma: int, wrap: Wrap | None = None
+) -> int:
+    """The fine unit of a row's rest: under the tent where the tent leaves a unit (`tent_of`, every shipped world bit for bit), else, on a board open on every axis of more than one Node (no wrap and no fold there, `wrap` the board's), under the source's own bound (`source_bound`, the room the tent over-bounds by 2 (L + 1), which held the Node clock of the atom's world at a fiftieth of its reach); a periodic axis folds the images of the source onto it and the rest is a slab's, a chain's or the gap's uniform mode, above the bound by 3 to 19 times on the tubes the mathematician solved (260, #1572 comment 5968797010), so the tent stays there; refused by name where both leave none."""
     unit = unit_from_bound(tent_of(counts, divisor), pair, width, gamma)
-    if not unit and all(n > 1 for n in counts.shape):
+    long = [axis for axis in range(len(counts.shape)) if counts.shape[axis] > 1]
+    open_board = wrap is not None and len(long) == 3 and not any(wrap[axis] for axis in long)
+    if not unit and open_board:
         unit = unit_from_bound(source_bound(counts, divisor), pair, width, gamma)
     if unit < 1:
         raise ValueError(
@@ -234,7 +238,7 @@ def rest(
             f"the sum's rest needs a sink: a board periodic on every axis at [1, 1] has no rest under the "
             f"source total {int(counts.sum())}"
         )
-    unit, largest = unit_of(counts, pair, divisor, width, gamma), min(width, MAX_WORK_INT)
+    unit, largest = unit_of(counts, pair, divisor, width, gamma, wrap), min(width, MAX_WORK_INT)
     source = division(3 * den * unit, divisor, counts) * gamma * gamma
     half = int(division(1, 2, unit))
     fine, own, iterations = np.zeros_like(counts), np.zeros_like(counts), 0
