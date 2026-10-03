@@ -223,6 +223,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         "a region of a travelling wave",
         regions_of_the_law,
         detectors_of(one, (2, 1, 1), 0, (), ()),
+        (),
         (2, 1, 1),
         (False,) * 3,
         (),
