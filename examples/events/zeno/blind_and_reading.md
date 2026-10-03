@@ -171,3 +171,50 @@ numerator); the detuned taker is read on the tree that also holds main's dark gr
 givings, so its number stands in `examples/events/resonance/blind_and_reading.md` against the blinds
 there and not against this line. The function named `meeting.sheared` in the blind lives in
 `src/event_universe/resonance.py` as `sheared`, called by `meeting.turned_labels`.
+
+### The n = 2 row at 480 seeds, a finding by name (the advisor's re-read, #1572 comment 5966923475)
+
+The advisor read the shipped Zeno worlds at 954c4a75 over the fresh seeds 121 to 600 with
+`tools/meeting_trials.py` (a scratch worktree, nothing written to the repository):
+
+| world | ends in e | fraction | Itano | standard error | the jumps g to e / e to g |
+| --- | --- | --- | --- | --- | --- |
+| n = 2 | 295 of 480 | 0.615 | 0.500 | 0.023 | 380 / 85 |
+| n = 2, the first window alone (24 intervals) | 221 of 480 | 0.460 | 0.500 | 0.023 | 221 / 0 |
+| n = 4 | 193 of 480 | 0.402 | 0.375 | 0.022 | 251 / 58 |
+| n = 8 | 99 of 480 | 0.206 | 0.235 | 0.019 | 109 / 10 |
+
+n = 4 and n = 8 within 1.5 standard errors; n = 2 five standard errors high, the branch's 68 of 120
+and the first build's 67 of 120 on the seeds 1 to 120 the same bias at a quarter of the statistics
+and not the draw. The two windows separated: the first window alone flips 221 of 480 (0.460, within
+2 standard errors); in the second window 159 of the 259 left in g flipped to e (0.61) and only 85 of
+the 221 in e flipped back to g, 0.385 against 0.5, 3.5 standard errors low. The asymmetry is the
+finding by name: after a taking, the return e to g is suppressed. The cause by one hand, the
+advisor's reading: the taking's write is the hole, the arriving record's levels at the Node to 0 by
+the face with its count down by one, and the Zeno drive at A = 392 holds at the instrument's Node
+the share 3 den A^2 sin^2 omega = 1.54 x 10^9 against one quantum's W_c sin omega = 4.40 x 10^8 at
+T = 32,768, 3.5 quanta's share per Node, so the hole of one taking removes three and a half quanta's
+worth of the drive at the Node, which Rule3 refills from the neighbours over the following intervals,
+and the second window's sum at that Node is short; not the resonant act's (the magnitude form had the
+same hole, 120 trials hid it) and not statistics; the one-quantum records of the gates are untouched
+by it, a dense drive is the case. The hole of a dense record (the Node's share down by one quantum,
+W_rec, and not to 0, the record re-laid at its share less W_rec with the count down by one) is a line
+asked of the mathematician, a round of its own and not tonight's. The advisor's word for the gate:
+the trials 480 per world from now, 120 reads and does not prove; a design change for the next round,
+the five worlds' trials untouched tonight.
+
+The diagnostic the advisor asked, run before any change, labelled GAMEBOARD (a reading of the board
+and no measurement): `zeno_2.json` at the seed 2 (the record's generator at the state 2, as the trials
+set it), whose record takes at the first window's close, the interval 24, g to e, and ends in e; beside
+it the same seed with the taking suppressed (`meeting.took` returning no taking, so the record writes
+its null window at 24 and ends in g, the drive untouched). The drive's level at the instrument's Node
+[4, 4, 2] (`meeting.arriving`, the pulse's time line) at the intervals 22 to 48, with the taking and
+with it suppressed: 22: 361, 361; 23: 337, 337; 24: 82, 82; 25: 0, -234; 26: 0, -400; 27: -384, -305;
+28: -147, -14; 29: 312, 279; 30: 433, 379; 31: 230, 219; 32: -74, -95; 33: -340, -353; 34: -368,
+-384; 35: -170, -168; 36: 144, 152; 37: 381, 362; 38: 352, 322; 39: 104, 58; 40: -182, -255; 41:
+-348, -407; 42: -203, -298; 43: -10, 0; 44: 269, 287; 45: 479, 372; 46: 376, 198; 47: -118, -118;
+48: -368, -367. The face holds the level at 0 over the intervals 25 and 26, Rule3 refills the Node from
+its neighbours from 27 on, and the wave at the Node differs from the untouched run by up to 180 levels
+through the window; over the second window, the intervals 25 to 48, the plane's size SUM a_t
+e^(i Omega t) reads 4,428 with the taking against 4,765 without (A W / 2 = 4,704), 7 percent short,
+and SUM |a_t| 5,792 against 6,026. No number of the blind is adjusted.
