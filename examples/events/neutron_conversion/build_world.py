@@ -1,4 +1,4 @@
-"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table and rate and its own instrument, with a region detector of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
+"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table (the families out) and rate and its own instrument, with a region detector of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
 
 PYTHONPATH=src python examples/events/neutron_conversion/build_world.py --modes [--folder <folder>]
 """
@@ -14,17 +14,14 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-OUT_KEYS = (
-    "family",
-    "pair",
-    "sense",
-)  # the world's keys of a record out, the design's other words aside
 
 
 def world_of(design: dict[str, Any]) -> dict[str, Any]:
     """The one world: the open cube, the neutron of count 1 at the centre with its table, its rate and its draw, and the region beside it."""
     centre, table = [int(v) for v in design["centre"]], design["table"]
-    outs = [{k: row[k] for k in OUT_KEYS if k in row} for row in table["to"]]
+    outs = [
+        str(row["family"]) for row in table["to"]
+    ]  # the families out, the design's other words aside
     body = {
         "family": design["neutron"]["family"],
         "nodes": [{"node": centre, "count": int(design["neutron"]["count"])}],

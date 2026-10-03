@@ -292,28 +292,22 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
 
 
 def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_path, monkeypatch):
-    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c) and 5964082980; src/event_universe/meeting.py `converted`, loader/instrument.py `conversion_of`): the neutron's row of three real lines declared whole at one Node with its table (the proton's three planes at [0, 6000] and the sense -1, the electron's plane at [4000, 6000] and the sense +1, the antineutrino's real line at the excess pair [5978, 6000]) and the rate 1 at the window 1, so the first window draws it. (i) The loader: a rate of 0, a record out of the body's own family, a massless lay pair, a plane without a sense, a real line with one, a conversion beside parts and one without the instrument are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the instrument's count 1. (iii) The click: one conversion line naming the instrument, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; the proton's six lines (73, 0) and (0, -73), the electron's (148, 98) and (0, 110), the antineutrino's (437, 435), the credit's counts 1 each, the first planes' Wronskians -73^2 and 148 x 110, the senses opposite; no second conversion, no front (the body cut) and no null window of a record of one part."""
+    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c), 5964082980, 5964520368 and 5964754600; src/event_universe/meeting.py `converted`, loader/instrument.py `conversion_of`): the neutron's row of three real lines declared whole at one Node with its table (the proton's three planes, the electron's plane, the antineutrino's real line) and the rate 1 at the window 1, so the first window draws it. (i) The loader: a rate of 0, a record out of the body's own family, an empty table, a sense on a record of real lines, a conversion beside parts and one without the instrument are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the instrument's count 1. (iii) The click: one conversion line naming the instrument, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; each record out given one whole quantum by the count on its first line, (128, 128) at A^2 = T div 2, its other lines 0, the credit's counts 1 each and the share 1 per quantum at the Node (the two hands); no second conversion, no front (the body cut) and no null window of a record of one part."""
     universe = json.loads((EVENTS / "neutron_conversion" / "nucleons.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    pairs = {"proton": ([0, 6000], -1), "electron": ([4000, 6000], 1), "antineutrino": ([5978, 6000], 0)}
-    outs = [{"family": f, "pair": p, **({"sense": s} if s else {})} for f, (p, s) in pairs.items()]
     draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
     body = {"family": "neutron", "nodes": [{"node": [3, 3, 3], "count": 1}], "instrument": draw}
-    body["conversion"] = table = {"rate": 1, "to": outs}
+    body["conversion"] = table = {"rate": 1, "to": ["proton", "electron", "antineutrino"]}
     world = dict(shape=[7, 7, 7], boundary=dict(x="open", y="open", z="open"), face_depth=1, ticks=4)
     world.update(universe="u.json", engine="e.json", measured=[body], messages=[])
     world.update(detectors=[{"name": "around", "positions": [[4, 3, 3], [5, 3, 3]]}])
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     families = universe_of(universe)[1]
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
-    rows = {"rate must": {"rate": 0}, "other than": {"to": [{**outs[0], "family": "neutron"}]}}
-    rows["num must"], rows["a plane is laid"] = (
-        {"to": [{**outs[2], "pair": [6000, 6000]}]},
-        {"to": [outs[0] | {"sense": 0}]},
-    )
-    rows["real lines at none"] = {"to": [{**outs[2], "sense": 1}]}
+    rows = {"rate must": {"rate": 0}, "other than": {"to": ["neutron"]}, "lists the": {"to": []}}
+    rows["real lines at none"] = {"sense": 1}
     wrong = {word: {**body, "conversion": {**table, **row}} for word, row in rows.items()}
     wrong["no parts"] = {**body, "parts": []}
     wrong["no `instrument`"] = {k: v for k, v in body.items() if k != "instrument"}
@@ -332,9 +326,9 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     assert found[0]["node"] == {"label": "GAMEBOARD", "at": [3, 3, 3]} and found[0]["window"] == [1, 1]
     assert (found[0]["detector"], found[0]["label"]) == ("measured 0", "DETECTOR")
     assert levels(n) == [(0, 0)] * 3 and board.credit.bodies[0].counts == [0]
-    assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(148, 98), (0, 110)]
-    assert levels(nu) == [(437, 435)] and [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
-    assert [levels(k)[0][0] * levels(k)[1][1] for k in (p, e)] == [-73 * 73, 148 * 110]
+    assert levels(p) == [(128, 128)] + [(0, 0)] * 5 and levels(e) == [(128, 128), (0, 0)]
+    assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
+    assert [int(board.quanta(k)[0][3, 3, 3]) for k in (p, e, nu)] == [1, 1, 1]
     for _ in range(3):
         board.step()
     assert len([line for line in lines if line["event"] == "conversion"]) == 1

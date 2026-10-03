@@ -114,10 +114,6 @@ CONVERSION_KEYS, CONVERSION_REQUIRED = (
     ("rate", "to", "sense"),
     ("rate", "to"),
 )  # a record converted whole
-OUT_KEYS, OUT_REQUIRED = (
-    ("family", "pair", "sense"),
-    ("family", "pair"),
-)  # one record out of a conversion
 
 
 @dataclass(frozen=True)
@@ -141,20 +137,11 @@ class Rate:
 
 
 @dataclass(frozen=True)
-class Out:
-    """One record out of a conversion (the fifth list of the act; the two hands of 2026-10-03, the advisor's (c) and the mathematician's 204): the family laid, by its position, the pair of the rotation its whole quantum is laid at (the rotations summing at the Node, the excess pair for the record that carries the rest) and the sense of a plane's lay, 0 for a record of real lines."""
-
-    family: int
-    pair: tuple[int, int]
-    sense: int
-
-
-@dataclass(frozen=True)
 class Conversion:
-    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), and the records out, each one whole quantum laid at the Node."""
+    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), and the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands, #1572 comments 5964520368 and 5964754600)."""
 
     rate: int
-    outs: tuple[Out, ...]
+    outs: tuple[int, ...]
 
 
 @dataclass(frozen=True)
@@ -253,15 +240,6 @@ def family_named(value: object, label: str, quanta: dict[str, int], own: int) ->
     return quanta[str(value)]
 
 
-def laid_pair(value: object, label: str) -> tuple[int, int]:
-    """The pair of a lay's rotation, [num, den] with den from 1 and |num| below den (cos omega = num / den; a massless lay, |num| = den, has no finite amplitude); refused by name otherwise."""
-    if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{label} must be the pair [num, den] of the lay's rotation")
-    den = integer(value[1], f"{label}'s den", 1)
-    num = integer(value[0], f"{label}'s num", 1 - den, den - 1)
-    return num, den
-
-
 def sense_of(value: object, label: str, plane: bool) -> int:
     """A lay's sense, +1 or -1 for a plane (the sign of its Wronskian) and none for a record of real lines, which write no sign; refused by name otherwise."""
     sense = integer(value, label, -1, 1) if value is not None else 0
@@ -275,22 +253,16 @@ def sense_of(value: object, label: str, plane: bool) -> int:
 def conversion_of(
     value: object, label: str, families: tuple[FamilyRule, ...], own: int, quanta: dict[str, int]
 ) -> tuple[Conversion, int]:
-    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out, each `family` (a family of quanta other than the body's own), `pair`, the rotation its one whole quantum is laid at (`laid_pair`; the rotations summing at the Node, the excess pair for the record carrying the rest, every one the file's) and `sense` (`sense_of`), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
+    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the families of the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
     found = keyed(value, label, CONVERSION_KEYS, CONVERSION_REQUIRED)
     rate = integer(found["rate"], f"{label}.rate", 1)
     if not isinstance(found["to"], list) or not found["to"]:
-        raise ValueError(
-            f"{label}.to lists the records out of the conversion, each its family, pair and sense"
-        )
-    outs = []
-    for index, entry in enumerate(found["to"]):
-        row = keyed(entry, f"{label}.to[{index}]", OUT_KEYS, OUT_REQUIRED)
-        family = family_named(row["family"], f"{label}.to[{index}].family", quanta, own)
-        pair = laid_pair(row["pair"], f"{label}.to[{index}].pair")
-        sense = sense_of(row.get("sense"), f"{label}.to[{index}].sense", families[family].plane)
-        outs.append(Out(family, pair, sense))
+        raise ValueError(f"{label}.to lists the families of the records out of the conversion")
+    outs = tuple(
+        family_named(name, f"{label}.to[{index}]", quanta, own) for index, name in enumerate(found["to"])
+    )
     own_sense = sense_of(found.get("sense"), f"{label}.sense", families[own].plane)
-    return Conversion(rate, tuple(outs)), own_sense
+    return Conversion(rate, outs), own_sense
 
 
 def node_instrument_of(
