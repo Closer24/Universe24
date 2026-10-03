@@ -75,8 +75,8 @@ def world(design: dict[str, Any]) -> dict[str, object]:
     giver = {
         "family": row["family"],
         "nodes": [
-            {"node": found["body"], "count": 1},
-            {"node": [found["body"][0] + 1, *found["body"][1:]], "count": 1},
+            {"node": found["body"], "weight": 1},
+            {"node": [found["body"][0] + 1, *found["body"][1:]], "weight": 1},
         ],
         "parts": [{"part": 0, "name": "g", "count": 0}, {"part": 1, "name": "e", "count": 1}],
         "transitions": [

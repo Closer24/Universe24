@@ -28,9 +28,10 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
     body = {
         "family": design["neutron"]["family"],
         "nodes": [
-            {"node": centre, "count": int(design["neutron"]["count"])},
-            {"node": [centre[0] + 1, *centre[1:]], "count": int(design["neutron"]["count"])},
+            {"node": centre, "weight": 1},
+            {"node": [centre[0] + 1, *centre[1:]], "weight": 1},
         ],
+        "count": int(design["neutron"]["count"]),  # the record's count, declared once over its region
     }
     body["conversion"] = {"rate": int(table["rate"]), "to": outs}
     body["instrument"] = {k: int(v) for k, v in design["generator"].items()}

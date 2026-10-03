@@ -134,11 +134,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
     "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
-        213,
+        281,
         "the NodeReader round (the owner's word of 2026-10-03, a detector is never on one Node; the Boss's brief): the "
-        "ion's record declared over two adjacent Nodes in equal counts, the lay A_n^2 = A^2 / n, the share credited 1, "
-        "the one-Node and the in-pieces refusals, the boundary cut with the inner Link open, the uniform mode's "
-        "recurrence to the bit, the taking's and the giving's Nodes drawn by the shares",
+        "ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, the share credited 1, "
+        "the one-Node, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "
+        "uniform mode's recurrence to the bit, the drive projected on the reader's normalised mode, one draw per click "
+        "with the write's Node drawn after the outcome by the window's inflow booked per Node, the giving's Node by "
+        "the record's share (the mathematician's 299 with the advisor's second, two hands)",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

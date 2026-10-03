@@ -205,22 +205,45 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     board = GameBoard(load_world(path), (lines := []).append)
     n, p, e, nu = map(quanta.__getitem__, names := ("neutron", "proton", "electron", "antineutrino"))
 
-    def levels(k):
-        return [(int(r.now[4, 4, 4]), int(r.before[4, 4, 4])) for r in board.states[k].lines]
+    region = [(4, 4, 4), (5, 4, 4)]  # the record's two Nodes, the lay in equal weights
 
-    assert levels(n) == [(95, -76)] * 3 and board.credit.bodies[0].counts == [1]
+    def levels(k, at=(4, 4, 4)):
+        return [(int(r.now[at]), int(r.before[at])) for r in board.states[k].lines]
+
+    for at in (
+        region
+    ):  # the three lines at each Node by the invariant over two, A_l^2 = T den div (2 s x 3 x 2)
+        assert levels(n, at) == [(67, -54)] * 3
+    assert board.credit.bodies[0].counts == [1]
     board.step(), board.step()
     [first] = [line for line in lines if line["event"] == "conversion"]  # one conversion line
-    assert first["window"] == [1, 2] and first["node"] == {"label": "GAMEBOARD", "at": [4, 4, 4]}
+    assert first["window"] == [1, 2] and first["node"]["label"] == "GAMEBOARD"
+    drawn = tuple(first["node"]["at"])  # the records out at the one Node of the region the draw picked
+    assert drawn in region and (other := next(at for at in region if at != drawn))
     assert (first["into"], first["detector"], first["label"]) == ([*names[1:]], "measured 0", "DETECTOR")
-    assert levels(n) == [(0, 0)] * 3 and board.credit.bodies[0].counts == [0]
-    assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(128, 0), (0, 128)]
-    assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
-    assert [int(board.quanta(k)[0][4, 4, 4]) for k in (p, e, nu)] == [1, 1, 1]
-    laid = [(x["family"], x["line"]) for x in lines if x["event"] == "lay"]
-    assert laid == [(f, k) for f, m in zip(names, (3, 6, 2, 1), strict=True) for k in range(m)]
+    assert all(levels(n, at) == [(0, 0)] * 3 for at in region) and board.credit.bodies[0].counts == [0]
+    assert levels(p, drawn) == [(73, 0), (0, -73)] * 3 and levels(e, drawn) == [(128, 0), (0, 128)]
+    assert levels(nu, drawn) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [
+        1,
+        1,
+        1,
+    ]
+    assert all(
+        levels(k, other)[0] == (0, 0) for k in (p, e, nu)
+    )  # the other Node of the region untouched
+    assert [int(board.quanta(k)[0][drawn]) for k in (p, e, nu)] == [1, 1, 1]
+    laid = [(line["family"], line["line"]) for line in lines if line["event"] == "lay"]
+    assert laid == [("neutron", k) for k in range(3) for _ in region] + [
+        (f, k) for f, m in zip(names[1:], (6, 2, 1), strict=True) for k in range(m)
+    ]  # the record's lines once per Node of its region, the records out at the drawn Node
     board.step(), board.step()
-    assert [x["event"] for x in lines if x["event"] not in ("click", "lay", "field")] == ["conversion"]
+    others = (
+        "click",
+        "lay",
+        "field",
+        "parts",
+    )  # the region `around` holds the record's second Node: its parts read
+    assert [x["event"] for x in lines if x["event"] not in others] == ["conversion"]
     assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
 
 
@@ -232,7 +255,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
-    body, at = world["measured"][0], (4, 4, 4)
+    body, region = world["measured"][0], [(4, 4, 4), (5, 4, 4)]  # the record's two Nodes
     proton, electron, antineutrino = table = body["conversion"]["to"]
     assert (proton["sense"], electron["sense"], antineutrino) == (-1, 1, "antineutrino")
     wrong = {
@@ -251,15 +274,23 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     p, e, nu = outs = [quanta[row["family"] if isinstance(row, dict) else row] for row in table]
     sign = next(k for k, f in enumerate(board.families) if f.wronskian)
 
+    at = (
+        4,
+        4,
+        4,
+    )  # the records out at the one Node of the region the conversion's draw picks, read below
+
     def levels(k):
         return [(int(r.now[at]), int(r.before[at])) for r in board.states[k].lines]
 
     def sign_rows():
         return [int(line.now[at]) for line in board.states[sign].lines[: board.families[sign].records]]
 
-    assert sign_rows() == [0, 0, 0]
+    assert all(sign_rows() == [0, 0, 0] for at in region)
     board.step()  # the first window closes at the first interval and the conversion is drawn
-    assert [x["tick"] for x in lines if x["event"] == "conversion"] == [1] and sign_rows() == [0, 0, 0]
+    [converted] = [x for x in lines if x["event"] == "conversion"]
+    at = tuple(converted["node"]["at"])  # the drawn Node, a diagnostic of the line
+    assert converted["tick"] == 1 and at in region and sign_rows() == [0, 0, 0]
     assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(128, 0), (0, 128)]
     assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in outs] == [1, 1, 1]
     wronskians = [int(np.asarray(node.wronskian(board.states[k].lines, True))[at]) for k in (p, e)]
@@ -273,9 +304,9 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
         1,
     ]  # the count's unit, the share rounded
     laid = [(x["family"], x["line"]) for x in lines if x["event"] == "lay"]
-    assert laid[:3] == [(body["family"], k) for k in range(3)] and len(laid) == 12
-    assert laid[3:9] == [(proton["family"], k) for k in range(6)]
-    assert laid[9:] == [(electron["family"], 0), (electron["family"], 1), (antineutrino, 0)]
+    assert laid[:6] == [(body["family"], k) for k in range(3) for _ in region] and len(laid) == 15
+    assert laid[6:12] == [(proton["family"], k) for k in range(6)]  # the records out at the drawn Node
+    assert laid[12:] == [(electron["family"], 0), (electron["family"], 1), (antineutrino, 0)]
     first = {row_of(board.families, k, 0): 0 for k in (p, e)}  # the rows the two records own
     for _ in range(4):
         board.step()
@@ -334,7 +365,8 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
     turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
     probe["drive"] = "probe"
-    record = {"family": "atom", "nodes": [{"node": [1, 1, 1], "count": 1}], "parts": parts}
+    region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
+    record = {"family": "atom", "nodes": region, "parts": parts}
     record.update(transitions=[*turns, probe], rates=[], instrument=draw)
     lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
     world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
@@ -372,7 +404,11 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     click = ("DETECTOR", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
     assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
     laid = [(x["family"], x["tick"]) for x in lines if x["event"] == "lay"]
-    assert laid == [("probe", 3), ("atom", 3)]  # the probe's lay, then the body's re-lay in g
+    assert laid == [
+        ("probe", 3),
+        ("atom", 3),
+        ("atom", 3),
+    ]  # the probe's lay, then the re-lay in g at both Nodes
     assert not board.credit.faces and (books.elapsed, books.windows, books.part) == (0, 1, 0)
     assert books.state != 25
     board.credit.counts[pulse] = 1  # one quantum of the drive in the books

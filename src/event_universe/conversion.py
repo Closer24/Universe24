@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from event_universe.loader.instrument import Instrument
-from event_universe.meeting import Item, NodeBooks, click, drawn_node
+from event_universe.meeting import Item, NodeBooks, drawn_node, picked, written
 from event_universe.reports import conversion
 
 if TYPE_CHECKING:
@@ -20,16 +20,17 @@ def converted(board: GameBoard, books: NodeBooks) -> bool:
         if books.counts[books.part] <= 0:
             return False
         span = window if window <= table.rate else table.rate
-        items = [Item(books.index, books.number, books.part, -1, books.nodes)]
-        laid_at = drawn_node(
-            board, books, list(books.weights)
-        )  # the records out at one Node by the share
-        for out, sense in zip(table.outs, table.senses, strict=True):
-            den = board.families[out].pair[1]
-            items.append(Item(out, None, None, 1, (laid_at,), (den, den), sense=sense))
         weights = [span, table.rate - span]
-        pick, books.state = click(board, books.state, books.declared.draw, weights, [items, []])
-        if pick == 0:
+        pick, books.state = picked(board, books.state, books.declared.draw, weights, 2)
+        if (
+            pick == 0
+        ):  # realised: the records out at one Node of the region drawn now, by the record's own share
+            items = [Item(books.index, books.number, books.part, -1, books.nodes)]
+            laid_at = drawn_node(board, books, list(books.weights))
+            for out, sense in zip(table.outs, table.senses, strict=True):
+                den = board.families[out].pair[1]
+                items.append(Item(out, None, None, 1, (laid_at,), (den, den), sense=sense))
+            written(board, items)
             if board.observer is not None:
                 name, *into = [board.families[i].name for i in (books.index, *table.outs)]
                 over, at = [board.tick - window + 1, board.tick], list(laid_at)

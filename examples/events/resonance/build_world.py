@@ -36,8 +36,8 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
     return {
         "family": row["family"],
         "nodes": [
-            {"node": list(row["node"]), "count": 1},
-            {"node": [int(row["node"][0]) + 1, *row["node"][1:]], "count": 1},
+            {"node": list(row["node"]), "weight": 1},
+            {"node": [int(row["node"][0]) + 1, *row["node"][1:]], "weight": 1},
         ],
         "parts": parts,
         "transitions": transitions,
@@ -79,6 +79,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "value": num / den,
             "pair": [num, den],
             "node": list(design["reading_node"]),
+            "node_from_the_lay": "the design's reading Node is eight Nodes along x from the giver's first Node; the reader stands over the Nodes 0 and 1 and its giving is laid at the Node drawn by the record's share, so the reading Node is the one eight Nodes along x from the laid Node, 8 or 9",
             "window": list(design["reading_window"]),
             "estimator": "SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2)",
             "gate": "|cos Omega_read - num / den| <= 2 / A_far with A_far = max |n_t| over the window at the reading Node (the mathematician's 220, the advisor's second)",

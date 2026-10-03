@@ -384,6 +384,15 @@ class GameBoard:
                 self.families[index].parts > 1
             ):  # the meeting through the root is a record of several parts'
                 credit.joined(self, index, found)
+        for books in (
+            self.credit.bodies
+        ):  # a reader's own book: its drives' inflow through its Nodes' front Ports
+            drives = sorted({t.drive for t in books.declared.transitions if t.drive in currents})
+            if drives:
+                region = self.mask(books.nodes)
+                facing = reports.front(region, wrap, region, own)
+                for drive in drives:
+                    meeting.booked_inflow(self, books, drive, entering(facing, currents[drive]))
         self.fields_read(forms, union)
 
     def fields_read(self, forms: Bookings, at: np.ndarray) -> None:

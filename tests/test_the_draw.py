@@ -304,9 +304,13 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
             books.state = seed * len(board.credit.bodies) + books.number
         pulse = [f.name for f in board.families].index("pulse")
         giver, series, expected = board.credit.bodies[0], {}, board.credit.bodies[0].state
+        beyond = (at[0] + 1, *at[1:])  # the reading Node eight Nodes from either Node of the reader
         for _ in range(96):
             board.step()
-            series[board.tick] = int(board.states[pulse].lines[0].now[at])
+            series[board.tick] = (
+                int(board.states[pulse].lines[0].now[at]),
+                int(board.states[pulse].lines[0].now[beyond]),
+            )
             given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
             if not given:  # in the dark one draw per interval at the now; the window's close at 48 draws nothing more
                 expected = (draw["multiplier"] * expected + draw["increment"]) % (board.world.width + 1)
@@ -319,10 +323,12 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         assert [c["tick"] for c in lays] == list(
             range(t, min(t + 48, 97))
         )  # the span from t, cut by the run's end
-        assert all(
-            c["node"]["at"] == [0, 0, 0] and c["line"] == 0 and c["after"][1:] == c["before"][1:]
-            for c in lays
-        )
+        laid_at = {tuple(c["node"]["at"]) for c in lays}
+        assert len(laid_at) == 1 and laid_at <= {
+            (0, 0, 0),
+            (1, 0, 0),
+        }  # the giving's Node drawn once per click by the record's share, inside the reader's region
+        assert all(c["line"] == 0 and c["after"][1:] == c["before"][1:] for c in lays)
         taken = [c for c in lines if c["event"] == "credit" and c["taken"]]
         assert max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22
         assert board.credit.counts[pulse] + len(taken) == 1  # one quantum given, kept or taken
@@ -336,10 +342,11 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
             for unit in (wall, record_unit(board, pulse, total, 1)):  # W_c and the record's own unit
                 assert division_forward(total, unit, division_forward(unit, 2, 0)[0])[0] == 1
         if t <= 53:  # the plateau after the front and before the stop, inside the run
-            window = range(t + 28, t + 43)
-            numerator = sum(series[k] * (series[k + 1] + series[k - 1]) for k in window)
-            read = numerator / (2 * sum(series[k] ** 2 for k in window))
-            far = max(abs(series[k]) for k in window)
+            window, read_at = range(t + 28, t + 43), next(iter(laid_at))[0]  # eight Nodes from the lay
+            levels = {k: pair[read_at] for k, pair in series.items()}
+            numerator = sum(levels[k] * (levels[k + 1] + levels[k - 1]) for k in window)
+            read = numerator / (2 * sum(levels[k] ** 2 for k in window))
+            far = max(abs(levels[k]) for k in window)
             assert far > 20 and abs(read - 2 / 3) <= 2 / far, (t, read, far)
     by_tau = sum(t <= 48 for t in given_at)  # 25 x 0.636 = 15.9 +/- 2.4: within three deviations
     assert 8 <= by_tau <= 24 and len(set(given_at)) > 1, (
@@ -399,7 +406,9 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
 
     def body(at, **changes):  # the giver at a Node with its one giving changed
         rate = {k: v for k, v in {**giver["rates"][0], **changes}.items() if v is not None}
-        return [{**giver, "nodes": [{"node": at, "count": 1}], "rates": [rate]}]
+        beside = [at[0] + 1, at[1], at[2]]  # the reader over two adjacent Nodes, in equal weights
+        nodes = [{"node": at, "weight": 1}, {"node": beside, "weight": 1}]
+        return [{**giver, "nodes": nodes, "rates": [rate]}]
 
     def deny(word, rows, shape):  # the loader's refusal by name at the board's shape
         refused(word, bodies_of, rows, None, "", families, shape, 9000, (), action)
@@ -432,11 +441,19 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     nodes = {tuple(c["node"]["at"]) for c in lays}
     spans = [sorted({at[a] for at in nodes}) for a in range(3)]
     along = [a for a in range(3) if len(spans[a]) > 3]
-    assert len(along) == 1 and 17 in (
+    drawn_x = {
+        17,
+        18,
+    }  # the giver's region, two Nodes along x: the packet from the one Node the draw picked
+    assert len(along) == 1 and (drawn_x if along[0] == 0 else {17}) & {
         spans[along[0]][0],
         spans[along[0]][-1],
-    )  # from the body's Node, one sense
-    assert all(spans[a] == [16, 17, 18] for a in range(3) if a not in along)  # the top-hat of 3 across
+    }  # from the drawn Node, one sense
+    for a in (
+        a for a in range(3) if a not in along
+    ):  # the top-hat of 3 across, centred at the drawn Node
+        centre = spans[a][1]
+        assert spans[a] == [centre - 1, centre, centre + 1] and centre in (drawn_x if a == 0 else {17})
     train = envelope(line_total(action, (2, 3)), 2, 9)
     assert len(spans[along[0]]) == len(train)  # L slices from tau and T
     turn = sum(9 * b * b - 12 * b * n + 9 * n * n for n, b, _ in (c["after"] for c in lays))

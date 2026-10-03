@@ -34,11 +34,12 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
     for books in board.credit.bodies:
         books.state = seed * len(board.credit.bodies) + books.number
     light = [f.name for f in board.families].index(design["light"])
-    far, series = tuple(np.add(design["reading_node"], board.offset)), {}
+    far, levels = tuple(np.add(design["reading_node"], board.offset)), {}
+    beyond = (far[0] + 1, *far[1:])  # the reading Node eight Nodes from either Node of the reader
     intervals, lifetime = int(design["ticks"]), int(design["giver"]["lifetime"])
     for _ in range(intervals):
         board.step()
-        series[board.tick] = int(board.states[light].lines[0].now[far])
+        levels[board.tick] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
     clicks = [c for c in lines if c["event"] == "credit" and (c["taken"] or c["given"])]
     given = [c["tick"] for c in clicks if c["given"] == design["light"]]
     taken = [f"{c['detector']} {c['realised']} by {c['taken']}" for c in clicks if c["taken"]]
@@ -49,6 +50,9 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
     if not given:
         return found
     t = given[0]
+    lays = [c for c in lines if c["event"] == "lay" and c["family"] == design["light"]]
+    read_at = lays[0]["node"]["at"][0] - int(design["giver"]["node"][0])  # the lay's Node, 0 or 1
+    series = {k: pair[read_at] for k, pair in levels.items()}
     if t + AFTER + PLATEAU <= intervals:
         window = range(t + AFTER, t + AFTER + PLATEAU)
         numerator = sum(series[k] * (series[k + 1] + series[k - 1]) for k in window)

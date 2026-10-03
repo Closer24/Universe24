@@ -27,7 +27,10 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     at, beside = [3, 3, 2], [4, 3, 2]  # the region: two Nodes adjacent along x, in equal counts
     parts = [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
     draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
-    nodes = [{"node": at, "count": 1}, {"node": beside, "count": 1}]
+    nodes = [
+        {"node": at, "weight": 1},
+        {"node": beside, "weight": 1},
+    ]  # the lay's weights, the count once
     record = {"family": "ion", "nodes": nodes, "parts": parts, "instrument": draw}
     record["transitions"] = [
         {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
@@ -56,9 +59,10 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     for word, body in wrong.items():
         refused(word, node_instrument_of, body, "measured[0]", families, 0, quanta, 1)
     one = {**record, "nodes": nodes[:1]}  # one Node: no boundary, refused by name
-    apart = {**record, "nodes": [nodes[0], {"node": [3, 5, 2], "count": 1}]}  # in pieces
+    apart = {**record, "nodes": [nodes[0], {"node": [3, 5, 2], "weight": 1}]}  # in pieces
     action = universe["integers"]["quantum_action"]
-    for word, body in (("never one Node", one), ("in pieces", apart)):
+    counted = {**record, "nodes": [{"node": at, "count": 1}, nodes[1]]}  # a count on a reader's Node
+    for word, body in (("never one Node", one), ("in pieces", apart), ("unknown key 'count'", counted)):
         refused(word, bodies_of, [body], None, "", families, (6, 6, 4), 9000, (), action)
     alone = {**twin, "messages": [], "detectors": []}  # the record alone: its uniform mode
     (rest := tmp_path / "r.json").write_text(json.dumps(alone), encoding="utf-8")
@@ -118,8 +122,44 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert board.credit.counts[ion] == 1 and int(board.quanta(ion)[0].sum()) <= 1
     assert all(int(line.now[n]) == 0 for line in board.states[ion].lines[2:] for n in region)
     assert BACK.verdict(GameBoard(load_world(plain)), 30)["verdict"] == "MATCH"
+    draws, node_draws, book = (
+        [],
+        [],
+        {},
+    )  # the generator's draws, the write's Node draws, the inflow book
+    real_draw, real_node, real_book = meeting.drawn, meeting.drawn_node, meeting.booked_inflow
+
+    def counted_draw(*args):  # type: ignore[no-untyped-def]
+        draws.append(board.tick)
+        return real_draw(*args)
+
+    def noted_node(b, books, weights):  # type: ignore[no-untyped-def]
+        node_draws.append((board.tick, list(weights)))
+        return real_node(b, books, weights)
+
+    def kept_book(b, books, drive, came):  # type: ignore[no-untyped-def]
+        real_book(b, books, drive, came)
+        book[drive] = list(books.intake[drive])
+
+    for name, found in (
+        ("drawn", counted_draw),
+        ("drawn_node", noted_node),
+        ("booked_inflow", kept_book),
+    ):
+        monkeypatch.setattr(meeting, name, found)
     while not (clicks := [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR"]):
         booked(board, monkeypatch, ion, drv, light), other.step()  # the booking identity at every act
+    reader = board.credit.bodies[
+        0
+    ]  # the turn's read: the drive projected on the reader's normalised mode
+    read = [int(other.states[drv].lines[0].now[tuple(np.add(n, board.offset))]) for n in region]
+    total = sum(d * a for d, a in zip(read, reader.amplitudes, strict=True))
+    assert (list(reader.amplitudes), reader.norm) == ([90, 90], 127)  # A_i = 90, A = isqrt(2 x 90^2)
+    assert meeting.arriving(other, reader, drv) == (1 if total >= 0 else -1) * ((abs(total) + 63) // 127)
+    assert draws.count(board.tick) == 2 and [t for t, _ in node_draws] == [
+        board.tick
+    ]  # one draw per click
+    assert node_draws[0][1] == [max(w, 0) for w in book[drv]]  # the Node by the window's inflow per Node
     first, click = clicks[0], ("P", "S", "strong_drive", None, 1, "measured 0")
     words = ("realised", "before", "taken", "given", "count", "detector")
     assert tuple(first[k] for k in words) == click and first["tick"] == board.tick
@@ -130,6 +170,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )
     holes = {f.at for f in board.credit.faces[board.tick + 1] if f.family == drv}  # the hole's faces
     assert len(holes) == 1 and (hole_at := next(iter(holes))) in region  # the taking's one drawn Node
+    assert (
+        book[drv][region.index(hole_at)] > 0
+    )  # the Node the quantum entered through, its inflow booked
     written = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["tick"] == board.tick}
     assert written == set(region)  # the GAMEBOARD lay lines of the write name the Nodes, the click none
     was, now = (dict(p for f in BACK.snapshot(b) for p in f) for b in (other, board))
@@ -150,7 +193,10 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     hole, twin = board.states[drv].lines[0], (other.step(), other.step(), other.states[drv].lines[0])[2]
     v, first_root = int(twin.before[here]), int(hole.before[here])
     assert min(v, leaving) < first_root < max(v, leaving)  # the first face's root between v and b (265)
-    assert 0 < abs(int(hole.now[here])) <= abs(int(twin.now[here]))  # the second face's root, the rest
+    second, v_next = int(hole.now[here]), int(twin.now[here])  # the second face's root, the rest (265)
+    assert second != 0 and min(v_next, first_root) <= second <= max(
+        v_next, first_root
+    )  # between v and b
     drop = int(other.total_share(drv)[0]) - int(board.total_share(drv)[0])
     assert (
         0 < drop <= board.credit.units[drv]

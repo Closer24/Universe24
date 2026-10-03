@@ -8,7 +8,6 @@ from dataclasses import dataclass
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
@@ -37,10 +36,14 @@ WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "tick
 WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes", "weights", *NODE_INSTRUMENT_KEYS),
+    ("family", "nodes", "weights", "count", *NODE_INSTRUMENT_KEYS),
     ("family", "nodes"),
-    ("node", "count"),
+    ("node", "count", "weight"),
 )
+READER_NODE_KEYS = (
+    "node",
+    "weight",
+)  # a reader's Node: its lay's weight, the record's count declared once
 DETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern")  # a detector's keys
 TRANSITION = (
     "transition"  # a region's own quantum, declared by no region: its unit is its record's own share
@@ -119,7 +122,7 @@ def bodies_of(
     action: int,
     periodic: tuple[bool, bool, bool] = (False, False, False),
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board; a body of a family that reads a holder of the sign, `derived.charged`, is one quantum of its family, one Node with the count 1, and a count above it is refused by name with the way to declare many quanta, that many bodies of count 1, each its own record and its own row of the sign, ALGEBRA.md, No record reads its own write of the sign) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`; its givings' lay decided by the board's shape against the declared width at the quantum action T, `packet_form`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board; a body of a family that reads a holder of the sign, `derived.charged`, is one quantum of its family, one Node with the count 1, and a count above it is refused by name with the way to declare many quanta, that many bodies of count 1, each its own record and its own row of the sign, ALGEBRA.md, No record reads its own write of the sign) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument` and its `count`) takes no mode entry, its Nodes listed with the lay's `weight` each (1 where absent, no `count` on a reader's Node: the record's count is declared once, by its parts or by `count`) and its lay the engine's own over its region (`node_instrument_of`; its givings' lay decided by the board's shape against the declared width at the quantum action T, `packet_form`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
@@ -146,7 +149,10 @@ def bodies_of(
             )
         nodes, counts = [], []
         for index, line in enumerate(lines):
-            keyed(line, f"{label}.nodes[{index}]", NODE_KEYS, NODE_KEYS)
+            if parted:  # a reader's Node carries the lay's weight (1 where absent); its count is the record's, once
+                keyed(line, f"{label}.nodes[{index}]", READER_NODE_KEYS, ("node",))
+            else:
+                keyed(line, f"{label}.nodes[{index}]", ("node", "count"), ("node", "count"))
             node = node_of(line["node"], f"{label}.nodes[{index}].node", shape, beyond)
             if node in taken:
                 raise ValueError(
@@ -154,8 +160,9 @@ def bodies_of(
                 )
             taken.add(node)
             nodes.append(node)
-            counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
-        if derived.charged(families, family) and sum(counts) > 1:
+            key = "weight" if parted else "count"
+            counts.append(integer(line.get(key, 1), f"{label}.nodes[{index}].{key}", 1))
+        if not parted and derived.charged(families, family) and sum(counts) > 1:
             raise ValueError(
                 f"{label} declares the count {sum(counts)} of {body['family']!r}, a family that reads the holder "
                 "of the sign: such a record is one quantum of its family, one Node with the count 1, and many "
@@ -170,13 +177,30 @@ def bodies_of(
                     "region through the six Ports (ALGEBRA.md, The NodeReader is one declaration kind for every "
                     "experiment); its Nodes are {[list(n) for n in nodes]}"
                 )
-            # a reader's Node counts are the lay's weights, the counts' proportion; the record's count is its
-            # parts' (a record converted whole: the mean of its Nodes' counts, each Node its share of the record)
+            # a reader's Nodes carry the lay's weights, A_i^2 = A^2 w_i / SUM w; the record's count is declared
+            # once, by its parts, or by `count` for a record converted whole (the mathematician's 299 section 4
+            # with the advisor's second, #1572, two hands)
             declared = body.get("parts")
             if isinstance(declared, list) and all(isinstance(p, dict) for p in declared):
+                if "count" in body:
+                    raise ValueError(
+                        f"{label} declares its count by its parts; `count` is a converted record's"
+                    )
                 count = sum(p.get("count", 0) for p in declared if isinstance(p.get("count"), int))
+            elif "count" in body:
+                count = integer(body["count"], f"{label}.count", 1)
             else:
-                count = int(division_forward(sum(counts), len(counts), 0)[0])
+                raise ValueError(
+                    f"{label} declares no count: a record converted whole declares `count`, the record's count "
+                    "over its region declared once; a record with parts declares it in its parts"
+                )
+            if derived.charged(families, family) and count > 1:
+                raise ValueError(
+                    f"{label} declares the count {count} of {body['family']!r}, a family that reads the holder of "
+                    "the sign: such a record is one quantum of its family, and many quanta are that many bodies "
+                    "of count 1, each its own record with its own row of the sign (ALGEBRA.md, No record reads "
+                    "its own write of the sign)"
+                )
             parts = node_instrument_of(body, label, families, family, quanta, count)
             parts = packet_form(parts, label, families, nodes[0], shape, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
