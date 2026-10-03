@@ -261,3 +261,14 @@ blind is a finding by name, never adjusted; a world refused by name is recorded 
   alike, no change of this round).
 - **The runs**: not run again tonight; the blind's rows stand with the second reading's numbers,
   unread on this engine, by name.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+N at the screen, the row by the shares, the clicks drawn and the arrival's peak, centroid and span
+are the detector's: the screen's `click` lines and `credit` lines read by `tools/click_counts.py`,
+in both readings; the lens (the two central regions against the outer two) is the same row. The
+`field` lines at the screen's column, the body's rest in the neutral tube, the books and the second
+reading's U under the packet (the books' least Node pace) are GameBoard readings, and that line's
+verdict rests on one. The `click` lines carry the board's `tick` alone and the `credit` lines the
+board's `tick` and the `window` in board intervals; the arrival's intervals are the board's, and no
+line carries the screen's own clock.

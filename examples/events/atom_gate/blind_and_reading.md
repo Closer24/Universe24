@@ -317,6 +317,13 @@ name (the start's rest under it differs at the rounding, as every world's does);
 and `hydrogen_1s.json` and `hydrogen_2s.json` stand declared without mode files, refused at load
 by name as before; the blind stands as written.
 
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Every number of every reading in this file is a GameBoard reading (`read_atom.py`: the electron's
+rotation summed over its lines and Nodes, the records' shares over the board and at the nucleus's
+Node, the 48 images, the books; `tools/body_standing.py` read 4 on the standing world). The worlds
+declare no detector, so no number is a detector's line and no verdict rests on one; the blind's own
+fence says "GameBoard" on every row. The intervals are the board's.
 ## The derived atom's run on main's engine: the blind, before any lay of the round
 
 The round of the owner's word of 2026-10-03, 09:27 Israel ("Bring in also the experiments that are
@@ -549,3 +556,9 @@ key (07:04 to 07:36 UTC): every number above read again identical, the rotation'
 deviations, the centroids, the rows, the holders, the detector's lines, the images and the books,
 so the reading stands on both engines; the committed-worlds gate (`tests/test_the_bound_body.py`)
 passed on the merged tree with the folder's files as committed.
+
+The one exception to the sources above, since the derived atom's run of this file: the region detector
+`beside` of the derived atom's run declares a region of two Nodes with no `instrument`, and its `click`
+lines in row 7 of that run's reading are a detector's lines, labelled so there (the fence DETECTOR for
+the click lines, GameBoard for the field lines); no verdict of this file rests on them, and the 1s
+standing is read from the GameBoard alone.
