@@ -276,7 +276,10 @@ HOLDER["held"] = {"sources": ["form"], "level_weight": 1, "write_weight": 300, "
 NUCLEON = {"name": "nucleon", "pair": list(PAIR), "dimension": ["plane"] * 3, "reads": HOLDER["reads"]}
 COMPACT = {"kind": "fixed_point", "stop": 2, "passes": 30, "seed": "compact", "profile": [1, 4]}
 K2 = (32, 1)  # the budget's confidence multiple squared, the shipped lays' key
-NUCLEUS, CUBE = 25, 9  # the design's count, a few quanta, and the open cube's side
+NUCLEUS, CUBE = (
+    32,
+    9,
+)  # the design's count (25 under the bolometer's unit; 32 the least that binds in the family's quantum, 31 and 35 clouds) and the open cube's side
 
 
 def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads(

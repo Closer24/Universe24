@@ -26,7 +26,7 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   rows, each folder its `design.json`, its `build_world.py` and its blind
   `expectation.json` written first from the advisor's numbers:
   `examples/events/matter_alone/` (matter alone: the compact pixel on the open
-  25-cube and the cloud on the 41-cube, the rest rotation, the
+  25-cube, the rest rotation, the
   tail and the drift), `examples/events/matter_and_gravity/` (the massless row's
   rest about a pixel in levels, 3 G(r) s, on its own universe with gravity at the
   level weight 10); the bodies' worlds are read by `tools/body_rest.py`, a
@@ -96,7 +96,7 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 PYTHONPATH=src python tools/run_inputs.py --out runs/nuclide examples/events/nuclide/free_nuclide.json
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/nuclide/free_nuclide.json
 for f in matter_alone matter_and_gravity; do PYTHONPATH=src python examples/events/$f/build_world.py --modes; done
-PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_alone/expectation.json examples/events/matter_alone/pixel.json examples/events/matter_alone/cloud.json
+PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_alone/expectation.json examples/events/matter_alone/pixel.json
 PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_and_gravity/expectation.json examples/events/matter_and_gravity/well.json
 ```
 

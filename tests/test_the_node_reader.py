@@ -2,6 +2,7 @@
 
 import ast
 import json
+import math
 
 import numpy as np
 
@@ -13,7 +14,7 @@ from event_universe.loader.node_reader_declaration import node_reader_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, TOOL, TOP, booked, refused
+from tests.laws import BACK, EVENTS, ROOT, TOOL, TOP, booked, chain_body_world, refused
 
 TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
 
@@ -78,11 +79,14 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     spread_to = spread(squared(1, action, (pair[0], pair[1])), (1, 2))  # A_n = isqrt(A^2 div 2)
     assert (pair, one_node, spread_to) == ([1, 1299], 128, 90)  # the ion's pair: A^2 = T div 2 = 16,384
     at_two_three = (amplitude(1, 32768, (2, 3)), spread(squared(1, 32768, (2, 3)), (1, 2)))
-    assert at_two_three == (
-        171,
-        121,
-    )  # the mathematician's 288 section 2: A^2 = 29,491 at T 32,768, [2, 3]
-    assert 2 * 121**2 == 29282 < 29491 == squared(1, 32768, (2, 3))  # the two Nodes' squares under A^2
+    assert (
+        at_two_three
+        == (
+            148,
+            104,
+        )
+    )  # one quantum of the invariant, A^2 = T / (2 sin omega) = 21,981 at T 32,768, [2, 3] (the law's L798)
+    assert 2 * 104**2 == 21632 < 21981 == squared(1, 32768, (2, 3))  # the two Nodes' squares under A^2
     there, next_to = tuple(at), tuple(beside)
     levels = [[int(quiet.states[0].lines[0].now[n]) for n in (there, next_to)]]
     assert levels[0] == [spread_to, spread_to]  # the lay over the two Nodes in equal counts
@@ -358,3 +362,31 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
     written = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["tick"] == board.tick}
     assert holes == written == {at}  # the only Node drawn: the hole and the write there, the click none
     assert BACK.verdict(GameBoard(load_world(paths["one"])), 48)["verdict"] == "MATCH"
+
+
+def test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall(tmp_path, monkeypatch):
+    """A count is one quantum of the invariant, the form T sin omega_0 of the family's gap (the two hands' word on #1793's R8): the taker's lay carries 2 A^2 sin omega = T per quantum per line to the unit, the family's wall is W_c sin omega_0 by one root on the whole product and 3 den T for a massless family, the [1, 1299] amplitude is unchanged, and the generator lays a body's declared count in that unit (the books' count of a bound body at the lay is the share at the Nodes' paces under its own well, a reading above the declaration on main before this branch, 13 for 6 on the tests' chain, and no part of this change)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    world = chain_body_world(tmp_path, TOOL, 7)
+    board = GameBoard(load_world(world))
+    names, action = [family.name for family in board.families], board.world.quantum_action
+    matter, light = board.families[names.index("matter")], board.families[names.index("charge")]
+    num, den = matter.pair
+    gap, laid = den * den - num * num, squared(1, action, matter.pair)
+    assert (
+        laid == squared(1, action, (2, 3)) == 21981 and action == 32768
+    )  # T / (2 sin omega_0) to the unit
+    assert (
+        action - 2 <= 2 * laid * math.isqrt(gap) // den <= action
+    )  # 2 A^2 sin omega = T, two roots' units
+    assert (
+        squared(1, action, (1, 1299)) == 16384 and amplitude(1, action, (1, 1299)) == 128
+    )  # bit for bit
+    assert count_wall(light, action) == 3 * 6000 * action  # the bolometer's W_c for a massless family
+    assert (
+        count_wall(matter, action) == math.isqrt(9 * action**2 * gap) == 439628852
+    )  # W_c sin omega_0 to the unit
+    laid_body = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
+    assert (
+        laid_body["count"] == laid_body["carried"] == 7
+    )  # the generator lays the declaration in that unit
