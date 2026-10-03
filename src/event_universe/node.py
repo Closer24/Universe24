@@ -17,9 +17,9 @@ from event_universe.features.hold import hold
 from event_universe.features.read import (
     axis_paces,
     content_of,
-    guard,
     link_factors,
     link_tensions,
+    paces_guard,
     plain,
 )
 from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns
@@ -39,14 +39,14 @@ from event_universe.records import form as form
 from event_universe.records import full as full
 from event_universe.records import largest as largest
 from event_universe.records import level_at as level_at
-from event_universe.records import light_record as light_record
 from event_universe.records import record_slice as record_slice
 from event_universe.records import row_levels as row_levels
+from event_universe.records import rows_total as rows_total
+from event_universe.records import rulers_write_factor as rulers_write_factor
 from event_universe.records import turned_by as turned_by
 from event_universe.records import well as well
 from event_universe.records import write_origins as write_origins
 from event_universe.records import write_sources as write_sources
-from event_universe.records import written as written
 from event_universe.records import wronskian as wronskian
 from event_universe.records import zeros as zeros
 
@@ -89,7 +89,7 @@ def read(
     record: int = 0,
     cut: Factors | None = None,
 ) -> tuple[Any, Factors]:
-    """The read of a record of a family at the interval's start (ALGEBRA.md #the-paces, Every row reads the content; The clock is the Node's, the tension is the Link's; #the-interval, the dependency radius): the content at every Node (`read_lines`, every sign row but the record's own) and the factor of each of its six Links, Q_ij from the Link's tension, the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one number per Link read the same from both ends, booked once per Link in the unit G^2 (features/read, `link_tensions`, `link_factors`); the integer 0 at the Node and G^2 on every Link where it reads nothing (the plain rule at Gamma); `cut`, per Port the mask of the Links the world declares at the factor 0, the six Links of a body that is an instrument, read 0 from both ends so that its record stays at its Node (ALGEBRA.md, The click writes on the GameBoard; the frozen Link, the world's declaration as the node_reader's region is); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
+    """The read of a record of a family at the interval's start (ALGEBRA.md #the-paces, Every row reads the content; The clock is the Node's, the tension is the Link's; #the-interval, the dependency radius): the content at every Node (`read_lines`, every sign row but the record's own) and the factor of each of its six Links, Q_ij from the Link's tension, the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one number per Link read the same from both ends, booked once per Link in the unit G^2 (features/read, `link_tensions`, `link_factors`); the integer 0 at the Node and G^2 on every Link where it reads nothing (the plain rule at Gamma); `cut`, per Port the mask of the Links the world declares at the factor 0, the six Links of a body that is a NodeReader, read 0 from both ends so that its record stays at its Node (ALGEBRA.md, The click writes on the GameBoard; the frozen Link, the world's declaration as the node_reader's region is); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
     if not any(not families[r.family].rotation for r in families[index].reads):
         factors: Factors = (unit * unit,) * PORTS
         content: Any = 0
@@ -144,15 +144,15 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
     for record in range(families[index].records):
         if families[index].reads:
             content, factors = read(index, families, states, 1, wrap, gamma, unit, record)
-            guard(families[index].pair, gamma, unit, content, factors, families[index].name)
+            paces_guard(families[index].pair, gamma, unit, content, factors, families[index].name)
         angles, before = (turning(index, families, states, d, gamma, record) for d in (1, -1))
         if angles is not None and before is not None:  # a turned record turns at both of its levels
-            rotation.guard(angles[0], 2 * gamma, families[index].name, None)
-            rotation.guard(before[0], 2 * gamma, families[index].name, None)
+            rotation.turn_guard(angles[0], 2 * gamma, families[index].name, None)
+            rotation.turn_guard(before[0], 2 * gamma, families[index].name, None)
             for a in range(3):
                 for side in (1, -1):
                     link = angles[1][a] + arrival(angles[1][a], a, side, wrap)
-                    rotation.guard(link, rotation.link_wall(gamma), families[index].name, a)
+                    rotation.turn_guard(link, rotation.link_wall(gamma), families[index].name, a)
 
 
 def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:
@@ -179,7 +179,7 @@ def rule_of(
 def step(
     record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0, faces: Faces = NO_FACE
 ) -> Record:
-    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six arrivals through the Ports of the level the step starts from, each under its Port's read, `fill` read beyond a face (the row's rest), and where the instrument presents a face at a Node its value in the place of that Port's arrival (features/click, `presented`), forward computed and kept, backward the kept one."""
+    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six arrivals through the Ports of the level the step starts from, each under its Port's read, `fill` read beyond a face (the row's rest), and where the click act presents a face at a Node its value in the place of that Port's arrival (features/click, `presented`), forward computed and kept, backward the kept one."""
     reads, self_coefficient, wall = rule
     level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
     arrived = ports(level, wrap, fill)
@@ -239,7 +239,7 @@ def step_family(
     record: int = 0,
     faces: Mapping[int, Faces] | None = None,
 ) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own), each part's plane as one (`step_plane`), every line with the faces the instrument presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
+    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
@@ -281,7 +281,7 @@ def step_records(
     cut: Factors | None = None,
     faces: Mapping[int, Faces] | None = None,
 ) -> tuple[list[Record], list[Booking]]:
-    """Every record of a family stepped by Rule3 in `direction`, each with the rule of its own read (`read`, `rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`) and its own angles (`step_family`), the faces the instrument presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
+    """Every record of a family stepped by Rule3 in `direction`, each with the rule of its own read (`read`, `rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`) and its own angles (`step_family`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
     lines: list[Record] = []
     bookings: list[Booking] = []
     for record in range(families[index].records):
@@ -295,7 +295,7 @@ def step_records(
 
 
 def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The sign's current of a two-part record at every Node on each axis, the mean of the Node's two a-Links' Wronskian currents, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, and the source its mean over the two Links, (J_a + 1) div 2 by the division act rounded as the read rounds the Link's tension (`features/read`, `link_tension`), as the tension on an axis is the mean of its two Links' stresses (ALGEBRA.md #the-primitives, The tension); odd under the sense within that rounding unit (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation over the time line's wall E_s T, the same wall as the time level's W (`loader.derived.held_write`; the mathematician's 122 D, #1572 comment 5946560198, and the advisor's #1563 comment 5946186214, two hands: over den T the odd levels were 1 / den of the law's), J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma, where J_a unhalved doubled the magnetic term (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word of 2026-10-01, 17:17, on the two hands, the mathematician's #1572 comment 5932451234 and the advisor's 5932831736 and 5933191332)."""
+    """The sign's current of a two-part record at every Node on each axis, the mean of the Node's two a-Links' Wronskian currents, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, and the source its mean over the two Links, (J_a + 1) div 2 by the division act rounded as the read rounds the Link's tension (`features/read`, `link_tension`), as the tension on an axis is the mean of its two Links' stresses (ALGEBRA.md #the-primitives, The tension); odd under the sense within that rounding unit (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation over the time line's wall E_s T, the same wall as the time level's W (`loader.derived.held_write_of`; the two hands: over den T the odd levels were 1 / den of the law's), J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma, where J_a unhalved doubled the magnetic term (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word on the two hands)."""
     found: list[Any] = [0, 0, 0]
     for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
         re_at, im_at = ports(re_line.now, wrap), ports(im_line.now, wrap)

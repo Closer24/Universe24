@@ -4,7 +4,7 @@ The paper's S.59 under the window bounded by the lays' schedule (ALGEBRA.md, The
 two hands of 2026-10-03: the advisor's design, #1572 comment 5967698811 section 2, the
 mathematician's 243, 5967783614 section 2, and the one text of his 244, 5967913000 section 2, at
 the owner's word "Everything now and in parallel"): the shipped Zeno world's body, one record of two
-parts (g, e) of the near-flat pair [1, 1299] declared an instrument at the centre Node of a periodic
+parts (g, e) of the near-flat pair [1, 1299] declared a NodeReader at the centre Node of a periodic
 box of 8 x 8 x 4, its six Link factors 0 so that it stays; the same continuous drive, the holder of
 the sign `pulse`, a plane wave at k = pi / 2 and the amplitude 392 read into the record's phase at
 the weight 1 in both directions at the resonance [2, 3]; the Node clock 96,000 with the Link unit 1,

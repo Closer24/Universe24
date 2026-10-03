@@ -1,4 +1,4 @@
-"""The messages of a world (ALGEBRA.md #the-generator, the message lay): laid records of families of quanta, packets and no bodies, each declared by its family, the axis it travels along, its wave number as a fraction of pi per Link, its amplitude and its envelope (per axis a flat top and the half-width of the raised cosine beyond it), its levels the generator's in the mode file beside the world; or a message laid whole at one Node by the count at a declared tick of the run (`WholeMessage`, `wholes_of`; ALGEBRA.md, The pulsed gate: the probe laid at a body's Node by the count at a declared tick; the two hands of 2026-10-03, #1572 comments 5967698811 and 5967783614), the world's protocol in time, no mode entry and no wave."""
+"""The messages of a world (ALGEBRA.md #the-generator, the message lay): laid records of families of quanta, packets and no bodies, each declared by its family, the axis it travels along, its wave number as a fraction of pi per Link, its amplitude and its envelope (per axis a flat top and the half-width of the raised cosine beyond it), its levels the generator's in the mode file beside the world; or a message laid whole at one Node by the count at a declared tick of the run (`WholeMessage`, `wholes_of`; ALGEBRA.md, The pulsed gate: the probe laid at a body's Node by the count at a declared tick; the two hands), the world's protocol in time, no mode entry and no wave."""
 
 from __future__ import annotations
 
@@ -42,14 +42,14 @@ class MessageRow:
     transverse: tuple[tuple[int, int], tuple[int, int], tuple[int, int]]
     now: Levels
     before: Levels
-    im_now: Levels
-    im_before: Levels
+    second_now: Levels
+    second_before: Levels
     weights: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
 class WholeMessage:
-    """A message laid whole at one Node by the count at a declared tick of the run (the probe of the pulsed gate; the two hands of 2026-10-03, #1572 comments 5967698811 and 5967783614): its family (a family of quanta), the Node at the file's coordinates, the whole quanta laid (from 1) and the interval at whose end the engine lays them (from 1, within the run), by the one-Node lay by the count at the family's massless pair, A^2 = count T div 2 on its first line (`giving.laid_by_count`, the conversion's lay of a given quantum; `meeting.laid_whole`); the experimenter's lay in time, a declaration of the world's protocol and nothing of the engine's."""
+    """A message laid whole at one Node by the count at a declared tick of the run (the probe of the pulsed gate; the two hands): its family (a family of quanta), the Node at the file's coordinates, the whole quanta laid (from 1) and the interval at whose end the engine lays them (from 1, within the run), by the one-Node lay by the count at the family's massless pair, A^2 = count T div 2 on its first line (`giving.laid_by_count`, the conversion's lay of a given quantum; `meeting.laid_whole`); the experimenter's lay in time, a declaration of the world's protocol and nothing of the engine's."""
 
     family: int
     at: Node
@@ -91,7 +91,7 @@ def messages_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[MessageRow, ...]:
-    """The messages: each its family (a family of quanta, or a holder of the content: a kick laid on the row's rest, the row's own travelling events with no count, the advisor's lay, #1563 comment 5916154126), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q and not 0, refused by name at 0, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines': a record of three real lines laid at (a, b, c) over its lines), and its levels from the mode file; a message with no mode entry is refused by name; an entry with the key `tick` is a message laid whole at one Node by the count at that tick (`wholes_of`, `WholeMessage`) and takes no mode entry, so the mode file's entries number the start's messages alone; `whole` or `count` without `tick` is refused by name (a lay whole at the start is not built: the start lays the generator's levels)."""
+    """The messages: each its family (a family of quanta, or a holder of the content: a kick laid on the row's rest, the row's own travelling events with no count, the advisor's lay), the axis it travels along, its wave number [p, q] (k = pi p / q per Link, p from -q through q and not 0, refused by name at 0, its sign the direction along the axis), its amplitude from 1 within the amplitude bound A, per axis its flat top [first, last] and the half-width of the raised cosine beyond it (0: none), optionally its phase [r, s] (the wave cos(k x + 2 pi r / s), r from 0 below s; the wave cos(k x) without the key), optionally `transverse` {an axis across the beam: [r, s]}, a wave number pi r / s per Link on that axis (r from -s through s; the wave cos(k x + k_y y + ...), a packet leaving at an angle), optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines': a record of three real lines laid at (a, b, c) over its lines), and its levels from the mode file; a message with no mode entry is refused by name; an entry with the key `tick` is a message laid whole at one Node by the count at that tick (`wholes_of`, `WholeMessage`) and takes no mode entry, so the mode file's entries number the start's messages alone; `whole` or `count` without `tick` is refused by name (a lay whole at the start is not built: the start lays the generator's levels)."""
     names = {family.name: index for index, family in enumerate(families)}
     if not isinstance(value, list):
         raise ValueError("messages must be a list of laid records")

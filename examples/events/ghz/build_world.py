@@ -77,7 +77,7 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
         "messages": messages,
         "node_readers": node_readers,
         "receding": design["receding"],
-        "instrument": design["instrument"],
+        "draw": design["draw"],
     }
 
 

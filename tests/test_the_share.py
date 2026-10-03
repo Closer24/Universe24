@@ -8,7 +8,7 @@ from event_universe import credit, node, share
 from event_universe.core import paces, ports
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule3
-from event_universe.features.read import edge_squared, guard
+from event_universe.features.read import edge_squared, paces_guard
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
@@ -55,7 +55,9 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
         assert [int(b.now[HERE]) for b in back] == [1, 3] and not any(b.remainder.any() for b in back)
     rule = coefficients(1, 1, GAMMA, GAMMA, GAMMA)
     assert Fraction(rule[1] - 6 * rule[0][0], rule[2]) == -2 and edge_squared((1, 1), GAMMA) == GAMMA**2
-    guard((1, 1), GAMMA, 1, 0, (1,) * 6, "light")  # the edge admitted: the clock and the paces at Gamma
+    paces_guard(
+        (1, 1), GAMMA, 1, 0, (1,) * 6, "light"
+    )  # the edge admitted: the clock and the paces at Gamma
     record = node.Record(parity := (-1) ** np.indices((2, 2, 2)).sum(0), 0 * parity, 0 * parity)
     for t in range(1, 7):
         record = node.step(record, rule, RING)
@@ -107,7 +109,7 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
 
 
 def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
-    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_readers' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `GameBoard.quanta` at the instrument's Nodes equals the full reading there, on the Zeno box, the resonance world, the shelved ion and the anticoincidence world over 24 intervals, every family. (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
+    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_readers' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `GameBoard.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the resonance world, the shelved ion and the anticoincidence world over 24 intervals, every family. (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
     worlds = (("zeno", "zeno_1"), ("resonance", "resonant"), ("shelved_ion", "shelved_ion"))
     for folder, name in (*worlds, ("anticoincidence", "one_photon")):
         board = GameBoard(load_world(EVENTS / folder / f"{name}.json"))

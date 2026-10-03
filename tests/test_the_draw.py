@@ -16,7 +16,7 @@ from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
 from event_universe.giving import born_unit, radiated_total
 from event_universe.loader.derived import count_wall
-from event_universe.loader.instrument import pair_of
+from event_universe.loader.node_reader_declaration import pair_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of, node_readers_of, regions_of_the_law
 from event_universe.meeting import hazard_weights
@@ -71,7 +71,7 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_pa
     names, found = [f"screen_{k}" for k in range(12)], []
     for seed in (24, 25):  # two independent draws of the design (a test runs under 30 seconds)
         (folder := tmp_path / f"seed_{seed}").mkdir()
-        seeded = {**design, "seed": seed, "instrument": {**design["instrument"], "seed": seed}}
+        seeded = {**design, "seed": seed, "draw": {**design["draw"], "seed": seed}}
         (folder / "design.json").write_text(json.dumps(seeded), encoding="utf-8")
         SLITS.main(["--design", str(folder / "design.json"), "--folder", str(folder)])
         assert RUN.run_input(str(folder / "two_slits.json"), str(folder))["verdict"] == "LAWFUL"
@@ -227,7 +227,7 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
 def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_counts_in_its_own_quantum(
     tmp_path,
 ):
-    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): a region's unit of one quantum is its record's own share per quantum read once at the books' origin (`credit.record_unit`, the advisor's line of 2026-10-03 with the mathematician's second, two hands), W_c for a record laid by share with its count and W_c sin Omega = 2.23605 den T for one quantum at [2, 3], and the loader refuses by name a region declaring a `transition`, a one-Node region (a region of a travelling wave), a transition without its resonance and a giving with no transition between its parts; the dark's hazard is per proper interval (`meeting.hazard_weights`): the weights [span x unit, (tau - span) x unit] in the vacuum and half the giving's weight at p_0 = Gamma / 2; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the node_reader's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `meeting.gave`): the giver is in the dark until it gives, so over the trials' first 25 seeds its giving is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the givings at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
+    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): a region's unit of one quantum is its record's own share per quantum read once at the books' origin (`credit.record_unit`, the advisor's line of 2026-10-03 with the mathematician's second, two hands), W_c for a record laid by share with its count and W_c sin Omega = 2.23605 den T for one quantum at [2, 3], and the loader refuses by name a region declaring a `transition`, a one-Node region (a region of a travelling wave), a transition without its resonance and a giving with no transition between its parts; the dark's hazard is per proper interval (`meeting.hazard_weights`): the weights [span x unit, (tau - span) x unit] in the vacuum and half the giving's weight at p_0 = Gamma / 2; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the node_reader's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the reader's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `meeting.gave`): the giver is in the dark until it gives, so over the trials' first 25 seeds its giving is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the givings at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
     light = next(f for f in families if f.name == "pulse")
@@ -269,7 +269,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
     refused("no transition", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, (), action)
     path, draw, at = (
         tmp_path / "resonant.json",
-        world["bodies"][0]["instrument"],
+        world["bodies"][0]["node_reader"],
         tuple(blind["cos_omega"]["node"]),
     )
     given_at: list[int] = []
@@ -419,8 +419,8 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
         "node_readers": [],
         "bodies": body([17, 17, 17], width=3, lifetime=2),
     }
-    small["bodies"][0]["instrument"] = {**giver["instrument"], "window": 2}
-    del small["instrument"]
+    small["bodies"][0]["node_reader"] = {**giver["node_reader"], "window": 2}
+    del small["draw"]
     (tmp_path / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
     load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py").main(
         ["--input", str(tmp_path / "small.json")]
@@ -467,9 +467,9 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
     """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_reader's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
     world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
     giver = {**world["bodies"][0], "transitions": [{**world["bodies"][0]["transitions"][0]}]}
-    giver["transitions"][0]["resonance"], giver["instrument"] = (
+    giver["transitions"][0]["resonance"], giver["node_reader"] = (
         [9, 10],
-        {**giver["instrument"], "window": 240},
+        {**giver["node_reader"], "window": 240},
     )
     (path := tmp_path / "low.json").write_text(json.dumps({**world, "bodies": [giver], "ticks": 240}))
     TOOL.main(["--input", str(path)])

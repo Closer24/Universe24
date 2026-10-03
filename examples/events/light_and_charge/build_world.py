@@ -80,7 +80,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
 
 
 def expectation(design: dict[str, Any], laid: int | None) -> dict[str, object]:
-    """The blind expectation file (NODEREADER, as tools/click_counts.py reads it): the screen's regions ordered along y, the family of light, the window, the pattern's range, the seed of the instrument's draw, the uniform blind row of the free world (every region one share, the lay's count over the regions where the lay stands), the arrival wager, `laid` the generator's count of the lay, and the delay's blind with the sign's 0 beside it."""
+    """The blind expectation file (NODEREADER, as tools/click_counts.py reads it): the screen's regions ordered along y, the family of light, the window, the pattern's range, the seed of the draw, the uniform blind row of the free world (every region one share, the lay's count over the regions where the lay stands), the arrival wager, `laid` the generator's count of the lay, and the delay's blind with the sign's 0 beside it."""
     names = [str(node_reader["name"]) for node_reader in screen_regions(design)]
     regions = len(names)
     share = round(laid / regions, 1) if laid is not None else 1.0

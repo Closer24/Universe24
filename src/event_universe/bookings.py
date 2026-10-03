@@ -25,10 +25,10 @@ def sources_of(families: node.Families, order: Sequence[int]) -> list[node.Sourc
 def record_lines(
     families: node.Families, index: int, record: int, lines: Sequence[node.Record]
 ) -> list[node.Record]:
-    """The lines of one record of a family of quanta among the family's `lines`: the record's own lines (`node.record_slice`), and for a holder of the sign its one record, light, the sum of its rows (`node.light_record`)."""
+    """The lines of one record of a family of quanta among the family's `lines`: the record's own lines (`node.record_slice`), and for a holder of the sign its one record, light, the sum of its rows (`node.rows_total`)."""
     family = families[index]
     return (
-        [node.light_record(family, lines)]
+        [node.rows_total(family, lines)]
         if family.wronskian
         else list(lines[node.record_slice(family, record)])
     )
@@ -41,8 +41,8 @@ def booked_of(
     family = families[index]
     forms, turns = Bookings(), Bookings()
     if family.wronskian:
-        first = [node.light_record(family, [b for first, _second in bookings for b in first])]
-        second = [node.light_record(family, [b for _first, second in bookings for b in second])]
+        first = [node.rows_total(family, [b for first, _second in bookings for b in first])]
+        second = [node.rows_total(family, [b for _first, second in bookings for b in second])]
         forms[(index, 0)], turns[(index, 0)] = node.form(first, second), 0
         return forms, turns
     for record, (first, second) in enumerate(bookings):

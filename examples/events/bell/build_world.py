@@ -70,7 +70,7 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         "messages": messages,
         "node_readers": node_readers,
         "receding": design["receding"],
-        "instrument": design["instrument"],
+        "draw": design["draw"],
     }
 
 

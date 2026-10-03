@@ -126,7 +126,7 @@
   ]
  },
  "seed": 24,
- "instrument": {
+ "draw": {
   "window": 60,
   "seed": 24,
   "multiplier": 6364136223846793005,

@@ -63,13 +63,13 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   `design.json` (every integer with its reason) and its blind `expectation.json`
   (the counts per bin bimodal, the bright periods exponential at the Zeno-limited
   shelving rate, the dark periods at the declared return rate; the control
-  unimodal); run on the night of 2026-10-03 with the ion a record declared an
-  instrument at its one Node (`src/event_universe/meeting.py`), both worlds
+  unimodal); run on the night of 2026-10-03 with the ion a record declared a
+  NodeReader at its one Node (`src/event_universe/meeting.py`), both worlds
   refused inside the run by the amplitude bound, the reading beside the blind in
   its `blind_and_reading.md` (`tools/telegraph.py`), a finding by name;
 - the quantum Zeno world, `examples/events/zeno/`, and the anticoincidence
   world, `examples/events/anticoincidence/` (the paper's S.59 and S.57): one
-  record of two parts declared an instrument at one Node under a drive's pi
+  record of two parts declared a NodeReader at one Node under a drive's pi
   pulse, reading its own parts n times, and two such records on either side of
   one light quantum, each with its design, its blind written before any run and
   its `blind_and_reading.md`, read by `tools/meeting_trials.py` over the
