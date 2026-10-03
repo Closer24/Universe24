@@ -28,6 +28,7 @@ from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, 
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, WholeMessage, messages_of, wholes_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
+from event_universe.loader.node_reader_rows import reader_count
 from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
@@ -36,10 +37,14 @@ WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "tick
 WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes", "weights", *NODE_INSTRUMENT_KEYS),
+    ("family", "nodes", "weights", "count", *NODE_INSTRUMENT_KEYS),
     ("family", "nodes"),
-    ("node", "count"),
+    ("node", "count", "weight"),
 )
+READER_NODE_KEYS = (
+    "node",
+    "weight",
+)  # a reader's Node: its lay's weight, the record's count declared once
 DETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern")  # a detector's keys
 TRANSITION = (
     "transition"  # a region's own quantum, declared by no region: its unit is its record's own share
@@ -116,8 +121,9 @@ def bodies_of(
     bound: int,
     beyond: tuple[Node, ...],
     action: int,
+    periodic: tuple[bool, bool, bool] = (False, False, False),
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board; a body of a family that reads a holder of the sign, `derived.charged`, is one quantum of its family, one Node with the count 1, and a count above it is refused by name with the way to declare many quanta, that many bodies of count 1, each its own record and its own row of the sign, ALGEBRA.md, No record reads its own write of the sign) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`; its givings' lay decided by the board's shape against the declared width at the quantum action T, `packet_form`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board; a body of a family that reads a holder of the sign, `derived.charged`, is one quantum of its family, one Node with the count 1, and a count above it is refused by name with the way to declare many quanta, that many bodies of count 1, each its own record and its own row of the sign, ALGEBRA.md, No record reads its own write of the sign) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument` and its `count`) takes no mode entry, its Nodes listed with the lay's `weight` each (1 where absent, no `count` on a reader's Node: the record's count is declared once, by its parts or by `count`) and its lay the engine's own over its region (`node_instrument_of`; its givings' lay decided by the board's shape against the declared width at the quantum action T, `packet_form`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
@@ -135,14 +141,19 @@ def bodies_of(
         if not isinstance(lines, list) or not lines:
             raise ValueError(f"{label}.nodes must list the body's Nodes with their counts")
         parted = entry not in laid
-        if parted and len(lines) != 1:
+        if parted and len(lines) < 2:
             raise ValueError(
-                f"{label} is laid in its parts at one Node and declares {len(lines)}: a body that is an instrument "
-                "is one Node, its record there (the owner's word of 2026-10-03; ALGEBRA.md, The bound body is one Node)"
+                f"{label} declares its own record over {len(lines)} Node: a reader is a connected region of two "
+                "Nodes or more, never one Node, since a quantum with a direction has no Node and a region of one "
+                "Node has no boundary (the uncertainty principle, the owner's word of 2026-10-03; ALGEBRA.md, The "
+                "NodeReader is one declaration kind for every experiment); declare its Nodes with the lay's weights"
             )
         nodes, counts = [], []
         for index, line in enumerate(lines):
-            keyed(line, f"{label}.nodes[{index}]", NODE_KEYS, NODE_KEYS)
+            if parted:  # a reader's Node carries the lay's weight (1 where absent); its count is the record's, once
+                keyed(line, f"{label}.nodes[{index}]", READER_NODE_KEYS, ("node",))
+            else:
+                keyed(line, f"{label}.nodes[{index}]", ("node", "count"), ("node", "count"))
             node = node_of(line["node"], f"{label}.nodes[{index}].node", shape, beyond)
             if node in taken:
                 raise ValueError(
@@ -150,8 +161,9 @@ def bodies_of(
                 )
             taken.add(node)
             nodes.append(node)
-            counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
-        if derived.charged(families, family) and sum(counts) > 1:
+            key = "weight" if parted else "count"
+            counts.append(integer(line.get(key, 1), f"{label}.nodes[{index}].{key}", 1))
+        if not parted and derived.charged(families, family) and sum(counts) > 1:
             raise ValueError(
                 f"{label} declares the count {sum(counts)} of {body['family']!r}, a family that reads the holder "
                 "of the sign: such a record is one quantum of its family, one Node with the count 1, and many "
@@ -160,7 +172,14 @@ def bodies_of(
                 "(ALGEBRA.md, No record reads its own write of the sign)"
             )
         if parted:
-            parts = node_instrument_of(body, label, families, family, quanta, sum(counts))
+            if not connected(tuple(nodes), shape, periodic):
+                raise ValueError(
+                    f"{label} declares its own record over a region in pieces: a reader's Nodes are one connected "
+                    "region through the six Ports (ALGEBRA.md, The NodeReader is one declaration kind for every "
+                    "experiment); its Nodes are {[list(n) for n in nodes]}"
+                )
+            count = reader_count(body, label, families, family)
+            parts = node_instrument_of(body, label, families, family, quanta, count)
             parts = packet_form(parts, label, families, nodes[0], shape, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
@@ -311,7 +330,17 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     width = integers["width"]
     bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
-    bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond, action)
+    bodies = bodies_of(
+        world["measured"],
+        mode,
+        digest,
+        families,
+        shape,
+        bound,
+        beyond,
+        action,
+        (periodic[0], periodic[1], periodic[2]),
+    )
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
     ticks = integer(world["ticks"], "ticks", 0)
     wholes = wholes_of(world.get("messages", []), families, shape, beyond, ticks)

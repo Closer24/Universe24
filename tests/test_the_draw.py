@@ -118,19 +118,19 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
 
 
 def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
-    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click (the records' jump lines, the Node a GAMEBOARD diagnostic beside, and the counter's credit lines, no Node, the hole's Nodes read from the face lines after them) lies inside the cone of the click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
+    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click (the records' and the counter's credit lines, the one click line kind, no Node: the Nodes written read from the GAMEBOARD lines beside them, the given quantum's lay lines and the hole's face lines after the taking) lies inside the cone of the click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
     board = GameBoard(load_world(EVENTS / "shelved_ion" / "shelved_ion.json"), (lines := []).append)
     for _ in range(200):
         board.step()
     shape = board.world.shape
 
-    def nodes_of(
-        c: dict,
-    ) -> list:  # a jump's one Node; a credit's the hole's Nodes in the face lines after it
-        if c["event"] == "jump":
-            return [c["node"]["at"]]
+    def nodes_of(c: dict) -> list:  # the write's Nodes from the GAMEBOARD lines beside the click line
+        if c["given"]:  # the giving's quantum laid at one Node: the lay lines of the family given to
+            laid = (f for f in lines if f["event"] == "lay" and f["tick"] == c["tick"])
+            return [f["node"]["at"] for f in laid if f["family"] == c["given"]]
+        taken = c["taken"] or c["family"]  # the hole's Nodes: the face lines of the record taken from
         holes = (f for f in lines if f["event"] == "face" and f["tick"] == c["tick"] + 1)
-        return [f["node"]["at"] for f in holes if f["family"] == c["family"]]
+        return [f["node"]["at"] for f in holes if f["family"] == taken]
 
     def inside(a: dict, b: dict) -> bool:  # the click b inside the cone of the click a
         return all(
@@ -140,14 +140,15 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
             for q in nodes_of(b)
         )
 
-    clicks = [c for c in lines if c["event"] in ("jump", "credit") and c["label"] == "DETECTOR"]
+    clicks = [c for c in lines if c["event"] == "credit" and c["label"] == "DETECTOR"]
+    clicks = [
+        c for c in clicks if c["tick"] < board.tick
+    ]  # the last interval's hole faces after the run
     clicks.sort(key=lambda c: int(c["tick"]))
-    assert len(clicks) > 30 and all(
-        nodes_of(c) and ("node" in c) == (c["event"] == "jump") for c in clicks
-    )
+    assert len(clicks) > 30 and all(nodes_of(c) and "node" not in c for c in clicks)
     assert all(inside(a, b) for a, b in zip(clicks, clicks[1:], strict=False) if b["tick"] > a["tick"])
-    givings = [c for c in clicks if c["event"] == "jump" and c["given"] == "fluorescence"]
-    credits = [c for c in clicks if c["event"] == "credit" and c["family"] == "fluorescence"]
+    givings = [c for c in clicks if c["given"] == "fluorescence"]
+    credits = [c for c in clicks if c["family"] == "fluorescence" and not c["given"]]
     assert givings and credits and all(inside(givings[0], c) for c in credits)
     assert all(
         g["tick"] < c["tick"] for g in givings[:1] for c in credits
@@ -191,9 +192,13 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
         board.step()
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     read = node.rule_of(board.families[light], board.world.node_clock, 0, None, board.unit)[0][0]
-    jumps = [c for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR"]
+    jumps = [c for c in lines if c["event"] == "credit" and c["label"] == "DETECTOR" and c["taken"]]
     assert len(jumps) == 1 and jumps[0]["tick"] == 40 and board.credit.counts[light] == 0
-    since, origin = 40, jumps[0]["node"]["at"]
+    holes = {
+        f.at for f in board.credit.faces[41] if f.family == light
+    }  # the hole's one Node, the face books'
+    since, origin = 40, list(next(iter(holes)))
+    assert len(holes) == 1 and "node" not in jumps[0]
     assert board.credit.fronts == [(light, tuple(origin), since)]
     checked = 0
 
@@ -299,10 +304,14 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
             books.state = seed * len(board.credit.bodies) + books.number
         pulse = [f.name for f in board.families].index("pulse")
         giver, series, expected = board.credit.bodies[0], {}, board.credit.bodies[0].state
+        beyond = (at[0] + 1, *at[1:])  # the reading Node eight Nodes from either Node of the reader
         for _ in range(96):
             board.step()
-            series[board.tick] = int(board.states[pulse].lines[0].now[at])
-            given = [c for c in lines if c["event"] == "jump" and c["given"] == "pulse"]
+            series[board.tick] = (
+                int(board.states[pulse].lines[0].now[at]),
+                int(board.states[pulse].lines[0].now[beyond]),
+            )
+            given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
             if not given:  # in the dark one draw per interval at the now; the window's close at 48 draws nothing more
                 expected = (draw["multiplier"] * expected + draw["increment"]) % (board.world.width + 1)
                 assert giver.state == expected
@@ -314,11 +323,13 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         assert [c["tick"] for c in lays] == list(
             range(t, min(t + 48, 97))
         )  # the span from t, cut by the run's end
-        assert all(
-            c["node"]["at"] == [0, 0, 0] and c["line"] == 0 and c["after"][1:] == c["before"][1:]
-            for c in lays
-        )
-        taken = [c for c in lines if c["event"] == "jump" and c["taken"]]
+        laid_at = {tuple(c["node"]["at"]) for c in lays}
+        assert len(laid_at) == 1 and laid_at <= {
+            (0, 0, 0),
+            (1, 0, 0),
+        }  # the giving's Node drawn once per click by the record's share, inside the reader's region
+        assert all(c["line"] == 0 and c["after"][1:] == c["before"][1:] for c in lays)
+        taken = [c for c in lines if c["event"] == "credit" and c["taken"]]
         assert max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22
         assert board.credit.counts[pulse] + len(taken) == 1  # one quantum given, kept or taken
         if (
@@ -331,10 +342,11 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
             for unit in (wall, record_unit(board, pulse, total, 1)):  # W_c and the record's own unit
                 assert division_forward(total, unit, division_forward(unit, 2, 0)[0])[0] == 1
         if t <= 53:  # the plateau after the front and before the stop, inside the run
-            window = range(t + 28, t + 43)
-            numerator = sum(series[k] * (series[k + 1] + series[k - 1]) for k in window)
-            read = numerator / (2 * sum(series[k] ** 2 for k in window))
-            far = max(abs(series[k]) for k in window)
+            window, read_at = range(t + 28, t + 43), next(iter(laid_at))[0]  # eight Nodes from the lay
+            levels = {k: pair[read_at] for k, pair in series.items()}
+            numerator = sum(levels[k] * (levels[k + 1] + levels[k - 1]) for k in window)
+            read = numerator / (2 * sum(levels[k] ** 2 for k in window))
+            far = max(abs(levels[k]) for k in window)
             assert far > 20 and abs(read - 2 / 3) <= 2 / far, (t, read, far)
     by_tau = sum(t <= 48 for t in given_at)  # 25 x 0.636 = 15.9 +/- 2.4: within three deviations
     assert 8 <= by_tau <= 24 and len(set(given_at)) > 1, (
@@ -369,7 +381,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         for books in board.credit.bodies:
             books.state = seed * len(board.credit.bodies) + books.number
         [board.step() for _ in range(48)]
-        assert [c["tick"] for c in lines if c["event"] == "jump" and c["given"] == "pulse"] == [48]
+        assert [c["tick"] for c in lines if c["event"] == "credit" and c["given"] == "pulse"] == [48]
 
 
 def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tmp_path):
@@ -394,7 +406,9 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
 
     def body(at, **changes):  # the giver at a Node with its one giving changed
         rate = {k: v for k, v in {**giver["rates"][0], **changes}.items() if v is not None}
-        return [{**giver, "nodes": [{"node": at, "count": 1}], "rates": [rate]}]
+        beside = [at[0] + 1, at[1], at[2]]  # the reader over two adjacent Nodes, in equal weights
+        nodes = [{"node": at, "weight": 1}, {"node": beside, "weight": 1}]
+        return [{**giver, "nodes": nodes, "rates": [rate]}]
 
     def deny(word, rows, shape):  # the loader's refusal by name at the board's shape
         refused(word, bodies_of, rows, None, "", families, shape, 9000, (), action)
@@ -420,18 +434,26 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     for _ in range(4):
         board.step()
     given = [
-        c for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR" and c["given"] == "pulse"
+        c for c in lines if c["event"] == "credit" and c["label"] == "DETECTOR" and c["given"] == "pulse"
     ]
     lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
     assert len(given) == 1 and {c["tick"] for c in lays} == {given[0]["tick"]} and len(lays) > 100
     nodes = {tuple(c["node"]["at"]) for c in lays}
     spans = [sorted({at[a] for at in nodes}) for a in range(3)]
     along = [a for a in range(3) if len(spans[a]) > 3]
-    assert len(along) == 1 and 17 in (
+    drawn_x = {
+        17,
+        18,
+    }  # the giver's region, two Nodes along x: the packet from the one Node the draw picked
+    assert len(along) == 1 and (drawn_x if along[0] == 0 else {17}) & {
         spans[along[0]][0],
         spans[along[0]][-1],
-    )  # from the body's Node, one sense
-    assert all(spans[a] == [16, 17, 18] for a in range(3) if a not in along)  # the top-hat of 3 across
+    }  # from the drawn Node, one sense
+    for a in (
+        a for a in range(3) if a not in along
+    ):  # the top-hat of 3 across, centred at the drawn Node
+        centre = spans[a][1]
+        assert spans[a] == [centre - 1, centre, centre + 1] and centre in (drawn_x if a == 0 else {17})
     train = envelope(line_total(action, (2, 3)), 2, 9)
     assert len(spans[along[0]]) == len(train)  # L slices from tau and T
     turn = sum(9 * b * b - 12 * b * n + 9 * n * n for n, b, _ in (c["after"] for c in lays))
@@ -463,7 +485,9 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
             board.step()
             series[board.tick] = board.total_share(pulse)[0]
         jumps = [
-            (c["tick"], c["given"]) for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR"
+            (c["tick"], c["given"])
+            for c in lines
+            if c["event"] == "credit" and c["label"] == "DETECTOR" and (c["taken"] or c["given"])
         ]
         if jumps and jumps[0][1] == "pulse" and jumps[0][0] <= 192:
             break

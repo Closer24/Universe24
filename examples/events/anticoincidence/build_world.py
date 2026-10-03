@@ -23,7 +23,7 @@ def world_of(design: dict, amplitude: int) -> dict:
         records.append(
             {
                 "family": design["records"]["family"],
-                "nodes": [{"node": [at, 0, 0], "count": 1}],
+                "nodes": [{"node": [at, 0, 0], "weight": 1}, {"node": [at + 1, 0, 0], "weight": 1}],
                 "parts": [
                     {"part": 0, "name": "g", "role": "ground", "count": 1},
                     {"part": 1, "name": "e", "role": "excited", "count": 0},

@@ -28,6 +28,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
 from event_universe.loader.mode import Levels
 from event_universe.loader.world import BodyRow, World
+from event_universe.node_reader import booked_inflows
 from event_universe.reports import Detector, book, click, entering, field, level_sums, parts, standing
 
 Observer = Callable[[dict[str, object]], None]
@@ -39,7 +40,7 @@ Rulers = dict[
 
 
 class GameBoard:
-    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines (`reports.py`: `click`, `parts`, `credit` and `jump` the detectors', `field`, `erasure`, `lay` and `face` the GameBoard's diagnostics)."""
+    """One world on the GameBoard, stepped interval by interval; `observer` receives the output lines (`reports.py`: `click`, `parts` and `credit` the detectors', `field`, `erasure`, `lay` and `face` the GameBoard's diagnostics)."""
 
     def __init__(self, world: World, observer: Observer | None = None) -> None:
         paces.clear_memo()  # the paces computed once per content value within this run, kept between none
@@ -190,7 +191,7 @@ class GameBoard:
     def gate(self) -> None:
         """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's share in quanta over its declared Nodes, ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
         for number, row in enumerate(self.world.bodies):
-            declared = sum(row.counts)
+            declared = sum(row.instrument.counts if row.instrument is not None else row.counts)
             read = int(self.quanta(row.family)[0][self.mask(row.nodes)].sum())
             off = abs(declared - read)
             half = int(carried(off - 1, 2, 0)[0])  # (|c - read| - 1) div 2, the division act
@@ -379,11 +380,10 @@ class GameBoard:
                     if any(any(level) for level in levels) and self.observer is not None:
                         self.observer(parts(self.tick, family.name, detector.name, levels))
                     sums.setdefault(index, {})[detector.name] = levels
-        for index, found in sums.items():
-            if (
-                self.families[index].parts > 1
-            ):  # the meeting through the root is a record of several parts'
+        for index, found in sums.items():  # the meeting through the root is several parts' record's
+            if self.families[index].parts > 1:
                 credit.joined(self, index, found)
+        booked_inflows(self, currents, wrap, own)
         self.fields_read(forms, union)
 
     def fields_read(self, forms: Bookings, at: np.ndarray) -> None:
