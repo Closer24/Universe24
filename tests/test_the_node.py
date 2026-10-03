@@ -20,7 +20,7 @@ from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import BodyRow
 from event_universe.world_files import input_digest, load_world
 from tests import laws
-from tests.laws import CHAIN, CHARGED, EVENTS, PACKET, UNIVERSE, real_rows, refused, universe_beside
+from tests.laws import CHAIN, CHARGED, EVENTS, PACKET, TOP, UNIVERSE, real_rows, refused, universe_beside
 
 TOOL, BACK, RUN, RECORD = laws.TOOL, laws.BACK, laws.RUN, laws.RECORD  # the tools loaded once
 
@@ -192,8 +192,10 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         moving = {"now": levels, "before": levels, **second}
         family = CHARGED["name"] if turn else "matter"
         mode = {"family": family, "pair": [4000, 6000], "moving": moving}
-        ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
-        ends += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
+        ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]], "transition": TOP}]
+        ends += [
+            {"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]], "transition": TOP}
+        ]
         world = dict(shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), ticks=400)
         world.update(face_depth=1, universe="u.json", engine="e.json", detectors=ends)
         body = {"family": family, "nodes": [{"node": [CHAIN // 2, 0, 0], "count": 1}]}
@@ -357,7 +359,7 @@ def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: 
     world = dict(shape=[extent, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
     world.update(ticks=200, universe="u.json", engine="e.json", measured=[], **keys)
     world["messages"] = [{**PACKET, "top": {"x": [first, first], "y": [0, 0], "z": [0, 0]}}]
-    world["detectors"] = [{"name": "post", "positions": [[14, 0, 0], [15, 0, 0]]}]
+    world["detectors"] = [{"name": "post", "positions": [[14, 0, 0], [15, 0, 0]], "transition": TOP}]
     (path := folder / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     return path

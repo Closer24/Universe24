@@ -30,7 +30,11 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
             {"family": design["family"], "nodes": [{"node": centre, "count": int(design["count"])}]}
         ],
         "detectors": [
-            {"name": "around", "positions": [[int(v) for v in node] for node in design["around"]]}
+            {
+                "name": "around",
+                "transition": design["detector_transition"],
+                "positions": [[int(v) for v in node] for node in design["around"]],
+            }
         ],
     }
 

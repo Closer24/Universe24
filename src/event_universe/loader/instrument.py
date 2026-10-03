@@ -103,7 +103,13 @@ def patterns_of_the_law(
 
 NODE_INSTRUMENT_KEYS = ("parts", "transitions", "rates", "instrument")  # a body as an instrument
 PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count"), ("part", "name", "count")
-TRANSITION_KEYS, RATE_KEYS = ("from", "to", "drive", "weight"), ("from", "to", "lifetime", "gives_to")
+TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance")  # a transition's keys
+RATE_KEYS = (
+    "from",
+    "to",
+    "lifetime",
+    "gives_to",
+)  # a giving's keys; its resonance the transition's between the parts
 
 
 @dataclass(frozen=True)
@@ -114,6 +120,16 @@ class Transition:
     enters: int
     drive: int
     weight: int
+    resonance: tuple[int, int]
+
+
+def pair_of(value: object, label: str) -> tuple[int, int]:
+    """A resonance as the file declares it, a pair [num, den] with cos Omega = num / den (the advisor's second, #1572 comment 5964191930, and the mathematician's 213 and 214, two hands): den from 1 and |num| below den, so that sin Omega is above 0; [0, den] the band's top, Omega = pi / 2; refused by name otherwise."""
+    if not isinstance(value, list) or len(value) != 2:
+        raise ValueError(f"{label} is a pair [num, den] with cos Omega = num / den, got {value!r}")
+    den = integer(value[1], f"{label}[1]", 1)
+    num = integer(value[0], f"{label}[0]", 1 - den, den - 1)
+    return num, den
 
 
 @dataclass(frozen=True)
@@ -124,6 +140,7 @@ class Rate:
     enters: int
     lifetime: int
     light: int
+    resonance: tuple[int, int]
 
 
 @dataclass(frozen=True)
@@ -173,14 +190,19 @@ def transitions_of(
             part_named(row["to"], f"{label}[{index}].to", names),
         )
         drive = family_named(row["drive"], f"{label}[{index}].drive", quanta, own)
-        found.append(
-            Transition(leaves, enters, drive, integer(row["weight"], f"{label}[{index}].weight", 1))
-        )
+        weight = integer(row["weight"], f"{label}[{index}].weight", 1)
+        resonance = pair_of(row["resonance"], f"{label}[{index}].resonance")
+        found.append(Transition(leaves, enters, drive, weight, resonance))
     return tuple(found)
 
 
 def rates_of(
-    value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int
+    value: object,
+    label: str,
+    names: tuple[str, ...],
+    quanta: dict[str, int],
+    own: int,
+    transitions: tuple[Transition, ...],
 ) -> tuple[Rate, ...]:
     """A body's `rates`: each `from` and `to`, two of its parts' names, `lifetime` from 1 (the giving at 1 / lifetime per interval, the declared floor) and `gives_to`, the family of quanta other than the body's own on which the given quantum is laid; refused by name otherwise."""
     if not isinstance(value, list):
@@ -193,14 +215,14 @@ def rates_of(
             part_named(row["to"], f"{label}[{index}].to", names),
         )
         lifetime = integer(row["lifetime"], f"{label}[{index}].lifetime", 1)
-        found.append(
-            Rate(
-                leaves,
-                enters,
-                lifetime,
-                family_named(row["gives_to"], f"{label}[{index}].gives_to", quanta, own),
+        light = family_named(row["gives_to"], f"{label}[{index}].gives_to", quanta, own)
+        between = [t for t in transitions if {t.leaves, t.enters} == {leaves, enters}]
+        if not between:  # the giving's frequency is the transition's declared resonance
+            raise ValueError(
+                f"{label}[{index}] gives between {names[leaves]!r} and {names[enters]!r}, and no transition "
+                "between them declares the resonance the light is born at"
             )
-        )
+        found.append(Rate(leaves, enters, lifetime, light, between[0].resonance))
     return tuple(found)
 
 
@@ -238,5 +260,5 @@ def node_instrument_of(
     if draw is None and ("transitions" in body or "rates" in body):
         raise ValueError(f"{label} declares transitions or rates and no `instrument` to draw them with")
     transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
-    rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own)
+    rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own, transitions)
     return NodeInstrument(names, counts, transitions, rates, draw)

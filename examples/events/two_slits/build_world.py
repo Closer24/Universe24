@@ -27,6 +27,7 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
     return [
         {
             "name": f"screen_{index}",
+            "transition": design["detector_transition"],
             "positions": [[column, row, 0] for row in range(first, first + rows)],
         }
         for index, first in enumerate(range(0, int(design["height"]), rows))
@@ -41,6 +42,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
     detectors.append(
         {
             "name": str(region["name"]),
+            "transition": design["detector_transition"],
             "positions": [
                 [x, y, 0]
                 for x in range(int(region["columns"][0]), int(region["columns"][1]) + 1)

@@ -19,7 +19,7 @@ from event_universe.loader.instrument import (
 from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import bodies_of, detectors_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, booked, load_file, refused
+from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, booked, load_file, refused
 
 GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")
 BELL, GHZ = (load_file(f"{n}_build", EVENTS / n / "build_world.py") for n in ("bell", "ghz"))
@@ -116,7 +116,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     fenced = [GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) for f in FENCE]
     assert fenced == [-1] * len(FENCE)
     refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "detectors[0].pattern", (1, 0))
-    row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]]}
+    row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]], "transition": TOP}
     refused("none is declared", detectors_of, [row], (2, 1, 1), 0, (), ())
     families = universe_of(json.loads((EVENTS / "ghz.json").read_text(encoding="utf-8")))[1]
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
@@ -187,11 +187,17 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     at, parts = [3, 3, 2], [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
     draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
     record = {"family": "ion", "nodes": [{"node": at, "count": 1}], "parts": parts, "instrument": draw}
-    record["transitions"] = [{"from": "S", "to": "P", "drive": "strong_drive", "weight": 1}]
+    record["transitions"] = [
+        {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
+    ]
     record["rates"] = [{"from": "P", "to": "S", "lifetime": 2, "gives_to": "fluorescence"}]
     drive = {"family": "strong_drive", "along": "x", "wave": [1, 2], "amplitude": 600}
     drive.update(top={"x": [0, 5], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
-    counter = {"name": "counter", "positions": [[0, y, z] for y in range(6) for z in range(4)]}
+    counter = {
+        "name": "counter",
+        "positions": [[0, y, z] for y in range(6) for z in range(4)],
+        "transition": TOP,
+    }
     world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
     world.update(universe="u.json", engine="e.json", measured=[record], messages=[drive])
     world.update(detectors=[counter], instrument={**draw, "window": 18, "seed": 24})

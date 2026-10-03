@@ -19,6 +19,7 @@ from event_universe.loader.instrument import (
     basis_of,
     instrument_of,
     node_instrument_of,
+    pair_of,
     pattern_of,
     patterns_of_the_law,
     ports_of,
@@ -39,7 +40,8 @@ BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
     ("node", "count"),
 )
-DETECTOR_KEYS, START_KEYS = ("name", "positions", "block", "basis", "pattern"), ("mode",)
+DETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern", "transition")  # a detector's keys
+START_KEYS = ("mode",)
 
 
 @dataclass(frozen=True)
@@ -67,6 +69,7 @@ class DetectorRow:
     declared: bool
     basis: tuple[int, ...]
     pattern: Pattern
+    transition: tuple[int, int] = (0, 1)
 
 
 @dataclass(frozen=True)
@@ -192,20 +195,26 @@ def detectors_of(
                 basis, pattern
             )  # the two ports orthogonal with equal norms, refused by name otherwise
         if "block" in row:
-            if basis:
+            if basis or "transition" in row:
                 raise ValueError(
-                    f"{label}.basis: a basis is declared on a region, not on a body's detector"
+                    f"{label}: a basis and a transition are declared on a region, not on a body's detector"
                 )
             body = integer(row["block"], f"{label}.block", 0, bodies - 1)
             found.append(DetectorRow(name, (), body, False, (), ()))
             continue
+        if "transition" not in row:
+            raise ValueError(
+                f"{label} lacks the key 'transition': a region detector declares its own quantum's resonance as "
+                "a pair [num, den], cos Omega = num / den, [0, den] the band's top (a detector counts in its own quantum)"
+            )
+        transition = pair_of(row["transition"], f"{label}.transition")
         positions = row["positions"]
         if not isinstance(positions, list) or not positions:
             raise ValueError(f"{label}.positions must list its Nodes")
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(DetectorRow(name, nodes, None, True, basis, pattern))
+        found.append(DetectorRow(name, nodes, None, True, basis, pattern, transition))
     if layer:
         found.append(DetectorRow(FACE_NAME, layer, None, False, (), ()))
     return tuple(found)

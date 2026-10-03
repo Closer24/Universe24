@@ -131,5 +131,9 @@
   "seed": 24,
   "multiplier": 6364136223846793005,
   "increment": 1442695040888963407
- }
+ },
+ "detector_transition": [
+  0,
+  6000
+ ]
 }

@@ -104,5 +104,9 @@
    8
   ]
  },
- "scatter": "sqrt(N p (1 - p)) per region, the draw's; a comparison of two rows within three times the larger scatter per region"
+ "scatter": "sqrt(N p (1 - p)) per region, the draw's; a comparison of two rows within three times the larger scatter per region",
+ "detector_transition": [
+  0,
+  6000
+ ]
 }

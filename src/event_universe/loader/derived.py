@@ -226,8 +226,22 @@ def readers_of(families: tuple[FamilyRule, ...], held: int) -> list[int]:
 
 
 def count_wall(family: FamilyRule, action: int) -> int:
-    """The count's wall W_c = 3 den T, the family's plain wall times the universe's quantum action: the unit in which a share is read as quanta (ALGEBRA.md #the-count-is-the-records-share)."""
+    """The count's wall W_c = 3 den T, the family's plain wall times the universe's quantum action: the unit in which a share is read as quanta (ALGEBRA.md #the-count-is-the-records-share), the energy T of a quantum at the band's top."""
     return 3 * family.pair[1] * action
+
+
+def own_quantum(transition: tuple[int, int]) -> tuple[int, int]:
+    """A declared resonance's sine as the pair (s, den) with s the fixed point of den^2 - num^2 (sin Omega den, as `features/click.born` computes it): the detector's own quantum's energy over T is s / den (the mathematician's 214, the advisor's second: a detector counts in its own quantum); (den, den) at the band's top [0, den]."""
+    num, den = transition
+    return division_fixed_point(den * den - num * num), den
+
+
+def detector_wall(family: FamilyRule, action: int, transition: tuple[int, int]) -> int:
+    """The detector's wall W_d = T sin Omega_d in the count's units, (3 den T s_d + den_d div 2) div den_d by the division act, the energy of its own transition's quantum (the mathematician's 214 (2b)): exactly W_c = 3 den T at the band's top, where the shipped worlds' regions stand."""
+    sine, den_d = own_quantum(transition)
+    return int(
+        division_forward(count_wall(family, action) * sine, den_d, division_forward(den_d, 2, 0)[0])[0]
+    )
 
 
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:

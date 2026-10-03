@@ -75,6 +75,7 @@ class Detector:
     nodes: np.ndarray | None
     body: int | None
     declared: bool
+    transition: tuple[int, int] = (0, 1)
 
 
 def click(tick: int, family: str, detector: str, inflow: int) -> dict[str, object]:

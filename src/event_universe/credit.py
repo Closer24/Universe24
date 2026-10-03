@@ -9,8 +9,9 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe import growth, share
+from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, drawn
-from event_universe.loader.derived import count_wall
+from event_universe.loader.derived import count_wall, own_quantum
 from event_universe.loader.instrument import Instrument, Ports, ports_of
 from event_universe.loader.keys import Node
 from event_universe.meeting import Item, NodeBooks, books_of, click
@@ -65,6 +66,12 @@ def counted(board: GameBoard, index: int, total: int | None) -> int:
     """A share in the current's units as whole quanta, (total + W_c div 2) div W_c by the division act (`share.quanta_of`), 0 where it is not read: the reading of the record's count."""
     wall = count_wall(board.families[index], board.world.quantum_action)
     return 0 if total is None else int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
+
+
+def own_units(board: GameBoard, name: str, inflow: int) -> int:
+    """A region's window inflow read in the detector's own quantum (the mathematician's 214 with the advisor's second, two hands: a detector counts in its own quantum, its wall its own transition's energy T sin Omega_d): the inflow times den_d over s_d by the division act, rounded to the nearest, so that the count N = (the sum + W_c div 2) div W_c reads one click per quantum of the detector's resonance and the detuned share sin omega / sin Omega_d off it; the inflow itself at the band's top [0, den], where every shipped region stands."""
+    sine, den = own_quantum(next(d.transition for d in board.detectors if d.name == name))
+    return int(division_forward(inflow * den, sine, division_forward(sine, 2, 0)[0])[0])
 
 
 def instrument_nodes(board: GameBoard) -> np.ndarray:
@@ -149,7 +156,7 @@ def credited(board: GameBoard) -> None:
                 nodes += written(board, index, name, intake[name], PORT_NAMES[port], kept, 1)
             items.append(Item(index, None, None, -1, tuple(nodes)))
         else:
-            shares = [max(sum(intake[name].values()), 0) for name in names]
+            shares = [own_units(board, name, max(sum(intake[name].values()), 0)) for name in names]
             if sum(shares) <= 0:
                 continue
             for quantum in range(min(counted(board, index, sum(shares)), books.counts[index])):
