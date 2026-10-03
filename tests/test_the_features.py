@@ -216,7 +216,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     refused("fails for 'charged'", universe_of, {**rule, "families": [*rows, CHARGED]})
     charge["write_weight"], rule["integers"]["quantum_action"] = 4, 36_000  # the advisor's one line
     universe_of({**rule, "families": [*rows, CHARGED]})
-    for name in ("rule", "light", "pair", "nuclide/deuteron", TUBE, TURN):
+    for name in ("rule", "light", "pair", "deuteron", TUBE, TURN):
         shipped = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))[1]
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
         for f in shipped:

@@ -26,23 +26,10 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   rows, each folder its `design.json`, its `build_world.py` and its blind
   `expectation.json` written first from the advisor's numbers:
   `examples/events/matter_alone/` (matter alone: the compact pixel on the open
-  25-cube, the rest rotation, the
-  tail and the drift), `examples/events/matter_and_gravity/` (the massless row's
-  rest about a pixel in levels, 3 G(r) s, on its own universe with gravity at the
-  level weight 10); the bodies' worlds are read by `tools/body_rest.py`, a
+  25-cube, the rest rotation, the tail and the drift); the body's world is read by `tools/body_rest.py`, a
   GameBoard reading of a body's rotation, tail, centroid and well and of every
   held row's level along the axes from its centre, and of the regions' field lines
   from a run's output;
-- and the nuclide as one event, `examples/events/nuclide/`: the deuteron's
-  universe file `deuteron.json`, the holder of the sign at the level weight 1 and
-  the nuclide family [4004, 6000] at the shape [2, 2], two planes laid as one
-  event and never summed at a Node, with no holder of the content; its one world
-  `free_nuclide.json`, the record laid at the centre of a square board of 33 x 33
-  Nodes as three beams toward three counters at the board's ends, every face
-  receding; its `design.json`, its `build_world.py` and its blind
-  `expectation.json` written before the run (the two parts bit-identical at every
-  interval, every click's inflow even and one whole nuclide per 2 T sin omega_N,
-  the holder of the sign at 0), read from the run's `click` and `parts` lines;
 - and the shelved ion's telegraph, `examples/events/shelved_ion/`, the click
   round's characterising experiment declared before any run: one ion of three
   modes as the parts of one record (the shape [3, 2], the labels S, P and D), two
@@ -93,11 +80,8 @@ PYTHONPATH=src python tools/bell_gate.py --expectation examples/events/bell/expe
 PYTHONPATH=src python tools/run_inputs.py --out runs/ghz examples/events/ghz/ghz_x_y_y.json examples/events/ghz/ghz_y_x_y.json examples/events/ghz/ghz_y_y_x.json examples/events/ghz/ghz_x_x_x.json
 PYTHONPATH=src python tools/bell_gate.py --expectation examples/events/ghz/expectation.json --outputs runs/ghz/ghz_x_y_y.output.json runs/ghz/ghz_y_x_y.output.json runs/ghz/ghz_y_y_x.output.json runs/ghz/ghz_x_x_x.output.json
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json
-PYTHONPATH=src python tools/run_inputs.py --out runs/nuclide examples/events/nuclide/free_nuclide.json
-PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/nuclide/free_nuclide.json
-for f in matter_alone matter_and_gravity; do PYTHONPATH=src python examples/events/$f/build_world.py --modes; done
+PYTHONPATH=src python examples/events/matter_alone/build_world.py --modes
 PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_alone/expectation.json examples/events/matter_alone/pixel.json
-PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_and_gravity/expectation.json examples/events/matter_and_gravity/well.json
 ```
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and
