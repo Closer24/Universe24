@@ -50,6 +50,7 @@
    0,
    0
   ],
+  "node_from_the_lay": "the design's reading Node is eight Nodes along x from the giver's first Node; the reader stands over the Nodes 0 and 1 and its giving is laid at the Node drawn by the record's share, so the reading Node is the one eight Nodes along x from the laid Node, 8 or 9",
   "window": [
    62,
    70
@@ -64,7 +65,7 @@
  },
  "resonant": {
   "share": 1.0,
-  "reading": "the fraction of the seeds with a taking at the taker (the jump lines, DETECTOR), gate sqrt(N p (1 - p)) over the seeds",
+  "reading": "the fraction of the seeds with a taking at the taker (the record's click lines, DETECTOR), gate sqrt(N p (1 - p)) over the seeds",
   "status": "the mathematician's 220: the resonant record's share 1 at delta = 0"
  },
  "detuned": {

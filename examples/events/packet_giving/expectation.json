@@ -4,7 +4,7 @@
  "family": "pulse",
  "lay": {
   "lifetime": 48,
-  "giving": "drawn per interval at the hazard 1 / lifetime in the dark, the jump line's tick",
+  "giving": "drawn per interval at the hazard 1 / lifetime in the dark, the record's click line's tick",
   "width": 4,
   "total": 43962,
   "total_formula": "T / sin Omega = isqrt(T^2 den^2 div (den^2 - num^2)), the one-line packet's root, twice S = T / (2 sin Omega), the plane's share per line (the mathematician's 242 section 1, #1572 comment 5967687794; the advisor's second, 5967838095 section 1)",

@@ -178,7 +178,7 @@ def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
         "back_in_time": crossing,
         "lines": {
             kind: [line for line in lines if line["event"] == kind]
-            for kind in ("conversion", "lay", "face", "click", "credit", "erasure", "jump")
+            for kind in ("conversion", "lay", "face", "click", "credit", "erasure")
         },
         "books": board.books(),
     }

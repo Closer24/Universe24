@@ -74,7 +74,10 @@ def world(design: dict[str, Any]) -> dict[str, object]:
     ticks = int(row["window"]) + int(design["passage_intervals"])
     giver = {
         "family": row["family"],
-        "nodes": [{"node": found["body"], "count": 1}],
+        "nodes": [
+            {"node": found["body"], "weight": 1},
+            {"node": [found["body"][0] + 1, *found["body"][1:]], "weight": 1},
+        ],
         "parts": [{"part": 0, "name": "g", "count": 0}, {"part": 1, "name": "e", "count": 1}],
         "transitions": [
             {
@@ -129,7 +132,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "family": design["light"],
         "lay": {
             "lifetime": int(design["giver"]["lifetime"]),
-            "giving": "drawn per interval at the hazard 1 / lifetime in the dark, the jump line's tick",
+            "giving": "drawn per interval at the hazard 1 / lifetime in the dark, the record's click line's tick",
             "width": int(design["width"]),
             "total": found["total"],
             "total_formula": "T / sin Omega = isqrt(T^2 den^2 div (den^2 - num^2)), the one-line packet's root, twice S = T / (2 sin Omega), the plane's share per line (the mathematician's 242 section 1, #1572 comment 5967687794; the advisor's second, 5967838095 section 1)",
@@ -179,7 +182,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
 
 
 def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
-    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the jump line, the drawn direction from the lay lines, the detector's clicks, the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
+    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the record's click line, the drawn direction from the lay lines, the detector's clicks, the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
     from event_universe.game_board import GameBoard
     from event_universe.world_files import load_world
 
@@ -201,7 +204,7 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
         for _ in range(int(world_file["ticks"])):
             board.step()
             series[board.tick] = int(board.states[pulse].lines[0].now[node])
-            if given_at is None and any(c["event"] == "jump" for c in lines):
+            if given_at is None and any(c["event"] == "credit" and c["given"] for c in lines):
                 given_at, laid = board.tick, board.total_share(pulse)[0]
                 share_at_lay = None if laid is None else laid / wall
             if board.ended is not None:
