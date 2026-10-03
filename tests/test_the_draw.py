@@ -256,14 +256,16 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
         1, 26
     ):  # the trials' seeds, every record's generator at its own state (tools/meeting_trials.py)
         board = GameBoard(load_world(path), (lines := []).append)
+        light_at = [f.name for f in board.families].index("pulse")
         gamma, own = (
             board.world.node_clock,
             division_fixed_point(wall * wall * 5) // 3,
         )  # one quantum at [2, 3]
         assert (
-            record_unit(board, 0, 7 * wall, 7) == wall and record_unit(board, 0, own, 1) == own
+            record_unit(board, light_at, 7 * wall, 7) == wall
+            and record_unit(board, light_at, own, 1) == own
         )  # W_rec
-        assert abs(own / wall - 5**0.5 / 3) < 2 / wall and record_unit(board, 0, None, 0) == wall
+        assert abs(own / wall - 5**0.5 / 3) < 2 / wall and record_unit(board, light_at, None, 0) == wall
         assert hazard_weights(1, 48, gamma, gamma, 9) == [
             9,
             47 * 9,
@@ -325,14 +327,16 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
     TOOL.main(["--input", str(path)])
     for seed in (1, 2, 3):  # the light at its Node: a window stands and its draw at 48 stands as it is
         board = GameBoard(load_world(path), (lines := []).append)
+        light_at = [f.name for f in board.families].index("pulse")
         gamma, own = (
             board.world.node_clock,
             division_fixed_point(wall * wall * 5) // 3,
         )  # one quantum at [2, 3]
         assert (
-            record_unit(board, 0, 7 * wall, 7) == wall and record_unit(board, 0, own, 1) == own
+            record_unit(board, light_at, 7 * wall, 7) == wall
+            and record_unit(board, light_at, own, 1) == own
         )  # W_rec
-        assert abs(own / wall - 5**0.5 / 3) < 2 / wall and record_unit(board, 0, None, 0) == wall
+        assert abs(own / wall - 5**0.5 / 3) < 2 / wall and record_unit(board, light_at, None, 0) == wall
         assert hazard_weights(1, 48, gamma, gamma, 9) == [
             9,
             47 * 9,
