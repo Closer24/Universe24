@@ -13,9 +13,11 @@ from collections.abc import Sequence
 from fractions import Fraction
 from pathlib import Path
 
+import numpy as np
+
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import AXES
-from event_universe.loader.world import DetectorRow
+from event_universe.loader.world import DetectorRow, World
 from event_universe.world_files import load_world
 
 Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its detector
@@ -141,6 +143,22 @@ def read_row(row: list[int], expected: dict[str, object]) -> dict[str, object]:
     }
 
 
+def photons(loaded: World, family: str, quanta: int, blind: object) -> dict[str, object]:
+    """The photon count at the light's own frequency beside N, a GameBoard reading labelled so (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267): the screen's regions declare the band's top, so N counts the energy in units of T, while one quantum of the laid light at its own omega carries the energy T sin omega, cos omega = (cos(pi p / q) + 2) / 3 along the axis for the wave [p, q] of the family's first message; the count N over sin omega is the number of the laid light's own quanta, 645 at N = 278 and k = pi / 4; the blind's value, where the expectation holds one, beside it."""
+    waves = [m.wave for m in loaded.messages if loaded.families[m.family].name == family]
+    if not waves:
+        return {"label": "GAMEBOARD", "value": None}
+    p, q = waves[0]
+    cosine = (float(np.cos(np.pi * p / q)) + 2) / 3  # light's dispersion along the axis
+    sine = (1 - cosine * cosine) ** (1 / 2)
+    return {
+        "label": "GAMEBOARD",
+        "sin_omega": round(sine, 3),
+        "value": round(quanta / sine, 1),
+        "blind": blind,
+    }
+
+
 def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
     """The reading: what each detector of the expectation's detector (or detectors) and family saw over its window, ordered along its axis, floored at 0, N over the wall to the nearest whole, the rounded shares (the expectation) and the clicks (the quanta the instrument credited in the run, from the credit lines), each row with its extrema, visibility and deviation, the arrival of the screen's inflow in the engine's labels, with the blind numbers beside."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
@@ -198,6 +216,7 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
             "wings": expected.get("wings"),
             "sum": [sum(blind_row).numerator, sum(blind_row).denominator],
         },
+        "photons": photons(loaded, str(expected["family"]), quanta, expected.get("photons")),
         "arrival": arrival(per_interval(lines, names, str(expected["family"]), window)),
         "blind_arrival": expected.get("arrival"),
         "aside": {

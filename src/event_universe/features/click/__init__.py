@@ -114,14 +114,6 @@ def standing(
     return (re, im), (re_before, im_before)
 
 
-def born(upper: tuple[int, int], lower: tuple[int, int]) -> tuple[int, int]:
-    """The pair of the born quantum's rotation, the resonance omega_L = omega_e - omega_g (the mathematician's 174 (c), the advisor's second; the one place of the choice between the resonance and the share's rotation sin omega_L = sin omega_e - sin omega_g): cos omega_L = cos omega_e cos omega_g + sin omega_e sin omega_g as [num_e num_g + s_e s_g, den_e den_g] with s the fixed point of den^2 - num^2 (sin omega den); the massless pair for parts of one pair, whose transition has no rotation, so the quantum is laid by its count alone; the giving's lay (`meeting.given_quantum`) calls it with light's own pair and lays at light's own pair, the two levels alike: the giving's frequency (T4) waits on the packet lay; a one-Node lay carries no frequency (the mathematician's 205, #1572 comment 5964520368)."""
-    (n_e, d_e), (n_g, d_g) = upper, lower
-    s_e, s_g = division_fixed_point(d_e * d_e - n_e * n_e), division_fixed_point(d_g * d_g - n_g * n_g)
-    num, den = n_e * n_g + s_e * s_g, d_e * d_g
-    return (den, den) if num >= den else (num, den)
-
-
 def invariant(count: int, action: int, pair: tuple[int, int], laid: int) -> int:
     """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands of 2026-10-03, the advisor's (b) and (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the fixed point of den^2 - num^2, sin omega den; the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`meeting.relaid`); the share form of `amplitude` beside it, the instrument's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands, #1572 comments 5964520368 and 5964754600); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
     num, den = pair

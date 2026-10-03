@@ -34,6 +34,7 @@ def world_of(design: dict, amplitude: int) -> dict:
                         "to": "e",
                         "drive": design["light"]["family"],
                         "weight": design["records"]["weight"],
+                        "resonance": design["resonance"],
                     }
                 ],
                 "rates": [],

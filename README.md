@@ -82,6 +82,11 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   the two slits with a declared region at one gap backed by a face, three worlds
   from one design with the blind written before any lay, read beside it in its
   `blind_and_reading.md` and asserted by `tests/test_the_draw.py`.
+- the resonance world, `examples/events/resonance/`, test (vi): the born light's
+  frequency, a quantum given as a source in time at one Node over the lifetime at
+  the transition's declared resonance and read at a far Node, beside a taker at
+  the same resonance and one detuned, with the blind written before any lay and
+  the reading in its `blind_and_reading.md`.
 
 The three documents: [the law](docs/ALGEBRA.md), one algebraic line per rule;
 [the engine](docs/ENGINE.md), the input files, the interval, the output, how to

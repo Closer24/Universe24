@@ -46,7 +46,8 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
             for centre in row["centres"]
         ],
         "detectors": [
-            {"name": str(label), "positions": region(box)} for label, box in row["regions"].items()
+            {"name": str(label), "transition": design["detector_transition"], "positions": region(box)}
+            for label, box in row["regions"].items()
         ],
     }
 

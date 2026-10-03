@@ -1,0 +1,196 @@
+{
+ "comment": "The resonance world, test (vi), T4 (the owner's word of 2026-10-03, 05:00 UTC, 'not in the morning, now'; the mathematician's 213 (B), #1572 comment 5965054791, his 220, 5965303134, and the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands): the born light's frequency read in the engine. On the Zeno atom's universe (examples/events/zeno/zeno_atom.json: the atom [1, 1299] of two parts, the light `pulse` the holder of the sign under the rotation), a chain of 48 Nodes periodic on x, y and z folded. The giver, an atom at the Node 0 standing in its upper part e, its transition g to e by `pulse` at the resonance [2, 3] (cos Omega = 2 / 3, Omega = 0.8411, the drive's own rotation at k = pi / 2) and its giving e to g to `pulse` at the lifetime 48, its window 48, so that the giving is drawn with certainty at the interval 48 (the weights the window against the lifetime's rest, 48 against 0) and the quantum is laid as a source in time at the Node 0 over the intervals 48 to 95: the total of the squared amplitudes S = isqrt(T^2 den^2 div (4 (den^2 - num^2))) = 21,981 at T = 32,768 (2 S sin Omega / T = 0.99998, one quantum's action), laid with the carry, A_t = isqrt((S t) div 48 - SUM A_u^2), 21 on 30 intervals and 22 on 18, one lay line per interval. Two worlds from the design: `resonant.json`, a second atom at the Node 12 standing in g with the transition g to e by `pulse` at the same resonance [2, 3] and the weight 6, its window 96, one draw at the run's end over its share; `detuned.json`, the same atom at the Node 12 at the resonance [1, 3] (Omega = 1.2310, the detuning delta = 0.3899 per interval, 2 pi / delta = 16.1 intervals). The far Node's reading: the light's level n_t at the Node 8 over the window of intervals 62 to 70 (the wave arriving at about 56 and the plateau standing until the source stops at 95 and the wrap returns at about 88), cos Omega read as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2), a GameBoard reading. The blind, written before any lay and never touched after, in expectation.json; the reading in blind_and_reading.md, a miss a finding by name. The mathematician's 221 (#1572 comment 5965498522): the source in time stands inside a guide, this chain, where its far Node reads the frequency; in the open board a single quantum falls below one level within about 0.28 A_source Links and travels only as a beam, the form of a round of its own.",
+ "status": "designed and the blind written before any lay, 2026-10-03, 05:10 UTC; the giver's source stands inside the chain, a guide of one Node across, where the mathematician's 221 (#1572 comment 5965498522, T10) finds the frequency travels; the beam form of 221 (3) along a drawn axis is a round of its own, named in blind_and_reading.md",
+ "universe": "examples/events/zeno/zeno_atom.json",
+ "engine": "examples/events/engine_start.json",
+ "shape": [
+  48,
+  1,
+  1
+ ],
+ "boundary": {
+  "x": "periodic",
+  "y": "periodic",
+  "z": "periodic"
+ },
+ "ticks": 96,
+ "light": "pulse",
+ "quantum_action": 32768,
+ "giver": {
+  "family": "atom",
+  "node": [
+   0,
+   0,
+   0
+  ],
+  "resonance": [
+   2,
+   3
+  ],
+  "lifetime": 48,
+  "window": 48,
+  "seed": 11,
+  "weight": 1
+ },
+ "taker": {
+  "family": "atom",
+  "node": [
+   12,
+   0,
+   0
+  ],
+  "weight": 6,
+  "window": 96,
+  "seed": 25
+ },
+ "worlds": {
+  "resonant": {
+   "resonance": [
+    2,
+    3
+   ]
+  },
+  "detuned": {
+   "resonance": [
+    1,
+    3
+   ]
+  }
+ },
+ "reading_node": [
+  8,
+  0,
+  0
+ ],
+ "reading_window": [
+  62,
+  70
+ ],
+ "generator": {
+  "multiplier": 6364136223846793005,
+  "increment": 1442695040888963407
+ },
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65,
+  66,
+  67,
+  68,
+  69,
+  70,
+  71,
+  72,
+  73,
+  74,
+  75,
+  76,
+  77,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  90,
+  91,
+  92,
+  93,
+  94,
+  95,
+  96,
+  97,
+  98,
+  99,
+  100
+ ],
+ "source": {
+  "total_formula": "S = isqrt(T^2 den^2 div (4 (den^2 - num^2)))",
+  "total": 21981,
+  "invariant_check": 0.99998,
+  "amplitudes": {
+   "21": 30,
+   "22": 18
+  },
+  "width": "1 / tau = 1 / 48"
+ },
+ "detuning": {
+  "delta_per_interval": 0.3899,
+  "period_intervals": 16.1,
+  "sinc_squared_at_tau": {
+   "3": 0.8911,
+   "6": 0.6195,
+   "12": 0.0944,
+   "24": 0.0456,
+   "48": 0.0001
+  }
+ }
+}
