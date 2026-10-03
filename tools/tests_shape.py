@@ -6,6 +6,9 @@ read from git, so no baseline file is kept: a pull request may lower a count, ne
 (a) Size. tests/ holds no more lines than at the merge base: it only shrinks, and a pull
     request that adds tests offsets them by deletions (the model owner, 2026-09-27); a test
     file above 600 lines holds no more than at the merge base, and a new one stays under.
+    A test the Boss gives room by name (ROOM: the test, its lines and the reason, recorded
+    here and in ENGINE.md section 9) adds that room to the base's size while it stands with
+    at most those lines; nothing else grows the budget.
 (b) Copied setup. No test module imports another `test_*.py`: shared builders live in
     `tests/laws.py`. A function of 8 lines or more whose abstracted
     body appears twice across tests/ is refused beyond the merge base's groups.
@@ -37,6 +40,19 @@ DUPLICATE_LINES = 8
 DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
+ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
+        36,
+        "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
+        "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
+    ),
+    "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
+        30,
+        "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
+        "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
+        "detuned sinc, the root once per window on the shipped Zeno world",
+    ),
+}
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
 
@@ -169,11 +185,24 @@ def uncalled(snapshot: Snapshot) -> set[str]:
     return found
 
 
+def room_of(snapshot: Snapshot) -> int:
+    """The room the named tests take in a snapshot: per ROOM entry whose test stands in its file, the fewer of its named lines and the test's own (the def through its last line), so a test keeps its room only while it holds it; 0 for a test that is gone."""
+    found = 0
+    for name, (lines, _reason) in ROOM.items():
+        path, function = name.split("::")
+        if path not in snapshot:
+            continue
+        for node in ast.walk(ast.parse(snapshot[path])):
+            if isinstance(node, ast.FunctionDef) and node.name == function and node.end_lineno:
+                found += min(lines, node.end_lineno - node.lineno + 1)
+    return found
+
+
 def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
     """Every way the head departs from the shape, each one line; with no base, the head is its own base."""
     base = head if base is None else base
     found: list[str] = []
-    head_tests, base_tests = lines_in(head, "tests/"), lines_in(base, "tests/")
+    head_tests, base_tests = lines_in(head, "tests/"), lines_in(base, "tests/") + room_of(head)
     if head_tests > base_tests:
         found.append(
             f"tests/ grew from {base_tests} to {head_tests} lines; offset the new tests by deletions in the same pull request"
