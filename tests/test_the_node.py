@@ -379,24 +379,24 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
         grows.step()
         if grows.ended is None:
             fixed.step(), history.append((grows.shape[0], grows.offset[0], BACK.snapshot(grows)[0]))
-    low, end = grows.offset[0], {"interval": 28, "axis": "x", "side": "high", "largest": 64}
+    low, end = grows.offset[0], {"interval": 44, "axis": "x", "side": "high", "largest": 64}
     large = GameBoard(load_world(light_alone_world(tmp_path, "large", 64, 8 + low)))
     for extent, offset, snapshot in history:
         large.step()
         at, wide = slice(low - offset, low - offset + extent), BACK.snapshot(large)[0]
         assert all(np.array_equal(a, b[at]) for (_, a), (_, b) in zip(snapshot, wide, strict=True))
-    assert grows.ended == end and grows.tick == 28
+    assert grows.ended == end and grows.tick == 44
     assert grows.books()["charge"]["share"] == large.books()["charge"]["share"]
     assert grows.mask(((15, 0, 0),))[15 + low, 0, 0] and all("node" not in e for e in lines)
     assert not grows.quanta(0)[0][low : low + 16].any() and fixed.quanta(0)[0].any()
-    assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 28
+    assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 44
     written = json.loads((tmp_path / "grows.output.json").read_text(encoding="utf-8"))
     look = RECORD.record(world, None)
     assert written["verdict"] == "LAWFUL" and written["ended"] == end == look["ended"]
-    assert [look["frames"][k]["shape"][0] for k in (0, 28)] == [16, 64] and lines
-    assert look["frames"][28]["offset"][0] == low
+    assert [look["frames"][k]["shape"][0] for k in (0, 44)] == [16, 64] and lines
+    assert look["frames"][44]["offset"][0] == low
     back = BACK.verdict(GameBoard(load_world(world)), 100)
-    assert back["verdict"] == "MATCH" and back["intervals"] == 27 and back["ended"] == end
+    assert back["verdict"] == "MATCH" and back["intervals"] == 43 and back["ended"] == end
     receding = {"x": {"sides": ["high"], "largest": 64, "layers": 4}}
     world = light_alone_world(tmp_path, "light", 24, 6, receding=receding)
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
