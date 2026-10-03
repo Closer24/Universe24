@@ -81,6 +81,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
         "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
     ),
+    "tests/test_the_share.py::test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit": (
+        35,
+        "the step's speed's dedicated test (the owner's word of 2026-10-03, 15:12 Israel, let them do it): every "
+        "shortened read of the step, the share at the Nodes with a level, the write factor in the hardware's "
+        "integers inside the width and the Port's fill on the face layer, equals the full read bit for bit",
+    ),
     "tests/test_the_features.py::test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair": (
         12,
         "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
