@@ -47,6 +47,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "after #1788's lay defect in the committed worlds that the test without a board did not catch): one GameBoard per "
         "folder, no interval, the long-loading folders the runner's gate by name",
     ),
+    "tests/test_pixel_mode.py::test_a_messages_mode_count_is_the_books_count_read_once_over_the_board": (
+        16,
+        "the generator's count as the books read it (mode-count, the mathematician's finding of 2026-10-03): the share "
+        "summed over the board and read in quanta once, the shipped two slits and Zeno counts the books' own, the dilute wave",
+    ),
     "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
         79,
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "

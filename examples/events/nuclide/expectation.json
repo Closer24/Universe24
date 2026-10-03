@@ -63,9 +63,9 @@
   "formula": "omega_N = (1 - b_d) omega_p per part, the nuclide's rest rotation below the free nucleon's by the binding fraction; cos omega_N = num / den at the nearest integer numerator, the denominator matter's"
  },
  "laid": [
-  2054,
-  2054,
-  2054
+  2046,
+  2046,
+  2046
  ],
  "seed": 24,
  "rule": "a counter's inflow over the window is the nuclide family's net current through its front, summed over the two parts, in the current's units; its share is the inflow over W_c = 3 den T; its count N is the share over the declared whole over T, 2 sin omega_N for the nuclide counters and sin omega_N for the part counter (The click's unit: the whole of a click is the node_reader's own transition; the energy of one quantum of a family T sin omega by the families reading); the parts lines give the two parts' signed level sums per interval and region",
