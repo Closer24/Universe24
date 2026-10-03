@@ -61,6 +61,16 @@ mathematician's numbers), the band's line at w = 4 and its refusals at w = 1 and
 refusals, a packet laid on an open board of 35^3 Nodes with the lifetime 2 (one lay line per Node, the
 count 1 by the count's line in a detector's own unit at [2, 3]) and this blind byte for byte.
 
+## The form the reading was taken on
+
+The readings above ran on the engine of own-quantum's squash (main a1b12409), where a body draws its
+giving at its window's close, 48 against the lifetime 48 with certainty; main 37868f61, merged into this
+branch after the reading (the grain in the dark, #1709), draws the giving of a body in the dark once per
+interval at the hazard 1 / 48, so the giving's interval is no longer 48 with certainty and the window
+of the passage shifts with it, seed by seed. The lay itself is unchanged by the merge (the packet at the
+giving's interval, whichever it is); the readings are not re-run tonight and stand on the form named here,
+as the telegraph's do; the dedicated test takes the dark grain's interval from the jump line.
+
 ## What is named and not built
 
 The open board's Rayleigh spreading, the reach (pi w / lambda) sqrt(S / L): this board is the width

@@ -46,6 +46,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
         "the band's line with the transverse mode, the loader's three refusals, the lay on an open board, the blind",
     ),
+    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum": (
+        36,
+        "the dark grain's dedicated test (the Boss, 2026-10-03): the giving drawn per interval at the hazard in the "
+        "dark over the trials' seeds, one draw per interval and none at the window's close, the window's draw "
+        "standing with the light present, the far Node's cosine on every seed's plateau",
+    ),
     "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
         36,
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
