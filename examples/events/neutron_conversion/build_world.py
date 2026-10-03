@@ -34,7 +34,7 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
         "count": int(design["neutron"]["count"]),  # the record's count, declared once over its region
     }
     body["conversion"] = {"rate": int(table["rate"]), "to": outs}
-    body["instrument"] = {k: int(v) for k, v in design["generator"].items()}
+    body["node_reader"] = {k: int(v) for k, v in design["generator"].items()}
     return {
         "shape": [int(v) for v in design["shape"]],
         "boundary": {"x": "open", "y": "open", "z": "open"},

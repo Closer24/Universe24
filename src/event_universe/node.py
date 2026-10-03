@@ -42,9 +42,9 @@ from event_universe.records import level_at as level_at
 from event_universe.records import record_slice as record_slice
 from event_universe.records import row_levels as row_levels
 from event_universe.records import rows_total as rows_total
+from event_universe.records import rulers_write_factor as rulers_write_factor
 from event_universe.records import turned_by as turned_by
 from event_universe.records import well as well
-from event_universe.records import write_factor as write_factor
 from event_universe.records import write_origins as write_origins
 from event_universe.records import write_sources as write_sources
 from event_universe.records import wronskian as wronskian

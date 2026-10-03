@@ -43,7 +43,7 @@ def world_of(design: dict, n: int) -> dict:
             },
         ],
         "rates": [],
-        "instrument": {
+        "node_reader": {
             **design["generator"],
             "window": design["intervals"] // n,
             "seed": design["record"]["seed"],

@@ -11,7 +11,7 @@ picture derives of the conversions): the row from `neutron` (three real lines, c
 row), `electron` (matter's plane at [4000, 6000]) and `antineutrino` (one real massless line
 [6000, 6000], neutral, what carries the rest); the rate 30, a declared integer, the intervals per
 expected conversion. One body of the neutron of count 1 at the centre of the open 9-cube, declared
-whole with its `conversion` (the table of the families out and the rate) and its own `instrument` (the
+whole with its `conversion` (the table of the families out and the rate) and its own `node_reader` (the
 window 1, the seed 25, the generator), laid by the engine at the start by the invariant over its three
 lines (95 per line) and held at its Node by the declaration (its six Link factors 0, as every record
 declared an instrument); at every window's end the conversion's list of the one click act is drawn at

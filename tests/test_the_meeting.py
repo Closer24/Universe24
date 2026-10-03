@@ -140,7 +140,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_reader's proper time at the close (the board's tick in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `instrument` key refused by name with a window of 0 and without its seed."""
+    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_reader's proper time at the close (the board's tick in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `draw` key refused by name with a window of 0 and without its seed."""
     world = json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8"))
     world["draw"]["window"], draw = 40, dict(world["draw"])
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
@@ -194,14 +194,14 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
     table = (body := world["bodies"][0])["conversion"]
-    body["conversion"]["rate"], body["instrument"]["window"], world["ticks"] = 1, 2, 4
+    body["conversion"]["rate"], body["node_reader"]["window"], world["ticks"] = 1, 2, 4
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
     rows = {"from 1": {"rate": 0}, "other than": {"to": ["neutron"]}, "lists the": {"to": []}}
     rows["at none"], rows["without its sense"] = {"sense": 1}, {"to": ["proton"]}  # a plane's entry
     wrong = {word: {**body, "conversion": {**table, **row}} for word, row in rows.items()}
     wrong["no parts"] = {**body, "parts": []}
-    wrong["no `instrument`"] = {k: v for k, v in body.items() if k != "instrument"}
+    wrong["no `node_reader`"] = {k: v for k, v in body.items() if k != "node_reader"}
     for word, entry in wrong.items():
         refused(word, node_reader_of, entry, "bodies[0]", families, quanta["neutron"], quanta, 1)
     board = GameBoard(load_world(path), (lines := []).append)
@@ -274,7 +274,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     for word, outs in wrong.items():
         entry = {**body, "conversion": {**body["conversion"], "to": outs}}
         refused(word, node_reader_of, entry, "bodies[0]", families, quanta["neutron"], quanta, 1)
-    body["conversion"]["rate"], body["instrument"]["window"], world["ticks"] = 1, 1, 6
+    body["conversion"]["rate"], body["node_reader"]["window"], world["ticks"] = 1, 1, 6
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     board = GameBoard(load_world(path), (lines := []).append)
     p, e, nu = outs = [quanta[row["family"] if isinstance(row, dict) else row] for row in table]
@@ -373,19 +373,19 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     probe["drive"] = "probe"
     region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
     record = {"family": "atom", "nodes": region, "parts": parts}
-    record.update(transitions=[*turns, probe], rates=[], instrument=draw)
+    record.update(transitions=[*turns, probe], rates=[], node_reader=draw)
     lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
     world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
     world.update(universe="u.json", engine="e.json", bodies=[record], messages=lays, node_readers=[])
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     families, quanta = universe_of(universe)[1], {"atom": 0, "pulse": 1, "probe": 2}
-    wrong = {"beside a probe": {**record, "instrument": {**draw, "window": 1}}}
+    wrong = {"beside a probe": {**record, "node_reader": {**draw, "window": 1}}}
     wrong["no weight"] = {**record, "transitions": [*turns, {**probe, "weight": 1}]}
     wrong["lacks the key 'window'"] = {**record, "transitions": turns}
     for word, body in wrong.items():
         refused(word, node_reader_of, body, "bodies[0]", families, 0, quanta, 1)
     assert node_reader_of(record, "bodies[0]", families, 0, quanta, 1).draw == Generator(**draw)
-    assert isinstance(draw_of({**draw, "window": 1}, "instrument"), Draw)
+    assert isinstance(draw_of({**draw, "window": 1}, "node_reader"), Draw)
     untimed = {k: v for k, v in lays[0].items() if k != "tick"}
     for word, message in (("without `tick`", untimed), ("tick", {**lays[0], "tick": 10})):
         bad = tmp_path / "bad.json"

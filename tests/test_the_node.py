@@ -342,7 +342,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
 
     def scaled(now: np.ndarray) -> np.ndarray:  # the write per proper volume at the row's own paces
         clock, pace = paces.node_paces(GAMMA, now)
-        return np.asarray(node.write_factor(source * T, (clock, (pace, pace, pace)), GAMMA, 2))
+        return np.asarray(node.rulers_write_factor(source * T, (clock, (pace, pace, pace)), GAMMA, 2))
 
     reads, self_coefficient, rule_wall = node.rule_of(binding, GAMMA, levels)  # the integer line at rest
     numerator = sum(r * a for r, a in zip(reads, node.ports(levels, wrap), strict=True))

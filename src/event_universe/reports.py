@@ -242,8 +242,8 @@ def inflow(
     nodes: np.ndarray,
     through: tuple[Any, ...],
     wrap: Wrap,
-    instrument: np.ndarray,
+    reader_nodes: np.ndarray,
     declared: np.ndarray,
 ) -> int:
-    """A node_reader's report of one interval, its click (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the node_reader a declared instrument): the currents through the instrument's front boundary Ports at the region's Nodes (`entering`), inward positive, summed in integers with their signs, the density that entered the region from the declared board (the advisor's correction: the front Links only, net; the transverse Links inside the instrument and the Links toward a receding face's grown layers not counted); the host's reading for the credit by the shares. `instrument` is the union of the declared regions (a body's node_reader and the faces' layer their own Nodes), so that what passes between the regions of one screen is not seen twice; nothing is handed over and no line names a Node."""
-    return int(entering(front(nodes, wrap, instrument, declared), through).sum(dtype=object))
+    """A node_reader's report of one interval, its click (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the node_reader a declared instrument): the currents through the instrument's front boundary Ports at the region's Nodes (`entering`), inward positive, summed in integers with their signs, the density that entered the region from the declared board (the advisor's correction: the front Links only, net; the transverse Links inside the instrument and the Links toward a receding face's grown layers not counted); the host's reading for the credit by the shares. `reader_nodes` is the union of the declared regions (a body's node_reader and the faces' layer their own Nodes), so that what passes between the regions of one screen is not seen twice; nothing is handed over and no line names a Node."""
+    return int(entering(front(nodes, wrap, reader_nodes, declared), through).sum(dtype=object))

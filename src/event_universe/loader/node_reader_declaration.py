@@ -1,4 +1,4 @@
-"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the giving at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `instrument` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
+"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the giving at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `node_reader` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ READER_RECORD_KEYS = (
     "parts",
     "transitions",
     "rates",
-    "instrument",
+    "node_reader",
     "conversion",
 )  # a body as an instrument
 PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count"), ("part", "name", "count")
@@ -301,19 +301,19 @@ def node_reader_of(
     quanta: dict[str, int],
     count: int,
 ) -> NodeReaderDeclaration:
-    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `instrument` to draw it; refused by name otherwise."""
+    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_reader` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_reader` to draw it; refused by name otherwise."""
     family = families[own]
     if "conversion" in body:
         if "parts" in body or "transitions" in body or "rates" in body:
             raise ValueError(f"{label} is converted whole: it declares no parts, transitions or rates")
-        if "instrument" not in body:
-            raise ValueError(f"{label} declares a conversion and no `instrument` to draw it with")
+        if "node_reader" not in body:
+            raise ValueError(f"{label} declares a conversion and no `node_reader` to draw it with")
         table, sense = conversion_of(body["conversion"], f"{label}.conversion", families, own, quanta)
-        own_draw = draw_of(body["instrument"], f"{label}.instrument")
+        own_draw = draw_of(body["node_reader"], f"{label}.node_reader")
         return NodeReaderDeclaration((family.name,), (count,), (), (), own_draw, (table,), sense)
     if "parts" not in body:
         raise ValueError(
-            f"{label} declares its parts, the modes it is laid in, before any instrument, transition or rate"
+            f"{label} declares its parts, the modes it is laid in, before any `node_reader`, transition or rate"
         )
     if not family.plane or family.parts < 2 or family.planes != 1:
         raise ValueError(
@@ -324,10 +324,10 @@ def node_reader_of(
     transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
     probed = any(transition.leaves == transition.enters for transition in transitions)
     draw: Generator | None = None
-    if "instrument" in body:
+    if "node_reader" in body:
         read = generator_of if probed else draw_of
-        draw = read(body["instrument"], f"{label}.instrument")
+        draw = read(body["node_reader"], f"{label}.node_reader")
     if draw is None and ("transitions" in body or "rates" in body):
-        raise ValueError(f"{label} declares transitions or rates and no `instrument` to draw them with")
+        raise ValueError(f"{label} declares transitions or rates and no `node_reader` to draw them with")
     rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own, transitions)
     return NodeReaderDeclaration(names, counts, transitions, rates, draw)

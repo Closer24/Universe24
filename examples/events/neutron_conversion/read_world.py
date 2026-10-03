@@ -103,7 +103,7 @@ def readings(board: GameBoard, here: tuple[int, int, int], quanta: list[int]) ->
         "interval": board.tick,
         "families": found,
         "sign_rows": sign_rows(board, here),
-        "instrument_counts": [list(b.counts) for b in board.credit.bodies],
+        "node_reader_counts": [list(b.counts) for b in board.credit.bodies],
         "rotations": rotations,
         "energies_T_sin_omega": {
             name: None if r is None else action * math.sin(r) for name, r in rotations.items()

@@ -269,7 +269,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
     refused("no transition", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, (), action)
     path, draw, at = (
         tmp_path / "resonant.json",
-        world["bodies"][0]["instrument"],
+        world["bodies"][0]["node_reader"],
         tuple(blind["cos_omega"]["node"]),
     )
     given_at: list[int] = []
@@ -419,7 +419,7 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
         "node_readers": [],
         "bodies": body([17, 17, 17], width=3, lifetime=2),
     }
-    small["bodies"][0]["instrument"] = {**giver["instrument"], "window": 2}
+    small["bodies"][0]["node_reader"] = {**giver["node_reader"], "window": 2}
     del small["draw"]
     (tmp_path / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
     load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py").main(
@@ -467,9 +467,9 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
     """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_reader's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
     world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
     giver = {**world["bodies"][0], "transitions": [{**world["bodies"][0]["transitions"][0]}]}
-    giver["transitions"][0]["resonance"], giver["instrument"] = (
+    giver["transitions"][0]["resonance"], giver["node_reader"] = (
         [9, 10],
-        {**giver["instrument"], "window": 240},
+        {**giver["node_reader"], "window": 240},
     )
     (path := tmp_path / "low.json").write_text(json.dumps({**world, "bodies": [giver], "ticks": 240}))
     TOOL.main(["--input", str(path)])

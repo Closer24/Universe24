@@ -42,7 +42,7 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
         "parts": parts,
         "transitions": transitions,
         "rates": rates,
-        "instrument": draw,
+        "node_reader": draw,
     }
 
 

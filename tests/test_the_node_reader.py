@@ -31,7 +31,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         {"node": at, "weight": 1},
         {"node": beside, "weight": 1},
     ]  # the lay's weights, the count once
-    record = {"family": "ion", "nodes": nodes, "parts": parts, "instrument": draw}
+    record = {"family": "ion", "nodes": nodes, "parts": parts, "node_reader": draw}
     record["transitions"] = [
         {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
     ]
@@ -55,7 +55,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     wrong = {"one part": {**record, "parts": [{**p, "count": 1} for p in parts]}}
     wrong["parts are"] = {**record, "transitions": [{**record["transitions"][0], "to": "X"}]}
     wrong["weight"] = {**record, "transitions": [{**record["transitions"][0], "weight": 0}]}
-    wrong["no `instrument`"] = {k: v for k, v in record.items() if k != "instrument"}
+    wrong["no `node_reader`"] = {k: v for k, v in record.items() if k != "node_reader"}
     edge = {**record["transitions"][0], "resonance": [1, 4]}  # cos Omega below 1 / 3: cos k below -1
     wrong["above the axis band's top"] = {**record, "transitions": [edge]}
     for word, body in wrong.items():
@@ -285,7 +285,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )  # the drive's record of many quanta, no giving in this world
     assert BACK.verdict(GameBoard(load_world(photon)), 40)["verdict"] == "MATCH"
     world = json.loads(photon.read_text(encoding="utf-8"))  # a window open after the click
-    world["bodies"][0]["instrument"]["window"], runs = 10, []
+    world["bodies"][0]["node_reader"]["window"], runs = 10, []
     (split := tmp_path / "split.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(split)])
     for front in (True, False):  # the count-0 record's inflow erased by the front, or standing
@@ -296,7 +296,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         level = int(b.states[ph].lines[0].now[tuple(np.add(b_at, b.offset))])
         runs.append((took, [k.state for k in b.credit.bodies], b.credit.counts[ph], level))
     assert runs[0][:3] == runs[1][:3] and len(runs[0][0]) == 1  # one taking, the generators alike
-    assert runs[0][1][1] == world["bodies"][1]["instrument"]["seed"] and runs[0][2] == 0  # no draw
+    assert runs[0][1][1] == world["bodies"][1]["node_reader"]["seed"] and runs[0][2] == 0  # no draw
     assert runs[0][3] == 0 != runs[1][3]  # the count-0 wave erased, or standing
     writers = set()  # every function of the engine that assigns a record's lines
     for module in (ROOT / "src" / "event_universe").rglob("*.py"):
