@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import conversion, credit, front, giving, growth, meeting, node, share
+from event_universe import conversion, credit, front, giving, growth, meeting, node, reports, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -347,16 +347,16 @@ class GameBoard:
         return found
 
     def report(self, currents: Currents, forms: Bookings, begun: list[list[node.Record]]) -> None:
-        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the instruments presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
+        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers; the region's Nodes and its front read once per detector and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the instruments presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
         meeting.faces_reported(self)
-        own, union = self.declared_board(), credit.instrument_nodes(self)
+        own, union, wrap = self.declared_board(), credit.instrument_nodes(self), self.wrap
+        where = [(d, reports.region_of(d, self.body_nodes)) for d in self.detectors]
+        fronts = [(d, at, reports.front(at, wrap, union if d.declared else at, own)) for d, at in where]
         sums: dict[int, dict[str, list[list[int]]]] = {}
         for index, through in currents.items():
             family = self.families[index]
-            for detector in self.detectors:
-                nodes = self.body_nodes(detector.body) if detector.body is not None else detector.nodes
-                assert nodes is not None
-                came = entering(nodes, through, self.wrap, union if detector.declared else nodes, own)
+            for detector, nodes, facing in fronts:
+                came = entering(facing, through)
                 seen = int(came.sum(dtype=object))
                 if seen != 0 and self.observer is not None:
                     self.observer(click(self.tick, family.name, detector.name, seen))
