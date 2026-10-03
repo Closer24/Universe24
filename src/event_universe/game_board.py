@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import conversion, credit, front, giving, growth, meeting, node, share
+from event_universe import conversion, credit, front, giving, growth, meeting, node, reports, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -217,8 +217,8 @@ class GameBoard:
             for s in sources_of(self.families, self.order)
         }
 
-    def share_of(self, index: int, direction: int = 1) -> tuple[np.ndarray, np.ndarray]:
-        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
+    def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
+        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
         family, gamma = self.families[index], self.world.node_clock
         found: Any = 0
         frozen = np.zeros(self.shape, dtype=bool)
@@ -226,14 +226,14 @@ class GameBoard:
             content, factors = self.read(index, direction, record)
             lines = self.lines_of(index, record)
             found = found + share.family_share(
-                family, lines, self.wrap, gamma, content, factors, self.unit
+                family, lines, self.wrap, gamma, content, factors, self.unit, at
             )
             frozen |= np.broadcast_to(share.frozen(gamma, content), self.shape)
         return np.asarray(found), frozen
 
-    def quanta(self, index: int) -> tuple[np.ndarray, np.ndarray]:
-        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, with the mask of its frozen Nodes, where it is not read."""
-        found, frozen = self.share_of(index)
+    def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
+        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
+        found, frozen = self.share_of(index, 1, at)
         return share.quanta_of(
             found, count_wall(self.families[index], self.world.quantum_action), self.kind
         ), frozen
@@ -359,16 +359,16 @@ class GameBoard:
         return found
 
     def report(self, currents: Currents, forms: Bookings, begun: list[list[node.Record]]) -> None:
-        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the instruments presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
+        """The detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): per family of quanta and detector (a detector's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the instrument's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the instrument, `declared_board`; not the Ports between two regions of one instrument and not those toward a receding face's grown layers; the region's Nodes and its front read once per detector and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the instrument's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the instruments presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
         meeting.faces_reported(self)
-        own, union = self.declared_board(), credit.instrument_nodes(self)
+        own, union, wrap = self.declared_board(), credit.instrument_nodes(self), self.wrap
+        where = [(d, reports.region_of(d, self.body_nodes)) for d in self.detectors]
+        fronts = [(d, at, reports.front(at, wrap, union if d.declared else at, own)) for d, at in where]
         sums: dict[int, dict[str, list[list[int]]]] = {}
         for index, through in currents.items():
             family = self.families[index]
-            for detector in self.detectors:
-                nodes = self.body_nodes(detector.body) if detector.body is not None else detector.nodes
-                assert nodes is not None
-                came = entering(nodes, through, self.wrap, union if detector.declared else nodes, own)
+            for detector, nodes, facing in fronts:
+                came = entering(facing, through)
                 seen = int(came.sum(dtype=object))
                 if seen != 0 and self.observer is not None:
                     self.observer(click(self.tick, family.name, detector.name, seen))
@@ -384,14 +384,14 @@ class GameBoard:
                 self.families[index].parts > 1
             ):  # the meeting through the root is a record of several parts'
                 credit.joined(self, index, found)
-        self.fields_read(forms)
+        self.fields_read(forms, union)
 
-    def fields_read(self, forms: Bookings) -> None:
-        """A GameBoard reading, no measurement, labelled so (`reports.field`): per family and declared region, the family's density over the region this interval, one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
+    def fields_read(self, forms: Bookings, at: np.ndarray) -> None:
+        """A GameBoard reading, no measurement, labelled so (`reports.field`): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the instrument's Nodes), one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival, #1563 comment 5916154126)."""
         for index, (family, state) in enumerate(zip(self.families, self.states, strict=True)):
             frozen, well = np.zeros(self.shape, dtype=bool), None
             if family.quanta:
-                density, frozen = self.quanta(index)
+                density, frozen = self.quanta(index, at)
                 form: Any = sum(
                     forms[(index, record)] for record in quanta_records(self.families, index)
                 )

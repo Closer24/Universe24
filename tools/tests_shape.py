@@ -53,6 +53,17 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "dense record, the face's target the scaled level where the share at the Node exceeds the record's own quantum, "
         "the phase and the sense standing, the back-in-time gate across a dense taking",
     ),
+    "tests/test_the_meeting.py::test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record": (
+        40,
+        "the partial hole's second pass (the Boss's brief of 2026-10-03 at the mathematician's 244): the quadratic "
+        "factor on the Node's own form at the first face and the exact rest at the second, one quantum leaving the "
+        "record within Rule3's floors on the shipped Zeno world",
+    ),
+    "tests/test_the_draw.py::test_the_source_in_time_lays_the_form_it_radiates": (
+        30,
+        "the partial hole's second pass (the mathematician's 245 with the advisor's second): the source in time's "
+        "total (2 / 3) T sin k in the law's integers at [2, 3], [4, 5] and [9, 10], the root on the large number",
+    ),
     "tests/test_the_draw.py::test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay": (
         24,
         "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the unit of a "
@@ -69,6 +80,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         36,
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
         "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
+    ),
+    "tests/test_the_share.py::test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit": (
+        35,
+        "the step's speed's dedicated test (the owner's word of 2026-10-03, 15:12 Israel, let them do it): every "
+        "shortened read of the step, the share at the Nodes with a level, the write factor in the hardware's "
+        "integers inside the width and the Port's fill on the face layer, equals the full read bit for bit",
     ),
     "tests/test_the_features.py::test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair": (
         12,
