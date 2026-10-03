@@ -140,14 +140,7 @@ def bodies_of(
         lines = body["nodes"]
         if not isinstance(lines, list) or not lines:
             raise ValueError(f"{label}.nodes must list the body's Nodes with their counts")
-        parted = entry not in laid
-        if parted and len(lines) < 2:
-            raise ValueError(
-                f"{label} declares its own record over {len(lines)} Node: a reader is a connected region of two "
-                "Nodes or more, never one Node, since a quantum with a direction has no Node and a region of one "
-                "Node has no boundary (the uncertainty principle, the owner's word of 2026-10-03; ALGEBRA.md, The "
-                "NodeReader is one declaration kind for every experiment); declare its Nodes with the lay's weights"
-            )
+        parted = entry not in laid  # a reader with its own record: one Node or more
         nodes, counts = [], []
         for index, line in enumerate(lines):
             if parted:  # a reader's Node carries the lay's weight (1 where absent); its count is the record's, once
@@ -276,14 +269,16 @@ def regions_of_the_law(
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyRule, ...],
 ) -> None:
-    """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words of 2026-09-30 and of 2026-10-01, 03:20, the uncertainty principle upheld): a declared region is one connected region of Nodes, never one Node, and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a detector reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
+    """The size rule of a detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words of 2026-09-30 and of 2026-10-01, 03:20, the uncertainty principle upheld): a declared region, a reader with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a reader with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a detector reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
     for detector in detectors:
         if not detector.declared:
             continue
         if len(detector.positions) < 2:
             raise ValueError(
-                f"detector {detector.name!r} is one Node: a region of a travelling wave is two Nodes or more, "
-                "never one Node (no click names a position finer than half a wavelength)"
+                f"detector {detector.name!r} is one Node: a region of a travelling wave, a reader with Nodes alone, "
+                "reads the net current through its boundary Ports, and through one Node what enters leaves, so it "
+                "stands on two Nodes or more, never one Node; a reader with a record of its own may stand on one "
+                "Node (ALGEBRA.md, The NodeReader is one declaration kind for every experiment)"
             )
         if not connected(detector.positions, shape, periodic):
             raise ValueError(
