@@ -124,6 +124,86 @@ the resonant two-mode act has his line (a reference record at the declared pair,
 plane's size over the window, the Zeno world's k rescaled once by 4 / pi) and is a round of its own,
 not this one's, cited with the advisor's 5965700585 at the findings 4 and 5 above.
 
+## The dark grain, 2026-10-03 (branch dark-grain): the blind re-derived before the run
+
+The giving's clock (ALGEBRA.md, the giving's clock; the mathematician's 223 (a), #1572 comment
+5965727937, and 224 (2)(a), 5966081562; the advisor's 5965918924 (a) and his second 5966129376; two
+hands): the lifetime's hazard 1 / tau per interval, drawn per window while a window stands and per
+interval in the dark, at the now and not a booked waiting time (`meeting.dark`, `meeting.gave`). The
+giver stands in the dark until it gives, no light on the board before the giving, so its declared
+window of 48 draws nothing and the giving is drawn once per interval at 1 / 48 from the interval 1;
+the degenerate corner of the first blind, the window 48 equal to the lifetime 48 giving with certainty
+at 48, is gone. The blind, written before any run under the form (`design.json`, `dark_grain`;
+`expectation.json`, `giving`; 06:50 UTC):
+
+1. The giving within the lifetime: the chance 1 - (47 / 48)^48 = 0.636, so 63.6 +/- 4.8 of the 100
+   seeds give by the interval 48 (the band of two deviations 54 to 73); within the run of 96
+   intervals 1 - (47 / 48)^96 = 0.8675, 86.7 +/- 3.4 seeds; the waiting time geometric at the grain
+   1, the exponential exactly, with the mean 48 and the standard deviation sqrt(48 x 47) = 47.5; the
+   same intervals in both worlds, the giver's generator at the same state per seed.
+2. The lay: 48 lay lines from the giving's interval t, cut by the run's end for t above 49 (0.644 of
+   the seeds hold the whole span); the amplitudes as before, 21 on 30 intervals and 22 on 18 over a
+   whole span.
+3. The far Node's cosine on each seed's plateau [t + 28, t + 42], inside the run for t <= 53 (0.675
+   of the seeds): within 2 / A_far of 2 / 3, as on the plateau 76 to 90 of the giving at 48, since the
+   board holds no light before the giving and the wave is the same relative to t in every seed until
+   the taker's draw at 96.
+4. The light's count at the span's end 1 by the count's line where the whole span lies in the run
+   and no taking emptied the record.
+5. The takers: the resonant and the detuned record take alike, as before (the two-mode act reads no
+   resonance, a finding by name); their fractions fall below the first reading's 39 of 100 where the
+   light's train reaches the Node 12 late in the taker's window of 96; no number blind beyond that.
+6. The telegraph (`examples/events/shelved_ion/`): unchanged, by name: the ion's window is 1, so its
+   window's draw was already one draw per interval at the hazard, and its two drives stand at its
+   Node at every interval (two plane waves, never both levels 0), so it is never in the dark; 43 of
+   43, the bins 5, 9, 0 and the refusal at 434 expected bit for bit.
+
+### The reading under the dark grain (branch dark-grain, 2026-10-03, about 07:10 UTC)
+
+`PYTHONPATH=src python examples/events/resonance/read_world.py` over the design's 100 seeds, both
+worlds (the giver's generator at the same state per seed in both, so the givings are the same):
+
+1. The giving within the lifetime: 59 of 100 seeds against the blind's 63.6 +/- 4.8 (0.96 deviations
+   below, inside the band 54 to 73); within the run 83 of 100 against 86.7 +/- 3.4 (1.1 deviations);
+   the giving's intervals from 2 to 95, 49 distinct intervals, their mean 32.2 (the geometric's mean
+   given a giving in the run, 33.3). PASS; the degenerate corner is gone, no interval is drawn with
+   certainty.
+2. The lay: 83 seeds with lay lines on `pulse`'s first line at the Node 0 from the giving's interval,
+   60 holding the whole span of 48 against the blind's 64.4 +/- 4.8 (0.9 deviations), the rest cut by
+   the run's end; the amplitudes as before. PASS.
+3. The far Node's cosine on each seed's plateau [t + 28, t + 42]: read in 66 seeds (the blind's 67.5
+   with the plateau inside the run), 0.6682 against 0.6667 in every one of them, within the gate
+   2 / A_far = 0.051, the same number as on the plateau 76 to 90 of the first reading (the board holds
+   no light before the giving, so the wave is the same relative to the giving's interval). PASS, 66
+   of 66.
+4. The light's count at the span's end: read in the 8 seeds whose whole span lies in the run and whose
+   record no taking emptied, 1 by the count's line in every one. PASS, 8 of 8.
+5. The takers: 50 takings in 100 seeds in the resonant world and 50 in the detuned world, the same
+   seeds (`measured 1 e by pulse`), against the first reading's 39 and 39. The two-mode act still reads
+   no resonance, the finding by name of the first reading. The blind above said the fractions would
+   fall below 39 where the light's train reaches the Node 12 late; they rose to 50: a MISS of the
+   blind's direction, a FINDING by name of the blind and not of the lay: given a giving in the run, the
+   giving's mean interval is 32 and not 48, so the train reaches the Node 12 earlier than in the first
+   reading (at about the interval 59 and not 75 for the mean seed) and more of its 48 intervals turn
+   the taker's labels before its window closes at 96; the share rose with the turn. The blind's
+   direction was reasoned from the late givings alone and stands corrected by name, not adjusted.
+6. A reading beside the blind, by name: in 3 of 100 seeds of each world the giver, standing in g after
+   its giving, takes its own light back at its window's close (`measured 0 e by pulse` 3), the light
+   on the free row read at the giver's Node as an arriving record; the one-in-flight limit and a
+   record's reading of the light it gave are not built, as ENGINE.md names them.
+7. The telegraph (`examples/events/shelved_ion/`), the anticoincidence and the Zeno worlds, the two
+   slits, Bell and GHZ: re-run on this branch and byte-identical to the readings on own-quantum
+   (the telegraph's output and `tools/telegraph.py`'s reading: 43 of 43, the bins 5, 9, 0, REFUSED at
+   434; N = 278, S = [478, 169], M = [-4, 1]), as the blind's item 6 expected: no shipped record is
+   ever in the dark with a giving to draw, and the ion's window of 1 was already the hazard per
+   interval.
+
+The test `tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum`
+runs the first 25 seeds, asserts one draw per interval in the dark and none at the window's close at
+48 (the generator's state), the givings at distinct intervals and within the lifetime in 8 to 24 of 25,
+each seed's lay lines, cosine and count as above, and that with the light laid on the chain a window
+stands and the window's draw at 48 stands as it is.
+
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
 Rows 1, 4 and 5 are the detector's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
