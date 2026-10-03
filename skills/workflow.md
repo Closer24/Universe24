@@ -198,12 +198,18 @@ says so.
 
 ## The review before a merge
 
-The Boss reads every diff before the merge: the changed files against the brief,
-the dedicated test, the three verdicts where a rule changes, the sentences
-deleted from the documents, no number and no name in the engine, English and
-sentence case, and `main` merged in. A change to the law or to `core/` is read
-against the law's lines; everything else merges on green CI. A green check on an
-old base is no evidence about the merged tree: merge one pull request at a time.
+The Boss reads every diff of the engine's rounds and of `core/` before the merge,
+against the law's lines: the changed files against the brief, the dedicated test,
+the three verdicts where a rule changes, the sentences deleted from the documents,
+no number and no name in the engine, English and sentence case, and `main` merged
+in. A documents, tests or paper pull request carries the hands' final paragraphs,
+pasted by the documents worker or the writer from the closures' comments; the Boss
+checks each paste against its comment id, a diff of two texts, and does not read
+the whole fill; it merges by auto-merge on green CI, the branch rule enforcing an
+up-to-date base, the Boss arming it after the check (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposals 3 and 5). The engine's branches merge one
+at a time; documents, paper and engine branches on disjoint file sets merge
+independently (234, proposal 6). A green check on an old base is no evidence
+about the merged tree.
 
 ## The language
 
@@ -221,19 +227,35 @@ for them.
    words verbatim to the other; the Boss records them.
 2. The Boss records a decision at once as one line in docs/HIGHLIGHTS.md,
    replacing the line it changes, and in docs/ALGEBRA.md when the law or its
-   numbers change; a hypothesis under its own name.
-3. The advisor computes the blind number from the engine's own lines and states
-   the three verdicts; the Boss writes them in the brief.
+   numbers change; a hypothesis under its own name. HIGHLIGHTS.md is the only
+   record of the hands' answers; the Boss writes no relay comments (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposal 2).
+3. The Boss asks both hands at once, in one comment on one thread (#1572 for
+   derivations), and fires their triggers the moment the ask is posted; while any
+   ask is open each hand's cadence is 15 minutes, the second hand seconding the
+   first's text in the same thread, the 45-minute check-in the fallback only.
+   Every closure's comment ends with its final paragraph for docs/ALGEBRA.md in
+   the law's words and, where the paper is touched, the paper's sentence (234,
+   proposals 1 to 3). The advisor computes the blind number from the engine's own
+   lines and states the three verdicts; the Boss writes them in the brief.
 4. The Boss's worker builds on one short branch from `main`, with a dedicated
    test, no number in the engine, and reports the numbers and the sentences it
-   removed.
+   removed; the brief grants the tests' ratchet's room for the round, "this round
+   adds N test lines" (234, proposal 7). Workers run on parallel branches by
+   disjoint file set; the engine's branches one at a time (234, proposal 6).
 5. The gates: `python tools/check.py`, then CI on the pull request.
 6. The Boss opens the pull request; its body carries "HANDED BY Boss: ..." and
    the Boss's session link, the problem, the change, the validation and what was
-   deleted from the documents.
-7. The Boss merges on green CI with `main` merged in, one pull request at a time,
-   and deletes the branch. `main` is the one version that works; no one pushes to
-   it directly; there are no tags.
+   deleted from the documents. The fills are batched: one documents pull request
+   and one paper pull request per hour or per three closures, the law's and the
+   paper's two-hands passes in parallel in the same batch, the documents worker
+   and the writer pasting the hands' final paragraphs (234, proposals 3 and 4).
+7. The Boss, the only merger, merges the engine's rounds and `core/` on green CI
+   with `main` merged in, one at a time, after reading the diff against the law's
+   lines; a documents, tests or paper pull request merges by auto-merge on green
+   CI, the branch rule enforcing an up-to-date base, after the Boss's check of the
+   pastes against their comment ids (234, proposal 5); the branch is deleted.
+   `main` is the one version that works; no one pushes to it directly; there are
+   no tags.
 8. The Boss reports to the owner in Hebrew: the numbers, the list of removed or
    rewritten sentences, and what stands with him.
 
