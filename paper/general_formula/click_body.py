@@ -355,8 +355,8 @@ def wave(ax: Axes, x1: float, x2: float, y: float, color: str, n: int = 4, amp: 
 
 def the_node(ax: Axes) -> None:
     """(b) The one Node before the window closes and after the one write, and the file."""
-    ax.set_xlim(-0.3, 10.3)
-    ax.set_ylim(-4.35, 5.3)
+    ax.set_xlim(-0.3, 10.9)
+    ax.set_ylim(-4.65, 5.3)
     ax.set_aspect("equal")
     ax.axis("off")
     s = 2.3
@@ -396,7 +396,7 @@ def the_node(ax: Axes) -> None:
     ax.text(
         (xa + xb) / 2,
         y - 0.3,
-        "realised?\nat which Node?",
+        "by the labels'\nsquares: realised?\nat which Node?",
         ha="center",
         va="top",
         fontsize=7,
@@ -477,12 +477,22 @@ def the_node(ax: Axes) -> None:
         color=GREY,
         fontstyle="italic",
     )
+    ax.text(
+        8.0,
+        yt - 1.45,
+        "one quantum's share",
+        ha="left",
+        va="center",
+        fontsize=6,
+        color=GREY,
+        fontstyle="italic",
+    )
     # the click line to the file: the report, the only measurement
     ax.add_patch(
         FancyBboxPatch(
-            (0.0, -4.25),
+            (0.0, -4.55),
             8.9,
-            0.62,
+            0.95,
             boxstyle="round,pad=0,rounding_size=0.12",
             facecolor=PALE,
             edgecolor=INK,
@@ -492,21 +502,11 @@ def the_node(ax: Axes) -> None:
     )
     ax.text(
         0.25,
-        -3.94,
-        "the click line to the file:  region, interval, family, 1",
+        -4.075,
+        "the click line to the file, the only measurement:\nregion, the detector's clock and window, family, count",
         ha="left",
         va="center",
         fontsize=7,
-        zorder=4,
-    )
-    ax.text(
-        8.65,
-        -3.94,
-        "the only\nmeasurement",
-        ha="right",
-        va="center",
-        fontsize=6.5,
-        color=GREY,
         zorder=4,
     )
     number(ax, xa - s / 2 - 0.5, y + s / 2 + 0.72, 3)
@@ -515,7 +515,7 @@ def the_node(ax: Axes) -> None:
 
 
 def click_body(output: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.65), gridspec_kw={"width_ratios": (11.2, 10.6)})
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.75), gridspec_kw={"width_ratios": (11.2, 11.2)})
     spacetime(axes[0])
     the_node(axes[1])
     fig.subplots_adjust(left=0.005, right=0.995, top=0.995, bottom=0.005, wspace=0.03)
