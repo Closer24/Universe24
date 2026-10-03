@@ -1,4 +1,4 @@
-"""The neutron conversion's reader (the two hands' blind, #1572 comments 5963954612 (c), 5964082980 (c), 5964484844 and 5964520368): the world is loaded as the runner loads it and stepped by the engine's own step with an observer, once per seed of the design's trials (the record's generator at the trials tool's state, the seed times the records declared instruments plus the record's number), and the blind's rows are read from the GameBoard, the lines and the books, every number a GameBoard reading labelled so unless it is a detector's line: over the first seed's run and the first converting seed's, at the start and at the conversion's interval, every family's lines at the Node (the levels now and before and Rule3's remainders), each record's rotation read from its levels (cos omega = before / now on a real line, (re re_b + im im_b) / (re^2 + im^2) on a plane), the Wronskian per family at the Node and summed, the instrument's counts and the credit's counts, the share per family at the Node and over the board in the current's units and in quanta beside the count, the energies T sin omega in and out, the back-in-time gate before the conversion, after it and across it; over every seed the conversion's interval and the realised conversions against the design's expectation. The tool holds no number of the law and compares nothing.
+"""The neutron conversion's reader (the two hands' blind, #1572 comments 5963954612 (c), 5964082980 (c), 5964484844 and 5964520368): the world is loaded as the runner loads it and stepped by the engine's own step with an observer, once per seed of the design's trials (the record's generator at the trials tool's state, the seed times the records declared instruments plus the record's number), and the blind's rows are read from the GameBoard, the lines and the books, every number a GameBoard reading labelled so unless it is a detector's line: over the first seed's run and the first converting seed's, at the start and at the conversion's interval, every family's lines at the Node (the levels now and before and Rule3's remainders), each record's rotation read from its levels (cos omega = before / now on a real line, (re re_b + im im_b) / (re^2 + im^2) on a plane), the Wronskian per family at the Node and summed, the holders of the sign's rows at the Node with the Nodes each row's level stands on (per interval over the run, the sign row written at the conversion), the instrument's counts and the credit's counts, the share per family at the Node and over the board in the current's units and in quanta beside the count, the energies T sin omega in and out, the back-in-time gate before the conversion, after it and across it; over every seed the conversion's interval and the realised conversions against the design's expectation. The tool holds no number of the law and compares nothing.
 
 PYTHONPATH=src python examples/events/neutron_conversion/read_world.py --expectation examples/events/neutron_conversion/expectation.json examples/events/neutron_conversion/neutron_conversion.json
 """
@@ -81,14 +81,28 @@ def at_node(board: GameBoard, index: int, here: tuple[int, int, int]) -> dict[st
     }
 
 
+def sign_rows(board: GameBoard, here: tuple[int, int, int]) -> dict[str, Any]:
+    """The holders of the sign at the Node, a GameBoard reading: per holder its rows' levels now at the Node (the free row 0, then one row per charged record in the file's order, the proton's and the electron's) and per row the Nodes carrying a level other than 0 (the row written, and the massless row carrying it away)."""
+    return {
+        board.families[i].name: {
+            "at_the_node": [int(line.now[here]) for line in rows],
+            "nodes_carrying_a_level": [int((line.now != 0).sum()) for line in rows],
+        }
+        for i in board.held
+        if board.families[i].wronskian
+        for rows in [board.states[i].lines[: board.families[i].records]]
+    }
+
+
 def readings(board: GameBoard, here: tuple[int, int, int], quanta: list[int]) -> dict[str, Any]:
-    """Every family of quanta's reading at the Node, the instrument's counts, the rotations' sum, the sines and the energies T sin omega."""
+    """Every family of quanta's reading at the Node, the holders of the sign's rows there (`sign_rows`), the instrument's counts, the rotations' sum, the sines and the energies T sin omega."""
     found = {board.families[i].name: at_node(board, i, here) for i in quanta}
     action = board.world.quantum_action
     rotations = {name: r["rotation"] for name, r in found.items()}
     return {
         "interval": board.tick,
         "families": found,
+        "sign_rows": sign_rows(board, here),
         "instrument_counts": [list(b.counts) for b in board.credit.bodies],
         "rotations": rotations,
         "energies_T_sin_omega": {
@@ -106,12 +120,16 @@ def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
     quanta = list(board.order)
     start = readings(board, node_at, quanta)
     conversion: dict[str, Any] | None = None
+    rows_by_interval: list[list[Any]] = []  # the sign holders' rows at the Node per interval
     for _ in range(intervals):
         board.step()
         lines: list[dict[str, Any]] = board.read_lines  # type: ignore[attr-defined]
         if conversion is None and any(line["event"] == "conversion" for line in lines):
             conversion = readings(board, node_at, quanta)
             conversion["line"] = next(line for line in lines if line["event"] == "conversion")
+        rows_by_interval.append(
+            [board.tick, {n: r["at_the_node"] for n, r in sign_rows(board, node_at).items()}]
+        )
         if board.ended is not None:
             break
     lines = board.read_lines  # type: ignore[attr-defined]
@@ -136,6 +154,7 @@ def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
         "start": start,
         "conversion": conversion,
         "end": readings(board, node_at, quanta),
+        "sign_rows_at_the_node_by_interval": rows_by_interval,
         "rotations_sum": None
         if conversion is None
         else {
