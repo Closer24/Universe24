@@ -53,6 +53,17 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "dense record, the face's target the scaled level where the share at the Node exceeds the record's own quantum, "
         "the phase and the sense standing, the back-in-time gate across a dense taking",
     ),
+    "tests/test_the_meeting.py::test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record": (
+        40,
+        "the partial hole's second pass (the Boss's brief of 2026-10-03 at the mathematician's 244): the quadratic "
+        "factor on the Node's own form at the first face and the exact rest at the second, one quantum leaving the "
+        "record within Rule3's floors on the shipped Zeno world",
+    ),
+    "tests/test_the_draw.py::test_the_source_in_time_lays_the_form_it_radiates": (
+        30,
+        "the partial hole's second pass (the mathematician's 245 with the advisor's second): the source in time's "
+        "total (2 / 3) T sin k in the law's integers at [2, 3], [4, 5] and [9, 10], the root on the large number",
+    ),
     "tests/test_the_draw.py::test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay": (
         24,
         "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the unit of a "
@@ -86,6 +97,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
         "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
         "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
+    ),
+    "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
+        48,
+        "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
+        "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
+        "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
     ),
     "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
         70,

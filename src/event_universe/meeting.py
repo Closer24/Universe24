@@ -12,7 +12,7 @@ from event_universe import front, node
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
-from event_universe.features.click import Face, drawn, hole_factor, laid_pairs, standing
+from event_universe.features.click import Face, Hole, drawn, laid_pairs, standing
 from event_universe.giving import given_quantum, levels_of
 from event_universe.loader.derived import count_wall, row_of
 from event_universe.loader.instrument import Generator, Instrument, NodeInstrument
@@ -289,15 +289,16 @@ def leaving_phase(board: GameBoard, item: Item) -> Phase:
 
 
 def faced(board: GameBoard, item: Item) -> None:
-    """A spread record's quantum taken at the Nodes named, the face (features/click, `Face`; ALGEBRA.md, The click writes on the GameBoard (b) and (d), and the hole of a dense record): for every line of the record and every Node, one face at the next two intervals, the first Port preferred, so that Rule3 writes the level 0 and then the level before 0 with its own remainder where the record's share at the Node is at most its own quantum, and where it exceeds it (a dense record, the Zeno drive at 3.5 quanta per Node) the two levels scaled by the hole's factor from the share read at the Node and the record's unit in the books (`features/click.hole_factor`, the mathematician's 237 with the advisor's second, two hands), the second interval's face knowing the first scaled the level now; a Node whose share is not read (frozen) takes the hole to 0; the record's count in the credit's books down by the item's change; nothing assigned at any Node."""
+    """A spread record's quantum taken at the Nodes named, the face (features/click, `Face`; ALGEBRA.md, The click writes on the GameBoard (b) and (d), and the hole of a dense record): for every line of the record and every Node, one face at the next two intervals, the first Port preferred, so that Rule3 writes the level 0 and then the level before 0 with its own remainder where the record's booked share at the Node, O + C / 2, is at most its own quantum (237, 239, the mathematician's 266; the front erasing what spread beyond the Node), and otherwise (a dense record, the Zeno drive at 3.5 quanta per Node or the ion's drive at 55) each face writes its level by the booking identity, one `Hole` per line and Node shared by its two faces carrying the record's unit from the books in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (the share's weight, `share.over_pace`, p_i the Node's Link pace under the record's read), the first face removing one quantum or the most one write can and recording exactly what left, the second the rest the same way (`features/click.rest_of`; the mathematician's 265 and 266 correcting 244, with 237 and the advisor's second); the record's count in the credit's books down by the item's change; nothing assigned at any Node."""
     lines, ticks = range(board.families[item.family].record), (board.tick + 1, board.tick + 2)
-    shares, frozen = board.share_of(item.family)
-    unit, width = board.credit.units[item.family], board.world.width
-    for at in item.nodes:
+    unit, gamma, link = board.credit.units[item.family], board.world.node_clock, board.unit
+    content = board.read(item.family, 1, 0)[0]
+    for at, line in itertools.product(item.nodes, lines):
         node_at, here = (int(at[0]), int(at[1]), int(at[2])), tuple(np.add(at, board.offset))
-        dense = None if frozen[here] else hole_factor(int(shares[here]), unit, width)
-        for line, tick in itertools.product(lines, ticks):
-            found = Face(item.family, line, node_at, 0, tick, None, dense, tick == ticks[1])
+        pace = int(paces.link_pace_of(gamma, np.asarray(content)[here] if np.ndim(content) else content))
+        hole = Hole(unit * 2 * pace * pace * link * link)  # W_rec in the form's own units at the Node
+        for tick in ticks:
+            found = Face(item.family, line, node_at, 0, tick, None, hole, tick == ticks[1])
             board.credit.faces.setdefault(tick, []).append(found)
     board.credit.counts[item.family] += item.delta
 
