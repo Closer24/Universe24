@@ -14,14 +14,21 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-OUT_KEYS = ("family", "pair", "sense")  # the world's keys of a record out, the design's other words aside
+OUT_KEYS = (
+    "family",
+    "pair",
+    "sense",
+)  # the world's keys of a record out, the design's other words aside
 
 
 def world_of(design: dict[str, Any]) -> dict[str, Any]:
     """The one world: the open cube, the neutron of count 1 at the centre with its table, its rate and its draw, and the region beside it."""
     centre, table = [int(v) for v in design["centre"]], design["table"]
     outs = [{k: row[k] for k in OUT_KEYS if k in row} for row in table["to"]]
-    body = {"family": design["neutron"]["family"], "nodes": [{"node": centre, "count": int(design["neutron"]["count"])}]}
+    body = {
+        "family": design["neutron"]["family"],
+        "nodes": [{"node": centre, "count": int(design["neutron"]["count"])}],
+    }
     body["conversion"] = {"rate": int(table["rate"]), "to": outs}
     body["instrument"] = {k: int(v) for k, v in design["generator"].items()}
     return {
@@ -68,7 +75,9 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--design", type=Path, default=HERE / "design.json", help="the design file")
     parser.add_argument("--folder", type=Path, default=HERE, help="the folder of the world written")
-    parser.add_argument("--modes", action="store_true", help="the generator's mode file beside the world")
+    parser.add_argument(
+        "--modes", action="store_true", help="the generator's mode file beside the world"
+    )
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
     args.folder.mkdir(parents=True, exist_ok=True)

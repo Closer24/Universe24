@@ -59,7 +59,10 @@ def rotation_of(levels: list[list[int]], plane: bool) -> float | None:
 def at_node(board: GameBoard, index: int, here: tuple[int, int, int]) -> dict[str, Any]:
     """One family's reading at the Node: its lines' levels and remainders, its rotation, its Wronskian there, its share at the Node and over the board in the current's units and in quanta, the credit's count."""
     family, state = board.families[index], board.states[index]
-    levels = [[int(r.now[here]), int(r.before[here]), int(r.remainder[here])] for r in state.lines[: family.lines]]
+    levels = [
+        [int(r.now[here]), int(r.before[here]), int(r.remainder[here])]
+        for r in state.lines[: family.lines]
+    ]
     share, _frozen = board.share_of(index)
     wall = count_wall(family, board.world.quantum_action)
     rotation = rotation_of(levels, family.plane)
@@ -67,7 +70,9 @@ def at_node(board: GameBoard, index: int, here: tuple[int, int, int]) -> dict[st
         "lines": levels,
         "rotation": rotation,
         "sine": None if rotation is None else math.sin(rotation),
-        "wronskian": int(np.asarray(node.wronskian(state.lines, family.plane))[here]) if family.plane else 0,
+        "wronskian": int(np.asarray(node.wronskian(state.lines, family.plane))[here])
+        if family.plane
+        else 0,
         "share_at_the_node": int(share[here]),
         "share_total": int(share.sum(dtype=object)),
         "quanta_at_the_node": int(share[here]) / wall,
@@ -190,7 +195,9 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("worlds", type=Path, nargs="+", help="the world files")
     parser.add_argument("--expectation", type=Path, required=True, help="the blind expectation file")
-    parser.add_argument("--design", type=Path, default=HERE / "design.json", help="the design, its trials")
+    parser.add_argument(
+        "--design", type=Path, default=HERE / "design.json", help="the design, its trials"
+    )
     parser.add_argument("--first-only", action="store_true", help="the first seed's run alone")
     args = parser.parse_args(argv)
     blind = json.loads(args.expectation.read_text(encoding="utf-8"))
@@ -204,7 +211,9 @@ def main(argv: list[str] | None = None) -> None:
             reading["trials"] = trials(path, seeds, intervals)
             when = reading["trials"]["conversion_intervals"]
             first = next((seed for seed in seeds if when[seed] is not None), None)
-            if first is not None and first != seeds[0]:  # the first seed whose run converts, read in full too
+            if (
+                first is not None and first != seeds[0]
+            ):  # the first seed whose run converts, read in full too
                 reading["first_converting_seed"] = first_trial(path, first, intervals)
         found["readings"][path.stem] = reading
     print(json.dumps(found, indent=1, default=str))
