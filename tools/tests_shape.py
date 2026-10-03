@@ -52,6 +52,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the generator's count as the books read it (mode-count, the mathematician's finding of 2026-10-03): the share "
         "summed over the board and read in quanta once, the shipped two slits and Zeno counts the books' own, the dilute wave",
     ),
+    "tests/test_the_node_reader.py::test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall": (
+        26,
+        "count-unit (the two hands' word on #1793's R8): the taker's lay at 2 A^2 sin omega = T per quantum, the "
+        "family's wall W_c sin omega_0 by one root, light's W_c, the [1, 1299] amplitude unchanged, a laid body's books",
+    ),
     "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
         79,
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "

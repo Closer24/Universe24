@@ -56,7 +56,7 @@ proposed (the owner's word of 2026-10-02, 19:28, cut what takes long: the pair's
 refusal by name before the word, and no cut of a board or of intervals was made in this folder);
 lines 2 and 3 are not read. Line 1, the range, is read on the single bodies of world (i), `examples/events/matter_alone/pixel.json`
 (the open 25-cube, the faces at 12 Links from the centre) and `cloud.json` (the 41-cube, 20
-Links), by `tools/body_rest.py` with `--reach 12` and `--reach 20`, every number a GameBoard
+Links; the cloud deleted at the owner's word of 2026-10-03 ("delete it now", #1572 comment 5973474075): it did not load under the family's quantum, and its re-lay is hours, its reading below the deleted world's), by `tools/body_rest.py` with `--reach 12` and `--reach 20`, every number a GameBoard
 reading:
 
 1. **The range.** The binding holder's level along +x from the pixel's centre at the start: 542,
