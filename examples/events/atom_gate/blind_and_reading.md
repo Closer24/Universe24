@@ -237,3 +237,67 @@ static line by up to 1 / (1 - rho) fine units in the board's lowest mode, rho = 
 the 31-cube, 207 fine units; at the one-Node nucleus the electron's well is the sign holder's rest
 about one Node, so the binding and the 1s : 2s ratio carry that shortfall until the scaled-residual
 correction lands (175 item 1, two hands), when the worlds are re-laid once.
+
+## The reading of the round (2026-10-03, on the engine before the rest's fix; main fb284717 merged)
+
+Every number a GameBoard reading labelled so (`read_atom.py`, the engine's own step over 1000
+intervals of `hydrogen_1s_toy.json`, the lay of `hydrogen_1s_toy.mode.json`); nothing adjusted.
+
+**The lay (the toy, `atom_toy.json`).** The nucleus as the one-Node record (the amplitude 4,255,
+its share 1 quantum at the Node by the gate's rounding, the Wronskian -T / 2 to 10^-5); the electron
+as the turned top mode in three passes of the fixed-point lay to the stop 2 (the trajectory
+[[1, 14, null, 0], [2, 0, 5, 0], [3, 0, 0, 0]]), the clock [55762, 41693] = 1.3374 above the
+band's top 4 / 3 by 4.1 x 10^-3 (the law's line in reals with the engine's rest 1.3382, within
+8 x 10^-4), the amplitude 342 over 25,655 Nodes, the standing check against the lay's own clock
+within 2.65 roundings at every Node, the count 1 standing at the declared Node (no Node carries a
+whole quantum); the loader admits the world and the gate its two declarations; the back-in-time
+gate MATCH over 40. The lay repeated bit for bit after the merge of main fb284717 (the seed by
+name, `one_node`). The large world (`hydrogen_1s_large.json`, the width 128): its lay attempt is
+the engine's cost at Gamma 7.3 x 10^5 (the Link's zero searched for above 25 minutes, the sign
+row's rest 8,132 Jacobi iterations in Python's integers, 10 minutes per rest); the attempt was
+started at 23:05 UTC, lost to the container's restart at 00:00 UTC and restarted at 00:05 UTC;
+its verdict stands below where it ended before this report, else by name as not finished.
+
+**Row 1, the bindings: not read, a finding by name.** The electron's rotation in the windowed
+summed form over windows of 6 intervals (the period of the accumulated rotation) over both lines
+and every Node: 1.3513, 1.3459, 1.3334, 1.3288, 1.3250 in the first five windows (the lay's
+clock 1.3374; the per-interval ratio's least 0.261 and largest 1.3616), then 1.23 at the interval
+60, 1.10 at 180, 1.007 at 240, 0.95 at 360, 0.87 at 660 and 0.72 to 0.74 in the last windows;
+the accumulated 2 cos omega_read over the run 49087640086 / 54126402721 = 0.9069, omega_read =
+1.1002 against omega_0 = 0.8411, 0.259 rad above the free rest and inside the band: no standing
+1s rotation stands over the window, so the binding 3.28 x 10^-3 rad of the blind is not read.
+Beside it the records' shares grow: the electron's over the board from 1.000 quanta at the first
+interval to 1.075 at 10, 1.37 at 50, 1.41 at 100, 1.59 at 200, 3.01 at 500 and 3.92 at 1000; the
+books at the end electron 4 quanta (the drift +1.42 x 10^12 in the current's units), nucleus 4,
+the charge (light, the rows' sum) 1, the least pace 5,833 (the content holders deepened to about
+84 levels at a Node from 1 at the lay). The cause the run shows by name: the nucleus's one-Node
+record spreads from the first interval (row 2), its share at the Node 1.34 quanta at the interval
+1 and 8 x 10^-4 at 10, so the sign row's well, the electron's binding, is gone within ten
+intervals and the electron's record stands in no stationary angle; the growth of every record's
+share under the time-varying turn (the form D is not conserved under a changing angle, ALGEBRA.md,
+A body and its light keep one energy; the engine's share read of a turned plane is the plain
+form on the stored levels) is a finding for the engine's register, by name: 2 quanta laid, 9
+read at the interval 1000 (4 + 4 + 1).
+
+**Row 2, the nucleus: as declared.** The one-Node record's share at its Node 1.34 quanta at the
+interval 1, 8 x 10^-4 at 10, 1.1 x 10^-3 at 20, 3 x 10^-4 at 100 and 1.4 x 10^-2 at 1000 (the
+spread record's return through the Node); its rotation at the Node no one number; the spread at
+the band's group velocity as the blind says.
+
+**Row 3, the 48 images: a finding by name.** The charge's rows depart at the lay (the interval 0)
+under every image that reflects an axis: the holder's odd lines start at 0 with their write
+remainders at the origin, wall div 2, on both sides of every mirror, where 166's theorem asks the
+complement on the image side (`records.complement`; the start lays the origin alone, the loader's
+`images` the engine's register item); the electron's lines depart at the interval 5 and gravity's,
+the binding holder's and the nucleus's at 7, the departure propagating from the odd lines and from
+the write's factor's ordered roundings (the standing world's finding at 516, here from the first
+intervals since the turned records carry the odd lines).
+
+**Row 4, the control: one world, 0 by construction**, as the folder's blind says.
+
+**What did not run, by name.** `hydrogen_1s_large.json`: the lay attempt at the width 128 (see
+above); no run. `hydrogen_2s_large.json`: declared, not laid (no deflation). The control world of
+163 (b) as a separate world: not declared (one world here). The 1s : 2s ratio: not read (no 2s).
+Every reading above is on the engine before the rest's fix (the caveat of 175 item 5: the sign
+row's rest short of its static line by up to 207 fine units on the 31-cube); the worlds are to be
+re-laid once when the scaled-residual correction lands.

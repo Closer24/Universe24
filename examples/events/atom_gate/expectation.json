@@ -315,7 +315,7 @@
       2
      ],
      "lay": {
-      "kind": "one_node",
+      "kind": "declaration",
       "declaration": "The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (examples/events/atom_gate/design.json, the nucleus; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs."
      }
     },
@@ -334,6 +334,7 @@
      ],
      "lay": {
       "kind": "fixed_point",
+      "seed": "one_node",
       "stop": 2,
       "trajectory": [
        [
