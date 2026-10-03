@@ -1,4 +1,4 @@
-"""The node_readers' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements, #the-click-is-the-meeting; the owner's words, no click names a Node, the node_reader a declared instrument): a node_reader is a region of Nodes declared in the file, a declared instrument that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the instrument's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to node_readers is the host's reading by the shares. For a record of several parts (the pair family) the instrument reports beside it the parts' signed level sums over its region each interval, the read the credit pairs through the root (the parts line). A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The credit line is the click proper (features/click; HIGHLIGHTS.md, the owner's decision): the instrument's draw written on the GameBoard at one Node, the credited quantum's share leaving the record there; its result the window, the node_reader's own proper time at the close and the index of its window, the family, the region, the port realised and the parts kept, the count moved and the record's count left, the count conserved and read by the credit, never a Node (the board's tick beside it a diagnostic). The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, the parts line and the credit line, one line kind for every click of every reader (the region's credit, a record's taking and giving alike, never a Node), labelled the node_reader's, the field line, the erasure line, the lay line and the face line, labelled a GameBoard reading, and the run's end."""
+"""The node_readers' reports and the bodies' Nodes (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements, #the-click-is-the-meeting; the owner's words, no click names a Node, the node_reader a declared NodeReader): a node_reader is a region of Nodes declared in the file, a declared NodeReader that reads the currents through its boundary; its click is its report of one interval, the net current into the region through the reader's front boundary Ports, in the current's units, with the region's name and the family and never a Node; the credit of quanta to node_readers is the host's reading by the shares. For a record of several parts (the pair family) the NodeReader reports beside it the parts' signed level sums over its region each interval, the read the credit pairs through the root (the parts line). A body's Nodes, where its family's share stands about its declared Nodes, are derived when a report needs them and never kept. The credit line is the click proper (features/click; HIGHLIGHTS.md, the owner's decision): the NodeReader's draw written on the GameBoard at one Node, the credited quantum's share leaving the record there; its result the window, the node_reader's own proper time at the close and the index of its window, the family, the region, the port realised and the parts kept, the count moved and the record's count left, the count conserved and read by the credit, never a Node (the board's tick beside it a diagnostic). The output's words live here and nowhere else in the engine (ENGINE.md, the output): the click line, the parts line and the credit line, one line kind for every click of every reader (the region's credit, a record's taking and giving alike, never a Node), labelled the node_reader's, the field line, the erasure line, the lay line and the face line, labelled a GameBoard reading, and the run's end."""
 
 from __future__ import annotations
 
@@ -79,7 +79,7 @@ BOOKS = ("share", "quanta", "drift", "pace", "frozen")  # the keys of a family's
 
 @dataclass(frozen=True)
 class NodeReader:
-    """A node_reader: its name, its Nodes (None: the Nodes of the body it names, derived each interval), that body's number, and whether it is a region of the declared instrument (the faces' layer and a body's node_reader are not: each reads its own boundary and takes no field line); it declares no quantum of its own, counting in the record's own unit (`credit.record_unit`)."""
+    """A node_reader: its name, its Nodes (None: the Nodes of the body it names, derived each interval), that body's number, and whether it is a region of the declared NodeReader (the faces' layer and a body's node_reader are not: each reads its own boundary and takes no field line); it declares no quantum of its own, counting in the record's own unit (`credit.record_unit`)."""
 
     name: str
     nodes: np.ndarray | None
@@ -88,7 +88,7 @@ class NodeReader:
 
 
 def click(tick: int, family: str, node_reader: str, inflow: int) -> dict[str, object]:
-    """The click line, the measurement: the node_reader's report of one interval, the net current into its region through the instrument's front boundary Ports in the current's units (undivided; N over W_c is the host's reading), with the region's name and the family and never a Node, labelled NODEREADER."""
+    """The click line, the measurement: the node_reader's report of one interval, the net current into its region through the reader's front boundary Ports in the current's units (undivided; N over W_c is the host's reading), with the region's name and the family and never a Node, labelled NODEREADER."""
     return dict(
         zip((*REPORT_KEYS, INFLOW), (CLICK, MEASUREMENT, tick, family, node_reader, inflow), strict=True)
     )
@@ -106,7 +106,7 @@ def density(
 
 
 def parts(tick: int, family: str, node_reader: str, levels: list[list[int]]) -> dict[str, object]:
-    """The parts line, the instrument's read of a record of several parts (ALGEBRA.md #the-click-is-the-meeting, the pair's form): per part the signed sums of its two levels over the region at the interval's start, [now, before], labelled NODEREADER with the region's name and never a Node; the credit pairs each part with the same part through the root and squares (the reader, `tools/bell_gate.py`), and nothing is handed over."""
+    """The parts line, the NodeReader's read of a record of several parts (ALGEBRA.md #the-click-is-the-meeting, the pair's form): per part the signed sums of its two levels over the region at the interval's start, [now, before], labelled NODEREADER with the region's name and never a Node; the credit pairs each part with the same part through the root and squares (the reader, `tools/bell_gate.py`), and nothing is handed over."""
     line = dict(zip(REPORT_KEYS, (PARTS, MEASUREMENT, tick, family, node_reader), strict=True))
     line[LEVELS] = levels
     return line
@@ -138,7 +138,7 @@ def credit(
 def conversion(
     tick: int, family: str, body: int, window: list[int], into: list[str], node: list[int]
 ) -> dict[str, object]:
-    """The conversion line, the click of a record converted whole at its one Node (the fifth list of the act, ALGEBRA.md, A family's declaration, item 5; the two hands on the table, the rate and the lay; src/event_universe/conversion.py), labelled NODEREADER: the interval, the record's family (the record in, its count down by one), the instrument by its number among the world's `bodies`, the window [first, last] drawn over and `into`, the families of the records out in the table's order, each up by one whole quantum laid at the Node by the count; beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the lay lines of the write beside it."""
+    """The conversion line, the click of a record converted whole at its one Node (the fifth list of the act, ALGEBRA.md, A family's declaration, item 5; the two hands on the table, the rate and the lay; src/event_universe/conversion.py), labelled NODEREADER: the interval, the record's family (the record in, its count down by one), the reader by its number among the world's `bodies`, the window [first, last] drawn over and `into`, the families of the records out in the table's order, each up by one whole quantum laid at the Node by the count; beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the lay lines of the write beside it."""
     line = dict(zip(REPORT_KEYS, (CONVERSION, MEASUREMENT, tick, family, f"{BODY} {body}"), strict=True))
     written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     line.update(zip(CONVERSION_KEYS, (window, into, written), strict=True))
@@ -213,11 +213,13 @@ def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.
 
 
 def front(
-    nodes: np.ndarray, wrap: Wrap, instrument: np.ndarray, declared: np.ndarray
+    nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray, declared: np.ndarray
 ) -> list[np.ndarray]:
-    """Per Port, the Nodes of the region at which that Port is a front boundary Port of the instrument: it leads in from a Node of the declared board outside the instrument (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
+    """Per Port, the Nodes of the region at which that Port is a front boundary Port of the declared NodeReaders: it leads in from a Node of the declared board outside them (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
     return [
-        nodes & ~arrival(instrument, axis, side, wrap, True) & arrival(declared, axis, side, wrap, False)
+        nodes
+        & ~arrival(reader_nodes, axis, side, wrap, True)
+        & arrival(declared, axis, side, wrap, False)
         for axis, side in PORT_SIDES
     ]
 
@@ -231,7 +233,7 @@ def region_of(node_reader: NodeReader, body_nodes: Callable[[int], np.ndarray]) 
 
 
 def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarray:
-    """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per node_reader and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the node_reader's report per boundary Node, the shares of the instrument's draw of the one Node it writes (features/click)."""
+    """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per node_reader and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the node_reader's report per boundary Node, the shares of the NodeReader's draw of the one Node it writes (features/click)."""
     seen: Any = 0
     for port in range(PORTS):
         seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
@@ -245,5 +247,5 @@ def inflow(
     reader_nodes: np.ndarray,
     declared: np.ndarray,
 ) -> int:
-    """A node_reader's report of one interval, its click (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the node_reader a declared instrument): the currents through the instrument's front boundary Ports at the region's Nodes (`entering`), inward positive, summed in integers with their signs, the density that entered the region from the declared board (the advisor's correction: the front Links only, net; the transverse Links inside the instrument and the Links toward a receding face's grown layers not counted); the host's reading for the credit by the shares. `reader_nodes` is the union of the declared regions (a body's node_reader and the faces' layer their own Nodes), so that what passes between the regions of one screen is not seen twice; nothing is handed over and no line names a Node."""
+    """A node_reader's report of one interval, its click (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the node_reader a declared NodeReader): the currents through the reader's front boundary Ports at the region's Nodes (`entering`), inward positive, summed in integers with their signs, the density that entered the region from the declared board (the advisor's correction: the front Links only, net; the transverse Links inside the declared NodeReader and the Links toward a receding face's grown layers not counted); the host's reading for the credit by the shares. `reader_nodes` is the union of the declared regions (a body's node_reader and the faces' layer their own Nodes), so that what passes between the regions of one screen is not seen twice; nothing is handed over and no line names a Node."""
     return int(entering(front(nodes, wrap, reader_nodes, declared), through).sum(dtype=object))

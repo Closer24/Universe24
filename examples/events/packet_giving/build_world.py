@@ -69,7 +69,7 @@ def numbers(design: dict[str, Any]) -> dict[str, Any]:
 
 
 def world(design: dict[str, Any]) -> dict[str, object]:
-    """The world of the design: the board long on x and `width` across, the giver at the centre with its packet's width, the region node_reader of the band's top across x at the reach on the +x side, the instrument's window the run."""
+    """The world of the design: the board long on x and `width` across, the giver at the centre with its packet's width, the region node_reader of the band's top across x at the reach on the +x side, the draw's window the run."""
     found, row, light = numbers(design), design["giver"], design["light"]
     ticks = int(row["window"]) + int(design["passage_intervals"])
     giver = {

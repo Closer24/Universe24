@@ -24,7 +24,7 @@ a reading that misses the blind is a finding, written as such and never adjusted
 
 ## The build the reading rests on (ENGINE.md section 3, act 6)
 
-The ion is a record declared an instrument at its one Node [6, 6, 4]: its three parts the lines of
+The ion is a record declared a NodeReader at its one Node [6, 6, 4]: its three parts the lines of
 its record, S laid at the count 1 as the standing record of the pair [1, 1299] (A = 128, the share
 reading 1), P and D at 0, its six Link factors 0 for its family so that it stays, rotating at its
 rest rotation; the drives arrive at that Node as the plane waves the generator laid; at the end of
@@ -175,7 +175,7 @@ dark fraction 0.333 against 0.667, the returns 422 the same. The counter still r
 beside the ion (the whole box but the ion's Node, the nearest within one Link), inside the floor's
 reach of about 0.28 A_source Links (221), so the source in time at the ion's Node is credited where a
 one-Node source in a large open board would not be; the credits per bin moved by the lay's form, a
-shipped reading changed by name, the blind untouched. The ion instrument test of
+shipped reading changed by name, the blind untouched. The ion reader test of
 `tests/test_the_meeting.py`, whose counter is one plane of a 6 x 6 x 4 periodic box three Links from
 the ion, reads no credit under the same lay (the inflow below half a quantum in its window), the floor
 in a small box, named there.

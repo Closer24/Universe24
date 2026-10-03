@@ -1,4 +1,4 @@
-"""The credit, the click written on the GameBoard (features/click; ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept): where the world declares the `draw` (its window in intervals, its seed, its generator's multiplier and increment, `loader/draw.py`) the instrument keeps the books of a window from the node_readers' reports, the inflow through each boundary Node's front Ports summed over the window per family and region and, for a family of several parts, the joint share J per combination of the sides' ports accumulated from the parts' sums (the same numbers the click and parts lines carry), and at the window's end draws with its declared generator and writes its click at one Node, the loop's act from outside the Node as the lay and the receding face are, forward only; the record's count goes down by one per credited quantum, the run's accounting in the output, and at 0 the record is uncreditable, whatever its levels still show. The books are the instrument's and stand at no Node; the Node knows no click and no family of clicks; a world without the key keeps empty books and runs as before bit for bit."""
+"""The credit, the click written on the GameBoard (features/click; ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept): where the world declares the `draw` (its window in intervals, its seed, its generator's multiplier and increment, `loader/draw.py`) the credit keeps the books of a window from the node_readers' reports, the inflow through each boundary Node's front Ports summed over the window per family and region and, for a family of several parts, the joint share J per combination of the sides' ports accumulated from the parts' sums (the same numbers the click and parts lines carry), and at the window's end draws with its declared generator and writes its click at one Node, the loop's act from outside the Node as the lay and the receding face are, forward only; the record's count goes down by one per credited quantum, the run's accounting in the output, and at 0 the record is uncreditable, whatever its levels still show. The books are the credit's and stand at no Node; the Node knows no click and no family of clicks; a world without the key keeps empty books and runs as before bit for bit."""
 
 from __future__ import annotations
 
@@ -38,7 +38,7 @@ Clock = list[
 
 @dataclass
 class Books:
-    """The instrument's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared instruments with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the instrument presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked_regions`) and the count of the windows closed, the node_readers' event clock."""
+    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeReaders with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked_regions`) and the count of the windows closed, the node_readers' event clock."""
 
     declaration: Draw | None
     elapsed: int
@@ -129,7 +129,7 @@ def clocked_regions(board: GameBoard) -> None:
 
 
 def node_reader_nodes(board: GameBoard) -> np.ndarray:
-    """The instrument's Nodes: the union of the declared regions (every node_reader with its own positions, the faces' layer and the bodies' node_readers aside, `NodeReader.declared`), whose boundary is where the reports are read, so that what moves between two regions of one screen is not seen twice."""
+    """The declared NodeReaders' Nodes: the union of the declared regions (every node_reader with its own positions, the faces' layer and the bodies' node_readers aside, `NodeReader.declared`), whose boundary is where the reports are read, so that what moves between two regions of one screen is not seen twice."""
     found = np.zeros(board.shape, dtype=bool)
     for node_reader in board.node_readers:
         if node_reader.declared and node_reader.nodes is not None:
@@ -138,7 +138,7 @@ def node_reader_nodes(board: GameBoard) -> np.ndarray:
 
 
 def booked(board: GameBoard, index: int, name: str, came: np.ndarray) -> None:
-    """The book of a window's inflows: per family and declared region the inflow through each boundary Node's front Ports (`reports.entering`) summed over the window's intervals, the Node at the file's coordinates; the shares of the draw of the one Node the click is written at; nothing where the world declares no instrument."""
+    """The book of a window's inflows: per family and declared region the inflow through each boundary Node's front Ports (`reports.entering`) summed over the window's intervals, the Node at the file's coordinates; the shares of the draw of the one Node the click is written at; nothing where the world declares no draw."""
     if board.credit.declaration is None:
         return
     book = board.credit.intake.setdefault((index, name), {})
@@ -148,7 +148,7 @@ def booked(board: GameBoard, index: int, name: str, came: np.ndarray) -> None:
 
 
 def joined(board: GameBoard, index: int, sums: Sums) -> None:
-    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no instrument or no side."""
+    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no draw or no side."""
     books = board.credit
     if books.declaration is None or not books.sides:
         return
@@ -169,7 +169,7 @@ def joined(board: GameBoard, index: int, sums: Sums) -> None:
 
 
 def draw(board: GameBoard, weights: list[int]) -> int:
-    """One draw of the instrument by its declared generator (features/click, `drawn`): the index drawn among the weights, the generator's state kept in the books, the modulus the width's own, 2^width."""
+    """One draw of the NodeReader by its declared generator (features/click, `drawn`): the index drawn among the weights, the generator's state kept in the books, the modulus the width's own, 2^width."""
     books = board.credit
     assert books.declaration is not None
     found = books.declaration
@@ -180,7 +180,7 @@ def draw(board: GameBoard, weights: list[int]) -> int:
 
 
 def counted_windows(board: GameBoard) -> None:
-    """The window's count at the end of an interval: where the world declares the instrument, the node_readers' own clocks advanced (`clocked_regions`), one more interval elapsed, and at the window's length the instrument's draw and its click written (`credited`), the window counted among the closed and the count beginning again."""
+    """The window's count at the end of an interval: where the world declares the draw, the node_readers' own clocks advanced (`clocked_regions`), one more interval elapsed, and at the window's length the NodeReader's draw and its click written (`credited`), the window counted among the closed and the count beginning again."""
     books = board.credit
     if books.declaration is None:
         return
@@ -193,7 +193,7 @@ def counted_windows(board: GameBoard) -> None:
 
 
 def credited(board: GameBoard) -> None:
-    """The click written on the GameBoard at a window's end, per family of quanta from the window's books, then the books emptied, the region node_reader's list of the one act (`meeting.click_act`, the first of its five lists): for a record of several parts the one draw through the root over the combinations of the sides' ports by the joint shares J (as the reader draws its combination), then at each side's one arrival Node (`click_node`, the Node drawn by the window's inflows per Node, the port realised and the parts it reads with a coefficient other than 0 named as kept in the credit line) the record at -1 as one item over the Nodes drawn, one quantum; for a record of one part the regions' window inflows floored at 0 are the shares, N = (their sum + W_rec div 2) div W_rec whole quanta in the record's own unit (`quanta_through`, `record_unit`), at most the count left, each drawn to a region by the shares and to one Node of it, one item each; the window's items written by the act in one list, the record's count down by one per quantum and its erasing front begun from every Node written where the count reaches 0; a record whose count stands at 0 is uncreditable and nothing draws from it, whatever its levels still show (the empty wave, a diagnostic, until the front reaches it); the draw and the write are the instrument's and no act of Rule3."""
+    """The click written on the GameBoard at a window's end, per family of quanta from the window's books, then the books emptied, the region node_reader's list of the one act (`meeting.click_act`, the first of its five lists): for a record of several parts the one draw through the root over the combinations of the sides' ports by the joint shares J (as the reader draws its combination), then at each side's one arrival Node (`click_node`, the Node drawn by the window's inflows per Node, the port realised and the parts it reads with a coefficient other than 0 named as kept in the credit line) the record at -1 as one item over the Nodes drawn, one quantum; for a record of one part the regions' window inflows floored at 0 are the shares, N = (their sum + W_rec div 2) div W_rec whole quanta in the record's own unit (`quanta_through`, `record_unit`), at most the count left, each drawn to a region by the shares and to one Node of it, one item each; the window's items written by the act in one list, the record's count down by one per quantum and its erasing front begun from every Node written where the count reaches 0; a record whose count stands at 0 is uncreditable and nothing draws from it, whatever its levels still show (the empty wave, a diagnostic, until the front reaches it); the draw and the write are the NodeReaders' and no act of Rule3."""
     books = board.credit
     names = [node_reader.name for node_reader in board.node_readers if node_reader.declared]
     for index in board.order:

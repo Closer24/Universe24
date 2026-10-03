@@ -130,7 +130,7 @@ def booked(board: GameBoard, monkeypatch, *indexes: int) -> list[tuple[int, Frac
         begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
     stepped, counted = {}, credit.counted_windows
 
-    def kept(b: GameBoard) -> None:  # the lines after the hold, before the instruments' acts
+    def kept(b: GameBoard) -> None:  # the lines after the hold, before the NodeReaders' acts
         stepped.update({i: own_lines(b, i) for i in indexes}), counted(b)
 
     with monkeypatch.context() as swap:

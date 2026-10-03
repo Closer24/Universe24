@@ -48,7 +48,7 @@ def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world of the design: the board, the wall with the gaps the world opens, the channel's two walls across y where the world has the channel (inner faces at the channel's `walls` rows over the channel's `wall_columns`, from the wall's far side to the column before the screen), the packet, the node_readers, the receding face and the instrument."""
+    """One world of the design: the board, the wall with the gaps the world opens, the channel's two walls across y where the world has the channel (inner faces at the channel's `walls` rows over the channel's `wall_columns`, from the wall's far side to the column before the screen), the packet, the node_readers, the receding face and the draw."""
     kind = design["worlds"][name]
     gaps = [{"y": list(design["gaps"][k]), "z": [0, 0]} for k in kind["gaps"]]
     faces: list[dict[str, object]] = [{"axis": "x", "at": int(design["wall"]), "gaps": gaps}]

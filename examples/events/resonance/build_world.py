@@ -19,7 +19,7 @@ ROOT = HERE.parents[2]
 
 
 def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str, object]:
-    """One atom declared an instrument at its Node: the giver standing in e with its giving, or the taker standing in g; the transition g to e by the light at the resonance given."""
+    """One atom declared a NodeReader at its Node: the giver standing in e with its giving, or the taker standing in g; the transition g to e by the light at the resonance given."""
     row, light = design[which], design["light"]
     upper = which == "giver"
     parts = [

@@ -3,7 +3,7 @@
 The paper's S.59 (the mathematician's 146 and 148; the advisor's 5949173532 column A; the owner's
 words of 2026-10-02, 12:38, "Yes, both of them", and of 2026-10-03, 03:25, "Both Zeno and
 anticoincidence must be obtained"): one record of two parts (g, e) of the near-flat pair [1, 1299]
-declared an instrument at the centre Node of a periodic box of 8 x 8 x 4, its six Link factors 0 so
+declared a NodeReader at the centre Node of a periodic box of 8 x 8 x 4, its six Link factors 0 so
 that it stays; one drive, the holder of the sign `pulse`, a plane wave at k = pi / 2 and the amplitude 308, read into the record's
 phase at the weight 1 in both directions, so that the accumulated turn over the run of 48 intervals
 is a pi pulse in the labels (48 x (2 / pi) x 308 / 6000 = 1.568 against pi / 2 = 1.571); one world
@@ -85,7 +85,7 @@ act above. PASS against column A at every n and unchanged.
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
 P(e at T_pi) is the part the record stands in at the trial's end, read by `tools/meeting_trials.py`
-from the instrument's own books on the board object (`meeting.NodeBooks.part`, the NodeReader's own
+from the reader's own books on the board object (`meeting.NodeBooks.part`, the NodeReader's own
 content, not a written line; the same part is the last `jump` line's `realised`). The jumps per kind
 are the `jump` lines labelled by the NodeReader. The pulse's count of 413 in the books, the turn per
 window named beside the blind and the pi pulse's tuning are GameBoard matters. The lines carry the
@@ -191,7 +191,7 @@ and not the draw. The two windows separated: the first window alone flips 221 of
 the 221 in e flipped back to g, 0.385 against 0.5, 3.5 standard errors low. The asymmetry is the
 finding by name: after a taking, the return e to g is suppressed. The cause by one hand, the
 advisor's reading: the taking's write is the hole, the arriving record's levels at the Node to 0 by
-the face with its count down by one, and the Zeno drive at A = 392 holds at the instrument's Node
+the face with its count down by one, and the Zeno drive at A = 392 holds at the reader's Node
 the share 3 den A^2 sin^2 omega = 1.54 x 10^9 against one quantum's W_c sin omega = 4.40 x 10^8 at
 T = 32,768, 3.5 quanta's share per Node, so the hole of one taking removes three and a half quanta's
 worth of the drive at the Node, which Rule3 refills from the neighbours over the following intervals,
@@ -207,7 +207,7 @@ The diagnostic the advisor asked, run before any change, labelled GAMEBOARD (a r
 and no measurement): `zeno_2.json` at the seed 2 (the record's generator at the state 2, as the trials
 set it), whose record takes at the first window's close, the interval 24, g to e, and ends in e; beside
 it the same seed with the taking suppressed (`meeting.took` returning no taking, so the record writes
-its null window at 24 and ends in g, the drive untouched). The drive's level at the instrument's Node
+its null window at 24 and ends in g, the drive untouched). The drive's level at the reader's Node
 [4, 4, 2] (`meeting.arriving`, the pulse's time line) at the intervals 22 to 48, with the taking and
 with it suppressed: 22: 361, 361; 23: 337, 337; 24: 82, 82; 25: 0, -234; 26: 0, -400; 27: -384, -305;
 28: -147, -14; 29: 312, 279; 30: 433, 379; 31: 230, 219; 32: -74, -95; 33: -340, -353; 34: -368,
@@ -250,7 +250,7 @@ return e to g at n = 2: 130 of the 381 that flipped g to e flipped back (0.34 ag
 for bit (the two slits' and Bell's four and the GHZ's four output files byte-identical to main's at
 7033a6aa, their records below one quantum per Node at every click, so the hole to 0 stands there).
 A GameBoard diagnostic beside the run, labelled so (the seed 2 of n = 2, the drive's first line at
-the instrument's Node): at the click the twin's share at the Node reads 2.564 quanta; after the
+the reader's Node): at the click the twin's share at the Node reads 2.564 quanta; after the
 face's two intervals the levels are the twin's scaled by 0.781 (-183 and -313 against -234 and -400),
 their ratio the twin's within 0.001, and the share at the Node reads 0.975 of a quantum against the
 twin's 2.674, more than one quantum gone at the Node itself, since the booked form's cross term with

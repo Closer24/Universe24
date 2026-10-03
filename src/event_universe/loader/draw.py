@@ -32,7 +32,7 @@ class Generator:
 
 @dataclass(frozen=True)
 class Draw(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_reader's window closes and the instrument draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
+    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_reader's window closes and the NodeReader draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
 
     window: int
 
@@ -65,7 +65,7 @@ def draw_of(value: object, label: str) -> Draw:
 
 
 def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
-    """A side's two ports from its declared setting (p, q) and its parts' pattern [[alpha_k, beta_k], ...]: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, the - port the + port's with the setting turned a quarter (the pair's pattern [[1, 0], [0, 1]] gives (p, q) and (-q, p)); refused by name: a setting of other than two coefficients, no pattern, and two ports not orthogonal with equal norms, which is no instrument of two outcomes."""
+    """A side's two ports from its declared setting (p, q) and its parts' pattern [[alpha_k, beta_k], ...]: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, the - port the + port's with the setting turned a quarter (the pair's pattern [[1, 0], [0, 1]] gives (p, q) and (-q, p)); refused by name: a setting of other than two coefficients, no pattern, and two ports not orthogonal with equal norms, which is no setting of two outcomes."""
     if len(basis) != 2 or not pattern:
         raise ValueError(
             "a side declares its setting (p, q) as `basis` and one pair [alpha, beta] per part as "
@@ -78,7 +78,7 @@ def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
     if crossed or sum(u * u for u in plus) != sum(v * v for v in minus):
         raise ValueError(
             f"the pattern {list(pattern)} at the setting {basis} gives the ports {plus} and {minus}, "
-            "not orthogonal with equal norms: no instrument of two outcomes"
+            "not orthogonal with equal norms: no setting of two outcomes"
         )
     return plus, minus
 

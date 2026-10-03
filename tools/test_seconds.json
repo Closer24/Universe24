@@ -36,7 +36,6 @@
   "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": 0.0,
   "tests/test_the_meeting.py::test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row": 2.4,
   "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": 2.4,
-  "tests/test_the_meeting.py::test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays": 1.2,
   "tests/test_the_meeting.py::test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded": 0.2,
   "tests/test_the_meeting.py::test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks": 4.0,
   "tests/test_the_meeting.py::test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly": 10.8,
