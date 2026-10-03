@@ -69,3 +69,12 @@ pi / 2; lay by the law's line and report the share beside the count. The mathema
 family, the share then 1; A^2 = T / (2 sin Omega) is a packet's amplitude and at one Node reads the
 share 1 / sin Omega; only a packet (several Nodes along the emission's direction) carries a frequency;
 the frozen taker (R = 0) unchanged. The advisor's second on the correction is asked.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Row 6 is the detector's: no `credit` line and no `click` line of the proton, and the 46 `click` lines
+of the family `charge` into `around` (`read_world.py`, the lines kept beside the reading). Rows 1 to 5
+are GameBoard readings and their verdicts rest on them: the six lines' levels and remainders at the
+Node (row 1), the books' quanta (row 2), the Wronskian at the Node (row 3), the holders' levels at the
+Node and its neighbours (row 4) and the lines' support (row 5). The `click` lines carry the board's
+`tick` alone; this world declares no instrument and writes no window.

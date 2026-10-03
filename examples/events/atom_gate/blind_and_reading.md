@@ -316,3 +316,11 @@ was laid by main's generator on the engine before the two fixes and is not laid 
 name (the start's rest under it differs at the rounding, as every world's does); the large worlds
 and `hydrogen_1s.json` and `hydrogen_2s.json` stand declared without mode files, refused at load
 by name as before; the blind stands as written.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Every number of every reading in this file is a GameBoard reading (`read_atom.py`: the electron's
+rotation summed over its lines and Nodes, the records' shares over the board and at the nucleus's
+Node, the 48 images, the books; `tools/body_standing.py` read 4 on the standing world). The worlds
+declare no detector, so no number is a detector's line and no verdict rests on one; the blind's own
+fence says "GameBoard" on every row. The intervals are the board's.

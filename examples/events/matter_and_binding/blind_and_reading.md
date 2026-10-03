@@ -111,3 +111,10 @@ blind is a finding by name, never adjusted; a world refused by name is recorded 
   beside the world must be an object".
 - **The blind**: unread on this engine, by name; the second reading's lines stand as the last
   reading of this world.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Line 1, the range, is a GameBoard reading (the binding holder's level along the axes,
+`tools/body_rest.py`); lines 2 and 3 are not read, the pair not laid, and the `field` lines of the
+regions `first` and `second` that would read the beat are labelled a GameBoard reading by the engine.
+No number here is a detector's line and no verdict rests on one. The intervals are the board's.

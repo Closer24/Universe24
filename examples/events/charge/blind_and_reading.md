@@ -146,3 +146,11 @@ blind is a finding by name, never adjusted; a world refused by name is recorded 
   REFUSED at load by name, verbatim: "the mode file beside the world must be an object".
 - **The run and the reading**: not run again tonight; the blind's rows stand with the reading
   above, unread on this engine, by name.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Every number of every reading in this file is a GameBoard reading (`tools/body_rest.py`: the
+Wronskian at the centre, the held rows along the axes, the three levels at the centre, the share and
+the books). The worlds declare no detector but the open faces' layer, whose `click` lines are read
+only as the totals that left the board (-0.06 quanta of the charged family, +0.19 of light); no
+verdict rests on them. The intervals are the board's.
