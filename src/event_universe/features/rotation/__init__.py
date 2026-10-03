@@ -40,7 +40,7 @@ def turned(x: Any, y: Any, numerator: Any, wall: Any, direction: int = 1) -> tup
     return shear(x1, y0, -numerator, wall, -1), y0
 
 
-def guard(numerator: Any, wall: int, name: str, axis: int | None) -> None:
+def turn_guard(numerator: Any, wall: int, name: str, axis: int | None) -> None:
     """The turn's guard at load (the one place the loader bounds a turn, as it bounds a pace): the tangent half-angle at most 1 at every Node, |numerator| <= wall, a quarter turn per interval (the time angle, `axis` None) or per Link (the odd line of `axis`), within which a turned level stays inside the loader's room (`TURNED_REACH`); refused by name beyond it, naming the Node."""
     size = np.abs(np.asarray(numerator))
     high = int(size.max()) if size.ndim else int(size)

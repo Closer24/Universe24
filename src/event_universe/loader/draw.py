@@ -23,7 +23,7 @@ DRAW_KEYS = (
 
 @dataclass(frozen=True)
 class Generator:
-    """A draw's generator as the files declare it: the seed and the generator's multiplier and increment, x <- (multiplier x + increment) mod 2^width (features/click); a body with a probe among its transitions declares this alone under `instrument`, its window bounded by the probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03)."""
+    """A draw's generator as the files declare it: the seed and the generator's multiplier and increment, x <- (multiplier x + increment) mod 2^width (features/click); a body with a probe among its transitions declares this alone under `instrument`, its window bounded by the probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate; the two hands)."""
 
     seed: int
     multiplier: int
@@ -38,7 +38,7 @@ class Draw(Generator):
 
 
 def generator_of(value: object, label: str) -> Generator:
-    """A body's `instrument` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03, #1572 comments 5967783614 and 5967913000); every other key refused by name."""
+    """A body's `instrument` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands); every other key refused by name."""
     if isinstance(value, dict) and "window" in value:
         raise ValueError(
             f"{label} declares a window beside a probe, and the window of a body with a probe is bounded by the "

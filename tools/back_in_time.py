@@ -19,7 +19,7 @@ from event_universe.node import NodeState, Record
 from event_universe.world_files import load_world
 
 Snapshot = list[tuple[str, np.ndarray]]
-Lines = list[dict[str, object]]  # the output lines of a run, as the GameBoard's observer receives them
+Lines = list[dict[str, object]]  # the output lines of a run, as the GameBoard's output receives them
 
 
 def arrays_of(name: str, state: NodeState) -> Snapshot:
@@ -85,14 +85,14 @@ def crossed(board: GameBoard, lines: Lines) -> None:
 
 def verdict(board: GameBoard, intervals: int) -> dict[str, object]:
     """The gate on a loaded GameBoard: the first interval, then `intervals` forward with a snapshot after each (fewer where the run ends at a receding face's largest size, `ended`) and the output lines kept, then as many back, the faces presented from the `face` lines and each interval's lays undone from its `lay` lines (`faces_from`, `crossed`), each step back compared with the snapshot of its interval; MATCH, or MISS with the first interval, array and Node that differ."""
-    kept, lines = board.observer, []
+    kept, lines = board.output, []
 
     def observed(line: dict[str, object]) -> None:
         lines.append(line)
         if kept is not None:
             kept(line)
 
-    board.observer = observed
+    board.output = observed
     board.step()
     snapshots, run = {board.tick: snapshot(board)}, 0
     for _ in range(intervals):
@@ -110,7 +110,7 @@ def verdict(board: GameBoard, intervals: int) -> dict[str, object]:
         if found is not None:
             label, at = found
             return {"verdict": "MISS", "interval": board.tick, "array": label, "node": at}
-    board.observer = kept
+    board.output = kept
     return {"verdict": "MATCH", "intervals": run, "interval": board.tick, "ended": ended}
 
 

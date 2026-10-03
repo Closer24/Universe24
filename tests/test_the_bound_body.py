@@ -21,7 +21,7 @@ from event_universe.game_board import GameBoard
 from event_universe.loader.derived import (
     amplitude_bound,
     count_wall,
-    held_write,
+    held_write_of,
     row_sources,
     turns,
     weight_of,
@@ -160,7 +160,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert (flux[0] > 0).all() and not flux[1].any() and not flux[2].any()
     assert np.isin(node.sense_current_of(wave(k, band(k), -1, SIZE), RING)[0] + flux[0], (0, 1)).all()
     assert not any(part.any() for part in node.sense_current_of([plane[0], plane[0]], RING))
-    own, write = (CHARGED, 0), held_write(TURNING, CHARGE, T)  # the plane's one record owns the row 1
+    own, write = (CHARGED, 0), held_write_of(TURNING, CHARGE, T)  # the plane's one record owns the row 1
     sign = {own: node.wronskian(plane, True)}
     sources = node.write_sources(CHARGE, TURNING, sign, {own: flux}, write, {own: VACUUM}, GAMMA)
     assert np.array_equal(sources[4], TURNING[CHARGE].write * sign[own]) and not sources[6].any()
@@ -179,7 +179,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert (TURNING[CHARGE].lines, TURNING[CHARGE].record, TURNING[CHARGE].rotation) == (8, 1, True)
     assert turns(TURNING, CHARGED) and not turns(TURNING, MATTER)
     assert CHARGE not in [read.family for read in TURNING[MATTER].reads]
-    assert held_write(TURNING, NAMES.index("gravity"), T).walls[1] == 1000 * 3 * PAIR[1] * T
+    assert held_write_of(TURNING, NAMES.index("gravity"), T).walls[1] == 1000 * 3 * PAIR[1] * T
     rows["charge"]["held"]["act"] = "pace"
     assert ((paced := universe_of(universe)[1][CHARGE]).lines, paced.rotation) == (2, False)
     rows["charge"]["held"]["act"] = "sideways"

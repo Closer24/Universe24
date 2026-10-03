@@ -35,7 +35,7 @@ def shown(world, monkeypatch, at, blind):
             wall = count_wall(charge, self.world.quantum_action)
             for name in at.get(self.tick, []):
                 line = {"event": "click", "tick": self.tick, "family": "charge", "node_reader": name}
-                self.observer({**line, "inflow": wall})
+                self.output({**line, "inflow": wall})
 
     monkeypatch.setattr(RECORD, "GameBoard", Clicking), RECORD.main([str(world), "--ticks", "3"])
     world.with_suffix(".blind.json").write_text(json.dumps(blind), encoding="utf-8")

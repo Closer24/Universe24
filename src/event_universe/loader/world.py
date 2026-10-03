@@ -56,15 +56,15 @@ START_KEYS = ("mode",)
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`reader`, `loader/node_reader_declaration.py`: its parts the modes' labels with the count in one of them, and as an instrument its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`reader`, `loader/node_reader_declaration.py`: its parts the modes' labels with the count in one of them, and as an instrument its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     nodes: tuple[Node, ...]
     counts: tuple[int, ...]
     now: Levels
     before: Levels
-    im_now: Levels
-    im_before: Levels
+    second_now: Levels
+    second_before: Levels
     weights: tuple[int, ...] = ()
     reader: NodeReaderDeclaration | None = None
 
@@ -110,7 +110,7 @@ class World:
 
 
 def kind_of(width: int) -> type:
-    """The kind of the run's arrays from the declared width, the one place the engine's integers are chosen (the owner, 2026-10-01, 02:35, "choose 64 or 128 bits outside the engine, at the start"): the host's 64-bit integers where the width is at or under the host's signed bits, Python's integers (arrays of objects, exact at any width and slow) above it; the amplitude bound A is derived at the declared width either way (ENGINE.md, the loader)."""
+    """The kind of the run's arrays from the declared width, the one place the engine's integers are chosen (the owner, "choose 64 or 128 bits outside the engine, at the start"): the host's 64-bit integers where the width is at or under the host's signed bits, Python's integers (arrays of objects, exact at any width and slow) above it; the amplitude bound A is derived at the declared width either way (ENGINE.md, the loader)."""
     return np.int64 if width <= MAX_WORK_INT.bit_length() else object
 
 
@@ -179,7 +179,7 @@ def bodies_of(
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed = laid.index(entry)
-        now, before, im_now, im_before = levels_of(
+        now, before, second_now, second_before = levels_of(
             entry_of(entries, placed, label),
             f"the mode file's bodies[{placed}]",
             families[family],
@@ -191,7 +191,7 @@ def bodies_of(
             body.get("weights"), f"{label}.weights", families[family].laid, families[family].plane
         )
         found.append(
-            BodyRow(family, tuple(nodes), tuple(counts), now, before, im_now, im_before, weights)
+            BodyRow(family, tuple(nodes), tuple(counts), now, before, second_now, second_before, weights)
         )
     return tuple(found)
 
@@ -203,7 +203,7 @@ def node_readers_of(
     beyond: tuple[Node, ...],
     layer: tuple[Node, ...],
 ) -> tuple[NodeReaderRow, ...]:
-    """The node_readers: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the draw's through the root, `loader/draw.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line of 2026-10-03 with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
+    """The node_readers: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the draw's through the root, `loader/draw.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
     if not isinstance(value, list):
         raise ValueError("node_readers must be a list")
     found: list[NodeReaderRow] = []
@@ -273,7 +273,7 @@ def regions_of_the_law(
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyRule, ...],
 ) -> None:
-    """The size rule of a node_reader's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words of 2026-09-30 and of 2026-10-01, 03:20, the uncertainty principle upheld): a declared region, a reader with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a reader with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a node_reader reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
+    """The size rule of a node_reader's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words, the uncertainty principle upheld): a declared region, a reader with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a reader with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a node_reader reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
     for node_reader in node_readers:
         if not node_reader.declared:
             continue

@@ -119,7 +119,7 @@ def frame(board: GameBoard, kept: dict[int, list[node.Record]] | None) -> dict[s
             if family.plane:
                 row["second"] = lines[1].now
             if kept is not None:
-                began = [node.light_record(family, kept[index])] if family.wronskian else kept[index]
+                began = [node.rows_total(family, kept[index])] if family.wronskian else kept[index]
                 row["form"] = node.form(began, lines)
             row["pace"] = node.least_pace(
                 index, board.families, board.states, world.node_clock, board.wrap, world.link_unit

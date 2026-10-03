@@ -128,13 +128,13 @@ def booked(board: GameBoard, monkeypatch, *indexes: int) -> list[tuple[int, Frac
         reads = node.rule_of(board.families[index], gamma, *read, unit)[0]
         squares, net = np.broadcast_to(pace * pace, shape), int(sum(c.sum() for c in flow))
         begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
-    stepped, windowed = {}, credit.windowed
+    stepped, counted = {}, credit.counted_windows
 
     def kept(b: GameBoard) -> None:  # the lines after the hold, before the instruments' acts
-        stepped.update({i: own_lines(b, i) for i in indexes}), windowed(b)
+        stepped.update({i: own_lines(b, i) for i in indexes}), counted(b)
 
     with monkeypatch.context() as swap:
-        swap.setattr(credit, "windowed", kept), board.step()
+        swap.setattr(credit, "counted_windows", kept), board.step()
     found = []
     for index in indexes:
         read, records, net, terms, squares, reads = begun[index]

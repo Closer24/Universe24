@@ -17,9 +17,9 @@ from event_universe.features.hold import hold
 from event_universe.features.read import (
     axis_paces,
     content_of,
-    guard,
     link_factors,
     link_tensions,
+    paces_guard,
     plain,
 )
 from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns
@@ -39,14 +39,14 @@ from event_universe.records import form as form
 from event_universe.records import full as full
 from event_universe.records import largest as largest
 from event_universe.records import level_at as level_at
-from event_universe.records import light_record as light_record
 from event_universe.records import record_slice as record_slice
 from event_universe.records import row_levels as row_levels
+from event_universe.records import rows_total as rows_total
 from event_universe.records import turned_by as turned_by
 from event_universe.records import well as well
+from event_universe.records import write_factor as write_factor
 from event_universe.records import write_origins as write_origins
 from event_universe.records import write_sources as write_sources
-from event_universe.records import written as written
 from event_universe.records import wronskian as wronskian
 from event_universe.records import zeros as zeros
 
@@ -144,15 +144,15 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
     for record in range(families[index].records):
         if families[index].reads:
             content, factors = read(index, families, states, 1, wrap, gamma, unit, record)
-            guard(families[index].pair, gamma, unit, content, factors, families[index].name)
+            paces_guard(families[index].pair, gamma, unit, content, factors, families[index].name)
         angles, before = (turning(index, families, states, d, gamma, record) for d in (1, -1))
         if angles is not None and before is not None:  # a turned record turns at both of its levels
-            rotation.guard(angles[0], 2 * gamma, families[index].name, None)
-            rotation.guard(before[0], 2 * gamma, families[index].name, None)
+            rotation.turn_guard(angles[0], 2 * gamma, families[index].name, None)
+            rotation.turn_guard(before[0], 2 * gamma, families[index].name, None)
             for a in range(3):
                 for side in (1, -1):
                     link = angles[1][a] + arrival(angles[1][a], a, side, wrap)
-                    rotation.guard(link, rotation.link_wall(gamma), families[index].name, a)
+                    rotation.turn_guard(link, rotation.link_wall(gamma), families[index].name, a)
 
 
 def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:
@@ -295,7 +295,7 @@ def step_records(
 
 
 def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The sign's current of a two-part record at every Node on each axis, the mean of the Node's two a-Links' Wronskian currents, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, and the source its mean over the two Links, (J_a + 1) div 2 by the division act rounded as the read rounds the Link's tension (`features/read`, `link_tension`), as the tension on an axis is the mean of its two Links' stresses (ALGEBRA.md #the-primitives, The tension); odd under the sense within that rounding unit (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation over the time line's wall E_s T, the same wall as the time level's W (`loader.derived.held_write`; the mathematician's 122 D, #1572 comment 5946560198, and the advisor's #1563 comment 5946186214, two hands: over den T the odd levels were 1 / den of the law's), J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma, where J_a unhalved doubled the magnetic term (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word of 2026-10-01, 17:17, on the two hands, the mathematician's #1572 comment 5932451234 and the advisor's 5932831736 and 5933191332)."""
+    """The sign's current of a two-part record at every Node on each axis, the mean of the Node's two a-Links' Wronskian currents, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, and the source its mean over the two Links, (J_a + 1) div 2 by the division act rounded as the read rounds the Link's tension (`features/read`, `link_tension`), as the tension on an axis is the mean of its two Links' stresses (ALGEBRA.md #the-primitives, The tension); odd under the sense within that rounding unit (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation over the time line's wall E_s T, the same wall as the time level's W (`loader.derived.held_write_of`; the two hands: over den T the odd levels were 1 / den of the law's), J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma, where J_a unhalved doubled the magnetic term (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word on the two hands)."""
     found: list[Any] = [0, 0, 0]
     for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
         re_at, im_at = ports(re_line.now, wrap), ports(im_line.now, wrap)

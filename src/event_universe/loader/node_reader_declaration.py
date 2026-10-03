@@ -41,7 +41,7 @@ OUT_KEYS, OUT_REQUIRED = (
 
 @dataclass(frozen=True)
 class Transition:
-    """A transition of a record at a Node that is an instrument (ALGEBRA.md, The click writes on the GameBoard (j), the taking click): the part the record leaves, the part it enters, the family whose arriving quantum it takes, by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands of 2026-10-03, #1572 comments 5967783614 and 5967913000): it names the family whose lay at the body's Node closes the body's window, the body taking it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
+    """A transition of a record at a Node that is an instrument (ALGEBRA.md, The click writes on the GameBoard (j), the taking click): the part the record leaves, the part it enters, the family whose arriving quantum it takes, by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands): it names the family whose lay at the body's Node closes the body's window, the body taking it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
 
     leaves: int
     enters: int
@@ -51,7 +51,7 @@ class Transition:
 
 
 def pair_of(value: object, label: str) -> tuple[int, int]:
-    """A resonance as the file declares it, a pair [num, den] with cos Omega = num / den (the advisor's second, #1572 comment 5964191930, and the mathematician's 213 and 214, two hands): den from 1 and |num| below den, so that sin Omega is above 0; [0, den] the band's top, Omega = pi / 2; refused by name otherwise."""
+    """A resonance as the file declares it, a pair [num, den] with cos Omega = num / den (the advisor's second and the mathematician's hand, two hands): den from 1 and |num| below den, so that sin Omega is above 0; [0, den] the band's top, Omega = pi / 2; refused by name otherwise."""
     if not isinstance(value, list) or len(value) != 2:
         raise ValueError(f"{label} is a pair [num, den] with cos Omega = num / den, got {value!r}")
     den = integer(value[1], f"{label}[1]", 1)
@@ -74,7 +74,7 @@ class Rate:
 
 @dataclass(frozen=True)
 class Conversion:
-    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands, #1572 comments 5964520368 and 5964754600), and per record out the sense of its lay, +1 or -1 for a plane family as the table declares it and 0 for a record of real lines (the mathematician's 244 item 3, #1572 comment 5967913000: the sense is the table's per record out and no family's, the anti-body being the same plane family at the opposite sense)."""
+    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands), and per record out the sense of its lay, +1 or -1 for a plane family as the table declares it and 0 for a record of real lines (the mathematician's hand: the sense is the table's per record out and no family's, the anti-body being the same plane family at the opposite sense)."""
 
     rate: int
     outs: tuple[int, ...]
@@ -119,7 +119,7 @@ def parts_of(
 def transitions_of(
     value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int
 ) -> tuple[Transition, ...]:
-    """A record's `transitions`: each `from` and `to`, two of its parts' names, `drive`, a family of quanta other than the record's own whose arriving quantum it takes, and `weight` from 1, the coupling the arriving level is read with, at its `resonance`; a transition of a part into itself is the probe's and declares its three keys alone, no `weight` and no `resonance` (it turns nothing; the two hands of 2026-10-03); refused by name otherwise."""
+    """A record's `transitions`: each `from` and `to`, two of its parts' names, `drive`, a family of quanta other than the record's own whose arriving quantum it takes, and `weight` from 1, the coupling the arriving level is read with, at its `resonance`; a transition of a part into itself is the probe's and declares its three keys alone, no `weight` and no `resonance` (it turns nothing; the two hands); refused by name otherwise."""
     if not isinstance(value, list):
         raise ValueError(f"{label} must be a list of the body's transitions")
     found = []
@@ -174,7 +174,7 @@ def rates_of(
                 "between them declares the resonance the light is born at"
             )
         num, den = between[0].resonance
-        if below_the_band(num, den):  # the guide's cos k below -1 (the mathematician's 221)
+        if below_the_band(num, den):  # the guide's cos k below -1 (the mathematician's hand)
             raise ValueError(
                 f"{label}[{index}] gives at the resonance [{num}, {den}], above the axis band's top (cos Omega "
                 "below 1 / 3): no axis carries the quantum, and the diagonals' lay is not built"
@@ -191,7 +191,7 @@ def packet_form(
     shape: tuple[int, int, int],
     action: int,
 ) -> NodeReaderDeclaration:
-    """The loader's decision on each giving's lay by the board's shape against the width, no flag (the mathematician's 224 (1) and 229 with the advisor's seconds, two hands; the owner's word of 2026-10-03, 09:46 Israel): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`giving.given_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`giving.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
+    """The loader's decision on each giving's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`giving.given_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`giving.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
     guide = sum(1 for extent in shape if extent > 1) <= 1
     rates = []
     for index, rate in enumerate(found.rates):
@@ -270,7 +270,7 @@ def sense_of(value: object, label: str, plane: bool) -> int:
 def conversion_of(
     value: object, label: str, families: tuple[FamilyRule, ...], own: int, quanta: dict[str, int]
 ) -> tuple[Conversion, int]:
-    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count: a family's name for a record of real lines, and for a plane family an entry {`family`, `sense`}, the sense +1 or -1 of its lay, `giving.laid_by_count`; a plane family named without its sense and a record of real lines with one are refused by name, `sense_of`; the mathematician's 244 item 3, #1572 comment 5967913000), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
+    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands, the advisor's (c) and the mathematician's hand: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count: a family's name for a record of real lines, and for a plane family an entry {`family`, `sense`}, the sense +1 or -1 of its lay, `giving.laid_by_count`; a plane family named without its sense and a record of real lines with one are refused by name, `sense_of`; the mathematician's hand), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
     found = keyed(value, label, CONVERSION_KEYS, CONVERSION_REQUIRED)
     rate = integer(found["rate"], f"{label}.rate", 1)
     if not isinstance(found["to"], list) or not found["to"]:
@@ -286,7 +286,7 @@ def conversion_of(
             raise ValueError(
                 f"{where} names {families[out].name!r}, a plane family, without its sense: a record out of a plane "
                 "family is an entry {family, sense}, the sense +1 or -1 of its lay (ALGEBRA.md #the-paces, The sign "
-                "is the rotation sense; the mathematician's 244 item 3)"
+                "is the rotation sense)"
             )
         senses.append(sense_of(named.get("sense"), f"{where}.sense", families[out].plane))
     own_sense = sense_of(found.get("sense"), f"{label}.sense", families[own].plane)
@@ -301,7 +301,7 @@ def node_reader_of(
     quanta: dict[str, int],
     count: int,
 ) -> NodeReaderDeclaration:
-    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `instrument` to draw it; refused by name otherwise."""
+    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `instrument` to draw it; refused by name otherwise."""
     family = families[own]
     if "conversion" in body:
         if "parts" in body or "transitions" in body or "rates" in body:

@@ -8,7 +8,7 @@ from event_universe import credit, node, share
 from event_universe.core import paces, ports
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule3
-from event_universe.features.read import edge_squared, guard
+from event_universe.features.read import edge_squared, paces_guard
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
@@ -55,7 +55,9 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
         assert [int(b.now[HERE]) for b in back] == [1, 3] and not any(b.remainder.any() for b in back)
     rule = coefficients(1, 1, GAMMA, GAMMA, GAMMA)
     assert Fraction(rule[1] - 6 * rule[0][0], rule[2]) == -2 and edge_squared((1, 1), GAMMA) == GAMMA**2
-    guard((1, 1), GAMMA, 1, 0, (1,) * 6, "light")  # the edge admitted: the clock and the paces at Gamma
+    paces_guard(
+        (1, 1), GAMMA, 1, 0, (1,) * 6, "light"
+    )  # the edge admitted: the clock and the paces at Gamma
     record = node.Record(parity := (-1) ** np.indices((2, 2, 2)).sum(0), 0 * parity, 0 * parity)
     for t in range(1, 7):
         record = node.step(record, rule, RING)

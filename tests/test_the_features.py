@@ -13,10 +13,16 @@ from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.features.hold import hold
-from event_universe.features.read import content_of, edge_squared, guard, link_tension, stability_bound
+from event_universe.features.read import (
+    content_of,
+    edge_squared,
+    link_tension,
+    paces_guard,
+    stability_bound,
+)
 from event_universe.features.start import arrivals, read_content, rest, scaled_source
 from event_universe.features.write import carried
-from event_universe.loader.derived import held_write, readers_of, weight_of
+from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
 from tests.laws import CHARGED, ROOT, UNIVERSE, refused
 
@@ -36,7 +42,7 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
 
     plain = (np.full(SHAPE, 256),) * 6  # the six Links' factors with no tension, G^2 at G = 16
     assert int(hill(74)[1, 1, 1]) == -74 and int(hill(150)[1, 1, 1]) == -150  # the read carries no guard
-    guard((800, 850), GAMMA, 16, hill(74), plain, "matter")
+    paces_guard((800, 850), GAMMA, 16, hill(74), plain, "matter")
     axis, hollow, deep = plain[0].copy(), flat.copy(), flat.copy()
     axis[2, 0, 1], hollow[0, 1, 0] = 264, -1  # 264: the tension -153, a hill
     deep[1, 1, 1], zero = paces.frozen_content(4), paces.frozen_content(4)  # the Link's zero at Gamma 4
@@ -49,15 +55,15 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
         (r"squared is 100020001 at the Node \(0, 1, 0\) at load, above", (1, 1), hollow, plain, light),
         (r"factor of 'light' \(the Port 1\) is 0 at the Node \(0, 0, 0\)", (1, 1), flat, closed, light),
     ):
-        refused(match, guard, pair, GAMMA, 16, content, factors, name)
+        refused(match, paces_guard, pair, GAMMA, 16, content, factors, name)
     at_zero = rf"is {zero} at the Node \(1, 1, 1\) at load, at or beyond {zero}"  # the Link's zero
-    refused(at_zero, guard, (1, 1), 4, 16, deep, plain, light)
+    refused(at_zero, paces_guard, (1, 1), 4, 16, deep, plain, light)
     deep[1, 1, 1] -= 1
-    guard((1, 1), 4, 16, deep, plain, "light")  # one below the Link's zero passes
+    paces_guard((1, 1), 4, 16, deep, plain, "light")  # one below the Link's zero passes
     assert (stability_bound((-1, 2), 4), edge_squared((-1, 2), 4)) == ((3, 64), 21)  # [-1, 2] at Gamma 4
     witness = r"the clock\) squared is 25 at the Node \(0, 0, 0\) at load, above the stability edge's square 21"
-    refused(witness, guard, (-1, 2), 4, 1, flat - 1, (1,) * 6, "quarks")  # the content -1, a hill
-    guard((-1, 2), 4, 1, flat, (1,) * 6, "quarks")  # the pair's vacuum, 2 cos omega = -1 at k = 0
+    refused(witness, paces_guard, (-1, 2), 4, 1, flat - 1, (1,) * 6, "quarks")  # the content -1, a hill
+    paces_guard((-1, 2), 4, 1, flat, (1,) * 6, "quarks")  # the pair's vacuum, 2 cos omega = -1 at k = 0
     shape, a = (2, 1, 1), np.array([[[5]], [[7]]], dtype=np.int64)
     b, c = np.array([[[1]], [[-2]]], dtype=np.int64), np.array([[[3]], [[0]]], dtype=np.int64)
     assert content_of([(2, a), (-3, b), (4, c)]).tolist() == [[[10 - 3 + 12]], [[14 + 6]]]
@@ -148,7 +154,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     assert reads == [[(0, 1)], [], [(0, 2)], [(1, 1)]] and readers_of(families, hollow) == [stuff]
     assert readers_of(families, core) == [other] and weight_of(hollow, families[stuff]) == 2
     draw, wrap, action = np.random.default_rng(7), Wrap(True, True, True), integers["quantum_action"]
-    writes = {i: held_write(families, i, action) for i in (hollow, core)}
+    writes = {i: held_write_of(families, i, action) for i in (hollow, core)}
     walls = [writes[i].walls if f.held else () for i, f in enumerate(families)]
     states = [node.empty_state(f, SHAPE, w, np.int64) for f, w in zip(families, walls, strict=True)]
     for state in states:
@@ -169,7 +175,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
     for held, reader, weights in ((hollow, stuff, 3 * 2), (core, other, -1 * 1)):
         numerators = node.write_sources(held, families, forms, {}, writes[held], rulers, GAMMA)
-        by_hand = weights * node.written(forms[reader, 0], rulers[reader, 0], GAMMA, 2)
+        by_hand = weights * node.write_factor(forms[reader, 0], rulers[reader, 0], GAMMA, 2)
         assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand) and (by_hand < 0).any()
         before, wall = states[held].lines[0], writes[held].walls[0]
         remainder = [draw.integers(0, wall, SHAPE)]
