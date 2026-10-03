@@ -2,7 +2,9 @@
 
 Run with PYTHONPATH set to the checkout's src:
 
-    PYTHONPATH=src python examples/events/resonance/read_world.py [--design design.json] [--expectation expectation.json] [--folder .]
+    PYTHONPATH=src python examples/events/resonance/read_world.py [--design design.json] [--expectation expectation.json] [--folder .] [--seeds N]
+
+`--seeds N` reads the seeds 1 to N in place of the design's list (the design's own 100 are the first 100 of them); the re-read of the detuned taker at 480 seeds (the mathematician's 240, item 5, #1572 comment 5967367372) runs with `--seeds 480`.
 """
 
 from __future__ import annotations
@@ -106,8 +108,13 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--design", type=Path, default=HERE / "design.json")
     parser.add_argument("--expectation", type=Path, default=HERE / "expectation.json")
     parser.add_argument("--folder", type=Path, default=HERE, help="the folder holding the world files")
+    parser.add_argument(
+        "--seeds", type=int, default=None, help="read the seeds 1 to N in place of the design's list"
+    )
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
+    if args.seeds is not None:
+        design["seeds"] = list(range(1, args.seeds + 1))
     blind = json.loads(args.expectation.read_text(encoding="utf-8"))
     found = {
         "worlds": [world_reading(args.folder / f"{name}.json", design) for name in design["worlds"]],
