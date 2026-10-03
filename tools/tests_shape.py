@@ -231,9 +231,7 @@ def test_imports(snapshot: Snapshot) -> list[str]:
             modules = [a.name for a in node.names] if isinstance(node, ast.Import) else [module or ""]
             for imported in modules:
                 if imported.split(".")[-1].startswith("test_"):
-                    found.append(
-                        f"{name} imports {imported}: move the helper to tests/worlds.py or tests/running.py"
-                    )
+                    found.append(f"{name} imports {imported}: move the helper to tests/laws.py")
     return found
 
 
@@ -304,9 +302,7 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
     base_groups = duplicate_groups(base)
     for digest, names in duplicate_groups(head).items():
         if len(names) > len(base_groups.get(digest, [])):
-            found.append(
-                f"copied setup: {', '.join(names)} share one body; keep one in tests/worlds.py or tests/running.py"
-            )
+            found.append(f"copied setup: {', '.join(names)} share one body; keep one in tests/laws.py")
     for name in sorted(uncalled(head) - uncalled(base)):
         found.append(f"{name} is called nowhere in src/, tools/ or examples/: delete it with its tests")
     return found
