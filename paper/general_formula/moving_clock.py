@@ -116,9 +116,9 @@ def figure(ax: Axes) -> None:
         fontsize=7,
     )
     ax.text(
-        0.02,
-        0.98,
-        "$c_m / c = 0.867$ at $[2, 3]$, $1$ as the gap closes",
+        0.60,
+        0.30,
+        "$c_m / c = 0.867$ at $[2, 3]$,\n$1$ as the gap closes",
         ha="left",
         va="top",
         fontsize=7,

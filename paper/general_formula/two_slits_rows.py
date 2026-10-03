@@ -162,7 +162,7 @@ def rows(ax: Axes) -> None:
     for r in (4, 8):
         ax.text(
             r,
-            max(BLIND[r], REAL[r]) + scatter[r] + 1.2,
+            max(BLIND[r], REAL[r]) + scatter[r] + 3.2,
             "a minimum",
             ha="center",
             va="bottom",
