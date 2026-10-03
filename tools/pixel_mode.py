@@ -1370,7 +1370,11 @@ def pixel_mode(
         zero,
     )
     names = [family.name for family in universe_of(universe)[1]]
-    document_messages = cast(list[dict[str, Any]], document.get("messages", []))
+    document_messages = [  # the start's messages: one laid whole at a tick of the run takes no mode entry
+        message
+        for message in cast(list[dict[str, Any]], document.get("messages", []))
+        if "tick" not in message
+    ]
     events = [names.index(str(row["family"])) for row in bodies]
     families = with_records(universe_of(universe)[1], [events.count(i) for i in range(len(names))])
     records = []  # each body's record number within its family; a message lays on the first record, 0
@@ -1510,7 +1514,7 @@ def pixel_mode(
             family_of(universe, str(message["family"])),
             f"messages[{number}]",
         )
-        for number, message in enumerate(cast(list[dict[str, Any]], document.get("messages", [])))
+        for number, message in enumerate(document_messages)
     ]
     return {"world_digest": input_digest(document), "bodies": entries, "messages": messages}
 

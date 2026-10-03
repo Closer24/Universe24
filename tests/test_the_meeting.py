@@ -11,6 +11,8 @@ from event_universe import meeting, node, resonance, world_files
 from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
 from event_universe.loader.instrument import (
+    Generator,
+    Instrument,
     Transition,
     basis_of,
     instrument_of,
@@ -400,3 +402,75 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
     turned = [resonance.sheared(10**6, 0, 9408, pieces, 6000) for pieces in (48, 1)]
     angles = [math.atan2(v, u) for u, v in turned]
     assert abs(angles[0] - 1.5680) <= 0.002 and abs(angles[1] - 1.330) <= 0.002  # the sub-turns add
+
+
+def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking(
+    tmp_path, monkeypatch
+):
+    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/messages.py `wholes_of`, loader/instrument.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the ticks 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `tick`, a tick beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw an instrument. (ii) The window stands from the lay to the probe's tick: no close before it, the generator at its seed, the body dark under the probe alone; at the tick the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled DETECTOR with the window [1, 3], the body's proper time 3 and the window's index 1, `taken` and `given` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's taking is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's ticks' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's ticks are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
+    folder = EVENTS / "zeno_pulsed"
+    universe = json.loads((folder / "pulsed_atom.json").read_text(encoding="utf-8"))
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    draw = {"seed": 25, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
+    parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
+    ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
+    turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
+    probe["drive"] = "probe"
+    record = {"family": "atom", "nodes": [{"node": [1, 1, 1], "count": 1}], "parts": parts}
+    record.update(transitions=[*turns, probe], rates=[], instrument=draw)
+    lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
+    world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
+    world.update(universe="u.json", engine="e.json", measured=[record], messages=lays, detectors=[])
+    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    families, quanta = universe_of(universe)[1], {"atom": 0, "pulse": 1, "probe": 2}
+    wrong = {"beside a probe": {**record, "instrument": {**draw, "window": 1}}}
+    wrong["no weight"] = {**record, "transitions": [*turns, {**probe, "weight": 1}]}
+    wrong["lacks the key 'window'"] = {**record, "transitions": turns}
+    for word, body in wrong.items():
+        refused(word, node_instrument_of, body, "measured[0]", families, 0, quanta, 1)
+    assert node_instrument_of(record, "measured[0]", families, 0, quanta, 1).draw == Generator(**draw)
+    assert isinstance(instrument_of({**draw, "window": 1}, "instrument"), Instrument)
+    untimed = {k: v for k, v in lays[0].items() if k != "tick"}
+    for word, message in (("without `tick`", untimed), ("tick", {**lays[0], "tick": 10})):
+        bad = tmp_path / "bad.json"
+        bad.write_text(json.dumps({**world, "messages": [message]}), encoding="utf-8")
+        refused(word, load_world, bad)
+    board = GameBoard(load_world(path), (lines := []).append)
+    names = [f.name for f in board.families]
+    pulse, probed = names.index("pulse"), names.index("probe")
+    here, books = tuple(np.add([1, 1, 1], board.offset)), board.credit.bodies[0]
+    room, bound = board.world.width, board.world.amplitude_bound
+    assert books.references[0].scale == resonance.scale_of(room, bound, 9)
+    for tick in (1, 2):  # the window stands: no close, no draw, no lay
+        board.step()
+        assert (books.elapsed, books.state, books.windows) == (tick, 25, 0)
+    assert not lines and meeting.dark(board, books) and board.credit.counts[probed] == 0
+    board.step()  # the probe's tick: the lay by the count, the close, the probe's click certain from g
+    line, wall = board.states[probed].lines[0], books.labels[0]
+    assert (int(line.now[here]), int(line.before[here])) == (128, 128)
+    assert (board.credit.counts[probed], int(board.quanta(probed)[0][here])) == (1, 1)
+    jumps = [x for x in lines if x["event"] == "jump"]
+    keys = ("label", "tick", "window", "proper", "windows", "realised", "left", "taken", "given")
+    click = ("DETECTOR", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
+    assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
+    laid = [(x["family"], x["tick"]) for x in lines if x["event"] == "lay"]
+    assert laid == [("probe", 3), ("atom", 3)]  # the probe's lay, then the body's re-lay in g
+    assert not board.credit.faces and (books.elapsed, books.windows, books.part) == (0, 1, 0)
+    assert books.state != 25
+    board.credit.counts[pulse] = 1  # one quantum of the drive in the books
+    books.labels, state = [0, wall], books.state  # the labels carried to e by hand: cos^2 0
+    for _ in range(4):
+        board.step()
+    jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
+    taking = ("DETECTOR", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
+    assert [tuple(x[k] for k in keys) for x in jumps[1:]] == [taking] and state != books.state
+    assert (books.part, board.credit.counts[pulse], board.credit.counts[probed]) == (1, 0, 2)
+    faces = {(f.family, f.tick) for faces in board.credit.faces.values() for f in faces}
+    assert faces == {(pulse, 8), (pulse, 9)} and (books.windows, books.clock) == (2, [7, 0])
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
+    pulsed = folder / "zeno_pulsed_4.json"
+    shipped = json.loads(pulsed.read_text(encoding="utf-8"))
+    assert [m["tick"] for m in shipped["messages"] if "tick" in m] == [192, 384, 576, 768]
+    assert BACK.verdict(GameBoard(load_world(pulsed)), 200)["verdict"] == "MATCH"

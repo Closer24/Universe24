@@ -25,7 +25,7 @@ from event_universe.loader.instrument import (
 )
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
-from event_universe.loader.messages import MessageRow, messages_of
+from event_universe.loader.messages import MessageRow, WholeMessage, messages_of, wholes_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 from event_universe.loader.universe import universe_of
 
@@ -75,7 +75,7 @@ class DetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages, the detectors, the receding faces, the instrument and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)'s draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine)."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the detectors, the receding faces, the instrument and the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`)'s draw (`instrument`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -96,6 +96,9 @@ class World:
     receding: tuple[RecedingFace, ...]
     instrument: Instrument | None
     lay: Lay | None  # the lay the world declares for its bodies and its tolerance (`loader/lay.py`)
+    wholes: tuple[
+        WholeMessage, ...
+    ] = ()  # the messages laid whole at a tick of the run (`loader/messages.py`)
 
 
 def kind_of(width: int) -> type:
@@ -299,11 +302,14 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
+    ticks = integer(world["ticks"], "ticks", 0)
+    wholes = wholes_of(world.get("messages", []), families, shape, beyond, ticks)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
     detectors = detectors_of(world["detectors"], shape, len(bodies), beyond, layer)
     regions_of_the_law(detectors, messages, shape, (periodic[0], periodic[1], periodic[2]), families)
     laid = [message.family for message in messages] + [body.family for body in bodies]
+    laid += [whole.family for whole in wholes]
     patterns_of_the_law([(d.name, d.pattern) for d in detectors], laid, families)
     # the world's records: a charged family's bodies each a record owning one row of the sign, every
     # holder of the sign one row per charged record beside the free row (derived.with_records)
@@ -311,7 +317,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     instrument = instrument_of(world["instrument"], "instrument") if "instrument" in world else None
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
-    ticks, pairs = integer(world["ticks"], "ticks", 0), [families[b.family].pair for b in bodies]
+    pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)
     return World(
         shape,
@@ -333,4 +339,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         receding,
         instrument,
         lay,
+        wholes,
     )
