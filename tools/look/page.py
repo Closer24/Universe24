@@ -220,11 +220,11 @@ TEMPLATE = """<title>{{TITLE}}</title>
   --text: 14px; --small: 12px; --title: 20px; --gap: 12px; --pad: 14px; --radius: 6px; --gutter: 16px;
   --sky: #ffffff; --ground: #5a5a5a; --sun: 0.3;
   --side-min: 300px; --board-height: min(76vh, 900px); --graph-width: 360; --graph-height: 84; --graph-pad: 6;
-  --bar-slot: 12; --measure-width: 960px; --blind-words: 100; --blind-list: 48; --arrival-width: 2.6; --arrival-height: 1.6;
+  --bar-slot: 12; --measure-width: 960px; --blind-words: 100; --blind-list: 48; --blind-rows: 24; --arrival-width: 2.6; --arrival-height: 1.6;
   --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-offset: 0.22; --glow: 1; --glow-power: 0.35; --glow-tint: 0;
   --mist-size: 1.02; --mist-opacity: 0.3; --mist-power: 0.5; --bar-length: 0.9; --bar-thickness: 0.07;
   --wall-size: 1; --wall-depth: 0.6; --ring-radius: 0.6; --ring-tube: 0.09; --flash-scale: 1.2; --plane-opacity: 0.12;
-  --view-margin: 1; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
+  --view-margin: 1; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
   --label-size: 1.4;
   color-scheme: dark;
 }
@@ -421,8 +421,10 @@ const EXTENT = Math.max(X, Y, Z);
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, EXTENT * size('--camera-far'));
 /* The frame: the declared board's two axes across the view with a margin of Links, fitted to the stage; the eye along VIEW at the board's centre, looking at it, the up axis the second of ACROSS. */
 function fit() {
-  const w = stage.clientWidth || 1, h = stage.clientHeight || 1, margin = size('--view-margin');
+  const w = stage.clientWidth || 1, margin = size('--view-margin');
   let halfW = (LOOK.shape[ACROSS[0]] + 2 * margin) / 2, halfH = (LOOK.shape[ACROSS[1]] + 2 * margin) / 2;
+  stage.style.height = Math.round(Math.max(size('--board-least'), Math.min(size('--board-most'), w * halfH / halfW))) + 'px';  // the stage the board's own shape, within bounds
+  const h = stage.clientHeight || 1;
   if (halfW / halfH > w / h) halfH = halfW * h / w; else halfW = halfH * w / h;
   camera.left = -halfW; camera.right = halfW; camera.top = halfH; camera.bottom = -halfH; camera.updateProjectionMatrix();
   const centre = new THREE.Vector3(...CENTRE), eye = centre.clone(), up = new THREE.Vector3();
@@ -844,7 +846,9 @@ function blindTable() {
     else rows.push([name, plain(v)]);
   };
   Object.entries(BLIND).forEach(([k, v]) => walk(k, v));
-  box.innerHTML = '<div class="scroll"><table><thead><tr><th>the blind file, key</th><th>value</th></tr></thead><tbody>' + rows.map(([k, v]) => `<tr><td>${esc(k)}</td><td class="num">${esc(v)}</td></tr>`).join('') + '</tbody></table></div>'
+  const row = ([k, v]) => `<tr><td>${esc(k)}</td><td class="num">${esc(v)}</td></tr>`, head = '<table><thead><tr><th>the blind file, key</th><th>value</th></tr></thead><tbody>', first = size('--blind-rows');
+  box.innerHTML = '<div class="scroll">' + head + rows.slice(0, first).map(row).join('') + '</tbody></table></div>'
+    + (rows.length > first ? '<details><summary>the blind file, ' + format(rows.length - first) + ' more rows</summary><div class="scroll">' + head + rows.slice(first).map(row).join('') + '</tbody></table></div></details>' : '')
     + (words.length ? '<details><summary>the blind file, its words: ' + esc(words.map(([k]) => k).join(', ')) + '</summary>' + words.map(([k, v]) => `<p><b>${esc(k)}</b> ${esc(v)}</p>`).join('') + '</details>' : '');
 }
 
