@@ -76,7 +76,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
     ),
     "tests/test_the_bound_body.py::test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads": (
-        99,
+        104,
         "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
         "2026-10-03, C.15): the fixed-point lay with the compact seed in its own nuclear holder's well at the four "
         "declared integers, the rest within 0.51 level of the row's exact line, the count the record's share within "
