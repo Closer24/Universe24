@@ -218,3 +218,65 @@ its neighbours from 27 on, and the wave at the Node differs from the untouched r
 through the window; over the second window, the intervals 25 to 48, the plane's size SUM a_t
 e^(i Omega t) reads 4,428 with the taking against 4,765 without (A W / 2 = 4,704), 7 percent short,
 and SUM |a_t| 5,792 against 6,026. No number of the blind is adjusted.
+
+## On the partial hole, 2026-10-03
+
+The hole of a dense record (the mathematician's 237, #1572 comment 5967012316, with the advisor's
+second, 5967123679, two hands; branch partial-hole): where the arriving record's share at the Node
+exceeds its own quantum W_rec, the taking's face writes the record's two time levels scaled by
+isqrt((s - W_rec) x 2^(2m)) div (isqrt(s) x 2^m) instead of 0, the phase and the sense at the Node
+standing and one quantum's share leaving; where the share is at most W_rec the hole to 0 as before.
+The trials from now 480 per world, the design's seeds 1 to 480 (the advisor's word), `tools/meeting_trials.py`.
+
+The blind, written by the two hands before the build (237): n = 2 at 480 seeds 0.500 within 0.023;
+n = 1, 4, 8 and 16 unchanged within 1.5 standard errors from the shipped act's 480 of 480, 0.402 and
+0.206 at 480 seeds; the column within one standard error of 480 seeds.
+
+| world | ends in e | fraction | Itano | standard error | against the column | the shipped act at 480 seeds | the jumps g to e / e to g |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| n = 1 | 480 of 480 | 1.000 | 1.000 | 0.000 | the column exactly | 480 of 480 | 480 / 0 |
+| n = 2 | 251 of 480 | 0.523 | 0.500 | 0.023 | 1.00 standard errors, within the blind's 0.023 | 0.615 | 381 / 130 |
+| n = 4 | 196 of 480 | 0.408 | 0.375 | 0.022 | 1.50 standard errors, beyond one | 0.402 (unchanged, 0.3) | 256 / 60 |
+| n = 8 | 109 of 480 | 0.227 | 0.235 | 0.019 | 0.41 standard errors | 0.206 (unchanged, 1.1) | 121 / 12 |
+| n = 16 | 57 of 480 | 0.119 | 0.133 | 0.016 | 0.90 standard errors | 15 of 120 at 120 seeds | 60 / 3 |
+
+The reading: n = 2 moves from 0.615 to 0.523, the finding this line answered, within the blind's
+0.023 at exactly one standard error; n = 1, 8 and 16 within one standard error of the column; n = 4
+reads 0.408, unchanged from the shipped act's 0.402 as the blind asked and 1.5 standard errors above
+Itano's 0.375, beyond the column's one standard error, a finding by name and not adjusted (the same
+row read 0.402 under the hole to 0, so the excess is not the partial hole's). The second window's
+return e to g at n = 2: 130 of the 381 that flipped g to e flipped back (0.34 against the hole to 0's
+85 of 380, 0.22), the suppression of the return lifted in part and not whole, by name. The gates bit
+for bit (the two slits' and Bell's four and the GHZ's four output files byte-identical to main's at
+7033a6aa, their records below one quantum per Node at every click, so the hole to 0 stands there).
+A GameBoard diagnostic beside the run, labelled so (the seed 2 of n = 2, the drive's first line at
+the instrument's Node): at the click the twin's share at the Node reads 2.564 quanta; after the
+face's two intervals the levels are the twin's scaled by 0.781 (-183 and -313 against -234 and -400),
+their ratio the twin's within 0.001, and the share at the Node reads 0.975 of a quantum against the
+twin's 2.674, more than one quantum gone at the Node itself, since the booked form's cross term with
+the six neighbours' levels scales by the factor alone and not by its square, Rule3 refilling the Node
+from 2.784 at the second interval after; a finding by name for the hands, no number adjusted.
+
+### The reading on main after round A's merge (the Boss, 2026-10-03, 11:30 to 11:36 UTC)
+
+The experiment on main at 7732b5ff (the engine of the squash 08c092a9, pull request #1724, the partial
+hole and the empty-origin unit), the five shipped worlds over the design's seeds 1 to 480 by
+`tools/meeting_trials.py`, each world as four processes of 120 seeds (the owner's rule of the day: a
+run under a minute; 25 to 27 s per world on four cores), the counts summed over the four; the blind
+rows above copied before the run (n = 2 at 0.500 within 0.023; n = 1, 4, 8 and 16 unchanged within
+1.5 standard errors from the shipped act's 480 of 480, 0.402 and 0.206; the column within one
+standard error).
+
+| world | ends in e | fraction | Itano | standard error | against the column | the jumps g to e / e to g |
+| --- | --- | --- | --- | --- | --- | --- |
+| n = 1 | 480 of 480 | 1.000 | 1.000 | 0.000 | the column exactly | 480 / 0 |
+| n = 2 | 251 of 480 | 0.523 | 0.500 | 0.023 | 1.00 standard errors, within the blind's 0.023: PASS | 381 / 130 |
+| n = 4 | 196 of 480 | 0.408 | 0.375 | 0.022 | 1.51 standard errors; unchanged from the shipped act's 0.402 within 1.5 as the blind asked; against the column a finding by name (the branch's reading the same) | 256 / 60 |
+| n = 8 | 109 of 480 | 0.227 | 0.235 | 0.019 | 0.41 standard errors | 121 / 12 |
+| n = 16 | 57 of 480 | 0.119 | 0.133 | 0.015 | 0.92 standard errors | 60 / 3 |
+
+The reading on main is the branch's reading bit for bit (the same seeds, the same engine after the
+squash): n = 2 PASS at one standard error; n = 4 the finding by name that stands (the hands' 244 and
+the quadratic factor's branch, pull request #1730, where it reads 0.415 at 480 seeds; the advisor's
+line: 960 seeds before any cause is named); n = 1, 8 and 16 within one standard error of the column.
+Nothing adjusted.
