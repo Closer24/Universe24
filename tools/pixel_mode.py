@@ -1338,8 +1338,8 @@ def pixel_mode(
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
     measured = cast(list[dict[str, Any]], document.get("measured", []))
-    # a body declaring its parts is laid by the engine at its one Node (loader/instrument.py), not here
-    kept = [number for number, body in enumerate(measured) if "parts" not in body]
+    # a body declaring its parts, or converted whole, is laid by the engine at its one Node (loader/instrument.py)
+    kept = [n for n, body in enumerate(measured) if not any(k in body for k in ("parts", "conversion"))]
     bodies = [measured[number] for number in kept]
     lay = lay_of(document["lay"], "lay") if "lay" in document else None  # the lay by name
     lays: list[tuple[np.ndarray, Pairs, Axis, int]] = []

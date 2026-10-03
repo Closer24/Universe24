@@ -81,8 +81,7 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     assert (m["ratios"], m["rho"], m["label"]) == ([[19, 20]], UNEQUAL[2], "GAMEBOARD")
     rho_zero = credits([side((1, 1), (0, 0)), b], ORDER, (PAIR, PAIR))[1]
     assert GATE.combination(rho_zero, CHSH) == FENCE[GATE.parts_shares]
-    refused("setting", GATE.ports_of, (1,), PAIR)
-    refused("orthogonal", GATE.ports_of, A, ((1, 1),))
+    refused("setting", GATE.ports_of, (1,), PAIR), refused("orthogonal", GATE.ports_of, A, ((1, 1),))
     read, expected = gate_worlds(BELL, tmp_path)
     assert [Fraction(*read["correlation"][k]) for k in expected["order"]] == MEETING
     assert (read["S_by_the_parts_shares"], read["S_by_the_local_sums"]) == ([238, 169], [240, 169])
@@ -221,7 +220,7 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     wrong["weight"] = {**record, "transitions": [{**record["transitions"][0], "weight": 0}]}
     wrong["no `instrument`"] = {k: v for k, v in record.items() if k != "instrument"}
     for word, body in wrong.items():
-        refused(word, node_instrument_of, body, "measured[0]", families[0], 0, quanta, 1)
+        refused(word, node_instrument_of, body, "measured[0]", families, 0, quanta, 1)
     two = {**record, "nodes": record["nodes"] + [{"node": [3, 4, 2], "count": 1}]}
     refused("one Node", bodies_of, [two], None, "", families, (6, 6, 4), 9000, ())
     board, other = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(plain))
@@ -290,3 +289,53 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
     lay |= {("meeting", "relaid"), ("meeting", "given_quantum")}
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
+
+
+def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_path, monkeypatch):
+    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c) and 5964082980; src/event_universe/meeting.py `converted`, loader/instrument.py `conversion_of`): the neutron's row of three real lines declared whole at one Node with its table (the proton's three planes at [0, 6000] and the sense -1, the electron's plane at [4000, 6000] and the sense +1, the antineutrino's real line at the excess pair [5978, 6000]) and the rate 1 at the window 1, so the first window draws it. (i) The loader: a rate of 0, a record out of the body's own family, a massless lay pair, a plane without a sense, a real line with one, a conversion beside parts and one without the instrument are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the instrument's count 1. (iii) The click: one conversion line naming the instrument, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; the proton's six lines (73, 0) and (0, -73), the electron's (148, 98) and (0, 110), the antineutrino's (437, 435), the credit's counts 1 each, the first planes' Wronskians -73^2 and 148 x 110, the senses opposite; no second conversion, no front (the body cut) and no null window of a record of one part."""
+    universe = json.loads((EVENTS / "neutron_conversion" / "nucleons.json").read_text(encoding="utf-8"))
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    pairs = {"proton": ([0, 6000], -1), "electron": ([4000, 6000], 1), "antineutrino": ([5978, 6000], 0)}
+    outs = [{"family": f, "pair": p, **({"sense": s} if s else {})} for f, (p, s) in pairs.items()]
+    draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
+    body = {"family": "neutron", "nodes": [{"node": [3, 3, 3], "count": 1}], "instrument": draw}
+    body["conversion"] = table = {"rate": 1, "to": outs}
+    world = dict(shape=[7, 7, 7], boundary=dict(x="open", y="open", z="open"), face_depth=1, ticks=4)
+    world.update(universe="u.json", engine="e.json", measured=[body], messages=[])
+    world.update(detectors=[{"name": "around", "positions": [[4, 3, 3], [5, 3, 3]]}])
+    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    families = universe_of(universe)[1]
+    quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
+    rows = {"rate must": {"rate": 0}, "other than": {"to": [{**outs[0], "family": "neutron"}]}}
+    rows["num must"], rows["a plane is laid"] = (
+        {"to": [{**outs[2], "pair": [6000, 6000]}]},
+        {"to": [outs[0] | {"sense": 0}]},
+    )
+    rows["real lines at none"] = {"to": [{**outs[2], "sense": 1}]}
+    wrong = {word: {**body, "conversion": {**table, **row}} for word, row in rows.items()}
+    wrong["no parts"] = {**body, "parts": []}
+    wrong["no `instrument`"] = {k: v for k, v in body.items() if k != "instrument"}
+    for word, entry in wrong.items():
+        refused(word, node_instrument_of, entry, "measured[0]", families, quanta["neutron"], quanta, 1)
+    board = GameBoard(load_world(path), (lines := []).append)
+    n, p, e, nu = (quanta[name] for name in ("neutron", "proton", "electron", "antineutrino"))
+
+    def levels(k):
+        return [(int(r.now[3, 3, 3]), int(r.before[3, 3, 3])) for r in board.states[k].lines]
+
+    assert levels(n) == [(95, -76)] * 3 and board.credit.bodies[0].counts == [1]
+    board.step()
+    found = [line for line in lines if line["event"] == "conversion"]
+    assert len(found) == 1 and found[0]["into"] == ["proton", "electron", "antineutrino"]
+    assert found[0]["node"] == {"label": "GAMEBOARD", "at": [3, 3, 3]} and found[0]["window"] == [1, 1]
+    assert (found[0]["detector"], found[0]["label"]) == ("measured 0", "DETECTOR")
+    assert levels(n) == [(0, 0)] * 3 and board.credit.bodies[0].counts == [0]
+    assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(148, 98), (0, 110)]
+    assert levels(nu) == [(437, 435)] and [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
+    assert [levels(k)[0][0] * levels(k)[1][1] for k in (p, e)] == [-73 * 73, 148 * 110]
+    for _ in range(3):
+        board.step()
+    assert len([line for line in lines if line["event"] == "conversion"]) == 1
+    assert not [line for line in lines if line["event"] in ("erasure", "jump")]

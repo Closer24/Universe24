@@ -18,20 +18,23 @@ MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
     "GAMEBOARD",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE = (
+CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE, CONVERSION = (
     "click",
     "field",
     "parts",
     "credit",
     "jump",
     "erasure",
-)  # the output's six lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell
+    "conversion",
+)  # the output's seven lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell, a record converted whole at its Node
 REPORT_KEYS = ("event", "label", "tick", "family", "detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 CREDIT_KEYS = ("window", "realised", "kept", "count", "left", "node")  # the credit line's own keys
 JUMP_OWN = ("left", "taken", "given")  # the jump line's own words beside the credit's
 ERASURE_KEYS = ("origin", "distance", "nodes", "taken")  # the erasure line's own keys
 JUMP_KEYS = ("window", "realised", *JUMP_OWN, "node")  # the jump line's keys
+INTO = "into"  # the conversion line's own key, the families of the records out
+CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
 MEASURED = "measured"  # a record at a Node that is an instrument in the output, by its number in the world's order
 AT = "at"  # the one Node written, a GameBoard diagnostic beside the credit's result
 OUTPUT = (
@@ -43,6 +46,7 @@ OUTPUT = (
     *CREDIT_KEYS,
     *JUMP_OWN,
     *ERASURE_KEYS,
+    INTO,
 )  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
@@ -121,6 +125,18 @@ def jump(
     if levels is not None:
         written[LEVELS] = levels
     line.update(zip(JUMP_KEYS, (window, realised, left, taken, given, written), strict=True))
+    return line
+
+
+def conversion(
+    tick: int, family: str, measured: int, window: list[int], into: list[str], node: list[int]
+) -> dict[str, object]:
+    """The conversion line, the click of a record converted whole at its one Node (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03), labelled DETECTOR: the interval, the record's family (the record in, its count down by one), the instrument by its number among the world's `measured`, the window [first, last] drawn over and `into`, the families of the records out in the table's order, each up by one whole quantum laid at the Node at its declared rotation; beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool."""
+    line = dict(
+        zip(REPORT_KEYS, (CONVERSION, MEASUREMENT, tick, family, f"{MEASURED} {measured}"), strict=True)
+    )
+    written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
+    line.update(zip(CONVERSION_KEYS, (window, into, written), strict=True))
     return line
 
 
