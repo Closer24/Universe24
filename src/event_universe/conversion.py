@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from event_universe.loader.instrument import Instrument
 from event_universe.meeting import Item, NodeBooks, click
 from event_universe.reports import conversion
 
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 
 def converted(board: GameBoard, books: NodeBooks) -> bool:
     """The conversion drawn at a record's window's end: while the record's count stands, for each conversion its declaration names, one draw of the act between the conversion's list (the record whole at -1, each family out at +1 by the count at its massless pair, a plane at the sense the table declares) and nothing, at the weights [window, rate - window] (the window capped at the rate), the record's own generator; the first conversion drawn is taken, its line written, and the window ends; returns whether one was drawn."""
-    assert books.declared.draw is not None
+    assert isinstance(books.declared.draw, Instrument)  # a record converted whole declares its window
     window = books.declared.draw.window
     for table in books.declared.conversions:
         if books.counts[books.part] <= 0:

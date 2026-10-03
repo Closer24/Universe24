@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -42,7 +42,7 @@ CREDIT_KEYS = (
 )  # the credit line's own keys
 JUMP_OWN = ("left", "taken", "given")  # the jump line's own words beside the credit's
 ERASURE_KEYS = ("origin", "distance", "nodes", "taken")  # the erasure line's own keys
-JUMP_KEYS = ("window", "realised", *JUMP_OWN, "node")  # the jump line's keys
+JUMP_KEYS = ("window", "proper", "windows", "realised", *JUMP_OWN, "node")  # the jump line's keys
 INTO = "into"  # the conversion line's own key, the families of the records out
 CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
 LINE, BEFORE, AFTER, PORT, VALUE = ("line", "before", "after", "port", "value")  # the two acts' words
@@ -143,12 +143,15 @@ def jump(
     given: str | None,
     node: list[int],
     quantum: bool = True,
+    proper: int = 0,
+    windows: int = 0,
 ) -> dict[str, object]:
-    """The jump line, the click of a record at a Node that is an instrument, written on the GameBoard at that one Node (features/click; ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the exchange at one Node), labelled DETECTOR: the interval, the record's family, the instrument by its number among the world's `measured` (`measured n`), the window [first, last] drawn over, the part realised and the part left (their declared names), the family whose arriving quantum was taken (the taking click; None otherwise) and the family of light a whole quantum was given to (the giving click; None otherwise); beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the null window's write, where its re-lay changed a level, the same line labelled GAMEBOARD throughout (no `quantum` passed, no measurement), the levels laid standing in the `lay` lines beside it."""
+    """The jump line, the click of a record at a Node that is an instrument, written on the GameBoard at that one Node (features/click; ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the exchange at one Node), labelled DETECTOR: the interval, the record's family, the instrument by its number among the world's `measured` (`measured n`), the window [first, last] drawn over, the body's own proper time at the close in whole intervals (`proper`, the carried sum of its clock p_0 over Gamma, `meeting.NodeBooks.clock`; the board's tick in the vacuum) and the index of the window closed (`windows`, the body's windows closed so far, its event clock; the two hands of 2026-10-03, #1572 comments 5967698811 and 5967783614, the click line's index and clock), the part realised and the part left (their declared names), the family whose arriving quantum was taken (the taking click; None otherwise) and the family of light a whole quantum was given to (the giving click; None otherwise); beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the null window's write, where its re-lay changed a level, the same line labelled GAMEBOARD throughout (no `quantum` passed, no measurement), the levels laid standing in the `lay` lines beside it."""
     label = MEASUREMENT if quantum else DIAGNOSTIC
     line = dict(zip(REPORT_KEYS, (JUMP, label, tick, family, f"{MEASURED} {measured}"), strict=True))
     written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
-    line.update(zip(JUMP_KEYS, (window, realised, left, taken, given, written), strict=True))
+    own = (window, proper, windows, realised, left, taken, given, written)
+    line.update(zip(JUMP_KEYS, own, strict=True))
     return line
 
 
@@ -241,15 +244,16 @@ def front(
     ]
 
 
-def entering(
-    nodes: np.ndarray,
-    through: tuple[Any, ...],
-    wrap: Wrap,
-    instrument: np.ndarray,
-    declared: np.ndarray,
-) -> np.ndarray:
-    """Per Node of a region, the currents through its front boundary Ports (`front`) summed with their signs, inward positive, in the current's units, 0 at every other Node: the detector's report per boundary Node, the shares of the instrument's draw of the one Node it writes (features/click)."""
-    facing = front(nodes, wrap, instrument, declared)
+def region_of(detector: Detector, body_nodes: Callable[[int], np.ndarray]) -> np.ndarray:
+    """A detector's Nodes as a report needs them: its declared Nodes, or the Nodes of the body it names derived now (`body_nodes`, the GameBoard's reading by the share, `standing`)."""
+    if detector.body is not None:
+        return body_nodes(detector.body)
+    assert detector.nodes is not None  # a detector declares its Nodes or names a body
+    return detector.nodes
+
+
+def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarray:
+    """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per detector and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the detector's report per boundary Node, the shares of the instrument's draw of the one Node it writes (features/click)."""
     seen: Any = 0
     for port in range(len(PORTS)):
         seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
@@ -264,4 +268,4 @@ def inflow(
     declared: np.ndarray,
 ) -> int:
     """A detector's report of one interval, its click (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): the currents through the instrument's front boundary Ports at the region's Nodes (`entering`), inward positive, summed in integers with their signs, the density that entered the region from the declared board (the advisor's correction, #1515 comment 5912958018: the front Links only, net; the transverse Links inside the instrument and the Links toward a receding face's grown layers not counted); the host's reading for the credit by the shares. `instrument` is the union of the declared regions (a body's detector and the faces' layer their own Nodes), so that what passes between the regions of one screen is not seen twice; nothing is handed over and no line names a Node."""
-    return int(entering(nodes, through, wrap, instrument, declared).sum(dtype=object))
+    return int(entering(front(nodes, wrap, instrument, declared), through).sum(dtype=object))

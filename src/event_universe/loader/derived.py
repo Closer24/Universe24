@@ -274,14 +274,45 @@ def hill_scale(pair: tuple[int, int], gamma: int) -> int:
     return int(division_forward(edge * edge * edge, cube, cube - 1)[0])
 
 
-def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite, gamma: int) -> list[int]:
-    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level, each part's times the size of the row's write weight: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`), times the write's factor's room at the source's hill's edge (`hill_scale`, 1 in a hollow); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays)."""
+def factor_bound(families: tuple[FamilyRule, ...], index: int, gamma: int, bound: int) -> int:
+    """The largest Link factor q_max the axis lines within the level `bound` admit on a Link of the family `index`'s record (ALGEBRA.md, The write per proper volume and per proper interval): the Link's factor is q = Gamma - t (`paces.axis_pace`), t the Link's tension, SUM over the held rows with axis lines the family reads of W_a times the mean of the row's axis line at the Link's two ends (`read.link_tension`), each end within the bound, so q_max = Gamma + SUM W_a x bound over those rows (the mathematician's 268 with the advisor's precision, #1572 comments 5969128707 and 5969197876: Gamma + W A on the one axis line a Link carries today, the sum where more than one held row's axis lines are read on a Link); Gamma where the family reads no axis line, the odd lines of a holder under the rotation entering no Link's factor (`node.read_lines`)."""
+    weights = sum(
+        abs(read.weight)
+        for read in families[index].reads
+        if families[read.family].axes and not families[read.family].rotation
+    )
+    return gamma + weights * bound
+
+
+def tension_room(pair: tuple[int, int], gamma: int, q_max: int, wronskian: bool) -> int:
+    """The write's factor's room at a source's hill's edge under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's 268 and the advisor's second, #1572 comments 5969128707 and 5969197876, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q itself, so under a negative tension q exceeds Gamma, up to q_max, the largest Link factor the axis lines within the bound admit (`factor_bound`), and in a hollow the factor reaches (P / Gamma)^3 sqrt(q_max / P) on a count and (P / Gamma)^3 q_max / P on a Wronskian, P the edge's pace of the source's pair (`edge_of`), beyond the hill's room (`hill_scale`); the room is the ceiling of P^2 (isqrt(q_max P) + 1) / Gamma^3 on a count and of P^2 q_max / Gamma^3 on a Wronskian, the ceiling by the division act with the carry Gamma^3 - 1 and the root by its fixed point plus one, so that the floor never under-bounds (at the rule's universe, Gamma 6,000 and q_max 15,266: 3 and 4 on matter's pair against the hill's 2, 2 and 3 on the massless pairs against 1)."""
+    edge = edge_of(pair, gamma)
+    cube = gamma * gamma * gamma
+    factor = q_max if wronskian else division_fixed_point(q_max * edge) + 1
+    return int(division_forward(edge * edge * factor, cube, cube - 1)[0])
+
+
+def source_room(
+    families: tuple[FamilyRule, ...], index: int, gamma: int, wronskian: bool, hill: int | None
+) -> int:
+    """The room of the write's factor of the source `index` in a row's write (ALGEBRA.md, The write per proper volume and per proper interval): the hill's room alone (`hill_scale`) where `hill` is None, the first pass of `amplitude_bound`, which finds the hill's own bound A_1; else the larger of the hill's room and the tension's room at the largest Link factor the axis lines within A_1 = `hill` admit (`tension_room`, `factor_bound`), one pass and no fixed point, since the bound found is at most A_1 and q_max(A_1) bounds q_max(A)."""
+    room = hill_scale(families[index].pair, gamma)
+    if hill is None:
+        return room
+    q_max = factor_bound(families, index, gamma, hill)
+    return max(room, tension_room(families[index].pair, gamma, q_max, wronskian))
+
+
+def write_rooms(
+    families: tuple[FamilyRule, ...], index: int, write: HeldWrite, gamma: int, hill: int | None
+) -> list[int]:
+    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level, each part's times the size of the row's write weight: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`), times the write's factor's room at the source's hill's edge (`source_room`: the hill's, `hill_scale`, 1 in a hollow under tensions at or above 0, where `hill` is None, and the larger of it and the tension's room at the hill's own bound `hill`, `tension_room`, where it is given); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays)."""
     family = families[index]
     sources = readers_of(families, index)
     time = sum(
         abs(weight_of(index, families[other]))
         * booking_room(families, other, family.wronskian)
-        * hill_scale(families[other].pair, gamma)
+        * source_room(families, other, gamma, family.wronskian, hill)
         for other in sources
     )
     axis = sum(
@@ -298,7 +329,15 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite, 
 def amplitude_bound(
     families: tuple[FamilyRule, ...], gamma: int, action: int, width: int, unit: int = 1
 ) -> int:
-    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the vacuum's paces, at a frozen clock (the paces 0, the bound the deepest hollow approaches: |S| grows to 12 den Gamma^2 G^2 as the paces fall) and at the hill's edge P on the clock and the pace alike (`features/read`, `edge_of`; the three the extremes of the guard, ALGEBRA.md #the-bound, #the-paces, The guard; for a turned record the six arrivals within twice A, `TURNED_REACH`, and the three shears' largest product, 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice A and one, features/rotation), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), at which every held family's one write per part, its numerator at the sources' room with the write's factor at the hill's edge (`write_rooms`: the booking's room times the factor's room at the source's hill's edge, `hill_scale`, the one rounding's value; its numerator, the count times the three paces, is exact in Python's integers and meets no width, `paces.write_factor`) plus its remainder under the wall, does too; refused by name where no level fits. Where a holder turns a record (features/rotation) every room of the universe is read at the level A + 2 and the level found is 2 less (`TURNED_SLACK`: a turned level stays below 2^(1 / 2) A + 3, within twice A + 2, and not within twice A, the audit's witness (-1, -1) turning to (-3, -1) at A = 1), the turned record's total 6 R x twice the level + |S| A + w x twice the level + w (its six arrivals and the level before it is stepped against both turned, `TURNED_REACH`), the three shears' largest product 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice the level and one, and its bookings' products of turned levels (`booking_room`)."""
+    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the vacuum's paces, at a frozen clock (the paces 0, the bound the deepest hollow approaches: |S| grows to 12 den Gamma^2 G^2 as the paces fall) and at the hill's edge P on the clock and the pace alike (`features/read`, `edge_of`; the three the extremes of the guard, ALGEBRA.md #the-bound, #the-paces, The guard; for a turned record the six arrivals within twice A, `TURNED_REACH`, and the three shears' largest product, 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice A and one, features/rotation), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), at which every held family's one write per part, its numerator at the sources' room with the write's factor at the hill's edge (`write_rooms`: the booking's room times the factor's room at the source's hill's edge, `hill_scale`, the one rounding's value; its numerator, the count times the three paces, is exact in Python's integers and meets no width, `paces.write_factor`) plus its remainder under the wall, does too, in two passes: the first with every source's room the hill's (`hill_scale`) finds the hill's own bound A_1, the second with every source's room the larger of the hill's and the tension's at q_max = Gamma + SUM W_a A_1, the largest Link factor the axis lines within A_1 admit (`source_room`, `tension_room`, `factor_bound`; `bound_under_rooms`, the one pass), the bound at most A_1 and no fixed point, since q_max(A_1) bounds q_max(A) (the mathematician's 268 and the advisor's second, two hands; the four shipped universes' bound 9,266 unmoved, the write's total not their binding term); refused by name where no level fits. Where a holder turns a record (features/rotation) every room of the universe is read at the level A + 2 and the level found is 2 less (`TURNED_SLACK`: a turned level stays below 2^(1 / 2) A + 3, within twice A + 2, and not within twice A, the audit's witness (-1, -1) turning to (-3, -1) at A = 1), the turned record's total 6 R x twice the level + |S| A + w x twice the level + w (its six arrivals and the level before it is stepped against both turned, `TURNED_REACH`), the three shears' largest product 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice the level and one, and its bookings' products of turned levels (`booking_room`)."""
+    hill = bound_under_rooms(families, gamma, action, width, unit, None)
+    return bound_under_rooms(families, gamma, action, width, unit, hill)
+
+
+def bound_under_rooms(
+    families: tuple[FamilyRule, ...], gamma: int, action: int, width: int, unit: int, hill: int | None
+) -> int:
+    """One pass of `amplitude_bound`: the largest level inside the width under Rule3's totals, the currents' reading and every held family's one write per part, its rooms read by `write_rooms` at `hill`, None every source's room the hill's (the first pass, whose level is the hill's own bound A_1) and A_1 the larger of the hill's and the tension's room per source (the second pass, the bound); refused by name where no level fits."""
     largest = largest_of(width)
     found = largest
     slack = TURNED_SLACK if any(turns(families, index) for index in range(len(families))) else 0
@@ -319,7 +358,8 @@ def amplitude_bound(
             found = min(found, division_fixed_point(int(division_forward(largest, room, 0)[0])) - slack)
         if family.held:
             write = held_write(families, index, action)
-            for wall, room in zip(write.walls, write_rooms(families, index, write, gamma), strict=True):
+            rooms = write_rooms(families, index, write, gamma, hill)
+            for wall, room in zip(write.walls, rooms, strict=True):
                 if wall > largest:
                     found = 0
                 elif room:
