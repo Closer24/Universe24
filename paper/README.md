@@ -38,8 +38,12 @@ their statuses.
 - `general_formula/main.pdf`: the compiled paper at the same commit.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.60, numbered as added, each naming its section,
-  cited in the paper as (S.n); submitted as supplementary material to the
+  its proof, Derivations S.1 to S.62, numbered as added, each naming its section,
+  cited in the paper as (S.n), S.61 the engine's derivation ledger and S.62 the
+  implementation's versions of the click's write and their readings, which stand
+  there and not in the main text (the owner's word of 2026-10-03: a derivation
+  is shown as a derivation, and the main text reports no run but the two slits
+  with Bell's and the GHZ's gates); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
   asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
