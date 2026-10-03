@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -244,15 +244,16 @@ def front(
     ]
 
 
-def entering(
-    nodes: np.ndarray,
-    through: tuple[Any, ...],
-    wrap: Wrap,
-    instrument: np.ndarray,
-    declared: np.ndarray,
-) -> np.ndarray:
-    """Per Node of a region, the currents through its front boundary Ports (`front`) summed with their signs, inward positive, in the current's units, 0 at every other Node: the detector's report per boundary Node, the shares of the instrument's draw of the one Node it writes (features/click)."""
-    facing = front(nodes, wrap, instrument, declared)
+def region_of(detector: Detector, body_nodes: Callable[[int], np.ndarray]) -> np.ndarray:
+    """A detector's Nodes as a report needs them: its declared Nodes, or the Nodes of the body it names derived now (`body_nodes`, the GameBoard's reading by the share, `standing`)."""
+    if detector.body is not None:
+        return body_nodes(detector.body)
+    assert detector.nodes is not None  # a detector declares its Nodes or names a body
+    return detector.nodes
+
+
+def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarray:
+    """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per detector and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the detector's report per boundary Node, the shares of the instrument's draw of the one Node it writes (features/click)."""
     seen: Any = 0
     for port in range(len(PORTS)):
         seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
@@ -267,4 +268,4 @@ def inflow(
     declared: np.ndarray,
 ) -> int:
     """A detector's report of one interval, its click (ALGEBRA.md #the-count-is-the-records-share; the owner's words of 2026-09-30, no click names a Node, the detector a declared instrument): the currents through the instrument's front boundary Ports at the region's Nodes (`entering`), inward positive, summed in integers with their signs, the density that entered the region from the declared board (the advisor's correction, #1515 comment 5912958018: the front Links only, net; the transverse Links inside the instrument and the Links toward a receding face's grown layers not counted); the host's reading for the credit by the shares. `instrument` is the union of the declared regions (a body's detector and the faces' layer their own Nodes), so that what passes between the regions of one screen is not seen twice; nothing is handed over and no line names a Node."""
-    return int(entering(nodes, through, wrap, instrument, declared).sum(dtype=object))
+    return int(entering(front(nodes, wrap, instrument, declared), through).sum(dtype=object))
