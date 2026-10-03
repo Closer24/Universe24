@@ -321,6 +321,39 @@ GameBoard readings and labelled so.
    1 in every seed read, 149 of 149 in the resonant world and 299 of 299 in the detuned one; the giver
    takes its own light back in 4 of 480 seeds of each world (`measured 0 e by pulse` 4; the first 100's
    1), the one-in-flight limit not built, as before.
+
+### The reading on main at the merged sha e62b6651 (2026-10-03, 10:19Z)
+
+The experiment's reading, the owner's word of 12:40 Israel: the run on `main` at the merged sha after the
+squash of the round (#1726), its reading appended here beside the blind, which stands as written.
+`PYTHONPATH=src python examples/events/resonance/read_world.py --seeds 480`, both worlds, the seeds 1 to
+480, on the tree of `main` at e62b6651 and nothing else: 854 seconds for the two worlds on one core at a
+load average of about 30 on four cores (the branch's diagnostic, 273 seconds at low load). The takings
+are the clicks, the jump lines labelled DETECTOR; the giver's cosine and count are GameBoard readings and
+labelled so; the standard error of a count c of N is sqrt(c (N - c) / N), the blind's item 3.
+
+1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`measured 1 e by pulse` 1), the share 0.0021 with
+   the standard error 0.0021 (1.0 taking), against the blind's at most 2. PASS; the branch's diagnostic
+   read 1 of 480 beside. The ratio detuned over resonant is 1 to 155, 0.0065.
+2. The resonant taker at [2, 3]: 155 takings in 480 seeds (`measured 1 e by pulse` 155), the share 0.323
+   with the standard error 0.021 (10.2 takings), against the blind's 177.6 and its band 156 to 199: one
+   taking below the band's floor, 2.1 of the blind's standard errors (10.6) below 177.6. A MISS of the
+   blind's band by one count and a FINDING by name of the blind's form and not of the act, as the blind
+   states it: the blind took the first reading's share, 37 of 100, as the exact share and left out that
+   reading's own standard error, 0.048 at 100 seeds; the two readings differ by 0.047, 0.9 of their
+   combined standard error sqrt(0.048^2 + 0.021^2) = 0.052. The branch's diagnostic read 155 of 480
+   beside, the same count. The blind stands as written and the world untouched.
+3. Beside the blind: the giver's items repeat the branch's diagnostic number for number, the same intervals
+   in both worlds: 300 givings within the lifetime against the dark grain's 305.3 +/- 10.5 (0.5
+   deviations below) and 409 within the run against 416.4 +/- 7.4 (1.0 below); the giving's intervals
+   from 2 to 96, 88 distinct, their mean 33.3; 301 seeds holding the whole span against 309.1 +/- 10.5
+   (0.8 below); the cosine on the plateau 0.6682 in 316 of 316 seeds read, within the gate 2 / A_far =
+   0.051 (a GameBoard reading); the count at the span's end 1 in every seed read, 149 of 149 in the
+   resonant world and 299 of 299 in the detuned one (a GameBoard reading); the giver takes its own light
+   back in 4 of 480 seeds of each world (`measured 0 e by pulse` 4, the standard error 2.0), the
+   one-in-flight limit not built, as before. The design's own 100 seeds were not run apart in this
+   reading; the branch's diagnostic read them at 37 and 1.
+
 ## On the source in time's energy, 2026-10-03 (branch partial-hole-quadratic): the blind, written before the build
 
 The finding this answers (Worker HOLE's reading on branch partial-hole, 2026-10-03): a born quantum's

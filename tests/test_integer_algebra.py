@@ -1,4 +1,4 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate). PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, each one's docstring saying why."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate); and the one division act Rule3's, no raw floor division or modulo outside core/rule3.py but the named index wraps and shape divisions. PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, each one's docstring saying why."""
 
 import ast
 import io
@@ -153,3 +153,51 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
     assert all(numpy_violations(ast.parse("import numpy as np\n" + text)) for text in NUMPY_CHECKS)
     assert float_literals(PASSING) == [] and true_divisions(PASSING) == []
     assert forbidden_imports(tree := ast.parse(PASSING)) == [] and numpy_violations(tree) == []
+
+
+RULE3, DIVISIONS = "core/rule3.py", {ast.FloorDiv, ast.Mod}
+DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
+INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
+    ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
+    ("loader/world.py", ast.Mod, "connected", "the periodic wrap of a walked neighbour's coordinate"),
+    ("growth.py", ast.Mod, "reached", "a line's number against the family's width, a part's first line"),
+    ("growth.py", ast.Mod, "resized", "a line's number against the family's width, a part's first line"),
+    ("loader/derived.py", ast.FloorDiv, "width", "a row's lines over its parts and records, exact"),
+    ("loader/derived.py", ast.FloorDiv, "planes", "a part's width over the plane's two lines, exact"),
+)
+
+
+def divisions(tree: ast.AST) -> list[tuple[int, type[ast.AST], str]]:
+    """Every raw division of a module, its line, its operator's kind and the enclosing function's name: `//` and `%` in an expression or an augmented assignment, and the calls `divmod` and numpy's floor division and remainder (DIVISION_CALLS), counted as a floor division."""
+    functions = [n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]
+    spans = [(n.lineno, n.end_lineno or n.lineno, n.name) for n in functions]
+    found = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.BinOp | ast.AugAssign) and type(node.op) in DIVISIONS:
+            kind = type(node.op)
+        elif isinstance(node, ast.Call) and ast.unparse(node.func) in DIVISION_CALLS:
+            kind = ast.FloorDiv
+        else:
+            continue
+        inner = [span for span in spans if span[0] <= node.lineno <= span[1]]
+        found.append((node.lineno, kind, max(inner)[2] if inner else ""))
+    return found
+
+
+def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
+    """The arithmetic of the engine is Rule3's division act (`division_forward` and its fixed point in core/rule3.py; ALGEBRA.md #the-four-acts): a raw floor division or modulo on a number of the law is refused in every other module of the engine (`//`, `%`, their augmented forms, `divmod`, numpy's floor division and remainder), and the index wraps and the row's shape divisions are the named exceptions (INDEX_ARITHMETIC, each by module, operator and function, no level, share, count or pace among them), refused in turn when one no longer stands in the code."""
+    allowed = {(name, kind, function) for name, kind, function, _reason in INDEX_ARITHMETIC}
+    standing, offenders = set(), []
+    for path in sorted(p for p in SRC.rglob("*.py") if p.relative_to(SRC).as_posix() != RULE3):
+        name, source = path.relative_to(SRC).as_posix(), path.read_text(encoding="utf-8")
+        for line, kind, function in divisions(ast.parse(source)):
+            if (name, kind, function) in allowed:
+                standing.add((name, kind, function))
+            else:
+                offenders.append(f"{name}:{line} {function}: {source.splitlines()[line - 1].strip()}")
+    assert offenders == [], offenders
+    assert standing == allowed, sorted(allowed - standing)
+    assert divisions(ast.parse((SRC / RULE3).read_text(encoding="utf-8"))), "the act's home divides"
+    REFUSED = ("x = a // b\n", "x %= b\n", "q, r = divmod(a, b)\n", "y = np.floor_divide(a, b)\n")
+    assert all(divisions(ast.parse(text)) for text in (*REFUSED, "y = np.mod(a, b)\n", "x = a % b\n"))
+    assert divisions(ast.parse("x = a * b + c\ny = np.pad(a, w)\n")) == []
