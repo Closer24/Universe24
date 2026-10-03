@@ -79,10 +79,10 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert (pair, one_node, spread_to) == ([1, 1299], 128, 90)  # the ion's pair: A^2 = T div 2 = 16,384
     at_two_three = (amplitude(1, 32768, (2, 3)), spread(squared(1, 32768, (2, 3)), (1, 2)))
     assert at_two_three == (
-        171,
-        121,
-    )  # the mathematician's 288 section 2: A^2 = 29,491 at T 32,768, [2, 3]
-    assert 2 * 121**2 == 29282 < 29491 == squared(1, 32768, (2, 3))  # the two Nodes' squares under A^2
+        148,
+        104,
+    )  # one quantum of the invariant, A^2 = T / (2 sin omega) = 21,981 at T 32,768, [2, 3] (the law's L798)
+    assert 2 * 104**2 == 21632 < 21981 == squared(1, 32768, (2, 3))  # the two Nodes' squares under A^2
     there, next_to = tuple(at), tuple(beside)
     levels = [[int(quiet.states[0].lines[0].now[n]) for n in (there, next_to)]]
     assert levels[0] == [spread_to, spread_to]  # the lay over the two Nodes in equal counts

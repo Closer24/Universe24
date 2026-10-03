@@ -171,9 +171,19 @@ def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: n
     return np.asarray(found, dtype=board.kind)
 
 
-def read_quanta(share_now: np.ndarray | int, den: int, action: int, kind: type = np.int64) -> np.ndarray:
-    """A share read in quanta at every Node, the engine's own reading (`share.quanta_of`): (share + W_c div 2) div W_c with W_c = 3 den T by Rule3's division act (ALGEBRA.md #the-count-is-the-records-share), in the arrays' kind."""
-    return np.asarray(quanta_of(share_now, 3 * den * action, kind))
+def count_wall_of(pair: tuple[int, int], action: int) -> int:
+    """The wall of one quantum of a family at the pair, as the engine reads it (`loader.derived.count_wall`): isqrt(9 T^2 (den^2 - num^2)), W_c sin omega_0 to the unit, for a family with a gap, 3 den T for a massless one (the two hands' word on R8, #1793)."""
+    num, den = pair
+    gap = den * den - num * num
+    wall = 3 * action
+    return division_fixed_point(wall * wall * gap) if gap else 3 * den * action
+
+
+def read_quanta(
+    share_now: np.ndarray | int, pair: tuple[int, int], action: int, kind: type = np.int64
+) -> np.ndarray:
+    """A share read in quanta at every Node, the engine's own reading (`share.quanta_of`): (share + W div 2) div W with W the family's quantum (`count_wall_of`) by Rule3's division act (ALGEBRA.md #the-count-is-the-records-share)."""
+    return np.asarray(quanta_of(share_now, count_wall_of(pair, action), kind))
 
 
 def period_reading(
@@ -536,10 +546,10 @@ def standing(
     )
     summed = int(np.where(region, total_share, 0).sum(dtype=object))
     if angles is None:  # the quanta at the Nodes, each rounded, summed: the body's counts as laid
-        quanta = read_quanta(total_share, board.pair[1], board.action, board.kind)
+        quanta = read_quanta(total_share, board.pair, board.action, board.kind)
         carried = int(np.where(region, quanta, 0).sum())
     else:  # the law's count 1 over the mode's Nodes: the summed share rounded once
-        carried = int(read_quanta(summed, board.pair[1], board.action, object))
+        carried = int(read_quanta(summed, board.pair, board.action, object))
     amplitude = max(int(np.abs(a).max()) for a, _b in pairs)
     return Standing(carried, window, amplitude, clock, now, before, nxt, summed, second)
 
@@ -743,7 +753,7 @@ def scaled_record(
     """The standing record scaled so its form over the region carries the body's quanta: the scale bracketed from the centre's own count (the form there is its count times T) by halving and doubling, a scale too large to stand halved back toward the last that stood, then bisected on the quanta carried at the Nodes (each Node's share rounded, summed, the counts as laid) or, for a record a holder turns, on the summed share against the quanta's wall W_c = 3 den T (the share itself and not its rounding to whole quanta, so that a record of count 1, whose share at every Node is below a quantum, is scaled to one quantum over its region); the reading closest to the quanta; refused by name when no reading stands. The mode is iterated once per fine unit in this content and scaled to each trial amplitude (`Modes`)."""
     readings: dict[int, Standing] = {}
     modes: Modes = {}
-    target = quanta if angles is None else quanta * 3 * board.pair[1] * board.action
+    target = quanta if angles is None else quanta * count_wall_of(board.pair, board.action)
 
     def measure(found: Standing) -> int:  # the share over the lines the pair is laid on at their weights
         return found.carried * squares if angles is None else found.share
@@ -803,7 +813,7 @@ def pixel_record(
     total = sum((share_of(board, 0, a, b) for a, b in pairs), zero.copy())
     summed = int(total.sum(dtype=object))
     record = Standing(
-        int(read_quanta(summed, den, board.action, object)),
+        int(read_quanta(summed, (num, den), board.action, object)),
         0,
         amplitude,
         (2 * num, den),
@@ -865,7 +875,7 @@ def body_fixed_point(
         a, level = record.clock
         zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
         total = sum((share_of(board, found, now, before) for now, before in pairs), zero)
-        laid = np.where(region, read_quanta(total, board.pair[1], board.action, board.kind), 0)
+        laid = np.where(region, read_quanta(total, board.pair, board.action, board.kind), 0)
         agreed = bool(np.all(within(laid - counts, np.maximum(laid, counts))))
         print(
             f"GAMEBOARD the body about {list(centre)}, round {round_number}: the content at the centre "
@@ -1008,7 +1018,7 @@ def unit_fixed_point(
         region = keep if angles is not None else region_of(counts, content, centre, board.wrap)
         zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
         total = sum((share_of(board, found, now, before) for now, before in pairs), zero)
-        laid = np.where(region, read_quanta(total, board.pair[1], board.action, board.kind), 0)
+        laid = np.where(region, read_quanta(total, board.pair, board.action, board.kind), 0)
         moved = max(
             int(np.abs(a - b).max())
             for a, b in zip(angled(found, turned_by), angled(content, angles), strict=True)
@@ -1136,7 +1146,7 @@ def read_at_the_start(
     content, angles = start_content(board, families, index, slot, pairs, others)
     zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
     total = sum((share_of(board, content, now, before) for now, before in pairs), zero)
-    weighted = np.where(region, read_quanta(total, board.pair[1], board.action, board.kind), 0)
+    weighted = np.where(region, read_quanta(total, board.pair, board.action, board.kind), 0)
     return weighted, content, angles
 
 
@@ -1299,7 +1309,7 @@ def message_entry(
         "family": message["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(read_quanta(whole, board.pair[1], board.action, object)),
+        "count": int(read_quanta(whole, board.pair, board.action, object)),
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 

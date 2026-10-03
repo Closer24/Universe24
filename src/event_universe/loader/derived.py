@@ -228,8 +228,13 @@ def readers_of(families: tuple[FamilyRule, ...], held: int) -> list[int]:
 
 
 def count_wall(family: FamilyRule, action: int) -> int:
-    """The count's wall W_c = 3 den T, the family's plain wall times the universe's quantum action: the unit in which a share is read as quanta (ALGEBRA.md #the-count-is-the-records-share), the energy T of a quantum at the band's top."""
-    return 3 * family.pair[1] * action
+    """The wall of one quantum of the family, the unit in which its share is read as quanta (ALGEBRA.md #the-count-is-the-records-share; the two hands' word of 2026-10-03 on R8, #1793, the Boss's 5972724842: a count is one quantum of the invariant, the form T sin omega_0 of the family's gap): isqrt(9 T^2 (den^2 - num^2)) for a family with a gap, W_c sin omega_0 to the unit by one root of the whole product (the fixed point of the division act), the share per quantum of a record standing at its rest; 3 den T, the bolometer's W_c, for a massless family, whose quantum is read at its wave's own frequency by the books (`credit.record_unit`) and whose inflow a region reads in units of T."""
+    num, den = family.pair
+    gap = den * den - num * num
+    if gap:
+        wall = 3 * action  # Rule3's 3 den over the den of sin omega_0 = isqrt(gap) / den
+        return division_fixed_point(wall * wall * gap)  # one root on the whole product
+    return 3 * den * action
 
 
 def held_write(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:

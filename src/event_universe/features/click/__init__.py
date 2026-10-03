@@ -138,11 +138,12 @@ def presented(
 
 
 def squared(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
-    """A^2 of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part), count T den^2 div (2 laid (den^2 - num^2)) by the division act (count T div (2 laid) for the massless pair), the number `amplitude` takes the root of."""
+    """A^2 of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): isqrt(count^2 T^2 den^2 div (4 laid^2 (den^2 - num^2))), one root on the whole product by the fixed point of the division act, the invariant 2 A^2 sin omega = T per quantum per line (ALGEBRA.md, the taking's A^2 = (N + 1) T / (2 sin omega_part); the two hands' word on R8, #1793), count T div (2 laid) for the massless pair, the number `amplitude` takes the root of."""
     num, den = pair
     gap = den * den - num * num
     if gap:
-        return int(division_forward(count * action * den * den, 2 * laid * gap, 0)[0])
+        half = count * action * den  # 2 laid A^2 sqrt(gap) = count T den: the root of the whole product
+        return division_fixed_point(int(division_forward(half * half, 2 * laid * 2 * laid * gap, 0)[0]))
     return int(division_forward(count * action, 2 * laid, 0)[0])
 
 
