@@ -8,6 +8,7 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import meeting, node, resonance, world_files
+from event_universe.core import paces
 from event_universe.features.click import amplitude, hole_factor
 from event_universe.game_board import GameBoard
 from event_universe.loader.instrument import (
@@ -408,35 +409,24 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
 
 
 def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands():
-    """The hole of a dense record (the mathematician's 237 with the advisor's second, #1572 comments 5967012316 and 5967123679, two hands; features/click `hole_factor`, `target_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (s above W_rec), at the trial seed 2, beside its untouched twin. (i) The factor: None where the share is at most the unit; sqrt((s - W_rec) / s) within the root's own rounding above it, the numerator within the width's half and the scale m above 0 at the Zeno share against the width's largest integer (the advisor's second, #1572 comment 5967957083: the root taken with the carry). (ii) The taking at 24: the drive's two levels at the Node after the face's two intervals are the twin's scaled by the factor within one level, their ratio the twin's (the phase and the sense stand), not 0, the count down by one, no front begun. (iii) The back-in-time gate reads MATCH across the dense taking over the run, the face's inverse presenting the kept values whatever the target."""
-    width, zeno = (1 << 63) - 1, EVENTS / "zeno" / "zeno_2.json"
-    assert hole_factor(5, 5, width) is None and hole_factor(4, 5, width) is None
-    numerator, denominator = hole_factor(1540 * 10**6, 440 * 10**6, width) or (0, 1)
-    assert (
-        abs(numerator / denominator - (1100 / 1540) ** 0.5) < 1e-4
-    )  # the root's own rounding, 1 / isqrt(s)
-    assert numerator < 1 << 32 and denominator > 1 << 16 > 39243  # m = 16 > 0 at this share: scaled
+    """The hole of a dense record (the mathematician's 237 and 244 with the advisor's seconds, #1572 comments 5967012316, 5967123679 and 5967913000, two hands; features/click `hole_factor`, `target_of`, `rest_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the instrument's Node (s above W_rec), at the trial seed 2, beside its untouched twin. (i) The factor: (0, 1) where O + C is at most the unit; the root of f^2 O + f C = s - W_rec above it, within the root's own rounding. (ii) The taking at 24: the first face scales the level it writes by the factor within one level (the record's level before at 26 the twin's times f), the second removes the rest of the quantum, both levels standing below the twin's and not 0, the count down by one, no front begun. (iii) The back-in-time gate reads MATCH across the dense taking over the run, the face's inverse presenting the kept values whatever the target."""
+    zeno = EVENTS / "zeno" / "zeno_2.json"
+    assert hole_factor(5, 0, 5) == (0, 1) == hole_factor(3, 1, 5) == hole_factor(0, 9, 5)
+    numerator, denominator = hole_factor(3000, -1200, 400)  # O, C, W_rec: f^2 3000 - 1200 f = 1400
+    assert abs(numerator / denominator - (1200 + (1200**2 + 4 * 3000 * 1400) ** 0.5) / 6000) < 1e-3
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
     unit, at, count = board.credit.units[pulse], (4, 4, 2), board.credit.counts[pulse]
-    for _ in range(24):
+    for _ in range(26):
         board.step(), twin.step()
-    share = int(
-        twin.share_of(pulse)[0][at]
-    )  # the share at the click, dense at the Node, above a quantum
-    factor = hole_factor(share, unit, width)
-    assert factor is not None and share > unit
-    board.step(), twin.step(), board.step(), twin.step()  # the face's two intervals
     jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
     assert [x["tick"] for x in jumps] == [24] and jumps[0]["taken"] == "pulse"
+    hole = board.credit.faces[25][0].hole
+    assert hole is not None and hole.factor is not None and 0 < hole.factor[0] < hole.factor[1]
     mine, its = board.states[pulse].lines[0], twin.states[pulse].lines[0]
     now, before = (int(mine.now[at]), int(mine.before[at])), (int(its.now[at]), int(its.before[at]))
-    assert 0 not in now and all(
-        abs(a - b * factor[0] / factor[1]) <= 1.5 for a, b in zip(now, before, strict=True)
-    )
-    assert (
-        abs(now[0] / now[1] - before[0] / before[1]) < 0.01 and board.credit.counts[pulse] == count - 1
-    )
+    assert abs(now[1] - before[1] * hole.factor[0] / hole.factor[1]) <= 1.5  # the first face's level
+    assert 0 < abs(now[0]) < abs(before[0]) and board.credit.counts[pulse] == count - 1
     assert (
         not board.credit.fronts
         and board.credit.faces[26][0].scaled
@@ -445,3 +435,37 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
     gate = GameBoard(load_world(zeno))
     gate.credit.bodies[0].state = 2
     assert BACK.verdict(gate, 47)["verdict"] == "MATCH"  # across the dense taking's two faces
+
+
+def test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record():
+    """The exact removal (the mathematician's 244, section 1, with the booking identity's face term, tests/laws.py: a face changes the record's form by (a* - before) R_face (value - arrival)): the Zeno n = 2 world at the seed 2 beside its twin. (i) The first face's factor is the root of f^2 O + f C = s - W_rec on the Node's own numbers at its interval, O = w (a^2 + b^2) - S a b and C = -a SUM_j R_j b_j - b SUM_j R_j a_j with the neighbours' levels through the Ports, W_rec in the form's own units at the Node, 2 p_i^2 G^2 W_rec, recomputed here from the twin at the click. (ii) After the two faces the record's share over the board is the twin's less one quantum within one level's share at the Node (0.9965 of W_rec at this seed, the second face removing exactly the rest); the share the engine reads at the Node alone is above s - W_rec (1.85 against 1.67 quanta), the Link terms with the six neighbours landing on them, a finding by name beside the record's own number."""
+    zeno = EVENTS / "zeno" / "zeno_2.json"
+    board, twin = GameBoard(load_world(zeno)), GameBoard(load_world(zeno))
+    board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
+    family, gamma, at = board.families[pulse], board.world.node_clock, (4, 4, 2)
+    unit = board.credit.units[pulse]
+    for _ in range(24):
+        board.step(), twin.step()
+    record, (content, factors) = twin.states[pulse].lines[0], twin.read(pulse, 1, 0)
+    reads, coefficient, wall = node.rule_of(family, gamma, content, factors, twin.unit)
+    here, pick = (
+        [int(np.asarray(r)[at]) if np.ndim(r) else int(r) for r in reads],
+        lambda v: int(np.asarray(v)[at]) if np.ndim(v) else int(v),
+    )
+    a, b = int(record.now[at]), int(record.before[at])
+    arrivals = sum(here[p] * int(node.ports(record.now, twin.wrap)[p][at]) for p in range(6))
+    befores = sum(here[p] * int(node.ports(record.before, twin.wrap)[p][at]) for p in range(6))
+    own = int(wall) * (a * a + b * b) - pick(coefficient) * a * b
+    links = -(a * befores + b * arrivals)
+    pace = int(paces.link_pace_of(gamma, pick(content)))
+    weight = 2 * pace * pace * twin.unit * twin.unit  # the share's weight at the Node
+    assert (own + links) > unit * weight > 0  # dense: the form's share at the Node above a quantum
+    board.step(), twin.step(), board.step(), twin.step()
+    hole = board.credit.faces[25][0].hole
+    assert hole is not None and hole.unit == unit * weight
+    assert hole.factor == hole_factor(own, links, unit * weight) and 0 < hole.removed < hole.unit
+    totals = [int(x.total_share(pulse)[0]) for x in (twin, board)]
+    level = int(wall) * (2 * abs(int(board.states[pulse].lines[0].now[at])) + 1)  # one level's share
+    assert abs(totals[0] - totals[1] - unit) <= level / weight + 1  # one quantum left the record
+    left = int(board.share_of(pulse)[0][at]) / unit
+    assert 1.6 < left < 2.0 and left > int(twin.share_of(pulse)[0][at]) / unit - 1  # the Node alone

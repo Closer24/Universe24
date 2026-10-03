@@ -47,6 +47,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "dense record, the face's target the scaled level where the share at the Node exceeds the record's own quantum, "
         "the phase and the sense standing, the back-in-time gate across a dense taking",
     ),
+    "tests/test_the_meeting.py::test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record": (
+        40,
+        "the partial hole's second pass (the Boss's brief of 2026-10-03 at the mathematician's 244): the quadratic "
+        "factor on the Node's own form at the first face and the exact rest at the second, one quantum leaving the "
+        "record within Rule3's floors on the shipped Zeno world",
+    ),
     "tests/test_the_draw.py::test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay": (
         24,
         "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the unit of a "
