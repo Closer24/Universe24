@@ -63,8 +63,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     walled.step()
     assert not [x for x in lines if x["event"] == "click"] and not walled.quanta(charge)[0][beyond].any()
     for _ in range(23):
-        walled.step()
-        open_board.step()
+        walled.step(), open_board.step()
         risen = [x for x in lines if x["tick"] == walled.tick and x["detector"] == "screen"]
         assert all(x["event"] in ("click", "field") and not {"node", "ports"} & x.keys() for x in risen)
         assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")

@@ -205,8 +205,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for module in [m for m in engine if m.__dict__.get("rule3") is original]:
         monkeypatch.setattr(module, "rule3", counting)
     for direction, act in ((1, board.step), (-1, board.step_inverse)):
-        calls.clear()
-        act()
+        calls.clear(), act()
         records = [record for state in board.states for record in state.lines]
         steps = [begun for kind, begun in calls if kind == "step"]
         begun = {id(getattr(record, "before" if direction == 1 else "now")) for record in records}
@@ -219,8 +218,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             share.family_share(family, state.lines, board.wrap, board.world.node_clock)
             node.currents_of(family.pair[0], state.lines, board.wrap)
             node.stresses_of(family.pair[0], state.lines, board.wrap)
-            node.wronskian(state.lines, family.plane)
-            node.form(state.lines, state.lines)
+            node.wronskian(state.lines, family.plane), node.form(state.lines, state.lines)
             board.quanta(index)
     assert board.books() and all(kind != "write" for kind, _ in calls)  # the readings write nothing
     assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands

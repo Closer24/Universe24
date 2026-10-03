@@ -124,8 +124,7 @@ def booked(board: GameBoard, monkeypatch, *indexes: int) -> list[tuple[int, Frac
         stepped.update({i: own_lines(b, i) for i in indexes}), windowed(b)
 
     with monkeypatch.context() as swap:
-        swap.setattr(credit, "windowed", kept)
-        board.step()
+        swap.setattr(credit, "windowed", kept), board.step()
     found = []
     for index in indexes:
         read, records, net, terms, squares, reads = begun[index]
