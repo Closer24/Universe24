@@ -92,7 +92,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     packet = {**PACKET, "amplitude": 400, "top": dict(x=[5, 5], y=[0, 0], z=[0, 0])}
     document = {**json.loads(world.read_text(encoding="utf-8")), "messages": [packet]}
     world.write_text(json.dumps(document), encoding="utf-8")
-    TOOL.main(["--input", str(world), "--sense", "1"])
+    TOOL.main(["--input", str(world), "--sense", "1", "--pixel", "0"])  # the one-Node record
     board = GameBoard(load_world(world))
     message, light = board.world.messages[0], board.states[CHARGE].lines[0]
     now, before = board.board_array(message.now), board.board_array(message.before)
