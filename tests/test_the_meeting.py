@@ -85,8 +85,7 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     assert (m["ratios"], m["rho"], m["label"]) == ([[19, 20]], UNEQUAL[2], "GAMEBOARD")
     rho_zero = credits([side((1, 1), (0, 0)), b], ORDER, (PAIR, PAIR))[1]
     assert GATE.combination(rho_zero, CHSH) == FENCE[GATE.parts_shares]
-    refused("setting", GATE.ports_of, (1,), PAIR)
-    refused("orthogonal", GATE.ports_of, A, ((1, 1),))
+    refused("setting", GATE.ports_of, (1,), PAIR), refused("orthogonal", GATE.ports_of, A, ((1, 1),))
     read, expected = gate_worlds(BELL, tmp_path)
     assert [Fraction(*read["correlation"][k]) for k in expected["order"]] == MEETING
     assert (read["S_by_the_parts_shares"], read["S_by_the_local_sums"]) == ([238, 169], [240, 169])
@@ -217,7 +216,7 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     wrong["weight"] = {**record, "transitions": [{**record["transitions"][0], "weight": 0}]}
     wrong["no `instrument`"] = {k: v for k, v in record.items() if k != "instrument"}
     for word, body in wrong.items():
-        refused(word, node_instrument_of, body, "measured[0]", families[0], 0, quanta, 1)
+        refused(word, node_instrument_of, body, "measured[0]", families, 0, quanta, 1)
     two = {**record, "nodes": record["nodes"] + [{"node": [3, 4, 2], "count": 1}]}
     refused("one Node", bodies_of, [two], None, "", families, (6, 6, 4), 9000, ())
     board, other = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(plain))
@@ -227,15 +226,12 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     assert int(board.quanta(ion)[0][here]) == 1 == int(board.quanta(ion)[0].sum())
     assert all(int(line.now[here]) == 0 for line in board.states[ion].lines[2:])
     assert BACK.verdict(GameBoard(load_world(plain)), 30)["verdict"] == "MATCH"
-    clicks = [line for line in lines if line["event"] == "jump" and line["label"] == "DETECTOR"]
-    while not clicks:
+    while not (clicks := [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]):
         booked(board, monkeypatch, ion, drv, light), other.step()  # the booking identity at every act
-        clicks = [line for line in lines if line["event"] == "jump" and line["label"] == "DETECTOR"]
     first, click = clicks[0], ("P", "S", "strong_drive", None)
     assert (first["realised"], first["left"], first["taken"], first["given"]) == click
     assert first["node"] == {"label": "GAMEBOARD", "at": at} and first["tick"] == board.tick
-    was = dict(p for f in BACK.snapshot(other) for p in f)
-    now = dict(p for f in BACK.snapshot(board) for p in f)
+    was, now = (dict(p for f in BACK.snapshot(b) for p in f) for b in (other, board))
     assert {tuple(map(int, w)) for k in was for w in np.argwhere(was[k] != now[k])} == {here}
     assert board.credit.counts[drv] == other.credit.counts[drv] - 1
     in_s, in_p = (any(int(x.now[here]) for x in board.states[ion].lines[k : k + 2]) for k in (0, 2))
@@ -245,21 +241,19 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     assert abs(p_re * p_re + p_im * p_im - size * size) <= 2 * size and (p_re, p_im) != (size, 0)
     walls = {k: node.rule_of(board.families[k], gamma, 0, None, unit)[2] for k in (ion, drv)}
     assert int(now["ion.lines[2].remainder"][here]) == walls[ion] // 2  # the taker at the lay's origin
-    [
-        booked(board, monkeypatch, ion, drv, light) for _ in (0, 1)
-    ]  # the hole: the face term, two intervals
+    [booked(board, monkeypatch, ion, drv, light) for _ in (0, 1)]  # the hole: the face's two intervals
     hole = board.states[drv].lines[0]
     assert (int(hole.now[here]), int(hole.before[here])) == (0, 0)
     assert 0 <= int(hole.remainder[here]) < walls[drv]  # the giver's remainder Rule3's own
     still = GameBoard(load_world(path))  # the same run without the front: its fronts dropped each step
-    for _ in range(still.tick, board.tick):
-        still.step()
-    extent = np.reshape(board.shape, (3, 1, 1, 1))
+    [still.step() for _ in range(still.tick, board.tick)]
     for _ in range(board.tick, 23):
         booked(board, monkeypatch, ion, drv, light), still.step(), still.credit.fronts.clear()
         for index, origin, since in board.credit.fronts:  # the theorem: nothing differs beyond the ball
             gap = np.abs(np.indices(board.shape) - np.reshape(origin, (3, 1, 1, 1)))
-            far = np.minimum(gap, extent - gap).sum(0) > board.tick - since
+            far = (
+                np.minimum(gap, np.reshape(board.shape, (3, 1, 1, 1)) - gap).sum(0) > board.tick - since
+            )
             for a, b in zip(board.states[index].lines, still.states[index].lines, strict=True):
                 assert (a.now[far] == b.now[far]).all() and (a.before[far] == b.before[far]).all()
     given = [line for line in lines if line["event"] == "jump" and line["given"]]
@@ -313,8 +307,7 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     TOOL.main(["--input", str(split)])
     for front in (True, False):  # the count-0 record's inflow erased by the front, or standing
         b = GameBoard(load_world(split), (sl := []).append)
-        for _ in range(40):
-            b.step(), front or b.credit.fronts.clear()
+        [(b.step(), front or b.credit.fronts.clear()) for _ in range(40)]
         ph, b_at = [f.name for f in b.families].index("photon"), world["measured"][1]["nodes"][0]["node"]
         took = [(x["tick"], x["detector"]) for x in sl if x["event"] == "jump" and x["taken"]]
         level = int(b.states[ph].lines[0].now[tuple(np.add(b_at, b.offset))])
@@ -331,8 +324,46 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
                     writers.add((module.stem, f.name))
     rule3 = {("game_board", "step"), ("game_board", "step_inverse"), ("game_board", "hold")}
     lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
-    lay |= {("meeting", "relaid"), ("giving", "laid_increment")}
+    lay |= {("meeting", "relaid"), ("giving", "laid_increment"), ("giving", "laid_by_count")}
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
+
+
+def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_path):
+    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c), 5964082980, 5964520368 and 5964754600; src/event_universe/conversion.py, loader/instrument.py `conversion_of`): the neutron conversion's committed world (examples/events/neutron_conversion) at the rate 1 and the window 2, so the first window, closing at the second interval, draws it. (i) The loader: a rate of 0, a record out of the body's own family, an empty table, a sense on a record of real lines, a conversion beside parts and one without the instrument are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the instrument's count 1. (iii) The click: one conversion line naming the instrument, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; each record out given one whole quantum by the count on its first line, (128, 128) at A^2 = T div 2, its other lines 0, the credit's counts 1 each and the share 1 per quantum at the Node (the two hands); one lay line per line the write changed, the record's three and the three first lines out, and the back-in-time gate MATCH across the conversion from them; no second conversion, no front (the body cut) and no null window of a record of one part."""
+    folder = EVENTS / "neutron_conversion"
+    families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
+    world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
+    table = (body := world["measured"][0])["conversion"]
+    body["conversion"]["rate"], body["instrument"]["window"], world["ticks"] = 1, 2, 4
+    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
+    rows = {"from 1": {"rate": 0}, "other than": {"to": ["neutron"]}, "lists the": {"to": []}}
+    rows["at none"] = {"sense": 1}
+    wrong = {word: {**body, "conversion": {**table, **row}} for word, row in rows.items()}
+    wrong["no parts"] = {**body, "parts": []}
+    wrong["no `instrument`"] = {k: v for k, v in body.items() if k != "instrument"}
+    for word, entry in wrong.items():
+        refused(word, node_instrument_of, entry, "measured[0]", families, quanta["neutron"], quanta, 1)
+    board = GameBoard(load_world(path), (lines := []).append)
+    n, p, e, nu = (quanta[name] for name in ("neutron", "proton", "electron", "antineutrino"))
+
+    def levels(k):
+        return [(int(r.now[4, 4, 4]), int(r.before[4, 4, 4])) for r in board.states[k].lines]
+
+    assert levels(n) == [(95, -76)] * 3 and board.credit.bodies[0].counts == [1]
+    board.step(), board.step()
+    [first] = [line for line in lines if line["event"] == "conversion"]  # one conversion line
+    assert first["window"] == [1, 2] and first["node"] == {"label": "GAMEBOARD", "at": [4, 4, 4]}
+    assert (first["into"], first["detector"], first["label"]) == (table["to"], "measured 0", "DETECTOR")
+    assert levels(n) == [(0, 0)] * 3 and board.credit.bodies[0].counts == [0]
+    assert levels(p) == [(128, 128)] + [(0, 0)] * 5 and levels(e) == [(128, 128), (0, 0)]
+    assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
+    assert [int(board.quanta(k)[0][4, 4, 4]) for k in (p, e, nu)] == [1, 1, 1]
+    laid = [(line["family"], line["line"]) for line in lines if line["event"] == "lay"]
+    assert laid == [("neutron", k) for k in range(3)] + [(f, 0) for f in table["to"]]
+    board.step(), board.step()
+    assert [x["event"] for x in lines if x["event"] not in ("click", "lay", "field")] == ["conversion"]
+    assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
 
 
 def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():

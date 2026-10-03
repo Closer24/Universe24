@@ -112,3 +112,23 @@ def standing(
     re_before = int(division_forward(re * num - im * sine, den, 0)[0])
     im_before = int(division_forward(im * num + re * sine, den, 0)[0])
     return (re, im), (re_before, im_before)
+
+
+def invariant(count: int, action: int, pair: tuple[int, int], laid: int) -> int:
+    """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands of 2026-10-03, the advisor's (b) and (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the fixed point of den^2 - num^2, sin omega den; the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`meeting.relaid`); the share form of `amplitude` beside it, the instrument's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands, #1572 comments 5964520368 and 5964754600); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
+    num, den = pair
+    sine = division_fixed_point(den * den - num * num)
+    if count <= 0 or sine == 0:
+        return 0
+    return division_fixed_point(int(division_forward(count * action * den, 2 * sine * laid, 0)[0]))
+
+
+def laid_pairs(
+    count: int, action: int, pair: tuple[int, int], sense: int, plane: bool, laid: int
+) -> list[tuple[int, int]]:
+    """The level pairs (now, before) of `count` whole quanta on every line of a record at one Node, the lay of a record converted whole at the start (the two hands of 2026-10-03; the generator's one-Node declaration, equal phases): per real line or plane the amplitude `invariant` on the level now and the level before turned by the pair's rest rotation, (A, A num div den), and for a plane its second line's pair, the sense, (0, sense A s div den) with s the fixed point of den^2 - num^2, so that its Wronskian is sense x A^2 sin omega; `laid` pairs for real lines, 2 `laid` for planes, every one alike; every level 0 at the count 0."""
+    num, den = pair
+    size, sine = invariant(count, action, pair, laid), division_fixed_point(den * den - num * num)
+    real = (size, int(division_forward(size * num, den, 0)[0]))
+    turned = (0, sense * int(division_forward(size * sine, den, 0)[0]))
+    return [pair for _ in range(laid) for pair in ((real, turned) if plane else (real,))]

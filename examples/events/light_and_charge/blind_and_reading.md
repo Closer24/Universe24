@@ -233,3 +233,31 @@ this weight: the tube at the weight 1,000 reads light free of its own well but h
 line 2's delay waits on a declaration that keeps U << 1 under the packet and the body's well
 alike, the advisor's other way (an amplitude with U << 1 at the packet, the binding holder at the
 weight 1), the run proposed.
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (on main fb284717): the write's factor booked as one rounding
+of the count times p_x p_y p_z over the one wall, the product exact beyond the width
+(`paces.write_factor`; the advisor's and the mathematician's lines, #1563 comments 5959617991
+and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
+line within one fine unit at every Node by the scaled residual in integers (`features/start`,
+`refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
+number below a GameBoard reading labelled so unless a detector clicked; a miss against the
+blind is a finding by name, never adjusted; a world refused by name is recorded verbatim.
+
+- **The lays**: the message lay of `free.json` and `free_at_thousand.json` is the wave under its
+  envelope at the vacuum's paces (ALGEBRA.md #the-generator (h)), which neither fix touches, so
+  their mode files stand as the builder wrote them (the builders of the gate worlds, run with
+  `--modes` on this engine, left every message lay byte for byte); `through_neutral.json` and
+  `through_charged.json` stand declared without a mode file, their bodies' lays refused by name
+  before this round and not laid anew in the night's budget (one lay at a time on a shared box).
+- **The committed worlds loaded on the fixed engine** (the start's rest refined): `free.json`
+  LAWFUL at load in 154 s (the tube's start under the refined rest: the holders at the level
+  weight 10^6 rest under the packet's form within one fine unit of their lines, a quarter of the
+  world's run before it), 2,346 quanta of light by the books (2,304 the mode file's count, 2,471
+  the earlier books'); `free_at_thousand.json` REFUSED at load by name, verbatim: "families[0]
+  ('gravity') lacks the key 'reads': a family names the holders it reads, {} for none" (its
+  universe file `binding_at_thousand.json` predates the declaration's read of 2026-10-02; on main
+  alike, no change of this round).
+- **The runs**: not run again tonight; the blind's rows stand with the second reading's numbers,
+  unread on this engine, by name.

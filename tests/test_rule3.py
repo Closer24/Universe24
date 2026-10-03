@@ -205,8 +205,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for module in [m for m in engine if m.__dict__.get("rule3") is original]:
         monkeypatch.setattr(module, "rule3", counting)
     for direction, act in ((1, board.step), (-1, board.step_inverse)):
-        calls.clear()
-        act()
+        calls.clear(), act()
         records = [record for state in board.states for record in state.lines]
         steps = [begun for kind, begun in calls if kind == "step"]
         begun = {id(getattr(record, "before" if direction == 1 else "now")) for record in records}
@@ -219,8 +218,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             share.family_share(family, state.lines, board.wrap, board.world.node_clock)
             node.currents_of(family.pair[0], state.lines, board.wrap)
             node.stresses_of(family.pair[0], state.lines, board.wrap)
-            node.wronskian(state.lines, family.plane)
-            node.form(state.lines, state.lines)
+            node.wronskian(state.lines, family.plane), node.form(state.lines, state.lines)
             board.quanta(index)
     assert board.books() and all(kind != "write" for kind, _ in calls)  # the readings write nothing
     assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands
@@ -286,10 +284,15 @@ def test_the_composed_paces_are_the_laws_two_functions_of_the_content_and_their_
     one = [paces.write_factor(counts, at, at, at, at, gamma, k) for k in (2, 1)]
     assert all(f.tolist() == counts.tolist() for f in [*one, paces.turn_factor(counts, at, gamma)])
     p = [paces.link_pace(gamma, c) for c in (300, 400, 500)] + [paces.clock(gamma, 400)]
-    axis = (2**40 * p[0] + gamma // 2) // gamma * p[1]
-    count = ((axis + gamma // 2) // gamma * p[2] + p[3] // 2) // p[3]
-    wronskian = ((axis + p[3] // 2) // p[3] * p[2] + p[3] // 2) // p[3]
-    both = [paces.write_factor(2**40, *p, gamma, k) for k in (2, 1)]
-    assert both == [count, wronskian] and count != wronskian
+    walls, product = (gamma**2 * p[3], gamma * p[3] ** 2), 2**40 * p[0] * p[1] * p[2]
+    both = [int(paces.write_factor(2**40, *p, gamma, k)) for k in (2, 1)]
+    assert both == [(2 * product + w) // (2 * w) for w in walls] and both[0] != both[1]
+    cs, big = np.array([0, 250, 900]).reshape(3, 1, 1), np.full((3, 1, 1), 2**40)  # three Nodes
+    p0, ps = paces.clock_of(gamma, cs), [paces.link_pace_of(gamma, cs + o) for o in (0, 1, 7)]
+    for k, wall in ((2, gamma**2 * p0), (1, gamma * p0 * p0)):  # the paces differ by axis
+        found = paces.write_factor(big, *ps, p0, gamma, k)
+        at = zip(found.flat, *(p.flat for p in ps), wall.flat, strict=True)
+        off = [Fraction(2**40 * int(x) * int(y) * int(z), int(w)) - int(f) for f, x, y, z, w in at]
+        assert found.dtype == big.dtype and all(abs(e) <= Fraction(1, 2) for e in off)
     assert [paces.write_factor(9, 0, 0, 0, 0, gamma, k) for k in (2, 1)] == [0, 0]
     assert paces.turn_factor(gamma + 1, p[3], gamma) == ((gamma + 1) * p[3] + gamma // 2) // gamma

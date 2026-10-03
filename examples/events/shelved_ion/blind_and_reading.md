@@ -179,6 +179,13 @@ shipped reading changed by name, the blind untouched. The ion instrument test of
 `tests/test_the_meeting.py`, whose counter is one plane of a 6 x 6 x 4 periodic box three Links from
 the ion, reads no credit under the same lay (the inflow below half a quantum in its window), the floor
 in a small box, named there.
+The mathematician's line on the change (#1572 comment 5966081562, one hand; the advisor's word
+pending): the counter's change is a finding by name moved by the lay's form in the expected direction,
+since a source in time over tau = 48 holds the given quantum beside the ion for 48 intervals (A_t =
+isqrt(S / tau) = 30, the floor's reach 0.28 A_t about 8 Links) where the one-instant lay passed the
+counter in one transit, so a counter within that reach credits more of the 43 (14 against 8) and the
+bins fill nearer the givings; the condition it states by name: the counter's Nodes within 0.28 A_t of
+the ion, else nothing is credited.
 
 ## On the resonant act, 2026-10-03 (branch resonant-act)
 

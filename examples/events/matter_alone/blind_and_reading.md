@@ -754,3 +754,62 @@ and 17 of CPU without a pass line, as the first hour did, and was stopped by the
 Israel so that the night's report could be written; the world stands declared with one Node and the
 `lay` key and no mode file, its direct lay unread on this engine until the start's stopping rule is
 fixed (finding 5), a stop by the clock and no reading of the branch.
+
+## On the fixed engine (the fix round, 2026-10-03)
+
+The engine of branch `fix-round` (on main fb284717): the write's factor booked as one rounding
+of the count times p_x p_y p_z over the one wall, the product exact beyond the width
+(`paces.write_factor`; the advisor's and the mathematician's lines, #1563 comments 5959617991
+and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
+line within one fine unit at every Node by the scaled residual in integers (`features/start`,
+`refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
+number below a GameBoard reading labelled so; a miss against the blind is a finding by name,
+never adjusted. The night's budget: one lay at a time on a shared box, so `pixel` alone is
+re-laid here; `cloud` (the 41-cube, whose start under the refined rest is hours), `pixel_compact`
+and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine as below, and
+`pixel_compact_20000` and the three direct worlds stand declared without a mode file as before.
+
+- **`pixel`, re-laid** (the generator's reading before any run): the design's 10,000 quanta at the centre of the open 25-cube,
+  the repeat lay converged at the round 16 in 1,363 s on the shared box (its first round of the
+  night, before the refinement's seeding, took ten minutes alone): the clock pair [2581, 1875],
+  2 cos omega_b = 1.3765 (main's lay [2647, 1922] = 1.3772), the amplitude 1,875 (1,922), 9,995
+  quanta declared over 1,551 Nodes with 81 at the centre (10,137 over 1,363 Nodes with 85), the
+  record over 11,165 Nodes (10,733), 9,995 carried; the one-step standing check passed, the
+  rotation 1.3767 in the median over the 1,551 Nodes and 1.3765 at the centre. The wide branch
+  again, the body's rms radius 3.96 Links at the start (3.91): the lay moves at the rounding with
+  the refined rest, as the two hands said every world's would, and the branch does not.
+- **`pixel`, run 400 intervals and read** (`tools/body_rest.py`): LAWFUL over the 400 intervals, 400 `click` lines of the open faces' layer summing to
+  275,064,000 in the current's units, 0.47 quanta of matter leaving the board (0.018 before); the
+  centre's count 81 to 71 (85 to 70), the rms radius 3.96 to 4.13 Links, the centroid 12, 12, 12
+  at both ends; 2 cos omega_b at the centre 1.3765 at the start and 1.3728 at the end; the well
+  D div T summed over the board 8,262 quanta at the start and 8,305 at the end over the declared
+  9,995, 0.83 (8,358 and 8,409 over 10,137, 0.82, before); the books' drift +78,191,316,109 in the
+  current's units at the reading's end, +133 quanta (1.3 percent of the count) where the first
+  reading read +65.3: a finding by name, the drift doubled under the refined rest and the one
+  rounding. Gravity's time level along +x from the centre, 1, 1, 0, 0, 0, 0, 0 at the start (the
+  level weight 1,000, the row's rest at the body's own paces) and 15, 3, 17, 28, 22, 17, 14 at
+  the end: the massless row is not static under the run with its rest now within one fine unit
+  of its line, a finding by name (the first reading's "gravity not static", for which the rest's
+  miss was the named candidate, stands with the miss closed; the start lays no tension, and the
+  row's axis lines are first written at the first interval, the candidate this reading names and
+  does not test); the binding holder's row is read the same way by the tool and stands at 0
+  along the axes at both ends at its level weight 1,000.
+- **The committed lays loaded on the fixed engine** (the start's rest refined, the gate's reading
+  of each declared count): `pixel_compact.json` LAWFUL at load in 1.6 s, 8,065 quanta by the books (8,000 declared),
+  `pixel_compact_14000.json` LAWFUL in 2.9 s, 14,069 quanta (14,000 declared), the gate admitting
+  each declaration within its rounding at the refined rest's paces; `cloud.json` not loaded
+  tonight (its 41-cube start under the refined rest is a quarter hour at least on the shared box;
+  the budget's cut, not a refusal); `pixel_compact_20000.json`, `pixel_direct_8000.json`,
+  `pixel_direct_14000.json` and `pixel_direct_25cube_14000.json` declared without a mode file,
+  refused at load by name as before.
+- **Two findings of the start's stopping rule, named and not fixed** (worker C's fifth reading
+  above, items 4 and 5; the fix round's `refined` is the inner solve at fixed paces, the line
+  within one fine unit, and touches neither): (1) the rest of the compact seed on the 11-cube
+  2-cycles at the unit in the outer re-read of the paces from the row's own level (4297 and
+  4299 at the seed Node after 20 passes, refused by name as a cycle) at 9,000, 12,000, 13,000
+  and 14,000 quanta while it converges at 8,000, 10,000 and 11,000; (2) on the 25-cube at 14,000
+  the same re-read neither repeats nor returns to an earlier state for an hour, the start
+  having no pass limit. Both are the outer loop's, the paces re-read from the rounded levels
+  until they repeat (`rest`, `returned`), where the inner solve is now exact to the fine unit:
+  a self-consistent integer map whose rounding can alternate between two neighbours or walk
+  without a repeat at a steep well; no run added for them tonight.
