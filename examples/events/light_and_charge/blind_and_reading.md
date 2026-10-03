@@ -1,5 +1,7 @@
 # World (v), light and charge: the blind and the reading
 
+**Removed on 2026-10-03 at the owner's word ("what does not load, delete; we will manage without them"):** the two body worlds, `through_neutral.json` and `through_charged.json`, declared without a mode file and refused at load, with the delay blind that read them; `free.json` alone stands and loads. The sections below that name the body worlds are the record of the blind and of the readings on the engines they name, kept as history.
+
 The families round, run once on the frozen engine (the owner's word of 2026-10-01, 11:45,
 "run the engine on all the families and see that they work"; HIGHLIGHTS.md, **Every family run
 on the engine and seen to work**). The blind below is the advisor's, GitHub issue #1563 comment

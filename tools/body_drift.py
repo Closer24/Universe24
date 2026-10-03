@@ -105,31 +105,19 @@ def change_of(reading: dict[str, Any]) -> Fraction:
 
 
 def compared(expected: dict[str, Any], readings: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    """The like and the unlike worlds against the background the blind names: the uncharged pair's separation change plus the image force of the faces read on the single bodies (the charged singles' separation change, the second's drift less the first's, less the uncharged singles'); a and b, their sum (the asymmetry) and their half-difference (the effect's size), and the blind's three lines answered."""
-    worlds, named = expected["worlds"], expected["background"]
+    """The three uncharged worlds against the blind: the uncharged pair's separation change (the mutual pull of the two holders of the content, G), the single bodies' drifts and their difference (the second's less the first's, the spreading of a body alone), and the pair's change less that difference, the pull alone; the blind's lines answered. The charged worlds that read like against unlike left the repository on 2026-10-03 at the owner's word, so no a and no b are read here."""
+    named = expected["background"]
     pair = change_of(readings[str(named["pair"])])
-    charged, uncharged = (
-        change_of(readings[str(names[1])]) - change_of(readings[str(names[0])])
-        for names in (named["charged_alone"], named["uncharged_alone"])
-    )
-    like, unlike = (change_of(readings[str(worlds[name])]) for name in ("like", "unlike"))
-    a, b = like - (pair + charged - uncharged), unlike - (pair + charged - uncharged)
-    half = (a - b) / 2
+    first, second = (change_of(readings[str(name)]) for name in named["uncharged_alone"])
+    alone = second - first
+    pull = pair - alone
     return {
         "label": LABEL,
         "uncharged_pair": [pair.numerator, pair.denominator],
-        "image_force_of_the_singles": [
-            (charged - uncharged).numerator,
-            (charged - uncharged).denominator,
-        ],
-        "a_like_less_background": [a.numerator, a.denominator],
-        "b_unlike_less_background": [b.numerator, b.denominator],
-        "asymmetry": [(a + b).numerator, (a + b).denominator],
-        "half_difference": [half.numerator, half.denominator],
-        "like_apart": a > 0,
-        "unlike_together": b < 0,
-        "same_size": 3 * abs(a + b) <= abs(half),
-        "like_further_than_unlike": half > 0,
+        "uncharged_singles_apart": [alone.numerator, alone.denominator],
+        "pull_less_the_spreading": [pull.numerator, pull.denominator],
+        "pair_closes": pair < 0,
+        "pull_closes": pull < 0,
         "blind": expected["blind"],
     }
 

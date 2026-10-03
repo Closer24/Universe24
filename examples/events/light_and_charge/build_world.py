@@ -1,4 +1,4 @@
-"""World (v) of the families round, light and charge (HIGHLIGHTS.md, Every family run on the engine and seen to work; the advisor's blinds, #1563 comment 5928483084), from the design file beside this script: a packet of light along a tube past a body onto a screen of regions backed by a receding face, three worlds on the universe of world (iv) (no body; a compact pixel of the matter family; the same quanta of the charged family laid rotating), the message laid by the generator (tools/pixel_mode.py, with --modes, which lays the body too, a refusal by name printed and the world left declared); and the blind expectation file in the format tools/click_counts.py reads, the uniform row of the free world, the arrival from the band's group velocity and the delay by the content's index with the sign's 0, written from the law's lines before any run and never touched after. Every number is the design's and stands in the files, none in this script or the engine.
+"""World (v) of the families round, light and charge (HIGHLIGHTS.md, Every family run on the engine and seen to work; the advisor's blinds, #1563 comment 5928483084), from the design file beside this script: a packet of light along a tube onto a screen of regions backed by a receding face, one world on the universe of world (iv), no body (the two body worlds of the first design were removed on 2026-10-03 at the owner's word, what does not load is deleted), the message laid by the generator (tools/pixel_mode.py, with --modes); and the blind expectation file in the format tools/click_counts.py reads, the uniform row of the free world and the arrival from the band's group velocity, written from the law's lines before any run and never touched after. Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -33,18 +33,9 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world: the tube (x open with both faces receding, y and z periodic), the body the world names at the centre or none, the message of light along +x over the whole cross-section, the screen's regions, the universe the design names."""
-    row, across = design["worlds"][name], int(design["across"])
-    bodies = (
-        []
-        if row["body"] is None
-        else [
-            {
-                "family": str(row["body"]),
-                "nodes": [{"node": [int(v) for v in design["centre"]], "count": int(design["quanta"])}],
-            }
-        ]
-    )
+    """One world: the tube (x open with both faces receding, y and z periodic), no body, the message of light along +x over the whole cross-section, the screen's regions, the universe the design names."""
+    across = int(design["across"])
+    bodies: list[dict[str, object]] = []  # the free world: no body (the body worlds removed, 2026-10-03)
     return {
         "shape": [int(design["length"]), across, across],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
@@ -80,7 +71,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
 
 
 def expectation(design: dict[str, Any], laid: int | None) -> dict[str, object]:
-    """The blind expectation file (NODEREADER, as tools/click_counts.py reads it): the screen's regions ordered along y, the family of light, the window, the pattern's range, the seed of the draw, the uniform blind row of the free world (every region one share, the lay's count over the regions where the lay stands), the arrival wager, `laid` the generator's count of the lay, and the delay's blind with the sign's 0 beside it."""
+    """The blind expectation file (NODEREADER, as tools/click_counts.py reads it): the screen's regions ordered along y, the family of light, the window, the pattern's range, the seed of the draw, the uniform blind row of the free world (every region one share, the lay's count over the regions where the lay stands), the arrival wager and `laid` the generator's count of the lay."""
     names = [str(node_reader["name"]) for node_reader in screen_regions(design)]
     regions = len(names)
     share = round(laid / regions, 1) if laid is not None else 1.0
@@ -99,10 +90,7 @@ def expectation(design: dict[str, Any], laid: int | None) -> dict[str, object]:
         "quanta": laid,
         "laid": laid,
         "arrival": design["arrival"],
-        "delay": design["delay"],
         "worlds": {name: row["body"] for name, row in design["worlds"].items()},
-        "body": {"family_per_world": {name: row["body"] for name, row in design["worlds"].items()}},
-        "lay": design["lay"],
     }
 
 
