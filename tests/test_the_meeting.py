@@ -416,7 +416,7 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
     assert abs(numerator / denominator - (1200 + (1200**2 + 4 * 3000 * 1400) ** 0.5) / 6000) < 1e-3
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
-    unit, at, count = board.credit.units[pulse], (4, 4, 2), board.credit.counts[pulse]
+    at, count = (4, 4, 2), board.credit.counts[pulse]
     for _ in range(26):
         board.step(), twin.step()
     jumps = [x for x in lines if x["event"] == "jump" and x["label"] == "DETECTOR"]
