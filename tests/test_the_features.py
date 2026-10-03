@@ -62,8 +62,7 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert content_of([]) == 0 and link_tension([]) == 0
     assert link_tension([(1, level, level)]).ravel().tolist() == [7, -7]
     assert link_tension([(1, level, -level), (1, full, full + 1)]).ravel().tolist() == [4, 4]
-    refused("wall is from 1", carried, 5, 0, 0)
-    refused("direction", carried, 5, 3, 0, 2)
+    refused("wall is from 1", carried, 5, 0, 0), refused("direction", carried, 5, 3, 0, 2)
     refused("wall E_s T is from 1", hold, 0, 1, 0, 0)
 
 
@@ -72,9 +71,8 @@ OPEN_CHAIN, OPEN_CUBE = Wrap(False, True, True), Wrap(False, False, False)
 
 def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     """On a chain and a box, at [1, 1], at the binding holder's pair [2400, 2401] (a periodic box too, the screening its sink) and at short-range pairs, with sources of one sign and of both (a box with one open face, its sink): one more act of the line returns the fine levels (the first repeat is a fixed point), the line's residual at the row's own composed paces, (6 (den - num) p_0^2 + 6 num p_i^2) b - num p_i^2 S_6(b) - 3 den Gamma^2 sigma with sigma scaled per proper volume and per proper interval, is within one act's floor (0 to the divisor), and the levels are the fine levels over the unit to the nearest integer, of the sources' sign at the sources (a negative source beside a positive one at 0 at most) and, with one sign, never below 0. The binding holder's pair of the tests' universe at its level weight on a closed box of 21^3 with one source of 100 quanta per interval at the centre (the fine unit 485; at 1,000 the unit 48 leaves the floored iteration two levels off the exact line): the level at the six neighbours is one number (an isotropic rest, the vector test of the two rows), the level falls along each axis all the way to the face (the screened well of the six Ports, whose reach is the pair's, ALGEBRA.md #the-well), and at every Node, the far ones among them, the level is within one unit of the self-consistent line at the row's own composed paces with the source scaled as the write scales it, solved sparse. A board periodic on its every axis at [1, 1] gives the sources no sink; a level weight below 1 is refused. The self-consistent line at the row's own paces, solved sparse at those paces, returns the levels. A one-Node source of 24,576 quanta on an open 11-cube at Gamma 6,000 under the binding pair: the levels re-read from their own rounding swing between two states 10,071 apart at the Node, no fixed point and no rounding tie, refused by name."""
-    chain = np.zeros((40, 1, 1), dtype=np.int64)
-    chain[10:13, 0, 0], chain[25, 0, 0], box = 30, 12, np.zeros((6, 5, 4), dtype=np.int64)
-    box[1:3, 1:3, 1] = 9
+    chain, box = np.zeros((40, 1, 1), dtype=np.int64), np.zeros((6, 5, 4), dtype=np.int64)
+    chain[10:13, 0, 0], chain[25, 0, 0], box[1:3, 1:3, 1] = 30, 12, 9
     mixed = box.copy()
     mixed[4, 2:4, 2], mixed[1, 1, 1] = -13, -9  # sources of both signs, the tension and the senses
     cases = [(chain, OPEN_CHAIN, pair, 7) for pair in ((1, 1), (2400, 2401), (1, 4))]

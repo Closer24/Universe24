@@ -18,17 +18,32 @@ MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
     "GAMEBOARD",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, FIELD, PARTS, CREDIT = (
+CLICK, FIELD, PARTS, CREDIT, JUMP, ERASURE = (
     "click",
     "field",
     "parts",
     "credit",
-)  # the output's four lines: the detector's report, the GameBoard reading, the parts' levels, the click written
+    "jump",
+    "erasure",
+)  # the output's six lines: the detector's report, the GameBoard reading, the parts' levels, the click written, a record's click at its Node, the front's shell
 REPORT_KEYS = ("event", "label", "tick", "family", "detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 CREDIT_KEYS = ("window", "realised", "kept", "count", "left", "node")  # the credit line's own keys
+JUMP_OWN = ("left", "taken", "given")  # the jump line's own words beside the credit's
+ERASURE_KEYS = ("origin", "distance", "nodes", "taken")  # the erasure line's own keys
+JUMP_KEYS = ("window", "realised", *JUMP_OWN, "node")  # the jump line's keys
+MEASURED = "measured"  # a record at a Node that is an instrument in the output, by its number in the world's order
 AT = "at"  # the one Node written, a GameBoard diagnostic beside the credit's result
-OUTPUT = (*REPORT_KEYS, INFLOW, READING, WELL, LEVELS, *CREDIT_KEYS)  # the lines' keys, in their order
+OUTPUT = (
+    *REPORT_KEYS,
+    INFLOW,
+    READING,
+    WELL,
+    LEVELS,
+    *CREDIT_KEYS,
+    *JUMP_OWN,
+    *ERASURE_KEYS,
+)  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
 BOOKS = ("share", "quanta", "drift", "pace", "frozen")  # the keys of a family's books, a diagnostic
@@ -84,6 +99,40 @@ def credit(
     line = dict(zip(REPORT_KEYS, (CREDIT, MEASUREMENT, tick, family, detector), strict=True))
     written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     line.update(zip(CREDIT_KEYS, (window, realised, kept, count, left, written), strict=True))
+    return line
+
+
+def jump(
+    tick: int,
+    family: str,
+    measured: int,
+    window: list[int],
+    realised: str,
+    left: str,
+    taken: str | None,
+    given: str | None,
+    node: list[int],
+    levels: list[list[int]] | None = None,
+) -> dict[str, object]:
+    """The jump line, the click of a record at a Node that is an instrument, written on the GameBoard at that one Node (features/click; ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the exchange at one Node), labelled DETECTOR: the interval, the record's family, the instrument by its number among the world's `measured` (`measured n`), the window [first, last] drawn over, the part realised and the part left (their declared names), the family whose arriving quantum was taken (the taking click; None otherwise) and the family of light a whole quantum was given to (the giving click; None otherwise); beside the result, under `node` and labelled GAMEBOARD, the one Node written at the file's coordinates, a diagnostic for the host's tool; the null window's write, where its re-lay changed a level, the same line labelled GAMEBOARD throughout (no quantum passed, no measurement) with the part's levels before and after under `node.levels`, the diagnostic the host's tool crosses from."""
+    label = MEASUREMENT if levels is None else DIAGNOSTIC
+    line = dict(zip(REPORT_KEYS, (JUMP, label, tick, family, f"{MEASURED} {measured}"), strict=True))
+    written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
+    if levels is not None:
+        written[LEVELS] = levels
+    line.update(zip(JUMP_KEYS, (window, realised, left, taken, given, written), strict=True))
+    return line
+
+
+def erasure(
+    tick: int, family: str, origin: list[int], distance: int, nodes: int, taken: int
+) -> dict[str, object]:
+    """The erasure line, the front's shell of one interval (src/event_universe/front.py; the owner's word of 2026-10-03, the past going out at the speed of light), labelled GAMEBOARD, a diagnostic beside the click line for the host's tool and no result: the interval, the clicked record's family, the click's Node at the file's coordinates (`origin`), the shell's Link-metric distance from it, the shell's Nodes and the levels taken there, the sum of the sizes of the record's two levels over the shell."""
+    line: dict[str, object] = dict(
+        zip(REPORT_KEYS, (ERASURE, DIAGNOSTIC, tick, family, None), strict=True)
+    )
+    for key, value in zip(ERASURE_KEYS, (origin, distance, nodes, taken), strict=True):
+        line[key] = value
     return line
 
 
