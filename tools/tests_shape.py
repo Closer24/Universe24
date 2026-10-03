@@ -44,18 +44,25 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
         79,
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
-        "the band's line with the transverse mode, the loader's three refusals, the lay on an open board, the blind",
+        "the band's line with the transverse mode, the loader's three refusals, the lay on an open board with the "
+        "carrier's phase at Omega, the blind",
     ),
     "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum": (
-        36,
-        "the dark grain's dedicated test (the Boss, 2026-10-03): the giving drawn per interval at the hazard in the "
-        "dark over the trials' seeds, one draw per interval and none at the window's close, the window's draw "
-        "standing with the light present, the far Node's cosine on every seed's plateau",
+        90,
+        "the generic detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
+        "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
+        "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
     "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
         36,
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
         "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
+    ),
+    "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
+        33,
+        "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
+        "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
+        "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

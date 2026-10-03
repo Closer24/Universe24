@@ -91,3 +91,130 @@ are the `jump` lines labelled by the detector. The pulse's count of 413 in the b
 window named beside the blind and the pi pulse's tuning are GameBoard matters. The lines carry the
 board's `tick` and the `window` in board intervals; the turn itself is taken per proper interval at the
 record's Node (`meeting.turned_labels`) and no line carries that clock.
+
+## On the resonant act, 2026-10-03 (branch resonant-act)
+
+The resonant two-mode act (the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562; the advisor's
+seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' precisions of the
+morning, #1572 comments 5966338551 and 5966387795; the form in `examples/events/resonance/blind_and_reading.md`)
+turns the labels once per window by k isqrt(X^2 + Y'^2) div R, A W / 2 at resonance, where the
+magnitude form it replaces accumulated (2 / pi) A W per window; the design's drive amplitude is
+rescaled once by 4 / pi, 308 to 392, a file number by name in `design.json` with the hands' ids, so
+that the pi pulse stands where T9 has it (48 x 392 / (2 x 6000) = 1.568 against pi / 2), the five
+worlds and their mode files rebuilt by `build_world.py --modes`, the blind's column untouched. Re-run
+by `tools/meeting_trials.py` over the 120 seeds:
+
+| n | window | trials ending in e | P(e at T_pi) | blind | the shipped act | the form's own number |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 48 | 113 of 120 | 0.942 | 1.000 | 120 of 120 | 0.943 (the angle 1.330 per window) |
+| 2 | 24 | 67 of 120 | 0.558 | 0.500 | 61 of 120 | 0.497 (the angle 0.747 per window) |
+| 4 | 12 | 44 of 120 | 0.367 | 0.375 | 44 of 120 | 0.369 (the angle 0.387 per window) |
+| 8 | 6 | 32 of 120 | 0.267 | 0.235 | 28 of 120 | 0.233 (the angle 0.195 per window) |
+| 16 | 3 | 15 of 120 | 0.125 | 0.133 | 16 of 120 | 0.133 (the angle 0.098 per window) |
+
+PASS at n = 4 within one standard error of column A (0.045), the same count as the shipped act's 44
+of 120, the jumps 61 g to e and 17 e to g against 62 and 18; PASS at n = 16 (0.125 against 0.133)
+and at n = 8 (0.267 against 0.235, 0.032 off, within one standard error of 0.039); n = 2 reads 0.558
+against 0.500, 0.058 off, within two standard errors (0.046) and not one; n = 1 reads 0.942 against
+1.000, 113 of 120, 7 trials ending in g where the blind and the shipped act had none: a MISS and a
+FINDING by name, named in this section before the four other probe counts were run and read as
+predicted. Named, a GameBoard matter and
+no adjustment of the blind: the window's turn is the plane's size over the window whatever the drive's
+phase at the window's start (the hands' A W / 2 at every arrival phase), so the angle per window no
+longer varies with that phase as the magnitude form's did; and the one turn per window passes through
+the engine's turn, 2 arctan of the numerator over 2 Gamma, so a window carrying a quarter turn in one
+application (n = 1, the numerator 9,408 against 12,000) turns by 1.33 and not 1.57, a compression of
+the tangent half-angle at large turns, 1.4 percent at n = 4 and 15 percent at n = 1; the form's own
+number per world under that angle and the null window's write stands in the last column (0.943 at
+n = 1 against the read 0.942), so the n = 1 miss is the engine's turn form and not the draw. The
+jumps: n = 1, 113 g to e; n = 2, 91 and 24; n = 8, 38 and 6; n = 16, 15 and 0.
+## On the sub-turn form, 2026-10-03: the blind, written before the run
+
+The advisor's second on the first build (d12a4f51, read from the diff): the window's turn is an angle
+and the engine's turn (`features/rotation`, `turned`) takes a tangent half-angle, tan(theta / 2) = the
+numerator over 2 Gamma, so one shear of the whole window's sum compresses a large turn, 2 arctan(9,408
+/ 12,000) = 1.332 at n = 1 against 1.568, sin^2(1.332) = 0.9435, the 113 of 120 above exactly; at n = 2
+the per-window angle 2 arctan(0.392) = 0.744 against pi / 4 = 0.785. The misses at n = 1 and 2 and the
+passes at n = 4, 8 and 16 are one cause, the tangent, not statistics. The fix, one line of the act
+(`meeting.sheared`): the window's turn applied at the close as W equal sub-turns, each sub-turn's
+numerator (turn + carry) div W with the remainder carried across the W shears (the carried division,
+the write's own act), so the sub-turns sum to the turn exactly and the angles add as the proper
+intervals' did: 48 x 2 arctan(9,408 / (12,000 x 48)) = 1.5680 at n = 1 (pi / 2 = 1.5708, the 0.003 the
+design's rounding of 392), the per-window angle pi / (2 n) at every n within 0.001; the labels
+untouched inside the window, the resonance read by the plane's size, the root once per window; no
+amplitude recalibration (2 arctan is not linear in W, no one amplitude fits every n). The blind for the
+re-read, the advisor's, written here before the run: n = 1 at 1.000 (120 of 120); n = 2 at 0.500
+within one standard error (0.046); n = 4, 8 and 16 as read above (44, 32 and 15 of 120) within one
+standard error; the resonance world's detuned and four-phase readings unchanged (they read the turn's
+numerator, not the angle). A reading that misses this blind is a finding by name, not adjusted.
+
+### The reading under the sub-turn form (branch resonant-act, 2026-10-03, about 07:35 UTC, 120 trials per world)
+
+| n | window | trials ending in e | P(e at T_pi) | the blind above | the first build |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 48 | 120 of 120 | 1.000 | 1.000 (120 of 120) | 113 of 120 |
+| 2 | 24 | 68 of 120 | 0.567 | 0.500 within 0.046 | 67 of 120 |
+| 4 | 12 | 45 of 120 | 0.375 | 0.375, as read (44) | 44 of 120 |
+| 8 | 6 | 33 of 120 | 0.275 | 0.235, as read (32) | 32 of 120 |
+| 16 | 3 | 15 of 120 | 0.125 | 0.133, as read (15) | 15 of 120 |
+
+PASS at n = 1 (120 of 120, the blind's), at n = 4 (0.375, the column exactly), at n = 8 and at n = 16
+(as read, within one count). n = 2 reads 0.567 against 0.500, 0.067 off, 1.46 standard errors, beyond
+the blind's one standard error: a MISS by name, not adjusted; the same 120 seeds read 0.558 on the
+first build at the per-window angle 0.747 and 0.567 here at 0.784 (pi / 4 = 0.785, the form's own
+number 0.500), so the excess is the seeds' draw and not the angle, named and left standing. The
+jumps: n = 1, 120 g to e; n = 2, 95 and 27; n = 4, 63 and 18; n = 8, 39 and 6; n = 16, 15 and 0.
+The one shear's angle at n = 1 is 2 arctan(9,408 / 12,000) = 1.3298 exactly, the blind's 1.332 its
+rounding; the sub-turn form's 48 x 2 arctan(196 / 12,000) = 1.5679. The resonance world's detuned and
+four-phase readings: the four-phase turns are the dedicated test's and unchanged (they read the turn's
+numerator); the detuned taker is read on the tree that also holds main's dark grain, which moved the
+givings, so its number stands in `examples/events/resonance/blind_and_reading.md` against the blinds
+there and not against this line. The function named `meeting.sheared` in the blind lives in
+`src/event_universe/resonance.py` as `sheared`, called by `meeting.turned_labels`.
+
+### The n = 2 row at 480 seeds, a finding by name (the advisor's re-read, #1572 comment 5966923475)
+
+The advisor read the shipped Zeno worlds at 954c4a75 over the fresh seeds 121 to 600 with
+`tools/meeting_trials.py` (a scratch worktree, nothing written to the repository):
+
+| world | ends in e | fraction | Itano | standard error | the jumps g to e / e to g |
+| --- | --- | --- | --- | --- | --- |
+| n = 2 | 295 of 480 | 0.615 | 0.500 | 0.023 | 380 / 85 |
+| n = 2, the first window alone (24 intervals) | 221 of 480 | 0.460 | 0.500 | 0.023 | 221 / 0 |
+| n = 4 | 193 of 480 | 0.402 | 0.375 | 0.022 | 251 / 58 |
+| n = 8 | 99 of 480 | 0.206 | 0.235 | 0.019 | 109 / 10 |
+
+n = 4 and n = 8 within 1.5 standard errors; n = 2 five standard errors high, the branch's 68 of 120
+and the first build's 67 of 120 on the seeds 1 to 120 the same bias at a quarter of the statistics
+and not the draw. The two windows separated: the first window alone flips 221 of 480 (0.460, within
+2 standard errors); in the second window 159 of the 259 left in g flipped to e (0.61) and only 85 of
+the 221 in e flipped back to g, 0.385 against 0.5, 3.5 standard errors low. The asymmetry is the
+finding by name: after a taking, the return e to g is suppressed. The cause by one hand, the
+advisor's reading: the taking's write is the hole, the arriving record's levels at the Node to 0 by
+the face with its count down by one, and the Zeno drive at A = 392 holds at the instrument's Node
+the share 3 den A^2 sin^2 omega = 1.54 x 10^9 against one quantum's W_c sin omega = 4.40 x 10^8 at
+T = 32,768, 3.5 quanta's share per Node, so the hole of one taking removes three and a half quanta's
+worth of the drive at the Node, which Rule3 refills from the neighbours over the following intervals,
+and the second window's sum at that Node is short; not the resonant act's (the magnitude form had the
+same hole, 120 trials hid it) and not statistics; the one-quantum records of the gates are untouched
+by it, a dense drive is the case. The hole of a dense record (the Node's share down by one quantum,
+W_rec, and not to 0, the record re-laid at its share less W_rec with the count down by one) is a line
+asked of the mathematician, a round of its own and not tonight's. The advisor's word for the gate:
+the trials 480 per world from now, 120 reads and does not prove; a design change for the next round,
+the five worlds' trials untouched tonight.
+
+The diagnostic the advisor asked, run before any change, labelled GAMEBOARD (a reading of the board
+and no measurement): `zeno_2.json` at the seed 2 (the record's generator at the state 2, as the trials
+set it), whose record takes at the first window's close, the interval 24, g to e, and ends in e; beside
+it the same seed with the taking suppressed (`meeting.took` returning no taking, so the record writes
+its null window at 24 and ends in g, the drive untouched). The drive's level at the instrument's Node
+[4, 4, 2] (`meeting.arriving`, the pulse's time line) at the intervals 22 to 48, with the taking and
+with it suppressed: 22: 361, 361; 23: 337, 337; 24: 82, 82; 25: 0, -234; 26: 0, -400; 27: -384, -305;
+28: -147, -14; 29: 312, 279; 30: 433, 379; 31: 230, 219; 32: -74, -95; 33: -340, -353; 34: -368,
+-384; 35: -170, -168; 36: 144, 152; 37: 381, 362; 38: 352, 322; 39: 104, 58; 40: -182, -255; 41:
+-348, -407; 42: -203, -298; 43: -10, 0; 44: 269, 287; 45: 479, 372; 46: 376, 198; 47: -118, -118;
+48: -368, -367. The face holds the level at 0 over the intervals 25 and 26, Rule3 refills the Node from
+its neighbours from 27 on, and the wave at the Node differs from the untouched run by up to 180 levels
+through the window; over the second window, the intervals 25 to 48, the plane's size SUM a_t
+e^(i Omega t) reads 4,428 with the taking against 4,765 without (A W / 2 = 4,704), 7 percent short,
+and SUM |a_t| 5,792 against 6,026. No number of the blind is adjusted.

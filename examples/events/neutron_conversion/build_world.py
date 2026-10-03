@@ -40,7 +40,6 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
             {
                 "name": "around",
                 "positions": [[int(v) for v in node] for node in design["around"]],
-                "transition": design["detector_transition"],
             }
         ],
     }

@@ -100,7 +100,6 @@ def world(design: dict[str, Any]) -> dict[str, object]:
     positions = [[found["detector_x"], y, z] for y in range(width) for z in range(width)]
     detector = {
         "name": design["detector"]["name"],
-        "transition": list(design["detector"]["transition"]),
         "positions": positions,
     }
     return {

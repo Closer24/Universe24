@@ -20,7 +20,6 @@ from event_universe.loader.instrument import (
     instrument_of,
     node_instrument_of,
     packet_form,
-    pair_of,
     pattern_of,
     patterns_of_the_law,
     ports_of,
@@ -41,7 +40,10 @@ BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes"),
     ("node", "count"),
 )
-DETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern", "transition")  # a detector's keys
+DETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern")  # a detector's keys
+TRANSITION = (
+    "transition"  # a region's own quantum, declared by no region: its unit is its record's own share
+)
 START_KEYS = ("mode",)
 
 
@@ -62,7 +64,7 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class DetectorRow:
-    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), read by the reader and by the instrument's draw through the root in the run, each empty where none is declared."""
+    """A detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared instrument, and not for a body's detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the instrument's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/instrument.py`), read by the reader and by the instrument's draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name)."""
 
     name: str
     positions: tuple[Node, ...]
@@ -70,7 +72,6 @@ class DetectorRow:
     declared: bool
     basis: tuple[int, ...]
     pattern: Pattern
-    transition: tuple[int, int] = (0, 1)
 
 
 @dataclass(frozen=True)
@@ -177,12 +178,17 @@ def detectors_of(
     beyond: tuple[Node, ...],
     layer: tuple[Node, ...],
 ) -> tuple[DetectorRow, ...]:
-    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the instrument's draw's through the root, `loader/instrument.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
+    """The detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared instrument, optionally with its `basis`, the instrument's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the reader's declaration and the instrument's draw's through the root, `loader/instrument.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line of 2026-10-03 with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the instrument."""
     if not isinstance(value, list):
         raise ValueError("detectors must be a list")
     found: list[DetectorRow] = []
     for index, entry in enumerate(value):
         label = f"detectors[{index}]"
+        if isinstance(entry, dict) and TRANSITION in entry:
+            raise ValueError(
+                f"{label} holds the key {TRANSITION!r}: a region declares no quantum of its own, its unit of one "
+                "quantum being its record's own share per quantum, read from the credit's books and not declared"
+            )
         row = keyed(entry, label, DETECTOR_KEYS, ("name",))
         name = row["name"]
         if not isinstance(name, str) or name == FACE_NAME or name in [d.name for d in found]:
@@ -198,26 +204,18 @@ def detectors_of(
                 basis, pattern
             )  # the two ports orthogonal with equal norms, refused by name otherwise
         if "block" in row:
-            if basis or "transition" in row:
-                raise ValueError(
-                    f"{label}: a basis and a transition are declared on a region, not on a body's detector"
-                )
+            if basis:
+                raise ValueError(f"{label}: a basis is declared on a region, not on a body's detector")
             body = integer(row["block"], f"{label}.block", 0, bodies - 1)
             found.append(DetectorRow(name, (), body, False, (), ()))
             continue
-        if "transition" not in row:
-            raise ValueError(
-                f"{label} lacks the key 'transition': a region detector declares its own quantum's resonance as "
-                "a pair [num, den], cos Omega = num / den, [0, den] the band's top (a detector counts in its own quantum)"
-            )
-        transition = pair_of(row["transition"], f"{label}.transition")
         positions = row["positions"]
         if not isinstance(positions, list) or not positions:
             raise ValueError(f"{label}.positions must list its Nodes")
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(DetectorRow(name, nodes, None, True, basis, pattern, transition))
+        found.append(DetectorRow(name, nodes, None, True, basis, pattern))
     if layer:
         found.append(DetectorRow(FACE_NAME, layer, None, False, (), ()))
     return tuple(found)
@@ -254,8 +252,8 @@ def regions_of_the_law(
             continue
         if len(detector.positions) < 2:
             raise ValueError(
-                f"detector {detector.name!r} is one Node: a detector is a region of Nodes, never one Node "
-                "(no click names a Node)"
+                f"detector {detector.name!r} is one Node: a region of a travelling wave is two Nodes or more, "
+                "never one Node (no click names a position finer than half a wavelength)"
             )
         if not connected(detector.positions, shape, periodic):
             raise ValueError(

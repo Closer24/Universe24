@@ -11,7 +11,6 @@ from tests.laws import (
     ROOT,
     SLIT,
     TOOL,
-    TOP,
     chain_body_world,
     load_file,
     refused,
@@ -22,14 +21,8 @@ PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
 NARROW = [[[20, 4, 0]], [[20, 4, 0], [20, 5, 0]], [[20, y, 0] for y in (0, 1, 6, 7)]]  # the size rule
 REASONS = ("never one Node", "under half the wavelength", "not one connected region")
-REFUSED = [
-    ([{"name": "n", "positions": at, "transition": TOP}], why)
-    for at, why in zip(NARROW, REASONS, strict=True)
-]
-SCREEN = [
-    {"name": f"s{y}", "positions": [[20, y + r, 0] for r in range(4 + (y == 4))], "transition": TOP}
-    for y in (0, 4)
-]
+REFUSED = [([{"name": "n", "positions": at}], why) for at, why in zip(NARROW, REASONS, strict=True)]
+SCREEN = [{"name": f"s{y}", "positions": [[20, y + r, 0] for r in range(4 + (y == 4))]} for y in (0, 4)]
 BLIND = {"detector": [d["name"] for d in SCREEN], "family": "charge", "window": [1, 2], "across": "y"}
 BLIND.update(pattern=[0, 1], counts=[1.5, 2], through=10, watch={"4": 2, "0": 1.5}, seed=7)
 
@@ -93,10 +86,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert "drawGate();" in gated and "gate-reading" not in html and "{{" not in html
     refused("not among the reading's worlds", PAGE.page, look, gate, {"worlds": {}})
     cells = [(21 + c // 4, c % 4) for c in range(8)]
-    groups = [
-        {"name": f"g{y}", "positions": [[x, y + r, 0] for x, r in cells], "transition": TOP}
-        for y in (0, 4)
-    ]
+    groups = [{"name": f"g{y}", "positions": [[x, y + r, 0] for x, r in cells]} for y in (0, 4)]
     world = slit_world(tmp_path, TOOL, detectors=[*SCREEN, *groups])
     pair = slit_world(tmp_path, TOOL, "pair", detectors=groups)
     for detectors, reason in REFUSED:

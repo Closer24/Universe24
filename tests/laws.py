@@ -19,7 +19,10 @@ EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
 CHAIN, QUANTA = 24, 50  # the shortest chain (x open) holding the body of 50 and the end detectors apart
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
-TOP = [0, 6000]  # a region detector's own quantum at the band's top, cos Omega = 0, its wall W_c
+TOP = [
+    0,
+    6000,
+]  # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
 CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
 
 
@@ -67,8 +70,8 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
     universe_beside(folder, charged=CHARGED["name"] in families)
     nodes = [[dict(node=[x, 0, 0], count=quanta)] for x in at]
     measured = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
-    ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]], "transition": TOP}]
-    ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]], "transition": TOP}]
+    ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
+    ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
     detectors = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
     world = dict(shape=[chain, 1, 1], detectors=detectors, measured=measured, ticks=400, face_depth=1)
     world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")

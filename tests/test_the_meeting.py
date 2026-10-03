@@ -2,14 +2,16 @@
 
 import ast
 import json
+import math
 from fractions import Fraction
 
 import numpy as np
 
-from event_universe import meeting, node, world_files
+from event_universe import meeting, node, resonance, world_files
 from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
 from event_universe.loader.instrument import (
+    Transition,
     basis_of,
     instrument_of,
     node_instrument_of,
@@ -117,7 +119,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     fenced = [GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) for f in FENCE]
     assert fenced == [-1] * len(FENCE)
     refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "detectors[0].pattern", (1, 0))
-    row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]], "transition": TOP}
+    row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]]}
     refused("none is declared", detectors_of, [row], (2, 1, 1), 0, (), ())
     families = universe_of(json.loads((EVENTS / "ghz.json").read_text(encoding="utf-8")))[1]
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
@@ -133,7 +135,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, the one Node beside as a GameBoard diagnostic; at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `instrument` key refused by name with a window of 0 and without its seed."""
+    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the detector's proper time at the close (the board's tick in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `instrument` key refused by name with a window of 0 and without its seed."""
     world = json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8"))
     world["instrument"]["window"], draw = 40, dict(world["instrument"])
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
@@ -152,15 +154,17 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     assert at == [(40, "left", 1, 1, left + 1), (40, "right", 1, 1, left + 1)] + at[2:]
     assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
-    assert {c["node"]["label"] for c in credits} == {"GAMEBOARD"}  # the one Node a diagnostic beside
-    report = set("event label tick family detector window realised kept count left".split())
-    assert all(set(c) == report | {"node"} and c["label"] == "DETECTOR" for c in credits)  # never a Node
-    written = {tuple(np.add(c["node"]["at"], plain.offset)) for c in credits[:2]}
-    assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
-    w, keys = (
-        tuple(np.add(credits[0]["node"]["at"], plain.offset)),
-        [k for k in was if "light_pair" in k],
+    assert [(c["proper"], c["windows"]) for c in credits] == [(40, 1), (40, 1), (80, 2), (80, 2)]
+    report = set(
+        "event label tick family detector window proper windows realised kept count left".split()
     )
+    assert all(set(c) == report and c["label"] == "DETECTOR" for c in credits)  # never a Node
+    holes = [
+        f for f in lines if f["event"] == "face" and f["tick"] == 41
+    ]  # the hole's Nodes, the tool's
+    written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
+    assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
+    w, keys = sorted(written)[0], [k for k in was if "light_pair" in k]
     assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]
     levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 41
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
@@ -197,7 +201,6 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     counter = {
         "name": "counter",
         "positions": [[0, y, z] for y in range(6) for z in range(4)],
-        "transition": TOP,
     }
     world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
     world.update(universe="u.json", engine="e.json", measured=[record], messages=[drive])
@@ -374,3 +377,38 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     board.step(), board.step()
     assert [x["event"] for x in lines if x["event"] not in ("click", "lay", "field")] == ["conversion"]
     assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
+
+
+def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
+    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/resonance.py and `meeting.turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the giving's one recurrence (giving.advanced, through `gathered` at the level 0) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the instrument's act; (vi) the window's turn is applied as W equal sub-turns with the carry (`resonance.sheared`), so the labels' angle at the Zeno world's n = 1 is 48 x 2 arctan(9,408 / (12,000 x 48)) = 1.568 and not the one shear's 1.330, the tangent half-angle's compression the advisor's second found on the first build."""
+    omega, detuned, bound, room = math.acos(2 / 3), math.acos(1 / 3), 9266, 2**63 - 1
+    assert [resonance.scale_of(room, bound, w) for w in (48, 96, 12)] == [2**12, 2**11, 2**14]
+    scale, transitions = resonance.scale_of(room, bound, 48), (Transition(0, 1, 1, 1, (2, 3)),)
+    references = resonance.references_of(scale, transitions)
+    for t in range(1, 101):
+        resonance.gathered(references, transitions, {1: 0})
+        cosine, sine = references[0].cosine[0], references[0].sine[0]
+        assert abs(cosine - scale * math.cos(omega * t)) <= 7 >= abs(sine - scale * math.sin(omega * t))
+
+    def turn(frequency: float, phase: float, window: int) -> int:
+        fresh = resonance.references_of(scale, transitions)
+        for t in range(window):
+            resonance.gathered(fresh, transitions, {1: round(1000 * math.cos(frequency * t + phase))})
+        return resonance.window_turn(fresh[0], 1)
+
+    phases = (0, 0.7, math.pi / 2, 2.5)
+    assert all(abs(turn(omega, phi, 48) - 24000) <= 480 for phi in phases)  # A W / 2 at every phase
+    assert all(turn(detuned, phi, 48) < 480 for phi in phases)  # sinc(delta W / 2), the residue
+    sinc = abs(math.sin((detuned - omega) * 6) / ((detuned - omega) * 6))
+    assert all(abs(turn(detuned, phi, 12) / 6000 - sinc) <= 0.02 for phi in phases)
+    board = GameBoard(load_world(EVENTS / "zeno" / "zeno_4.json"))
+    books = board.credit.bodies[0]
+    start, gathered = list(books.labels), books.references[0]
+    for _ in range(11):
+        board.step()
+        assert books.labels == start and (gathered.in_phase, gathered.quadrature) != (0, 0)
+    board.step()
+    assert (gathered.in_phase, gathered.quadrature) == (0, 0) and books.elapsed == 0
+    turned = [resonance.sheared(10**6, 0, 9408, pieces, 6000) for pieces in (48, 1)]
+    angles = [math.atan2(v, u) for u, v in turned]
+    assert abs(angles[0] - 1.5680) <= 0.002 and abs(angles[1] - 1.330) <= 0.002  # the sub-turns add

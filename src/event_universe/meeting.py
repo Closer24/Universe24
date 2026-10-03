@@ -1,4 +1,4 @@
-"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words of 2026-10-02 and 2026-10-03; the owner's word of 03:15 Israel, 2026-10-03, the click the heart): a detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the detector's own transition's quantum read back from the realised click, the click their meeting; a detector always receives two quanta, the arriving one and its own, a region detector's own quantum implicit in its declared window and whole, and for a record declared an instrument at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence of 2026-10-03 with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an instrument's window at the Node named, 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the two-mode line: the arriving level read into the record's phase at the transition's declared weight, the turn per proper interval, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there: the arriving record's levels and remainder to 0 (the hole) and its count in the books down by one, the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn at the lifetime's hazard 1 / tau per interval, per window while a window stands and per interval in the dark at the now (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid as a source in time at that Node over the giving's lifetime at the transition's declared resonance (`giving.given_quantum`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the jump line, the window, the instrument, the family and the parts, the Node a GameBoard diagnostic beside it. The record declared an instrument is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the detector's region is), its books the instrument's own and at no Node; the Node knows no click."""
+"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words of 2026-10-02 and 2026-10-03; the owner's word of 03:15 Israel, 2026-10-03, the click the heart): a detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the detector's own transition's quantum read back from the realised click, the click their meeting; a detector always receives two quanta, the arriving one and its own, a region detector's own quantum implicit in its declared window and whole, and for a record declared an instrument at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence of 2026-10-03 with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an instrument's window at the Node named, 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the resonant two-mode act, the two-quadrature form: the arriving level summed over the window against the record's two reference records at the transition's declared resonance, the plane's size over the scale the window's turn at the declared weight, applied once at the window's close as W sub-turns with the carry, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form, `resonance.gathered`, `resonance.window_turn`, `turned_labels`); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there: the arriving record's levels and remainder to 0 (the hole) and its count in the books down by one, the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn at the lifetime's hazard 1 / tau per interval, per window while a window stands and per interval in the dark at the now (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid as a source in time at that Node over the giving's lifetime at the transition's declared resonance (`giving.given_quantum`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the jump line, the window, the instrument, the family and the parts, the Node a GameBoard diagnostic beside it. The record declared an instrument is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the detector's region is), its books the instrument's own and at no Node; the Node knows no click."""
 
 from __future__ import annotations
 
@@ -12,7 +12,6 @@ from event_universe import front, node
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
-from event_universe.features import rotation
 from event_universe.features.click import Face, drawn, laid_pairs, standing
 from event_universe.giving import given_quantum, levels_of
 from event_universe.loader.derived import count_wall, row_of
@@ -21,6 +20,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.world import BodyRow
 from event_universe.plane import Faces
 from event_universe.reports import face, jump, lay
+from event_universe.resonance import Reference, gathered, references_of, scale_of, sheared, window_turn
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class NodeBooks:
-    """The books of a record at a Node that is an instrument, the instrument's own and at no Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03, one thinks of a Node): the declaration's number among the world's `measured`, the record's family and its record number, its one Node at the file's coordinates, its declaration, the part the record stands in as its last write left it (its own transition read back, the past), its count per part, per part the two-mode line's amplitude in the count's units since its last write (the parts' coherence, turned by the arriving records' levels), the intervals elapsed in its window and its generator's state."""
+    """The books of a record at a Node that is an instrument, the instrument's own and at no Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03, one thinks of a Node): the declaration's number among the world's `measured`, the record's family and its record number, its one Node at the file's coordinates, its declaration, the part the record stands in as its last write left it (its own transition read back, the past), its count per part, per part the two-mode line's amplitude in the count's units since its last write (the parts' coherence, turned at the window's close by the window's plane), the intervals elapsed in its window, its generator's state and per transition its two reference records with the window's two sums (`resonance.Reference`)."""
 
     number: int
     index: int
@@ -40,6 +40,7 @@ class NodeBooks:
     labels: list[int]
     elapsed: int
     state: int
+    references: list[Reference]
 
 
 def books_of(board: GameBoard) -> list[NodeBooks]:
@@ -53,8 +54,12 @@ def books_of(board: GameBoard) -> list[NodeBooks]:
         part = max(range(len(parted)), key=lambda k: parted[k])
         labels = [count * wall for count in parted]
         at, seed = row.nodes[0], row.instrument.draw.seed
+        scale = scale_of(board.world.width, board.world.amplitude_bound, row.instrument.draw.window)
+        references = references_of(scale, row.instrument.transitions)
         found.append(
-            NodeBooks(number, row.family, record, at, row.instrument, part, parted, labels, 0, seed)
+            NodeBooks(
+                number, row.family, record, at, row.instrument, part, parted, labels, 0, seed, references
+            )
         )
     return found
 
@@ -118,7 +123,7 @@ def laid_record(board: GameBoard, number: int, record: int) -> None:
     """A record laid in its parts at its one Node at the start (`loader/instrument.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
     row = board.world.bodies[number]
     assert row.instrument is not None
-    books = NodeBooks(number, row.family, record, row.nodes[0], row.instrument, 0, [], [], 0, 0)
+    books = NodeBooks(number, row.family, record, row.nodes[0], row.instrument, 0, [], [], 0, 0, [])
     for part, count in enumerate(row.instrument.counts):
         relaid(board, books, part, count, (1, 0), 1)
 
@@ -148,20 +153,30 @@ def dark(board: GameBoard, books: NodeBooks) -> bool:
     return all(arriving(board, books, drive, side) == 0 for drive in drives for side in (1, -1))
 
 
-def turned_labels(board: GameBoard, books: NodeBooks) -> None:
-    """The two-mode line at the instrument's Node, one interval (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; the advisor's Omega = k_r ell / Gamma): for every transition out of the part the record stands in, the arriving record's level at the Node read into the record's phase at the weight the transition declares, the turn per proper interval (`node.turned_by`, the tangent half-angle over 2 Gamma), turns the two parts' labels into each other by the engine's own three shears (features/rotation), the turn's size added at the resonance the transition declares; the labels' squares are the parts' shares the window's draw reads, sin^2 of the accumulated turn, the Rabi form."""
+def own_clock(board: GameBoard, books: NodeBooks) -> int:
+    """The composed clock p_0 at the instrument's one Node under its record's read of the content (`paces.clock_of`): the body's own clock, Gamma in the vacuum and below it in a well, the number the turn per proper interval and the dark's hazard read (the advisor's derivation of 2026-10-03, #1572 comment 5966657866, the clock composed from the paces, with the mathematician's second, 5966769056: nature's lifetime is a proper time)."""
     gamma = board.world.node_clock
     content = board.read(books.index, 1, books.record)[0]
     at = tuple(np.add(books.at, board.offset))
-    clock = paces.clock_of(gamma, int(np.asarray(content)[at]) if np.ndim(content) else int(content))
-    for transition in books.declared.transitions:
-        if transition.leaves != books.part:
-            continue
-        level = transition.weight * arriving(board, books, transition.drive)
-        turn = int(node.turned_by(level, clock, gamma))
-        u, v = books.labels[transition.leaves], books.labels[transition.enters]
-        u, v = rotation.turned(u, v, turn if turn >= 0 else -turn, 2 * gamma)
-        books.labels[transition.leaves], books.labels[transition.enters] = int(u), int(v)
+    return int(paces.clock_of(gamma, int(np.asarray(content)[at]) if np.ndim(content) else int(content)))
+
+
+def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) -> list[int]:
+    """The dark's draw between the giving and nothing over `span` board intervals at the lifetime tau, a proper time (the mathematician's 235, #1572 comment 5966769056, with the advisor's second, 5966780505, two hands): the hazard 1 / tau per proper interval, the body's proper intervals per board tick p_0 / Gamma, so the giving's weight is span x p_0 x unit div Gamma by the division act (half up) against the rest of tau x unit, [span x unit, (tau - span) x unit] exactly in the vacuum where p_0 = Gamma, and in a well the body gives slower by p_0 / Gamma."""
+    given = int(division_forward(span * clock * unit, gamma, division_forward(gamma, 2, 0)[0])[0])
+    return [given, lifetime * unit - given]
+
+
+def turned_labels(board: GameBoard, books: NodeBooks) -> None:
+    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation) as W equal sub-turns with the carry (`resonance.sheared`, W the window's intervals, so the angles add as the proper intervals' did), the plane's size over the wall read once and not a turn per interval; the labels' squares are the parts' shares the window's draw reads, sin^2 of the turn, the Rabi form; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
+    gamma, clock = board.world.node_clock, own_clock(board, books)
+    for transition, reference in zip(books.declared.transitions, books.references, strict=True):
+        if transition.leaves == books.part:
+            turn = int(node.turned_by(window_turn(reference, transition.weight), clock, gamma))
+            u, v = books.labels[transition.leaves], books.labels[transition.enters]
+            u, v = sheared(u, v, turn, books.elapsed, gamma)
+            books.labels[transition.leaves], books.labels[transition.enters] = u, v
+        reference.in_phase, reference.quadrature = 0, 0
 
 
 @dataclass(frozen=True)
@@ -323,9 +338,10 @@ def reported(
 
 
 def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
-    """The giving drawn at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act, and the giving's clock; the advisor's clause 5; the mathematician's 174 (c) and 223 (a), #1572 comment 5965727937, with the advisor's second 5965918924 (a), the per-interval draw at the now of 224 (2)(a), 5966081562, and his second 5966129376, two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights [span x unit, (tau - span) x unit] in the labels' unit with span the smaller of the grain and the lifetime tau, the lifetime's hazard 1 / tau per interval (the beat's current of a one-part record at one Node is 0, so the hazard alone is the rate): the window at its close while a window stands, the one interval in the dark (`dark`), at the now and not a booked waiting time (a booked variate writes a future, which the click's line does not: the click implements the now, the mathematician's 208); the record's own generator; the first giving drawn is taken; one jump line. Where the body stands in the open board and its rate declares a `width`, the given quantum is laid as a packet along a drawn direction, one list per direction the board holds, each at the giving's weight, the direction's draw the click's one draw with the record's own generator, an assumption by name (`giving.laid_packet`; the mathematician's 224 (1) and 229 with the advisor's seconds, two hands); inside a guide, or with no width declared, the source in time as built."""
+    """The giving drawn at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act, and the giving's clock; the advisor's clause 5; the mathematician's 174 (c) and 223 (a), #1572 comment 5965727937, with the advisor's second 5965918924 (a), the per-interval draw at the now of 224 (2)(a), 5966081562, and his second 5966129376, two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights [span x p_0 x unit div Gamma, the rest of tau x unit] in the labels' unit (`hazard_weights`) with span the smaller of the grain and the lifetime tau and p_0 the body's own clock at its Node (`own_clock`), the lifetime's hazard 1 / tau per proper interval, [span x unit, (tau - span) x unit] in the vacuum (the beat's current of a one-part record at one Node is 0, so the hazard alone is the rate): the window at its close while a window stands, the one interval in the dark (`dark`), at the now and not a booked waiting time (a booked variate writes a future, which the click's line does not: the click implements the now, the mathematician's 208); the record's own generator; the first giving drawn is taken; one jump line. Where the body stands in the open board and its rate declares a `width`, the given quantum is laid as a packet along a drawn direction, one list per direction the board holds, each at the giving's weight, the direction's draw the click's one draw with the record's own generator, an assumption by name (`giving.laid_packet`; the mathematician's 224 (1) and 229 with the advisor's seconds, two hands); inside a guide, or with no width declared, the source in time as built."""
     assert books.declared.draw is not None
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
+    clock = own_clock(board, books)
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             span = grain if grain <= rate.lifetime else rate.lifetime
@@ -335,7 +351,8 @@ def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
                 items + [replace(given, width=rate.width, direction=direction)]
                 for direction in (rate.directions or (None,))
             ]
-            weights = [span * unit] * len(outcomes) + [len(outcomes) * (rate.lifetime - span) * unit]
+            giving, rest = hazard_weights(span, rate.lifetime, clock, board.world.node_clock, unit)
+            weights = [giving] * len(outcomes) + [len(outcomes) * rest]
             pick, books.state = click(board, books.state, books.declared.draw, weights, [*outcomes, []])
             if pick < len(outcomes):
                 reported(board, books, (rate.enters, rate.leaves), (None, rate.light))
@@ -378,11 +395,15 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
 
 
 def jumped(board: GameBoard) -> None:
-    """The records at Nodes that are instruments at the end of an interval: each turned by the records arriving at its Node (`turned_labels`), one more interval elapsed, and at the windows' length the draws and the writes, the givings first record by record (`gave`: at the window's close while a window stands, at every interval in the dark, `dark`, the lifetime's hazard 1 / tau per interval either way), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record of several parts that neither gave nor took (`null_window`; a record of one part reads no part of itself and has none; a record converted whole is drawn after the jumps, src/event_universe/conversion.py), every write the one act's (`click`); the windows begun again."""
+    """The records at Nodes that are instruments at the end of an interval: each gathers the records arriving at its Node into its window's sums (`resonance.gathered`, the arriving level per drive family read once, `arriving`), one more interval elapsed, and at the windows' length the window's turn of the labels (`turned_labels`, once per window, as W sub-turns with the carry), then the draws and the writes, the givings first record by record (`gave`: at the window's close while a window stands, at every interval in the dark, `dark`, the lifetime's hazard 1 / tau per interval either way), then the takings in one draw per arriving family over the records that gave none (`took`), then the null window of every record of several parts that neither gave nor took (`null_window`; a record of one part reads no part of itself and has none; a record converted whole is drawn after the jumps, src/event_universe/conversion.py), every write the one act's (`click`); the windows begun again."""
     for books in board.credit.bodies:
-        turned_labels(board, books)
+        drives = {transition.drive for transition in books.declared.transitions}
+        levels = {drive: arriving(board, books, drive) for drive in drives}
+        gathered(books.references, books.declared.transitions, levels)
         books.elapsed += 1
     closing = [b for b in board.credit.bodies if b.declared.draw and b.elapsed == b.declared.draw.window]
+    for books in closing:
+        turned_labels(board, books)
     closed, given = {books.number for books in closing}, set()
     for books in board.credit.bodies:
         if books.declared.draw is None:
