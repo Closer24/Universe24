@@ -12,12 +12,12 @@ from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features.click import (
     SCALE_OF,
     along_cosine,
+    amplitude,
     envelope,
     line_total,
     rotated,
-    standing,
 )
-from event_universe.loader.derived import count_wall
+from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import Node
 from event_universe.reports import lay
 
@@ -98,18 +98,32 @@ def born_unit(board: GameBoard, index: int, resonance: tuple[int, int]) -> int:
     )
 
 
+def given_lines(family: FamilyRule) -> list[int]:
+    """The lines a spread record's given quantum is laid on at the Node by the count (`laid_by_count`): every line of one part of its first record, each real line, or each plane's two lines, laid alike; a holder of the sign's time line alone, its record, light (the giving's source in time writes that first line alone)."""
+    return list(range(1 if family.held else family.width))
+
+
 def laid_by_count(board: GameBoard, item: Item) -> None:
-    """A spread record given `delta` whole quanta at the Nodes named by the count (features/click, `standing`), at the pair the item names: the conversion's records out at their family's massless pair [den, den], the two levels alike, A^2 = count T div 2 whatever the family, added to the record's first line, the free row, its remainder at the lay's origin, the half wall; the record's count in the books up by the change (the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum)."""
+    """A spread record given `delta` whole quanta at the Nodes named by the count (features/click, `amplitude`), at the pair the item names, the conversion's records out at their family's massless pair [den, den] (the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum), every laid line of the record alike, the symmetric lay (`given_lines`; the mathematician's 244 item 2, #1572 comment 5967913000: the law's form names no line of a record), A_l^2 = count T div (2 laid) with `laid` the record's real lines or its planes (128 on one line or one plane; 73 on each of three planes, the fixed point of the division act on 5,461, the share then 0.976 of a quantum at T = 32,768, the file's rounding and not the form's, read beside the count: no three squares sum to 2^14, so no exact equal split exists at a power-of-two T, and the alike lay at the fixed point is laid rather than the unequal (74, 74, 73), the record's own unit absorbing the rounding in the count, the advisor's second, #1572 comment 5967957083): a real line at the two levels alike, (A_l, A_l), the level before the level now turned by the pair's rest rotation, none at the massless pair; a plane on its two lines with the sense the item carries from the conversion's table (`Item.sense`, +1 or -1), the real line (A_l, 0) and the sense line (0, sense A_l), the level before the level now turned a quarter in the record's sense as `laid_pairs` lays a plane at the quarter turn [0, den], the one lay at which the count's unit and the charge's unit coincide: the share per plane 3 den (A_l^2 + A_l^2) and the Wronskian re_now im_before - im_now re_before = sense A_l^2, over the planes count W_c and sense count T div 2 to the root's rounding (|W| is at most (|z_now|^2 + |z_before|^2) / 2, so no other lay has both), so that the sign row is written at the Node from the lay on (ALGEBRA.md #the-paces, The sign is the rotation sense; round F of the board of 2026-10-03, the neutron reading's row 2; the worker's four points to both hands, #1572 comment 5967852499, and the mathematician's 244 item 1); every laid line's remainder at the lay's origin, the half wall; the record's count in the books up by the change."""
     assert item.pair is not None
     family, state = board.families[item.family], board.states[item.family]
     gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
-    (level, _im), (before, _im_before) = standing(
-        item.delta, board.world.quantum_action, item.pair, (1, 0), 1
-    )
+    num, den = item.pair
+    laid = 1 if family.held else family.laid  # a holder of the sign: its time line alone, not its rows
+    size = amplitude(item.delta, board.world.quantum_action, item.pair, laid)
+    if family.plane:  # the loader admits a plane given by the count with the table's sense alone
+        assert item.sense != 0
+        pairs = [pair for _ in range(laid) for pair in ((size, 0), (0, item.sense * size))]
+    else:
+        pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * laid
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
-    line = state.lines[0]
-    now, was = line.now + np.where(at, level, 0), line.before + np.where(at, before, 0)
-    state.lines[0] = node.Record(now, was, np.where(at, origin, line.remainder))
+    for number, (now, was) in zip(given_lines(family), pairs, strict=True):
+        line = state.lines[number]
+        state.lines[number] = node.Record(
+            line.now + np.where(at, now, 0),
+            line.before + np.where(at, was, 0),
+            np.where(at, origin, line.remainder),
+        )
     board.credit.counts[item.family] += item.delta
 
 
@@ -147,13 +161,13 @@ def laid_packet(board: GameBoard, item: Item) -> None:
             )
             line = state.lines[0]
             now, before = line.now.copy(), line.before.copy()
-            for distance, (amplitude, wave, quadrature) in enumerate(
+            for distance, (size, wave, quadrature) in enumerate(
                 zip(amplitudes, waves, quadratures, strict=True)
             ):
-                level = int(division_forward(amplitude * wave, scale, half_scale)[0])
+                level = int(division_forward(size * wave, scale, half_scale)[0])
                 earlier = int(
                     division_forward(
-                        amplitude * (wave * num * scale - quadrature * sine),
+                        size * (wave * num * scale - quadrature * sine),
                         scale * scale * den,
                         half_wall,
                     )[0]
