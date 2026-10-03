@@ -11,6 +11,7 @@ from event_universe import meeting, node, resonance, world_files
 from event_universe.core import paces
 from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
+from event_universe.giving import laid_by_count
 from event_universe.loader.instrument import (
     Transition,
     basis_of,
@@ -486,3 +487,29 @@ def test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record():
     assert abs(totals[0] - totals[1] - unit) <= level / weight + 1  # one quantum left the record
     left = int(board.share_of(pulse)[0][at]) / unit
     assert 1.6 < left < 2.0 and left > int(twin.share_of(pulse)[0][at]) / unit - 1  # the Node alone
+
+
+def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):
+    """The law's line of the start (the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands): every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2), the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor. A Node holding no level and the half wall steps to itself exactly; and one massless quantum laid whole by the count at one Node of an even periodic box, whose uniform mode is a double root of the rule, stays bounded: under the floor it grew as t^2 to 6,268 at the interval 200 (Worker PULSE's 5968413761), the lattice's half-up rule reads 172 and the reals 242."""
+    world = json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8"))
+    world.update(measured=[], messages=[], detectors=[], ticks=200)
+    path = tmp_path / "box.json"
+    path.write_text(json.dumps(world), encoding="utf-8")
+    board = GameBoard(load_world(path))
+    pulse = next(index for index, family in enumerate(board.families) if family.name == "pulse")
+    half = board.half_wall(pulse)
+    assert half > 0 and all(
+        (line.remainder == board.half_wall(index)).all()
+        for index in board.order
+        for line in board.states[index].lines
+    )
+    board.step()
+    line = board.states[pulse].lines[0]
+    assert not line.now.any() and not line.before.any() and (line.remainder == half).all()
+    laid_by_count(board, meeting.Item(pulse, None, None, 1, ((4, 4, 2),), pair=(6000, 6000)))
+    for _ in range(200):
+        board.step()
+    largest = int(np.abs(board.states[pulse].lines[0].now).max())
+    assert largest < 300, (
+        largest
+    )  # bounded: 172 by the lattice's rule, 242 in reals, 6,268 under the floor

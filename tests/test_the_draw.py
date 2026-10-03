@@ -29,7 +29,20 @@ SLITS, WAY, RESONANCE, PACKET = (
     for n in ("two_slits", "which_way", "resonance", "packet_giving")
 )
 SRC = ROOT / "src" / "event_universe"
-GATE_ROW = [23, 18, 34, 13, 5, 35, 52, 19, 9, 27, 22, 21]  # the two slits' gate, N = 278, at the seed 24
+GATE_ROW = [
+    16,
+    17,
+    33,
+    12,
+    13,
+    42,
+    44,
+    10,
+    11,
+    21,
+    32,
+    27,
+]  # the two slits' gate, N = 278, at the seed 24
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -53,7 +66,7 @@ def chi_square(clicks: dict[str, int], shares: dict[str, int], names: list[str])
 
 
 def test_borns_rule_is_the_proportionality_to_whole_shares_over_four_seeds(tmp_path):
-    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at four seeds, the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees inside the 1 percent band (2.6 to 26.8) at every seed and about 11 on average (the advisor's run 8.9, 10.5, 9.5, 12.1 at the seeds 24 to 27; the seed 24 the gate's own, N = 278 and the row bit for bit); the draw's weights are the shares and nothing else."""
+    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at four seeds, the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees inside the 1 percent band (2.6 to 26.8) at every seed and about 10 on average (the half-up rule's own run, every Node's remainder born at the half wall, 14.2, 16.1, 2.9, 6.0 at the seeds 24 to 27; the seed 24 the gate's own, N = 278 and the row bit for bit); the draw's weights are the shares and nothing else."""
     design = json.loads((EVENTS / "two_slits" / "design.json").read_text(encoding="utf-8"))
     names, found = [f"screen_{k}" for k in range(12)], []
     for seed in (24, 25, 26, 27):
@@ -68,7 +81,12 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_four_seeds(tmp_p
         if seed == 24:  # the gate's own numbers, bit for bit
             assert quanta == 278 and [clicks[n] for n in names] == GATE_ROW
     assert all(2.6 < chi < 26.8 for chi in found) and 7 < sum(found) / 4 < 16, found
-    assert [round(chi, 1) for chi in found] == [8.9, 10.5, 9.5, 12.1]  # the advisor's run reproduced
+    assert [round(chi, 1) for chi in found] == [
+        14.2,
+        16.1,
+        2.9,
+        6.0,
+    ]  # the half-up rule's run, bit for bit
 
 
 def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
