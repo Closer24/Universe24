@@ -3,11 +3,16 @@
 import importlib.util
 import json
 import sys
+from fractions import Fraction
 from pathlib import Path
 
+import numpy as np
 import pytest
 
-from event_universe.loader.derived import Row
+from event_universe import credit, growth, node, share
+from event_universe.core import paces
+from event_universe.game_board import GameBoard
+from event_universe.loader.derived import Row, quanta_records
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
@@ -85,3 +90,67 @@ def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Pat
     path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")
     tool.main(["--input", str(path)])
     return path
+
+
+def own_lines(board: GameBoard, index: int) -> list[node.Record]:
+    """A family's record lines as the engine reads them: every record's lines, light the sum of its rows."""
+    return [line for r in quanta_records(board.families, index) for line in board.lines_of(index, r)]
+
+
+def shares_of(board: GameBoard, index: int, read, pairs) -> np.ndarray:  # type: ignore[no-untyped-def]
+    """The share form per Node of a family's lines at the paces of its `read`, in Python's integers."""
+    gamma, unit = board.world.node_clock, board.unit
+    found = share.family_share(board.families[index], pairs, board.wrap, gamma, *read, unit)
+    return found.astype(object)
+
+
+def booked(board: GameBoard, monkeypatch, *indexes: int) -> list[tuple[int, Fraction]]:  # type: ignore[no-untyped-def]
+    """One step of the GameBoard with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the taking's and the giving's parts, the given quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
+    growth.grow(board)  # the receding faces read first, as the step reads them
+    gamma, unit, begun, shape = board.world.node_clock, board.unit, {}, board.shape
+    for index in indexes:
+        read = board.read(index)
+        pace = np.asarray(paces.link_pace_of(gamma, read[0])).astype(object)
+        flow = [np.asarray(current, dtype=object) for current in board.currents()[index]]
+        factors = [np.asarray(q).astype(object) - unit * unit for q in read[1]]
+        skew = [q * c for q, c in zip(factors, flow, strict=True)]
+        terms = sum(Fraction(int(n), unit * unit) for found in skew for n in found.ravel())
+        reads = node.rule_of(board.families[index], gamma, *read, unit)[0]
+        squares, net = np.broadcast_to(pace * pace, shape), int(sum(c.sum() for c in flow))
+        begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
+    stepped, windowed = {}, credit.windowed
+
+    def kept(b: GameBoard) -> None:  # the lines after the hold, before the instruments' acts
+        stepped.update({i: own_lines(b, i) for i in indexes}), windowed(b)
+
+    with monkeypatch.context() as swap:
+        swap.setattr(credit, "windowed", kept), board.step()
+    found = []
+    for index in indexes:
+        read, records, net, terms, squares, reads = begun[index]
+        moved, fixed = own_lines(board, index), int(shares_of(board, index, read, stepped[index]).sum())
+        for was, now in zip(records, stepped[index], strict=True):  # Rule3's remainder term per line
+            step = (now.now.astype(object) - was.before.astype(object)).ravel()  # next - before
+            carried = (now.remainder.astype(object) - was.remainder.astype(object)).ravel()  # r' - r
+            pairs = zip(step * carried, squares.ravel(), strict=True)
+            terms += sum(Fraction(-int(n), 2 * int(d) * unit * unit) for n, d in pairs)
+        for face in [f for f in board.credit.faces.get(board.tick, []) if f.family == index]:
+            here, read_at = tuple(np.add(face.at, board.offset)), reads[face.port]  # the face term
+            read_at = int(np.asarray(read_at)[here]) if np.ndim(read_at) else int(read_at)
+            fill = board.families[index].rest if face.line == 0 else 0
+            arrived = int(node.ports(records[face.line].now, board.wrap, fill)[face.port][here])
+            step = int(stepped[index][face.line].now[here]) - int(records[face.line].before[here])
+            wall = 2 * int(squares[here]) * unit * unit
+            terms += Fraction(step * read_at * (face.value - arrived), wall)
+        floors = len(records) * records[0].now.size  # the division act's floor, under one unit per Node
+        start = int(shares_of(board, index, read, records).sum())
+        assert abs(Fraction(fixed - start - net) - terms) < floors, (index, fixed - start - net, terms)
+        delta = shares_of(board, index, read, moved) - shares_of(board, index, read, stepped[index])
+        laid = np.zeros(shape, dtype=bool)
+        for a, b in zip(stepped[index], moved, strict=True):  # the Nodes a lay wrote
+            laid |= (a.now != b.now) | (a.before != b.before) | (a.remainder != b.remainder)
+        ports = node.ports(laid.astype(np.int64), board.wrap)
+        near = laid | np.logical_or.reduce([p != 0 for p in ports])
+        assert not delta[~near].any() and fixed + int(delta[near].sum()) == int(delta.sum()) + fixed
+        found.append((board.total_share(index)[0] - fixed - int(delta.sum()), abs(terms) + floors))  # type: ignore[operator]
+    return found

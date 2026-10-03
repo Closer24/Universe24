@@ -99,3 +99,203 @@ def patterns_of_the_law(
                     else "no record of several parts"
                 )
             )
+
+
+NODE_INSTRUMENT_KEYS = (
+    "parts",
+    "transitions",
+    "rates",
+    "instrument",
+    "conversion",
+)  # a body as an instrument
+PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count"), ("part", "name", "count")
+TRANSITION_KEYS, RATE_KEYS = ("from", "to", "drive", "weight"), ("from", "to", "lifetime", "gives_to")
+CONVERSION_KEYS, CONVERSION_REQUIRED = (
+    ("rate", "to", "sense"),
+    ("rate", "to"),
+)  # a record converted whole
+
+
+@dataclass(frozen=True)
+class Transition:
+    """A transition of a record at a Node that is an instrument (ALGEBRA.md, The click writes on the GameBoard (j), the taking click): the part the record leaves, the part it enters, the family whose arriving quantum it takes, by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r)."""
+
+    leaves: int
+    enters: int
+    drive: int
+    weight: int
+
+
+@dataclass(frozen=True)
+class Rate:
+    """A giving of a body as an instrument (the fifth act, the giving click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions."""
+
+    leaves: int
+    enters: int
+    lifetime: int
+    light: int
+
+
+@dataclass(frozen=True)
+class Conversion:
+    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), and the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands, #1572 comments 5964520368 and 5964754600)."""
+
+    rate: int
+    outs: tuple[int, ...]
+
+
+@dataclass(frozen=True)
+class NodeInstrument:
+    """A body as an instrument as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its givings, its own draw (the window, the seed and the generator), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
+
+    names: tuple[str, ...]
+    counts: tuple[int, ...]
+    transitions: tuple[Transition, ...]
+    rates: tuple[Rate, ...]
+    draw: Instrument | None
+    conversions: tuple[Conversion, ...] = ()
+    sense: int = 0
+
+
+def parts_of(
+    value: object, label: str, parts: int, count: int
+) -> tuple[tuple[str, ...], tuple[int, ...]]:
+    """A body's `parts`: one entry per part of its family in order, each `part` (its position), `name` (its own) and `count` (from 0), optionally `role`, a word read by nothing; the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other); refused by name otherwise."""
+    if not isinstance(value, list) or len(value) != parts:
+        raise ValueError(f"{label} lists one entry per part of the body's family, {parts} parts")
+    names, counts = [], []
+    for index, entry in enumerate(value):
+        part = keyed(entry, f"{label}[{index}]", PART_KEYS, PART_REQUIRED)
+        integer(part["part"], f"{label}[{index}].part", index, index)
+        if not isinstance(part["name"], str) or not part["name"] or part["name"] in names:
+            raise ValueError(f"{label}[{index}].name must be a name of its own, the mode's label")
+        names.append(part["name"])
+        counts.append(integer(part["count"], f"{label}[{index}].count", 0))
+    if sum(counts) != count or sum(1 for c in counts if c) > 1:
+        raise ValueError(
+            f"{label} holds the counts {counts}: the body's count {count} stands in one part at the start, a lay "
+            "in one mode having no amplitude in any other (ALGEBRA.md, The click writes on the GameBoard (j))"
+        )
+    return tuple(names), tuple(counts)
+
+
+def transitions_of(
+    value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int
+) -> tuple[Transition, ...]:
+    """A record's `transitions`: each `from` and `to`, two of its parts' names, `drive`, a family of quanta other than the record's own whose arriving quantum it takes, and `weight` from 1, the coupling the arriving level is read with; refused by name otherwise."""
+    if not isinstance(value, list):
+        raise ValueError(f"{label} must be a list of the body's transitions")
+    found = []
+    for index, entry in enumerate(value):
+        row = keyed(entry, f"{label}[{index}]", TRANSITION_KEYS, TRANSITION_KEYS)
+        leaves, enters = (
+            part_named(row["from"], f"{label}[{index}].from", names),
+            part_named(row["to"], f"{label}[{index}].to", names),
+        )
+        drive = family_named(row["drive"], f"{label}[{index}].drive", quanta, own)
+        found.append(
+            Transition(leaves, enters, drive, integer(row["weight"], f"{label}[{index}].weight", 1))
+        )
+    return tuple(found)
+
+
+def rates_of(
+    value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int
+) -> tuple[Rate, ...]:
+    """A body's `rates`: each `from` and `to`, two of its parts' names, `lifetime` from 1 (the giving at 1 / lifetime per interval, the declared floor) and `gives_to`, the family of quanta other than the body's own on which the given quantum is laid; refused by name otherwise."""
+    if not isinstance(value, list):
+        raise ValueError(f"{label} must be a list of the body's givings")
+    found = []
+    for index, entry in enumerate(value):
+        row = keyed(entry, f"{label}[{index}]", RATE_KEYS, RATE_KEYS)
+        leaves, enters = (
+            part_named(row["from"], f"{label}[{index}].from", names),
+            part_named(row["to"], f"{label}[{index}].to", names),
+        )
+        lifetime = integer(row["lifetime"], f"{label}[{index}].lifetime", 1)
+        found.append(
+            Rate(
+                leaves,
+                enters,
+                lifetime,
+                family_named(row["gives_to"], f"{label}[{index}].gives_to", quanta, own),
+            )
+        )
+    return tuple(found)
+
+
+def part_named(value: object, label: str, names: tuple[str, ...]) -> int:
+    """A part by its declared name, its position; refused by name where no part has it."""
+    if value not in names:
+        raise ValueError(f"{label} names {value!r}, and the body's parts are {list(names)}")
+    return names.index(str(value))
+
+
+def family_named(value: object, label: str, quanta: dict[str, int], own: int) -> int:
+    """A family of quanta by name, not the body's own, its position; refused by name otherwise."""
+    if value not in quanta or quanta[str(value)] == own:
+        raise ValueError(
+            f"{label} names {value!r}: a family of quanta other than the body's own, of {sorted(quanta)}"
+        )
+    return quanta[str(value)]
+
+
+def sense_of(value: object, label: str, plane: bool) -> int:
+    """A lay's sense, +1 or -1 for a plane (the sign of its Wronskian) and none for a record of real lines, which write no sign; refused by name otherwise."""
+    sense = integer(value, label, -1, 1) if value is not None else 0
+    if plane == (sense == 0):
+        raise ValueError(
+            f"{label}: a plane is laid at the sense +1 or -1 and a record of real lines at none, got {value!r}"
+        )
+    return sense
+
+
+def conversion_of(
+    value: object, label: str, families: tuple[FamilyRule, ...], own: int, quanta: dict[str, int]
+) -> tuple[Conversion, int]:
+    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the families of the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
+    found = keyed(value, label, CONVERSION_KEYS, CONVERSION_REQUIRED)
+    rate = integer(found["rate"], f"{label}.rate", 1)
+    if not isinstance(found["to"], list) or not found["to"]:
+        raise ValueError(f"{label}.to lists the families of the records out of the conversion")
+    outs = tuple(
+        family_named(name, f"{label}.to[{index}]", quanta, own) for index, name in enumerate(found["to"])
+    )
+    own_sense = sense_of(found.get("sense"), f"{label}.sense", families[own].plane)
+    return Conversion(rate, outs), own_sense
+
+
+def node_instrument_of(
+    body: dict[str, object],
+    label: str,
+    families: tuple[FamilyRule, ...],
+    own: int,
+    quanta: dict[str, int],
+    count: int,
+) -> NodeInstrument:
+    """A body's declaration as an instrument (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word of 2026-10-03: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `instrument` (its own draw, `instrument_of`) its `transitions` and its `rates`, each needing the instrument and the instrument needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `instrument` to draw it; refused by name otherwise."""
+    family = families[own]
+    if "conversion" in body:
+        if "parts" in body or "transitions" in body or "rates" in body:
+            raise ValueError(f"{label} is converted whole: it declares no parts, transitions or rates")
+        if "instrument" not in body:
+            raise ValueError(f"{label} declares a conversion and no `instrument` to draw it with")
+        table, sense = conversion_of(body["conversion"], f"{label}.conversion", families, own, quanta)
+        own_draw = instrument_of(body["instrument"], f"{label}.instrument")
+        return NodeInstrument((family.name,), (count,), (), (), own_draw, (table,), sense)
+    if "parts" not in body:
+        raise ValueError(
+            f"{label} declares its parts, the modes it is laid in, before any instrument, transition or rate"
+        )
+    if not family.plane or family.parts < 2 or family.planes != 1:
+        raise ValueError(
+            f"{label}: a body laid in its parts is a plane of several parts, one plane per part, and "
+            f"{family.name!r} is not"
+        )
+    names, counts = parts_of(body["parts"], f"{label}.parts", family.parts, count)
+    draw = instrument_of(body["instrument"], f"{label}.instrument") if "instrument" in body else None
+    if draw is None and ("transitions" in body or "rates" in body):
+        raise ValueError(f"{label} declares transitions or rates and no `instrument` to draw them with")
+    transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
+    rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own)
+    return NodeInstrument(names, counts, transitions, rates, draw)

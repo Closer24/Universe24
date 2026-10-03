@@ -111,7 +111,11 @@ the journal.
 ### Foundations of Physics
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
-  unspecified reference; there are 4 to 6 keywords. Met.
+  unspecified reference; there are 4 to 6 keywords. Met by the journal's
+  version of the abstract, `abstract_journal.txt` beside the paper: the
+  arXiv abstract without its opening question, light's speed sentence, the
+  cube's 48, the alpha clause and the shadow, 248 words,
+  every formula in it the arXiv abstract's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
   interests, ethics and consent, data availability, author contributions.
@@ -144,8 +148,8 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "33 pages, 2 figures, 4 tables; supplementary material of 27 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 250 words and about 1600
-  characters.
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 327 words and 1917
+  characters counted with its TeX signs, below the cap.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
   scripts; it compiles under pdflatex in a clean directory, and no `.bbl`

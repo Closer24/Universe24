@@ -97,7 +97,7 @@ def well(booking: Any, action: int) -> np.ndarray:
 
 
 def written(count: Any, rulers: Rulers, gamma: int, intervals: int) -> Any:
-    """The write's factor, one place (ALGEBRA.md, The write per proper volume and per proper interval): a source's booking scaled per proper volume and per proper interval at the source family's paces, N^intervals p_x p_y p_z / p_0^3 with N = p_0 / Gamma, the three axes divided one at a time (`paces.write_factor`), `intervals` the proper-interval powers of the held row's source, 2 on a count (the form) and 1 on the Wronskian, which carries one N of its own; the booking itself at the vacuum's paces."""
+    """The write's factor, one place (ALGEBRA.md, The write per proper volume and per proper interval): a source's booking scaled per proper volume and per proper interval at the source family's paces, N^intervals p_x p_y p_z / p_0^3 with N = p_0 / Gamma, one rounding over the one wall (`paces.write_factor`), `intervals` the proper-interval powers of the held row's source, 2 on a count (the form) and 1 on the Wronskian, which carries one N of its own; the booking itself at the vacuum's paces."""
     clock, (p_x, p_y, p_z) = rulers
     return paces.write_factor(count, p_x, p_y, p_z, clock, gamma, intervals)
 

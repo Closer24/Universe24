@@ -1,4 +1,4 @@
-"""The composed paces' cost and width, a GameBoard diagnostic and no measurement (core/paces.py; ALGEBRA.md #the-paces, the principle C, the owner's word of 2026-10-01, 17:02): for the worlds given, at their universe's Gamma, T and width, the time of one lookup of the clock and of the Link's pace over a board of the world's declared shape (and of every shape given with --nodes) holding a well of the depth given, the memo cold and warm, beside the time of the whole first interval of the world itself; the contents at which the Link's pace and the clock round to 0 at Gamma, with the exact integers' size there, the time of one value by its own power and the memo's running fill through the well's depth, 3 Gamma and the Link's zero; and the write's width: the form D of one quantum (T) and at the amplitude bound (A^2) times the three Links' paces at the vacuum and at the guard's edge, as one product and one axis at a time (`paces.write_factor`, on a count and on a Wronskian), each against the width's largest integer, with the identity of the write's and the turn's factors at the vacuum. Every number comes from the files and the command line; the tool holds none of the law's and writes nothing to the engine.
+"""The composed paces' cost and width, a GameBoard diagnostic and no measurement (core/paces.py; ALGEBRA.md #the-paces, the principle C, the owner's word of 2026-10-01, 17:02): for the worlds given, at their universe's Gamma, T and width, the time of one lookup of the clock and of the Link's pace over a board of the world's declared shape (and of every shape given with --nodes) holding a well of the depth given, the memo cold and warm, beside the time of the whole first interval of the world itself; the contents at which the Link's pace and the clock round to 0 at Gamma, with the exact integers' size there, the time of one value by its own power and the memo's running fill through the well's depth, 3 Gamma and the Link's zero; and the write's width: the form D of one quantum (T) and at the amplitude bound (A^2) times the three Links' paces at the vacuum and at the guard's edge, as one product (`paces.write_factor`, one rounding on a count and on a Wronskian, the product exact beyond the width), against the width's largest integer, with the identity of the write's and the turn's factors at the vacuum. Every number comes from the files and the command line; the tool holds none of the law's and writes nothing to the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -85,7 +85,7 @@ def fits(value: int, largest: int) -> str:
 def width_of(
     gamma: int, action: int, bound: int, largest: int, pairs: list[tuple[int, int]]
 ) -> dict[str, Any]:
-    """The write's width at the vacuum's paces and at the guard's edge: D p_x p_y p_z as one product and p_0 D p_x p_y p_z with the clock, each against the width's largest integer, and the per-axis booking's largest intermediate, D times one pace; D the form of one quantum, T, and the form at the amplitude bound, A^2; the identities at the vacuum."""
+    """The write's width at the vacuum's paces and at the guard's edge: D p_x p_y p_z as one product, the one rounding's numerator, and p_0 D p_x p_y p_z with the clock, each against the width's largest integer (the product is exact in Python's integers in the engine; the value, the booking times at most (P / Gamma)^3, is what the width holds); D the form of one quantum, T, and the form at the amplitude bound, A^2; the identities at the vacuum."""
     edge = max(division_fixed_point(edge_squared(pair, gamma)) for pair in pairs)
     found: dict[str, Any] = {"vacuum_pace": gamma, "edge_pace": edge, "largest": largest}
     for name, form in (("one_quantum_T", action), ("amplitude_bound_A_squared", bound * bound)):
@@ -94,7 +94,6 @@ def width_of(
             found[f"{name}_{label}"] = {
                 "D_px_py_pz": [product, fits(product, largest)],
                 "p0_D_px_py_pz": [product * pace, fits(product * pace, largest)],
-                "per_axis_intermediate_D_p": [form * pace, fits(form * pace, largest)],
                 "write_factor_count": int(paces.write_factor(form, pace, pace, pace, pace, gamma, 2)),
                 "write_factor_wronskian": int(
                     paces.write_factor(form, pace, pace, pace, pace, gamma, 1)

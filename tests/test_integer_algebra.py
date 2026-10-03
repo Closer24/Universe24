@@ -11,23 +11,17 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
 PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "credit.py", "world_files.py")
-PHYSICAL_MODULES += ("records.py", "bookings.py")
+PHYSICAL_MODULES += ("records.py", "bookings.py", "meeting.py", "conversion.py", "front.py", "plane.py")
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/universe.py", "loader/lay.py")
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
-NUMPY_DTYPES_FORBIDDEN = set(
-    "complex128 complex64 complex_ complexfloating float128 float16 float32".split()
-)
-NUMPY_DTYPES_FORBIDDEN |= set(
-    "float64 float_ floating int16 int32 int8 uint16 uint32 uint64 uint8".split()
-)
-NUMPY_FORBIDDEN = set(
-    "arctan2 average cbrt cos divide exp float hypot log log10 log2 mean power".split()
-)
-NUMPY_FORBIDDEN |= set("sin sqrt std tan true_divide var".split())
+FLOATS = "complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating"
+NUMPY_DTYPES_FORBIDDEN = {*FLOATS.split(), *"int16 int32 int8 uint16 uint32 uint64 uint8".split()}
+NUMPY_FORBIDDEN = set("arctan2 average cbrt cos divide exp float hypot log log10 log2 mean".split())
+NUMPY_FORBIDDEN |= set("power sin sqrt std tan true_divide var".split())
 BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int", "kind"}  # kind: the loader's choice by the width
 ROOT_NAMES = {"isqrt", "integer_root"}
 
@@ -72,22 +66,17 @@ METHODS_FORBIDDEN = {"mean", "std", "var"}
 def numpy_chain(node: ast.AST) -> list[str] | None:
     chain: list[str] = []
     while isinstance(node, ast.Attribute):
-        chain.append(node.attr)
-        node = node.value
-    if isinstance(node, ast.Name) and node.id == "np":
-        return list(reversed(chain))
-    return None
+        chain, node = [node.attr, *chain], node.value
+    return chain if isinstance(node, ast.Name) and node.id == "np" else None
 
 
 def is_integer_literal(node: ast.AST) -> bool:
     """A literal that is an integer or a (nested) list or tuple of integers and booleans."""
-    if isinstance(node, ast.Constant):
-        return isinstance(node.value, (int, bool)) and not isinstance(node.value, float)
     if isinstance(node, (ast.List, ast.Tuple)):
         return all(is_integer_literal(item) for item in node.elts)
     if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
         return is_integer_literal(node.operand)
-    return True  # a name or a call: judged where it is made
+    return not isinstance(node, ast.Constant) or isinstance(node.value, (int, bool))  # a name, a call
 
 
 def numpy_violations(tree: ast.AST) -> list[str]:
@@ -135,8 +124,7 @@ FEATURES = sorted(p.relative_to(SRC).as_posix() for p in (SRC / "features").glob
 @pytest.mark.parametrize("name", sorted(PHYSICAL_MODULES) + FEATURES)
 def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     """Every physical module, and every feature's folder under the same gate (issue #1154 cut 2), found by its folder and never listed."""
-    source = (SRC / name).read_text(encoding="utf-8")
-    tree = ast.parse(source)
+    tree = ast.parse(source := (SRC / name).read_text(encoding="utf-8"))
     assert float_literals(source) == [], (name, float_literals(source))
     assert true_divisions(source) == [], (name, true_divisions(source))
     assert forbidden_imports(tree) == [], (name, forbidden_imports(tree))

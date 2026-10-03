@@ -1,0 +1,64 @@
+{
+ "verdict": "DETECTOR",
+ "comment": "The fifth feasibility world of the click's line (the Boss's list to both hands, #1572 comment 5963599079 (A) 5, with the hands' amendments, the advisor's 5963681796 and the mathematician's 5963662072 part C; the owner's words of 2026-10-03, 03:26 Israel, 'likewise an option for dimension 3 in the families', and 00:52 UTC, 'build and run tonight'): a test family of dimension 3, `triplet`, three real lines of the massless pair [6000, 6000] reading nothing, neutral, a test row that claims nothing of the proton (the proton's row, three planes, is the morning's by name, written in the documents and built with its experiment; in the rule's universe no pair is 1,836 times the electron's), on the universe file `universe` beside this design. One record of it laid as a message (`tools/pixel_mode.py`, the message lay) at the column `source` of a chain of `length` Nodes (x open with both faces receding to `largest` by `layers` layers, y and z folded), moving toward +x at the wave `wave` (k = pi / 4) under the raised cosine of `edge` beyond its top, at the amplitude `amplitude` and the weights `weights` over its three lines (the world file's key `weights` on the message: the pair times each line's weight, so the record stands at (a, b, c) over its lines, `GameBoard.lay`), the amplitude chosen so that the laid share over the three lines reads one whole quantum, the count 1 (the books' count read from the loaded world; at this amplitude the three lines' shares in quanta are about 0.07, 0.29 and 0.64, a^2 : b^2 : c^2 of one), the second world the same lay with the weights permuted (`permuted`); one region detector `counter` of `counter_nodes` Nodes, the chain's last two before the x high face, backed by that receding face (opaque: what enters leaves the declared board and never returns); the world declares the `instrument` with the window `window`, the run `ticks` two windows, so that the click falls at the first window's end and the second window reads nothing after it; the generator the shipped gate worlds' at the seed `seed`. The reading (`read_world.py` beside this design): the `credit` lines (how many, at which interval, the count moved and left), the `parts` lines over the first window line by line, each line's fraction the sum of the squares of its two level sums over the window over the three lines' total (the parts line's own read, as `tools/bell_gate.py` squares the sums), the record's three lines' levels and remainders at the click's Node after the face's two intervals (a GameBoard reading labelled so), and every line after the click. Every number stands here and the engine reads none; the blind below is the advisor's, verbatim as the Boss relayed it, written before any lay and never edited after.",
+ "family": "triplet",
+ "window": [
+  1,
+  30
+ ],
+ "counter": "counter",
+ "clicks": 1,
+ "worlds": {
+  "triple_weighted": {
+   "weights": [
+    1,
+    2,
+    3
+   ],
+   "fractions": [
+    [
+     1,
+     14
+    ],
+    [
+     4,
+     14
+    ],
+    [
+     9,
+     14
+    ]
+   ]
+  },
+  "triple_permuted": {
+   "weights": [
+    3,
+    1,
+    2
+   ],
+   "fractions": [
+    [
+     9,
+     14
+    ],
+    [
+     1,
+     14
+    ],
+    [
+     4,
+     14
+    ]
+   ]
+  }
+ },
+ "blind": {
+  "one_click": "exactly one click (one credit line in the run), the count 1 to 0 (the credit line's count 1 and left 0)",
+  "the_hole": "at the click's Node the three lines' levels and remainders go to 0 in the same act, two intervals under the face (the levels now and before and Rule3's remainder of every line of the record 0 at that Node after the two intervals that follow the click)",
+  "no_line_named": "no click line names a line: the click is the record's, every line of it taken in one act",
+  "fractions": "the window's three level-sum fractions (the parts line, line by line) equal a^2 : b^2 : c^2 to the rounding and sum to one: at the weights [1, 2, 3], 1 / 14, 4 / 14 and 9 / 14 = 0.0714, 0.2857 and 0.6429",
+  "permuted": "a second lay with the weights permuted gives the permuted fractions: at [3, 1, 2], 9 / 14, 1 / 14 and 4 / 14",
+  "no_second_click": "no second click anywhere after (the front): no credit line after the first, the record's count at 0 uncreditable, the erasing front taking what is left",
+  "gates_unchanged": "the gate worlds bit for bit unchanged, since no shipped file declares dimension 3 (the two slits' N = 278, Bell's S = 478 / 169, the GHZ gate's M = -4, every committed world's run the same lines)"
+ }
+}

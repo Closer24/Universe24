@@ -1,4 +1,4 @@
-"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: one real line, or a plane of two) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the hold's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
+"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the hold's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
 
 from __future__ import annotations
 
@@ -11,10 +11,17 @@ from event_universe.features.currents import AXIS_PORTS, PORTS, PRODUCTS
 from event_universe.features.read import edge_of
 from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK
 
+PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
+REAL_LINE, PLANE_LINE = (
+    "real",
+    "plane",
+)  # the kinds of a record's lines, the shape by name (the two hands of 2026-10-03)
+KINDS = (REAL_LINE, PLANE_LINE)
+
 
 @dataclass(frozen=True)
 class Row:
-    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, 1 or 2, times its parts; a held row's sources' count, one real line per source, and the three odd axis lines of a holder of the sign under the rotation), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (re and im: charged matter), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), whether it acts on its readers by the rotation of the two-part record (the holder of the sign's declared act; else by the plain read into their paces), its level weight where it is held (the quanta of form that write one level of the row), its write weight where it is held (the signed multiplier of its one write per line, the files' key `write_weight`: the sign holder's k_w, a nuclear holder's W_1 or -W_2), its rest, and the holders its declaration names with the weight it reads each with (`declared`, the files' key `reads`, by name; empty where it reads none)."""
+    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, any integer from 1, times its parts; a held row's sources' count, one real line per source, and the three odd axis lines of a holder of the sign under the rotation), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (the dimension 2, re and im: charged matter, the one dimension with a Wronskian and a turn; every other dimension real lines, which read none of the sign), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), whether it acts on its readers by the rotation of the two-part record (the holder of the sign's declared act; else by the plain read into their paces), its level weight where it is held (the quanta of form that write one level of the row), its write weight where it is held (the signed multiplier of its one write per line, the files' key `write_weight`: the sign holder's k_w, a nuclear holder's W_1 or -W_2), its rest, and the holders its declaration names with the weight it reads each with (`declared`, the files' key `reads`, by name; empty where it reads none)."""
 
     name: str
     pair: tuple[int, int]
@@ -62,8 +69,23 @@ class FamilyRule(Row):
 
     @property
     def width(self) -> int:
-        """The lines of one part of one record, the lines in all over the parts and the records: one real line, or a plane's two; a held row's time line with its axis lines (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
+        """The lines of one part of one record, the lines in all over the parts and the records: a family of quanta's dimension, one real line, a plane's two or the three of a record of three real lines; a held row's time line with its axis lines (ALGEBRA.md #a-familys-declaration, the dimension's table)."""
         return self.lines // (self.parts * self.records)
+
+    @property
+    def planes(self) -> int:
+        """The planes of one part of one record, half its lines where its lines are planes (re and im, `PLANE`), 0 for real lines: one for charged matter, three for a record declared as three planes."""
+        return self.width // PLANE if self.plane else 0
+
+    @property
+    def laid(self) -> int:
+        """The lines of one part the laid pair goes to, one per real line and one per plane (its first line, the second line its sense): the count of a body's or a message's `weights` (`keys.weights_of`, `GameBoard.lay`)."""
+        return self.planes if self.plane else self.width
+
+    @property
+    def several(self) -> bool:
+        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `GameBoard.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported."""
+        return self.parts > 1 or (self.width > 1 and not self.plane)
 
     @property
     def axes(self) -> bool:
@@ -83,7 +105,7 @@ def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
 
 
 def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
-    """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
+    """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family, a plane (`read_of` admits no family of real lines naming one), owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
     return families[index].quanta and any(
         families[read.family].wronskian for read in families[index].reads
     )
@@ -139,7 +161,7 @@ class HeldWrite:
 
 
 def read_of(rows: Sequence[Row], index: int, name: str, weight: int) -> Read:
-    """One declared read resolved to the held row's position (ALGEBRA.md, every family reads the holders its declaration names, at the weights it names), refused by name where the name is no held row of the universe file, where the holder of the sign names its own level (light reads none of the sign) and where a family of real lines names a holder under the rotation, which turns a two-part record and nothing else."""
+    """One declared read resolved to the held row's position (ALGEBRA.md, every family reads the holders its declaration names, at the weights it names), refused by name where the name is no held row of the universe file, where the holder of the sign names its own level (light reads none of the sign) and where a family of real lines, one or three, names a holder of the sign: a plane reads the holder of the sign, plainly into its pace or as the turn of its two lines, and writes it by its Wronskian, and a real line does not, neutral by itself (ALGEBRA.md #a-familys-declaration, Every family has a dimension; the advisor's second hand, #1572 comment 5963681796)."""
     names = [row.name for row in rows]
     row = rows[index]
     if name not in names or rows[names.index(name)].level_weight is None:
@@ -153,10 +175,11 @@ def read_of(rows: Sequence[Row], index: int, name: str, weight: int) -> Read:
             f"{row.name!r} reads its own level: the holder of the sign never reads its own level, light "
             "reads none of the sign (ALGEBRA.md #a-familys-declaration)"
         )
-    if rows[other].rotation and not row.plane:
+    if rows[other].wronskian and not row.plane:
         raise ValueError(
-            f"{row.name!r} reads {name!r}, a holder under the rotation, with lines that are no plane: the "
-            "rotation turns a two-part record and nothing else (ALGEBRA.md, The sign holder rotates the two-part record)"
+            f"{row.name!r} reads {name!r}, a holder of the sign, with lines that are no plane: a plane reads the "
+            "holder of the sign, plainly or as the turn of its two lines, and a real line does not (ALGEBRA.md "
+            "#a-familys-declaration, Every family has a dimension)"
         )
     return Read(other, weight)
 
@@ -234,20 +257,20 @@ def largest_of(width: int) -> int:
 
 
 def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) -> int:
-    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products, or the form's two per line of its record (now^2 and next x before); where the source's record is turned (`turns`) the booking is read from the step's levels before the turn, each within twice A once A is read as A + 2 (features/rotation, `TURNED_REACH`, `TURNED_SLACK`; `amplitude_bound`): the Wronskian's two products of a turned level and a level, the form's now^2 and the two turned levels' product per line."""
+    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products per plane of the part (three planes thrice), or the form's two per line of its record (now^2 and next x before); where the source's record is turned (`turns`) the booking is read from the step's levels before the turn, each within twice A once A is read as A + 2 (features/rotation, `TURNED_REACH`, `TURNED_SLACK`; `amplitude_bound`): the Wronskian's two products of a turned level and a level, the form's now^2 and the two turned levels' product per line."""
     reach = TURNED_REACH if turns(families, index) else 1
     if wronskian:
-        return PRODUCTS * reach
+        return (
+            PRODUCTS * reach * (families[index].planes or 1)
+        )  # every plane of the part its two products
     return families[index].record * (1 + reach * reach if reach > 1 else PRODUCTS)
 
 
-def hill_scale(pair: tuple[int, int], gamma: int) -> tuple[int, int, int]:
-    """The write's factor at a source's hill's edge (ALGEBRA.md, The write per proper volume and per proper interval; The guard): P the edge's pace of the source's pair, the largest the guard admits (`features/read`, `edge_of`), where the factor N^k p_x p_y p_z / p_0^3 is at most (P / Gamma)^3 (1 at most in a hollow, every pace at or below Gamma); returns P, the factor's room P^3 div Gamma^3 rounded up, which multiplies the booking's room in the write's numerator, and the per-axis booking's room P^3 div Gamma^2 rounded up, the scaled booking times the last pace before its division, the largest intermediate of the three divisions (every earlier one smaller, P at or above Gamma)."""
+def hill_scale(pair: tuple[int, int], gamma: int) -> int:
+    """The write's factor's room at a source's hill's edge (ALGEBRA.md, The write per proper volume and per proper interval; The guard): P the edge's pace of the source's pair, the largest the guard admits (`features/read`, `edge_of`), where the factor N^k p_x p_y p_z / p_0^3, one rounding of the count times the three paces over the one wall (`paces.write_factor`, the product exact beyond the width), is at most (P / Gamma)^3 (1 at most in a hollow, every pace at or below Gamma): P^3 div Gamma^3 rounded up, which multiplies the booking's room in the write's numerator, the one place the factor meets the width."""
     edge = edge_of(pair, gamma)
-    cube, square = gamma * gamma * gamma, gamma * gamma
-    factor = int(division_forward(edge * edge * edge, cube, cube - 1)[0])
-    intermediate = int(division_forward(edge * edge * edge, square, square - 1)[0])
-    return edge, factor, intermediate
+    cube = gamma * gamma * gamma
+    return int(division_forward(edge * edge * edge, cube, cube - 1)[0])
 
 
 def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite, gamma: int) -> list[int]:
@@ -257,7 +280,7 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite, 
     time = sum(
         abs(weight_of(index, families[other]))
         * booking_room(families, other, family.wronskian)
-        * hill_scale(families[other].pair, gamma)[1]
+        * hill_scale(families[other].pair, gamma)
         for other in sources
     )
     axis = sum(
@@ -274,7 +297,7 @@ def write_rooms(families: tuple[FamilyRule, ...], index: int, write: HeldWrite, 
 def amplitude_bound(
     families: tuple[FamilyRule, ...], gamma: int, action: int, width: int, unit: int = 1
 ) -> int:
-    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the vacuum's paces, at a frozen clock (the paces 0, the bound the deepest hollow approaches: |S| grows to 12 den Gamma^2 G^2 as the paces fall) and at the hill's edge P on the clock and the pace alike (`features/read`, `edge_of`; the three the extremes of the guard, ALGEBRA.md #the-bound, #the-paces, The guard; for a turned record the six arrivals within twice A, `TURNED_REACH`, and the three shears' largest product, 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice A and one, features/rotation), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), at which every held family's one write per part, its numerator at the sources' room with the write's factor at the hill's edge (`write_rooms`) plus its remainder under the wall, does too, and at which the write's factor's per-axis booking, the scaled booking times one pace before its division rounded half up, 2 x the booking's room x P^3 div Gamma^2 x A^2 + 2 P per source (`hill_scale`; ALGEBRA.md, The write per proper volume and per proper interval, the engine's booking), does too; refused by name where no level fits. Where a holder turns a record (features/rotation) every room of the universe is read at the level A + 2 and the level found is 2 less (`TURNED_SLACK`: a turned level stays below 2^(1 / 2) A + 3, within twice A + 2, and not within twice A, the audit's witness (-1, -1) turning to (-3, -1) at A = 1), the turned record's total 6 R x twice the level + |S| A + w x twice the level + w (its six arrivals and the level before it is stepped against both turned, `TURNED_REACH`), the three shears' largest product 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice the level and one, and its bookings' products of turned levels (`booking_room`)."""
+    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the vacuum's paces, at a frozen clock (the paces 0, the bound the deepest hollow approaches: |S| grows to 12 den Gamma^2 G^2 as the paces fall) and at the hill's edge P on the clock and the pace alike (`features/read`, `edge_of`; the three the extremes of the guard, ALGEBRA.md #the-bound, #the-paces, The guard; for a turned record the six arrivals within twice A, `TURNED_REACH`, and the three shears' largest product, 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice A and one, features/rotation), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), at which every held family's one write per part, its numerator at the sources' room with the write's factor at the hill's edge (`write_rooms`: the booking's room times the factor's room at the source's hill's edge, `hill_scale`, the one rounding's value; its numerator, the count times the three paces, is exact in Python's integers and meets no width, `paces.write_factor`) plus its remainder under the wall, does too; refused by name where no level fits. Where a holder turns a record (features/rotation) every room of the universe is read at the level A + 2 and the level found is 2 less (`TURNED_SLACK`: a turned level stays below 2^(1 / 2) A + 3, within twice A + 2, and not within twice A, the audit's witness (-1, -1) turning to (-3, -1) at A = 1), the turned record's total 6 R x twice the level + |S| A + w x twice the level + w (its six arrivals and the level before it is stepped against both turned, `TURNED_REACH`), the three shears' largest product 2 n w x1 at the tangent half-angle 1 on a Link with x1 within twice the level and one, and its bookings' products of turned levels (`booking_room`)."""
     largest = largest_of(width)
     found = largest
     slack = TURNED_SLACK if any(turns(families, index) for index in range(len(families))) else 0
@@ -301,11 +324,6 @@ def amplitude_bound(
                 elif room:
                     fits = int(division_forward(largest - wall, room, 0)[0])
                     found = min(found, division_fixed_point(fits) - slack)
-            for other in readers_of(families, index):
-                edge, _factor, intermediate = hill_scale(families[other].pair, gamma)
-                room = 2 * booking_room(families, other, family.wronskian) * intermediate
-                fits = int(division_forward(largest - 2 * edge, room, 0)[0])
-                found = min(found, division_fixed_point(fits) - slack)
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "

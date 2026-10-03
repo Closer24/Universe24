@@ -1,0 +1,58 @@
+{
+ "verdict": "DETECTOR",
+ "comment": "The quantum Zeno world (S.59; the mathematician's 146 and 148, the advisor's second hand, the owner's word of 2026-10-02, 12:38, 'Yes, both of them'): one record of two parts declared an instrument at one Node, a drive whose accumulated turn over the run is a pi pulse in the labels, the record reading its own parts n times over the run; written before any run and never edited after.",
+ "trials": 120,
+ "intervals": 48,
+ "blind": {
+  "zeno_1": {
+   "n": 1,
+   "window": 48,
+   "reading": "the fraction of the trials whose record stands in e at the run's end (tools/meeting_trials.py, the books' part as the last write left it, a click)",
+   "blind": "P(e at T_pi) = (1 - cos^n(pi / n)) / 2 = 1.0000",
+   "value": 1.0,
+   "status": "Itano, Heinzen, Bollinger and Wineland 1990's formula, the paper's S.59 column A, under the null window's write (the owner's 'yes, both of them'); column B, the click writing and the null window leaving the record, 1, 0.625, 0.154, 0.005, 0.000 at n = 1, 2, 4, 8, 16, and column C, no write, 1 at every n, beside it",
+   "fence": "clicks"
+  },
+  "zeno_2": {
+   "n": 2,
+   "window": 24,
+   "reading": "the fraction of the trials whose record stands in e at the run's end (tools/meeting_trials.py, the books' part as the last write left it, a click)",
+   "blind": "P(e at T_pi) = (1 - cos^n(pi / n)) / 2 = 0.5000",
+   "value": 0.5,
+   "status": "Itano, Heinzen, Bollinger and Wineland 1990's formula, the paper's S.59 column A, under the null window's write (the owner's 'yes, both of them'); column B, the click writing and the null window leaving the record, 1, 0.625, 0.154, 0.005, 0.000 at n = 1, 2, 4, 8, 16, and column C, no write, 1 at every n, beside it",
+   "fence": "clicks"
+  },
+  "zeno_4": {
+   "n": 4,
+   "window": 12,
+   "reading": "the fraction of the trials whose record stands in e at the run's end (tools/meeting_trials.py, the books' part as the last write left it, a click)",
+   "blind": "P(e at T_pi) = (1 - cos^n(pi / n)) / 2 = 0.3750",
+   "value": 0.375,
+   "status": "Itano, Heinzen, Bollinger and Wineland 1990's formula, the paper's S.59 column A, under the null window's write (the owner's 'yes, both of them'); column B, the click writing and the null window leaving the record, 1, 0.625, 0.154, 0.005, 0.000 at n = 1, 2, 4, 8, 16, and column C, no write, 1 at every n, beside it",
+   "fence": "clicks"
+  },
+  "zeno_8": {
+   "n": 8,
+   "window": 6,
+   "reading": "the fraction of the trials whose record stands in e at the run's end (tools/meeting_trials.py, the books' part as the last write left it, a click)",
+   "blind": "P(e at T_pi) = (1 - cos^n(pi / n)) / 2 = 0.2346",
+   "value": 0.2346,
+   "status": "Itano, Heinzen, Bollinger and Wineland 1990's formula, the paper's S.59 column A, under the null window's write (the owner's 'yes, both of them'); column B, the click writing and the null window leaving the record, 1, 0.625, 0.154, 0.005, 0.000 at n = 1, 2, 4, 8, 16, and column C, no write, 1 at every n, beside it",
+   "fence": "clicks"
+  },
+  "zeno_16": {
+   "n": 16,
+   "window": 3,
+   "reading": "the fraction of the trials whose record stands in e at the run's end (tools/meeting_trials.py, the books' part as the last write left it, a click)",
+   "blind": "P(e at T_pi) = (1 - cos^n(pi / n)) / 2 = 0.1334",
+   "value": 0.1334,
+   "status": "Itano, Heinzen, Bollinger and Wineland 1990's formula, the paper's S.59 column A, under the null window's write (the owner's 'yes, both of them'); column B, the click writing and the null window leaving the record, 1, 0.625, 0.154, 0.005, 0.000 at n = 1, 2, 4, 8, 16, and column C, no write, 1 at every n, beside it",
+   "fence": "clicks"
+  }
+ },
+ "pi_pulse": {
+  "formula": "48 x (2 / pi) x 308 / 6000",
+  "value": 1.5686,
+  "wanted": 1.5708
+ }
+}
