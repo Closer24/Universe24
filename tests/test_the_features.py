@@ -3,6 +3,7 @@
 import json
 
 import numpy as np
+import pytest
 from scipy.sparse import diags, kronsum
 from scipy.sparse.linalg import spsolve
 
@@ -214,3 +215,33 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
             expected = sorted((i, 1) for i, sign in held if f.plane or not sign)
             assert sorted((r.family, r.weight) for r in f.reads) == expected, (name, f.name)
             assert f.write_weight == (WRITES.get((name, f.name), 1) if f.held else None), (name, f.name)
+
+
+def test_the_rests_room_is_the_sources_own_bound_where_the_tent_leaves_no_unit():
+    """The fine unit of a rest (`unit_of`): under the tent where the tent leaves a unit, as every shipped world has it; where it leaves none, on a board with no folded axis, under the source's own bound, the source total over its wall plus one, since a point source's rest on the cubic lattice peaks at 3 G(0) of its source over the wall, below one (the mathematician's 249 with the advisor's second, two hands: the tent over-bounds a point source by 2 (L + 1), which held the atom's Node clock at a fiftieth of its reach). A point source on an open cube: at a Node clock the tent admits, the tent's unit; at one it refuses, the bound's unit, the levels the same rest within one level (the rest in levels is the clock's own at the vacuum's paces), its peak under the bound; at a clock the bound refuses too, the refusal by name; a chain, its axes folded, keeps the tent and the refusal."""
+    from event_universe.features.start import source_bound, tent_of, unit_from_bound, unit_of
+
+    counts, chain = np.zeros((9, 9, 9), dtype=np.int64), np.zeros((40, 1, 1), dtype=np.int64)
+    counts[4, 4, 4], chain[20, 0, 0], pair, width = 1000, 1000, (6000, 6000), MAX_WORK_INT
+    admitted, refused_by_the_tent, refused_by_both = 60_000, 70_000, 300_000
+    assert unit_from_bound(tent_of(counts, 1), pair, width, admitted) >= 1
+    assert unit_from_bound(tent_of(counts, 1), pair, width, refused_by_the_tent) == 0
+    assert unit_of(counts, pair, 1, width, admitted) == unit_from_bound(
+        tent_of(counts, 1), pair, width, admitted
+    )
+    assert unit_of(counts, pair, 1, width, refused_by_the_tent) == unit_from_bound(
+        source_bound(counts, 1), pair, width, refused_by_the_tent
+    )
+    by_the_tent = rest(counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], admitted, own_weight=0)
+    by_the_bound = rest(
+        counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], refused_by_the_tent, own_weight=0
+    )
+    assert (
+        by_the_bound.unit >= 1 and by_the_tent.unit >= 1
+    )  # the bound's unit stands where the tent's does not
+    assert int(np.abs(by_the_bound.levels - by_the_tent.levels).max()) <= 1
+    assert int(by_the_bound.levels.max()) < source_bound(counts, 1) < tent_of(counts, 1)
+    with pytest.raises(ValueError, match="no fine unit"):
+        unit_of(counts, pair, 1, width, refused_by_both)
+    with pytest.raises(ValueError, match="no fine unit"):
+        unit_of(chain, pair, 1, width, refused_by_the_tent)

@@ -49,12 +49,28 @@ def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
     return tuple(arrival(a, axis, 1, wrap) + arrival(a, axis, -1, wrap) for axis in range(3))
 
 
-def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int, gamma: int) -> int:
-    """The fine unit, derived from the width and never written: the largest unit at which num p_i^2 S_6 of the rest stays inside the host's width, or inside the file's where the host's leaves none (so that a file wider than the host lays the same levels, the rest's own fixed point within the roundings' floor, and only widens the room), p_i^2 at most Gamma^2 under the guard, the rest's bound the larger of the source over its wall and the tent of the whole source over the longest extent (half of 3 x the source total over the wall times the extent); refused by name where the width leaves no unit."""
+def tent_of(counts: np.ndarray, divisor: int) -> int:
+    """A bound on a rest's levels from its source alone, the tent: the larger of the source over its wall at one Node and the parabola a source spread flat over the longest extent would raise, half of 3 x the source total over the wall times the extent, each plus one (ALGEBRA.md #the-bound). It is the bound of a chain or a slab, whose rest grows with the extent, and loose by 2 (L + 1) for a point source on a board with no folded axis, whose rest peaks near 0.76 of its source over the wall (the mathematician's 249 with the advisor's second, #1572 comments 5968344874 and 5968375224, two hands)."""
     tent = int(division(3 * int(np.abs(counts).sum()) * (max(counts.shape) + 1), 2 * divisor, 1))
-    largest = max(int(division(1, divisor, int(np.abs(counts).max()))) + 1, tent + 1)
-    bound = 2 * 2 * abs(pair[0]) * 6 * largest * gamma * gamma
-    unit = int(division(1, bound, min(width, MAX_WORK_INT))) or int(division(1, bound, width))
+    return max(int(division(1, divisor, int(np.abs(counts).max()))) + 1, tent + 1)
+
+
+def source_bound(counts: np.ndarray, divisor: int) -> int:
+    """A bound on a rest's levels on a board with no folded axis, the source total over its wall plus one, no number of the engine in it: on the cubic lattice the rest of a point source peaks at 3 G(0) of its source over the wall, G(0) the lattice Green's function at the origin, 0.2527 (Watson's integral), below one third; a screened row (num below den), a face read as 0 and a sink lower it; so the rest of any source at the vacuum's paces stands below the sum of its sources over the wall (the mathematician's 249 with the advisor's second, two hands). On a board with a folded axis the rest is a chain's or a slab's and grows with the extent, and the tent is its bound (`tent_of`)."""
+    return int(division(1, divisor, int(np.abs(counts).sum()))) + 1
+
+
+def unit_from_bound(largest_level: int, pair: Pair, width: int, gamma: int) -> int:
+    """The fine unit under a bound on the rest's levels, derived from the width and never written: the largest unit at which num p_i^2 S_6 of a rest within `largest_level` stays inside the host's width, or inside the file's where the host's leaves none (so that a file wider than the host lays the same levels, the rest's own fixed point within the roundings' floor, and only widens the room), p_i^2 at most Gamma^2 under the guard; 0 where the width leaves no unit."""
+    bound = 2 * 2 * abs(pair[0]) * 6 * largest_level * gamma * gamma
+    return int(division(1, bound, min(width, MAX_WORK_INT))) or int(division(1, bound, width))
+
+
+def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int, gamma: int) -> int:
+    """The fine unit of a row's rest: under the tent where the tent leaves a unit (`tent_of`, every shipped world bit for bit), else, on a board with no folded axis, under the source's own bound (`source_bound`, the room the tent over-bounds by 2 (L + 1), which held the Node clock of the atom's world at a fiftieth of its reach); refused by name where both leave none."""
+    unit = unit_from_bound(tent_of(counts, divisor), pair, width, gamma)
+    if not unit and all(n > 1 for n in counts.shape):
+        unit = unit_from_bound(source_bound(counts, divisor), pair, width, gamma)
     if unit < 1:
         raise ValueError(
             f"the width {width} leaves no fine unit for the rest of the pair {list(pair)} under a source of "
