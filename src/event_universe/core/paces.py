@@ -12,6 +12,9 @@ import numpy as np
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 
+COUNT_POWER = 2  # the proper-interval powers of a count's write, p_x p_y p_z / (p_0 Gamma^2)
+WRONSKIAN_POWER = 1  # the proper-interval power of a Wronskian's write, p_x p_y p_z / (p_0^2 Gamma)
+
 
 def rounded(numerator: Any, wall: Any) -> Any:
     """The numerator over the wall rounded half up in one division of the division act, (2 numerator + wall) div (2 wall), the count's own rounding (share.quanta_of, (share + W_c div 2) div W_c) in the one act, no remainder kept: a pace and a factor are coefficients of the interval and no level; integers or whole-board arrays alike."""

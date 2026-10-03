@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.ports import Wrap, arrival
+from event_universe.core.ports import PORTS, SIDES, Wrap, arrival
 from event_universe.core.rule3 import NO_READ, Reads, coefficients, rule3
 
 Pair = tuple[int, int]
@@ -50,7 +50,7 @@ def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
 
 
 def tent_of(counts: np.ndarray, divisor: int) -> int:
-    """A bound on a rest's levels from its source alone, the tent: the larger of the source over its wall at one Node and the parabola a source spread flat over the longest extent would raise, half of 3 x the source total over the wall times the extent, each plus one (ALGEBRA.md #the-bound). It is the bound of a chain or a slab, whose rest grows with the extent, and loose by 2 (L + 1) for a point source on a board with no folded axis, whose rest peaks near 0.76 of its source over the wall (the mathematician's 249 with the advisor's second, #1572 comments 5968344874 and 5968375224, two hands)."""
+    """A bound on a rest's levels from its source alone, the tent: the larger of the source over its wall at one Node and the parabola a source spread flat over the longest extent would raise, half of 3 x the source total over the wall times the extent, each plus one (ALGEBRA.md #the-bound; ENGINE.md, the start: on a chain the line 6 den b = num S_6(b) + 3 den sigma at the massless pair is 2 b_x - b_(x-1) - b_(x+1) = 3 sigma, the four folded reads on the Node itself, so a source sigma per Node over n Nodes raises b_x = 3 sigma x (n + 1 - x) / 2, the discrete parabola whose sum is 3 sigma n (n + 1) (n + 2) / 12 and whose top is 3 S (n + 1) / 8 at S = n sigma, under 3 S (n + 1) / 2 by four; the 3 Rule3's own source coefficient and the 2 the parabola's half, no number of the engine). It is the bound of a chain or a slab, whose rest grows with the extent, and loose by 2 (L + 1) for a point source on a board with no folded axis, whose rest peaks near 0.76 of its source over the wall (the mathematician's 249 with the advisor's second, #1572 comments 5968344874 and 5968375224, two hands)."""
     tent = int(division(3 * int(np.abs(counts).sum()) * (max(counts.shape) + 1), 2 * divisor, 1))
     return max(int(division(1, divisor, int(np.abs(counts).max()))) + 1, tent + 1)
 
@@ -61,8 +61,9 @@ def source_bound(counts: np.ndarray, divisor: int) -> int:
 
 
 def unit_from_bound(largest_level: int, pair: Pair, width: int, gamma: int) -> int:
-    """The fine unit under a bound on the rest's levels, derived from the width and never written: the largest unit at which num p_i^2 S_6 of a rest within `largest_level` stays inside the host's width, or inside the file's where the host's leaves none (so that a file wider than the host lays the same levels, the rest's own fixed point within the roundings' floor, and only widens the room), p_i^2 at most Gamma^2 under the guard; 0 where the width leaves no unit."""
-    bound = 2 * 2 * abs(pair[0]) * 6 * largest_level * gamma * gamma
+    """The fine unit under a bound on the rest's levels, derived from the width and never written: the largest unit at which the six reads at the vacuum's paces on a rest within `largest_level`, 12 num Gamma^2 x the bound (`coefficients`, R = 2 num p_i^2 per Port), taken twice for the two levels the line sums, stay inside the host's width, or inside the file's where the host's leaves none (so that a file wider than the host lays the same levels, the rest's own fixed point within the roundings' floor, and only widens the room), p_i^2 at most Gamma^2 under the guard; 0 where the width leaves no unit."""
+    reads = coefficients(pair[0], pair[1], gamma, gamma, gamma)[0]  # the six reads at the vacuum's paces
+    bound = 2 * abs(sum(reads)) * largest_level  # on a rest within the bound, twice for the two levels
     return int(division(1, bound, min(width, MAX_WORK_INT))) or int(division(1, bound, width))
 
 
@@ -116,11 +117,14 @@ def settled(
 
 
 def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any) -> int:
-    """The floored iteration's largest miss in fine units, K, a bound of the line's inverse on the unit source (the advisor's finding, #1563 comment 5958624379: the first state the act returns unchanged lies below the line by up to one fine unit over 1 - rho, rho the row's Jacobi factor on the board's lowest mode, (num / den) cos(pi / (n + 1)) on an open n-cube): along the longest open or closed axis of n Nodes, 3 ((n + 2) div 2)^2 + 1, at or above the top 3 (n + 1)^2 / 4 of the parabola 3 x (n + 1 - x), which the massless line at the vacuum's paces returns at or above the unit source at every Node (at every pace the six reads sum to at most the divisor, 6 num p_i^2 <= 6 (den - num) p_0^2 + 6 num p_i^2, so the inverse's row sums are at most that line's, and a face or an inner face read as 0 only lowers them); where every axis of more than one Node wraps, the pair's gap alone is the sink, W div (W - 6 R) + 1 at the Node where it is largest (den over den - num at the vacuum); the smaller where both hold; where neither holds and an inner face is the sink (`Wrap.beyond`), the longest axis's parabola, the face a wall somewhere along it; refused by name where no face at all bounds it (a massless row on a board wrapping on every axis needs a sink, which `rest` refuses before)."""
+    """The floored iteration's largest miss in fine units, K, a bound of the line's inverse on the unit source (the advisor's finding, #1563 comment 5958624379: the first state the act returns unchanged lies below the line by up to one fine unit over 1 - rho, rho the row's Jacobi factor on the board's lowest mode, (num / den) cos(pi / (n + 1)) on an open n-cube): along the longest open or closed axis of n Nodes, (6 div 2) ((n + 2) div 2)^2 + 1, the six reads over the axis's two Ports times the half-extent squared, plus one (`PORTS`, `SIDES`; no three of the axes in it), at or above the top 3 (n + 1)^2 / 4 of the parabola 3 x (n + 1 - x), the inverse of 6 b - S_6(b) = 6 along the axis, 2 b_x - b_(x-1) - b_(x+1) = 6, which the massless line at the vacuum's paces returns at or above the unit source at every Node (at every pace the six reads sum to at most the divisor, 6 num p_i^2 <= 6 (den - num) p_0^2 + 6 num p_i^2, so the inverse's row sums are at most that line's, and a face or an inner face read as 0 only lowers them); where every axis of more than one Node wraps, the pair's gap alone is the sink, W div (W - 6 R) + 1 at the Node where it is largest (den over den - num at the vacuum); the smaller where both hold; where neither holds and an inner face is the sink (`Wrap.beyond`), the longest axis's parabola, the face a wall somewhere along it; refused by name where no face at all bounds it (a massless row on a board wrapping on every axis needs a sink, which `rest` refuses before)."""
     open_axes = [n for axis, n in enumerate(fine.shape) if n > 1 and not wrap[axis]]
     longest = max(open_axes if open_axes or wrap.beyond is None else fine.shape, default=0) + 1
     half = int(division(1, 2, longest + 1))  # (n + 2) div 2, at or above (n + 1) / 2
-    bounds = [3 * half * half + 1] if longest > 1 else []
+    peak = int(
+        division(PORTS, SIDES, half * half)
+    )  # the parabola's top: the six reads over the axis's two
+    bounds = [peak + 1] if longest > 1 else []
     gap = divisor - 2 * sum(reads)  # W - 6 R at every Node, 6 (den - num) p_0^2
     if bool((gap > 0).all()):
         bounds.append(int(division(divisor, gap, 1).max()) + 1)
@@ -220,8 +224,8 @@ def rest(
     wall: int,
     gamma: int,
     others: np.ndarray | int = 0,
-    intervals: int = 2,
     *,
+    intervals: int,
     own_weight: int,
     seed: FieldAtRest | None = None,
 ) -> FieldAtRest:
@@ -304,7 +308,17 @@ def settled_rows(
             wall = coefficients(pair[0], pair[1], gamma, gamma, gamma, None, unit)[2]
             seed = before[number] if number < len(before) else None
             field = rest(
-                counts, pair, wrap, divisor, width, wall, gamma, others, own_weight=own_weight, seed=seed
+                counts,
+                pair,
+                wrap,
+                divisor,
+                width,
+                wall,
+                gamma,
+                others,
+                intervals=paces.COUNT_POWER,
+                own_weight=own_weight,
+                seed=seed,
             )
             levels[number] = field.levels
             fields.append(field)
@@ -341,7 +355,7 @@ def held_rests(
                     wall,
                     gamma,
                     content,
-                    1,
+                    intervals=paces.WRONSKIAN_POWER,
                     own_weight=own_weight,
                     seed=seeded,
                 )

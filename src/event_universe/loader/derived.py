@@ -6,8 +6,9 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
+from event_universe.core.ports import PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
-from event_universe.features.currents import AXIS_PORTS, PORTS, PRODUCTS
+from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
 from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK
 
@@ -320,7 +321,7 @@ def write_rooms(
         * write.factors[other]
         * families[other].record
         * PRODUCTS
-        * (AXIS_PORTS if family.rotation else abs(families[other].pair[0]))
+        * (SIDES if family.rotation else abs(families[other].pair[0]))
         for other in sources
     )
     return [abs(family.write) * room for room in ([time] + [axis] * (family.width - 1)) * family.records]

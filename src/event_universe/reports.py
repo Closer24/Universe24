@@ -8,11 +8,8 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.ports import Wrap, arrival
+from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
 from event_universe.node import Record
-
-PORTS = tuple((axis, side) for axis in range(3) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
-
 
 MEASUREMENT, DIAGNOSTIC = (
     "DETECTOR",
@@ -222,7 +219,7 @@ def front(
     """Per Port, the Nodes of the region at which that Port is a front boundary Port of the instrument: it leads in from a Node of the declared board outside the instrument (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
     return [
         nodes & ~arrival(instrument, axis, side, wrap, True) & arrival(declared, axis, side, wrap, False)
-        for axis, side in PORTS
+        for axis, side in PORT_SIDES
     ]
 
 
@@ -237,7 +234,7 @@ def region_of(detector: Detector, body_nodes: Callable[[int], np.ndarray]) -> np
 def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarray:
     """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per detector and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the detector's report per boundary Node, the shares of the instrument's draw of the one Node it writes (features/click)."""
     seen: Any = 0
-    for port in range(len(PORTS)):
+    for port in range(PORTS):
         seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
     return np.asarray(seen)
 

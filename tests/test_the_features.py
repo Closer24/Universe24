@@ -18,9 +18,10 @@ from event_universe.features.start import arrivals, read_content, rest, scaled_s
 from event_universe.features.write import carried
 from event_universe.loader.derived import held_write, readers_of, weight_of
 from event_universe.loader.universe import universe_of
-from tests.laws import CHARGED, UNIVERSE, refused
+from tests.laws import CHARGED, ROOT, UNIVERSE, refused
 
-GAMMA, SHAPE, OWN = 10_000, (3, 3, 3), {"own_weight": 1}  # a row reading its own level at 1
+GAMMA, SHAPE = 10_000, (3, 3, 3)
+OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own level at 1, a count
 
 
 def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_name():
@@ -248,10 +249,9 @@ def test_the_rests_room_is_the_sources_own_bound_where_the_tent_leaves_no_unit()
     assert unit_of(counts, pair, 1, width, refused_by_the_tent, OPEN_CUBE) == unit_from_bound(
         source_bound(counts, 1), pair, width, refused_by_the_tent
     )
-    by_the_tent = rest(counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], admitted, own_weight=0)
-    by_the_bound = rest(
-        counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], refused_by_the_tent, own_weight=0
-    )
+    sign = {"own_weight": 0, "intervals": paces.COUNT_POWER}  # the holder of the sign, a count source
+    by_the_tent = rest(counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], admitted, **sign)
+    by_the_bound = rest(counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], refused_by_the_tent, **sign)
     assert by_the_bound.unit >= 1 and by_the_tent.unit >= 1  # the bound's unit where the tent's is none
     assert int(np.abs(by_the_bound.levels - by_the_tent.levels).max()) <= 1
     assert int(by_the_bound.levels.max()) < source_bound(counts, 1) < tent_of(counts, 1)
@@ -313,3 +313,51 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
     assert (
         derived.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7
     )  # the sum over the two rows read
+
+
+def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
+    """No number in the engine (ENGINE.md, the start; ALGEBRA.md, the ledger's row 5 and The giving): the start's fine unit under a bound equals the former 2 x 2 x |num| x 6 x L x Gamma^2 form, the six reads at the vacuum's paces taken twice for the two levels; on three open chains the rest of a point source peaks at the discrete parabola's top 3 S c (n + 1 - c) / (n + 1) within one level, under the tent; the miss bound is (6 div 2) ((n + 2) div 2)^2 + 1 on a chain, a slab and a cube of the same extent, the six reads over the axis's two Ports and no three of the axes; the rest's `intervals` is keyword-only, the two powers by name in its two callers, 2 on a count and 1 on a Wronskian, the write's factor p^3 / (p_0 Gamma^2) and p^3 / (p_0^2 Gamma); the radiated total within one of (2 / 3) T sin k at two T and two resonances; and `PORTS` is defined once under src/, in core/ports.py."""
+    from event_universe.features.start import bound_of, tent_of, unit_from_bound
+    from event_universe.giving import radiated_total
+
+    gamma, width, source = 6000, MAX_WORK_INT, 1000
+    former = width // (2 * 2 * 3 * 6 * source * gamma * gamma)  # 24 |num| L Gamma^2 at num = 3, L = 1000
+    assert unit_from_bound(source, (3, 4), width, gamma) == former > 0
+    reads, divisor = (gamma * gamma,) * 3, np.int64(6 * gamma * gamma)  # the massless line's
+    count = {"intervals": paces.COUNT_POWER}
+    for n in (5, 9, 17):
+        counts, c = np.zeros((n, 1, 1), dtype=np.int64), (n + 1) // 2
+        counts[c - 1] = source  # the point source at the chain's centre Node c, 1 to n
+        field = rest(counts, (1, 1), OPEN_CHAIN, 1, width, 3, gamma, own_weight=0, **count)
+        peak = (
+            3 * source * c * (n + 1 - c) // (n + 1)
+        )  # 2 b_x - b_(x-1) - b_(x+1) = 3 sigma, b_0 = b_(n+1) = 0
+        assert abs(int(field.levels.max()) - peak) <= 1 < tent_of(counts, 1) - peak
+        for shape in ((n, 1, 1), (n, n, 1), (n, n, n)):
+            wrap = Wrap(False, shape[1] == 1, shape[2] == 1)
+            assert (
+                bound_of(np.zeros(shape, dtype=np.int64), wrap, reads, divisor)
+                == 3 * ((n + 2) // 2) ** 2 + 1
+            )
+    with pytest.raises(TypeError):
+        rest(counts, (1, 1), OPEN_CHAIN, 1, width, 3, gamma, 0, 2, own_weight=0)  # no positional power
+    assert (paces.COUNT_POWER, paces.WRONSKIAN_POWER) == (2, 1)
+    powers = (paces.COUNT_POWER, paces.WRONSKIAN_POWER)
+    assert [int(paces.write_factor(np.int64(1), 6, 6, 6, 3, 6, k)) for k in powers] == [
+        2,
+        4,
+    ]  # 216 / (36 x 3), 216 / (6 x 9)
+    text = (ROOT / "src" / "event_universe" / "features" / "start" / "__init__.py").read_text(
+        encoding="utf-8"
+    )
+    assert [text.count(f"intervals=paces.{k}") for k in ("COUNT_POWER", "WRONSKIAN_POWER")] == [1, 1]
+    for action, (num, den) in ((32768, (2, 3)), (15000, (2, 3)), (32768, (4, 5)), (15000, (4, 5))):
+        cos_k = (3 * num - 2 * den) / den  # the guide's wave number at the resonance
+        assert abs(radiated_total(action, (num, den)) - 2 * action * (1 - cos_k**2) ** 0.5 / 3) <= 1
+    sources = (ROOT / "src").rglob("*.py")
+    defined = [
+        p.name
+        for p in sources
+        if any(x.startswith("PORTS =") for x in p.read_text(encoding="utf-8").splitlines())
+    ]
+    assert defined == ["ports.py"]  # one definition of the six Ports under src/

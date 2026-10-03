@@ -113,6 +113,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
         "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
     ),
+    "tests/test_the_features.py::test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names": (
+        46,
+        "PR D, no number in the engine (the owner's word, the Boss's brief of 2026-10-03): the start's fine unit from "
+        "the six reads twice, the tent against the discrete parabola's top on three chains, the miss bound from the "
+        "six reads over the axis's two Ports on a chain, a slab and a cube, the rest's two powers by name and its "
+        "keyword-only `intervals`, the radiated total against (2 / 3) T sin k at two T, one PORTS under src/",
+    ),
     "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
         48,
         "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "

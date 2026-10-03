@@ -328,7 +328,8 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     shape, wrap = (16 * reach, 1, 1), Wrap(False, True, True)
     source, centre = node.zeros(shape, np.int64), 8 * reach
     source[centre], weight, wall = 1, binding.level_weight, node.rule_of(binding, GAMMA, 0)[2]
-    field = rest(source, binding.pair, wrap, weight, 2**63 - 1, wall, GAMMA, own_weight=1)
+    kind = {"intervals": paces.COUNT_POWER, "own_weight": 1}
+    field = rest(source, binding.pair, wrap, weight, 2**63 - 1, wall, GAMMA, **kind)
     away = (0, reach // 2, reach, 3 * reach // 2)
     at = [int(field.levels[centre + r, 0, 0]) for r in away]
     assert all(abs(at[i] - round(at[0] * math.exp(-kappa * r))) <= 1 for i, r in enumerate(away))

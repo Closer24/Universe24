@@ -9,8 +9,8 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import Wrap, arrival
-from event_universe.core.rule3 import PORTS, coefficients, division_forward, rule3
+from event_universe.core.ports import PORTS, SIDES, Wrap, arrival
+from event_universe.core.rule3 import coefficients, division_forward, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.click import presented
 from event_universe.features.hold import hold
@@ -306,7 +306,7 @@ def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
                 + re_line.now * (im_at[plus] - im_at[minus])
                 - im_line.now * (re_at[plus] - re_at[minus])
             )
-    x, y, z = (division_forward(current, currents.AXIS_PORTS, 1)[0] for current in found)
+    x, y, z = (division_forward(current, SIDES, 1)[0] for current in found)
     return np.asarray(x), np.asarray(y), np.asarray(z)
 
 
