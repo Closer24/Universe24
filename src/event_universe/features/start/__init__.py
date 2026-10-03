@@ -50,7 +50,7 @@ def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
 
 
 def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int, gamma: int) -> int:
-    """The fine unit, derived from the width and never written: the largest unit at which num p_i^2 S_6 of the rest stays inside the host's width, or inside the file's where the host's leaves none (so that a file wider than the host lays the same levels, the rest's own fixed point within the roundings' floor, and only widens the room), p_i^2 at most Gamma^2 under the guard, the rest's bound the larger of the source over its wall and the tent of the whole source over the longest extent (half of 3 x the source total over the wall times the extent); refused by name where the width leaves no unit."""
+    """The fine unit, derived from the width and never written: the largest unit at which num p_i^2 S_6 of the rest stays inside the host's width, or inside the file's where the host's leaves none (so that a file wider than the host lays the same levels, the rest's own fixed point within the roundings' floor, and only widens the room), p_i^2 at most Gamma^2 under the guard, the rest's bound the larger of the source over its wall and the tent of the whole source over the longest extent (half of 3 x the source total over the wall times the extent); refused by name where the width leaves no unit, the refusal `rest` turns into the coarse pass from the rest's own maximum (`own_unit`)."""
     tent = int(division(3 * int(np.abs(counts).sum()) * (max(counts.shape) + 1), 2 * divisor, 1))
     largest = max(int(division(1, divisor, int(np.abs(counts).max()))) + 1, tent + 1)
     bound = 2 * 2 * abs(pair[0]) * 6 * largest * gamma * gamma
@@ -60,6 +60,18 @@ def unit_of(counts: np.ndarray, pair: Pair, divisor: int, width: int, gamma: int
             f"the width {width} leaves no fine unit for the rest of the pair {list(pair)} under a source of "
             f"{int(np.abs(counts).sum())} at Gamma = {gamma} (ALGEBRA.md #the-bound)"
         )
+    return unit
+
+
+def own_unit(fine: np.ndarray, pair: Pair, largest: int, gamma: int, tent: ValueError) -> int:
+    """The fine unit from the rest's own maximum where the tent leaves none (the mathematician's 249 with the advisor's second, #1572 comments 5968344874 and 5968375224, two hands; ALGEBRA.md, The start): the tent of `unit_of` bounds a source spread flat over the extent and over-bounds a point source's rest by 2 (L + 1) (the point source's peak 3 G(0) s / w = 0.758 s / w on the infinite board, the lattice Green's function at the origin, below it on every finite board), so where it leaves no unit the first pass is iterated at the coarse unit, one fine unit per level (`settled` from nothing, monotone from the fixed point's floor, every value within the fixed point's own, so inside the width wherever the fixed point is), its largest level read, and the fine unit is the room over that maximum plus one coarse unit (the floored iteration's own miss within a level there, `bound_of`) and the coefficients' sum, `unit_of`'s own bound with the maximum in the tent's place; refused by name, the tent's refusal carried, where even that maximum leaves no unit: the width's room is then the rest's own and not the bound's."""
+    peak = int(np.abs(fine).max()) + 1  # the coarse pass's largest level plus one coarse unit
+    unit = int(division(1, 2 * 2 * abs(pair[0]) * 6 * peak * gamma * gamma, largest))
+    if unit < 1:
+        raise ValueError(
+            f"{tent}; the rest's own maximum at the coarse pass, {peak - 1} level(s), leaves no fine unit "
+            "either (ALGEBRA.md #the-bound, The start)"
+        ) from tent
     return unit
 
 
@@ -205,7 +217,7 @@ def rest(
     own_weight: int,
     seed: FieldAtRest | None = None,
 ) -> FieldAtRest:
-    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (source x unit div divisor) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), `divisor` the wall of the source's booking (the row's level weight E_s on a count in quanta, the write's wall E_s T on the form the hold books), the paces from the content the row reads, `others` the other holders' weighted levels with their rests and `own_weight` x the row's own level b div unit among them (the weight its declaration names for itself, 0 where it does not read its own level: the holder of the sign), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and refined to the line within one fine unit at every Node (`settled`, `refined`), and the paces re-read from it until the levels repeat the content they were read at, the fixed point, or repeat an earlier state one unit off at most at every Node, a rounding tie (the content then one unit off at that Node; a return further off refused by name, `returned`), the remainder at the half of `wall`, the wall of the rule the row steps by; `seed` a rest found before under other sources or paces, the fine levels (at this call's unit) and the content the iteration starts from in place of nothing, the same fixed point reached from nearer (the start's passes seed each row with the pass before, `settled_rows`, `held_rests`), none in a first pass; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, where the divisor is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
+    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (source x unit div divisor) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), `divisor` the wall of the source's booking (the row's level weight E_s on a count in quanta, the write's wall E_s T on the form the hold books), the paces from the content the row reads, `others` the other holders' weighted levels with their rests and `own_weight` x the row's own level b div unit among them (the weight its declaration names for itself, 0 where it does not read its own level: the holder of the sign), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and refined to the line within one fine unit at every Node (`settled`, `refined`), and the paces re-read from it until the levels repeat the content they were read at, the fixed point, or repeat an earlier state one unit off at most at every Node, a rounding tie (the content then one unit off at that Node; a return further off refused by name, `returned`), the remainder at the half of `wall`, the wall of the rule the row steps by; the fine unit the tent's (`unit_of`) or, where the tent leaves none, the room over the rest's own maximum at a first pass at the coarse unit, one fine unit per level (`own_unit`, the pass then taken again at the unit found); `seed` a rest found before under other sources or paces, the fine levels (at this call's unit) and the content the iteration starts from in place of nothing, the same fixed point reached from nearer (the start's passes seed each row with the pass before, `settled_rows`, `held_rests`), none in a first pass; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, where the divisor is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
     num, den = pair
     if divisor < 1:
         raise ValueError(
@@ -218,7 +230,11 @@ def rest(
             f"the sum's rest needs a sink: a board periodic on every axis at [1, 1] has no rest under the "
             f"source total {int(counts.sum())}"
         )
-    unit, largest = unit_of(counts, pair, divisor, width, gamma), min(width, MAX_WORK_INT)
+    try:
+        unit, coarse = unit_of(counts, pair, divisor, width, gamma), None
+    except ValueError as tent:  # the tent leaves no unit: the first pass at the coarse unit, one fine unit per level, reads the rest's own maximum (`own_unit`)
+        unit, coarse = 1, tent
+    largest = min(width, MAX_WORK_INT)
     source = division(3 * den * unit, divisor, counts) * gamma * gamma
     half = int(division(1, 2, unit))
     fine, own, iterations = np.zeros_like(counts), np.zeros_like(counts), 0
@@ -239,6 +255,13 @@ def rest(
         line_wall = 6 * (den - num) * clock * clock + 6 * num * pace * pace
         scaled = scaled_source(source, clock, pace, gamma, intervals)
         fine, iterations = settled(fine, reads, line_wall, scaled, wrap, iterations)
+        if (
+            coarse is not None
+        ):  # the coarse pass stands: the fine unit from its maximum, the pass again at it
+            unit, coarse = own_unit(fine, pair, largest, gamma, coarse), None
+            fine, source = fine * unit, division(3 * den * unit, divisor, counts) * gamma * gamma
+            half = int(division(1, 2, unit))
+            continue
         fine, iterations, correction = refined(
             fine, reads, line_wall, scaled, wrap, largest, unit, iterations, correction
         )

@@ -878,3 +878,93 @@ largest Gamma there, 19,500 (k_w = 3,367, T = 98,484,750, the bound 120,317, the
 intervals and 5.9 over 10^3; the compressed line in reals 1.334825 on the 61-cube, above the top by
 1.49 x 10^-3, the lay expected 1 to 2 x 10^-3 below it, so at the edge of the rule), the blind's
 rows unchanged in form; (ii) and (iii) laid beside it at the owner's word, (iii) in the background.
+
+### The second refusal, by name (10:28 to 10:34 UTC): the start's room binds on the electron's row, 1.33 times the nucleus's
+
+The lay of `hydrogen_1s_seven.json` (alpha about 1 / 7, the 41-cube, Gamma = 13,500) was refused by
+the start in the electron's first pass: "the width 9223372036854775807 leaves no fine unit for the
+rest of the pair [6000, 6000] under a source of 1165435721296 at Gamma = 13500", a source 1.3229
+times the nucleus's k_w T / 2 = 880,715,246,400 the room was first computed on. The engine's own
+booking under the frozen nucleus alone (`booked_sources` on a 9-cube, read before any further lay)
+gives the nucleus's row exactly k_w x 3 A_l^2 at every Gamma (the factor 1), so the row that binds
+is the electron's: a record laid at one quantum of share carries the Wronskian T / (2 sin Omega)
+and not T / 2 (205 item 3; 1.3286 x T / 2 on the toy's committed lay, 1 / sin Omega_lay = 1.344),
+so its row's source is 1.33 to 1.34 times the frozen row's, and the start's tent on it leaves no
+fine unit where the nucleus's alone would. The rule, restated: Gamma^3 (L + 1) k_w / Gamma within
+about 3.8 x 10^14 at alpha = 1 / 28, the largest Gamma a multiple of 1,500 with a unit at the
+factor 1.344 (the engine's `unit_of` on that source) **18,000 on the 61-cube** (k_w = 3,108,
+T = 83,916,000, the bound 141,204, the nucleus's level 3,739 per plane, the electron's level about
+78 on the free atom, the walk 2.0 percent over 100 intervals and 6.4 over 10^3),
+**12,000 on the 41-cube at alpha = 1 / 7** (k_w = 8,292, T = 149,256,000, the bound 317,728, the
+level about 416, the walk 0.38 percent over 100 intervals) and **15,000 on the 90-cube**
+(k_w = 2,590, T = 58,275,000, the bound 203,351, the level about 65, the walk 2.4 percent over
+100 intervals). The worlds at 19,500 on the 61-cube and 16,500 on the 90-cube, stopped before their
+own refusal (the 19,500 lay on compute node A by the protocol's step 2 at fa5cf202 reads the same
+room), stand declared with their refusal by name in `design.json` (`round_d.numbers_d.refused_by_name`),
+nothing adjusted after a reading: the three worlds are re-declared at these integers with the blind's
+rows unchanged in form and the numbers restated at the Gamma laid, before the lays that follow.
+
+### The room's line and the worlds at the hands' Gamma (10:45 to 10:55 UTC), before their lays
+
+**The 61-cube's cloud, Gamma-free (compute node A, #1572 comment 5968415381, 10:41 UTC).** The
+protocol's step 2 run on node A at Gamma = 19,500 on the 61-cube read the electron a cloud by name,
+2 cos Omega = 51868 / 38935 = 1.332169, below the band's top by 1.16 x 10^-3 and below the compressed
+line in reals (1.334825 with the engine's rest before the fix) by 2.66 x 10^-3 (the 41-cube's lay
+1.34 x 10^-3 below its line, the toy's 1.77 x 10^-3): the blind's row 2 missed on the 61-cube by name;
+the cloud rule reads before the start's room, and it is Gamma-free to first order (the turn's angle
+alpha c / r, k_w proportional to Gamma along the line), so the worlds at 19,500 and 18,000 on the
+61-cube were never refused by the room (that refusal a prediction, not a reading; the 18,000 lay
+here stopped at 10:48 before its verdict) and the 61-cube does not hold the 1s at alpha = 1 / 28 in
+integers at any Gamma. So the compressed atom at nature's alpha needs a larger cube, the 81-cube by
+the line in reals (1.33773 before the fix's rest, the integer lay about 2.7 x 10^-3 below it).
+
+**The start's room, the engine's line (the mathematician's 249, #1572 comment 5968344874, the
+advisor's second 5968375224, two hands; the Boss's word of 10:44 UTC).** The tent of
+`features/start.unit_of`, 3 x the source x (L + 1) / (2 wall), bounds a source spread flat over the
+extent and over-bounds a point source's rest (its peak 3 G(0) s / w = 0.758 s / w on the infinite
+board) by 2 (L + 1): 84 on the 41-cube, 124 on the 61-cube, 183 on the 91-cube. The line, one in the
+start (`own_unit`): where the tent leaves no unit the first pass is iterated at the coarse unit, one
+fine unit per level, its largest level read, and the fine unit is the room over that maximum plus
+one coarse unit and the coefficients' sum, the tent the refusal only where no coarse pass stands;
+every world the tent admits lays as before, bit for bit (the line enters only where the tent
+refused). Its test: a point source of 6,000 levels on an open 9-cube at Gamma = 96,000, refused by
+the tent alone and standing at the coarse pass with the unit 1, its doubling refused by name, a
+source the tent admits laid as before. **The room then is the refinement's** (`features/start`,
+`refined`: the first round's scale (2^62 - six K) / (2 six K + the divisor) at or above 2, six = 6 num
+Gamma^2 and K = 3 ((L + 2) div 2)^2 + 1 the floored iteration's miss bound on an open L-cube), so
+Gamma^2 K stays within about 2.56 x 10^13: computed with the engine's own `bound_of` before any lay,
+the largest Gamma a multiple of 1,500 with the room is **96,000 on the 41-cube** (K = 1,324, the
+scale 4), **93,000 on the 61-cube** (K = 2,884, the scale 2), **70,500 on the 81-cube** (K = 5,044)
+and **63,000 on the 90-cube** (K = 6,349); the fine unit from the rest's own maximum is 1 at
+96,000 (the point source's peak 6,283 levels against 2^63 / (24 x 6000 x Gamma^2) = 6,961), the rest
+at whole levels, within one level of its line by the refinement (the angle per level 1 / Gamma,
+1.0 x 10^-5 rad against the binding's 7.1 x 10^-4).
+
+**The nucleus on the 3 x 3 x 3 cube** (the advisor's 5967957083 section 4 (1)): the frozen row laid
+over the 27 Nodes about its declared Node by the generator's `--pixel-side 3`, every Node and plane
+alike at A_l^2 = T / (6 x 27), 3,838 at Gamma = 96,000 under the loader's bound 4,962 (the one Node's
+19,945 above it); at [0, den] every Node of the cube rotates alone (R = 0 on every Link), so the cube
+stands as the one Node does and its Wronskian sum is -T / 2, one quantum, its share 1 over the cube;
+the world declares the one Node with the count 1, admitted by the gate's rule |c - read| <= 1.
+
+**The worlds re-declared** (`design.json`, `round_d`, every number from the loader and the start's
+own functions at load; the refused Gammas kept by name under `numbers_d.refused_by_name`):
+
+| World | Universe | Gamma | k_w | T | cube | the bound at load | the cube nucleus's level per plane | the electron's level (the design's 26 scaled) | the walk over 100 intervals |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| (i) `hydrogen_1s_d`, `hydrogen_2s_d` | `atom_d.json`, alpha^-1 = 28.01 | 96,000 | 16,576 | 2,386,944,000 | 41 | 4,962 | 3,838 | 416 | 0.38 percent |
+| (i) `hydrogen_1s_d61` | `atom_d61.json` | 93,000 | 16,058 | 2,240,091,000 | 61 | 5,287 | 3,718 | 403 | 0.39 percent |
+| (i) `hydrogen_1s_d81` | `atom_d81.json` | 70,500 | 12,173 | 1,287,294,750 | 81 | 9,202 | 2,818 | 306 | 0.51 percent |
+| (ii) `hydrogen_1s_seven`, `hydrogen_2s_seven` | `atom_d_seven.json`, alpha^-1 = 7.00 | 61,500 | 42,495 | 3,920,163,750 | 41 | 12,094 | 4,919 | about 2,100 | 0.07 percent |
+| (iii) `hydrogen_1s_free` | `atom_d_free.json` | 63,000 | 10,878 | 1,027,971,000 | 90 | 11,524 | 2,519 | 273 | 0.57 percent |
+
+The blind's rows stand in form as written (the walk sqrt(t) sigma / a at the lay's own a, the
+rotation against the lay's clock pair with the compressed line in reals as the cube's blind, the
+free atom's 2 cos Omega_1s = 1.334395 for (iii) and named as not read on a cut cube, the beat, the
+share in 2s, the loader's bound and the energy line at load, the drift, the nucleus, the detector
+when it lands); the 41-cube's 1s at 96,000 is read again as the hands ask, the cloud predicted
+Gamma-free by node A's two readings; (ii) at alpha = 1 / 7 (a_0 = 3.6 Links by the chain) holds the
+free 1s inside the 41-cube, its binding m* (alpha c)^2 / 2 = 1.141 x 10^-2 rad per interval
+(2 cos Omega_1s = 1.3503, the far kernel's) the row the cube can read against the free line; the
+81-cube and the 90-cube lays as the machine allows, (iii) in the background at the owner's word.
+The run's folder is never committed; the lays follow one at a time under nice.

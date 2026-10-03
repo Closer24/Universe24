@@ -13,7 +13,7 @@ from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.features.hold import hold
 from event_universe.features.read import content_of, edge_squared, guard, link_tension, stability_bound
-from event_universe.features.start import arrivals, read_content, rest, scaled_source
+from event_universe.features.start import arrivals, read_content, rest, scaled_source, unit_of
 from event_universe.features.write import carried
 from event_universe.loader.derived import held_write, readers_of, weight_of
 from event_universe.loader.universe import universe_of
@@ -230,3 +230,32 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
     moving = {**plane, "name": "slower", "pair": [3000, 6000]}
     refused("fails for 'slower'", universe_of, universe(SIGN, plane, moving, quantum_action=15_000))
     universe_of(universe({**SIGN, "held": {**SIGN["held"], "act": "pace"}}, plane, frozen))
+
+
+def test_a_point_sources_rest_stands_where_the_tent_leaves_no_fine_unit_and_the_rests_own_room_refuses_beyond_it():
+    """The start's room from the rest's own maximum (the mathematician's 249 with the advisor's second, #1572 comments 5968344874 and 5968375224, two hands; `features/start`, `own_unit`): the tent of `unit_of`, 3 x the source x (L + 1) / (2 wall), bounds a source spread flat over the extent and over-bounds a point source's rest, whose peak is 3 G(0) s / w = 0.758 s / w on the infinite board, by 2 (L + 1). One source of 6,000 levels at the centre of an open 9-cube at the massless pair and Gamma = 96,000: the tent leaves no fine unit (refused by name alone), while the rest stands at the coarse pass, its peak at the source between 0.6 and 0.76 of the source's level, every level within one of the line's floor and fixed point (one more act returns the fine levels), the unit 1; the same source doubled leaves no unit at the rest's own maximum either and is refused by name with both the tent's words and the maximum; a source the tent admits lays as before."""
+    counts = np.zeros((9, 9, 9), dtype=np.int64)
+    counts[4, 4, 4], gamma, pair = 6_000, 96_000, (6000, 6000)
+    wall = 6 * 6000 * gamma * gamma  # the massless rule's wall at the vacuum paces
+    refused("leaves no fine unit", unit_of, counts, pair, 1, MAX_WORK_INT, gamma)
+    found = rest(counts, pair, OPEN_CUBE, 1, MAX_WORK_INT, wall, gamma, own_weight=0)
+    assert (
+        found.unit == 1
+        and 3_600 <= found.levels[4, 4, 4] <= 4_560
+        and found.levels.max() == found.levels[4, 4, 4]
+    )
+    assert (found.levels >= 0).all() and found.levels[0, 0, 0] < found.levels[4, 4, 4] // 10
+    refused(
+        "no fine unit either",
+        rest,
+        2 * counts,
+        pair,
+        OPEN_CUBE,
+        1,
+        MAX_WORK_INT,
+        wall,
+        gamma,
+        own_weight=0,
+    )
+    small = rest(counts // 100, pair, OPEN_CUBE, 1, MAX_WORK_INT, wall, gamma, own_weight=0)
+    assert small.unit == unit_of(counts // 100, pair, 1, MAX_WORK_INT, gamma) > 1

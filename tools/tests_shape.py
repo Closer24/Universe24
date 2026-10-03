@@ -57,6 +57,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
         "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
     ),
+    "tests/test_the_features.py::test_a_point_sources_rest_stands_where_the_tent_leaves_no_fine_unit_and_the_rests_own_room_refuses_beyond_it": (
+        14,
+        "the start's room from the rest's own maximum (the Boss, 2026-10-03, the mathematician's 249 at two hands): a point "
+        "source the tent refuses stands at the coarse pass, its doubling refused by name, a source the tent admits laid as before",
+    ),
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
         33,
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "

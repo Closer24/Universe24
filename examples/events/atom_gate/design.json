@@ -513,7 +513,8 @@
     "plane",
     "plane"
    ],
-   "declaration": "the frozen row at one Node by the generator's one-Node declaration (--pixel 0): every plane alike at A_l^2 = T / 6, 12,465 levels, the Wronskian sum -T / 2, R_ij = 0 on every Link so the record never moves"
+   "declaration": "the frozen row over the 3 x 3 x 3 cube of Nodes about its declared Node by the generator's one-Node declaration (--pixel 0 --pixel-side 3): every Node and plane alike at A_l^2 = T / (6 x 27), the Wronskian sum -T / 2, R_ij = 0 on every Link so every Node of the cube rotates alone and nothing moves; the advisor's #1572 comment 5967957083 section 4 (1), its level under the loader's bound where the one Node's is not",
+   "side": 3
   },
   "electron": {
    "family": "electron",
@@ -540,6 +541,42 @@
   "worlds": {
    "hydrogen_1s_d": {
     "shape": [
+     41,
+     41,
+     41
+    ],
+    "centre": [
+     20,
+     20,
+     20
+    ],
+    "ticks": 100,
+    "mode": "1s",
+    "deflations": 0,
+    "laid": true,
+    "universe": "examples/events/atom_gate/atom_d.json",
+    "world": "(i) the compressed atom at alpha = 1 / 28 on the 41-cube at Gamma = 96,000 (241 (A), the hands' re-read at the level 416; the cube's cloud at 22,500 recorded, the cloud rule Gamma-free to first order)"
+   },
+   "hydrogen_2s_d": {
+    "shape": [
+     41,
+     41,
+     41
+    ],
+    "centre": [
+     20,
+     20,
+     20
+    ],
+    "ticks": 100,
+    "mode": "2s",
+    "deflations": 1,
+    "laid": true,
+    "universe": "examples/events/atom_gate/atom_d.json",
+    "world": "(i), the 2s by one deflation"
+   },
+   "hydrogen_1s_d61": {
+    "shape": [
      61,
      61,
      61
@@ -553,26 +590,26 @@
     "mode": "1s",
     "deflations": 0,
     "laid": true,
-    "universe": "examples/events/atom_gate/atom_d.json",
-    "world": "(i) the compressed atom at alpha = 1 / 28 on the 61-cube (the owner's word, 246; the 41-cube refused as a cloud by name)"
+    "universe": "examples/events/atom_gate/atom_d61.json",
+    "world": "(i) on the 61-cube at the correction room's largest Gamma, 93,000 (node A's cloud at 19,500 recorded, Gamma-free)"
    },
-   "hydrogen_2s_d": {
+   "hydrogen_1s_d81": {
     "shape": [
-     61,
-     61,
-     61
+     81,
+     81,
+     81
     ],
     "centre": [
-     30,
-     30,
-     30
+     40,
+     40,
+     40
     ],
     "ticks": 100,
-    "mode": "2s",
-    "deflations": 1,
+    "mode": "1s",
+    "deflations": 0,
     "laid": true,
-    "universe": "examples/events/atom_gate/atom_d.json",
-    "world": "(i), the 2s by one deflation"
+    "universe": "examples/events/atom_gate/atom_d81.json",
+    "world": "(i) on the 81-cube at the correction room's largest Gamma, 70,500: the first cube on which the integer lay is expected above the band's top (the compressed line in reals 1.33773 with the engine's rest before the fix, the integer lay about 2.7 x 10^-3 below it)"
    },
    "hydrogen_1s_seven": {
     "shape": [
@@ -590,7 +627,7 @@
     "deflations": 0,
     "laid": true,
     "universe": "examples/events/atom_gate/atom_d_seven.json",
-    "world": "(ii) the atom at alpha about 1 / 7 on the 41-cube, a_0 = 3.6 Links by the chain, the free atom inside the cube, a hypothesis under its own name (245, 246)"
+    "world": "(ii) the atom at alpha about 1 / 7 on the 41-cube, a hypothesis under its own name (245, 246), at the loader's largest Gamma for the cube nucleus, 61,500"
    },
    "hydrogen_2s_seven": {
     "shape": [
@@ -626,7 +663,7 @@
     "deflations": 0,
     "laid": true,
     "universe": "examples/events/atom_gate/atom_d_free.json",
-    "world": "(iii) the free atom at alpha = 1 / 28 on the 90-cube, six a_0 across (247), the background lay the owner's word started (246); its centre a Node of the even cube's inner eight, the images about it not the cube's"
+    "world": "(iii) the free atom at alpha = 1 / 28 on the 90-cube (247) at the correction room's largest Gamma, 63,000, the background lay the owner's word started (246)"
    }
   },
   "lays": {
@@ -634,61 +671,89 @@
    "note": "the 1s lay's electron turned by k / count of a turn, k = 0 to count - 1, by the engine's three shears at the tangent half-angle n / (2 Gamma) with n = round(2 Gamma tan(pi k / count)) after the half-turn's sign where |angle| is above a quarter turn; the nucleus and the digest alike; build_world.py --lays count --into <folder>; the run's folder is never committed"
   },
   "numbers_d": {
-   "Gamma": 19500,
-   "k_w": 3367,
+   "Gamma": 96000,
+   "k_w": 16576,
    "E_h": 1,
-   "T": 98484750,
+   "T": 2386944000,
    "G": 1,
    "width": 63,
-   "cube": 61,
+   "cube": 41,
+   "nucleus_side": 3,
    "alpha_law": "1 / 28, the law's",
    "alpha_law_inverse": 28.0123,
    "T_over_Gamma_squared": 0.259,
-   "energy_line": "E_h T num = k_w Gamma den: 1 x 98484750 x 4000 = 3367 x 19500 x 6000 = 393939000000",
-   "amplitude_bound_at_load": 120317,
-   "nucleus_amplitude_per_plane": 4051,
-   "start_rest_fine_unit_one_node_source": 1,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 2386944000 x 4000 = 16576 x 96000 x 6000 = 9547776000000",
+   "amplitude_bound_at_load": 4962,
+   "nucleus_amplitude_per_plane_on_the_cube": 3838,
+   "nucleus_amplitude_per_plane_one_node": 19945,
+   "correction_room_K": 1324,
+   "correction_room_scales": 4,
+   "point_source_peak_levels": 6282,
+   "fine_unit_from_the_peak": 1,
    "a_0_links_chain": 14.47,
    "omega_0": 0.84107,
-   "binding_1s_rad_per_interval_free_atom": 0.0005359231471970779,
-   "two_cos_Omega_1s_free_atom": 1.334132,
-   "beat_1s_2s_rad_per_interval_free_atom": 0.0004019423603978084,
-   "electron_level_per_node_free_atom_scaled_from_the_design": 84.5,
-   "note_level": "26 at Gamma 6000 and alpha 1 / 28 (the design), scaled as Gamma and as alpha^(3 / 2) (N_eff falls as a_0^3); the lay's own amplitude is the number read",
-   "walk_over_1000_intervals": 0.0587,
-   "walk_over_100_intervals": 0.0186,
-   "hands_A_refused": {
-    "Gamma": 96000,
-    "k_w": 16576,
-    "T": 2386944000,
-    "amplitude_bound_at_load": 4962,
-    "nucleus_amplitude_per_plane": 19945,
-    "nucleus_amplitude_one_plane": 34545,
-    "electron_level": 416,
-    "walk": 0.012,
-    "refusal": "the mode file's level above the amplitude bound A = 4962 (loader/mode.py)"
-   },
-   "gamma_60000_refused_by_the_start": {
-    "Gamma": 60000,
-    "k_w": 10360,
-    "T": 932400000,
-    "amplitude_bound_at_load": 12706,
-    "nucleus_amplitude_per_plane": 12465,
-    "refusal": "the width 9223372036854775807 leaves no fine unit for the rest of the pair [6000, 6000] under a source of 4829093073000 at Gamma = 60000 (features/start, unit_of: the tent 3 k_w (L + 1) / 4 of the whole source over the wall times 24 |num| Gamma^2 beyond 2^63)"
-   },
-   "start_room": "the start's fine unit (features/start, unit_of) admits k_w (L + 1) Gamma^2 up to 2^63 / 108000 for the sign row under one frozen quantum: Gamma^3 (L + 1) about 4.95 x 10^14 at alpha = 1 / 28; the largest Gamma a multiple of 1500 with a unit: 24,000 on the 31-cube, 22,500 on the 41-cube, 19,500 on the 61-cube, 16,500 on the 90-cube; at alpha = 1 / 7: 15,000, 13,500, 12,000, and on the 90-cube 10,500",
-   "step_cost": "about 3 microseconds per Node-line under the day's load (3.0 s per interval on the open 41-cube with 13 lines, the frozen proton's universe; the atom's world 25 lines)",
    "binding_1s_rad_per_interval_free_atom_247": 0.0007124035348023967,
    "two_cos_Omega_1s_free_atom_247": 1.334395,
-   "cube_41_cloud": {
-    "Gamma": 22500,
-    "k_w": 3885,
-    "T": 131118750,
-    "amplitude_bound_at_load": 90373,
-    "nucleus_amplitude_per_plane": 4674,
-    "electron_level_free_atom": 97.5,
-    "lay": "refused by the generator as a cloud at 10:26 UTC: the body of 1 quanta about the Node [21, 20, 20] is a cloud: its standing reading rotates at [44912, 33744] = 1.330960, not above the band's top 2 x 4000 / 6000 (the compressed line in reals 1.332307 with the engine's rest before the fix; the lay 1.35 x 10^-3 below it, as the toy's lay read 1.8 x 10^-3 below its line)"
-   }
+   "beat_1s_2s_rad_per_interval_free_atom": 0.0005343026511017975,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 416.0,
+   "walk_over_100_intervals": 0.0038,
+   "walk_over_1000_intervals": 0.0119,
+   "step_cost": "about 3 microseconds per Node-line under the day's load (3.0 s per interval on the open 41-cube with 13 lines, the frozen proton's universe; the atom's world 25 lines)",
+   "refused_by_name": {
+    "hands_A_refused": {
+     "Gamma": 96000,
+     "k_w": 16576,
+     "T": 2386944000,
+     "amplitude_bound_at_load": 4962,
+     "nucleus_amplitude_per_plane": 19945,
+     "nucleus_amplitude_one_plane": 34545,
+     "electron_level": 416,
+     "walk": 0.012,
+     "refusal": "the mode file's level above the amplitude bound A = 4962 (loader/mode.py)"
+    },
+    "gamma_60000_refused_by_the_start": {
+     "Gamma": 60000,
+     "k_w": 10360,
+     "T": 932400000,
+     "amplitude_bound_at_load": 12706,
+     "nucleus_amplitude_per_plane": 12465,
+     "refusal": "the width 9223372036854775807 leaves no fine unit for the rest of the pair [6000, 6000] under a source of 4829093073000 at Gamma = 60000 (features/start, unit_of: the tent 3 k_w (L + 1) / 4 of the whole source over the wall times 24 |num| Gamma^2 beyond 2^63)"
+    },
+    "cube_41_cloud": {
+     "Gamma": 22500,
+     "k_w": 3885,
+     "T": 131118750,
+     "amplitude_bound_at_load": 90373,
+     "nucleus_amplitude_per_plane": 4674,
+     "electron_level_free_atom": 97.5,
+     "lay": "refused by the generator as a cloud at 10:26 UTC: the body of 1 quanta about the Node [21, 20, 20] is a cloud: its standing reading rotates at [44912, 33744] = 1.330960, not above the band's top 2 x 4000 / 6000 (the compressed line in reals 1.332307 with the engine's rest before the fix; the lay 1.35 x 10^-3 below it, as the toy's lay read 1.8 x 10^-3 below its line)"
+    },
+    "gamma_19500_on_the_61_cube": {
+     "Gamma": 19500,
+     "k_w": 3367,
+     "T": 98484750,
+     "refusal": "the start's room on the electron's row (the rule below); the lay stopped here before its refusal, laid on compute node A by the protocol"
+    },
+    "seven_gamma_13500_refused_by_the_start": {
+     "Gamma": 13500,
+     "k_w": 9328,
+     "T": 188892000,
+     "refusal": "the width 9223372036854775807 leaves no fine unit for the rest of the pair [6000, 6000] under a source of 1165435721296 at Gamma = 13500: the electron's row, its one-quantum Wronskian T / (2 sin Omega) = 1.323 x T / 2 in the generator's pass (205 item 3), against the nucleus's exact T / 2 the room was first computed on"
+    },
+    "free_gamma_16500_on_the_90_cube": {
+     "Gamma": 16500,
+     "k_w": 2849,
+     "T": 70512750,
+     "refusal": "the start's room on the electron's row (the rule below); the lay stopped here before its refusal"
+    },
+    "gamma_18000_on_the_61_cube": {
+     "Gamma": 18000,
+     "k_w": 3108,
+     "T": 83916000,
+     "lay": "stopped at 10:48 UTC before its verdict: compute node A's lay of the 61-cube at 19,500 (#1572 comment 5968415381) read the electron a cloud by name, 2 cos Omega = 51868 / 38935 = 1.332169, below the band's top by 1.16 x 10^-3 and below the compressed line in reals (1.334825) by 2.66 x 10^-3, the cloud rule Gamma-free to first order, so the 61-cube does not hold the 1s at alpha = 1 / 28 in integers; 19,500 was never refused by the start's room (the cloud rule reads first), the room's refusal a prediction and not a reading"
+    }
+   },
+   "start_room": "the start's fine unit from the rest's own maximum where the tent leaves none (features/start, own_unit, this round's engine line at two hands, 249 and the advisor's second): the room then is the correction's (features/start, refined: the first round's scale room, (2^62 - six K) / (2 six K + the divisor) at or above 2 with six = 6 num Gamma^2 and K the floored iteration's miss bound 3 ((L + 2) div 2)^2 + 1 on an open L-cube), so Gamma^2 K within about 2.56 x 10^13: the largest Gamma a multiple of 1,500 with the room at alpha = 1 / 28: 96,000 on the 41-cube (K = 1324, the scale 4), 93,000 on the 61-cube (K = 2884, the scale 2), 70,500 on the 81-cube (K = 5044), 63,000 on the 90-cube (K = 6349); at alpha = 1 / 7 on the 41-cube 61,500 by the loader's bound on the cube nucleus's level (4,919 against 12,094)"
   },
   "g_check": {
    "reading": "the toy world (atom_toy.json, Gamma = 6000, the 31-cube, the one-Node nucleus of matter's pair, the shipped G = 8) laid and run at G = 1, 8 and 16: the lay's clock pair and amplitude per G; over 100 intervals the electron's share over the board and the accumulated 2 cos omega_read; the same lay (the G = 8 mode file under the G = 1 universe) run at both G, bit for bit or not (GameBoard, labelled so)",
@@ -747,60 +812,128 @@
    }
   },
   "numbers_seven": {
-   "Gamma": 13500,
-   "k_w": 9328,
+   "Gamma": 61500,
+   "k_w": 42495,
    "E_h": 1,
-   "T": 188892000,
+   "T": 3920163750,
    "G": 1,
    "width": 63,
    "cube": 41,
+   "nucleus_side": 3,
    "alpha_law": "about 1 / 7, a hypothesis under its own name (245, 246)",
-   "alpha_law_inverse": 7.0001,
-   "T_over_Gamma_squared": 1.0364,
-   "energy_line": "E_h T num = k_w Gamma den: 1 x 188892000 x 4000 = 9328 x 13500 x 6000 = 755568000000",
-   "amplitude_bound_at_load": 251048,
-   "nucleus_amplitude_per_plane": 5610,
-   "start_rest_fine_unit_one_node_source": 1,
+   "alpha_law_inverse": 7.0,
+   "T_over_Gamma_squared": 1.0365,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 3920163750 x 4000 = 42495 x 61500 x 6000 = 15680655000000",
+   "amplitude_bound_at_load": 12094,
+   "nucleus_amplitude_per_plane_on_the_cube": 4919,
+   "nucleus_amplitude_per_plane_one_node": 25560,
+   "correction_room_K": 1324,
+   "correction_room_scales": 12,
+   "point_source_peak_levels": 16105,
+   "fine_unit_from_the_peak": 1,
    "a_0_links_chain": 3.61,
    "omega_0": 0.84107,
-   "binding_1s_rad_per_interval_free_atom": 0.008582129093587592,
-   "two_cos_Omega_1s_free_atom": 1.346078,
-   "beat_1s_2s_rad_per_interval_free_atom": 0.006436596820190694,
-   "electron_level_per_node_free_atom_scaled_from_the_design": 468.3,
-   "note_level": "26 at Gamma 6000 and alpha 1 / 28 (the design), scaled as Gamma and as alpha^(3 / 2) (N_eff falls as a_0^3); the lay's own amplitude is the number read",
-   "walk_over_1000_intervals": 0.0106,
-   "walk_over_100_intervals": 0.0033
+   "binding_1s_rad_per_interval_free_atom_247": 0.011408656157170216,
+   "two_cos_Omega_1s_free_atom_247": 1.350253,
+   "beat_1s_2s_rad_per_interval_free_atom": 0.008556492117877661,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 2133.4,
+   "walk_over_100_intervals": 0.0007,
+   "walk_over_1000_intervals": 0.0023
   },
   "numbers_free": {
-   "Gamma": 16500,
-   "k_w": 2849,
+   "Gamma": 63000,
+   "k_w": 10878,
    "E_h": 1,
-   "T": 70512750,
+   "T": 1027971000,
    "G": 1,
    "width": 63,
    "cube": 90,
+   "nucleus_side": 3,
    "alpha_law": "1 / 28, the law's; the free atom's cube (247)",
    "alpha_law_inverse": 28.0123,
    "T_over_Gamma_squared": 0.259,
-   "energy_line": "E_h T num = k_w Gamma den: 1 x 70512750 x 4000 = 2849 x 16500 x 6000 = 282051000000",
-   "amplitude_bound_at_load": 168060,
-   "nucleus_amplitude_per_plane": 3428,
-   "start_rest_fine_unit_one_node_source": 1,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 1027971000 x 4000 = 10878 x 63000 x 6000 = 4111884000000",
+   "amplitude_bound_at_load": 11524,
+   "nucleus_amplitude_per_plane_on_the_cube": 2519,
+   "nucleus_amplitude_per_plane_one_node": 13089,
+   "correction_room_K": 6349,
+   "correction_room_scales": 2,
+   "point_source_peak_levels": 4122,
+   "fine_unit_from_the_peak": 3,
    "a_0_links_chain": 14.47,
    "omega_0": 0.84107,
-   "binding_1s_rad_per_interval_free_atom": 0.0005359231471970777,
-   "two_cos_Omega_1s_free_atom": 1.334132,
-   "beat_1s_2s_rad_per_interval_free_atom": 0.00040194236039780824,
-   "electron_level_per_node_free_atom_scaled_from_the_design": 71.5,
-   "note_level": "26 at Gamma 6000 and alpha 1 / 28 (the design), scaled as Gamma and as alpha^(3 / 2) (N_eff falls as a_0^3); the lay's own amplitude is the number read",
-   "walk_over_1000_intervals": 0.0694,
-   "walk_over_100_intervals": 0.0219
+   "binding_1s_rad_per_interval_free_atom_247": 0.0007124035348023967,
+   "two_cos_Omega_1s_free_atom_247": 1.334395,
+   "beat_1s_2s_rad_per_interval_free_atom": 0.0005343026511017975,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 273.0,
+   "walk_over_100_intervals": 0.0057,
+   "walk_over_1000_intervals": 0.0182
   },
   "universes": {
-   "one": "examples/events/atom_gate/atom_d.json",
+   "one_41": "examples/events/atom_gate/atom_d.json",
+   "one_61": "examples/events/atom_gate/atom_d61.json",
+   "one_81": "examples/events/atom_gate/atom_d81.json",
    "two": "examples/events/atom_gate/atom_d_seven.json",
    "three": "examples/events/atom_gate/atom_d_free.json"
   },
-  "ticks_note": "100 intervals per run (the advisor's cut, #1563 comment 5968100104 (2): the binding read at the lay from the mode's own clock, the walk over 100 intervals a reading in its own right, the 10^3-interval walk in the background from the same lay); the world's ticks 100, read_atom.py --intervals 1000 for the long walk"
+  "ticks_note": "100 intervals per run (the advisor's cut, #1563 comment 5968100104 (2): the binding read at the lay from the mode's own clock, the walk over 100 intervals a reading in its own right, the 10^3-interval walk in the background from the same lay); the world's ticks 100, read_atom.py --intervals 1000 for the long walk",
+  "numbers_d61": {
+   "Gamma": 93000,
+   "k_w": 16058,
+   "E_h": 1,
+   "T": 2240091000,
+   "G": 1,
+   "width": 63,
+   "cube": 61,
+   "nucleus_side": 3,
+   "alpha_law": "1 / 28, the law's; the 61-cube at the correction room's largest Gamma",
+   "alpha_law_inverse": 28.0123,
+   "T_over_Gamma_squared": 0.259,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 2240091000 x 4000 = 16058 x 93000 x 6000 = 8960364000000",
+   "amplitude_bound_at_load": 5287,
+   "nucleus_amplitude_per_plane_on_the_cube": 3718,
+   "nucleus_amplitude_per_plane_one_node": 19322,
+   "correction_room_K": 2884,
+   "correction_room_scales": 2,
+   "point_source_peak_levels": 6085,
+   "fine_unit_from_the_peak": 1,
+   "a_0_links_chain": 14.47,
+   "omega_0": 0.84107,
+   "binding_1s_rad_per_interval_free_atom_247": 0.0007124035348023967,
+   "two_cos_Omega_1s_free_atom_247": 1.334395,
+   "beat_1s_2s_rad_per_interval_free_atom": 0.0005343026511017975,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 403.0,
+   "walk_over_100_intervals": 0.0039,
+   "walk_over_1000_intervals": 0.0123
+  },
+  "numbers_d81": {
+   "Gamma": 70500,
+   "k_w": 12173,
+   "E_h": 1,
+   "T": 1287294750,
+   "G": 1,
+   "width": 63,
+   "cube": 81,
+   "nucleus_side": 3,
+   "alpha_law": "1 / 28, the law's; the 81-cube at the correction room's largest Gamma",
+   "alpha_law_inverse": 28.0123,
+   "T_over_Gamma_squared": 0.259,
+   "energy_line": "E_h T num = k_w Gamma den: 1 x 1287294750 x 4000 = 12173 x 70500 x 6000 = 5149179000000",
+   "amplitude_bound_at_load": 9202,
+   "nucleus_amplitude_per_plane_on_the_cube": 2818,
+   "nucleus_amplitude_per_plane_one_node": 14647,
+   "correction_room_K": 5044,
+   "correction_room_scales": 2,
+   "point_source_peak_levels": 4613,
+   "fine_unit_from_the_peak": 2,
+   "a_0_links_chain": 14.47,
+   "omega_0": 0.84107,
+   "binding_1s_rad_per_interval_free_atom_247": 0.0007124035348023968,
+   "two_cos_Omega_1s_free_atom_247": 1.334395,
+   "beat_1s_2s_rad_per_interval_free_atom": 0.0005343026511017976,
+   "electron_level_per_node_free_atom_scaled_from_the_design": 305.5,
+   "walk_over_100_intervals": 0.0051,
+   "walk_over_1000_intervals": 0.0162
+  }
  }
 }

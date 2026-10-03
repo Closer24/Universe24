@@ -844,20 +844,29 @@ def scaled_record(
 
 
 def pixel_record(
-    board: Board, counts: np.ndarray, centre: Axis, sense: int, planes: int = 1
+    board: Board, counts: np.ndarray, centre: Axis, sense: int, planes: int = 1, side: int = 1
 ) -> tuple[Standing, Pairs]:
-    """The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (examples/events/atom_gate/design.json, the nucleus; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs; `planes` the planes of the record's part, every plane laid alike at A_l^2 = count T den / (2 sin omega_0 x planes), the planes summing to the invariant (the two hands of 2026-10-03, the proton's row of three planes at A_l^2 = T / 6 at [0, den])."""
+    """The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (examples/events/atom_gate/design.json, the nucleus; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs; `planes` the planes of the record's part, every plane laid alike at A_l^2 = count T den / (2 sin omega_0 x planes), the planes summing to the invariant (the two hands of 2026-10-03, the proton's row of three planes at A_l^2 = T / 6 at [0, den]); `side` the side of the cube of Nodes about the declared Node the quanta are laid over, every Node alike (the advisor's #1572 comment 5967957083, the frozen nucleus over 3 x 3 x 3 Nodes at A_l^2 = T / (6 x 27), its level under the loader's bound where one Node's is not; at [0, den] every Node of the cube rotates alone, R = 0 on every Link, so the cube stands as the one Node does), 1 the one Node; a cube beyond the board is refused by name."""
     num, den = board.pair
     sine = division_fixed_point(den * den - num * num)
     quanta = int(counts.sum())
+    reach = int(division_forward(side - 1, 2, 0)[0])  # the cube's half side, its Nodes from the centre
+    cube = tuple(slice(c - reach, c - reach + side) for c in centre)
+    if side < 1 or any(
+        c - reach < 0 or c - reach + side > extent for c, extent in zip(centre, board.shape, strict=True)
+    ):
+        raise ValueError(
+            f"the one-Node record's cube of side {side} about the Node {list(centre)} is not on the board {list(board.shape)}"
+        )
+    nodes = side * side * side
     amplitude = division_fixed_point(
-        int(division_forward(quanta * board.action * den, 2 * sine * planes, 0)[0])
+        int(division_forward(quanta * board.action * den, 2 * sine * planes * nodes, 0)[0])
     )
     zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
     re_now, re_before, im_before = zero.copy(), zero.copy(), zero.copy()
-    re_now[centre] = amplitude
-    re_before[centre] = int(division_forward(amplitude * num, den, 0)[0])
-    im_before[centre] = sense * int(division_forward(amplitude * sine, den, 0)[0])
+    re_now[cube] = amplitude
+    re_before[cube] = int(division_forward(amplitude * num, den, 0)[0])
+    im_before[cube] = sense * int(division_forward(amplitude * sine, den, 0)[0])
     pairs: Pairs = [(re_now, re_before), (zero.copy(), im_before)] * planes
     total = sum((share_of(board, 0, a, b) for a, b in pairs), zero.copy())
     summed = int(total.sum(dtype=object))
@@ -1392,6 +1401,7 @@ def pixel_mode(
     designed: list[int | None] | None = None,
     pixels: Sequence[int] = (),
     deflations: Sequence[int] = (),
+    side: int = 1,
 ) -> dict[str, Any]:
     """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
@@ -1491,8 +1501,10 @@ def pixel_mode(
                         f"measured[{number}] is laid as a one-Node record with no sense: the declaration is one "
                         "quantum of a plane, its Wronskian sense x T / 2 (ALGEBRA.md, the quantum of a family)"
                     )
-                record, pairs_kept = pixel_record(board, counts, centre, sense, families[index].planes)
-                region, laid = dilated(counts > 0, wrap), counts
+                record, pairs_kept = pixel_record(
+                    board, counts, centre, sense, families[index].planes, side
+                )
+                region, laid = dilated(pairs_kept[0][0] != 0, wrap), counts
                 lays[number] = (laid, pairs_kept, centre, quanta)
                 entry = body_entry(record, board, region, body, quanta, record.amplitude)
                 entry["lay"] = {"kind": DECLARATION, "declaration": pixel_record.__doc__}
@@ -1502,8 +1514,8 @@ def pixel_mode(
                 ]
                 print(
                     f"GAMEBOARD measured[{number}] is laid as the one-Node record of {quanta} quanta at the Node "
-                    f"{list(centre)}, a declaration: the amplitude {record.amplitude}, its share {record.carried} "
-                    "quanta at the Node, no fixed point and no standing check",
+                    f"{list(centre)} over the cube of side {side}, a declaration: the amplitude {record.amplitude}, its "
+                    f"share {record.carried} quanta over the cube, no fixed point and no standing check",
                     file=sys.stderr,
                     flush=True,
                 )
@@ -1630,10 +1642,23 @@ def main(argv: list[str] | None = None) -> None:
         default=[],
         help="per body in the world's order, the turned modes deflated before the one laid: 0 the top mode (the 1s), 1 the next standing solution (the 2s); a body a holder of the sign turns alone",
     )
+    parser.add_argument(
+        "--pixel-side",
+        type=int,
+        default=1,
+        help="the side of the cube of Nodes about the declared Node a --pixel body's quanta are laid over, every Node alike (1 the one Node; the frozen nucleus over 3)",
+    )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
     designed = designed_quanta(args.input, len(cast(list[Any], document.get("measured", []))))
-    mode = pixel_mode(document, list(args.sense), designed, tuple(args.pixel), tuple(args.deflate))
+    mode = pixel_mode(
+        document,
+        list(args.sense),
+        designed,
+        tuple(args.pixel),
+        tuple(args.deflate),
+        int(args.pixel_side),
+    )
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
     out.write_text(json.dumps(mode, separators=(",", ":")) + "\n", encoding="utf-8")

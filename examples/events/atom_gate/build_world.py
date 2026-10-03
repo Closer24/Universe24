@@ -138,8 +138,10 @@ def expectation(design: dict[str, Any], folder: Path) -> dict[str, object]:
     }
 
 
-def laid(paths: list[tuple[Path, list[str]]], senses: list[int], pixel: list[int]) -> None:
-    """The generator's lay of the worlds' bodies side by side, each mode file written beside its world: the nucleus (measured[0]) as the one-Node record (`--pixel`), both bodies in the senses given and each world's own further arguments (the deflations of round D's 2s); a refusal by name is printed and the world stays declared without a mode file."""
+def laid(
+    paths: list[tuple[Path, list[str]]], senses: list[int], pixel: list[int], side: int = 1
+) -> None:
+    """The generator's lay of the worlds' bodies side by side, each mode file written beside its world: the nucleus (measured[0]) as the one-Node record (`--pixel`) over the cube of side `side` about its Node (`--pixel-side`, 1 the one Node; round D's frozen nucleus over 3), both bodies in the senses given and each world's own further arguments (the deflations of round D's 2s); a refusal by name is printed and the world stays declared without a mode file."""
     runs = [
         subprocess.Popen(
             [
@@ -151,6 +153,8 @@ def laid(paths: list[tuple[Path, list[str]]], senses: list[int], pixel: list[int
                 *(str(sense) for sense in senses),
                 "--pixel",
                 *(str(number) for number in pixel),
+                "--pixel-side",
+                str(side),
                 *extra,
             ],
             cwd=ROOT,
@@ -267,7 +271,12 @@ def main(argv: list[str] | None = None) -> None:
             to_lay.append((path, ["--deflate", *(str(number) for number in deflations)]))
     if to_lay:
         senses = [int(round_d["senses"][body]) for body in ("nucleus", "electron")]
-        laid(to_lay, senses, [int(number) for number in round_d["pixel"]])
+        laid(
+            to_lay,
+            senses,
+            [int(number) for number in round_d["pixel"]],
+            int(round_d["nucleus"].get("side", 1)),
+        )
     written = expectation(design, args.folder)
     (args.folder / "expectation.json").write_text(json.dumps(written, indent=1) + "\n", encoding="utf-8")
     print(json.dumps({"expectation": str(args.folder / "expectation.json")}))
