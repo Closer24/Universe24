@@ -99,6 +99,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "planes laid alike at the quarter turn on the committed neutron conversion world, the Wronskians and the shares "
         "at the Node, the twelve lay lines and the crossing, the sign rows' first write",
     ),
+    "tests/test_the_bound_body.py::test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads": (
+        104,
+        "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
+        "2026-10-03, C.15): the fixed-point lay with the compact seed in its own nuclear holder's well at the four "
+        "declared integers, the hold's first write returning the start's rest within one unit at every Node, the deviation from the exact line a GAMEBOARD reading, the count the record's share within "
+        "the gate, the standing read over one period against the twin without the holder, the remainders at the "
+        "half wall and the back-in-time gate across two periods",
+    ),
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
         33,
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
