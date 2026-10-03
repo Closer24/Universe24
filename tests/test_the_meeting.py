@@ -219,7 +219,18 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     for word, body in wrong.items():
         refused(word, node_instrument_of, body, "measured[0]", families, 0, quanta, 1)
     two = {**record, "nodes": record["nodes"] + [{"node": [3, 4, 2], "count": 1}]}
-    refused("one Node", bodies_of, [two], None, "", families, (6, 6, 4), 9000, ())
+    refused(
+        "one Node",
+        bodies_of,
+        [two],
+        None,
+        "",
+        families,
+        (6, 6, 4),
+        9000,
+        (),
+        universe["integers"]["quantum_action"],
+    )
     board, other = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(plain))
     names = [f.name for f in board.families]
     ion, drv, light = (names.index(n) for n in ("ion", "strong_drive", "fluorescence"))
@@ -331,6 +342,7 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
     rule3 = {("game_board", "step"), ("game_board", "step_inverse"), ("game_board", "hold")}
     lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
     lay |= {("meeting", "relaid"), ("giving", "laid_increment"), ("giving", "laid_by_count")}
+    lay |= {("giving", "laid_packet")}  # the open board's packet, the lay (A) along a drawn direction
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
 
 
