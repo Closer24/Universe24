@@ -136,13 +136,13 @@ def presented(
     return tuple(found)
 
 
-def squared(count: int, action: int, pair: tuple[int, int]) -> int:
-    """A^2 of `count` quanta standing at one Node, count T den^2 div (2 (den^2 - num^2)) by the division act (count T div 2 for the massless pair), the number `amplitude` takes the root of."""
+def squared(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
+    """A^2 of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part), count T den^2 div (2 laid (den^2 - num^2)) by the division act (count T div (2 laid) for the massless pair), the number `amplitude` takes the root of."""
     num, den = pair
     gap = den * den - num * num
     if gap:
-        return int(division_forward(count * action * den * den, 2 * gap, 0)[0])
-    return int(division_forward(count * action, 2, 0)[0])
+        return int(division_forward(count * action * den * den, 2 * laid * gap, 0)[0])
+    return int(division_forward(count * action, 2 * laid, 0)[0])
 
 
 def spread(square: int, share: tuple[int, int]) -> int:
@@ -151,9 +151,9 @@ def spread(square: int, share: tuple[int, int]) -> int:
     return division_fixed_point(int(division_forward(square * weight, total, 0)[0]))
 
 
-def amplitude(count: int, action: int, pair: tuple[int, int]) -> int:
-    """The amplitude A of `count` quanta standing at one Node: A^2 = count T den^2 div (2 (den^2 - num^2)), the share 6 den A^2 sin^2 omega over W_c = 3 den T the count, by the fixed point of the division act; for the massless pair, whose one-Node record has no rotation, A^2 = count T div 2, the two levels alike."""
-    return division_fixed_point(squared(count, action, pair))
+def amplitude(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
+    """The amplitude A of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): A^2 = count T den^2 div (2 laid (den^2 - num^2)), the share 6 den A^2 sin^2 omega per line over W_c = 3 den T the count, by the fixed point of the division act; for the massless pair, whose one-Node record has no rotation, A^2 = count T div (2 laid), the two levels alike (the lay by the count, `giving.laid_by_count`: every laid line of the record alike, the symmetric lay, the mathematician's 244 item 2, #1572 comment 5967913000)."""
+    return division_fixed_point(squared(count, action, pair, laid))
 
 
 def direction(re: int, im: int, size: int) -> tuple[int, int]:

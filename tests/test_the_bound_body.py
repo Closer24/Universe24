@@ -6,15 +6,27 @@ import shutil
 from itertools import product
 
 import numpy as np
+from scipy.sparse import diags, kronsum
+from scipy.sparse.linalg import spsolve
 
 import event_universe.world_files as world_files
 from event_universe import node
+from event_universe.bookings import booked_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients
+from event_universe.core.rule3 import coefficients, division_forward
 from event_universe.features import rotation
+from event_universe.features.start import scaled_source, unit_of
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import amplitude_bound, count_wall, held_write, turns
+from event_universe.loader.derived import (
+    amplitude_bound,
+    count_wall,
+    held_write,
+    row_sources,
+    turns,
+    weight_of,
+)
+from event_universe.loader.lay import least_action
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
@@ -92,7 +104,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     packet = {**PACKET, "amplitude": 400, "top": dict(x=[5, 5], y=[0, 0], z=[0, 0])}
     document = {**json.loads(world.read_text(encoding="utf-8")), "messages": [packet]}
     world.write_text(json.dumps(document), encoding="utf-8")
-    TOOL.main(["--input", str(world), "--sense", "1"])
+    TOOL.main(["--input", str(world), "--sense", "1", "--pixel", "0"])  # the one-Node record
     board = GameBoard(load_world(world))
     message, light = board.world.messages[0], board.states[CHARGE].lines[0]
     now, before = board.board_array(message.now), board.board_array(message.before)
@@ -191,3 +203,182 @@ def test_the_looks_committed_worlds_pass_the_gate_and_the_lawful_pairs_are_read(
         assert (v["verdict"], v["intervals"], board.step_inverse()) == ("MATCH", t, None), n
         assert BACK.first_difference(loaded, BACK.snapshot(board)) is None and board.tick == 0, n
     assert {DRIFT.drift(gated[n], None)["intervals"] for n in lawful} == {expected["window"][1]}
+
+
+def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused(
+    tmp_path, monkeypatch
+):
+    """The count-1 gate and the lay of each quantum of charge as its own record (ALGEBRA.md, No record reads its own write of the sign; what is open, item 43 (1)): a universe of a holder of the content at a level weight so large that its rest is 0 at every Node (the paces Gamma, the write's factor 1 and the turn's numerator the level itself), the holder of the sign under the rotation at E_s = 1 and k_w by the energy line (k_w Gamma den = E_s T num, 4 at T = 36,000) and the charged plane of matter's pair; a chain of ten Nodes (x open) with two bodies of the charged family of count 1 in the senses +1 and -1, each laid by the generator as the one-Node record of its quantum (`--pixel`: one unit of the invariant 2 A^2 sin omega = T, A = isqrt(T den div (2 sine)) with sine = isqrt(den^2 - num^2), its Wronskian A x (A sine div den) at its Node and 0 elsewhere, sense x T / 2 within 2 A of the rounding) and admitted by the gate at the start: each body its own record, the holder three rows of four lines (the free row 0 and one per record), each row sourced by its own record alone (`row_sources`), the free row 0 at every Node (nothing sources it, no light laid) and each record's row at the start of the sign of its own sense; over three intervals, for each record, the turn's time numerator is bit for bit the other record's row's time line and its odd angles the other row's odd lines, the same bit for bit with the record's own row zeroed (the self-read 0 to the bit), and the row's time line after the step is Rule3's plain step of the row (the massless pair at the vacuum's paces) plus (k_w x W + r) div (E_s T) with W the record's own Wronskian booking and r the write's remainder before, the other record's Wronskian entering nowhere; a body of count 2, and a body of two Nodes of count 1, of the charged family are refused by name as one quantum of its family."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    k_w = T * PAIR[0] // (GAMMA * PAIR[1])  # the energy line at E_s = 1: k_w Gamma den = E_s T num
+    content = {"sources": ["form"], "level_weight": 10**12, "write_weight": 1}  # a rest of 0 levels
+    sign = {"sources": ["wronskian"], "level_weight": 1, "write_weight": k_w, "act": "rotation"}
+    rows = [
+        {"name": "binding", "pair": [2400, 2401], "reads": {"binding": 1}, "held": content},
+        {"name": "charge", "pair": [6000, 6000], "reads": {"binding": 1}, "held": sign},
+        {"name": "charged", "pair": list(PAIR), "reads": {"binding": 1, "charge": 1}, "dimension": 2},
+    ]
+    (tmp_path / "u.json").write_text(json.dumps({"integers": INTEGERS, "families": rows}), "utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    world = dict(shape=[10, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
+    quanta = [{"family": "charged", "nodes": [{"node": [x, 0, 0], "count": 1}]} for x in (3, 6)]
+    world.update(ticks=3, universe="u.json", engine="e.json", detectors=[], measured=quanta)
+    (path := tmp_path / "quanta.json").write_text(json.dumps(world), encoding="utf-8")
+    TOOL.main(["--input", str(path), "--sense", "1", "-1", "--pixel", "0", "1"])  # each its own record
+    board = GameBoard(load_world(path))
+    families, charge, charged = board.families, 1, 2
+    sources = [row_sources(families, charge, row) for row in range(3)]  # the free row, one per record
+    assert sources == [[], [(charged, 0)], [(charged, 1)]] and families[charge].lines == 4 * 3
+    assert [r for r, _ in board.laid_rows()] == [0, 1]  # each body of the charged family its own record
+    sine = math.isqrt(PAIR[1] ** 2 - PAIR[0] ** 2)  # the lay by the invariant 2 A^2 sin omega = T
+    amplitude = math.isqrt(T * PAIR[1] // (2 * sine))
+    quantum = amplitude * (amplitude * sine // PAIR[1])  # the one-Node record's Wronskian, T / 2
+    assert abs(quantum - T // 2) <= 2 * amplitude
+    time_lines = [board.states[charge].lines[4 * row].now for row in range(3)]  # the rows at the start
+    for record, (x, sense) in enumerate(((3, 1), (6, -1))):
+        wronskian = node.wronskian(board.lines_of(charged, record), True)
+        assert int(wronskian[x, 0, 0]) == sense * quantum and int(np.count_nonzero(wronskian)) == 1
+        own = sense * time_lines[record + 1]  # the row's rest at the start, of its own record's sense
+        assert (own >= 0).all() and own[x, 0, 0] > 0
+    assert not time_lines[0].any()  # the free row: nothing sources it and no light is laid
+    rule = coefficients(6000, 6000, GAMMA, GAMMA, GAMMA, None, board.unit)  # the vacuum's rule
+    empty = node.empty_record(board.shape, board.kind)
+    for _ in range(3):
+        states, lines = board.states, list(board.states[charge].lines)
+        remainders = [r.copy() for r in states[charge].write_remainders]
+        bookings = board.stepped(charged, 1)[1]  # the bookings about the step, as the step books them
+        for record in (0, 1):
+            other = 4 * (2 - record)  # the other record's row: its time line and its three odd lines
+            turn = node.turning(charged, families, states, 1, GAMMA, record)
+            assert np.array_equal(turn[0], lines[other].now) and lines[4 * (record + 1)].now.any()
+            assert all(np.array_equal(a, lines[other + 1 + axis].now) for axis, a in enumerate(turn[1]))
+            blank = [*states[:charge], node.NodeState(list(lines), remainders), *states[charge + 1 :]]
+            blank[charge].lines[4 * (record + 1) : 4 * (record + 2)] = [empty] * 4  # the own row zeroed
+            zeroed = node.turning(charged, families, blank, 1, GAMMA, record)
+            assert np.array_equal(zeroed[0], turn[0])  # the self-read 0 to the bit
+            assert all(np.array_equal(a, b) for a, b in zip(zeroed[1], turn[1], strict=True))
+        board.step()
+        for record in (0, 1):
+            line, own = 4 * (record + 1), node.wronskian(bookings[record][1], True)
+            expected = node.step(lines[line], rule, board.wrap).now + (k_w * own + remainders[line]) // T
+            assert np.array_equal(board.states[charge].lines[line].now, expected), (board.tick, record)
+    document, mode_path = json.loads(path.read_text(encoding="utf-8")), path.with_suffix(".mode.json")
+    for nodes in ([{"node": [3, 0, 0], "count": 2}], [{"node": [x, 0, 0], "count": 1} for x in (3, 4)]):
+        document["measured"][0]["nodes"] = nodes
+        path.write_text(json.dumps(document), encoding="utf-8")
+        mode = {**json.loads(mode_path.read_text("utf-8")), "world_digest": input_digest(document)}
+        mode_path.write_text(json.dumps(mode), encoding="utf-8")
+        refused("one quantum of its family", load_world, path)
+
+
+HOLDER = {"name": "nuclear", "pair": [50, 51], "reads": {"gravity": 1, "binding": 1, "nuclear": 1}}
+HOLDER["held"] = {"sources": ["form"], "level_weight": 1, "write_weight": 300}  # E_n and W_1, the file's
+NUCLEON = {"name": "nucleon", "pair": list(PAIR), "dimension": ["plane"] * 3, "reads": HOLDER["reads"]}
+COMPACT = {"kind": "fixed_point", "stop": 2, "passes": 30, "seed": "compact", "profile": [1, 4]}
+NUCLEUS, CUBE = 25, 9  # the design's count, a few quanta, and the open cube's side
+
+
+def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads(
+    tmp_path, monkeypatch
+):
+    """The nucleon's fixed point in its own nuclear holder's well (ALGEBRA.md, The nucleon is a compact body of its family and The nuclear holder, a hypothesis by name with four declared integers, the file's and not the law's: the holder's pair [50, 51], its level weight E_n = 1, its write weight W_1 = 300 and the read weight 1, printed beside the numbers; the mathematician's 275 (b) with the advisor's second, #1572 comments 5969267087 and 5969197876): the rule's universe with a held row `nuclear` sourced by the form, reading the content holders and itself at 1 as every shipped holder does, and a `nucleon` family of three planes at matter's pair reading gravity 1, binding 1 and `nuclear` 1; one body of 25 quanta at the centre of an open 9-cube laid by `lay.kind` `fixed_point` with the compact seed at the profile [1, 4] (one part at the centre and four at each of the six Ports' Nodes), the stop 2 and 30 passes, the tolerance [1, den] at the largest den whose least T is the universe's 32,768 (the budget's line, loader/lay.py); no instrument and no detector: the body is read by its share and its standing. (i) The fixed point returns: the generator's passes end with the content and the record repeating within the stop at every Node under the passes (ten passes on the first run, the last within one unit); the engine's start then holds the rest: the hold's first write returns it within one unit at every Node (the mathematician's 293: the integer rest satisfies its line within one rounding, the residual at most half a wall under the half-wall origin, so the first write moves a level by at most 1; the floor origin admitted two), and the nuclear row's deviation from the row's exact line at its own composed paces (the source the laid record's form as the hold books it, scaled per proper volume and per proper interval over the wall E_n T, solved sparse in the test as tests/test_the_features.py solves the massless and binding rows) is printed beside the line as a GAMEBOARD reading and pinned below 0.6 at this seed, a reading of the neighbours' roundings' alignment and no bound: the derived bound is the residual through the inverse operator, 0.5 x 306 / 6 = 25.5 levels. (ii) The count is the record's share: the world's declared counts (the generator's reading, 43 over 33 Nodes from the design's 25, the three planes' per-plane rounding scaling the record above the design's count) against the share read at those Nodes within the gate ((|c - read| - 1) div 2)^2 <= c, every plane's lines alike and the sense lines 0. (iii) The body stands: P = 2 pi / omega_b rounded, cos omega_b the level before over the level now at the centre of the laid record (8 intervals from the pair (227, 158)), and the form D_i = now^2 - next x before summed over the record's lines returns to itself within one quantum of form, |D_i(1 + P) - D_i(1)| < T, at every Node of the region whose form is above T div 100 (2,547 at most against 32,768 on the first run); the twin without the holder (the nucleon's read of `nuclear` dropped, the same lay under the same mode file) spreads: after P intervals its share over the body's Nodes is below the bound body's by more than the gate's rounding at the body's count (20.6 against 43.7 quanta on the first run, the numbers pinned in the assertion's comment) and its centre's share below the body's. (iv) The guard admits the start (the content below the Link's zero at every Node, the laid levels within the amplitude bound as main derives it with the hill's factor; C.14's tension room is not on main), the back-in-time gate MATCH over 2 P intervals, every write remainder at half its wall and every sourced held row's time line at its rest's half wall, the record's lines born at the half wall of the rule they step by, the lay's origin (#1743). Found and not asserted: deeper wells toward the compact branch (W_1 from 325 at this count, from 450 at 13 quanta seeded [1, 2]) are refused in the engine's own start, the lay and the rest of the holders returning to an earlier state three to five units apart at the centre, beyond the rounding tie's two, so the nucleon laid here stands on the wide branch, the content 1,217 = 0.20 Gamma at the centre and 2 cos omega_b = 1.392 above the band's top 1.333."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    rule = json.loads((EVENTS / "rule.json").read_text(encoding="utf-8"))
+    action, rows = rule["integers"]["quantum_action"], rule["families"]
+    rows = [r for r in rows if r["name"] != "matter"]
+    unread = {name: w for name, w in NUCLEON["reads"].items() if name != HOLDER["name"]}
+    for name, reads in (("u", NUCLEON["reads"]), ("t", unread)):  # the universe and the twin's
+        universe = {**rule, "families": [*rows, HOLDER, {**NUCLEON, "reads": reads}]}
+        (tmp_path / f"{name}.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    centre = (CUBE // 2,) * 3
+    world = dict(shape=[CUBE] * 3, boundary=dict(x="open", y="open", z="open"), face_depth=1, ticks=40)
+    world.update(universe="u.json", engine="e.json", detectors=[], lay=COMPACT)
+    world["measured"] = [{"family": "nucleon", "nodes": [{"node": list(centre), "count": NUCLEUS}]}]
+    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    mode = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    world = json.loads(path.read_text(encoding="utf-8"))  # the Nodes and counts the generator read
+    passes = mode["bodies"][0]["lay"][
+        "trajectory"
+    ]  # per pass the content's change, the record's, the count
+    assert len(passes) <= COMPACT["passes"] and max(passes[-1][1:3]) <= COMPACT["stop"]
+    nodes, ticks = world["measured"][0]["nodes"], world["ticks"]
+    declared, per_node = sum(n["count"] for n in nodes), max(n["count"] for n in nodes)
+    den = max(d for d in range(1, 1000) if least_action(PAIR, ticks, per_node, (1, d)) <= action)
+    assert least_action(PAIR, ticks, per_node, (1, den)) == action  # T the least power of two admitted
+    assert least_action(PAIR, ticks, per_node, (1, den + 1)) > action
+    world["lay"] = {**COMPACT, "tolerance": [1, den]}
+    for name, document in (("w", world), ("tw", {**world, "universe": "t.json"})):  # the twin's lay
+        (tmp_path / f"{name}.json").write_text(json.dumps(document), encoding="utf-8")
+        laid = {**mode, "world_digest": input_digest(document)}
+        (tmp_path / f"{name}.mode.json").write_text(json.dumps(laid), encoding="utf-8")
+    board, twin = (GameBoard(load_world(tmp_path / f"{n}.json")) for n in ("w", "tw"))  # the guard
+    names, families, gamma = [f.name for f in board.families], board.families, GAMMA
+    nucleon, nuclear = names.index("nucleon"), names.index("nuclear")
+    lines = board.states[nucleon].lines
+    mask = board.mask(tuple(tuple(n["node"]) for n in nodes))
+    off = abs(declared - int(board.quanta(nucleon)[0][mask].sum()))
+    assert off <= 1 or ((off - 1) // 2) ** 2 <= declared  # the gate, the count the record's share
+    assert all(np.array_equal(getattr(lines[0], k), getattr(lines[p], k)) for p in (2, 4) for k in KEYS)
+    assert not any(lines[p].now.any() or lines[p].before.any() for p in (1, 3, 5))  # no sense laid
+    assert int(board.read(nucleon)[0].max()) < paces.frozen_content(gamma)  # below the Link's zero
+    assert max(int(np.abs(line.now).max()) for line in lines) <= board.world.amplitude_bound
+    assert all((x.remainder == board.half_wall(nucleon)).all() for x in lines)  # born at the half wall
+    for index in (names.index(n) for n in ("gravity", "binding", "nuclear")):  # the sourced held rows
+        state, walls = board.states[index], board.walls(index)
+        assert all((r == w // 2).all() for r, w in zip(state.write_remainders, walls, strict=True))
+        half = (coefficients(*families[index].pair, gamma, gamma, gamma, None, board.unit)[2] - 1) // 2
+        assert board.origins[index] == half and (state.lines[0].remainder == half).all()  # the rest's
+    num, den_h = families[nuclear].pair  # the nuclear row's exact line at its own composed paces
+    levels = [board.states[r.family].lines[0].now.astype(object) for r in families[nuclear].reads]
+    content = sum(r.weight * level for r, level in zip(families[nuclear].reads, levels, strict=True))
+    form = np.asarray(booked_of(families, nucleon, board.stepped(nucleon, 1)[1])[0][(nucleon, 0)])
+    source = families[nuclear].write * weight_of(nuclear, families[nucleon]) * form.astype(object)
+    wall, (clock, pace) = board.walls(nuclear)[0], paces.node_paces(gamma, content)
+    unit = unit_of(source, (num, den_h), wall, board.world.width, gamma, board.wrap)
+    fine = division_forward(3 * den_h * unit * source, wall, 0)[0] * gamma * gamma  # the booked source
+    scaled = np.asarray(scaled_source(fine, clock, pace, gamma, 2), dtype=float).ravel() / unit
+    paths = [diags([1.0, 1.0], [-1, 1], shape=(n, n)) for n in board.shape]
+    links = kronsum(kronsum(paths[0], paths[1]), paths[2])  # the six Ports, zeros beyond the faces
+    line = np.asarray(6 * (den_h - num) * clock * clock + 6 * num * pace * pace, dtype=float).ravel()
+    operator = (diags(line) - diags(np.asarray(num * pace * pace, dtype=float).ravel()) @ links).tocsr()
+    exact = spsolve(operator, scaled).reshape(board.shape)
+    off_line = float(np.abs(board.states[nuclear].lines[0].now - exact)[mask].max())
+    # a reading of the neighbours' roundings' alignment at this seed (the mathematician's 293), not a bound; the
+    # derived bound is 25.5 levels
+    assert off_line < 0.6
+    now, before = (int(getattr(lines[0], k)[centre]) for k in KEYS[:2])
+    period = round(2 * math.pi / math.acos(before / now))  # the record's own rotation at the centre
+    kept, hold_before = [[x.now.astype(object) for x in lines]], board.states[nuclear].lines[0].now
+    hold_before = hold_before.copy()
+    for tick in range(1, 2 * period + 3):
+        board.step()
+        kept.append([x.now.astype(object) for x in board.states[nucleon].lines])
+        if tick == 1:  # the hold's first write returns the start's rest within one unit
+            moved = int(np.abs(board.states[nuclear].lines[0].now - hold_before).max())
+            assert moved <= 1
+        if tick == period:
+            share = board.share_of(nucleon)[0]
+            standing, at_centre = int(share[mask].sum(dtype=object)), int(share[centre])
+
+    def form_at(t: int):  # type: ignore[no-untyped-def]
+        return sum(kept[t][k] * kept[t][k] - kept[t + 1][k] * kept[t - 1][k] for k in range(len(lines)))
+
+    first, later = form_at(1), form_at(1 + period)
+    region = first > action // 100  # the body's region, the Nodes above a hundredth of a quantum of form
+    assert region[centre] and mask[region].any() and int(np.abs(later - first)[region].max()) < action
+    for _ in range(period):
+        twin.step()
+    spread, wall_c = twin.share_of(nucleon)[0], count_wall(families[nucleon], action)
+    deficit = (standing - int(spread[mask].sum(dtype=object))) // wall_c  # 43.7 against 20.6 quanta
+    assert ((deficit - 1) // 2) ** 2 > declared and int(spread[centre]) < at_centre
+    print(
+        f"GAMEBOARD the nuclear holder's declared integers: the pair {HOLDER['pair']}, E_n "
+        f"{HOLDER['held']['level_weight']}, W_1 {HOLDER['held']['write_weight']}, the read weight "
+        f"{NUCLEON['reads']['nuclear']}; the lay {declared} quanta over {len(nodes)} Nodes in {len(passes)} "
+        f"passes, the period {period}, the body's share {standing / wall_c:.1f} and the twin's "
+        f"{int(spread[mask].sum(dtype=object)) / wall_c:.1f} over the body's Nodes after the period; the nuclear "
+        f"rest off its exact line by {off_line:.4f} level at most over the body (a reading), the first write moving it {moved}"
+    )
+    assert BACK.verdict(GameBoard(load_world(tmp_path / "w.json")), 2 * period)["verdict"] == "MATCH"

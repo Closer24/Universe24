@@ -13,7 +13,7 @@ from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, Hole, drawn, laid_pairs, standing
-from event_universe.giving import given_quantum, levels_of
+from event_universe.giving import given_lines, given_quantum, levels_of
 from event_universe.loader.derived import count_wall, row_of
 from event_universe.loader.instrument import Generator, Instrument, NodeInstrument
 from event_universe.loader.keys import Node
@@ -249,7 +249,7 @@ def turned_labels(board: GameBoard, books: NodeBooks) -> None:
 
 @dataclass(frozen=True)
 class Item:
-    """One entry of a click's list (the mathematician's 192 with the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, one generic implementation the detector operates): the record by its family and, for a record declared an instrument at one Node, its number among `measured` (None for a record spread over the board), the part (None for every line of a spread record, no line alone), the change of its count, +1, -1 or 0 (the null window moves no count), the Nodes written at, the file's coordinates, and for a spread record given whole quanta the form of its lay (`giving.given_quantum`): the pair its lay stands at where the list names one (the conversion's records out at their family's massless pair [den, den], the lay by the count at one Node, the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600), else the resonance and the span of a source in time (the giving's, the transition's declared resonance and the lifetime, the mathematician's 213 (B) and 220 with the advisor's second, #1572 comments 5965054791 and 5965303134, #1563 comment 5965316267)."""
+    """One entry of a click's list (the mathematician's 192 with the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, one generic implementation the detector operates): the record by its family and, for a record declared an instrument at one Node, its number among `measured` (None for a record spread over the board), the part (None for every line of a spread record, no line alone), the change of its count, +1, -1 or 0 (the null window moves no count), the Nodes written at, the file's coordinates, and for a spread record given whole quanta the form of its lay (`giving.given_quantum`): the pair its lay stands at where the list names one (the conversion's records out at their family's massless pair [den, den], the lay by the count at one Node, the two hands of 2026-10-03, #1572 comments 5964520368 and 5964754600) with, for a plane, the sense of its lay as the conversion's table declares it (0 for real lines; `giving.laid_by_count`), else the resonance and the span of a source in time (the giving's, the transition's declared resonance and the lifetime, the mathematician's 213 (B) and 220 with the advisor's second, #1572 comments 5965054791 and 5965303134, #1563 comment 5965316267)."""
 
     family: int
     measured: int | None
@@ -259,6 +259,7 @@ class Item:
     pair: tuple[int, int] | None = None
     resonance: tuple[int, int] | None = None
     span: int = 0
+    sense: int = 0
     width: int | None = (
         None  # the open board's packet: its Nodes across (`giving.laid_packet`), None for the source in time
     )
@@ -314,9 +315,9 @@ def written(board: GameBoard, items: list[Item]) -> None:
 
 
 def laid_lines(board: GameBoard, item: Item) -> list[int]:
-    """The lines of a record an item lays at its Nodes: the lines of the part of a record declared an instrument at one Node (`parted`), the first line of a spread record given whole quanta (`given_quantum`), none for a quantum taken by the face."""
+    """The lines of a record an item lays at its Nodes: the lines of the part of a record declared an instrument at one Node (`parted`), the lines of a spread record given whole quanta (`given_quantum`, `giving.given_lines`: every laid line of one part of its first record, a plane's two lines per plane, a holder of the sign's time line alone), none for a quantum taken by the face."""
     if item.measured is None:
-        return [0] if item.delta > 0 else []
+        return given_lines(board.families[item.family]) if item.delta > 0 else []
     assert item.part is not None
     family, books = board.families[item.family], books_named(board, item.measured)
     first = node.record_slice(family, books.record).start + item.part * family.width

@@ -92,6 +92,21 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
         "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
     ),
+    "tests/test_the_meeting.py::test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row": (
+        60,
+        "the lay by the count with the sense (round F of the board, the Boss's brief at the owner's word of 2026-10-03, "
+        "everything now and in parallel): the conversion table's sense per record out and its refusals, the given "
+        "planes laid alike at the quarter turn on the committed neutron conversion world, the Wronskians and the shares "
+        "at the Node, the twelve lay lines and the crossing, the sign rows' first write",
+    ),
+    "tests/test_the_bound_body.py::test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads": (
+        104,
+        "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
+        "2026-10-03, C.15): the fixed-point lay with the compact seed in its own nuclear holder's well at the four "
+        "declared integers, the hold's first write returning the start's rest within one unit at every Node, the deviation from the exact line a GAMEBOARD reading, the count the record's share within "
+        "the gate, the standing read over one period against the twin without the holder, the remainders at the "
+        "half wall and the back-in-time gate across two periods",
+    ),
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
         33,
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
@@ -103,6 +118,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
         "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
         "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
+    ),
+    "tests/test_the_bound_body.py::test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused": (
+        64,
+        "the count-1 gate's dedicated test (the Boss, 2026-10-03; ALGEBRA.md, No record reads its own write of "
+        "the sign, item 43 (1)): two charged records of count 1 on a chain, each its own record and its own row "
+        "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
+        "self-read 0 to the bit over three intervals, a count above 1 refused by name",
     ),
     "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
         70,

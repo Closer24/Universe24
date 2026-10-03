@@ -27,7 +27,7 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   sign's declared act `rotation`, with the neutral and the plain controls and the
   blind `expectation.json` written first, a GameBoard reading of the bodies'
   drifts by `tools/body_drift.py` and no measurement;
-- and the families round's five worlds, each one family's act on the rule's own
+- and the families round's worlds, each one family's act on the rule's own
   rows, each folder its `design.json`, its `build_world.py` and its blind
   `expectation.json` written first from the advisor's numbers:
   `examples/events/matter_alone/` (matter alone: the compact pixel on the open
@@ -35,18 +35,18 @@ gate and read a world (`tools/`), and the worlds that gate the engine:
   tail and the drift), `examples/events/matter_and_gravity/` (the massless row's
   rest about a pixel in levels, 3 G(r) s, on its own universe with gravity at the
   level weight 10), `examples/events/matter_and_binding/` (two pixels twelve Links
-  apart, Yukawa's range, the beat and the parting, the field lines of two regions),
-  `examples/events/charge/` (a charged body's Wronskian sourcing the holder of the
-  sign at the level weight 1, like and unlike senses under the plain read) and
-  `examples/events/light_and_charge/` (a packet of light along a tube past a
-  neutral and past a charged pixel onto a screen of regions, the arrival and the
-  delay by the content's index, the sign's 0, read by `tools/click_counts.py`); the
+  apart, Yukawa's range, the beat and the parting, the field lines of two regions)
+  and `examples/events/light_and_charge/` (a packet of light along a tube past no
+  body and past a neutral pixel onto a screen of regions, the arrival and the
+  delay by the content's index, read by `tools/click_counts.py`; the charged tube
+  and the three charge worlds of `examples/events/charge/`, whose universe file
+  `charged.json` the tube keeps, left the repository with the count-1 gate at the
+  owner's word of 2026-10-03, 16:20 Israel); the
   bodies' worlds are read by `tools/body_rest.py`, a GameBoard reading of a body's
   rotation, tail, centroid and well and of every held row's level along the axes
   from its centre, and of the regions' field lines from a run's output; the pair
-  of `examples/events/matter_and_binding/pair.json` and the like and unlike pairs
-  of `examples/events/charge/` stand declared without a mode file, refused by the
-  generator by name, so the single bodies' worlds alone run;
+  of `examples/events/matter_and_binding/pair.json` stands declared without a mode
+  file, refused by the generator by name, so the single bodies' worlds alone run;
 - and the nuclide as one event, `examples/events/nuclide/`: the deuteron's
   universe file `deuteron.json`, the holder of the sign at the level weight 1 and
   the nuclide family [4004, 6000] at the shape [2, 2], two planes laid as one
@@ -112,11 +112,10 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 PYTHONPATH=src python tools/run_inputs.py --out runs/nuclide examples/events/nuclide/free_nuclide.json
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/nuclide/free_nuclide.json
 PYTHONPATH=src python tools/body_drift.py --expectation examples/events/like_or_unlike/expectation.json examples/events/like_or_unlike/like.json examples/events/like_or_unlike/unlike.json examples/events/like_or_unlike/uncharged_pair.json examples/events/like_or_unlike/alone_first.json examples/events/like_or_unlike/alone_second.json examples/events/like_or_unlike/uncharged_alone_first.json examples/events/like_or_unlike/uncharged_alone_second.json examples/events/like_or_unlike/like_plain.json examples/events/like_or_unlike/unlike_plain.json
-for f in matter_alone matter_and_gravity matter_and_binding charge light_and_charge; do PYTHONPATH=src python examples/events/$f/build_world.py --modes; done
+for f in matter_alone matter_and_gravity matter_and_binding light_and_charge; do PYTHONPATH=src python examples/events/$f/build_world.py --modes; done
 PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_alone/expectation.json examples/events/matter_alone/pixel.json examples/events/matter_alone/cloud.json
 PYTHONPATH=src python tools/body_rest.py --expectation examples/events/matter_and_gravity/expectation.json examples/events/matter_and_gravity/well.json
-PYTHONPATH=src python tools/body_rest.py --expectation examples/events/charge/expectation.json examples/events/charge/charged_body.json
-PYTHONPATH=src python tools/run_inputs.py --out runs/light examples/events/light_and_charge/free.json examples/events/light_and_charge/through_neutral.json examples/events/light_and_charge/through_charged.json && for w in free through_neutral through_charged; do PYTHONPATH=src python tools/click_counts.py --world examples/events/light_and_charge/$w.json --output runs/light/$w.output.json --expectation examples/events/light_and_charge/expectation.json; done
+PYTHONPATH=src python tools/run_inputs.py --out runs/light examples/events/light_and_charge/free.json examples/events/light_and_charge/through_neutral.json && for w in free through_neutral; do PYTHONPATH=src python tools/click_counts.py --world examples/events/light_and_charge/$w.json --output runs/light/$w.output.json --expectation examples/events/light_and_charge/expectation.json; done
 ```
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and

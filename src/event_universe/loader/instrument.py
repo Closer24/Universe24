@@ -156,6 +156,10 @@ CONVERSION_KEYS, CONVERSION_REQUIRED = (
     ("rate", "to", "sense"),
     ("rate", "to"),
 )  # a record converted whole
+OUT_KEYS, OUT_REQUIRED = (
+    ("family", "sense"),
+    ("family",),
+)  # a record out of a conversion, a plane with its sense
 
 
 @dataclass(frozen=True)
@@ -193,10 +197,11 @@ class Rate:
 
 @dataclass(frozen=True)
 class Conversion:
-    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), and the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands, #1572 comments 5964520368 and 5964754600)."""
+    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands, #1572 comments 5964520368 and 5964754600), and per record out the sense of its lay, +1 or -1 for a plane family as the table declares it and 0 for a record of real lines (the mathematician's 244 item 3, #1572 comment 5967913000: the sense is the table's per record out and no family's, the anti-body being the same plane family at the opposite sense)."""
 
     rate: int
     outs: tuple[int, ...]
+    senses: tuple[int, ...]
 
 
 @dataclass(frozen=True)
@@ -388,16 +393,27 @@ def sense_of(value: object, label: str, plane: bool) -> int:
 def conversion_of(
     value: object, label: str, families: tuple[FamilyRule, ...], own: int, quanta: dict[str, int]
 ) -> tuple[Conversion, int]:
-    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the families of the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
+    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count: a family's name for a record of real lines, and for a plane family an entry {`family`, `sense`}, the sense +1 or -1 of its lay, `giving.laid_by_count`; a plane family named without its sense and a record of real lines with one are refused by name, `sense_of`; the mathematician's 244 item 3, #1572 comment 5967913000), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
     found = keyed(value, label, CONVERSION_KEYS, CONVERSION_REQUIRED)
     rate = integer(found["rate"], f"{label}.rate", 1)
     if not isinstance(found["to"], list) or not found["to"]:
-        raise ValueError(f"{label}.to lists the families of the records out of the conversion")
-    outs = tuple(
-        family_named(name, f"{label}.to[{index}]", quanta, own) for index, name in enumerate(found["to"])
-    )
+        raise ValueError(f"{label}.to lists the records out of the conversion")
+    outs, senses = [], []
+    for index, entry in enumerate(found["to"]):
+        where = f"{label}.to[{index}]"
+        named = (
+            keyed(entry, where, OUT_KEYS, OUT_REQUIRED) if isinstance(entry, dict) else {"family": entry}
+        )
+        outs.append(out := family_named(named["family"], where, quanta, own))
+        if families[out].plane and "sense" not in named:
+            raise ValueError(
+                f"{where} names {families[out].name!r}, a plane family, without its sense: a record out of a plane "
+                "family is an entry {family, sense}, the sense +1 or -1 of its lay (ALGEBRA.md #the-paces, The sign "
+                "is the rotation sense; the mathematician's 244 item 3)"
+            )
+        senses.append(sense_of(named.get("sense"), f"{where}.sense", families[out].plane))
     own_sense = sense_of(found.get("sense"), f"{label}.sense", families[own].plane)
-    return Conversion(rate, outs), own_sense
+    return Conversion(rate, tuple(outs), tuple(senses)), own_sense
 
 
 def node_instrument_of(
