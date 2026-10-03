@@ -112,6 +112,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
         "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
     ),
+    "tests/test_the_bound_body.py::test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused": (
+        64,
+        "the count-1 gate's dedicated test (the Boss, 2026-10-03; ALGEBRA.md, No record reads its own write of "
+        "the sign, item 43 (1)): two charged records of count 1 on a chain, each its own record and its own row "
+        "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
+        "self-read 0 to the bit over three intervals, a count above 1 refused by name",
+    ),
     "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
         70,
         "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
