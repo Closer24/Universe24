@@ -10,7 +10,7 @@ import numpy as np
 from event_universe import node
 from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
 from event_universe.credit import record_unit
-from event_universe.features.click import along_cosine, envelope, exact_total
+from event_universe.features.click import along_cosine, envelope, exact_total, line_total
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
@@ -354,10 +354,11 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
 
 
 def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tmp_path):
-    """Step 5 of the emitter/detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the exact root and the envelope in the energy form carry one quantum within the deficit below tau per Node (S = 43,962 at T = 65,536 and [2, 3], a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 35^3 Nodes a giver of the lifetime 2 in the dark (its giving drawn per interval at the hazard 1 / 2) lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a detector's own unit at [2, 3]; the packet giving world's blind is the builder's byte for byte (examples/events/packet_giving)."""
-    total, train = exact_total(65536, (2, 3)), envelope(exact_total(65536, (2, 3)), 48, 1)
+    """Step 5 of the emitter/detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the one-line packet's root T / sin Omega, twice S (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), and the envelope in the energy form carry one quantum within the deficit below tau per Node (43,962 at T = 32,768 and [2, 3], 87,925 at T = 65,536, the root rounded once; a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 35^3 Nodes a giver of the lifetime 2 in the dark (its giving drawn per interval at the hazard 1 / 2) lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a detector's own unit at [2, 3], the carrier's phase at Omega by the rotation's invariant over the lay lines, den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2 per Node within 2 percent, the floor root of the sine 6 percent off; the packet giving world's blind is the builder's byte for byte (examples/events/packet_giving)."""
+    total, train = line_total(32768, (2, 3)), envelope(line_total(32768, (2, 3)), 48, 1)
     assert (total, train[0], len(train), total - sum(a * a for a in train)) == (43962, 30, 456, 47)
-    assert train == sorted(train, reverse=True) and train[-1] == 1
+    assert train[::-1] == sorted(train) and train[-1] == 1 and total == 2 * exact_total(32768, (2, 3))
+    assert line_total(65536, (2, 3)) == 87925  # the root at 2 T, rounded once (2 S there is 87,924)
     unit = (3 * 6000 * 32768) ** 2
     doubled = along_cosine((6000, 6000), (2, 3), 4, unit)
     assert doubled is not None and abs(doubled / (2 * unit) - (2 - 2 * math.cos(math.pi / 5))) < 1e-9
@@ -376,23 +377,12 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
         rate = {k: v for k, v in {**giver["rates"][0], **changes}.items() if v is not None}
         return [{**giver, "nodes": [{"node": at, "count": 1}], "rates": [rate]}]
 
-    refused(
-        "inside a guide", bodies_of, body([0, 0, 0]), None, "", families, (48, 1, 1), 9000, (), action
-    )
-    refused(
-        "cannot carry",
-        bodies_of,
-        body([4, 4, 4], width=2),
-        None,
-        "",
-        families,
-        (9, 9, 9),
-        9000,
-        (),
-        action,
-    )
-    short = body([4, 4, 4], width=3, lifetime=2)
-    refused("holds the packet", bodies_of, short, None, "", families, (9, 9, 9), 9000, (), action)
+    def deny(word, rows, shape):  # the loader's refusal by name at the board's shape
+        refused(word, bodies_of, rows, None, "", families, shape, 9000, (), action)
+
+    deny("inside a guide", body([0, 0, 0]), (48, 1, 1))
+    deny("cannot carry", body([4, 4, 4], width=2), (9, 9, 9))
+    deny("holds the packet", body([4, 4, 4], width=3, lifetime=2), (9, 9, 9))
     small = {
         **world,
         "shape": [35, 35, 35],
@@ -423,12 +413,12 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
         spans[along[0]][-1],
     )  # from the body's Node, one sense
     assert all(spans[a] == [16, 17, 18] for a in range(3) if a not in along)  # the top-hat of 3 across
-    assert len(spans[along[0]]) == len(
-        envelope(exact_total(action, (2, 3)), 2, 9)
-    )  # L slices from tau and T
+    train = envelope(line_total(action, (2, 3)), 2, 9)
+    assert len(spans[along[0]]) == len(train)  # L slices from tau and T
+    turn = sum(9 * b * b - 12 * b * n + 9 * n * n for n, b, _ in (c["after"] for c in lays))
+    carried = 45 * sum(a * a for a in train)  # den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2
+    assert abs(turn - carried) * 50 < carried  # the carrier's phase at Omega, exact within 2 percent
     wall, total = count_wall(board.families[pulse], action), board.total_share(pulse)[0]
     own = division_fixed_point(wall * wall * 5) // 3  # one quantum at [2, 3], W_c sin Omega
     assert board.credit.counts[pulse] == 1 and total is not None
-    assert (
-        division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1
-    )  # one quantum, its own unit
+    assert division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1  # one quantum

@@ -14,6 +14,7 @@ from event_universe.features.click import (
     along_cosine,
     envelope,
     exact_total,
+    line_total,
     rotated,
     standing,
 )
@@ -90,7 +91,7 @@ def laid_by_count(board: GameBoard, item: Item) -> None:
 
 
 def laid_packet(board: GameBoard, item: Item) -> None:
-    """The open board's giving (the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; the owner's word of 2026-10-03, 09:46 Israel, "a new emitter detector also needs to enter"): the given quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the message lay's form (ALGEBRA.md, The message lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/instrument.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`meeting.gave`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 = S, the slice's a_t = isqrt((R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant 2 SUM over the Nodes of a^2 sin Omega = T within the deficit, S the exact root (`exact_total`, one root at the lay, the instrument's own act). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level isqrt(R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (cos(k_z z) num - sin(k_z z) s) div den with s the fixed point of den^2 - num^2, the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; added to the light record's first line at every Node of the packet, the remainder as it stands; one `lay` line per Node changed for the host's tool to cross (written here, the write step's lines for the body's Node alone standing aside); the record's count in the books up by the change."""
+    """The open board's giving (the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; the owner's word of 2026-10-03, 09:46 Israel, "a new emitter detector also needs to enter"): the given quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the message lay's form (ALGEBRA.md, The message lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/instrument.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`meeting.gave`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = isqrt((R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the instrument's own act; the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level isqrt(R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = isqrt(R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale, isqrt(R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root isqrt(den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; added to the light record's first line at every Node of the packet, the remainder as it stands; one `lay` line per Node changed for the host's tool to cross (written here, the write step's lines for the body's Node alone standing aside); the record's count in the books up by the change."""
     assert item.resonance is not None and item.span > 0 and item.width and item.direction is not None
     num, den = item.resonance
     family, state, action = (
@@ -103,8 +104,9 @@ def laid_packet(board: GameBoard, item: Item) -> None:
     assert doubled is not None  # the loader refused a width that cannot carry Omega
     axis, sign = item.direction
     width, shape = item.width, board.world.shape
-    sine = division_fixed_point(den * den - num * num)
-    half_scale, half_wall = division_forward(scale, 2, 0)[0], division_forward(scale * den, 2, 0)[0]
+    sine = division_fixed_point(scale * scale * (den * den - num * num))  # R sin Omega den, at the scale
+    half_scale = division_forward(scale, 2, 0)[0]
+    half_wall = division_forward(scale * scale * den, 2, 0)[0]
     for at in item.nodes:
         for _ in range(item.delta):
             section = [
@@ -114,7 +116,7 @@ def laid_packet(board: GameBoard, item: Item) -> None:
                 )
                 for offset in _offsets(axis, width, at, shape)
             ]
-            amplitudes = envelope(exact_total(action, item.resonance), item.span, len(section))
+            amplitudes = envelope(line_total(action, item.resonance), item.span, len(section))
             cosine = int(division_forward(doubled, 2, 0)[0])
             waves = rotated(scale, cosine, doubled, scale, len(amplitudes))
             quadratures = rotated(
@@ -128,7 +130,9 @@ def laid_packet(board: GameBoard, item: Item) -> None:
                 level = int(division_forward(amplitude * wave, scale, half_scale)[0])
                 earlier = int(
                     division_forward(
-                        amplitude * (wave * num - quadrature * sine), scale * den, half_wall
+                        amplitude * (wave * num * scale - quadrature * sine),
+                        scale * scale * den,
+                        half_wall,
                     )[0]
                 )
                 for node_at in section:
