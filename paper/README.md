@@ -50,12 +50,13 @@ their statuses.
   source.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, none from a run and none by a
-  generative tool, at its final size and included at it, 1:1, within the
+  generative tool, with 8 pt lettering at the drawn size (Figs. 1 and 2 are
+  included at that size, the other four at 0.66 to 0.75 of the text width), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
   every line at least 0.3 pt, black and grey, no transparency), with an EPS
   beside each PDF for the journal. The paper uses seven: `lattice.pdf` and `octahedron.pdf` (the two panels
-  of Fig. 1, the GameBoard and the octahedron of the Nodes one interval away
+  of Fig. 2, the GameBoard and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
   `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 4,
   the click at a NodeReader: space and time with the NodeReader's region of
@@ -154,7 +155,9 @@ the journal.
   cited in numerical order, every table has a caption, and a figure's
   label reads "Fig." in bold. Met.
 - Artwork: vector figures with embedded fonts, lettering of 8 to 12 pt at
-  the final size, lines of at least 0.3 pt, at most 119 mm wide. Met.
+  the final size, lines of at least 0.3 pt, at most 119 mm wide. Not met as
+  drawn: three figures are drawn 174 mm wide and included at 0.70 to 0.75 of the
+  text width, their lettering scaled with them; the journal's typesetting resizes them.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
 - The scope is the conceptual bases of modern physics; a desk rejection
@@ -169,7 +172,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "33 pages, 2 figures, 4 tables; supplementary material of 27 pages as an
+  "33 pages, 6 figures, 4 tables; supplementary material of 34 pages as an
   ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 327 words and 1917
   characters counted with its TeX signs, below the cap.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the

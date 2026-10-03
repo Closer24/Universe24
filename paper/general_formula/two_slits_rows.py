@@ -1,6 +1,6 @@
-"""The two slits: the declared world and its screen's row, the blind beside the law's real line.
+"""The two slits: the declared file and its screen's row, the blind beside the law's real line.
 
-(a) The world as the file declares it (examples/events/two_slits/two_slits.json, read through
+(a) The GameBoard as the file declares it (examples/events/two_slits/two_slits.json, read through
 design.json): the flat GameBoard of 45 x 48 Nodes, the packet of light at the wavelength 8 Links
 laid over the columns 4 to 16, the wall at the column 20 with its two gaps of three rows 12 Links
 apart, the screen at the column 44, twelve declared NodeReaders of four rows each. (b) The screen's
@@ -47,10 +47,10 @@ INK, GREY, LIGHT, PALE = "#000000", "#7a7a7a", "#c8c8c8", "#efefef"
 # expectation.json: the Huygens blind row per region of four rows, N = 273 through the screen
 BLIND = (21, 20, 26, 15, 9, 40, 45, 16, 11, 25, 22, 25)
 BLIND_N = 273.0
-# two_slits_real_line.txt: the law's real line on the same world, the window 45 to 130, the engine's labels
+# two_slits_real_line.txt: the law's real line on the same file, the window 45 to 130, the engine's labels
 REAL = (20.32, 19.47, 26.75, 16.38, 9.31, 40.33, 47.31, 14.40, 12.38, 26.62, 21.39, 23.19)
 REAL_N = 277.85
-# the world's numbers (design.json, two_slits.json): the board, the packet, the wall, the gaps, the screen
+# the file's numbers (design.json, two_slits.json): the board, the packet, the wall, the gaps, the screen
 LENGTH, HEIGHT = 45, 48
 PACKET_X, PACKET_Y = (4, 16), (4, 44)
 WALL_X, GAPS = 20, ((17, 19), (29, 31))
@@ -64,7 +64,7 @@ def save(fig: Figure, path: Path) -> None:
 
 
 def world(ax: Axes) -> None:
-    """(a) The declared world: the board, the packet, the wall with its gaps, the screen's regions."""
+    """(a) The declared file: the board, the packet, the wall with its gaps, the screen's regions."""
     ax.set_xlim(-1.5, LENGTH + 1.5)
     ax.set_ylim(-12.0, HEIGHT + 7.5)
     ax.set_aspect("equal")
@@ -148,7 +148,7 @@ def rows(ax: Axes) -> None:
         facecolor=LIGHT,
         edgecolor=INK,
         lw=0.5,
-        label="the law's real line on the same world ($N = 277.85$)",
+        label="the law's real line on the same file ($N = 277.85$)",
     )
     ax.set_xticks(xs)
     ax.set_xticklabels([str(x) for x in xs])

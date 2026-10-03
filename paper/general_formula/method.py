@@ -117,7 +117,7 @@ def method(ax: Axes) -> None:
         w,
         h,
         "the files",
-        "the universe file: the pairs\n$[\\mathrm{num}, \\mathrm{den}]$, $\\Gamma$, $T$, the\nholders' weights; the world file:\nthe Nodes, the lays, the faces;\nthe detectors' four declarations",
+        "the universe file: the pairs\n$[\\mathrm{num}, \\mathrm{den}]$, $\\Gamma$, $T$, the\nholders' weights; the run's file:\nthe Nodes, the lays, the faces;\nthe NodeReaders' four declarations",
     )
     box(
         ax,
