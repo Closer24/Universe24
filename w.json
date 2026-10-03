@@ -1,0 +1,1 @@
+{"shape": [9, 9, 9], "boundary": {"x": "open", "y": "open", "z": "open"}, "face_depth": 1, "ticks": 8, "universe": "u.json", "engine": "e.json", "measured": [{"family": "proton", "nodes": [{"node": [4, 4, 4], "count": 1}]}], "detectors": []}
