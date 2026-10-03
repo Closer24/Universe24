@@ -158,9 +158,9 @@ def full(shape: tuple[int, int, int], value: Any, kind: type) -> np.ndarray:
     return np.full(shape, value, dtype=kind)
 
 
-def empty_record(shape: tuple[int, int, int], kind: type) -> Record:
-    """A line at 0 with the remainder 0 at every Node."""
-    return Record(zeros(shape, kind), zeros(shape, kind), zeros(shape, kind))
+def empty_record(shape: tuple[int, int, int], kind: type, origin: Any = 0) -> Record:
+    """A line at 0 with its remainder at `origin` at every Node, the half wall of the rule the line steps by where the caller gives it: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root); 0 where no wall is given (a line read for its levels alone)."""
+    return Record(zeros(shape, kind), zeros(shape, kind), full(shape, origin, kind))
 
 
 def complement(remainder: Any, wall: Any) -> Any:
@@ -187,7 +187,10 @@ def empty_state(
     walls: Sequence[int],
     kind: type,
     images: Sequence[Any] = (),
+    origin: Any = 0,
 ) -> NodeState:
     """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), and where it is held one write remainder per line at the origin (`walls` the write's wall per line), complemented at a signed line's image Nodes (`images`, `write_origins`)."""
-    lines = [empty_record(shape, kind) for _ in range(family.lines)]
+    lines = [
+        empty_record(shape, kind, origin) for _ in range(family.lines)
+    ]  # every line born at the half wall
     return NodeState(lines, write_origins(walls, shape, kind, images) if family.held else [])

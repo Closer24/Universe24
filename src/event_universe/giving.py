@@ -9,7 +9,15 @@ import numpy as np
 
 from event_universe import node
 from event_universe.core.rule3 import division_fixed_point, division_forward
-from event_universe.features.click import standing
+from event_universe.features.click import (
+    SCALE_OF,
+    along_cosine,
+    envelope,
+    exact_total,
+    line_total,
+    rotated,
+    standing,
+)
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.reports import lay
@@ -35,9 +43,6 @@ class Source:
     begun: int
 
 
-SCALE_OF = 2  # the reference phasor's scale, the count's wall times itself: its rounding below one level
-
-
 def levels_of(board: GameBoard, index: int, line: int, at: Node) -> list[int]:
     """One line's [now, before, remainder] at a Node named at the file's coordinates, read from its arrays."""
     record, here = board.states[index].lines[line], tuple(np.add(at, board.offset))
@@ -49,6 +54,9 @@ def given_quantum(board: GameBoard, item: Item) -> None:
     if item.pair is not None:
         laid_by_count(board, item)
         return
+    if item.direction is not None:
+        laid_packet(board, item)
+        return
     assert item.resonance is not None and item.span > 0  # a lay names its resonance and its span
     num, den = item.resonance
     action = board.world.quantum_action
@@ -57,8 +65,7 @@ def given_quantum(board: GameBoard, item: Item) -> None:
     ):  # a record empty at the books' origin: its unit the first lay's own
         board.credit.units[item.family] = born_unit(board, item.family, item.resonance)
         board.credit.empty.discard(item.family)
-    half = division_forward(action * den, 2, 0)[0]  # T den div 2, exact for the file's T, a power of two
-    total = division_fixed_point(division_forward(half * half, den * den - num * num, 0)[0])
+    total = exact_total(action, item.resonance)
     scale = count_wall(board.families[item.family], action) ** SCALE_OF
     previous = int(division_forward(scale * num, den, division_forward(den, 2, 0)[0])[0])
     for at in item.nodes:
@@ -95,6 +102,88 @@ def laid_by_count(board: GameBoard, item: Item) -> None:
     now, was = line.now + np.where(at, level, 0), line.before + np.where(at, before, 0)
     state.lines[0] = node.Record(now, was, np.where(at, origin, line.remainder))
     board.credit.counts[item.family] += item.delta
+
+
+def laid_packet(board: GameBoard, item: Item) -> None:
+    """The open board's giving (the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; the owner's word of 2026-10-03, 09:46 Israel, "a new emitter detector also needs to enter"): the given quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the message lay's form (ALGEBRA.md, The message lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/instrument.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`meeting.gave`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = isqrt((R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the instrument's own act; the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level isqrt(R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = isqrt(R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale, isqrt(R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root isqrt(den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; added to the light record's first line at every Node of the packet, the remainder as it stands; one `lay` line per Node changed for the host's tool to cross (written here, the write step's lines for the body's Node alone standing aside); the record's count in the books up by the change."""
+    assert item.resonance is not None and item.span > 0 and item.width and item.direction is not None
+    num, den = item.resonance
+    family, state, action = (
+        board.families[item.family],
+        board.states[item.family],
+        board.world.quantum_action,
+    )
+    scale = count_wall(family, action) ** SCALE_OF
+    doubled = along_cosine(family.pair, item.resonance, item.width, scale)
+    assert doubled is not None  # the loader refused a width that cannot carry Omega
+    axis, sign = item.direction
+    width, shape = item.width, board.world.shape
+    sine = division_fixed_point(scale * scale * (den * den - num * num))  # R sin Omega den, at the scale
+    half_scale = division_forward(scale, 2, 0)[0]
+    half_wall = division_forward(scale * scale * den, 2, 0)[0]
+    for at in item.nodes:
+        for _ in range(item.delta):
+            section = [
+                tuple(
+                    int(at[a]) + (offset[k] if a != axis else 0)
+                    for a, k in zip(range(3), (0, 1, 2), strict=True)
+                )
+                for offset in _offsets(axis, width, at, shape)
+            ]
+            amplitudes = envelope(line_total(action, item.resonance), item.span, len(section))
+            cosine = int(division_forward(doubled, 2, 0)[0])
+            waves = rotated(scale, cosine, doubled, scale, len(amplitudes))
+            quadratures = rotated(
+                0, division_fixed_point(scale * scale - cosine * cosine), doubled, scale, len(amplitudes)
+            )
+            line = state.lines[0]
+            now, before = line.now.copy(), line.before.copy()
+            for distance, (amplitude, wave, quadrature) in enumerate(
+                zip(amplitudes, waves, quadratures, strict=True)
+            ):
+                level = int(division_forward(amplitude * wave, scale, half_scale)[0])
+                earlier = int(
+                    division_forward(
+                        amplitude * (wave * num * scale - quadrature * sine),
+                        scale * scale * den,
+                        half_wall,
+                    )[0]
+                )
+                for node_at in section:
+                    there = list(node_at)
+                    there[axis] += sign * distance
+                    here = tuple(np.add(there, board.offset))
+                    was = [int(now[here]), int(before[here]), int(line.remainder[here])]
+                    now[here] += level
+                    before[here] += earlier
+                    if board.observer is not None and (level or earlier):
+                        board.observer(
+                            lay(
+                                board.tick,
+                                family.name,
+                                0,
+                                there,
+                                was,
+                                [int(now[here]), int(before[here]), was[2]],
+                            )
+                        )
+            state.lines[0] = node.Record(now, before, line.remainder)
+    board.credit.counts[item.family] += item.delta
+
+
+def _offsets(axis: int, width: int, at: Node, shape: Node) -> list[tuple[int, int, int]]:
+    """The cross-section's offsets from the body's Node on the two axes across the packet's axis, the top-hat of `width` Nodes around the Node, -(w div 2) through w - 1 - (w div 2) on each, kept where the Node stands on the board (the loader admitted the whole section, so every one is)."""
+    half = int(division_forward(width, 2, 0)[0])  # w div 2 by the division act, an index
+    span = range(-half, width - half)
+    found: list[tuple[int, int, int]] = []
+    for first in span:
+        for second in span:
+            offset = [0, 0, 0]
+            across = [a for a in range(3) if a != axis]
+            offset[across[0]], offset[across[1]] = first, second
+            if all(0 <= int(at[a]) + offset[a] < shape[a] for a in range(3)):
+                found.append((offset[0], offset[1], offset[2]))
+    return found
 
 
 def laid_increment(board: GameBoard, source: Source) -> None:

@@ -19,6 +19,7 @@ from event_universe.loader.instrument import (
     basis_of,
     instrument_of,
     node_instrument_of,
+    packet_form,
     pattern_of,
     patterns_of_the_law,
     ports_of,
@@ -111,8 +112,9 @@ def bodies_of(
     shape: Node,
     bound: int,
     beyond: tuple[Node, ...],
+    action: int,
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`; its givings' lay decided by the board's shape against the declared width at the quantum action T, `packet_form`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
@@ -148,6 +150,7 @@ def bodies_of(
             counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
         if parted:
             parts = node_instrument_of(body, label, families, family, quanta, sum(counts))
+            parts = packet_form(parts, label, families, nodes[0], shape, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed = laid.index(entry)
@@ -297,7 +300,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     width = integers["width"]
     bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
-    bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond)
+    bodies = bodies_of(world["measured"], mode, digest, families, shape, bound, beyond, action)
     messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
