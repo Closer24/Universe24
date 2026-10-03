@@ -54,7 +54,15 @@ their statuses.
   `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 2,
   the click at a bound body: space and time at the body's Node, the past
   meeting the future, and the Node before and after the write, schematically,
-  in black and grey) by `python paper/general_formula/click_body.py`. The others,
+  in black and grey) by `python paper/general_formula/click_body.py`;
+  `bands.pdf` (light's and matter's bands along one axis, from the law's line)
+  by `python paper/general_formula/bands.py`; `two_slits_rows.pdf` (the two
+  slits' declared world and its screen's row, the Huygens blind of the
+  expectation file beside the law's real line of `two_slits_real_line.txt`,
+  the numbers typed from those two files) by
+  `python paper/general_formula/two_slits_rows.py`; and `method.pdf` (the
+  method's three layers, from nature's clicks to the paper's reading) by
+  `python paper/general_formula/method.py`. The others,
   `band.pdf`, `channels.pdf` (by `band_and_channels.py`) and `branches.pdf`
   (by `branches.py`), belong to the long version of the paper, which stays in
   the branch's history (commit 5adef30), and are kept for it.
