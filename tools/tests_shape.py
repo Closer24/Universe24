@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
+        79,
+        "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
+        "the band's line with the transverse mode, the loader's three refusals, the lay on an open board with the "
+        "carrier's phase at Omega, the blind",
+    ),
     "tests/test_the_meeting.py::test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands": (
         36,
         "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the hole of a "
