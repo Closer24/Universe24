@@ -9,7 +9,7 @@ experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
 a NodeReader reports). Its title is "Universe24: an integer cellular automaton read through clicks,
-set beside the clicks of nature", the method, the
+and the formulas it shares with nature", the method, the
 Universe24 it computes and the comparison, by the owner's word (2026-10-03, the
 title chosen in the writer's session; "cellular automaton" the literature's name
 for a lattice of integers stepped by one local rule); the meeting of the past with the future stands in the introduction as the
@@ -68,7 +68,7 @@ their statuses.
   expectation file beside the law's real line of `two_slits_real_line.txt`,
   the numbers typed from those two files) by
   `python paper/general_formula/two_slits_rows.py`; and `method.pdf` (the
-  method's three layers, from nature's clicks to the paper's reading) by
+  method's three layers, from nature's measurements to the paper's reading) by
   `python paper/general_formula/method.py`; and `moving_clock.pdf` (the moving
   clock's factor from the band against Lorentz's) by
   `python paper/general_formula/moving_clock.py`. The others,

@@ -1,4 +1,4 @@
-"""The method's three layers and the way from nature's clicks to the paper's row, by no run.
+"""The method's three layers and the way from nature's measurements to the paper's row, by no run.
 
 Drawn from the paper's words (Section 1.1, the three layers; Section 5.3, the NodeReader's
 declaration; Section 10.1, the calibration series; Section 2.4, the implementation): the clicks of
@@ -106,8 +106,8 @@ def method(ax: Axes) -> None:
         y,
         w,
         h,
-        "nature's clicks",
-        "clicks of bound bodies\nagainst a declared clock;\nthe measured numbers,\nnever a GameBoard reading",
+        "nature's measurements",
+        "measured numbers of bound bodies\nagainst a declared clock;\nnever a GameBoard reading",
         shaded=True,
     )
     box(
@@ -187,7 +187,7 @@ def method(ax: Axes) -> None:
         fontsize=6.5,
         color=GREY,
     )
-    # the comparison, only on the clicks' side: the reading back to nature's clicks
+    # the comparison, only on the clicks' side: the reading back to nature's measurements
     ax.add_patch(
         FancyArrowPatch(
             (xs[4] + w / 2, y - 0.05),
@@ -204,7 +204,7 @@ def method(ax: Axes) -> None:
     ax.text(
         (xs[0] + xs[4] + w) / 2,
         y - 0.2,
-        "compared only here, click against click: the paper claims the method, never that nature is so",
+        "compared only here, click against measurement: the paper claims the method, never that nature is so",
         ha="center",
         va="top",
         fontsize=6.5,
