@@ -81,3 +81,14 @@ floor by the hands' bound (L w^2 at most S); the lay as a wave is read at a larg
 a round of its own. The share form of a laid pair off the lattice's local band (1 above). The direction
 drawn among six on a cube, here two (the board's). The telegraph, Zeno, anticoincidence, the two slits,
 Bell, GHZ, the resonance world in its guide: unchanged, bit for bit.
+
+## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
+
+Row 1 is the detector's: the `credit` lines of the region `reach` over the run (none in any seed), beside
+the giver's `jump` lines (`build_world.py --read`, the trials over the design's seeds, the giver's
+generator at the trial's seed); the `lay` lines it counts are labelled a GameBoard diagnostic by the
+engine. Rows 2 and 3 are GameBoard readings and their verdicts rest on them: the far Node's cosine is
+read from the light's levels at the Node [283, 2, 2] per interval, the share over the board from the
+light's record, and the drawn direction from the `lay` lines' Nodes against the body's. The lines carry
+the board's `tick` and the `window` in board intervals; the giver's window 48 and the lifetime 48 are
+board intervals, and no line carries a record's own clock.
