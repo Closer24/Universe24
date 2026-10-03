@@ -18,7 +18,7 @@ from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of, detectors_of
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, RUN, TOP, load_file, refused
+from tests.laws import EVENTS, ROOT, RUN, TOOL, TOP, load_file, refused
 
 SLITS, WAY, RESONANCE = (
     load_file(f"{n}_build", EVENTS / n / "build_world.py")
@@ -194,7 +194,7 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
 def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum(
     tmp_path,
 ):
-    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): the detector's wall is its own transition's energy, W_d = isqrt(W_c^2 (den_d^2 - num_d^2)) div den_d, exactly W_c at the band's top and 2.23605 den T at [2, 3], the credit's conversion the identity at the top, and the loader refuses by name a region without its transition, a transition without its resonance and a giving with no transition between its parts; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the detector's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own."""
+    """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): the detector's wall is its own transition's energy, W_d = isqrt(W_c^2 (den_d^2 - num_d^2)) div den_d, exactly W_c at the band's top and 2.23605 den T at [2, 3], the credit's conversion the identity at the top, and the loader refuses by name a region without its transition, a transition without its resonance and a giving with no transition between its parts; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the detector's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the instrument's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `meeting.gave`): the giver is in the dark until it gives, so over the trials' first 25 seeds its giving is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the givings at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
     light = next(f for f in families if f.name == "pulse")
@@ -233,36 +233,70 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_coun
     )
     alone = {**world["measured"][0], "transitions": []}
     refused("no transition between them", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, ())
-    board = GameBoard(load_world(tmp_path / "resonant.json"), (lines := []).append)
-    pulse = [f.name for f in board.families].index("pulse")
-    series = {}
-    for _ in range(96):
-        board.step()
-        series[board.tick] = int(board.states[pulse].lines[0].now[tuple(blind["cos_omega"]["node"])])
-    given = [
-        c for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR" and c["given"] == "pulse"
-    ]
-    lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
-    assert [g["tick"] for g in given] == [48] and [c["tick"] for c in lays] == list(range(48, 96))
-    assert all(
-        c["node"]["at"] == [0, 0, 0] and c["line"] == 0 and c["after"][1:] == c["before"][1:]
-        for c in lays
+    path, draw, at = (
+        tmp_path / "resonant.json",
+        world["measured"][0]["instrument"],
+        tuple(blind["cos_omega"]["node"]),
     )
-    assert (
-        max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22 and board.credit.counts[pulse] == 1
+    given_at: list[int] = []
+    for seed in range(
+        1, 26
+    ):  # the trials' seeds, every record's generator at its own state (tools/meeting_trials.py)
+        board = GameBoard(load_world(path), (lines := []).append)
+        for books in board.credit.bodies:
+            books.state = seed * len(board.credit.bodies) + books.number
+        pulse = [f.name for f in board.families].index("pulse")
+        giver, series, expected = board.credit.bodies[0], {}, board.credit.bodies[0].state
+        for _ in range(96):
+            board.step()
+            series[board.tick] = int(board.states[pulse].lines[0].now[at])
+            given = [c for c in lines if c["event"] == "jump" and c["given"] == "pulse"]
+            if not given:  # in the dark one draw per interval at the now; the window's close at 48 draws nothing more
+                expected = (draw["multiplier"] * expected + draw["increment"]) % (board.world.width + 1)
+                assert giver.state == expected
+        if not given:
+            continue
+        t = given[0]["tick"]
+        given_at.append(t)
+        lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
+        assert [c["tick"] for c in lays] == list(
+            range(t, min(t + 48, 97))
+        )  # the span from t, cut by the run's end
+        assert all(
+            c["node"]["at"] == [0, 0, 0] and c["line"] == 0 and c["after"][1:] == c["before"][1:]
+            for c in lays
+        )
+        taken = [c for c in lines if c["event"] == "jump" and c["taken"]]
+        assert max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22
+        assert board.credit.counts[pulse] + len(taken) == 1  # one quantum given, kept or taken
+        if (
+            t <= 49 and not taken
+        ):  # the whole span in the run: one quantum by the count's line, either unit
+            total = board.total_share(pulse)[0]
+            assert (
+                total is not None and 0.7 < total / wall < 0.8
+            )  # sin Omega = 0.745 in the band's top's unit
+            for own in (wall, detector_wall(light, action, (2, 3))):
+                assert division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1
+        if t <= 53:  # the plateau after the front and before the stop, inside the run
+            window = range(t + 28, t + 43)
+            numerator = sum(series[k] * (series[k + 1] + series[k - 1]) for k in window)
+            read = numerator / (2 * sum(series[k] ** 2 for k in window))
+            far = max(abs(series[k]) for k in window)
+            assert far > 20 and abs(read - 2 / 3) <= 2 / far, (t, read, far)
+    by_tau = sum(t <= 48 for t in given_at)  # 25 x 0.636 = 15.9 +/- 2.4: within three deviations
+    assert 8 <= by_tau <= 24 and len(set(given_at)) > 1, (
+        given_at
+    )  # not the degenerate corner's one interval
+    lit = {**world, "messages": [{"family": "pulse", "along": "x", "wave": [1, 2], "amplitude": 308}]}
+    lit["messages"][0].update(
+        top={"x": [0, 47], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0}
     )
-    total = board.total_share(pulse)[0]
-    assert total is not None and 0.7 < total / wall < 0.8  # sin Omega = 0.745 in the band's top's unit
-    for own in (
-        wall,
-        detector_wall(light, action, (2, 3)),
-    ):  # one quantum by the count's line, either unit
-        assert division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1
-    first, last = 76, 90
-    window = range(first, last + 1)
-    numerator = sum(series[t] * (series[t + 1] + series[t - 1]) for t in window)
-    read, far = (
-        numerator / (2 * sum(series[t] ** 2 for t in window)),
-        max(abs(series[t]) for t in window),
-    )
-    assert far > 20 and abs(read - 2 / 3) <= 2 / far, (read, far)
+    (path := tmp_path / "lit.json").write_text(json.dumps(lit), encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    for seed in (1, 2, 3):  # the light at its Node: a window stands and its draw at 48 stands as it is
+        board = GameBoard(load_world(path), (lines := []).append)
+        for books in board.credit.bodies:
+            books.state = seed * len(board.credit.bodies) + books.number
+        [board.step() for _ in range(48)]
+        assert [c["tick"] for c in lines if c["event"] == "jump" and c["given"] == "pulse"] == [48]

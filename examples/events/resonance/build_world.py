@@ -59,17 +59,18 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
 
 
 def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind, from the design alone: the source's total and amplitudes, the far Node's cosine with its gate, the light's count at the span's end, the resonant taker's share and the detuned one's ratio; written before any lay."""
+    """The blind, from the design alone: the source's total and amplitudes, the far Node's cosine with its gate, the light's count at the span's end, the resonant taker's share and the detuned one's ratio, and the dark grain's chances (`dark_grain`); written before any lay and re-derived before any run under the dark grain."""
     num, den = design["giver"]["resonance"]
     return {
         "verdict": "DETECTOR",
         "comment": design["comment"],
         "family": design["light"],
         "giving": {
-            "interval": int(design["giver"]["window"]),
+            "clock": "the lifetime's hazard 1 / tau per interval: in the dark one draw per interval at the now, the window's draw while a window stands (the giver is in the dark until it gives)",
             "span": int(design["giver"]["lifetime"]),
-            "lay_lines": int(design["giver"]["lifetime"]),
+            "lay_lines": "the lifetime from the giving's interval, cut by the run's end",
             **design["source"],
+            **design["dark_grain"],
         },
         "cos_omega": {
             "value": num / den,
