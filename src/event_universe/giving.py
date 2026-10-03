@@ -93,12 +93,13 @@ def laid_by_count(board: GameBoard, item: Item) -> None:
     family, state = board.families[item.family], board.states[item.family]
     gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
     num, den = item.pair
-    size = amplitude(item.delta, board.world.quantum_action, item.pair, family.laid)
+    laid = 1 if family.held else family.laid  # a holder of the sign: its time line alone, not its rows
+    size = amplitude(item.delta, board.world.quantum_action, item.pair, laid)
     if family.plane:  # the loader admits a plane given by the count with the table's sense alone
         assert item.sense != 0
-        pairs = [pair for _ in range(family.laid) for pair in ((size, 0), (0, item.sense * size))]
+        pairs = [pair for _ in range(laid) for pair in ((size, 0), (0, item.sense * size))]
     else:
-        pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * family.laid
+        pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * laid
     origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
     for number, (now, was) in zip(given_lines(family), pairs, strict=True):
         line = state.lines[number]
