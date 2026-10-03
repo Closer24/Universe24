@@ -96,8 +96,9 @@ def settled(
 
 
 def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any) -> int:
-    """The floored iteration's largest miss in fine units, K, a bound of the line's inverse on the unit source (the advisor's finding, #1563 comment 5958624379: the first state the act returns unchanged lies below the line by up to one fine unit over 1 - rho, rho the row's Jacobi factor on the board's lowest mode, (num / den) cos(pi / (n + 1)) on an open n-cube): along the longest open or closed axis of n Nodes, 3 ((n + 2) div 2)^2 + 1, at or above the top 3 (n + 1)^2 / 4 of the parabola 3 x (n + 1 - x), which the massless line at the vacuum's paces returns at or above the unit source at every Node (at every pace the six reads sum to at most the divisor, 6 num p_i^2 <= 6 (den - num) p_0^2 + 6 num p_i^2, so the inverse's row sums are at most that line's, and a face or an inner face read as 0 only lowers them); where every axis of more than one Node wraps, the pair's gap alone is the sink, W div (W - 6 R) + 1 at the Node where it is largest (den over den - num at the vacuum); the smaller where both hold; refused by name where neither bounds it, a massless row sunk by an inner face alone."""
-    longest = max([n for axis, n in enumerate(fine.shape) if n > 1 and not wrap[axis]], default=0) + 1
+    """The floored iteration's largest miss in fine units, K, a bound of the line's inverse on the unit source (the advisor's finding, #1563 comment 5958624379: the first state the act returns unchanged lies below the line by up to one fine unit over 1 - rho, rho the row's Jacobi factor on the board's lowest mode, (num / den) cos(pi / (n + 1)) on an open n-cube): along the longest open or closed axis of n Nodes, 3 ((n + 2) div 2)^2 + 1, at or above the top 3 (n + 1)^2 / 4 of the parabola 3 x (n + 1 - x), which the massless line at the vacuum's paces returns at or above the unit source at every Node (at every pace the six reads sum to at most the divisor, 6 num p_i^2 <= 6 (den - num) p_0^2 + 6 num p_i^2, so the inverse's row sums are at most that line's, and a face or an inner face read as 0 only lowers them); where every axis of more than one Node wraps, the pair's gap alone is the sink, W div (W - 6 R) + 1 at the Node where it is largest (den over den - num at the vacuum); the smaller where both hold; where neither holds and an inner face is the sink (`Wrap.beyond`), the longest axis's parabola, the face a wall somewhere along it; refused by name where no face at all bounds it (a massless row on a board wrapping on every axis needs a sink, which `rest` refuses before)."""
+    open_axes = [n for axis, n in enumerate(fine.shape) if n > 1 and not wrap[axis]]
+    longest = max(open_axes if open_axes or wrap.beyond is None else fine.shape, default=0) + 1
     half = int(division(1, 2, longest + 1))  # (n + 2) div 2, at or above (n + 1) / 2
     bounds = [3 * half * half + 1] if longest > 1 else []
     gap = divisor - 2 * sum(reads)  # W - 6 R at every Node, 6 (den - num) p_0^2
@@ -123,15 +124,19 @@ def refined(
     largest: int,
     iterations: int,
     seed: Correction | None = None,
-) -> tuple[np.ndarray, int, Correction]:
+) -> tuple[np.ndarray, int, Correction | None]:
     """The rest refined to its line within one fine unit at every Node (the law's rest is the static solution of the row's line, ALGEBRA.md, The start; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991, the mathematician's 172 beside it: the floored iteration stops below the line by up to K fine units, `bound_of`, in the board's lowest mode, 137 on the open 25-cube at the massless pair, 9 levels at the row's unit 15 there): the line's residual is read exactly in integers at the stop, rho = SUM over the Ports of read x arrival + source - divisor x b, in [0, divisor) at every Node, the same line is solved for the correction with F rho as its source by the same act to its own stop (`settled` from nothing), delta within K of F times the miss, and the correction is added rounded half up, b + (delta + F div 2) div F; F a power of two, the least at or above 2 K the width admits for the round, else the largest it admits (the act's numerator at most 6 R (2 F B + K) + F |rho| inside half the width's largest integer, B the miss's bound in fine units, K before the first round and 1 + K div F after a round at F), the rounds repeated while F is below 2 K, after which the miss lies in [-1 / 2, 1 / 2 + K / F), within one fine unit; one round on the 25-cube and three on the chain of 128 at the width 63, each round's passes about ln(F K) over 1 - rho from nothing (a Richardson refinement in integers, nothing of the law, every number the width's and the board's); the first round's correction is returned with its scale and seeds the first round of the next call (`seed`, the pass before's correction brought to this round's scale: the floored stop lies the same K below the line at every pass, so the correction barely moves and the act from it stops in a fraction of the passes, the same fixed-point property at the stop whatever the start); refused by name where the width leaves no room for a round."""
-    bound = bound_of(fine, wrap, reads, divisor)
     found: Correction | None = None
-    miss, six = bound, 2 * sum(int(np.asarray(read).max()) for read in reads)  # 6 R at the largest pace
+    bound = miss = 0
+    six = 2 * sum(int(np.asarray(read).max()) for read in reads)  # 6 R at the largest pace
     while True:
         total = rule3(reads, arrivals(fine, wrap), 0, 1, fine, 0, source)[0]  # the numerator, the wall 1
         residual = np.asarray(total, dtype=object) - np.asarray(divisor, dtype=object) * fine
         residual = residual.astype(fine.dtype)  # within the divisor, the fine levels' kind
+        if not residual.any():  # the stop is the line itself: nothing to refine, no bound needed
+            return fine, iterations, found
+        if not bound:
+            bound = miss = bound_of(fine, wrap, reads, divisor)
         room = int(division(1, 2, largest)) - six * bound
         scales = int(division(1, 2 * six * miss + int(np.abs(residual).max()), room)) if room > 0 else 0
         if scales < 2:
