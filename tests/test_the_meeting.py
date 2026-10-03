@@ -17,12 +17,12 @@ from event_universe.loader.instrument import (
     Transition,
     basis_of,
     instrument_of,
-    node_instrument_of,
+    node_reader_of,
     pattern_of,
     patterns_of_the_law,
 )
 from event_universe.loader.universe import shape_of, universe_of
-from event_universe.loader.world import detectors_of
+from event_universe.loader.world import node_readers_of
 from event_universe.world_files import load_world
 from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, load_file, refused
 
@@ -58,11 +58,11 @@ def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
         assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
         lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
         parts = [line for line in lines if line["event"] == "parts"]
-        equal = all(len(set(map(tuple, p["levels"]))) == 1 and p["label"] == "DETECTOR" for p in parts)
+        equal = all(len(set(map(tuple, p["levels"]))) == 1 and p["label"] == "NODEREADER" for p in parts)
         credits = [line for line in lines if line["event"] == "credit"]
         assert parts and equal and credits and all(c["tick"] == c["window"][1] for c in credits)
         board = GameBoard(load_world(folder / f"{name}.json"))
-        assert BACK.verdict(board, board.world.ticks - 2)["verdict"] == "MATCH"  # exact before the click
+        assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
     outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
     read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
     assert read[name] == expected["blind"][name]
@@ -104,7 +104,7 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     assert (board.states[-1].lines[0].now != board.states[-1].lines[1].now).any()
     assert GATE.one_world(path, lines, expected)["mismatch"]["ratios"] != [[1, 1]]
     refused(r"as a shape is \[parts, dimension\]", shape_of, {"dimension": [2, 1, 1]}, "families[0]")
-    refused("not all 0", basis_of, [0, 0], "detectors[0].basis")
+    refused("not all 0", basis_of, [0, 0], "node_readers[0].basis")
 
 
 def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(tmp_path):
@@ -121,9 +121,9 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     assert e_3 == Fraction(119, 169) and joint[("plus",) * 3] / sum(joint.values()) == Fraction(36, 169)
     fenced = [GATE.combination(credits(three, MERMIN[0], PATTERNS, f)[1], MERMIN[1]) for f in FENCE]
     assert fenced == [-1] * len(FENCE)
-    refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "detectors[0].pattern", (1, 0))
+    refused(r"\[0, 0\]", pattern_of, [[1, 0], [0, 0]], "node_readers[0].pattern", (1, 0))
     row = {"name": "d", "positions": [[0, 0, 0], [1, 0, 0]], "pattern": [[1, 0]]}
-    refused("none is declared", detectors_of, [row], (2, 1, 1), 0, (), ())
+    refused("none is declared", node_readers_of, [row], (2, 1, 1), 0, (), ())
     families = universe_of(json.loads((EVENTS / "ghz.json").read_text(encoding="utf-8")))[1]
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
     refused("no record of several parts", patterns_of_the_law, [("d", (P,) * 4)], [], families)
@@ -138,7 +138,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the detector's proper time at the close (the board's tick in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `instrument` key refused by name with a window of 0 and without its seed."""
+    """The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the instrument's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_reader's proper time at the close (the board's tick in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the instrument credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `instrument` key refused by name with a window of 0 and without its seed."""
     world = json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8"))
     world["instrument"]["window"], draw = 40, dict(world["instrument"])
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
@@ -152,16 +152,16 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
         board.tick <= 41 and plain.step()
     credits = [line for line in lines if line["event"] == "credit"]
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
-    at = [(c["tick"], c["detector"], c["count"], c["window"][0], c["left"]) for c in credits]
+    at = [(c["tick"], c["node_reader"], c["count"], c["window"][0], c["left"]) for c in credits]
     left = board.credit.counts[pair]
     assert at == [(40, "left", 1, 1, left + 1), (40, "right", 1, 1, left + 1)] + at[2:]
     assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
     assert [(c["proper"], c["windows"]) for c in credits] == [(40, 1), (40, 1), (80, 2), (80, 2)]
     report = set(
-        "event label tick family detector window proper windows before realised kept count left taken given".split()
+        "event label tick family node_reader window proper windows before realised kept count left taken given".split()
     )
-    assert all(set(c) == report and c["label"] == "DETECTOR" for c in credits)  # never a Node
+    assert all(set(c) == report and c["label"] == "NODEREADER" for c in credits)  # never a Node
     holes = [
         f for f in lines if f["event"] == "face" and f["tick"] == 41
     ]  # the hole's Nodes, the tool's
@@ -191,7 +191,7 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     folder = EVENTS / "neutron_conversion"
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
-    table = (body := world["measured"][0])["conversion"]
+    table = (body := world["bodies"][0])["conversion"]
     body["conversion"]["rate"], body["instrument"]["window"], world["ticks"] = 1, 2, 4
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
@@ -201,7 +201,7 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     wrong["no parts"] = {**body, "parts": []}
     wrong["no `instrument`"] = {k: v for k, v in body.items() if k != "instrument"}
     for word, entry in wrong.items():
-        refused(word, node_instrument_of, entry, "measured[0]", families, quanta["neutron"], quanta, 1)
+        refused(word, node_reader_of, entry, "bodies[0]", families, quanta["neutron"], quanta, 1)
     board = GameBoard(load_world(path), (lines := []).append)
     n, p, e, nu = map(quanta.__getitem__, names := ("neutron", "proton", "electron", "antineutrino"))
 
@@ -220,7 +220,11 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     assert first["window"] == [1, 2] and first["node"]["label"] == "GAMEBOARD"
     drawn = tuple(first["node"]["at"])  # the records out at the one Node of the region the draw picked
     assert drawn in region and (other := next(at for at in region if at != drawn))
-    assert (first["into"], first["detector"], first["label"]) == ([*names[1:]], "measured 0", "DETECTOR")
+    assert (first["into"], first["node_reader"], first["label"]) == (
+        [*names[1:]],
+        "body 0",
+        "NODEREADER",
+    )
     assert all(levels(n, at) == [(0, 0)] * 3 for at in region) and board.credit.bodies[0].counts == [0]
     assert levels(p, drawn) == [(73, 0), (0, -73)] * 3 and levels(e, drawn) == [(128, 0), (0, 128)]
     assert levels(nu, drawn) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [
@@ -240,7 +244,7 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     others = (
         "click",
         "lay",
-        "field",
+        "density",
         "parts",
     )  # the region `around` holds the record's second Node: its parts read
     assert [x["event"] for x in lines if x["event"] not in others] == ["conversion"]
@@ -255,7 +259,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
-    body, region = world["measured"][0], [(4, 4, 4), (5, 4, 4)]  # the record's two Nodes
+    body, region = world["bodies"][0], [(4, 4, 4), (5, 4, 4)]  # the record's two Nodes
     proton, electron, antineutrino = table = body["conversion"]["to"]
     assert (proton["sense"], electron["sense"], antineutrino) == (-1, 1, "antineutrino")
     wrong = {
@@ -267,7 +271,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     }
     for word, outs in wrong.items():
         entry = {**body, "conversion": {**body["conversion"], "to": outs}}
-        refused(word, node_instrument_of, entry, "measured[0]", families, quanta["neutron"], quanta, 1)
+        refused(word, node_reader_of, entry, "bodies[0]", families, quanta["neutron"], quanta, 1)
     body["conversion"]["rate"], body["instrument"]["window"], world["ticks"] = 1, 1, 6
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     board = GameBoard(load_world(path), (lines := []).append)
@@ -354,7 +358,7 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
 def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking(
     tmp_path, monkeypatch
 ):
-    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/messages.py `wholes_of`, loader/instrument.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the ticks 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `tick`, a tick beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw an instrument. (ii) The window stands from the lay to the probe's tick: no close before it, the generator at its seed, the body dark under the probe alone; at the tick the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled DETECTOR with the window [1, 3], the body's proper time 3 and the window's index 1, `taken` and `given` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's taking is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's ticks' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's ticks are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
+    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/messages.py `wholes_of`, loader/instrument.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the ticks 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `tick`, a tick beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw an instrument. (ii) The window stands from the lay to the probe's tick: no close before it, the generator at its seed, the body dark under the probe alone; at the tick the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEREADER with the window [1, 3], the body's proper time 3 and the window's index 1, `taken` and `given` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's taking is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's ticks' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's ticks are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
     folder = EVENTS / "zeno_pulsed"
     universe = json.loads((folder / "pulsed_atom.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
@@ -370,15 +374,15 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     record.update(transitions=[*turns, probe], rates=[], instrument=draw)
     lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
     world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
-    world.update(universe="u.json", engine="e.json", measured=[record], messages=lays, detectors=[])
+    world.update(universe="u.json", engine="e.json", bodies=[record], messages=lays, node_readers=[])
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     families, quanta = universe_of(universe)[1], {"atom": 0, "pulse": 1, "probe": 2}
     wrong = {"beside a probe": {**record, "instrument": {**draw, "window": 1}}}
     wrong["no weight"] = {**record, "transitions": [*turns, {**probe, "weight": 1}]}
     wrong["lacks the key 'window'"] = {**record, "transitions": turns}
     for word, body in wrong.items():
-        refused(word, node_instrument_of, body, "measured[0]", families, 0, quanta, 1)
-    assert node_instrument_of(record, "measured[0]", families, 0, quanta, 1).draw == Generator(**draw)
+        refused(word, node_reader_of, body, "bodies[0]", families, 0, quanta, 1)
+    assert node_reader_of(record, "bodies[0]", families, 0, quanta, 1).draw == Generator(**draw)
     assert isinstance(instrument_of({**draw, "window": 1}, "instrument"), Instrument)
     untimed = {k: v for k, v in lays[0].items() if k != "tick"}
     for word, message in (("without `tick`", untimed), ("tick", {**lays[0], "tick": 10})):
@@ -401,7 +405,7 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     assert (board.credit.counts[probed], int(board.quanta(probed)[0][here])) == (1, 1)
     jumps = [x for x in lines if x["event"] == "credit"]
     keys = ("label", "tick", "window", "proper", "windows", "realised", "before", "taken", "given")
-    click = ("DETECTOR", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
+    click = ("NODEREADER", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
     assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
     laid = [(x["family"], x["tick"]) for x in lines if x["event"] == "lay"]
     assert laid == [
@@ -415,8 +419,8 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     books.labels, state = [0, wall], books.state  # the labels carried to e by hand: cos^2 0
     for _ in range(4):
         board.step()
-    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR"]
-    taking = ("DETECTOR", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
+    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER"]
+    taking = ("NODEREADER", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
     assert [tuple(x[k] for k in keys) for x in jumps[1:]] == [taking] and state != books.state
     assert (books.part, board.credit.counts[pulse], board.credit.counts[probed]) == (1, 0, 2)
     faces = {(f.family, f.tick) for faces in board.credit.faces.values() for f in faces}
@@ -439,7 +443,7 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
     leaving = int(twin.states[pulse].lines[0].now[at])  # b, standing as before at the first face
     for _ in range(2):
         board.step(), twin.step()
-    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "DETECTOR" and x["taken"]]
+    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER" and x["taken"]]
     assert [x["tick"] for x in jumps] == [24] and jumps[0]["taken"] == "pulse"
     hole = board.credit.faces[25][0].hole
     assert hole is not None and hole.factor == (1, 1)  # the identity's faces: the share above a quantum
@@ -497,7 +501,7 @@ def test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record():
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):
     """The law's line of the start (the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands): every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2), the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor. A Node holding no level and the half wall steps to itself exactly; and one massless quantum laid whole by the count at one Node of an even periodic box, whose uniform mode is a double root of the rule, stays bounded: under the floor it grew as t^2 to 6,268 at the interval 200 (Worker PULSE's 5968413761), the lattice's half-up rule reads 172 and the reals 242."""
     world = json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8"))
-    world.update(measured=[], messages=[], detectors=[], ticks=200)
+    world.update(bodies=[], messages=[], node_readers=[], ticks=200)
     path = tmp_path / "box.json"
     path.write_text(json.dumps(world), encoding="utf-8")
     board = GameBoard(load_world(path))

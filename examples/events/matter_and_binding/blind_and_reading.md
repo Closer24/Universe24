@@ -6,7 +6,7 @@ on the engine and seen to work**). The blind below is the advisor's, GitHub issu
 5928483084 (2026-10-01, 12:19), its formulas and numbers restated here before any run of this
 round and never edited after; `expectation.json` beside it carries the same blind with the
 design's restatements under the law's lines as they stand. The reading is appended after the
-run, every number a GameBoard reading labelled so (only a detector's click is a measurement;
+run, every number a GameBoard reading labelled so (only a NodeReader's click is a measurement;
 this world's two declared regions report the matter family's share over them as `field` lines,
 a GameBoard reading, and their `click` lines where the share crosses their front); a reading
 that misses the blind is a finding, written as such and never adjusted.
@@ -43,7 +43,7 @@ level along an axis from the centre `tools/body_rest.py` prints with `--reach`.
 The lay of `pair.json` on this engine (the builder with `--modes`, the generator laying two
 bodies in two passes beside four other folders' lays): refused by name by the generator after
 4,770 s (80 minutes on four cores shared with the other lays and another session's tests),
-verbatim: `ValueError: measured[1] and measured[0] share a Node in their regions: two bodies
+verbatim: `ValueError: bodies[1] and bodies[0] share a Node in their regions: two bodies
 stand apart or are one body`. The first body's record on this engine is wide (the single pixel
 of world (i): the rms 3.9 Links, its record reaching about 12 Links), so two such bodies twelve
 Links apart on the 25-cube have regions that share a Node, and the generator lays no pair (the
@@ -101,7 +101,7 @@ of the count times p_x p_y p_z over the one wall, the product exact beyond the w
 and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
 line within one fine unit at every Node by the scaled residual in integers (`features/start`,
 `refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
-number below a GameBoard reading labelled so unless a detector clicked; a miss against the
+number below a GameBoard reading labelled so unless a NodeReader clicked; a miss against the
 blind is a finding by name, never adjusted; a world refused by name is recorded verbatim.
 
 - **The lay**: `pair.json`, two bodies twelve Links apart, refused by the generator by name on the
@@ -117,4 +117,4 @@ blind is a finding by name, never adjusted; a world refused by name is recorded 
 Line 1, the range, is a GameBoard reading (the binding holder's level along the axes,
 `tools/body_rest.py`); lines 2 and 3 are not read, the pair not laid, and the `field` lines of the
 regions `first` and `second` that would read the beat are labelled a GameBoard reading by the engine.
-No number here is a detector's line and no verdict rests on one. The intervals are the board's.
+No number here is a NodeReader's line and no verdict rests on one. The intervals are the board's.

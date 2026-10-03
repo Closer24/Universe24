@@ -31,7 +31,7 @@ seed), the realised conversions against N p with p = 1 - (29 / 30)^32 = 0.662, 4
 Every number is `design.json`'s, the world and the blind `expectation.json` are written by
 `build_world.py` from it, the reader is `read_world.py`. The blind below is the hands', verbatim as
 the Boss relayed it, written before any lay and never edited after; the reading is appended after the
-run, every number a GameBoard reading labelled so unless it is a detector's line; a reading that
+run, every number a GameBoard reading labelled so unless it is a NodeReader's line; a reading that
 misses its blind is a finding by name, never adjusted.
 
 ## The blind (the two hands, as the Boss relayed them)
@@ -73,7 +73,7 @@ blind from the design); the run and the reading: `read_world.py` with `--expecta
 expectation.json`, 64 trials of 32 intervals each, the record's generator at the trials tool's state
 (the seed), the first seed's run (seed 1, which does not convert within 32 intervals) and the first
 converting seed's run (seed 2, the conversion at the interval 28) read in full. Every number below is
-the reader's, a GameBoard reading unless named a detector's line. The lay at the start, read from the
+the reader's, a GameBoard reading unless named a NodeReader's line. The lay at the start, read from the
 lines: the neutron's three lines at the Node (95, -76) with Rule3's remainder at the lay's origin
 165,888,000,000,000 (the half wall), the rotation read from the levels 2.4981 (cos = -76 / 95 = -0.8),
 the instrument's count 1; its share at the Node 176,031,150 in the current's units, 0.298 of a
@@ -93,8 +93,8 @@ the neutron reads 0 from the start (a finding by name below).
 | 9, not a blind | the electron's spectrum | not read; the electron's and the antineutrino's one-Node lays spread from the next interval (their click lines into the region `around` from the interval 30, the antineutrino's inflow 32,256,000 then -28,164,000 in the current's units), no wave number; the proton at [0, 6000] stays at its Node by its row alone (R = 0 on every Link; (129, 128) at the end of the run) | by name |
 | 10, the caution | the act's test, nothing of the neutron's mass or Q | the pair [-4800, 6000] past pi / 2; the counts, the rate and the books read above; nothing claimed of the neutron's mass or its excess | by name |
 
-The lines of seed 2's run: one `conversion` line (`{"event": "conversion", "label": "DETECTOR", "tick":
-28, "family": "neutron", "detector": "measured 0", "window": [28, 28], "into": ["proton", "electron",
+The lines of seed 2's run: one `conversion` line (`{"event": "conversion", "label": "NODEREADER", "tick":
+28, "family": "neutron", "node_reader": "body 0", "window": [28, 28], "into": ["proton", "electron",
 "antineutrino"], "node": {"label": "GAMEBOARD", "at": [4, 4, 4]}}`); six `click` lines of the electron
 and the antineutrino into the region `around` at the intervals 30 to 32 (their waves leaving the
 Node); six `lay` lines at the interval 28 (above, row 6), no `face` line (no face in this world), no `credit` (no instrument on the world), no `erasure` (the body cut, nothing beyond its Node to erase), no `jump`. Books at the end of seed 2's run (a GameBoard diagnostic): `neutron` share 0,
@@ -118,8 +118,8 @@ no momentum, the body cut).
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Row 4, the rate, is the detector's: the `conversion` lines' ticks per seed (`read_world.py`,
-`trials`). Row 9's six `click` lines into `around` are the detector's and enter no verdict. Every
+Row 4, the rate, is the NodeReader's: the `conversion` lines' ticks per seed (`read_world.py`,
+`trials`). Row 9's six `click` lines into `around` are the NodeReader's and enter no verdict. Every
 other row is read on the GameBoard or in the books and its verdict rests there: row 1 on the
 instrument's and the credit's books and the books' quanta (the `conversion` line the act's evidence),
 rows 2, 3, 5, 7 and 8 on the levels, the Wronskian and the share at the Node, row 6 on the
@@ -199,14 +199,14 @@ The lay and the run as the first reading had them: `build_world.py --modes` (the
 carrying the senses, the mode file's digest the world's), `read_world.py` over the 64 seeds, the
 first seed (seed 1, no conversion within 32 intervals) and the first converting seed (seed 2, the
 conversion at the interval 28) read in full. Every number a GameBoard reading unless named a
-detector's line.
+NodeReader's line.
 
 | row | the blind | the reading | agreement |
 | --- | --- | --- | --- |
 | 1, the senses | the proton's Wronskian -15,987 at the Node, the electron's +16,384, the antineutrino's 0, the sum +397; the levels (73, 0) and (0, -73) on each of the proton's three planes, (128, 0) and (0, 128) on the electron's, (128, 128) on the antineutrino's | at the interval 28: the proton's W -15,987, the electron's +16,384, the antineutrino's 0, the sum 397; the levels as the blind has them, every laid line's remainder at the lay's origin 165,888,000,000,000; the proton's W -15,987 still at the end of the run (its record at its Node, R = 0), the electron's 3,829 at the Node at the end, its record spread | PASS: the senses opposite and the charge's unit written at the conversion, row 2 of the first blind closed |
-| 2, the sign row | the three rows 0 before the conversion; the proton's row -1 and the electron's +1 at the Node within three intervals, one level every two intervals, carried away as light; the free row 0; the `charge` share in the books other than 0 | the rows [0, 0, 0] at the Node at every interval 1 to 28; at 29 [0, 0, +1] (the electron's row at the first hold after the lay), at 30 [0, -1, 0] (the proton's at the second), at 31 [0, -1, -1], at 32 [0, -2, 0] (the proton's second level two intervals after its first; the electron's row at the Node the massless row's own cycle of the carried level once its record has spread, +1, 0, -1, 0); at the end the proton's row on 19 Nodes and the electron's on 6, the free row on none; one `click` line of the family `charge` into `around` at the interval 32 (the inflow 6,000 in the current's units, a detector's line), the sign holder's quanta born by the write reaching the region; the books' `charge` share 360,360 at the end, 0 quanta | PASS: the sign rows written at the Node from the conversion on, each at its record's sense, the free row untouched, the carried half-level write as the frozen proton's row 6 read it |
+| 2, the sign row | the three rows 0 before the conversion; the proton's row -1 and the electron's +1 at the Node within three intervals, one level every two intervals, carried away as light; the free row 0; the `charge` share in the books other than 0 | the rows [0, 0, 0] at the Node at every interval 1 to 28; at 29 [0, 0, +1] (the electron's row at the first hold after the lay), at 30 [0, -1, 0] (the proton's at the second), at 31 [0, -1, -1], at 32 [0, -2, 0] (the proton's second level two intervals after its first; the electron's row at the Node the massless row's own cycle of the carried level once its record has spread, +1, 0, -1, 0); at the end the proton's row on 19 Nodes and the electron's on 6, the free row on none; one `click` line of the family `charge` into `around` at the interval 32 (the inflow 6,000 in the current's units, a NodeReader's line), the sign holder's quanta born by the write reaching the region; the books' `charge` share 360,360 at the end, 0 quanta | PASS: the sign rows written at the Node from the conversion on, each at its record's sense, the free row untouched, the carried half-level write as the frozen proton's row 6 read it |
 | 3, the share | the electron's exactly 1.0000 (589,824,000 = W_c), the proton's 0.976 (31,974 of 32,768), the antineutrino's 1.0000; the books' quanta at the end 1, 1 and 1 | at the lay the antineutrino's 589,824,000, exactly 1.0000; the electron's 589,038,352, 0.9987, and the proton's 574,765,386, 0.9745, both 0.13 percent under the blind's numbers (the share read at the paces of the Node, which stands in the neutron's well from the start, as the first reading's 0.9998 and 0.9993 at (128, 128) were, the massless real line alone exact); 1 quantum each at the Node in the books' rounding; the books' quanta at the end 1, 1 and 1 (the shares 573,618,342, 588,144,027 and 567,280,245, the proton's at its Node 0.9725 at the end) | PASS in quanta, the books and the share agreeing; FINDING by name on the exact number: the blind's 1.0000 and 0.976 are the vacuum's paces, the Node's read 0.13 percent under for the two planes |
-| 4, the rate and the counts | 43 of 64 within 32 intervals, seed by seed as at the first reading, the mean 13.0; the counts by the row | 43 of 64 converted, the conversion's interval per seed the first reading's (seed 2 at 28, seed 21 and 43 at 1, seed 48 at 30), the mean 12.98, no run with a second conversion; at the conversion the instrument's count 1 to 0 and the credit's counts 0 to 1 each (the detector's `conversion` line at the interval 28, the window [28, 28]) | PASS: the lay touches no draw |
+| 4, the rate and the counts | 43 of 64 within 32 intervals, seed by seed as at the first reading, the mean 13.0; the counts by the row | 43 of 64 converted, the conversion's interval per seed the first reading's (seed 2 at 28, seed 21 and 43 at 1, seed 48 at 30), the mean 12.98, no run with a second conversion; at the conversion the instrument's count 1 to 0 and the credit's counts 0 to 1 each (the NodeReader's `conversion` line at the interval 28, the window [28, 28]) | PASS: the lay touches no draw |
 | 5, the rotation at the Node | pi / 2 for the proton and the electron, the lay's quarter turn and no frequency; row 3 of the first blind a finding by name | the rotations read from the levels at the Node 1.5708 for both planes, 0 for the antineutrino, the sum 3.1416 against the neutron's 2.4981; the energies T sin omega out 32,768 + 32,768 + 0 against 19,661 in | as blinded: the quarter turn read, no frequency in a one-Node lay; the rotations' sum a packet's reading, the finding by name standing |
 | 6, the back in time | MATCH before, after and across the conversion; twelve lay lines at the conversion's interval | MATCH over the 26 intervals before (a fresh load), the 3 after and the 2 across the write; twelve `lay` lines at the interval 28: the neutron's three from (67, -10) to (0, 0), the proton's six, the electron's two and the antineutrino's one from (0, 0, 0) to their laid levels at the origin's remainder | PASS: the tool crosses the planes' two lines from the lay lines |
 | 7, the gates bit for bit | the two slits, Bell's four, the GHZ's four and the shelved ion's two against main | run after the merge of main e62b6651 into the branch (`packet-lay` not merged, its branch behind main by name), `tools/run_inputs.py` on both trees and `cmp` of the eleven output files: GATES_RESULT | GATES_VERDICT |

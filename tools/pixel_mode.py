@@ -1317,7 +1317,7 @@ def pixel_mode(
     designed: list[int | None] | None = None,
     pixels: Sequence[int] = (),
 ) -> dict[str, Any]:
-    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
+    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per declared event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
     integers = universe["integers"]
     if "quantum_action" not in integers:
@@ -1337,20 +1337,18 @@ def pixel_mode(
         *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
-    measured = cast(list[dict[str, Any]], document.get("measured", []))
+    rows = cast(list[dict[str, Any]], document.get("bodies", []))
     # a body declaring its parts, or converted whole, is laid by the engine at its one Node (loader/instrument.py)
-    kept = [n for n, body in enumerate(measured) if not any(k in body for k in ("parts", "conversion"))]
-    bodies = [measured[number] for number in kept]
+    kept = [n for n, body in enumerate(rows) if not any(k in body for k in ("parts", "conversion"))]
+    bodies = [rows[number] for number in kept]
     lay = lay_of(document["lay"], "lay") if "lay" in document else None  # the lay by name
     lays: list[tuple[np.ndarray, Pairs, Axis, int]] = []
     zero = np.zeros(shape, dtype=np.int64)
     for number, body in enumerate(bodies):
-        counts, centre, quanta = declared(
-            body, shape, (designed or [None] * len(measured))[kept[number]]
-        )
+        counts, centre, quanta = declared(body, shape, (designed or [None] * len(rows))[kept[number]])
         if bool(counts[beyond].any()):
             raise ValueError(
-                f"measured[{number}] declares a Node beyond the board's inner face: nothing stands there"
+                f"bodies[{number}] declares a Node beyond the board's inner face: nothing stands there"
             )
         board = board_of(shape, wrap, gamma, integers, pairs[body["family"]])
         rows = held_rows(universe, str(body["family"]))
@@ -1407,16 +1405,16 @@ def pixel_mode(
             rows = held_rows(universe, str(body["family"]))
             sense = (senses or [])[number] if number < len(senses or []) else 0
             if sense not in (-1, 0, 1):
-                raise ValueError(f"measured[{number}]: a sense is +1 or -1 (0: none), got {sense}")
+                raise ValueError(f"bodies[{number}]: a sense is +1 or -1 (0: none), got {sense}")
             if sense and not family_of(universe, str(body["family"])).plane:
                 raise ValueError(
-                    f"measured[{number}]: a body of {body['family']!r}, a family of dimension one, is laid with "
+                    f"bodies[{number}]: a body of {body['family']!r}, a family of dimension one, is laid with "
                     "no sense: a rotating record is a plane, dimension two (ALGEBRA.md #a-familys-declaration)"
                 )
             if number in pixels:
                 if not sense:
                     raise ValueError(
-                        f"measured[{number}] is laid as a one-Node record with no sense: the declaration is one "
+                        f"bodies[{number}] is laid as a one-Node record with no sense: the declaration is one "
                         "quantum of a plane, its Wronskian sense x T / 2 (ALGEBRA.md, the quantum of a family)"
                     )
                 record, pairs_kept = pixel_record(board, counts, centre, sense, families[index].planes)
@@ -1429,7 +1427,7 @@ def pixel_mode(
                     for x, y, z in zip(*np.nonzero(counts), strict=True)
                 ]
                 print(
-                    f"GAMEBOARD measured[{number}] is laid as the one-Node record of {quanta} quanta at the Node "
+                    f"GAMEBOARD bodies[{number}] is laid as the one-Node record of {quanta} quanta at the Node "
                     f"{list(centre)}, a declaration: the amplitude {record.amplitude}, its share {record.carried} "
                     "quanta at the Node, no fixed point and no standing check",
                     file=sys.stderr,
@@ -1443,7 +1441,7 @@ def pixel_mode(
                 entries.append(entry)
                 continue
             arguments = (board, families, index, records[number], rows, (all_counts - counts, others))
-            weights = laid_weights(body, f"measured[{number}]", families[index])  # the lines' weights
+            weights = laid_weights(body, f"bodies[{number}]", families[index])  # the lines' weights
             trajectory: Trajectory = []
             try:
                 if lay is not None and lay.kind == FIXED_POINT:
@@ -1484,7 +1482,7 @@ def pixel_mode(
             for other, taken in enumerate(regions):
                 if other not in pixels and bool(np.any(taken & region)):
                     raise ValueError(
-                        f"measured[{number}] and measured[{other}] share a Node in their regions: two bodies stand apart or are one body"
+                        f"bodies[{number}] and bodies[{other}] share a Node in their regions: two bodies stand apart or are one body"
                     )
             regions.append(region)
             all_counts = all_counts - counts + laid
@@ -1548,7 +1546,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
-    designed = designed_quanta(args.input, len(cast(list[Any], document.get("measured", []))))
+    designed = designed_quanta(args.input, len(cast(list[Any], document.get("bodies", []))))
     mode = pixel_mode(document, list(args.sense), designed, tuple(args.pixel))
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")

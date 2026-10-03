@@ -70,7 +70,7 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
             "is not this world's digest",
             lambda: mode.mode_entries({"world_digest": "a", "bodies": []}, "b", ""),
         ),
-        ("has no entry in the mode file", lambda: mode.entry_of([], 0, "measured[0]")),
+        ("has no entry in the mode file", lambda: mode.entry_of([], 0, "bodies[0]")),
         ("kind is one of", lambda: laid(kind="spread")),
         ("stop is declared with the lay 'fixed_point'", lambda: laid(stop=1)),
         (r"tolerance must be \[num, den\]", lambda: laid(tolerance=[1])),

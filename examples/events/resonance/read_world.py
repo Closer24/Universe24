@@ -42,7 +42,7 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
         levels[board.tick] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
     clicks = [c for c in lines if c["event"] == "credit" and (c["taken"] or c["given"])]
     given = [c["tick"] for c in clicks if c["given"] == design["light"]]
-    taken = [f"{c['detector']} {c['realised']} by {c['taken']}" for c in clicks if c["taken"]]
+    taken = [f"{c['node_reader']} {c['realised']} by {c['taken']}" for c in clicks if c["taken"]]
     found: dict[str, Any] = {"given": given[0] if given else None, "takings": taken}
     found["lay_lines"] = len(
         [c for c in lines if c["event"] == "lay" and c["family"] == design["light"]]
@@ -103,7 +103,7 @@ def world_reading(path: Path, design: dict[str, Any]) -> dict[str, Any]:
         },
         "count_at_the_spans_end": {"read": len(counts), "ones": sum(1 for c in counts if c == 1)},
         "takings": dict(sorted(takings.items())),
-        "label": "DETECTOR for the givings and the takings; GAMEBOARD for the cosine and the count",
+        "label": "NODEREADER for the givings and the takings; GAMEBOARD for the cosine and the count",
     }
 
 

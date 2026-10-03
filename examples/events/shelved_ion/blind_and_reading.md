@@ -5,7 +5,7 @@ to the experiment", and his question of 2026-10-03, 01:00, whether the experimen
 the past meets the future was run). The blind is `expectation.json`, written before any lay and
 any run from the law's names and never edited after; `design.json` holds every number and, since
 this night, the mends the files needed to load (its key `mends_of_the_night`). The reading is
-appended here after the night's runs; only a detector's click is a measurement (the counter's
+appended here after the night's runs; only a NodeReader's click is a measurement (the counter's
 `credit` lines and the ion's `jump` lines), every array and book a GameBoard reading labelled so;
 a reading that misses the blind is a finding, written as such and never adjusted.
 
@@ -37,7 +37,7 @@ the part P drawn, the taking: the strong drive's levels and remainder at the Nod
 hole), its count in the books down by one, the record moved S to P; the null window re-lays the
 record in S at its count and ends the labels' coherence. The counter of every other Node draws per
 window of 160 with the world's seed from its front inflows and writes its hole at the entry Node,
-as every detector of main does.
+as every NodeReader of main does.
 
 ## The reading (branch ion-world, the night of 2026-10-02 to 2026-10-03)
 
@@ -122,8 +122,8 @@ clicks, would read as Omega_w^2 cos^2 per interval, about 4 x 10^-5, under the n
 every interval (the owner's "yes, both of them"), a bright mean of about 25,000 intervals and not
 1,602: a second finding by name, unread in 452 intervals and stated here before any longer run.
 
-**Not built this night, by name**: the record's own detector region around its Node (the
-mathematician's 180); the back-in-time tool's crossing of a jump from the jump line; the booking of
+**Not built this night, by name**: the record's own NodeReader region around its Node (the
+mathematician's 180); the back-in-time tool's crossing of a jump from the click line; the booking of
 the share's difference T (sin omega_L - sin omega_e + sin omega_g) at the giving (0 for parts of
 one pair); the beat's current in the giving's rate (0 for a one-part record at one Node, the
 declared floor alone); the phase phi_L of the arriving light added to the realised part's phase
@@ -159,7 +159,7 @@ this night: the rate's declared resonance as a key of the file and the lay at it
 
 ## On the own quantum, 2026-10-03 (branch own-quantum, 8382b8b9)
 
-The round of the detector's own quantum (the mathematician's 213, 214, 220, 221 and 223, #1572 comments
+The round of the NodeReader's own quantum (the mathematician's 213, 214, 220, 221 and 223, #1572 comments
 5965054791, 5965082449, 5965303134, 5965498522 and 5965727937; the advisor's seconds, #1563 comments
 5965316267 and 5965700890, #1572 comments 5965312353 and 5965700585) changed the giving: the born
 quantum is laid as a source in time at the ion's Node over the rate's lifetime at the transition's
@@ -207,7 +207,7 @@ the ion, else nothing is credited.
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Rows 1 to 8 are the detector's: the counter's `credit` lines per bin and the ion's `jump` lines, read
+Rows 1 to 8 are the NodeReader's: the counter's `credit` lines per bin and the ion's `jump` lines, read
 by `tools/telegraph.py`; so are row 9's absence of an ion credit and row 10's inflows (the 422 returns
 of the strong drive). Row 9's count half (the ion's count 1 at every interval, one part at 1) is the
 books' and the parts' counts, a GameBoard reading as the blind's own fence says; row 10's levels (the

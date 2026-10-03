@@ -1,4 +1,4 @@
-"""The reader's region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's 299 with the advisor's second, #1572, two hands): what a reader declared over a connected region of two Nodes or more reads and books without writing a level: its books (`NodeBooks`, `books_of`), the lay's amplitudes in the weights' proportion and the record's norm, the arriving record's level projected on the reader's normalised mode (`arriving`), the window's inflow booked per Node (`booked_inflow`, `booked_inflows`), the dark and the reader's own clock over the region (`dark`, `own_clock`), the outcome's draw and the one Node a write is laid at, the taking's by the inflow booked and the giving's by the record's share (`picked`, `drawn_node`, `hole_node`), and the click line that names no Node (`reported`); the writes themselves stay in `meeting.py`."""
+"""The reader's region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's 299 with the advisor's second, #1572, two hands): what a reader declared over a connected region (two Nodes or more with Nodes alone, one Node or more with a record of its own, the relation seen from its two ends) reads and books without writing a level: its books (`NodeBooks`, `books_of`), the lay's amplitudes in the weights' proportion and the record's norm, the arriving record's level projected on the reader's normalised mode (`arriving`), the window's inflow booked per Node (`booked_inflow`, `booked_inflows`), the dark and the reader's own clock over the region (`dark`, `own_clock`), the outcome's draw and the one Node a write is laid at, the taking's by the inflow booked and the giving's by the record's share (`picked`, `drawn_node`, `hole_node`), and the click line that names no Node (`reported`); the writes themselves stay in `meeting.py`."""
 
 from __future__ import annotations
 
@@ -13,10 +13,10 @@ from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features.click import drawn, spread, squared
 from event_universe.loader.derived import count_wall, row_of
-from event_universe.loader.instrument import Generator, Instrument, NodeInstrument
+from event_universe.loader.instrument import Generator, Instrument, NodeReaderDeclaration
 from event_universe.loader.keys import Node
 from event_universe.loader.world import BodyRow
-from event_universe.reports import MEASURED, credit, entering, front
+from event_universe.reports import BODY, credit, entering, front
 from event_universe.resonance import Reference, references_of, scale_of
 
 if TYPE_CHECKING:
@@ -27,14 +27,14 @@ Currents = dict[int, Any]
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `measured`, the record's family and its record number, its Nodes with the lay's weights (the counts' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, and `intake` per arriving family the window's inflow through each Node's front Ports, the taking's draw weights."""
+    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, and `intake` per arriving family the window's inflow through each Node's front Ports, the taking's draw weights."""
 
     number: int
     index: int
     record: int
     nodes: tuple[Node, ...]
     weights: tuple[int, ...]
-    declared: NodeInstrument
+    declared: NodeReaderDeclaration
     part: int
     counts: list[int]
     labels: list[int]
@@ -49,7 +49,7 @@ class NodeBooks:
 
 
 def books_of(board: GameBoard) -> list[NodeBooks]:
-    """The books of every record declared an instrument at a Node, in the world's order: its number among `measured`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units, the window begun and the generator at the declared seed; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
+    """The books of every record declared an instrument at a Node, in the world's order: its number among `bodies`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units, the window begun and the generator at the declared seed; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
     found = []
     for number, (record, row) in enumerate(board.laid_rows()):
         if not isinstance(row, BodyRow) or row.instrument is None or row.instrument.draw is None:
@@ -187,7 +187,7 @@ def reported(
     exchanged: tuple[int | None, int | None],
     quantum: bool = True,
 ) -> None:
-    """The click line of a record's click (`reports.credit`, the one click line kind of every reader; ALGEBRA.md, The NodeReader is one declaration kind for every experiment: never a Node): the reader `measured n` by its number, the `parts` realised and left by their declared names (`realised` the part after, `before` the part before), the families `exchanged`, the one taken from and the one given to (None where none), the count moved, 1 for a click and 0 for the null window's write, the count left in the books of the family exchanged (None where none), the window's intervals [first, last], the body's own proper time at the close and the index of the window closed (its books' clock and windows); labelled the detector's where a `quantum` passed and a diagnostic for the null window's write; the Node written stands in the `lay` and `face` lines beside it and here nowhere."""
+    """The click line of a record's click (`reports.credit`, the one click line kind of every reader; ALGEBRA.md, The NodeReader is one declaration kind for every experiment: never a Node): the reader `body n` by its number, the `parts` realised and left by their declared names (`realised` the part after, `before` the part before), the families `exchanged`, the one taken from and the one given to (None where none), the count moved, 1 for a click and 0 for the null window's write, the count left in the books of the family exchanged (None where none), the window's intervals [first, last], the body's own proper time at the close and the index of the window closed (its books' clock and windows); labelled the node_reader's where a `quantum` passed and a diagnostic for the null window's write; the Node written stands in the `lay` and `face` lines beside it and here nowhere."""
     if board.observer is None:
         return
     names, families = books.declared.names, board.families
@@ -195,7 +195,7 @@ def reported(
     taken, light = (families[k].name if k is not None else None for k in exchanged)
     moved = next((k for k in exchanged if k is not None), None)
     left = board.credit.counts[moved] if moved is not None else None
-    name, reader, own = families[books.index].name, f"{MEASURED} {books.number}", books.clock[0]
+    name, reader, own = families[books.index].name, f"{BODY} {books.number}", books.clock[0]
     after, before = names[parts[0]], names[parts[1]]
     line = credit(
         board.tick,

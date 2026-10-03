@@ -1,4 +1,4 @@
-"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`); the chain is the shortest that holds the body of 50 quanta (about eleven Nodes about its centre) and the end detectors with their regions apart, since the lay's cost is the start's relaxation over the chain's length squared, and every bound the tests put on the chain is per Node, the same on any length."""
+"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`); the chain is the shortest that holds the body of 50 quanta (about eleven Nodes about its centre) and the end node_readers with their regions apart, since the lay's cost is the start's relaxation over the chain's length squared, and every bound the tests put on the chain is per Node, the same on any length."""
 
 import importlib.util
 import json
@@ -17,7 +17,11 @@ from event_universe.loader.derived import Row, quanta_records
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
 UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
-CHAIN, QUANTA = 24, 50  # the shortest chain (x open) holding the body of 50 and the end detectors apart
+CHAIN, QUANTA = (
+    24,
+    6,
+)  # the shortest chain (x open) holding the body apart from the end node_readers; the
+# smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
 TOP = [
     0,
@@ -64,17 +68,17 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
 
 
 def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
-    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the detector `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (`--pixel`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
+    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the node_reader `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (`--pixel`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the node_readers `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
     at = at or (chain // 2,)  # the chain's centre where no Node is named
     families = [CHARGED["name"] if i < len(senses) and senses[i] else "matter" for i in range(len(at))]
     universe_beside(folder, charged=CHARGED["name"] in families)
     charged = [f == CHARGED["name"] for f in families]  # one quantum per charged record, the law's count
     nodes = [[dict(node=[x, 0, 0], count=1 if c else quanta)] for x, c in zip(at, charged, strict=True)]
-    measured = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
+    bodies = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
     ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
     ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
-    detectors = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
-    world = dict(shape=[chain, 1, 1], detectors=detectors, measured=measured, ticks=400, face_depth=1)
+    node_readers = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
+    world = dict(shape=[chain, 1, 1], node_readers=node_readers, bodies=bodies, ticks=400, face_depth=1)
     world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
     (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     if mode:  # the charged body the one-Node record of its quantum (--pixel), matter at its fixed point
@@ -84,7 +88,7 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
 
 
 SLIT = dict(shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, ticks=24)
-SLIT.update(universe="u.json", engine="e.json", measured=[], detectors=[])
+SLIT.update(universe="u.json", engine="e.json", bodies=[], node_readers=[])
 SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
 PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "amplitude": 1328}
 PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})

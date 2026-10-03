@@ -1,4 +1,4 @@
-"""The trials of a world of records declared instruments (examples/events/zeno, examples/events/anticoincidence; ALGEBRA.md, The click writes on the GameBoard (j); the paper's S.57 and S.59): one world file run as many times as the design names seeds, each run from the same lay with every instrument's generator at a state of its own from the trial's seed (the seed times the records' number plus the record's number) (the design's list of seeds, `seeds`, the host's declaration standing where one world file holds one seed; the counter's generator untouched), over the design's intervals, and at the end the part each record stands in (its books, the instrument's own), its windows closed (its books' count, the pulsed gate's n) and its `credit` lines labelled DETECTOR naming `taken` or `given`, the clicks (the null window's GAMEBOARD-labelled lines left out); the readings over the trials: per record the fraction of trials ending in each part and the windows closed per trial, the clicks per kind, the trials the run refused inside (the guard's refusal with its interval, by seed, read and not hidden), and over the records the fractions of trials with a taking at one record alone, at both and at neither, the anticoincidence parameter P(both) / (P(A) P(B)) where defined. Every number a click (the clicks, the parts the writes left) and no array is read; the tool holds no number of the law and compares nothing, the blind printed beside the readings where an expectation file is given.
+"""The trials of a world of records declared instruments (examples/events/zeno, examples/events/anticoincidence; ALGEBRA.md, The click writes on the GameBoard (j); the paper's S.57 and S.59): one world file run as many times as the design names seeds, each run from the same lay with every instrument's generator at a state of its own from the trial's seed (the seed times the records' number plus the record's number) (the design's list of seeds, `seeds`, the host's declaration standing where one world file holds one seed; the counter's generator untouched), over the design's intervals, and at the end the part each record stands in (its books, the instrument's own), its windows closed (its books' count, the pulsed gate's n) and its `credit` lines labelled NODEREADER naming `taken` or `given`, the clicks (the null window's GAMEBOARD-labelled lines left out); the readings over the trials: per record the fraction of trials ending in each part and the windows closed per trial, the clicks per kind, the trials the run refused inside (the guard's refusal with its interval, by seed, read and not hidden), and over the records the fractions of trials with a taking at one record alone, at both and at neither, the anticoincidence parameter P(both) / (P(A) P(B)) where defined. Every number a click (the clicks, the parts the writes left) and no array is read; the tool holds no number of the law and compares nothing, the blind printed beside the readings where an expectation file is given.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -40,7 +40,9 @@ def one_trial(
     clicks = [
         line
         for line in lines
-        if line["event"] == "credit" and line["label"] == "DETECTOR" and (line["taken"] or line["given"])
+        if line["event"] == "credit"
+        and line["label"] == "NODEREADER"
+        and (line["taken"] or line["given"])
     ]
     return parts, windows, clicks, refused
 
@@ -67,15 +69,15 @@ def reading(path: Path, design: Path, expectation: Path | None) -> dict[str, obj
                 closed.append(Counter())
             ends[number][part] += 1
             closed[number][count] += 1
-        kinds.update(f"{j['detector']} {j['realised']} by {j['taken'] or j['given']}" for j in clicks)
-        took[tuple(sorted({int(str(j["detector"]).split()[-1]) for j in clicks if j["taken"]}))] += 1
+        kinds.update(f"{j['node_reader']} {j['realised']} by {j['taken'] or j['given']}" for j in clicks)
+        took[tuple(sorted({int(str(j["node_reader"]).split()[-1]) for j in clicks if j["taken"]}))] += 1
     trials = len(seeds) - len(refusals)
     fractions = {
-        f"measured {n}": {part: [c, trials] for part, c in sorted(found.items())}
+        f"body {n}": {part: [c, trials] for part, c in sorted(found.items())}
         for n, found in enumerate(ends)
     }
     windows_closed = {
-        f"measured {n}": {str(count): c for count, c in sorted(found.items())}
+        f"body {n}": {str(count): c for count, c in sorted(found.items())}
         for n, found in enumerate(closed)
     }
     coincidence: dict[str, object] = {}
@@ -99,7 +101,7 @@ def reading(path: Path, design: Path, expectation: Path | None) -> dict[str, obj
         "refused": {str(seed): message for seed, message in sorted(refusals.items())},
         "clicks": dict(sorted(kinds.items())),
         "coincidence": coincidence,
-        "label": "DETECTOR",
+        "label": "NODEREADER",
     }
     if expectation is not None:
         found["blind"] = json.loads(expectation.read_text(encoding="utf-8")).get("blind")

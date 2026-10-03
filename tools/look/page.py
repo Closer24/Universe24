@@ -1,6 +1,6 @@
-"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the detectors' Nodes as rings, seen at rest and brighter and larger the interval they click; the detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw and the sums its bars draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size, the dark theme's values among them) stands in the one block at the top of the template's style and nowhere else; a button in the header sets the theme, remembered in the browser where it can be.
+"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the GameBoard as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames, the reading's window marked on the slider; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the node_readers' Nodes as rings, seen at rest and brighter and larger the interval they click; the node_readers' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum), every one labelled "GameBoard reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw and the sums its bars draw, and draws no curve, surface or interpolation between Nodes. The page's own layout (every colour and size, the dark theme's values among them) stands in the one block at the top of the template's style and nowhere else; a button in the header sets the theme, remembered in the browser where it can be.
 
-The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the detectors' totals, `{"expected": {detector name: count, ...} or [one count per detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"detector": name, "count": the one number to watch}}`, every key optional, one bar per detector, what it saw over W_c up to the frame shown.
+The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"node_reader": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the node_reader, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the node_readers' totals, `{"expected": {node_reader name: count, ...} or [one count per node_reader in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"node_reader": name, "count": the one number to watch}}`, every key optional, one bar per node_reader, what it saw over W_c up to the frame shown.
 
 A gate's reading, optional: with `--gate <reading>.json`, the joint-share reader's file (`tools/bell_gate.py`'s output over the gate's worlds, the look's world among them), and the gate's blind as `--blind` (the expectation of the gate's form: `family`, `sides`, `order`, `runs`, `combination`, `blind`), the page adds the gate's panels, inserted at three markers of the template and absent without a reading (a page without one holds none of them): the board seen from above at the frame shown (frame 0 the input as laid, the record's counts at its Nodes and each side's region with its declared setting and pattern as the reader read them; the beams leaving the record and meeting the regions over the intervals; a region brighter the interval it clicks), labelled a GameBoard reading; the gate's family's `parts` lines per region over the intervals (the parts overlaid, one curve where they are equal) with the region's `click` lines marked, the instrument's read; and the reader's credit beside the blind: the 2^n joint shares as bars, the run filled and the blind outlined, the drawn combination (the click) named, E_n, the marginals, the sub-correlations and the three local credits of the look's world in one table against the blind, the combination over the gate's worlds (its formula from the blind's order and signs, the run's value beside the blind's) on a ruler from minus to plus the number of its terms (the algebraic maximum, one per term) with the fence the blind's theorem lines name ("at most") shaded and the local credits marked on it. `--beside <other>.json` adds one line with another gate's blind combination, read from that file and typed nowhere. Every number of the panels is the reader's file's, the blind's or the look's; the page compares them and sums nothing new.
 
@@ -16,7 +16,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-MATTER, LIGHT, FIELD = "matter", "light", "field"
+MATTER, LIGHT, HELD = "matter", "light", "held"
 AXES = ("x", "y", "z")
 CDN_THREE = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
 
@@ -26,21 +26,21 @@ def shown(value: object) -> str:
     return f"{value:,}" if isinstance(value, int) and not isinstance(value, bool) else str(value)
 
 
-Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its detector
+Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its node_reader
 
 
 def inflows(
-    look: dict[str, Any], detectors: list[str], family: str, window: tuple[int, int]
+    look: dict[str, Any], node_readers: list[str], family: str, window: tuple[int, int]
 ) -> dict[str, int]:
-    """What each named detector saw of one family within the window [first, last] of intervals, its click lines' net front inflows summed from the look's frames' lines as tools/click_counts.py sums them (a click reports its region and never a Node)."""
-    found = {name: 0 for name in detectors}
+    """What each named node_reader saw of one family within the window [first, last] of intervals, its click lines' net front inflows summed from the look's frames' lines as tools/click_counts.py sums them (a click reports its region and never a Node)."""
+    found = {name: 0 for name in node_readers}
     for frame in look["frames"]:
         for line in frame["lines"]:
-            if line.get("event") != "click" or line.get("detector") not in found:
+            if line.get("event") != "click" or line.get("node_reader") not in found:
                 continue
             if line.get("family") != family or not window[0] <= int(line["tick"]) <= window[1]:
                 continue
-            found[str(line["detector"])] += int(line["inflow"])
+            found[str(line["node_reader"])] += int(line["inflow"])
     return found
 
 
@@ -56,32 +56,32 @@ def apportioned(quanta: int, shares: list[int]) -> list[int]:
     return floors
 
 
-def reporters(detectors: list[dict[str, Any]], axis: int) -> list[Reporter]:
-    """The reporters across `axis` as tools/click_counts.py places them, one per detector, ordered by their coordinate on it, the least of the detector's Nodes' (a region across the beam at its first row)."""
-    return sorted((min(int(node[axis]) for node in d["nodes"]), str(d["name"])) for d in detectors)
+def reporters(node_readers: list[dict[str, Any]], axis: int) -> list[Reporter]:
+    """The reporters across `axis` as tools/click_counts.py places them, one per node_reader, ordered by their coordinate on it, the least of the node_reader's Nodes' (a region across the beam at its first row)."""
+    return sorted((min(int(node[axis]) for node in d["nodes"]), str(d["name"])) for d in node_readers)
 
 
 def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str, Any] | None:
-    """The one measurement from an expectation in tools/click_counts.py's format (`detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, floored at 0, N over the family's wall to the nearest whole and the rounded shares (`apportioned`, as the tool reads them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
+    """The one measurement from an expectation in tools/click_counts.py's format (`node_reader`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, floored at 0, N over the family's wall to the nearest whole and the rounded shares (`apportioned`, as the tool reads them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
     if blind is None or "across" not in blind:
         return None
     if blind["across"] not in AXES:
         raise ValueError(f"the blind file's across is one of {list(AXES)}, got {blind['across']!r}")
     axis = AXES.index(blind["across"])
-    named = blind.get("detector")
+    named = blind.get("node_reader")
     if named is None:  # every declared region, over the whole look (the faces' layer is drawn, not read)
-        detectors = [d for d in look["detectors"] if d["body"] is None and d["name"] != "face"]
-        names = [str(d["name"]) for d in detectors]
+        node_readers = [d for d in look["node_readers"] if d["body"] is None and d["name"] != "face"]
+        names = [str(d["name"]) for d in node_readers]
     else:
         names = [str(name) for name in named] if isinstance(named, list) else [str(named)]
-        detectors = [d for d in look["detectors"] if d["name"] in names]
-    if len(detectors) != len(names):
-        raise ValueError(f"the blind file's detectors {names} are not all in the look")
+        node_readers = [d for d in look["node_readers"] if d["name"] in names]
+    if len(node_readers) != len(names):
+        raise ValueError(f"the blind file's node_readers {names} are not all in the look")
     spanned = blind.get("window", [0, len(look["frames"]) - 1])
     window = (int(spanned[0]), int(spanned[1]))
     saw = inflows(look, names, str(blind["family"]), window)
-    placed = reporters(detectors, axis)
-    seen = [saw[detector] for _at, detector in placed]
+    placed = reporters(node_readers, axis)
+    seen = [saw[node_reader] for _at, node_reader in placed]
     wall = next(int(f["wall"]) for f in look["families"] if f["name"] == blind["family"])
     shares = [max(value, 0) for value in seen]  # the credit's floor, the instrument's declaration
     quanta = (sum(shares) + wall // 2) // wall
@@ -92,7 +92,7 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
         for key, value in watch.items()
     ]
     return {
-        "detector": named if named is not None else names,
+        "node_reader": named if named is not None else names,
         "family": blind["family"],
         "window": list(window),
         "across": blind["across"],
@@ -115,7 +115,7 @@ def roles(families: list[dict[str, Any]]) -> dict[str, dict[str, object]]:
     found: dict[str, dict[str, object]] = {}
     seen = False
     for family in families:
-        role = LIGHT if family.get("sign") else FIELD if family.get("held") else MATTER
+        role = LIGHT if family.get("sign") else HELD if family.get("held") else MATTER
         found[str(family["name"])] = {"role": role, "dashed": role == MATTER and seen}
         seen = seen or role == MATTER
     return found
@@ -313,7 +313,7 @@ td.num { font-family: var(--font-mono); }
     <div class="lines" id="lines"></div>
   </section>{{GATE_PANELS}}
   <section class="panel measure" id="measure-box">
-    <h2>Measurement: the detectors' report</h2>
+    <h2>Measurement: the node_readers' report</h2>
     <div class="picker" id="measure-picker"></div>
     <div class="graph" id="measure"></div>
     <div class="totals" id="totals"></div>
@@ -403,7 +403,7 @@ const indexOf = (x, y, z) => ((x - LOW[0]) * Y + (y - LOW[1])) * Z + (z - LOW[2]
 const nodeOf = i => [Math.floor(i / (Y * Z)) + LOW[0], Math.floor(i / Z) % Y + LOW[1], i % Z + LOW[2]];
 const reportsAt = {};
 for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'click') {
-  const byFamily = reportsAt[line.detector] || (reportsAt[line.detector] = {});
+  const byFamily = reportsAt[line.node_reader] || (reportsAt[line.node_reader] = {});
   (byFamily[line.family] || (byFamily[line.family] = [])).push([line.tick, line.inflow]);
 }
 const WALL = {};
@@ -475,10 +475,10 @@ for (const f of HELD) {
     layers[f.name + ' tension bars'] = { on: false, objects: bars[f.name] };
   }
 }
-const ringCapacity = LOOK.detectors.reduce((n, d) => n + (d.body === null ? d.nodes.length : Math.max(...LOOK.frames.map(fr => fr.bodies[d.body].length))), 0);
+const ringCapacity = LOOK.node_readers.reduce((n, d) => n + (d.body === null ? d.nodes.length : Math.max(...LOOK.frames.map(fr => fr.bodies[d.body].length))), 0);
 const rings = new THREE.InstancedMesh(new THREE.TorusGeometry(size('--ring-radius'), size('--ring-tube'), 8, 32), new THREE.MeshBasicMaterial({ color: 0xffffff }), Math.max(ringCapacity, 1));
 scene.add(rings);
-layers['detector rings'] = { on: true, objects: [rings] };
+layers['node_reader rings'] = { on: true, objects: [rings] };
 /* The inner faces the world declares: the plane's Nodes across the axis at the coordinate, its gaps left open, drawn as dark cubes; the Nodes are the file's declaration and nothing is read there. */
 const beyond = new Set();
 for (const face of LOOK.faces || []) {
@@ -596,9 +596,9 @@ function draw() {
   }
   let slot = 0;
   const ringColour = new THREE.Color(token('--ring')), flashColour = new THREE.Color(token('--flash')), flashScale = size('--flash-scale');
-  for (const d of LOOK.detectors) {
+  for (const d of LOOK.node_readers) {
     const nodes = d.body === null ? d.nodes : frame.bodies[d.body];
-    const flashing = frame.lines.some(line => line.event === 'click' && line.detector === d.name);
+    const flashing = frame.lines.some(line => line.event === 'click' && line.node_reader === d.name);
     for (const [x, y, z] of nodes) {
       rings.setMatrixAt(slot, matrix.compose(position(indexOf(x, y, z)), quaternion, scale.setScalar(flashing ? flashScale : 1)));
       rings.setColorAt(slot, flashing ? flashColour : ringColour); slot++;
@@ -612,7 +612,7 @@ function draw() {
   byId('frame').textContent = t === 0 ? 'laid, 0 / ' + T : 'interval ' + t + ' / ' + T;
   const counts = {};
   for (const line of frame.lines) counts[line.event] = (counts[line.event] || 0) + 1;
-  const clicks = frame.lines.filter(line => line.event === 'click').map(line => line.detector + ': ' + line.family);
+  const clicks = frame.lines.filter(line => line.event === 'click').map(line => line.node_reader + ': ' + line.family);
   byId('lines').textContent = t === 0 ? 'The world as laid: the bodies\\' declared counts, the levels of the mode file, every held row at its start.'
     : Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? '' : 's')).join(', ') + (clicks.length ? ' (' + [...new Set(clicks)].join(', ') + ')' : '') || 'no line this interval';
   if (!MEASURE) drawMeasure();
@@ -750,12 +750,12 @@ picker.innerHTML = 'Node ' + AXES.map((axis, a) => `<label>${axis} <input type="
 AXES.forEach(axis => byId('node-' + axis).addEventListener('change', () => { named = AXES.map((a, k) => Math.max(LOW[k], Math.min(HIGH[k] - 1, Number(byId('node-' + a).value) || 0))); drawGraphs(); }));
 if (LOOK.bodies.length && LOOK.bodies[0].nodes.length) { named = LOOK.bodies[0].nodes[0].slice(); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); }
 
-/* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the rounded shares of what the reporters saw within the window, the expectation (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the detectors' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
+/* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the rounded shares of what the reporters saw within the window, the expectation (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the node_readers' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
 const measurePicker = byId('measure-picker'), select = document.createElement('select'); select.id = 'measure-family';
 function drawNodeMeasure() {
   const m = MEASURE, n = m.rounded_shares.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
   byId('measure-box').classList.add('wide');
-  measurePicker.textContent = `${m.detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
+  measurePicker.textContent = `${m.node_reader}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
   const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
@@ -778,7 +778,7 @@ function drawNodeMeasure() {
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
   const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
-  box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the detectors' credit per reporter">${body}</svg>`;
+  box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.node_reader))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_readers' credit per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals;
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
 }
@@ -789,32 +789,32 @@ if (!MEASURE) {
   select.addEventListener('change', drawMeasure);
   measurePicker.append('Family ', select, document.createTextNode(WINDOW ? ' within the window ' + WINDOW[0] + ' to ' + WINDOW[1] : ' over every interval'));
 }
-function reported(detector, family) {
-  const lines = (reportsAt[detector] || {})[family] || [];
+function reported(node_reader, family) {
+  const lines = (reportsAt[node_reader] || {})[family] || [];
   const saw = lines.filter(([k]) => k <= t && (!WINDOW || (k >= WINDOW[0] && k <= WINDOW[1]))).reduce((s, [, inflow]) => s + inflow, 0);
   return WALL[family] ? saw / WALL[family] : saw;
 }
 function drawMeasure() {
-  const family = select.value, detectors = LOOK.detectors, box = byId('measure');
-  const expected = detectors.map((d, k) => Array.isArray(BLIND.expected) ? BLIND.expected[k] : BLIND.expected && typeof BLIND.expected === 'object' ? BLIND.expected[d.name] : undefined);
-  const counts = detectors.map(d => reported(d.name, family));
+  const family = select.value, node_readers = LOOK.node_readers, box = byId('measure');
+  const expected = node_readers.map((d, k) => Array.isArray(BLIND.expected) ? BLIND.expected[k] : BLIND.expected && typeof BLIND.expected === 'object' ? BLIND.expected[d.name] : undefined);
+  const counts = node_readers.map(d => reported(d.name, family));
   const W = size('--graph-width'), H = size('--graph-height') * 1.5, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3;
   const high = Math.max(1, ...counts, ...expected.filter(v => typeof v === 'number'));
-  const slot = (W - left - pad) / Math.max(detectors.length, 1), py = v => pad + (high - v) / high * (H - pad - bottom);
+  const slot = (W - left - pad) / Math.max(node_readers.length, 1), py = v => pad + (high - v) / high * (H - pad - bottom);
   let body = `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   if (expected.some(v => typeof v === 'number')) {
     const points = expected.map((v, k) => typeof v === 'number' ? (left + slot * (k + 0.5)).toFixed(1) + ',' + py(v).toFixed(1) : null).filter(Boolean).join(' ');
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const every = Math.max(1, Math.ceil(detectors.length / 12));
-  detectors.forEach((d, k) => {
+  const every = Math.max(1, Math.ceil(node_readers.length / 12));
+  node_readers.forEach((d, k) => {
     const x = left + slot * (k + 0.5), w = Math.max(1, slot * 0.6);
     body += `<rect x="${(x - w / 2).toFixed(1)}" y="${py(counts[k]).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(counts[k])).toFixed(1)}" fill="${colourOf(family)}"><title>${esc(d.name)}: ${counts[k].toFixed(2)} quanta seen</title></rect>`;
     if (k % every === 0) body += svgText(d.name, x, H - pad, 'middle');
   });
-  box.innerHTML = `<div class="caption"><b>The reports of ${esc(family)} (what each detector saw over W_c)</b><span>measurement</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the detectors' report">${body}</svg>`;
+  box.innerHTML = `<div class="caption"><b>The reports of ${esc(family)} (what each node_reader saw over W_c)</b><span>measurement</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_readers' report">${body}</svg>`;
   const watch = BLIND.watch && typeof BLIND.watch === 'object' ? BLIND.watch : null;
-  byId('watch').textContent = watch ? `${watch.detector}: ${reported(watch.detector, family).toFixed(2)} quanta seen, the blind ${format(watch.count)}` : '';
+  byId('watch').textContent = watch ? `${watch.node_reader}: ${reported(watch.node_reader, family).toFixed(2)} quanta seen, the blind ${format(watch.count)}` : '';
 }
 
 /* The world's numbers as the files hold them, and the books at the end. */
@@ -830,8 +830,8 @@ function numbers() {
     + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held ? (f.sign ? 'the sign' : 'the content') : 'nothing'}</td><td class="num">${f.level_weight === null ? '' : f.level_weight}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th></tr></thead><tbody>'
     + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td></tr>`).join('') + '</tbody></table></div>';
-  html += '<div class="scroll"><table><thead><tr><th>detector</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'
-    + LOOK.detectors.map(d => `<tr><td>${esc(d.name)}</td><td class="num">${d.body === null ? d.nodes.length : 'the body\\'s'}</td><td>${d.body === null ? 'its Nodes' : 'body ' + d.body}</td></tr>`).join('') + '</tbody></table></div>';
+  html += '<div class="scroll"><table><thead><tr><th>node_reader</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'
+    + LOOK.node_readers.map(d => `<tr><td>${esc(d.name)}</td><td class="num">${d.body === null ? d.nodes.length : 'the body\\'s'}</td><td>${d.body === null ? 'its Nodes' : 'body ' + d.body}</td></tr>`).join('') + '</tbody></table></div>';
   if (Object.keys(BLIND).length) html += '<dl>' + row('blind expectation', JSON.stringify(BLIND)) + '</dl>';
   byId('numbers').innerHTML = html;
   const books = LOOK.books || {}, keys = Object.keys(Object.values(books)[0] || {});
@@ -887,8 +887,8 @@ const ratio = v => v === null || v === undefined ? NaN : v[0] / v[1];
 const same = (u, v) => u !== null && u !== undefined && v !== null && v !== undefined && u[0] === v[0] && u[1] === v[1];
 const verdictOf = (u, v) => same(u, v) ? 'MATCH' : 'differs';
 const port = key => String(key).split(' ').map(p => p === 'plus' ? '+' : p === 'minus' ? '\u2212' : p).join(' ');
-const regionOf = label => LOOK.detectors.find(d => d.name === BLIND.sides[label]) || { name: String(BLIND.sides[label]), nodes: [], body: null };
-const clickedAt = (frame, name) => frame.lines.some(line => line.event === 'click' && line.detector === name && line.family === GATE_FAMILY);
+const regionOf = label => LOOK.node_readers.find(d => d.name === BLIND.sides[label]) || { name: String(BLIND.sides[label]), nodes: [], body: null };
+const clickedAt = (frame, name) => frame.lines.some(line => line.event === 'click' && line.node_reader === name && line.family === GATE_FAMILY);
 const AT_MOST = /at most (\d+)/, boundOf = text => { const m = AT_MOST.exec(String(text || '')); return m ? Number(m[1]) : null; };
 const FENCE = CREDITS.map(f => boundOf((EXPECTED[f] || {}).status)).find(b => b !== null) ?? null;
 
@@ -929,7 +929,7 @@ function sidesList() {
 
 /* The parts lines: per region the parts' signed level sums (now) over the intervals, the parts overlaid, and a strip of its click lines. */
 const PARTS_AT = {};
-for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'parts' && line.family === GATE_FAMILY) (PARTS_AT[line.detector] || (PARTS_AT[line.detector] = {}))[line.tick] = line.levels;
+for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'parts' && line.family === GATE_FAMILY) (PARTS_AT[line.node_reader] || (PARTS_AT[line.node_reader] = {}))[line.tick] = line.levels;
 function drawParts() {
   const box = byId('gate-parts'); box.innerHTML = '';
   SIDES.forEach((label, k) => {
@@ -1005,7 +1005,7 @@ function drawReading() { byId('gate-reading').innerHTML = shareBars() + worldTab
 let gateTheme = '';
 function drawGate() {
   drawAbove();
-  const frame = LOOK.frames[t], counts = {}, clicked = frame.lines.filter(line => line.event === 'click').map(line => line.detector + ': ' + line.family);
+  const frame = LOOK.frames[t], counts = {}, clicked = frame.lines.filter(line => line.event === 'click').map(line => line.node_reader + ': ' + line.family);
   for (const line of frame.lines) counts[line.event] = (counts[line.event] || 0) + 1;
   if (t) byId('lines').textContent = Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? ' line' : ' lines')).join(', ') + (clicked.length ? ' (' + [...new Set(clicked)].join(', ') + ')' : '') || 'no line this interval';
   const theme = token('--fg') + token('--matter');

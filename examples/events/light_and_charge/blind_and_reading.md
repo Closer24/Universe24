@@ -242,7 +242,7 @@ of the count times p_x p_y p_z over the one wall, the product exact beyond the w
 and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
 line within one fine unit at every Node by the scaled residual in integers (`features/start`,
 `refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
-number below a GameBoard reading labelled so unless a detector clicked; a miss against the
+number below a GameBoard reading labelled so unless a NodeReader clicked; a miss against the
 blind is a finding by name, never adjusted; a world refused by name is recorded verbatim.
 
 - **The lays**: the message lay of `free.json` and `free_at_thousand.json` is the wave under its
@@ -265,7 +265,7 @@ blind is a finding by name, never adjusted; a world refused by name is recorded 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
 N at the screen, the row by the shares, the clicks drawn and the arrival's peak, centroid and span
-are the detector's: the screen's `click` lines and `credit` lines read by `tools/click_counts.py`,
+are the NodeReader's: the screen's `click` lines and `credit` lines read by `tools/click_counts.py`,
 in both readings; the lens (the two central regions against the outer two) is the same row. The
 `field` lines at the screen's column, the body's rest in the neutral tube, the books and the second
 reading's U under the packet (the books' least Node pace) are GameBoard readings, and that line's

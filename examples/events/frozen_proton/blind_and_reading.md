@@ -10,11 +10,11 @@ every Link, omega_0 = pi / 2, the inertia infinite, E_rest = T), a test row that
 proton's mass (1.34 m_e in this universe; nature's gap-closing pair a declared integer). One body of
 count 1 at the centre of the open 9-cube, laid by the generator's one-Node declaration (every plane
 alike at A_l^2 = T / 6, 73 by the division act's fixed point, the sense -1 opposite to the electron's),
-40 intervals, a region detector of two Nodes beside it. Every number is `design.json`'s, the world and
+40 intervals, a region NodeReader of two Nodes beside it. Every number is `design.json`'s, the world and
 the blind `expectation.json` are written by `build_world.py` from it, the reader is `read_world.py`.
 The blind below is the hands', verbatim as the Boss relayed it, written before any lay and never
 edited after; the reading is appended after the run, every number a GameBoard reading labelled so
-unless it is a detector's line; a reading that misses its blind is a finding by name, never adjusted.
+unless it is a NodeReader's line; a reading that misses its blind is a finding by name, never adjusted.
 
 ## The blind (the two hands, as the Boss relayed them)
 
@@ -39,7 +39,7 @@ one-Node declaration, `--pixel 0 --sense -1`: the amplitude 73 per plane, the fi
 division act on 32,768 div 6 = 5,461, the share read 1 quantum, the levels at the Node (73, 0) on each
 plane's first line and (0, -73) on its second, the six lines alike); the run: `tools/run_inputs.py`,
 `LAWFUL`, 40 intervals; the reading: `read_world.py` with `--expectation expectation.json`. Every
-number below is the reader's, a GameBoard reading unless named a detector's line.
+number below is the reader's, a GameBoard reading unless named a NodeReader's line.
 
 | row | the blind | the reading | agreement |
 | --- | --- | --- | --- |
@@ -72,7 +72,7 @@ the frozen taker (R = 0) unchanged. The advisor's second on the correction is as
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Row 6 is the detector's: no `credit` line and no `click` line of the proton, and the 46 `click` lines
+Row 6 is the NodeReader's: no `credit` line and no `click` line of the proton, and the 46 `click` lines
 of the family `charge` into `around` (`read_world.py`, the lines kept beside the reading). Rows 1 to 5
 are GameBoard readings and their verdicts rest on them: the six lines' levels and remainders at the
 Node (row 1), the books' quanta (row 2), the Wronskian at the Node (row 3), the holders' levels at the

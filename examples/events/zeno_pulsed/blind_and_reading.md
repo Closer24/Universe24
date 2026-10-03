@@ -24,7 +24,7 @@ and one Node, no write on its record, the fluorescence by name its own wave cont
 drive's taking exchanges the parts (the hole of round A), the rest the null window, the body whole
 in its part. The reading is the part the body stands in at the run's end over the trials, each the
 same lay with the body's generator at one of the design's 480 seeds (`tools/meeting_trials.py`), the
-jump lines labelled DETECTOR (`taken` the family read, `proper` the body's own clock, `windows` the
+click lines labelled NODEREADER (`taken` the family read, `proper` the body's own clock, `windows` the
 window's index) and the windows closed beside it. The blind is `expectation.json`, written by
 `build_world.py` from the design before any run and never edited after; the reading is appended
 here after the run; a reading that misses the blind is a finding, written as such and never
@@ -35,7 +35,7 @@ window the probe that is not laid; the anticoincidence and the telegraph keep th
 
 Of the two forms the hands wrote on the morning of 2026-10-03 (the advisor's first, 5967698811, and
 the mathematician's 243 agreeing on the probe's click at its tick with the labels' weights; the
-advisor's second on 242, 5967838095, a third part aux with the probe's own detector at the body's
+advisor's second on 242, 5967838095, a third part aux with the probe's own NodeReader at the body's
 Node), the one text is 244's: 243's form. The aux form needs a body's window alternating between
 the drive's segment and the probe's two intervals, which no primitive gives, and a one-Node region
 crediting a quantum laid at its own Node, which the inflow through the front Ports never sees; the
@@ -137,8 +137,8 @@ from the checkout of the branch's sha, nothing of the law in the tool:
 for n in 1, 2, 4, 8, 16, 32 and 64 (one run of 768 ticks per seed, about 20 seconds on a quiet
 core, so 480 seeds take about 2.7 hours per row; the seeds may be split over cores by copies of the
 design with disjoint `seeds` lists and the counts summed). The reading per row: `ends_in_part`
-(`measured 0`, the trials ending in e over the trials, P(e at T_pi) against the blind's row),
-`windows_closed` (n in every trial), `jumps` (`measured 0 g by probe` the probe's clicks, `g by
+(`body 0`, the trials ending in e over the trials, P(e at T_pi) against the blind's row),
+`windows_closed` (n in every trial), `jumps` (`body 0 g by probe` the probe's clicks, `g by
 pulse` the drive's return, `e by pulse` the drive's taking; the fluorescence clicks per run the two
 g kinds over the trials) and `refused` (empty; a trial the guard refused is read, never hidden). The
 first window of n = 2 alone: the same world with a copy of the design whose `intervals` is 384, P(e)
@@ -168,4 +168,4 @@ standard error of the column (0.20, 0.10 and 0.00 against 0.235, 0.133 and 0.072
 took in no trial of 20, the blind's 1.4 trials), the probe's clicks per run 7.10, 14.75 and 32.00
 against the blind's 6.85, 14.8 and 30.8; the rows to be read at 480 seeds on a quiet machine, with
 the partial hole on main (the protocol above); n = 64 reads 0 of 20 (0.000 against 0.037), the probe's clicks 64.00 per run against the blind's 62.8. Every number a click (the jumps,
-the parts the writes left), labelled DETECTOR.
+the parts the writes left), labelled NODEREADER.

@@ -1,6 +1,6 @@
 # The packet giving world: the blind and the reading
 
-Step 5 of the emitter/detector (the owner's word of 2026-10-03, 09:46 Israel, "a new emitter detector also
+Step 5 of the emitter/NodeReader (the owner's word of 2026-10-03, 09:46 Israel, "a new emitter NodeReader also
 needs to enter"; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the
 advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his
 precisions 5966338551 step 5; two hands on every line): the open board's giving as a packet along a
@@ -8,7 +8,7 @@ drawn axis, read in the engine. On the Zeno atom's universe (`examples/events/ze
 T = 32,768) an open board of 627 x 4 x 4 Nodes, the one board of this lay the machine runs in minutes:
 the resonance world's giver at the centre [313, 2, 2], standing in its upper part, its transition at
 the resonance [2, 3] and its giving at the lifetime 48 with the window 48 (drawn per interval at the hazard
-1 / 48 in the dark, the dark grain, its tick the jump line's), its packet's `width` 4, the one new number; the loader holds the packet along x alone (the
+1 / 48 in the dark, the dark grain, its tick the click line's), its packet's `width` 4, the one new number; the loader holds the packet along x alone (the
 train fits neither y nor z), so the giver draws between +x and -x. The lay (`src/event_universe/giving.py`,
 `laid_packet`): the one-line packet's root T / sin Omega = 43,962, twice S = 21,981, the plane's share
 per line (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands; the packet laid on the light record's first line alone), the envelope in the energy
@@ -18,44 +18,44 @@ the band's line with the transverse mode, cos k_x = 3 cos Omega - 2 cos(pi / 5) 
 lambda 5.33 Links), the level before a_t cos(k_x z + Omega) exact, the sine's root on the large number at
 the reference scale, isqrt(R^2 (den^2 - num^2)), one carried rounding (the floor root isqrt(5) = 2 had laid
 0.943 a_t cos(k_x z + pi / 4), the form short by 0.075 of the top's unit, Worker PACKET-DIAG's reading of
-the branch), the top-hat of 4 across; the detector `reach`, a region across x at the derived reach,
+the branch), the top-hat of 4 across; the NodeReader `reach`, a region across x at the derived reach,
 (pi w / lambda) sqrt(S / L) = 28.0 Links, at x = 341 on the +x side, its unit the record's own share per
-quantum read from the books (the generic detector, #1717), its window the run of 168 intervals. The blind `expectation.json` was written by `build_world.py` from `design.json`
+quantum read from the books (the generic NodeReader, #1717), its window the run of 168 intervals. The blind `expectation.json` was written by `build_world.py` from `design.json`
 before any lay, rewritten at two hands on the one-line root and the exact phase before the re-run (242
 section 1 and the advisor's second; the diag worker's reading) and never touched after a reading; the readings are the builder's `--read` over the design's 20
-seeds (the clicks labelled DETECTOR; the directions from the lay lines, the share and the far Node's
+seeds (the clicks labelled NODEREADER; the directions from the lay lines, the share and the far Node's
 levels GameBoard readings, labelled so); a miss is a finding by name and never an adjustment of the blind.
 
 ## The blind (expectation.json)
 
-1. The count 1 read by the detector in its own unit (the record's own share per quantum read from the
-   books; one quantum alike in the top's unit W_c, the detector's W_d and the record's own W_rec, the diag
+1. The count 1 read by the NodeReader in its own unit (the record's own share per quantum read from the
+   books; one quantum alike in the top's unit W_c, the NodeReader's W_d and the record's own W_rec, the diag
    worker's expectation) within the window of the packet's passage, over the seeds whose drawn direction meets it (one
    quantum one click by the count's line, the advisor's clause (iii)); re-read on the one-line root, half
-   of the detector's inflow at the half root having been the lay's (242 section 1).
+   of the NodeReader's inflow at the half root having been the lay's (242 section 1).
 2. The share at the lay: the light's share over the board at the giving's tick, sin Omega x 1.055 = 0.786
    of the top's unit W_c under the top-hat (the edges' 5 percent), 0.745 with the sine mode across (the
    hands' derivation at T = 2^22 on the one-line root with the exact phase, 242 section 1 and the advisor's
    second); at the shipped T the rounded levels' residue is a finding by name. A GameBoard reading.
-3. The far reading of cos Omega at the Node [327, 2, 2], half way to the detector, over the window 2 to 17
+3. The far reading of cos Omega at the Node [327, 2, 2], half way to the NodeReader, over the window 2 to 17
    intervals after the giving's tick, cos Omega read as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2),
    within 2 / A_far of 2 / 3, A_far the largest |n_t| over the window (the mathematician's 220, the
    advisor's second).
-4. The fraction of seeds whose drawn direction meets the detector 1 / 2, the directions the board holds
+4. The fraction of seeds whose drawn direction meets the NodeReader 1 / 2, the directions the board holds
    (+x and -x) each at the giving's weight, within sqrt(N p (1 - p)) = 2.2 of 10 over the 20 seeds.
 
 ## On the one-line root with the exact phase, 2026-10-03 (packet-lay with main 7033a6aa merged, 20 seeds)
 
 The readings ran on the engine of this branch with main 7033a6aa merged (the dark grain, the resonant act,
-the generic detector), the packet on the one-line root with the carrier's phase exact: the giver draws its giving per interval at the hazard 1 / 48 in the dark, so the
-giving's tick is the jump line's, 2 to 138 over the seeds, and two seeds (2 and 15) gave no quantum within
+the generic NodeReader), the packet on the one-line root with the carrier's phase exact: the giver draws its giving per interval at the hazard 1 / 48 in the dark, so the
+giving's tick is the click line's, 2 to 138 over the seeds, and two seeds (2 and 15) gave no quantum within
 the run of 168 intervals ((47 / 48)^168 = 0.029 per seed, 0.6 expected over 20).
 
-1. The count: 0 clicks in every one of the 7 seeds whose direction meets the detector (and 0 in the 11
+1. The count: 0 clicks in every one of the 7 seeds whose direction meets the NodeReader (and 0 in the 11
    toward -x). A MISS, a FINDING by name: the packet of one quantum at w = 4, tau = 48 and T = 32,768 is
    laid at a_0 = 7 with 142 of its 312 slices at one level, the integer floor the hands named (ALGEBRA.md,
    item 49: a quantum carried as a wave occupies at most T / (2 sin Omega) Nodes and Rule3 carries no
-   sub-level wave); the detector's unit is the record's own share per quantum read from the books, and
+   sub-level wave); the NodeReader's unit is the record's own share per quantum read from the books, and
    under Rule3 at the floor the light's share over the board grows from the lay on, 0.834 at the giving's
    tick to 4.25 of the top's unit at 168 for a giving at the tick 2 (3.3 for a giving at 50, 1.4 for one at
    138), the count in the books standing at 1: the roundings' walk, one unit per Node per interval at
@@ -69,7 +69,7 @@ the run of 168 intervals ((47 / 48)^168 = 0.029 per seed, 0.6 expected over 20).
    whole on the one-line root with the exact phase: the same form read 0.395 at the half root with the
    floor root of the sine, and 0.757 at the one-line root with the floor root of the sine (the before level
    at pi / 4, its mean square 8 / 9 of now's, the diag worker's reading), 0.834 with the phase exact.
-3. The far Node's cosine: 0.628 against 0.667 in every one of the 7 seeds toward the detector, 0.039 off,
+3. The far Node's cosine: 0.628 against 0.667 in every one of the 7 seeds toward the NodeReader, 0.039 off,
    A_far = 11, within the gate 2 / 11 = 0.18. PASS (the lay's own oscillation at Omega right after the lay;
    the levels at the Node [327, 2, 2] from 2 intervals after the giving: -7, -3, 5, 11, 6, -4, -10, -6,
    2, 6, 6, 5, 0, -6, -9, -8; 0.625 at A_far = 9 with the floor root of the sine). In the 11 seeds toward
@@ -85,7 +85,7 @@ holds the one-line root and the envelope (43,962 at T = 32,768 and [2, 3], twice
 Node across, SUM a^2 = 43,915, the mathematician's numbers; 87,925 at T = 65,536, the root rounded once),
 the band's line at w = 4 and its refusals at w = 1 and 2, the loader's three refusals, a packet laid on an
 open board of 35^3 Nodes with the lifetime 2 (one lay line per Node, the count 1 by the count's line in
-the detector's own unit at [2, 3]) and this blind byte for byte.
+the NodeReader's own unit at [2, 3]) and this blind byte for byte.
 
 ## What is named and not built
 
@@ -102,11 +102,11 @@ width declared there).
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Row 1 is the detector's: the `credit` lines of the region `reach` over the run (none in any seed), beside
+Row 1 is the NodeReader's: the `credit` lines of the region `reach` over the run (none in any seed), beside
 the giver's `jump` lines (`build_world.py --read`, the trials over the design's seeds, the giver's
 generator at the trial's seed); the `lay` lines it counts are labelled a GameBoard diagnostic by the
 engine. Rows 2, 3 and 4 are GameBoard readings and their verdicts rest on them: the share at the lay from
-the light's record over the board at the jump line's tick, the far Node's cosine from the light's levels
+the light's record over the board at the click line's tick, the far Node's cosine from the light's levels
 at the Node [327, 2, 2] per interval, and the drawn direction from the `lay` lines' Nodes against the
 body's. The lines carry
 the board's `tick` and the `window` in board intervals; the giver's lifetime 48 is in board intervals, the

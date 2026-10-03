@@ -31,7 +31,21 @@ from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
 
-DRIFT, STANDING = (load_file(p.stem, p) for p in sorted(EVENTS.parents[1].glob("tools/body_[ds]*")))
+DRIFT = load_file("body_drift", EVENTS.parents[1] / "tools" / "body_drift.py")  # the looks' drift tool
+GATED = (  # the smallest shipped world of each builder whose load is seconds; the long loads are the runner's gate
+    ("anticoincidence", "one_photon"),
+    ("bell", "bell_a_prime_b_prime"),
+    ("ghz", "ghz_y_x_y"),
+    ("neutron_conversion", "neutron_conversion"),
+    ("nuclide", "free_nuclide"),
+    ("packet_giving", "packet_giving"),
+    ("resonance", "detuned"),
+    ("shelved_ion", "shelved_ion"),
+    ("two_slits", "two_slits"),
+    ("which_way", "one_gap"),
+    ("zeno", "zeno_1"),
+    ("zeno_pulsed", "zeno_pulsed_1"),
+)
 LOOK, GAMMA, PAIR, RING = EVENTS / "like_or_unlike", 6000, (4000, 6000), Wrap(True, True, True)
 INTEGERS, TURNING = universe_of(json.loads((LOOK / "turning.json").read_text(encoding="utf-8")))
 T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]  # the rule's rows, the plane
@@ -95,7 +109,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert abs(books["quanta"] - laid) <= CHAIN  # Rule3's rounding, under a quantum per Node
     assert abs(max(drifts, key=abs)) < CHAIN * wall and board.books()["matter"]["pace"] > 0 and kept
     mode_path, document = world.with_suffix(".mode.json"), json.loads(world.read_text(encoding="utf-8"))
-    document["measured"][0]["nodes"] = [{**n, "count": 1} for n in document["measured"][0]["nodes"]]
+    document["bodies"][0]["nodes"] = [{**n, "count": 5} for n in document["bodies"][0]["nodes"]]
     world.write_text(json.dumps(document), encoding="utf-8")
     mode = {**json.loads(mode_path.read_text(encoding="utf-8")), "world_digest": input_digest(document)}
     mode_path.write_text(json.dumps(mode), encoding="utf-8")
@@ -176,14 +190,12 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         assert not any("act" in row.get("held", {}) for row in gate["families"])
 
 
-def test_the_looks_committed_worlds_pass_the_gate_and_the_lawful_pairs_are_read(tmp_path):
-    """The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world): the like, the unlike, the uncharged pair and the four single-body worlds read by tools/body_drift.py over their run: the like pair ends further apart than the unlike pair, the mutual effect's sign ((a - b) / 2 above 0, which no background enters), asserted; the blind's three lines against the background (the uncharged pair's change plus the image force read on the single bodies), like apart, unlike together and the same size to a third of the half-difference, read and printed yes or no beside the plain controls' changes (ENGINE.md, section 6, the looks' numbers: the bodies' response to their own angle is not additive between a pair and a lone body, so the three lines are not met by that background); the back-in-time gate MATCH on the three pairs over their run, each on its own fresh load, and one inverse step more returns its board to the loaded state bit for bit, the state the drift then reads (one load of each pair instead of two: the reading is the fresh load's by that check). The standing world (examples/events/standing_body, the body round) read by tools/body_standing.py over its whole run of 1000 intervals: every line of every family keeps its 48 images about the centre to the bit, levels, remainders and write remainders, through the last interval (166's theorem under the write's factor booked as one rounding, the fix round of 2026-10-03; under the three roundings in the order x, y, z the tension lines departed at the interval 516)."""
+def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte(tmp_path):
+    """The committed worlds of examples/events/like_or_unlike (the blind expectation the builder's byte for byte, written from the design before any run; the mode files the generator's, the digest binding each to its world) and every blind of examples/events: each blind is its builder's byte for byte; the three lawful pairs load, their run the blind's window; the charged ones are refused by name without a mode file, the start's refusals recorded in the blind by name. No world runs here: the looks' drift over the window, the back-in-time MATCH on the pairs over their 400 and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/body_drift.py, tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03: a committed 128-chain's held rests alone take longer at the load). The drift's tool runs over four intervals of the anticoincidence world, its reading two bodies. The count gate (GameBoard's start) runs on the smallest world of every builder whose load is seconds (GATED, the loader's mode file applied to the laid Nodes, the defect of #1788 caught here); the folders whose smallest world is a long load (light_and_charge, like_or_unlike, matter_alone, matter_and_binding, matter_and_gravity, standing_body, frozen_proton) keep the runner's gate at every run, by name."""
     for folder in (LOOK, *(p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md")))):
         build, out = load_file(f"{folder.name}_build", folder / "build_world.py"), tmp_path / folder.name
         build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
         assert (out / "expectation.json").read_bytes() == (folder / "expectation.json").read_bytes()
-    images = STANDING.standing(EVENTS / "standing_body" / "standing_15.json", None)["images"]
-    assert images == {"kept_to_the_bit_through": 1000, "first_departure": None}, images  # the 48
     expected = json.loads((LOOK / "expectation.json").read_text(encoding="utf-8"))
     charged, lawful = ([n for n in expected["worlds"] if ("uncharged" in n) is f] for f in (False, True))
     for name in charged:  # declared without a mode file, refused at load by name
@@ -197,12 +209,12 @@ def test_the_looks_committed_worlds_pass_the_gate_and_the_lawful_pairs_are_read(
     ):
         assert words in expected["comment"], words  # the start's refusals recorded in the blind by name
     assert (len(charged), len(lawful)) == (6, 3)
-    gated = {n: GameBoard(load_world(LOOK / f"{n}.json")) for n in lawful}
-    for n, board in gated.items():  # the gate on a fresh load; a step back more: the drift's start
-        loaded, v, t = BACK.snapshot(board), BACK.verdict(board, board.world.ticks), board.world.ticks
-        assert (v["verdict"], v["intervals"], board.step_inverse()) == ("MATCH", t, None), n
-        assert BACK.first_difference(loaded, BACK.snapshot(board)) is None and board.tick == 0, n
-    assert {DRIFT.drift(gated[n], None)["intervals"] for n in lawful} == {expected["window"][1]}
+    assert all(load_world(LOOK / f"{n}.json").ticks == expected["window"][1] for n in lawful)  # loaded
+    read = DRIFT.drift(GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json")), 4)
+    assert read["intervals"] == 4 and len(read["bodies"]) == 2  # the drift's tool on a small world
+    for folder, name in GATED:  # the gate on the smallest world of every builder whose load is seconds
+        world = GameBoard(load_world(EVENTS / folder / f"{name}.json")).world
+        assert world.bodies or world.messages, (folder, name)
 
 
 def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused(
@@ -222,7 +234,7 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     world = dict(shape=[10, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
     quanta = [{"family": "charged", "nodes": [{"node": [x, 0, 0], "count": 1}]} for x in (3, 6)]
-    world.update(ticks=3, universe="u.json", engine="e.json", detectors=[], measured=quanta)
+    world.update(ticks=3, universe="u.json", engine="e.json", node_readers=[], bodies=quanta)
     (path := tmp_path / "quanta.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path), "--sense", "1", "-1", "--pixel", "0", "1"])  # each its own record
     board = GameBoard(load_world(path))
@@ -264,7 +276,7 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
             assert np.array_equal(board.states[charge].lines[line].now, expected), (board.tick, record)
     document, mode_path = json.loads(path.read_text(encoding="utf-8")), path.with_suffix(".mode.json")
     for nodes in ([{"node": [3, 0, 0], "count": 2}], [{"node": [x, 0, 0], "count": 1} for x in (3, 4)]):
-        document["measured"][0]["nodes"] = nodes
+        document["bodies"][0]["nodes"] = nodes
         path.write_text(json.dumps(document), encoding="utf-8")
         mode = {**json.loads(mode_path.read_text("utf-8")), "world_digest": input_digest(document)}
         mode_path.write_text(json.dumps(mode), encoding="utf-8")
@@ -281,7 +293,7 @@ NUCLEUS, CUBE = 25, 9  # the design's count, a few quanta, and the open cube's s
 def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads(
     tmp_path, monkeypatch
 ):
-    """The nucleon's fixed point in its own nuclear holder's well (ALGEBRA.md, The nucleon is a compact body of its family and The nuclear holder, a hypothesis by name with four declared integers, the file's and not the law's: the holder's pair [50, 51], its level weight E_n = 1, its write weight W_1 = 300 and the read weight 1, printed beside the numbers; the mathematician's 275 (b) with the advisor's second, #1572 comments 5969267087 and 5969197876): the rule's universe with a held row `nuclear` sourced by the form, reading the content holders and itself at 1 as every shipped holder does, and a `nucleon` family of three planes at matter's pair reading gravity 1, binding 1 and `nuclear` 1; one body of 25 quanta at the centre of an open 9-cube laid by `lay.kind` `fixed_point` with the compact seed at the profile [1, 4] (one part at the centre and four at each of the six Ports' Nodes), the stop 2 and 30 passes, the tolerance [1, den] at the largest den whose least T is the universe's 32,768 (the budget's line, loader/lay.py); no instrument and no detector: the body is read by its share and its standing. (i) The fixed point returns: the generator's passes end with the content and the record repeating within the stop at every Node under the passes (ten passes on the first run, the last within one unit); the engine's start then holds the rest: the hold's first write returns it within one unit at every Node (the mathematician's 293: the integer rest satisfies its line within one rounding, the residual at most half a wall under the half-wall origin, so the first write moves a level by at most 1; the floor origin admitted two), and the nuclear row's deviation from the row's exact line at its own composed paces (the source the laid record's form as the hold books it, scaled per proper volume and per proper interval over the wall E_n T, solved sparse in the test as tests/test_the_features.py solves the massless and binding rows) is printed beside the line as a GAMEBOARD reading and pinned below 0.6 at this seed, a reading of the neighbours' roundings' alignment and no bound: the derived bound is the residual through the inverse operator, 0.5 x 306 / 6 = 25.5 levels. (ii) The count is the record's share: the world's declared counts (the generator's reading, 43 over 33 Nodes from the design's 25, the three planes' per-plane rounding scaling the record above the design's count) against the share read at those Nodes within the gate ((|c - read| - 1) div 2)^2 <= c, every plane's lines alike and the sense lines 0. (iii) The body stands: P = 2 pi / omega_b rounded, cos omega_b the level before over the level now at the centre of the laid record (8 intervals from the pair (227, 158)), and the form D_i = now^2 - next x before summed over the record's lines returns to itself within one quantum of form, |D_i(1 + P) - D_i(1)| < T, at every Node of the region whose form is above T div 100 (2,547 at most against 32,768 on the first run); the twin without the holder (the nucleon's read of `nuclear` dropped, the same lay under the same mode file) spreads: after P intervals its share over the body's Nodes is below the bound body's by more than the gate's rounding at the body's count (20.6 against 43.7 quanta on the first run, the numbers pinned in the assertion's comment) and its centre's share below the body's. (iv) The guard admits the start (the content below the Link's zero at every Node, the laid levels within the amplitude bound as main derives it with the hill's factor; C.14's tension room is not on main), the back-in-time gate MATCH over 2 P intervals, every write remainder at half its wall and every sourced held row's time line at its rest's half wall, the record's lines born at the half wall of the rule they step by, the lay's origin (#1743). Found and not asserted: deeper wells toward the compact branch (W_1 from 325 at this count, from 450 at 13 quanta seeded [1, 2]) are refused in the engine's own start, the lay and the rest of the holders returning to an earlier state three to five units apart at the centre, beyond the rounding tie's two, so the nucleon laid here stands on the wide branch, the content 1,217 = 0.20 Gamma at the centre and 2 cos omega_b = 1.392 above the band's top 1.333."""
+    """The nucleon's fixed point in its own nuclear holder's well (ALGEBRA.md, The nucleon is a compact body of its family and The nuclear holder, a hypothesis by name with four declared integers, the file's and not the law's: the holder's pair [50, 51], its level weight E_n = 1, its write weight W_1 = 300 and the read weight 1, printed beside the numbers; the mathematician's 275 (b) with the advisor's second, #1572 comments 5969267087 and 5969197876): the rule's universe with a held row `nuclear` sourced by the form, reading the content holders and itself at 1 as every shipped holder does, and a `nucleon` family of three planes at matter's pair reading gravity 1, binding 1 and `nuclear` 1; one body of 25 quanta at the centre of an open 9-cube laid by `lay.kind` `fixed_point` with the compact seed at the profile [1, 4] (one part at the centre and four at each of the six Ports' Nodes), the stop 2 and 30 passes, the tolerance [1, den] at the largest den whose least T is the universe's 32,768 (the budget's line, loader/lay.py); no instrument and no node_reader: the body is read by its share and its standing. (i) The fixed point returns: the generator's passes end with the content and the record repeating within the stop at every Node under the passes (ten passes on the first run, the last within one unit); the engine's start then holds the rest: the hold's first write returns it within one unit at every Node (the mathematician's 293: the integer rest satisfies its line within one rounding, the residual at most half a wall under the half-wall origin, so the first write moves a level by at most 1; the floor origin admitted two), and the nuclear row's deviation from the row's exact line at its own composed paces (the source the laid record's form as the hold books it, scaled per proper volume and per proper interval over the wall E_n T, solved sparse in the test as tests/test_the_features.py solves the massless and binding rows) is printed beside the line as a GAMEBOARD reading and pinned below 0.6 at this seed, a reading of the neighbours' roundings' alignment and no bound: the derived bound is the residual through the inverse operator, 0.5 x 306 / 6 = 25.5 levels. (ii) The count is the record's share: the world's declared counts (the generator's reading, 43 over 33 Nodes from the design's 25, the three planes' per-plane rounding scaling the record above the design's count) against the share read at those Nodes within the gate ((|c - read| - 1) div 2)^2 <= c, every plane's lines alike and the sense lines 0. (iii) The body stands: P = 2 pi / omega_b rounded, cos omega_b the level before over the level now at the centre of the laid record (8 intervals from the pair (227, 158)), and the form D_i = now^2 - next x before summed over the record's lines returns to itself within one quantum of form, |D_i(1 + P) - D_i(1)| < T, at every Node of the region whose form is above T div 100 (2,547 at most against 32,768 on the first run); the twin without the holder (the nucleon's read of `nuclear` dropped, the same lay under the same mode file) spreads: after P intervals its share over the body's Nodes is below the bound body's by more than the gate's rounding at the body's count (20.6 against 43.7 quanta on the first run, the numbers pinned in the assertion's comment) and its centre's share below the body's. (iv) The guard admits the start (the content below the Link's zero at every Node, the laid levels within the amplitude bound as main derives it with the hill's factor; C.14's tension room is not on main), the back-in-time gate MATCH over 2 P intervals, every write remainder at half its wall and every sourced held row's time line at its rest's half wall, the record's lines born at the half wall of the rule they step by, the lay's origin (#1743). Found and not asserted: deeper wells toward the compact branch (W_1 from 325 at this count, from 450 at 13 quanta seeded [1, 2]) are refused in the engine's own start, the lay and the rest of the holders returning to an earlier state three to five units apart at the centre, beyond the rounding tie's two, so the nucleon laid here stands on the wide branch, the content 1,217 = 0.20 Gamma at the centre and 2 cos omega_b = 1.392 above the band's top 1.333."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     rule = json.loads((EVENTS / "rule.json").read_text(encoding="utf-8"))
     action, rows = rule["integers"]["quantum_action"], rule["families"]
@@ -293,8 +305,8 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     centre = (CUBE // 2,) * 3
     world = dict(shape=[CUBE] * 3, boundary=dict(x="open", y="open", z="open"), face_depth=1, ticks=40)
-    world.update(universe="u.json", engine="e.json", detectors=[], lay=COMPACT)
-    world["measured"] = [{"family": "nucleon", "nodes": [{"node": list(centre), "count": NUCLEUS}]}]
+    world.update(universe="u.json", engine="e.json", node_readers=[], lay=COMPACT)
+    world["bodies"] = [{"family": "nucleon", "nodes": [{"node": list(centre), "count": NUCLEUS}]}]
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     mode = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))
@@ -303,7 +315,7 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
         "trajectory"
     ]  # per pass the content's change, the record's, the count
     assert len(passes) <= COMPACT["passes"] and max(passes[-1][1:3]) <= COMPACT["stop"]
-    nodes, ticks = world["measured"][0]["nodes"], world["ticks"]
+    nodes, ticks = world["bodies"][0]["nodes"], world["ticks"]
     declared, per_node = sum(n["count"] for n in nodes), max(n["count"] for n in nodes)
     den = max(d for d in range(1, 1000) if least_action(PAIR, ticks, per_node, (1, d)) <= action)
     assert least_action(PAIR, ticks, per_node, (1, den)) == action  # T the least power of two admitted

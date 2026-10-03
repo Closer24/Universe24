@@ -1,5 +1,5 @@
 {
- "verdict": "DETECTOR",
+ "verdict": "NODEREADER",
  "family": "charge",
  "window": [
   1,
