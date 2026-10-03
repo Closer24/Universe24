@@ -17,7 +17,8 @@ from event_universe.core.rule3 import coefficients, link_factor, rule3
 from event_universe.features.start import rest
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import HeldWrite, count_wall, family_rules, held_write
-from event_universe.loader.universe import universe_of
+from event_universe.loader.universe import shape_of, universe_of
+from event_universe.loader.world import BodyRow
 from event_universe.world_files import input_digest, load_world
 from tests import laws
 from tests.laws import CHAIN, CHARGED, EVENTS, PACKET, UNIVERSE, real_rows, refused, universe_beside
@@ -96,8 +97,8 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         node_term = wall * (now_here**2 + before_here**2) - self_coefficient * now_here * before_here
         share_here = node_term // (2 * pace**2) - 5 * now_here * sum(by_hand(after.before, HERE))
         read = share.family_share(QUANTA, (after,), WRAP, 100, content)
-        assert int(read[HERE]) == share_here
-        assert int(share.quanta_of(read, wall_c, np.int64)[HERE]) == (share_here + wall_c // 2) // wall_c
+        quanta_here = int(share.quanta_of(read, wall_c, np.int64)[HERE])
+        assert int(read[HERE]) == share_here and quanta_here == (share_here + wall_c // 2) // wall_c
         form = here[0] ** 2 - int(after.now[HERE]) * here[1]
         assert int(node.well(node.form([levels], [after]), 64)[HERE]) == form // 64
         assert node.rule_of(GAPPED, 100, 0) == ((3 * 20_000,) * 6, 0, 12 * 20_000)
@@ -130,31 +131,32 @@ def test_every_act_of_the_interval_reaches_one_link(tmp_path, monkeypatch):
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")  # the energy line's T and k_w
     world = dict(shape=[9, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
     world.update(ticks=2, universe="u.json", engine="e.json", measured=[], detectors=[])
-    (tmp_path / "reach.json").write_text(json.dumps(world), encoding="utf-8")
-
-    def laid(far: int) -> GameBoard:
-        board, draw = GameBoard(load_world(tmp_path / "reach.json")), np.random.default_rng(9)
-
-        def pick(low: int, high: int) -> np.ndarray:
-            return draw.integers(low, high, board.shape, dtype=np.int64)
-
-        for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-            low = 0 if family.held and not family.wronskian else -60  # a holder of the content above 0
-            state.lines = [node.Record(pick(low, 60), pick(low, 60), pick(0, 60)) for _ in state.lines]
-            state.write_remainders = [pick(0, wall) for wall in board.walls(index)]
-            for array in [*(getattr(r, k) for r in state.lines for k in KEYS), *state.write_remainders]:
-                array[4 + far, 0, 0] += 7 * bool(far)  # the one difference, `far` Links from the centre
-        return board
+    (reach := tmp_path / "reach.json").write_text(json.dumps(world), encoding="utf-8")
 
     def centre(board: GameBoard) -> list[int]:
         return [int(array[4, 0, 0]) for _label, array in sum(BACK.snapshot(board), [])]
 
-    (same := laid(0)).step()
+    (same := random_state(reach, 9)).step()
     for far, reaches in ((1, True), (2, False), (3, False)):
-        (other := laid(far)).step()
+        (other := random_state(reach, 9, far)).step()
         assert (centre(other) != centre(same)) is reaches, far
         other.step_inverse()
-        assert centre(other) == centre(laid(0))
+        assert centre(other) == centre(random_state(reach, 9))
+
+
+def random_state(path: Path, seed: int, far: int = 0) -> GameBoard:
+    """A world loaded with every line and every write remainder at random levels within 60 by the draw `seed` (a holder of the content above 0; a held row's axis lines at 0, so that every axis's pace is the Node's and the write's factor, which divides the three axes one at a time in the engine's order, rounds the same under every permutation of the axes), and where `far` is not 0 one difference of 7 at the Node `far` Links along x from the board's centre, the reach test's."""
+    board, draw = GameBoard(load_world(path)), np.random.default_rng(seed)
+    for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
+        low = 0 if family.held and not family.wronskian else -60
+        picks = [draw.integers(low, 60, (3, *board.shape)) for _ in state.lines]
+        state.lines = [node.Record(now, before, np.abs(r)) for now, before, r in picks]
+        if family.axes:  # the axis lines at 0, every axis's pace the Node's
+            state.lines[1:] = [node.empty_record(board.shape, board.kind) for _ in state.lines[1:]]
+        state.write_remainders = [draw.integers(0, wall, board.shape) for wall in board.walls(index)]
+        for array in [*(getattr(r, k) for r in state.lines for k in KEYS), *state.write_remainders]:
+            array[board.shape[0] // 2 + far, 0, 0] += 7 * bool(far)
+    return board
 
 
 def hand_world(folder: Path, name: str, world: dict, body: dict, mode: dict) -> Path:
@@ -192,14 +194,13 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         assert len(set(near)) == 1 and 0 < near[0] < int(level[centre]), near
     for _ in range(4):
         start = node.Record(*(getattr(matter.lines[0], k).copy() for k in KEYS))
-        ports = [(a, s) for a in range(3) for s in (1, -1)]
 
         def across(a: np.ndarray, axis: int, side: int) -> np.ndarray:  # the arrival, 0 beyond a face
             return np.roll(np.pad(a, 1), -side, axis)[BOX]
 
-        arrived = tuple(across(start.now, a, s) for a, s in ports)
+        arrived = tuple(across(start.now, a, s) for a, s in product(range(3), (1, -1)))
         c, aa = sum(holder.lines[0].now for holder in holders), [line.now for line in gravity.lines[1:]]
-        tensions = [(aa[a] + across(aa[a], a, s) + 1) // 2 for a, s in ports]
+        tensions = [(aa[a] + across(aa[a], a, s) + 1) // 2 for a, s in product(range(3), (1, -1))]
         factors, own = tuple(link_factor(GAMMA, UNIT, t) for t in tensions), paces.node_paces(GAMMA, c)
         reads, self_coefficient, rule_wall = coefficients(4000, 6000, GAMMA, *own, factors, UNIT)
         expected = rule3(reads, arrived, self_coefficient, rule_wall, *(getattr(start, k) for k in KEYS))
@@ -209,11 +210,10 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         assert np.array_equal(matter.lines[0].remainder, expected[1])
         for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):  # the 48 kept
             for state in board.states:
-                tensor = len(state.lines) == 1 + 3
+                tensor, parts = len(state.lines) == 1 + 3, state.lines[1:]
                 scalars = state.lines[:1] if tensor else state.lines
                 arrays = [getattr(r, k) for r in scalars for k in KEYS] + state.write_remainders[:1]
                 assert all(np.array_equal(turned(a, axes, signs), a) for a in arrays)
-                parts = state.lines[1:]
                 found = [state.write_remainders[1:]] + [[getattr(r, k) for r in parts] for k in KEYS]
                 for t in found if tensor else []:  # the tensions as the diagonal of a tensor
                     assert all(np.array_equal(turned(t[axes[a]], axes, signs), t[a]) for a in range(3))
@@ -486,3 +486,54 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     written = json.loads((tmp_path / "light.output.json").read_text(encoding="utf-8"))
     lit = [x for x in written["lines"] if x["event"] == "field" and x["family"] == "charge"]
     assert output["verdict"] == "LAWFUL" and lit and max(x["reading"] for x in lit) > 0
+
+
+def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_path, monkeypatch):
+    """The dimension generic (the Boss's line, #1572 comment 5963599079 (B), with the two hands' amendments, the advisor's 5963681796 and the mathematician's 5963662072 part C): a family of quanta declares any dimension from 1, its record that many real lines but for 2, the one plane (3 three real lines, [2, 5] ten real lines in two parts, 0 refused by name); a family of real lines names no holder of the sign, refused by name as no plane (the sign a plane's, read plainly or by the turn and written by the Wronskian), so the sign holder keeps its one row beside it; on a periodic 5-cube of the rule's universe with a family of three real lines beside it, random levels on every line and every write remainder, each of the cube's 48 signed axis permutations commutes with the interval line by line (every real line imaged as a scalar, gravity's axis lines as a tensor's diagonal: Rule3 mixes lines never and a rotation of the cube maps each line to itself), the inverse returning every array; the record's NodeState is its three lines and nothing else, its form the plain sum of the three lines' forms and its share the sum of theirs, one quantum one unit of the form over every line (the dimension adds no mass); a body or a message is laid at its declared weights over the three lines (`weights`), the pair times each line's weight."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe_beside(tmp_path)
+    rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    triple = {**CHARGED, "name": "triple", "reads": {"gravity": 1, "binding": 1}, "dimension": 3}
+    rows["families"].append(triple)
+    (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
+    families, vector = universe_of(rows)[1], len(rows["families"]) - 1
+    assert (families[vector].lines, families[vector].plane, families[CHARGE].records) == (3, False, 1)
+    assert shape_of({"dimension": [2, 5]}, "x")[:2] == (10, 2) and shape_of({"dimension": 2}, "x")[2]
+    refused("from 1", shape_of, {"dimension": 0}, "x")
+    triple["reads"]["charge"] = 1  # three real lines naming the holder of the sign: no plane
+    refused("no plane", universe_of, rows)
+    world = dict(shape=[5] * 3, boundary=dict.fromkeys("xyz", "periodic"), ticks=1, measured=[])
+    world.update(universe="u.json", engine="e.json", detectors=[])
+    (cube := tmp_path / "cube.json").write_text(json.dumps(world))
+
+    def imaged(board: GameBoard, axes, signs) -> list[node.NodeState]:  # the state under one of the 48
+        found = []
+        for f, s in zip(board.families, board.states, strict=True):
+            lands = [axes[k - 1] + 1 if f.axes and k else k for k in range(len(s.lines))]
+            arrays = [[turned(getattr(s.lines[at], key), axes, signs) for key in KEYS] for at in lands]
+            writes = [turned(s.write_remainders[at], axes, signs) for at in lands] if f.held else []
+            found.append(node.NodeState([node.Record(*a) for a in arrays], writes))
+        return found
+
+    def arrays(states: list[node.NodeState]) -> list[list]:
+        return [BACK.arrays_of(str(k), s) for k, s in enumerate(states)]
+
+    (stepped := random_state(cube, 11)).step()
+    for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):
+        other = random_state(cube, 11)
+        other.states = imaged(other, axes, signs)
+        other.step()
+        assert BACK.first_difference(arrays(imaged(stepped, axes, signs)), arrays(other.states)) is None
+    begun, state = list(stepped.states[vector].lines), stepped.states[vector]
+    stepped.step_inverse()
+    assert BACK.first_difference(BACK.snapshot(random_state(cube, 11)), BACK.snapshot(stepped)) is None
+    content, factors = stepped.read(vector)
+    pair, wrap = families[vector].pair, stepped.wrap
+    own = sum(share.share(pair, line, wrap, GAMMA, content, factors, UNIT) for line in state.lines)
+    forms = sum(node.form([a], [b]) for a, b in zip(state.lines, begun, strict=True))
+    assert len(state.lines) == 3 and not state.write_remainders and len(begun) == 3
+    assert (own == stepped.share_of(vector)[0]).all() and (node.form(state.lines, begun) == forms).all()
+    lines = (fresh := GameBoard(load_world(cube))).states[vector].lines
+    fresh.lay(BodyRow(vector, ((2, 2, 2),), (1,), ((62, 7),), ((62, 5),), (), (), (2, 3, -5)))
+    laid = [[int(a.ravel()[62]) for a in (r.now, r.before)] for r in lines]
+    assert laid == [[14, 10], [21, 15], [-35, -25]]

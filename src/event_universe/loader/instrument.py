@@ -228,9 +228,10 @@ def node_instrument_of(
         raise ValueError(
             f"{label} declares its parts, the modes it is laid in, before any instrument, transition or rate"
         )
-    if not family.plane or family.parts < 2:
+    if not family.plane or family.parts < 2 or family.planes != 1:
         raise ValueError(
-            f"{label}: a body laid in its parts is a plane of several parts, and {family.name!r} is not"
+            f"{label}: a body laid in its parts is a plane of several parts, one plane per part, and "
+            f"{family.name!r} is not"
         )
     names, counts = parts_of(body["parts"], f"{label}.parts", family.parts, count)
     draw = instrument_of(body["instrument"], f"{label}.instrument") if "instrument" in body else None

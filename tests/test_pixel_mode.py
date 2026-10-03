@@ -61,8 +61,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     charge, beyond = [family.name for family in walled.families].index("charge"), walled.wrap.beyond
     assert beyond is not None and beyond.sum() == 8 and not beyond[12, 4, 0]
     walled.step()
-    clicked = [line for line in lines if line["event"] == "click"]
-    assert not clicked and not walled.quanta(charge)[0][beyond].any()  # nothing stands beyond the face
+    assert not [x for x in lines if x["event"] == "click"] and not walled.quanta(charge)[0][beyond].any()
     for _ in range(23):
         walled.step()
         open_board.step()
@@ -109,8 +108,7 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
         refused("share a Node|does not stand", TOOL.pixel_mode, {**document, "measured": near})
     fixed = json.loads((lay_path := chain_body_world(tmp_path, TOOL, 10, mode=False)).read_text())
     fixed["lay"] = {"kind": "fixed_point", "stop": 1, "passes": 30, "tolerance": [1, 4]}
-    lay_path.write_text(json.dumps(fixed), encoding="utf-8")
-    TOOL.main(["--input", str(lay_path)])
+    lay_path.write_text(json.dumps(fixed), encoding="utf-8"), TOOL.main(["--input", str(lay_path)])
     laid_mode = json.loads((mode_path := lay_path.with_suffix(".mode.json")).read_text(encoding="utf-8"))
     passes, laid = laid_mode["bodies"][0]["lay"]["trajectory"], json.loads(lay_path.read_text())
     assert len(passes) > 1 and max(passes[-1][1:3]) <= 1 and load_world(lay_path).lay.stop == 1

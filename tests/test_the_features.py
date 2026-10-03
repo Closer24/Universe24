@@ -62,8 +62,7 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert content_of([]) == 0 and link_tension([]) == 0
     assert link_tension([(1, level, level)]).ravel().tolist() == [7, -7]
     assert link_tension([(1, level, -level), (1, full, full + 1)]).ravel().tolist() == [4, 4]
-    refused("wall is from 1", carried, 5, 0, 0)
-    refused("direction", carried, 5, 3, 0, 2)
+    refused("wall is from 1", carried, 5, 0, 0), refused("direction", carried, 5, 3, 0, 2)
     refused("wall E_s T is from 1", hold, 0, 1, 0, 0)
 
 
@@ -202,8 +201,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         turn = node.turning(1, rows, board, 1, GAMMA)
         assert np.asarray(paced_read if rows is paced else turn[0]).ravel().tolist() == found
         assert rows is paced or paced_read == 0  # the rotation: no level in the content
-    rule = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    rows = rule["families"]
+    rows = (rule := json.loads(UNIVERSE.read_text(encoding="utf-8")))["families"]
     charge = next(row for row in rows if row["name"] == "charge")["held"]
     universe_of({**rule, "families": [*rows, CHARGED]})  # the plain read: not gated
     charge["act"] = "rotation"

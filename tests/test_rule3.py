@@ -116,8 +116,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
     assert not offenders, offenders
     assert all(re.search(p, (SOURCE / "core" / "rule3.py").read_text()) for p in RULE_LINES)
     SHIFT_HOME = {"src/event_universe/core/ports.py": {"shifted"}}
-    SHIFT_TOKENS = re.compile(r"np\.roll\(|\._shift\(|\.take\(")
-    found: dict[str, set[str]] = {}
+    SHIFT_TOKENS, found = re.compile(r"np\.roll\(|\._shift\(|\.take\("), {}
     for path in sorted(SOURCE.rglob("*.py")):
         text = path.read_text(encoding="utf-8")
         if not SHIFT_TOKENS.search(text):

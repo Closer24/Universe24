@@ -6,7 +6,7 @@ from typing import Any
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
-from event_universe.loader.derived import FamilyRule, Row
+from event_universe.loader.derived import KINDS, PLANE, PLANE_LINE, FamilyRule, Row
 from event_universe.loader.keys import integer, keyed, reads_of
 
 UNIVERSE_KEYS = ("integers", "families")
@@ -28,11 +28,10 @@ PACE, ROTATION = (
     "rotation",
 )  # how a held row acts on its readers: its level into their paces, or the turn of the two-part record
 ACTS = (PACE, ROTATION)
-PLANE = 2  # the dimension of a plane, re and im: charged matter; 1 one real line
 
 
 def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, bool]:
-    """A family's shape from its row, (lines, parts, plane, wronskian, rotation): a family of quanta declares its `dimension`, 1 (one real line), 2 (a plane, re and im) or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), no dimension, a held row never being a plane, and optionally its `act` on its readers (`ACTS`): the plain read into their paces, every holder's without the key, or the rotation of the two-part record, the holder of the sign's alone (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record), under which the holder carries three odd axis lines beside its time line (1 + 3 lines); a holder of the content asking the rotation, and an act by another word, are refused by name."""
+    """A family's shape from its row, (lines, parts, plane, wronskian, rotation): a family of quanta declares its `dimension`, any integer from 1, the lines of its record, each stepped by Rule3 as every line is, the form and the share the sum over them (1 one real line; 2 a plane, re and im, the one dimension with a Wronskian and a turn, `PLANE`; 3 three real lines, each stepped as a line of dimension one, no turn and no row of the sign; a dimension below 1 refused by name and no other refused by number), or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), or the shape by name, a list of its lines' kinds, `real` or `plane` (`KINDS`; the two hands of 2026-10-03, #1572 comments 5963681796 and 5964082980: 1 and 2 kept as spellings, ["plane", "plane", "plane"] a record of three planes, one Wronskian per plane summed into its row, the proton's row; a record of real lines and planes together refused by name, not built), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), no dimension, a held row never being a plane, and optionally its `act` on its readers (`ACTS`): the plain read into their paces, every holder's without the key, or the rotation of the two-part record, the holder of the sign's alone (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record), under which the holder carries three odd axis lines beside its time line (1 + 3 lines); a holder of the content asking the rotation, and an act by another word, are refused by name."""
     if "held" in row:
         if "dimension" in row:
             raise ValueError(
@@ -56,14 +55,29 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, boo
         return 1 + 3 * (TENSIONS in sources or rotation), 1, False, WRONSKIAN in sources, rotation
     if "dimension" not in row:
         raise ValueError(
-            f"{label} lacks the key 'dimension': a family of quanta declares 1, {PLANE} or [parts, dimension]"
+            f"{label} lacks the key 'dimension': a family of quanta declares an integer from 1 or [parts, dimension]"
         )
     shape = row["dimension"]
+    if isinstance(shape, list) and shape and all(isinstance(kind, str) for kind in shape):
+        kinds = sorted(set(shape))
+        if any(kind not in KINDS for kind in kinds):
+            raise ValueError(
+                f"{label}.dimension lists its lines' kinds, each one of {list(KINDS)}, got {shape!r}"
+            )
+        if len(kinds) > 1:
+            raise ValueError(
+                f"{label}.dimension {shape!r} mixes real lines and planes in one record: every line of a record is "
+                "real or every line a plane (the two hands of 2026-10-03; a mixed record is not built)"
+            )
+        plane = kinds[0] == PLANE_LINE
+        return len(shape) * (PLANE if plane else 1), 1, plane, False, False
     if isinstance(shape, list) and len(shape) != 2:
-        raise ValueError(f"{label}.dimension as a shape is [parts, dimension], got {shape!r}")
+        raise ValueError(
+            f"{label}.dimension as a shape is [parts, dimension] or a list of its lines' kinds, got {shape!r}"
+        )
     parts, lines = shape if isinstance(shape, list) else [1, shape]
     parts = integer(parts, f"{label}.dimension's parts", 1)
-    lines = integer(lines, f"{label}.dimension", 1, PLANE)
+    lines = integer(lines, f"{label}.dimension", 1)
     return parts * lines, parts, lines == PLANE, False, False
 
 

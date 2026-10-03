@@ -23,7 +23,7 @@ from event_universe.loader.instrument import (
     patterns_of_the_law,
     ports_of,
 )
-from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of
+from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, messages_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
@@ -35,7 +35,7 @@ WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "tick
 WORLD_KEYS += ("measured", "messages", "detectors", "receding", "instrument", "lay")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "measured", "detectors")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes", *NODE_INSTRUMENT_KEYS),
+    ("family", "nodes", "weights", *NODE_INSTRUMENT_KEYS),
     ("family", "nodes"),
     ("node", "count"),
 )
@@ -44,7 +44,7 @@ DETECTOR_KEYS, START_KEYS = ("name", "positions", "block", "basis", "pattern"), 
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`instrument`, `loader/instrument.py`: its parts the modes' labels with the count in one of them, and as an instrument its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the body is at a Node)."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`instrument`, `loader/instrument.py`: its parts the modes' labels with the count in one of them, and as an instrument its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word of 2026-10-03, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     nodes: tuple[Node, ...]
@@ -53,6 +53,7 @@ class BodyRow:
     before: Levels
     im_now: Levels
     im_before: Levels
+    weights: tuple[int, ...] = ()
     instrument: NodeInstrument | None = None
 
 
@@ -107,7 +108,7 @@ def bodies_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`)."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
@@ -143,7 +144,7 @@ def bodies_of(
             counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
         if parted:
             parts = node_instrument_of(body, label, families[family], family, quanta, sum(counts))
-            found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), parts))
+            found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed = laid.index(entry)
         now, before, im_now, im_before = levels_of(
@@ -154,7 +155,12 @@ def bodies_of(
             bound,
             beyond,
         )
-        found.append(BodyRow(family, tuple(nodes), tuple(counts), now, before, im_now, im_before))
+        weights = weights_of(
+            body.get("weights"), f"{label}.weights", families[family].laid, families[family].plane
+        )
+        found.append(
+            BodyRow(family, tuple(nodes), tuple(counts), now, before, im_now, im_before, weights)
+        )
     return tuple(found)
 
 

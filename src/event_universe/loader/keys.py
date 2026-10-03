@@ -1,4 +1,4 @@
-"""The keys of the world's files as the loader reads them: an object with its allowed and required keys, an integer within its bounds, a Node inside the shape and on the board, a range of Nodes along an axis, a family's declared reads by name and weight, and the document a world names by a repository path; every defect refused by name, no default written (ALGEBRA.md #a-familys-declaration)."""
+"""The keys of the world's files as the loader reads them: an object with its allowed and required keys, an integer within its bounds, a Node inside the shape and on the board, a range of Nodes along an axis, a family's declared reads by name and weight, a laid record's weight per real line, and the document a world names by a repository path; every defect refused by name, no default written (ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
@@ -59,6 +59,23 @@ def document_at(files: Mapping[str, object], path: object, label: str) -> object
     if not isinstance(path, str) or path not in files:
         raise ValueError(f"{label} names {path!r}, and no file stands at that repository path")
     return files[path]
+
+
+def weights_of(value: object, label: str, lines: int, plane: bool) -> tuple[int, ...]:
+    """A laid record's weight on each laid line of its part (the world file's key `weights` on a body or a message, `GameBoard.lay`: the laid pair times the line's weight on that line, so a record of three real lines is laid at the weights (a, b, c) over its three lines): a list of one integer per real line, not all 0, refused by name on planes, whose second line is its sense and no weighted copy of the first; 1 on every laid line without the key (`FamilyRule.laid`, one per real line, one per plane), the pair laid alike."""
+    if value is None:
+        return (1,) * lines
+    if plane:
+        raise ValueError(
+            f"{label} weights the lines of a plane: a plane's second line is its sense (the second level pair), "
+            "and no weight is laid on it; the key is a record of real lines' (ALGEBRA.md #a-familys-declaration)"
+        )
+    if not isinstance(value, list) or len(value) != lines:
+        raise ValueError(f"{label} must list one integer weight per line of the record, {lines} here")
+    found = tuple(integer(weight, f"{label}[{at}]", -MAX_WORK_INT) for at, weight in enumerate(value))
+    if not any(found):
+        raise ValueError(f"{label} weights every line of the record at 0: nothing is laid")
+    return found
 
 
 def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:
