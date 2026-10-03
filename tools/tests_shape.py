@@ -41,6 +41,18 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_meeting.py::test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands": (
+        36,
+        "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the hole of a "
+        "dense record, the face's target the scaled level where the share at the Node exceeds the record's own quantum, "
+        "the phase and the sense standing, the back-in-time gate across a dense taking",
+    ),
+    "tests/test_the_draw.py::test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay": (
+        24,
+        "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the unit of a "
+        "record empty at the books' origin set at its first lay to the giving's own W_c sin Omega, a born quantum "
+        "below the half-top energy credited 1 and not 0",
+    ),
     "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum": (
         90,
         "the generic detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "

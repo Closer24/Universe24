@@ -51,9 +51,10 @@ their statuses.
   EPS beside each PDF for the journal. The paper uses three: `lattice.pdf` and `octahedron.pdf` (the two panels
   of Fig. 1, the GameBoard and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
-  `python paper/general_formula/octahedron.py` and `meeting.pdf` (the click as
-  the meeting of the future with the past, schematically) by
-  `python paper/general_formula/meeting.py`. The others,
+  `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 2,
+  the click at a bound body: space and time at the body's Node, the past
+  meeting the future, and the Node before and after the write, schematically,
+  in black and grey) by `python paper/general_formula/click_body.py`. The others,
   `band.pdf`, `channels.pdf` (by `band_and_channels.py`) and `branches.pdf`
   (by `branches.py`), belong to the long version of the paper, which stays in
   the branch's history (commit 5adef30), and are kept for it.
