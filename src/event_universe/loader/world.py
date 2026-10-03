@@ -112,7 +112,7 @@ def bodies_of(
     bound: int,
     beyond: tuple[Node, ...],
 ) -> tuple[BodyRow, ...]:
-    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
+    """The bodies: each its family (a family of quanta), its Nodes with their counts (no Node shared, none beyond the board; a body of a family that reads a holder of the sign, `derived.charged`, is one quantum of its family, one Node with the count 1, and a count above it is refused by name with the way to declare many quanta, that many bodies of count 1, each its own record and its own row of the sign, ALGEBRA.md, No record reads its own write of the sign) and its two levels from the mode file beside the world, which stands for this world by its digest, the mode's entries in the order of the bodies it lays; a body with no mode entry is refused by name; a body declaring its `parts` (and as an instrument its `transitions`, `rates` and `instrument`) or its `conversion` (the record converted whole, with its `instrument`) takes no mode entry, its lay the engine's own at its one Node (`node_instrument_of`), and optionally `weights`, the laid pair's weight per line of its record (`keys.weights_of`, a record of real lines')."""
     names = {family.name: index for index, family in enumerate(families)}
     quanta = {name: index for name, index in names.items() if families[index].quanta}
     if not isinstance(value, list):
@@ -146,6 +146,14 @@ def bodies_of(
             taken.add(node)
             nodes.append(node)
             counts.append(integer(line["count"], f"{label}.nodes[{index}].count", 1))
+        if derived.charged(families, family) and sum(counts) > 1:
+            raise ValueError(
+                f"{label} declares the count {sum(counts)} of {body['family']!r}, a family that reads the holder "
+                "of the sign: such a record is one quantum of its family, one Node with the count 1, and many "
+                "quanta are that many bodies of count 1, each laid by the generator as the one-Node record of "
+                "its quantum (tools/pixel_mode.py, --pixel) and its own record with its own row of the sign "
+                "(ALGEBRA.md, No record reads its own write of the sign)"
+            )
         if parted:
             parts = node_instrument_of(body, label, families, family, quanta, sum(counts))
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))

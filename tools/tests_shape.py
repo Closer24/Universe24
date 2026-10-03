@@ -75,6 +75,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
         "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
     ),
+    "tests/test_the_bound_body.py::test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused": (
+        64,
+        "the count-1 gate's dedicated test (the Boss, 2026-10-03; ALGEBRA.md, No record reads its own write of "
+        "the sign, item 43 (1)): two charged records of count 1 on a chain, each its own record and its own row "
+        "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
+        "self-read 0 to the bit over three intervals, a count above 1 refused by name",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
