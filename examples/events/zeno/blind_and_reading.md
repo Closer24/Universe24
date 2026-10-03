@@ -256,3 +256,27 @@ their ratio the twin's within 0.001, and the share at the Node reads 0.975 of a 
 twin's 2.674, more than one quantum gone at the Node itself, since the booked form's cross term with
 the six neighbours' levels scales by the factor alone and not by its square, Rule3 refilling the Node
 from 2.784 at the second interval after; a finding by name for the hands, no number adjusted.
+
+### The reading on main after round A's merge (the Boss, 2026-10-03, 11:30 to 11:36 UTC)
+
+The experiment on main at 7732b5ff (the engine of the squash 08c092a9, pull request #1724, the partial
+hole and the empty-origin unit), the five shipped worlds over the design's seeds 1 to 480 by
+`tools/meeting_trials.py`, each world as four processes of 120 seeds (the owner's rule of the day: a
+run under a minute; 25 to 27 s per world on four cores), the counts summed over the four; the blind
+rows above copied before the run (n = 2 at 0.500 within 0.023; n = 1, 4, 8 and 16 unchanged within
+1.5 standard errors from the shipped act's 480 of 480, 0.402 and 0.206; the column within one
+standard error).
+
+| world | ends in e | fraction | Itano | standard error | against the column | the jumps g to e / e to g |
+| --- | --- | --- | --- | --- | --- | --- |
+| n = 1 | 480 of 480 | 1.000 | 1.000 | 0.000 | the column exactly | 480 / 0 |
+| n = 2 | 251 of 480 | 0.523 | 0.500 | 0.023 | 1.00 standard errors, within the blind's 0.023: PASS | 381 / 130 |
+| n = 4 | 196 of 480 | 0.408 | 0.375 | 0.022 | 1.51 standard errors; unchanged from the shipped act's 0.402 within 1.5 as the blind asked; against the column a finding by name (the branch's reading the same) | 256 / 60 |
+| n = 8 | 109 of 480 | 0.227 | 0.235 | 0.019 | 0.41 standard errors | 121 / 12 |
+| n = 16 | 57 of 480 | 0.119 | 0.133 | 0.015 | 0.92 standard errors | 60 / 3 |
+
+The reading on main is the branch's reading bit for bit (the same seeds, the same engine after the
+squash): n = 2 PASS at one standard error; n = 4 the finding by name that stands (the hands' 244 and
+the quadratic factor's branch, pull request #1730, where it reads 0.415 at 480 seeds; the advisor's
+line: 960 seeds before any cause is named); n = 1, 8 and 16 within one standard error of the column.
+Nothing adjusted.
