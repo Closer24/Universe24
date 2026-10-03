@@ -1,4 +1,4 @@
-"""The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept; the owner's word of 2026-10-03, the click the meeting of two quanta at one Node, the write their exchange there): the instruments' acts outside Rule3, taken by the engine's loop at the instruments' reports from outside the Node, as the lay and the receding face are; the Node knows nothing of them and no family of clicks exists. The draw: the instrument's generator, declared in the world file with its seed, x <- (multiplier x + increment) mod modulus by the division act, and one index among integer weights, the first whose cumulative weight exceeds x mod total (the lower index on a tie); the run is deterministic per seed. The hole: the arriving record's levels at the one Node the credited quantum entered through set to 0, every line of the record there at the state of a Node with no level, exactly as the receding face removes a share (the advisor's second hand: for a spread record the form is quadratic, and subtracting one quantum's levels where less than a quantum stands would add form instead of removing it), which spreads by Rule3 alone as an event (no front is sent: a family has one level field, and an act ending a record's shares on arrival would end every other quantum's wave it reached); the record's count, not the levels, goes down by one. The lay of a record at one Node: the levels of `count` quanta of a pair standing at one Node at the pair's own rotation, the amplitude A from the count's measure, A^2 = count T den^2 div (2 (den^2 - num^2)) so that the share 6 den A^2 sin^2 omega reads the count (the count is the record's share), and for the massless pair the two levels alike, A^2 = count T div 2; a direction taken from the levels of the part the quantum leaves, so the phase passes with the quantum (the mathematician's 174 (a), the arriving quantum's phase 0 on a real line of light); the level before the level now turned by the rest rotation, cos omega = num / den, in the record's own sense; the remainder at the lay's origin, the half wall (174 (b)). The face (the mathematician's 193, 195 and 197, the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, the detector operates Rule3 on the families): the giver's write is no assignment but one value presented at one Port of the Node for two intervals, the least arrival that lifts Rule3's numerator at the Node into the target's window, arr_face = ceiling((w a* - SUM over the other Ports of R_j arr_j - S a_now + w a_before - r) / R_face) with the target a* = 0, so that Rule3 itself writes the level 0 and its own remainder, below one read coefficient; the second interval's face makes the new now 0 and the new before the 0 of the first, the record's lines at (0, 0) from then where every neighbour stands at 0, and the hole spreading by Rule3 alone elsewhere; the same value presented on the way back, Rule3's inverse crosses the click bit for bit, the Node knowing neither (the faces the books' log, `Face`)."""
+"""The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept; the owner's word of 2026-10-03, the click the meeting of two quanta at one Node, the write their exchange there): the instruments' acts outside Rule3, taken by the engine's loop at the instruments' reports from outside the Node, as the lay and the receding face are; the Node knows nothing of them and no family of clicks exists. The draw: the instrument's generator, declared in the world file with its seed, x <- (multiplier x + increment) mod modulus by the division act, and one index among integer weights, the first whose cumulative weight exceeds x mod total (the lower index on a tie); the run is deterministic per seed. The hole: the arriving record's levels at the one Node the credited quantum entered through set to 0, every line of the record there at the state of a Node with no level, exactly as the receding face removes a share (the advisor's second hand: for a spread record the form is quadratic, and subtracting one quantum's levels where less than a quantum stands would add form instead of removing it), which spreads by Rule3 alone as an event (no front is sent: a family has one level field, and an act ending a record's shares on arrival would end every other quantum's wave it reached); the record's count, not the levels, goes down by one. The lay of a record at one Node: the levels of `count` quanta of a pair standing at one Node at the pair's own rotation, the amplitude A from the count's measure, A^2 = count T den^2 div (2 (den^2 - num^2)) so that the share 6 den A^2 sin^2 omega reads the count (the count is the record's share), and for the massless pair the two levels alike, A^2 = count T div 2; a direction taken from the levels of the part the quantum leaves, so the phase passes with the quantum (the mathematician's 174 (a), the arriving quantum's phase 0 on a real line of light); the level before the level now turned by the rest rotation, cos omega = num / den, in the record's own sense; the remainder at the lay's origin, the half wall (174 (b)). The face (the mathematician's 193, 195 and 197, the advisor's second, #1572 comment 5963391333, two hands; the owner's word of 2026-10-03, 03:22 Israel, the detector operates Rule3 on the families): the giver's write is no assignment but one value presented at one Port of the Node for two intervals, the least arrival that lifts Rule3's numerator at the Node into the target's window, arr_face = ceiling((w a* - SUM over the other Ports of R_j arr_j - S a_now + w a_before - r) / R_face) with the target a* = 0, so that Rule3 itself writes the level 0 and its own remainder, below one read coefficient; the second interval's face makes the new now 0 and the new before the 0 of the first, the record's lines at (0, 0) from then where every neighbour stands at 0, and the hole spreading by Rule3 alone elsewhere; the same value presented on the way back, Rule3's inverse crosses the click bit for bit, the Node knowing neither (the faces the books' log, `Face`). The hole of a dense record (the mathematician's 237 with the advisor's second, #1572 comments 5967012316 and 5967123679, two hands; ALGEBRA.md, the hole of a dense record): the taking's hole removes one quantum's share at the Node and not the Node's whole level; where the arriving record's share s at the Node (the booked form's Node term as the engine reads it per Node, `GameBoard.share_of`) exceeds its own quantum W_rec (the record's unit read once at the books' origin, `credit.record_unit`), the face's target is no longer 0 but the level Rule3 would write scaled by isqrt((s - W_rec) x 2^(2m)) div (isqrt(s) x 2^m) in one carried rounding, the lay's own root (`hole_factor`, m the scale at which the root's argument stays within the width), both time levels alike over the face's two intervals (the second interval's face scales every term of the numerator but the one on the level now, which the first face already scaled), so the record's phase and sense at the Node stand and only its share drops; where s is at most W_rec the hole to 0 as before. The count goes down by one as before; the front is unchanged, erasing only a record at count 0; the inverse presents the kept value whatever the target."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ def drawn(
 
 @dataclass
 class Face:
-    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Port preferred (the first in Port order whose read is not 0 at the step is taken and kept), the interval at whose step it is presented, and the value, None until the forward step computes it, the value the inverse presents again."""
+    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Port preferred (the first in Port order whose read is not 0 at the step is taken and kept), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, the hole's factor (numerator, denominator) for a dense record, None for the hole to 0 (`hole_factor`), and whether the level now at the Node already carries the factor (the second of the face's two intervals)."""
 
     family: int
     line: int
@@ -39,11 +39,35 @@ class Face:
     port: int
     tick: int
     value: int | None = None
+    hole: tuple[int, int] | None = None
+    scaled: bool = False
 
 
 def face_value(total: int, read: int) -> int:
-    """The least arrival that lifts Rule3's numerator into the target's window [0, R_face), ceiling(-total / R_face), the division act's floor negated, with `total` the numerator without the face Port's term: R_face x value + total in [0, R_face), within [0, w) since R_face <= w, so the level next is 0 and the remainder Rule3's own."""
+    """The least arrival that lifts Rule3's numerator into the target's window [0, R_face), ceiling(-total / R_face), the division act's floor negated, with `total` the numerator without the face Port's term less w a* (a* the target, 0 for the hole to 0): R_face x value + total in [0, R_face), within [0, w) since R_face <= w, so the level next is a* and the remainder Rule3's own."""
     return -int(division_forward(total, read, 0)[0])
+
+
+def hole_factor(share: int, unit: int, width: int) -> tuple[int, int] | None:
+    """The partial hole's factor at a Node where the arriving record's share `share` exceeds its own quantum `unit` (the mathematician's 237, precision 2, with the advisor's second): the numerator isqrt((share - unit) x 2^(2m)) and the denominator isqrt(share) x 2^m, their ratio sqrt((share - unit) / share) in one carried rounding, the lay's own root, with 2^(2m) the power of four from the share's bit length against the width's (`width` the run's largest integer), so that the root's argument stays within the width and the numerator within its half; None where the share is at most the unit, the hole to 0."""
+    if share <= unit:
+        return None
+    bits = max(int(width).bit_length() - int(share).bit_length(), 0)
+    scale = int(division_forward(bits, 2, 0)[0])
+    numerator = division_fixed_point((share - unit) * 2 ** (2 * scale))
+    return numerator, division_fixed_point(share) * 2**scale
+
+
+def target_of(face: Face, untouched: int, self_term: int, wall: int) -> int:
+    """The face's target a*, the level Rule3 writes at the Node: 0 for the hole to 0; for a dense record the level it would write, (self_term + untouched) div wall with `self_term` the numerator's term on the level now and `untouched` every other term with the face Port's own arrival, scaled by the hole's factor, every term alike at the first interval and every term but the self term at the second, whose level now the first face already scaled (the two time levels alike, the phase and the sense standing); the products in Python's integers, beyond the width where the write's numerator already is."""
+    if face.hole is None:
+        return 0
+    numerator, denominator = face.hole
+    if face.scaled:
+        found = self_term + int(division_forward(numerator * untouched, denominator, 0)[0])
+    else:
+        found = int(division_forward(numerator * (self_term + untouched), denominator, 0)[0])
+    return int(division_forward(found, wall, 0)[0])
 
 
 def presented(
@@ -58,7 +82,7 @@ def presented(
     offset: tuple[int, int, int],
     direction: int,
 ) -> tuple[Any, ...]:
-    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed from the arrivals, the Node's two levels and its remainder as the step reads them (`face_value`, the first Port from the preferred one whose read is not 0 at the Node, kept in the face; a Node with every read 0 refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
+    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed from the arrivals, the Node's two levels and its remainder as the step reads them (`face_value` at the target `target_of`, 0 or a dense record's scaled level, the first Port from the preferred one whose read is not 0 at the Node, kept in the face; a Node with every read 0 refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
     found, copied = list(arrived), set()
     for face in faces:
         at = (face.at[0] + offset[0], face.at[1] + offset[1], face.at[2] + offset[2])
@@ -71,12 +95,14 @@ def presented(
                     f"the face at the Node {list(face.at)} finds every read 0: no open Link"
                 )
             face.port = ports[0]
-            total = int(
+            self_term = int(
                 np.asarray(self_coefficient)[at] if np.ndim(self_coefficient) else self_coefficient
-            )
-            total = total * int(now[at]) - int(wall) * int(other[at]) + int(carry[at])
-            total += sum(here[p] * int(found[p][at]) for p in range(len(here)) if p != face.port)
-            face.value = face_value(total, here[face.port])
+            ) * int(now[at])
+            rest = -int(wall) * int(other[at]) + int(carry[at])
+            rest += sum(here[p] * int(found[p][at]) for p in range(len(here)) if p != face.port)
+            own = here[face.port] * int(found[face.port][at])  # the face Port's arrival untouched
+            target = target_of(face, rest + own, self_term, int(wall))
+            face.value = face_value(self_term + rest - int(wall) * target, here[face.port])
         if face.port not in copied:
             found[face.port] = np.array(found[face.port], copy=True)
             copied.add(face.port)

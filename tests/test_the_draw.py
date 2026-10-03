@@ -14,6 +14,7 @@ from event_universe.features.click import along_cosine, envelope, exact_total, l
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.game_board import GameBoard
+from event_universe.giving import born_unit
 from event_universe.loader.derived import count_wall
 from event_universe.loader.instrument import pair_of
 from event_universe.loader.universe import universe_of
@@ -422,3 +423,36 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     own = division_fixed_point(wall * wall * 5) // 3  # one quantum at [2, 3], W_c sin Omega
     assert board.credit.counts[pulse] == 1 and total is not None
     assert division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1  # one quantum
+
+
+def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path):
+    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic detector's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 is not what the engine reads on the chain, left to the hands (the mathematician's 245 answers it: the source in time's energy on the chain)."""
+    world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
+    giver = {**world["measured"][0], "transitions": [{**world["measured"][0]["transitions"][0]}]}
+    giver["transitions"][0]["resonance"], giver["instrument"] = (
+        [9, 10],
+        {**giver["instrument"], "window": 240},
+    )
+    (path := tmp_path / "low.json").write_text(json.dumps({**world, "measured": [giver], "ticks": 240}))
+    TOOL.main(["--input", str(path)])
+    for seed in (1, 2, 3, 4):  # the first trial whose giving leaves the whole span inside the run
+        board, series = GameBoard(load_world(path), (lines := []).append), {}
+        pulse = [f.name for f in board.families].index("pulse")
+        wall, books = count_wall(board.families[pulse], board.world.quantum_action), board.credit
+        assert books.units[pulse] == wall and pulse in books.empty and books.counts[pulse] == 0
+        board.credit.bodies[0].state = seed
+        for _ in range(240):
+            board.step()
+            series[board.tick] = board.total_share(pulse)[0]
+        jumps = [
+            (c["tick"], c["given"]) for c in lines if c["event"] == "jump" and c["label"] == "DETECTOR"
+        ]
+        if jumps and jumps[0][1] == "pulse" and jumps[0][0] <= 192:
+            break
+    assert jumps and jumps[0][1] == "pulse" and jumps[0][0] <= 192 and pulse not in books.empty
+    assert (
+        books.units[pulse] == born_unit(board, pulse, (9, 10))
+        and abs(books.units[pulse] / wall - 0.436) < 0.002
+    )
+    taken = sum(given is None for _t, given in jumps[1:])  # the window's close at 240 may take it back
+    assert books.counts[pulse] + taken == 1  # one quantum given, kept or taken back, the books' number
