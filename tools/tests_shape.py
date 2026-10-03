@@ -52,6 +52,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
         "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
     ),
+    "tests/test_the_meeting.py::test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row": (
+        60,
+        "the lay by the count with the sense (round F of the board, the Boss's brief at the owner's word of 2026-10-03, "
+        "everything now and in parallel): the conversion table's sense per record out and its refusals, the given "
+        "planes laid alike at the quarter turn on the committed neutron conversion world, the Wronskians and the shares "
+        "at the Node, the twelve lay lines and the crossing, the sign rows' first write",
+    ),
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
         33,
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "

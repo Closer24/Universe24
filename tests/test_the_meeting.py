@@ -10,6 +10,7 @@ import numpy as np
 from event_universe import meeting, node, resonance, world_files
 from event_universe.features.click import amplitude
 from event_universe.game_board import GameBoard
+from event_universe.loader.derived import row_of
 from event_universe.loader.instrument import (
     Transition,
     basis_of,
@@ -330,7 +331,7 @@ def test_a_record_declared_an_instrument_at_one_node_takes_gives_and_stays(tmp_p
 
 
 def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_path):
-    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c), 5964082980, 5964520368 and 5964754600; src/event_universe/conversion.py, loader/instrument.py `conversion_of`): the neutron conversion's committed world (examples/events/neutron_conversion) at the rate 1 and the window 2, so the first window, closing at the second interval, draws it. (i) The loader: a rate of 0, a record out of the body's own family, an empty table, a sense on a record of real lines, a conversion beside parts and one without the instrument are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the instrument's count 1. (iii) The click: one conversion line naming the instrument, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; each record out given one whole quantum by the count on its first line, (128, 128) at A^2 = T div 2, its other lines 0, the credit's counts 1 each and the share 1 per quantum at the Node (the two hands); one lay line per line the write changed, the record's three and the three first lines out, and the back-in-time gate MATCH across the conversion from them; no second conversion, no front (the body cut) and no null window of a record of one part."""
+    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c), 5964082980, 5964520368 and 5964754600; src/event_universe/conversion.py, loader/instrument.py `conversion_of`): the neutron conversion's committed world (examples/events/neutron_conversion) at the rate 1 and the window 2, so the first window, closing at the second interval, draws it. (i) The loader: a rate of 0, a record out of the body's own family, an empty table, a sense on a record of real lines, a conversion beside parts and one without the instrument are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the instrument's count 1. (iii) The click: one conversion line naming the instrument, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; each record out given one whole quantum by the count on every laid line alike, A_l^2 = T div (2 laid): the antineutrino's real line (128, 128), the electron's plane (128, 0) and (0, 128) and the proton's three planes (73, 0) and (0, -73) each at the senses the table declares (`giving.laid_by_count`), the credit's counts 1 each and the share 1 per quantum at the Node (the two hands; the proton's 0.976 rounding to 1); one lay line per line the write changed, the record's three, the proton's six, the electron's two and the antineutrino's one, and the back-in-time gate MATCH across the conversion from them; no second conversion, no front (the body cut) and no null window of a record of one part."""
     folder = EVENTS / "neutron_conversion"
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
@@ -339,14 +340,14 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
     rows = {"from 1": {"rate": 0}, "other than": {"to": ["neutron"]}, "lists the": {"to": []}}
-    rows["at none"] = {"sense": 1}
+    rows["at none"], rows["without its sense"] = {"sense": 1}, {"to": ["proton"]}  # a plane's entry
     wrong = {word: {**body, "conversion": {**table, **row}} for word, row in rows.items()}
     wrong["no parts"] = {**body, "parts": []}
     wrong["no `instrument`"] = {k: v for k, v in body.items() if k != "instrument"}
     for word, entry in wrong.items():
         refused(word, node_instrument_of, entry, "measured[0]", families, quanta["neutron"], quanta, 1)
     board = GameBoard(load_world(path), (lines := []).append)
-    n, p, e, nu = (quanta[name] for name in ("neutron", "proton", "electron", "antineutrino"))
+    n, p, e, nu = map(quanta.__getitem__, names := ("neutron", "proton", "electron", "antineutrino"))
 
     def levels(k):
         return [(int(r.now[4, 4, 4]), int(r.before[4, 4, 4])) for r in board.states[k].lines]
@@ -355,15 +356,76 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     board.step(), board.step()
     [first] = [line for line in lines if line["event"] == "conversion"]  # one conversion line
     assert first["window"] == [1, 2] and first["node"] == {"label": "GAMEBOARD", "at": [4, 4, 4]}
-    assert (first["into"], first["detector"], first["label"]) == (table["to"], "measured 0", "DETECTOR")
+    assert (first["into"], first["detector"], first["label"]) == ([*names[1:]], "measured 0", "DETECTOR")
     assert levels(n) == [(0, 0)] * 3 and board.credit.bodies[0].counts == [0]
-    assert levels(p) == [(128, 128)] + [(0, 0)] * 5 and levels(e) == [(128, 128), (0, 0)]
+    assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(128, 0), (0, 128)]
     assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
     assert [int(board.quanta(k)[0][4, 4, 4]) for k in (p, e, nu)] == [1, 1, 1]
-    laid = [(line["family"], line["line"]) for line in lines if line["event"] == "lay"]
-    assert laid == [("neutron", k) for k in range(3)] + [(f, 0) for f in table["to"]]
+    laid = [(x["family"], x["line"]) for x in lines if x["event"] == "lay"]
+    assert laid == [(f, k) for f, m in zip(names, (3, 6, 2, 1), strict=True) for k in range(m)]
     board.step(), board.step()
     assert [x["event"] for x in lines if x["event"] not in ("click", "lay", "field")] == ["conversion"]
+    assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
+
+
+def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row(
+    tmp_path,
+):
+    """The lay by the count with the sense (round F of the board of 2026-10-03, the neutron reading's row 2; the two hands' one-Node lay, #1572 comments 5964520368 and 5964754600; the worker's four points to both hands, 5967852499, and the mathematician's 244 on them, 5967913000: the quarter turn, every plane alike, the sense in the conversion's table per record out; src/event_universe/giving.py `laid_by_count` and `given_lines`, loader/instrument.py `conversion_of`): (i) the loader: a `to` entry of a plane family is {family, sense}, the sense +1 or -1 (the shipped world's proton -1 and electron +1); a plane family named without its sense, a record of real lines with one, a sense of 0 or 2 and an entry with another key are refused by name. (ii) The lay, on the committed world at the rate 1 and the window 1 (the conversion drawn at the first interval, the weights [1, 0]): every laid line alike, A_l^2 = T div (2 laid), the electron's plane at (128, 0) and (0, 128), the proton's three planes at (73, 0) and (0, -73) each (the fixed point of 5,461), the antineutrino's real line (128, 128); the Wronskians at the Node 16,384 and -15,987 (3 x 73^2, the root's rounding), the senses opposite; the share at the Node 1 quantum each (the proton's 0.976 of W_c rounding to 1), the books and the share agreeing; twelve lay lines, the neutron's three, the proton's six, the electron's two and the antineutrino's one, and the back-in-time gate MATCH across the conversion from them. (iii) The sign row: the holder's rows 0 at the Node before the conversion and the free row 0 throughout; from the conversion on the proton's row and the electron's row are written at the Node, each record's W over the wall E_s T about half a level per interval carried, the first level other than 0 within four intervals the record's sense, -1 and +1."""
+    folder = EVENTS / "neutron_conversion"
+    families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
+    world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
+    quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
+    body, at = world["measured"][0], (4, 4, 4)
+    proton, electron, antineutrino = table = body["conversion"]["to"]
+    assert (proton["sense"], electron["sense"], antineutrino) == (-1, 1, "antineutrino")
+    wrong = {
+        "without its sense": ["proton"],
+        "real lines at none": [{"family": "antineutrino", "sense": 1}],
+        "got 0": [{**proton, "sense": 0}],
+        "from -1 through 1": [{**electron, "sense": 2}],
+        "unknown key": [{**proton, "weight": 1}],
+    }
+    for word, outs in wrong.items():
+        entry = {**body, "conversion": {**body["conversion"], "to": outs}}
+        refused(word, node_instrument_of, entry, "measured[0]", families, quanta["neutron"], quanta, 1)
+    body["conversion"]["rate"], body["instrument"]["window"], world["ticks"] = 1, 1, 6
+    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    board = GameBoard(load_world(path), (lines := []).append)
+    p, e, nu = outs = [quanta[row["family"] if isinstance(row, dict) else row] for row in table]
+    sign = next(k for k, f in enumerate(board.families) if f.wronskian)
+
+    def levels(k):
+        return [(int(r.now[at]), int(r.before[at])) for r in board.states[k].lines]
+
+    def sign_rows():
+        return [int(line.now[at]) for line in board.states[sign].lines[: board.families[sign].records]]
+
+    assert sign_rows() == [0, 0, 0]
+    board.step()  # the first window closes at the first interval and the conversion is drawn
+    assert [x["tick"] for x in lines if x["event"] == "conversion"] == [1] and sign_rows() == [0, 0, 0]
+    assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(128, 0), (0, 128)]
+    assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in outs] == [1, 1, 1]
+    wronskians = [int(np.asarray(node.wronskian(board.states[k].lines, True))[at]) for k in (p, e)]
+    assert wronskians == [
+        -15987,
+        16384,
+    ]  # 3 x (-73^2) and T div 2: the senses opposite, the root's rounding
+    assert [int(board.quanta(k)[0][at]) for k in outs] == [
+        1,
+        1,
+        1,
+    ]  # the count's unit, the share rounded
+    laid = [(x["family"], x["line"]) for x in lines if x["event"] == "lay"]
+    assert laid[:3] == [(body["family"], k) for k in range(3)] and len(laid) == 12
+    assert laid[3:9] == [(proton["family"], k) for k in range(6)]
+    assert laid[9:] == [(electron["family"], 0), (electron["family"], 1), (antineutrino, 0)]
+    first = {row_of(board.families, k, 0): 0 for k in (p, e)}  # the rows the two records own
+    for _ in range(4):
+        board.step()
+        first = {row: found or sign_rows()[row] for row, found in first.items()}
+        assert sign_rows()[0] == 0  # the free row, owned by no record, untouched
+    assert [first[row_of(board.families, k, 0)] for k in (p, e)] == [-1, 1]  # the first write the sense
     assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
 
 

@@ -82,13 +82,13 @@ def presented(
     return tuple(found)
 
 
-def amplitude(count: int, action: int, pair: tuple[int, int]) -> int:
-    """The amplitude A of `count` quanta standing at one Node: A^2 = count T den^2 div (2 (den^2 - num^2)), the share 6 den A^2 sin^2 omega over W_c = 3 den T the count, by the fixed point of the division act; for the massless pair, whose one-Node record has no rotation, A^2 = count T div 2, the two levels alike."""
+def amplitude(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
+    """The amplitude A of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): A^2 = count T den^2 div (2 laid (den^2 - num^2)), the share 6 den A^2 sin^2 omega per line over W_c = 3 den T the count, by the fixed point of the division act; for the massless pair, whose one-Node record has no rotation, A^2 = count T div (2 laid), the two levels alike (the lay by the count, `giving.laid_by_count`: every laid line of the record alike, the symmetric lay, the mathematician's 244 item 2, #1572 comment 5967913000)."""
     num, den = pair
     gap = den * den - num * num
-    square = division_forward(count * action * den * den, 2 * gap, 0)[0] if gap else None
+    square = division_forward(count * action * den * den, 2 * laid * gap, 0)[0] if gap else None
     return division_fixed_point(
-        int(square if square is not None else division_forward(count * action, 2, 0)[0])
+        int(square if square is not None else division_forward(count * action, 2 * laid, 0)[0])
     )
 
 
