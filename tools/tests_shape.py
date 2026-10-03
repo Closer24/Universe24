@@ -133,6 +133,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "drive's taking by the labels' squares, the body's clock and the window's index on the jump line, the "
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
+    "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
+        159,
+        "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
+        "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
+        "budget's least T, the faces and the open faces' layer, the messages, the universe",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
