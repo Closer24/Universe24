@@ -64,11 +64,12 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
 
 
 def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
-    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the detector `taker` where asked), a body rotating in the `senses` given of the charged family (matter's pair as a plane), laid by the generator: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
+    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the detector `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (`--pixel`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
     at = at or (chain // 2,)  # the chain's centre where no Node is named
     families = [CHARGED["name"] if i < len(senses) and senses[i] else "matter" for i in range(len(at))]
     universe_beside(folder, charged=CHARGED["name"] in families)
-    nodes = [[dict(node=[x, 0, 0], count=quanta)] for x in at]
+    charged = [f == CHARGED["name"] for f in families]  # one quantum per charged record, the law's count
+    nodes = [[dict(node=[x, 0, 0], count=1 if c else quanta)] for x, c in zip(at, charged, strict=True)]
     measured = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
     ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
     ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
@@ -76,8 +77,9 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
     world = dict(shape=[chain, 1, 1], detectors=detectors, measured=measured, ticks=400, face_depth=1)
     world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
     (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
-    if mode:
-        tool.main(["--input", str(path), "--sense", *(str(sense) for sense in senses)])
+    if mode:  # the charged body the one-Node record of its quantum (--pixel), matter at its fixed point
+        pixels = [str(n) for n, c in enumerate(charged) if c]
+        tool.main(["--input", str(path), "--sense", *map(str, senses), "--pixel", *pixels])
     return path
 
 
