@@ -179,12 +179,29 @@ shipped reading changed by name, the blind untouched. The ion instrument test of
 `tests/test_the_meeting.py`, whose counter is one plane of a 6 x 6 x 4 periodic box three Links from
 the ion, reads no credit under the same lay (the inflow below half a quantum in its window), the floor
 in a small box, named there.
-The mathematician's line on the change (#1572 comment 5966081562, one hand; the advisor's word
-pending): the counter's change is a finding by name moved by the lay's form in the expected direction,
+The mathematician's line on the change (#1572 comment 5966081562) with the advisor's second (#1572
+comment 5966129376, 08:55 Israel; two hands): the counter's change is a finding by name moved by the
+lay's form and not more, in the direction the floor predicts,
 since a source in time over tau = 48 holds the given quantum beside the ion for 48 intervals (A_t =
 isqrt(S / tau) = 30, the floor's reach 0.28 A_t about 8 Links) where the one-instant lay passed the
 counter in one transit, so a counter within that reach credits more of the 43 (14 against 8) and the
 bins fill nearer the givings; the condition it states by name: the counter's Nodes within 0.28 A_t of
+the ion, else nothing is credited; the advisor's word for this folder: the telegraph's bins move with
+every form of the giving and read nothing of the blind until the strong drive's row is fixed, so each
+section names the form it was read on, as this one does.
+
+## Under the dark grain, 2026-10-03 (branch dark-grain)
+
+The giving's clock became the lifetime's hazard 1 / tau per interval, drawn per window while a window
+stands and per interval in the dark (the mathematician's 223 (a), #1572 comment 5965727937, and 224
+(2)(a), 5966081562; the advisor's 5965918924 (a) and his second 5966129376; two hands; `meeting.dark`,
+`meeting.gave`). Named before the run (`examples/events/resonance/design.json`, `dark_grain`) and read
+after it: this world is unchanged, the run's output and `tools/telegraph.py`'s reading byte-identical to
+the own-quantum reading above (43 takings `P by strong_drive`, 43 givings `S by fluorescence`, the counts
+per bin 5, 9, 0, REFUSED at the interval 434), since the ion's window is 1, so its window's draw was
+already one draw per interval at the hazard with the weights [1, tau - 1] in the labels' unit, and its
+two drives, plane waves, stand at its Node at every interval, never both levels 0, so the ion is never
+in the dark.
 the ion, else nothing is credited.
 
 ## On the resonant act, 2026-10-03 (branch resonant-act)
