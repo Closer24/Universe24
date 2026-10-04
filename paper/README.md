@@ -20,14 +20,16 @@ journal's name leaves the supplement's title. The paper is kept to about 35 page
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
-hypotheses by name where they stand (Sections 7.5 and 10.2), and the three
-files derived and read by the gates, whose runs Section 3.7 reports; the
-compact pixel's numbers stand only in the long version. The runs the
-paper reports are the gates' (Section 3.7): the back-in-time gate's MATCH on
-every file, taken by the owner's word of 2026-10-01 ("if there is a run of
-the reversal that looks good and agrees with nature, take it"), and the two
-slits', Bell's and GHZ's gates, the blind written first and the runs of Bell's and
-the GHZ's identical to theirs, the two slits' 270 against its Huygens blind 273 (the law's line 269.3), the engine's check of the algebra and no experiment against nature;
+hypotheses by name where they stand (Sections 7.5 and 10.2), and the one
+run the paper reports, the two slits' at the frozen commit (Section 3.7), and Bell's and the GHZ's
+values as evaluations of the declared credit, exact in the shares; the
+compact pixel's numbers stand only in the long version. The one run the
+paper reports is the two slits' (Section 3.7): the back-in-time gate's MATCH on its
+file, taken by the owner's word of 2026-10-01 ("if there is a run of
+the reversal that looks good and agrees with nature, take it"), and its screen's
+row against the blind written first, the engine's check of the algebra and no experiment
+against nature; Bell's and the GHZ's values are evaluations of the declared credit, exact in
+the shares, and the folder's runs of them are the repository's and no claim of the paper;
 only a NodeReader's click is a measurement, and a number read off the GameBoard
 is a diagnostic. Table 1 of the paper lists every result with its
 kind, its fence and what it rests on, and Table 2 the formulas of clicks with
@@ -35,15 +37,16 @@ their statuses.
 
 - `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
   twice; it needs only its figures.
-- `general_formula/main.pdf`: the compiled paper at the same commit.
+- `general_formula/main.pdf`: the compiled paper at the same commit. The paper's pins:
+  the implementation at the frozen commit 7756546d and the three documents (the law,
+  the engine's document, the decisions) at ed1a3b5d, both of 2026-10-04.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
   its proof, Derivations S.1 to S.63, numbered as added, each naming its section,
   cited in the paper as (S.n), S.61 the engine's derivation ledger and S.62 the
   implementation's versions of the click's write and their readings, which stand
   there and not in the main text (the owner's word of 2026-10-03: a derivation
-  is shown as a derivation, and the main text reports no run but the two slits
-  with Bell's and the GHZ's gates); submitted as supplementary material to the
+  is shown as a derivation, and the main text reports no run but the two slits'); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
   asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
@@ -118,11 +121,10 @@ their statuses.
   lay is the one the pinned commit's mode file holds, within the integer
   rounding of a level; the script prints no draw, the clicks' row being the
   folder's. Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`,
-  the script of the paper's own commit (this folder's), on the folder's files as they
-  stand at the pinned commit; the script is not the pinned commit's (its `law_lay`
-  carries the uniform-component correction added after it), so it is run from the
-  paper's revision in a worktree of the pinned commit, and its printed output is the
-  current script's. Its
+  from the paper's commit on the folder's files as they stand at the pinned commit
+  7756546d (a worktree of it); the script lays the before level as the generator does at
+  that commit (`tools/pixel_mode.advanced_real_part`), so its lay is the mode file's to the
+  rounding and its printed output is the line at the engine's own lay. Its
   printed output stands beside it as `two_slits_real_line.txt`, every
   number with its definition: the total over the whole passage, the twelve
   regions' quanta and shares, the visibility, the wings and the arrival (in the
@@ -153,8 +155,8 @@ back), and the twins (a number or a word printed in two places asserted equal). 
 scripts' count is a ratchet the same test holds: of the 127 derived and computed marks of the main
 text, 117 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
 line alone with no engine import and no run's file, the paper's own check scripts, or, for a computed
-mark, the run's reader) and 10 name none: the qualitative statements (a body's four statements, Theorem 4's
-mark, the three kinds of binding, the k^4 term's ten percent, the seat of the electromagnetic binding
+mark, the run's reader) and 10 name none: the qualitative statements (a body's four statements, the stable body's
+proposition, the three kinds of binding, the k^4 term's ten percent, the seat of the electromagnetic binding
 energy, confinement, the polarisations, the Lorentz form, Bjorken's finding) and the integer Wronskian's
 witness of S.9; the count may only fall, and the paper claims nothing beyond it (the supplement
 carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
