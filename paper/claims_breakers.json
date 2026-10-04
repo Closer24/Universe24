@@ -413,5 +413,170 @@
     "kind": "a",
     "breaker": "S.33's covector and the force between moving charges (Table 1's row's breaker): the magnetic term from the holder's line at v = 0.1 to 0.5 c.",
     "state": "to write"
+  },
+  "S.1": {
+    "kind": "a",
+    "breaker": "The plane wave in Rule3's line at the vacuum's paces and at uneven static paces (two Links of an axis sharing one R_a): Eq. (4)'s cos omega against the exact recurrence's eigenvalue in exact rationals at k = pi p / q; the axial long-wave coefficients (1 / 3, k^4 / 12) against the series; outside: a Link factor differing on the two Links of one axis, where the two-Link form fails and the general form of S.32 holds.",
+    "state": "to write"
+  },
+  "S.2": {
+    "kind": "a",
+    "breaker": "The band at the composed paces p_0 = Gamma N, p_a = Gamma N^2: light's speed N^2 / sqrt 3 and the index N^-2 from Eq. (4) at k -> 0 at N = 0.9, 0.5, 0.1 in exact rationals; outside: the quadratic paces (1 - 2U + 2U^2) instead of the exponential, where the index departs at second order.",
+    "state": "to write"
+  },
+  "S.3": {
+    "kind": "a",
+    "breaker": "The guard's edge P^2 = 2 den Gamma^2 div (den + |num|): the recurrence at k = pi on every axis stable at p = P and growing at p = P + 1 for every pair (1, 1) to (4000, 6000) in exact rationals, fixed coefficients; outside: the parametric sequence of R326 growing while every instant's pace is below P.",
+    "state": "to write"
+  },
+  "S.4": {
+    "kind": "a",
+    "breaker": "The 48 maps of the cube on a 3x3x3 periodic board commute with Rule3 in exact rationals (random levels, every pair); the integer floors do not inherit the rational rotation (the 3-4-5 witness of R338 (a)), so the integer step's symmetry is the lattice's 48 alone.",
+    "state": "to write"
+  },
+  "S.5": {
+    "kind": "a",
+    "breaker": "The share's rational change over one step equal to the six currents weighted by the Link factors plus the Node's remainder term, on random 2x2x2 to 4x4x4 boards with uneven factors and paces; the floored share's change differs by the floor alone.",
+    "state": "to write"
+  },
+  "S.6": {
+    "kind": "a",
+    "breaker": "The total share non-negative on closed and periodic boards at |num| <= den (random levels, every pair), zero at the static uniform level and the checkerboard; the Node's minimum 3 den b^2 - num^2 s^2 / (12 den) with the |num| test and the num = 0 case (the addendum); outside: |num| > den or an open face, negative.",
+    "state": "to write"
+  },
+  "S.7": {
+    "kind": "a",
+    "breaker": "The stress reading G_aa on a plane wave equals -A^2 sin^2 k at every Node and interval in exact rationals at k = pi / 4 and pi / 3; the mixed-axis product on a wave along a diagonal; outside: a packet's envelope, where G_aa varies.",
+    "state": "to write"
+  },
+  "S.8": {
+    "kind": "a",
+    "breaker": "The region's reading factor (the finite geometric filter 0.906127 at the window's length) by the exact sum; the draw's scatter sqrt(N p (1 - p)) under independent draws, against 10^4 draws of the shipped generator's picks (K1's pick) at the two slits' shares; outside: the affine seeding of R342, where the scatter is not the binomial's.",
+    "state": "to write"
+  },
+  "S.9": {
+    "kind": "a",
+    "breaker": "The weighted Wronskian conserved by the line at static paces (D M symmetric) in exact rationals on random boards; its current per Link; the integer step's defect the remainder term; outside: moving weights, where the work term enters (S.26 (d')).",
+    "state": "to write"
+  },
+  "S.10": {
+    "kind": "a",
+    "breaker": "The credit's joint shares at the four settings in exact rationals: E = 119 / 169, -119 / 169, 120 / 169, 120 / 169, S = 478 / 169; every marginal 1 / 2; the unequal-part contrast (1, 1) against (3, 1); outside: settings at irrational angles approaching 2 sqrt 2.",
+    "state": "to write"
+  },
+  "S.11": {
+    "kind": "a",
+    "breaker": "The static tail cosh kappa = 3 den / num - 2 for 0 < num <= den on a chain in exact rationals ([2400, 2401]: R = 20.00; [1, 2]: e^-kappa = 0.127); the alternating root at [-1, 2] and the zero support at [0, 1] (the addendum's domain).",
+    "state": "to write"
+  },
+  "S.12": {
+    "kind": "a",
+    "breaker": "The phase and group speeds on the massless band at k from 0.01 to pi along an axis: 1 / sqrt 3 at long wavelength, the phase speed 0.392 at the zone's edge, the group speed to 0; outside: a diagonal direction, the two speeds' anisotropy.",
+    "state": "to write"
+  },
+  "S.13": {
+    "kind": "a",
+    "breaker": "The functional F(R) on a chain and a small box: the fixed point as the top mode of the symmetric form by the floored Jacobi iteration; the virial and the dilation's second variation at power-law kernels; the joint scaling Delta phi = O(U phi) checked at the fixed point (the band term balancing the well) and failing for a free packet (#1908 (3)); the running exponent of the screened kernel s(R) from 1 to 3 through 2 at kappa R = 0.82 for a Gaussian body.",
+    "state": "to write"
+  },
+  "S.14": {
+    "kind": "a",
+    "breaker": "The one-Node line with omega_t changing slowly: the invariant A^2 sin omega kept to the stated order (the midpoint-phase increment), the count's drift per Eq. (13) at a 10^-3 change per step in exact floats; outside: a fast change (omega jumping by 0.5 in one step), where the invariant fails by the named amount.",
+    "state": "to write"
+  },
+  "S.15": {
+    "kind": "a",
+    "breaker": "Eq. (4) at k = 0 with the quadratic paces to first order in U: the clock's rate e^{-U} f(omega_0) with f = 2 (1 - cos omega_0) / (omega_0 sin omega_0) at [2, 3] (1.0634) and as the gap closes (1); outside: second order in U, the quadratic and the exponential paces differing.",
+    "state": "to write"
+  },
+  "S.16": {
+    "kind": "a",
+    "breaker": "The one-Node line with the rotation modulated at omega_L: the parametric resonance at twice the rotation with the exponent of the weak drive; the alias at omega_b = pi / 2 (R338 (b)) outside the averaging's condition, growing at asinh(epsilon / 2) per step against epsilon / 4.",
+    "state": "to write"
+  },
+  "S.17": {
+    "kind": "a",
+    "breaker": "Two standing records at omega_1 != omega_2 on one Link: the cross current averaging to 0 over a common period (distinct non-aliased frequencies) in exact floats; outside: omega_1 = omega_2 (the cross term standing) and the aliased case omega_1 + omega_2 = 2 pi.",
+    "state": "to write"
+  },
+  "S.18": {
+    "kind": "a",
+    "breaker": "The slow packet's fall from Eq. (4) at a content: a = 2 nu / (3 (1 + nu)) grad U, 4 / 15 at [2, 3] and 2 / 7 at [3, 4]; Kepler's potential factor lambda = (den + num) / (2 num); outside: a packet at k near the band's top where the slow form fails.",
+    "state": "to write"
+  },
+  "S.19": {
+    "kind": "a",
+    "breaker": "The PPN conversion: gamma_K = den / num, beta_K = (den + num) / (2 num), 1 + alpha_K = tan omega_0 / omega_0 at [2, 3] and [999, 1000]; an independent fixed-energy orbit computation recovering the leading perihelion precession at the pair; the k^4 term's ten percent at the computed pair's k.",
+    "state": "to write"
+  },
+  "S.20": {
+    "kind": "a",
+    "breaker": "The bending 4 U_b and Shapiro's delay by the index n = 1 + 2U integrated along the ray at b = 10 to 1000 m against the closed forms at first order; the second-order difference of the exponential metric (2 against 1.5) by the exact integral.",
+    "state": "to write"
+  },
+  "S.21": {
+    "kind": "a",
+    "breaker": "The exact band's inversion along an axis, a face diagonal and the body diagonal at v = 0.1 to 0.5 c_m: the second order one c_m, the fourth order's three coefficients at [2, 3] (1.6926, 1.2224, 1.0657); the full-band speed bound; outside: v above the band's top.",
+    "state": "to write"
+  },
+  "S.22": {
+    "kind": "a",
+    "breaker": "k = m* v with m* = 3 tan omega_0 at k = 0.02 to 0.5, the relative departure at k = 0.5; m* c_m^2 = omega_0 exactly at every pair; outside: the band's top where the group velocity turns.",
+    "state": "to write"
+  },
+  "S.23": {
+    "kind": "a",
+    "breaker": "The hyperbola's roots 24 +/- 2 sqrt 19 for the near-field minima at d = 12, L = 24, lambda = 8 (the rows 15.3 and 32.7, the regions 3 and 8); the far-field spacing lambda L / d = 16; the Huygens per-Node sum against expectation.json's row (two_slits.py).",
+    "state": "to write"
+  },
+  "S.24": {
+    "kind": "a",
+    "breaker": "The Link's bound from v_g = (1 / sqrt 3)(1 - k^2 / 12) against the quadratic dispersion bound of the gamma-ray data at the printed energies (the bound's arithmetic in exact floats); outside: a cubic dispersion, where the bound is weaker by the stated factor.",
+    "state": "to write"
+  },
+  "S.25": {
+    "kind": "a",
+    "breaker": "Newton's constant as a reading: the massless holder's rest 3 s / (4 pi r) over E_g at r = 10 to 1000 on the 3D lattice Green's function (Watson's integral at the Link), the orbit's G against the clock's G at the pair.",
+    "state": "to write"
+  },
+  "S.26": {
+    "kind": "a",
+    "breaker": "alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s) from the holder's write and the two-quantum coupling at the rule's file (constants.py's chain re-run); the energy line k_r E_s T cos omega_s = k_w Gamma; (d') the switch-on check named and not re-run (R322); the ratio +kappa under row 9 by the algebra.",
+    "state": "to write"
+  },
+  "S.27": {
+    "kind": "a",
+    "breaker": "The electron as the free matter quantum: den = d / (1 - cos omega_0), about 2d / omega_0^2 with d >= 1, the bound at d = 1 from the LHAASO photon read as a share (omega_0 < 3.7 x 10^-10), the [999, 1001] check (1001 against 500.3); outside: the frequency read as the energy, the other bound.",
+    "state": "to write"
+  },
+  "S.28": {
+    "kind": "a",
+    "breaker": "The content's index for every family as the arcsine ratio on the composed paces at k = 0.3 and 0.9, light's e^{2U} and slow matter's n_m^2 proportional to 1 / k^2 at long wavelength; the general lens equation against its light reduction (R329).",
+    "state": "to write"
+  },
+  "S.29": {
+    "kind": "a",
+    "breaker": "The ball of dust under Newton's pull at Kepler's G: a(t)'s equation, Hubble's law at first order and q_0 = Omega_m / 2 for bound and free balls at z << 1 in exact floats; outside: a vacuum write (Lambda) turning the sign, a declaration.",
+    "state": "to write"
+  },
+  "S.30": {
+    "kind": "a",
+    "breaker": "Root-finding on b(r) = r e^{2U}, U = m / r: the minimum at r = 2m, b = 2 e m exactly at random m; Schwarzschild's 3 sqrt 3 m beside; the general lens equation at finite k reproducing it as k -> 0.",
+    "state": "to write"
+  },
+  "S.31": {
+    "kind": "a",
+    "breaker": "The two clocks under the one assumption: a uniform level a change of units with hN = 1, the Node's clock and a body's beat shifting alike at U = 0.001 to 0.1 in exact rationals; outside: the plain read without the assumption, where the two shift differently (the assumption's fence).",
+    "state": "to write"
+  },
+  "S.32": {
+    "kind": "a",
+    "breaker": "Theorem 3's Link factor on a periodic board with every Link's factor q: the form conserved with the factor squared (q / Gamma)^2 on the currents and not with q / Gamma, the two witnesses in exact rationals; outside: factors differing per Link, the general R_ij form.",
+    "state": "to write"
+  },
+  "S.33": {
+    "kind": "a",
+    "breaker": "The continuity identity w [W_i(t+1) - W_i(t)] = the net Link fluxes R_a g on random boards in exact rationals; the plane current J_a = 2 (w / R_a) W v_a at any paces and (6 den / num) W v at the vacuum's (#1908 (2)); the covector under the holder's phases; the identity (a) on a chain with the row (b2)'s prediction at beta = 0.1 and 0.5.",
+    "state": "to write"
   }
 }

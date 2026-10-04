@@ -283,13 +283,17 @@ def build() -> str:
         )
     lines += [
         "",
-        "## C. The supplement's derivations and their Status lines",
+        "## C. The supplement's derivations and their Status lines (the key `S.n`)",
         "",
-        "| S | line | title | status |",
-        "|---|---|---|---|",
+        "| S | line | title | status | kind | the breaker | state |",
+        "|---|---|---|---|---|---|---|",
     ]
     for index, number, title, status in derivations:
-        lines.append(f"| S.{index} | {number} | {title} | {status} |")
+        breaker = breakers.get(f"S.{index}", {})
+        lines.append(
+            f"| S.{index} | {number} | {title} | {status} | {breaker.get('kind', '')} |"
+            f" {breaker.get('breaker', '')} | {breaker.get('state', '')} |"
+        )
     return "\n".join(lines) + "\n"
 
 
