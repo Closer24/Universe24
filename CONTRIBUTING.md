@@ -72,6 +72,10 @@ the short procedure of [the shared workflow](skills/workflow.md).
   reviewer names the state at the hash.
 - A document cites a path in backticks only where the tree holds it;
   `tests/test_documents.py` refuses a pull request otherwise.
+- A history clause in the law or the engine's document is dated or struck, never
+  left; a number that stands in two places is one row of `tools/numbers.json`, and a
+  derived number has its script under `tools/derivations/`; `tools/documents_gates.py`
+  refuses a pull request otherwise (ENGINE.md, section 8).
 - Write all comments, docstrings and documents in English under the rule in
   [AGENTS.md](AGENTS.md#repository-language-english); translate prose from older
   branches before integration.
