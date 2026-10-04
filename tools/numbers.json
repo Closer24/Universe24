@@ -349,5 +349,10 @@
             "expected": [3.0, 2.4],
             "digits": 2
         }
+    },
+    {
+        "name": "the Zeno drive's share per Node at A = 392 (R201's kin; the sweep's item 29)",
+        "canonical": ["2.605", "2.6"],
+        "forbidden": ["3.5 quanta's share"]
     }
 ]
