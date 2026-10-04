@@ -36,7 +36,7 @@ from event_universe.loader.universe import universe_of
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_reader of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("bodies", "messages", "node_readers", "receding", "draw", "lay")
+WORLD_KEYS += ("bodies", "messages", "node_readers", "receding", "draw", "lay", "erasure")
 WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "bodies", "node_readers")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes", "weights", "count", *READER_RECORD_KEYS),
@@ -83,7 +83,7 @@ class NodeReaderRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the node_readers, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeReaders' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate)."""
+    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the node_readers, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeReaders' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate), and the erasing front's taper in shells (`erasure`, 1 where the world declares none)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -107,6 +107,7 @@ class World:
     wholes: tuple[
         WholeMessage, ...
     ] = ()  # the messages laid whole at a tick of the run (`loader/messages.py`)
+    erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the GameBoard (6); src/event_universe/front.py)
 
 
 def kind_of(width: int) -> type:
@@ -307,6 +308,7 @@ def regions_of_the_law(
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
     """The world from its document, the files it names (the universe, the engine start file, the mode file beside it, read by the host) and its digest; every defect refused by name."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
+    erasure = integer(world["erasure"], "erasure", 1) if "erasure" in world else 1  # the front's taper
     keyed(document_at(files, world["engine"], "engine"), "the engine start file", START_KEYS, START_KEYS)
     integers, families = universe_of(document_at(files, world["universe"], "universe"))
     shape_value = world["shape"]
@@ -379,4 +381,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         draw,
         lay,
         wholes,
+        erasure,
     )
