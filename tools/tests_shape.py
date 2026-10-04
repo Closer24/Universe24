@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_hazard_window.py::test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_ones_their_own_grain": (
+        39,
+        "the giving's hazard over a declared window (A3 of the alignment audit, #1793 comment 5982140872; the advisor's second "
+        "5982171035 (2)): the dark intervals drawn at their own grain as they pass, the close at the lit count, every interval "
+        "of the window in exactly one draw's span, and a window with no dark interval at its length bit for bit",
+    ),
     "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it": (
         88,
         "the share under the rotation (the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker): the level "

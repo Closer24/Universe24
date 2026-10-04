@@ -1,4 +1,4 @@
-"""The reader's region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands): what a reader declared over a connected region (two Nodes or more with Nodes alone, one Node or more with a record of its own, the relation seen from its two ends) reads and books without writing a level: its books (`NodeBooks`, `books_of`), the lay's amplitudes in the weights' proportion and the record's norm, the arriving record's level projected on the reader's normalised mode (`arriving`), the window's inflow booked per Node (`booked_inflow`, `booked_inflows`), the dark and the reader's own clock over the region (`dark`, `own_clock`), the outcome's draw and the one Node a write is laid at, the taking's by the inflow booked and the giving's by the record's share (`picked`, `drawn_node`, `hole_node`), and the click line that names no Node (`reported`); the writes themselves stay in `meeting.py`."""
+"""The reader's region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands): what a reader declared over a connected region (two Nodes or more with Nodes alone, one Node or more with a record of its own, the relation seen from its two ends) reads and books without writing a level: its books (`NodeBooks`, `books_of`), the lay's amplitudes in the weights' proportion and the record's norm, the arriving record's level projected on the reader's normalised mode (`arriving`), the window's inflow booked per Node (`booked_inflow`, `booked_inflows`), the dark and the reader's own clock over the region (`dark`, `own_clock`), the outcome's draw and the one Node a write is laid at, the taking's by the inflow booked and the giving's and the conversion's by the record's share at the body's Nodes as the board holds it at the close (`picked`, `drawn_node`, `share_weights`, `hole_node`), and the click line that names no Node (`reported`); the writes themselves stay in `meeting.py`."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ Weighed = dict[
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the taking's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its taking (`meeting.turned_labels`, `meeting.took`)."""
+    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the giving's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the taking's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its taking (`meeting.turned_labels`, `meeting.took`)."""
 
     number: int
     index: int
@@ -46,6 +46,7 @@ class NodeBooks:
     state: int
     references: list[Reference]
     windows: int = 0
+    lit: int = 0
     clock: list[int] = field(default_factory=lambda: [0, 0])
     amplitudes: tuple[int, ...] = ()
     norm: int = 1
@@ -172,7 +173,7 @@ def picked(
 
 
 def drawn_node(board: GameBoard, books: NodeBooks, weights: list[int]) -> Node:
-    """The one Node of the region a write is laid at, drawn by `weights` over the reader's Nodes with its own generator (features/click, `drawn`; ALGEBRA.md, The NodeReader is one declaration kind for every experiment: the write of a click is at one Node of the region, the share at a Node a GameBoard reading and no measurement); the lay's weights where every weight is 0."""
+    """The one Node of the region a write is laid at, drawn by `weights` over the reader's Nodes with its own generator (features/click, `drawn`; ALGEBRA.md, The NodeReader is one declaration kind for every experiment: the write of a click is at one Node of the region, the taking's by the inflow booked, `hole_node`, the giving's and the conversion's by the record's share at the body's Nodes as the board holds it at the close, `share_weights`, the share at a Node a GameBoard reading and no measurement); the file's lay weights enter no draw and stand alone where every weight is 0."""
     assert books.declared.draw is not None
     found = weights if sum(weights) > 0 else list(books.weights)
     pick, books.state = drawn(
@@ -189,6 +190,13 @@ def drawn_weights(board: GameBoard, inflows: Iterable[int]) -> list[int]:
     """The draw's weights from the books' inflows booked in the unit G^2 (`booked_inflow`, `credit.booked`): each floored at 0 and divided once at the close by G^2 by the division act, the current's units the generator draws in (features/click, `drawn`: the pick the state's fraction of the weights' total, (state times total) div 2^width, so the weights' ratios realise the draw and their one rounding at the close is part of the realisation), the plain inflows bit for bit where no tension stood and the draw's realisation with them (ALGEBRA.md #the-click-is-the-meeting, the credit's booking: every reading at the vacuum's paces unchanged bit for bit), the law's ratios under tension; one division at the close and none per Link, the count's own division by W_rec G^2 beside it (`credit.quanta_through`)."""
     square = board.unit * board.unit
     return [int(division_forward(max(int(inflow), 0), square, 0)[0]) for inflow in inflows]
+
+
+def share_weights(board: GameBoard, books: NodeBooks) -> list[int]:
+    """The giving's and the conversion's draw weights (ALGEBRA.md, The NodeReader is one declaration kind for every experiment: the giving's whole quantum laid at the Node drawn by its own record's share over its Nodes; the mathematician's words, #1793, A2 of the alignment audit): the record's family's share at each of the body's Nodes as the board holds it at the close, `GameBoard.share_of` read once at the body's Nodes in the current's units, a GameBoard reading and no measurement, each floored at 0 as `drawn_weights` floors the inflows; the file's lay weights enter no draw and stand alone where every share is 0, nothing standing at the Nodes, so that a draw stays possible."""
+    found = board.share_of(books.index, 1, board.mask(books.nodes))[0]
+    shares = [max(int(found[tuple(np.add(at, board.offset))]), 0) for at in books.nodes]
+    return shares if sum(shares) > 0 else list(books.weights)
 
 
 def hole_node(board: GameBoard, books: NodeBooks, drive: int) -> Node:
