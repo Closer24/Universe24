@@ -77,7 +77,10 @@ STALE_PATTERNS = [
     (r"\buntil then\b", "R228"),
     (r"\bnow (refuses|stands|reads|holds|carries|gives|writes|lays|runs)\b|\blaid now\b", "R228"),
     (r"\bearlier (review|reading|finding|lay|version)\b", "R228, the supplement's side"),
-    (r"\bno longer\b|\bsince replaced\b|\buntil read\b|\bas before\b|\bnot settled\b|\bstood open\b", "R228, the supplement's side"),
+    (
+        r"\bno longer\b|\bsince replaced\b|\buntil read\b|\bas before\b|\bnot settled\b|\bstood open\b",
+        "R228, the supplement's side",
+    ),
     (r"on \\texttt\{main\}", "R228, the supplement's side (the pinned commit, not the branch)"),
 ]
 # a struck phrase allowed in one named sentence, by a fragment of that sentence
@@ -89,24 +92,6 @@ STALE_ALLOWED = {
 
 # a number or a word printed in two places: every fragment must be found in the named file
 TWINS = [
-    ("the Zeno column", [("supplement.tex", "$1.000$, $0.508$, $0.367$, $0.233$ and $0.133$")]),
-    (
-        "the gate's intervals",
-        [
-            (
-                "main.tex",
-                "at 7ed11fdf the two slits over $130$ intervals, Bell's four over $100$ and the GHZ's four over $60$",
-            )
-        ],
-    ),
-    (
-        "the conversion's two findings",
-        [
-            ("main.tex", "two named findings"),
-            ("supplement.tex", "two named findings"),
-            ("supplement.tex", "the two findings of the conversion"),
-        ],
-    ),
     (
         "positronium's convention",
         [
@@ -118,7 +103,10 @@ TWINS = [
     (
         "the real line's numbers",
         [
-            ("main.tex", "$269.2$ ($269.3$ in the physical labels; $278.0$ at the lay before the fix)"),
+            (
+                "main.tex",
+                "$269.2$ ($269.3$ in the physical labels, the pair after $t$ steps labelled $t$)",
+            ),
             ("main.tex", "$N = 269.18$ in the engine's labels"),
         ],
     ),
@@ -130,16 +118,6 @@ TWINS = [
         "the neutron's lifetime",
         [("main.tex", "$878.4 \\pm 0.5$"), ("supplement.tex", "$878.4 \\pm 0.5$")],
     ),
-    (
-        "alpha_law at 1/28",
-        [
-            ("main.tex", "$\\alpha_{\\mathrm{law}} = 1 / 28$ (the design's $T = 0.259\\,\\Gamma^2$"),
-            (
-                "supplement.tex",
-                "$\\alpha_{\\mathrm{law}} = 1 / 28$ (the design's $T = 0.259\\,\\Gamma^2$",
-            ),
-        ],
-    ),
     ("the draw's bound", [("main.tex", "$2 \\times 10^{-8}$ at the width $63$")]),
     (
         "the wall of a massless family",
@@ -150,21 +128,6 @@ TWINS = [
     ),
     ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$"), ("supplement.tex", "$\\Delta = 1 / m^*$")]),
     (
-        "the lay's fix of 2026-10-04 and the re-pin",
-        [
-            ("main.tex", "the lay's fix of 2026-10-04 (PR \\#1862, S.62)"),
-            ("main.tex", "fixed the same day at d00aa9e2 (S.62)"),
-            ("main.tex", "the commit d00aa9e2 of 2026-10-04"),
-            ("supplement.tex", "The fix entered main at d00aa9e2 the same day (PR \\#1862"),
-            ("supplement.tex", "at d00aa9e2, after the lay's fix and the redesign"),
-            ("supplement.tex", "the commit d00aa9e2 of 2026-10-04, the pinned commit"),
-        ],
-    ),
-    (
-        "the engine's open items point to the engine's document",
-        [("main.tex", "stand in the engine's document and in the law's open section, each with its number, and not here"), ("supplement.tex", "stand in the engine's document and in the law's open section and not in this paper")],
-    ),
-    (
         "the two slits at the fixed lay",
         [
             ("main.tex", "$N = 270$ units of $W_c$ ($626.5$ photons at $\\omega = 0.4456$"),
@@ -172,6 +135,42 @@ TWINS = [
             ("main.tex", "the two slits' $270$ stands against the blind $273$"),
             ("main.tex", "The run of the implementation gives $N = 270$"),
             ("supplement.tex", "The two slits' $270$ units are $626.5$ photons"),
+        ],
+    ),
+    (
+        "the one run",
+        [
+            ("main.tex", "The one run this paper reports is the two slits'"),
+            ("main.tex", "What ran on the implementation for this paper is that one file"),
+            ("supplement.tex", "which reports one run, the two slits'"),
+        ],
+    ),
+    (
+        "the pins",
+        [
+            ("main.tex", "the commit d00aa9e2 of 2026-10-04, the commit the two slits ran at"),
+            (
+                "supplement.tex",
+                "the commit d00aa9e2 of 2026-10-04, the pinned commit, the commit the two slits ran at",
+            ),
+        ],
+    ),
+    (
+        "the gate on the one file",
+        [
+            ("main.tex", "\\textsc{match} on the two slits' file over $40$ intervals"),
+            (
+                "supplement.tex",
+                "the two slits' \\textsc{match} over $40$ intervals at the pinned commit",
+            ),
+        ],
+    ),
+    (
+        "the walk and not a bound",
+        [
+            ("main.tex", "stands within that walk of the line's $269.3$"),
+            ("main.tex", "within the integer step's walk of the line"),
+            ("supplement.tex", "within the integer step's walk"),
         ],
     ),
 ]
