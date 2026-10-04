@@ -1,7 +1,7 @@
 # Instructions for every contributor
 
-The project keeps three current documents, the skills and the entry files, and
-nothing else. Start from the current checkout, never from a previous conversation.
+The project keeps three current documents, the reviewer's ledger, the skills and
+the entry files, and nothing else. Start from the current checkout, never from a previous conversation.
 
 | What | Where |
 | --- | --- |
