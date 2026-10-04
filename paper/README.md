@@ -133,6 +133,18 @@ them and the advisor checked them, never as results. The paper's outline, its
 chapters and its questions are on the issue "The paper: the outline, the
 chapters and the questions".
 
+## The paper's gates and the derivation scripts' count
+
+`general_formula/paper_gates.py` runs on every pull request through `tests/test_paper_gates.py`:
+the marks (every `\claimmark` one of the key's eight words, every `\fence` one of the two, a fence
+beside every derived or theorem mark of the main text), the struck phrases (the words earlier prints
+removed, with the history forms "pending", "not yet", "earlier version" and their kin, none allowed
+back), and the twins (a number or a word printed in two places asserted equal). The derivation
+scripts' count is a ratchet the same test holds: of the 127 derived and computed marks of the main
+text, 4 name a Python script beside them (`invariant_check.py`, `surplus_check.py`, `test_the_draw.py`, `test_the_meeting.py`) and
+123 name none; the count may only fall, and the paper claims nothing beyond it (the supplement
+carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
+
 ## Submission rules and status
 
 The paper goes first to arXiv and then to Foundations of Physics
