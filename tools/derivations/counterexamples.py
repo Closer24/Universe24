@@ -219,7 +219,7 @@ REGISTRY_TWO: tuple[tuple[str, Callable[[], Row]], ...] = (
     ),
     ("S.28", derived_two.lens_one_formula_for_light_and_matter),
     (
-        "tab:adds: The gravity of light a light packet pulls at 1 times E c2 ag",
+        "tab:adds: The gravity of light a light packets integrated write at 1 t",
         derived_two.gravity_of_light_factor_one,
     ),
     (
