@@ -149,7 +149,7 @@ def rows(ax: Axes) -> None:
         facecolor=LIGHT,
         edgecolor=INK,
         lw=0.5,
-        label="the law's real line on the same file ($N = 269.18$)",
+        label=f"the law's real line on the same file ($N = {REAL_N:.2f}$)",
     )
     ax.set_xticks(xs)
     ax.set_xticklabels([str(x) for x in xs])

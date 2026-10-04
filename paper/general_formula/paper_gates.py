@@ -12,6 +12,8 @@ script exits non-zero on any.
 
 4. The derivations' Inputs graph: no cycle among the supplement's Inputs lines beyond the ones named in
    claims_table.KNOWN_CYCLES, a set that may only shrink (the owner's question of 2026-10-04 on circularity).
+5. The bare board: the GameBoard is named by its one noun; a bare "board" stands only inside a cited document's
+   title (the owner's question of 2026-10-04 on two names for one thing).
 
     python paper/general_formula/paper_gates.py
 """
@@ -266,6 +268,24 @@ def gate_twins(texts: dict[str, str]) -> list[str]:
     return misses
 
 
+BOARD = re.compile(r"(?<!Game)\b[Bb]oard('s)?\b")
+
+
+def gate_board(texts: dict[str, str]) -> list[str]:
+    """The misses: a bare "board" for the GameBoard outside a cited document title (the repository's one noun)."""
+    misses = []
+    for name, text in texts.items():
+        for match in BOARD.finditer(text):
+            before = text[: match.start()]
+            opened = before.rfind("\\cite[")
+            if opened >= 0 and "]" not in before[opened:]:
+                continue
+            misses.append(
+                f"{name}: a bare 'board' at line {line_of(text, match.start())}: {text[max(0, match.start() - 40) : match.end() + 20]!r}"
+            )
+    return misses
+
+
 def gate_scripts(texts: dict[str, str]) -> list[str]:
     """The derived and computed marks of the main text that name no derivation script (the Boss's rule of 2026-10-04,
     #1793 comment 5975147735): a ratchet, the count may only fall; it reaches 0 with part 4's map of marks to scripts."""
@@ -286,6 +306,7 @@ def main() -> int:
         ("the stale phrases", gate_stale),
         ("the twins", gate_twins),
         ("the derivations' Inputs graph", lambda texts: gate_inputs_graph(texts["supplement.tex"])),
+        ("the bare board", gate_board),
     ):
         misses = run(texts)
         print(f"{gate}: {len(misses)} miss{'es' if len(misses) != 1 else ''}")
