@@ -27,13 +27,19 @@ the engine.
   paper-side scripts of `paper/general_formula/` that lean on the engine or
   read a run are a ratchet that only falls (`PAPER_SCRIPTS_LEANING_ON_THE_ENGINE`,
   2 at the paper's head d75c42a9); (b) the modules here that do not import
-  `rule3` are a ratchet that only falls (`MODULES_WITHOUT_RULE3_ROOT`, 10
-  today), so a new module roots in `rule3.py`; (c) `rule3.py`'s own checks: a
+  `rule3` are a ratchet that only falls (`MODULES_WITHOUT_RULE3_ROOT`, at most
+  8; an `import rule3` anywhere in the module counts), so a new module roots in
+  `rule3.py`; (c) `rule3.py`'s own checks: a
   plane wave at the derived omega satisfies the line to rounding on a chain,
   the conserved form is exact over 50 intervals on a periodic chain of 24
   Nodes with integer levels and the integer step's walk of it is the law's
-  term exactly; (d) the inventory below loads with every field and its
-  scriptless count is a ratchet that only falls (`SCRIPTLESS_MARKS`, 123).
+  term exactly; (d) the inventory below loads with every field, each entry's
+  status one of `scriptless` (no script here yet), `scripted` (its `script`,
+  `function`, `expected` and `digits` named) or `differs` (its `computed` and
+  `reason` named, a finding for the hands), and the scriptless count is a
+  ratchet that only falls (`SCRIPTLESS_MARKS`, at most 91); (e) every scripted
+  entry's function returns its printed numbers in order, a `num/den` string as
+  an exact Fraction, an int as it stands and a float to `digits` decimal places.
 
 ## The inventory
 
