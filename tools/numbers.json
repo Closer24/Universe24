@@ -275,6 +275,52 @@
         }
     },
     {
+        "name": "the pair of two bound records at [2, 3]: the relative part's and the centre's num at den 6,000",
+        "canonical": ["[5237, 6000]", "[2449, 6000]"],
+        "derivation": {
+            "module": "tools/derivations/two_body.py",
+            "function": "composed_pairs_at_two_three",
+            "expected": [5237, 2449],
+            "digits": 0
+        }
+    },
+    {
+        "name": "the pair's inertia ratios, the relative part one half and the centre twice the record's",
+        "derivation": {
+            "module": "tools/derivations/two_body.py",
+            "function": "inertia_ratio",
+            "expected": [0.5001, 2.0005],
+            "digits": 4
+        }
+    },
+    {
+        "name": "the reduced masses over the electron's: hydrogen, deuterium, muonium, positronium, muonic hydrogen",
+        "derivation": {
+            "module": "tools/derivations/two_body.py",
+            "function": "reduced_masses",
+            "expected": [0.999456, 0.999728, 0.995187, 0.5, 185.840832],
+            "digits": 6
+        }
+    },
+    {
+        "name": "the pair line against nature: the H to D 1s-2s shift in meV, positronium's 1s and 1s-2s in eV, muonic hydrogen's 1s in keV",
+        "derivation": {
+            "module": "tools/derivations/two_body.py",
+            "function": "against_nature",
+            "expected": [2.7751, -6.8028, 5.1021, -2.5285],
+            "digits": 4
+        }
+    },
+    {
+        "name": "the rest contents of two [2, 3] records against the pair's two parts, 2 sin omega_e and sin omega_M + sin omega_mu",
+        "derivation": {
+            "module": "tools/derivations/two_body.py",
+            "function": "rest_contents",
+            "expected": [1.4907, 1.4008],
+            "digits": 4
+        }
+    },
+    {
         "name": "the ball of dust's deceleration without and with the vacuum's write (q_0 = Omega_m / 2, Omega_m / 2 - Omega_Lambda)",
         "canonical": ["q_0 = Omega_m / 2 - Omega_Lambda = -0.55"],
         "derivation": {
