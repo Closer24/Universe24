@@ -95,7 +95,7 @@ TWINS = [
         [
             ("main.tex", "positronium $44$ percent of nature's"),
             ("supplement.tex", "positronium $44$ percent of nature's"),
-            ("supplement.tex", "$44$ percent of nature's behind the line's $62$"),
+            ("supplement.tex", "$44$ percent of nature's, the line at $38$"),
         ],
     ),
     (
