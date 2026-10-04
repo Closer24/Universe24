@@ -64,6 +64,8 @@ STALE = [
     ("1:1", "the README's figures clause"),
     ("No body stands within rounding", "(16), the hands' 5975194901 and 5975225540"),
     ("no body stands within rounding", "(16), the hands' 5975194901 and 5975225540"),
+    ("the hole raising the light's share", "the re-pin at d00aa9e2 (the Boss's 5975843075)"),
+    ("suspended until its fix", "the re-pin at d00aa9e2"),
 ]
 # the history forms the paper may not carry undated (R228): each dated to the pinned commit or struck; the engine's
 # "level at now" stands, so "now" is listed in its verb-led forms alone
@@ -148,12 +150,24 @@ TWINS = [
     ),
     ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$"), ("supplement.tex", "$\\Delta = 1 / m^*$")]),
     (
-        "the hole's defect of 2026-10-04",
+        "the lay's fix of 2026-10-04 and the re-pin",
         [
-            ("main.tex", "found on 2026-10-04, the hole raising the light's share"),
-            ("main.tex", "On 2026-10-04 a run of the one-photon file at the pinned commit found the hole raising the light's share"),
-            ("supplement.tex", "On 2026-10-04 a run of the one-photon file at the pinned commit found the hole raising the light's share"),
-            ("supplement.tex", "On 2026-10-04 the file's run found the hole raising the light's share (S.62)"),
+            ("main.tex", "the lay's fix of 2026-10-04 (PR \\#1862, S.62)"),
+            ("main.tex", "fixed the same day at d00aa9e2 (S.62)"),
+            ("main.tex", "the commit d00aa9e2 of 2026-10-04"),
+            ("supplement.tex", "The fix entered main at d00aa9e2 the same day (PR \\#1862"),
+            ("supplement.tex", "at d00aa9e2, after the lay's fix and the redesign"),
+            ("supplement.tex", "the commit d00aa9e2 of 2026-10-04, the pinned commit"),
+        ],
+    ),
+    (
+        "the two slits at the fixed lay",
+        [
+            ("main.tex", "$N = 270$ units of $W_c$ ($626$ photons at $\\omega = 0.4456$"),
+            ("main.tex", "the run $N = 270$ in the NodeReader's unit"),
+            ("main.tex", "the two slits' $270$ stands against the blind $273$"),
+            ("main.tex", "The run of the implementation gives $N = 270$"),
+            ("supplement.tex", "The two slits' $270$ units are $626$ photons"),
         ],
     ),
 ]
