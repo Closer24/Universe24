@@ -1,4 +1,4 @@
-"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's level weight, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, the held rows then rest under that record by the engine's own start (`start_content`, one act with `GameBoard.start`: the form of the record as the hold books it over the write's wall, the lay and the rest iterated to the fixed point; the count is the seed of the first pass alone), and the counts are that record's share in quanta at the paces of its read in those rests (ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one; the region names the body's Nodes and where its counts are read, not where its record is iterated), and the record written is the top mode of the read act on the board as declared (`on_the_board`: a mode cut at the region is no mode of the board's and relaxes when laid), the content it stands in the board's. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read, the held rows at the rests the engine's start lays under the laid records (`read_at_the_start` calls the same act), so one body's declaration is the gate's reading within the rounding. A body of a plane turned by a holder of the sign (ALGEBRA.md, The sign holder rotates the two-part record; The atom is a bound body of the holder of the sign) is laid as the turned top mode (`turned_mode`): the power iteration of Rule3's read with the arrivals turned by the Link angles and the Node by the time angle, in the content holders' paces, the holder under the rotation entering no pace; its region is the board as kept, where its record stands, and where no Node carries a whole quantum of it (the law's count 1 over the Nodes of its mode) its count stands at its declared Node, which the gate admits within its rounding. A body named by `--pixel` is laid as the one-Node record of its quanta at its declared Node, a declaration by name and no fixed point (the tests' one-quantum charged body, tests/laws.py; the frozen proton's world left the repository on 2026-10-03 at the owner's word). The arrays are of the kind the universe's width chooses, as the loader's are (`loader.world.kind_of`)."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's level weight, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, the held rows then rest under that record by the engine's own start (`start_content`, one act with `GameBoard.start`: the form of the record as the hold books it over the write's wall, the lay and the rest iterated to the fixed point; the count is the seed of the first pass alone), and the counts are that record's share in quanta at the paces of its read in those rests (ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one; the region names the body's Nodes and where its counts are read, not where its record is iterated), and the record written is the top mode of the read act on the board as declared (`on_the_board`: a mode cut at the region is no mode of the board's and relaxes when laid), the content it stands in the board's. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read, the held rows at the rests the engine's start lays under the laid records (`read_at_the_start` calls the same act), so one body's declaration is the gate's reading within the rounding. A body of a plane turned by a holder of the sign (ALGEBRA.md, The sign holder rotates the two-part record; The atom is a bound body of the holder of the sign) is laid as the turned top mode (`turned_mode`): the power iteration of Rule3's read with the arrivals turned by the Link angles and the Node by the time angle, in the content holders' paces, the holder under the rotation entering no pace; its region is the board as kept, where its record stands, and where no Node carries a whole quantum of it (the law's count 1 over the Nodes of its mode) its count stands at its declared Node, which the gate admits within its rounding. A body numbered in the design file's `pixels` is laid as the one-Node record of its quanta at its declared Node, a declaration by name and no fixed point (the tests' one-quantum charged body, tests/laws.py; the frozen proton's world left the repository on 2026-10-03 at the owner's word). The arrays are of the kind the universe's width chooses, as the loader's are (`loader.world.kind_of`)."""
 
 from __future__ import annotations
 
@@ -1051,6 +1051,9 @@ def unit_fixed_point(
 
 ENGINE_LAID = ("parts", "conversion")  # a body the engine lays at its one Node, no mode entry
 QUANTA = "quanta"  # the design file's key naming a body's count, the generator's input
+SENSES = "senses"  # the design file's key: the rotation sense of each body in the world's order
+PIXELS = "pixels"  # the design file's key: the numbers of the bodies laid as one-Node records
+FLAGS = ("--sense", "--pixel")  # the command-line inputs the design file replaced (C2)
 
 
 def laid_by_the_engine(body: dict[str, Any]) -> bool:
@@ -1086,14 +1089,26 @@ def declared(
     return counts, centre, int(quanta)
 
 
+def design_entry(world: Path) -> dict[str, Any]:
+    """The design file's keys for a world (the owner's decision C2, #1793 comment 5982379080: the generator's inputs are the design file's, nothing on the command line): the folder's `design.json` beside the world, its world's entry under `worlds` (by the world's stem; a design may name its world in prose alone) over the design's own `quanta`, `senses` and `pixels`; empty without a design file."""
+    design = world.with_name("design.json")
+    if not design.exists():
+        return {}
+    designed = json.loads(design.read_text(encoding="utf-8"))
+    entry = cast(dict[str, Any], designed.get("worlds", {})).get(world.stem, {})
+    own = {key: designed[key] for key in (QUANTA, SENSES, PIXELS) if key in designed}
+    return {**own, **(entry if isinstance(entry, dict) else {})}
+
+
+def designed_lay(world: Path) -> tuple[list[int], tuple[int, ...]]:
+    """The design file's rotation sense per body and one-Node declarations (`design_entry`; the owner's decision C2, #1793 comment 5982379080): `senses`, the sense of each body in the world's order, +1 or -1, 0 a real record and none beyond the list, and `pixels`, the numbers of the bodies laid as the one-Node record of their quanta at their declared Node (`pixel_record`); the command line carries neither."""
+    entry = design_entry(world)
+    return [int(sense) for sense in entry.get(SENSES, [])], tuple(int(n) for n in entry.get(PIXELS, []))
+
+
 def designed_quanta(world: Path, document: dict[str, Any]) -> list[int | None]:
-    """The design's count of every body of a world file, the generator's input (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the folder's design file beside the world (`design.json`, its world's entry `quanta` or the design's own `quanta`, one count for every body of the world), None for every body where it carries none; a body declared on its Nodes, laid before, is then refused by name here, naming the folder, the world and the key (`declared` refuses it again for a caller without a design): its declared counts are the engine's reading of the lay before, the output and never the input (ALGEBRA.md #the-generator), and no mode file beside the world stands for the design, a mode file written elsewhere carrying another lay's count (the shipped pixel re-laid at its Nodes' sum against its design's count, in a scratch)."""
-    design, quanta = world.with_name("design.json"), None
-    if design.exists():
-        designed = json.loads(design.read_text(encoding="utf-8"))
-        worlds = cast(dict[str, Any], designed.get("worlds", {}))
-        entry = worlds.get(world.stem, {})  # a design may name its world in prose alone
-        quanta = (entry if isinstance(entry, dict) else {}).get(QUANTA, designed.get(QUANTA))
+    """The design's count of every body of a world file, the generator's input (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the folder's design file beside the world (`design.json`, its world's entry `quanta` or the design's own `quanta`, `design_entry`, one count for every body of the world), None for every body where it carries none; a body declared on its Nodes, laid before, is then refused by name here, naming the folder, the world and the key (`declared` refuses it again for a caller without a design): its declared counts are the engine's reading of the lay before, the output and never the input (ALGEBRA.md #the-generator), and no mode file beside the world stands for the design, a mode file written elsewhere carrying another lay's count (the shipped pixel re-laid at its Nodes' sum against its design's count, in a scratch)."""
+    design, quanta = world.with_name("design.json"), design_entry(world).get(QUANTA)
     bodies = cast(list[dict[str, Any]], document.get("bodies", []))
     shape = (int(document["shape"][0]), int(document["shape"][1]), int(document["shape"][2]))
     for number, body in enumerate(bodies):
@@ -1403,9 +1418,7 @@ def nonzero(levels: np.ndarray) -> dict[str, list[int]]:
     return {"at": at.tolist(), "values": flat[at].tolist()}
 
 
-DECLARATION = (
-    "declaration"  # the lay of a body named by --pixel, the one-Node record by name (`pixel_record`)
-)
+DECLARATION = "declaration"  # the lay of a body in the design's `pixels`, the one-Node record by name (`pixel_record`)
 
 
 def pixel_mode(
@@ -1414,7 +1427,7 @@ def pixel_mode(
     designed: list[int | None] | None = None,
     pixels: Sequence[int] = (),
 ) -> dict[str, Any]:
-    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per declared event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
+    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per declared event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record; the design file's `senses`, `designed_lay`), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; a new body's declared count otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels` (the design file's `pixels`), the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
     integers = universe["integers"]
     if "quantum_action" not in integers:
@@ -1523,7 +1536,8 @@ def pixel_mode(
                 if not sense:
                     raise ValueError(
                         f"bodies[{number}] is laid as a one-Node record with no sense: the declaration is one "
-                        "quantum of a plane, its Wronskian sense x T / 2 (ALGEBRA.md, the quantum of a family)"
+                        "quantum of a plane, its Wronskian sense x T / 2 (ALGEBRA.md, the quantum of a family); "
+                        f"the design file's `{SENSES}` names it, +1 or -1, beside its `{PIXELS}`"
                     )
                 record, pairs_kept = pixel_record(board, counts, centre, sense, families[index].planes)
                 region, laid = dilated(counts > 0, wrap), counts
@@ -1627,6 +1641,15 @@ def pixel_mode(
 
 
 def main(argv: list[str] | None = None) -> None:
+    arguments = sys.argv[1:] if argv is None else list(argv)
+    for flag in arguments:  # the inputs are the design file's, nothing on the command line (C2)
+        if flag.split("=")[0] in FLAGS:
+            raise ValueError(
+                f"{flag} on the command line: the generator's sense per body and its one-Node declarations are "
+                f"the design file's (`{SENSES}` and `{PIXELS}` in the folder's design.json beside the world, its "
+                "world's entry or the design's own; the owner's decision C2, #1793 comment 5982379080), "
+                "nothing on the command line"
+            )
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--input",
@@ -1639,24 +1662,10 @@ def main(argv: list[str] | None = None) -> None:
         type=Path,
         help="the mode file to write; beside the world as <world>.mode.json when omitted",
     )
-    parser.add_argument(
-        "--sense",
-        type=int,
-        nargs="*",
-        default=[],
-        help="the rotation sense of each body in the world's order, +1 or -1 (0: a real record, neutral)",
-    )
-    parser.add_argument(
-        "--pixel",
-        type=int,
-        nargs="*",
-        default=[],
-        help="the numbers of the bodies laid as the one-Node record of their quanta at their declared Node, a declaration by name (the atom's nucleus)",
-    )
-    args = parser.parse_args(argv)
+    args = parser.parse_args(arguments)
     document = json.loads(args.input.read_text(encoding="utf-8"))
-    designed = designed_quanta(args.input, document)
-    mode = pixel_mode(document, list(args.sense), designed, tuple(args.pixel))
+    designed, (senses, pixels) = designed_quanta(args.input, document), designed_lay(args.input)
+    mode = pixel_mode(document, senses, designed, pixels)
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")
     out.write_text(json.dumps(mode, separators=(",", ":")) + "\n", encoding="utf-8")

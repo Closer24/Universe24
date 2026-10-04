@@ -10,7 +10,18 @@ from event_universe.core import paces
 from event_universe.game_board import GameBoard
 from event_universe.loader.faces import faces_of
 from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, CHAIN, EVENTS, PACKET, SLIT, TOOL, chain_body_world, refused, slit_world
+from tests.laws import (
+    BACK,
+    CHAIN,
+    EVENTS,
+    PACKET,
+    SLIT,
+    TOOL,
+    chain_body_world,
+    design_beside,
+    refused,
+    slit_world,
+)
 
 
 def dense(levels: dict[str, list[int]], shape: tuple[int, ...] = (24, 9, 1)) -> np.ndarray:
@@ -20,7 +31,7 @@ def dense(levels: dict[str, list[int]], shape: tuple[int, ...] = (24, 9, 1)) -> 
 
 
 def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(tmp_path, monkeypatch):
-    """The message lay: now_i = b e_i cos(k x_i) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, and the before level the exact lay's, the real part of the packet z = b e e^(i k x) with every component advanced by its own omega(q) (ALGEBRA.md, The message lay), each level within two units of the test's own transform over the board's shape with the uniform content out in proportion to the envelope (the rounding and the division act's leftover units; the rotation act and no table); the loader admits the folded board and refuses by name a node_reader Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a node_reader's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node without its `tick` (a lay whole by the count is at a declared tick of the run, `loader/messages.py`); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within two units of the same transform (the band cos omega(q) over x and y), and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run. One Node declaring six quanta on the chain becomes a body of several Nodes, each carrying a quantum, their counts within the rounding of the declaration (one lay of the body of 6 at the integer fixed point serves every reading of the body: a test runs under 30 seconds, the owner's word of 2026-10-03; the lays of 10, 50 and 100 quanta are the generator's scaling, a run of tools/pixel_mode.py by name); its standing reading rotates above the matter band's top and below 2, its peak at the centre, its period read whole; the mode file stands for the world by its digest and the GameBoard loads its levels as written; a body laid with a sense carries its second level pair beside them, a neutral one none; the body of the charged family is one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (`--pixel`: the level now (A, 0) and the level before the band's rest rotation in its sense, so the first pair's second level is 0 at every Node and the second pair's level before carries the sense). Two quanta on the tests' chain of 24 are refused by name as a cloud, the top mode of the board as declared rotating at [230, 173] = 1.3295, under the band's top 1.3333 (in one dimension every well binds on a board that holds its mode, the board's length entering the lightest body's binding: on a chain of 28 the two quanta bind as two Nodes carrying a quantum each, a run of tools/pixel_mode.py by name; the cloud is otherwise a three-dimensional body's refusal by name); the body's well stands far below the Link's zero (no finite count collapses under the composed paces, the write per proper volume, ALGEBRA.md #the-paces, The paces compose); two bodies of ten quanta two Links apart at the centre are refused by name (no mode stands in the region left to the first body by the second's, or their regions share a Node), a universe without T and a sense other than +1 or -1 are refused by name. The lay at the integer fixed point (the world's `lay` of the kind `fixed_point`, loader/lay.py): the body of 7 quanta (6 under the bolometer's unit; 7 the least that binds at the fixed point in the family's quantum, a quantum carrying sin omega_0 = 0.745 of the form it carried in W_c) re-laid in the content it returns until the record's two levels and the content repeat within the declared stop of 1 unit at every Node, the mode file's trajectory ending within it after more than one pass, the loader reading the lay; the compact seed's lay by name at the stop of 8 units; the budget's gate refuses by name a tolerance whose least T is above the universe's. The aslant message toward -x at the phase pi / 2 with k_y = pi / 8 is the real pair of z = b e e^(i (-k x + k_y y + pi / 2)); the screen's lines are the region's report and the field's reading alone, no Node named."""
+    """The message lay: now_i = b e_i cos(k x_i) at k = pi / 4 along x, b = 1,328, the raised cosine of half-width 4 about x = 5, and the before level the exact lay's, the real part of the packet z = b e e^(i k x) with every component advanced by its own omega(q) (ALGEBRA.md, The message lay), each level within two units of the test's own transform over the board's shape with the uniform content out in proportion to the envelope (the rounding and the division act's leftover units; the rotation act and no table); the loader admits the folded board and refuses by name a node_reader Node, a body Node and a laid level beyond the inner face, faces that leave no Node, a node_reader's `remainder` key (no count stands at a Node: the count is the record's share) and a message's `whole` Node without its `tick` (a lay whole by the count is at a declared tick of the run, `loader/messages.py`); a packet toward -x at the phase pi / 2 with the transverse wave number pi / 8 along y (`wave` [-1, 4], `phase` [1, 4], `transverse` {y: [1, 8]}) is laid as its mirror at that slant within two units of the same transform (the band cos omega(q) over x and y), and a transverse wave number on the along axis is refused by name; the screen's click lines are its report, the net inflow into its column through its front boundary Ports, never 0 and never a Node, beside the field's readings; in the run the Nodes beyond the board stay 0 in every family and the charge's share in quanta over the board stays above 0, the wave passes the gap (the light's levels beyond the wall, more in the gap's row than at the board's edge) and reflects elsewhere (more of its form before the wall than on the same board without the wall); the back-in-time gate says MATCH over the run. One Node declaring six quanta on the chain becomes a body of several Nodes, each carrying a quantum, their counts within the rounding of the declaration (one lay of the body of 6 at the integer fixed point serves every reading of the body: a test runs under 30 seconds, the owner's word of 2026-10-03; the lays of 10, 50 and 100 quanta are the generator's scaling, a run of tools/pixel_mode.py by name); its standing reading rotates above the matter band's top and below 2, its peak at the centre, its period read whole; the mode file stands for the world by its digest and the GameBoard loads its levels as written; a body laid with a sense carries its second level pair beside them, a neutral one none; the body of the charged family is one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (the design's `pixels`: the level now (A, 0) and the level before the band's rest rotation in its sense, so the first pair's second level is 0 at every Node and the second pair's level before carries the sense). Two quanta on the tests' chain of 24 are refused by name as a cloud, the top mode of the board as declared rotating at [230, 173] = 1.3295, under the band's top 1.3333 (in one dimension every well binds on a board that holds its mode, the board's length entering the lightest body's binding: on a chain of 28 the two quanta bind as two Nodes carrying a quantum each, a run of tools/pixel_mode.py by name; the cloud is otherwise a three-dimensional body's refusal by name); the body's well stands far below the Link's zero (no finite count collapses under the composed paces, the write per proper volume, ALGEBRA.md #the-paces, The paces compose); two bodies of ten quanta two Links apart at the centre are refused by name (no mode stands in the region left to the first body by the second's, or their regions share a Node), a universe without T and a sense other than +1 or -1 are refused by name. The lay at the integer fixed point (the world's `lay` of the kind `fixed_point`, loader/lay.py): the body of 7 quanta (6 under the bolometer's unit; 7 the least that binds at the fixed point in the family's quantum, a quantum carrying sin omega_0 = 0.745 of the form it carried in W_c) re-laid in the content it returns until the record's two levels and the content repeat within the declared stop of 1 unit at every Node, the mode file's trajectory ending within it after more than one pass, the loader reading the lay; the compact seed's lay by name at the stop of 8 units; the budget's gate refuses by name a tolerance whose least T is above the universe's. The aslant message toward -x at the phase pi / 2 with k_y = pi / 8 is the real pair of z = b e e^(i (-k x + k_y y + pi / 2)); the screen's lines are the region's report and the field's reading alone, no Node named."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     screen = {"name": "screen", "positions": [[20, y, 0] for y in range(9)]}
     path = slit_world(tmp_path, TOOL, node_readers=[screen])
@@ -285,12 +296,12 @@ def test_the_generators_count_is_the_designs_and_a_re_lay_without_the_designs_ke
     document["bodies"][0]["nodes"] = nodes
     world.write_text(json.dumps(document), encoding="utf-8")
     named = f"{tmp_path.name}/chain.json bodies\\[0\\] is declared on 3 Nodes, a body laid before, and "
+    design = tmp_path / "design.json"  # the chain's design beside it: its lay's keys and no `quanta`
+    refused(named + f"the design file {design} names no `quanta`", TOOL.main, ["--input", str(world)])
+    design.unlink()
     refused(named + "no design.json in .* names no `quanta`", TOOL.main, ["--input", str(world)])
     world.with_suffix(".mode.json").write_text(json.dumps({"bodies": [{"count": 5}]}), encoding="utf-8")
     refused(named + "no design.json", TOOL.main, ["--input", str(world)])  # the mode file is no design
-    design = tmp_path / "design.json"
-    design.write_text(json.dumps({"worlds": {"chain": {"ticks": 400}}}), encoding="utf-8")
-    refused(named + f"the design file {design} names no `quanta`", TOOL.main, ["--input", str(world)])
     refused("bodies\\[0\\] is declared on 3 Nodes.*design file's `quanta`", TOOL.pixel_mode, document)
     pixel = EVENTS / "matter_alone" / "pixel.json"
     shipped = json.loads((pixel.parent / "design.json").read_text(encoding="utf-8"))["worlds"]["pixel"]
@@ -330,3 +341,36 @@ def test_the_generator_refuses_a_wave_at_p_0_by_name_before_any_lay(tmp_path, mo
     refused("messages\\[0\\].wave's p is 0: a message has", lambda: load_world(path))  # the loader's own
     print(f"the tool's refusal: {refusal}; the two slits' message laid as shipped: {entries == shipped}")
     assert entries == shipped
+
+
+def test_the_generators_sense_and_one_node_declaration_are_the_design_files_and_the_flags_are_refused(
+    tmp_path, monkeypatch
+):
+    """The generator's two inputs beside the count are the design file's (the owner's decision C2, #1793 comment 5982379080; `design_entry`, `designed_lay`): `senses`, the rotation sense per body in the world's order, and `pixels`, the bodies laid as the one-Node record of their quanta, read from the folder's design.json beside the world, its world's entry or the design's own, and never from the command line: `--sense` and `--pixel` on the command line are refused by name with the words "the design file's" before the world is read (no mode file written); a design naming a body in `pixels` without its sense is refused by name naming the design file's `senses`; with both keys the chain's one quantum of the charged family is laid as the one-Node record in its sense, as the flags laid it, the design's own keys standing where the design has no entry for the world; the pair atom's shipped design carries the keys its builder passed."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    world = chain_body_world(tmp_path, TOOL, senses=(1,), mode=False)  # its design entry written beside
+    for flags in (["--sense", "1"], ["--pixel", "0"], ["--sense=1", "--pixel=0"]):
+        refusal = refused("the design file's", TOOL.main, ["--input", str(world), *flags])
+    assert not world.with_suffix(".mode.json").exists() and str(refusal).startswith("--sense=1 on the")
+    design_beside(tmp_path, "chain", senses=[], pixels=[0])
+    refused(
+        "one-Node record with no sense.*the design file's `senses`", TOOL.main, ["--input", str(world)]
+    )
+    (tmp_path / "design.json").write_text(json.dumps({"senses": [1], "pixels": [0]}), encoding="utf-8")
+    assert TOOL.designed_lay(world) == ([1], (0,)) and TOOL.design_entry(world) == {
+        "senses": [1],
+        "pixels": [0],
+    }
+    TOOL.main(["--input", str(world)])
+    entry = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
+    assert entry["count"] == 1 and entry["lay"]["kind"] == TOOL.DECLARATION
+    assert not any(entry["moving"]["im_now"]) and any(
+        entry["moving"]["im_before"]
+    )  # the one-Node record
+    pair = json.loads((EVENTS / "pair_atom" / "design.json").read_text(encoding="utf-8"))
+    print(
+        f"the flags' refusal: {refusal}; the chain's one-Node record {entry['clock']}; the pair atom's design {pair['senses']} {pair['pixels']}"
+    )
+    assert (pair["senses"], pair["pixels"]) == ([1, -1], [0, 1]) and TOOL.designed_lay(
+        EVENTS / "a.json"
+    ) == ([], ())
