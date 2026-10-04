@@ -427,12 +427,12 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
 
 
 def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
-    """The undepleted beam (ALGEBRA.md, The click writes on the GameBoard; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `GameBoard.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), at the trial seed 2, beside its untouched twin. The taking at 24, g to e climbing, books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift` over W_c and one quantum of the reading's rounding, printed); the return, e to g descending by the pulse at a later window's close (`meeting.exchange`, stimulated emission), gives the quantum back into the dense pulse: nothing laid, no source in time, the count back to the start and the deficit 0, the arrays the twin's still; the back-in-time gate MATCH across the taking and the return, the atom's lays crossed from their lines."""
+    """The undepleted beam (ALGEBRA.md, The click writes on the GameBoard; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `GameBoard.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), at the trial seed 2, beside its untouched twin. The taking at 72, g to e climbing (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 24 under the state modulo the total until the clean main of 2026-10-04), books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books read at 84, between the taking and the return; the books' `drift` over W_c and one quantum of the reading's rounding, printed); the return, e to g descending by the pulse at the next window's close, 96 (`meeting.exchange`, stimulated emission), gives the quantum back into the dense pulse: nothing laid, no source in time, the count back to the start and the deficit 0, the arrays the twin's still; the back-in-time gate MATCH across the taking and the return, the atom's lays crossed from their lines."""
     zeno = EVENTS / "zeno" / "zeno_2.json"
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
     at, count, unit = (4, 4, 2), board.credit.counts[pulse], board.credit.units[pulse]
-    for _ in range(24):
+    for _ in range(72):
         board.step(), twin.step()
     booked_share = int(board.share_of(pulse)[0][at])
     assert booked_share > unit  # dense: the booked share at the Node above the record's quantum
@@ -442,11 +442,11 @@ def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
         for key in ("now", "before", "remainder"):
             mine, its = (getattr(b.states[pulse].lines[0], key) for b in (board, twin))
             assert np.array_equal(mine, its)  # the undepleted beam: nothing written on the drive
-        if board.tick == 48:
+        if board.tick == 84:
             books, its_books = board.books()["pulse"], twin.books()["pulse"]
         returns = [x for x in lines if x["event"] == "credit" and x["given"] == "pulse"]
     jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER" and x["taken"]]
-    assert [x["tick"] for x in jumps][:1] == [24] and jumps[0]["taken"] == "pulse"
+    assert [x["tick"] for x in jumps][:1] == [72] and jumps[0]["taken"] == "pulse"
     assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
     assert not board.credit.fronts and not board.credit.sources
     print(

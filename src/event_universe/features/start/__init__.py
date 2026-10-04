@@ -270,7 +270,7 @@ def rest(
         if returned([rounded], [own], seen, f"the rest of the pair {list(pair)}"):
             break
         own = rounded
-    return FieldAtRest(rounded, fine, unit, iterations, int(division(1, 2, wall - 1)), own)
+    return FieldAtRest(rounded, fine, unit, iterations, int(division(1, 2, wall)), own)
 
 
 def read_content(
