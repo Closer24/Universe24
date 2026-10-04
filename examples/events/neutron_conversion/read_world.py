@@ -1,4 +1,4 @@
-"""The neutron conversion's reader (the two hands' blind, #1572 comments 5963954612 (c), 5964082980 (c), 5964484844 and 5964520368): the world is loaded as the runner loads it and stepped by the engine's own step with an observer, once per seed of the design's trials (the record's generator at the trials tool's state, the seed times the records declared NodeReaders plus the record's number), and the blind's rows are read from the GameBoard, the lines and the books, every number a GameBoard reading labelled so unless it is a node_reader's line: over the first seed's run and the first converting seed's, at the start and at the conversion's interval, every family's lines at the Node (the levels now and before and Rule3's remainders), each record's rotation read from its levels (cos omega = before / now on a real line, (re re_b + im im_b) / (re^2 + im^2) on a plane), the Wronskian per family at the Node and summed, the holders of the sign's rows at the Node with the Nodes each row's level stands on (per interval over the run, the sign row written at the conversion), the reader's counts and the credit's counts, the share per family at the Node and over the board in the current's units and in quanta beside the count, the energies T sin omega in and out, the back-in-time gate before the conversion, after it and across it; over every seed the conversion's interval and the realised conversions against the design's expectation. The tool holds no number of the law and compares nothing.
+"""The neutron conversion's reader (the two hands' blind, #1572 comments 5963954612 (c), 5964082980 (c), 5964484844 and 5964520368): the world is loaded as the runner loads it and stepped by the engine's own step with an observer, once per seed of the design's trials (the record's generator at the trials tool's state, the seed times the records declared NodeReaders plus the record's number), and the blind's rows are read from the GameBoard, the lines and the books, every number a GameBoard reading labelled so unless it is a node_reader's line: over the first seed's run and the first converting seed's, at the start and at the conversion's interval, every family's lines at the Node of the reading (the levels now and before and Rule3's remainders; the Node of the reading is the body's first Node until the NODEREADER conversion line names the Node the draw picked by the record's share over its declared Nodes, the law's A2, and that Node from the conversion on, named with its source in the output), each record's rotation read from its levels (cos omega = before / now on a real line, (re re_b + im im_b) / (re^2 + im^2) on a plane), the Wronskian per family at the Node and summed, the holders of the sign's rows at the Node with the Nodes each row's level stands on (per interval over the run, the sign row written at the conversion), the reader's counts and the credit's counts, the share per family at the Node and over the board in the current's units and in quanta beside the count, the energies T sin omega in and out, the back-in-time gate before the conversion, after it and across it; over every seed the conversion's interval and the realised conversions against the design's expectation. The tool holds no number of the law and compares nothing.
 
 PYTHONPATH=src python examples/events/neutron_conversion/read_world.py --expectation examples/events/neutron_conversion/expectation.json examples/events/neutron_conversion/neutron_conversion.json
 """
@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
@@ -123,24 +124,32 @@ def readings(board: GameBoard, here: tuple[int, int, int], quanta: list[int]) ->
     }
 
 
+def on_the_board(board: GameBoard, node: Sequence[int]) -> tuple[int, int, int]:
+    """A Node at the file's coordinates as the board's arrays index it, the board's offset added."""
+    x, y, z = (int(a) + b for a, b in zip(node, board.offset, strict=True))
+    return (x, y, z)
+
+
 def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
-    """The first seed's run read in full: the start, the conversion's interval and the run's end, the lines, the books and the back-in-time gate before, after and across the conversion."""
+    """The first seed's run read in full: the start at the body's first Node; the conversion's interval, the sign rows from that interval on and the run's end at the Node of the reading, the body's first Node until the NODEREADER conversion line names the Node the draw picked by the record's share over its declared Nodes (the law's A2; the line's `node`, a GameBoard diagnostic at the file's coordinates), that Node from the conversion on, so that the rows are read where the records out were laid; the output names the Node read and its source; the lines, the books and the back-in-time gate before, after and across the conversion."""
     board = loaded(path, seed)
     index = board.world.bodies[0].family
-    here = tuple(int(a) + b for a, b in zip(board.world.bodies[0].nodes[0], board.offset, strict=True))
-    node_at = (here[0], here[1], here[2])
+    first = on_the_board(board, board.world.bodies[0].nodes[0])
+    read_at = first  # the reading's Node, the body's first until a conversion line names the drawn one
     quanta = list(board.order)
-    start = readings(board, node_at, quanta)
+    start = readings(board, first, quanta)
     conversion: dict[str, Any] | None = None
-    rows_by_interval: list[list[Any]] = []  # the sign holders' rows at the Node per interval
+    rows_by_interval: list[list[Any]] = []  # the sign holders' rows at the reading's Node per interval
     for _ in range(intervals):
         board.step()
         lines: list[dict[str, Any]] = board.read_lines  # type: ignore[attr-defined]
         if conversion is None and any(line["event"] == "conversion" for line in lines):
-            conversion = readings(board, node_at, quanta)
-            conversion["line"] = next(line for line in lines if line["event"] == "conversion")
+            line = next(line for line in lines if line["event"] == "conversion")
+            read_at = on_the_board(board, line["node"]["at"])  # the drawn Node, the line's diagnostic
+            conversion = readings(board, read_at, quanta)
+            conversion["line"] = line
         rows_by_interval.append(
-            [board.tick, {n: r["at_the_node"] for n, r in sign_rows(board, node_at).items()}]
+            [board.tick, {n: r["at_the_node"] for n, r in sign_rows(board, read_at).items()}]
         )
         if board.ended is not None:
             break
@@ -162,10 +171,16 @@ def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
     neutron = board.families[index].name
     out = {
         "seed": seed,
-        "node": list(board.world.bodies[0].nodes[0]),
+        "node": {  # the Node of the reading and its source, the coordinates the file's
+            "label": "GAMEBOARD",
+            "at": list(read_at),
+            "source": "the conversion line's node, the Node the draw picked by the record's share (A2)"
+            if conversion is not None
+            else "the body's first Node, no conversion in the run",
+        },
         "start": start,
         "conversion": conversion,
-        "end": readings(board, node_at, quanta),
+        "end": readings(board, read_at, quanta),
         "sign_rows_at_the_node_by_interval": rows_by_interval,
         "rotations_sum": None
         if conversion is None
