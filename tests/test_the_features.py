@@ -99,7 +99,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
         assert (found.levels == (fine + found.unit // 2) // found.unit).all() and found.iterations > 1
         assert (found.levels[counts > 0] > 0).all() and (found.levels[counts < 0] <= 0).all()
         assert (found.levels < 0).any() != (counts >= 0).all()  # only negative sources sink below 0
-        assert found.remainder == (3 * den - 1) // 2
+        assert found.remainder == 3 * den // 2
     rows = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
     row = next(entry for entry in rows if entry["name"] == "binding")
     (num, den), weight, exact = row["pair"], row["held"]["level_weight"], {}
@@ -317,9 +317,7 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
     assert derived.bound_under_rooms(families, GAMMA, 64, 63, 1, None) == under_the_hill
     assert derived.amplitude_bound(families, GAMMA, 64, 63) == under_the_rooms < under_the_hill
     two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}))[1]
-    assert (
-        derived.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7
-    )  # the sum over the two rows read
+    assert derived.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7  # the two rows read, summed
 
 
 def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
