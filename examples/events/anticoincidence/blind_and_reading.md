@@ -117,44 +117,50 @@ outcome is not S.57 (c)'s form). The finding named above, the standing level rea
 by the resonant form. The first build of the act (one shear of the window's sum) read 92, 89, 0 and
 19 with alpha 0 and 19, 19, 162 and 0 with alpha 0.99; its numbers are replaced by this table's.
 
-## On the lay without the uniform mode, 2026-10-04 (branch click-share-fix, 84f151f)
+## On the lay without the uniform mode and the redesign, 2026-10-04 (branch click-share-fix)
 
 The experimenter's bug report (#1827 comment 5975131359; the hands' lines 5975317261, 5975334043 and
-5975371441; the Boss's 5975430859): the message lay wrote the packets with a uniform-mode content, the
-sum of now -563 and of before -406 over the chain, and Rule3 carries their difference exactly on the
-massless row (the double root at wave number 0), so the mean level fell by 157 every interval, the
-records read that standing level in place of the passing packet (the finding named above), and the
-click act's hole, written to 0 into it, left two kinks worth a quantum of share that the front carried
-outward (the photon's share 1 quantum to 2 after the one taking, 2 to 5 in the control). The fix: the
-generator takes the uniform mode's content out of a massless packet's two levels (each sums to 0 over
-the board, the sum divided among the packet's Nodes in proportion to the envelope by the division act)
-and the loader refuses a massless message whose sums are not 0; nothing of Rule3, the hole, the front or
-the books moves. This folder's design changes by its own rule and no more: the amplitudes 160 and 226
-become 238 and 333 so that the books read one and two quanta (the lump at top 1 and edge 3 was more than
-half uniform mode), and the declared seed 25 becomes 5 so that the shipped run takes (body 0 at 40) and
-the reader test's window of 10 takes at 10; the blind is untouched. Re-run by `tools/meeting_trials.py`
+5975371441; the Boss's 5975430859 and 5975547149): the message lay wrote the packets with a uniform-mode
+content, the sum of now -563 and of before -406 over the chain of 24, and Rule3 carries their difference
+exactly on the massless row (the double root at wave number 0), so the mean level fell by 157 every
+interval, the records read that standing level in place of the passing packet (the finding named
+above), and the click act's hole, written to 0 into it, left two kinks worth a quantum of share that the
+front carried outward (the photon's share 1 quantum to 2 after the one taking, 2 to 5 in the control).
+The fix: the generator takes the uniform mode's content out of a massless packet's two levels (each sums
+to 0 over the board, the sum divided among the packet's Nodes in proportion to the envelope by the
+division act) and the loader refuses a massless message whose sums are not 0; nothing of Rule3, the
+hole, the front or the books moves (ALGEBRA.md, The message lay, the sentence of 2026-10-04). The old
+lay at top 1 and edge 3 on the chain of 24 was mostly uniform mode: what the correction leaves is a
+three-Node wiggle of no wave number near pi / 4, off the atoms' resonance, whose reading contradicts
+this folder's blind (the advisor's finding, 5975512075: at the amplitudes that keep the count, 36 of 50
+seeds close with no taking), so it is replaced and not kept. The redesign (the advisor's and the
+mathematician's approval, 5975470305 and 5975568700): the chain 96 open on x with both faces receding,
+the atoms at the Nodes 23 to 24 and 71 to 72 (24 Links from the centre each, the lay symmetric), the
+packets toward +x from 48 and toward -x from 47 at k = pi / 4 with top one Node and edge 8 (one
+wavelength, the envelope's transform 0 at the carrier, so the correction is a no-op), the amplitudes by
+the design's own rule so that the books read one whole quantum (116: 585,066,000, 0.99 W_rec) and two
+(165: 1,188,630,000, 2.02), the window 48 at the passage's end (the packets reach the atoms' rings by
+about 27, their tops at 42), the run 170 so that the front reaches both packets; the blind rebuilt by
+the builder from the design with one line added at the hands' word, P(A only) = P(B only) exact by the
+lay's symmetry and the seeds' draw alone, its exact claims unchanged. Re-run by `tools/meeting_trials.py`
 over the 200 seeds and by `tools/run_inputs.py` on the shipped world, every number labelled:
 
 | world | A only | B only | both | neither | alpha |
 | --- | --- | --- | --- | --- | --- |
-| one_photon | 7 of 200 | 47 of 200 | 0 of 200 | 146 of 200 | 0 |
-| two_photons | 8 of 200 | 80 of 200 | 11 of 200 | 101 of 200 | 2200 / 1729 = 1.27 |
+| one_photon | 99 of 200 | 101 of 200 | 0 of 200 | 0 of 200 | 0 |
+| two_photons | 5 of 200 | 0 of 200 | 195 of 200 | 0 of 200 | 1 |
 
-One photon: P(both) = 0 exactly and alpha = 0, the blind's (PASS, by the count); P(A only) = 0.035 and
-P(B only) = 0.235, each at most 1 / 2 (PASS on the bound) and in the shares' proportion of this lay
-(the draw's shares at the window's end A 0.034, B 0.253, none 0.714, NODEREADER), not equal: the two
-packets after the correction differ (the hands' line on the blind's "equal", 5975092300 and 5975225429,
-reads it as the shares' proportion), and most windows close with no taking, since the lump's passage at
-the weight 6 transfers a few percent where the standing level had transferred nearly all. Two photons:
-P(both) = 0.055 above 0 (PASS); alpha = 1.27, neither form of the blind exactly (the second draw over
-the atom left and the rest of its unit). The shipped run (GAMEBOARD, the books per interval): the share
-1.02 quanta at the lay and 1.05 through the window, 1.05 at the hole's two faces (the hole at a Node the
-packets left 26 intervals before removes about nothing and adds nothing: every Node outside the hole's
-first shell bit for bit a no-taking run's, the dedicated test), then falling as the light leaves through
-the receding faces, 0.66 at 72; the 32 erasure lines take 5 to 136 units per shell, the residual wave;
-`tools/back_in_time.py --intervals 72` MATCH. What the folder still owes, the hands' design item: a
-packet long against its wavelength on a longer chain with the window closing at the passage's end (the
-chain 96, the packets at 47 and 48 with top 1 and edge 8, the atoms at 23 to 24 and 71 to 72, the window
-48, the run 170), read on the experimenter's scratch branch at 50 seeds as A only 25, B only 25, both 0,
-neither 0 and the control both 50 of 50, the front sweeping the near packet within 15 intervals and the
-far one from about 120, the board dark at 170; its pull request follows this one.
+One photon: P(both) = 0 exactly and alpha = 0, the blind's (PASS, by the count); P(A only) = 0.495 and
+P(B only) = 0.505, equal within the standard error and the symmetry's (PASS), each at most 1 / 2 with no
+"neither" (PASS on the bound: the draw's shares at the window's end A 0.487, B 0.513, none 0.000,
+NODEREADER, the passage's transfer complete at the weight 6). Two photons: P(both) = 0.975 above 0
+(PASS); alpha = 1, the blind's second form (two sequential takings at one share). The shipped run
+(GAMEBOARD, the books per interval; the page from the output file): the share 1.00 quanta at the lay and
+1.01 at 48; body 0 takes at 48 (NODEREADER, the count 1 to 0, the hole at its Node); 1.05 at 49 (the
+hole's transient) and 1.12 at 56 (the front's sweep through the near packet, the most, the known
+transient of the hole to 0 inside a smooth wave), 0.59 at 60 and 0.49 from 80 to 150 (the near packet
+erased, the far one the empty wave in the grown layers), 0.10 at 170 as the front sweeps the far packet
+(it meets its top at about 159), 0.02 at 180 and 0 exactly from 190, the board dark; the erasure one
+shell per interval on both sides until the left shell leaves the declared board; `tools/back_in_time.py
+--intervals 170` MATCH; the control both atoms at 48. The two transients are the hands' known one, named
+by their numbers until the front's taper at the owner's word.

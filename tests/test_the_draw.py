@@ -185,18 +185,18 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
 
 
 def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constant():
-    """T3 (the mathematician's 193 (2) and 197 precision 3 with the advisor's second; the matrix row 3): on the anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json, the chain of 24 with its receding faces, the committed world and its mode file) one record takes the photon at the interval 40, the photon's count reaches 0 and the front presents its faces shell by shell from the taker's Node; at every interval after, inside the ball of the shells whose two faces are done and whose outer neighbours stand at 0 (the Link-metric distance at most t - 40 - 3), every line of the photon's record stands at (0, 0) with its remainder below one read coefficient R of the photon's rule at the vacuum's paces and unchanged from one interval to the next: the erasure is Rule3's own write and nothing assigned; the erasure lines one per interval from the interval after the click."""
+    """T3 (the mathematician's 193 (2) and 197 precision 3 with the advisor's second; the matrix row 3): on the anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json, the chain of 96 with its receding faces, the committed world and its mode file) one record takes the photon at the interval 48, the photon's count reaches 0 and the front presents its faces shell by shell from the taker's Node; at every interval after, inside the ball of the shells whose two faces are done and whose outer neighbours stand at 0 (the Link-metric distance at most t - 40 - 3), every line of the photon's record stands at (0, 0) with its remainder below one read coefficient R of the photon's rule at the vacuum's paces and unchanged from one interval to the next: the erasure is Rule3's own write and nothing assigned; the erasure lines one per interval from the interval after the click."""
     board = GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
-    for _ in range(40):
+    for _ in range(48):
         board.step()
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     read = node.rule_of(board.families[light], board.world.node_clock, 0, None, board.unit)[0][0]
     jumps = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
-    assert len(jumps) == 1 and jumps[0]["tick"] == 40 and board.credit.counts[light] == 0
+    assert len(jumps) == 1 and jumps[0]["tick"] == 48 and board.credit.counts[light] == 0
     holes = {
-        f.at for f in board.credit.faces[41] if f.family == light
+        f.at for f in board.credit.faces[49] if f.family == light
     }  # the hole's one Node, the face books'
-    since, origin = 40, list(next(iter(holes)))
+    since, origin = 48, list(next(iter(holes)))
     assert len(holes) == 1 and "node" not in jumps[0]
     assert board.credit.fronts == [(light, tuple(origin), since)]
     checked = 0

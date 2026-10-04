@@ -46,10 +46,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
         "packet's two levels each sum to 0 on the committed worlds, and the loader refuses a mode entry whose sums are not 0",
     ),
-    "tests/test_the_meeting.py::test_the_taking_at_an_empty_node_removes_share_and_leaves_every_other_node_as_it_was": (
-        28,
-        "the lay's uniform mode (#1827 comment 5975131359): the hole at a Node the packet has passed removes share and adds no "
-        "kink, every Node outside its first shell bit for bit a no-taking run's",
+    "tests/test_the_meeting.py::test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark": (
+        14,
+        "the lay's uniform mode (#1827 comment 5975131359): the committed one-photon world's taking at 48, the share never "
+        "above the lay's by more than the known transient, and 0 exactly once the front has swept both packets",
     ),
     "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
         10,

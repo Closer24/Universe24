@@ -526,28 +526,19 @@ def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_b
     )  # bounded: 172 by the lattice's rule, 242 in reals, 6,268 under the floor
 
 
-def test_the_taking_at_an_empty_node_removes_share_and_leaves_every_other_node_as_it_was():
-    """The hole written where the packet has passed (ALGEBRA.md, The click writes on the GameBoard (3)): over the committed one-photon world the first seed whose window closes with a taking against the first that closes with none, the count 0 against 1, the light's share after the hole's two faces at most the share before them and at most the no-taking run's, the hole's Node and its first shell at 0, and every other Node's level bit for bit the no-taking run's: the hole adds no kink."""
-    world, runs = EVENTS / "anticoincidence" / "one_photon.json", {}
-    for seed in range(1, 21):
-        lines = []
-        board = GameBoard(load_world(world), lines.append)
-        for books in board.credit.bodies:
-            books.state = seed * len(board.credit.bodies) + books.number
-        photon, shares = [f.name for f in board.families].index("photon"), []
-        for _ in range(42):
-            board.step()
-            shares.append(board.books()["photon"]["share"])
-        credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER"]
-        key = "taking" if any(c["taken"] for c in credits) else "control"
-        holes = [tuple(c["node"]["at"]) for c in lines if c["event"] == "face"]
-        now = board.states[photon].lines[0].now.copy()
-        runs.setdefault(key, (shares, now, board.credit.counts[photon], holes[:1], board.offset[0]))
-        if len(runs) == 2:
-            break
-    (taking, now, count, holes, offset), (control, still, kept, _, _) = runs["taking"], runs["control"]
-    assert count == 0 and kept == 1 and taking[41] <= taking[39] and taking[41] <= control[41]
-    ball = [holes[0][0] + offset + d for d in (-1, 0, 1)]
-    assert all(int(now[i, 0, 0]) == 0 for i in ball)
-    others = [i for i in range(now.shape[0]) if i not in ball]
-    assert all(int(now[i, 0, 0]) == int(still[i, 0, 0]) for i in others)
+def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
+    """The committed one-photon world at the lay without the uniform mode (ALGEBRA.md, The click writes on the GameBoard (3) and (6)): one atom takes at the window's close and the count falls to 0; the light's share over the GameBoard never rises above the lay's by more than the hole's and the front's transient (one part in seven, the known one), and once the front has swept both packets the share is 0 exactly, the board dark."""
+    board = GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
+    photon, shares = [f.name for f in board.families].index("photon"), []
+    laid = board.books()["photon"]["share"]
+    for _ in range(200):
+        board.step()
+        shares.append(board.books()["photon"]["share"])
+    credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
+    assert len(credits) == 1 and credits[0]["tick"] == 48 and board.credit.counts[photon] == 0
+    assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
+    assert all(
+        line["event"] == "erasure"
+        for line in lines
+        if line["tick"] > 48 and line["event"] not in ("face", "credit", "lay")
+    )
