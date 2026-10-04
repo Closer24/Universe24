@@ -9,6 +9,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     import json
     import sys
     import time
+    from math import atan2, degrees, isqrt
 
     import numpy as np
 
@@ -16,7 +17,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.core import paces
     from event_universe.core.ports import Wrap
     from event_universe.core.rule3 import coefficients
-    from event_universe.features.click import Face, standing
+    from event_universe.features.click import Face
     from event_universe.game_board import GameBoard
     from event_universe.loader.derived import quanta_records
     from event_universe.loader.universe import universe_of
@@ -53,15 +54,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     def the_step_is_reversible_to_the_bit():
         """Row 27 and the results table's row 1, "The whole run therefore goes back: N intervals forward and N back return every array of every family bit for bit, provided every number an act read at an interval's start is kept" and "Rule3's step is reversible to the bit"; the breaker: random states on 2x2x2 to 4x4x4 boards (every face kind, the pairs [1, 1] to [4000, 6000], uneven Link factors, the width 63) forward then the inverse bit for bit, a face's kept value presented again on the way back; outside, a face that moves between the step and its inverse, or a face forgotten, the read not kept; the whole GameBoard's gate on the box here, on the closed cube in tests/test_the_node.py and on the one rule's integers in tests/test_rule3.py."""
         draw, wraps = np.random.default_rng(1), [Wrap(True, True, True), Wrap(False, True, True)]
-        wraps.append(Wrap(False, False, False))
+        wraps, kind = [*wraps, Wrap(False, False, False)], np.int64
         tried = misses = 0
         for shape in ((2, 2, 2), (3, 3, 3), (4, 4, 4), (3, 2, 4)):
             for wrap in wraps:
                 for num, den in ((1, 1), (2, 3), (4000, 6000), (-1, 2)):
-                    content = draw.integers(-30, 60, shape).astype(np.int64)
-                    factors = tuple(
-                        (256 + draw.integers(-40, 40, shape)).astype(np.int64) for _ in range(6)
-                    )
+                    content = draw.integers(-30, 60, shape).astype(kind)
+                    factors = tuple((256 + draw.integers(-40, 40, shape)).astype(kind) for _ in range(6))
                     rule = coefficients(num, den, 6000, *paces.node_paces(6000, content), factors, 16)
                     now, before = (draw.integers(-60, 60, shape).astype(np.int64) for _ in (0, 1))
                     remainder = draw.integers(0, 2**40, shape).astype(object) % int(rule[2])
@@ -78,9 +77,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         with profiled():
             after = node.step(record, rule, closed, 1, 0, ([face], (0, 0, 0)))
         assert face.value is not None and int(after.now[1, 1, 1]) == 0  # the hole to 0 at the Node
-        assert same(
-            node.step(after, rule, closed, -1, 0, ([face], (0, 0, 0))), record
-        )  # presented again
+        assert same(node.step(after, rule, closed, -1, 0, ([face], (0, 0, 0))), record)
         forgotten, moved = node.step(after, rule, closed, -1), node.step(after, rule, periodic, -1)
         off = int((moved.before != before).sum()), int((forgotten.before != before).sum())
         assert off[0] > shape[1] * shape[2] and off[1] == 1  # outside: the read not kept
@@ -99,7 +96,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         )
 
     def the_gate_runs_across_the_click_and_the_write_is_the_whole_re_lay():
-        """Row 26, "The back-in-time gate is exact between clicks, and runs across a click and the erasure intervals that follow it, treating the values a NodeReader presented at its Ports as given", and S.59's engine clause (R332: a body's write is its whole re-lay); the breaker: the shipped Zeno world's click at 72, the body's taking of its dense drive; between clicks 60 forward and 60 back bit for bit with nothing crossed, across the click with the lays crossed from their lines MATCH (tests/test_the_meeting.py and tests/test_the_node_reader.py hold the shipped gates); outside, the step back across the click with nothing crossed misses at the lay's Node, the draw forward only; the write at 72 the whole re-lay, the part entered at the standing levels of one quantum in the leaving part's direction and sense over the two Nodes, the part left at 0, every remainder at the lay's origin, where the twin without the draw reads and writes nothing."""
+        """Row 26, "The back-in-time gate is exact between clicks, and runs across a click and the erasure intervals that follow it, treating the values a NodeReader presented at its Ports as given", and S.59's engine clause (R332: a body's write is its whole re-lay); the breaker: the shipped Zeno world's click at 72, the body's taking of its dense drive; between clicks 60 forward and 60 back bit for bit with nothing crossed, across the click with the lays crossed from their lines MATCH (tests/test_the_meeting.py and tests/test_the_node_reader.py hold the shipped gates); outside, the step back across the click with nothing crossed misses at the lay's Node, the draw forward only; the write at 72 the whole re-lay, the part entered at the standing levels of one quantum over the two Nodes in the leaving part's sense and in its direction turned by the arriving record's phase, atan2(Y', X) of the window's two sums (the phase passes with the quantum, ALGEBRA.md L739 and the ledger's row 16), the part left at 0, every remainder at the lay's origin, where the twin without the draw reads and writes nothing; the expected levels the law's own integers and no engine function, written here from the drive's levels at the Nodes over the window (a_t = SUM d_i A_i div A half up, the reference records by Chebyshev's line at the declared pair, X and Y' over the window, N = isqrt(X^2 + Y'^2), the direction (90 X div N, 90 Y' div N) at the amplitude A_i and the level before by the record's own rotation, the mathematician's reading of the witness, #1793 comment 5983031085), the float turn one level off in im through the act's two floors."""
         world = json.loads((EVENTS / "zeno" / "zeno_4.json").read_text(encoding="utf-8"))
         (tmp_path / "zu.json").write_bytes((ROOT / world["universe"]).read_bytes())
         world.update(universe="zu.json", engine="e.json")
@@ -108,7 +105,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         for name, bodies in (("drawn", world["bodies"]), ("undrawn", [record])):
             paths[name].write_text(json.dumps({**world, "bodies": bodies}), encoding="utf-8")
             TOOL.main(["--input", str(paths[name])])
-        twin, between, undrawn = GameBoard(load_world(paths["undrawn"])), None, None
+        twin, between, undrawn, drive = GameBoard(load_world(paths["undrawn"])), None, None, []
+        body = world["bodies"][0]
+        at = [tuple(int(v) for v in n["node"]) for n in body["nodes"]]
+        pulse = [f.name for f in twin.families].index(body["transitions"][0]["drive"])
         with profiled():  # the reader's books made at the load, S.61's line 27, under the profile too
             board = GameBoard(load_world(paths["drawn"]), (lines := []).append)
             kept = {board.tick: BACK.snapshot(board)}
@@ -117,10 +117,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 kept[board.tick] = BACK.snapshot(board)
                 between = copy.deepcopy(board) if board.tick == 60 else between
                 undrawn = BACK.snapshot(twin) if twin.tick == 72 else undrawn
+                drive.append([int(twin.states[pulse].lines[0].now[n]) for n in at])  # d_i, a_t's read
         clicks, lays = ([x for x in lines if x["event"] == event] for event in ("credit", "lay"))
-        assert (
-            [c["tick"] for c in clicks] == [72] and {x["tick"] for x in lays} == {72} and len(lays) == 8
-        )
+        assert [c["tick"] for c in clicks] == [72] and len(lays) == 8
+        assert {x["tick"] for x in lays} == {72}
         for _ in range(60):  # between clicks: nothing crossed, bit for bit
             between.step_inverse()
             assert BACK.first_difference(kept[between.tick], BACK.snapshot(between)) is None
@@ -134,45 +134,58 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         for _ in range(75):  # across the click with the lays crossed from their lines
             BACK.crossed(board, lines), board.step_inverse()
             assert BACK.first_difference(kept[board.tick], BACK.snapshot(board)) is None
-        atom = [f.name for f in board.families].index("atom")
-        books, (num, den) = board.credit.bodies[0], board.families[atom].pair
-        at = [tuple(int(v) for v in n) for n in books.nodes]
+        atom = [f.name for f in board.families].index(body["family"])
+        (num, den), action = board.families[atom].pair, board.world.quantum_action
         first, second = (
             next(x for x in lays if x["line"] == k and tuple(x["node"]["at"]) == at[0]) for k in (0, 1)
         )
         (re, re_before), (im, im_before) = first["before"][:2], second["before"][:2]
         sense = 1 if re * im_before - im * re_before >= 0 else -1
-        laid = standing(1, board.world.quantum_action, (num, den), (re, im), sense, (1, len(at)))
+        gap, (rn, rd) = den * den - num * num, body["transitions"][0]["resonance"]
+        window = body["node_reader"]["window"]
+        amp = isqrt(isqrt((action * den) ** 2 // (4 * gap)) // len(at))
+        norm, scale, bound = max(isqrt(len(at) * amp * amp), 1), 1, board.world.amplitude_bound
+        while 2 * (2 * scale * bound * window) ** 2 <= board.world.width:
+            scale *= 2
+        cosine = (scale, (scale * rn + rd // 2) // rd)  # (r_0, r_-1)
+        sine = (0, -(isqrt(scale * scale * (rd * rd - rn * rn)) // rd))  # (r'_0, r'_-1)
+        sums = [0, 0]
+        for tick, levels in enumerate(drive, 1):
+            total = sum(d * amp for d in levels)
+            arrived = (abs(total) + norm // 2) // norm * (1 if total >= 0 else -1)
+            if 72 - window < tick <= 72:
+                sums = [sums[0] + arrived * cosine[0], sums[1] + arrived * sine[0]]
+            cosine, sine = (((2 * rn * r + rd // 2) // rd - p, r) for r, p in (cosine, sine))
+        size = isqrt(sums[0] ** 2 + sums[1] ** 2)
+        turned = ((re * sums[0] - im * sums[1]) // size, (re * sums[1] + im * sums[0]) // size)
+        length, root = isqrt(turned[0] ** 2 + turned[1] ** 2), isqrt(gap)
+        entered = (turned[0] * amp // length, turned[1] * amp // length)
+        e0, e1 = entered
+        before = ((e0 * num - sense * e1 * root) // den, (e1 * num + sense * e0 * root) // den)
         written, stood, half = arrays_of(kept[72]), arrays_of(undrawn), board.half_wall(atom)
+
+        def read(a, here, *ks):  # [re now, re before, im now, im before] of a part's two lines
+            return [int(a[f"atom.lines[{k}].{w}"][here]) for k in ks for w in ("now", "before")]
+
         for here in at:
-            levels = [
-                [int(a[f"atom.lines[{k}].{key}"][here]) for k in lines_of for key in ("now", "before")]
-                for a, lines_of in (
-                    (written, (2, 3)),
-                    (written, (0, 1)),
-                    (stood, (0, 1)),
-                    (stood, (2, 3)),
-                )
-            ]
-            assert levels[0] == [laid[0][0], laid[1][0], laid[0][1], laid[1][1]]  # the part entered
-            assert levels[1] == [0, 0, 0, 0] and levels[3] == [0, 0, 0, 0]  # the part left; the twin's e
-            assert levels[2] == [re, re_before, im, im_before]  # the twin's g stands as the lay found it
+            assert read(written, here, 2, 3) == [entered[0], before[0], entered[1], before[1]]  # entered
+            assert read(written, here, 0, 1) == [0, 0, 0, 0] == read(stood, here, 2, 3)  # left; e
+            assert read(stood, here, 0, 1) == [re, re_before, im, im_before]  # the twin's g stands
             assert all(int(written[f"atom.lines[{k}].remainder"][here]) == half for k in range(4))
+        assert sums[1] != 0 and entered != (re, im)  # the arrival's phase is not 0: the direction turned
         return (
             f"the click at {clicks[0]['tick']} with {len(lays)} lay lines; between clicks 60 forward and 60 "
             f"back bit for bit; across it with the lays crossed MATCH; without the crossing MISS at "
-            f"{miss[0]}, {miss[1]} at {miss[2]}; the re-lay of one quantum over {len(at)} Nodes in the leaving "
-            f"direction ({re}, {im}) at the sense {sense}: {laid}, the part left at 0, remainders {half}"
+            f"{miss[0]}, {miss[1]} at {miss[2]}; the re-lay of one quantum over {len(at)} Nodes: the leaving "
+            f"direction ({re}, {im}) at the sense {sense} turned by the arrival (X, Y') = {tuple(sums)} at R = "
+            f"{scale}, {degrees(atan2(sums[1], sums[0])):.3f} degrees, to {entered} with the level before {before}, the part left "
+            f"at 0, remainders {half}"
         )
 
     def the_credit_books_the_conserved_forms_current():
         """S.42's and the clicks table's row 40 engine clause (R307: the credit books the conserved form's own current through the front Ports, the Link's factor squared the one weight); the breaker: a chain of 8 with two declared regions of two Nodes in the tests' universe at random levels, the content holder's axis lines at 0 and then within 12, one interval: the booked inflow per boundary Node equals the sum over the region's front Ports of Q_ij F_ij from the engine's own read and currents, and equals G^2 times the plain current where no Link carries tension; outside, under tension the plain current misses it; the share identity over a passage stands in tests/test_the_node_reader.py."""
-        draw = {
-            "window": 3,
-            "seed": 5,
-            "multiplier": 6364136223846793005,
-            "increment": 1442695040888963407,
-        }
+        draw = {"window": 3, "seed": 5, "multiplier": 6364136223846793005}
+        draw["increment"] = 1442695040888963407
         regions = [{"name": "left", "positions": [[1, 0, 0], [2, 0, 0]]}]
         regions.append({"name": "right", "positions": [[5, 0, 0], [6, 0, 0]]})
         world = dict(shape=[8, 1, 1], boundary=wrapped, face_depth=1, ticks=4, universe="u.json")
@@ -184,10 +197,8 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
                 origin = np.full(board.shape, board.half_wall(index), dtype=board.kind)
                 if family.quanta:
-                    picks = [
-                        levels.integers(-300, 300, (2, *board.shape)).astype(board.kind)
-                        for _ in state.lines
-                    ]
+                    shape = (2, *board.shape)
+                    picks = [levels.integers(-300, 300, shape).astype(board.kind) for _ in state.lines]
                     state.lines = [node.Record(now, before, origin) for now, before in picks]
                 if family.held and not family.wronskian:  # a well, and axis lines where asked
                     well = levels.integers(0, 40, board.shape).astype(board.kind)
@@ -206,10 +217,8 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                         factors = board.read(index, 1, number)[1]
                         for port in range(6):
                             flow = np.where(facing[port], currents[port].astype(object), 0)
-                            factor = np.broadcast_to(np.asarray(factors[port]), board.shape).astype(
-                                object
-                            )
-                            weighed, plain = weighed + factor * flow, plain + flow
+                            factor = np.broadcast_to(np.asarray(factors[port]), board.shape)
+                            weighed, plain = weighed + factor.astype(object) * flow, plain + flow
                     expected[index, reader.name] = (weighed, plain)
             board.step()
             square = board.unit * board.unit
@@ -235,11 +244,8 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         rows = document["families"]
         for k, row in enumerate(rows):
             others = [*rows[:k], {**row, "band": [1, 3]}, *rows[k + 1 :]]
-            found = refused(
-                rf"families\[{k}\] holds the unknown key 'band'",
-                universe_of,
-                {**document, "families": others},
-            )
+            bad = {**document, "families": others}
+            found = refused(rf"families\[{k}\] holds the unknown key 'band'", universe_of, bad)
             assert "['name', 'pair', 'dimension', 'held', 'reads']" in str(found)
         bare = {k: v for k, v in rows[0].items() if k != "pair"}
         refused("lacks the key 'pair'", universe_of, {**document, "families": [bare, *rows[1:]]})
@@ -268,22 +274,17 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             dx, dy, dz = (abs(int(here[a]) - at[a]) for a in range(3))
             return dx + min(dy, extents[1] - dy) + min(dz, extents[2] - dz)
 
+        def apart(a, b):  # the Nodes at which two GameBoards' arrays differ
+            arrays = zip(sum(BACK.snapshot(a), []), sum(BACK.snapshot(b), []), strict=True)
+            return [n for (_, x), (_, y) in arrays for n in np.argwhere(x != y)]
+
         for interval in range(1, 21):
             first.step(), second.step()
-            assert BACK.first_difference(BACK.snapshot(first), BACK.snapshot(second)) is None
+            assert not apart(first, second)  # bit for bit
             for kick, board in kicked.items() if interval <= 6 else ():
                 board.step()
-                pairs = zip(BACK.snapshot(first), BACK.snapshot(board), strict=True)
-                far = sorted(
-                    {
-                        distance(n)
-                        for f, g in pairs
-                        for (_l, x), (_m, y) in zip(f, g, strict=True)
-                        for n in np.argwhere(x != y)
-                    }
-                )
-                reach[kick].append(far[-1])
-                assert far and far[-1] <= interval  # the causal bound
+                reach[kick].append(far := max(distance(n) for n in apart(first, board)))
+                assert far <= interval  # the causal bound
         assert reach[200] == list(range(1, 7))
         assert all(t - 1 <= far <= t for t, far in enumerate(reach[1], 1))
         return (
@@ -323,9 +324,8 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 walked = (a for t in targets for a in ast.walk(t) if isinstance(a, ast.Attribute))
                 return [f"assigns .{a.attr}" for a in walked if a.attr in fields | state]
             if isinstance(item, ast.Call):
-                callee = (
-                    item.func.id if isinstance(item.func, ast.Name) else getattr(item.func, "attr", None)
-                )
+                func = item.func
+                callee = func.id if isinstance(func, ast.Name) else getattr(func, "attr", None)
                 if callee == "Record":
                     return ["builds a Record"]
                 if callee == "replace":
@@ -337,16 +337,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             if path == source / "core" / "rule3.py":
                 continue
             tree, name = ast.parse(path.read_text(encoding="utf-8")), path.relative_to(source).as_posix()
-            parents = {
-                child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)
-            }
+            parents = {c: p for p in ast.walk(tree) for c in ast.iter_child_nodes(p)}
             for item in ast.walk(tree):
+                key = f"{name}::{owner(item, parents)}"
                 for site in writes(item):
-                    found.setdefault(f"{name}::{owner(item, parents)}", []).append(
-                        f"{item.lineno} {site}"
-                    )
+                    found.setdefault(key, []).append(f"{item.lineno} {site}")
                 if isinstance(item, ast.FunctionDef):
-                    docs[f"{name}::{owner(item, parents)}"] = ast.get_docstring(item) or ""
+                    docs[key] = ast.get_docstring(item) or ""
         unnamed, gone = sorted(set(found) - set(inventory)), sorted(set(inventory) - set(found))
         assert not unnamed, f"shout: a write site outside Rule3 the inventory does not name: {unnamed}"
         assert not gone, f"the inventory names a write site that is gone: {gone}"
@@ -395,9 +392,8 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 print(f"  line {line}: no engine function, a bound or a finding by name")
                 continue
             path, qualname = act
-            module = importlib.import_module(
-                "event_universe." + path.removesuffix(".py").removesuffix("/__init__").replace("/", ".")
-            )
+            dotted = path.removesuffix(".py").removesuffix("/__init__").replace("/", ".")
+            module = importlib.import_module(f"event_universe.{dotted}")
             function = module
             for part in qualname.split("."):
                 function = getattr(function, part)
