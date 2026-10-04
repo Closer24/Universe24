@@ -198,7 +198,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
     assert set(first) == set(
         credits_keys
-        := "event label interval family node_detector window proper windows before realised kept count left taken given".split()
+        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted".split()
     )
     hole_at = tuple(
         node_draws[0][2]

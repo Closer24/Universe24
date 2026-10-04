@@ -42,7 +42,7 @@ def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
                 "rates": [],
                 "node_detector": {
                     **design["generator"],
-                    "window": design["intervals"],
+                    "window": design["window"],
                     "seed": design["records"]["seed"],
                 },
             }
@@ -97,7 +97,7 @@ def main(argv: list[str] | None = None) -> None:
         "verdict": "NODEDETECTOR",
         "comment": "One photon on two bodies, the anticoincidence (the paper's S.57; ALGEBRA.md (h2); the mathematician's 144 and 145, two hands by the law as it stands): one light record of one whole quantum laid between two records declared NodeDetectors at one Node each, equidistant, each reading the light into its e part over one window, the run; the credit's count per record, one quantum one click; written before any run and never edited after.",
         "trials": len(design["seeds"]),
-        "intervals": design["intervals"],
+        "intervals": design["window"],
         "blind": {
             "one_photon": {
                 "reading": "over the trials the fraction with an absorption at the record A alone, at B alone, at both and at neither (tools/meeting_trials.py, the jump lines), and alpha = P(both) / (P(A) P(B))",

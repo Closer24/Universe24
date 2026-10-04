@@ -42,7 +42,7 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
         levels[board.interval] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
     clicks = [c for c in lines if c["event"] == "credit" and (c["absorbed"] or c["emitted"])]
     given = [c["interval"] for c in clicks if c["emitted"] == design["light"]]
-    taken = [f"{c['node_detector']} {c['realised']} by {c['taken']}" for c in clicks if c["absorbed"]]
+    taken = [f"{c['node_detector']} {c['realised']} by {c['absorbed']}" for c in clicks if c["absorbed"]]
     found: dict[str, Any] = {"emitted": given[0] if given else None, "absorptions": taken}
     found["lay_lines"] = len(
         [c for c in lines if c["event"] == "lay" and c["family"] == design["light"]]

@@ -191,7 +191,7 @@ def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-
 
 def click_key(line: dict[str, object]) -> str:
     """A click line's key as tools/meeting_trials.py counts the kinds: the reader, the part realised and the family taken or given."""
-    return f"{line['node_detector']} {line['realised']} by {line['taken'] or line['given']}"
+    return f"{line['node_detector']} {line['realised']} by {line['absorbed'] or line['emitted']}"
 
 
 def own_lines(board: Lattice, index: int) -> list[node.Record]:

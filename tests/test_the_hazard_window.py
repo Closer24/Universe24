@@ -25,7 +25,7 @@ def test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_on
         return False
 
     monkeypatch.setattr(meeting, "dark", dark)
-    monkeypatch.setattr(meeting, "gave", emitted)
+    monkeypatch.setattr(meeting, "emitted", emitted)
     for at["window"] in (1, 2, 3):
         for _ in range(8):
             board.step()

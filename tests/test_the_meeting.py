@@ -159,7 +159,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
     assert [(c["proper"], c["windows"]) for c in credits] == [(40, 1), (40, 1), (80, 2), (80, 2)]
     report = set(
-        "event label interval family node_detector window proper windows before realised kept count left taken given".split()
+        "event label interval family node_detector window proper windows before realised kept count left absorbed emitted".split()
     )
     assert all(set(c) == report and c["label"] == "NODEDETECTOR" for c in credits)  # never a Node
     holes = [

@@ -101,7 +101,7 @@ def reading(path: Path, design: Path, expectation: Path | None) -> dict[str, obj
             ends[number][part] += 1
             closed[number][count] += 1
         kinds.update(
-            f"{j['node_detector']} {j['realised']} by {j['taken'] or j['given']}" for j in clicks
+            f"{j['node_detector']} {j['realised']} by {j['absorbed'] or j['emitted']}" for j in clicks
         )
         absorbed[
             tuple(sorted({int(str(j["node_detector"]).split()[-1]) for j in clicks if j["absorbed"]}))
