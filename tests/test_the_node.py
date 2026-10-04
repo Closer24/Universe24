@@ -374,7 +374,7 @@ def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: 
 
 
 def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_returns(tmp_path, monkeypatch):
-    """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the GameBoard grows by 4 layers of zeros beyond a face whenever a level stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes, the books the same and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's share over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size, the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew. (h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, no count in it), the layers grown before its front stand at 60 and the gate says MATCH; light's share over a region is its field line. The frozen Node (ALGEBRA.md #the-count-is-the-records-share; The paces compose): the row set by hand to the Link's zero (28,206 at Gamma 6,000, where the Node's pace rounds to 0, far beyond any body and inside the bound A at the Link unit 1) at three Nodes freezes light there, every pace 0, so the books read None for the share, its quanta and its drift with the frozen count 3 (a Node whose x Link stands at the factor 0 by its xx line's standing tension keeps its share), the step runs and the region's field line reads None with the frozen Nodes' wells 0 as `well`."""
+    """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the GameBoard grows by 4 layers of zeros beyond a face whenever a level stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes (the larger chain started from the grown chain's laid levels at the offset: the message lay's two sums are 0 over the board as declared, so the exact lay's tails beyond the smaller board, 4 units of the amplitude 665 here, are taken out by the division act on it and not on the larger, and the lay depends on the declared board by that much), the books the same and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's share over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size (at the interval 40: the exact lay's tails stand on the layer before each face from the lay, so the board grows from the first interval, a GameBoard diagnostic read at this commit, re-read at the frozen hash), the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew. (h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, no count in it), the layers grown before its front stand at 60 and the gate says MATCH; light's share over a region is its field line. The frozen Node (ALGEBRA.md #the-count-is-the-records-share; The paces compose): the row set by hand to the Link's zero (28,206 at Gamma 6,000, where the Node's pace rounds to 0, far beyond any body and inside the bound A at the Link unit 1) at three Nodes freezes light there, every pace 0, so the books read None for the share, its quanta and its drift with the frozen count 3 (a Node whose x Link stands at the factor 0 by its xx line's standing tension keeps its share), the step runs and the region's field line reads None with the frozen Nodes' wells 0 as `well`."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     both = {"x": {"sides": ["low", "high"], "largest": 64, "layers": 4}}
     wrong = [("y", "sides", ["high"]), ("x", "largest", 16), ("x", "sides", ["far"])]
@@ -389,24 +389,30 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
         grows.step()
         if grows.ended is None:
             fixed.step(), history.append((grows.shape[0], grows.offset[0], BACK.snapshot(grows)[0]))
-    low, end = grows.offset[0], {"interval": 43, "axis": "x", "side": "high", "largest": 64}
-    large = GameBoard(load_world(light_alone_world(tmp_path, "large", 64, 8 + low)))
+    low, end = grows.offset[0], {"interval": 40, "axis": "x", "side": "high", "largest": 64}
+    large_world = light_alone_world(tmp_path, "large", 64, 8 + low)
+    laid = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"][0]
+    for word in ("now", "before"):  # the grown chain's laid levels at the offset: the lay is the board's
+        laid["moving"][word]["at"] = [x + low for x in laid["moving"][word]["at"]]
+    mode = json.loads(large_world.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    large_world.with_suffix(".mode.json").write_text(json.dumps({**mode, "messages": [laid]}), "utf-8")
+    large = GameBoard(load_world(large_world))
     for extent, offset, snapshot in history:
         large.step()
         at, wide = slice(low - offset, low - offset + extent), BACK.snapshot(large)[0]
         assert all(np.array_equal(a, b[at]) for (_, a), (_, b) in zip(snapshot, wide, strict=True))
-    assert grows.ended == end and grows.tick == 43
+    assert grows.ended == end and grows.tick == 40
     assert grows.books()["charge"]["share"] == large.books()["charge"]["share"]
     assert grows.mask(((15, 0, 0),))[15 + low, 0, 0] and all("node" not in e for e in lines)
     assert not grows.quanta(0)[0][low : low + 16].any() and fixed.quanta(0)[0].any()
-    assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 43
+    assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 40
     written = json.loads((tmp_path / "grows.output.json").read_text(encoding="utf-8"))
     look = RECORD.record(world, None)
     assert written["verdict"] == "LAWFUL" and written["ended"] == end == look["ended"]
-    assert [look["frames"][k]["shape"][0] for k in (0, 43)] == [16, 64] and lines
-    assert look["frames"][43]["offset"][0] == low
+    assert [look["frames"][k]["shape"][0] for k in (0, 40)] == [16, 64] and lines
+    assert look["frames"][40]["offset"][0] == low
     back = BACK.verdict(GameBoard(load_world(world)), 100)
-    assert back["verdict"] == "MATCH" and back["intervals"] == 42 and back["ended"] == end
+    assert back["verdict"] == "MATCH" and back["intervals"] == 39 and back["ended"] == end
     receding = {"x": {"sides": ["high"], "largest": 64, "layers": 4}}
     world = light_alone_world(tmp_path, "light", 24, 6, receding=receding)
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))

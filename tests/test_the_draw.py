@@ -30,8 +30,8 @@ SLITS, WAY, RESONANCE, PACKET = (
     for n in ("two_slits", "which_way", "resonance", "packet_giving")
 )
 SRC = ROOT / "src" / "event_universe"
-# the two slits' gate, N = 270, at the seed 24
-GATE_ROW = [28, 15, 24, 18, 7, 37, 44, 13, 13, 25, 24, 22]
+# the two slits' gate, N = 284, at the seed 24: a GameBoard diagnostic read at this commit, re-read at the frozen hash
+GATE_ROW = [20, 18, 24, 18, 11, 37, 61, 10, 12, 19, 17, 37]
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -55,7 +55,7 @@ def chi_square(clicks: dict[str, int], shares: dict[str, int], names: list[str])
 
 
 def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_path):
-    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at two seeds (two independent draws of the design; a test runs under 30 seconds, the owner's word of 2026-10-03), the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees per seed, the two seeds summed inside the 1 percent band of chi-square on 22 degrees (8.6 to 42.8; the half-up rule's own run, every Node's remainder born at the half wall, 6.1 and 29.5 at the seeds 24 and 25, the seed 25's one region of the central minimum at 21 clicks against 8.7, the ten seeds 26 to 35 reading 6.6 to 12.8 with the mean 8.7; the seed 24 the gate's own, N = 270 and the row bit for bit); the draw's weights are the shares and nothing else."""
+    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at two seeds (two independent draws of the design; a test runs under 30 seconds, the owner's word of 2026-10-03), the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees per seed, the two seeds summed inside the 1 percent band of chi-square on 22 degrees (8.6 to 42.8; the exact lay's run at the amplitude 1,241, 1,804 laid quanta, every Node's remainder born at the half wall, 20.6 and 4.7 at the seeds 24 and 25, the ten seeds 26 to 35 reading 2.3 to 29.5 with the mean 12.3, a GameBoard diagnostic read at this commit, re-read at the frozen hash; the seed 24 the gate's own, N = 284 and the row bit for bit); the draw's weights are the shares and nothing else."""
     design = json.loads((EVENTS / "two_slits" / "design.json").read_text(encoding="utf-8"))
     names, found = [f"screen_{k}" for k in range(12)], []
     for seed in (24, 25):  # two independent draws of the design (a test runs under 30 seconds)
@@ -68,11 +68,11 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_pa
         found.append(chi_square(clicks, shares, names))
         assert quanta == sum(clicks[n] for n in names) and clicks.get("gap", 0) == 0
         if seed == 24:  # the gate's own numbers, bit for bit
-            assert quanta == 270 and [clicks[n] for n in names] == GATE_ROW
+            assert quanta == 284 and [clicks[n] for n in names] == GATE_ROW
     assert 8.6 < sum(found) < 42.8, (
         found
     )  # chi-square on 22 degrees, the two seeds summed, the 1 percent band
-    assert [round(chi, 1) for chi in found] == [6.1, 29.5]  # the half-up rule's run, bit for bit
+    assert [round(chi, 1) for chi in found] == [20.6, 4.7]  # the exact lay's run, bit for bit
 
 
 def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
@@ -150,7 +150,7 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
 
 
 def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone(tmp_path):
-    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 270 and the row); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
+    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 284 and the row at the exact lay, a GameBoard diagnostic read at this commit, re-read at the frozen hash); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
     WAY.main(["--folder", str(tmp_path), "--modes"])
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "which_way" / "expectation.json").read_text(encoding="utf-8"))
@@ -168,7 +168,7 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
             assert [rows[name][k] for k in blind["shadowed_regions"]] == [0] * 4 and rows[name][4] == 0
     way, one, two = rows["which_way"], rows["one_gap"], GATE_ROW
     channel, scatter = totals["which_way"] - sum(way), 3 * math.sqrt(blind["quanta"]["two_gaps"]) / 2
-    assert totals["one_gap"] == sum(one) and sum(two) == 270
+    assert totals["one_gap"] == sum(one) and sum(two) == 284
     assert abs(channel - blind["quanta"]["which_way"]["channel"]) < scatter, channel
     assert abs(sum(way) - blind["quanta"]["which_way"]["screen"]) < scatter
     pairs = [(way[k], one[k]) for k in range(5, 12)]

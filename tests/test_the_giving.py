@@ -64,7 +64,7 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
 def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark(
     tmp_path, monkeypatch
 ):
-    """The front's taper (ALGEBRA.md, The click writes on the GameBoard (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 48 as the shipped one does; from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
+    """The front's taper (ALGEBRA.md, The click writes on the GameBoard (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 48 as the shipped one does; from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
     folder = EVENTS / "anticoincidence"
     world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_bytes((ROOT / world["universe"]).read_bytes())
@@ -96,6 +96,6 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
             tapered += int(np.abs(line.now[taper]).sum(dtype=object) > 0)
     erased = [e for e in lines if e["event"] == "erasure"]
     assert tapered > 20 and erased and all(e["unit"] == board.credit.units[photon] for e in erased)
-    assert all(e["take"] >= 0 for e in erased) and max(e["take"] for e in erased) > 0
+    assert sum(e["take"] for e in erased) > 0  # the takes' sum; a tail's take follows its level's sign
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
     assert BACK.verdict(GameBoard(load_world(path)), 170)["verdict"] == "MATCH"
