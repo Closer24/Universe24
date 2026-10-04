@@ -169,7 +169,7 @@
    63,
    64
   ],
-  "state": "the seed times 1 plus 0, tools/meeting_trials.py's",
+  "state": "the hash of the seed times 1 plus 0, tools/meeting_trials.py's hashed_state, the trial's one seeding rule (the label itself would make the trials' states one arithmetic progression and their draws one Weyl sequence; the mathematician's finding of 2026-10-04)",
   "intervals": 32
  },
  "rate_expectation": {
