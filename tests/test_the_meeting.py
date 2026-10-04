@@ -437,7 +437,7 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
 
 
 def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
-    """The undepleted beam (ALGEBRA.md, The click writes on the GameBoard; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `GameBoard.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), at the trial seed 2, beside its untouched twin. The taking at 24 books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift` over W_c and one quantum of the reading's rounding, printed); the back-in-time gate MATCH across the taking, the ion's lays crossed from their lines."""
+    """The undepleted beam (ALGEBRA.md, The click writes on the GameBoard; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `GameBoard.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), at the trial seed 2, beside its untouched twin. The taking at 24, g to e climbing, books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift` over W_c and one quantum of the reading's rounding, printed); the return, e to g descending by the pulse at a later window's close (`meeting.exchange`, stimulated emission), gives the quantum back into the dense pulse: nothing laid, no source in time, the count back to the start and the deficit 0, the arrays the twin's still; the back-in-time gate MATCH across the taking and the return, the atom's lays crossed from their lines."""
     zeno = EVENTS / "zeno" / "zeno_2.json"
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
@@ -446,16 +446,19 @@ def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
         board.step(), twin.step()
     booked_share = int(board.share_of(pulse)[0][at])
     assert booked_share > unit  # dense: the booked share at the Node above the record's quantum
-    for _ in range(24):
+    returns: list[dict] = []
+    while board.tick < 480 and not returns:
         board.step(), twin.step()
         for key in ("now", "before", "remainder"):
             mine, its = (getattr(b.states[pulse].lines[0], key) for b in (board, twin))
             assert np.array_equal(mine, its)  # the undepleted beam: nothing written on the drive
+        if board.tick == 48:
+            books, its_books = board.books()["pulse"], twin.books()["pulse"]
+        returns = [x for x in lines if x["event"] == "credit" and x["given"] == "pulse"]
     jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER" and x["taken"]]
-    assert [x["tick"] for x in jumps] == [24] and jumps[0]["taken"] == "pulse"
+    assert [x["tick"] for x in jumps][:1] == [24] and jumps[0]["taken"] == "pulse"
     assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
-    assert not board.credit.fronts and board.credit.counts[pulse] == count - 1
-    books, its_books = board.books()["pulse"], twin.books()["pulse"]
+    assert not board.credit.fronts and not board.credit.sources
     print(
         f"the Zeno drive's booked share at the Node {booked_share} over W_rec {unit}, the books {books}"
     )
@@ -464,13 +467,18 @@ def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
     print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
     assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
     assert books["share"] == its_books["share"] and books["drift"] == its_books["drift"]
+    cycled = board.books()["pulse"]
+    print(f"the return at {returns[0]['tick']} after {len(jumps)} takings: the books {cycled}")
+    assert (cycled["count"], cycled["deficit"]) == (count - len(jumps) + 1, len(jumps) - 1)
     gate = GameBoard(load_world(zeno))
     gate.credit.bodies[0].state = 2
-    assert BACK.verdict(gate, 47)["verdict"] == "MATCH"  # across the dense taking, written nowhere
+    assert (
+        BACK.verdict(gate, returns[0]["tick"])["verdict"] == "MATCH"
+    )  # across the taking and the return
 
 
 def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_path):
-    """The undepleted beam at the giving (ALGEBRA.md, The click writes on the GameBoard; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `meeting.written`, `meeting.faced`, `giving.given_quantum`): the Zeno n = 2 world with a rate e to g at the lifetime 8 giving to the pulse itself, the dense record at the reader's Node, at the trial seed 2, beside the pulse alone: the takings and the giving write nothing on the pulse, whose three arrays stand bit for bit as the pulse alone over the run, no source in time begins and no lay line names the pulse, the count down by one per taking and up by one per giving, the deficit the takings less the givings (the books' line printed); the sparse giving's own tests stand in `tests/test_the_giving.py`."""
+    """The undepleted beam at the giving (ALGEBRA.md, The click writes on the GameBoard; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `meeting.written`, `meeting.faced`, `giving.given_quantum`): the Zeno n = 2 world with a rate e to g at the lifetime 8 giving to the pulse itself, the dense record at the reader's Node, at the trial seed 2, beside the pulse alone (the return by the rate or by the transition's descent, `meeting.exchange`, both givings into the beam): the takings and the giving write nothing on the pulse, whose three arrays stand bit for bit as the pulse alone over the run, no source in time begins and no lay line names the pulse, the count down by one per taking and up by one per giving, the deficit the takings less the givings (the books' line printed); the sparse giving's own tests stand in `tests/test_the_giving.py`."""
     world = json.loads((EVENTS / "zeno" / "zeno_2.json").read_text(encoding="utf-8"))
     world["bodies"][0]["rates"] = [{"from": "e", "to": "g", "lifetime": 8, "gives_to": "pulse"}]
     world["ticks"] = 480
