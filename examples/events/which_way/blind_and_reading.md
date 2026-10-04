@@ -133,7 +133,7 @@ within the scatter (19 against 25) and above the two gaps' 13, the visibility ab
 below half the two slits' (PASS); the two-gaps row the two slits' gate row at this lay, N 270 against the
 blind's 273. The night's table above stands as history at its commit.
 
-## The statement, 2026-10-04 (main d00aa9e; the advisor's first hand, #1827 comment 5976031061)
+## The statement, 2026-10-04 (main d00aa9e; two hands, the advisor's #1827 comment 5976031061 and the mathematician's 5976051758)
 
 When everything that passes the lower gap is credited in the channel, the screen reads the lower gap
 open and read as it reads the lower gap closed, two draws at the same shares, and both differ from the
@@ -149,7 +149,9 @@ The fence is the test's and no wider (`tests/test_the_draw.py`, the which-way te
 regions 0 exactly; the channel and the which-way screen each within three scatters (24.8) of the
 blind's 136.5; the two rows' chi-square over the regions 5 to 11 under the one percent band 18.5 on 7
 degrees (the reading 8.1 at the seed 24); the region-8 minimum above the two gaps' and within three
-scatters of the one gap's (13 against 19 and 25); the visibility about the regions 6 and 8 under half
+scatters of the one gap's, the scatter of the difference of two draws at the counts a and b being
+sqrt(a + b) (the test's |a - b| < 3 sqrt(a + b); 19 against 25, the two gaps' 13; the mathematician's
+word, 5976051758 (b)); the visibility about the regions 6 and 8 under half
 the two slits' (0.25 against 0.54); one quantum one click exact. The chi-squares against the two-gaps
 row (24.0 and 19.5) are the reading and no fence.
 

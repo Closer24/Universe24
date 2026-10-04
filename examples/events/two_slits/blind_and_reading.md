@@ -50,6 +50,19 @@ without the seed 25), the ten seeds 26 to 35 reading chi-square 7.7, 12.8, 8.4, 
 8.6, 8.0, 8.9: the lay fills no minimum, so the division act stands for this folder (the Boss's
 word, PR #1862 comment 5975750797).
 
+## The blind file's `laid` field, 2026-10-04 (R248, #1793; the advisor's line 5976077759 item 2)
+
+The blind file `expectation.json` carries a field `laid`, the count of the lay, which the builder
+writes from the mode file's count: a GameBoard reading of the lay and no fence of the blind (the
+file's own status line says so). At the lay without the uniform mode (PR #1862, main d00aa9e) the
+builder's re-run in place moved that one field from 1,998 to 1,805, the division act's count at the
+design's amplitude 1,328; every fence of the blind (the counts, N 273.0, the maxima, the minima, the
+visibility, the arrival) stands byte for byte as written before any run, and the committed-worlds
+test (`tests/test_the_bound_body.py`, every blind its builder's byte for byte) passes. At the next
+change of the folder's tools a reading's field leaves the blind file for the folder's reading, the
+builder writing fences alone: a blind holds what is written before any run and nothing read from a
+lay.
+
 ## The gate's table
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
