@@ -369,20 +369,27 @@ def held_rests(
         levels = found
 
 
+def shares_of(total: int, weights: Sequence[int]) -> list[int]:
+    """`total` divided among the weights in proportion by the division act, floor by floor, the division's leftover one unit each at the heaviest in their order, so that the shares sum to `total` exactly (the one act of the message lay's correction, the packet's and the source in time's alike); every share 0 where the total is 0 or the weights are all 0, and 0 at a weight of 0."""
+    mass = sum(int(weight) for weight in weights)
+    if total == 0 or mass == 0:
+        return [0] * len(weights)
+    found = [int(division_forward(total * int(w), mass, 0)[0]) if w else 0 for w in weights]
+    leftover = total - sum(found)  # the floors fall short by less than one unit per weighted entry
+    for i in sorted((i for i, w in enumerate(weights) if w), key=lambda i: -int(weights[i]))[:leftover]:
+        found[i] += 1
+    return found
+
+
 def uniform_removed(levels: np.ndarray, weights: np.ndarray) -> np.ndarray:
-    """A laid level of a massless record with the uniform mode's content taken out (ALGEBRA.md, The message lay: the massless row's double root at wave number 0 carries neither level nor velocity, so a laid packet's two levels each sum to 0 over the board): the level's sum over the board divided among the laid Nodes in proportion to the envelope's weights by the division act, floor by floor, the division's leftover one unit each at the heaviest Nodes in x-major order, so that the sum is exactly 0 and the packet keeps the envelope's taper; a level whose sum is 0 as it stands, or whose weights are all 0, is returned as it is."""
+    """A laid level of a massless record with the uniform mode's content taken out (ALGEBRA.md, The message lay: the massless row's double root at wave number 0 carries neither level nor velocity, so a laid packet's two levels each sum to 0 over the board): the level's sum over the board divided among the laid Nodes in proportion to the envelope's weights by the division act, floor by floor, the division's leftover one unit each at the heaviest Nodes in x-major order (`shares_of`), so that the sum is exactly 0 and the packet keeps the envelope's taper; a level whose sum is 0 as it stands, or whose weights are all 0, is returned as it is."""
     flat, heavy = (
         np.asarray(levels, dtype=object).ravel().copy(),
         np.asarray(weights, dtype=object).ravel(),
     )
-    total, mass = int(flat.sum()), int(heavy.sum())
-    if total == 0 or mass == 0:
+    total = int(flat.sum())
+    if total == 0 or int(heavy.sum()) == 0:
         return levels
-    laid = [int(i) for i in np.flatnonzero(heavy != 0)]
-    taken = {i: int(division_forward(-total * int(heavy[i]), mass, 0)[0]) for i in laid}
-    leftover = -total - sum(taken.values())  # the floors fall short by less than one unit per Node
-    for i in sorted(laid, key=lambda i: -int(heavy[i]))[:leftover]:
-        taken[i] += 1
-    for i, change in taken.items():
+    for i, change in enumerate(shares_of(-total, [int(w) for w in heavy])):
         flat[i] += change
     return flat.reshape(np.shape(levels))

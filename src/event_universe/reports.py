@@ -39,7 +39,7 @@ CREDIT_KEYS = (
     "left",
     *EXCHANGED,
 )  # the credit line's own keys, the one click line kind's
-ERASURE_KEYS = ("origin", "distance", "nodes", "taken")  # the erasure line's own keys
+ERASURE_KEYS = ("origin", "distance", "nodes", "take", "unit")  # the erasure line's own keys
 INTO = "into"  # the conversion line's own key, the families of the records out
 CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
 LINE, BEFORE, AFTER, PORT, VALUE = ("line", "before", "after", "port", "value")  # the two acts' words
@@ -165,13 +165,13 @@ def face(tick: int, family: str, line: int, node: list[int], port: int, value: i
 
 
 def erasure(
-    tick: int, family: str, origin: list[int], distance: int, nodes: int, taken: int
+    tick: int, family: str, origin: list[int], distance: int, nodes: int, take: int, unit: int
 ) -> dict[str, object]:
-    """The erasure line, the front's shell of one interval (src/event_universe/front.py; the owner's word, the past going out at the speed of light), labelled GAMEBOARD, a diagnostic beside the click line for the host's tool and no result: the interval, the clicked record's family, the click's Node at the file's coordinates (`origin`), the shell's Link-metric distance from it, the shell's Nodes and the levels taken there, the sum of the sizes of the record's two levels over the shell."""
+    """The erasure line, the front's shell of one interval (src/event_universe/front.py; the owner's word, the past going out at the speed of light), labelled GAMEBOARD, a diagnostic beside the click line for the host's tool and no result: the interval, the clicked record's family, the click's Node at the file's coordinates (`origin`), the shell's Link-metric distance from it, the shell's Nodes, the record's share standing on the shell as the front reaches it in the current's units (`take`, what the shell's faces book for removal) and the record's quantum W_rec (`unit`), so that take over unit is the faces' take in quanta."""
     line: dict[str, object] = dict(
         zip(REPORT_KEYS, (ERASURE, DIAGNOSTIC, tick, family, None), strict=True)
     )
-    for key, value in zip(ERASURE_KEYS, (origin, distance, nodes, taken), strict=True):
+    for key, value in zip(ERASURE_KEYS, (origin, distance, nodes, take, unit), strict=True):
         line[key] = value
     return line
 
