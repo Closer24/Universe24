@@ -374,3 +374,18 @@ def test_the_generators_sense_and_one_node_declaration_are_the_design_files_and_
     assert (pair["senses"], pair["pixels"]) == ([1, -1], [0, 1]) and TOOL.designed_lay(
         EVENTS / "a.json"
     ) == ([], ())
+
+
+def test_a_packet_of_a_gapped_family_is_advanced_by_its_own_band_and_a_massless_one_by_the_vacuums(
+    tmp_path, monkeypatch
+):
+    """R370 (the reviewer's #1793 comment 5984295586 section C, the advisor's 5984314233 (3); the law's (h), **L** the line's own read of the message's family): the generator's exact before level advances every component of a packet by its family's own band, cos omega(q) = (num / den) (cos q_x + cos q_y + cos q_z) / 3, the massless band its case at num = den; a plane wave cos(k x) at k = pi / 4 over a periodic box of 8 Nodes has one component, so its before level is A cos(k x + omega) rounded once half up, omega from that formula in the test's own floats, at matter's pair [4000, 6000] and at the charge's [6000, 6000]."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    plane = {**PACKET, "top": {"x": [0, 7], "y": [0, 0], "z": [0, 0]}, "edge": {"x": 0, "y": 0, "z": 0}}
+    box = {"shape": [8, 1, 1], "boundary": {axis: "periodic" for axis in "xyz"}, "faces": []}
+    for family, (num, den) in (("matter", (4000, 6000)), ("charge", (6000, 6000))):
+        path = slit_world(tmp_path, TOOL, family, messages=[{**plane, "family": family}], **box)
+        entry = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"][0]
+        omega = math.acos(num / den * (math.cos(math.pi / 4) + 2) / 3)  # the family's own band
+        before = np.floor(1328 * np.cos(math.pi / 4 * np.arange(8) + omega) + 0.5).astype(int)
+        assert dense(entry["moving"]["before"], (8, 1, 1)).ravel().tolist() == before.tolist()

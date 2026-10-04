@@ -1279,14 +1279,17 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
     return found
 
 
-def advanced_real_part(real_now: np.ndarray, real_quadrature: np.ndarray) -> np.ndarray:
-    """The exact lay's before level in the tool's floats (ALGEBRA.md, The message lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)): the packet z = a + i s over the board, a the now level and s its quadrature on the real line, its transform over the board's shape (the board's periodic extension; numpy's bin m is the component e^(+i 2 pi m x / L)), every component advanced by its own omega(q), cos omega(q) = (cos q_x + cos q_y + cos q_z) / 3 the massless band at the board's wave numbers q_a = 2 pi m_a / L_a and sin omega(q) the positive root, omega(q) in [0, pi] (the lay's sense, (**L** + i sqrt(1 - **L**^2)) z), and the real part of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, **L** the line's own read whose eigenvalue on e^(i q x) is cos omega(q), the backward root 0; one plane wave over a periodic box has one component and gives b cos(k x + phi + omega), the plain lay."""
+def advanced_real_part(
+    real_now: np.ndarray, real_quadrature: np.ndarray, pair: tuple[int, int]
+) -> np.ndarray:
+    """The exact lay's before level in the tool's floats (ALGEBRA.md, The message lay, the law's (h): **L** the line's own read of the message's family; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3); the family's pair, R370, the reviewer's 5984295586 section C and the advisor's 5984314233 (3)): the packet z = a + i s over the board, a the now level and s its quadrature on the real line, its transform over the board's shape (the board's periodic extension; numpy's bin m is the component e^(+i 2 pi m x / L)), every component advanced by its own omega(q), **L**'s eigenvalue on e^(i q x) at the vacuum's paces, cos omega(q) = (num / den) (cos q_x + cos q_y + cos q_z) / 3 at the family's pair [num, den] (`pair`, the Board's) and the board's wave numbers q_a = 2 pi m_a / L_a, the massless band its case at num = den, and sin omega(q) the positive root, omega(q) in [0, pi] (the lay's sense, (**L** + i sqrt(1 - **L**^2)) z), and the real part of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, the backward root 0; one plane wave over a periodic box has one component and gives b cos(k x + phi + omega), the plain lay at its family's own band."""
     imaginary = complex(0, 1)
     wave_numbers = [
         (2 * np.pi * np.fft.fftfreq(extent)).reshape([-1 if a == axis else 1 for a in range(3)])
         for axis, extent in enumerate(real_now.shape)
     ]
-    omega = np.arccos(np.clip(sum(np.cos(q) for q in wave_numbers) / 3, -1, 1))
+    num, den = pair
+    omega = np.arccos(np.clip(num / den * sum(np.cos(q) for q in wave_numbers) / 3, -1, 1))
     packet = np.fft.fftn(real_now + imaginary * real_quadrature)
     advanced = packet * (np.cos(omega) + imaginary * np.sin(omega))
     return np.asarray(np.real(np.fft.ifftn(advanced)))
@@ -1367,7 +1370,7 @@ def message_levels(
         whole[within] = np.vectorize(lambda numerator: numerator / scale, otypes=[float])(level)
     levels = [
         np.where(beyond, 0, np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, now + half)[0])),
-        np.where(beyond, 0, half_up(advanced_real_part(extended[0], extended[1])[within])),
+        np.where(beyond, 0, half_up(advanced_real_part(extended[0], extended[1], board.pair)[within])),
     ]
     # the one lay act's correction last (`lay.corrected`): for a massless family the uniform mode's
     # content out of each level in proportion to the envelope, so that each sums to 0 over the board

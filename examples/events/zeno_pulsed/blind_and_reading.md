@@ -113,6 +113,16 @@ and the windows closed per run, n exactly:
 | 32 | 24 k | 24 | 0.072 | 0.012 | 34.3 | 30.79 | 32 |
 | 64 | 12 k | 12 | 0.037 | 0.009 | 17.8 | 62.78 | 64 |
 
+The row's two keys (the mathematician's 5983410256 and 5983478474, the advisor's 5983460299; F4 closed
+at both hands as a reading of the tool's columns, no engine change): the row counts both g kinds as
+written above; the engine's close draws once per window (`meeting.probe_click`): from g the outcomes
+are "e by pulse" or "g by probe", from e "g by pulse" (the return, the probe's finding of g in that
+same click) or the null window; so the key "g by probe" alone follows the survival sum SUM over k = 1
+to n of cos^(2k)(pi / 2n) (the probe finds g from g alone), and a reading tool that sums that key
+alone reads under the row by exactly the returns; the tool's column for this row sums both keys,
+`body 0 g by probe` + `body 0 g by pulse` as `tools/meeting_trials.py` keys them (the reader's name,
+the part realised and the family taken or given).
+
 The acceptance: every row within two standard errors after round A (the hole of a dense record,
 branch partial-hole) lands on main; before it the rows n >= 2 carry the hole's bias by name (the
 return e to g weakened for two ticks after each taking, the shipped n = 2 row's 0.615 at 480 seeds
