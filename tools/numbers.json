@@ -2,7 +2,7 @@
     {
         "name": "the MAGIC chain (R148, W11)",
         "canonical": ["1.3 x 10^-26 m"],
-        "forbidden": ["1.4 x 10^-26 m", "2.1 x 10^-14", "2.4 x 10^-28"]
+        "forbidden": ["1.4 x 10^-26 m", "1.45 x 10^-26 m", "1.5 x 10^-26 m", "2.1 x 10^-14", "2.4 x 10^-28"]
     },
     {
         "name": "the neutron's lifetime (W16)",
