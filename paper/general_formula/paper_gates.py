@@ -62,6 +62,8 @@ STALE = [
     ("short by $5.9$", "R184"),
     ("the top velocity of its mode", "R179"),
     ("1:1", "the README's figures clause"),
+    ("No body stands within rounding", "(16), the hands' 5975194901 and 5975225540"),
+    ("no body stands within rounding", "(16), the hands' 5975194901 and 5975225540"),
 ]
 # a struck phrase allowed in one named sentence, by a fragment of that sentence
 STALE_ALLOWED = {
@@ -132,6 +134,15 @@ TWINS = [
         ],
     ),
     ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$"), ("supplement.tex", "$\\Delta = 1 / m^*$")]),
+    (
+        "the hole's defect of 2026-10-04",
+        [
+            ("main.tex", "found on 2026-10-04, the hole raising the light's share"),
+            ("main.tex", "On 2026-10-04 a run of the one-photon file at the pinned commit found the hole raising the light's share"),
+            ("supplement.tex", "On 2026-10-04 a run of the one-photon file at the pinned commit found the hole raising the light's share"),
+            ("supplement.tex", "On 2026-10-04 the file's run found the hole raising the light's share (S.62)"),
+        ],
+    ),
 ]
 
 
