@@ -9,7 +9,7 @@ experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
 fence (GameBoard for a reading of the lattice, clicks for a formula of what a
 a NodeReader reports). Its title is "Universe24: an integer cellular automaton read through clicks,
-and the formulas it shares with nature", the method, the
+the formulas it shares with nature and the ones it adds", the method, the
 Universe24 it computes and the comparison, by the owner's word (2026-10-03, the
 title chosen in the writer's session; "cellular automaton" the literature's name
 for a lattice of integers stepped by one local rule); the meeting of the past with the future stands in the introduction as the
@@ -206,7 +206,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "36 pages, 7 figures, 4 tables; supplementary material of 34 pages as an
+  "37 pages, 7 figures, 5 tables; supplementary material of 34 pages as an
   ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,630
   characters counted with its TeX signs, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
