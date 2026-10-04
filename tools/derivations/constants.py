@@ -179,18 +179,18 @@ def reciprocal_pair(first: int = 3, second: int = 5) -> list[float]:
 
 
 def energy_line() -> list[float]:
-    """A charged body and its light keep one energy by the line E_s T cos omega_s = k_w Gamma: the body's loss under the turn and the holder's gain under the write agree if and only if it holds (line 571; S.26 (d')): the turn by theta = k_r Delta l / Gamma shifts a quantum from omega to omega - theta at its fixed Wronskian, its energy T sin omega by -T cos omega theta; the holder gains k_w Delta l / E_s per quantum; the loss over the gain is k_r E_s T cos omega_s / (k_w Gamma), 1 under the line; [that ratio at the charged universe's integers, at the turning file's, T cos omega_s at the rule's file against its Gamma, 21,845 against 6,000]."""
+    """A charged body and its light keep one energy by the line k_r E_s T cos omega_s = k_w Gamma (row 9 of the law's conventions and units table; the law's line What the GameBoard conserves, R316; line 571; S.26 (d')): the energy the body's clicks read and the holder's form move together under the turn and the write, both up for a body in its own level and both down for a pair of opposite senses, the sign the senses' product (a quantum of sense sigma in a level of source sense sigma_s goes from omega to omega + sigma sigma_s |theta| at its fixed Wronskian, theta = k_r Delta l / Gamma the turn, its energy T sin omega moving by sigma sigma_s T cos omega |theta|; the holder's form moving by k_w Delta l / E_s per quantum under the write), and the two agree to first order in the turn if and only if the line holds, one energy read twice; the ratio computed here is the magnitude, T (sin omega - sin(omega - theta)) / theta times E_s / (k_w Gamma) at k_r = 1 (T cos omega_s to first order), 1 under the line; [that ratio at the charged universe's integers, at the turning file's, T cos omega_s at the rule's file against its Gamma, 21,845 against 6,000]."""
 
-    def loss_over_gain(action: int, gamma: int, e_s: int, k_w: int, pair: tuple[int, int]) -> float:
+    def clicks_over_form(action: int, gamma: int, e_s: int, k_w: int, pair: tuple[int, int]) -> float:
         omega = rest_rotation(*pair)
         theta = 1e-6  # the turn of one small level over Gamma, k_r = 1
-        loss = action * (math.sin(omega) - math.sin(omega - theta)) / theta  # T cos omega per unit angle
-        return loss * e_s / (k_w * gamma)
+        read = action * (math.sin(omega) - math.sin(omega - theta)) / theta  # the magnitude T cos omega
+        return read * e_s / (k_w * gamma)
 
-    charged = loss_over_gain(
+    charged = clicks_over_form(
         CHARGED["action"], CHARGED["gamma"], CHARGED["e_s"], CHARGED["k_w"], CHARGED["pair"]
     )
-    turning = loss_over_gain(
+    turning = clicks_over_form(
         TURNING["action"], TURNING["gamma"], TURNING["e_s"], TURNING["k_w"], TURNING["pair"]
     )
     before = RULE_FILE["action"] * rule3.plane_wave_dispersion(0.0, *RULE_FILE["pair"])
