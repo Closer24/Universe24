@@ -104,7 +104,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
 
 
 def test_the_trials_seed_each_record_by_a_hash_and_not_by_an_arithmetic_progression():
-    """The trials tool's seeding (tools/meeting_trials.py, `hashed_state`; the mathematician's finding of 2026-10-04 on #1827 at the advisor's second): the generator of the files is affine, so trial labels in arithmetic progression (the seed times the records' number plus the record's number, the tool's rule before the fix) stay one progression at every depth of the draw and the trials' variates at a fixed depth are one Weyl sequence; with the files' generator and the control's labels_unit the states of 200 such trials after each of the first four draws have one consecutive difference modulo the modulus and their picks over a fixed total, (state times total) div 2^width, two adjacent consecutive differences modulo the total, one Weyl sequence (under the pick by the state modulo the total, until the clean main of 2026-10-04, the second draw fell in the even tenths alone; the pick from the high bits, the mathematician's #1793 comment 5981866600 K1, spreads the one progression evenly over the tenths and hides the defect from a histogram). The state from a hash of the label breaks the progression: over the same 200 trials the tenth each of the first four draws falls in is flat within the binomial band, and no three consecutive states share a difference. The engine's `drawn` is the generator read; the tool holds no number of the law."""
+    """The trials tool's seeding (tools/meeting_trials.py, `hashed_state`; the mathematician's finding of 2026-10-04 on #1827 at the advisor's second): the generator of the files is affine, so trial labels in arithmetic progression (the seed times the records' number plus the record's number, the tool's rule before the fix) stay one progression at every depth of the draw and the trials' variates at a fixed depth are one Weyl sequence; with the files' generator and the control's labels_unit the states of 200 such trials after each of the first four draws have one consecutive difference modulo the modulus and their picks over a fixed total, (state times total) div 2^width, two adjacent consecutive differences modulo the total, one Weyl sequence (under the pick by the state modulo the total, until the clean main of 2026-10-04, the second draw fell in the even tenths alone; the pick from the high bits, the mathematician's #1793 comment 5981866600 K1, spreads the one progression evenly over the tenths and hides the defect from a histogram). The state from a hash of the label breaks the progression: over 1,000 such trials the tenth each of the first four draws falls in is flat by the chi-square on 9 degrees at 1 percent, and no three consecutive states share a difference. The engine's `drawn` is the generator read; the tool holds no number of the law."""
     from event_universe.features.click import drawn
     from tests.laws import ROOT, load_file
 
@@ -127,7 +127,8 @@ def test_the_trials_seed_each_record_by_a_hash_and_not_by_an_arithmetic_progress
         return found, after
 
     affine, states = histograms([seed * 2 for seed in range(1, 201)])  # the rule before the fix
-    hashed, _ = histograms([trials.hashed_state(seed * 2, width) for seed in range(1, 201)])
+    hashed, _ = histograms([trials.hashed_state(seed * 2, width) for seed in range(1, 1001)])
+    flat = [sum((count - 100) ** 2 / 100 for count in counts) for counts in hashed]  # chi-square on 9
     total = sum(tenths)
     steps = [{(b - a) % modulus for a, b in zip(ends, ends[1:], strict=False)} for ends in states]
     picks = [
@@ -136,11 +137,12 @@ def test_the_trials_seed_each_record_by_a_hash_and_not_by_an_arithmetic_progress
     ]
     print(
         f"the affine seeding's second draw over 200 trials {affine[1]}, its states' differences {[len(s) for s in steps]} "
-        f"and its picks' {[len(p) for p in picks]}; the hash's four draws {hashed}"
+        f"and its picks' {[len(p) for p in picks]}; the hash's four draws over 1,000 trials {hashed}, "
+        f"their chi-squares on 9 degrees {[round(f, 1) for f in flat]} against the 1 percent 21.7"
     )
     assert all(len(s) == 1 for s in steps) and sum(affine[1]) == 200  # one progression at every depth
     assert all(len(p) <= 2 and max(p) - min(p) <= 1 for p in picks)  # the Weyl sequence's two steps
-    assert all(abs(count - 20) <= 17 for counts in hashed for count in counts)  # four sigma of 4.24
+    assert all(f < 21.7 for f in flat)  # the hash's draws flat at every depth, 1 percent on 9 degrees
     states = [trials.hashed_state(label, width) for label in range(400)]
     assert all(0 <= state < modulus for state in states)
     assert all(b - a != c - b for a, b, c in zip(states, states[1:], states[2:], strict=False))
