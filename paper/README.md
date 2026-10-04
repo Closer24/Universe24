@@ -38,7 +38,7 @@ their statuses.
 - `general_formula/main.pdf`: the compiled paper at the same commit.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.62, numbered as added, each naming its section,
+  its proof, Derivations S.1 to S.63, numbered as added, each naming its section,
   cited in the paper as (S.n), S.61 the engine's derivation ledger and S.62 the
   implementation's versions of the click's write and their readings, which stand
   there and not in the main text (the owner's word of 2026-10-03: a derivation
@@ -117,8 +117,12 @@ their statuses.
   out of each level in proportion to the envelope, in real arithmetic), so the
   lay is the one the pinned commit's mode file holds, within the integer
   rounding of a level; the script prints no draw, the clicks' row being the
-  folder's. Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`
-  at the pinned commit; it runs from the repository on the folder's files. Its
+  folder's. Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`,
+  the script of the paper's own commit (this folder's), on the folder's files as they
+  stand at the pinned commit; the script is not the pinned commit's (its `law_lay`
+  carries the uniform-component correction added after it), so it is run from the
+  paper's revision in a worktree of the pinned commit, and its printed output is the
+  current script's. Its
   printed output stands beside it as `two_slits_real_line.txt`, every
   number with its definition: the total over the whole passage, the twelve
   regions' quanta and shares, the visibility, the wings and the arrival (in the
