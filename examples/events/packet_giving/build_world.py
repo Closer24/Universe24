@@ -1,4 +1,4 @@
-"""The packet giving world's builder (examples/events/packet_giving; the open board's giving as a packet along a drawn axis, the mathematician's 224 (1) and 229 with the advisor's seconds, two hands): one world from the design, its board's length, the node_reader's place and the blind `expectation.json` derived from the design's numbers by the engine's own pure functions (the one-line packet's root T / sin Omega, the envelope, the band's line with the transverse mode; `features/click`) and the reach's line, written before any lay and byte for byte the same on every run of this script; `--modes` writes the mode file by the generator; `--read` runs the world over the design's seeds and prints the readings beside the blind (the node_reader's clicks, the drawn directions from the lay lines, the far Node's cosine, a GameBoard reading labelled so).
+"""The packet giving world's builder (examples/events/packet_giving; the open board's giving as a packet along a drawn axis, the mathematician's 224 (1) and 229 with the advisor's seconds, two hands): one world from the design, its board's length, the node_reader's place and the blind `expectation.json` derived from the design's numbers by the engine's own pure functions (the one-line packet's root T / sin Omega, the envelope, the band's line with the transverse mode; `features/click`) and the reach's line, written before any lay and byte for byte the same on every run of this script; `--modes` writes the mode file by the generator; `--read` runs the world over the design's seeds and prints the readings beside the blind (the region node_reader's clicks, its own click lines within the draw's window, with the giver's credit lines in their own column; the drawn directions from the lay lines, the far Node's cosine, a GameBoard reading labelled so).
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -185,8 +185,21 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     }
 
 
+def counted(lines: list[dict[str, Any]], region: str, window: int) -> dict[str, Any]:
+    """One run's clicks for the reading's columns: `clicks`, the region's click lines (the `credit` lines naming the region, one quantum credited each, NODEREADER) within the draw's window [1, window], with their ticks, and in their own columns the giver's credit lines (its giving at the giving's tick and its null window's re-lay, `body 0`, no click of the region) with their ticks."""
+    credits = [c for c in lines if c["event"] == "credit"]
+    reach = [c for c in credits if c["node_reader"] == region and 1 <= int(c["tick"]) <= window]
+    giver = [c for c in credits if c["node_reader"] != region]
+    return {
+        "clicks": len(reach),
+        "click_ticks": [c["tick"] for c in reach],
+        "giver_credits": len(giver),
+        "giver_credit_ticks": [c["tick"] for c in giver],
+    }
+
+
 def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
-    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the record's click line, the drawn direction from the lay lines, the node_reader's clicks, the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
+    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the record's click line, the drawn direction from the lay lines, the region node_reader's clicks within the draw's window beside the giver's credit lines (`counted`), the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
     from event_universe.game_board import GameBoard
     from event_universe.world_files import load_world
 
@@ -195,6 +208,7 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
     world_file = json.loads(path.read_text(encoding="utf-8"))
     node = tuple(blind["cos_omega"]["node"])  # type: ignore[index]
     first, last = blind["cos_omega"]["window_after_giving"]  # type: ignore[index]
+    region, window = str(design["node_reader"]["name"]), int(world_file["draw"]["window"])
     trials = []
     for seed in design["seeds"]:
         lines: list[dict[str, Any]] = []
@@ -217,16 +231,15 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
         xs = sorted({c["node"]["at"][0] for c in lays})
         body_x = blind["lay"]["body"][0]  # type: ignore[index]
         direction = "+x" if xs and xs[-1] > body_x else "-x" if xs and xs[0] < body_x else None
-        credits = [c for c in lines if c["event"] == "credit"]
-        window = [
+        after = [
             t
             for t in (range(given_at + first, given_at + last + 1) if given_at is not None else ())
             if t - 1 in series and t + 1 in series
         ]
-        squares = sum(series[t] ** 2 for t in window)
-        far = max((abs(series[t]) for t in window), default=0)
+        squares = sum(series[t] ** 2 for t in after)
+        far = max((abs(series[t]) for t in after), default=0)
         cosine = (
-            sum(series[t] * (series[t + 1] + series[t - 1]) for t in window) / (2 * squares)
+            sum(series[t] * (series[t + 1] + series[t - 1]) for t in after) / (2 * squares)
             if squares
             else None
         )
@@ -238,13 +251,12 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
                 "direction": direction,
                 "share_at_lay": share_at_lay,
                 "lay_lines": len(lays),
-                "clicks": len(credits),
-                "click_ticks": [c["tick"] for c in credits],
+                **counted(lines, region, window),
                 "count_in_books": board.credit.counts[pulse],
                 "share_over_wall": None if total is None else total / wall,
                 "cos_omega_read": cosine,
                 "far_level": far,
-                "levels": [series[t] for t in window],
+                "levels": [series[t] for t in after],
             }
         )
     meeting = [t for t in trials if t["direction"] in blind["direction"]["meeting"]]  # type: ignore[index]
@@ -256,7 +268,7 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
         "share_at_lay": [t["share_at_lay"] for t in trials],
         "cos_omega_where_meeting": [t["cos_omega_read"] for t in meeting],
         "blind": blind,
-        "label": "clicks NODEREADER; the cosine, the share and the directions GAMEBOARD readings",
+        "label": "clicks the region's click lines and the giver's credit lines NODEREADER; the cosine, the share and the directions GAMEBOARD readings",
     }
 
 
