@@ -53,11 +53,9 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     }
 
 
-def laid(path: Path, senses: list[str]) -> None:
-    """The generator's lay of a world's bodies, its mode file written beside the world; a refusal by name is printed and the world stays declared without a mode file."""
+def laid(path: Path) -> None:
+    """The generator's lay of a world's bodies, its mode file written beside the world (a body's sense the design's `senses` for its world, read by the generator from the design file beside the world and never from the command line; the owner's decision C2, #1793 comment 5982379080); a refusal by name is printed and the world stays declared without a mode file."""
     command = [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path)]
-    if senses:
-        command += ["--sense", *senses]
     found = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
     if found.returncode:
         print(json.dumps({"world": str(path), "refused": found.stderr.strip().splitlines()[-1]}))
@@ -82,7 +80,7 @@ def main(argv: list[str] | None = None) -> None:
         path.write_text(json.dumps(world(design, name)) + "\n", encoding="utf-8")
         print(json.dumps({"world": str(path)}))
         if args.modes:
-            laid(path, [str(int(v)) for v in design["worlds"][name].get("senses", [])])
+            laid(path)
     written = expectation(design)
     (args.folder / "expectation.json").write_text(json.dumps(written, indent=1) + "\n", encoding="utf-8")
     print(json.dumps({"expectation": str(args.folder / "expectation.json")}))

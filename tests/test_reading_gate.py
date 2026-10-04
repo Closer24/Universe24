@@ -219,3 +219,37 @@ def test_the_pick_is_the_states_fraction_of_the_weights_total_and_no_low_bit_ent
         440 < draws(halves, 1000).count(1) < 560
         and drawn(24, multiplier, increment, modulus, [1, 1 << 63])[0] == 1
     )
+
+
+def test_the_trials_coincidence_rows_are_every_record_alone_and_every_pair(tmp_path):
+    """The trials tool's coincidence rows (tools/meeting_trials.py, `coincidence_rows`; the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the rows derived from the records' count and from no fixed key, every record alone and every pair (`itertools.combinations`), neither, and alpha per pair; on the shipped two-record anticoincidence world over three of the design's seeds the report's rows are the keys listed here by hand, A_only, B_only, both, neither and alpha in that order, the four counts summing to the trials and alpha the fraction of the counts; with three records the function gives the three singles, the three pairs by their letters, `all` for the trials where every record took, neither and the three alphas, a taking at the third record alone, which the fixed keys (0,), (1,), (0, 1) never counted, its own row, every trial with a taking in exactly one row; under two records no row."""
+    import json
+    from collections import Counter
+    from fractions import Fraction
+
+    from tests.laws import EVENTS, ROOT, load_file
+
+    trials = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
+    folder = EVENTS / "anticoincidence"
+    design = json.loads((folder / "design.json").read_text(encoding="utf-8"))
+    (tmp_path / "design.json").write_text(json.dumps({**design, "seeds": design["seeds"][:3]}), "utf-8")
+    found = trials.reading(folder / "one_photon.json", tmp_path / "design.json", None)
+    rows, run = found["coincidence"], found["trials"]
+    assert list(rows) == ["A_only", "B_only", "both", "neither", "alpha"]  # the keys by hand, in order
+    a_only, b_only, both, neither = (rows[key][0] for key in ("A_only", "B_only", "both", "neither"))
+    assert a_only + b_only + both + neither == run == 3 and rows["A_only"][1] == run
+    a, b = a_only + both, b_only + both
+    alpha = Fraction(both * run, a * b) if a and b else None
+    assert rows["alpha"] == ([alpha.numerator, alpha.denominator] if alpha is not None else None)
+    took = Counter({(2,): 2, (0, 1): 1, (): 1, (0, 1, 2): 1})  # five trials over three records
+    three = trials.coincidence_rows(took, 3, 5)
+    singles, pairs = ["A_only", "B_only", "C_only"], ["A_B_only", "A_C_only", "B_C_only"]
+    assert list(three) == singles + pairs + ["all", "neither", "alpha_A_B", "alpha_A_C", "alpha_B_C"]
+    assert [three[key] for key in singles + pairs] == [[0, 5], [0, 5], [2, 5], [1, 5], [0, 5], [0, 5]]
+    assert (
+        three["all"] == [1, 5]
+        and sum(three[key][0] for key in singles + pairs + ["all", "neither"]) == 5
+    )
+    assert (three["neither"], three["alpha_A_B"], three["alpha_A_C"]) == ([1, 5], [5, 2], [5, 6])
+    assert three["alpha_B_C"] == [5, 6] and trials.coincidence_rows(Counter({(0,): 2}), 1, 2) == {}
+    print(f"the two-record rows over {run} trials {rows}; the three-record rows {three}")

@@ -58,11 +58,9 @@ def given_quantum(board: GameBoard, item: Item) -> None:
         board.credit.empty.discard(item.family)
     total = radiated_total(action, item.resonance)
     scale = count_wall(board.families[item.family], action) ** SCALE_OF
-    increments, amplitudes = increments_of(total, item.span, item.resonance, scale)
-    family = board.families[item.family]
-    increments = laid_in_time(  # the one act in time; the loader admitted a span holding its period
-        family.name, family.pair[0] == family.pair[1], increments, amplitudes
-    )
+    increments, amplitudes = increments_of(total, item.span, item.resonance, scale, item.levels)
+    family = board.families[item.family]  # the one lay act in time over the span the loader admitted
+    increments = laid_in_time(family.name, family.pair[0] == family.pair[1], increments, amplitudes)
     for at in item.nodes:
         for _ in range(item.delta):
             where = (int(at[0]), int(at[1]), int(at[2]))
@@ -149,15 +147,8 @@ def laid_packet(board: GameBoard, item: Item) -> None:
             levels, earliers = [], []
             for size, wave, quadrature in zip(amplitudes, waves, quadratures, strict=True):
                 levels.append(int(division_forward(size * wave, scale, half_scale)[0]))
-                earliers.append(
-                    int(
-                        division_forward(
-                            size * (wave * num * scale - quadrature * sine),
-                            scale * scale * den,
-                            half_wall,
-                        )[0]
-                    )
-                )
+                earlier = size * (wave * num * scale - quadrature * sine)
+                earliers.append(int(division_forward(earlier, scale * scale * den, half_wall)[0]))
             # the one lay act over the packet's Nodes: each level's sum over the train and the
             # cross-section to 0 exactly, in proportion to the envelope (the uniform mode laid none)
             nows, befores, weights = (np.zeros(board.shape, dtype=object) for _ in range(3))
@@ -187,13 +178,29 @@ def _offsets(axis: int, width: int, at: Node, shape: Node) -> list[tuple[int, in
     return found
 
 
-def increments_of(
-    total: int, span: int, resonance: tuple[int, int], scale: int
-) -> tuple[list[int], list[int]]:
-    """The span's increments and amplitudes of a source in time, computed whole at its start as the interval-by-interval lay held them: the amplitude A_t = isqrt((S (t + 1)) div tau - the carry) with the carry gaining A_t^2, so that the cumulative sum of the squares tracks S t / tau within one level squared and the amplitudes differ by one level now and then; the reference phasor at the scale R, R cos(Omega t), advanced by the resonance (`advanced`) from r_0 = R and r_(-1) = R cos Omega; the increment A_t r_t div R, rounded half up; one list of each, so that the division act in time reads the whole span before the first interval is laid."""
+Levels = tuple[tuple[int, int], tuple[int, int]]  # e's and g's (re, im) at the Node, the light's phase
+
+
+def start_of(scale: int, resonance: tuple[int, int], levels: Levels | None) -> tuple[int, int]:
+    """The source's start (r_0, r_(-1)) = (R cos phi, R cos(phi - Omega)) at the phase phi = phi_e - phi_g, the angle from the ground part's direction g to the excited part's e at the Node, read by the division act from the two parts' (re, im) pairs (ALGEBRA.md, The click writes on the GameBoard (j), the giving; the two-mode line's rotation): D = e . g = R_e R_g cos phi, C = g x e = R_e R_g sin phi, M = isqrt(|e|^2 |g|^2), r_0 = R D div M and r_(-1) = R (D num + C isqrt(R^2 (den^2 - num^2)) div R) div (M den), each rounded half up as the recurrence rounds, cos Omega = num / den and R sin Omega the root the reference records take (`resonance.references_of`); where a part stands at 0 (M = 0) or no parts are named, the phase 0: (R, R num div den), the start as before, which the parallel case (C = 0, D = M) reproduces bit for bit."""
     num, den = resonance
-    phasor = scale
-    previous = int(division_forward(scale * num, den, division_forward(den, 2, 0)[0])[0])
+    (re_e, im_e), (re_g, im_g) = levels or ((1, 0), (1, 0))
+    dot, cross = re_e * re_g + im_e * im_g, re_g * im_e - im_g * re_e
+    size = division_fixed_point((re_e * re_e + im_e * im_e) * (re_g * re_g + im_g * im_g))
+    if size == 0:
+        dot, cross, size = 1, 0, 1
+    sine = division_fixed_point(scale * scale * (den * den - num * num))  # R sin Omega den
+    first = int(division_forward(scale * dot, size, division_forward(size, 2, 0)[0])[0])
+    wall = size * den
+    earlier = division_forward(scale * dot * num + cross * sine, wall, division_forward(wall, 2, 0)[0])
+    return first, int(earlier[0])
+
+
+def increments_of(
+    total: int, span: int, resonance: tuple[int, int], scale: int, levels: Levels | None = None
+) -> tuple[list[int], list[int]]:
+    """The span's increments and amplitudes of a source in time, computed whole at its start as the interval-by-interval lay held them: the amplitude A_t = isqrt((S (t + 1)) div tau - the carry) with the carry gaining A_t^2, so that the cumulative sum of the squares tracks S t / tau within one level squared and the amplitudes differ by one level now and then; the reference phasor at the scale R, R cos(Omega t + phi), advanced by the resonance (`advanced`) from r_0 = R cos phi and r_(-1) = R cos(phi - Omega), the phase phi_e - phi_g read from the two parts' directions `levels` at the Node (`start_of`; 0 where none are named or a part stands at 0); the increment A_t r_t div R, rounded half up; one list of each, so that the division act in time reads the whole span before the first interval is laid."""
+    phasor, previous = start_of(scale, resonance, levels)
     half_scale = division_forward(scale, 2, 0)[0]
     carried, increments, amplitudes = 0, [], []
     for interval in range(span):
