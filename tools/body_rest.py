@@ -1,4 +1,4 @@
-"""The bodies' rest, a GameBoard reading labelled so and no measurement (docs/ENGINE.md #6-how-to-run-a-world; ALGEBRA.md #the-stable-body, #a-familys-declaration; the families round's worlds under examples/events/): a world of one or two bodies on any board is loaded as tools/run_inputs.py loads it and stepped by the engine's own step over the window; at the window's ends every body is read from its record and from the rows it sources. Per body: its centre (the declared Node of its largest count); the three levels of its record about one interval at the centre, [before, now, next], whose ratio (next + before) / now is 2 cos omega_b, the rest rotation of the standing record, an exact fraction (ALGEBRA.md #the-bound-body-is-one-node); its Wronskian at the centre where the body is a plane (its sense, the source of the holder of the sign); its share in quanta at the centre Node and summed over its region (the half of the board nearer its centre along the axis joining two bodies' centres, the whole board for a single body); the centroid of its share over its region and the share-weighted second moment about the centroid (the rms radius squared), exact fractions at the file's coordinates; its well over its region, the form D = now^2 - next x before summed over the region and divided by T, in quanta (the source of the rows holding the content); its record's level along each axis from the centre outward (the tail) with the ratios of successive levels (e^(-kappa) per Link where the tail is evanescent); and every held row's time level along the same axes (a holder of the content's rest about a body, 3 G(r) s on an open box; the holder of the sign's about a plane, light as the sum of its rows, `GameBoard.record`). For two bodies the separation of the centroids along the joining axis at the window's ends and its change; the books at the end and, beside their drift, the two terms of the drift's identity summed over every interval the reader stepped (ALGEBRA.md #the-count-is-the-records-share, The share's change is the currents: at the paces a step read, the share's change is the weighted currents less Rule3's remainder term, exactly in rationals; #the-conserved-form: the form changes by the work term where the paces move): the work term of L510, the share of the step's pair at the paces after the step less the same pair at the paces the step read (`work_term`), and Rule3's remainder term, the rounding of the level (`remainder_term`), so that the books' drift is their sum plus the currents through the faces, to the per-Node division's rounding; in the current's units and in quanta, a GameBoard reading and no fence. With a run's output file the `field` lines of the regions the expectation names (or of every region) are read over the window, each region's least and largest reading with their intervals and the count of its local maxima (a swinging count's beat). With an expectation file its blind is printed beside the readings. The tool compares nothing, holds no number of the law and writes nothing to the engine.
+"""The bodies' rest, a GameBoard reading labelled so and no measurement (docs/ENGINE.md #6-how-to-run-a-world; ALGEBRA.md #the-stable-body, #a-familys-declaration; the families round's worlds under examples/events/): a world of one or two bodies on any board is loaded as tools/run_inputs.py loads it and stepped by the engine's own step over the window; at the window's ends every body is read from its record and from the rows it sources. Per body: its centre (the declared Node of its largest count); the three levels of its record about one interval at the centre, [before, now, next], whose ratio (next + before) / now is 2 cos omega_b, the rest rotation of the standing record, an exact fraction (ALGEBRA.md #the-bound-body-is-one-node); the content its record reads at the centre, the held rows' levels at the law's weights (`GameBoard.read`), and the one-Node line at the composed clock read at that content, 2 cos omega = 2 - 2 ((den - num) / den) (1 - 1 / Gamma)^(2 c), the Node's own rest rotation and not the bound omega_b the tail fixes (ALGEBRA.md, The paces compose; The bound body is one Node), as a decimal; its Wronskian at the centre where the body is a plane (its sense, the source of the holder of the sign); its share in quanta at the centre Node and summed over its region (the half of the board nearer its centre along the axis joining two bodies' centres, the whole board for a single body); the centroid of its share over its region and the share-weighted second moment about the centroid (the rms radius squared), exact fractions at the file's coordinates; its well over its region, the form D = now^2 - next x before summed over the region and divided by T, in quanta (the source of the rows holding the content); its record's level along each axis from the centre outward (the tail) with the ratios of successive levels (e^(-kappa) per Link where the tail is evanescent); and every held row's time level along the same axes (a holder of the content's rest about a body, 3 G(r) s on an open box; the holder of the sign's about a plane, light as the sum of its rows, `GameBoard.record`). For two bodies the separation of the centroids along the joining axis at the window's ends and its change; the books at the end and, beside their drift, the two terms of the drift's identity summed over every interval the reader stepped (ALGEBRA.md #the-count-is-the-records-share, The share's change is the currents: at the paces a step read, the share's change is the weighted currents less Rule3's remainder term, exactly in rationals; #the-conserved-form: the form changes by the work term where the paces move): the work term of L510, the share of the step's pair at the paces after the step less the same pair at the paces the step read (`work_term`), and Rule3's remainder term, the rounding of the level (`remainder_term`), so that the books' drift is their sum plus the currents through the faces, to the per-Node division's rounding; in the current's units and in quanta, a GameBoard reading and no fence. With a run's output file the `field` lines of the regions the expectation names (or of every region) are read over the window, each region's least and largest reading with their intervals and the count of its local maxima (a swinging count's beat). With an expectation file its blind is printed beside the readings. The tool compares nothing, holds no number of the law and writes nothing to the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -104,13 +104,17 @@ def body_reading(
     share: np.ndarray,
     quanta: np.ndarray,
     reach: int,
+    content: Any,
 ) -> dict[str, object]:
-    """One body's reading about one interval: the board has stepped once since `begun`, `share` and `quanta` were read, so its records' `now` is the next level; everything else is of the interval's start."""
+    """One body's reading about one interval: the board has stepped once since `begun`, `share`, `quanta` and `content` (the record's read at the interval's start, `GameBoard.read`) were read, so its records' `now` is the next level; everything else is of the interval's start, the one-Node line at the composed clock read at the content at the centre among it (ALGEBRA.md, The paces compose; The bound body is one Node)."""
     row = board.world.bodies[number]
     family, state = board.families[row.family], board.states[row.family]
     centre = centre_of(board, number)
     at = tuple(c + o for c, o in zip(centre, board.offset, strict=True))
     before, now, after = (int(a[at]) for a in (begun[0].before, begun[0].now, state.lines[0].now))
+    num, den, gamma = *family.pair, board.world.node_clock
+    read_content = int(content[at]) if np.ndim(content) else int(content)
+    one_node = 2 - 2 * Fraction(den - num, den) * Fraction(gamma - 1, gamma) ** (2 * read_content)
     form = node.form(begun, state.lines[: family.record])
     well_sum = int(np.where(region, form, 0).sum(dtype=object))
     wronskian = node.wronskian(begun, family.plane)
@@ -129,6 +133,8 @@ def body_reading(
         "centre": list(centre),
         "levels_at_centre": [before, now, after],
         "two_cos_omega": None if now == 0 else pair(Fraction(after + before, now)),
+        "content_at_centre": read_content,
+        "one_node_line_at_centre": float(one_node),
         "wronskian_at_centre": None if not family.plane else int(np.asarray(wronskian)[at]),
         "quanta_at_centre": int(quanta[at]),
         "quanta_in_region": int(np.where(region, quanta, 0).sum(dtype=object)),
@@ -253,19 +259,24 @@ def work_books(board: GameBoard, terms: dict[int, dict[str, int]]) -> dict[str, 
 def read_about_one_interval(
     board: GameBoard, centres: list[Node], reach: int, terms: dict[int, dict[str, int]]
 ) -> list[dict[str, object]]:
-    """Every body's reading about the interval the board is at: the records, shares and quanta of the start are kept, the board steps once (`stepped`, the step's two terms of the drift's identity added to `terms`; grown at a receding face where the front reaches it, the kept arrays grown with it, `grown`), the regions are read at the board's shape after the step, and each body is read (`body_reading`)."""
+    """Every body's reading about the interval the board is at: the records, shares, quanta and the records' reads (the content) of the start are kept, the board steps once (`stepped`, the step's two terms of the drift's identity added to `terms`; grown at a receding face where the front reaches it, the kept arrays grown with it, `grown`), the regions are read at the board's shape after the step, and each body is read (`body_reading`)."""
     shape, offset = tuple(board.shape), tuple(board.offset)
     kept = {}
     for number, row in enumerate(board.world.bodies):
         begun = [
             copied(line) for line in board.states[row.family].lines[: board.families[row.family].record]
         ]
-        kept[number] = (begun, board.share_of(row.family)[0].copy(), board.quanta(row.family)[0].copy())
+        kept[number] = (
+            begun,
+            board.share_of(row.family)[0].copy(),
+            board.quanta(row.family)[0].copy(),
+            board.read(row.family, 1, 0)[0],
+        )
     stepped(board, terms)
     masks = regions(board, centres)
     found = []
     for number in range(len(board.world.bodies)):
-        begun, share, quanta = kept[number]
+        begun, share, quanta, content = kept[number]
         begun = [
             node.Record(
                 grown(line.now, shape, offset, board),
@@ -275,7 +286,8 @@ def read_about_one_interval(
             for line in begun
         ]
         share, quanta = grown(share, shape, offset, board), grown(quanta, shape, offset, board)
-        found.append(body_reading(board, number, masks[number], begun, share, quanta, reach))
+        content = grown(content, shape, offset, board) if np.ndim(content) else content
+        found.append(body_reading(board, number, masks[number], begun, share, quanta, reach, content))
     return found
 
 
