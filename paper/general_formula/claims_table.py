@@ -105,9 +105,10 @@ def plain(sentence: str, length: int = 170) -> str:
 
 def key_of(sentence: str) -> str:
     """The row's key, the sentence's opening words without TeX, stable across reprints that leave them."""
-    text = re.sub(r"\\[a-zA-Z]+\{[^}]*\}", "", sentence)
+    text = re.sub(r"\\(emph|texttt|textsc|textbf)\{([^}]*)\}", r"\2", sentence)
+    text = re.sub(r"\\[a-zA-Z]+(\[[^\]]*\])?\{[^}]*\}", "", text)
     text = re.sub(r"[^A-Za-z0-9 ]", "", text)
-    return " ".join(text.split())[:60]
+    return " ".join(text.split())[:60].strip()
 
 
 def kind_of(marks: list[str]) -> str:

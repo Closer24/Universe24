@@ -9,17 +9,17 @@
     "breaker": "Random paces p at or below P on 2x2x2 to 4x4x4 periodic boards, the coefficients fixed, 200 steps at every pair up to [4000, 6000]: the largest level bounded, no mode growing; p = P + 1: the pi mode grows (the claim's first half). Outside the fence: the coefficients changing in time (the parametric sequence of #1901, R326) with every instant's pace below P: one solution grows, so the fence 'at coefficients fixed in time' is where the sentence says.",
     "state": "to write"
   },
-  "In the clicks there are conservations other than the boards ": {
+  "In the clicks there are conservations other than the boards": {
     "kind": "a",
     "breaker": "The board's conservations: the weighted form and Wronskian on random boards at static paces in exact rationals (the rows of Theorem 3 and 5.5); no total energy: the clicks' energy T sin omega and the holder's form move together (R316), a world where a body's level grows and the form falls, both read; the credit's conservation of the count the engine's own act (kind (e): one quantum one click on the tests' universe, the count before and after).",
     "state": "to write"
   },
-  "The backintime gate is exact between clicks and runs across ": {
+  "The backintime gate is exact between clicks and runs across": {
     "kind": "e",
     "breaker": "The engine's gate on the tests' universe: forward n and back n bit for bit between clicks; across a click with its erasure intervals, the values presented at the Ports treated as given: MATCH; outside: a draw inside the reversed span without the crossing fails (the draw forward only), so the fence 'between clicks, across a click with the crossing' is the engine's. tools/back_in_time.py at 7756546d.",
     "state": "to write"
   },
-  "The whole run therefore goes back N intervals forward and N ": {
+  "The whole run therefore goes back N intervals forward and N": {
     "kind": "e",
     "breaker": "Random states on 2x2x2 to 4x4x4 boards (every face kind, pairs [1, 1] to [4000, 6000], uneven Link factors, the width 63): Rule3 forward then its inverse returns every level and remainder bit for bit (the advisor's breaker found 0 misses on 384 boards, 5981736108 A (1)); outside: a state whose read at an interval's start is not kept (a face that moves) breaks it, the proviso of the sentence.",
     "state": "to write"
@@ -29,12 +29,12 @@
     "breaker": "Exact rationals on random boards with uneven static paces: the weighted form's total constant to the remainder term, the plain form's total not (its change the pace's variation across the board); paces moving in time (a deepening well): the weighted total falls, the work term; surplus_check.py re-run at the hash for the printed numbers.",
     "state": "to write"
   },
-  "The integer step subtracts the remainder term deltaiDeltaai ": {
+  "The integer step subtracts the remainder term deltaiDeltaai": {
     "kind": "a",
     "breaker": "Exact integers on random boards: the integer step's momentum flux through a Link minus the line's flux applied to the integer levels equals delta_i Delta_a(now)_i - now_i Delta_a(delta)_i with delta = r - r' per Node, every Link, every pair; a mismatch at one Link breaks the identity.",
     "state": "to write"
   },
-  "Over one step of Rule3 the shares rational value before its ": {
+  "Over one step of Rule3 the shares rational value before its": {
     "kind": "a",
     "breaker": "Exact rationals on 2x2x2 to 4x4x4 boards with uneven Link factors and paces: the share's rational change per Node equals the six weighted currents plus the Node's own remainder term exactly (S.5), at every pair; the floored share's change differs by the floor alone (the remainders' walk), named.",
     "state": "to write"
@@ -54,7 +54,7 @@
     "breaker": "The step on random states is a bijection (its inverse found for every state, no two states to one); the draw's write is not (two states, the quantum taken from either of two Nodes, map to one board): the arrow is the click's, the step's reversibility the first half of 5.1.",
     "state": "to write"
   },
-  "The line without its division conserves it exactly with the ": {
+  "The line without its division conserves it exactly with the": {
     "kind": "a",
     "breaker": "A two-part record on random boards stepped by the line in exact rationals at paces static in time: the weighted Wronskian total constant exactly (S.9), the integer step's defect the remainder term; paces moving in time without the time-Link turn: the total drifts (the work term, S.26 (d')), with the turn booked from the turned levels u_i, v_i: constant again (R334).",
     "state": "to write"
@@ -79,7 +79,7 @@
     "breaker": "Every pair [num, den] with den up to 10^4: 2 cos omega_0 = 2 num / den an integer only at num / den in {1 / 2, 0, -1 / 2}, the orbit of the one-Node line periodic in integers only there (Niven's theorem on the rational cosines, checked by enumeration on the integer recurrence a_next + a_before = (2 num / den) a_now over 1,000 steps); the periods 6, 4 and 3.",
     "state": "to write"
   },
-  "i a family is a band of the rule and its row holds only its ": {
+  "i a family is a band of the rule and its row holds only its": {
     "kind": "e",
     "breaker": "(i) the loader on the tests' universe: a family's row with a third key refused by name, with its two keys admitted (kind (e), loader/world.py at 7756546d); (ii) the three exact massive rotations as the row above; the two assumptions in the sentence have no breaker, being declarations.",
     "state": "to write"
@@ -94,7 +94,7 @@
     "breaker": "pixel_mode.py re-run at the frozen commit on the shipped matter worlds: the two branches from two start widths, their numbers the printed ones (the compact pixel's and the wide cloud's clock pairs); a start width between the two lands on one of them and on no third.",
     "state": "to write"
   },
-  "itemm Rule3 is invariant under the lattices translations the": {
+  "itemm A free record keeps its wave number Rule3 is invariant": {
     "kind": "a",
     "breaker": "A plane wave at a rational wave number on a periodic board stepped by the line in exact rationals: its wave number kept exactly at every step (the Fourier component's modulus constant); the integer step's remainders add their walk, so a mode's amplitude at another k grows at the walk's size and no faster (the fence 'in the rational line before the rounding', 6 (m)).",
     "state": "to write"
@@ -102,6 +102,96 @@
   "The two parts of one beam laid equal are two records of one": {
     "kind": "e",
     "breaker": "Two records of one family laid equal on the tests' universe and stepped by the engine over 50 intervals: every array equal bit for bit at every interval (the engine's determinism); laid one level apart at one Node: they differ, and the difference propagates at one Link per interval, the causal bound.",
+    "state": "to write"
+  },
+  "The three are one as the gap closes Its slow limit at small": {
+    "kind": "a",
+    "breaker": "The band at the vacuum's paces against Schroedinger's and Klein-Gordon's at k = 0.02 to 0.5 along an axis and a diagonal, at the pairs [2, 3], [9, 10], [999, 1000]: the slow limit's three conditions of S.63 each tested outside its order (k = 1, the k^4 term 1 / 12 of the k^2; the envelope's second difference at a short packet); the Gaussian packet's centre and width of S.63's check re-run (schroedinger_check.py).",
+    "state": "to write"
+  },
+  "A body with two bound modes omegai omegaj transfers between": {
+    "kind": "a",
+    "breaker": "Rabi's transfer sin^2(Omega_R tau) between two modes under the two-mode line (S.43) at random couplings and detunings on one Node: the full transfer at resonance, the detuned transfer sinc^2 at delta tau / 2 (the resonance folder's 5 x 10^-5); outside: a drive at the alias omega = pi / 2 (R338 (b)) where the averaging fails.",
+    "state": "to write"
+  },
+  "itema The redshift weakfieldpy": {
+    "kind": "b",
+    "breaker": "weak_field.py re-run at the frozen commit: the clock's rate in a level against e^{-U} and the factor f(omega_0) = 2 (1 - cos omega_0) / (omega_0 sin omega_0) at [2, 3] and as the gap closes (1); outside: the redshift read as T omega (the energy) instead of the clock gives another number, S.27's caution.",
+    "state": "to write"
+  },
+  "itemb The bending of light weakfieldpy": {
+    "kind": "b",
+    "breaker": "weak_field.py: the ray's bending 4 U_b on the exponential metric by the index e^{2U} at impact parameters b = 10 to 1000 m, against Schwarzschild's at first order (equal) and second order (the metric's 2 against 1.5); the lattice's chromatic term k^2 (e^{6U} - e^{2U}) / 24 at finite k, 0 as k -> 0.",
+    "state": "to write"
+  },
+  "Its bending is exact in the gap while the orbits second orde": {
+    "kind": "a",
+    "breaker": "The bending's derivation (S.20) at the pairs [2, 3], [9, 10], [999, 1000]: the first-order angle 4 U_b the same at every gap (exact in the gap); the orbit's second order (the perihelion) at the computed pair against the band's k^4 term's ten percent (S.19): the two numbers printed, the k^4 term's share of the second order.",
+    "state": "to write"
+  },
+  "itemc The delay of light S20 weakfieldpy": {
+    "kind": "b",
+    "breaker": "weak_field.py: Shapiro's delay by the index e^{2U} integrated along the ray against the known form 2 (r_s / c) ln(4 r_1 r_2 / b^2) at first order; the second-order difference of the exponential metric named.",
+    "state": "to write"
+  },
+  "itemd The perihelion weakfieldpy": {
+    "kind": "b",
+    "breaker": "weak_field.py: the orbit step of S.19 at the computed pair: the precession per orbit against 6 pi m / (a (1 - e^2)) with gamma_K = den / num and beta_K at the pair, and with the gap closed (the PPN values 1, 1); the k^4 caveat's size at the pair's k.",
+    "state": "to write"
+  },
+  "iteme The moving clock the bands kinetic scale and the fourt": {
+    "kind": "a",
+    "breaker": "S.21's inversion on the exact band: a packet at v = 0.1 to 0.5 c_m along an axis, a face diagonal and the body diagonal: the clock's rate against 1 / gamma to second order (one speed c_m) and the fourth order's three coefficients 1.6926, 1.2224, 1.0657 at [2, 3] (moving_clock.py); outside: v near the band's top, where the inversion fails, named.",
+    "state": "to write"
+  },
+  "itemh De Broglies relation for the band for the fringe spaci": {
+    "kind": "a",
+    "breaker": "k = m* v on the band at small k (S.22) with m* = 3 tan omega_0: the group velocity's inversion at k = 0.02 to 0.5, the relative departure at k = 0.5 printed; the two slits' fringe spacing lambda L / d read by the real line at the shipped file (two_slits_real_line.py) as the click's side.",
+    "state": "to write"
+  },
+  "itemi The fall weakfieldpy": {
+    "kind": "b",
+    "breaker": "weak_field.py: the slow packet's fall a = f(omega_0) omega_0 / m* grad U = 2 nu / (3 (1 + nu)) grad U at [2, 3] (4 / 15) and [3, 4] (2 / 7), the family dependence at finite gaps (#1908 (4)) and the common limit 1 / 3 = c^2 as the gaps close; the rest push over E at the pair, 1.0634.",
+    "state": "to write"
+  },
+  "itemj Newtons pull and orbits weakfieldpy": {
+    "kind": "b",
+    "breaker": "weak_field.py: Kepler's potential U_K from the fall and the orbits' G as a reading (S.18, S.25): a circular orbit's period against Kepler's third law on the exponential metric at r = 100 to 10^4 m, the departure at second order in U.",
+    "state": "to write"
+  },
+  "itemp The lens a content bends light and matter alike by one": {
+    "kind": "a",
+    "breaker": "Eq. (lens) at [2, 3], k = 0.3, N = 0.9: the general equation's k_in against the light reduction sin(k_in / 2) = sin(k / 2) / N^2 (R329's witness: 1.0500 against the reduction's number, the rest term of matter); the index e^{2U} for light and n_m^2 proportional to 1 / k^2 for slow matter at long wavelength; two derivations (S.28).",
+    "state": "to write"
+  },
+  "Lights index e2U places the photon sphere at r 2m with U m r": {
+    "kind": "a",
+    "breaker": "The capture radius from the index e^{2U} with U = m / r: the turning-point condition b = r e^{2U} minimised at r = 2m gives b = 2 e m exactly (root-finding on the general equation at random m); Schwarzschild's 3 sqrt 3 m beside it; the 4.6 percent printed.",
+    "state": "to write"
+  },
+  "So the odd lines are sourced by the halved current over the": {
+    "kind": "a",
+    "breaker": "The holder's static solution sourced by a point charge on a chain and a 3D box in exact rationals: Coulomb's 1 / r on the massless holder (3 G(0) = 0.7582 of Watson's integral at the source Node), the halved current's write; a gapped holder gives Yukawa's e^{-kappa r} / r (6.4); outside: a source moving at a fraction of c, the retarded form.",
+    "state": "to write"
+  },
+  "The declared pairs 478 169 sits below 2sqrt 2 because the an": {
+    "kind": "a",
+    "breaker": "The credit's joint shares at the rational settings a = (1, 0), a' = (1, 1), b = (12, 5), b' = (5, 12): E = 119 / 169, -119 / 169, 120 / 169, 120 / 169 and S = 478 / 169 exactly (bell.py); the marginals 1 / 2 each; outside: an unequal-part pair (1, 1) against (3, 1) gives the contrast's S, and settings at irrational angles give 2 sqrt 2 in the limit.",
+    "state": "to write"
+  },
+  "The same credit on four lines gives the threequantum GHZ cor": {
+    "kind": "a",
+    "breaker": "The credit on four lines at the GHZ settings: E_3 = cos 2 (a + b + c) and M = -4 exactly in the shares (bell.py's GHZ rows); outside: a settings' triple off the Mermin angles gives |M| below 4; the port patterns' orthogonality checked with one pattern wrong (the advisor's configuration).",
+    "state": "to write"
+  },
+  "The level slows the clock by the potential Phi ell Gamma U w": {
+    "kind": "a",
+    "breaker": "The composed paces at a level ell: the clock's pace p_0 / Gamma = e^{-U} with U = ell / Gamma (Eq. (3)) in exact rationals at random levels, Newton's sign; outside: the plain read without the one assumption (hN = 1) gives another clock, the assumption's fence.",
+    "state": "to write"
+  },
+  "What the clicks structure derives of the masses is in S53 th": {
+    "kind": "a",
+    "breaker": "The rest energy m* c_m^2 = omega_0 exactly on the band (m* = 3 tan omega_0, c_m^2 = omega_0 / (3 tan omega_0)) at every pair; the mass ratios' square roots of the gaps under the one-denominator hypothesis (a declaration, no breaker); the charge universality's exactness against the free fall's family dependence (#1908 (4)).",
     "state": "to write"
   }
 }
