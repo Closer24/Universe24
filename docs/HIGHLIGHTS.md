@@ -4,8 +4,8 @@ This document holds the decisions of the model owner that are in force, one line
 each, in the present tense. A decision of the owner replaces the line it changes:
 the old line is deleted, not kept. It carries no dates, no comment ids, no
 narrative and no history of who said what when; the narrative lives in the issues
-and the git history, and the findings with their states in docs/REVIEW_LEDGER.md,
-the reviewer's ledger. The Boss alone edits it, by a pull request read by both
+and the git history, and the findings with their states in the reviewer's ledger
+in the repository. The Boss alone edits it, by a pull request read by both
 hands. The project's three documents are [docs/ALGEBRA.md](ALGEBRA.md), the law,
 [docs/ENGINE.md](ENGINE.md), the engine, and this one, the decisions. Where a line
 points at the law, the law's line governs and no formula is restated here.
@@ -31,9 +31,9 @@ points at the law, the law's line governs and no formula is restated here.
 
 - The law is docs/ALGEBRA.md, one algebraic line per rule, and the engine is its implementation and nothing else; every rule passes the three tests (generic, vector, local) before it enters, and a hypothesis that needs more is stated under its own name.
 - Every claim in the paper and in the law has one sentence with its status mark and its fence; every derived or computed mark names its derivation script.
-- Every derived or computed claim has a Python derivation script under tools/derivations/ whose output a test compares to the printed number and to tests/numbers.json, the numbers table, where every number printed in more than one place is defined once with its forbidden variants; the whole law is the target, and the derived and computed lines that name no script are counted by the test as a ratchet that only falls, reaching zero with part 4.
+- Every derived or computed claim has a Python derivation script under tools/derivations/ whose output a test compares to the printed number and to the numbers table, where every number printed in more than one place is defined once with its forbidden variants; the whole law is the target, and the derived and computed lines that name no script are counted by the test as a ratchet that only falls, reaching zero with part 4.
 - A theorem's proof stays in words beside its mark, and its script checks the claim on the engine's integers.
-- The stale-phrase gate in the documents test asserts the struck phrases absent from the law, the engine's document and the paper.
+- Two gates run on every pull request: the documents gate on the law and the engine's document (the stale phrases, the numbers table, the derivation scripts) and the paper's gate, the writer's (the marks, the struck phrases and the twins).
 - The conventions and units table is a section of the law (the one orientation, the tension's sign, the step's phase, the matrices and the energy, T and the walls, form against share against inflow), drafted by the first hand and confirmed by the second, its identities asserted in the integer algebra test.
 - The readings gate, tools/reading_gate.py, re-runs the gate worlds and compares their output bit for bit to the folders' blind_and_reading documents.
 - The engine's derivation ledger is a section of the law: every number the engine prints that the law derives stands there with its derivation.
@@ -43,7 +43,7 @@ points at the law, the law's line governs and no formula is restated here.
 - The vacuum's content is 0; the vacuum's writes (Lambda) are a hypothesis under its own name; there is no field, only events.
 - The forces are the law's holders by name: the weak force is the conversion click, confinement the record's indivisibility, nuclear binding the declared holder, the electromagnetic force the sign holder, gravity the massless holder; the nucleus is a bound body of the nuclear holder and the atom a bound body of the sign holder, each a hypothesis by name until shown.
 - Universe24's clicks are the mechanism's own; nature is not said to have clicks.
-- HIGHLIGHTS is the decisions in force, one line each, no diary; the night's narrative lives in the issues and the git history and the findings' states in docs/REVIEW_LEDGER.md; nothing is a decision until it is a line here.
+- HIGHLIGHTS is the decisions in force, one line each, no diary; the night's narrative lives in the issues and the git history and the findings' states in the reviewer's ledger in the repository; nothing is a decision until it is a line here.
 - A change to a document replaces what it touches and deletes what no longer holds in the same pull request; the documents are English and ASCII, simple and precise, every symbol named at its first use.
 
 ## The experiments and the worlds
@@ -78,5 +78,5 @@ points at the law, the law's line governs and no formula is restated here.
 - The paper claims nowhere beyond what was shown and names which experiments ran by Rule3.
 - The paper claims only what cannot be killed; what does not endanger us is the guideline for every sentence.
 - The title is "Universe24: an integer cellular automaton read through clicks, and the formulas it shares with nature", with six keywords, the field Foundations of Physics, arXiv quant-ph with gr-qc and nlin.CG as cross-lists, in the author's voice.
-- The paper's gates (the marks against the key, the struck phrases asserted absent, the twins asserted present) run as a test on every pull request; every derived or theorem mark carries its fence, the fence following the sentence's object.
+- The paper's gate (the marks against the key, the struck phrases asserted absent, the twins asserted present) runs as a test on every pull request; every derived or theorem mark carries its fence, the fence following the sentence's object.
 - The quantum computer is not for the paper.
