@@ -238,7 +238,7 @@
  },
  "rates": {
   "P_to_S": {
-   "lifetime": 4,
+   "lifetime": 8,
    "rate_per_interval": 0.25,
    "gives_to": "fluorescence",
    "what": "the fluorescence, the strong transition's; nature's 2P lifetime 2.3 ns"
