@@ -260,6 +260,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "5983514044): the return from e is the pulse's click 'g by pulse' and the probe finds g from g alone, 'g by probe', "
         "one draw per close",
     ),
+    "tests/test_pixel_mode.py::test_a_packet_of_a_gapped_family_is_advanced_by_its_own_band_and_a_massless_one_by_the_vacuums": (
+        20,
+        "R370: the generator's exact lay advances a packet by its family's own band, cos omega = (num / den) sum cos q_a / 3 "
+        "(the law's (h), L the line's own read), the massless band its case at num = den (#1793 comments 5984295586, "
+        "5984314233; the Boss's grant 5984406201)",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

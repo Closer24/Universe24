@@ -141,9 +141,13 @@ at 48, is gone. The blind, written before any run under the form (`design.json`,
    intervals 1 - (47 / 48)^96 = 0.8675, 86.7 +/- 3.4 seeds; the waiting time geometric at the grain
    1, the exponential exactly, with the mean 48 and the standard deviation sqrt(48 x 47) = 47.5; the
    same intervals in both worlds, the giver's generator at the same state per seed.
-2. The lay: 48 lay lines from the giving's interval t, cut by the run's end for t above 49 (0.644 of
-   the seeds hold the whole span); the amplitudes as before, 21 on 30 intervals and 22 on 18 over a
-   whole span.
+2. The lay: the span of 48 from the giving's interval t by the convention of the lay (the
+   mathematician's 5983099257 (2), the advisor's second 5983234007 (3)): the giving is one act at the
+   click's interval, its first increment written in the click's act (`giving.given_quantum` through
+   `lay.laid_in_time`) and the 47 increments after it each their own `lay` line, so a span of 48 is
+   the click's line and 47 lay lines, min(47, the run's remaining intervals) within the run; cut by
+   the run's end for t above 49 (0.644 of the seeds hold the whole span); the amplitudes as before,
+   21 on 30 intervals and 22 on 18 over a whole span.
 3. The far Node's cosine on each seed's plateau [t + 28, t + 42], inside the run for t <= 53 (0.675
    of the seeds): within 2 / A_far of 2 / 3, as on the plateau 76 to 90 of the giving at 48, since the
    board holds no light before the giving and the wave is the same relative to t in every seed until
