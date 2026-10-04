@@ -42,8 +42,8 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
 def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind expectation file, as tools/body_rest.py prints it beside the readings: the window, the family, the worlds, the reading named, and the blind with its status and fence."""
     return {
-        "verdict": "GAMEBOARD",
-        "label": "GAMEBOARD",
+        "verdict": "LATTICE",
+        "label": "LATTICE",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],

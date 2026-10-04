@@ -1,4 +1,4 @@
-"""The packet giving world's builder (examples/events/packet_giving; the open board's giving as a packet along a drawn axis, the mathematician's 224 (1) and 229 with the advisor's seconds, two hands): one world from the design, its board's length, the node_reader's place and the blind `expectation.json` derived from the design's numbers by the engine's own pure functions (the one-line packet's root T / sin Omega, the envelope, the band's line with the transverse mode; `features/click`) and the reach's line, written before any lay and byte for byte the same on every run of this script; `--modes` writes the mode file by the generator; `--read` runs the world over the design's seeds and prints the readings beside the blind (the node_reader's clicks, the drawn directions from the lay lines, the far Node's cosine, a GameBoard reading labelled so).
+"""The packet giving world's builder (examples/events/packet_giving; the open board's giving as a packet along a drawn axis, the mathematician's 224 (1) and 229 with the advisor's seconds, two hands): one world from the design, its board's length, the node_reader's place and the blind `expectation.json` derived from the design's numbers by the engine's own pure functions (the one-line packet's root T / sin Omega, the envelope, the band's line with the transverse mode; `features/click`) and the reach's line, written before any lay and byte for byte the same on every run of this script; `--modes` writes the mode file by the generator; `--read` runs the world over the design's seeds and prints the readings beside the blind (the node_reader's clicks, the drawn directions from the lay lines, the far Node's cosine, a lattice reading labelled so).
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -157,7 +157,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "value": sine * excess,
             "sine_mode": sine,
             "top_hat_excess": excess,
-            "reading": "the light's share over the board in the top's unit W_c at the giving's interval, the jump line's tick, a GameBoard reading",
+            "reading": "the light's share over the board in the top's unit W_c at the giving's interval, the jump line's tick, a lattice reading",
             "status": "sin Omega of the top's unit with the sine mode across, times the top-hat's excess at its edges (the hands' derivation at T = 2^22, the mathematician's 242 section 1 and the advisor's second); at the shipped T the rounded levels' residue is a finding by name",
         },
         "count": {
@@ -171,7 +171,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "node": found["reading_node"],
             "window_after_giving": [first, last],
             "estimator": "SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2)",
-            "gate": "|cos Omega_read - num / den| <= 2 / A_far with A_far = max |n_t| over the window at the reading Node (the mathematician's 220, the advisor's second); a GameBoard reading",
+            "gate": "|cos Omega_read - num / den| <= 2 / A_far with A_far = max |n_t| over the window at the reading Node (the mathematician's 220, the advisor's second); a lattice reading",
         },
         "direction": {
             "fraction": [len(meeting), len(held)],
@@ -181,13 +181,13 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "gate": "within sqrt(N p (1 - p)) of N p over the seeds",
         },
         "seeds": len(design["seeds"]),
-        "status": "the two hands' lines (224, 229, the advisor's seconds; the root 242 section 1, the advisor's second); fence: clicks for the count, a GameBoard reading for the cosine, the lay lines for the direction",
+        "status": "the two hands' lines (224, 229, the advisor's seconds; the root 242 section 1, the advisor's second); fence: clicks for the count, a lattice reading for the cosine, the lay lines for the direction",
     }
 
 
 def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
     """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the record's click line, the drawn direction from the lay lines, the node_reader's clicks, the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
-    from event_universe.game_board import GameBoard
+    from event_universe.lattice import Lattice
     from event_universe.world_files import load_world
 
     blind = expectation(design)
@@ -198,7 +198,7 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
     trials = []
     for seed in design["seeds"]:
         lines: list[dict[str, Any]] = []
-        board = GameBoard(load_world(path), lines.append)
+        board = Lattice(load_world(path), lines.append)
         for books in board.credit.bodies:
             books.state = int(seed) * len(board.credit.bodies) + books.number
         pulse = [f.name for f in board.families].index(design["light"])
@@ -256,7 +256,7 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
         "share_at_lay": [t["share_at_lay"] for t in trials],
         "cos_omega_where_meeting": [t["cos_omega_read"] for t in meeting],
         "blind": blind,
-        "label": "clicks NODEREADER; the cosine, the share and the directions GAMEBOARD readings",
+        "label": "clicks NODEREADER; the cosine, the share and the directions LATTICE readings",
     }
 
 

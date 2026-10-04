@@ -48,7 +48,7 @@ REGISTRY: tuple[tuple[str, Callable[[], Row]], ...] = (
         forms.regions_share_changes_by_boundary_currents,
     ),
     (
-        "The total share of a closed or periodic GameBoard is nonnega",
+        "The total share of a closed or periodic lattice is nonnega",
         forms.total_share_nonnegative_inside_the_guard,
     ),
     ("The direction of time belongs to the clicks and not to the b", rows.the_step_is_a_bijection),
@@ -57,7 +57,7 @@ REGISTRY: tuple[tuple[str, Callable[[], Row]], ...] = (
         forms.wronskian_conserved_by_the_line_at_static_paces,
     ),
     (
-        "Its total over the GameBoard is invariant under any change o",
+        "Its total over the lattice is invariant under any change o",
         forms.wronskian_total_under_a_change_of_paces,
     ),
     ("The exact angle of the shears is 2arctanL p0 2Gamma2 which i", rows.shears_exact_angle),

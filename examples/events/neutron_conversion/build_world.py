@@ -55,7 +55,7 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
 def expectation(design: dict[str, Any]) -> dict[str, Any]:
     """The blind expectation file, from the design alone: the neutron's row, the table, the excess, the trials, the rate's expectation and the hands' rows verbatim."""
     return {
-        "verdict": "GAMEBOARD",
+        "verdict": "LATTICE",
         "comment": design["comment"],
         "neutron": design["neutron"],
         "table": design["table"],

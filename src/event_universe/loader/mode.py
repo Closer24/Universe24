@@ -1,4 +1,4 @@
-"""The generator's mode file beside the world (`<world>.mode.json`, `tools/pixel_mode.py`): the world's digest, and per body and per message its two level pairs over the GameBoard, each one integer per Node in x-major order or the nonzero Nodes alone (their flat x-major indexes with their levels), within the amplitude bound A and 0 beyond the board; every key checked, every defect refused by name (ALGEBRA.md #the-generator)."""
+"""The generator's mode file beside the world (`<world>.mode.json`, `tools/pixel_mode.py`): the world's digest, and per body and per message its two level pairs over the lattice, each one integer per Node in x-major order or the nonzero Nodes alone (their flat x-major indexes with their levels), within the amplitude bound A and 0 beyond the board; every key checked, every defect refused by name (ALGEBRA.md #the-generator)."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ LEVEL_KEYS, SENSE_KEYS = ("now", "before"), ("im_now", "im_before")
 SPARSE_KEYS = ("at", "values")  # a level's nonzero Nodes alone: their flat x-major indexes and levels
 Levels = tuple[
     tuple[int, int], ...
-]  # a level over the GameBoard as its nonzero Nodes: (flat index, level)
+]  # a level over the lattice as its nonzero Nodes: (flat index, level)
 
 
 def pairs_of(given: object, label: str, size: int) -> Levels:
@@ -54,7 +54,7 @@ def pairs_of(given: object, label: str, size: int) -> Levels:
 def levels_of(
     entry: object, label: str, family: FamilyRule, shape: Node, bound: int, beyond: tuple[Node, ...]
 ) -> tuple[Levels, Levels, Levels, Levels]:
-    """A body's or a message's two level pairs from its mode entry as their nonzero Nodes: `moving`'s now and before, laid on every real line of the record alike (`GameBoard.lay`), and its im_now and im_before (the second level pair of a family of dimension two, a plane, its sense; both or neither, 0 where absent; refused by name on a family whose lines are no plane, one real line or the three real lines of a record of dimension 3), each one integer per Node in x-major order or the nonzero Nodes alone (`pairs_of`), within the amplitude bound A and 0 at every Node beyond the board (nothing is laid there); a sense without a rotation (a second pair on real levels at 0) is refused by name; the generator's readings beside them are read and not used."""
+    """A body's or a message's two level pairs from its mode entry as their nonzero Nodes: `moving`'s now and before, laid on every real line of the record alike (`Lattice.lay`), and its im_now and im_before (the second level pair of a family of dimension two, a plane, its sense; both or neither, 0 where absent; refused by name on a family whose lines are no plane, one real line or the three real lines of a record of dimension 3), each one integer per Node in x-major order or the nonzero Nodes alone (`pairs_of`), within the amplitude bound A and 0 at every Node beyond the board (nothing is laid there); a sense without a rotation (a second pair on real levels at 0) is refused by name; the generator's readings beside them are read and not used."""
     size = shape[0] * shape[1] * shape[2]
     outside = {(x * shape[1] + y) * shape[2] + z: (x, y, z) for x, y, z in beyond}
     mode = keyed(entry, label, MODE_BODY_KEYS, ("family", "pair", "moving"))

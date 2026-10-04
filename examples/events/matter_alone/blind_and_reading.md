@@ -6,7 +6,7 @@ on the engine and seen to work**). The blind below is the advisor's, GitHub issu
 5928483084 (2026-10-01, 12:19), its formulas and numbers restated here before any run of this
 round and never edited after; `expectation.json` beside it carries the same blind with the
 design's restatements under the law's lines as they stand. The reading is appended after the
-run, every number a GameBoard reading labelled so (only a NodeReader's click is a measurement,
+run, every number a lattice reading labelled so (only a NodeReader's click is a measurement,
 and this world declares no NodeReader); a reading that misses the blind is a finding, written as
 such and never adjusted.
 
@@ -44,7 +44,7 @@ squared), the well over the board in quanta, and every held row's level along th
 
 ## The reading (main d924798b)
 
-Every number below is a GameBoard reading (`tools/body_rest.py` with `--reach 12` on the pixel, the books, the `click` lines of the open faces' layer); the
+Every number below is a lattice reading (`tools/body_rest.py` with `--reach 12` on the pixel, the books, the `click` lines of the open faces' layer); the
 worlds declare no NodeReader. The pixel was laid anew by the builder on this engine (the
 generator, four folders laying beside it on four cores): `pixel.json` in a few minutes, the body
 of 10,000 quanta standing as one bound record over 1,363 declared Nodes carrying 10,137 quanta
@@ -130,7 +130,7 @@ experiment, the one declared. The world is `pixel_compact.json`, the design's en
 intervals), the builder writing the one-Node declaration and `expectation.json` anew with the
 blind entry `blind.pixel_compact`, and the generator (`tools/pixel_mode.py --input`) laying the
 body from that seed; the reader `tools/body_rest.py --reach 5` (the faces at 5 Links from the
-centre), every number a GameBoard reading and no click. This section's blind is written before
+centre), every number a lattice reading and no click. This section's blind is written before
 the lay and the run of this world and never edited after; the reading is appended below it.
 
 ### The blind (the advisor's numbers, comments 5928483084 and 5956767030)
@@ -153,12 +153,12 @@ and the world is run and read as laid.
 
 ### The reading (the branch families-two on the engine of the reading above)
 
-Every number below is a GameBoard reading (`tools/body_rest.py --reach 5`, the books, the
+Every number below is a lattice reading (`tools/body_rest.py --reach 5`, the books, the
 `click` lines of the open faces' layer); the world declares no NodeReader. The lay:
 `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact.json`, 20 s on one core,
 the generator from the one-Node seed of 8,000 quanta at [5, 5, 5] on the open 11-cube: twelve
 rounds, the content at the centre 1,111 to 453, the count at the centre 304 to 101, the clock
-[5839, 4154] = 1.4056 to [2836, 2112] = 1.3428 (the generator's own lines, GAMEBOARD), the lay
+[5839, 4154] = 1.4056 to [2836, 2112] = 1.3428 (the generator's own lines, LATTICE), the lay
 check "stepped once in its start's content the rotation (next + before) / now reads 1.3430 (the
 median over 823 Nodes), at the centre 1.3428, the largest departure 1.25 of the rounding
 1 / |now|"; the mode file's clock [2836, 2112], 823 declared Nodes carrying 7,999 quanta, 101 at
@@ -240,7 +240,7 @@ declaration and `expectation.json` anew with the blind entry `blind.pixel_compac
 builder lays only with `--modes`, which the committed-worlds gate of
 `tests/test_the_bound_body.py` does not pass, so no lay enters the tests' time), and the
 generator (`tools/pixel_mode.py --input`) laying the body from that seed; the reader
-`tools/body_rest.py --reach 5 --expectation`, every number a GameBoard reading and no click.
+`tools/body_rest.py --reach 5 --expectation`, every number a lattice reading and no click.
 This section's blind is written before the lay and the run of this world, from the law's line's
 own numbers (ALGEBRA.md, **The compact pixel under the composed paces**, the generator's table on
 the 11-cube under the count-sourced start, the threshold's shift under the form-sourced start),
@@ -289,13 +289,13 @@ once at most (one more world at 20,000 only if this lay takes under 10 minutes) 
 
 ### The reading (the branch pixel-compact-two on the engine of main 337eac09)
 
-Every number below is a GameBoard reading (`tools/body_rest.py --reach 5 --expectation`, the
+Every number below is a lattice reading (`tools/body_rest.py --reach 5 --expectation`, the
 books, the `click` lines of the open faces' layer); the world declares no NodeReader. The lay:
 `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact_14000.json`, 29 s on one
 core, the generator from the one-Node seed of 14,000 quanta at [5, 5, 5] on the open 11-cube:
 fourteen rounds, the content at the centre 1,770 to 885, the count at the centre 532 to 435 of
 13,999, the clock [9780, 6502] = 1.5042 to [5419, 3904] = 1.3881 (the generator's own lines,
-GameBoard), the lay check "stepped once in its start's content the rotation (next + before) / now
+Lattice), the lay check "stepped once in its start's content the rotation (next + before) / now
 reads 1.3883 (the median over 691 Nodes), at the centre 1.3881, the largest departure 1.16 of the
 rounding 1 / |now|"; the mode file's clock [5419, 3904], 691 declared Nodes carrying 13,999
 quanta, 435 at the centre Node and 289 at each of its six neighbours (2,169 over the seven Nodes,
@@ -307,7 +307,7 @@ the band's top 1.3333, and no compact pixel: the reading of line 1, by name. The
 
 The generator's bracket of the 11-cube's own threshold (lays from the same one-Node seed on the
 same board at other counts, in a scratch folder and not committed; the generator's lines,
-GameBoard): 15,000 lays the wide branch too (31 s, fifteen rounds, the clock [6004, 4301] =
+Lattice): 15,000 lays the wide branch too (31 s, fifteen rounds, the clock [6004, 4301] =
 1.3960, 667 Nodes carrying 15,000); 16,000, 17,000, 18,000, 19,000, 25,000 and 30,000 are refused
 by name in 1.5 to 4 s each, as 20,000 is below, "the record of the body of 16000 quanta about the
 Node [5, 5, 5] scaled at 9825 does not stand: the top mode of the read in this content is no one
@@ -378,7 +378,7 @@ finding by name, and the compact pixel's defined numbers stay unread; the count 
 ## The fourth reading, the count raised once (20,000, the line's own table point)
 
 The lay of `pixel_compact_14000.json` reached the wide branch again from the one-Node seed on the
-11-cube (the generator's own lines, GameBoard: fourteen rounds in 29 s, 435 quanta at the centre
+11-cube (the generator's own lines, lattice: fourteen rounds in 29 s, 435 quanta at the centre
 of 13,999, the content at the centre 885, the clock [5419, 3904] = 1.3881; its reading is the
 third reading's above), so the count is raised once, as the owner's words allow (the 14,000 lay
 under 10 minutes), to the line's own table point 20,000 quanta in the engine's count, where the
@@ -417,7 +417,7 @@ wide branch is the reading, stated by name, the world run and read as laid, and 
 
 The lay, `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact_20000.json`, 4 s
 on one core: one round (the content at the centre 2,332 to 1,528, the count at the centre 760 to
-3,162 of 15,000, the clock [13601, 8583] = 1.5846; the generator's line, GameBoard) and then the
+3,162 of 15,000, the clock [13601, 8583] = 1.5846; the generator's line, lattice) and then the
 refusal by name, verbatim: "ValueError: the record of the body of 20000 quanta about the Node
 [5, 5, 5] scaled at 8209 does not stand: the top mode of the read in this content is no one
 rotation across the region within the roundings of a step, or its centre's level never returns
@@ -457,7 +457,7 @@ pull less), the builder writing the one-Node declarations with the `lay` key and
 `blind.pixel_direct_14000` and `blind.pixel_direct_25cube_14000`; the generator
 (`tools/pixel_mode.py --input`) laying each from the compact seed; where the lay converges the
 world is run 400 intervals and read by `tools/body_rest.py --reach 5 --expectation`, every number
-a GameBoard reading and no click: does the compact body stand or spread. This section's blind is
+a lattice reading and no click: does the compact body stand or spread. This section's blind is
 written before any lay and never edited after; the reading is appended below it. A fourth world
 at 20,000, the line's own table point, is declared only if the 14,000 lay takes under 10 minutes,
 its blind written before its lay in the same way.
@@ -582,7 +582,7 @@ a reading that misses either is a finding by name against it, never adjusted.
 ### The reading (the branch pixel-direct on the engine of main 3f2cc9bd)
 
 The lays, `tools/pixel_mode.py --input` on each world, one core each on a shared machine; every
-number below is a GameBoard reading (the generator's own lines) and no click; no world was run,
+number below is a lattice reading (the generator's own lines) and no click; no world was run,
 since no lay converged, so lines 2 to 5 are unread in every world and `tools/body_rest.py` read
 nothing.
 
@@ -617,7 +617,7 @@ So no direct lay converged on this engine and the compact pixel's lines 2 to 5 s
 reading by name; the world files stand declared with one Node and the `lay` key and no mode file,
 which the loader refuses at load.
 
-**The findings beside the refusals** (GameBoard diagnostics of the generator's acts in a scratch
+**The findings beside the refusals** (lattice diagnostics of the generator's acts in a scratch
 folder, not committed; the generator itself unchanged beyond the seed):
 
 1. **The seed's rest from 8,000 to 14,000** (the compact seed [76, 4] on the open 11-cube,
@@ -738,7 +738,7 @@ of the count times p_x p_y p_z over the one wall, the product exact beyond the w
 and 5960096992, #1572 comment 5959853571), and the start's rest refined to the row's static
 line within one fine unit at every Node by the scaled residual in integers (`features/start`,
 `refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). Every
-number below a GameBoard reading labelled so; a miss against the blind is a finding by name,
+number below a lattice reading labelled so; a miss against the blind is a finding by name,
 never adjusted. The night's budget: one lay at a time on a shared box, so `pixel` alone is
 re-laid here; `cloud` (the 41-cube, whose start under the refined rest is hours), `pixel_compact`
 and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine as below, and
@@ -791,7 +791,7 @@ and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine 
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Every line of every world in this file is a GameBoard reading (`tools/body_rest.py`: the three
+Every line of every world in this file is a lattice reading (`tools/body_rest.py`: the three
 levels at the centre, the tail along the axes, the share and its centroid and second moment, the
 well, the held rows, the books; the generator's own lines for the lays and the refusals). The worlds
 declare no NodeReader but the open faces' layer, whose `click` lines (labelled the NodeReader's by the

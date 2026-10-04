@@ -1,4 +1,4 @@
-"""The faces a world declares beside its boundary (ALGEBRA.md #the-objects): the inner faces (the face rule inside the board), a declaration of the file, like the wraps and the node_reader Nodes, of a plane of Nodes across an axis that lies beyond the board except for its gaps, every Node beyond the board reading 0 through every Port and read as 0 (core/ports.py), nothing laid, sourced or declared there; and the receding faces (the unbounded board), a face of an open or closed axis beyond which the GameBoard grows by layers of zeros as the front reaches it (growth.py), with the axis's largest size and the layers per growth, the file's numbers."""
+"""The faces a world declares beside its boundary (ALGEBRA.md #the-objects): the inner faces (the face rule inside the board), a declaration of the file, like the wraps and the node_reader Nodes, of a plane of Nodes across an axis that lies beyond the board except for its gaps, every Node beyond the board reading 0 through every Port and read as 0 (core/ports.py), nothing laid, sourced or declared there; and the receding faces (the unbounded board), a face of an open or closed axis beyond which the lattice grows by layers of zeros as the front reaches it (growth.py), with the axis's largest size and the layers per growth, the file's numbers."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ PERIODIC = "periodic"  # the boundary word of an axis without faces
 
 @dataclass(frozen=True)
 class RecedingFace:
-    """A receding face as declared: its axis, its side (-1 the low face, +1 the high), the axis's largest extent in Nodes and the layers of zeros the GameBoard grows by at a time."""
+    """A receding face as declared: its axis, its side (-1 the low face, +1 the high), the axis's largest extent in Nodes and the layers of zeros the lattice grows by at a time."""
 
     axis: int
     side: int

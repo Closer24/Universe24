@@ -101,7 +101,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             **design["detuning"],
         },
         "seeds": len(design["seeds"]),
-        "status": "the two hands' numbers (the mathematician's 220, #1572 comment 5965303134; the advisor's second, #1563 comment 5965316267); fence: clicks for the takings, a GameBoard reading for the cosine and the count",
+        "status": "the two hands' numbers (the mathematician's 220, #1572 comment 5965303134; the advisor's second, #1563 comment 5965316267); fence: clicks for the takings, a lattice reading for the cosine and the count",
     }
 
 

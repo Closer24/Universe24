@@ -6,7 +6,7 @@ the past meets the future was run). The blind is `expectation.json`, written bef
 any run from the law's names and never edited after; `design.json` holds every number and, since
 this night, the mends the files needed to load (its key `mends_of_the_night`). The reading is
 appended here after the night's runs; only a NodeReader's click is a measurement (the counter's
-`credit` lines and the ion's `jump` lines), every array and book a GameBoard reading labelled so;
+`credit` lines and the ion's `jump` lines), every array and book a lattice reading labelled so;
 a reading that misses the blind is a finding, written as such and never adjusted.
 
 ## The blind (expectation.json, rows 1 to 10)
@@ -44,7 +44,7 @@ The fluorescence's lifetime stands at 8 in `shelved_ion.json` since the engine's
 ## The reading (branch ion-world, the night of 2026-10-02 to 2026-10-03)
 
 Both worlds were laid and run as declared (the mends of `design.json` aside). `tools/telegraph.py`
-read the outputs; the numbers below are its, every one a click unless labelled a GameBoard reading.
+read the outputs; the numbers below are its, every one a click unless labelled a lattice reading.
 
 **The telegraph world, `shelved_ion.json`: REFUSED inside the run at interval 452** (the round's
 final build, the credit's one draw over the records reading one arriving record), "the family
@@ -60,7 +60,7 @@ bins (the first build 19 and 18; row 1: the blind 20 +/- 4.5, the final build's 
 Poisson widths under it, the Poisson width itself unreadable from two bins), the third bin cut by
 the refusal; rows 2 to 7 unreadable, no period being complete (FINDING, below); the ion family
 credited never (row 9's click half PASS), its count 1 at every interval and one part at 1 (a
-GameBoard reading of the books, PASS).
+Lattice reading of the books, PASS).
 
 **The telegraph world with the erasing front (the round's last act, two hands at 04:30 Israel):
 REFUSED inside the run at interval 166**, "the family 'fluorescence' reached the level 9668", six
@@ -87,7 +87,7 @@ massless pair has a double root at wave number 0 (a static uniform level of ligh
 0, ALGEBRA.md, The share's sign and the credit's floor (a)), so a uniform component with a
 velocity grows linearly forever and nothing damps it (the mode does not propagate, no face takes
 it). Two sources of that velocity were isolated on a bare periodic box of light alone, every number
-a GameBoard reading of the integer recurrence a_next = -a_before + (1 / 3) SUM over the six Ports
+a lattice reading of the integer recurrence a_next = -a_before + (1 / 3) SUM over the six Ports
 of a_j against the same recurrence in real numbers: (a) a line whose Rule3 remainders stand at 0
 takes a one-time impulse as its remainders rise to their mean (the floor of the division is biased
 until the carried remainder settles), and the sum of the remainders over the board, divided by the
@@ -212,8 +212,8 @@ the ion, else nothing is credited.
 Rows 1 to 8 are the NodeReader's: the counter's `credit` lines per bin and the ion's `jump` lines, read
 by `tools/telegraph.py`; so are row 9's absence of an ion credit and row 10's inflows (the 422 returns
 of the strong drive). Row 9's count half (the ion's count 1 at every interval, one part at 1) is the
-books' and the parts' counts, a GameBoard reading as the blind's own fence says; row 10's levels (the
-strong drive's row at 10,314 above the bound, the uniform mode's drift) are GameBoard readings, as is
+books' and the parts' counts, a lattice reading as the blind's own fence says; row 10's levels (the
+strong drive's row at 10,314 above the bound, the uniform mode's drift) are lattice readings, as is
 every number of the finding on the uniform mode. The refusal's interval is the run's verdict. The
 lines carry the board's `tick` and the `window` in board intervals (the ion's window 1, the counter's
 160); the ion's own clock enters only the two-mode turn at its Node and no line carries it.

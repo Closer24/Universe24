@@ -87,8 +87,8 @@ def from_the_lay(design: dict[str, Any], name: str, mode: Path) -> dict[str, obj
 def expectation(design: dict[str, Any], folder: Path) -> dict[str, object]:
     """The blind expectation file, as tools/body_standing.py prints it beside the readings: the window, the family, the worlds, the reading named, the blind of 167 with its status and fence per read, and per world the body's own numbers from its lay (`from_the_lay`)."""
     return {
-        "verdict": "GAMEBOARD",
-        "label": "GAMEBOARD",
+        "verdict": "LATTICE",
+        "label": "LATTICE",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],

@@ -175,7 +175,7 @@ def de_broglie(num: int = 2, den: int = 3, k: float = 0.01) -> list[float]:
 
 
 def folded_axis_band(k: float = math.pi / 4) -> list[float]:
-    """A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat GameBoard carries the file's band exactly (line 538): on a folded axis the arrival is the Node's own level (The line), the two arrivals summing to 2 a_now as cos k_z = 1 does; [k_z, |cos omega at (k, 0, 0) - cos omega along one axis|, the plane wave's residual against the line on a chain with y and z folded], all 0."""
+    """A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly (line 538): on a folded axis the arrival is the Node's own level (The line), the two arrivals summing to 2 a_now as cos k_z = 1 does; [k_z, |cos omega at (k, 0, 0) - cos omega along one axis|, the plane wave's residual against the line on a chain with y and z folded], all 0."""
     difference = abs(
         rule3.dispersion_at_paces((k, 0.0, 0.0), 1, 1, 1, 1, (1, 1, 1))
         - rule3.plane_wave_dispersion(k, 1, 1)

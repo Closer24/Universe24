@@ -1,10 +1,10 @@
-"""The Node of the giving's lay and of the conversion's write (ALGEBRA.md, The NodeReader is one declaration kind for every experiment: the giving's whole quantum laid at the Node drawn by its own record's share over its Nodes, the share at a Node a GameBoard reading and no measurement; the mathematician's words on A2 of the law-engine audit, #1793): drawn by the record's share at the body's Nodes as the board holds it at the close, the file's lay weights entering no draw."""
+"""The Node of the giving's lay and of the conversion's write (ALGEBRA.md, The NodeReader is one declaration kind for every experiment: the giving's whole quantum laid at the Node drawn by its own record's share over its Nodes, the share at a Node a lattice reading and no measurement; the mathematician's words on A2 of the law-engine audit, #1793): drawn by the record's share at the body's Nodes as the board holds it at the close, the file's lay weights entering no draw."""
 
 import json
 import math
 
 from event_universe import conversion, meeting, node_reader, world_files
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, load_file, packet_world
 
@@ -39,7 +39,7 @@ def test_the_giving_and_the_conversion_draw_their_node_by_the_records_share_and_
     world.update(universe="u.json", engine="e.json")
     (path := tmp_path / "zeno.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
-    board = GameBoard(load_world(path))
+    board = Lattice(load_world(path))
     books = board.credit.bodies[0]
     assert books.weights == (1, 2) and len(books.nodes) == 2
     laid = node_reader.share_weights(board, books)
@@ -62,11 +62,11 @@ def test_the_giving_and_the_conversion_draw_their_node_by_the_records_share_and_
     )
     assert abs(frequency - share) < 3 * error < abs(frequency - weight)
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped worlds' universes
-    giver = GameBoard(load_world(packet_world(tmp_path, TOOL)))  # a body in its upper part with a rate
+    giver = Lattice(load_world(packet_world(tmp_path, TOOL)))  # a body in its upper part with a rate
     emitter, given = giver.credit.bodies[0], forced_write(monkeypatch, meeting)
     standing = node_reader.share_weights(giver, emitter)  # read before the write, as `gave` reads it
     assert meeting.gave(giver, emitter, 2) and given == [standing] and given[0] != list(emitter.weights)
-    neutron = GameBoard(load_world(EVENTS / "neutron_conversion" / "neutron_conversion.json"))
+    neutron = Lattice(load_world(EVENTS / "neutron_conversion" / "neutron_conversion.json"))
     whole, converted = neutron.credit.bodies[0], forced_write(monkeypatch, conversion)
     standing = node_reader.share_weights(neutron, whole)
     assert conversion.converted(neutron, whole) and converted == [standing]

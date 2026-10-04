@@ -8,7 +8,7 @@ Four gates, selected on every pull request by `tools/check.py`:
 2. Family names. A string literal equal to the name of a family declared in a world file under
    `examples/` is counted per file, on the same ratchet.
 3. Rule3's arithmetic by hand. A floor division, a remainder (`//`, `%`, `divmod`) in
-   `features/`, in `node.py` or in `game_board.py` is counted per file, on the same
+   `features/`, in `node.py` or in `lattice.py` is counted per file, on the same
    ratchet: a division belongs in `core/rule3.py`, and the count may only fall.
 4. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
    does not hold needs a line in the pull request's body that starts with `APPROVED-CORE` and
@@ -43,7 +43,7 @@ APPROVAL = "APPROVED-CORE"
 COUNTS = ("numbers", "family_names", "hand_divisions")
 # the places where a division by hand is Rule3's arithmetic written again
 DIVISION_SCOPES = (PACKAGE / "features",)
-DIVISION_FILES = (PACKAGE / "node.py", PACKAGE / "game_board.py")
+DIVISION_FILES = (PACKAGE / "node.py", PACKAGE / "lattice.py")
 
 
 def python_files(root: Path) -> list[Path]:

@@ -67,7 +67,7 @@ in this round. Two consequences by name (the advisor's): the conversion's massle
 the count at one Node meet the same edge wherever the board is periodic with even sides (the neutron
 world's open cube is safe, a periodic one is not until round C lays them as packets); and the same
 lone massless quantum in a 9 x 9 x 5 periodic box or on a board with open faces is bounded. The
-check, read before the trials (GameBoard, the same lay over 800 ticks): with open faces the level
+check, read before the trials (lattice, the same lay over 800 ticks): with open faces the level
 stays between 40 and 45 and the share between 1.07 and 1.41 of a quantum, bounded; in the 9 x 9 x 5
 periodic box the level reads 35, 49, 82, 153 and 285 at the ticks 50, 100, 200, 400 and 800 and the
 share 1.01, 1.08, 1.19, 1.44 and 2.06, no longer the square of the ticks but a slow growth still, the
@@ -86,7 +86,7 @@ from the engine: R / w = 1 / 3 at each of the six Ports, S / w = 0, the corner's
 exactly, the double root; the growth stands in Rule3's integer step on this lattice, for the hands to
 localise against the engine's division act (#1572, Worker PULSE's finding); no change to the engine
 from this round.
-Beside it, GameBoard matters named and not adjusted: the drive's holes excite the same growth
+Beside it, lattice matters named and not adjusted: the drive's holes excite the same growth
 slowly (the drive's level 3,155 at the tick 768 under twelve takings at the Node clock 6000, 840
 under fifteen on another seed), one or two takings per pulsed run leaving it far below the bound; the
 antineutrino of the neutron conversion world is laid by the count at the massless pair over 40
@@ -130,7 +130,7 @@ on main), the n = 2 row the same 0.500 within 0.023 as that round's blind; the f
 alone, the part at the tick 384 over 480 seeds, 0.500 within 0.023 (its window of 384 holds no
 hole); the windows closed n exactly in every trial; the stray share of earlier probes at the body's
 Node at most n / 256 quanta (n quanta spread over the box's 256 Nodes), the draw's weights untouched
-by it; the walk of the body's levels under the rounding a GameBoard diagnostic (the body re-laid at
+by it; the walk of the body's levels under the rounding a lattice diagnostic (the body re-laid at
 every close in this form, so the walk is a window's); the shipped 48-interval Zeno worlds, the
 anticoincidence and the telegraph bit for bit (the gate tests); the dedicated test
 `tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking`.

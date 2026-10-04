@@ -547,7 +547,7 @@
   {
    "id": "L27",
    "name": "The velocity invariant of the massless row",
-   "place": "ALGEBRA.md at 915c6a7b, The click writes on the GameBoard (the restoring front's third test; the front is history at 3a334eeb under the dense record's clause, the identity of the line standing); ENGINE.md, the face's kicks",
+   "place": "ALGEBRA.md at 915c6a7b, The click writes on the lattice (the restoring front's third test; the front is history at 3a334eeb under the dense record's clause, the identity of the line standing); ENGINE.md, the face's kicks",
    "statement": "For a record at uniform paces with S + SUM R = 2 w the velocity sum SUM now - SUM before is kept by the line and the integer V = w (SUM now - SUM before) + SUM r is exactly invariant on a periodic board; for a gapped pair it moves by -12 (den - num) Gamma^2 SUM now per interval.",
    "ground": "exact integers by rule3.step on four periodic boards, 100 intervals",
    "kind": "A",
@@ -1371,7 +1371,7 @@
    "id": "R04",
    "name": "The folded axis carries the band",
    "place": "main.tex 9.1",
-   "statement": "A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat GameBoard carries the file's band exactly.",
+   "statement": "A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly.",
    "ground": "exact at rational angles on the folded chain by rule3.numerator",
    "kind": "A",
    "check": {

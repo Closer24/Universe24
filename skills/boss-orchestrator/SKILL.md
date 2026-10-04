@@ -62,7 +62,7 @@ disjoint file sets, the engine's branches one at a time (the owner's decision 23
    written in the brief. A difference is a defect of the engine, never a
    finding, and the worker fixes it with a test.
 3. **The report.** The worker reports the numbers, labelled NODEREADER or
-   GAMEBOARD, the head commit, the gates' results and every sentence it removed
+   LATTICE, the head commit, the gates' results and every sentence it removed
    or rewrote in the documents: a summary, never a log.
 4. **The review.** For the engine's rounds and `core/` the Boss reads the diff
    against the law's lines: the files against the brief, the test, no number and
@@ -90,7 +90,7 @@ disjoint file sets, the engine's branches one at a time (the owner's decision 23
 
 A brief that asks a worker for a blind number or a derivation names the method
 of derivation of [skills/workflow.md](../workflow.md); a worker's number without
-its status and its fence (GameBoard or clicks) is sent back.
+its status and its fence (lattice or clicks) is sent back.
 
 ## Context economy
 

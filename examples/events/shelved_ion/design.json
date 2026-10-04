@@ -121,7 +121,7 @@
     "count_at_interval_0": 0
    }
   ],
-  "shapes": "the three parts' shapes alike, the one Node's standing record of one quantum (the symmetric lay, GameBoard.lay), the labels alone telling them apart",
+  "shapes": "the three parts' shapes alike, the one Node's standing record of one quantum (the symmetric lay, Lattice.lay), the labels alone telling them apart",
   "overlap": {
    "value": 1,
    "why": "the two modes' overlap in Omega's formula; the shapes alike, the overlap is 1"
@@ -388,7 +388,7 @@
   "mercury_ion.json": "the declared file lacked `reads` on every family and `write_weight` on the three held rows, which the loader of main requires, so it never loaded; `reads` {} added to every family (the ion reads no holder on the board: reading the drives under the rotation at the weight 1 fails the energy line at the ion's pair, E_h T num = k_w Gamma den having no integer k_w at num = 1, den = 1299, and on the fully periodic box the sign rows have no sink for the ion's Wronskian source, the start refusing by name), `write_weight` 1 added to the three held rows, the level weight 1 kept; the two-mode line's coupling k_r is therefore the transition's own declared `weight`, 1",
   "shelved_ion.json": "each transition given its `weight` 1 (the coupling the arriving level is read into the ion's phase with)",
   "shelved_ion_control.json": "the body given the `parts` of the telegraph world, so that the engine lays it in S at one of its two Nodes, drawn by the record's share, without a mode entry (the control's body as designed: today's engine, no draw, no click)",
-  "not_as_designed": "the body's own detector region around its Node (the mathematician's 180) is not declared and not built: the ion's clicks are the `jump` lines naming the reader by its number, the Node a GameBoard diagnostic, the counter the region around it"
+  "not_as_designed": "the body's own detector region around its Node (the mathematician's 180) is not declared and not built: the ion's clicks are the `jump` lines naming the reader by its number, the Node a lattice diagnostic, the counter the region around it"
  },
  "the_light_records_count": "the count is per family's record in the books (credit.counts), not per quantum: the giving adds one to the fluorescence row's one record, so with the giving at 1 / 4 per interval and the counter's window of 160 the row's count rises to about 20 before the window's credits take it, and the erasing front from the credits' entry Nodes begins only where that count reaches 0, at a window's end; the Boss's limit of the night (at most one light quantum in flight before its take) is therefore not met by this world as declared, since the bin of the blind is the counter's window; the law's line of one record per giving, each with its own count and front, goes by the procedure",
  "blind": {
@@ -409,7 +409,7 @@
   "bin": 160,
   "bins": 600,
   "seed": 24,
-  "rule": "the counter's `credit` lines of the family `fluorescence` (branch click-ends: one line per credited quantum, with its window), counted per window of B intervals, are the counts per bin; a bin with 0 counts is dark and a bin with 1 or more is bright (Poisson at the mean 20 gives 0 with the probability 2 x 10^-9, so no bright bin reads 0 and the two kinds are told apart by the count alone); a run of bright bins between two dark ones is a bright period and a run of dark bins a dark period, their lengths in bins times B in intervals, the first and the last period dropped as cut by the window; the counter's `credit` lines of the family `weak_drive` are the returns, one per dark period's end; `click` lines are the inflows per interval, read by no row (the drives' net inflow 0 but for the rounding, the fluorescence's the quanta's passage), and `field` lines, the books and every array are GameBoard readings",
+  "rule": "the counter's `credit` lines of the family `fluorescence` (branch click-ends: one line per credited quantum, with its window), counted per window of B intervals, are the counts per bin; a bin with 0 counts is dark and a bin with 1 or more is bright (Poisson at the mean 20 gives 0 with the probability 2 x 10^-9, so no bright bin reads 0 and the two kinds are told apart by the count alone); a run of bright bins between two dark ones is a bright period and a run of dark bins a dark period, their lengths in bins times B in intervals, the first and the last period dropped as cut by the window; the counter's `credit` lines of the family `weak_drive` are the returns, one per dark period's end; `click` lines are the inflows per interval, read by no row (the drives' net inflow 0 but for the rounding, the fluorescence's the quanta's passage), and `field` lines, the books and every array are lattice readings",
   "numbers": {
    "tau_P": 4,
    "tau_D": 1600,
@@ -470,7 +470,7 @@
     "reading": "the counts per bin over the bright bins of `shelved_ion` (the rule above), their mean and their variance",
     "blind": "Poisson with the mean B / (2 tau_P) = 20 counts per bin, the variance the mean, 20 +/- 4.5 per bin",
     "status": "computed from the law's names: the P -> S giving at the declared rate 1 / tau_P from the P part's share, the P part's mean share one half under the saturating strong drive (the two-mode line), so R = 1 / (2 tau_P) per interval and B R = 20 per bin (the advisor's 5947666040 section 4, row 1); at the declared level 3,000 the two-mode line's saturation s = 2 (Omega_s tau_P)^2 = 8 gives the P share 0.444 and 17.8 per bin, the finite-saturation number beside the saturated one",
-    "fence": "clicks; the bins' width beside the Poisson's: the empty waves accumulated on the fluorescence row (the given quanta after their credit, up to about 6,000 over 1,008 Nodes) hold at the ion's Node a share of at most about 6 quanta by the run's end, whose change per window enters the counter's inflow as noise of that order, a GameBoard matter"
+    "fence": "clicks; the bins' width beside the Poisson's: the empty waves accumulated on the fluorescence row (the given quanta after their credit, up to about 6,000 over 1,008 Nodes) hold at the ion's Node a share of at most about 6 quanta by the run's end, whose change per window enters the counter's inflow as noise of that order, a lattice matter"
    },
    "2_bright_periods_exponential": {
     "reading": "the bright periods' lengths in intervals (bins times B), their mean, and their distribution's shape (the standard deviation over the mean, 1 for an exponential)",
@@ -515,16 +515,16 @@
     "fence": "clicks"
    },
    "9_the_ion_stands": {
-    "reading": "the ion family's share at its Node and over the board at every interval (GameBoard.share_of), the parts' counts, and the counter's `credit` lines of the family `ion`",
+    "reading": "the ion family's share at its Node and over the board at every interval (Lattice.share_of), the parts' counts, and the counter's `credit` lines of the family `ion`",
     "blind": "the ion's count 1 at every interval, one part at 1 and two at 0 after every click, its share at its Node above 0.9 of a quantum between clicks (the spread t / (2 m*) at m* = 3,897, 0.21 Links over the longest dark period), and no `credit` line of the family `ion` (its share entering the counter per window under 10^-3 of a quantum)",
     "status": "computed from the near-flat pair's inertia and the re-lay at the declared Node; the counter's credit rounds its window inflow to the nearest whole quantum",
-    "fence": "GameBoard for the shares; clicks for the absence of an ion credit"
+    "fence": "lattice for the shares; clicks for the absence of an ion credit"
    },
    "10_the_drives_stand": {
     "reading": "the drives' levels at the ion's Node over the run and the counter's `click` lines of the families `strong_drive` and `weak_drive` summed per window",
     "blind": "the strong drive's amplitude at the ion 3,000 within 2 percent over the run (about 6,000 quanta taken of 210,000) and the weak drive's 53 within 2 percent (about 30 taken of 66, each taking the levels at one Node, 0.06 of a quantum); the net window inflow of either drive into the counter 0 but for the rounding and the fresh return",
     "status": "computed from the plane waves' uniform and constant share on the periodic axes and from the counts of the design",
-    "fence": "GameBoard for the levels; clicks for the inflows"
+    "fence": "lattice for the levels; clicks for the inflows"
    }
   }
  }

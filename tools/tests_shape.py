@@ -85,7 +85,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
         25,
         "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
-        "after #1788's lay defect in the committed worlds that the test without a board did not catch): one GameBoard per "
+        "after #1788's lay defect in the committed worlds that the test without a board did not catch): one lattice per "
         "folder, no interval, the long-loading folders the runner's gate by name",
     ),
     "tests/test_pixel_mode.py::test_a_messages_mode_count_is_the_books_count_read_once_over_the_board": (
@@ -165,7 +165,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         104,
         "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
         "2026-10-03, C.15): the fixed-point lay with the compact seed in its own nuclear holder's well at the four "
-        "declared integers, the hold's first write returning the start's rest within one unit at every Node, the deviation from the exact line a GAMEBOARD reading, the count the record's share within "
+        "declared integers, the hold's first write returning the start's rest within one unit at every Node, the deviation from the exact line a LATTICE reading, the count the record's share within "
         "the gate, the standing read over one period against the twin without the holder, the remainders at the "
         "half wall and the back-in-time gate across two periods",
     ),

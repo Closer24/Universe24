@@ -12,7 +12,7 @@ Node 0 over the intervals 48 to 95 (`src/event_universe/giving.py`); a taker at 
 same resonance (`resonant.json`) or detuned at [1, 3] (`detuned.json`), its window 96, one draw at
 the run's end. The blind `expectation.json` was written by `build_world.py` from `design.json` before
 any lay and never touched after; the readings are `tools/meeting_trials.py`'s over the design's 100
-seeds (the takings, clicks labelled NODEREADER) and one run's GameBoard readings (the far Node's levels,
+seeds (the takings, clicks labelled NODEREADER) and one run's lattice readings (the far Node's levels,
 the light's share), labelled so; a miss is a finding by name and never an adjustment of the blind.
 
 ## The blind (expectation.json)
@@ -211,8 +211,8 @@ stands and the window's draw at 48 stands as it is.
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
 Rows 1, 4 and 5 are the NodeReader's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
-test's `jump` lines). The 48 `lay` lines of row 1 are labelled a GameBoard diagnostic by the engine.
-Rows 2 and 3 are GameBoard readings and their verdicts rest on them: the far Node's cosine is read
+test's `jump` lines). The 48 `lay` lines of row 1 are labelled a lattice diagnostic by the engine.
+Rows 2 and 3 are lattice readings and their verdicts rest on them: the far Node's cosine is read
 from the light's levels at the Node [8, 0, 0] per interval (`tests/test_the_draw.py`, the levels
 series) and the count at the span's end from the share over the board. The lines carry the board's
 `tick` and the `window` in board intervals; the giver's window 48 and the lifetime 48 are board
@@ -269,7 +269,7 @@ before the run and never touched after; examples only, no engine change. The run
 --seeds 480` over both worlds of the design on the tree holding main at 7033a6aa, the seeds 1 to 480 with
 every record's generator at its own state from the seed as before (the design's 100 are the first 100 of
 them); a taking is the NodeReader's click, `body 1 e by pulse` on the click lines labelled NODEREADER; a
-GameBoard reading is a diagnostic and labelled so.
+Lattice reading is a diagnostic and labelled so.
 
 1. The detuned taker at [1, 3]: at most 2 takings in 480 seeds. The hands' number: the window's sum
    against the two reference records at the declared pair keeps, off resonance, the counter-rotating
@@ -297,7 +297,7 @@ sha after the squash, which re-reads these numbers and replaces this section's v
 on one core, the design's own 100 seeds run beside as the check of the tree (58 seconds). The reader's
 `--seeds N` is the one change to the folder's script, reading the seeds 1 to N in place of the design's
 list. The takings are the clicks, the click lines labelled NODEREADER; the giver's cosine and count are
-GameBoard readings and labelled so.
+Lattice readings and labelled so.
 
 1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`body 1 e by pulse` 1), the share 0.0021
    with the standard error 0.0021 (1.0 taking), against the blind's at most 2. PASS. The one taking is
@@ -333,7 +333,7 @@ squash of the round (#1726), its reading appended here beside the blind, which s
 `PYTHONPATH=src python examples/events/resonance/read_world.py --seeds 480`, both worlds, the seeds 1 to
 480, on the tree of `main` at e62b6651 and nothing else: 854 seconds for the two worlds on one core at a
 load average of about 30 on four cores (the branch's diagnostic, 273 seconds at low load). The takings
-are the clicks, the click lines labelled NODEREADER; the giver's cosine and count are GameBoard readings and
+are the clicks, the click lines labelled NODEREADER; the giver's cosine and count are lattice readings and
 labelled so; the standard error of a count c of N is sqrt(c (N - c) / N), the blind's item 3.
 
 1. The detuned taker at [1, 3]: 1 taking in 480 seeds (`body 1 e by pulse` 1), the share 0.0021 with
@@ -352,8 +352,8 @@ labelled so; the standard error of a count c of N is sqrt(c (N - c) / N), the bl
    deviations below) and 409 within the run against 416.4 +/- 7.4 (1.0 below); the giving's intervals
    from 2 to 96, 88 distinct, their mean 33.3; 301 seeds holding the whole span against 309.1 +/- 10.5
    (0.8 below); the cosine on the plateau 0.6682 in 316 of 316 seeds read, within the gate 2 / A_far =
-   0.051 (a GameBoard reading); the count at the span's end 1 in every seed read, 149 of 149 in the
-   resonant world and 299 of 299 in the detuned one (a GameBoard reading); the giver takes its own light
+   0.051 (a lattice reading); the count at the span's end 1 in every seed read, 149 of 149 in the
+   resonant world and 299 of 299 in the detuned one (a lattice reading); the giver takes its own light
    back in 4 of 480 seeds of each world (`body 0 e by pulse` 4, the standard error 2.0), the
    one-in-flight limit not built, as before. The design's own 100 seeds were not run apart in this
    reading; the branch's diagnostic read them at 37 and 1.
@@ -376,14 +376,14 @@ pair, [2, 3], [4, 5] and [9, 10] (the three readings 1.0, 1.4 and 2.43 falling t
 world's count 1 in both units; the gate worlds bit for bit (they lay by messages, no giving); the Zeno
 worlds re-read (no giving there, unmoved by construction; the resonance and Zeno numbers may move within
 their blinds under the quadratic factor of the same branch: what moves is recorded); the injected form
-summed at the lay as delta^2 + delta (a_t - a_(t-2)) kept beside as a GameBoard diagnostic labelled so.
+summed at the lay as delta^2 + delta (a_t - a_(t-2)) kept beside as a lattice diagnostic labelled so.
 
 ### The reading under the radiated total (branch partial-hole-quadratic, 2026-10-03, about 10:20 UTC)
 
 The giver alone on the shipped chain (resonant.json with the second record out, its window 240 so
 that nothing is taken back before the run's end, 240 intervals, the trial seed 1, the giving at the
 interval 6), the born quantum's share over the board in the record's own unit (`born_unit`, W_c sin
-Omega) at the span's end and after, a GameBoard reading labelled so:
+Omega) at the span's end and after, a lattice reading labelled so:
 
 | pair | sin Omega | S laid, in T | at t + 48 | t + 60 | t + 80 | t + 100 | the invariant's S before | the blind |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -392,7 +392,7 @@ Omega) at the span's end and after, a GameBoard reading labelled so:
 | [9, 10] | 0.436 | 0.476 (15600) | 1.010 | 1.008 | 1.009 | 1.013 | 2.43 | PASS at the edge |
 
 The injected form summed at the lay as delta^2 + delta (a_t - a_(t-2)) over the span, times w over the
-share's weight 2 p^2 G^2, in the record's own unit (a GameBoard diagnostic beside the reading): 0.971,
+share's weight 2 p^2 G^2, in the record's own unit (a lattice diagnostic beside the reading): 0.971,
 0.991 and 1.002 at the three pairs, the lay's own carry at [2, 3] (A_t about 21.3 levels, floored to
 21 or 22 per interval) the larger part of its 0.04. The two readings that were 1.4 and 2.43 fall to
 1.0 as the blind asked; [2, 3], which was 1.01 under the invariant's S = 0.671 T, reads 0.955 under

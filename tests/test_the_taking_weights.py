@@ -5,7 +5,7 @@ import math
 
 from event_universe import meeting
 from event_universe.features.click import drawn
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, load_file
 
@@ -17,7 +17,7 @@ def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path, 
     (path := tmp_path / "two_counts.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
-    board = GameBoard(load_world(path))
+    board = Lattice(load_world(path))
     a, b = board.credit.bodies
     drive, width, trials = a.declared.transitions[0].drive, board.world.width, 1200
     n_a, n_b = (sum(label * label for label in books.labels) for books in (a, b))

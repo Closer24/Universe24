@@ -50,7 +50,7 @@ mode, so the records read a standing level and not a passing packet.** The two p
 the mode file with their Rule3 remainders at 0, and the row's remainders rising to their mean give
 the uniform mode (a double root of Rule3 at wave number 0, a level of zero share) a velocity, so the
 photon's level at both records drifts to about -145 by the interval 8 and stays there while the
-packets have passed (a GameBoard reading of one trial: the level at A and at B -98 and -157 at 8,
+packets have passed (a lattice reading of one trial: the level at A and at B -98 and -157 at 8,
 -146 and -149 at 28, -141 and -141 at 32); the records' turn therefore keeps accumulating, about
 0.15 per interval at the weight 6, and the two-mode line's share at the window's end is the Rabi
 oscillation's phase at that interval (in the one-photon world near 1 for both, in the two-photon
@@ -95,7 +95,7 @@ readings above. PASS and unchanged.
 
 The table's numbers (A only, B only, both, neither, alpha) are the NodeReader's: the `jump` lines'
 `taken` per trial, read by `tools/meeting_trials.py`. The finding's levels at the two records' Nodes
-(-98 and -157 at 8, -146 and -149 at 28, -141 and -141 at 32) are a GameBoard reading of one trial,
+(-98 and -157 at 8, -146 and -149 at 28, -141 and -141 at 32) are a lattice reading of one trial,
 labelled so, and no number of the blind. The lines carry the board's `tick` and the `window` in board
 intervals and nothing of the records' own clocks.
 
@@ -166,7 +166,7 @@ P(B only) = 0.505, equal within the standard error and the symmetry's (PASS), ea
 "neither" (PASS on the bound: the draw's shares at the window's end A 0.487, B 0.513, none 0.000,
 NODEREADER, the passage's transfer complete at the weight 6). Two photons: P(both) = 0.975 above 0
 (PASS); alpha = 1, the blind's second form (two sequential takings at one share). The shipped run
-(GAMEBOARD, the books per interval; the page from the output file): the share 1.00 quanta at the lay and
+(LATTICE, the books per interval; the page from the output file): the share 1.00 quanta at the lay and
 1.01 at 48; body 0 takes at 48 (NODEREADER, the count 1 to 0, the hole at its Node); 1.05 at 49 (the
 hole's transient) and 1.12 at 56 (the front's sweep through the near packet, the most, the known
 transient of the hole to 0 inside a smooth wave), 0.59 at 60 and 0.49 from 80 to 150 (the near packet
@@ -180,28 +180,28 @@ by their numbers until the front's taper at the owner's word.
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
 compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
-lines' clicks and the trials' coincidences, GAMEBOARD for the verdict, the ticks, the line counts, the
+lines' clicks and the trials' coincidences, LATTICE for the verdict, the ticks, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
 
 | label | world | by | reading | value |
 | --- | --- | --- | --- | --- |
-| GAMEBOARD | one_photon.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | one_photon.json | run_inputs | ticks | 170 |
+| LATTICE | one_photon.json | run_inputs | verdict | LAWFUL |
+| LATTICE | one_photon.json | run_inputs | ticks | 170 |
 | NODEREADER | one_photon.json | run_inputs | clicks | 1 |
 | NODEREADER | one_photon.json | run_inputs | clicks body 0 | 1 |
 | NODEREADER | one_photon.json | run_inputs | clicks body 1 | 0 |
 | NODEREADER | one_photon.json | run_inputs | takings body 0 | 1 |
 | NODEREADER | one_photon.json | run_inputs | takings body 1 | 0 |
-| GAMEBOARD | one_photon.json | run_inputs | lines lay | 8 |
-| GAMEBOARD | one_photon.json | run_inputs | lines face | 323 |
-| GAMEBOARD | one_photon.json | run_inputs | lines erasure | 122 |
-| GAMEBOARD | one_photon.json | run_inputs | lines credit | 1 |
-| GAMEBOARD | one_photon.json | run_inputs | books photon quanta | 0 |
-| GAMEBOARD | one_photon.json | run_inputs | books photon share | 61284000 |
-| GAMEBOARD | one_photon.json | run_inputs | books atom quanta | 2 |
-| GAMEBOARD | one_photon.json | meeting_trials | trials | 200 |
-| GAMEBOARD | one_photon.json | meeting_trials | refused | 0 |
+| LATTICE | one_photon.json | run_inputs | lines lay | 8 |
+| LATTICE | one_photon.json | run_inputs | lines face | 323 |
+| LATTICE | one_photon.json | run_inputs | lines erasure | 122 |
+| LATTICE | one_photon.json | run_inputs | lines credit | 1 |
+| LATTICE | one_photon.json | run_inputs | books photon quanta | 0 |
+| LATTICE | one_photon.json | run_inputs | books photon share | 61284000 |
+| LATTICE | one_photon.json | run_inputs | books atom quanta | 2 |
+| LATTICE | one_photon.json | meeting_trials | trials | 200 |
+| LATTICE | one_photon.json | meeting_trials | refused | 0 |
 | NODEREADER | one_photon.json | meeting_trials | A only | 99 |
 | NODEREADER | one_photon.json | meeting_trials | B only | 101 |
 | NODEREADER | one_photon.json | meeting_trials | both | 0 |
@@ -213,22 +213,22 @@ reading in the gate's words and the value as its report prints it.
 | NODEREADER | one_photon.json | meeting_trials | ends in g body 1 | 99 |
 | NODEREADER | one_photon.json | meeting_trials | clicks body 0 e by photon | 99 |
 | NODEREADER | one_photon.json | meeting_trials | clicks body 1 e by photon | 101 |
-| GAMEBOARD | two_photons.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | two_photons.json | run_inputs | ticks | 170 |
+| LATTICE | two_photons.json | run_inputs | verdict | LAWFUL |
+| LATTICE | two_photons.json | run_inputs | ticks | 170 |
 | NODEREADER | two_photons.json | run_inputs | clicks | 2 |
 | NODEREADER | two_photons.json | run_inputs | clicks body 0 | 1 |
 | NODEREADER | two_photons.json | run_inputs | clicks body 1 | 1 |
 | NODEREADER | two_photons.json | run_inputs | takings body 0 | 1 |
 | NODEREADER | two_photons.json | run_inputs | takings body 1 | 1 |
-| GAMEBOARD | two_photons.json | run_inputs | lines lay | 16 |
-| GAMEBOARD | two_photons.json | run_inputs | lines face | 325 |
-| GAMEBOARD | two_photons.json | run_inputs | lines erasure | 122 |
-| GAMEBOARD | two_photons.json | run_inputs | lines credit | 2 |
-| GAMEBOARD | two_photons.json | run_inputs | books photon quanta | 0 |
-| GAMEBOARD | two_photons.json | run_inputs | books photon share | 36954000 |
-| GAMEBOARD | two_photons.json | run_inputs | books atom quanta | 2 |
-| GAMEBOARD | two_photons.json | meeting_trials | trials | 200 |
-| GAMEBOARD | two_photons.json | meeting_trials | refused | 0 |
+| LATTICE | two_photons.json | run_inputs | lines lay | 16 |
+| LATTICE | two_photons.json | run_inputs | lines face | 325 |
+| LATTICE | two_photons.json | run_inputs | lines erasure | 122 |
+| LATTICE | two_photons.json | run_inputs | lines credit | 2 |
+| LATTICE | two_photons.json | run_inputs | books photon quanta | 0 |
+| LATTICE | two_photons.json | run_inputs | books photon share | 36954000 |
+| LATTICE | two_photons.json | run_inputs | books atom quanta | 2 |
+| LATTICE | two_photons.json | meeting_trials | trials | 200 |
+| LATTICE | two_photons.json | meeting_trials | refused | 0 |
 | NODEREADER | two_photons.json | meeting_trials | A only | 5 |
 | NODEREADER | two_photons.json | meeting_trials | B only | 0 |
 | NODEREADER | two_photons.json | meeting_trials | both | 195 |
@@ -240,6 +240,6 @@ reading in the gate's words and the value as its report prints it.
 | NODEREADER | two_photons.json | meeting_trials | ends in g body 1 | 5 |
 | NODEREADER | two_photons.json | meeting_trials | clicks body 0 e by photon | 200 |
 | NODEREADER | two_photons.json | meeting_trials | clicks body 1 e by photon | 195 |
-| GAMEBOARD | one_photon.json | back_in_time | intervals 170 | MATCH |
-| GAMEBOARD | one_photon.json | back_in_time | intervals 72 | MATCH |
-| GAMEBOARD | two_photons.json | back_in_time | intervals 170 | MATCH |
+| LATTICE | one_photon.json | back_in_time | intervals 170 | MATCH |
+| LATTICE | one_photon.json | back_in_time | intervals 72 | MATCH |
+| LATTICE | two_photons.json | back_in_time | intervals 170 | MATCH |

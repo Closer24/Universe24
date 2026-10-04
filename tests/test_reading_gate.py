@@ -5,7 +5,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
 
     import pytest
 
-    from event_universe.game_board import GameBoard
+    from event_universe.lattice import Lattice
     from event_universe.world_files import load_world
     from tests.laws import EVENTS, ROOT, load_file
 
@@ -21,7 +21,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     design = json.loads((EVENTS / "zeno" / "design.json").read_text(encoding="utf-8"))
     design["seeds"] = design["seeds"][:3]
     (folder / "design.json").write_text(json.dumps(design), encoding="utf-8")
-    board = GameBoard(load_world(folder / world), (lines := []).append)
+    board = Lattice(load_world(folder / world), (lines := []).append)
     for _ in range(board.world.ticks):
         board.step()
     clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEREADER"]
@@ -35,11 +35,11 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     rows = [
         ("NODEREADER", "run_inputs", "takings body 0", takings),
         ("NODEREADER", "run_inputs", "clicks", takings),
-        ("GAMEBOARD", "run_inputs", "books pulse quanta", quanta),
-        ("GAMEBOARD", "run_inputs", "ticks", board.world.ticks),
-        ("GAMEBOARD", "back_in_time", f"intervals {board.world.ticks}", "MATCH"),
+        ("LATTICE", "run_inputs", "books pulse quanta", quanta),
+        ("LATTICE", "run_inputs", "ticks", board.world.ticks),
+        ("LATTICE", "back_in_time", f"intervals {board.world.ticks}", "MATCH"),
         ("NODEREADER", "meeting_trials", "ends in e body 0", ends),
-        ("GAMEBOARD", "meeting_trials", "trials", 3),
+        ("LATTICE", "meeting_trials", "trials", 3),
     ]
     wrong = [
         ("NODEREADER", "run_inputs", "takings body 0", takings + 1),
@@ -91,7 +91,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
         str(takings),
         str(takings + 1),
     ) and "reason" not in read[-2]
-    assert read[-1]["reason"] == "the reading's own label is GAMEBOARD"
+    assert read[-1]["reason"] == "the reading's own label is LATTICE"
     screen = f"| region | zeno_4 clicks | zeno_4 share |\n| --- | --- | --- |\n| body 0 | {takings} | 1.0 |\n| N | {takings} | |\n"
     document.write_text("# A copy\n\n## The reading\n\n" + screen, encoding="utf-8")
     read = report(0)

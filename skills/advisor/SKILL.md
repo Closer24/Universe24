@@ -76,7 +76,7 @@ nor a finding (a click outside its band: it names the missing law).
 Every derivation follows the method of derivation of
 [skills/workflow.md](../workflow.md): Rule3's line first, a body's clicks as the
 only bridge to nature, every observable a click formula and every other formula
-labelled GameBoard, a re-derivation at every change, and the six statuses of the
+labelled lattice, a re-derivation at every change, and the six statuses of the
 paper (theorem, derived, computed from the law, the owner's declaration,
 hypothesis, to be determined by an experiment).
 
@@ -122,4 +122,4 @@ it retracts.
   computed from the documents' lines, by hand or by a derivation script, and
   labelled as the advisor's.
 - Never grants a permission or relaxes a gate; never presents a hypothesis as
-  law or a GameBoard reading as a measurement.
+  law or a lattice reading as a measurement.

@@ -11,7 +11,7 @@ import pytest
 
 from event_universe import credit, growth, node, share, world_files
 from event_universe.core import paces
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.loader.derived import Row, quanta_records
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -188,20 +188,20 @@ def click_key(line: dict[str, object]) -> str:
     return f"{line['node_reader']} {line['realised']} by {line['taken'] or line['given']}"
 
 
-def own_lines(board: GameBoard, index: int) -> list[node.Record]:
+def own_lines(board: Lattice, index: int) -> list[node.Record]:
     """A family's record lines as the engine reads them: every record's lines, light the sum of its rows."""
     return [line for r in quanta_records(board.families, index) for line in board.lines_of(index, r)]
 
 
-def shares_of(board: GameBoard, index: int, read, pairs) -> np.ndarray:  # type: ignore[no-untyped-def]
+def shares_of(board: Lattice, index: int, read, pairs) -> np.ndarray:  # type: ignore[no-untyped-def]
     """The share form per Node of a family's lines at the paces of its `read`, in Python's integers."""
     gamma, unit = board.world.node_clock, board.unit
     found = share.family_share(board.families[index], pairs, board.wrap, gamma, *read, unit)
     return found.astype(object)
 
 
-def booked(board: GameBoard, monkeypatch, *indexes: int) -> list[tuple[int, Fraction]]:  # type: ignore[no-untyped-def]
-    """One step of the GameBoard with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the taking's and the giving's parts, the given quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
+def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fraction]]:  # type: ignore[no-untyped-def]
+    """One step of the lattice with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the taking's and the giving's parts, the given quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
     growth.grow(board)  # the receding faces read first, as the step reads them
     gamma, unit, begun, shape = board.world.node_clock, board.unit, {}, board.shape
     for index in indexes:
@@ -216,7 +216,7 @@ def booked(board: GameBoard, monkeypatch, *indexes: int) -> list[tuple[int, Frac
         begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
     stepped, counted = {}, credit.counted_windows
 
-    def kept(b: GameBoard) -> None:  # the lines after the hold, before the NodeReaders' acts
+    def kept(b: Lattice) -> None:  # the lines after the hold, before the NodeReaders' acts
         stepped.update({i: own_lines(b, i) for i in indexes}), counted(b)
 
     with monkeypatch.context() as swap:

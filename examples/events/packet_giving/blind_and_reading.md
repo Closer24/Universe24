@@ -24,7 +24,7 @@ quantum read from the books (the generic NodeReader, #1717), its window the run 
 before any lay, rewritten at two hands on the one-line root and the exact phase before the re-run (242
 section 1 and the advisor's second; the diag worker's reading) and never touched after a reading; the readings are the builder's `--read` over the design's 20
 seeds (the clicks labelled NODEREADER; the directions from the lay lines, the share and the far Node's
-levels GameBoard readings, labelled so); a miss is a finding by name and never an adjustment of the blind.
+levels lattice readings, labelled so); a miss is a finding by name and never an adjustment of the blind.
 
 ## The blind (expectation.json)
 
@@ -36,7 +36,7 @@ levels GameBoard readings, labelled so); a miss is a finding by name and never a
 2. The share at the lay: the light's share over the board at the giving's tick, sin Omega x 1.055 = 0.786
    of the top's unit W_c under the top-hat (the edges' 5 percent), 0.745 with the sine mode across (the
    hands' derivation at T = 2^22 on the one-line root with the exact phase, 242 section 1 and the advisor's
-   second); at the shipped T the rounded levels' residue is a finding by name. A GameBoard reading.
+   second); at the shipped T the rounded levels' residue is a finding by name. A lattice reading.
 3. The far reading of cos Omega at the Node [327, 2, 2], half way to the NodeReader, over the window 2 to 17
    intervals after the giving's tick, cos Omega read as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2),
    within 2 / A_far of 2 / 3, A_far the largest |n_t| over the window (the mathematician's 220, the
@@ -104,8 +104,8 @@ width declared there).
 
 Row 1 is the NodeReader's: the `credit` lines of the region `reach` over the run (none in any seed), beside
 the giver's `jump` lines (`build_world.py --read`, the trials over the design's seeds, the giver's
-generator at the trial's seed); the `lay` lines it counts are labelled a GameBoard diagnostic by the
-engine. Rows 2, 3 and 4 are GameBoard readings and their verdicts rest on them: the share at the lay from
+generator at the trial's seed); the `lay` lines it counts are labelled a lattice diagnostic by the
+engine. Rows 2, 3 and 4 are lattice readings and their verdicts rest on them: the share at the lay from
 the light's record over the board at the click line's tick, the far Node's cosine from the light's levels
 at the Node [327, 2, 2] per interval, and the drawn direction from the `lay` lines' Nodes against the
 body's. The lines carry

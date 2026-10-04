@@ -22,11 +22,13 @@ The physical location is a **Node**; its complete local information is its
 **NodeState**, the law's own numbers and nothing else. Nodes are connected by
 **Links** through directional **Ports**, six per Node; a local change is an
 **Event** and configured local logic is a **LocalRule**. The lattice of Nodes is
-the **GameBoard** (`GameBoard` in code, `game_board` in module and function
-names). Do not introduce `Site`, board, lattice, grid or any other noun for these;
-new location identifiers use `node`, `nodes` and `NodeState`. The words of the
-engine (Family, Record, Body, NodeReader, Click, Primitive, Interval) are defined in
-[docs/ENGINE.md](docs/ENGINE.md#1-the-words). The nouns detector, instrument,
+the **Lattice** (`Lattice` in code, `lattice` in module and function names; the
+readings' label `LATTICE`), the paper's word and the code's, one vocabulary (the
+owner's word of 2026-10-04). Do not introduce `Site`, GameBoard, board, grid or
+any other noun for these; new location identifiers use `node`, `nodes` and
+`NodeState`. The words of the engine (Family, Record, Body, NodeReader, Click,
+Primitive, Interval) are defined in [docs/ENGINE.md](docs/ENGINE.md#1-the-words).
+The nouns detector, instrument,
 emitter, absorber, observer and measurer have left the repository (the owner's
 word of 2026-10-03): the NodeReader, with Nodes alone or with a record of its
 own, is the one declaration kind; do not reintroduce them.
@@ -61,7 +63,7 @@ exempt a directory, disable the gate or encode non-English prose as escapes.
   found by its name ([docs/ENGINE.md](docs/ENGINE.md)).
 - Physical calculations use bounded integers, fixed local NodeState and the six
   neighbouring Nodes; nothing is kept at a Node beyond the law's own numbers.
-- Only a NodeReader's click is a measurement; a GameBoard reading is a diagnostic
+- Only a NodeReader's click is a measurement; a lattice reading is a diagnostic
   and is labelled so. Runs and tests are headless.
 - A behavior change needs a dedicated test; a physics change needs the law's line
   first and the procedure in [CONTRIBUTING.md](CONTRIBUTING.md).

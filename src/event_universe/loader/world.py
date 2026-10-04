@@ -1,4 +1,4 @@
-"""The world's files read into the GameBoard's world: the universe file (the integers and the families), the world file (the GameBoard with its inner faces, the bodies, the messages, the node_readers) and the generator's mode file beside it (every body's and message's levels, `loader/mode.py`); every key checked, every other key refused as unknown by name, no default written (ALGEBRA.md #a-familys-declaration)."""
+"""The world's files read into the lattice's world: the universe file (the integers and the families), the world file (the lattice with its inner faces, the bodies, the messages, the node_readers) and the generator's mode file beside it (every body's and message's levels, `loader/mode.py`); every key checked, every other key refused as unknown by name, no default written (ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
@@ -64,7 +64,7 @@ START_KEYS = ("mode",)
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`reader`, `loader/node_reader_declaration.py`: its parts the modes' labels with the count in one of them, and as a NodeReader its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the GameBoard (j); the owner's word, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`reader`, `loader/node_reader_declaration.py`: its parts the modes' labels with the count in one of them, and as a NodeReader its transitions, its givings and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the lattice (j); the owner's word, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     nodes: tuple[Node, ...]
@@ -91,7 +91,7 @@ class NodeReaderRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the GameBoard's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the node_readers, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeReaders' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate), and the erasing front's taper in shells (`erasure`, 1 where the world declares none)."""
+    """The world as loaded: the lattice's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the node_readers, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeReaders' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate), and the erasing front's taper in shells (`erasure`, 1 where the world declares none)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -115,7 +115,7 @@ class World:
     wholes: tuple[
         WholeMessage, ...
     ] = ()  # the messages laid whole at a tick of the run (`loader/messages.py`)
-    erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the GameBoard (6); src/event_universe/front.py)
+    erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the lattice (6); src/event_universe/front.py)
 
 
 def kind_of(width: int) -> type:
@@ -331,9 +331,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     open_axes = tuple(faces[axis] == "open" for axis in AXES)
     even_box_refused(shape, periodic, families)
     if any(open_axes) and "face_depth" not in world:
-        raise ValueError(
-            "face_depth is required on a GameBoard with an open face: the depth of its layer"
-        )
+        raise ValueError("face_depth is required on a lattice with an open face: the depth of its layer")
     depth = integer(world["face_depth"], "face_depth", 1) if "face_depth" in world else 0
     beyond = faces_of(world["faces"], shape) if "faces" in world else ()
     gamma, action = integers["node_clock"], integers["quantum_action"]

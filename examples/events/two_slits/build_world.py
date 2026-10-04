@@ -129,7 +129,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "wings": design["wings"],
         "aside": [str(design["aside"]["name"])],
         "photons": {
-            "label": "GAMEBOARD",
+            "label": "LATTICE",
             "per_count": round(
                 1
                 / math.sqrt(
@@ -144,7 +144,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
                 ),
                 1,
             ),
-            "status": "the photon count at the light's own omega beside N, a GameBoard reading and no fence: the screen's regions declare the band's top [0, den], so N counts the energy in units of T, and one quantum of the laid light at k = pi / 4 (cos omega = (cos(pi / 4) + 2) / 3, sin omega = 0.4310) carries T sin omega; N over sin omega is the laid light's own quanta, 645 at N = 278 (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267; the shipped regions keep the band's top so that no gate number moves)",
+            "status": "the photon count at the light's own omega beside N, a lattice reading and no fence: the screen's regions declare the band's top [0, den], so N counts the energy in units of T, and one quantum of the laid light at k = pi / 4 (cos omega = (cos(pi / 4) + 2) / 3, sin omega = 0.4310) carries T sin omega; N over sin omega is the laid light's own quanta, 645 at N = 278 (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267; the shipped regions keep the band's top so that no gate number moves)",
         },
     }
 

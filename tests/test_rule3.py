@@ -16,7 +16,7 @@ from event_universe import node, share
 from event_universe.core import paces
 from event_universe.core import rule3 as core
 from event_universe.core.rule3 import NO_READ, coefficients, form_term, link_factor, rule3
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, TOOL, chain_body_world
 
@@ -106,7 +106,7 @@ RULE_ARITHMETIC += (r"wall \* now \+ remainder", r"direction \* carry\b")
 
 
 def test_no_other_file_of_src_writes_the_rules_arithmetic():
-    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the old two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the GameBoard, core and the folders hold no split of their own."""
+    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the old two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the lattice, core and the folders hold no split of their own."""
     offenders = []
     for path in sorted(p for p in SOURCE.rglob("*.py") if p.name != "rule3.py"):
         text = path.read_text(encoding="utf-8")
@@ -128,7 +128,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
             found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
     assert {home: found.pop(home) for home in SHIFT_HOME} == SHIFT_HOME and found == {}, found
-    stepping = [SOURCE / "node.py", SOURCE / "game_board.py", *SOURCE.glob("core/*.py")]
+    stepping = [SOURCE / "node.py", SOURCE / "lattice.py", *SOURCE.glob("core/*.py")]
     for path in stepping + list(SOURCE.glob("features/*/*.py")):
         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             assert not (isinstance(item, ast.FunctionDef) and "split" in item.name.lower()), path.name
@@ -185,7 +185,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
     assert [f.name for f in dataclasses.fields(node.Record)] == ["now", "before", "remainder"]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), (lines := []).append)
+    board = Lattice(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), (lines := []).append)
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
@@ -243,7 +243,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         (tmp_path / f"{name}.json").write_text(json.dumps(text), encoding="utf-8")
     runs = []
     for path, kind in ((world, np.int64), (tmp_path / "chain_wide.json", object)):
-        board = GameBoard(load_world(path), (lines := []).append)
+        board = Lattice(load_world(path), (lines := []).append)
         for _ in range(40):
             board.step()
         arrays = [a for s in board.states for r in s.lines for a in (r.now, r.remainder)]

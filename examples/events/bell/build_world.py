@@ -118,7 +118,7 @@ def blind(design: dict[str, Any]) -> dict[str, Any]:
     found["of_rho"] = {
         "S": f"({s_shares.numerator} + {(s_meeting - s_shares).numerator} rho) / {s_meeting.denominator}",
         "status": "derived (the mathematician, #1572 comment 5925175652): E = cos 2a cos 2b + rho sin 2a sin 2b, rho = 2 r / (1 + r^2) the parts' mismatch, 1 at the equal lay; r and rho are the reader's labelled diagnostics and no number of this blind",
-        "fence": "GameBoard for r and rho, clicks for S",
+        "fence": "lattice for r and rho, clicks for S",
     }
     return found
 

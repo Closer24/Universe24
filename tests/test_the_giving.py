@@ -1,4 +1,4 @@
-"""The giving lays no uniform mode and the front writes to 0 over L declared shells (ALGEBRA.md, The click writes on the GameBoard (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the message lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
+"""The giving lays no uniform mode and the front writes to 0 over L declared shells (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the message lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
 
 import json
 
@@ -6,8 +6,8 @@ import numpy as np
 
 from event_universe import world_files
 from event_universe.features.click import SCALE_OF
-from event_universe.game_board import GameBoard
 from event_universe.giving import holds_period, increments_of, radiated_total
+from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
@@ -15,7 +15,7 @@ from tests.laws import BACK, EVENTS, ROOT, TOOL, packet_world, refused
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
-    """The giving lays no uniform mode (ALGEBRA.md, The click writes on the GameBoard (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `giving.increments_of`, `lay.division_act_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; on the resonance world the giver gives at 61 (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 41 under the state modulo the total until the clean main of 2026-10-04) and at the interval 116, the span laid, the light's two sums over the chain of 48 are within one level per Node (3 and 6, against 797 and 765 before the correction) while the share reads the quantum, 0.7518 W_c against sin Omega = 0.745 (0.7582 uncorrected)."""
+    """The giving lays no uniform mode (ALGEBRA.md, The click writes on the lattice (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `giving.increments_of`, `lay.division_act_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; on the resonance world the giver gives at 61 (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 41 under the state modulo the total until the clean main of 2026-10-04) and at the interval 116, the span laid, the light's two sums over the chain of 48 are within one level per Node (3 and 6, against 797 and 765 before the correction) while the share reads the quantum, 0.7518 W_c against sin Omega = 0.745 (0.7582 uncorrected)."""
     scale, total = (3 * 6000 * 32768) ** SCALE_OF, radiated_total(32768, (2, 3))
     raw, amplitudes = increments_of(total, 48, (2, 3), scale)
     fixed = division_act_in_time(raw, amplitudes)
@@ -37,7 +37,7 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
     assert [holds_period(t, (5414, 6000), scale) for t in (14, 15)] == [False, True]
     short, amps = increments_of(total, 4, (2, 3), scale)
     assert short == [73, 49, -8, -60] and division_act_in_time(short, amps) == [-9, 13, 1, -5]
-    board = GameBoard(load_world(EVENTS / "resonance" / "resonant.json"), (lines := []).append)
+    board = Lattice(load_world(EVENTS / "resonance" / "resonant.json"), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     for _ in range(116):
         board.step()
@@ -50,8 +50,8 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
 
 
 def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
-    """The packet's two levels take the message lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the GameBoard (5) and The message lay; `giving.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
-    board = GameBoard(load_world(packet_world(tmp_path, TOOL)), (lines := []).append)
+    """The packet's two levels take the message lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The message lay; `giving.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
+    board = Lattice(load_world(packet_world(tmp_path, TOOL)), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     while board.tick < 60 and not any(c["event"] == "credit" and c["given"] == "pulse" for c in lines):
         board.step()
@@ -64,7 +64,7 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
 def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark(
     tmp_path, monkeypatch
 ):
-    """The front's taper (ALGEBRA.md, The click writes on the GameBoard (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 48 as the shipped one does; from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
+    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 48 as the shipped one does; from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
     folder = EVENTS / "anticoincidence"
     world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_bytes((ROOT / world["universe"]).read_bytes())
@@ -75,7 +75,7 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     TOOL.main(["--input", str(path)])
     (bad := tmp_path / "bad.json").write_text(json.dumps({**world, "erasure": 0}), encoding="utf-8")
     refused("erasure", load_world, bad)
-    board = GameBoard(load_world(path), (lines := []).append)
+    board = Lattice(load_world(path), (lines := []).append)
     assert board.world.erasure == 8
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
@@ -98,4 +98,4 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert tapered > 20 and erased and all(e["unit"] == board.credit.units[photon] for e in erased)
     assert sum(e["take"] for e in erased) > 0  # the takes' sum; a tail's take follows its level's sign
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert BACK.verdict(GameBoard(load_world(path)), 170)["verdict"] == "MATCH"
+    assert BACK.verdict(Lattice(load_world(path)), 170)["verdict"] == "MATCH"

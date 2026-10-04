@@ -62,7 +62,7 @@
  {
   "file": "docs/ALGEBRA.md",
   "clause": "pending",
-  "context": "not reproduced, the engine's to-do pending, no atom laid on the GameBoard yet,"
+  "context": "not reproduced, the engine's to-do pending, no atom laid on the lattice yet, n"
  },
  {
   "file": "docs/ALGEBRA.md",
@@ -137,12 +137,12 @@
  {
   "file": "docs/ALGEBRA.md",
   "clause": "the engine's to-do",
-  "context": "replacing hydrogen not reproduced, the engine's to-do pending, no atom laid on the GameBo"
+  "context": "replacing hydrogen not reproduced, the engine's to-do pending, no atom laid on the lattic"
  },
  {
   "file": "docs/ALGEBRA.md",
   "clause": "the engine's to-do",
-  "context": "s findings; fence: GameBoard. 43. **The engine's to-do under the two lines, with its five"
+  "context": "d's findings; fence: lattice. 43. **The engine's to-do under the two lines, with its five"
  },
  {
   "file": "docs/ALGEBRA.md",

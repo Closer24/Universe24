@@ -1,4 +1,4 @@
-"""The GameBoard: every family's NodeState over the Nodes (node.py), a flat list of lines of dimension one per family, and the node_readers, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the read and Rule3 on every line, the node_readers' reports, the one write per held line; `step_inverse` runs the same acts back. The GameBoard groups the lines into families for the readings and the sources as the loader derived them (loader/derived.py): the form D summed over a record's lines, the Wronskian W the bilinear of a plane's two, the share over every line, the axis lines of a holder read into the paces. The board's face rule (core/ports.py) is the file's: the wraps, the Nodes its inner faces declare beyond the board and its receding faces, beyond which it grows by layers of zeros as the front reaches them (growth.py), every declared coordinate staying the file's. No record's count of bodies is kept: a body's Nodes are where its family's share stands about its declared Nodes, derived when a report needs them (reports.standing_nodes); a message is a laid record and no body; a reader is a region of Nodes declared in the file, a declared NodeReader, its click its report of the net current into it through its front boundary Ports, with the region's name and never a Node (ALGEBRA.md #the-count-is-the-records-share), the count of every family the share of its record, a reading, and every other reading a GameBoard diagnostic; the guard reads the initial state once at load and no act of the interval. Where the world declares the `draw` (its window, its seed and its generator) the NodeReaders draw inside the run at every window's end from the window's inflows the reports gathered and writes its click on the GameBoard at one Node (`credit.py`, features/click; HIGHLIGHTS.md, the owner's decision): the loop's act from outside the Node, as the lay and the receding face are, forward only; the Node knows nothing of it, and a world without the key runs as before bit for bit."""
+"""The lattice: every family's NodeState over the Nodes (node.py), a flat list of lines of dimension one per family, and the node_readers, stepped one interval at a time in the law's order (ALGEBRA.md #the-interval): the read and Rule3 on every line, the node_readers' reports, the one write per held line; `step_inverse` runs the same acts back. The lattice groups the lines into families for the readings and the sources as the loader derived them (loader/derived.py): the form D summed over a record's lines, the Wronskian W the bilinear of a plane's two, the share over every line, the axis lines of a holder read into the paces. The board's face rule (core/ports.py) is the file's: the wraps, the Nodes its inner faces declare beyond the board and its receding faces, beyond which it grows by layers of zeros as the front reaches them (growth.py), every declared coordinate staying the file's. No record's count of bodies is kept: a body's Nodes are where its family's share stands about its declared Nodes, derived when a report needs them (reports.standing_nodes); a message is a laid record and no body; a reader is a region of Nodes declared in the file, a declared NodeReader, its click its report of the net current into it through its front boundary Ports, with the region's name and never a Node (ALGEBRA.md #the-count-is-the-records-share), the count of every family the share of its record, a reading, and every other reading a lattice diagnostic; the guard reads the initial state once at load and no act of the interval. Where the world declares the `draw` (its window, its seed and its generator) the NodeReaders draw inside the run at every window's end from the window's inflows the reports gathered and writes its click on the lattice at one Node (`credit.py`, features/click; HIGHLIGHTS.md, the owner's decision): the loop's act from outside the Node, as the lay and the receding face are, forward only; the Node knows nothing of it, and a world without the key runs as before bit for bit."""
 
 from __future__ import annotations
 
@@ -39,8 +39,8 @@ Stresses = dict[node.Sourcing, Vector]  # per record of quanta its tension on ea
 Rulers = dict[node.Sourcing, node.Rulers]
 
 
-class GameBoard:
-    """One world on the GameBoard, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_readers', `field`, `erasure`, `lay` and `face` the GameBoard's diagnostics)."""
+class Lattice:
+    """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_readers', `field`, `erasure`, `lay` and `face` the lattice's diagnostics)."""
 
     def __init__(self, world: World, output: Output | None = None) -> None:
         paces.clear_memo()  # the paces computed once per content value within this run, kept between none
@@ -103,7 +103,7 @@ class GameBoard:
         return found + [(0, message) for message in self.world.messages]
 
     def lay(self, row: BodyRow | MessageRow, record: int = 0) -> None:
-        """A body's or a message's levels from the mode file added to its family's lines of the record `record` (`node.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting) and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the message, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same. The loader's door of the one lay act (`lay.laid`; ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode): a message's levels are the generator's, corrected at the lay, so the weights handed to the act are all 0, which means no correction and the guard alone, the board's refusal of a massless message whose two sums are not 0 (the loader builds no board and refuses nothing of this); a body's levels and a kick on a holder of the content are laid as declared; a plane's second pair, its sense, on the plane's second line; the remainders stand at the half wall every line was born with (`node.empty_state`), the origin None; the lay is the initial state and no event of the run, so it reports no lay line (the output is handed to the GameBoard after its construction)."""
+        """A body's or a message's levels from the mode file added to its family's lines of the record `record` (`node.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting) and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the message, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same. The loader's door of the one lay act (`lay.laid`; ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode): a message's levels are the generator's, corrected at the lay, so the weights handed to the act are all 0, which means no correction and the guard alone, the board's refusal of a massless message whose two sums are not 0 (the loader builds no board and refuses nothing of this); a body's levels and a kick on a holder of the content are laid as declared; a plane's second pair, its sense, on the plane's second line; the remainders stand at the half wall every line was born with (`node.empty_state`), the origin None; the lay is the initial state and no event of the run, so it reports no lay line (the output is handed to the lattice after its construction)."""
         family = self.families[row.family]
         span, step = node.record_slice(family, record), PLANE if family.plane else 1
         guarded = isinstance(row, MessageRow) and family.quanta
@@ -116,14 +116,14 @@ class GameBoard:
                     laid(self, row.family, line + number, change, weights, None)
 
     def board_array(self, values: Levels) -> np.ndarray:
-        """The levels the mode file lays as an array over the GameBoard: the nonzero Nodes' flat x-major indexes with their levels, 0 elsewhere."""
+        """The levels the mode file lays as an array over the lattice: the nonzero Nodes' flat x-major indexes with their levels, 0 elsewhere."""
         found = node.zeros(self.shape, self.kind).reshape(-1)
         for at, value in values:
             found[at] += value
         return found.reshape(self.shape)
 
     def mask(self, nodes: tuple[Node, ...]) -> np.ndarray:
-        """The mask of a set of Nodes declared at the file's coordinates, on the GameBoard as grown."""
+        """The mask of a set of Nodes declared at the file's coordinates, on the lattice as grown."""
         found = np.zeros(self.shape, dtype=bool)
         found[tuple((np.array(nodes) + np.array(self.offset)).T)] = True
         return found
@@ -236,7 +236,7 @@ class GameBoard:
         return share.quanta_of(found, wall, self.kind), frozen
 
     def total_share(self, index: int) -> tuple[int | None, int]:
-        """A family's share summed over the GameBoard in the current's units, a reading, None over a GameBoard holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""
+        """A family's share summed over the lattice in the current's units, a reading, None over a lattice holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""
         found, frozen = self.share_of(index)
         return (None if frozen.any() else int(found.sum(dtype=object))), int(frozen.sum())
 
@@ -247,7 +247,7 @@ class GameBoard:
         return standing_nodes(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
 
     def books(self) -> dict[str, dict[str, int | None]]:
-        """The books per family of quanta, a GameBoard diagnostic (`reports.book`): its share summed over the GameBoard in the current's units and in quanta over its wall W_c, its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `meeting.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
+        """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its wall W_c, its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `meeting.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
         found: dict[str, dict[str, int | None]] = {}
         for index in self.order:
             family, gamma, credit = self.families[index], self.world.node_clock, self.credit
@@ -351,7 +351,7 @@ class GameBoard:
             )
 
     def declared_board(self) -> np.ndarray:
-        """The declared board: the file's own Nodes over the GameBoard as grown, the layers a receding face has grown beyond them (what leaves into those layers has left the world, `growth`)."""
+        """The declared board: the file's own Nodes over the lattice as grown, the layers a receding face has grown beyond them (what leaves into those layers has left the world, `growth`)."""
         found = np.zeros(self.shape, dtype=bool)
         found[tuple(slice(f, f + e) for f, e in zip(self.offset, self.world.shape, strict=True))] = True
         return found
@@ -386,7 +386,7 @@ class GameBoard:
         self.densities_read(forms, union)
 
     def densities_read(self, forms: Bookings, at: np.ndarray) -> None:
-        """A GameBoard reading, no measurement, labelled so (`reports.density`): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the declared NodeReaders' Nodes), one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival)."""
+        """A lattice reading, no measurement, labelled so (`reports.density`): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the declared NodeReaders' Nodes), one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival)."""
         for index, (family, state) in enumerate(zip(self.families, self.states, strict=True)):
             frozen, well = np.zeros(self.shape, dtype=bool), None
             if family.quanta:

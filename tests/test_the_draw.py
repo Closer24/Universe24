@@ -15,8 +15,8 @@ from event_universe.features.click import along_cosine, envelope, exact_total, l
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
 from event_universe.front import Front
-from event_universe.game_board import GameBoard
 from event_universe.giving import born_unit, radiated_total
+from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall
 from event_universe.loader.node_reader_declaration import pair_of
 from event_universe.loader.universe import universe_of
@@ -31,7 +31,7 @@ SLITS, WAY, RESONANCE, PACKET = (
     for n in ("two_slits", "which_way", "resonance", "packet_giving")
 )
 SRC = ROOT / "src" / "event_universe"
-# the two slits' gate, N = 284, at the seed 24: a GameBoard diagnostic read at this commit, re-read at the pick from the high bits (K1)
+# the two slits' gate, N = 284, at the seed 24: a lattice diagnostic read at this commit, re-read at the pick from the high bits (K1)
 GATE_ROW = [21, 22, 27, 16, 8, 36, 56, 11, 12, 27, 23, 25]
 
 
@@ -56,7 +56,7 @@ def chi_square(clicks: dict[str, int], shares: dict[str, int], names: list[str])
 
 
 def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_path):
-    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at two seeds (two independent draws of the design; a test runs under 30 seconds, the owner's word of 2026-10-03), the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees per seed, the two seeds summed inside the 1 percent band of chi-square on 22 degrees (8.6 to 42.8; the exact lay's run at the amplitude 1,241, 1,804 laid quanta, every Node's remainder born at the half wall, 3.4 and 12.5 at the seeds 24 and 25, the ten seeds 26 to 35 reading 2.8 to 18.3 with the mean 10.0, a GameBoard diagnostic read at this commit, re-read at the pick from the high bits (the mathematician's #1793 comment 5981866600 K1); the seed 24 the gate's own, N = 284 and the row bit for bit); the draw's weights are the shares and nothing else."""
+    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at two seeds (two independent draws of the design; a test runs under 30 seconds, the owner's word of 2026-10-03), the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the lattice's reading the draw reads): Pearson's chi-square on 11 degrees per seed, the two seeds summed inside the 1 percent band of chi-square on 22 degrees (8.6 to 42.8; the exact lay's run at the amplitude 1,241, 1,804 laid quanta, every Node's remainder born at the half wall, 3.4 and 12.5 at the seeds 24 and 25, the ten seeds 26 to 35 reading 2.8 to 18.3 with the mean 10.0, a lattice diagnostic read at this commit, re-read at the pick from the high bits (the mathematician's #1793 comment 5981866600 K1); the seed 24 the gate's own, N = 284 and the row bit for bit); the draw's weights are the shares and nothing else."""
     design = json.loads((EVENTS / "two_slits" / "design.json").read_text(encoding="utf-8"))
     names, found = [f"screen_{k}" for k in range(12)], []
     for seed in (24, 25):  # two independent draws of the design (a test runs under 30 seconds)
@@ -105,13 +105,13 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
 
 
 def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
-    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click that writes on the board (the records' and the counter's credit lines, the one click line kind, no Node: the Nodes written read from the GAMEBOARD lines beside them, the given quantum's lay lines and the hole's face lines after a taking) lies inside the cone of the written click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the ion's takings from its two drives, beams of many quanta per Node, write nothing (the undepleted beam, `meeting.faced`) and name no Node in any line; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
-    board = GameBoard(load_world(EVENTS / "shelved_ion" / "shelved_ion.json"), (lines := []).append)
+    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click that writes on the board (the records' and the counter's credit lines, the one click line kind, no Node: the Nodes written read from the LATTICE lines beside them, the given quantum's lay lines and the hole's face lines after a taking) lies inside the cone of the written click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the ion's takings from its two drives, beams of many quanta per Node, write nothing (the undepleted beam, `meeting.faced`) and name no Node in any line; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
+    board = Lattice(load_world(EVENTS / "shelved_ion" / "shelved_ion.json"), (lines := []).append)
     for _ in range(200):
         board.step()
     shape = board.world.shape
 
-    def nodes_of(c: dict) -> list:  # the write's Nodes from the GAMEBOARD lines beside the click line
+    def nodes_of(c: dict) -> list:  # the write's Nodes from the LATTICE lines beside the click line
         if c["given"]:  # the giving's quantum laid at one Node: the lay lines of the family given to
             laid = (f for f in lines if f["event"] == "lay" and f["tick"] == c["tick"])
             return [f["node"]["at"] for f in laid if f["family"] == c["given"]]
@@ -151,7 +151,7 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
 
 
 def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone(tmp_path):
-    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 284 and the row at the exact lay, a GameBoard diagnostic read at this commit, re-read at the pick from the high bits); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
+    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 284 and the row at the exact lay, a lattice diagnostic read at this commit, re-read at the pick from the high bits); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
     WAY.main(["--folder", str(tmp_path), "--modes"])
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "which_way" / "expectation.json").read_text(encoding="utf-8"))
@@ -184,7 +184,7 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
 
 def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constant():
     """T3 (the mathematician's 193 (2) and 197 precision 3 with the advisor's second; the matrix row 3): on the anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json, the chain of 96 with its receding faces, the committed world and its mode file) one record takes the photon at the interval 48, the photon's count reaches 0 and the front presents its faces shell by shell from the taker's Node; at every interval after, inside the ball of the shells whose two faces are done and whose outer neighbours stand at 0 (the Link-metric distance at most t - 40 - 3), every line of the photon's record stands at (0, 0) with its remainder below one read coefficient R of the photon's rule at the vacuum's paces and unchanged from one interval to the next: the erasure is Rule3's own write and nothing assigned; the erasure lines one per interval from the interval after the click."""
-    board = GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
+    board = Lattice(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
     for _ in range(48):
         board.step()
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
@@ -278,7 +278,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
     for seed in range(
         1, 26
     ):  # the trials' seeds, every record's generator at its own state (tools/meeting_trials.py)
-        board = GameBoard(load_world(path), (lines := []).append)
+        board = Lattice(load_world(path), (lines := []).append)
         light_at = [f.name for f in board.families].index("pulse")
         gamma, own = (
             board.world.node_clock,
@@ -357,7 +357,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
     (path := tmp_path / "lit.json").write_text(json.dumps(lit), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     for seed in (1, 2, 3):  # the light at its Node: a window stands and its draw at 48 stands as it is
-        board = GameBoard(load_world(path), (lines := []).append)
+        board = Lattice(load_world(path), (lines := []).append)
         light_at = [f.name for f in board.families].index("pulse")
         gamma, own = (
             board.world.node_clock,
@@ -428,7 +428,7 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py").main(
         ["--input", str(tmp_path / "small.json")]
     )
-    board = GameBoard(load_world(tmp_path / "small.json"), (lines := []).append)
+    board = Lattice(load_world(tmp_path / "small.json"), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     given: list = []
     while board.tick < 40 and not given:  # until the first giving: the body in g gives no more
@@ -464,7 +464,7 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
 
 
 def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path):
-    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_reader's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a GameBoard reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
+    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_reader's entry; `giving.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the giving's first lay the unit becomes the giving's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the giving 1, kept or taken back at the window's close, a click's number. The finding by name beside it, a lattice reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any taking, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
     world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
     giver = {**world["bodies"][0], "transitions": [{**world["bodies"][0]["transitions"][0]}]}
     giver["transitions"][0]["resonance"], giver["node_reader"] = (
@@ -474,7 +474,7 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
     (path := tmp_path / "low.json").write_text(json.dumps({**world, "bodies": [giver], "ticks": 240}))
     TOOL.main(["--input", str(path)])
     for seed in (1, 2, 3, 4):  # the first trial whose giving leaves the whole span inside the run
-        board, series = GameBoard(load_world(path), (lines := []).append), {}
+        board, series = Lattice(load_world(path), (lines := []).append), {}
         pulse = [f.name for f in board.families].index("pulse")
         wall, books = count_wall(board.families[pulse], board.world.quantum_action), board.credit
         assert books.units[pulse] == wall and pulse in books.empty and books.counts[pulse] == 0
@@ -512,7 +512,7 @@ def test_the_source_in_time_lays_the_form_it_radiates():
 
 
 def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_falls_to_zero(tmp_path):
-    """The control's two photons as two records (ALGEBRA.md, The click writes on the GameBoard (3) and (6), one event one record one root; the advisor's design of the control, two massless families of one pair, and his asked assertion, #1793 comment 5979746881 (3)): the shipped control's chain cut to 64 Nodes, the atoms 16 Links from the centre with their windows apart, the left atom's at 44 and the right atom's at 56, the -x packet `photon_b` passing the left atom and the +x packet `photon` the right one; each atom's click names the drive whose packet passed it (the taking drawn by each drive's own transfer share, `meeting.took`), body 0 by `photon_b` at 44 and body 1 by `photon` at 56, whichever closes first; after the first taking that record's count is 0 with its front from the taker's Node at the taking's interval and every level of its line 0 within the front's reach (the Link-metric distance at most t - 44 - 3, T3's margin), while the other record stands whole, its count 1 and its one quantum in the books, no front; at 56 both stand at 0 with a front each; the deficits 0 throughout (both records sparse, every taking a hole to 0)."""
+    """The control's two photons as two records (ALGEBRA.md, The click writes on the lattice (3) and (6), one event one record one root; the advisor's design of the control, two massless families of one pair, and his asked assertion, #1793 comment 5979746881 (3)): the shipped control's chain cut to 64 Nodes, the atoms 16 Links from the centre with their windows apart, the left atom's at 44 and the right atom's at 56, the -x packet `photon_b` passing the left atom and the +x packet `photon` the right one; each atom's click names the drive whose packet passed it (the taking drawn by each drive's own transfer share, `meeting.took`), body 0 by `photon_b` at 44 and body 1 by `photon` at 56, whichever closes first; after the first taking that record's count is 0 with its front from the taker's Node at the taking's interval and every level of its line 0 within the front's reach (the Link-metric distance at most t - 44 - 3, T3's margin), while the other record stands whole, its count 1 and its one quantum in the books, no front; at 56 both stand at 0 with a front each; the deficits 0 throughout (both records sparse, every taking a hole to 0)."""
     world = json.loads((EVENTS / "anticoincidence" / "two_photons.json").read_text(encoding="utf-8"))
     for body, at, window in zip(world["bodies"], (15, 47), (44, 56), strict=True):
         body["nodes"] = [{"node": [at, 0, 0], "weight": 1}, {"node": [at + 1, 0, 0], "weight": 1}]
@@ -521,7 +521,7 @@ def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_
         message["top"] = {**message["top"], "x": [x, x]}
     (path := tmp_path / "control.json").write_text(json.dumps({**world, "shape": [64, 1, 1]}))
     TOOL.main(["--input", str(path)])
-    board = GameBoard(load_world(path), (lines := []).append)
+    board = Lattice(load_world(path), (lines := []).append)
     photon, photon_b = ([f.name for f in board.families].index(n) for n in ("photon", "photon_b"))
     for tick in (47, 52, 55, 56, 60):
         while board.tick < tick:
@@ -543,7 +543,7 @@ def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_
 
 
 def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_nulls(tmp_path, monkeypatch):
-    """The one draw over readers of one record closing at different intervals (ALGEBRA.md, The click writes on the GameBoard (7), the mathematician's line, #1793 comment 5981514001 (5); `meeting.took`, `credit.Books.untaken`): one photon of count 1 on a chain of 72, laid at the Node 14 over 16 Nodes of edge and travelling +x at the group pace, passes the atom A at 30 and 31, whose window closes at 48, and the atom B beside it at 32 and 33, whose window closes at 52 (the two reads of one record staggered in time, not in space); A's null window leaves the wave as laid, so B reads the same packet; over 400 trials (the board copied at the interval before A's close, the lay and the steps before it the same in every trial, every record's generator at the trials tool's hashed state of the trial's label, the seed times the records' number plus the record's number, so that the trials are independent draws and not one Weyl sequence, R342 and R351, the engine's own draws from there; B beside A and its close four intervals after A's keep the test under the check's bound of 30 seconds on the CI runner's clock) the realised frequency of B's taking is the one draw's, s_B over the labels' unit, within three standard errors, and not the branch's (1 - s_A) s_B, more than three standard errors away, and given A's null B takes at the law's s_B / (1 - s_A) and not at the branch's s_B, the sharper statistic; A's frequency is s_A; no trial holds two takings, the count conserved; the books after a trial of two nulls hold the record's untaken share, the unit less A's share, read in B's unit, less B's share, and after a taking none; the shares read from the books at the two closes and the four numbers printed."""
+    """The one draw over readers of one record closing at different intervals (ALGEBRA.md, The click writes on the lattice (7), the mathematician's line, #1793 comment 5981514001 (5); `meeting.took`, `credit.Books.untaken`): one photon of count 1 on a chain of 72, laid at the Node 14 over 16 Nodes of edge and travelling +x at the group pace, passes the atom A at 30 and 31, whose window closes at 48, and the atom B beside it at 32 and 33, whose window closes at 52 (the two reads of one record staggered in time, not in space); A's null window leaves the wave as laid, so B reads the same packet; over 400 trials (the board copied at the interval before A's close, the lay and the steps before it the same in every trial, every record's generator at the trials tool's hashed state of the trial's label, the seed times the records' number plus the record's number, so that the trials are independent draws and not one Weyl sequence, R342 and R351, the engine's own draws from there; B beside A and its close four intervals after A's keep the test under the check's bound of 30 seconds on the CI runner's clock) the realised frequency of B's taking is the one draw's, s_B over the labels' unit, within three standard errors, and not the branch's (1 - s_A) s_B, more than three standard errors away, and given A's null B takes at the law's s_B / (1 - s_A) and not at the branch's s_B, the sharper statistic; A's frequency is s_A; no trial holds two takings, the count conserved; the books after a trial of two nulls hold the record's untaken share, the unit less A's share, read in B's unit, less B's share, and after a taking none; the shares read from the books at the two closes and the four numbers printed."""
     seen, turned = {}, meeting.turned_labels
 
     def kept(board, books):  # the labels' unit and the transfer share at a close while the count stands
@@ -570,7 +570,7 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     (path := tmp_path / "staggered.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
-    laid, trials, clicks, left = GameBoard(load_world(path)), 400, [], {}
+    laid, trials, clicks, left = Lattice(load_world(path)), 400, [], {}
     photon = [f.name for f in laid.families].index("photon")
     while laid.tick < 47:  # the interval before A's close: the same lay and steps in every trial
         laid.step()

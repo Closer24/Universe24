@@ -1,4 +1,4 @@
-"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the giving's interval from the record's click lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a GameBoard reading), the light's count at the span's end where the whole span lies in the run and no taking emptied the record (a GameBoard reading), and the takings (clicks); the counts over the seeds beside the blind.
+"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the giving's interval from the record's click lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a lattice reading), the light's count at the span's end where the whole span lies in the run and no taking emptied the record (a lattice reading), and the takings (clicks); the counts over the seeds beside the blind.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -16,7 +16,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
 
@@ -30,7 +30,7 @@ AFTER, PLATEAU = (
 def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
     """One run from the lay, every record's generator at its own state from the seed: the giving's interval, the lay lines, the cosine on the plateau, the count at the span's end and the takings."""
     lines: list[dict[str, Any]] = []
-    board = GameBoard(load_world(path), lines.append)
+    board = Lattice(load_world(path), lines.append)
     for books in board.credit.bodies:
         books.state = seed * len(board.credit.bodies) + books.number
     light = [f.name for f in board.families].index(design["light"])
@@ -103,7 +103,7 @@ def world_reading(path: Path, design: dict[str, Any]) -> dict[str, Any]:
         },
         "count_at_the_spans_end": {"read": len(counts), "ones": sum(1 for c in counts if c == 1)},
         "takings": dict(sorted(takings.items())),
-        "label": "NODEREADER for the givings and the takings; GAMEBOARD for the cosine and the count",
+        "label": "NODEREADER for the givings and the takings; LATTICE for the cosine and the count",
     }
 
 

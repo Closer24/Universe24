@@ -18,7 +18,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.core.ports import Wrap
     from event_universe.core.rule3 import coefficients
     from event_universe.features.click import Face
-    from event_universe.game_board import GameBoard
+    from event_universe.lattice import Lattice
     from event_universe.loader.derived import quanta_records
     from event_universe.loader.universe import universe_of
     from event_universe.reports import front
@@ -52,7 +52,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         return dict(pair for family in snapshot for pair in family)
 
     def the_step_is_reversible_to_the_bit():
-        """Row 27 and the results table's row 1, "The whole run therefore goes back: N intervals forward and N back return every array of every family bit for bit, provided every number an act read at an interval's start is kept" and "Rule3's step is reversible to the bit"; the breaker: random states on 2x2x2 to 4x4x4 boards (every face kind, the pairs [1, 1] to [4000, 6000], uneven Link factors, the width 63) forward then the inverse bit for bit, a face's kept value presented again on the way back; outside, a face that moves between the step and its inverse, or a face forgotten, the read not kept; the whole GameBoard's gate on the box here, on the closed cube in tests/test_the_node.py and on the one rule's integers in tests/test_rule3.py."""
+        """Row 27 and the results table's row 1, "The whole run therefore goes back: N intervals forward and N back return every array of every family bit for bit, provided every number an act read at an interval's start is kept" and "Rule3's step is reversible to the bit"; the breaker: random states on 2x2x2 to 4x4x4 boards (every face kind, the pairs [1, 1] to [4000, 6000], uneven Link factors, the width 63) forward then the inverse bit for bit, a face's kept value presented again on the way back; outside, a face that moves between the step and its inverse, or a face forgotten, the read not kept; the whole lattice's gate on the box here, on the closed cube in tests/test_the_node.py and on the one rule's integers in tests/test_rule3.py."""
         draw, wraps = np.random.default_rng(1), [Wrap(True, True, True), Wrap(False, True, True)]
         wraps, kind = [*wraps, Wrap(False, False, False)], np.int64
         tried = misses = 0
@@ -82,7 +82,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         off = int((moved.before != before).sum()), int((forgotten.before != before).sum())
         assert off[0] > shape[1] * shape[2] and off[1] == 1  # outside: the read not kept
         with profiled():  # the load, the start and the guard under the profile as well
-            board = GameBoard(load_world(box))
+            board = Lattice(load_world(box))
             kept = {board.tick: BACK.snapshot(board)}
             for _ in range(4):
                 board.step(), kept.__setitem__(board.tick, BACK.snapshot(board))
@@ -105,12 +105,12 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         for name, bodies in (("drawn", world["bodies"]), ("undrawn", [record])):
             paths[name].write_text(json.dumps({**world, "bodies": bodies}), encoding="utf-8")
             TOOL.main(["--input", str(paths[name])])
-        twin, between, undrawn, drive = GameBoard(load_world(paths["undrawn"])), None, None, []
+        twin, between, undrawn, drive = Lattice(load_world(paths["undrawn"])), None, None, []
         body = world["bodies"][0]
         at = [tuple(int(v) for v in n["node"]) for n in body["nodes"]]
         pulse = [f.name for f in twin.families].index(body["transitions"][0]["drive"])
         with profiled():  # the reader's books made at the load, S.61's line 27, under the profile too
-            board = GameBoard(load_world(paths["drawn"]), (lines := []).append)
+            board = Lattice(load_world(paths["drawn"]), (lines := []).append)
             kept = {board.tick: BACK.snapshot(board)}
             for _ in range(75):
                 board.step(), twin.step()
@@ -193,7 +193,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         (chain := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
         agreed, plain_too = 0, {}
         for tension in (0, 12):
-            board, levels = GameBoard(load_world(chain)), np.random.default_rng(3)
+            board, levels = Lattice(load_world(chain)), np.random.default_rng(3)
             for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
                 origin = np.full(board.shape, board.half_wall(index), dtype=board.kind)
                 if family.quanta:
@@ -262,8 +262,8 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         )
 
     def two_records_laid_equal_are_identical_and_one_apart_diverge_at_one_link_per_interval():
-        """Row 133, "The two parts of one beam, laid equal, are two records of one family stepped by the same line along the same path, and they are identical bit for bit"; the breaker: two records of one family laid equal on the tests' universe and stepped by the engine, every array equal bit for bit at every interval; laid one level apart at one Node they differ and the difference propagates at one Link per interval, the causal bound; here two GameBoards of the box, the light packet laid alike, 20 intervals bit for bit; the twins with one level more at one Node of the packet and with 200 more differ, every differing Node within t Links of it in the Link metric at the interval t, the kick of 200 reaching t exactly, the kick of one riding the carried remainders one Link behind at most (the one-Link reach of every act is tests/test_the_node.py's)."""
-        first, second, at = GameBoard(load_world(box)), GameBoard(load_world(box)), (6, 2, 2)
+        """Row 133, "The two parts of one beam, laid equal, are two records of one family stepped by the same line along the same path, and they are identical bit for bit"; the breaker: two records of one family laid equal on the tests' universe and stepped by the engine, every array equal bit for bit at every interval; laid one level apart at one Node they differ and the difference propagates at one Link per interval, the causal bound; here two lattices of the box, the light packet laid alike, 20 intervals bit for bit; the twins with one level more at one Node of the packet and with 200 more differ, every differing Node within t Links of it in the Link metric at the interval t, the kick of 200 reaching t exactly, the kick of one riding the carried remainders one Link behind at most (the one-Link reach of every act is tests/test_the_node.py's)."""
+        first, second, at = Lattice(load_world(box)), Lattice(load_world(box)), (6, 2, 2)
         light = [f.name for f in first.families].index("charge")
         kicked = {kick: copy.deepcopy(first) for kick in (1, 200)}
         for kick, board in kicked.items():
@@ -274,7 +274,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             dx, dy, dz = (abs(int(here[a]) - at[a]) for a in range(3))
             return dx + min(dy, extents[1] - dy) + min(dz, extents[2] - dz)
 
-        def apart(a, b):  # the Nodes at which two GameBoards' arrays differ
+        def apart(a, b):  # the Nodes at which two lattices' arrays differ
             arrays = zip(sum(BACK.snapshot(a), []), sum(BACK.snapshot(b), []), strict=True)
             return [n for (_, x), (_, y) in arrays for n in np.argwhere(x != y)]
 
@@ -288,7 +288,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         assert reach[200] == list(range(1, 7))
         assert all(t - 1 <= far <= t for t, far in enumerate(reach[1], 1))
         return (
-            f"two GameBoards laid alike identical bit for bit over 20 intervals; the farthest differing Node "
+            f"two lattices laid alike identical bit for bit over 20 intervals; the farthest differing Node "
             f"per interval, in Links: the kick of 200 {reach[200]}, the kick of 1 {reach[1]}"
         )
 
@@ -296,10 +296,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         """Rows E.1 to E.3, "The engine holds no number, no formula, no family name and no flag, and every primitive is one folder found by its name", "Each act is a call of Rule3 on whole-board arrays of integers at a declared width, every neighbour read through a Port" and "It holds no number of physics, no formula, no family's name and no flag"; the breaker, the owner's rule (#1793 comment 5982567335): every act of the engine on a Node's levels is Rule3's one line or the division act with the half, and logic found at a Node that is not of Rule3's form is shouted; here the inventory of every function of src/event_universe that writes a Node's levels or remainder outside core/rule3, an assignment into a line's `now`, `before` or `remainder` or into a NodeState's `lines` or `write_remainders`, a `Record(...)` built or a `replace(...)` of those fields (an ast walk over the state's own names, no arithmetic read), each with the law's line its own docstring stands on; a site the inventory does not name fails by the function's name, the shout, a named site that is gone fails too, and tools/record_code_shape.py counts the same sites per file."""
         inventory = {
             "bookings.py::booked_sources": "ALGEBRA.md #what-a-body-is, the four lines (a) and (c)",
-            "game_board.py::GameBoard.hold": 'ALGEBRA.md #the-primitives, the row "the hold"',
-            "game_board.py::GameBoard.start": "ALGEBRA.md #the-generator (g), the start",
-            "game_board.py::GameBoard.step": "ALGEBRA.md #the-interval",
-            "game_board.py::GameBoard.step_inverse": "ALGEBRA.md #the-direction",
+            "lattice.py::Lattice.hold": 'ALGEBRA.md #the-primitives, the row "the hold"',
+            "lattice.py::Lattice.start": "ALGEBRA.md #the-generator (g), the start",
+            "lattice.py::Lattice.step": "ALGEBRA.md #the-interval",
+            "lattice.py::Lattice.step_inverse": "ALGEBRA.md #the-direction",
             "growth.py::resized": "the NodeState of a Node with no level",
             "lay.py::written": "the one place a level is written from outside Rule3",
             "node.py::held_write": 'ALGEBRA.md #the-primitives, the row "the hold"',
@@ -381,7 +381,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             23: ("bookings.py", "booked_sources"),
             24: ("loader/keys.py", "keyed"),
             25: ("records.py", "row_levels"),
-            26: ("game_board.py", "GameBoard.step_inverse"),
+            26: ("lattice.py", "Lattice.step_inverse"),
             27: ("resonance.py", "references_of"),
             28: None,
             29: None,

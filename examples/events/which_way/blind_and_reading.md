@@ -15,7 +15,7 @@ rows left to the channel). Three worlds from one design (`design.json`), built, 
 open, no channel: the two slits as shipped). The blind `expectation.json` was written by the builder
 from the design before any lay and never touched after; the reading below is `tools/run_inputs.py`'s
 output read per region (the `credit` lines, the clicks, labelled NODEREADER; the shares the `click`
-lines' window inflows, a GameBoard reading beside them, labelled so); a miss is a finding by name and
+lines' window inflows, a lattice reading beside them, labelled so); a miss is a finding by name and
 never an adjustment of the blind.
 
 ## The blind (expectation.json)
@@ -54,7 +54,7 @@ never an adjustment of the blind.
 | which_way | | | | | 145 | 138.3 |
 | N | 278 | | 139 | | 276 | |
 
-The shares are the window inflows in whole quanta (the inflow over 3 den T), a GameBoard reading;
+The shares are the window inflows in whole quanta (the inflow over 3 den T), a lattice reading;
 the clicks are the measurement.
 
 1. The shadow: `screen_0` to `screen_3` read 0 clicks and 0 share in both worlds with the channel.
@@ -99,7 +99,7 @@ second seed's reading (one seed, the design's).
 Every number of the reading above is the NodeReader's: the clicks are the `credit` lines' counts per
 region and the shares are the `click` lines' window inflows over 3 den T, both lines the NodeReader's
 report by the engine's label (ENGINE.md section 5, `reports.click` and `reports.credit`; the folder's
-own words call the shares a GameBoard reading beside the clicks, a stricter label than the engine's).
+own words call the shares a lattice reading beside the clicks, a stricter label than the engine's).
 No number is read from a Node. The lines carry the board's `tick` and the `window` in board intervals
 and nothing of the NodeReader's own clock. The crude Huygens rows of item 4 are the design's.
 
@@ -157,7 +157,7 @@ the two slits' (0.25 against 0.54); one quantum one click exact. The chi-squares
 row (24.0 and 19.5) are the reading and no fence.
 
 The two rows over thirty seeds (the advisor's (d); the world's generator at each seed, `credit.state`,
-the seed 24 reproducing the rows above; the worlds and the blind untouched; GAMEBOARD over the seeds,
+the seed 24 reproducing the rows above; the worlds and the blind untouched; LATTICE over the seeds,
 each seed's rows NODEREADER): the which-way screen row against the one-gap row, two draws at the same
 shares, chi-square on 7 degrees per seed [8.1, 2.8, 10.5, 4.6, 3.0, 6.3, 7.8, 15.5, 5.9, 3.1, 3.4, 5.8, 7.4, 1.4, 4.8, 6.4, 10.2, 11.8, 11.5, 3.7, 5.5, 7.1, 3.7, 7.2, 3.3, 1.1, 5.6, 4.4, 9.2, 9.1], the mean 6.33 against the expectation 7 (the
 scatter 3.35 against sqrt 14 = 3.74), none above the one percent band 18.5; the channel 135.0 on the mean against the
@@ -169,14 +169,14 @@ seed in both worlds; N 269 and 135 at every seed (N is the shares', the draw pla
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
 compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
-lines' clicks and the trials' coincidences, GAMEBOARD for the verdict, the ticks, the line counts, the
+lines' clicks and the trials' coincidences, LATTICE for the verdict, the ticks, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
 
 | label | world | by | reading | value |
 | --- | --- | --- | --- | --- |
-| GAMEBOARD | which_way.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | which_way.json | run_inputs | ticks | 130 |
+| LATTICE | which_way.json | run_inputs | verdict | LAWFUL |
+| LATTICE | which_way.json | run_inputs | ticks | 130 |
 | NODEREADER | which_way.json | run_inputs | clicks | 269 |
 | NODEREADER | which_way.json | run_inputs | clicks screen_0 | 0 |
 | NODEREADER | which_way.json | run_inputs | clicks screen_1 | 0 |
@@ -190,10 +190,10 @@ reading in the gate's words and the value as its report prints it.
 | NODEREADER | which_way.json | run_inputs | clicks screen_10 | 9 |
 | NODEREADER | which_way.json | run_inputs | clicks screen_11 | 13 |
 | NODEREADER | which_way.json | run_inputs | clicks which_way | 142 |
-| GAMEBOARD | which_way.json | run_inputs | lines click | 1062 |
-| GAMEBOARD | which_way.json | run_inputs | lines credit | 269 |
-| GAMEBOARD | one_gap.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | one_gap.json | run_inputs | ticks | 130 |
+| LATTICE | which_way.json | run_inputs | lines click | 1062 |
+| LATTICE | which_way.json | run_inputs | lines credit | 269 |
+| LATTICE | one_gap.json | run_inputs | verdict | LAWFUL |
+| LATTICE | one_gap.json | run_inputs | ticks | 130 |
 | NODEREADER | one_gap.json | run_inputs | clicks | 135 |
 | NODEREADER | one_gap.json | run_inputs | clicks screen_0 | 0 |
 | NODEREADER | one_gap.json | run_inputs | clicks screen_1 | 0 |
@@ -207,10 +207,10 @@ reading in the gate's words and the value as its report prints it.
 | NODEREADER | one_gap.json | run_inputs | clicks screen_10 | 16 |
 | NODEREADER | one_gap.json | run_inputs | clicks screen_11 | 19 |
 | NODEREADER | one_gap.json | run_inputs | clicks which_way | 0 |
-| GAMEBOARD | one_gap.json | run_inputs | lines click | 888 |
-| GAMEBOARD | one_gap.json | run_inputs | lines credit | 135 |
-| GAMEBOARD | two_gaps.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | two_gaps.json | run_inputs | ticks | 130 |
+| LATTICE | one_gap.json | run_inputs | lines click | 888 |
+| LATTICE | one_gap.json | run_inputs | lines credit | 135 |
+| LATTICE | two_gaps.json | run_inputs | verdict | LAWFUL |
+| LATTICE | two_gaps.json | run_inputs | ticks | 130 |
 | NODEREADER | two_gaps.json | run_inputs | clicks | 270 |
 | NODEREADER | two_gaps.json | run_inputs | clicks screen_0 | 28 |
 | NODEREADER | two_gaps.json | run_inputs | clicks screen_1 | 15 |
@@ -224,6 +224,6 @@ reading in the gate's words and the value as its report prints it.
 | NODEREADER | two_gaps.json | run_inputs | clicks screen_9 | 25 |
 | NODEREADER | two_gaps.json | run_inputs | clicks screen_10 | 24 |
 | NODEREADER | two_gaps.json | run_inputs | clicks screen_11 | 22 |
-| GAMEBOARD | two_gaps.json | run_inputs | lines click | 1086 |
-| GAMEBOARD | two_gaps.json | run_inputs | lines credit | 270 |
-| GAMEBOARD | which_way.json | back_in_time | intervals 40 | MATCH |
+| LATTICE | two_gaps.json | run_inputs | lines click | 1086 |
+| LATTICE | two_gaps.json | run_inputs | lines credit | 270 |
+| LATTICE | which_way.json | back_in_time | intervals 40 | MATCH |

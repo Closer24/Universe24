@@ -43,7 +43,7 @@ books is 413 whole quanta and no taking brings it to 0, so no front begins (chec
 the front on and off, the jumps identical); an earlier table in this file, 0.408 and 0.292 at n = 2
 and 4, was read on the build before the one draw over the outcomes entered (the per-record draw) and
 is replaced by this one, the build that shipped at bd300d4c reading as above on the same seeds.
-Named beside it, a GameBoard matter and no adjustment of the blind: the engine's turn per window is
+Named beside it, a lattice matter and no adjustment of the blind: the engine's turn per window is
 the size of the drive's level at the Node summed over the window's intervals, whose mean over the
 drive's period of 7.47 intervals is 2 / pi of the amplitude, and a window of 24 or 12 intervals
 holds 3.2 or 1.6 periods, so the angle per window varies with the drive's phase at the window's
@@ -88,7 +88,7 @@ P(e at T_pi) is the part the record stands in at the trial's end, read by `tools
 from the reader's own books on the board object (`meeting.NodeBooks.part`, the NodeReader's own
 content, not a written line; the same part is the last `jump` line's `realised`). The jumps per kind
 are the `jump` lines labelled by the NodeReader. The pulse's count of 413 in the books, the turn per
-window named beside the blind and the pi pulse's tuning are GameBoard matters. The lines carry the
+window named beside the blind and the pi pulse's tuning are lattice matters. The lines carry the
 board's `tick` and the `window` in board intervals; the turn itself is taken per proper interval at the
 record's Node (`meeting.turned_labels`) and no line carries that clock.
 
@@ -118,7 +118,7 @@ and at n = 8 (0.267 against 0.235, 0.032 off, within one standard error of 0.039
 against 0.500, 0.058 off, within two standard errors (0.046) and not one; n = 1 reads 0.942 against
 1.000, 113 of 120, 7 trials ending in g where the blind and the shipped act had none: a MISS and a
 FINDING by name, named in this section before the four other probe counts were run and read as
-predicted. Named, a GameBoard matter and
+predicted. Named, a lattice matter and
 no adjustment of the blind: the window's turn is the plane's size over the window whatever the drive's
 phase at the window's start (the hands' A W / 2 at every arrival phase), so the angle per window no
 longer varies with that phase as the magnitude form's did; and the one turn per window passes through
@@ -203,7 +203,7 @@ asked of the mathematician, a round of its own and not tonight's. The advisor's 
 the trials 480 per world from now, 120 reads and does not prove; a design change for the next round,
 the five worlds' trials untouched tonight.
 
-The diagnostic the advisor asked, run before any change, labelled GAMEBOARD (a reading of the board
+The diagnostic the advisor asked, run before any change, labelled LATTICE (a reading of the board
 and no measurement): `zeno_2.json` at the seed 2 (the record's generator at the state 2, as the trials
 set it), whose record takes at the first window's close, the interval 24, g to e, and ends in e; beside
 it the same seed with the taking suppressed (`meeting.took` returning no taking, so the record writes
@@ -249,7 +249,7 @@ return e to g at n = 2: 130 of the 381 that flipped g to e flipped back (0.34 ag
 85 of 380, 0.22), the suppression of the return lifted in part and not whole, by name. The gates bit
 for bit (the two slits' and Bell's four and the GHZ's four output files byte-identical to main's at
 7033a6aa, their records below one quantum per Node at every click, so the hole to 0 stands there).
-A GameBoard diagnostic beside the run, labelled so (the seed 2 of n = 2, the drive's first line at
+A lattice diagnostic beside the run, labelled so (the seed 2 of n = 2, the drive's first line at
 the reader's Node): at the click the twin's share at the Node reads 2.564 quanta; after the
 face's two intervals the levels are the twin's scaled by 0.781 (-183 and -313 against -234 and -400),
 their ratio the twin's within 0.001, and the share at the Node reads 0.975 of a quantum against the

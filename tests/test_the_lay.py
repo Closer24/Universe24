@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from event_universe import lay, world_files
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
@@ -56,7 +56,7 @@ def test_the_write_step_lays_at_the_nodes_with_the_remainder_at_the_origin_and_o
     world = json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8"))
     world.update(bodies=[], messages=[], node_readers=[], ticks=4)
     (path := tmp_path / "box.json").write_text(json.dumps(world), encoding="utf-8")
-    board = GameBoard(load_world(path), (lines := []).append)
+    board = Lattice(load_world(path), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     half, record = board.half_wall(pulse), board.states[pulse].lines[0]
     first, second, third = (2, 2, 1), (3, 2, 1), (4, 2, 1)
@@ -128,7 +128,7 @@ def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_a
 def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
     door, tmp_path, monkeypatch
 ):
-    """Every door of the act on a massless record changes the two sums by 0 and the back-in-time gate reads MATCH across it (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode: the loader's lay of the file's levels, `GameBoard.lay`; the source in time's increments over its span, `giving.given_quantum`; the open board's packet, `giving.laid_packet`): the act's change read from its lay lines (the loader's lay has none, the sums themselves 0 at the start), the division act's leftover units among them, since `lay.written` is the one place that writes a level from outside Rule3 and the host's tool crosses every write from the lay lines."""
+    """Every door of the act on a massless record changes the two sums by 0 and the back-in-time gate reads MATCH across it (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode: the loader's lay of the file's levels, `Lattice.lay`; the source in time's increments over its span, `giving.given_quantum`; the open board's packet, `giving.laid_packet`): the act's change read from its lay lines (the loader's lay has none, the sums themselves 0 at the start), the division act's leftover units among them, since `lay.written` is the one place that writes a level from outside Rule3 and the host's tool crosses every write from the lay lines."""
     if door == "the loader's lay":  # the scratch world beside its universe
         monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
         path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
@@ -136,7 +136,7 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
         path, name, intervals = EVENTS / "resonance" / "resonant.json", "pulse", 112  # the giving at 61
     else:
         path, name, intervals = packet_world(tmp_path, TOOL), "pulse", 20
-    board = GameBoard(load_world(path), (lines := []).append)
+    board = Lattice(load_world(path), (lines := []).append)
     index = [f.name for f in board.families].index(name)
     assert not lines and board.families[index].pair[0] == board.families[index].pair[1]
     line = board.states[index].lines[0]
@@ -146,16 +146,16 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
     lays = [c for c in lines if c["event"] == "lay" and c["family"] == name]
     assert (door == "the loader's lay") == (not lays)
     assert [sum(c["after"][k] - c["before"][k] for c in lays) for k in (0, 1)] == [0, 0]
-    assert BACK.verdict(GameBoard(load_world(path)), intervals)["verdict"] == "MATCH"
+    assert BACK.verdict(Lattice(load_world(path)), intervals)["verdict"] == "MATCH"
 
 
 def test_a_taking_writes_nothing_on_a_dense_record_and_the_books_carry_the_deficit(
     tmp_path, monkeypatch
 ):
-    """The undepleted beam (ALGEBRA.md, The click writes on the GameBoard; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `GameBoard.books`): on the ion-like world, a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board), the drive's record of several quanta per Node (its booked share at the ion's two Nodes above its quantum W_rec) is taken by the ion over 170 intervals: no face is booked for the drive and no front begins from it, its three arrays stand bit for bit as the twin's without the ion at every interval (the drive reads no holder, so its step is the same Rule3), its four sums (plain and staggered of now and before, sigma = (-1)^(x + y + z) over the board) and its largest level printed with the twin's and equal; the books' count down by one per taking, the deficit the takings' count and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift`, Rule3's own rounding, over W_c, and one quantum of the reading's rounding; the books' line and the tolerance printed); the back-in-time gate reads MATCH over the run across the takings, the ion's lays crossed from their lines."""
+    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `Lattice.books`): on the ion-like world, a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board), the drive's record of several quanta per Node (its booked share at the ion's two Nodes above its quantum W_rec) is taken by the ion over 170 intervals: no face is booked for the drive and no front begins from it, its three arrays stand bit for bit as the twin's without the ion at every interval (the drive reads no holder, so its step is the same Rule3), its four sums (plain and staggered of now and before, sigma = (-1)^(x + y + z) over the board) and its largest level printed with the twin's and equal; the books' count down by one per taking, the deficit the takings' count and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift`, Rule3's own rounding, over W_c, and one quantum of the reading's rounding; the books' line and the tolerance printed); the back-in-time gate reads MATCH over the run across the takings, the ion's lays crossed from their lines."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path, alone = (ion_world(tmp_path, TOOL, ticks=170, body=body) for body in (True, False))
-    board, twin = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(alone))
+    board, twin = Lattice(load_world(path), (lines := []).append), Lattice(load_world(alone))
     drive = [f.name for f in board.families].index("strong_drive")
     unit, count, region = board.credit.units[drive], board.credit.counts[drive], ((3, 3, 2), (4, 3, 2))
     taken = board.mask(region)
@@ -190,4 +190,4 @@ def test_a_taking_writes_nothing_on_a_dense_record_and_the_books_carry_the_defic
     print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
     assert books["quanta"] == its_books["quanta"] and books["drift"] == its_books["drift"]
     assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
-    assert BACK.verdict(GameBoard(load_world(path)), 169)["verdict"] == "MATCH"
+    assert BACK.verdict(Lattice(load_world(path)), 169)["verdict"] == "MATCH"

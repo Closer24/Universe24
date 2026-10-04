@@ -16,7 +16,7 @@ the short procedure of [the shared workflow](skills/workflow.md).
    overwrite local work of the user or another conversation; use a separate
    worktree for concurrent work.
 2. The core (`src/event_universe/core/`, `src/event_universe/node.py` and
-   `src/event_universe/game_board.py`) changes only by the Boss's worker on a
+   `src/event_universe/lattice.py`) changes only by the Boss's worker on a
    brief that names the law's line. A new act of the law is a pure function of
    arrays that calls Rule3 alone, its line in `docs/ALGEBRA.md` first and the
    three verdicts (generic, vector, local) in its pull request. A new module of
@@ -56,7 +56,7 @@ the short procedure of [the shared workflow](skills/workflow.md).
 
 ## Tests and documents
 
-- A test exercises one generic rule alone on a minimal GameBoard, its expected
+- A test exercises one generic rule alone on a minimal lattice, its expected
   integers written before the first run, with an edge case; no test pins the
   numbers of an example world. `tests/` may not grow, only shrink, until it is below
   `src/`, the ratchet's room for a round granted in its brief, "this round adds N

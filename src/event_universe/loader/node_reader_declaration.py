@@ -1,4 +1,4 @@
-"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the giving at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `node_reader` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
+"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the giving at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `node_reader` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
 
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ OUT_KEYS, OUT_REQUIRED = (
 
 @dataclass(frozen=True)
 class Transition:
-    """A transition of a record at a Node that is a NodeReader (ALGEBRA.md, The click writes on the GameBoard (j), the taking click): the part the record leaves, the part it enters, the family whose arriving quantum it takes climbing or receives back descending (the parts' declared order, `parts_of`; `meeting.exchange`), by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands): it names the family whose lay at the body's Node closes the body's window, the body taking it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
+    """A transition of a record at a Node that is a NodeReader (ALGEBRA.md, The click writes on the lattice (j), the taking click): the part the record leaves, the part it enters, the family whose arriving quantum it takes climbing or receives back descending (the parts' declared order, `parts_of`; `meeting.exchange`), by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands): it names the family whose lay at the body's Node closes the body's window, the body taking it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
 
     leaves: int
     enters: int
@@ -76,7 +76,7 @@ class Rate:
 
 @dataclass(frozen=True)
 class Conversion:
-    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the GameBoard; the two hands): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands), and per record out the sense of its lay, +1 or -1 for a plane family as the table declares it and 0 for a record of real lines (the mathematician's hand: the sense is the table's per record out and no family's, the anti-body being the same plane family at the opposite sense)."""
+    """A conversion of a record whole at its one Node (ALGEBRA.md, The click writes on the lattice; the two hands): the rate in intervals per expected conversion, the declared floor (nature's lifetime read in as a declaration), the families of the records out, by their positions, each given one whole quantum at the Node by the count (the two hands), and per record out the sense of its lay, +1 or -1 for a plane family as the table declares it and 0 for a record of real lines (the mathematician's hand: the sense is the table's per record out and no family's, the anti-body being the same plane family at the opposite sense)."""
 
     rate: int
     outs: tuple[int, ...]
@@ -113,7 +113,7 @@ def parts_of(
     if sum(counts) != count or sum(1 for c in counts if c) > 1:
         raise ValueError(
             f"{label} holds the counts {counts}: the body's count {count} stands in one part at the start, a lay "
-            "in one mode having no amplitude in any other (ALGEBRA.md, The click writes on the GameBoard (j))"
+            "in one mode having no amplitude in any other (ALGEBRA.md, The click writes on the lattice (j))"
         )
     return tuple(names), tuple(counts)
 
@@ -186,7 +186,7 @@ def rates_of(
 
 
 def holding_period(rate: Rate, name: str, families: tuple[FamilyRule, ...], action: int) -> Rate:
-    """The span condition on every giving, the source in time and the open board's packet alike (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode; The click writes on the GameBoard (5)): the giving's lifetime holds one period of its resonance, tau Omega >= 2 pi, that is num / den <= cos(2 pi / tau) by the rotation act (`giving.holds_period`; 8 at [2, 3], 15 at [5414, 6000]), else the loader refuses by name with the lifetime and the least admitted span, since a lay below its period is mostly uniform mode and the division act would take most of it; the rate as declared where it holds, the one rule on the span in one place."""
+    """The span condition on every giving, the source in time and the open board's packet alike (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode; The click writes on the lattice (5)): the giving's lifetime holds one period of its resonance, tau Omega >= 2 pi, that is num / den <= cos(2 pi / tau) by the rotation act (`giving.holds_period`; 8 at [2, 3], 15 at [5414, 6000]), else the loader refuses by name with the lifetime and the least admitted span, since a lay below its period is mostly uniform mode and the division act would take most of it; the rate as declared where it holds, the one rule on the span in one place."""
     scale = count_wall(families[rate.light], action) ** SCALE_OF
     if holds_period(rate.lifetime, rate.resonance, scale):
         return rate
@@ -287,7 +287,7 @@ def sense_of(value: object, label: str, plane: bool) -> int:
 def conversion_of(
     value: object, label: str, families: tuple[FamilyRule, ...], own: int, quanta: dict[str, int]
 ) -> tuple[Conversion, int]:
-    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the GameBoard; the two hands, the advisor's (c) and the mathematician's hand: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count: a family's name for a record of real lines, and for a plane family an entry {`family`, `sense`}, the sense +1 or -1 of its lay, `giving.laid_by_count`; a plane family named without its sense and a record of real lines with one are refused by name, `sense_of`; the mathematician's hand), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
+    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the lattice; the two hands, the advisor's (c) and the mathematician's hand: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count: a family's name for a record of real lines, and for a plane family an entry {`family`, `sense`}, the sense +1 or -1 of its lay, `giving.laid_by_count`; a plane family named without its sense and a record of real lines with one are refused by name, `sense_of`; the mathematician's hand), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
     found = keyed(value, label, CONVERSION_KEYS, CONVERSION_REQUIRED)
     rate = integer(found["rate"], f"{label}.rate", 1)
     if not isinstance(found["to"], list) or not found["to"]:
@@ -318,7 +318,7 @@ def node_reader_of(
     quanta: dict[str, int],
     count: int,
 ) -> NodeReaderDeclaration:
-    """A body's declaration as a NodeReader (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_reader` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_reader` to draw it; refused by name otherwise."""
+    """A body's declaration as a NodeReader (ALGEBRA.md, The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_reader` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_reader` to draw it; refused by name otherwise."""
     family = families[own]
     if "conversion" in body:
         if "parts" in body or "transitions" in body or "rates" in body:

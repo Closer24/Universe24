@@ -32,7 +32,7 @@ gate's: the top reader's window inflow is 803.239 quanta against the left's 923.
 the column 16, one along y from the row 16, the top 7 Nodes across, the edges 6 along and 4 across,
 the readers 28 Nodes each). Read with each beam laid alone (copies of `ghz_x_y_y.json` with one, two
 or three of its messages, laid by `tools/pixel_mode.py --input` and run over the 60 intervals; the
-window inflows NODEREADER, the lay's count GAMEBOARD; #1827 comment 5975991093):
+window inflows NODEREADER, the lay's count LATTICE; #1827 comment 5975991093):
 
 | the lay | left | right | top | the lay's count |
 | --- | --- | --- | --- | --- |
@@ -71,46 +71,46 @@ road, the x beams laid apart by the packet's 13 Nodes, is a world file's change 
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
 compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
-lines' clicks and the trials' coincidences, GAMEBOARD for the verdict, the ticks, the line counts, the
+lines' clicks and the trials' coincidences, LATTICE for the verdict, the ticks, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
 
 | label | world | by | reading | value |
 | --- | --- | --- | --- | --- |
-| GAMEBOARD | ghz_x_y_y.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | ghz_x_y_y.json | run_inputs | ticks | 60 |
+| LATTICE | ghz_x_y_y.json | run_inputs | verdict | LAWFUL |
+| LATTICE | ghz_x_y_y.json | run_inputs | ticks | 60 |
 | NODEREADER | ghz_x_y_y.json | run_inputs | clicks | 3 |
 | NODEREADER | ghz_x_y_y.json | run_inputs | clicks left | 1 |
 | NODEREADER | ghz_x_y_y.json | run_inputs | clicks right | 1 |
 | NODEREADER | ghz_x_y_y.json | run_inputs | clicks top | 1 |
-| GAMEBOARD | ghz_x_y_y.json | run_inputs | lines click | 156 |
-| GAMEBOARD | ghz_x_y_y.json | run_inputs | lines parts | 156 |
-| GAMEBOARD | ghz_x_y_y.json | run_inputs | lines credit | 3 |
-| GAMEBOARD | ghz_y_x_y.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | ghz_y_x_y.json | run_inputs | ticks | 60 |
+| LATTICE | ghz_x_y_y.json | run_inputs | lines click | 156 |
+| LATTICE | ghz_x_y_y.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_x_y_y.json | run_inputs | lines credit | 3 |
+| LATTICE | ghz_y_x_y.json | run_inputs | verdict | LAWFUL |
+| LATTICE | ghz_y_x_y.json | run_inputs | ticks | 60 |
 | NODEREADER | ghz_y_x_y.json | run_inputs | clicks | 3 |
 | NODEREADER | ghz_y_x_y.json | run_inputs | clicks left | 1 |
 | NODEREADER | ghz_y_x_y.json | run_inputs | clicks right | 1 |
 | NODEREADER | ghz_y_x_y.json | run_inputs | clicks top | 1 |
-| GAMEBOARD | ghz_y_x_y.json | run_inputs | lines click | 156 |
-| GAMEBOARD | ghz_y_x_y.json | run_inputs | lines parts | 156 |
-| GAMEBOARD | ghz_y_x_y.json | run_inputs | lines credit | 3 |
-| GAMEBOARD | ghz_y_y_x.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | ghz_y_y_x.json | run_inputs | ticks | 60 |
+| LATTICE | ghz_y_x_y.json | run_inputs | lines click | 156 |
+| LATTICE | ghz_y_x_y.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_y_x_y.json | run_inputs | lines credit | 3 |
+| LATTICE | ghz_y_y_x.json | run_inputs | verdict | LAWFUL |
+| LATTICE | ghz_y_y_x.json | run_inputs | ticks | 60 |
 | NODEREADER | ghz_y_y_x.json | run_inputs | clicks | 3 |
 | NODEREADER | ghz_y_y_x.json | run_inputs | clicks left | 1 |
 | NODEREADER | ghz_y_y_x.json | run_inputs | clicks right | 1 |
 | NODEREADER | ghz_y_y_x.json | run_inputs | clicks top | 1 |
-| GAMEBOARD | ghz_y_y_x.json | run_inputs | lines click | 156 |
-| GAMEBOARD | ghz_y_y_x.json | run_inputs | lines parts | 156 |
-| GAMEBOARD | ghz_y_y_x.json | run_inputs | lines credit | 3 |
-| GAMEBOARD | ghz_x_x_x.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | ghz_x_x_x.json | run_inputs | ticks | 60 |
+| LATTICE | ghz_y_y_x.json | run_inputs | lines click | 156 |
+| LATTICE | ghz_y_y_x.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_y_y_x.json | run_inputs | lines credit | 3 |
+| LATTICE | ghz_x_x_x.json | run_inputs | verdict | LAWFUL |
+| LATTICE | ghz_x_x_x.json | run_inputs | ticks | 60 |
 | NODEREADER | ghz_x_x_x.json | run_inputs | clicks | 3 |
 | NODEREADER | ghz_x_x_x.json | run_inputs | clicks left | 1 |
 | NODEREADER | ghz_x_x_x.json | run_inputs | clicks right | 1 |
 | NODEREADER | ghz_x_x_x.json | run_inputs | clicks top | 1 |
-| GAMEBOARD | ghz_x_x_x.json | run_inputs | lines click | 156 |
-| GAMEBOARD | ghz_x_x_x.json | run_inputs | lines parts | 156 |
-| GAMEBOARD | ghz_x_x_x.json | run_inputs | lines credit | 3 |
-| GAMEBOARD | ghz_x_y_y.json | back_in_time | intervals 60 | MATCH |
+| LATTICE | ghz_x_x_x.json | run_inputs | lines click | 156 |
+| LATTICE | ghz_x_x_x.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_x_x_x.json | run_inputs | lines credit | 3 |
+| LATTICE | ghz_x_y_y.json | back_in_time | intervals 60 | MATCH |

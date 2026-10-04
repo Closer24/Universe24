@@ -103,7 +103,7 @@ def check_the_cut_regions_uniform_mode() -> Check:
 
 
 def check_the_folded_axis_carries_the_band() -> Check:
-    """main.tex Section 9.1: a record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat GameBoard carries the file's band exactly: on a chain with y and z folded (rule3.chain_arrivals, four Ports returning the Node itself) a plane wave along x satisfies the line at cos omega = (num / (3 den)) (cos k + 2), the band at k_y = k_z = 0; exact at rational angles by rule3.numerator."""
+    """main.tex Section 9.1: a record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly: on a chain with y and z folded (rule3.chain_arrivals, four Ports returning the Node itself) a plane wave along x satisfies the line at cos omega = (num / (3 den)) (cos k + 2), the band at k_y = k_z = 0; exact at rational angles by rule3.numerator."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 6):
         gamma = draw.randint(2, 20)

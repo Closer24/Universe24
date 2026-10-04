@@ -1,4 +1,4 @@
-"""The write: a family's one act onto the GameBoard, (w x q(Node) + r) div E at every Node by Rule3's carried division with the remainder r kept at that Node, forward and back (ALGEBRA.md #the-primitives, a family's write is one act): the hold is its instance, one write per held part with one remainder, and no number is the act's own."""
+"""The write: a family's one act onto the lattice, (w x q(Node) + r) div E at every Node by Rule3's carried division with the remainder r kept at that Node, forward and back (ALGEBRA.md #the-primitives, a family's write is one act): the hold is its instance, one write per held part with one remainder, and no number is the act's own."""
 
 from __future__ import annotations
 

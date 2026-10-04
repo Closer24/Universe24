@@ -160,7 +160,7 @@ under its own name. No expectation is rewritten after a look, and no body's
 number is tuned to a result.
 
 Only a NodeReader's click is a measurement. Every number reported is labelled
-NODEREADER or GAMEBOARD; a GameBoard reading is a diagnostic, never compared with
+NODEREADER or LATTICE; a lattice reading is a diagnostic, never compared with
 nature and never a result on its own.
 
 ## The method of derivation (the owner, 2026-10-01)
@@ -181,8 +181,8 @@ the paper explains it as its own:
    equations.
 4. Every observable is a click formula: the NodeReader's form over the
    quantum's measure on the forward orbit, or a ratio of two such. Every other
-   formula is of the GameBoard, a diagnostic, and is labelled so beside its
-   status (the fence: GameBoard or clicks).
+   formula is of the lattice, a diagnostic, and is labelled so beside its
+   status (the fence: lattice or clicks).
 5. Re-derive every row whenever a line changes and look for the problems: a
    row that does not come out, a sign that turns, a band that is not real. Each
    is a finding by name, never smoothed. Two hands derive before a line is
@@ -196,7 +196,7 @@ the paper explains it as its own:
 Every experiment, rule, folder and file is called by its plain name: "the two
 slits", "the moving lamp's redshift", "the signed read". No code letter or
 number stands for a thing, not even in parentheses after its name. A block is
-named by what it is on the GameBoard (a source, a body, a NodeReader, a clock);
+named by what it is on the lattice (a source, a body, a NodeReader, a clock);
 the laboratory's word for it may be said once to explain what it models. A new
 word enters the words of docs/ENGINE.md with its one definition before it is
 used; a word already taken is not reused.
@@ -226,13 +226,13 @@ and every item the Boss brings the owner opens with six short lines, one each:
 which Link and Port, at what rate, what is kept and what is lost; (2) the generic
 solution: the one primitive, for every family alike, from which the number
 follows, never a patch beside it; (3) why it will work: the mechanism on the
-GameBoard, with the reading that would show it and the reading that would refute
+Lattice, with the reading that would show it and the reading that would refute
 it; (4) why do this at all: what it buys the law or a measurement, and what stays
 unread or wrong if it is not done; (5) the decisions: which lines of
 docs/HIGHLIGHTS.md the item keeps, and whether one should now change, a change
 being a proposal made on the owner's word; (6) the implementation: what changes
 in the tree, the time end to end, and what it can break. The evidence follows the
-six lines. Every number in them is labelled NODEREADER or GAMEBOARD.
+six lines. Every number in them is labelled NODEREADER or LATTICE.
 
 ## Writing to the owner (the owner, 2026-09-30)
 
@@ -246,7 +246,7 @@ repository.
 
 ## Checks proportional to the change
 
-A test exercises one generic rule alone on a minimal GameBoard, with its expected
+A test exercises one generic rule alone on a minimal lattice, with its expected
 integers derived from the law inside the test, with an edge case, and finishes in
 seconds; no test pins the numbers of an example world (the owner, 2026-09-17 and
 2026-09-19). A behaviour change needs a dedicated test; a bug is fixed with a
@@ -290,7 +290,7 @@ Every repository file, commit and pull request body is in English, simple and
 precise; every message to the owner is in Hebrew (AGENTS.md, the language rule).
 Every heading and every name is in sentence case: a capital first letter, never
 all caps (the owner, 2026-09-30). The words of the engine are the words of
-docs/ENGINE.md: a Node, a Link, a Port, an Event, the GameBoard, a Family, a
+docs/ENGINE.md: a Node, a Link, a Port, an Event, the lattice, a Family, a
 Record, a Body, a NodeReader, a Click, a Primitive, an Interval, and no other noun
 for them. The old nouns detector, instrument, emitter, absorber, observer and
 measurer have left (the owner's word of 2026-10-03, "no field, only events"): a

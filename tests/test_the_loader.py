@@ -3,7 +3,7 @@
 import json
 
 from event_universe import world_files
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.loader import faces, keys, lay, messages, mode, universe
 from event_universe.loader.derived import PLANE_LINE, REAL_LINE
 from event_universe.world_files import load_world
@@ -187,9 +187,9 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
 def test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_does(
     tmp_path, monkeypatch
 ):
-    """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The message lay), and a mode entry whose level sums otherwise is refused by name at the board's construction, through the one lay act's guard (`GameBoard.lay`, `lay.guarded`; the loader builds no board and refuses nothing of this)."""
+    """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The message lay), and a mode entry whose level sums otherwise is refused by name at the board's construction, through the one lay act's guard (`Lattice.lay`, `lay.guarded`; the loader builds no board and refuses nothing of this)."""
     for world in ("anticoincidence/one_photon", "two_slits/two_slits", "bell/bell_a_b"):
-        board = GameBoard(load_world(EVENTS / f"{world}.json"), lambda line: None)
+        board = Lattice(load_world(EVENTS / f"{world}.json"), lambda line: None)
         for index, family in enumerate(board.families):
             if family.quanta and family.pair[0] == family.pair[1]:
                 line = board.states[index].lines[0]
@@ -197,14 +197,14 @@ def test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = slit_world(tmp_path, TOOL)  # the generator's packet: the two sums 0, admitted at the door
     mode_path = path.with_suffix(".mode.json")
-    mode, board = json.loads(mode_path.read_text(encoding="utf-8")), GameBoard(load_world(path))
+    mode, board = json.loads(mode_path.read_text(encoding="utf-8")), Lattice(load_world(path))
     laid = board.states[[f.name for f in board.families].index("charge")].lines[0]
     assert int(laid.now.sum(dtype=object)) == 0 and int(laid.before.sum(dtype=object)) == 0
     for word in ("now", "before"):  # one level moved by 2 at one Node: the act's guard refuses by name
         moved = json.loads(json.dumps(mode))
         moved["messages"][0]["moving"][word]["values"][0] += 2
         mode_path.write_text(json.dumps(moved), encoding="utf-8")
-        refusal = refused("wakes the zero mode", lambda: GameBoard(load_world(path)))
+        refusal = refused("wakes the zero mode", lambda: Lattice(load_world(path)))
         assert f"SUM {word} by 2" in str(refusal) and "'charge'" in str(refusal)
 
 
@@ -226,10 +226,10 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
     refusal = str(refused("staggered mode", load_world, written("even", shape=[4, 4, 2])))
     print(refusal)
     assert "'gravity'" in refusal and "[4, 4, 2]" in refusal and "odd extent or open it" in refusal
-    assert GameBoard(load_world(written("odd", shape=[4, 4, 3]))).shape == (4, 4, 3)
+    assert Lattice(load_world(written("odd", shape=[4, 4, 3]))).shape == (4, 4, 3)
     opened = dict(x="open", y="periodic", z="periodic")
     assert (
-        GameBoard(load_world(written("open", shape=[4, 4, 2], boundary=opened, face_depth=1))).shape[0]
+        Lattice(load_world(written("open", shape=[4, 4, 2], boundary=opened, face_depth=1))).shape[0]
         == 4
     )
 

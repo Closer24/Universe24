@@ -1,4 +1,4 @@
-"""The records' lines and the sign's rows (ALGEBRA.md #the-count-is-the-records-share; No record reads its own write of the sign): a line of dimension one over the GameBoard, the lines of one record of a family (its bodies each a record where the family reads a holder of the sign), light as the sum of a holder of the sign's rows, the sum of every row but the reader's own, and the readings of the lines kept nowhere, the form, the Wronskian, the well, the write's factor, the turn's factor and the one write's numerators row by row; every one a pure function of arrays, no state of its own."""
+"""The records' lines and the sign's rows (ALGEBRA.md #the-count-is-the-records-share; No record reads its own write of the sign): a line of dimension one over the lattice, the lines of one record of a family (its bodies each a record where the family reads a holder of the sign), light as the sum of a holder of the sign's rows, the sum of every row but the reader's own, and the readings of the lines kept nowhere, the form, the Wronskian, the well, the write's factor, the turn's factor and the one write's numerators row by row; every one a pure function of arrays, no state of its own."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ States = list[NodeState]  # every family's NodeState, in the families' order
 
 @dataclass(frozen=True)
 class Record:
-    """One line of dimension one over the GameBoard: the level now, the level before and the remainder r at every Node."""
+    """One line of dimension one over the lattice: the level now, the level before and the remainder r at every Node."""
 
     now: np.ndarray
     before: np.ndarray
@@ -149,12 +149,12 @@ def largest(record: Record) -> int:
 
 
 def zeros(shape: tuple[int, int, int], kind: type) -> np.ndarray:
-    """An array of zeros over the GameBoard, of the run's kind of integers (the loader's choice by the file's width, `World.kind`)."""
+    """An array of zeros over the lattice, of the run's kind of integers (the loader's choice by the file's width, `World.kind`)."""
     return np.zeros(shape, dtype=kind)
 
 
 def full(shape: tuple[int, int, int], value: Any, kind: type) -> np.ndarray:
-    """An array over the GameBoard at one value, of the run's kind of integers."""
+    """An array over the lattice at one value, of the run's kind of integers."""
     return np.full(shape, value, dtype=kind)
 
 

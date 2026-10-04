@@ -80,12 +80,12 @@ class FamilyRule(Row):
 
     @property
     def laid(self) -> int:
-        """The lines of one part the laid pair goes to, one per real line and one per plane (its first line, the second line its sense): the count of a body's or a message's `weights` (`keys.weights_of`, `GameBoard.lay`)."""
+        """The lines of one part the laid pair goes to, one per real line and one per plane (its first line, the second line its sense): the count of a body's or a message's `weights` (`keys.weights_of`, `Lattice.lay`)."""
         return self.planes if self.plane else self.width
 
     @property
     def several(self) -> bool:
-        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `GameBoard.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported."""
+        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `Lattice.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported."""
         return self.parts > 1 or (self.width > 1 and not self.plane)
 
     @property

@@ -1,4 +1,4 @@
-"""The phase passes with the quantum (B1 of the law-engine alignment audit, #1793 comments 5982140872 and 5982171035 (3), the mathematician's of 17:14 UTC; ALGEBRA.md, The two-mode line, row 16, and The click writes on the GameBoard (j), the giving): the entered part's direction is the leaving part's turned by the arriving record's phase at the Node, atan2(Y', X) of the window's two sums, and the born light's source begins at the phase phi_e - phi_g read from the two parts' directions at the Node."""
+"""The phase passes with the quantum (B1 of the law-engine alignment audit, #1793 comments 5982140872 and 5982171035 (3), the mathematician's of 17:14 UTC; ALGEBRA.md, The two-mode line, row 16, and The click writes on the lattice (j), the giving): the entered part's direction is the leaving part's turned by the arriving record's phase at the Node, atan2(Y', X) of the window's two sums, and the born light's source begins at the phase phi_e - phi_g read from the two parts' directions at the Node."""
 
 import math
 import random
@@ -6,8 +6,8 @@ import random
 from event_universe import meeting
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import SCALE_OF
-from event_universe.game_board import GameBoard
 from event_universe.giving import increments_of, radiated_total, start_of
+from event_universe.lattice import Lattice
 from event_universe.resonance import turned_direction
 from event_universe.world_files import load_world
 from tests.laws import EVENTS
@@ -61,7 +61,7 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     monkeypatch.setattr(meeting, "turned_labels", held)
     monkeypatch.setattr(meeting, "relaid", spied)
     monkeypatch.setattr(meeting, "leaving_phase", read)
-    board = GameBoard(load_world(EVENTS / "zeno" / "zeno_2.json"), (lines := []).append)
+    board = Lattice(load_world(EVENTS / "zeno" / "zeno_2.json"), (lines := []).append)
     taken: list[dict] = []
     while not taken and board.tick < 96:
         board.step()
