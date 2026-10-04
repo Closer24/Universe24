@@ -104,7 +104,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
 
 
 def test_the_trials_seed_each_record_by_a_hash_and_not_by_an_arithmetic_progression():
-    """The trials tool's seeding (tools/meeting_trials.py, `hashed_state`; the mathematician's finding of 2026-10-04 on #1827 at the advisor's second): the generator of the files is affine, so trial labels in arithmetic progression (the seed times the records' number plus the record's number, the tool's rule before the fix) stay one progression at every depth of the draw and the trials' variates at a fixed depth are one Weyl sequence; with the files' generator and the control's labels_unit the second draw of 200 such trials falls in the even tenths alone. The state from a hash of the label breaks the progression: over the same 200 trials the tenth each of the first four draws falls in is flat within the binomial band, and no three consecutive states share a difference. The engine's `drawn` is the generator read; the tool holds no number of the law."""
+    """The trials tool's seeding (tools/meeting_trials.py, `hashed_state`; the mathematician's finding of 2026-10-04 on #1827 at the advisor's second): the generator of the files is affine, so trial labels in arithmetic progression (the seed times the records' number plus the record's number, the tool's rule before the fix) stay one progression at every depth of the draw and the trials' variates at a fixed depth are one Weyl sequence; with the files' generator and the control's labels_unit the states of 200 such trials after each of the first four draws have one consecutive difference modulo the modulus and their picks over a fixed total, (state times total) div 2^width, two adjacent consecutive differences modulo the total, one Weyl sequence (under the pick by the state modulo the total, until the clean main of 2026-10-04, the second draw fell in the even tenths alone; the pick from the high bits, the mathematician's #1793 comment 5981866600 K1, spreads the one progression evenly over the tenths and hides the defect from a histogram). The state from a hash of the label breaks the progression: over the same 200 trials the tenth each of the first four draws falls in is flat within the binomial band, and no three consecutive states share a difference. The engine's `drawn` is the generator read; the tool holds no number of the law."""
     from event_universe.features.click import drawn
     from tests.laws import ROOT, load_file
 
@@ -113,24 +113,107 @@ def test_the_trials_seed_each_record_by_a_hash_and_not_by_an_arithmetic_progress
     labels_unit, modulus = 16305915721555161 + 2094318374976, 1 << 63
     tenths = [labels_unit // 10] * 10  # the draw's variate x mod unit read by its tenth
 
-    def histograms(states):
-        found = []
+    def histograms(states):  # per depth the tenths' counts and the states after the draws
+        found, after = [], []
         for depth in range(1, 5):
-            counts = [0] * 10
+            counts, ends = [0] * 10, []
             for state in states:
                 for _ in range(depth):
                     index, state = drawn(state, multiplier, increment, modulus, tenths)
                 counts[index] += 1
+                ends.append(state)
             found.append(counts)
-        return found
+            after.append(ends)
+        return found, after
 
-    affine = histograms([seed * 2 for seed in range(1, 201)])  # the rule before the fix
-    hashed = histograms([trials.hashed_state(seed * 2, width) for seed in range(1, 201)])
+    affine, states = histograms([seed * 2 for seed in range(1, 201)])  # the rule before the fix
+    hashed, _ = histograms([trials.hashed_state(seed * 2, width) for seed in range(1, 201)])
+    total = sum(tenths)
+    steps = [{(b - a) % modulus for a, b in zip(ends, ends[1:], strict=False)} for ends in states]
+    picks = [
+        {(b - a) % total for a, b in zip(p, p[1:], strict=False)}
+        for p in ([s * total // modulus for s in e] for e in states)
+    ]
     print(
-        f"the affine seeding's second draw over 200 trials {affine[1]}; the hash's four draws {hashed}"
+        f"the affine seeding's second draw over 200 trials {affine[1]}, its states' differences {[len(s) for s in steps]} "
+        f"and its picks' {[len(p) for p in picks]}; the hash's four draws {hashed}"
     )
-    assert affine[1][1::2] == [0] * 5 and sum(affine[1]) == 200  # the even tenths alone, the finding
+    assert all(len(s) == 1 for s in steps) and sum(affine[1]) == 200  # one progression at every depth
+    assert all(len(p) <= 2 and max(p) - min(p) <= 1 for p in picks)  # the Weyl sequence's two steps
     assert all(abs(count - 20) <= 17 for counts in hashed for count in counts)  # four sigma of 4.24
     states = [trials.hashed_state(label, width) for label in range(400)]
     assert all(0 <= state < modulus for state in states)
     assert all(b - a != c - b for a, b, c in zip(states, states[1:], states[2:], strict=False))
+
+
+def test_the_pick_is_the_states_fraction_of_the_weights_total_and_no_low_bit_enters():
+    """The generator's pick (ALGEBRA.md, The click is the meeting, How it chooses; the mathematician's line #1793 comment 5981866600 K1 with K2, the advisor's breaker 5981736108, two hands; `features/click.drawn`): the pick is the state's fraction of the weights' total, (x times total) div 2^width, and the index the first whose cumulative weight exceeds it, so the state's low bits, each with the period of its own count, enter no pick. With the shipped generator (the two slits' design, 6364136223846793005 and 1442695040888963407 at the modulus 2^63) from the seed 24, through the engine's own `drawn`: (a) the weights [1, 1] over 8,000 draws give each index near 4,000 and the equal consecutive pairs near 4,000 (the pick by the low bits, the state modulo the total until the clean main of 2026-10-04, alternated 0, 1 and gave none); (b) [1, 1, 1, 1] over 4,000 draws is no cycle of period 4 and flat, Pearson's chi-square under 11.3 on 3 degrees; (c) [2^62, 2^62, 2^62], a total above the modulus, draws the third index near a third (never under the pick by the low bits; no refusal of a total enters, K2); (d) a random list of weights is flat at the 1 percent band on 5 degrees; (e) [1, 7], the breaker's rate-8 conversion with the window 1, over 64 seeds through `drawn` alone: the first hit's interval spreads with a geometric tail beyond 8 and the hits within 8 are near 1 - (7 / 8)^8 of the seeds, not exactly 8 seeds per interval 1 to 8 (the shipped neutron conversion's world run costs about two seconds per seed and is not run here); and the law's count: over every state of the modulus 2^10 (the multiplier 1 and the increment 0 keep the state) the index i is drawn ceiling(c_(i+1) m / total) - ceiling(c_i m / total) times, within one of w_i m / total, a weight of 0 never, the lower index on a tie; the product state times total is above 2^width at any total above 1, so the pick is taken in Python's integers (the reviewer's #1793 comment 5982079576 D): a total near 2^60 given as numpy's 64-bit integers, the state among them, draws bit for bit as Python's integers do, both indices reached near half each, and the total 1 + 2^63 above the modulus draws its second index."""
+    import json
+    import math
+
+    import numpy as np
+
+    from event_universe.features.click import drawn
+    from tests.laws import EVENTS
+
+    design = json.loads((EVENTS / "two_slits" / "design.json").read_text(encoding="utf-8"))["draw"]
+    multiplier, increment, modulus = design["multiplier"], design["increment"], 1 << 63
+    assert (multiplier, increment) == (6364136223846793005, 1442695040888963407)
+
+    def draws(weights, count, seed=24):  # the indices drawn from the seed, the state carried
+        found, state = [], seed
+        for _ in range(count):
+            index, state = drawn(state, multiplier, increment, modulus, weights)
+            found.append(index)
+        return found
+
+    def chi(found, weights):  # Pearson's chi-square against the weights' expectation
+        total, n = sum(weights), len(found)
+        return sum(
+            (found.count(k) - n * w / total) ** 2 / (n * w / total) for k, w in enumerate(weights)
+        )
+
+    pairs = draws([1, 1], 8000)
+    counts, equal = (
+        [pairs.count(k) for k in (0, 1)],
+        sum(a == b for a, b in zip(pairs, pairs[1:], strict=False)),
+    )
+    four, thirds = draws([1, 1, 1, 1], 4000), draws([1 << 62] * 3, 3000)
+    weights = [int(w) for w in np.random.default_rng(24).integers(1, 50, 6)]
+    hits = []
+    for seed in range(64):  # the breaker's construction through drawn alone: the first hit's interval
+        state = seed
+        for interval in range(1, 200):
+            index, state = drawn(state, multiplier, increment, modulus, [1, 7])
+            if index == 0:
+                hits.append(interval)
+                break
+    print(
+        f"[1, 1] counts {counts} with {equal} equal pairs; [1, 1, 1, 1] chi-square {chi(four, [1] * 4):.2f}; "
+        f"[2^62] x 3 third index {thirds.count(2)} of 3,000; {weights} chi-square {chi(draws(weights, 6000), weights):.2f}; "
+        f"[1, 7] first hits {[hits.count(k) for k in range(1, 9)]} within 8, {sum(h > 8 for h in hits)} beyond, the last at {max(hits)}"
+    )
+    assert all(abs(c - 4000) < 3 * math.sqrt(2000) for c in (*counts, equal))
+    assert any(four[k] != four[k + 4] for k in range(len(four) - 4)) and chi(four, [1] * 4) < 11.3
+    assert abs(thirds.count(2) - 1000) < 3 * math.sqrt(1000 * 2 / 3)
+    assert chi(draws(weights, 6000), weights) < 15.1
+    within = sum(h <= 8 for h in hits)  # 64 x 0.656 = 42 +/- 3.8: within three deviations
+    assert max(hits) > 8 and 31 <= within <= 53 and [hits.count(k) for k in range(1, 9)] != [8] * 8
+    small, kept = 1 << 10, [3, 5, 0, 2]
+    drawn_at = [drawn(state, 1, 0, small, kept)[0] for state in range(small)]
+    below = [sum(kept[:k]) for k in range(len(kept) + 1)]  # the cumulative weight below each index
+    for k, weight in enumerate(kept):
+        count = math.ceil(below[k + 1] * small / sum(kept)) - math.ceil(below[k] * small / sum(kept))
+        assert drawn_at.count(k) == count and abs(count - weight * small / sum(kept)) < 1
+    assert drawn_at[0] == 0 and 2 not in drawn_at and drawn(0, 1, 0, small, [2, 0, 2])[0] == 0
+    halves, state, typed = [1 << 59, 1 << 59], 24, np.int64(24)  # the total 2^60 in numpy's integers
+    for _ in range(1000):
+        (index, state), (found, typed) = (
+            drawn(state, multiplier, increment, modulus, halves),
+            drawn(typed, multiplier, increment, modulus, [np.int64(w) for w in halves]),
+        )
+        assert (index, state) == (found, int(typed)) and isinstance(typed, int)
+    assert (
+        440 < draws(halves, 1000).count(1) < 560
+        and drawn(24, multiplier, increment, modulus, [1, 1 << 63])[0] == 1
+    )

@@ -296,7 +296,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped reader worlds
     zeno, photon = EVENTS / "zeno" / "zeno_4.json", EVENTS / "anticoincidence" / "one_photon.json"
     loaded = BACK.snapshot(z := GameBoard(load_world(zeno), (zlines := []).append))
-    assert BACK.verdict(z, 48)["verdict"] == "MATCH" and z.step_inverse() is None  # the lays, the start
+    assert BACK.verdict(z, 72)["verdict"] == "MATCH" and z.step_inverse() is None  # the taking at 72
     assert BACK.first_difference(loaded, BACK.snapshot(z)) is None and z.tick == 0
     assert any(x["event"] == "credit" and x["taken"] for x in zlines) and not any(
         x.get("given") for x in zlines
@@ -341,7 +341,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
 
 
 def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
-    """The relation seen from its two ends (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the shipped Zeno reader declared at one Node alone is admitted by the loader; its lay is the whole amplitude, A_1 = A, and its norm A, so the resonant turn reads the drive's level at the Node exactly, (|d| A + A div 2) div A = |d|; its six Links are cut; the record alone rotates in the uniform mode at cos omega_0 = num / den, Chebyshev's recurrence within one level over a window; the click line names no Node while the write's lay lines stand at the only Node and the dense drive's taking is read in the books (no face, the deficit 1), and the back-in-time gate crosses the run; a reader with Nodes alone at one Node is still refused by name, since through one Node what enters leaves and the net current over a passing wave is about 0."""
+    """The relation seen from its two ends (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the shipped Zeno reader declared at one Node alone is admitted by the loader; its lay is the whole amplitude, A_1 = A, and its norm A, so the resonant turn reads the drive's level at the Node exactly, (|d| A + A div 2) div A = |d|; its six Links are cut; the record alone rotates in the uniform mode at cos omega_0 = num / den, Chebyshev's recurrence within one level over a window; the click line names no Node while the write's lay lines stand at the only Node and the dense drive's taking, at 72 under the pick from the high bits (the mathematician's #1793 comment 5981866600 K1), is read in the books (no face, the deficit 1), and the back-in-time gate crosses the run; a reader with Nodes alone at one Node is still refused by name, since through one Node what enters leaves and the net current over a passing wave is about 0."""
     world = json.loads((EVENTS / "zeno" / "zeno_4.json").read_text(encoding="utf-8"))
     world["bodies"][0]["nodes"] = world["bodies"][0]["nodes"][:1]  # the reader at one Node
     at = tuple(world["bodies"][0]["nodes"][0]["node"])
@@ -374,7 +374,7 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
     residues = [den * (levels[t + 1] + levels[t - 1]) - 2 * num * levels[t] for t in range(1, 12)]
     assert max(map(abs, residues)) <= den  # the uniform mode at the cut Node, cos omega_0 = num / den
     clicks = [x for x in lines if x["event"] == "credit" and x["count"]]  # none before the run
-    while board.tick < 48 and not clicks:
+    while board.tick < 72 and not clicks:
         board.step(), plain.step()
         level = int(plain.states[drv].lines[0].now[here])  # d, the drive's level at the Node
         assert meeting.arriving(plain, reader, drv) == level  # the turn reads |d| exactly, signed
@@ -387,7 +387,7 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
         written == {at} and board.credit.deficits[drv] == 1
     )  # the write at the only Node, the click none
     assert not any(f.family == drv for faces in board.credit.faces.values() for f in faces)  # dense
-    assert BACK.verdict(GameBoard(load_world(paths["one"])), 48)["verdict"] == "MATCH"
+    assert BACK.verdict(GameBoard(load_world(paths["one"])), 72)["verdict"] == "MATCH"
 
 
 def test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall(tmp_path, monkeypatch):
