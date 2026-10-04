@@ -47,6 +47,62 @@ the engine.
   function's output, so a function returns its mark's numbers first and names
   every output in its docstring.
 
+## The proofs' checks
+
+Beside the numbers' derivations the folder holds a machine check of the law's
+and the paper's theorems and identities (the owner's order of 2026-10-04,
+07:50 UTC, that all the proofs be checked, clearly; the advisor's design
+lines, #1793 comment 5977935062). The rule: a check replaces a hand with a
+machine and changes no claim of the paper or the law; the paper's marks do not
+move by it, and where a check fails as printed the statement, the computed
+object and the discrepancy are reported as a finding, never patched in the
+law. `proofs_inventory.json` is the inventory, one row per theorem, lemma,
+identity or quantitative claim of `docs/ALGEBRA.md`, `main.tex` and
+`supplement.tex` (at the heads its header names), each with its place, its
+statement in the document's words, the ground it rests on, its kind, its check
+(the module and the `check_` function) and its verdict. The first ten rows are
+the ten items of the external audit, #1876. The kinds: (A) an exact identity,
+checked in Python's integers, `fractions.Fraction` and Gaussian rationals at
+random integer witnesses with the symmetric cases forced (a trigonometric
+identity at the Pythagorean rational points of the circle is a polynomial
+identity; a derivative identity by the centred difference's order 2); (B) a
+series expansion with its order, checked by the residual against the exact
+function at two step sizes, the ratio 2^order the test of the order, with the
+far end of the claim's stated domain computed beside the claim
+(`far_regime_witness`); (C) a hand proof with a numerical witness only, the
+witness recomputed where a script exists and the row counted as unchecked;
+(D) a statement of the engine's structure that only a test of the engine
+shows, the engine's tests named and no check here. The verdicts: `holds` (the
+statement as printed holds on every witness), `witness only`, `finding` (the
+check reproduces the discrepancy, so its function returns False and the
+row's note states what holds instead) and `none` (no check). No new
+dependency: every check is pure Python on `rule3.py`'s line, `proofs_ground.py`
+holding the shared pieces (the Gaussian rationals, the Pythagorean angles, the
+order test, the general read with Link factors, the integer witnesses).
+
+| Module | Area | What it checks |
+| --- | --- | --- |
+| `proofs_band.py` | the band | the plane wave's identity, the band at a pace, the mirror, the guard, the indices, the group velocity, light's series to the fourth order |
+| `proofs_form.py` | the form | Rule3's coefficients against the read, Theorem 3's symmetry, the remainders' walk, the direction, the Wronskian and the time-Link turn, the velocity invariant |
+| `proofs_booking.py` | the booking | the hole's identity, the share identity at any paces, the currents, the momentum flux with remainders, the stress, the lay's operator line |
+| `proofs_paces.py` | the paces | the composition, the clock's readings, the acts' factors, the PN orders, the fall and Kepler, the moving clock, the push, the shadow, the bounds, the bending and Shapiro |
+| `proofs_credit.py` | the click | Bell's lines and the local credits, GHZ, the three shears, the units of one quantum, the region's factor, the wall, Zeno |
+| `proofs_bodies.py` | the bodies | the stable body theorem, the functional's gradient, the adiabatic invariant, the slow limit, the resonances, the budget, the two-mode line, the atom and the nucleus |
+| `proofs_audit.py` | the audit | Theorem 4's exponent, the monopole, the band's reality, the Link phase gauge, the beat's mean, the orientation coefficient, (d')'s remainder |
+| `proofs_far_regime.py` | the far ends | every claim that says for all, exactly, at every step, in the limit or to O(...), computed at the far end of its stated domain; the heads' new claims (the massless row's double roots, light's stress at finite k, the division act's stop, the shears' angle) |
+
+The gate, `tests/test_proofs_check_the_law.py`: every row with a check runs
+to its verdict (`holds` and `witness only` True, `finding` False, the
+discrepancy reproduced), every `check_` function of the `proofs_` modules is
+a row's, the rows of the kinds A, B and C without a machine check are a
+ratchet that only falls (`theorems_without_machine_check`, 12 today: two
+witness-only rows and ten without a check), the header's counts are the
+rows', and no `proofs_` module imports the engine or names a run's file.
+The inventory's header names the heads its statements are quoted at
+(`law.head`, `paper.head`) and the heads first read; where a text moved
+between them, the row's note names both, and a row raised as a finding at
+the first read keeps its id with its verdict against the head.
+
 ## The inventory
 
 `paper_marks.json` lists every `\claimmark{derived}` and `\claimmark{computed}`
