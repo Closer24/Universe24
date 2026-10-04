@@ -24,8 +24,8 @@
   "edge": 3
  },
  "worlds": {
-  "one_photon": 160,
-  "two_photons": 226
+  "one_photon": 238,
+  "two_photons": 333
  },
  "generator": {
   "multiplier": 6364136223846793005,

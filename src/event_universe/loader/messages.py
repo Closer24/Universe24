@@ -156,6 +156,16 @@ def messages_of(
             bound,
             beyond,
         )
+        if families[family].pair[0] == families[family].pair[1]:  # massless: no uniform mode laid
+            for word, pairs in zip(("now", "before"), levels[:2], strict=True):
+                total = sum(int(v) for _at, v in pairs)
+                if total != 0:
+                    raise ValueError(
+                        f"the mode file's messages[{placed}] carries the uniform mode: its {word} level sums "
+                        f"to {total} over the board, and the massless row's double root at wave number 0 grows "
+                        "a level and a velocity without bound; the generator lays a packet whose two levels each "
+                        "sum to 0 (tools/pixel_mode.py --modes; ALGEBRA.md, The message lay)"
+                    )
         placed += 1
         found.append(
             MessageRow(
