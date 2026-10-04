@@ -27,6 +27,7 @@ from event_universe.node_reader import (
     own_clock,
     picked,
     reported,
+    share_weights,
 )
 from event_universe.plane import Faces
 from event_universe.reports import face
@@ -293,7 +294,7 @@ def null_window(board: GameBoard, books: NodeBooks) -> None:
 
 
 def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
-    """The giving drawn at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act, and the giving's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights [span x p_0 x unit div Gamma, the rest of tau x unit] in the labels' unit (`hazard_weights`) with span the smaller of the grain and the lifetime tau and p_0 the body's own clock at its Node (`own_clock`), the lifetime's hazard 1 / tau per proper interval, [span x unit, (tau - span) x unit] in the vacuum (the beat's current of a one-part record at one Node is 0, so the hazard alone is the rate): the window at its close while a window stands, the one interval in the dark (`dark`), at the now and not a booked waiting time (a booked variate writes a future, which the click's line does not: the click implements the now, the mathematician's hand); the record's own generator; the first giving drawn is taken; one click line. Where the body stands in the open board and its rate declares a `width`, the given quantum is laid as a packet along a drawn direction, one list per direction the board holds, each at the giving's weight, the direction's draw the click's one draw with the record's own generator, an assumption by name (`giving.laid_packet`; the mathematician's hand with the advisor's seconds, two hands); inside a guide, or with no width declared, the source in time as built."""
+    """The giving drawn at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the GameBoard (j), the fifth act, and the giving's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): for the givings out of the part the record stands in, one draw of the act between the giving's list (the part at N - 1 and the lower at N + 1 at its Node, light's record at +1 there, laid as a source in time over the lifetime at the transition's declared resonance, `giving.given_quantum`; `click`) and nothing, the weights [span x p_0 x unit div Gamma, the rest of tau x unit] in the labels' unit (`hazard_weights`) with span the smaller of the grain and the lifetime tau and p_0 the body's own clock at its Node (`own_clock`), the lifetime's hazard 1 / tau per proper interval, [span x unit, (tau - span) x unit] in the vacuum (the beat's current of a one-part record at one Node is 0, so the hazard alone is the rate): the window at its close while a window stands, the one interval in the dark (`dark`), at the now and not a booked waiting time (a booked variate writes a future, which the click's line does not: the click implements the now, the mathematician's hand); the record's own generator; the first giving drawn is taken, its quantum laid at the one Node of the body's region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw); one click line. Where the body stands in the open board and its rate declares a `width`, the given quantum is laid as a packet along a drawn direction, one list per direction the board holds, each at the giving's weight, the direction's draw the click's one draw with the record's own generator, an assumption by name (`giving.laid_packet`; the mathematician's hand with the advisor's seconds, two hands); inside a guide, or with no width declared, the source in time as built."""
     assert books.declared.draw is not None
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     clock = own_clock(board, books)
@@ -303,11 +304,9 @@ def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
             directions = rate.directions or (None,)
             giving, rest = hazard_weights(span, rate.lifetime, clock, board.world.node_clock, unit)
             weights = [giving] * len(directions) + [len(directions) * rest]
-            pick, books.state = picked(
-                board, books.state, books.declared.draw, weights, len(directions) + 1
-            )
+            pick, books.state = picked(board, books.state, books.declared.draw, weights, len(weights))
             if pick < len(directions):
-                laid_at = drawn_node(board, books, list(books.weights))
+                laid_at = drawn_node(board, books, share_weights(board, books))
                 given = Item(rate.light, None, None, 1, (laid_at,), None, rate.resonance, rate.lifetime)
                 items = exchange(board, books, rate.leaves, rate.enters)
                 written(board, items + [replace(given, width=rate.width, direction=directions[pick])])
