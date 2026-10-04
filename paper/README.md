@@ -156,7 +156,7 @@ the journal.
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
   unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
   and `abstract_journal.txt` beside it are one text of 250 words of prose
-  (277 tokens with the TeX signs), every formula in it the paper's.
+  (273 tokens with the TeX signs), every formula in it the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
   interests, ethics and consent, data availability, author contributions.
