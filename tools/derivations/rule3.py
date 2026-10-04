@@ -10,6 +10,7 @@ Usage: `python tools/derivations/rule3.py` prints the vacuum band's values at [1
 from __future__ import annotations
 
 import math
+import random
 from collections.abc import Sequence
 from fractions import Fraction
 
@@ -243,6 +244,130 @@ def plane_wave_residual(
     return worst
 
 
+def band_at_a_pace(
+    num: int = 2, den: int = 3, gamma: int = 6000, content: int = 300, k: float = 0.3
+) -> list[float]:
+    """The band at a pace from the line's coefficients (The band at a pace; the paper's Eq. (4) and its line 189, S.1): at the clock p_0 = Gamma (1 - 1 / Gamma)^c and the Node's pace p_a = p_0^2 / Gamma a plane wave along x has 2 w cos omega = S + 2 SUM_a R_a cos k_a, the arrivals of an axis summing to 2 cos k_a a_now and a_next + a_before to 2 cos omega a_now; [cos omega so computed from `coefficients`, its difference from the closed formula of `dispersion_at_paces`], the difference 0."""
+    clock = clock_pace(gamma, content)
+    pace = node_pace(clock, gamma)
+    wall, reads, self_coefficient = coefficients(num, den, gamma, clock, (pace, pace, pace))
+    cosines = (math.cos(k), 1.0, 1.0)
+    from_the_line = (
+        float(self_coefficient) + 2 * sum(float(r) * c for r, c in zip(reads, cosines, strict=True))
+    ) / (2 * float(wall))
+    closed = dispersion_at_paces((k, 0.0, 0.0), num, den, gamma, clock, (pace, pace, pace))
+    return [from_the_line, abs(from_the_line - closed)]
+
+
+def three_level_form_walk(
+    nodes: int = 24, num: int = 2, den: int = 3, intervals: int = 50, seed: int = 258
+) -> list[float]:
+    """What the remainders add to the two forms in one interval (The conserved form, the proof's last sentence; The conventions and the units, row 7; the paper's line 258 and S.5): with epsilon_i = (r_i - r_i') / w the two-level form Q = E / w of now and before walks by SUM_i epsilon_i (next_i - before_i) / p_i^2 (`form_walk` over w) and the three-level form E_3 = SUM_i (now_i^2 - next_i before_i) / p_i^2 walks by SUM_i [epsilon_i(t) next_i - epsilon_i(t + 1) now_i] / p_i^2, since E_3(t) = Q(t) - SUM_i epsilon_i(t) before_i / p_i^2 by the line; on a periodic chain of integer levels at the vacuum's paces, exact in the rationals: [the largest departure of Q's walk from its term, of E_3's walk from its term], both 0."""
+    draw = random.Random(seed)
+    arrivals = chain_arrivals(nodes)
+    wall, _, _ = coefficients(num, den)
+    levels = [
+        [draw.randint(-1000, 1000) for _ in range(nodes)],
+        [draw.randint(-1000, 1000) for _ in range(nodes)],
+    ]
+    remainders = [0] * nodes
+    epsilons: list[list[Fraction]] = []
+    for _ in range(intervals + 1):
+        before, now = levels[-2], levels[-1]
+        stepped = [
+            step(now[i], before[i], [now[j] for j in arrivals[i]], num, den, remainders[i])
+            for i in range(nodes)
+        ]
+        carried = [s[1] for s in stepped]
+        epsilons.append(
+            [Fraction(r - r_next, wall) for r, r_next in zip(remainders, carried, strict=True)]
+        )
+        levels.append([s[0] for s in stepped])
+        remainders = carried
+
+    def two_level(t: int) -> Fraction:
+        return conserved_form(levels[t], levels[t - 1], arrivals, num, den) / wall
+
+    def three_level(t: int) -> Fraction:
+        return Fraction(
+            sum(levels[t][i] ** 2 - levels[t + 1][i] * levels[t - 1][i] for i in range(nodes))
+        )
+
+    worst_two, worst_three = Fraction(0), Fraction(0)
+    for t in range(1, intervals):
+        # epsilons[t - 1] belongs to the step from (levels[t - 1], levels[t]) to levels[t + 1]
+        term_two = sum(
+            e * (nxt - prev)
+            for e, nxt, prev in zip(epsilons[t - 1], levels[t + 1], levels[t - 1], strict=True)
+        )
+        term_three = sum(
+            e_now * nxt - e_next * now
+            for e_now, e_next, nxt, now in zip(
+                epsilons[t - 1], epsilons[t], levels[t + 1], levels[t], strict=True
+            )
+        )
+        worst_two = max(worst_two, abs(two_level(t + 1) - two_level(t) - term_two))
+        worst_three = max(worst_three, abs(three_level(t + 1) - three_level(t) - term_three))
+    return [float(worst_two), float(worst_three)]
+
+
+def backward_reading_to_the_bit(
+    nodes: int = 24,
+    num: int = 2,
+    den: int = 3,
+    gamma: int = 6000,
+    content: int = 300,
+    intervals: int = 50,
+    seed: int = 308,
+) -> list[float]:
+    """The backward reading exists to the bit at fixed paces (The direction; the paper's line 308): on a periodic chain at the integer paces p_0 = Gamma (1 - 1 / Gamma)^c to the unit and p_a = p_0^2 / Gamma to the unit, `step` over the intervals and `step_backward` over the same intervals in reverse return the start's levels and remainders; [the Nodes whose level or remainder differs after the round trip], 0."""
+    draw = random.Random(seed)
+    arrivals = chain_arrivals(nodes)
+    clock = round(clock_pace(gamma, content))
+    links = (round(node_pace(clock, gamma)),) * AXES
+    before = [draw.randint(-1000, 1000) for _ in range(nodes)]
+    now = [draw.randint(-1000, 1000) for _ in range(nodes)]
+    remainders = [draw.randint(0, 6 * den * gamma * gamma - 1) for _ in range(nodes)]
+    start = (list(before), list(now), list(remainders))
+    for _ in range(intervals):
+        stepped = [
+            step(
+                now[i],
+                before[i],
+                [now[j] for j in arrivals[i]],
+                num,
+                den,
+                remainders[i],
+                gamma,
+                clock,
+                links,
+            )
+            for i in range(nodes)
+        ]
+        before, now, remainders = now, [s[0] for s in stepped], [s[1] for s in stepped]
+    for _ in range(intervals):
+        back = [
+            step_backward(
+                before[i],
+                now[i],
+                [before[j] for j in arrivals[i]],
+                num,
+                den,
+                remainders[i],
+                gamma,
+                clock,
+                links,
+            )
+            for i in range(nodes)
+        ]
+        now, before, remainders = before, [b[0] for b in back], [b[1] for b in back]
+    differing = sum(
+        int(a != b)
+        for a, b in zip(start[0] + start[1] + start[2], before + now + remainders, strict=True)
+    )
+    return [float(differing)]
+
+
 if __name__ == "__main__":
     for pair in ((1, 1), (2, 3)):
         values = [
@@ -258,4 +383,16 @@ if __name__ == "__main__":
     print(
         "a plane wave's residual against the line at [2, 3], k = pi / 4:",
         plane_wave_residual(math.pi / 4, 2, 3),
+    )
+    print(
+        "the band at a pace, from the coefficients and its difference from the closed formula:",
+        band_at_a_pace(),
+    )
+    print(
+        "the forms' walks less the remainders' terms, two-level and three-level:",
+        three_level_form_walk(),
+    )
+    print(
+        "Nodes differing after the forward and backward intervals at fixed paces:",
+        backward_reading_to_the_bit(),
     )
