@@ -1,0 +1,1830 @@
+{
+ "header": {
+  "title": "The paper's scriptless marks: the inventory for the derivation scripts",
+  "paper_branch": "paper",
+  "paper_head": "d75c42a90ac84a3f53d04e7943bceff1e796e7ae",
+  "main_tex": "paper/general_formula/main.tex",
+  "rule": "paper_gates.gate_scripts at the paper's head: a \\claimmark{derived} or \\claimmark{computed} of main.tex whose innermost enclosing parenthesis holds no \\texttt{<name>.py} is scriptless; the ratchet of tests/test_paper_gates.py on the paper branch stands at 123",
+  "fields": {
+   "line": "the line of main.tex at the paper's head",
+   "mark": "derived or computed",
+   "main_section": "the label of the enclosing section or subsection of main.tex",
+   "excerpt": "the enclosing sentence (for a row of the forms list, the row's first sentence), about 300 characters, ASCII, LaTeX kept",
+   "numbers": "every printed number of the sentence (of the whole row for a row of the forms list), as printed, one-digit constants inside formulas left out",
+   "source": "the S.NN of the supplement or the section label the excerpt cites, else none named",
+   "existing_script": "a path under paper/general_formula/ or tools/derivations/ whose functions or printed output already give the excerpt's numbers, else null",
+   "proposed_module": "the module under tools/derivations/ to hold the derivation, null for a computed mark whose number is a run's reading",
+   "reader": "for a computed mark: the run's reader or its test, never a derivation",
+   "status": "scriptless"
+  },
+  "counts": {
+   "scriptless": 123,
+   "derived": 112,
+   "computed": 11,
+   "with_existing_script": 44,
+   "by_main_section": {
+    "sec:line": 5,
+    "sec:paces": 7,
+    "sec:engine": 1,
+    "sec:direction": 1,
+    "sec:form": 2,
+    "sec:meeting": 3,
+    "sec:node-reader": 2,
+    "sec:nothing": 6,
+    "sec:sign": 1,
+    "sec:light": 1,
+    "sec:price": 1,
+    "sec:universe": 1,
+    "sec:shapes": 3,
+    "sec:reach": 1,
+    "sec:vacuum": 2,
+    "sec:whatbody": 1,
+    "sec:stable": 1,
+    "sec:branches": 5,
+    "sec:bodyclicks": 9,
+    "sec:clusters": 3,
+    "sec:forms": 18,
+    "sec:slits-world": 3,
+    "sec:slits-blind": 4,
+    "sec:bell-blind": 8,
+    "sec:constants-law": 10,
+    "sec:calibration": 6,
+    "sec:open": 18
+   },
+   "by_proposed_module": {
+    "weak_field.py": 16,
+    "constants.py": 15,
+    "clicks.py": 12,
+    "body_clicks.py": 9,
+    "bands.py": 8,
+    "bell.py": 8,
+    "paces.py": 8,
+    "families.py": 6,
+    "frame.py": 6,
+    "bodies.py": 5,
+    "moving_clock.py": 4,
+    "atom.py": 3,
+    "nuclear.py": 3,
+    "rule3.py": 3,
+    "cosmology.py": 2,
+    "sign.py": 2,
+    "two_slits.py": 2,
+    "tension.py": 1,
+    "zeno.py": 1
+   }
+  },
+  "computed_marks": [
+   {
+    "line": 213,
+    "excerpt": "And the back-in-time check: \\textsc{match} on every file (\\claimmark{computed}, runs of the implementation; \\fence{clicks} for the readers' counts, \\fence{GameB",
+    "reader": "tools/back_in_time.py (run inside tests/test_the_node.py on the closed cube) and tools/reading_gate.py for the folders' readings",
+    "proposed_module": null
+   },
+   {
+    "line": 235,
+    "excerpt": "... ur over $60$, the intervals the tool steps back; at d00aa9e2 the two slits over $40$ and the anticoincidence over $170$ by their folders' documents) (\\claim",
+    "reader": "tools/back_in_time.py (run inside tests/test_the_node.py on the closed cube) and tools/reading_gate.py for the folders' readings",
+    "proposed_module": null
+   },
+   {
+    "line": 340,
+    "excerpt": "So the integer $W$ changes at a Node by $\\epsilon_{\\mathrm{re}}\\,\\mathrm{im}_{\\mathrm{now}} - \\epsilon_{\\mathrm{im}}\\,\\mathrm{re}_{\\mathrm{now}}$ per interval, ",
+    "reader": "none: the witness is algebraic (S.9), computed on a chain of integers with no run",
+    "proposed_module": "sign.py"
+   },
+   {
+    "line": 464,
+    "excerpt": "The binding row's fixed point has two branches, a wide cloud and a compact pixel, and the start's width alone chooses between them (Section~\\ref{sec:stable}; \\c",
+    "reader": "tools/pixel_mode.py (the generator's fixed point) with tests/test_pixel_mode.py",
+    "proposed_module": null
+   },
+   {
+    "line": 538,
+    "excerpt": "The peak of the screen's inflow is at the interval $68.0$, against $61.8$ on the same file with the lattice refined fourfold (\\claimmark{computed}, \\fence{click",
+    "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270",
+    "proposed_module": null
+   },
+   {
+    "line": 539,
+    "excerpt": "\\caption{\\label{fig:slits}The two slits, the one computed file (Sections~\\ref{sec:slits-world} and~\\ref{sec:slits-blind}; \\claimmark{computed}, \\fence{clicks}).",
+    "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270; the figure two_slits_rows.py types the two files' numbers",
+    "proposed_module": null
+   },
+   {
+    "line": 542,
+    "excerpt": "Light's line at the vacuum's paces, stepped in real arithmetic on the declared file, gives $278.0$ quanta through the screen (Section~\\ref{sec:slits-world}), re",
+    "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270",
+    "proposed_module": null
+   },
+   {
+    "line": 542,
+    "excerpt": "On the Huygens row at $N = 273$ the central maximum stands above its two minima by $5.7$ times its scatter (\\claimmark{computed}, \\fence{clicks}).",
+    "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270; the Huygens blind is examples/events/two_slits/build_world.py's",
+    "proposed_module": null
+   },
+   {
+    "line": 542,
+    "excerpt": "(c) \\emph{The lattice's own number} is the inflow peak's $68.0$ against $61.8$ (Section~\\ref{sec:slits-world}), which the click line resolves (\\claimmark{comput",
+    "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270",
+    "proposed_module": null
+   },
+   {
+    "line": 561,
+    "excerpt": "The efficiency is $1$ by construction, and the marginal is one half on each side whatever the partner's setting (\\claimmark{computed}, \\fence{clicks}; S.10).",
+    "reader": "tools/bell_gate.py with tests/test_the_meeting.py (the joint shares through the root)",
+    "proposed_module": "bell.py"
+   },
+   {
+    "line": 622,
+    "excerpt": "The many-body correlation is not reproduced by a product of records (helium $1.4$ percent, positronium $44$ percent of nature's, \\claimmark{computed}, GameBoard",
+    "reader": "tools/pixel_mode.py (the generator's GameBoard readings of the bound bodies) and tools/body_rest.py, with tests/test_the_bound_body.py",
+    "proposed_module": null
+   }
+  ],
+  "computed_runs_and_their_derived_counterparts": "the owner's word of 2026-10-04, 04:39 UTC, made exact by the advisor (#1793 comment 5976637730): the run is the check of the derivation and never the claim; beside every computed run the derived value and, for an integer run, the budget's bound: the two slits' N = 270 against the law's real line at the same lay, 269.3, within the integer budget's bound sigma sqrt(n) = 0.236 x sqrt(130) = 2.7 levels, about 1.1 unit of N (ALGEBRA.md, The integer budget of a derived row); Bell's S = 478 / 169 and the GHZ's M = -4 by their exact derivations (Lagrange's identity on the declared ports; the determinism of equal parts), the run a bit-for-bit check; the gates' readings have their blinds' formulas: Zeno (1 - cos^n(pi / n)) / 2 (tools/derivations/zeno.py:formula_column), the resonance A W / 2 and the detuned sinc, the anticoincidence alpha = 0, the conversion's hazard by the geometric law, the telegraph's rate equations; none in closed form for three: the integer step's exact remainders, the draw's outcomes at a seed, the body's fixed point by iteration",
+  "paper_scripts_leaning_on_the_engine_or_a_run": {
+   "measured_over": "every paper/general_formula/*.py at origin/paper d75c42a90ac84a3f53d04e7943bceff1e796e7ae",
+   "count": 2,
+   "rule": "a script that imports event_universe (or a tool of tools/ that does) or names a run's file (runs/, .output.json, .look.json) outside its docstring; the ratchet PAPER_SCRIPTS_LEANING_ON_THE_ENGINE of tests/test_derivations_lean_on_rule3_alone.py may only fall",
+   "scripts": [
+    {
+     "script": "paper/general_formula/two_slits_real_line.py",
+     "imports": {
+      "event_universe.core.rule3.coefficients": "the law's line at the vacuum's paces: w = 6 den Gamma^2, R = 2 num Gamma^2, S = 12 num Gamma^2 - 6 R = 0 (ALGEBRA.md, The line; The conventions and the units, row 3)",
+      "event_universe.loader.derived.count_wall": "W_c = 3 den T for a massless family (ALGEBRA.md, The conventions and the units, row 11)",
+      "event_universe.loader.world.World": "the files are JSON: the world, the universe it names and the mode file beside it, read with json",
+      "event_universe.world_files.load_world": "the same JSON read, the mode file's levels the message lay's",
+      "click_counts.apportioned, drawn, extrema, nearest": "the reader's arithmetic on the regions' inflows: the credit N = (sum s + W_rec div 2) div W_rec and the draw by the shares (row 16), a pure-Python copy of the reader's own formulas"
+     },
+     "status": "the advisor's #1538 comment 5976619027, item 5: the three formulas are the law's own lines and the files are JSON, so the imports can drop; the writer re-pins the paper"
+    },
+    {
+     "script": "paper/general_formula/two_slits_frames.py",
+     "imports": {},
+     "reads": "the look tool's recording figures/two_slits_frames.json (or --look <world>.look.json): three GameBoard readings of the run, a diagnostic the figure labels so",
+     "status": "a reading of the run by design, no derivation; on the paper branch alone"
+    }
+   ]
+  },
+  "choices": [
+   "paper/general_formula/two_slits_real_line.py imports the engine's coefficients, count wall and loader; it stands as the two-slits marks' existing_script and reader under the paper-side ratchet (the Boss's precision of 2026-10-04), with the law's line replacing each import listed above; the modules of tools/derivations/ import nothing of the engine, a hard rule",
+   "a computed mark's proposed_module is null where its number is a reading of a run; sign.py is proposed for the Wronskian's walk witness (line 340) and bell.py for the efficiency and the marginal (line 561), whose numbers are algebra and no run",
+   "a row of the forms list (lines 507 to 524) is excerpted by its first sentence and its numbers are the whole row's",
+   "the blinds' formulas of examples/events/*/build_world.py (478 / 169, M = -4, N = 273) are noted beside their marks and not listed as existing scripts, the field naming paper/general_formula/ and tools/derivations/ alone"
+  ]
+ },
+ "marks": [
+  {
+   "line": 170,
+   "mark": "derived",
+   "main_section": "sec:line",
+   "excerpt": "\\caption{\\label{fig:bands}The bands of light and matter along one axis, from the law's line (\\claimmark{derived}, \\fence{GameBoard}; drawn from the formula, no run): $\\cos\\omega = \\frac{\\num}{3\\,\\den}(2 + \\cos k)$ at the wave number $k$ along one axis, for light's pair $[1, 1]$ (solid) and matter's  ...",
+   "numbers": [
+    "[1, 1]",
+    "[2, 3]"
+   ],
+   "source": "none named",
+   "existing_script": "paper/general_formula/bands.py",
+   "proposed_module": "bands.py",
+   "status": "scriptless",
+   "note": "the figure's formula cos omega = (num / (3 den)) (2 + cos k) at [1, 1] and [2, 3]"
+  },
+  {
+   "line": 175,
+   "mark": "derived",
+   "main_section": "sec:line",
+   "excerpt": "Along the cube's diagonal $\\cos\\omega = \\cos k$ exactly, with no dispersion (\\claimmark{derived}, \\fence{GameBoard}; S.1).",
+   "numbers": [],
+   "source": "S.1",
+   "existing_script": "paper/general_formula/bands.py",
+   "proposed_module": "bands.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 175,
+   "mark": "derived",
+   "main_section": "sec:line",
+   "excerpt": "The three are one as the gap closes.) Its slow limit at small wave number is Schr\\\"odinger's equation with the inertia $m^* = 3\\tan\\omega_0$ and, in a content $U$, the potential $\\omega_0 f(\\omega_0)\\,U$ of Section~\\ref{sec:bodyclicks} (\\claimmark{derived}, \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "sec:bodyclicks",
+   "existing_script": "tools/derivations/two_body.py",
+   "proposed_module": "bands.py",
+   "status": "scriptless",
+   "note": "two_body.inertia gives m* = 3 tan omega_0; the potential omega_0 f(omega_0) U is the rest push of ALGEBRA.md, The push on a moving record"
+  },
+  {
+   "line": 175,
+   "mark": "derived",
+   "main_section": "sec:line",
+   "excerpt": "The departure is $\\omega_0 / \\tan\\omega_0$, which is $1 - \\omega_0^2 / 3$ to the order $\\omega_0^2$ (\\claimmark{derived}, \\fence{clicks}; S.18, S.21).",
+   "numbers": [],
+   "source": "S.18, S.21",
+   "existing_script": "paper/general_formula/moving_clock.py",
+   "proposed_module": "bands.py",
+   "status": "scriptless",
+   "note": "moving_clock.py holds c_m^2 = omega_0 / (3 tan omega_0)"
+  },
+  {
+   "line": 175,
+   "mark": "derived",
+   "main_section": "sec:line",
+   "excerpt": "What the law adds is one rational $[\\num, \\den]$ that fixes mass and speed together, an equation that is exact, departures that are predictions with bounds (Section~\\ref{sec:calibration}), the integers with the remainder, and the paces (\\claimmark{derived}, \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "sec:calibration",
+   "existing_script": null,
+   "proposed_module": "bands.py",
+   "status": "scriptless",
+   "note": "one pair fixes cos omega_0 and c_m together"
+  },
+  {
+   "line": 187,
+   "mark": "derived",
+   "main_section": "sec:paces",
+   "excerpt": "The clock composes, $p_0 = \\Gamma(1 - 1 / \\Gamma)^c$: each unit slows the clock as it stands by the same fraction, since the write of one unit is an act measured in the Node's own units, the read included (\\claimmark{derived} from it; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": "tools/derivations/paces.py",
+   "proposed_module": "paces.py",
+   "status": "scriptless",
+   "note": "paces.clock"
+  },
+  {
+   "line": 187,
+   "mark": "derived",
+   "main_section": "sec:paces",
+   "excerpt": "The write carries $p_x p_y p_z / (p_0\\Gamma^2)$ on the form and $p_x p_y p_z / (p_0^2\\Gamma)$ on the Wronskian, and the turn carries $p_0 / \\Gamma$, per proper volume and per proper interval (\\claimmark{derived}, S.34; implemented, Section~\\ref{sec:engine}; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "S.34",
+   "existing_script": null,
+   "proposed_module": "paces.py",
+   "status": "scriptless",
+   "note": "the acts' factors per proper volume and per proper interval, S.34"
+  },
+  {
+   "line": 187,
+   "mark": "derived",
+   "main_section": "sec:paces",
+   "excerpt": "The metric is stated in the variable in which it is exact (\\claimmark{derived}; S.31; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "S.31",
+   "existing_script": null,
+   "proposed_module": "paces.py",
+   "status": "scriptless",
+   "note": "the exponential metric, S.31"
+  },
+  {
+   "line": 189,
+   "mark": "derived",
+   "main_section": "sec:paces",
+   "excerpt": "\\paragraph{The band at a pace.} From the coefficients, the rotation of a record at a Node with clock pace $p_0$ and Link paces $p_a$ is (\\claimmark{derived}, \\fence{GameBoard}; S.1) \\begin{equation}\\label{eq:bandpace} \\boxed{\\cos\\omega = 1 - \\Bigl(1 - \\frac{\\num}{\\den}\\Bigr)\\Bigl(\\frac{p_0}{\\Gamma}\\ ...",
+   "numbers": [],
+   "source": "S.1",
+   "existing_script": "paper/general_formula/einstein_check.py",
+   "proposed_module": "rule3.py",
+   "status": "scriptless",
+   "note": "rule3.dispersion_at_paces transcribes the band at a pace; einstein_check.py builds omega(k, U) from the same coefficients"
+  },
+  {
+   "line": 193,
+   "mark": "derived",
+   "main_section": "sec:paces",
+   "excerpt": "So light's speed is $N^2 = e^{-2x}$ times its vacuum speed, to the unit: an index $n = e^{2x}$, which is $1 / (1 - 2x)$ to the first order, with $n - 1 = 2x$ (\\claimmark{derived}, \\fence{GameBoard}; S.2).",
+   "numbers": [],
+   "source": "S.2",
+   "existing_script": "paper/general_formula/band_and_channels.py",
+   "proposed_module": "paces.py",
+   "status": "scriptless",
+   "note": "light's speed (1 - 2 x) / sqrt 3 at a content, the index"
+  },
+  {
+   "line": 193,
+   "mark": "derived",
+   "main_section": "sec:paces",
+   "excerpt": "Light meets a total mirror where $p_a < \\Gamma \\sin(k / 2)$ (\\claimmark{derived}, \\fence{GameBoard}) \\cite[the band at a pace; the rows against nature, (b)]{algebra}.",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": "tools/derivations/paces.py",
+   "proposed_module": "paces.py",
+   "status": "scriptless",
+   "note": "paces.mirror_thresholds"
+  },
+  {
+   "line": 196,
+   "mark": "derived",
+   "main_section": "sec:paces",
+   "excerpt": "So a deep well freezes a clock and closes nothing, and the horizon of the quadratic form at $\\Gamma / 2$ is a feature of the truncation and not of the law (\\claimmark{derived}, \\fence{GameBoard}; S.3).",
+   "numbers": [],
+   "source": "S.3",
+   "existing_script": "tools/derivations/paces.py",
+   "proposed_module": "paces.py",
+   "status": "scriptless",
+   "note": "paces.frozen_content: the composed clock never closes"
+  },
+  {
+   "line": 213,
+   "mark": "computed",
+   "main_section": "sec:engine",
+   "excerpt": "And the back-in-time check: \\textsc{match} on every file (\\claimmark{computed}, runs of the implementation; \\fence{clicks} for the readers' counts, \\fence{GameBoard} for the gate and the $645$) \\cite[the rows against nature, (g) and (h); the GHZ gate]{algebra}.",
+   "numbers": [
+    "645"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "tools/back_in_time.py (run inside tests/test_the_node.py on the closed cube) and tools/reading_gate.py for the folders' readings",
+   "derived_counterpart": "the inverse is exact by the proof of ALGEBRA.md, The direction (rule3.step_backward); the readers' counts: the two slits the law's real line at the same lay, 269.3 (two_slits_real_line.py through its division-act lay) beside the run's N = 270; the continuum's arrival tools/derivations/bands.py:arrival_intervals, 62.2 intervals over 34 Links; Bell's S = 478 / 169 by Lagrange's identity on the declared ports and the GHZ's M = -4 by the determinism of equal parts (examples/events/bell and ghz, build_world.py), the run a bit-for-bit check; the draw's outcomes at a seed: none in closed form",
+   "bound": "the integer budget's bound sigma sqrt(n) = 0.236 x sqrt(130) = 2.7 levels, about 1.1 unit of N (ALGEBRA.md, The integer budget of a derived row) for the two slits; exact for the inverse, Bell and the GHZ gate",
+   "note": "a reading of the gate worlds' runs: the three gate folders' MATCH and the 645"
+  },
+  {
+   "line": 235,
+   "mark": "computed",
+   "main_section": "sec:direction",
+   "excerpt": "... ur over $60$, the intervals the tool steps back; at d00aa9e2 the two slits over $40$ and the anticoincidence over $170$ by their folders' documents) (\\claimmark{computed}, \\fence{GameBoard}) \\cite[the inverse; the objects]{algebra}\\cite[how to run a world]{engine}\\cite[the Node knows no family]{alge ...",
+   "numbers": [
+    "130",
+    "100",
+    "60",
+    "40",
+    "170"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "tools/back_in_time.py (run inside tests/test_the_node.py on the closed cube) and tools/reading_gate.py for the folders' readings",
+   "derived_counterpart": "the backward act returns (a_before, r) bit for bit, ALGEBRA.md, The direction; rule3.step_backward",
+   "bound": null,
+   "note": "a reading of the gate worlds' runs over their intervals"
+  },
+  {
+   "line": 258,
+   "mark": "derived",
+   "main_section": "sec:form",
+   "excerpt": "... magnitude times the level's change, and the three-level form itself walks by $\\sum_i [\\epsilon_i(t)\\,\\mathrm{next}_i - \\epsilon_i(t + 1)\\,\\mathrm{now}_i] / p_i^2$ with $\\epsilon_i = (r_i - r_i') / w$ (\\claimmark{derived}, exact in integers at both hands; S.5; \\fence{GameBoard}). $E$ is a diagnostic.",
+   "numbers": [],
+   "source": "S.5",
+   "existing_script": null,
+   "proposed_module": "rule3.py",
+   "status": "scriptless",
+   "note": "rule3.conserved_form and the remainder's walk (r - r') (next - before) / (w p_i^2) on a chain"
+  },
+  {
+   "line": 274,
+   "mark": "derived",
+   "main_section": "sec:form",
+   "excerpt": "A packet of count $c$ and velocity $\\mathbf v$ has $2c\\,v_a v_b$, the two Links' currents summed, which is the stress of dust (\\claimmark{derived}, \\fence{GameBoard}; S.7 for the plane wave).",
+   "numbers": [],
+   "source": "S.7",
+   "existing_script": "tools/derivations/tension.py",
+   "proposed_module": "tension.py",
+   "status": "scriptless",
+   "note": "the plane wave's current and the stress of dust 2 c v_a v_b"
+  },
+  {
+   "line": 306,
+   "mark": "derived",
+   "main_section": "sec:meeting",
+   "excerpt": "A frozen Node stands in no NodeReader's front and is never clicked (\\claimmark{assumption} for the definition, \\claimmark{derived} for the precisions; \\fence{clicks}) \\cite[the click's algebraic definition]{algebra}.",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 308,
+   "mark": "derived",
+   "main_section": "sec:meeting",
+   "excerpt": "...  forward records alone, by the linearity of the rule; the check of Section~\\ref{sec:direction} shows that the backward reading exists to the bit (the credit \\claimmark{assumption}; the equality of the forward and backward descriptions \\claimmark{derived} for the line at fixed paces; \\fence{clicks}).",
+   "numbers": [],
+   "source": "sec:direction",
+   "existing_script": null,
+   "proposed_module": "rule3.py",
+   "status": "scriptless",
+   "note": "rule3.step_backward: the backward reading exists to the bit at fixed paces"
+  },
+  {
+   "line": 310,
+   "mark": "derived",
+   "main_section": "sec:meeting",
+   "excerpt": "\\caption{\\label{fig:meeting}The click at a NodeReader, in plain words (\\claimmark{assumption} for the draw and the write, the rest \\claimmark{derived}; \\fence{clicks}; drawn from the definitions, no run; solid lines run forward, dashed lines read backward).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": "paper/general_formula/click_body.py",
+   "proposed_module": "clicks.py",
+   "status": "scriptless",
+   "note": "the figure is drawn from the definitions, no number"
+  },
+  {
+   "line": 318,
+   "mark": "derived",
+   "main_section": "sec:node-reader",
+   "excerpt": "What each declaration costs is derived in S.8 and S.50: a pattern in the histogram and never in one click (\\claimmark{derived}, \\fence{clicks}) \\cite[the output]{engine}.",
+   "numbers": [],
+   "source": "S.8, S.50",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless",
+   "note": "the region's reading factor and the draw's scatter sqrt(N p (1 - p)), S.8"
+  },
+  {
+   "line": 320,
+   "mark": "derived",
+   "main_section": "sec:node-reader",
+   "excerpt": "... nt's whole reading, and every GameBoard number, the Node written, the levels taken, the erasure shells, the regions' densities, is a diagnostic labelled so (\\claimmark{derived}, two derivations; \\fence{clicks}; the implementation's versions and their readings are in S.62; S.61, lines 12, 13 and 17).",
+   "numbers": [
+    "12",
+    "13",
+    "17"
+   ],
+   "source": "S.62, S.61",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless",
+   "note": "the NodeReader's own clock, the carried sum of p_0 / Gamma"
+  },
+  {
+   "line": 328,
+   "mark": "derived",
+   "main_section": "sec:nothing",
+   "excerpt": "... en far NodeReaders \\cite{grangier}, from the credit's one draw over all the NodeReaders that read one record (\\claimmark{assumption} for the one draw, \\claimmark{derived} from it for the rest; \\fence{clicks}; the numbers of Sections~\\ref{sec:slits-blind} and \\ref{sec:bell-blind} are unchanged, one c ...",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless",
+   "note": "one draw over all the NodeReaders reading one record"
+  },
+  {
+   "line": 328,
+   "mark": "derived",
+   "main_section": "sec:nothing",
+   "excerpt": "A bound body clicks when quanta from outside meet its own transition, never by clicks from outside; the meeting is the resonance of Section~\\ref{sec:bodyclicks} (\\claimmark{derived}, \\fence{clicks}), and it clicks only where it is declared a NodeReader.",
+   "numbers": [],
+   "source": "sec:bodyclicks",
+   "existing_script": null,
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 328,
+   "mark": "derived",
+   "main_section": "sec:nothing",
+   "excerpt": "A bound body has no window of its own, and the now reaches it only through a NodeReader's click; its own period as its window is killed by nature's $n = 1$ (\\claimmark{derived}, \\fence{clicks}; S.59) \\cite[what is open, item 46]{algebra}.",
+   "numbers": [
+    "1"
+   ],
+   "source": "S.59",
+   "existing_script": "tools/derivations/zeno.py",
+   "proposed_module": "zeno.py",
+   "status": "scriptless",
+   "note": "zeno.formula_column: the formula at n = 1 kills the body's own period as its window"
+  },
+  {
+   "line": 328,
+   "mark": "derived",
+   "main_section": "sec:nothing",
+   "excerpt": "The arrival-window rule as built is derived by two derivations, built and read, and enters no shipped file (\\claimmark{derived}, two derivations; \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 328,
+   "mark": "derived",
+   "main_section": "sec:nothing",
+   "excerpt": "The write is the NodeReader's act (\\claimmark{assumption}, the NodeReader's declaration \\cite[the click writes on the GameBoard]{algebra}; the form of the decision is \\claimmark{derived}, the one form of Section~\\ref{sec:meeting}; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "sec:meeting",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 332,
+   "mark": "derived",
+   "main_section": "sec:nothing",
+   "excerpt": "The implementation holds it structurally and tests it: nothing writes a record's lines but Rule3, the lay and the face, and the credit's counts move in the click's acts alone (\\claimmark{derived}, two derivations; \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless",
+   "note": "a structural statement; the gate tests/test_the_features.py holds it on the engine"
+  },
+  {
+   "line": 340,
+   "mark": "computed",
+   "main_section": "sec:sign",
+   "excerpt": "So the integer $W$ changes at a Node by $\\epsilon_{\\mathrm{re}}\\,\\mathrm{im}_{\\mathrm{now}} - \\epsilon_{\\mathrm{im}}\\,\\mathrm{re}_{\\mathrm{now}}$ per interval, not zero in general; one witness is computed in S.9 (\\claimmark{computed}, \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "S.9",
+   "existing_script": null,
+   "proposed_module": "sign.py",
+   "status": "scriptless",
+   "reader": "none: the witness is algebraic (S.9), computed on a chain of integers with no run",
+   "derived_counterpart": "the walk's formula per interval, epsilon_re im_now - epsilon_im re_now with epsilon = (r - r') / w, S.9 (proposed sign.py on a chain of integers); the integer step's exact remainders: none in closed form",
+   "bound": "below one level per line per interval (|epsilon| < 1): |Delta W| < |im_now| + |re_now| at the Node",
+   "note": "the Wronskian's walk under the rounding, epsilon_re im_now - epsilon_im re_now per interval"
+  },
+  {
+   "line": 346,
+   "mark": "derived",
+   "main_section": "sec:light",
+   "excerpt": "A uniformly moving body writes no travelling light in the long-wavelength band (S.42 (b)) (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.42",
+   "existing_script": null,
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless",
+   "note": "S.42 (b)"
+  },
+  {
+   "line": 348,
+   "mark": "derived",
+   "main_section": "sec:price",
+   "excerpt": "The model's opaque NodeReader in one gap loses the fringes and reads one gap's envelope, as nature's absorbing which-way markers do (\\claimmark{derived}, the continuity of the one inflow through the two fronts; \\fence{clicks}) \\cite[what is open, item 4; the rows against nature, (g) and (h); the cli ...",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "two_slits.py",
+   "status": "scriptless",
+   "note": "the opaque NodeReader's envelope, the continuity of the one inflow"
+  },
+  {
+   "line": 395,
+   "mark": "derived",
+   "main_section": "sec:universe",
+   "excerpt": "\\caption{\\label{tab:universe}The rule's own universe, its four families as the file \\texttt{examples/events/rule.json} holds them (\\claimmark{derived} from the two keys of a row, its pair and its shape; \\fence{GameBoard}): each family with its pair $[\\num, \\den]$ (in brackets over $\\Gamma = 6{,}000$ ...",
+   "numbers": [
+    "6,000"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "families.py",
+   "status": "scriptless",
+   "note": "the universe table's derived columns: the gap, the reach and the free number from the pair and the shape"
+  },
+  {
+   "line": 410,
+   "mark": "derived",
+   "main_section": "sec:shapes",
+   "excerpt": "\\subsection{What each family carries, and how gravity enters as a clock}\\label{sec:shapes} What a family carries is set by what Rule3 reads and by what a record can write, not by a name (\\claimmark{derived}, \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "families.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 412,
+   "mark": "derived",
+   "main_section": "sec:shapes",
+   "excerpt": "Around a static source it therefore rests at Poisson's solution, $3\\,G(r)\\,s$, which is $3s / (4\\pi r)$ far away (\\claimmark{derived}, \\fence{GameBoard}; S.38).",
+   "numbers": [],
+   "source": "S.38",
+   "existing_script": "tools/derivations/greens_function.py",
+   "proposed_module": "families.py",
+   "status": "scriptless",
+   "note": "greens_function.three_g and four_pi_r_g: 3 G(r) s toward 3 s / (4 pi r)"
+  },
+  {
+   "line": 412,
+   "mark": "derived",
+   "main_section": "sec:shapes",
+   "excerpt": "What general relativity calls curved space stands here as the Link's pace, light's index $n = e^{2x}$ (\\claimmark{derived}, \\fence{GameBoard}; S.2); no space is bent in the model.",
+   "numbers": [],
+   "source": "S.2",
+   "existing_script": "paper/general_formula/band_and_channels.py",
+   "proposed_module": "paces.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 416,
+   "mark": "derived",
+   "main_section": "sec:reach",
+   "excerpt": "So the gap is one number that is both the mass of the holder's quanta and the inverse reach of the row (\\claimmark{derived}, \\fence{GameBoard}). $[1, 1]$ has no gap, and its rest is Poisson's over the whole GameBoard. $[1, 2]$ has $\\cosh\\kappa = 4$ and falls by $0.127$ per Link: a contact well with  ...",
+   "numbers": [
+    "[1, 1]",
+    "[1, 2]",
+    "4",
+    "0.127",
+    "0.48"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "families.py",
+   "status": "scriptless",
+   "note": "cosh kappa = 4: kappa = 2.063, e^-kappa = 0.127 per Link, 1 / kappa = 0.48 Links"
+  },
+  {
+   "line": 430,
+   "mark": "derived",
+   "main_section": "sec:vacuum",
+   "excerpt": "GW170817 bounds $\\gamma_{\\mathrm{GW}} - \\gamma_{\\mathrm{EM}}$ between $-2.6 \\times 10^{-7}$ and $1.2 \\times 10^{-6}$ \\cite{gw170817} (\\claimmark{derived} from the law's line; \\fence{clicks}; S.12).",
+   "numbers": [
+    "-2.6 \\times 10^{-7}",
+    "1.2 \\times 10^{-6}"
+   ],
+   "source": "S.12",
+   "existing_script": null,
+   "proposed_module": "families.py",
+   "status": "scriptless",
+   "note": "the two speeds' difference 0 under Every row reads the content, S.12; GW170817's bounds are nature's"
+  },
+  {
+   "line": 430,
+   "mark": "derived",
+   "main_section": "sec:vacuum",
+   "excerpt": "Inside matter the source is read through the pace: gravity gravitates (\\claimmark{derived}, \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "the source read through the pace, sigma / (1 - 2 U)^2"
+  },
+  {
+   "line": 442,
+   "mark": "derived",
+   "main_section": "sec:whatbody",
+   "excerpt": "Four statements make a body (\\claimmark{derived} from the line, with the decisions named; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "bodies.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 460,
+   "mark": "derived",
+   "main_section": "sec:stable",
+   "excerpt": "Beside it, a hollow beyond its reach adds a barrier: $F = a / R^2 - b / R^3 - c / R$ on a Gaussian body, where the wide critical point is a minimum and the narrow one a saddle, and there is none where $3bc > a^2$, which is the collapse (\\claimmark{derived}, \\fence{GameBoard}; S.13).",
+   "numbers": [],
+   "source": "S.13",
+   "existing_script": "paper/general_formula/stable_body_check.py",
+   "proposed_module": "bodies.py",
+   "status": "scriptless",
+   "note": "the functional F(R) and its critical points"
+  },
+  {
+   "line": 464,
+   "mark": "computed",
+   "main_section": "sec:branches",
+   "excerpt": "The binding row's fixed point has two branches, a wide cloud and a compact pixel, and the start's width alone chooses between them (Section~\\ref{sec:stable}; \\claimmark{theorem} for the equation, \\claimmark{computed} for its solution, S.13; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "S.13",
+   "existing_script": "paper/general_formula/stable_body_check.py",
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "tools/pixel_mode.py (the generator's fixed point) with tests/test_pixel_mode.py",
+   "derived_counterpart": "the functional's closed form F(R) = a / R^2 - b / R^3 - c / R and its critical points R_-+ = (a -+ sqrt(a^2 - 3 b c)) / c (paper/general_formula/stable_body_check.py); the body's fixed point by iteration: none in closed form",
+   "bound": null,
+   "note": "the two branches: the closed form in stable_body_check.py, the GameBoard solution the generator's"
+  },
+  {
+   "line": 466,
+   "mark": "derived",
+   "main_section": "sec:branches",
+   "excerpt": "With the nucleus's angle alone, the levels have Bohr's form, $E_n \\propto 1 / n^2$ with $a_0 = \\sqrt 3 / (m^* Z\\alpha)$ (\\claimmark{derived} in the slow limit, \\fence{clicks}; S.46).",
+   "numbers": [],
+   "source": "S.46",
+   "existing_script": "tools/derivations/two_body.py",
+   "proposed_module": "atom.py",
+   "status": "scriptless",
+   "note": "two_body.against_nature: the Bohr levels with the reduced mass"
+  },
+  {
+   "line": 468,
+   "mark": "derived",
+   "main_section": "sec:branches",
+   "excerpt": "The orbital Zeeman splitting has $g = 1$ (\\claimmark{derived}; supporting findings with their numbers in S.46; \\fence{clicks} for the levels' ratios, \\fence{GameBoard} for the records).",
+   "numbers": [
+    "1"
+   ],
+   "source": "S.46",
+   "existing_script": null,
+   "proposed_module": "atom.py",
+   "status": "scriptless",
+   "note": "the orbital Zeeman g = 1, S.46"
+  },
+  {
+   "line": 468,
+   "mark": "derived",
+   "main_section": "sec:branches",
+   "excerpt": "What decays is a body, from which a click at its front parts a quantum; a quantum itself never breaks, since it has no part that the click credits (\\claimmark{derived}; \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 468,
+   "mark": "derived",
+   "main_section": "sec:branches",
+   "excerpt": "A nuclear holder that the electron reads is excluded by the spectrum, by hydrogen's $1S$ and by muonic hydrogen (\\claimmark{derived} for the shift's form, the exclusion a comparison; one derivation; \\fence{clicks}; S.46).",
+   "numbers": [],
+   "source": "S.46",
+   "existing_script": null,
+   "proposed_module": "atom.py",
+   "status": "scriptless",
+   "note": "the nuclear holder's shift form against hydrogen's 1S and muonic hydrogen"
+  },
+  {
+   "line": 472,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "A body is seen by what it absorbs and by what it writes when it breathes or moves (\\claimmark{derived}; the Wronskian and the source \\fence{GameBoard}, the far NodeReader's rate \\fence{clicks}) \\cite[light is born by the write]{algebra}.",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 478,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "The first factor is the rotation's own change under the clock's pace; the second is the Node's weight in the share (\\claimmark{derived} for the invariant, to the first order in the slow variation, and for the drift; \\fence{GameBoard}; S.14).",
+   "numbers": [],
+   "source": "S.14",
+   "existing_script": "paper/general_formula/invariant_check.py",
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless",
+   "note": "the adiabatic invariant A^2 sin omega and the drift, S.14"
+  },
+  {
+   "line": 478,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "So $E = \\hbar\\omega$ holds, with $T$ for $\\hbar$ and $\\sin\\omega$ in place of $\\omega$ (\\claimmark{derived}; \\fence{clicks}) \\cite[the count is the record's share; the paces' own change moves the share with no current]{algebra}.",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": "tools/derivations/units.py",
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless",
+   "note": "the quantum's form T sin omega"
+  },
+  {
+   "line": 480,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "A light clock between two faces falls by $2U$, the Link's pace read twice (Section~\\ref{sec:calibration}; S.15) (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.15",
+   "existing_script": "paper/general_formula/band_and_channels.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "the cavity's round trip at light's lattice pace, 2 U to first order"
+  },
+  {
+   "line": 482,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "A body with two bound modes $\\omega_i < \\omega_j$ transfers between them at the difference $\\omega_j - \\omega_i$, at Rabi's rate $\\Omega_R = \\epsilon_{ij} / (4\\sqrt{\\sin\\omega_i\\sin\\omega_j})$ (\\claimmark{derived}, two derivations; S.16; \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.16",
+   "existing_script": null,
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless",
+   "note": "Rabi's rate Omega_R = epsilon_ij / (4 sqrt(sin omega_i sin omega_j)), S.16"
+  },
+  {
+   "line": 482,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "The one-mode line at $2\\omega_b$ has no analogue there (\\claimmark{derived}; S.43; \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.43",
+   "existing_script": null,
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless",
+   "note": "S.43"
+  },
+  {
+   "line": 484,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "Under a moving well it drifts by Eq.~\\eqref{eq:drift} (\\claimmark{derived}, \\fence{GameBoard} for the drift).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless",
+   "note": "the drift under a moving well, Eq. (13)"
+  },
+  {
+   "line": 484,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "So a body counts photons and reads $\\hbar\\omega$ per click, Millikan's slope $T$ (\\claimmark{derived}; S.14; \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.14",
+   "existing_script": null,
+   "proposed_module": "body_clicks.py",
+   "status": "scriptless",
+   "note": "Millikan's slope T"
+  },
+  {
+   "line": 484,
+   "mark": "derived",
+   "main_section": "sec:bodyclicks",
+   "excerpt": "The share stays the conserved form and the draw's measure, so every ratio of the checks is unchanged, a common unit cancelling in every ratio (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless",
+   "note": "a common unit cancels in every ratio"
+  },
+  {
+   "line": 490,
+   "mark": "derived",
+   "main_section": "sec:clusters",
+   "excerpt": "It moves only by the clicks at its front, up to the drift of Eq.~\\eqref{eq:drift} (\\claimmark{derived} from the definitions; \\fence{clicks}, the drift GameBoard) \\cite[the click's algebraic definition; the click is the meeting of the future with the past]{algebra}.",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 492,
+   "mark": "derived",
+   "main_section": "sec:clusters",
+   "excerpt": "These are three kinds of binding by rank: quanta into a body, bodies into a charged cluster, charged clusters into a gravitational cluster (\\claimmark{derived}, \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "bodies.py",
+   "status": "scriptless",
+   "note": "three kinds of binding by rank"
+  },
+  {
+   "line": 494,
+   "mark": "derived",
+   "main_section": "sec:clusters",
+   "excerpt": "The two derivations, the Doppler period of row (m) times the moving clock of row (e), agree exactly (\\claimmark{derived}, two derivations; \\fence{clicks}; S.29).",
+   "numbers": [],
+   "source": "S.29",
+   "existing_script": null,
+   "proposed_module": "cosmology.py",
+   "status": "scriptless",
+   "note": "the Doppler period times the moving clock, S.29"
+  },
+  {
+   "line": 504,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "The two columns are one algebra, and nature's tests read the second (\\claimmark{derived} for the formulas, \\fence{clicks}; S.18, S.19) \\cite[the rows against nature]{algebra}.",
+   "numbers": [],
+   "source": "S.18, S.19",
+   "existing_script": "paper/general_formula/einstein_check.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "the clock column and the Kepler column, S.18 and S.19"
+  },
+  {
+   "line": 507,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\begin{enumerate}[leftmargin=1.6em] \\item[(a)] \\emph{The redshift} (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "row (a), the redshift: the numbers of the whole row"
+  },
+  {
+   "line": 508,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(b)] \\emph{The bending of light} (\\claimmark{derived}, \\fence{clicks}). At a Node whose clock's share is $U = \\ell / \\Gamma$ (the content level over $\\Gamma$, Section~\\ref{sec:paces}), light's index is $n = e^{2U}$, $1 + 2U$ to first order, because the Link's pace reads the content twice. Far  ...",
+   "numbers": [
+    "[2, 3]",
+    "1",
+    "1.5",
+    "2.1 \\pm 2.3",
+    "10^{-5}",
+    "0.8944",
+    "0.8411",
+    "1.335",
+    "1.0045"
+   ],
+   "source": "S.20, S.49 (33), S.19, S.58",
+   "existing_script": "paper/general_formula/einstein_check.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "row (b), the bending 4 U_1 / b and the push's coefficient; the numbers of the whole row"
+  },
+  {
+   "line": 516,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "Its bending is exact in the gap, while the orbit's second order at the computed pair carries the band's $k^4$ term (S.19) (\\claimmark{derived} from Eqs.~\\eqref{eq:paces} and~\\eqref{eq:bandpace} under the one assumption, fitted; S.58; \\fence{clicks}) \\cite[the push on a moving record]{algebra}.",
+   "numbers": [],
+   "source": "S.58",
+   "existing_script": "paper/general_formula/einstein_check.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "the bending exact in the gap, the orbit's k^4 term at the computed pair, S.58"
+  },
+  {
+   "line": 517,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(c)] \\emph{The delay of light} (\\claimmark{derived}, \\fence{clicks}; S.20). Light's coordinate speed at the content $U$ is $e^{-2U} / \\sqrt 3$, so its index is $1 + 2U$ to first order. Take a signal grazing a body at the impact parameter $b$ from $x_1$ to $x_2$, with $U = \\mu / r$, $\\mu = GM / ...",
+   "numbers": [
+    "1"
+   ],
+   "source": "S.20",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "row (c), Shapiro's delay from the index e^(2 U), S.20"
+  },
+  {
+   "line": 518,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(d)] \\emph{The perihelion} (\\claimmark{derived}, \\fence{clicks}). A slow body's orbit in the composed clock's metric, $N^2 = e^{-2U}$ and $h^2 = e^{2U}$, is the post-Newtonian orbit with $\\gamma = 1$ exactly and $\\beta = 1$ in $U$ for the quadratic band, the small-gap limit. So the periapsis a ...",
+   "numbers": [
+    "[2, 3]",
+    "1",
+    "43",
+    "1.25",
+    "10^{-4}"
+   ],
+   "source": "S.19, S.34",
+   "existing_script": "paper/general_formula/einstein_check.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "row (d), the perihelion: 43 arcseconds, the Kepler column's 1.25"
+  },
+  {
+   "line": 518,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "...  of the same order as the relativistic one, adds of the order of ten percent to the advance; the addition depends on the orientation and vanishes as $\\tan^2\\omega_0$ (\\claimmark{derived} at the small gap; the quadratic band an \\claimmark{assumption} at the computed pair; S.19, S.34; \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.19, S.34",
+   "existing_script": "paper/general_formula/einstein_check.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "the k^4 term's ten percent, vanishing as tan^2 omega_0"
+  },
+  {
+   "line": 519,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(e)] \\emph{The moving clock: the band's kinetic scale and the fourth order} (\\claimmark{derived}, \\fence{clicks}; S.21). The tick's factor of a packet moving at the velocity $v$ is $f = \\Omega(k) / \\omega_0$, where $\\Omega(k) = \\omega(k) - k\\,\\omega'(k)$ is the rotation at the moving centre. F ...",
+   "numbers": [
+    "[2, 3]",
+    "1.6926",
+    "1.2224",
+    "1.0657",
+    "1",
+    "0.752",
+    "13",
+    "0.2501",
+    "7 \\times 10^{-29}",
+    "2.0 \\times 10^{-28}",
+    "2.2 \\times 10^{-20}",
+    "6.7 \\times 10^{-20}",
+    "6 \\times 10^{-20}",
+    "5 \\times 10^{-21}",
+    "10^{-15}",
+    "5 \\times 10^{-23}",
+    "10^{-10}"
+   ],
+   "source": "S.21",
+   "existing_script": "paper/general_formula/moving_clock.py",
+   "proposed_module": "moving_clock.py",
+   "status": "scriptless",
+   "note": "row (e): the tick's factor from the band at [2, 3] and [999, 1000]; the numbers of the whole row"
+  },
+  {
+   "line": 520,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(h)] \\emph{De Broglie's relation} (\\claimmark{derived}; \\fence{GameBoard} for the band, \\fence{clicks} for the fringe spacing that reads it; S.22). A free record of a matter family has the band $\\cos\\omega_b = (\\num / (3\\,\\den))(2 + \\cos k)$ and the group velocity $v = (\\num / (3\\,\\den))\\sin k ...",
+   "numbers": [],
+   "source": "S.22",
+   "existing_script": "tools/derivations/bands.py",
+   "proposed_module": "bands.py",
+   "status": "scriptless",
+   "note": "row (h), de Broglie: the band's group velocity"
+  },
+  {
+   "line": 521,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(i)] \\emph{The fall} (\\claimmark{derived}, \\fence{clicks}). In a pace gradient a free packet or a cloud accelerates toward the well at $a = \\Delta\\,|d\\omega_0 / d\\ell|\\,(\\ell_+ - \\ell_-) / D$ Links per interval squared, where $\\Delta = 1 / m^*$ is the band's curvature at rest, $d^2\\omega / dk^ ...",
+   "numbers": [
+    "0",
+    "32.3",
+    "1.3 \\times 10^{-26}",
+    "2.0 \\times 10^{-14}",
+    "6.3 \\times 10^{10}",
+    "4.4 \\times 10^{-18}",
+    "10^{-13}",
+    "10^{-15}"
+   ],
+   "source": "S.47, S.38, S.24",
+   "existing_script": "tools/derivations/paces.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "row (i), the fall a = Delta |d omega_0 / d l| (l_+ - l_-) / D; paces.newton_coefficients holds Newton's coefficient on the exact band; the numbers of the whole row"
+  },
+  {
+   "line": 521,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "The seat of the electromagnetic binding energy is open (\\claimmark{derived}; \\fence{clicks}; S.38).",
+   "numbers": [],
+   "source": "S.38",
+   "existing_script": null,
+   "proposed_module": "bodies.py",
+   "status": "scriptless",
+   "note": "S.38"
+  },
+  {
+   "line": 521,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "That, a free-packet estimate (S.47), is under nature's $10^{-13}$ for that pair \\cite{will} and $10^{-15}$ for titanium against platinum \\cite{microscope} (\\claimmark{derived}, \\fence{clicks}; S.47) \\cite[the rows against nature, (i)]{algebra}.",
+   "numbers": [
+    "10^{-13}",
+    "10^{-15}"
+   ],
+   "source": "S.47",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "the free-packet estimate of the equivalence between families, S.47"
+  },
+  {
+   "line": 522,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(j)] \\emph{Newton's pull and orbits} (\\claimmark{derived}, \\fence{clicks}). The massless holder rests at Poisson's solution with the sources, and at Laplace's outside a body: the content level is $\\ell(r) = 3s / (4\\pi r)$ levels at $r$ Links, where $s$ is the body's write per interval over the ...",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": "tools/derivations/greens_function.py",
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "row (j), Newton: the holder's rest 3 s / (4 pi r); the numbers of the whole row"
+  },
+  {
+   "line": 524,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\item[(p)] \\emph{The lens: a content bends light and matter alike, by one formula} (\\claimmark{derived}, two derivations; \\fence{GameBoard} for the index, \\fence{clicks} for the focus and the clicks; S.28). A stationary boundary conserves the rotation. So, for every family, a record of wave number $ ...",
+   "numbers": [
+    "24"
+   ],
+   "source": "S.28",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "row (p), the lens: one index for every family, S.28; the numbers of the whole row"
+  },
+  {
+   "line": 530,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "\\end{enumerate} \\caption{\\label{fig:clock}The moving clock's factor from the band (Section~\\ref{sec:forms}, (e); \\claimmark{derived}, \\fence{clicks}; drawn from the formula, no run).",
+   "numbers": [],
+   "source": "sec:forms",
+   "existing_script": "paper/general_formula/moving_clock.py",
+   "proposed_module": "moving_clock.py",
+   "status": "scriptless",
+   "note": "the figure is drawn from the band"
+  },
+  {
+   "line": 534,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "... ton sphere at $r = 2m$ with $U = m / r$ (S.30), so the capture radius of a black hole's shadow is $b = 2e\\,m = 5.44\\,m$ against Schwarzschild's $3\\sqrt 3\\,m = 5.20\\,m$, $4.6$ percent larger, an explicit prediction (\\claimmark{derived} under the one assumption, which is fitted; \\fence{clicks}; S.30).",
+   "numbers": [
+    "5.44",
+    "5.20",
+    "4.6"
+   ],
+   "source": "S.30",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "2 e = 5.44 against 3 sqrt 3 = 5.20, 4.6 percent, S.30"
+  },
+  {
+   "line": 534,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "So the odd lines are sourced by the halved current over the same wall as the time level, with no number matched, and a co-moving reader feels Coulomb's force over $\\gamma$ (\\claimmark{derived}; \\fence{clicks}; S.33).",
+   "numbers": [],
+   "source": "S.33",
+   "existing_script": null,
+   "proposed_module": "sign.py",
+   "status": "scriptless",
+   "note": "the odd lines' source, the halved current, S.33"
+  },
+  {
+   "line": 534,
+   "mark": "derived",
+   "main_section": "sec:forms",
+   "excerpt": "In nature light's $c$ is the same to $10^{-28}$ at the MAGIC bound and $10^{-20}$ at LHAASO's (\\claimmark{derived} for the band's one speed, the bound a comparison; \\fence{clicks}) \\cite[the odd line's source is the sign's own current; the rows against nature, (b2)]{algebra}.",
+   "numbers": [
+    "10^{-28}",
+    "10^{-20}"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "the band's one speed against the MAGIC and LHAASO bounds"
+  },
+  {
+   "line": 538,
+   "mark": "derived",
+   "main_section": "sec:slits-world",
+   "excerpt": "A record uniform along the folded axis has the three-dimensional band at $k_z = 0$, so the flat GameBoard carries the file's band exactly (\\claimmark{derived}, \\fence{GameBoard}).",
+   "numbers": [
+    "0"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "bands.py",
+   "status": "scriptless",
+   "note": "the folded axis: k_z = 0"
+  },
+  {
+   "line": 538,
+   "mark": "computed",
+   "main_section": "sec:slits-world",
+   "excerpt": "The peak of the screen's inflow is at the interval $68.0$, against $61.8$ on the same file with the lattice refined fourfold (\\claimmark{computed}, \\fence{clicks}) \\cite[the rows against nature, (g)]{algebra}\\cite[the two slits]{decisions}\\cite[one experiment and one gate]{algebra}.",
+   "numbers": [
+    "68.0",
+    "61.8"
+   ],
+   "source": "none named",
+   "existing_script": "paper/general_formula/two_slits_real_line.py",
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270",
+   "derived_counterpart": "the law's real line at the same lay, 269.3 (two_slits_real_line.py through its division-act lay) beside the run's N = 270; the continuum's arrival tools/derivations/bands.py:arrival_intervals, 62.2 intervals over 34 Links; the lattice's own 68.0 against 61.8 is the real line's at the two refinements",
+   "bound": null,
+   "note": "the inflow's peak 68.0 against 61.8 at the lattice refined fourfold"
+  },
+  {
+   "line": 539,
+   "mark": "computed",
+   "main_section": "sec:slits-world",
+   "excerpt": "\\caption{\\label{fig:slits}The two slits, the one computed file (Sections~\\ref{sec:slits-world} and~\\ref{sec:slits-blind}; \\claimmark{computed}, \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": "paper/general_formula/two_slits_real_line.py",
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270; the figure two_slits_rows.py types the two files' numbers",
+   "derived_counterpart": "the law's real line at the same lay, 269.3 (two_slits_real_line.py through its division-act lay) beside the run's N = 270; the continuum's arrival tools/derivations/bands.py:arrival_intervals, 62.2 intervals over 34 Links; the Huygens blind N = 273 of examples/events/two_slits/build_world.py",
+   "bound": "the integer budget's bound sigma sqrt(n) = 0.236 x sqrt(130) = 2.7 levels, about 1.1 unit of N (ALGEBRA.md, The integer budget of a derived row)"
+  },
+  {
+   "line": 542,
+   "mark": "derived",
+   "main_section": "sec:slits-blind",
+   "excerpt": "... and $32.7$, in the regions $3$ and $8$ of the twelve four-row blocks counted from $0$; the blind's regional sums dip at the regions $4$ and $8$ (\\texttt{expectation.json}'s minima), the pattern's centre, the row $24$, being no mirror of the blocks' $23.5$ (\\claimmark{derived}, \\fence{clicks}; S.23).",
+   "numbers": [
+    "15.3",
+    "32.7",
+    "3",
+    "8",
+    "0",
+    "4",
+    "24",
+    "23.5"
+   ],
+   "source": "S.23",
+   "existing_script": "paper/general_formula/two_slits_real_line.py",
+   "proposed_module": "two_slits.py",
+   "status": "scriptless",
+   "note": "the near-field minima 15.3 and 32.7 at L = 2 d, printed by two_slits_real_line.py; the folder's module recomputes them from the band alone"
+  },
+  {
+   "line": 542,
+   "mark": "computed",
+   "main_section": "sec:slits-blind",
+   "excerpt": "Light's line at the vacuum's paces, stepped in real arithmetic on the declared file, gives $278.0$ quanta through the screen (Section~\\ref{sec:slits-world}), region by region as the script's table lists (\\claimmark{computed}, \\fence{clicks}; the script of Section~\\ref{sec:engine}).",
+   "numbers": [
+    "278.0"
+   ],
+   "source": "sec:engine",
+   "existing_script": "paper/general_formula/two_slits_real_line.py",
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270",
+   "derived_counterpart": "278.0 is the real line's own number, the derived value; the law's real line at the same lay, 269.3 (two_slits_real_line.py through its division-act lay) beside the run's N = 270; the continuum's arrival tools/derivations/bands.py:arrival_intervals, 62.2 intervals over 34 Links",
+   "bound": "the integer budget's bound sigma sqrt(n) = 0.236 x sqrt(130) = 2.7 levels, about 1.1 unit of N (ALGEBRA.md, The integer budget of a derived row)",
+   "note": "278.0 quanta through the screen"
+  },
+  {
+   "line": 542,
+   "mark": "computed",
+   "main_section": "sec:slits-blind",
+   "excerpt": "On the Huygens row at $N = 273$ the central maximum stands above its two minima by $5.7$ times its scatter (\\claimmark{computed}, \\fence{clicks}).",
+   "numbers": [
+    "273",
+    "5.7"
+   ],
+   "source": "none named",
+   "existing_script": "paper/general_formula/two_slits_real_line.py",
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270; the Huygens blind is examples/events/two_slits/build_world.py's",
+   "derived_counterpart": "the Huygens row N = 273 of examples/events/two_slits/build_world.py and the draw's scatter sqrt(N p (1 - p)) per region, S.8",
+   "bound": null,
+   "note": "N = 273 and the 5.7 scatters"
+  },
+  {
+   "line": 542,
+   "mark": "computed",
+   "main_section": "sec:slits-blind",
+   "excerpt": "(c) \\emph{The lattice's own number} is the inflow peak's $68.0$ against $61.8$ (Section~\\ref{sec:slits-world}), which the click line resolves (\\claimmark{computed}, \\fence{clicks}); and the fringe row's own departure from the continuum: at the scaled limit of the script's section 6 the wings, the re ...",
+   "numbers": [
+    "68.0",
+    "61.8",
+    "3",
+    "8",
+    "23.7",
+    "20.5",
+    "16.4",
+    "12.4",
+    "45",
+    "65",
+    "278.0",
+    "278.1"
+   ],
+   "source": "sec:slits-world",
+   "existing_script": "paper/general_formula/two_slits_real_line.py",
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "paper/general_formula/two_slits_real_line.py (light's line stepped in real arithmetic on the declared world; it imports the engine's coefficients, count wall and loader, the three lines the header lists with the law's line replacing each) and tools/click_counts.py with tests/test_the_draw.py for the run's N = 270",
+   "derived_counterpart": "the real line at the scales 2, 4 and 8 (two_slits_real_line.py --scales), the wings' continuum limit",
+   "bound": null,
+   "note": "the scaled limit's wings"
+  },
+  {
+   "line": 552,
+   "mark": "derived",
+   "main_section": "sec:bell-blind",
+   "excerpt": "The root sums the two branches: $\\sum_k c_k\\,e_k(a)\\,e_k(b) = \\cos(a - b)$, with $c$ the parts' laid weights, $(1, 1)$ for the symmetric lay (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless",
+   "note": "the root's sum cos(a - b) at the weights (1, 1)"
+  },
+  {
+   "line": 561,
+   "mark": "derived",
+   "main_section": "sec:bell-blind",
+   "excerpt": "... S = 2;\\\\ &\\text{the contrast credit, one side weighted:} && E = \\cos 2(a - b) \\text{ at one side's efficiency } 2 / \\pi, \\quad S = 2\\sqrt 2, \\end{aligned} \\end{equation} The second, third and fourth lines follow by averaging over the pair's phase $\\theta$ (\\claimmark{derived}, \\fence{clicks}; S.10).",
+   "numbers": [],
+   "source": "S.10",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless",
+   "note": "the four lines of Eq. (bell), S.10; the blind's S = 478 / 169 is examples/events/bell/build_world.py's"
+  },
+  {
+   "line": 561,
+   "mark": "computed",
+   "main_section": "sec:bell-blind",
+   "excerpt": "The efficiency is $1$ by construction, and the marginal is one half on each side whatever the partner's setting (\\claimmark{computed}, \\fence{clicks}; S.10).",
+   "numbers": [
+    "1"
+   ],
+   "source": "S.10",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless",
+   "reader": "tools/bell_gate.py with tests/test_the_meeting.py (the joint shares through the root)",
+   "derived_counterpart": "S.10's averaging over the pair's phase theta: the marginal one half and the efficiency 1 under the declared credit (proposed bell.py)",
+   "bound": null,
+   "note": "the efficiency 1 and the marginal one half under the declared credit"
+  },
+  {
+   "line": 561,
+   "mark": "derived",
+   "main_section": "sec:bell-blind",
+   "excerpt": "For unequal parts, with $r$ the ratio of their products at the ports, the same credit gives $E = \\cos 2a\\cos 2b + \\rho\\sin 2a\\sin 2b$ with $\\rho = 2r / (1 + r^2)$, and $S = \\sqrt 2\\,(1 + \\rho)$ at the ideal angles (\\claimmark{derived}; \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless",
+   "note": "rho = 2 r / (1 + r^2), S = sqrt 2 (1 + rho)"
+  },
+  {
+   "line": 561,
+   "mark": "derived",
+   "main_section": "sec:bell-blind",
+   "excerpt": "The declared pairs' $478 / 169$ sits below $2\\sqrt 2$ because the angles are rational (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [
+    "478",
+    "169"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless",
+   "note": "478 / 169 = 2.828 below 2 sqrt 2 at the rational angles; examples/events/bell/build_world.py computes it by Lagrange's identity"
+  },
+  {
+   "line": 563,
+   "mark": "derived",
+   "main_section": "sec:bell-blind",
+   "excerpt": "Without the declaration the GameBoard gives the second and third lines of Eq.~\\eqref{eq:bell}, two results on local credits on the same file (\\claimmark{derived} under the uniform phase, \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 563,
+   "mark": "derived",
+   "main_section": "sec:bell-blind",
+   "excerpt": "... edit on four lines gives the three-quantum GHZ correlation \\cite{ghz}, $E_3 = \\cos 2(a + b + c)$, with every pairwise $E$ equal to $0$ and Mermin's $M = -4$, where every local credit gives at most $2$ (\\claimmark{derived} under the declared credit, \\fence{clicks}; S.40) \\cite[the GHZ gate]{algebra}.",
+   "numbers": [
+    "0",
+    "-4",
+    "2"
+   ],
+   "source": "S.40",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless",
+   "note": "E_3 = cos 2(a + b + c), M = -4, S.40; examples/events/ghz/build_world.py's blind"
+  },
+  {
+   "line": 563,
+   "mark": "derived",
+   "main_section": "sec:bell-blind",
+   "excerpt": "Nature's gate-joined ions \\cite{rowe} and transmons with a transferred photon \\cite{storz} exceed it: a finding of the first rank against the law as written (\\claimmark{derived} for the bound, the comparison a named finding; \\fence{clicks}; S.56 (14)).",
+   "numbers": [],
+   "source": "S.56 (14)",
+   "existing_script": null,
+   "proposed_module": "bell.py",
+   "status": "scriptless",
+   "note": "the bound 2 sqrt 2 of the declared credit"
+  },
+  {
+   "line": 566,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "The level slows the clock by the potential $\\Phi = -\\ell / \\Gamma = -U$, with Newton's sign, so (\\claimmark{derived}, \\fence{GameBoard}; S.25) \\begin{equation}\\label{eq:G} \\boxed{\\frac{G_{\\mathrm{clock}}}{c^2} = \\frac{3}{4\\pi\\,\\Gamma\\,E_g}, \\text{ that is } G_{\\mathrm{clock}} = \\frac{1}{4\\pi\\,\\Gamma ...",
+   "numbers": [],
+   "source": "S.25",
+   "existing_script": "tools/derivations/greens_function.py",
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "G_clock = 3 / (4 pi Gamma E_g) c^2 from the holder's rest 3 s / (4 pi r), S.25"
+  },
+  {
+   "line": 570,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "Kepler's $G$, read from the orbits of matter as clicks, is $[2\\cos\\omega_0 / (1 + \\cos\\omega_0)]\\,G_{\\mathrm{clock}}$ by Eq.~\\eqref{eq:kepler}, which is $0.8$ of it at $[2, 3]$ (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [
+    "[2, 3]",
+    "0.8"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "2 cos omega_0 / (1 + cos omega_0) = 0.8 at [2, 3]"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "...  universality follows from these two definitions, the quantum one unit of the invariant and the sign holder's source the Wronskian: $|q_p| = |q_e|$ by construction, no test, which nature's measurements give to $10^{-21}$ \\cite{bressi} (\\claimmark{derived} from the definitions; \\fence{clicks}; S.26).",
+   "numbers": [
+    "10^{-21}"
+   ],
+   "source": "S.26",
+   "existing_script": "tools/derivations/units.py",
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "the quantum one unit of the invariant 2 A^2 sin omega = T, S.26"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "The law's coupling between two quanta is then $\\alpha_{\\mathrm{law}} = (3\\sqrt 3 / 8\\pi)\\,k / (\\Gamma E_s)$, independent of the family's gap (\\claimmark{derived} under the rotation, $k$ \\claimmark{assumption}; \\fence{clicks}; S.26).",
+   "numbers": [],
+   "source": "S.26",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s), S.26"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "The reader sources the holder it reads, so the pair is reciprocal (\\claimmark{derived}; S.26, S.43; \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.26, S.43",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "... by a line of the law, $E_s T\\cos\\omega_s = k_w\\Gamma$: the body's loss under the turn and the holder's gain under the write agree if and only if it holds (\\claimmark{derived} for the identity under the turn's convention at the pinned commit; the line \\claimmark{assumption}; S.26; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "S.26",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "E_s T cos omega_s = k_w Gamma, the line of one energy"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "... mit refuses a body of a family that reads a holder of the sign at a count above $1$, so that many quanta of charge are that many records of count $1$; the charge rows' derivations stand under that line, per record and additive over records (\\claimmark{derived}, one derivation; \\fence{clicks}; S.26).",
+   "numbers": [
+    "1"
+   ],
+   "source": "S.26",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "This is an identity forced by charge universality and $F_g \\propto m^2$, by construction and no test (\\claimmark{derived} from the definitions; \\fence{clicks}; S.44).",
+   "numbers": [],
+   "source": "S.44",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "S.44"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "... 8}$; the dispersion vanishes on the eight body diagonals alone, so this bound leads for every generic direction and LHAASO's is slack by four orders (\\claimmark{derived}, two derivations; \\fence{clicks}; S.24, S.27). $\\Gamma$ reads nothing of $\\omega_e$ or of $\\alpha$, and nothing of the clocks boun ...",
+   "numbers": [
+    "2.0 \\times 10^{-14}",
+    "3.1 \\times 10^{-14}",
+    "2.0 \\times 10^{-28}",
+    "4.9 \\times 10^{-28}"
+   ],
+   "source": "S.24, S.27",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "the Link's bound from MAGIC: omega_e < 2.0 x 10^-14 on an axis, 3.1 x 10^-14 averaged, S.24 and S.27"
+  },
+  {
+   "line": 571,
+   "mark": "derived",
+   "main_section": "sec:constants-law",
+   "excerpt": "$\\Gamma$ reads nothing of $\\omega_e$ or of $\\alpha$, and nothing of the clocks bounds it (\\claimmark{derived}, \\fence{GameBoard}): the clocks read the mean of the write's dithered sub-unit level, the exact rest, and not $\\Gamma$ (an argument on the mean; the dynamics under a dithered level are open; ...",
+   "numbers": [],
+   "source": "S.26",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 575,
+   "mark": "derived",
+   "main_section": "sec:calibration",
+   "excerpt": "\\paragraph{What the lattice fixes with no number.} Before any file, the lattice fixes the following, each \\claimmark{derived} with its status in S.54 (\\fence{GameBoard} for the forms, \\fence{clicks} where a click reads them).",
+   "numbers": [],
+   "source": "S.54",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "the lattice's properties with no number, S.54: the group of 48, 1 / sqrt 3, the bound 1"
+  },
+  {
+   "line": 577,
+   "mark": "derived",
+   "main_section": "sec:calibration",
+   "excerpt": "... light's speed of $1 / \\sqrt 3$ Links per interval, from Rule3's vacuum band (Eq.~\\eqref{eq:bandpace}), and the causal bound of $1$, the step's reach (\\claimmark{derived} for the speed, \\fence{GameBoard}; the bound is postulate (4)) \\cite[the reading; nature's numbers enter the board only as clicks]{ ...",
+   "numbers": [
+    "1",
+    "4"
+   ],
+   "source": "none named",
+   "existing_script": "tools/derivations/bands.py",
+   "proposed_module": "bands.py",
+   "status": "scriptless",
+   "note": "bands.light_speed"
+  },
+  {
+   "line": 577,
+   "mark": "derived",
+   "main_section": "sec:calibration",
+   "excerpt": "A cavity of bodies and an atom's beat shift alike by $N$ at long wavelength, as nature's clocks do, atom against atom and cavity against maser \\cite{will}, with a cavity of declared faces at $N^2$ (\\claimmark{derived}; \\fence{clicks}; S.31).",
+   "numbers": [],
+   "source": "S.31",
+   "existing_script": null,
+   "proposed_module": "paces.py",
+   "status": "scriptless",
+   "note": "the two clocks under the principle, S.31"
+  },
+  {
+   "line": 580,
+   "mark": "derived",
+   "main_section": "sec:calibration",
+   "excerpt": "\\caption{\\label{tab:calibration}The calibration series: each coefficient of the universe's file, the one measurement of nature that reads it, and the layer it lives in (\\claimmark{derived} for every form of reading, the integer the file's; \\fence{GameBoard}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "the calibration series' forms of reading"
+  },
+  {
+   "line": 598,
+   "mark": "derived",
+   "main_section": "sec:calibration",
+   "excerpt": "It is entered as an explicitly named hypothesis, and no click has read it (\\claimmark{derived}; S.41; \\fence{clicks}): \\emph{the gravity of light} (\\fence{clicks}, untested).",
+   "numbers": [],
+   "source": "S.41",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "the gravity of light, S.41"
+  },
+  {
+   "line": 598,
+   "mark": "derived",
+   "main_section": "sec:calibration",
+   "excerpt": "This is $0.989$ for a strontium clock at one metre for one second, the magnitude of the semiclassical expectation \\cite{zych}, and it is unmeasured (\\claimmark{derived}, \\fence{clicks}; S.41).",
+   "numbers": [
+    "0.989"
+   ],
+   "source": "S.41",
+   "existing_script": null,
+   "proposed_module": "weak_field.py",
+   "status": "scriptless",
+   "note": "0.989 for a strontium clock at one metre for one second, S.41"
+  },
+  {
+   "line": 602,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "What the click's structure derives of the masses is in S.53: the rest energy $m^* c_m^2$ exactly, the ratio of two declared rotations, the ceiling at LHAASO's bound and the kinetic excess of a conversion, and no cause for $1{,}836$ (\\claimmark{derived}, two derivations; \\fence{clicks}; S.55).",
+   "numbers": [
+    "1,836"
+   ],
+   "source": "S.55",
+   "existing_script": "tools/derivations/two_body.py",
+   "proposed_module": "constants.py",
+   "status": "scriptless",
+   "note": "the rest energy m* c_m^2 from two_body.inertia and the band's c_m, S.53 and S.55"
+  },
+  {
+   "line": 602,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "Charge universality and the equivalence between families follow from the writes (\\claimmark{derived}, \\fence{clicks}).",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "constants.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 604,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "Confinement is the record's indivisibility under the click (\\claimmark{derived} from its declared row; S.37; \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.37",
+   "existing_script": null,
+   "proposed_module": "nuclear.py",
+   "status": "scriptless",
+   "note": "S.37"
+  },
+  {
+   "line": 606,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "Nature's gravitational waves carry $+$ and $\\times$ at every orientation (\\claimmark{derived} under the static read, a finding; \\fence{clicks}; S.36) \\cite[what is open, item 23]{algebra}.",
+   "numbers": [],
+   "source": "S.36",
+   "existing_script": null,
+   "proposed_module": "frame.py",
+   "status": "scriptless",
+   "note": "the static read's polarisations, S.36"
+  },
+  {
+   "line": 606,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "Gravity Probe B measured $37.2 \\pm 7.2$ milliarcseconds per year, against general relativity's $39.2$ \\cite{everitt} (\\claimmark{derived}, \\fence{clicks}) \\cite[the current's read]{algebra}.",
+   "numbers": [
+    "37.2 \\pm 7.2",
+    "39.2"
+   ],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "frame.py",
+   "status": "scriptless",
+   "note": "the frame dragging the static read gives none of, against Gravity Probe B"
+  },
+  {
+   "line": 606,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "This is a finding (\\claimmark{derived}, \\fence{clicks}; S.35) \\cite[what is open, item 15]{algebra}.",
+   "numbers": [],
+   "source": "S.35",
+   "existing_script": null,
+   "proposed_module": "frame.py",
+   "status": "scriptless",
+   "note": "S.35"
+  },
+  {
+   "line": 606,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "Like $\\alpha_1$, this is conditional on the metric read for a static source (named, not claimed; \\claimmark{derived} under the static read, \\fence{clicks}; S.35).",
+   "numbers": [],
+   "source": "S.35",
+   "existing_script": null,
+   "proposed_module": "frame.py",
+   "status": "scriptless",
+   "note": "alpha_1 of a diagonal metric, S.35"
+  },
+  {
+   "line": 606,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "At the second order in $z$ the ball of dust alone decelerates, $q_0 = \\Omega_m / 2 > 0$ (\\claimmark{derived}, \\fence{clicks}; S.29), where the supernovae read $q_0 \\approx -0.5$, which is flat $\\Lambda$CDM's $\\Omega_m / 2 - \\Omega_\\Lambda$ \\cite{riess}\\cite{perlmutter}\\cite{pantheon}.",
+   "numbers": [
+    "-0.5"
+   ],
+   "source": "S.29",
+   "existing_script": "tools/derivations/cosmology.py",
+   "proposed_module": "cosmology.py",
+   "status": "scriptless",
+   "note": "cosmology.deceleration"
+  },
+  {
+   "line": 608,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "\\paragraph{The lattice's frame, and its mend as a hypothesis.} At long wavelength and small gap every record's band is a Lorentz form, $\\omega^2 = \\omega_0^2 N^2 + c_m^2 k^2$ (\\claimmark{derived}, \\fence{GameBoard}; S.21).",
+   "numbers": [],
+   "source": "S.21",
+   "existing_script": "paper/general_formula/moving_clock.py",
+   "proposed_module": "moving_clock.py",
+   "status": "scriptless",
+   "note": "the Lorentz form at long wavelength and small gap, S.21"
+  },
+  {
+   "line": 608,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "... mma$ follows, and no Michelson-Morley shift appears at nature's pair beyond $c_m$'s own difference from $c$, $2.2 \\times 10^{-20}$ at LHAASO's bound (\\claimmark{derived}, \\fence{clicks}; Section~\\ref{sec:forms} (e)) (at the computed pair $c$ and $c_m$ differ, and a matter-armed interferometer would  ...",
+   "numbers": [
+    "2.2 \\times 10^{-20}"
+   ],
+   "source": "sec:forms",
+   "existing_script": null,
+   "proposed_module": "moving_clock.py",
+   "status": "scriptless",
+   "note": "c_m's difference from c, 2.2 x 10^-20 at LHAASO's bound"
+  },
+  {
+   "line": 608,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "But the content's Poisson rest in the lattice's frame gives a moving mass no $g_{0a}$ and no $g_{ab}$ (\\claimmark{derived}; \\fence{clicks}) \\cite[the lattice's frame is read by gravity alone, and its carrier is a pair of Links; what is open, item 15]{algebra}.",
+   "numbers": [],
+   "source": "none named",
+   "existing_script": null,
+   "proposed_module": "frame.py",
+   "status": "scriptless"
+  },
+  {
+   "line": 608,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "Against it stands this: among the five forms tried, no real, local, explicit, bijective lattice line on Rule3's clock carries $g_{0a}$ (\\claimmark{derived} for the five forms, no theorem over every form; S.36; \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.36",
+   "existing_script": null,
+   "proposed_module": "frame.py",
+   "status": "scriptless",
+   "note": "the five forms tried, S.36"
+  },
+  {
+   "line": 610,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "This is an explicit finding (\\claimmark{derived} from the declared row; \\fence{clicks}; S.37, S.56).",
+   "numbers": [],
+   "source": "S.37, S.56",
+   "existing_script": null,
+   "proposed_module": "nuclear.py",
+   "status": "scriptless",
+   "note": "S.37 and S.56"
+  },
+  {
+   "line": 610,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "A body's binding per quantum is bounded by $0.76\\,CW / (\\Gamma E)$ at one Node, and is about $0.29\\,CW / (\\Gamma E r)$ for a uniform ball of $r$ Links ($0.36$ at its centre), with $E$ the holder's divisor (\\claimmark{derived}, a bound; \\fence{GameBoard}; S.38).",
+   "numbers": [
+    "0.76",
+    "0.29",
+    "0.36"
+   ],
+   "source": "S.38",
+   "existing_script": "tools/derivations/greens_function.py",
+   "proposed_module": "bodies.py",
+   "status": "scriptless",
+   "note": "0.76 = 3 G(0) at one Node; 0.29 and 0.36 for the uniform ball, S.38"
+  },
+  {
+   "line": 610,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "The findings are these, each \\claimmark{derived} under the hypothesis and set beside nature (\\fence{clicks}; S.45).",
+   "numbers": [],
+   "source": "S.45",
+   "existing_script": "tools/derivations/nuclear.py",
+   "proposed_module": "nuclear.py",
+   "status": "scriptless",
+   "note": "nuclear.yukawa_threshold and the findings of S.45"
+  },
+  {
+   "line": 612,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "Every rotation holder, massive or not, couples at $\\alpha$ at the Link; its gap is its range and never its strength (\\claimmark{derived}; \\fence{GameBoard}; S.39).",
+   "numbers": [],
+   "source": "S.39",
+   "existing_script": null,
+   "proposed_module": "families.py",
+   "status": "scriptless",
+   "note": "the gapped holder's kernel, S.39"
+  },
+  {
+   "line": 618,
+   "mark": "derived",
+   "main_section": "sec:open",
+   "excerpt": "The shape of the statistics is derived from the known form of the rate equations \\cite{cook} (\\claimmark{derived} under a declaration; the rate itself a \\claimmark{hypothesis} under its own name; S.56 (15); \\fence{clicks}).",
+   "numbers": [],
+   "source": "S.56 (15)",
+   "existing_script": null,
+   "proposed_module": "clicks.py",
+   "status": "scriptless",
+   "note": "the shape of the statistics from the rate equations, S.56 (15)"
+  },
+  {
+   "line": 622,
+   "mark": "computed",
+   "main_section": "sec:open",
+   "excerpt": "The many-body correlation is not reproduced by a product of records (helium $1.4$ percent, positronium $44$ percent of nature's, \\claimmark{computed}, GameBoard readings; S.60), and Pauli's exclusion has no line (S.46, S.60) \\cite[the atom is a bound body of the holder of the sign]{algebra}.",
+   "numbers": [
+    "1.4",
+    "44"
+   ],
+   "source": "S.60",
+   "existing_script": null,
+   "proposed_module": null,
+   "status": "scriptless",
+   "reader": "tools/pixel_mode.py (the generator's GameBoard readings of the bound bodies) and tools/body_rest.py, with tests/test_the_bound_body.py",
+   "derived_counterpart": "the pair line of two bound records, tools/derivations/two_body.py:against_nature and reduced_masses (positronium at mu = 1 / 2), S.60; the body's fixed point by iteration: none in closed form",
+   "bound": null,
+   "note": "helium 1.4 percent and positronium 44 percent of nature's, GameBoard readings, S.60"
+  }
+ ]
+}
