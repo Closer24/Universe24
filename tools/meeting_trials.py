@@ -1,4 +1,4 @@
-"""The trials of a world of records declared NodeReaders (examples/events/zeno, examples/events/anticoincidence; ALGEBRA.md, The click writes on the lattice (j); the paper's S.57 and S.59): one world file run as many times as the design names seeds, each run from the same lay with every reader's generator at a state of its own from the trial's seed, the hash of the trial's label (the seed times the records' number plus the record's number; `hashed_state`: the generator is affine, so labels in arithmetic progression would stay one progression at every draw's depth and the trials' variates one Weyl sequence and not independent draws, the mathematician's finding of 2026-10-04 on #1827 at the advisor's second) (the design's list of seeds, `seeds`, the host's declaration standing where one world file holds one seed; the counter's generator untouched), over the design's intervals, and at the end the part each record stands in (its books, the reader's own), its windows closed (its books' count, the pulsed gate's n) and its `credit` lines labelled NODEREADER naming `absorbed` or `emitted`, the clicks (the null window's LATTICE-labelled lines left out); the readings over the trials: per record the fraction of trials ending in each part and the windows closed per trial, the clicks per kind, the trials the run refused inside (the guard's refusal with its interval, by seed, read and not hidden), and over the records the coincidence rows derived from the records' count (`coincidence_rows`): the fractions of trials with an absorption at every record alone and at every pair and no other, at neither, and per pair the anticoincidence parameter P(both) / (P(A) P(B)) where defined (A_only, B_only, both, neither and alpha for two records). Every number a click (the clicks, the parts the writes left) and no array is read; the tool holds no number of the law and compares nothing, the blind printed beside the readings where an expectation file is given.
+"""The trials of a world of records declared NodeDetectors (examples/events/zeno, examples/events/anticoincidence; ALGEBRA.md, The click writes on the lattice (j); the paper's S.57 and S.59): one world file run as many times as the design names seeds, each run from the same lay with every reader's generator at a state of its own from the trial's seed, the hash of the trial's label (the seed times the records' number plus the record's number; `hashed_state`: the generator is affine, so labels in arithmetic progression would stay one progression at every draw's depth and the trials' variates one Weyl sequence and not independent draws, the mathematician's finding of 2026-10-04 on #1827 at the advisor's second) (the design's list of seeds, `seeds`, the host's declaration standing where one world file holds one seed; the counter's generator untouched), over the design's intervals, and at the end the part each record stands in (its books, the reader's own), its windows closed (its books' count, the pulsed gate's n) and its `credit` lines labelled NODEDETECTOR naming `absorbed` or `emitted`, the clicks (the null window's LATTICE-labelled lines left out); the readings over the trials: per record the fraction of trials ending in each part and the windows closed per trial, the clicks per kind, the trials the run refused inside (the guard's refusal with its interval, by seed, read and not hidden), and over the records the coincidence rows derived from the records' count (`coincidence_rows`): the fractions of trials with an absorption at every record alone and at every pair and no other, at neither, and per pair the anticoincidence parameter P(both) / (P(A) P(B)) where defined (A_only, B_only, both, neither and alpha for two records). Every number a click (the clicks, the parts the writes left) and no array is read; the tool holds no number of the law and compares nothing, the blind printed beside the readings where an expectation file is given.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -50,7 +50,7 @@ def one_trial(
         line
         for line in lines
         if line["event"] == "credit"
-        and line["label"] == "NODEREADER"
+        and line["label"] == "NODEDETECTOR"
         and (line["absorbed"] or line["emitted"])
     ]
     return parts, windows, clicks, refused
@@ -100,9 +100,11 @@ def reading(path: Path, design: Path, expectation: Path | None) -> dict[str, obj
                 closed.append(Counter())
             ends[number][part] += 1
             closed[number][count] += 1
-        kinds.update(f"{j['node_reader']} {j['realised']} by {j['taken'] or j['given']}" for j in clicks)
+        kinds.update(
+            f"{j['node_detector']} {j['realised']} by {j['taken'] or j['given']}" for j in clicks
+        )
         absorbed[
-            tuple(sorted({int(str(j["node_reader"]).split()[-1]) for j in clicks if j["absorbed"]}))
+            tuple(sorted({int(str(j["node_detector"]).split()[-1]) for j in clicks if j["absorbed"]}))
         ] += 1
     trials = len(seeds) - len(refusals)
     fractions = {
@@ -123,7 +125,7 @@ def reading(path: Path, design: Path, expectation: Path | None) -> dict[str, obj
         "refused": {str(seed): packet for seed, packet in sorted(refusals.items())},
         "clicks": dict(sorted(kinds.items())),
         "coincidence": coincidence,
-        "label": "NODEREADER",
+        "label": "NODEDETECTOR",
     }
     if expectation is not None:
         found["blind"] = json.loads(expectation.read_text(encoding="utf-8")).get("blind")

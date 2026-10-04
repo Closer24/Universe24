@@ -1,6 +1,6 @@
 {
- "verdict": "NODEREADER",
- "node_reader": [
+ "verdict": "NODEDETECTOR",
+ "node_detector": [
   "screen_0",
   "screen_1",
   "screen_2",

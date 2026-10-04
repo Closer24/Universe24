@@ -71,7 +71,7 @@ def check_the_clocks_rate_is_exact_in_the_half_sine() -> Check:
 
 
 def check_the_cut_regions_uniform_mode() -> Check:
-    """main.tex Section 5.3 (the NodeReader with its own record): a region with its outer Links cut (the Link's factor 0 at both ends, the Node's own coefficient recomputed from its open Links) and its inner Links open has its uniform mode rotating at cos omega_0 = num / den exactly whatever the region's size: S_i = 12 den Gamma^2 - 12 (den - num) Gamma^2 - SUM over the open Ports of R_ij at the vacuum's clock, so (S_i + SUM over the open Ports of R_ij) / w = 12 num Gamma^2 / (6 den Gamma^2) = 2 num / den; exact rationals on chains of one to five Nodes."""
+    """main.tex Section 5.3 (the NodeDetector with its own record): a region with its outer Links cut (the Link's factor 0 at both ends, the Node's own coefficient recomputed from its open Links) and its inner Links open has its uniform mode rotating at cos omega_0 = num / den exactly whatever the region's size: S_i = 12 den Gamma^2 - 12 (den - num) Gamma^2 - SUM over the open Ports of R_ij at the vacuum's clock, so (S_i + SUM over the open Ports of R_ij) / w = 12 num Gamma^2 / (6 den Gamma^2) = 2 num / den; exact rationals on chains of one to five Nodes."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 6):
         gamma = draw.randint(2, 30)

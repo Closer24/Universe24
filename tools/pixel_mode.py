@@ -1057,7 +1057,7 @@ FLAGS = ("--sense", "--pixel")  # the command-line inputs the design file replac
 
 
 def laid_by_the_engine(body: dict[str, Any]) -> bool:
-    """A body the engine lays at its one Node and the generator leaves (loader/node_reader_declaration.py): one declaring its parts, or converted whole."""
+    """A body the engine lays at its one Node and the generator leaves (loader/node_detector_declaration.py): one declaring its parts, or converted whole."""
     return any(key in body for key in ENGINE_LAID)
 
 

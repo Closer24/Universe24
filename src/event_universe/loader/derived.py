@@ -65,7 +65,7 @@ class FamilyRule(Row):
 
     @property
     def quanta(self) -> bool:
-        """Whether the family carries quanta, stepping at the paces of its reads with its share its count and its currents a node_reader's reading: every family of quanta and the holder of the sign, whose own record is light; a held row sourced by the form holds the content and steps at the pace 1."""
+        """Whether the family carries quanta, stepping at the paces of its reads with its share its count and its currents a node_detector's reading: every family of quanta and the holder of the sign, whose own record is light; a held row sourced by the form holds the content and steps at the pace 1."""
         return not self.held or self.wronskian
 
     @property

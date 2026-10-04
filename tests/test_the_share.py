@@ -1,4 +1,4 @@
-"""The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; in integers the identities carry Rule3's remainder term and the reader's own floor, the audit's exact witnesses pinned (#1582, #1583, #1579); the engine reads the same currents from the record and a node_reader's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; in integers the identities carry Rule3's remainder term and the reader's own floor, the audit's exact witnesses pinned (#1582, #1583, #1579); the engine reads the same currents from the record and a node_detector's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
 import json
 from fractions import Fraction
@@ -90,7 +90,7 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
-    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a node_reader's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board. On the chain of three with every Node declared and none grown: +x from Node 2 is outside the region; -x from Node 0 inside it is a hop, no entry; +y beyond the board has no boundary Port."""
+    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a node_detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board. On the chain of three with every Node declared and none grown: +x from Node 2 is outside the region; -x from Node 0 inside it is a hop, no entry; +y beyond the board has no boundary Port."""
     (quanta,) = family_rules(real_rows(("quanta", (5, 7), 1, None)))
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = node.zeros(shape, kind_of(63))
@@ -108,13 +108,13 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
 
 
 def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
-    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_readers' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the resonance world, the shelved ion and the anticoincidence world over 24 intervals, every family. (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
+    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the resonance world, the shelved ion and the anticoincidence world over 24 intervals, every family. (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
     worlds = (("zeno", "zeno_1"), ("resonance", "resonant"), ("shelved_ion", "shelved_ion"))
     for folder, name in (*worlds, ("anticoincidence", "one_photon")):
         board = Lattice(load_world(EVENTS / folder / f"{name}.json"))
         for _ in range(24):
             board.step()  # the board may grow beyond a receding face: the masks at its shape now
-            union, everywhere = credit.node_reader_nodes(board), np.ones(board.shape, dtype=bool)
+            union, everywhere = credit.node_detector_nodes(board), np.ones(board.shape, dtype=bool)
             for index in range(len(board.families)):
                 full, frozen = board.share_of(index, 1, everywhere)
                 short, frozen_short = board.share_of(index)
@@ -155,7 +155,7 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
     world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=40)
-    world.update(engine="e.json", bodies=[], node_readers=[])
+    world.update(engine="e.json", bodies=[], node_detectors=[])
     paths = {name: tmp_path / f"{name}_ring.json" for name in ("u", "turn")}
     for name, path in paths.items():
         path.write_text(json.dumps({**world, "universe": f"{name}.json"}), encoding="utf-8")

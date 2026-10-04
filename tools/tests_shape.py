@@ -93,7 +93,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the generator's count as the books read it (mode-count, the mathematician's finding of 2026-10-03): the share "
         "summed over the board and read in quanta once, the shipped two slits and Zeno counts the books' own, the dilute wave",
     ),
-    "tests/test_the_node_reader.py::test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall": (
+    "tests/test_the_node_detector.py::test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall": (
         26,
         "count-unit (the two hands' word on #1793's R8): the taker's lay at 2 A^2 sin omega = T per quantum, the "
         "family's wall W_c sin omega_0 by one root, light's W_c, the [1, 1299] amplitude unchanged, a laid body's books",
@@ -115,9 +115,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "record empty at the books' origin set at its first lay to the emission's own W_c sin Omega, a born quantum "
         "below the half-top energy credited 1 and not 0",
     ),
-    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_counts_in_its_own_quantum": (
+    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector_counts_in_its_own_quantum": (
         90,
-        "the generic node_reader round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
+        "the generic node_detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
@@ -213,21 +213,21 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
         "budget's least T, the faces and the open faces' layer, the packets, the universe",
     ),
-    "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
+    "tests/test_the_node_detector.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
         289,
-        "the NodeReader round (the owner's word of 2026-10-03, a reader with Nodes alone is never on one Node; the "
+        "the NodeDetector round (the owner's word of 2026-10-03, a NodeDetector with Nodes alone is never on one Node; the "
         "Boss's brief): the ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, "
         "the share credited 1, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "
         "uniform mode's recurrence to the bit, the drive projected on the reader's normalised mode, one draw per click "
         "with the write's Node drawn after the outcome by the window's inflow booked per Node, the emission's Node by "
         "the record's share (the mathematician's 299 with the advisor's second, two hands)",
     ),
-    "tests/test_the_node_reader.py::test_a_reader_with_its_own_record_stands_on_one_node": (
+    "tests/test_the_node_detector.py::test_a_reader_with_its_own_record_stands_on_one_node": (
         46,
         "the relation seen from its two ends (the owner's decision of 2026-10-03, 16:30 UTC, on the mathematician's 323 "
         "with the advisor's yes): the shipped Zeno reader declared at one Node, its lay A_1 = A, the turn reading the "
         "drive's level exactly, its six Links cut, the uniform mode's recurrence, the click line naming no Node with "
-        "the hole and the lay at the only Node, the back-in-time gate across the run, and a reader with Nodes alone "
+        "the hole and the lay at the only Node, the back-in-time gate across the run, and a NodeDetector with Nodes alone "
         "at one Node still refused by name",
     ),
     "tests/test_reading_gate.py::test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit": (

@@ -23,7 +23,7 @@ from click_counts import extrema  # noqa: E402  # the one extrema rule, the read
 
 
 def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
-    """The screen's node_readers: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward."""
+    """The screen's node_detectors: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward."""
     rows, column = int(design["rows_per_region"]), int(design["screen"])
     return [
         {
@@ -37,9 +37,9 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
 def world(design: dict[str, Any]) -> dict[str, object]:
     """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and absorption no share), the receding face, the intervals."""
     gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
-    node_readers = screen_regions(design)
+    node_detectors = screen_regions(design)
     region = design["aside"]
-    node_readers.append(
+    node_detectors.append(
         {
             "name": str(region["name"]),
             "positions": [
@@ -74,7 +74,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
                 "edge": {"x": int(packet["edge_along"]), "y": int(packet["edge_across"]), "z": 0},
             }
         ],
-        "node_readers": node_readers,
+        "node_detectors": node_detectors,
         "receding": design["receding"],
         "draw": design["draw"],
     }
@@ -97,9 +97,9 @@ def first_minima(blind: list[float], maxima: list[int], minima: list[int]) -> tu
 
 
 def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
-    """The blind expectation file, per region (NODEREADER, written before the run, as tools/click_counts.py reads it): the advisor's per-Node row summed per region, its total N's blind, its maxima within the pattern's range, the central maximum with the first minima about it and the blind visibility there, the arrival wager and the wings from the design, `laid` the generator's count of the lay and the bare region read beside the screen."""
+    """The blind expectation file, per region (NODEDETECTOR, written before the run, as tools/click_counts.py reads it): the advisor's per-Node row summed per region, its total N's blind, its maxima within the pattern's range, the central maximum with the first minima about it and the blind visibility there, the arrival wager and the wings from the design, `laid` the generator's count of the lay and the bare region read beside the screen."""
     rows = int(design["rows_per_region"])
-    names = [node_reader["name"] for node_reader in screen_regions(design)]
+    names = [node_detector["name"] for node_detector in screen_regions(design)]
     blind = per_region([float(v) for v in design["blind_per_node"]], rows)
     through = float(design["blind_through"])
     first, last = design["pattern"]
@@ -107,8 +107,8 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
     central, first_two = first_minima(blind, maxima, minima)
     most, low = blind[central], sum(blind[at] for at in first_two)
     return {
-        "verdict": "NODEREADER",
-        "node_reader": names,
+        "verdict": "NODEDETECTOR",
+        "node_detector": names,
         "family": design["family"],
         "window": list(design["window"]),
         "across": "y",
@@ -164,7 +164,7 @@ def main(argv: list[str] | None = None) -> None:
         check=True,
         cwd=ROOT,
     )
-    print(json.dumps({"world": str(path), "node_readers": len(document["node_readers"])}))
+    print(json.dumps({"world": str(path), "node_detectors": len(document["node_detectors"])}))
     mode = json.loads((args.folder / "two_slits.mode.json").read_text(encoding="utf-8"))
     laid = sum(int(packet["count"]) for packet in mode["packets"])  # the generator's count
     blind = expectation(design, laid)

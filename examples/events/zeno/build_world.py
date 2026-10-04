@@ -1,4 +1,4 @@
-"""The quantum Zeno world's builder (the paper's S.59; ALGEBRA.md, The click writes on the lattice (j), the record's re-lay read n times is the quantum Zeno effect; the owner's words of 2026-10-02, 12:38, and 2026-10-03): from `design.json` it writes one world per probe count n, `zeno_<n>.json`, a record of two parts (g at the count 1, e at 0) declared a NodeReader at one Node of a periodic box under a drive's plane wave whose turn over the run is a pi pulse (the Rabi angle pi / 2 in the labels), the record's own window the run over n, so that it reads its own parts n times (the null window's write at each), and the blind `expectation.json`, Itano's column: P(e at T_pi) = (1 - cos^n(pi / n)) / 2. With `--modes` it lays the drives by the generator. Every number is the design's; the engine reads none of it.
+"""The quantum Zeno world's builder (the paper's S.59; ALGEBRA.md, The click writes on the lattice (j), the record's re-lay read n times is the quantum Zeno effect; the owner's words of 2026-10-02, 12:38, and 2026-10-03): from `design.json` it writes one world per probe count n, `zeno_<n>.json`, a record of two parts (g at the count 1, e at 0) declared a NodeDetector at one Node of a periodic box under a drive's plane wave whose turn over the run is a pi pulse (the Rabi angle pi / 2 in the labels), the record's own window the run over n, so that it reads its own parts n times (the null window's write at each), and the blind `expectation.json`, Itano's column: P(e at T_pi) = (1 - cos^n(pi / n)) / 2. With `--modes` it lays the drives by the generator. Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/zeno/build_world.py --modes [--folder <folder>]
 """
@@ -43,7 +43,7 @@ def world_of(design: dict, n: int) -> dict:
             },
         ],
         "rates": [],
-        "node_reader": {
+        "node_detector": {
             **design["generator"],
             "window": design["intervals"] // n,
             "seed": design["record"]["seed"],
@@ -67,7 +67,7 @@ def world_of(design: dict, n: int) -> dict:
         "engine": design["engine"],
         "bodies": [record],
         "packets": [packet],
-        "node_readers": [],
+        "node_detectors": [],
     }
 
 
@@ -98,8 +98,8 @@ def main(argv: list[str] | None = None) -> None:
             "fence": "clicks",
         }
     expectation = {
-        "verdict": "NODEREADER",
-        "comment": "The quantum Zeno world (S.59; the mathematician's 146 and 148, the advisor's second hand, the owner's word of 2026-10-02, 12:38, 'Yes, both of them'): one record of two parts declared a NodeReader at one Node, a drive whose accumulated turn over the run is a pi pulse in the labels, the record reading its own parts n times over the run; written before any run and never edited after.",
+        "verdict": "NODEDETECTOR",
+        "comment": "The quantum Zeno world (S.59; the mathematician's 146 and 148, the advisor's second hand, the owner's word of 2026-10-02, 12:38, 'Yes, both of them'): one record of two parts declared a NodeDetector at one Node, a drive whose accumulated turn over the run is a pi pulse in the labels, the record reading its own parts n times over the run; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],
         "blind": blind,

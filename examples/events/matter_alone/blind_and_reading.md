@@ -6,8 +6,8 @@ on the engine and seen to work**). The blind below is the advisor's, GitHub issu
 5928483084 (2026-10-01, 12:19), its formulas and numbers restated here before any run of this
 round and never edited after; `expectation.json` beside it carries the same blind with the
 design's restatements under the law's lines as they stand. The reading is appended after the
-run, every number a lattice reading labelled so (only a NodeReader's click is a measurement,
-and this world declares no NodeReader); a reading that misses the blind is a finding, written as
+run, every number a lattice reading labelled so (only a NodeDetector's click is a measurement,
+and this world declares no NodeDetector); a reading that misses the blind is a finding, written as
 such and never adjusted.
 
 ## The blind (the advisor, #1563 comment 5928483084)
@@ -45,7 +45,7 @@ squared), the well over the board in quanta, and every held row's level along th
 ## The reading (main d924798b)
 
 Every number below is a lattice reading (`tools/body_rest.py` with `--reach 12` on the pixel, the books, the `click` lines of the open faces' layer); the
-worlds declare no NodeReader. The pixel was laid anew by the builder on this engine (the
+worlds declare no NodeDetector. The pixel was laid anew by the builder on this engine (the
 generator, four folders laying beside it on four cores): `pixel.json` in a few minutes, the body
 of 10,000 quanta standing as one bound record over 1,363 declared Nodes carrying 10,137 quanta
 at the paces of the read (the share's total over the board 10,400, the record's faint tail
@@ -154,7 +154,7 @@ and the world is run and read as laid.
 ### The reading (the branch families-two on the engine of the reading above)
 
 Every number below is a lattice reading (`tools/body_rest.py --reach 5`, the books, the
-`click` lines of the open faces' layer); the world declares no NodeReader. The lay:
+`click` lines of the open faces' layer); the world declares no NodeDetector. The lay:
 `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact.json`, 20 s on one core,
 the generator from the one-Node seed of 8,000 quanta at [5, 5, 5] on the open 11-cube: twelve
 rounds, the content at the centre 1,111 to 453, the count at the centre 304 to 101, the clock
@@ -290,7 +290,7 @@ once at most (one more world at 20,000 only if this lay takes under 10 minutes) 
 ### The reading (the branch pixel-compact-two on the engine of main 337eac09)
 
 Every number below is a lattice reading (`tools/body_rest.py --reach 5 --expectation`, the
-books, the `click` lines of the open faces' layer); the world declares no NodeReader. The lay:
+books, the `click` lines of the open faces' layer); the world declares no NodeDetector. The lay:
 `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact_14000.json`, 29 s on one
 core, the generator from the one-Node seed of 14,000 quanta at [5, 5, 5] on the open 11-cube:
 fourteen rounds, the content at the centre 1,770 to 885, the count at the centre 532 to 435 of
@@ -794,6 +794,6 @@ and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine 
 Every line of every world in this file is a lattice reading (`tools/body_rest.py`: the three
 levels at the centre, the tail along the axes, the share and its centroid and second moment, the
 well, the held rows, the books; the generator's own lines for the lays and the refusals). The worlds
-declare no NodeReader but the open faces' layer, whose `click` lines (labelled the NodeReader's by the
+declare no NodeDetector but the open faces' layer, whose `click` lines (labelled the NodeDetector's by the
 engine) are read only as the total of matter that left the board (0.018, 1.75, 12.5 and 0.47
 quanta); no verdict rests on them. The intervals are the board's.

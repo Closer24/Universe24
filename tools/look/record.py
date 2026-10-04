@@ -1,4 +1,4 @@
-"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "lattice reading". Per interval: a family of quanta's level now, its second level now where it is a plane, its count (the record's share in quanta, the engine's own `Lattice.quanta`), its share over the lattice in the current's units (the books' per interval, the engine's own `Lattice.total_share`), the form the interval booked (D_i over both level pairs, the engine's own `node.form`) and the least Node pace Gamma - 2 c_i its read finds at that state (the engine's own read and `node_pace`); a held family's level (its time part) and its further parts; the bodies' Nodes (where the family's share stands in quanta about the declared Nodes, `Lattice.body_nodes`), each body marked a reader where the file declares it one; the interval's `click` lines and, for a family of several parts, its `parts` lines (the NodeReader's read, the parts' signed level sums per region, which the joint-share reader credits); the lattice's shape at that interval and its offset, the layers grown before the origin on each axis (a board with a receding face grows, every array of the frame over the shape of its own frame and every Node named at the file's coordinates). At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the receding faces, the folded axes, the bodies with their declared counts, the node_readers), at the end the books and the end of the run where it ended at a receding face's largest size. Frame 0 is the world as laid before the first interval, its counts the record's share as the mode file laid it (the gate having admitted each body's declared count within the rounding of that share). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
+"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "lattice reading". Per interval: a family of quanta's level now, its second level now where it is a plane, its count (the record's share in quanta, the engine's own `Lattice.quanta`), its share over the lattice in the current's units (the books' per interval, the engine's own `Lattice.total_share`), the form the interval booked (D_i over both level pairs, the engine's own `node.form`) and the least Node pace Gamma - 2 c_i its read finds at that state (the engine's own read and `node_pace`); a held family's level (its time part) and its further parts; the bodies' Nodes (where the family's share stands in quanta about the declared Nodes, `Lattice.body_nodes`), each body marked a reader where the file declares it one; the interval's `click` lines and, for a family of several parts, its `parts` lines (the NodeDetector's read, the parts' signed level sums per region, which the joint-share reader credits); the lattice's shape at that interval and its offset, the layers grown before the origin on each axis (a board with a receding face grows, every array of the frame over the shape of its own frame and every Node named at the file's coordinates). At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the receding faces, the folded axes, the bodies with their declared counts, the node_detectors), at the end the books and the end of the run where it ended at a receding face's largest size. Frame 0 is the world as laid before the first interval, its counts the record's share as the mode file laid it (the gate having admitted each body's declared count within the rounding of that share). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -66,7 +66,7 @@ def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int
 
 
 def declared(world: World, path: Path, board: Lattice) -> dict[str, object]:
-    """The world's declared numbers as the loader read them (the inner faces as the world file declares them, each its axis, its coordinate and its gaps, the loader having admitted them), and the node_readers as the lattice holds them (the open faces' layer among them)."""
+    """The world's declared numbers as the loader read them (the inner faces as the world file declares them, each its axis, its coordinate and its gaps, the loader having admitted them), and the node_detectors as the lattice holds them (the open faces' layer among them)."""
     families = world.families
     faces = [
         "open" if opened else "periodic" if wraps else "closed"
@@ -94,17 +94,17 @@ def declared(world: World, path: Path, board: Lattice) -> dict[str, object]:
                 "nodes": [list(at) for at in row.nodes],
                 "counts": list(row.counts),
                 "declared": sum(row.counts),
-                "reader": row.reader is not None,
+                "reader": row.detector is not None,
             }
             for number, row in enumerate(world.bodies)
         ],
-        "node_readers": [
+        "node_detectors": [
             {
-                "name": node_reader.name,
-                "nodes": nodes_of(node_reader.nodes) if node_reader.nodes is not None else [],
-                "body": node_reader.body,
+                "name": node_detector.name,
+                "nodes": nodes_of(node_detector.nodes) if node_detector.nodes is not None else [],
+                "body": node_detector.body,
             }
-            for node_reader in board.node_readers
+            for node_detector in board.node_detectors
         ],
     }
 

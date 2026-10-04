@@ -10,7 +10,7 @@ from event_universe import node
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
-from event_universe.reports import NodeReader, end
+from event_universe.reports import NodeDetector, end
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -94,17 +94,17 @@ def resized(
     ]
 
 
-def resized_node_reader(
-    node_reader: NodeReader, axis: int, side: int, layers: int, direction: int
-) -> NodeReader:
-    """A node_reader's declared Nodes over the grown lattice (none grown: nothing is declared there), a body's derived each interval."""
-    if node_reader.nodes is None:
-        return node_reader
-    return NodeReader(
-        node_reader.name,
-        sized(node_reader.nodes, axis, side, layers, direction, False),
-        node_reader.body,
-        node_reader.declared,
+def resized_node_detector(
+    node_detector: NodeDetector, axis: int, side: int, layers: int, direction: int
+) -> NodeDetector:
+    """A node_detector's declared Nodes over the grown lattice (none grown: nothing is declared there), a body's derived each interval."""
+    if node_detector.nodes is None:
+        return node_detector
+    return NodeDetector(
+        node_detector.name,
+        sized(node_detector.nodes, axis, side, layers, direction, False),
+        node_detector.body,
+        node_detector.declared,
     )
 
 
@@ -123,7 +123,7 @@ def grow(board: Lattice) -> bool:
 
 
 def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) -> None:
-    """The lattice grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the node_readers' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
+    """The lattice grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the node_detectors' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         kind = board.world.kind
         resized(
@@ -138,8 +138,8 @@ def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) ->
             kind,
             board.half_wall(index),
         )
-    board.node_readers = [
-        resized_node_reader(d, axis, side, layers, direction) for d in board.node_readers
+    board.node_detectors = [
+        resized_node_detector(d, axis, side, layers, direction) for d in board.node_detectors
     ]
     if board.wrap.beyond is not None:
         beyond = sized(board.wrap.beyond, axis, side, layers, direction, False)

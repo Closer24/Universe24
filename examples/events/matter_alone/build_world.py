@@ -19,7 +19,7 @@ ROOT = HERE.parents[2]
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world: the open box, one body of the design's family declared with one Node carrying its quanta at the centre, no declared node_reader, the universe the design names, and the world's `lay` where its row declares one (the direct lay's fixed-point lay with its compact seed and profile, loader/lay.py)."""
+    """One world: the open box, one body of the design's family declared with one Node carrying its quanta at the centre, no declared node_detector, the universe the design names, and the world's `lay` where its row declares one (the direct lay's fixed-point lay with its compact seed and profile, loader/lay.py)."""
     row = design["worlds"][name]
     return {
         "shape": [int(v) for v in row["shape"]],
@@ -34,7 +34,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
                 "nodes": [{"node": [int(v) for v in row["centre"]], "count": int(row["quanta"])}],
             }
         ],
-        "node_readers": [],
+        "node_detectors": [],
         **({"lay": row["lay"]} if "lay" in row else {}),
     }
 

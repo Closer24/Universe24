@@ -45,7 +45,7 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         }
         for sign in (-1, 1)
     ]
-    node_readers = [
+    node_detectors = [
         {
             "name": design["sides"]["a"],
             "positions": [[x, 0, 0] for x in range(depth)],
@@ -68,7 +68,7 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         "engine": design["engine"],
         "bodies": [],
         "packets": packets,
-        "node_readers": node_readers,
+        "node_detectors": node_detectors,
         "receding": design["receding"],
         "draw": design["draw"],
     }
@@ -126,7 +126,7 @@ def blind(design: dict[str, Any]) -> dict[str, Any]:
 def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind expectation file, as tools/bell_gate.py reads it: the family, the window, the sides' regions, the settings and the patterns, the four worlds in CHSH order with the combination's name and signs, the credit's rule named, the seed and the blind."""
     return {
-        "verdict": "NODEREADER",
+        "verdict": "NODEDETECTOR",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],

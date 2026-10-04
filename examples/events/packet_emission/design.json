@@ -12,7 +12,7 @@
  "boundary": {"x": "open", "y": "open", "z": "open"},
  "face_depth": 1,
  "giver": {"family": "atom", "resonance": [2, 3], "lifetime": 48, "window": 48, "seed": 11, "weight": 1},
- "node_reader": {"name": "reach", "seed": 24},
+ "node_detector": {"name": "reach", "seed": 24},
  "passage_intervals": 120,
  "reading_window_after_emission": [2, 17],
  "generator": {"multiplier": 6364136223846793005, "increment": 1442695040888963407},

@@ -134,7 +134,7 @@ def packets_of(
         if turns == 0:
             raise ValueError(
                 f"{label}.wave's p is 0: a packet has a wave number pi p / q per Link, p not 0, its sign "
-                "the direction along the axis (a node_reader's region is read against it)"
+                "the direction along the axis (a node_detector's region is read against it)"
             )
         phase = packet["phase"]  # required: the file states its phase, [0, 1] for none
         if not isinstance(phase, list) or len(phase) != 2:

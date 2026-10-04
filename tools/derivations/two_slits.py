@@ -1,4 +1,4 @@
-"""The two slits' blind from the declared file's geometry (ALGEBRA.md, The rows against nature, (g); the paper's Section 9.2, S.23): the far-field spacing lambda L / d = 16 Links, the near-field minima at the rows 15.3 and 32.7 in the regions 3 and 8 of the twelve four-row blocks, the pattern's centre 24 against the blocks' 23.5, the Huygens sum's regional dips, and the opaque NodeReader in one gap that loses the fringes and reads one gap's envelope.
+"""The two slits' blind from the declared file's geometry (ALGEBRA.md, The rows against nature, (g); the paper's Section 9.2, S.23): the far-field spacing lambda L / d = 16 Links, the near-field minima at the rows 15.3 and 32.7 in the regions 3 and 8 of the twelve four-row blocks, the pattern's centre 24 against the blocks' 23.5, the Huygens sum's regional dips, and the opaque NodeDetector in one gap that loses the fringes and reads one gap's envelope.
 
 The wavelength is the declared packet's, k = pi / 4, and its rotation is the band's at the vacuum's paces, `rule3.plane_wave_dispersion`; the arrival of the packet at the screen is the band's group velocity (`bands.arrival_intervals`). The run's numbers (N = 270, the clicks' rows) are the reader's and never here.
 
@@ -22,7 +22,7 @@ GAP_SPACING = GAP_CENTRES[1] - GAP_CENTRES[0]  # d = 12 Links
 SCREEN_DISTANCE = 24  # L = 24 Links from the wall at x = 20 to the screen at x = 44
 WAVE_NUMBER = math.pi / 4  # the packet's k, the wavelength 8 Links
 SCREEN_ROWS = 48  # the board's y, the rows 0 to 47
-BLOCK = 4  # the twelve NodeReaders of four rows each
+BLOCK = 4  # the twelve NodeDetectors of four rows each
 LIGHT_PAIR = (1, 1)
 
 
@@ -103,7 +103,7 @@ def huygens_dips() -> list[float]:
 
 
 def opaque_reader_envelope() -> list[float]:
-    """[the number of minima of the two gaps' Huygens row across the central pattern (the rows 8 to 40), the same with one gap opaque]: 2 and 0; the opaque NodeReader in one gap takes that gap's inflow, the screen reads the other gap's envelope alone, monotone across the pattern, and the fringes are lost (the paper's Section 5.6)."""
+    """[the number of minima of the two gaps' Huygens row across the central pattern (the rows 8 to 40), the same with one gap opaque]: 2 and 0; the opaque NodeDetector in one gap takes that gap's inflow, the screen reads the other gap's envelope alone, monotone across the pattern, and the fringes are lost (the paper's Section 5.6)."""
     low, high = 8, 40
     both = len(interior_minima(huygens_rows(GAP_ROWS), low, high))
     one = len(interior_minima(huygens_rows((GAP_ROWS[1],)), low, high))

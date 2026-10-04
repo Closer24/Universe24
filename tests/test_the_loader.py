@@ -215,7 +215,7 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
     world = dict(boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=1, universe="u.json")
-    world.update(engine="e.json", bodies=[], packets=[], node_readers=[])
+    world.update(engine="e.json", bodies=[], packets=[], node_detectors=[])
 
     def written(name, **changes):
         (path := tmp_path / f"{name}.json").write_text(
@@ -271,15 +271,17 @@ def test_the_region_rule_refuses_a_node_named_twice_and_reads_the_extent_through
     world = dict(shape=[4, 4, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=1)
     world.update(universe="u.json", engine="e.json", bodies=[])
     for name, positions in (("twice", [[2, 2, 2], [2, 2, 2]]), ("two", [[2, 2, 2], [2, 2, 1]])):
-        readers = [{"name": name, "positions": positions}]
-        (tmp_path / f"{name}.json").write_text(json.dumps({**world, "node_readers": readers}), "utf-8")
+        detectors = [{"name": name, "positions": positions}]
+        (tmp_path / f"{name}.json").write_text(
+            json.dumps({**world, "node_detectors": detectors}), "utf-8"
+        )
     refusal = str(refused("names the Node", load_world, tmp_path / "twice.json"))
     print(refusal)
     assert "'twice'" in refusal and "[[2, 2, 2]] twice" in refusal
-    assert load_world(tmp_path / "two.json").node_readers[0].positions == ((2, 2, 2), (2, 2, 1))
+    assert load_world(tmp_path / "two.json").node_detectors[0].positions == ((2, 2, 2), (2, 2, 1))
     narrow = {**PACKET, "top": {**PACKET["top"], "y": [0, 4]}}  # the slit's packet over 5 Nodes of y
     board = dict(shape=[24, 5, 1], packets=[narrow])
-    board["node_readers"] = [{"name": "ring", "positions": [[20, 0, 0], [20, 4, 0]]}]
+    board["node_detectors"] = [{"name": "ring", "positions": [[20, 0, 0], [20, 4, 0]]}]
     wrapped = slit_world(
         tmp_path, TOOL, "wrap", boundary=dict(x="open", y="periodic", z="periodic"), **board
     )

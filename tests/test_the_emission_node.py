@@ -1,9 +1,9 @@
-"""The Node of the emission's lay and of the conversion's write (ALGEBRA.md, The NodeReader is one declaration kind for every experiment: the emission's whole quantum laid at the Node drawn by its own record's share over its Nodes, the share at a Node a lattice reading and no measurement; the mathematician's words on A2 of the law-engine audit, #1793): drawn by the record's share at the body's Nodes as the board holds it at the close, the file's lay weights entering no draw."""
+"""The Node of the emission's lay and of the conversion's write (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: the emission's whole quantum laid at the Node drawn by its own record's share over its Nodes, the share at a Node a lattice reading and no measurement; the mathematician's words on A2 of the law-engine audit, #1793): drawn by the record's share at the body's Nodes as the board holds it at the close, the file's lay weights entering no draw."""
 
 import json
 import math
 
-from event_universe import conversion, meeting, node_reader, world_files
+from event_universe import conversion, meeting, node_detector, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, load_file, packet_world
@@ -42,10 +42,10 @@ def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_an
     board = Lattice(load_world(path))
     books = board.credit.bodies[0]
     assert books.weights == (1, 2) and len(books.nodes) == 2
-    laid = node_reader.share_weights(board, books)
+    laid = node_detector.share_weights(board, books)
     for _ in range(10):  # inside the window of 12: the window's close lays the parts again
         board.step()
-    shares = node_reader.share_weights(board, books)
+    shares = node_detector.share_weights(board, books)
     share, weight = shares[0] / sum(shares), books.weights[0] / sum(books.weights)
     assert abs(laid[0] / sum(laid) - weight) < 0.05  # the lay near the weights' proportion
     assert shares != list(books.weights) and abs(share - weight) > 0.2  # the board's own shares
@@ -53,7 +53,7 @@ def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_an
     drawn = [0, 0]
     for seed in range(TRIALS):
         books.state = hashed_state(seed, board.world.width)
-        at = node_reader.drawn_node(board, books, node_reader.share_weights(board, books))
+        at = node_detector.drawn_node(board, books, node_detector.share_weights(board, books))
         drawn[books.nodes.index(at)] += 1
     frequency, error = drawn[0] / TRIALS, math.sqrt(share * (1 - share) / TRIALS)
     print(
@@ -64,12 +64,14 @@ def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_an
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped worlds' universes
     giver = Lattice(load_world(packet_world(tmp_path, TOOL)))  # a body in its upper part with a rate
     emitter, given = giver.credit.bodies[0], forced_write(monkeypatch, meeting)
-    standing = node_reader.share_weights(giver, emitter)  # read before the write, as `emitted` reads it
+    standing = node_detector.share_weights(
+        giver, emitter
+    )  # read before the write, as `emitted` reads it
     assert (
         meeting.emitted(giver, emitter, 2) and given == [standing] and given[0] != list(emitter.weights)
     )
     neutron = Lattice(load_world(EVENTS / "neutron_conversion" / "neutron_conversion.json"))
     whole, converted = neutron.credit.bodies[0], forced_write(monkeypatch, conversion)
-    standing = node_reader.share_weights(neutron, whole)
+    standing = node_detector.share_weights(neutron, whole)
     assert conversion.converted(neutron, whole) and converted == [standing]
     assert converted[0] != list(whole.weights)

@@ -66,7 +66,7 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     while not taken and board.interval < 96:
         board.step()
         taken = [
-            c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["absorbed"]
+            c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
         ]
     interval = board.interval
     assert taken and taken[0]["interval"] == interval

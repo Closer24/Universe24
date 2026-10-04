@@ -344,14 +344,14 @@ def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
 def field_series(
     lines: list[dict[str, object]], window: tuple[int, int]
 ) -> dict[tuple[str, str], dict[int, int]]:
-    """The `field` lines of a run's output within the window, per (node_reader, family): the reading at each interval it was written (it is written where it differs from the last interval's)."""
+    """The `field` lines of a run's output within the window, per (node_detector, family): the reading at each interval it was written (it is written where it differs from the last interval's)."""
     found: dict[tuple[str, str], dict[int, int]] = {}
     for line in lines:
         if line.get("event") != "density" or line.get("reading") is None:
             continue
         interval = int(str(line["interval"]))
         if window[0] <= interval <= window[1]:
-            key = (str(line["node_reader"]), str(line["family"]))
+            key = (str(line["node_detector"]), str(line["family"]))
             found.setdefault(key, {})[interval] = int(str(line["reading"]))
     return found
 
@@ -389,7 +389,7 @@ def densities_read(output: Path, expected: dict[str, Any] | None) -> dict[str, A
     wanted = [
         key
         for key in series
-        if (not named.get("node_readers") or key[0] in named["node_readers"])
+        if (not named.get("node_detectors") or key[0] in named["node_detectors"])
         and (not named.get("family") or key[1] == named["family"])
     ]
     return {
@@ -399,11 +399,11 @@ def densities_read(output: Path, expected: dict[str, Any] | None) -> dict[str, A
         "window": list(window),
         "regions": [
             {
-                "node_reader": node_reader,
+                "node_detector": node_detector,
                 "family": family,
-                **swing(series[(node_reader, family)], (window[0], window[1])),
+                **swing(series[(node_detector, family)], (window[0], window[1])),
             }
-            for node_reader, family in sorted(wanted)
+            for node_detector, family in sorted(wanted)
         ],
     }
 

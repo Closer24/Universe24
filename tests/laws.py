@@ -1,4 +1,4 @@
-"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`); the chain is the shortest that holds the body of 50 quanta (about eleven Nodes about its centre) and the end node_readers with their regions apart, since the lay's cost is the start's relaxation over the chain's length squared, and every bound the tests put on the chain is per Node, the same on any length."""
+"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`); the chain is the shortest that holds the body of 50 quanta (about eleven Nodes about its centre) and the end node_detectors with their regions apart, since the lay's cost is the start's relaxation over the chain's length squared, and every bound the tests put on the chain is per Node, the same on any length."""
 
 import importlib.util
 import json
@@ -20,7 +20,7 @@ UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 3276
 CHAIN, QUANTA = (
     24,
     6,
-)  # the shortest chain (x open) holding the body apart from the end node_readers; the
+)  # the shortest chain (x open) holding the body apart from the end node_detectors; the
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
 # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
@@ -75,7 +75,7 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
 
 
 def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
-    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the node_reader `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (the design file's `pixels` and `senses` beside the chain, `design_beside`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the node_readers `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
+    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the node_detector `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (the design file's `pixels` and `senses` beside the chain, `design_beside`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the node_detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
     at = at or (chain // 2,)  # the chain's centre where no Node is named
     families = [CHARGED["name"] if i < len(senses) and senses[i] else "matter" for i in range(len(at))]
     universe_beside(folder, charged=CHARGED["name"] in families)
@@ -84,9 +84,9 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
     bodies = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
     ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
     ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
-    node_readers = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
+    node_detectors = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
     world = dict(
-        shape=[chain, 1, 1], node_readers=node_readers, bodies=bodies, intervals=400, face_depth=1
+        shape=[chain, 1, 1], node_detectors=node_detectors, bodies=bodies, intervals=400, face_depth=1
     )
     world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
     (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
@@ -100,7 +100,7 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
 SLIT = dict(
     shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, intervals=24
 )
-SLIT.update(universe="u.json", engine="e.json", bodies=[], node_readers=[])
+SLIT.update(universe="u.json", engine="e.json", bodies=[], node_detectors=[])
 SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
 PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "phase": [0, 1], "amplitude": 1328}
 PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
@@ -112,9 +112,9 @@ def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, interval
     giver = world["bodies"][0]
     rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
     nodes = [{"node": [80, 2, 2], "weight": 1}, {"node": [81, 2, 2], "weight": 1}]
-    small = {**world, "shape": [160, 5, 5], "intervals": intervals, "node_readers": []}
-    reader = {**giver["node_reader"], "window": 2}
-    small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate], "node_reader": reader}]
+    small = {**world, "shape": [160, 5, 5], "intervals": intervals, "node_detectors": []}
+    reader = {**giver["node_detector"], "window": 2}
+    small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate], "node_detector": reader}]
     del small["draw"]
     (path := folder / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
     tool.main(["--input", str(path)])
@@ -135,7 +135,7 @@ def ion_world(folder: Path, tool, intervals: int = 23, amplitude: int = 600, bod
     parts = [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
     draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
     nodes = [{"node": at, "weight": 1}, {"node": beside, "weight": 1}]
-    record = {"family": "ion", "nodes": nodes, "parts": parts, "node_reader": draw}
+    record = {"family": "ion", "nodes": nodes, "parts": parts, "node_detector": draw}
     record["transitions"] = [
         {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
     ]
@@ -155,7 +155,7 @@ def ion_world(folder: Path, tool, intervals: int = 23, amplitude: int = 600, bod
     )
     world.update(universe="u.json", engine="e.json", bodies=[record] if body else [], packets=[drive])
     world.update(
-        node_readers=[{"name": "counter", "positions": plane}], draw={**draw, "window": 18, "seed": 24}
+        node_detectors=[{"name": "counter", "positions": plane}], draw={**draw, "window": 18, "seed": 24}
     )
     (path := folder / ("ion_like.json" if body else "beam_alone.json")).write_text(json.dumps(world))
     tool.main(["--input", str(path)])
@@ -171,7 +171,7 @@ def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Pat
 
 
 def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-def]
-    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json with the engine file as e.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the intervals 3 and 7, no node_readers; the world's path."""
+    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json with the engine file as e.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the intervals 3 and 7, no node_detectors; the world's path."""
     (folder / "u.json").write_bytes((EVENTS / "zeno_pulsed" / "pulsed_atom.json").read_bytes())
     (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
@@ -180,18 +180,18 @@ def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-
     ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
     turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
     region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
-    record = {"family": "atom", "nodes": region, "parts": parts, "rates": [], "node_reader": draw}
+    record = {"family": "atom", "nodes": region, "parts": parts, "rates": [], "node_detector": draw}
     record["transitions"] = [*turns, {**probe, "drive": "probe"}]
     lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "interval": t} for t in (3, 7)]
     world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=9)
-    world.update(universe="u.json", engine="e.json", bodies=[record], packets=lays, node_readers=[])
+    world.update(universe="u.json", engine="e.json", bodies=[record], packets=lays, node_detectors=[])
     (path := folder / "w.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 
 
 def click_key(line: dict[str, object]) -> str:
     """A click line's key as tools/meeting_trials.py counts the kinds: the reader, the part realised and the family taken or given."""
-    return f"{line['node_reader']} {line['realised']} by {line['taken'] or line['given']}"
+    return f"{line['node_detector']} {line['realised']} by {line['taken'] or line['given']}"
 
 
 def own_lines(board: Lattice, index: int) -> list[node.Record]:
@@ -222,7 +222,7 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
         begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
     stepped, counted = {}, credit.counted_windows
 
-    def kept(b: Lattice) -> None:  # the lines after the held write, before the NodeReaders' acts
+    def kept(b: Lattice) -> None:  # the lines after the held write, before the NodeDetectors' acts
         stepped.update({i: own_lines(b, i) for i in indexes}), counted(b)
 
     with monkeypatch.context() as swap:

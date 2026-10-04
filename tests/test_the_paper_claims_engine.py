@@ -96,7 +96,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         )
 
     def the_gate_runs_across_the_click_and_the_write_is_the_whole_re_lay():
-        """Row 26, "The back-in-time gate is exact between clicks, and runs across a click and the erasure intervals that follow it, treating the values a NodeReader presented at its Ports as given", and S.59's engine clause (R332: a body's write is its whole re-lay); the breaker: the shipped Zeno world's click at 72, the body's absorption of its dense drive; between clicks 60 forward and 60 back bit for bit with nothing crossed, across the click with the lays crossed from their lines MATCH (tests/test_the_meeting.py and tests/test_the_node_reader.py hold the shipped gates); outside, the step back across the click with nothing crossed misses at the lay's Node, the draw forward only; the write at 72 the whole re-lay, the part entered at the standing levels of one quantum over the two Nodes in the leaving part's sense and in its direction turned by the arriving record's phase, atan2(Y', X) of the window's two sums (the phase passes with the quantum, ALGEBRA.md L739 and the ledger's row 16), the part left at 0, every remainder at the lay's origin, where the twin without the draw reads and writes nothing; the expected levels the law's own integers and no engine function, written here from the drive's levels at the Nodes over the window (a_t = SUM d_i A_i div A half up, the reference records by Chebyshev's line at the declared pair, X and Y' over the window, N = isqrt(X^2 + Y'^2), the direction (90 X div N, 90 Y' div N) at the amplitude A_i and the level before by the record's own rotation, the mathematician's reading of the witness, #1793 comment 5983031085), the float turn one level off in im through the act's two floors."""
+        """Row 26, "The back-in-time gate is exact between clicks, and runs across a click and the erasure intervals that follow it, treating the values a NodeDetector presented at its Ports as given", and S.59's engine clause (R332: a body's write is its whole re-lay); the breaker: the shipped Zeno world's click at 72, the body's absorption of its dense drive; between clicks 60 forward and 60 back bit for bit with nothing crossed, across the click with the lays crossed from their lines MATCH (tests/test_the_meeting.py and tests/test_the_node_detector.py hold the shipped gates); outside, the step back across the click with nothing crossed misses at the lay's Node, the draw forward only; the write at 72 the whole re-lay, the part entered at the standing levels of one quantum over the two Nodes in the leaving part's sense and in its direction turned by the arriving record's phase, atan2(Y', X) of the window's two sums (the phase passes with the quantum, ALGEBRA.md L739 and the ledger's row 16), the part left at 0, every remainder at the lay's origin, where the twin without the draw reads and writes nothing; the expected levels the law's own integers and no engine function, written here from the drive's levels at the Nodes over the window (a_t = SUM d_i A_i div A half up, the reference records by Chebyshev's line at the declared pair, X and Y' over the window, N = isqrt(X^2 + Y'^2), the direction (90 X div N, 90 Y' div N) at the amplitude A_i and the level before by the record's own rotation, the mathematician's reading of the witness, #1793 comment 5983031085), the float turn one level off in im through the act's two floors."""
         world = json.loads((EVENTS / "zeno" / "zeno_4.json").read_text(encoding="utf-8"))
         (tmp_path / "zu.json").write_bytes((ROOT / world["universe"]).read_bytes())
         world.update(universe="zu.json", engine="e.json")
@@ -142,7 +142,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         (re, re_before), (im, im_before) = first["before"][:2], second["before"][:2]
         sense = 1 if re * im_before - im * re_before >= 0 else -1
         gap, (rn, rd) = den * den - num * num, body["transitions"][0]["resonance"]
-        window = body["node_reader"]["window"]
+        window = body["node_detector"]["window"]
         amp = isqrt(isqrt((action * den) ** 2 // (4 * gap)) // len(at))
         norm, scale, bound = max(isqrt(len(at) * amp * amp), 1), 1, board.world.amplitude_bound
         while 2 * (2 * scale * bound * window) ** 2 <= board.world.width:
@@ -183,13 +183,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         )
 
     def the_credit_books_the_conserved_forms_current():
-        """S.42's and the clicks table's row 40 engine clause (R307: the credit books the conserved form's own current through the front Ports, the Link's factor squared the one weight); the breaker: a chain of 8 with two declared regions of two Nodes in the tests' universe at random levels, the content holder's axis lines at 0 and then within 12, one interval: the booked inflow per boundary Node equals the sum over the region's front Ports of Q_ij F_ij from the engine's own read and currents, and equals G^2 times the plain current where no Link carries tension; outside, under tension the plain current misses it; the share identity over a passage stands in tests/test_the_node_reader.py."""
+        """S.42's and the clicks table's row 40 engine clause (R307: the credit books the conserved form's own current through the front Ports, the Link's factor squared the one weight); the breaker: a chain of 8 with two declared regions of two Nodes in the tests' universe at random levels, the content holder's axis lines at 0 and then within 12, one interval: the booked inflow per boundary Node equals the sum over the region's front Ports of Q_ij F_ij from the engine's own read and currents, and equals G^2 times the plain current where no Link carries tension; outside, under tension the plain current misses it; the share identity over a passage stands in tests/test_the_node_detector.py."""
         draw = {"window": 3, "seed": 5, "multiplier": 6364136223846793005}
         draw["increment"] = 1442695040888963407
         regions = [{"name": "left", "positions": [[1, 0, 0], [2, 0, 0]]}]
         regions.append({"name": "right", "positions": [[5, 0, 0], [6, 0, 0]]})
         world = dict(shape=[8, 1, 1], boundary=wrapped, face_depth=1, intervals=4, universe="u.json")
-        world.update(engine="e.json", bodies=[], draw=draw, node_readers=regions)
+        world.update(engine="e.json", bodies=[], draw=draw, node_detectors=regions)
         (chain := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
         agreed, plain_too = 0, {}
         for tension in (0, 12):
@@ -206,9 +206,9 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                     for k in range(1, len(state.lines)):
                         axis = levels.integers(-tension, tension + 1, board.shape).astype(board.kind)
                         state.lines[k] = node.Record(axis, axis.copy(), state.lines[k].remainder)
-            own, union, expected = board.declared_board(), credit.node_reader_nodes(board), {}
-            for reader in [r for r in board.node_readers if r.declared]:
-                facing = front(reader.nodes, board.wrap, union, own)
+            own, union, expected = board.declared_board(), credit.node_detector_nodes(board), {}
+            for detector in [r for r in board.node_detectors if r.declared]:
+                facing = front(detector.nodes, board.wrap, union, own)
                 for index in board.order:
                     weighed = plain = np.zeros(board.shape, dtype=object)
                     for number in quanta_records(board.families, index):
@@ -219,7 +219,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                             flow = np.where(facing[port], currents[port].astype(object), 0)
                             factor = np.broadcast_to(np.asarray(factors[port]), board.shape)
                             weighed, plain = weighed + factor.astype(object) * flow, plain + flow
-                    expected[index, reader.name] = (weighed, plain)
+                    expected[index, detector.name] = (weighed, plain)
             board.step()
             square = board.unit * board.unit
             for (index, name), (weighed, plain) in expected.items():

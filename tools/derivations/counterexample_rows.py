@@ -203,7 +203,7 @@ def guard_bounds_the_pi_mode_at_fixed_coefficients() -> Row:
 
 
 def the_step_is_a_bijection() -> Row:
-    """Theorem 1 (Section 4.1), 'The direction of time belongs to the clicks and not to the board': on a 3x3x3 periodic board at random integer paces the integer step followed by the backward act returns every level and remainder bit for bit over ten intervals, and distinct states map to distinct states; the click's draw is the NodeReader's act (kind (e)) and no algebra of the line, so the claim has no outside to test here."""
+    """Theorem 1 (Section 4.1), 'The direction of time belongs to the clicks and not to the board': on a 3x3x3 periodic board at random integer paces the integer step followed by the backward act returns every level and remainder bit for bit over ten intervals, and distinct states map to distinct states; the click's draw is the NodeDetector's act (kind (e)) and no algebra of the line, so the claim has no outside to test here."""
     draw = random.Random(SEED)
     shape = (3, 3, 3)
     nodes, arrivals = box_nodes(shape), box_arrivals(shape)

@@ -3,7 +3,7 @@
 The paper's S.59 (the mathematician's 146 and 148; the advisor's 5949173532 column A; the owner's
 words of 2026-10-02, 12:38, "Yes, both of them", and of 2026-10-03, 03:25, "Both Zeno and
 anticoincidence must be obtained"): one record of two parts (g, e) of the near-flat pair [1, 1299]
-declared a NodeReader at the centre Node of a periodic box of 8 x 8 x 4, its six Link factors 0 so
+declared a NodeDetector at the centre Node of a periodic box of 8 x 8 x 4, its six Link factors 0 so
 that it stays; one drive, the holder of the sign `pulse`, a plane wave at k = pi / 2 and the amplitude 308, read into the record's
 phase at the weight 1 in both directions, so that the accumulated turn over the run of 48 intervals
 is a pi pulse in the labels (48 x (2 / pi) x 308 / 6000 = 1.568 against pi / 2 = 1.571); one world
@@ -24,7 +24,7 @@ and column C (no write) 1 at every n beside it, what the law would give without 
 
 The tree at the reading: the one draw over the records reading one arriving record
 (`meeting.absorbed`) and the erasing front (`front.py`); the trials `tools/meeting_trials.py`, the
-part each record stands in at the end and its `jump` lines labelled NODEREADER.
+part each record stands in at the end and its `jump` lines labelled NODEDETECTOR.
 
 | n | window | trials ending in e | P(e at T_pi) | blind | column B | column C |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -67,17 +67,17 @@ face, the atom's parts at +1 and -1 by the lay) and the null window as its list 
 
 ## What is not built, by name
 
-The record's own NodeReader region around its Node (the mathematician's 180); the booking of the
+The record's own NodeDetector region around its Node (the mathematician's 180); the booking of the
 share's difference at an emission (no emission in this world); the trials' seeds as a key of the world
 file (one world file holds one seed; the trials set each record's generator from the design's
 seeds, the host's declaration, `tools/meeting_trials.py`).
 
 ## On the own quantum, 2026-10-03 (branch own-quantum, 8382b8b9)
 
-The round of the NodeReader's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
+The round of the NodeDetector's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
 advisor's seconds, the ids in `examples/events/resonance/blind_and_reading.md`) declares the atom's two
 transitions at the resonance [2, 3] (the pulse's rotation at k = pi / 2) and lays no light here (the
-atom has no rates); the worlds declare no region NodeReader. Re-run by `tools/meeting_trials.py` on
+atom has no rates); the worlds declare no region NodeDetector. Re-run by `tools/meeting_trials.py` on
 8382b8b9 over the 120 seeds: P(e at T_pi) 1.000, 0.508, 0.367, 0.233, 0.133 at n = 1, 2, 4, 8, 16, the
 jumps 120; 95 and 34; 62 and 18; 32 and 4; 16 and 0, bit for bit the readings through the one click
 act above. PASS against column A at every n and unchanged.
@@ -85,9 +85,9 @@ act above. PASS against column A at every n and unchanged.
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
 P(e at T_pi) is the part the record stands in at the trial's end, read by `tools/meeting_trials.py`
-from the reader's own books on the board object (`meeting.NodeBooks.part`, the NodeReader's own
+from the reader's own books on the board object (`meeting.NodeBooks.part`, the NodeDetector's own
 content, not a written line; the same part is the last `jump` line's `realised`). The jumps per kind
-are the `jump` lines labelled by the NodeReader. The pulse's count of 413 in the books, the turn per
+are the `jump` lines labelled by the NodeDetector. The pulse's count of 413 in the books, the turn per
 window named beside the blind and the pi pulse's tuning are lattice matters. The lines carry the
 board's `interval` and the `window` in board intervals; the turn itself is taken per proper interval at the
 record's Node (`meeting.turned_labels`) and no line carries that clock.

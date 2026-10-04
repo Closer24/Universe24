@@ -53,7 +53,7 @@ def record_slice(family: FamilyRule, record: int) -> slice:
 
 
 def rows_total(family: FamilyRule, lines: Sequence[Record], direction: int = 1) -> Record:
-    """A holder of the sign's record, light: the sum of its rows' time lines at every Node, both levels (a node_reader or a body reads the sum of all rows, ALGEBRA.md, No record reads its own write of the sign), the remainder the free row's; the row's own line where it has one row, bit for bit."""
+    """A holder of the sign's record, light: the sum of its rows' time lines at every Node, both levels (a node_detector or a body reads the sum of all rows, ALGEBRA.md, No record reads its own write of the sign), the remainder the free row's; the row's own line where it has one row, bit for bit."""
     rows = [lines[row * family.width] for row in range(family.records)]
     if len(rows) == 1:
         return rows[0]

@@ -19,7 +19,7 @@ ROOT = HERE.parents[2]
 
 
 def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str, object]:
-    """One atom declared a NodeReader at its Node: the giver standing in e with its emission, or the taker standing in g; the transition g to e by the light at the resonance given."""
+    """One atom declared a NodeDetector at its Node: the giver standing in e with its emission, or the taker standing in g; the transition g to e by the light at the resonance given."""
     row, light = design[which], design["light"]
     upper = which == "giver"
     parts = [
@@ -42,12 +42,12 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
         "parts": parts,
         "transitions": transitions,
         "rates": rates,
-        "node_reader": draw,
+        "node_detector": draw,
     }
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world of the design: the chain, no packet (the light born by the emission alone), the giver and the taker at the world's resonance, no region node_reader."""
+    """One world of the design: the chain, no packet (the light born by the emission alone), the giver and the taker at the world's resonance, no region node_detector."""
     taker = record(design, "taker", list(design["worlds"][name]["resonance"]))
     return {
         "shape": list(design["shape"]),
@@ -57,7 +57,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "engine": design["engine"],
         "bodies": [record(design, "giver", list(design["giver"]["resonance"])), taker],
         "packets": [],
-        "node_readers": [],
+        "node_detectors": [],
     }
 
 
@@ -65,7 +65,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind, from the design alone: the source's total and amplitudes, the far Node's cosine with its gate, the light's count at the span's end, the resonant taker's share and the detuned one's ratio, and the dark grain's chances (`dark_grain`); written before any lay and re-derived before any run under the dark grain."""
     num, den = design["giver"]["resonance"]
     return {
-        "verdict": "NODEREADER",
+        "verdict": "NODEDETECTOR",
         "comment": design["comment"],
         "family": design["light"],
         "emission": {
@@ -91,7 +91,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         },
         "resonant": {
             "share": 1.0,
-            "reading": "the fraction of the seeds with an absorption at the taker (the record's click lines, NODEREADER), gate sqrt(N p (1 - p)) over the seeds",
+            "reading": "the fraction of the seeds with an absorption at the taker (the record's click lines, NODEDETECTOR), gate sqrt(N p (1 - p)) over the seeds",
             "status": "the mathematician's 220: the resonant record's share 1 at delta = 0",
         },
         "detuned": {

@@ -61,7 +61,7 @@ disjoint file sets, the engine's branches one at a time (the owner's decision 23
 2. **The blind numbers first.** No run and no build without the expected number
    written in the brief. A difference is a defect of the engine, never a
    finding, and the worker fixes it with a test.
-3. **The report.** The worker reports the numbers, labelled NODEREADER or
+3. **The report.** The worker reports the numbers, labelled NODEDETECTOR or
    LATTICE, the head commit, the gates' results and every sentence it removed
    or rewrote in the documents: a summary, never a log.
 4. **The review.** For the engine's rounds and `core/` the Boss reads the diff

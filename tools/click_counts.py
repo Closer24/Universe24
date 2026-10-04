@@ -1,4 +1,4 @@
-"""The credit per node_reader over a window of intervals, read from a run's output file against an expectation file (NODEREADER, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the node_reader a declared NodeReader and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's node_reader (or node_readers, a list) and one family within the window are summed per node_reader, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each node_reader saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the NodeReader's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders (a tie of remainders broken by the lower index), the expectation and no sample, and the clicks are the quanta the draw credited inside the run, per region the `credit` lines' counts within the window (the click written on the lattice with the world's declared seed and generator, `src/event_universe/credit.py`; one quantum to one node_reader by the draw's construction; None for a world declaring no draw), the tool drawing nothing (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range (`extrema`, the one rule of the builder and the reader), the visibility at the blind central maximum (the expectation's `central`) against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over every interval of the window, the negative ones included, as an exact fraction and its half-maximum span, in the engine's interval labels (the click at interval t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the node_readers, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
+"""The credit per node_detector over a window of intervals, read from a run's output file against an expectation file (NODEDETECTOR, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the node_detector a declared NodeDetector and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's node_detector (or node_detectors, a list) and one family within the window are summed per node_detector, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each node_detector saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the NodeDetector's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders (a tie of remainders broken by the lower index), the expectation and no sample, and the clicks are the quanta the draw credited inside the run, per region the `credit` lines' counts within the window (the click written on the lattice with the world's declared seed and generator, `src/event_universe/credit.py`; one quantum to one node_detector by the draw's construction; None for a world declaring no draw), the tool drawing nothing (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range (`extrema`, the one rule of the builder and the reader), the visibility at the blind central maximum (the expectation's `central`) against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over every interval of the window, the negative ones included, as an exact fraction and its half-maximum span, in the engine's interval labels (the click at interval t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the node_detectors, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -17,35 +17,35 @@ import numpy as np
 
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import AXES
-from event_universe.loader.world import NodeReaderRow, World
+from event_universe.loader.world import NodeDetectorRow, World
 from event_universe.world_files import load_world
 
-Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its node_reader
+Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its node_detector
 
 
 def inflows(
-    lines: list[dict[str, object]], node_readers: list[str], family: str, window: tuple[int, int]
+    lines: list[dict[str, object]], node_detectors: list[str], family: str, window: tuple[int, int]
 ) -> dict[str, int]:
-    """What each named node_reader saw of one family within the window [first, last] of intervals: its `click` lines' net front inflows summed, in the current's units (0 where it saw nothing; a click reports its region, never a Node)."""
-    found = {name: 0 for name in node_readers}
+    """What each named node_detector saw of one family within the window [first, last] of intervals: its `click` lines' net front inflows summed, in the current's units (0 where it saw nothing; a click reports its region, never a Node)."""
+    found = {name: 0 for name in node_detectors}
     for line in lines:
         if line.get("event") != "click" or line.get("family") != family:
             continue
-        if line.get("node_reader") in found and window[0] <= int(str(line["interval"])) <= window[1]:
-            found[str(line["node_reader"])] += int(str(line["inflow"]))
+        if line.get("node_detector") in found and window[0] <= int(str(line["interval"])) <= window[1]:
+            found[str(line["node_detector"])] += int(str(line["inflow"]))
     return found
 
 
 def per_interval(
-    lines: list[dict[str, object]], node_readers: list[str], family: str, window: tuple[int, int]
+    lines: list[dict[str, object]], node_detectors: list[str], family: str, window: tuple[int, int]
 ) -> dict[int, int]:
-    """The screen's inflow per interval within the window, the named node_readers' `click` lines summed at each interval, in the current's units."""
+    """The screen's inflow per interval within the window, the named node_detectors' `click` lines summed at each interval, in the current's units."""
     found: dict[int, int] = {}
     for line in lines:
         if line.get("event") != "click" or line.get("family") != family:
             continue
         interval = int(str(line["interval"]))
-        if line.get("node_reader") in node_readers and window[0] <= interval <= window[1]:
+        if line.get("node_detector") in node_detectors and window[0] <= interval <= window[1]:
             found[interval] = found.get(interval, 0) + int(str(line["inflow"]))
     return found
 
@@ -73,7 +73,7 @@ def nearest(total: int, wall: int) -> int:
 
 
 def apportioned(quanta: int, shares: list[int]) -> list[int]:
-    """N apportioned by the shares to whole numbers, the largest remainders first (a tie of remainders broken by the lower index, the NodeReader's declaration): the rounded shares, the expectation and no sample (0 everywhere where nothing was seen)."""
+    """N apportioned by the shares to whole numbers, the largest remainders first (a tie of remainders broken by the lower index, the NodeDetector's declaration): the rounded shares, the expectation and no sample (0 everywhere where nothing was seen)."""
     total = sum(shares)
     if not total or quanta <= 0:
         return [0] * len(shares)
@@ -85,17 +85,17 @@ def apportioned(quanta: int, shares: list[int]) -> list[int]:
 
 
 def credited(
-    lines: list[dict[str, object]], node_readers: list[str], family: str, window: tuple[int, int]
+    lines: list[dict[str, object]], node_detectors: list[str], family: str, window: tuple[int, int]
 ) -> dict[str, int] | None:
-    """The quanta the draw credited to each named node_reader inside the run, its `credit` lines' counts of one family within the window summed, the clicks; None where the output holds no credit line of the family (a world declaring no draw)."""
-    found = {name: 0 for name in node_readers}
+    """The quanta the draw credited to each named node_detector inside the run, its `credit` lines' counts of one family within the window summed, the clicks; None where the output holds no credit line of the family (a world declaring no draw)."""
+    found = {name: 0 for name in node_detectors}
     seen = False
     for line in lines:
         if line.get("event") != "credit" or line.get("family") != family:
             continue
         seen = True
-        if line.get("node_reader") in found and window[0] <= int(str(line["interval"])) <= window[1]:
-            found[str(line["node_reader"])] += int(str(line["count"]))
+        if line.get("node_detector") in found and window[0] <= int(str(line["interval"])) <= window[1]:
+            found[str(line["node_detector"])] += int(str(line["count"]))
     return found if seen else None
 
 
@@ -109,8 +109,8 @@ def deviation(found: list[int], blind: list[object]) -> list[int]:
     return [value.numerator, value.denominator]
 
 
-def reporters(rows: list[NodeReaderRow], axis: int) -> list[Reporter]:
-    """The reporters across `axis`, one per node_reader, ordered by their coordinate on it, the least of the node_reader's Nodes' (a region across the beam at its first row)."""
+def reporters(rows: list[NodeDetectorRow], axis: int) -> list[Reporter]:
+    """The reporters across `axis`, one per node_detector, ordered by their coordinate on it, the least of the node_detector's Nodes' (a region across the beam at its first row)."""
     return sorted((min(node[axis] for node in row.positions), row.name) for row in rows)
 
 
@@ -162,22 +162,22 @@ def photons(loaded: World, family: str, quanta: int, blind: object) -> dict[str,
 
 
 def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
-    """The reading: what each node_reader of the expectation's node_reader (or node_readers) and family saw over its window, ordered along its axis, floored at 0, N over the wall to the nearest whole, the rounded shares (the expectation) and the clicks (the quanta the draw credited in the run, from the credit lines), each row with its extrema, visibility and deviation, the arrival of the screen's inflow in the engine's labels, with the blind numbers beside."""
+    """The reading: what each node_detector of the expectation's node_detector (or node_detectors) and family saw over its window, ordered along its axis, floored at 0, N over the wall to the nearest whole, the rounded shares (the expectation) and the clicks (the quanta the draw credited in the run, from the credit lines), each row with its extrema, visibility and deviation, the arrival of the screen's inflow in the engine's labels, with the blind numbers beside."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     document = json.loads(output.read_text(encoding="utf-8"))
     lines = document["lines"]
     loaded = load_world(world)
     axis = AXES.index(expected["across"])
-    named = expected.get("node_reader")
-    if named is None:  # every node_reader but the open faces' layer, over the whole run
-        rows = [d for d in loaded.node_readers if d.declared]
+    named = expected.get("node_detector")
+    if named is None:  # every node_detector but the open faces' layer, over the whole run
+        rows = [d for d in loaded.node_detectors if d.declared]
         names = [d.name for d in rows]
     else:
         names = [str(name) for name in named] if isinstance(named, list) else [str(named)]
-        rows = [d for d in loaded.node_readers if d.name in names]
+        rows = [d for d in loaded.node_detectors if d.name in names]
     if len(rows) != len(names):
         raise ValueError(
-            f"the expectation names the node_readers {names}; the world declares {[d.name for d in loaded.node_readers]}"
+            f"the expectation names the node_detectors {names}; the world declares {[d.name for d in loaded.node_detectors]}"
         )
     spanned = expected.get("window", [0, document.get("intervals", 0)])
     window = (int(spanned[0]), int(spanned[1]))
@@ -186,7 +186,7 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
     wall = count_wall(family, loaded.quantum_action)
     saw = inflows(lines, names, str(expected["family"]), window)
     seen = [saw[name] for _at, name in placed]
-    shares = [max(value, 0) for value in seen]  # the credit's floor, the NodeReader's declaration
+    shares = [max(value, 0) for value in seen]  # the credit's floor, the NodeDetector's declaration
     quanta = nearest(sum(shares), wall)
     aside = [str(name) for name in expected.get("aside", [])]  # bare regions read beside the screen
     aside_seen = inflows(lines, aside, str(expected["family"]), window)
@@ -195,8 +195,8 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
     clicks = [credits[name] for _at, name in placed] if credits is not None else None
     blind_row = [Fraction(str(value)) for value in expected["counts"]]
     return {
-        "verdict": "NODEREADER",
-        "node_reader": named if named is not None else names,
+        "verdict": "NODEDETECTOR",
+        "node_detector": named if named is not None else names,
         "family": expected["family"],
         "window": list(window),
         "across": expected["across"],

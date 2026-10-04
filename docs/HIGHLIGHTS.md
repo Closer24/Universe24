@@ -20,13 +20,13 @@ points at the law, the law's line governs and no formula is restated here.
 - Rule3 is not changed; a problem is solved with Rule3 as it stands, and floor division and modulo live in Rule3's module alone.
 - Three acts write a NodeState: Rule3, the lay and the face; nothing is kept at a Node beyond the law's own numbers.
 - The packet lay carries no uniform mode: the sums of the levels now and of the levels before over the board are both 0, by the division act at the lay, and the loader refuses a massless packet otherwise; an edge of one wavelength with a top of one Node reaches it with no correction and is the design's guidance; the shipped worlds' mode files are rebuilt and their readings re-read when a lay rule changes.
-- NodeReader is the one name of a reader: a connected region of two Nodes or more for a reader with Nodes alone, one Node allowed for a reader with a record of its own, one seed per world's `draw` serving every region reader in turn, a body's reader alone carrying its own; the click line names no Node; the nouns detector, instrument, emitter, absorber, observer and measurer are out of the engine, the law and the paper.
+- NodeDetector is the one name of a reader: a connected region of two Nodes or more for a NodeDetector with Nodes alone, one Node allowed for a NodeDetector with a record of its own, one seed per world's `draw` serving every region reader in turn, a body's reader alone carrying its own; the click line names no Node; the nouns detector, instrument, emitter, absorber, observer and measurer are out of the engine, the law and the paper.
 - A click writes on the lattice: a hole at one Node, an erasing front one shell per interval, the count at the record's root read through the root; no record reads its own write of the sign.
 - The front's taper (the shells written to 0 over L declared shells, so that the page shows no flash) and the emission's no uniform mode (the one division act, in time on the source's increments where the span holds its period and over the packet's Nodes for the open board's packet; the second difference of the moment, nature's dipole, is not the line on the lattice) are the law's lines, built on the branch one-lay through the one lay act and merged; the control world's two photons are two records of two massless families of one pair under the capacity line, one event one record one root, and the readings that name the flash, the emission's uniform mode and the lingering packet are re-read under the built lines.
 - There is no limit on clicks per window, and a bound body has no window of its own.
 - A family's dimension is generic, any integer from 1; a family of quanta is a shape list of real or plane lines; the masses are families, the proton and the neutron one quantum each of its own family.
 - The world's integers are the file's (node_clock, quantum_action, width, link_unit) and the energy line is the loader's gate; the engine derives none and defaults none.
-- Only a reader's click is a measurement; a lattice reading is a diagnostic, labelled LATTICE, and a reader's count is labelled NODEREADER.
+- Only a reader's click is a measurement; a lattice reading is a diagnostic, labelled LATTICE, and a reader's count is labelled NODEDETECTOR.
 - Runs and tests are headless; a look at a run is a page built from the output file outside the repository by the look tools.
 - A world stays in the repository only if it is in the paper or on a test; whatever does not load is deleted.
 
@@ -58,7 +58,7 @@ points at the law, the law's line governs and no formula is restated here.
 
 - The experimenter alone runs worlds: one shipped world at a time, on main, each run under a minute.
 - Every run is blind first: the statement with its formula and blind expectation is approved by two hands before the run, and the result is read against it; the next experiment does not start before the statement of the previous one is posted.
-- Every world passes the back-in-time gate (the tool says MATCH across the world's clicks) before its run, and its readings carry the labels NODEREADER for a click's count and LATTICE for a board reading.
+- Every world passes the back-in-time gate (the tool says MATCH across the world's clicks) before its run, and its readings carry the labels NODEDETECTOR for a click's count and LATTICE for a board reading.
 - A reading of a world is re-read, its blind untouched, whenever the lay or the engine changes under it.
 - The pages of a run are built from the output file outside the repository, in dark mode only, with a fixed camera, the moving quanta green, every part of a run a graphic beside its blind table.
 - The experimenter keeps a bug ledger on his issue and reports every problem the moment it is seen, looking at every run physically, frame by frame, and not only at the data; a difference from a blind or a folder's note is a report for the hands, who decide whether it is the engine's.

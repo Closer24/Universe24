@@ -1,4 +1,4 @@
-"""A reader's count, declared once (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands): a reader's Nodes carry the lay's weights, A_i^2 = A^2 w_i / SUM w, and the record's count is declared once, by its `parts` or by `count` for a record converted whole; a charged record's count is 1 (ALGEBRA.md, No record reads its own write of the sign)."""
+"""A reader's count, declared once (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands): a NodeDetector's Nodes carry the lay's weights, A_i^2 = A^2 w_i / SUM w, and the record's count is declared once, by its `parts` or by `count` for a record converted whole; a charged record's count is 1 (ALGEBRA.md, No record reads its own write of the sign)."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from event_universe.loader.keys import integer
 
 
 def reader_count(body: dict[str, Any], label: str, families: tuple[FamilyRule, ...], family: int) -> int:
-    """The record's count of a reader with a record of its own: the sum of its parts' counts where it declares `parts` (`count` beside them refused by name), else its `count` (a record converted whole), else refused by name; above 1 refused for a family that reads a holder of the sign (`derived.charged`)."""
+    """The record's count of a NodeDetector with a record of its own: the sum of its parts' counts where it declares `parts` (`count` beside them refused by name), else its `count` (a record converted whole), else refused by name; above 1 refused for a family that reads a holder of the sign (`derived.charged`)."""
     declared = body.get("parts")
     if isinstance(declared, list) and all(isinstance(p, dict) for p in declared):
         if "count" in body:

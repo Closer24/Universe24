@@ -165,7 +165,7 @@ replaces it.
 | `rule3.py` | 3 | the band at a pace, the form's walk with the rounding, the backward reading |
 | `cosmology.py` | 2 | the ball of dust's deceleration, the Doppler period times the moving clock |
 | `sign.py` | 2 | the Wronskian's walk witness, the odd lines' source |
-| `two_slits.py` | 2 | the near-field minima, the opaque NodeReader's envelope |
+| `two_slits.py` | 2 | the near-field minima, the opaque NodeDetector's envelope |
 | `tension.py` | 1 | the stress of dust |
 | `zeno.py` | 1 | nature's n = 1 against the body's own period |
 | (computed, no module) | 9 | the back-in-time gate, the two branches' solution, the two slits' run, the Bell efficiency, the atom's readings: readers named |

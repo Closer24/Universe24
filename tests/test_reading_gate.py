@@ -24,7 +24,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     board = Lattice(load_world(folder / world), (lines := []).append)
     for _ in range(board.world.intervals):
         board.step()
-    clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEREADER"]
+    clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEDETECTOR"]
     absorptions, quanta = sum(1 for line in clicks if line["absorbed"]), board.books()["pulse"]["quanta"]
     emissions = sum(
         1 for line in clicks if line["emitted"]
@@ -33,17 +33,17 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     trials = gate.trials_reading(folder / world, folder / "design.json", None)
     ends = trials["ends_in_part"]["body 0"].get("e", [0])[0]
     rows = [
-        ("NODEREADER", "run_inputs", "absorptions body 0", absorptions),
-        ("NODEREADER", "run_inputs", "clicks", absorptions),
+        ("NODEDETECTOR", "run_inputs", "absorptions body 0", absorptions),
+        ("NODEDETECTOR", "run_inputs", "clicks", absorptions),
         ("LATTICE", "run_inputs", "books pulse quanta", quanta),
         ("LATTICE", "run_inputs", "intervals", board.world.intervals),
         ("LATTICE", "back_in_time", f"intervals {board.world.intervals}", "MATCH"),
-        ("NODEREADER", "meeting_trials", "ends in e body 0", ends),
+        ("NODEDETECTOR", "meeting_trials", "ends in e body 0", ends),
         ("LATTICE", "meeting_trials", "trials", 3),
     ]
     wrong = [
-        ("NODEREADER", "run_inputs", "absorptions body 0", absorptions + 1),
-        ("NODEREADER", "run_inputs", "intervals", 48),
+        ("NODEDETECTOR", "run_inputs", "absorptions body 0", absorptions + 1),
+        ("NODEDETECTOR", "run_inputs", "intervals", 48),
     ]
     head = (
         "# A copy of the Zeno world\n\n## The gate's table\n\n| label | world | by | reading | value |\n"
@@ -80,7 +80,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     }
     assert (read[0]["read"], read[0]["label"], read[4]["read"], read[6]["read"]) == (
         str(absorptions),
-        "NODEREADER",
+        "NODEDETECTOR",
         "MATCH",
         "3",
     )

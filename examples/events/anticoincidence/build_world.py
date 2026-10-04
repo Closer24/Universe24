@@ -1,4 +1,4 @@
-"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeReaders at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record absorption it into e at the transition's declared weight over its one window of `intervals`, the run going on for `intervals` past the window's close so that the absorption's hole and the erasing front stand in the output interval by interval and the front reaches both packets (the owner's word of 2026-10-04, the click's experiment; the redesign at the lay without the uniform mode, the edge one wavelength on the chain of 96); and `two_photons.json`, the control, the same two packets at the control's amplitude on the universe `two_atoms_two_records.json`: two photons, one per record (two massless families of one pair), each atom's transition into e by either, each absorption bringing its record to 0 and its front starting at the absorption's interval (the design's `control`); and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
+"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeDetectors at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record absorption it into e at the transition's declared weight over its one window of `intervals`, the run going on for `intervals` past the window's close so that the absorption's hole and the erasing front stand in the output interval by interval and the front reaches both packets (the owner's word of 2026-10-04, the click's experiment; the redesign at the lay without the uniform mode, the edge one wavelength on the chain of 96); and `two_photons.json`, the control, the same two packets at the control's amplitude on the universe `two_atoms_two_records.json`: two photons, one per record (two massless families of one pair), each atom's transition into e by either, each absorption bringing its record to 0 and its front starting at the absorption's interval (the design's `control`); and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/anticoincidence/build_world.py --modes [--folder <folder>]
 """
@@ -40,7 +40,7 @@ def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
                     for light in dict.fromkeys(lights)
                 ],
                 "rates": [],
-                "node_reader": {
+                "node_detector": {
                     **design["generator"],
                     "window": design["intervals"],
                     "seed": design["records"]["seed"],
@@ -69,7 +69,7 @@ def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
         "engine": design["engine"],
         "bodies": records,
         "packets": packets,
-        "node_readers": [],
+        "node_detectors": [],
         "receding": {
             "x": {"sides": ["low", "high"], "largest": design["largest"], "layers": design["layers"]}
         },
@@ -94,8 +94,8 @@ def main(argv: list[str] | None = None) -> None:
 
             pixel_mode.main(["--input", str(path)])
     expectation = {
-        "verdict": "NODEREADER",
-        "comment": "One photon on two bodies, the anticoincidence (the paper's S.57; ALGEBRA.md (h2); the mathematician's 144 and 145, two hands by the law as it stands): one light record of one whole quantum laid between two records declared NodeReaders at one Node each, equidistant, each reading the light into its e part over one window, the run; the credit's count per record, one quantum one click; written before any run and never edited after.",
+        "verdict": "NODEDETECTOR",
+        "comment": "One photon on two bodies, the anticoincidence (the paper's S.57; ALGEBRA.md (h2); the mathematician's 144 and 145, two hands by the law as it stands): one light record of one whole quantum laid between two records declared NodeDetectors at one Node each, equidistant, each reading the light into its e part over one window, the run; the credit's count per record, one quantum one click; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],
         "blind": {

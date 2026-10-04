@@ -1,4 +1,4 @@
-"""The pulsed quantum Zeno gate's builder (the paper's S.59; ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): from `design.json` it writes one world per probe count n, `zeno_pulsed_<n>.json`, the shipped Zeno body (two parts, g at the count 1 and e at 0) declared a NodeReader at one Node of a periodic box under the continuous drive's plane wave whose turn over the run is a pi pulse at the Node clock 96,000, with a probe, a record of a neutral family of one real line laid whole by the count at the body's Node at the intervals T_pi k / n, k = 1 to n (Itano's protocol), the body's transition of g into itself at the probe's family (taken by g, no turn) and its generator alone under `node_reader`, no declared window: the window is bounded by the probe's lays; and the blind `expectation.json`, Itano's column P(e at T_pi) = (1 - cos^n(pi / n)) / 2 with its standard error at the design's seeds, the passed probes and the fluorescence clicks per run. With `--modes` it lays the drive by the generator (the probe takes no mode entry). Every number is the design's; the engine reads none of it.
+"""The pulsed quantum Zeno gate's builder (the paper's S.59; ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): from `design.json` it writes one world per probe count n, `zeno_pulsed_<n>.json`, the shipped Zeno body (two parts, g at the count 1 and e at 0) declared a NodeDetector at one Node of a periodic box under the continuous drive's plane wave whose turn over the run is a pi pulse at the Node clock 96,000, with a probe, a record of a neutral family of one real line laid whole by the count at the body's Node at the intervals T_pi k / n, k = 1 to n (Itano's protocol), the body's transition of g into itself at the probe's family (taken by g, no turn) and its generator alone under `node_detector`, no declared window: the window is bounded by the probe's lays; and the blind `expectation.json`, Itano's column P(e at T_pi) = (1 - cos^n(pi / n)) / 2 with its standard error at the design's seeds, the passed probes and the fluorescence clicks per run. With `--modes` it lays the drive by the generator (the probe takes no mode entry). Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/zeno_pulsed/build_world.py --modes [--folder <folder>]
 """
@@ -44,7 +44,7 @@ def world_of(design: dict, n: int) -> dict:
             {"from": "g", "to": "g", "drive": probe["family"]},
         ],
         "rates": [],
-        "node_reader": {**design["generator"], "seed": design["record"]["seed"]},
+        "node_detector": {**design["generator"], "seed": design["record"]["seed"]},
     }
     drive = design["drive"]
     packets = [
@@ -70,7 +70,7 @@ def world_of(design: dict, n: int) -> dict:
         "engine": design["engine"],
         "bodies": [record],
         "packets": packets,
-        "node_readers": [],
+        "node_detectors": [],
     }
 
 
@@ -117,7 +117,7 @@ def main(argv: list[str] | None = None) -> None:
             pixel_mode.main(["--input", str(path)])
         blind[f"zeno_pulsed_{n}"] = {**blind_of(n, len(design["seeds"])), "intervals": intervals_of(design, n)}
     expectation = {
-        "verdict": "NODEREADER",
+        "verdict": "NODEDETECTOR",
         "comment": "The pulsed quantum Zeno gate with the probe laid (S.59; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): the shipped Zeno body at the Node clock 96,000 under the continuous drive, the pi pulse 768 intervals, a probe laid whole by the count at its Node n times over the pi time, the body's window bounded by the probe's lays and its write at every close; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],

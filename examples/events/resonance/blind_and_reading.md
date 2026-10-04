@@ -12,7 +12,7 @@ Node 0 over the intervals 48 to 95 (`src/event_universe/emission.py`); a taker a
 same resonance (`resonant.json`) or detuned at [1, 3] (`detuned.json`), its window 96, one draw at
 the run's end. The blind `expectation.json` was written by `build_world.py` from `design.json` before
 any lay and never touched after; the readings are `tools/meeting_trials.py`'s over the design's 100
-seeds (the absorptions, clicks labelled NODEREADER) and one run's lattice readings (the far Node's levels,
+seeds (the absorptions, clicks labelled NODEDETECTOR) and one run's lattice readings (the far Node's levels,
 the light's share), labelled so; a miss is a finding by name and never an adjustment of the blind.
 
 ## The blind (expectation.json)
@@ -51,7 +51,7 @@ the light's share), labelled so; a miss is a finding by name and never an adjust
    own, or nothing would have reached the Node 8).
 3. The light's count at the span's end: the share over the board at the interval 96 is 0.752 W_c,
    sin Omega = 0.745 of a quantum at the band's top, 1 by the count's line in the top's unit
-   (0.752 + 0.5 rounded down) and 1 in the NodeReader's own unit at [2, 3] (W_d = 0.7454 W_c, the
+   (0.752 + 0.5 rounded down) and 1 in the NodeDetector's own unit at [2, 3] (W_d = 0.7454 W_c, the
    share 1.009 of it). PASS. A check made before the lay entered and named: adding the phasor's
    previous value to the level before as well, beside the level now, doubled the action (the share
    read 1.63); the lay adds the source's level to the level now alone.
@@ -210,7 +210,7 @@ stands and the window's draw at 48 stands as it is.
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Rows 1, 4 and 5 are the NodeReader's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
+Rows 1, 4 and 5 are the NodeDetector's: the `jump` lines over the seeds (`tools/meeting_trials.py`, the
 test's `jump` lines). The 48 `lay` lines of row 1 are labelled a lattice diagnostic by the engine.
 Rows 2 and 3 are lattice readings and their verdicts rest on them: the far Node's cosine is read
 from the light's levels at the Node [8, 0, 0] per interval (`tests/test_the_draw.py`, the levels
@@ -268,7 +268,7 @@ the blind by the counter-rotating residue's order) is re-read at 480 seeds, the 
 before the run and never touched after; examples only, no engine change. The run: `read_world.py
 --seeds 480` over both worlds of the design on the tree holding main at 7033a6aa, the seeds 1 to 480 with
 every record's generator at its own state from the seed as before (the design's 100 are the first 100 of
-them); an absorption is the NodeReader's click, `body 1 e by pulse` on the click lines labelled NODEREADER; a
+them); an absorption is the NodeDetector's click, `body 1 e by pulse` on the click lines labelled NODEDETECTOR; a
 Lattice reading is a diagnostic and labelled so.
 
 1. The detuned taker at [1, 3]: at most 2 absorptions in 480 seeds. The hands' number: the window's sum
@@ -296,7 +296,7 @@ sha after the squash, which re-reads these numbers and replaces this section's v
 480, on the branch's tree (main at 7033a6aa with the reader's one change): 273 seconds for the two worlds
 on one core, the design's own 100 seeds run beside as the check of the tree (58 seconds). The reader's
 `--seeds N` is the one change to the folder's script, reading the seeds 1 to N in place of the design's
-list. The absorptions are the clicks, the click lines labelled NODEREADER; the giver's cosine and count are
+list. The absorptions are the clicks, the click lines labelled NODEDETECTOR; the giver's cosine and count are
 Lattice readings and labelled so.
 
 1. The detuned taker at [1, 3]: 1 absorption in 480 seeds (`body 1 e by pulse` 1), the share 0.0021
@@ -333,7 +333,7 @@ squash of the round (#1726), its reading appended here beside the blind, which s
 `PYTHONPATH=src python examples/events/resonance/read_world.py --seeds 480`, both worlds, the seeds 1 to
 480, on the tree of `main` at e62b6651 and nothing else: 854 seconds for the two worlds on one core at a
 load average of about 30 on four cores (the branch's diagnostic, 273 seconds at low load). The absorptions
-are the clicks, the click lines labelled NODEREADER; the giver's cosine and count are lattice readings and
+are the clicks, the click lines labelled NODEDETECTOR; the giver's cosine and count are lattice readings and
 labelled so; the standard error of a count c of N is sqrt(c (N - c) / N), the blind's item 3.
 
 1. The detuned taker at [1, 3]: 1 absorption in 480 seeds (`body 1 e by pulse` 1), the share 0.0021 with

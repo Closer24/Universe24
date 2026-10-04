@@ -3,7 +3,7 @@
 The paper's S.57 (the mathematician's 144 and 145, two hands by the law as it stands; the owner's
 word of 2026-10-03, 03:25; the redesign of 2026-10-04 at the lay without the uniform mode, two
 hands, #1827 comments 5975470305 and 5975568700): a chain of 96 Nodes open on x with both faces
-receding, y and z folded; two records of two parts (g, e) of the pair [1, 1299] declared NodeReaders
+receding, y and z folded; two records of two parts (g, e) of the pair [1, 1299] declared NodeDetectors
 at two Nodes each, the Nodes 23 to 24 and 71 to 72, 24 Links from the centre each, their six Link
 factors 0 so that they stay; one light record of the family `photon` (light's pair, one real line)
 laid at the centre as two packets toward both, from 48 toward +x and from 47 toward -x, at k = pi / 4
@@ -79,21 +79,21 @@ comments 5975438107 and 5975470305); the emission's packet and the source in tim
 mode (the mathematician's first and the advisor's second, the second pull request); the erasure
 line's `absorbed` printed as the faces' booked take in quanta in place of the levels' sizes. The one
 draw's generator is the first closing record's (the world has no draw of its own); the record's own
-NodeReader region and the face form of the hole are built.
+NodeDetector region and the face form of the hole are built.
 
 ## On the own quantum, 2026-10-03 (branch own-quantum, 8382b8b9)
 
-The round of the NodeReader's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
+The round of the NodeDetector's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
 advisor's seconds, the ids in `examples/events/resonance/blind_and_reading.md`) declares the atoms'
 transition at the resonance [5414, 6000] (the photon's rotation at k = pi / 4, cos omega =
 (cos(pi / 4) + 2) / 3) and lays no light here (the atoms have no rates); the two worlds declare no
-region NodeReader. Re-run by `tools/meeting_trials.py` on 8382b8b9 over the 200 seeds: one photon A only
+region NodeDetector. Re-run by `tools/meeting_trials.py` on 8382b8b9 over the 200 seeds: one photon A only
 101, B only 99, both 0, neither 0, alpha 0; two photons 24, 47, 28, 101, alpha 56 / 39; bit for bit the
 readings above. PASS and unchanged.
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-The table's numbers (A only, B only, both, neither, alpha) are the NodeReader's: the `jump` lines'
+The table's numbers (A only, B only, both, neither, alpha) are the NodeDetector's: the `jump` lines'
 `absorbed` per trial, read by `tools/meeting_trials.py`. The finding's levels at the two records' Nodes
 (-98 and -157 at 8, -146 and -149 at 28, -141 and -141 at 32) are a lattice reading of one trial,
 labelled so, and no number of the blind. The lines carry the board's `interval` and the `window` in board
@@ -164,10 +164,10 @@ over the 200 seeds and by `tools/run_inputs.py` on the shipped world, every numb
 One photon: P(both) = 0 exactly and alpha = 0, the blind's (PASS, by the count); P(A only) = 0.495 and
 P(B only) = 0.505, equal within the standard error and the symmetry's (PASS), each at most 1 / 2 with no
 "neither" (PASS on the bound: the draw's shares at the window's end A 0.487, B 0.513, none 0.000,
-NODEREADER, the passage's transfer complete at the weight 6). Two photons: P(both) = 0.975 above 0
+NODEDETECTOR, the passage's transfer complete at the weight 6). Two photons: P(both) = 0.975 above 0
 (PASS); alpha = 1, the blind's second form (two sequential absorptions at one share). The shipped run
 (LATTICE, the books per interval; the page from the output file): the share 1.00 quanta at the lay and
-1.01 at 48; body 0 takes at 48 (NODEREADER, the count 1 to 0, the hole at its Node); 1.05 at 49 (the
+1.01 at 48; body 0 takes at 48 (NODEDETECTOR, the count 1 to 0, the hole at its Node); 1.05 at 49 (the
 hole's transient) and 1.12 at 56 (the front's sweep through the near packet, the most, the known
 transient of the hole to 0 inside a smooth wave), 0.59 at 60 and 0.49 from 80 to 150 (the near packet
 erased, the far one the empty wave in the grown layers), 0.10 at 170 as the front sweeps the far packet
@@ -179,7 +179,7 @@ by their numbers until the front's taper at the owner's word.
 ## The gate's table
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
-compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
+compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
 lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
@@ -188,11 +188,11 @@ reading in the gate's words and the value as its report prints it.
 | --- | --- | --- | --- | --- |
 | LATTICE | one_photon.json | run_inputs | verdict | LAWFUL |
 | LATTICE | one_photon.json | run_inputs | intervals | 170 |
-| NODEREADER | one_photon.json | run_inputs | clicks | 1 |
-| NODEREADER | one_photon.json | run_inputs | clicks body 0 | 1 |
-| NODEREADER | one_photon.json | run_inputs | clicks body 1 | 0 |
-| NODEREADER | one_photon.json | run_inputs | absorptions body 0 | 1 |
-| NODEREADER | one_photon.json | run_inputs | absorptions body 1 | 0 |
+| NODEDETECTOR | one_photon.json | run_inputs | clicks | 1 |
+| NODEDETECTOR | one_photon.json | run_inputs | clicks body 0 | 1 |
+| NODEDETECTOR | one_photon.json | run_inputs | clicks body 1 | 0 |
+| NODEDETECTOR | one_photon.json | run_inputs | absorptions body 0 | 1 |
+| NODEDETECTOR | one_photon.json | run_inputs | absorptions body 1 | 0 |
 | LATTICE | one_photon.json | run_inputs | lines lay | 8 |
 | LATTICE | one_photon.json | run_inputs | lines face | 323 |
 | LATTICE | one_photon.json | run_inputs | lines erasure | 122 |
@@ -202,24 +202,24 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | one_photon.json | run_inputs | books atom quanta | 2 |
 | LATTICE | one_photon.json | meeting_trials | trials | 200 |
 | LATTICE | one_photon.json | meeting_trials | refused | 0 |
-| NODEREADER | one_photon.json | meeting_trials | A only | 99 |
-| NODEREADER | one_photon.json | meeting_trials | B only | 101 |
-| NODEREADER | one_photon.json | meeting_trials | both | 0 |
-| NODEREADER | one_photon.json | meeting_trials | neither | 0 |
-| NODEREADER | one_photon.json | meeting_trials | alpha | 0 |
-| NODEREADER | one_photon.json | meeting_trials | ends in e body 0 | 99 |
-| NODEREADER | one_photon.json | meeting_trials | ends in g body 0 | 101 |
-| NODEREADER | one_photon.json | meeting_trials | ends in e body 1 | 101 |
-| NODEREADER | one_photon.json | meeting_trials | ends in g body 1 | 99 |
-| NODEREADER | one_photon.json | meeting_trials | clicks body 0 e by photon | 99 |
-| NODEREADER | one_photon.json | meeting_trials | clicks body 1 e by photon | 101 |
+| NODEDETECTOR | one_photon.json | meeting_trials | A only | 99 |
+| NODEDETECTOR | one_photon.json | meeting_trials | B only | 101 |
+| NODEDETECTOR | one_photon.json | meeting_trials | both | 0 |
+| NODEDETECTOR | one_photon.json | meeting_trials | neither | 0 |
+| NODEDETECTOR | one_photon.json | meeting_trials | alpha | 0 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in e body 0 | 99 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in g body 0 | 101 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in e body 1 | 101 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in g body 1 | 99 |
+| NODEDETECTOR | one_photon.json | meeting_trials | clicks body 0 e by photon | 99 |
+| NODEDETECTOR | one_photon.json | meeting_trials | clicks body 1 e by photon | 101 |
 | LATTICE | two_photons.json | run_inputs | verdict | LAWFUL |
 | LATTICE | two_photons.json | run_inputs | intervals | 170 |
-| NODEREADER | two_photons.json | run_inputs | clicks | 2 |
-| NODEREADER | two_photons.json | run_inputs | clicks body 0 | 1 |
-| NODEREADER | two_photons.json | run_inputs | clicks body 1 | 1 |
-| NODEREADER | two_photons.json | run_inputs | absorptions body 0 | 1 |
-| NODEREADER | two_photons.json | run_inputs | absorptions body 1 | 1 |
+| NODEDETECTOR | two_photons.json | run_inputs | clicks | 2 |
+| NODEDETECTOR | two_photons.json | run_inputs | clicks body 0 | 1 |
+| NODEDETECTOR | two_photons.json | run_inputs | clicks body 1 | 1 |
+| NODEDETECTOR | two_photons.json | run_inputs | absorptions body 0 | 1 |
+| NODEDETECTOR | two_photons.json | run_inputs | absorptions body 1 | 1 |
 | LATTICE | two_photons.json | run_inputs | lines lay | 16 |
 | LATTICE | two_photons.json | run_inputs | lines face | 325 |
 | LATTICE | two_photons.json | run_inputs | lines erasure | 122 |
@@ -229,17 +229,17 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | two_photons.json | run_inputs | books atom quanta | 2 |
 | LATTICE | two_photons.json | meeting_trials | trials | 200 |
 | LATTICE | two_photons.json | meeting_trials | refused | 0 |
-| NODEREADER | two_photons.json | meeting_trials | A only | 5 |
-| NODEREADER | two_photons.json | meeting_trials | B only | 0 |
-| NODEREADER | two_photons.json | meeting_trials | both | 195 |
-| NODEREADER | two_photons.json | meeting_trials | neither | 0 |
-| NODEREADER | two_photons.json | meeting_trials | alpha | 1 |
-| NODEREADER | two_photons.json | meeting_trials | ends in e body 0 | 200 |
-| NODEREADER | two_photons.json | meeting_trials | ends in g body 0 | 0 |
-| NODEREADER | two_photons.json | meeting_trials | ends in e body 1 | 195 |
-| NODEREADER | two_photons.json | meeting_trials | ends in g body 1 | 5 |
-| NODEREADER | two_photons.json | meeting_trials | clicks body 0 e by photon | 200 |
-| NODEREADER | two_photons.json | meeting_trials | clicks body 1 e by photon | 195 |
+| NODEDETECTOR | two_photons.json | meeting_trials | A only | 5 |
+| NODEDETECTOR | two_photons.json | meeting_trials | B only | 0 |
+| NODEDETECTOR | two_photons.json | meeting_trials | both | 195 |
+| NODEDETECTOR | two_photons.json | meeting_trials | neither | 0 |
+| NODEDETECTOR | two_photons.json | meeting_trials | alpha | 1 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in e body 0 | 200 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in g body 0 | 0 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in e body 1 | 195 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in g body 1 | 5 |
+| NODEDETECTOR | two_photons.json | meeting_trials | clicks body 0 e by photon | 200 |
+| NODEDETECTOR | two_photons.json | meeting_trials | clicks body 1 e by photon | 195 |
 | LATTICE | one_photon.json | back_in_time | intervals 170 | MATCH |
 | LATTICE | one_photon.json | back_in_time | intervals 72 | MATCH |
 | LATTICE | two_photons.json | back_in_time | intervals 170 | MATCH |

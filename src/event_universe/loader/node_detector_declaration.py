@@ -1,4 +1,4 @@
-"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the emission at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `node_reader` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
+"""A body's declaration as a NodeDetector with a record of its own (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the emission at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `node_detector` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeDetectorDeclaration` by `node_detector_of`, every defect refused by name and no default written."""
 
 from __future__ import annotations
 
@@ -16,9 +16,9 @@ READER_RECORD_KEYS = (
     "parts",
     "transitions",
     "rates",
-    "node_reader",
+    "node_detector",
     "conversion",
-)  # a body as a NodeReader with a record of its own
+)  # a body as a NodeDetector with a record of its own
 PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count"), ("part", "name", "count")
 TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance")  # a transition's keys
 PROBE_KEYS = ("from", "to", "drive")  # a transition of a part into itself, the probe's: it turns nothing
@@ -43,7 +43,7 @@ OUT_KEYS, OUT_REQUIRED = (
 
 @dataclass(frozen=True)
 class Transition:
-    """A transition of a record at a Node that is a NodeReader (ALGEBRA.md, The click writes on the lattice (j), the absorption click): the part the record leaves, the part it enters, the family whose arriving quantum it takes climbing or receives back descending (the parts' declared order, `parts_of`; `meeting.exchange`), by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands): it names the family whose lay at the body's Node closes the body's window, the body absorption it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
+    """A transition of a record at a Node that is a NodeDetector (ALGEBRA.md, The click writes on the lattice (j), the absorption click): the part the record leaves, the part it enters, the family whose arriving quantum it takes climbing or receives back descending (the parts' declared order, `parts_of`; `meeting.exchange`), by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands): it names the family whose lay at the body's Node closes the body's window, the body absorption it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
 
     leaves: int
     enters: int
@@ -63,7 +63,7 @@ def pair_of(value: object, label: str) -> tuple[int, int]:
 
 @dataclass(frozen=True)
 class Rate:
-    """An emission of a body as a NodeReader (the fifth act, the emission click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions; in the open board the packet's `width`, its Nodes across (None inside a guide, the source in time), and the directions the board holds for its lay from the body's Node, (axis, sense) each, drawn by the giver (`packet_form`; `emission.laid_packet`)."""
+    """An emission of a body as a NodeDetector (the fifth act, the emission click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions; in the open board the packet's `width`, its Nodes across (None inside a guide, the source in time), and the directions the board holds for its lay from the body's Node, (axis, sense) each, drawn by the giver (`packet_form`; `emission.laid_packet`)."""
 
     leaves: int
     enters: int
@@ -84,8 +84,8 @@ class Conversion:
 
 
 @dataclass(frozen=True)
-class NodeReaderDeclaration:
-    """A body as a NodeReader as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its emissions, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
+class NodeDetectorDeclaration:
+    """A body as a NodeDetector as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its emissions, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
 
     names: tuple[str, ...]
     counts: tuple[int, ...]
@@ -200,13 +200,13 @@ def holding_period(rate: Rate, name: str, families: tuple[FamilyRule, ...], acti
 
 
 def packet_form(
-    found: NodeReaderDeclaration,
+    found: NodeDetectorDeclaration,
     label: str,
     families: tuple[FamilyRule, ...],
     at: tuple[int, int, int],
     shape: tuple[int, int, int],
     action: int,
-) -> NodeReaderDeclaration:
+) -> NodeDetectorDeclaration:
     """The loader's decision on each emission's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`emission.emitted_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`emission.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
     guide = sum(1 for extent in shape if extent > 1) <= 1
     rates = []
@@ -310,27 +310,27 @@ def conversion_of(
     return Conversion(rate, tuple(outs), tuple(senses)), own_sense
 
 
-def node_reader_of(
+def node_detector_of(
     body: dict[str, object],
     label: str,
     families: tuple[FamilyRule, ...],
     own: int,
     quanta: dict[str, int],
     count: int,
-) -> NodeReaderDeclaration:
-    """A body's declaration as a NodeReader (ALGEBRA.md, The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_reader` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_reader` to draw it; refused by name otherwise."""
+) -> NodeDetectorDeclaration:
+    """A body's declaration as a NodeDetector (ALGEBRA.md, The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_detector` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_detector` to draw it; refused by name otherwise."""
     family = families[own]
     if "conversion" in body:
         if "parts" in body or "transitions" in body or "rates" in body:
             raise ValueError(f"{label} is converted whole: it declares no parts, transitions or rates")
-        if "node_reader" not in body:
-            raise ValueError(f"{label} declares a conversion and no `node_reader` to draw it with")
+        if "node_detector" not in body:
+            raise ValueError(f"{label} declares a conversion and no `node_detector` to draw it with")
         table, sense = conversion_of(body["conversion"], f"{label}.conversion", families, own, quanta)
-        own_draw = draw_of(body["node_reader"], f"{label}.node_reader")
-        return NodeReaderDeclaration((family.name,), (count,), (), (), own_draw, (table,), sense)
+        own_draw = draw_of(body["node_detector"], f"{label}.node_detector")
+        return NodeDetectorDeclaration((family.name,), (count,), (), (), own_draw, (table,), sense)
     if "parts" not in body:
         raise ValueError(
-            f"{label} declares its parts, the modes it is laid in, before any `node_reader`, transition or rate"
+            f"{label} declares its parts, the modes it is laid in, before any `node_detector`, transition or rate"
         )
     if not family.plane or family.parts < 2 or family.planes != 1:
         raise ValueError(
@@ -341,10 +341,12 @@ def node_reader_of(
     transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
     probed = any(transition.leaves == transition.enters for transition in transitions)
     draw: Generator | None = None
-    if "node_reader" in body:
+    if "node_detector" in body:
         read = generator_of if probed else draw_of
-        draw = read(body["node_reader"], f"{label}.node_reader")
+        draw = read(body["node_detector"], f"{label}.node_detector")
     if draw is None and ("transitions" in body or "rates" in body):
-        raise ValueError(f"{label} declares transitions or rates and no `node_reader` to draw them with")
+        raise ValueError(
+            f"{label} declares transitions or rates and no `node_detector` to draw them with"
+        )
     rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own, transitions)
-    return NodeReaderDeclaration(names, counts, transitions, rates, draw)
+    return NodeDetectorDeclaration(names, counts, transitions, rates, draw)

@@ -84,7 +84,7 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     for _ in range(48):
         board.step()
     credits = [
-        c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["absorbed"]
+        c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
     ]
     assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
     origin = next(f.at for f in board.credit.faces[49] if f.family == photon)

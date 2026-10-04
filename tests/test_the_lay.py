@@ -54,7 +54,7 @@ def test_the_write_step_lays_at_the_nodes_with_the_remainder_at_the_origin_and_o
 ):
     """The write step of the act (`lay.laid`, `lay.written`): on the Zeno box without bodies a massless record's change of (+5, -5) at two Nodes and (+2, -2) before them, weighted alike, adds the levels, leaves the two sums as it found them, sets the remainder of every written Node to the origin it is handed (the half wall, a Node moved off it included where the lay names it) and reports one lay line per written Node with [now, before, remainder] before and after; a Node named by the lay with no change and its remainder at the origin reports none; the faced Node is left to the faces."""
     world = json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8"))
-    world.update(bodies=[], packets=[], node_readers=[], intervals=4)
+    world.update(bodies=[], packets=[], node_detectors=[], intervals=4)
     (path := tmp_path / "box.json").write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
@@ -84,7 +84,7 @@ def test_the_write_step_lays_at_the_nodes_with_the_remainder_at_the_origin_and_o
 
 
 def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_admitted_span():
-    """The span condition (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode, the engine's declared problem 2; `loader/node_reader_declaration.holding_period`, `emission.holds_period`): the resonance world's giver at [2, 3] with the lifetime 4 is refused by name, the least admitted span 8 (tau Omega >= 2 pi, num / den <= cos(2 pi / tau) by the rotation act), and admitted at 8; an emission at [5414, 6000] needs 15."""
+    """The span condition (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode, the engine's declared problem 2; `loader/node_detector_declaration.holding_period`, `emission.holds_period`): the resonance world's giver at [2, 3] with the lifetime 4 is refused by name, the least admitted span 8 (tau Omega >= 2 pi, num / den <= cos(2 pi / tau) by the rotation act), and admitted at 8; an emission at [5414, 6000] needs 15."""
     world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
@@ -109,7 +109,9 @@ def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_a
         action,
     )
     assert "lifetime 4" in str(refusal) and "[2, 3]" in str(refusal)
-    assert bodies_of(rows(8, [2, 3]), None, "", families, shape, 9000, (), action)[0].reader is not None
+    assert (
+        bodies_of(rows(8, [2, 3]), None, "", families, shape, 9000, (), action)[0].detector is not None
+    )
     refused(
         "least admitted span is 15",
         bodies_of,

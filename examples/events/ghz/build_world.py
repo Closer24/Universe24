@@ -38,7 +38,7 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
     length, source, depth = int(design["length"]), int(design["source"]), int(design["screen"])
     p, q = (int(v) for v in design["wave"])
     first, last = (int(v) for v in design["top_across"])
-    packets, node_readers = [], []
+    packets, node_detectors = [], []
     for label, setting in zip(design["sides"], settings, strict=True):
         along, toward = str(design["beams"][label][0]), int(design["beams"][label][1])
         across = next(name for name in AXES[:2] if name != along)
@@ -54,7 +54,7 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
             }
         )
         deep = range(depth) if toward < 0 else range(length - depth, length)
-        node_readers.append(
+        node_detectors.append(
             {
                 "name": design["sides"][label],
                 "positions": [
@@ -75,7 +75,7 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
         "engine": design["engine"],
         "bodies": [],
         "packets": packets,
-        "node_readers": node_readers,
+        "node_detectors": node_detectors,
         "receding": design["receding"],
         "draw": design["draw"],
     }
@@ -123,7 +123,7 @@ def blind(design: dict[str, Any]) -> dict[str, Any]:
 def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind expectation file, as tools/bell_gate.py reads it: the family, the window, the sides' regions, the settings and the patterns, the four worlds in Mermin's order with the combination's name and signs, the credit's rule named, the seed and the blind."""
     return {
-        "verdict": "NODEREADER",
+        "verdict": "NODEDETECTOR",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],

@@ -4,7 +4,7 @@ The paper's S.59 under the window bounded by the lays' schedule (ALGEBRA.md, The
 two hands of 2026-10-03: the advisor's design, #1572 comment 5967698811 section 2, the
 mathematician's 243, 5967783614 section 2, and the one text of his 244, 5967913000 section 2, at
 the owner's word "Everything now and in parallel"): the shipped Zeno world's body, one record of two
-parts (g, e) of the near-flat pair [1, 1299] declared a NodeReader at the centre Node of a periodic
+parts (g, e) of the near-flat pair [1, 1299] declared a NodeDetector at the centre Node of a periodic
 box of 8 x 8 x 4, its six Link factors 0 so that it stays; the same continuous drive, the holder of
 the sign `pulse`, a plane wave at k = pi / 2 and the amplitude 392 read into the record's phase at
 the weight 1 in both directions at the resonance [2, 3]; the Node clock 96,000 with the Link unit 1,
@@ -24,7 +24,7 @@ and one Node, no write on its record, the fluorescence by name its own wave cont
 drive's absorption exchanges the parts (the hole of round A), the rest the null window, the body whole
 in its part. The reading is the part the body stands in at the run's end over the trials, each the
 same lay with the body's generator at one of the design's 480 seeds (`tools/meeting_trials.py`), the
-click lines labelled NODEREADER (`absorbed` the family read, `proper` the body's own clock, `windows` the
+click lines labelled NODEDETECTOR (`absorbed` the family read, `proper` the body's own clock, `windows` the
 window's index) and the windows closed beside it. The blind is `expectation.json`, written by
 `build_world.py` from the design before any run and never edited after; the reading is appended
 here after the run; a reading that misses the blind is a finding, written as such and never
@@ -35,7 +35,7 @@ window the probe that is not laid; the anticoincidence and the telegraph keep th
 
 Of the two forms the hands wrote on the morning of 2026-10-03 (the advisor's first, 5967698811, and
 the mathematician's 243 agreeing on the probe's click at its interval with the labels' weights; the
-advisor's second on 242, 5967838095, a third part aux with the probe's own NodeReader at the body's
+advisor's second on 242, 5967838095, a third part aux with the probe's own NodeDetector at the body's
 Node), the one text is 244's: 243's form. The aux form needs a body's window alternating between
 the drive's segment and the probe's two intervals, which no primitive gives, and a one-Node region
 crediting a quantum laid at its own Node, which the inflow through the front Ports never sees; the
@@ -178,4 +178,4 @@ standard error of the column (0.20, 0.10 and 0.00 against 0.235, 0.133 and 0.072
 took in no trial of 20, the blind's 1.4 trials), the probe's clicks per run 7.10, 14.75 and 32.00
 against the blind's 6.85, 14.8 and 30.8; the rows to be read at 480 seeds on a quiet machine, with
 the partial hole on main (the protocol above); n = 64 reads 0 of 20 (0.000 against 0.037), the probe's clicks 64.00 per run against the blind's 62.8. Every number a click (the jumps,
-the parts the writes left), labelled NODEREADER.
+the parts the writes left), labelled NODEDETECTOR.
