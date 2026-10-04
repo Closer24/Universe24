@@ -193,5 +193,15 @@
     "kind": "a",
     "breaker": "The rest energy m* c_m^2 = omega_0 exactly on the band (m* = 3 tan omega_0, c_m^2 = omega_0 / (3 tan omega_0)) at every pair; the mass ratios' square roots of the gaps under the one-denominator hypothesis (a declaration, no breaker); the charge universality's exactness against the free fall's family dependence (#1908 (4)).",
     "state": "to write"
+  },
+  "The one run this paper reports is the two slits the Huygens": {
+    "kind": "c",
+    "breaker": "A run's reading (3.7's run sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeReader for the counts and GameBoard for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
+    "state": "run"
+  },
+  "The implementation checks this as a test it runs a file forw": {
+    "kind": "c",
+    "breaker": "A run's reading (5.1's gate sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeReader for the counts and GameBoard for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
+    "state": "run"
   }
 }
