@@ -561,9 +561,8 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
     packet = world["messages"][0]
     world.update(shape=[72, 1, 1], universe="u.json", engine="e.json", ticks=68)
-    world["messages"] = [
-        {**packet, "top": {**packet["top"], "x": [14, 14]}, "edge": {"x": 16, "y": 0, "z": 0}}
-    ]
+    top, edge = {**packet["top"], "x": [14, 14]}, dict(x=16, y=0, z=0)  # the packet over 16 Nodes at 14
+    world["messages"] = [{**packet, "top": top, "edge": edge}]
     for body, at, window in zip(world["bodies"], (30, 32), (48, 52), strict=True):
         body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]
         body["node_reader"] = {**body["node_reader"], "window": window}
@@ -577,8 +576,7 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
         laid.step()
     assert laid.credit.counts[photon] == 1 and photon not in laid.credit.untaken
     for seed in range(trials):
-        board, lines = copy.deepcopy(laid), []
-        board.output = lines.append
+        (board := copy.deepcopy(laid)).output = (lines := []).append
         for books in board.credit.bodies:  # every record's generator at the trial's hashed state (R342)
             books.state = hashed_state(seed * len(board.credit.bodies) + books.number, board.world.width)
         while board.tick < 52:
@@ -589,13 +587,11 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     p_a, p_b = s_a / unit_a, s_b / unit_b
     f_a, f_b = (sum(reader in c for c in clicks) / trials for reader in ("body 0", "body 1"))
     nulls = sum(c == () for c in clicks) + round(f_b * trials)  # the trials A left to B
-    given, law = f_b * trials / nulls, p_b / (1 - p_a)  # B's frequency given A's null, and the law's
+    given, law = f_b * trials / nulls, p_b / (1 - p_a)  # B given A's null, and the law's
     error, spread = math.sqrt(p_b * (1 - p_b) / trials), math.sqrt(law * (1 - law) / nulls)
     print(
-        f"A's share {p_a:.4f}, realised {f_a:.4f}; B's share {p_b:.4f}, realised {f_b:.4f} (the standard error"
-        f" {error:.4f}) against the branch's (1 - s_A) s_B {(1 - p_a) * p_b:.4f}; given A's null over {nulls}"
-        f" trials B took {given:.4f}, the law's s_B / (1 - s_A) {law:.4f} (the standard error {spread:.4f})"
-        f" against the branch's s_B {p_b:.4f}"
+        f"A {p_a:.4f} realised {f_a:.4f}; B {p_b:.4f} realised {f_b:.4f}, error {error:.4f}, the branch's"
+        f" {(1 - p_a) * p_b:.4f}; given A's null ({nulls}) B {given:.4f}, the law's {law:.4f} ({spread:.4f})"
     )
     assert 0 < p_a and p_a + p_b < 1 and max(len(c) for c in clicks) <= 1  # the cap clear, one click
     assert abs(f_a - p_a) < 3 * math.sqrt(p_a * (1 - p_a) / trials)
