@@ -73,6 +73,8 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert engine and all(x["event"] == "click" and x["node_reader"] in ends for x in engine)
     assert all("node" not in x and x["inflow"] != 0 for x in engine)
     assert set(look["books"]) == {f["name"] for f in look["families"] if f["quanta"]}
+    for name, book in look["books"].items():  # the share per interval is the books' at the last frame
+        assert look["frames"][-1]["families"][name]["share"] == book["share"]
     roles, held = PAGE.roles(look["families"]), [f.get("held", {}).get("sources") for f in universe]
     expected = ["matter" if s is None else "light" if "wronskian" in s else "held" for s in held]
     assert [role["role"] for role in roles.values()] == expected
