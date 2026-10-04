@@ -13,6 +13,12 @@ gate and read a world (`tools/`) and the experiments that gate the engine
 (`examples/events/`), each one folder with its design, its worlds, its blind
 written before any run and its reading.
 
+The paper that states the method and its one claim, with its supplement of
+derivations, is in [paper/](paper/README.md) (`paper/general_formula/main.tex` and
+`supplement.tex`, built by the scripts there); the documents it cites are
+[docs/ALGEBRA.md](docs/ALGEBRA.md), [docs/ENGINE.md](docs/ENGINE.md) and
+[docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md).
+
 ## Seeing the experiments
 
 An experiment is one folder under `examples/events/`: its design (`design.json`,

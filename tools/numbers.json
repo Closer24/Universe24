@@ -49,8 +49,8 @@
     },
     {
         "name": "the guide's reaches at L = 8 (R72)",
-        "canonical": ["175, 430 and 911"],
-        "forbidden": ["233, 466 and 932", "466 at the flat"],
+        "canonical": ["about 2 x 10^2, 4 x 10^2 and 9 x 10^2"],
+        "forbidden": ["175, 430 and 911", "233, 466 and 932", "466 at the flat"],
         "derivation": {
             "module": "tools/derivations/bands.py",
             "function": "guide_reaches",

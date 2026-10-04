@@ -226,6 +226,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "DIFFERS on a wrong value and on a wrong label, the shipped screen table in the block's place, UNFILLED without "
         "either, the report's shape and the exit code; the imports stand inside the test so the file is the test alone",
     ),
+    "tests/test_proofs_check_the_law.py::test_every_row_of_the_proofs_inventory_returns_its_verdict_and_the_unchecked_only_fall": (
+        77,
+        "the proofs' gate (the owner's order of 2026-10-04, 07:50 UTC, that all the proofs be checked by machine; the "
+        "advisor's design lines, #1793 comment 5977935062): every row of tools/derivations/proofs_inventory.json with a "
+        "check runs to its verdict, every check_ function of the proofs_ modules is a row's, the rows of the kinds A, B "
+        "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
+        "a run's file; the imports stand inside the test so the file is the test alone",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
