@@ -1,13 +1,14 @@
 """The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's giving as a packet along a drawn axis (step 5 of the emitter/node_reader)."""
 
 import ast
+import copy
 import json
 import math
 from pathlib import Path
 
 import numpy as np
 
-from event_universe import node
+from event_universe import meeting, node, world_files
 from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
 from event_universe.credit import record_unit
 from event_universe.features.click import along_cosine, envelope, exact_total, line_total
@@ -539,3 +540,61 @@ def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_
         line = board.states[photon_b].lines[0]
         assert not line.now.reshape(-1)[reach].any() and not line.before.reshape(-1)[reach].any()
     assert {c["node_reader"]: c["taken"] for c in took} == {"body 0": "photon_b", "body 1": "photon"}
+
+
+def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_nulls(tmp_path, monkeypatch):
+    """The one draw over readers of one record closing at different intervals (ALGEBRA.md, The click writes on the GameBoard (7), the mathematician's line, #1793 comment 5981514001 (5); `meeting.took`, `credit.Books.untaken`): one photon of count 1 on a chain of 72, laid at the Node 14 over 16 Nodes of edge and travelling +x at the group pace, passes the atom A at 30 and 31, whose window closes at 48, and the atom B beside it at 32 and 33, whose window closes at 52 (the two reads of one record staggered in time, not in space); A's null window leaves the wave as laid, so B reads the same packet; over 400 trials (the board copied at the interval before A's close, the lay and the steps before it the same in every trial, every record's generator at the trials tool's hashed state of the trial's label, the seed times the records' number plus the record's number, so that the trials are independent draws and not one Weyl sequence, R342 and R351, the engine's own draws from there; B beside A and its close four intervals after A's keep the test under the check's bound of 30 seconds on the CI runner's clock) the realised frequency of B's taking is the one draw's, s_B over the labels' unit, within three standard errors, and not the branch's (1 - s_A) s_B, more than three standard errors away, and given A's null B takes at the law's s_B / (1 - s_A) and not at the branch's s_B, the sharper statistic; A's frequency is s_A; no trial holds two takings, the count conserved; the books after a trial of two nulls hold the record's untaken share, the unit less both shares, and after a taking none; the shares read from the books at the two closes and the four numbers printed."""
+    seen, turned = {}, meeting.turned_labels
+
+    def kept(board, books):  # the labels' unit and the transfer share at a close while the count stands
+        turned(board, books)
+        for transition, share in books.shares.items():
+            if board.credit.counts[transition.drive] > 0:
+                unit = sum(label * label for label in books.labels)
+                seen.setdefault((board.tick, books.number), set()).add((unit, share))
+
+    monkeypatch.setattr(meeting, "turned_labels", kept)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    folder = EVENTS / "anticoincidence"
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    (tmp_path / "u.json").write_bytes((folder / "two_atoms.json").read_bytes())
+    world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
+    packet = world["messages"][0]
+    world.update(shape=[72, 1, 1], universe="u.json", engine="e.json", ticks=68)
+    top, edge = {**packet["top"], "x": [14, 14]}, dict(x=16, y=0, z=0)  # the packet over 16 Nodes at 14
+    world["messages"] = [{**packet, "top": top, "edge": edge}]
+    for body, at, window in zip(world["bodies"], (30, 32), (48, 52), strict=True):
+        body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]
+        body["node_reader"] = {**body["node_reader"], "window": window}
+        body["transitions"] = [{**body["transitions"][0], "weight": 2}]
+    (path := tmp_path / "staggered.json").write_text(json.dumps(world), encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
+    laid, trials, clicks, left = GameBoard(load_world(path)), 400, [], {}
+    photon = [f.name for f in laid.families].index("photon")
+    while laid.tick < 47:  # the interval before A's close: the same lay and steps in every trial
+        laid.step()
+    assert laid.credit.counts[photon] == 1 and photon not in laid.credit.untaken
+    for seed in range(trials):
+        (board := copy.deepcopy(laid)).output = (lines := []).append
+        for books in board.credit.bodies:  # every record's generator at the trial's hashed state (R342)
+            books.state = hashed_state(seed * len(board.credit.bodies) + books.number, board.world.width)
+        while board.tick < 52:
+            board.step()
+        clicks.append(tuple(c["node_reader"] for c in lines if c["event"] == "credit" and c["taken"]))
+        left[clicks[-1]] = (board.credit.counts[photon], board.credit.untaken.get(photon))
+    ((unit_a, s_a),), ((unit_b, s_b),) = seen[48, 0], seen[52, 1]
+    p_a, p_b = s_a / unit_a, s_b / unit_b
+    f_a, f_b = (sum(reader in c for c in clicks) / trials for reader in ("body 0", "body 1"))
+    nulls = sum(c == () for c in clicks) + round(f_b * trials)  # the trials A left to B
+    given, law = f_b * trials / nulls, p_b / (1 - p_a)  # B given A's null, and the law's
+    error, spread = math.sqrt(p_b * (1 - p_b) / trials), math.sqrt(law * (1 - law) / nulls)
+    print(
+        f"A {p_a:.4f} realised {f_a:.4f}; B {p_b:.4f} realised {f_b:.4f}, error {error:.4f}, the branch's"
+        f" {(1 - p_a) * p_b:.4f}; given A's null ({nulls}) B {given:.4f}, the law's {law:.4f} ({spread:.4f})"
+    )
+    assert 0 < p_a and p_a + p_b < 1 and max(len(c) for c in clicks) <= 1  # the cap clear, one click
+    assert abs(f_a - p_a) < 3 * math.sqrt(p_a * (1 - p_a) / trials)
+    assert abs(f_b - p_b) < 3 * error < abs(f_b - (1 - p_a) * p_b)
+    assert abs(given - law) < 3 * spread < abs(given - p_b)
+    assert left[()] == (1, unit_a - s_a - s_b) and left["body 0",] == left["body 1",] == (0, None)
