@@ -435,7 +435,8 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     well.now[post] = well.before[post] = paces.frozen_content(GAMMA)  # a frozen clock at three Nodes
     for axis_level in (board.states[gravity].lines[1].now, board.states[gravity].lines[1].before):
         axis_level[19:21, 0, 0] = GAMMA - 2 * 60  # a standing tension on xx: the Link 19-20's factor 0
-    assert board.books() == {"charge": dict(share=None, quanta=None, drift=None, pace=0, frozen=3)}
+    frozen_books = dict(share=None, quanta=None, count=0, deficit=0, drift=None, pace=0, frozen=3)
+    assert board.books() == {"charge": frozen_books}
     board.step()
     cold = [line for line in lines if line["event"] == "density" and line["reading"] is None]
     assert (

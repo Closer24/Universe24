@@ -250,18 +250,18 @@ class GameBoard:
         return standing_nodes(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
 
     def books(self) -> dict[str, dict[str, int | None]]:
-        """The books per family of quanta, a GameBoard diagnostic (`reports.book`): its share summed over the GameBoard in the current's units and in quanta over its wall W_c, the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), the three None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
+        """The books per family of quanta, a GameBoard diagnostic (`reports.book`): its share summed over the GameBoard in the current's units and in quanta over its wall W_c, its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `meeting.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
         found: dict[str, dict[str, int | None]] = {}
         for index in self.order:
-            family, gamma = self.families[index], self.world.node_clock
+            family, gamma, credit = self.families[index], self.world.node_clock, self.credit
             wall = count_wall(family, self.world.quantum_action)
             (total, cold), laid = self.total_share(index), self.laid[index]
-            quanta = drift = None
+            quanta, drift, deficit = None, None, credit.deficits.get(index, 0)
             if total is not None:
                 quanta = int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
                 drift = None if laid is None else total - laid
             pace = node.least_pace(index, self.families, self.states, gamma, self.wrap, self.unit)
-            found[family.name] = book(total, quanta, drift, pace, cold)
+            found[family.name] = book(total, quanta, credit.counts[index], deficit, drift, pace, cold)
         return found
 
     def stepped(self, index: int, direction: int) -> tuple[list[node.Record], list[node.Booking]]:

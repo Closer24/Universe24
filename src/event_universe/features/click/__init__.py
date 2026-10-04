@@ -1,14 +1,14 @@
-"""The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept; the owner's word, the click the meeting of two quanta at one Node, the write their exchange there): the NodeReaders' acts outside Rule3, taken by the engine's loop at the NodeReaders' reports from outside the Node, as the lay and the receding face are; the Node knows nothing of them and no family of clicks exists. The draw: the draw's generator, declared in the world file with its seed, x <- (multiplier x + increment) mod modulus by the division act, and one index among integer weights, the first whose cumulative weight exceeds x mod total (the lower index on a tie); the run is deterministic per seed. The hole: the arriving record's levels at the one Node the credited quantum entered through set to 0, every line of the record there at the state of a Node with no level, exactly as the receding face removes a share (the advisor's second hand: for a spread record the form is quadratic, and subtracting one quantum's levels where less than a quantum stands would add form instead of removing it), which spreads by Rule3 alone as an event (no front is sent: a family has one level field, and an act ending a record's shares on arrival would end every other quantum's wave it reached); the record's count, not the levels, goes down by one. The lay of a record at one Node: the levels of `count` quanta of a pair standing at one Node at the pair's own rotation, the amplitude A from the count's measure, A^2 = count T den^2 div (2 (den^2 - num^2)) so that the share 6 den A^2 sin^2 omega reads the count (the count is the record's share), and for the massless pair the two levels alike, A^2 = count T div 2; a direction taken from the levels of the part the quantum leaves, so the phase passes with the quantum (the mathematician's hand, the arriving quantum's phase 0 on a real line of light); the level before the level now turned by the rest rotation, cos omega = num / den, in the record's own sense; the remainder at the lay's origin, the half wall. The face (the mathematician's hand, the advisor's second, two hands; the owner's word, the node_reader operates Rule3 on the families): the giver's write is no assignment but one value presented at one Port of the Node for two intervals, the least arrival that lifts Rule3's numerator at the Node into the target's window, arr_face = ceiling((w a* - SUM over the other Ports of R_j arr_j - S a_now + w a_before - r) / R_face) with the target a* = 0, so that Rule3 itself writes the level 0 and its own remainder, below one read coefficient; the second interval's face makes the new now 0 and the new before the 0 of the first, the record's lines at (0, 0) from then where every neighbour stands at 0, and the hole spreading by Rule3 alone elsewhere; the same value presented on the way back, Rule3's inverse crosses the click bit for bit, the Node knowing neither (the faces the books' log, `Face`). The hole of a dense record (the mathematician's hand with the advisor's second, two hands; ALGEBRA.md, the hole of a dense record): the taking's hole removes one quantum's share at the Node and not the Node's whole level: a face writes x in place of the level v Rule3 would write, the leaving level b (the pair's before at that interval) standing, and the record's form changes by w (x - v)(x - b) exactly (the booking identity's face term), so one write removes at most w (v - b)^2 / 4, at the midpoint; the first face writes the root nearest v of w (x - v)(x - b) = -W_rec where it is real (one quantum leaves at this face within Rule3's floors), else the midpoint, the most one write can remove, and records exactly what left; the second face removes the rest the same way, and the shortfall past the two faces stands by name (`Hole`, `rest_of`; the mathematician's hand with the advisor's seconds). The hole to 0, both levels to 0, where the record's booked share at the Node, O + C / 2 (the form's density the credit reads; O = w (a^2 + b^2) - S a b the terms on the Node's two levels, C = -a SUM_j R_j b_j - b SUM_j R_j a_j its Link terms with the six neighbours), is at most W_rec, a record of at most one quantum at the Node, the front erasing what spread beyond it (the mathematician's hand); the stake O + C, what leaves the form if the two levels go to 0, decides nothing: a near-uniform massless record has a negative stake at every Node (the uniform mode carries no form while each Node's own terms are positive), so the hole to 0 at s <= W_rec added 94 quanta of form at the ion's drive and is withdrawn: there the two midpoints remove 0.396 and 0.410 of the quantum and the record keeps 0.19 of its form while its count falls by one, the levels moving toward the leaving level, a finding by name (a one-Node take from a massless record whose wave is long against the Link cannot remove its quantum's form); at the Zeno n = 2 drive the first face's root is real and 0.9985 of the quantum leaves there (under the remainder born at the half wall). The count goes down by one as before; the front is unchanged, erasing only a record at count 0; the inverse presents the kept value whatever the target."""
+"""The click written on the GameBoard (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision: after a click the paths are cancelled on the GameBoard, not in the clicks' books, Rule3 kept; the owner's word, the click the meeting of two quanta at one Node, the write their exchange there): the NodeReaders' acts outside Rule3, taken by the engine's loop at the NodeReaders' reports from outside the Node, as the lay and the receding face are; the Node knows nothing of them and no family of clicks exists. The draw: the draw's generator, declared in the world file with its seed, x <- (multiplier x + increment) mod modulus by the division act, and one index among integer weights, the first whose cumulative weight exceeds x mod total (the lower index on a tie); the run is deterministic per seed. The hole: the arriving record's levels at the one Node the credited quantum entered through set to 0, every line of the record there at the state of a Node with no level, exactly as the receding face removes a share (the advisor's second hand: for a spread record the form is quadratic, and subtracting one quantum's levels where less than a quantum stands would add form instead of removing it), which spreads by Rule3 alone as an event (no front is sent: a family has one level field, and an act ending a record's shares on arrival would end every other quantum's wave it reached); the record's count, not the levels, goes down by one. The lay of a record at one Node: the levels of `count` quanta of a pair standing at one Node at the pair's own rotation, the amplitude A from the count's measure, A^2 = count T den^2 div (2 (den^2 - num^2)) so that the share 6 den A^2 sin^2 omega reads the count (the count is the record's share), and for the massless pair the two levels alike, A^2 = count T div 2; a direction taken from the levels of the part the quantum leaves, so the phase passes with the quantum (the mathematician's hand, the arriving quantum's phase 0 on a real line of light); the level before the level now turned by the rest rotation, cos omega = num / den, in the record's own sense; the remainder at the lay's origin, the half wall. The face (the mathematician's hand, the advisor's second, two hands; the owner's word, the node_reader operates Rule3 on the families): the giver's write is no assignment but one value presented at one Port of the Node for two intervals, the least arrival that lifts Rule3's numerator at the Node into the target's window, arr_face = ceiling((w a* - SUM over the other Ports of R_j arr_j - S a_now + w a_before - r) / R_face) with the target a* = 0, so that Rule3 itself writes the level 0 and its own remainder, below one read coefficient; the second interval's face makes the new now 0 and the new before the 0 of the first, the record's lines at (0, 0) from then where every neighbour stands at 0, and the hole spreading by Rule3 alone elsewhere; the same value presented on the way back, Rule3's inverse crosses the click bit for bit, the Node knowing neither (the faces the books' log, `Face`). The undepleted beam (the two hands' line, the owner's word for the simple solution): a record of many quanta per Node is a beam, and the taking of one of its quanta is read in the books and not written on the board, exact as the count per Node grows, so where the record's booked share at the Node, the share the credit reads there (`share.share`, the conserved form's density at the Node over 2 p_i^2 G^2), is above its own quantum W_rec, no face is booked and no front begins, the record's levels stand, its count in the books goes down by one and the board's share then exceeds the books' count by the quanta taken, the deficit, a tally per family printed in the books' line by name (`GameBoard.books`); the hole to 0, both levels to 0, stands where the booked share at the Node is at most W_rec, the record there being local and whole, the front erasing what spread beyond it where the count reaches 0 (`meeting.faced`); the count goes down by one either way, the front erases only a record at count 0, and the inverse presents the kept value whatever the target."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
 
 from event_universe.core.ports import AXES, PORTS, SIDES
-from event_universe.core.rule3 import NO_READ, division_fixed_point, division_forward, form_term, rule3
+from event_universe.core.rule3 import NO_READ, division_fixed_point, division_forward, rule3
 
 SCALE_OF = 2  # the giving's reference scale, the count's wall times itself: its rounding below one level
 
@@ -31,18 +31,8 @@ def drawn(
 
 
 @dataclass
-class Hole:
-    """The hole of one line at one Node, shared by its two faces: the record's own quantum W_rec (`credit.Books.units`) in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (`meeting.faced`), the factor the first face sets from the Node's booked share at its interval (None until then; (0, 1) for the hole to 0 where the booked share O + C / 2 is at most W_rec, (1, 1) for the identity's faces otherwise), the form the first face removed, exactly, its face term (x - before) R_face (value - arrival) negated (tests/laws.py, the booking identity), so that the second face removes the rest, and the two faces' kicks, each R_face (value - arrival), the face's change of the record's velocity invariant w (SUM now - SUM before) + SUM r, exact (the restoring front reads the hole's content from them, `front.content_of`)."""
-
-    unit: int
-    factor: tuple[int, int] | None = None
-    removed: int = 0
-    kicks: list[int] = field(default_factory=list)
-
-
-@dataclass
 class Face:
-    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Port preferred (the first in Port order whose read is not 0 at the step is taken and kept), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, the hole it belongs to (`Hole`, None for the hole to 0 whatever the share, the faces rebuilt from the lines), whether this is the second of the hole's two faces, the one that removes the rest of the quantum, and the front's taper (`fraction`, (p, q): the target the fraction p / q of Rule3's own level by the division act on its size, toward 0, so that a level of size 1 falls to 0 at any fraction below 1 and no leading edge of ones rides the band; None the target 0; src/event_universe/front.py)."""
+    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Port preferred (the first in Port order whose read is not 0 at the step is taken and kept), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, and the front's taper (`fraction`, (p, q): the target the fraction p / q of Rule3's own level by the division act on its size, toward 0, so that a level of size 1 falls to 0 at any fraction below 1 and no leading edge of ones rides the band; None the target 0, the hole to 0; src/event_universe/front.py)."""
 
     family: int
     line: int
@@ -50,27 +40,12 @@ class Face:
     port: int
     tick: int
     value: int | None = None
-    hole: Hole | None = None
-    scaled: bool = False
     fraction: tuple[int, int] | None = None
 
 
 def face_value(total: int, read: int) -> int:
     """The least arrival that lifts Rule3's numerator into the target's window [0, R_face), ceiling(-total / R_face), the division act's floor negated, with `total` the numerator without the face Port's term less w a* (a* the target, 0 for the hole to 0): R_face x value + total in [0, R_face), within [0, w) since R_face <= w, so the level next is a* and the remainder Rule3's own."""
     return -int(division_forward(total, read, 0)[0])
-
-
-def rest_of(hole: Hole, numerator: int, wall_term: int, wall: int) -> int:
-    """A face's target, either face: the level x that removes the rest of the quantum exactly (the mathematician's hand with the booking identity's face term): writing x in place of the level v = numerator div w Rule3 would write from the pair as it stands changes the record's form by (x - before) (w x - numerator) within Rule3's floors, so x is the root of w x^2 - (numerator + w before) x + before x numerator + R = 0 with R = W_rec less what the first face removed (W_rec itself at the first face), x = ((numerator + w before) +/- isqrt((numerator - w before)^2 - 2 x 2 x w R)) div (2 w), the root toward v (the smaller change, the sense standing); where R is at most 0 nothing more leaves, x = v; where no real root removes R (the pair too small), the level midway, (numerator + w before) div (2 w), removes the most one write can, w (v - before)^2 / 4, and the shortfall stands by name."""
-    rest = hole.unit - hole.removed
-    if rest <= 0:
-        return int(division_forward(numerator, wall, 0)[0])
-    middle, gap = numerator + wall_term, numerator - wall_term  # `wall_term` the step's own w x before
-    square = gap * gap - 2 * wall * 2 * rest  # the quadratic formula's b^2 - 4 a c, the 4 as 2 x 2
-    if square < 0:
-        return int(division_forward(middle, 2 * wall, 0)[0])
-    root = division_fixed_point(square)
-    return int(division_forward(middle + (root if gap >= 0 else -root), 2 * wall, 0)[0])
 
 
 def presented(
@@ -84,9 +59,8 @@ def presented(
     faces: list[Face],
     offset: tuple[int, int, int],
     direction: int,
-    befores: tuple[Any, ...],
 ) -> tuple[Any, ...]:
-    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed from the arrivals, the Node's two levels and its remainder as the step reads them (`face_value` at the target, 0, the taper's fraction of Rule3's own level or the identity's root, the first Port from the preferred one whose read is not 0 at the Node, kept in the face; a Node with every read 0 refused by name), the first face reading the Node's booked share from its own form at its interval, its two levels, the six arrivals and the neighbours' levels before through the same Ports, `befores`, the hole to 0 where it is at most W_rec and the identity's root otherwise, the second face removing the rest (`rest_of`), a face without a hole the hole to 0, backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
+    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed from the arrivals, the Node's two levels and its remainder as the step reads them (`face_value` at the target, 0, the hole to 0, or the taper's fraction of Rule3's own level, the first Port from the preferred one whose read is not 0 at the Node, kept in the face; a Node with every read 0 refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
     found, copied = list(arrived), set()
     for face in faces:
         at = (face.at[0] + offset[0], face.at[1] + offset[1], face.at[2] + offset[2])
@@ -102,48 +76,20 @@ def presented(
             coefficient = int(
                 np.asarray(self_coefficient)[at] if np.ndim(self_coefficient) else self_coefficient
             )
-            level, before, self_term = int(now[at]), int(other[at]), coefficient * int(now[at])
-            wall_term = int(wall) * before  # the step's own term on the level before
-            rest = -wall_term + int(carry[at])
+            self_term = coefficient * int(now[at])
+            rest = -int(wall) * int(other[at]) + int(carry[at])
             rest += sum(here[p] * int(found[p][at]) for p in range(len(here)) if p != face.port)
-            own = here[face.port] * int(found[face.port][at])  # the face Port's arrival untouched
-            if face.hole is not None and face.scaled:  # the second face: the rest of the quantum
-                target = (  # the hole to 0 (the booked share at most one quantum): the level before 0 as well
-                    0
-                    if face.hole.factor == (0, 1)
-                    else rest_of(face.hole, self_term + rest + own, wall_term, int(wall))
-                )
-            elif face.hole is not None:  # the first face: the Node's booked share decides the hole to 0
-                arrivals = sum(here[p] * int(found[p][at]) for p in range(len(here)))
-                arrived_before = sum(here[p] * int(befores[p][at]) for p in range(len(here)))
-                form = form_term(coefficient, int(wall), level, before)  # the Node's own terms
-                links = -(level * arrived_before + before * arrivals)
-                # the booked share at the Node, O + C / 2 (the form's density the credit reads), at most the
-                # record's quantum: the hole to 0, the front erasing what spreads beyond the Node
-                if 2 * form + links <= 2 * face.hole.unit:
-                    face.hole.factor = (0, 1)
-                    target = 0
-                else:  # the first face by the booking identity, as the second: one quantum or the most
-                    face.hole.factor = (1, 1)
-                    target = rest_of(face.hole, self_term + rest + own, wall_term, int(wall))
-            elif (
+            target = 0  # the hole to 0, every face's target but the taper's
+            if (
                 face.fraction is not None
             ):  # the front's taper: the fraction of Rule3's own level, toward 0
+                own = here[face.port] * int(found[face.port][at])  # the face Port's arrival untouched
                 own_level = int(division_forward(self_term + rest + own, int(wall), 0)[0])
                 scaled = int(division_forward(face.fraction[0] * abs(own_level), face.fraction[1], 0)[0])
                 target = (
                     scaled if own_level >= 0 else -scaled
                 )  # a level of size 1 goes to 0 at any fraction
-            else:  # a face without a hole: the hole to 0
-                target = 0
             face.value = face_value(self_term + rest - int(wall) * target, here[face.port])
-            if (
-                face.hole is not None
-            ):  # the face's kick, R_face (value - arrival): its change of the record's velocity invariant
-                kick = here[face.port] * (face.value - int(found[face.port][at]))
-                face.hole.kicks.append(kick)
-                if not face.scaled:  # what the first face removed, exactly
-                    face.hole.removed = -(target - before) * kick
         if face.port not in copied:
             found[face.port] = np.array(found[face.port], copy=True)
             copied.add(face.port)

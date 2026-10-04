@@ -26,7 +26,10 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
         board.step()
     clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEREADER"]
     takings, quanta = sum(1 for line in clicks if line["taken"]), board.books()["pulse"]["quanta"]
-    assert takings == sum(int(line["count"]) for line in clicks)  # the Zeno record takes and never gives
+    givings = sum(
+        1 for line in clicks if line["given"]
+    )  # the record takes climbing, gives back descending
+    assert takings + givings == sum(int(line["count"]) for line in clicks)
     trials = gate.trials_reading(folder / world, folder / "design.json", None)
     ends = trials["ends_in_part"]["body 0"].get("e", [0])[0]
     rows = [

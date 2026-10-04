@@ -74,7 +74,15 @@ OUTPUT = (
 )  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
-BOOKS = ("share", "quanta", "drift", "pace", "frozen")  # the keys of a family's books, a diagnostic
+BOOKS = (
+    "share",
+    "quanta",
+    "count",
+    "deficit",
+    "drift",
+    "pace",
+    "frozen",
+)  # a family's books, a diagnostic
 
 
 @dataclass(frozen=True)
@@ -148,7 +156,7 @@ def conversion(
 def lay(
     tick: int, family: str, line: int, node: list[int], before: list[int], after: list[int]
 ) -> dict[str, object]:
-    """The lay line, one line of a record laid at one Node by an act from outside the Node (src/event_universe/meeting.py, `written`: the taking's and the giving's lays of the record's parts, the given quantum's lay on light's record, the null window's re-lay, the restoring front's shares (`front.restored`); the mathematician's hand, the lay's part crossed from its line), labelled GAMEBOARD, a diagnostic for the host's tool and no result: the interval, the record's family, no node_reader, the line's number among the family's lines, its levels [now, before, remainder] at the Node before the lay and after it, and the one Node under `node`; written where the lay changed one of the three, so that `tools/back_in_time.py` sets the line back before its step back and Rule3's inverse crosses the lay."""
+    """The lay line, one line of a record laid at one Node by an act from outside the Node (src/event_universe/meeting.py, `written`: the taking's and the giving's lays of the record's parts, the given quantum's lay on light's record, the null window's re-lay; the mathematician's hand, the lay's part crossed from its line), labelled GAMEBOARD, a diagnostic for the host's tool and no result: the interval, the record's family, no node_reader, the line's number among the family's lines, its levels [now, before, remainder] at the Node before the lay and after it, and the one Node under `node`; written where the lay changed one of the three, so that `tools/back_in_time.py` sets the line back before its step back and Rule3's inverse crosses the lay."""
     found: dict[str, object] = dict(zip(REPORT_KEYS, (LAY, DIAGNOSTIC, tick, family, None), strict=True))
     written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     found.update(zip(LAY_KEYS, (line, before, after, written), strict=True))
@@ -185,10 +193,16 @@ def level_sums(nodes: np.ndarray, lines: Sequence[Record]) -> list[list[int]]:
 
 
 def book(
-    share: int | None, quanta: int | None, drift: int | None, pace: int, frozen: int
+    share: int | None,
+    quanta: int | None,
+    count: int,
+    deficit: int,
+    drift: int | None,
+    pace: int,
+    frozen: int,
 ) -> dict[str, int | None]:
-    """A family's books, a GameBoard diagnostic: its share summed over the GameBoard in the current's units, the same in quanta over W_c, the share's drift from the one the world started with (the three None where a Node is frozen: the share is not read there and no number is invented), the least Node pace Gamma - 2 c_i of the final state and the count of the frozen Nodes."""
-    return dict(zip(BOOKS, (share, quanta, drift, pace, frozen), strict=True))
+    """A family's books, a GameBoard diagnostic: its share summed over the GameBoard in the current's units, the same in quanta over W_c, its count in the credit's books, its deficit, the quanta taken from the record and written nowhere (the undepleted beam, `meeting.faced`, the takings' count times one quantum: the board's share in quanta stands above the books' count by it, the three compared at every reading), the share's drift from the one the world started with (share, quanta and drift None where a Node is frozen: the share is not read there and no number is invented), the least Node pace Gamma - 2 c_i of the final state and the count of the frozen Nodes."""
+    return dict(zip(BOOKS, (share, quanta, count, deficit, drift, pace, frozen), strict=True))
 
 
 def end(interval: int, axis: str, side: str, largest: int) -> dict[str, object]:
