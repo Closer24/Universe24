@@ -209,6 +209,33 @@ def turned_before(
     return found
 
 
+def lines_as_read(
+    index: int,
+    families: Families,
+    states: States,
+    gamma: int,
+    record: int,
+    lines: Sequence[Record],
+) -> list[Record]:
+    """The lines of one record of a family of quanta as the step reads them, the level pair its share and its currents are read from (ALGEBRA.md, The share's change is the currents: under the rotation the share reads the level pair as the step reads it; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker; two hands): `lines`, the record's lines as they stand, where the family's record is not turned (`derived.turns`), and each plane's level before turned by the holder's angle of the previous interval, u = e^(-i theta_(t-1)) z_before, where it is (`turned_before`, the time Link's phase `plane.step_plane` steps against), the share's squares read from the plain levels beside it (`share.share`)."""
+    if not turns(families, index):
+        return list(lines)
+    return turned_before(index, families, states, gamma, 1, record)
+
+
+def record_as_read(
+    index: int, families: Families, states: States, gamma: int, lines: Sequence[Record]
+) -> list[Record]:
+    """A family's record as the step reads it, the lines its currents are read from (`GameBoard.record`, `GameBoard.currents`): `lines`, the record as it stands, where the family's record is not turned, light's and every plain family's; every record's lines with the level before turned by the previous interval's angle where it is (`lines_as_read` per record, the records in their order)."""
+    if not turns(families, index):
+        return list(lines)
+    return [
+        line
+        for record in range(families[index].records)
+        for line in turned_before(index, families, states, gamma, 1, record)
+    ]
+
+
 def turned_back(index: int, families: Families, states: States, gamma: int) -> list[Record]:
     """Every record of a turned family with its level before turned back by its own angle, the inverse's last stage (`turned_before` at -1 per record)."""
     return [

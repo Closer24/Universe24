@@ -40,6 +40,10 @@ their statuses.
 - `general_formula/main.pdf`: the compiled paper at the same commit. The paper's pins:
   the implementation at the frozen commit 7756546d and the three documents (the law,
   the engine's document, the decisions) at ed1a3b5d, both of 2026-10-04.
+- `claims.md`: the paper's claims table, one row per marked sentence of the paper (its place,
+  marks, fence, kind, the source the sentence gives, the breaker that could break it and its state),
+  built by `general_formula/claims_table.py` at every print; `claims_breakers.json` holds the
+  breakers written by hand, keyed by the sentence's opening words (the method of 2026-10-04, #1538).
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
   its proof, Derivations S.1 to S.63, numbered as added, each naming its section,
@@ -124,7 +128,8 @@ their statuses.
   from the paper's commit on the folder's files as they stand at the pinned commit
   7756546d (a worktree of it); the script lays the before level as the generator does at
   that commit (`tools/pixel_mode.advanced_real_part`), so its lay is the mode file's to the
-  rounding and its printed output is the line at the engine's own lay. Its
+  rounding of the quadrature before the transform (0.4 percent of the amplitude in the
+  before level) and its printed output is the line at the engine's own lay. Its
   printed output stands beside it as `two_slits_real_line.txt`, every
   number with its definition: the total over the whole passage, the twelve
   regions' quanta and shares, the visibility, the wings and the arrival (in the

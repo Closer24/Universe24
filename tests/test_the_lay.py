@@ -133,7 +133,7 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
         monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
         path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
     elif door == "the source in time":
-        path, name, intervals = EVENTS / "resonance" / "resonant.json", "pulse", 92
+        path, name, intervals = EVENTS / "resonance" / "resonant.json", "pulse", 112  # the giving at 61
     else:
         path, name, intervals = packet_world(tmp_path, TOOL), "pulse", 20
     board = GameBoard(load_world(path), (lines := []).append)
