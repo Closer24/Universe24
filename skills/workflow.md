@@ -6,7 +6,10 @@ and the experimenter, each with its issue, and the owner decides (the owner,
 records his decisions and runs the workers; its card is
 [the Boss's card](boss-orchestrator/SKILL.md). The advisor answers from the
 current documents, judges every line by its status, computes the blind numbers
-and writes nothing; its card is [the advisor's card](advisor/SKILL.md). The
+and writes nothing to the law, the engine, the paper or HIGHLIGHTS.md; at the
+owner's word of 2026-10-04 it builds tests and tools on a branch from `main` for
+the Boss's HANDED BY pull request, nothing of src/event_universe/; its card is
+[the advisor's card](advisor/SKILL.md). The
 mathematician is the second hand on every derivation and at every sha (#1836).
 The reviewer reads the paper, the supplement and the law whole and keeps the
 ledger (#1793). The writer holds the paper (#1538). The experimenter runs the
@@ -358,5 +361,8 @@ The owner's standing authorization covers the Boss's commits, pushes, pull
 requests and merges of requested work on the branches of its tasks; it is not
 permission for unrelated changes, force pushes, a push to `main`, a bypassed gate
 or a message to another person. The advisor reads, computes and answers; it
-writes nothing to the repository and grants no permission. A skill supplies no
-authorization that the owner's word does not.
+writes nothing to the law, the engine, the paper or HIGHLIGHTS.md, opens no pull
+request and grants no permission; at the owner's word of 2026-10-04 its tests
+and tools go on a branch from `main` for the Boss's HANDED BY pull request,
+nothing of src/event_universe/. A skill supplies no authorization that the
+owner's word does not.
