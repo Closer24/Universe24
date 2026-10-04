@@ -1,12 +1,14 @@
 """The derivations' gate (the owner's order of 2026-10-04, 04:20 UTC: every derived mark's script from Rule3 and nothing of the simulator; the law's sentence beside the method of derivation, step 6, "No line of the law is derived from the engine", tested here by name): every module of tools/derivations/ imports nothing of event_universe or src/ and names no run's file, a hard rule; the paper-side scripts of paper/general_formula/ that lean on the engine or read a run are a ratchet that only falls;
 the modules that do not root in tools/derivations/rule3.py are a ratchet that only falls, so a new module imports rule3; rule3.py's own checks, a plane wave at the derived omega satisfying the line to rounding and the conserved form exact over 50 intervals on a periodic chain of 24 Nodes with integer levels, the remainders' walk the law's term;
-and the inventory tools/derivations/paper_marks.json loads with every field, its scriptless marks a ratchet that only falls."""
+and the inventory tools/derivations/paper_marks.json loads with every field, its scriptless marks a ratchet that only falls, and every mark it names scripted is its script's output to the digits printed."""
 
 import ast
+import importlib
 import importlib.util
 import json
 import math
 import random
+import sys
 from fractions import Fraction
 from pathlib import Path
 
@@ -17,12 +19,13 @@ INVENTORY = DERIVATIONS / "paper_marks.json"
 # the engine's package, its folder and a tool that imports it; a run's files
 ENGINE = ("event_universe", "src", "click_counts")
 RUN_FILE = ("runs/", ".output.json", ".look.json")
-# the ten modules of pull request #1854 and after, written before rule3.py
-MODULES_WITHOUT_RULE3_ROOT = 10
+# the modules of pull request #1854 and after, written before rule3.py; cosmology and nuclear rooted since
+MODULES_WITHOUT_RULE3_ROOT = 8
 # at origin/paper d75c42a9: two_slits_real_line.py imports the engine, two_slits_frames.py reads a run's look
 PAPER_SCRIPTS_LEANING_ON_THE_ENGINE = 2
-# the derived and computed marks of main.tex naming no script at d75c42a9
-SCRIPTLESS_MARKS = 123
+# the derived and computed marks of main.tex naming no script at d75c42a9 (123) whose inventory entry still has no
+# script here, the status "scriptless"; a ceiling the count may only fall below
+SCRIPTLESS_MARKS = 91
 FIELDS = (
     "line",
     "mark",
@@ -35,6 +38,9 @@ FIELDS = (
     "status",
 )
 COMPUTED_FIELDS = ("reader", "derived_counterpart", "bound")
+# scriptless: no script here yet; scripted: its script's function returns the printed numbers; differs: it does not, a finding for the hands
+STATUSES = ("scriptless", "scripted", "differs")
+SCRIPTED_FIELDS = ("script", "function", "expected", "digits")
 
 
 def imported(tree: ast.Module) -> set[str]:
@@ -141,10 +147,57 @@ def test_the_inventory_loads_and_its_scriptless_marks_only_fall():
     assert len(header["paper_head"]) == 40 and header["main_tex"] == "paper/general_formula/main.tex"
     for entry in marks:
         assert all(field in entry for field in FIELDS), entry
-        assert entry["mark"] in ("derived", "computed") and entry["status"] == "scriptless"
+        assert entry["mark"] in ("derived", "computed") and entry["status"] in STATUSES
+        if entry["status"] == "scripted":
+            assert all(field in entry for field in SCRIPTED_FIELDS), entry["line"]
+        if entry["status"] == "differs":
+            assert all(field in entry for field in SCRIPTED_FIELDS[:2] + ("computed", "reason")), entry[
+                "line"
+            ]
         assert entry["excerpt"].isascii() and isinstance(entry["numbers"], list)
         if entry["mark"] == "computed":
             assert all(field in entry for field in COMPUTED_FIELDS), entry["line"]
         if entry["existing_script"] is not None:
             assert entry["existing_script"].startswith(("paper/general_formula/", "tools/derivations/"))
-    assert header["counts"]["scriptless"] == len(marks) <= SCRIPTLESS_MARKS
+    scriptless = sum(entry["status"] == "scriptless" for entry in marks)
+    assert header["counts"]["scriptless"] == scriptless <= SCRIPTLESS_MARKS
+
+
+def agrees(value: object, printed: object, digits: int) -> bool:
+    """A function's number against a printed one: a "num/den" string is an exact rational, equal as Fractions; an int is equal as it stands; a float is equal rounded to `digits` decimal places (a negative count rounds to tens and hundreds, a large one reaches 10^-29)."""
+    if isinstance(printed, str):
+        return Fraction(value) == Fraction(printed)  # type: ignore[arg-type]
+    if isinstance(printed, int):
+        return value == printed
+    return round(float(value), digits) == round(float(printed), digits)  # type: ignore[arg-type]
+
+
+def test_every_scripted_mark_is_its_scripts_output():
+    """(e) Every entry of the inventory with the status "scripted" names its script under tools/derivations/, its function, the printed numbers and their digits; the function's output (a scalar or a list) carries the printed numbers in order, each a "num/den" string equal as a Fraction, an int equal as it stands or a float equal to `digits` decimal places (one count for every number or one count per number), so a scripted mark of the paper is its script's and no number of the paper is forced; a "differs" entry is not compared, it carries `computed` and `reason` for the hands."""
+    document = json.loads(INVENTORY.read_text(encoding="utf-8"))
+    scripted = [entry for entry in document["marks"] if entry["status"] == "scripted"]
+    assert scripted, "the inventory names scripted marks"
+    if str(DERIVATIONS) not in sys.path:
+        sys.path.insert(
+            0, str(DERIVATIONS)
+        )  # the modules import rule3 by name, as they run from their folder
+    modules: dict[str, object] = {}
+    for entry in scripted:
+        name = Path(entry["script"]).stem
+        assert (
+            entry["script"] == f"tools/derivations/{name}.py" and (DERIVATIONS / f"{name}.py").exists()
+        ), entry["line"]
+        module = modules.setdefault(name, importlib.import_module(name))
+        result = getattr(module, entry["function"])()
+        values = list(result) if isinstance(result, list | tuple) else [result]
+        expected = entry["expected"]
+        digits = (
+            entry["digits"] if isinstance(entry["digits"], list) else [entry["digits"]] * len(expected)
+        )
+        assert len(digits) == len(expected) and expected, entry["line"]
+        position = 0
+        for printed, count in zip(expected, digits, strict=True):
+            while position < len(values) and not agrees(values[position], printed, count):
+                position += 1
+            assert position < len(values), (entry["line"], entry["function"], printed, values)
+            position += 1
