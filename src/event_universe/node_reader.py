@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
@@ -12,23 +13,25 @@ from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features.click import drawn, spread, squared
-from event_universe.loader.derived import count_wall, row_of
+from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
 from event_universe.loader.node_reader_declaration import NodeReaderDeclaration
 from event_universe.loader.world import BodyRow
-from event_universe.reports import BODY, credit, entering, front
+from event_universe.reports import BODY, credit, front, weighted
 from event_universe.resonance import Reference, references_of, scale_of
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
 
-Currents = dict[int, Any]
+Weighed = dict[
+    int, list[tuple[tuple[np.ndarray, ...], node.Factors]]
+]  # per family of quanta, per record, its current through each Port and the factor of each of its six Links
 
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, and `intake` per arriving family the window's inflow through each Node's front Ports, the taking's draw weights."""
+    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, and `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the taking's draw weights."""
 
     number: int
     index: int
@@ -109,7 +112,7 @@ def arriving(board: GameBoard, books: NodeBooks, drive: int, direction: int = 1)
 
 
 def booked_inflow(board: GameBoard, books: NodeBooks, drive: int, came: Any) -> None:
-    """The reader's book of a window's inflows per Node (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands, one rule for the one kind): the arriving family's current through each of the reader's Nodes' front Ports this interval (`reports.entering`, the same read as the credit's `booked`) added to the window's sum at that Node, the weights the taking's Node is drawn by at the close, the Node the quantum entered through; emptied at the window's close (`jumped`)."""
+    """The reader's book of a window's inflows per Node (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands, one rule for the one kind): the arriving family's conserved form's own current through each of the reader's Nodes' front Ports this interval, the plain current times the Link's factor Q_ij in the unit G^2 (`reports.weighted`, the same read as the credit's `booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking) added to the window's sum at that Node, the weights the taking's Node is drawn by at the close, over G^2 once (`drawn_weights`), the Node the quantum entered through; emptied at the window's close (`jumped`)."""
     book = books.intake.setdefault(drive, [0] * len(books.nodes))
     for index, at in enumerate(books.nodes):
         book[index] += int(came[tuple(np.add(at, board.offset))])
@@ -181,10 +184,16 @@ def drawn_node(board: GameBoard, books: NodeBooks, weights: list[int]) -> Node:
     return books.nodes[pick]
 
 
+def drawn_weights(board: GameBoard, inflows: Iterable[int]) -> list[int]:
+    """The draw's weights from the books' inflows booked in the unit G^2 (`booked_inflow`, `credit.booked`): each floored at 0 and divided once at the close by G^2 by the division act, the current's units the generator draws in (features/click, `drawn`: the index by the state mod the weights' total, so the weights' scale is part of the realisation), the plain inflows bit for bit where no tension stood and the draw's realisation with them (ALGEBRA.md #the-click-is-the-meeting, the credit's booking: every reading at the vacuum's paces unchanged bit for bit), the law's ratios under tension; one division at the close and none per Link, the count's own division by W_rec G^2 beside it (`credit.quanta_through`)."""
+    square = board.unit * board.unit
+    return [int(division_forward(max(int(inflow), 0), square, 0)[0]) for inflow in inflows]
+
+
 def hole_node(board: GameBoard, books: NodeBooks, drive: int) -> Node:
-    """The taking's Node: drawn by the arriving record's inflow booked through each of the reader's Nodes' front Ports over the window (`booked_inflow`, floored at 0), the Node the quantum entered through, as the credit draws it for a reader of the field's record, one rule for the one kind (the mathematician's hand, the advisor's hand, two hands); the lay's weights where nothing entered; the hole's two faces written there; drawn after the outcome, for the realised write alone."""
+    """The taking's Node: drawn by the arriving record's inflow booked through each of the reader's Nodes' front Ports over the window (`booked_inflow`, floored at 0 and over G^2 once, `drawn_weights`), the Node the quantum entered through, as the credit draws it for a reader of the field's record, one rule for the one kind (the mathematician's hand, the advisor's hand, two hands); the lay's weights where nothing entered; the hole's two faces written there; drawn after the outcome, for the realised write alone."""
     booked = books.intake.get(drive, [0] * len(books.nodes))
-    return drawn_node(board, books, [max(int(weight), 0) for weight in booked])
+    return drawn_node(board, books, drawn_weights(board, booked))
 
 
 def reported(
@@ -222,12 +231,28 @@ def reported(
     board.output(line)
 
 
-def booked_inflows(board: GameBoard, currents: Currents, wrap: Wrap, own: np.ndarray) -> None:
-    """Every reader's own book of this interval: for each family its transitions name among `currents`, the inflow entering through its Nodes' front Ports (`reports.front` on the region, `entering`), added to its book per Node (`booked_inflow`); the credit's rule for a reader with Nodes alone, here for a reader with a record of its own."""
+def weighed_currents(board: GameBoard) -> Weighed:
+    """Every record of quanta's current through each Port at every Node (`node.currents_of`, as `GameBoard.currents` reads it, per record) with the factor Q_ij of each of its six Links in the unit G^2 (`GameBoard.read`, the record's own), both at the pair the step starts from: the pieces of the conserved form's own current, SUM over the family's records of Q_ij F_ij per Port, the one weight a NodeReader books through its front Ports (`reports.weighted`, `GameBoard.report`, `booked_inflows`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, equal to the plain current where no tension stands); the records of a charged family each with its own read, as `GameBoard.share_of` loops them."""
+    return {
+        index: [
+            (
+                node.currents_of(
+                    board.families[index].pair[0], board.lines_of(index, record), board.wrap
+                ),
+                board.read(index, 1, record)[1],
+            )
+            for record in quanta_records(board.families, index)
+        ]
+        for index in board.order
+    }
+
+
+def booked_inflows(board: GameBoard, weighed: Weighed, wrap: Wrap, own: np.ndarray) -> None:
+    """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`); the credit's rule for a reader with Nodes alone, here for a reader with a record of its own."""
     for books in board.credit.bodies:
-        drives = sorted({t.drive for t in books.declared.transitions if t.drive in currents})
+        drives = sorted({t.drive for t in books.declared.transitions if t.drive in weighed})
         if drives:
             region = board.mask(books.nodes)
             facing = front(region, wrap, region, own)
             for drive in drives:
-                booked_inflow(board, books, drive, entering(facing, currents[drive]))
+                booked_inflow(board, books, drive, weighted(facing, weighed[drive]))

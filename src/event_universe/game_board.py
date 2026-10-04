@@ -29,15 +29,14 @@ from event_universe.loader.keys import Node
 from event_universe.loader.messages import MessageRow
 from event_universe.loader.mode import Levels
 from event_universe.loader.world import BodyRow, World
-from event_universe.node_reader import booked_inflows
+from event_universe.node_reader import Weighed, booked_inflows, weighed_currents
 from event_universe.reports import NodeReader, book, click, entering, level_sums, parts, standing_nodes
 
 Output = Callable[[dict[str, object]], None]
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
 Stresses = dict[node.Sourcing, Vector]  # per record of quanta its tension on each axis
-Rulers = dict[
-    node.Sourcing, node.Rulers
-]  # per record of quanta the paces of its read, the write's rulers
+# per record of quanta the paces of its read, the write's rulers
+Rulers = dict[node.Sourcing, node.Rulers]
 
 
 class GameBoard:
@@ -64,9 +63,8 @@ class GameBoard:
             )
             for index, family in enumerate(self.families)
         ]
-        self.origins = [
-            self.half_wall(index) for index in range(len(self.families))
-        ]  # every line's remainder at birth, the half wall; the start gives each held row's time line its rest's own
+        # every line's remainder at birth, the half wall; the start gives each held row's time line its rest's own
+        self.origins = [self.half_wall(index) for index in range(len(self.families))]
         for number, (record, row) in enumerate(self.laid_rows()):
             if isinstance(row, BodyRow) and row.reader is not None:
                 meeting.laid_record(self, number, record)
@@ -274,7 +272,7 @@ class GameBoard:
         return [node.rows_total(family, lines)] if family.wronskian else lines[: family.record]
 
     def currents(self) -> Currents:
-        """Every family of quanta's current through each Port at every Node, read from its record as it stands (`node.currents_of`): before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum (ALGEBRA.md #the-count-is-the-records-share); a charged family's records' currents added, light's the current of its rows' sum."""
+        """Every family of quanta's plain current through each Port at every Node, read from its record as it stands (`node.currents_of`): before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); a charged family's records' currents added, light's the current of its rows' sum; the click line's number and every diagnostic's, the credit booking the weighted current (`node_reader.weighed_currents`)."""
         return {
             index: node.currents_of(self.families[index].pair[0], self.record(index), self.wrap)
             for index in self.order
@@ -303,7 +301,7 @@ class GameBoard:
             return
         self.tick, forms, turns = self.tick + 1, Bookings(), Bookings()
         currents, senses, stresses = self.currents(), self.sense_currents(), self.stresses()
-        rulers, begun = self.rulers(1), [state.lines for state in self.states]
+        rulers, begun, weighed = self.rulers(1), [s.lines for s in self.states], weighed_currents(self)
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
             family, state = self.families[index], self.states[index]
@@ -314,7 +312,7 @@ class GameBoard:
                 for held, gained in zip((forms, turns), booked, strict=True):
                     held.update(gained)
             state.lines = lines
-        self.report(currents, forms, begun)
+        self.report(currents, weighed, forms, begun)
         for index in self.held:
             self.hold(index, forms, turns, 1, stresses, senses, rulers)
         credit.counted_windows(self)
@@ -358,8 +356,10 @@ class GameBoard:
         found[tuple(slice(f, f + e) for f, e in zip(self.offset, self.world.shape, strict=True))] = True
         return found
 
-    def report(self, currents: Currents, forms: Bookings, begun: list[list[node.Record]]) -> None:
-        """The node_readers' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeReader): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net current into the region through the reader's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeReader, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading for the credit by the shares; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeReader's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
+    def report(
+        self, currents: Currents, weighed: Weighed, forms: Bookings, begun: list[list[node.Record]]
+    ) -> None:
+        """The node_readers' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeReader): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net plain current into the region through the reader's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeReader, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). The credit's book of a declared region, and a reader record's own (`node_reader.booked_inflows`), takes through the same front Ports the conserved form's own current, each record's current times its Link's factor Q_ij in the unit G^2 (`node_reader.weighed_currents`, `reports.weighted`, `credit.booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, the plain current times G^2 where no tension stands). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeReader's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
         meeting.faces_reported(self)
         own, union, wrap = self.declared_board(), credit.node_reader_nodes(self), self.wrap
         where = [(d, reports.region_of(d, self.body_nodes)) for d in self.node_readers]
@@ -373,7 +373,7 @@ class GameBoard:
                 if seen != 0 and self.output is not None:
                     self.output(click(self.tick, family.name, reader.name, seen))
                 if reader.declared:
-                    credit.booked(self, index, reader.name, came)
+                    credit.booked(self, index, reader.name, reports.weighted(facing, weighed[index]))
                 if family.several and reader.declared:
                     levels = level_sums(nodes, begun[index])
                     if any(any(level) for level in levels) and self.output is not None:
@@ -382,7 +382,7 @@ class GameBoard:
         for index, found in sums.items():  # the meeting through the root is several parts' record's
             if self.families[index].parts > 1:
                 credit.joined(self, index, found)
-        booked_inflows(self, currents, wrap, own)
+        booked_inflows(self, weighed, wrap, own)
         self.densities_read(forms, union)
 
     def densities_read(self, forms: Bookings, at: np.ndarray) -> None:
