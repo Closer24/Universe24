@@ -147,7 +147,7 @@ the journal.
   unspecified reference; there are 4 to 6 keywords. Met by the journal's
   version of the abstract, `abstract_journal.txt` beside the paper: the
   arXiv abstract without its opening question, light's speed sentence, the
-  cube's 48, the alpha clause and the shadow, 309 words, to be cut to 250 before submission,
+  cube's 48, the alpha clause and the shadow, 316 words, to be cut to 250 before submission,
   every formula in it the arXiv abstract's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
@@ -166,7 +166,7 @@ the journal.
   label reads "Fig." in bold. Met.
 - Artwork: vector figures with embedded fonts, lettering of 8 to 12 pt at
   the final size, lines of at least 0.3 pt, at most 119 mm wide. Not met as
-  drawn: three figures are drawn 174 mm wide and included at 0.70 to 0.75 of the
+  drawn: four figures are drawn 174 mm wide and included at 0.70 to 0.75 of the
   text width, their lettering scaled with them; the journal's typesetting resizes them.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
@@ -183,7 +183,7 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "35 pages, 7 figures, 4 tables; supplementary material of 35 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The journal's abstract file has 309 words and 1,842
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The journal's abstract file has 316 words and 1,867
   characters counted with its TeX signs, below the cap; the paper's own abstract is longer and is not the arXiv text.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
