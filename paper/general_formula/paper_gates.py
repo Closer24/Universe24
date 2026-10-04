@@ -118,8 +118,8 @@ TWINS = [
     (
         "the real line's numbers",
         [
-            ("main.tex", "$277.8$ ($278.0$ in the physical labels)"),
-            ("main.tex", "$N = 277.85$ in the engine's labels"),
+            ("main.tex", "$269.2$ ($269.3$ in the physical labels; $278.0$ at the lay before the fix)"),
+            ("main.tex", "$N = 269.18$ in the engine's labels"),
         ],
     ),
     (
