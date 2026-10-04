@@ -142,16 +142,16 @@ def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) 
 
 
 def turned_labels(board: GameBoard, books: NodeBooks) -> None:
-    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation) as W equal sub-turns with the carry (`resonance.sheared`, W the window's intervals, so the angles add as the proper intervals' did), the plane's size over the wall read once and not a turn per interval; the labels' squares are the parts' shares the window's draw reads, sin^2 of the turn, the Rabi form; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
+    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the GameBoard (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation) as W equal sub-turns with the carry (`resonance.sheared`, W the window's intervals, so the angles add as the proper intervals' did), the plane's size over the wall read once and not a turn per interval; the labels' squares are the parts' population after the window; the window's draw reads each transition's own transfer share, kept in the books (`NodeBooks.shares`): the pair as it stood before the window's turns sheared by that transition's turn alone, its entered label squared, sin^2 of the turn, the Rabi form, the record's share at the body (`took`, `probe_click`), the composed label squared itself where one transition alone feeds the part; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
     gamma, clock = board.world.node_clock, own_clock(board, books)
+    before, books.shares = list(books.labels), {}
     for transition, reference in zip(books.declared.transitions, books.references, strict=True):
-        if (
-            transition.leaves == books.part and transition.leaves != transition.enters
-        ):  # the probe's turns nothing
+        leaves, enters = transition.leaves, transition.enters
+        if leaves == books.part and leaves != enters:  # the probe's turns nothing
             turn = int(node.turned_by(window_turn(reference, transition.weight), clock, gamma))
-            u, v = books.labels[transition.leaves], books.labels[transition.enters]
-            u, v = sheared(u, v, turn, books.elapsed, gamma)
-            books.labels[transition.leaves], books.labels[transition.enters] = u, v
+            own = sheared(before[leaves], before[enters], turn, books.elapsed, gamma)
+            u, v = sheared(books.labels[leaves], books.labels[enters], turn, books.elapsed, gamma)
+            books.labels[leaves], books.labels[enters], books.shares[transition] = u, v, own[1] ** 2
         reference.in_phase, reference.quadrature = 0, 0
 
 
@@ -319,7 +319,7 @@ def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
 
 
 def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
-    """The takings drawn at the windows' end, one draw at a time per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the GameBoard (f): the credit draws once over all the NodeReaders that read one record, one quantum one click; the owner's word): the outcomes the transitions out of the part each record stands in reading that family, each weighted by its label squared, the two-mode line's share, and the outcome that none takes weighted by the rest of the count's unit; the first closing record's generator; none while the arriving record's count stands at 0 in the books; the drawn outcome's list (`exchange`: the drive at -1 at that Node where the transition climbs in the declared order of parts and at +1, given back, where it descends, the record's part entered at +1 and left at -1); a record that took or gave back is done for the window; returns the records done."""
+    """The takings drawn at the windows' end, one draw at a time per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the GameBoard (f): the credit draws once over all the NodeReaders that read one record, one quantum one click; the owner's word): the outcomes the transitions out of the part each record stands in reading that family, each weighted by its transition's own transfer share (`turned_labels`, `NodeBooks.shares`: the two-mode line's share of the record read at the body, nothing of another drive's transfer, never the composed label of a part several drives feed), and the outcome that none takes weighted by the rest of the count's unit; the first closing record's generator; none while the arriving record's count stands at 0 in the books; the drawn outcome's list (`exchange`: the drive at -1 at that Node where the transition climbs in the declared order of parts and at +1, given back, where it descends, the record's part entered at +1 and left at -1); a record that took or gave back is done for the window; returns the records done."""
     done: set[int] = set()
     pairs = [(b, t) for b in closing for t in b.declared.transitions if t.leaves == b.part]
     for drive in sorted({t.drive for _books, t in pairs}):
@@ -327,7 +327,7 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
             outcomes = [(b, t) for b, t in pairs if b.number not in done and t.drive == drive]
             if not outcomes:
                 break
-            weights = [books.labels[transition.enters] ** 2 for books, transition in outcomes]
+            weights = [books.shares[transition] for books, transition in outcomes]
             unit = max(sum(label * label for label in books.labels) for books, _transition in outcomes)
             rest = unit - sum(weights)
             first, weighted = closing[0], [*weights, rest if rest > 0 else 0]
@@ -354,13 +354,13 @@ def probe_arrived(books: NodeBooks, laid: set[tuple[int, Node]]) -> bool:
 
 
 def probe_click(board: GameBoard, books: NodeBooks) -> None:
-    """The click at a probe's arrival, the body's window's close (ALGEBRA.md, The pulsed gate; the two hands): one draw of the act over the transitions out of the part the body stands in whose family's count stands, each at its entered part's label squared as the shears carried the labels from the part the body stood in (the two-mode line's shares, cos^2 and sin^2 of the half window's turn): the probe's own, the transition of the part into itself, re-lays the body whole in that part, its list the part at the change 0 and no write on the probe's record (taken and given back at one tick and one Node, the fluorescence by name the probe's own wave continuing from that Node); a drive's takes the drive's quantum and exchanges the parts as every taking does (the hole, the count down by one); the rest of the labels' unit is the null window, the body whole in its part (`null_window`); one click line for a click, `taken` the family read and `given` the probe's where it was given back; the body's own generator."""
+    """The click at a probe's arrival, the body's window's close (ALGEBRA.md, The pulsed gate; the two hands): one draw of the act over the transitions out of the part the body stands in whose family's count stands, each turn at its own transfer share (`turned_labels`, `NodeBooks.shares`, the record's share at the body) and the probe's own at the part's label squared as the turns left it (the two-mode line's shares, sin^2 and cos^2 of the half window's turn): the probe's own, the transition of the part into itself, re-lays the body whole in that part, its list the part at the change 0 and no write on the probe's record (taken and given back at one tick and one Node, the fluorescence by name the probe's own wave continuing from that Node); a drive's takes the drive's quantum and exchanges the parts as every taking does (the hole, the count down by one); the rest of the labels' unit is the null window, the body whole in its part (`null_window`); one click line for a click, `taken` the family read and `given` the probe's where it was given back; the body's own generator."""
     outcomes = [
         t
         for t in books.declared.transitions
         if t.leaves == books.part and board.credit.counts[t.drive] > 0
     ]
-    weights = [books.labels[t.enters] ** 2 for t in outcomes]
+    weights = [books.shares.get(t, books.labels[t.enters] ** 2) for t in outcomes]
     rest = sum(label * label for label in books.labels) - sum(weights)
     weighted = [*weights, rest if rest > 0 else 0]
     pick, books.state = picked(board, books.state, books.declared.draw, weighted, len(outcomes) + 1)
