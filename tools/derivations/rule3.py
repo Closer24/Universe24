@@ -1,6 +1,6 @@
 """Rule3's line and its invariants as docs/ALGEBRA.md states them, in pure Python: the root every derivation script of this folder leans on, and nothing of the engine (no import of event_universe, no file of runs/ or examples/).
 
-Transcribed, each function naming its sentence of the law: the coefficients and the one line at a Node with the remainder kept (The line); the direction's forward and backward acts (The direction); the band of a plane wave at the vacuum's paces and at a Node's paces (The line, "the plain second-order rule of the pair"; The band at a pace); the group velocity (The band at a pace); the conserved form with its weights and the walk the remainders add (The conserved form; The conventions and the units, row 7); the paces' closed formulas, the clock, the Node's pace, the Link's factor and the Link's read coefficient (The paces; The clock is the Node's, the tension is the Link's), the guard's edge (The guard) and the rule's total at an amplitude (The bound).
+Transcribed, each function naming its sentence of the law: the coefficients and the one line at a Node with the remainder kept (The line); the direction's forward and backward acts (The direction); the band of a plane wave at the vacuum's paces and at a Node's paces (The line, "the plain second-order rule of the pair"; The band at a pace); the group velocity (The band at a pace); the conserved form with its weights, its Link's current and the walk the remainders add (The conserved form; The conventions and the units, row 7); the paces' closed formulas, the clock, the Node's pace, the Link's factor and the Link's read coefficient (The paces; The clock is the Node's, the tension is the Link's), the guard's edge (The guard) and the rule's total at an amplitude (The bound).
 
 Not here, because the law states no closed formula for them: the content c of a Node (a sum over the reads of weight times level, a run's quantity), the tension of a Link (read from the record as it stands), the carried remainder of a Node (the integer step's own, exact and in no closed form), the fixed point of a body (the start's iteration), and every number of nature (a click's). Every number in this module is the law's text's (the six Ports, the three axes, the two of the recurrence) or an argument; integers and fractions throughout, floats only where a cosine is asked for.
 
@@ -216,6 +216,20 @@ def link_factor(gamma: int, tension: int) -> int:
 def link_coefficient(num: int, pace: Number, factor: Number, gamma: int) -> Fraction:
     """R_a(i -> j) = 2 num p_i^2 q_ij^2 / Gamma^2, the Node's pace squared times the Link's factor squared, the product and not the sum (The paces, "The clock is the Node's, the tension is the Link's")."""
     return Fraction(2 * num) * Fraction(pace) ** 2 * Fraction(factor) ** 2 / Fraction(gamma * gamma)
+
+
+def link_current(
+    num: int,
+    now_i: Number,
+    before_i: Number,
+    now_j: Number,
+    before_j: Number,
+    factor: Number = 1,
+    gamma: int = 1,
+) -> Fraction:
+    """F_ij = num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the conserved form's current through the Link ij into the Node i (The conserved form, "Its Link term is the current"; The count is the record's share, "The share's change is the currents"), the Link's factor squared the one weight, 1 where no tension stands (the defaults)."""
+    plain = Fraction(now_i) * Fraction(before_j) - Fraction(before_i) * Fraction(now_j)
+    return Fraction(num) * Fraction(factor) ** 2 / Fraction(gamma * gamma) * plain
 
 
 def guard_edge_squared(num: int, den: int, gamma: int) -> int:
