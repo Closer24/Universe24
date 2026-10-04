@@ -7,10 +7,9 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import meeting, node, resonance, world_files
-from event_universe.core import paces
 from event_universe.game_board import GameBoard
 from event_universe.giving import laid_by_count
-from event_universe.loader.derived import row_of
+from event_universe.loader.derived import count_wall, row_of
 from event_universe.loader.draw import (
     Draw,
     Generator,
@@ -174,7 +173,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 41
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
     assert all(dict(p for f in kept[42] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 42
-    for _ in range(99):  # the faces presented again and the restoring front's lays crossed from their
+    for _ in range(99):  # the faces presented again and the lays crossed from their lines
         (
             BACK.crossed(board, lines),
             board.step_inverse(),
@@ -437,71 +436,76 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     assert BACK.verdict(GameBoard(load_world(pulsed)), 200)["verdict"] == "MATCH"
 
 
-def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands():
-    """The hole of a dense record (the mathematician's 237 and 265 with the advisor's seconds, #1572 comments 5967012316, 5967123679 and 5969040401, two hands; features/click `Hole`, `rest_of`, `meeting.faced`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share above W_rec), at the trial seed 2, beside its untouched twin. (i) The faces: the identity's, (1, 1), the booked share above one quantum (266). (ii) The taking at 24: the first face writes the root nearest v of w (x - v)(x - b) = -W_rec, between the twin's level v and the leaving level b, and 0.9985 of the quantum leaves at it (the remainder born at the half wall, 255); the second face writes the rest's root; the levels at the Node not 0 and the count down by one; the hole's second face marked, no front (the count stands above 0); the back-in-time gate MATCH across the two faces."""
+def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
+    """The undepleted beam (ALGEBRA.md, The click writes on the GameBoard; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `GameBoard.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), at the trial seed 2, beside its untouched twin. The taking at 24 books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift` over W_c and one quantum of the reading's rounding, printed); the back-in-time gate MATCH across the taking, the ion's lays crossed from their lines."""
     zeno = EVENTS / "zeno" / "zeno_2.json"
     board, twin = GameBoard(load_world(zeno), (lines := []).append), GameBoard(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
-    at, count = (4, 4, 2), board.credit.counts[pulse]
+    at, count, unit = (4, 4, 2), board.credit.counts[pulse], board.credit.units[pulse]
     for _ in range(24):
         board.step(), twin.step()
-    leaving = int(twin.states[pulse].lines[0].now[at])  # b, standing as before at the first face
-    for _ in range(2):
+    booked_share = int(board.share_of(pulse)[0][at])
+    assert booked_share > unit  # dense: the booked share at the Node above the record's quantum
+    for _ in range(24):
         board.step(), twin.step()
+        for key in ("now", "before", "remainder"):
+            mine, its = (getattr(b.states[pulse].lines[0], key) for b in (board, twin))
+            assert np.array_equal(mine, its)  # the undepleted beam: nothing written on the drive
     jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER" and x["taken"]]
     assert [x["tick"] for x in jumps] == [24] and jumps[0]["taken"] == "pulse"
-    hole = board.credit.faces[25][0].hole
-    assert hole is not None and hole.factor == (1, 1)  # the identity's faces: the share above a quantum
-    mine, its = board.states[pulse].lines[0], twin.states[pulse].lines[0]
-    now, before = (int(mine.now[at]), int(mine.before[at])), (int(its.now[at]), int(its.before[at]))
-    assert min(before[1], leaving) < now[1] < max(before[1], leaving)  # the root between v and b
-    assert round(hole.removed / hole.unit, 4) == 0.9985  # the first face's root real: one quantum
-    assert (
-        0 < abs(now[0]) <= abs(before[0]) and board.credit.counts[pulse] == count - 1
-    )  # the rest's root
-    assert (
-        all(f.restoring is not None for f in board.credit.fronts)  # the count stands: no erasing front
-        and board.credit.faces[26][0].scaled
-        and not board.credit.faces[25][0].scaled
+    assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
+    assert not board.credit.fronts and board.credit.counts[pulse] == count - 1
+    books, its_books = board.books()["pulse"], twin.books()["pulse"]
+    print(
+        f"the Zeno drive's booked share at the Node {booked_share} over W_rec {unit}, the books {books}"
     )
+    assert (books["count"], books["deficit"], books["quanta"]) == (count - 1, 1, its_books["quanta"])
+    within = abs(books["drift"]) // count_wall(board.families[pulse], board.world.quantum_action) + 1
+    print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
+    assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
+    assert books["share"] == its_books["share"] and books["drift"] == its_books["drift"]
     gate = GameBoard(load_world(zeno))
     gate.credit.bodies[0].state = 2
-    assert BACK.verdict(gate, 47)["verdict"] == "MATCH"  # across the dense taking's two faces
+    assert BACK.verdict(gate, 47)["verdict"] == "MATCH"  # across the dense taking, written nowhere
 
 
-def test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record():
-    """The exact removal (the mathematician's 244, section 1, with the booking identity's face term, tests/laws.py: a face changes the record's form by (a* - before) R_face (value - arrival)): the Zeno n = 2 world at the seed 2 beside its twin. (i) The Node's stake O + C on the Node's own numbers at the first face's interval, O = w (a^2 + b^2) - S a b and C = -a SUM_j R_j b_j - b SUM_j R_j a_j with the neighbours' levels through the Ports, recomputed here from the twin at the click, is above W_rec in the form's own units at the Node, 2 p_i^2 G^2 W_rec (the booked share O + C / 2 above it too), so the faces are the identity's, (1, 1), and the first removes at most the quantum (the mathematician's 265 and 266). (ii) After the two faces the record's share over the board is the twin's less one quantum within one level's share at the Node (0.9965 of W_rec at this seed, the second face removing exactly the rest); the share the engine reads at the Node alone is above s - W_rec (1.85 against 1.67 quanta), the Link terms with the six neighbours landing on them, a finding by name beside the record's own number."""
-    zeno = EVENTS / "zeno" / "zeno_2.json"
-    board, twin = GameBoard(load_world(zeno)), GameBoard(load_world(zeno))
-    board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
-    family, gamma, at = board.families[pulse], board.world.node_clock, (4, 4, 2)
-    unit = board.credit.units[pulse]
-    for _ in range(24):
-        board.step(), twin.step()
-    board.credit.fronts.clear()  # the two faces alone: the restoring front's shares held off here
-    record, (content, factors) = twin.states[pulse].lines[0], twin.read(pulse, 1, 0)
-    reads, coefficient, wall = node.rule_of(family, gamma, content, factors, twin.unit)
-    here, pick = (
-        [int(np.asarray(r)[at]) if np.ndim(r) else int(r) for r in reads],
-        lambda v: int(np.asarray(v)[at]) if np.ndim(v) else int(v),
+def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_path):
+    """The undepleted beam at the giving (ALGEBRA.md, The click writes on the GameBoard; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `meeting.written`, `meeting.faced`, `giving.given_quantum`): the Zeno n = 2 world with a rate e to g at the lifetime 8 giving to the pulse itself, the dense record at the reader's Node, at the trial seed 2, beside the pulse alone: the takings and the giving write nothing on the pulse, whose three arrays stand bit for bit as the pulse alone over the run, no source in time begins and no lay line names the pulse, the count down by one per taking and up by one per giving, the deficit the takings less the givings (the books' line printed); the sparse giving's own tests stand in `tests/test_the_giving.py`."""
+    world = json.loads((EVENTS / "zeno" / "zeno_2.json").read_text(encoding="utf-8"))
+    world["bodies"][0]["rates"] = [{"from": "e", "to": "g", "lifetime": 8, "gives_to": "pulse"}]
+    world["ticks"] = 480
+    (path := tmp_path / "zeno_rate.json").write_text(json.dumps(world), encoding="utf-8")
+    (alone := tmp_path / "pulse_alone.json").write_text(
+        json.dumps({**world, "bodies": []}), encoding="utf-8"
     )
-    a, b = int(record.now[at]), int(record.before[at])
-    arrivals = sum(here[p] * int(node.ports(record.now, twin.wrap)[p][at]) for p in range(6))
-    befores = sum(here[p] * int(node.ports(record.before, twin.wrap)[p][at]) for p in range(6))
-    own = int(wall) * (a * a + b * b) - pick(coefficient) * a * b
-    links = -(a * befores + b * arrivals)
-    pace = int(paces.link_pace_of(gamma, pick(content)))
-    weight = 2 * pace * pace * twin.unit * twin.unit  # the share's weight at the Node
-    assert (own + links) > unit * weight > 0  # dense: the form's share at the Node above a quantum
-    board.step(), twin.step(), board.step(), twin.step()
-    hole = board.credit.faces[25][0].hole
-    assert hole is not None and hole.unit == unit * weight
-    assert hole.factor == (1, 1) and 0 < hole.removed <= hole.unit
-    totals = [int(x.total_share(pulse)[0]) for x in (twin, board)]
-    level = int(wall) * (2 * abs(int(board.states[pulse].lines[0].now[at])) + 1)  # one level's share
-    assert abs(totals[0] - totals[1] - unit) <= level / weight + 1  # one quantum left the record
-    left = int(board.share_of(pulse)[0][at]) / unit
-    assert 1.6 < left < 2.0 and left > int(twin.share_of(pulse)[0][at]) / unit - 1  # the Node alone
+    TOOL.main(["--input", str(path)]), TOOL.main(["--input", str(alone)])
+    board, twin = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(alone))
+    board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
+    count, given = board.credit.counts[pulse], []
+    while board.tick < world["ticks"] and not given:
+        board.step(), twin.step()
+        given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
+    taken = [c for c in lines if c["event"] == "credit" and c["taken"] == "pulse"]
+    assert given and taken and given[0]["tick"] > taken[0]["tick"]  # a taking, then the giving back
+    for key in ("now", "before", "remainder"):
+        assert np.array_equal(
+            getattr(board.states[pulse].lines[0], key), getattr(twin.states[pulse].lines[0], key)
+        )
+    assert not board.credit.sources and not any(
+        c["family"] == "pulse" for c in lines if c["event"] == "lay"
+    )
+    books = board.books()["pulse"]
+    print(
+        f"the Zeno pulse after {len(taken)} takings and {len(given)} giving at {board.tick}: the books {books}"
+    )
+    assert (books["count"], books["deficit"]) == (
+        count - len(taken) + len(given),
+        len(taken) - len(given),
+    )
+    assert (
+        books["quanta"] == twin.books()["pulse"]["quanta"]
+        and books["share"] == twin.books()["pulse"]["share"]
+    )
 
 
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):

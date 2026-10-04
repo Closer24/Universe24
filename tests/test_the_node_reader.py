@@ -20,7 +20,7 @@ TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
 
 
 def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_path, monkeypatch):
-    """The reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the owner's words of 2026-10-03): the ion's three-part record declared over two adjacent Nodes in equal counts, the lay A_n^2 = A^2 / n at each, the share credited 1 by the count's rounding, the loader admitting it and refusing a region in pieces by name, the outer Links cut and the inner Link open (`meeting.cut`), the uniform mode at cos omega_0 = num / den to the bit over one window, the taking's hole at the Node drawn by the drive's share, the giving laid at the Node drawn by the record's share. The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/node_reader_declaration.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's draw. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0 and a rate without the draw are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the draw MATCH over 30 intervals back to the lay). (iii) The clicks: the first click takes the drive's quantum into P at the Node, the drive's record there after the face's two intervals the twin's two levels scaled below themselves and not 0 (the hole of a dense record, the drive at 55 quanta per Node, 2026-10-03) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at that Node alone; a later click gives one quantum to the light row and the counter credits it at a window's end (the world of 20 intervals, the counter's window 15), and where the credit took the row's count to 0 the erasing front begins at the entry Node: one erasure line per interval at the distances 1 to 5, and the same run without the front (its fronts dropped each interval) holds every level beyond the ball, the Link-metric distance above the intervals since the click, bit for bit (the front invisible ahead of itself); every click of the reader is one credit line, the one click line kind (the taking's and the giving's alike: the reader `body 0`, the family, the part before and after, the count moved and left, the family taken from or given to, the reader's clock and the window), carrying no Node, the Node written read from the GAMEBOARD lay lines of the write and the face books of the hole; the null window's re-lays that changed a level leave the same line labelled GAMEBOARD at the count 0. (iv) The acts from outside the Node as lines (the mathematician's 193 and 195 with the advisor's second, two hands): every line a lay changed at the Node writes one GAMEBOARD-labelled `lay` line with its levels and remainder before and after (the taking's four ion lines, the giving's light line, the null windows'), every face presented writes one `face` line carrying the value the books hold; the back-in-time gate (tools/back_in_time.py) reads MATCH over the whole run across the takings, the givings, the null windows, the credit and the fronts, the faces presented from the lines and the lays undone from theirs, and on the shipped Zeno and anticoincidence worlds, one step more returning the start. (v) The booking identity per act at every step on the ion, the drive and the light (tests/laws.py, `booked`): the share identity within the floors plus the face term at the hole's two intervals and at every shell of the front, and the lays' change of the share form local to the Node and its six neighbours, exact. (vi) The conversion's list through the one act: the drive at -1 and two other rows at +1 at the Node, no draw and the generator's state untouched, the counts moved by the row, one whole quantum laid on each row at the massless rotation, the two levels alike, and the dense drive's partial hole after two intervals, its levels standing below themselves and not 0. (vii) The generator consumed the same whether or not a count-0 record's inflow is booked: the anticoincidence world with the second record's window at 60 and the seed 2, run with the front and without it over 170 intervals, gives the same one taking (the first record's at 48) and the same generator states, the second record's its seed (its open window after the click draws nothing), while the far packet's level at its top is erased in the one run and stands in the other. (viii) The one-in-flight limit is not built, by name: the light row's count rises by one per giving before the counter's window and no giving is refused; the Zeno world gives nothing and its drive's count stands above 1."""
+    """The reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; the owner's words of 2026-10-03): the ion's three-part record declared over two adjacent Nodes in equal counts, the lay A_n^2 = A^2 / n at each, the share credited 1 by the count's rounding, the loader admitting it and refusing a region in pieces by name, the outer Links cut and the inner Link open (`meeting.cut`), the uniform mode at cos omega_0 = num / den to the bit over one window, the taking's hole at the Node drawn by the drive's share, the giving laid at the Node drawn by the record's share. The meeting at a Node (ALGEBRA.md, The click writes on the GameBoard (j) and (k); the owner's words of 2026-10-03; src/event_universe/meeting.py, loader/node_reader_declaration.py): a record of a plane family of three parts declared at one Node in its parts (S at the count 1, P and D at 0) with a transition S to P fed by a drive's plane wave, a giving P to S at the lifetime 2 onto a light row and its own window of 1, beside a counter with the world's draw. (i) The loader: the parts' count in two parts, a transition naming no part, a weight of 0 and a rate without the draw are refused by name; the generator lays the drive and no entry for the record. (ii) The lay: the record's share reads 1 at its Node in the S lines alone, and its Links cut it stays there (the twin without the draw MATCH over 30 intervals back to the lay). (iii) The clicks: the first click takes the drive's quantum into P at the Node, the drive's record standing bit for bit as the twin's (the undepleted beam: a record of several quanta per Node is read in the books and not written, no face and no front, its deficit 1 in the books' line) and its count in the books down by one, the record's P lines carrying the count and the S lines 0, the two boards differing at the region's Nodes alone; a later click gives one quantum to the light row and the counter credits it at a window's end (the world of 20 intervals, the counter's window 15), and where the credit took the row's count to 0 the erasing front begins at the entry Node: one erasure line per interval at the distances 1 to 5, and the same run without the front (its fronts dropped each interval) holds every level beyond the ball, the Link-metric distance above the intervals since the click, bit for bit (the front invisible ahead of itself); every click of the reader is one credit line, the one click line kind (the taking's and the giving's alike: the reader `body 0`, the family, the part before and after, the count moved and left, the family taken from or given to, the reader's clock and the window), carrying no Node, the Node written read from the GAMEBOARD lay lines of the write, the Node drawn for the drive from the draw; the null window's re-lays that changed a level leave the same line labelled GAMEBOARD at the count 0. (iv) The acts from outside the Node as lines (the mathematician's 193 and 195 with the advisor's second, two hands): every line a lay changed at the Node writes one GAMEBOARD-labelled `lay` line with its levels and remainder before and after (the taking's four ion lines, the giving's light line, the null windows'), every face presented writes one `face` line carrying the value the books hold (none in this world: the drive is a beam and the light is never taken); the back-in-time gate (tools/back_in_time.py) reads MATCH over the whole run across the takings, the givings, the null windows, the credit and the fronts, the faces presented from the lines and the lays undone from theirs, and on the shipped Zeno and anticoincidence worlds, one step more returning the start. (v) The booking identity per act at every step on the ion, the drive and the light (tests/laws.py, `booked`): the share identity within the floors plus the face term at every shell of the light's front, and the lays' change of the share form local to the Node and its six neighbours, exact. (vi) The conversion's list through the one act: the drive at -1 and two other rows at +1 at the Node, no draw and the generator's state untouched, the counts moved by the row, one whole quantum laid on each row at the massless rotation, the two levels alike, and the dense drive untouched, its deficit 1 and no face. (vii) The generator consumed the same whether or not a count-0 record's inflow is booked: the anticoincidence world with the second record's window at 60 and the seed 2, run with the front and without it over 170 intervals, gives the same one taking (the first record's at 48) and the same generator states, the second record's its seed (its open window after the click draws nothing), while the far packet's level at its top is erased in the one run and stands in the other. (viii) The one-in-flight limit is not built, by name: the light row's count rises by one per giving before the counter's window and no giving is refused; the Zeno world gives nothing and its drive's count stands above 1."""
     universe = json.loads((EVENTS / "shelved_ion" / "mercury_ion.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
@@ -146,8 +146,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         return real_draw(*args)
 
     def noted_node(b, books, weights):  # type: ignore[no-untyped-def]
-        node_draws.append((board.tick, list(weights)))
-        return real_node(b, books, weights)
+        found = real_node(b, books, weights)
+        node_draws.append((board.tick, list(weights), found))
+        return found
 
     def kept_book(b, books, drive, came):  # type: ignore[no-untyped-def]
         real_book(b, books, drive, came)
@@ -168,7 +169,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     total = sum(d * a for d, a in zip(read, reader.amplitudes, strict=True))
     assert (list(reader.amplitudes), reader.norm) == ([90, 90], 127)  # A_i = 90, A = isqrt(2 x 90^2)
     assert meeting.arriving(other, reader, drv) == (1 if total >= 0 else -1) * ((abs(total) + 63) // 127)
-    assert draws.count(board.tick) == 2 and [t for t, _ in node_draws] == [
+    assert draws.count(board.tick) == 2 and [t for t, _, _ in node_draws] == [
         board.tick
     ]  # one draw per click
     assert node_draws[0][1] == [max(w, 0) for w in book[drv]]  # the Node by the window's inflow per Node
@@ -180,8 +181,10 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         credits_keys
         := "event label tick family node_reader window proper windows before realised kept count left taken given".split()
     )
-    holes = {f.at for f in board.credit.faces[board.tick + 1] if f.family == drv}  # the hole's faces
-    assert len(holes) == 1 and (hole_at := next(iter(holes))) in region  # the taking's one drawn Node
+    hole_at = tuple(node_draws[0][2])  # the taking's one drawn Node, written nowhere: the drive is dense
+    assert hole_at in region and not any(
+        f.family == drv for f in board.credit.faces.get(board.tick + 1, [])
+    )
     assert (
         book[drv][region.index(hole_at)] > 0
     )  # the Node the quantum entered through, its inflow booked
@@ -200,21 +203,13 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert abs(p_re * p_re + p_im * p_im - size * size) <= 2 * size and (p_re, p_im) != (size, 0)
     walls = {k: node.rule_of(board.families[k], gamma, 0, None, unit)[2] for k in (ion, drv)}
     assert int(now["ion.lines[2].remainder"][here]) == walls[ion] // 2  # the taker at the lay's origin
-    leaving = int(other.states[drv].lines[0].now[here])  # b, the leaving level at the first face
-    [booked(board, monkeypatch, ion, drv, light) for _ in (0, 1)]  # the hole: the face's two intervals
-    hole, twin = board.states[drv].lines[0], (other.step(), other.step(), other.states[drv].lines[0])[2]
-    v, first_root = int(twin.before[here]), int(hole.before[here])
-    assert min(v, leaving) < first_root < max(v, leaving)  # the first face's root between v and b (265)
-    second, v_next = int(hole.now[here]), int(twin.now[here])  # the second face's root, the rest (265)
-    assert second != 0 and min(v_next, first_root) <= second <= max(
-        v_next, first_root
-    )  # between v and b
-    drop = int(other.total_share(drv)[0]) - int(board.total_share(drv)[0])
-    rounding = 2 * max(abs(v), abs(leaving)) * board.credit.units[drv] // board.world.quantum_action
-    assert (
-        0 < drop <= board.credit.units[drv] + rounding
-    )  # one quantum within one level's rounding at the drive's amplitude A: 6 den A of the form, 2 A / T of W_c = 3 den T (266)
-    assert 0 <= int(hole.remainder[here]) < walls[drv]  # the giver's remainder Rule3's own
+    [booked(board, monkeypatch, ion, drv, light) for _ in (0, 1)]  # two more acts, nothing on the drive
+    other.step(), other.step()
+    for key in ("now", "before", "remainder"):  # the undepleted beam: the drive the twin's bit for bit
+        assert np.array_equal(
+            getattr(board.states[drv].lines[0], key), getattr(other.states[drv].lines[0], key)
+        )
+    assert board.credit.deficits[drv] == 1 and board.books()[names[drv]]["deficit"] == 1
     still = GameBoard(load_world(path))  # the same run without the front: its fronts dropped each step
     [still.step() for _ in range(still.tick, board.tick)]
     for _ in range(board.tick, 23):
@@ -260,7 +255,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     key, kept = ("line", "port", "tick", "value"), sum(board.credit.faces.values(), [])
     faced = {(f.family, f.at, *(getattr(f, k) for k in key)) for f in kept}
     logged = {(names.index(x["family"]), tuple(x["node"]["at"]), *(x[k] for k in key)) for x in faces}
-    assert logged == {f for f in faced if f[4] <= board.tick} and logged  # the lines the books' values
+    assert logged == {f for f in faced if f[4] <= board.tick} == set()  # no face: the drive a beam
     assert BACK.verdict(GameBoard(load_world(path)), 23)["verdict"] == "MATCH"  # every act crossed
     fresh = GameBoard(load_world(path), (conv := []).append)  # the conversion's list through the one act
     counts, items = dict(fresh.credit.counts), [meeting.Item(drv, None, None, -1, (here,))]
@@ -277,9 +272,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )  # one quantum at the band's top in one interval
     assert laid == [("weak_drive", 0, [glow, 0]), ("fluorescence", 0, [glow, 0])]
     fresh.step(), fresh.step()
-    assert all(
-        0 < abs(int(getattr(fresh.states[drv].lines[0], k)[here])) for k in ("now", "before")
-    )  # dense
+    assert fresh.credit.deficits[drv] == 1 and not any(  # dense: read in the books, written nowhere
+        f.family == drv for faces in fresh.credit.faces.values() for f in faces
+    )
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped reader worlds
     zeno, photon = EVENTS / "zeno" / "zeno_4.json", EVENTS / "anticoincidence" / "one_photon.json"
     loaded = BACK.snapshot(z := GameBoard(load_world(zeno), (zlines := []).append))
@@ -328,7 +323,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
 
 
 def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
-    """The relation seen from its two ends (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the shipped Zeno reader declared at one Node alone is admitted by the loader; its lay is the whole amplitude, A_1 = A, and its norm A, so the resonant turn reads the drive's level at the Node exactly, (|d| A + A div 2) div A = |d|; its six Links are cut; the record alone rotates in the uniform mode at cos omega_0 = num / den, Chebyshev's recurrence within one level over a window; the click line names no Node while the taking's hole and the write's lay lines stand at the only Node, and the back-in-time gate crosses the run; a reader with Nodes alone at one Node is still refused by name, since through one Node what enters leaves and the net current over a passing wave is about 0."""
+    """The relation seen from its two ends (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the shipped Zeno reader declared at one Node alone is admitted by the loader; its lay is the whole amplitude, A_1 = A, and its norm A, so the resonant turn reads the drive's level at the Node exactly, (|d| A + A div 2) div A = |d|; its six Links are cut; the record alone rotates in the uniform mode at cos omega_0 = num / den, Chebyshev's recurrence within one level over a window; the click line names no Node while the write's lay lines stand at the only Node and the dense drive's taking is read in the books (no face, the deficit 1), and the back-in-time gate crosses the run; a reader with Nodes alone at one Node is still refused by name, since through one Node what enters leaves and the net current over a passing wave is about 0."""
     world = json.loads((EVENTS / "zeno" / "zeno_4.json").read_text(encoding="utf-8"))
     world["bodies"][0]["nodes"] = world["bodies"][0]["nodes"][:1]  # the reader at one Node
     at = tuple(world["bodies"][0]["nodes"][0]["node"])
@@ -369,9 +364,11 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
     first = clicks[0]
     assert "node" not in first and (first["node_reader"], first["label"]) == ("body 0", "NODEREADER")
     assert (first["before"], first["realised"], first["taken"], first["count"]) == ("g", "e", "pulse", 1)
-    holes = {f.at for f in board.credit.faces[board.tick + 1] if f.family == drv}
     written = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["tick"] == board.tick}
-    assert holes == written == {at}  # the only Node drawn: the hole and the write there, the click none
+    assert (
+        written == {at} and board.credit.deficits[drv] == 1
+    )  # the write at the only Node, the click none
+    assert not any(f.family == drv for faces in board.credit.faces.values() for f in faces)  # dense
     assert BACK.verdict(GameBoard(load_world(paths["one"])), 48)["verdict"] == "MATCH"
 
 
