@@ -105,7 +105,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$269.2$ ($269.3$ in the physical labels, the pair after $t$ steps labelled $t$)",
+                "$269.3$ in the paper's labelling ($269.2$ when the pair after $t$ steps is labelled $t$)",
             ),
             ("main.tex", "$N = 269.18$ in the engine's labels"),
         ],
@@ -122,7 +122,7 @@ TWINS = [
     (
         "the wall of a massless family",
         [
-            ("main.tex", "$3\\,\\den\\,T$ for a massless family"),
+            ("main.tex", "$W_c = 3\\,\\den\\,T$ itself for a massless family"),
             ("supplement.tex", "$3\\,\\den\\,T$ for a massless family"),
         ],
     ),
@@ -130,7 +130,7 @@ TWINS = [
     (
         "the two slits at the fixed lay",
         [
-            ("main.tex", "$N = 270$ units of $W_c$ ($626.5$ photons at $\\omega = 0.4456$"),
+            ("main.tex", "$N = 270$ units of $W_c$ ($626.5$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4456$"),
             ("main.tex", "the run $N = 270$ in the NodeReader's unit"),
             ("main.tex", "the two slits' $270$ stands against the blind $273$"),
             ("main.tex", "The run of the implementation gives $N = 270$"),
