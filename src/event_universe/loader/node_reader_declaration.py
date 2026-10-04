@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import itertools
 from dataclasses import dataclass, replace
 
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
+from event_universe.giving import holds_period
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.draw import Generator, draw_of, generator_of
 from event_universe.loader.keys import integer, keyed
@@ -183,6 +185,20 @@ def rates_of(
     return tuple(found)
 
 
+def holding_period(rate: Rate, name: str, families: tuple[FamilyRule, ...], action: int) -> Rate:
+    """The span condition on a source in time (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode; The click writes on the GameBoard (5)): the giving's lifetime holds one period of its resonance, tau Omega >= 2 pi, that is num / den <= cos(2 pi / tau) by the rotation act (`giving.holds_period`; 8 at [2, 3], 15 at [5414, 6000]), else the loader refuses by name with the lifetime and the least admitted span, since a source below its period lays mostly uniform mode; the rate as declared where it holds."""
+    scale = count_wall(families[rate.light], action) ** SCALE_OF
+    if holds_period(rate.lifetime, rate.resonance, scale):
+        return rate
+    least = next(span for span in itertools.count(2) if holds_period(span, rate.resonance, scale))
+    num, den = rate.resonance
+    raise ValueError(
+        f"{name}: the lifetime {rate.lifetime} does not hold one period of the resonance [{num}, {den}] "
+        f"(tau Omega >= 2 pi, num / den <= cos(2 pi / tau)): the least admitted span is {least} (ALGEBRA.md, "
+        "No write from outside Rule3 wakes the massless row's zero mode)"
+    )
+
+
 def packet_form(
     found: NodeReaderDeclaration,
     label: str,
@@ -202,12 +218,12 @@ def packet_form(
                     f"{name} declares the width {rate.width} inside a guide (a board of one Node across): the guide "
                     "carries the source in time, and the width is the open board's packet's"
                 )
-            rates.append(rate)
+            rates.append(holding_period(rate, name, families, action))
             continue
         if (
             rate.width is None
         ):  # no width declared: the source in time as built, every shipped world as it is
-            rates.append(rate)
+            rates.append(holding_period(rate, name, families, action))
             continue
         light, (num, den) = families[rate.light], rate.resonance
         if (

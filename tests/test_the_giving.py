@@ -7,17 +7,18 @@ import numpy as np
 from event_universe import world_files
 from event_universe.features.click import SCALE_OF
 from event_universe.game_board import GameBoard
-from event_universe.giving import holds_period, increments_of, radiated_total, uniform_removed_in_time
+from event_universe.giving import holds_period, increments_of, radiated_total
+from event_universe.lay import division_act_in_time
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
 from tests.laws import BACK, EVENTS, ROOT, TOOL, refused
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
-    """The giving lays no uniform mode (ALGEBRA.md, The click writes on the GameBoard (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `giving.increments_of`, `uniform_removed_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; on the resonance world the giver gives at 41 and at the interval 96 the light's two sums over the chain of 48 are within one level per Node (3 and 6, against 797 and 765 before the correction) while the share reads the quantum, 0.7518 W_c against sin Omega = 0.745 (0.7582 uncorrected)."""
+    """The giving lays no uniform mode (ALGEBRA.md, The click writes on the GameBoard (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `giving.increments_of`, `lay.division_act_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; on the resonance world the giver gives at 41 and at the interval 96 the light's two sums over the chain of 48 are within one level per Node (3 and 6, against 797 and 765 before the correction) while the share reads the quantum, 0.7518 W_c against sin Omega = 0.745 (0.7582 uncorrected)."""
     scale, total = (3 * 6000 * 32768) ** SCALE_OF, radiated_total(32768, (2, 3))
     raw, amplitudes = increments_of(total, 48, (2, 3), scale)
-    fixed = uniform_removed_in_time(raw, amplitudes)
+    fixed = division_act_in_time(raw, amplitudes)
     assert (sum(raw), sum(t * d for t, d in enumerate(raw)), min(amplitudes), max(amplitudes)) == (
         31,
         938,
@@ -35,7 +36,7 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
     ]
     assert [holds_period(t, (5414, 6000), scale) for t in (14, 15)] == [False, True]
     short, amps = increments_of(total, 4, (2, 3), scale)
-    assert short == [73, 49, -8, -60] and uniform_removed_in_time(short, amps) == [-9, 13, 1, -5]
+    assert short == [73, 49, -8, -60] and division_act_in_time(short, amps) == [-9, 13, 1, -5]
     board = GameBoard(load_world(EVENTS / "resonance" / "resonant.json"), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     for _ in range(96):

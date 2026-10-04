@@ -45,9 +45,6 @@ def division_act(levels: np.ndarray, weights: np.ndarray) -> np.ndarray:
     return flat.reshape(np.shape(levels))
 
 
-uniform_removed = division_act  # the act's name at the message lay, kept while a door still calls it
-
-
 def division_act_in_time(increments: list[int], amplitudes: list[int]) -> list[int]:
     """The source in time's increments with the uniform mode's content taken out (ALGEBRA.md, The click writes on the GameBoard (5), the giving lays no uniform mode; the mathematician's hand): on the massless row a level delta added at the one Node at the interval t puts into the double root at wave number 0 the velocity delta and, by the interval s, the level (s - t + 1) delta, so a span of increments leaves the board a uniform velocity SUM delta_t and, once that is 0, a uniform level -SUM t delta_t, growing with no bound in the first case and standing for ever in the second; both are taken out by the division act, exact in the integers: the velocity's sum divided among the increments in proportion to the amplitudes (`shares_of`), then the moment SUM t delta_t divided among the running sums s_0 .. s_(tau - 2) in proportion to the parabola (t + 1) (tau - 1 - t), the increments corrected by the running sums' differences s_t - s_(t - 1) with s_(-1) = s_(tau - 1) = 0, which leave the sum at 0 and move the moment by -SUM s_t exactly; the correction a slope over the span below one level per interval at the shipped lifetimes, where the second difference of the moment, nature's dipole, would have amplified the onset's transient by the band's top over the resonance, 2 (1 - cos pi) / (2 (1 - cos Omega)); increments summing to 0 with the moment 0, or a span of one interval, are returned as they are."""
     found = list(increments)
@@ -137,7 +134,7 @@ def laid(
     line: int,
     changes: Changes,
     weights: Any | None,
-    origin: int | None = None,
+    origin: int | None,
     nodes: Any | None = None,
     faced: Any | None = None,
 ) -> None:

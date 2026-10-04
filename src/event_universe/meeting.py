@@ -190,7 +190,9 @@ def written(board: GameBoard, items: list[Item]) -> None:
     laid = [
         (i.family, line, at)
         for i in items
-        if i.direction is None  # a packet writes its own lay lines at every Node it lays
+        if i.body is not None
+        or i.pair
+        is not None  # the source in time and the packet write their own lay lines (`lay.written`)
         for line in laid_lines(board, i)
         for at in i.nodes
     ]

@@ -36,7 +36,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     record["transitions"] = [
         {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
     ]
-    record["rates"] = [{"from": "P", "to": "S", "lifetime": 2, "gives_to": "fluorescence"}]
+    record["rates"] = [{"from": "P", "to": "S", "lifetime": 8, "gives_to": "fluorescence"}]
     drive = {"family": "strong_drive", "along": "x", "wave": [1, 2], "phase": [0, 1], "amplitude": 600}
     drive.update(top={"x": [0, 7], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
     counter = {
@@ -322,8 +322,8 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
                     writers.add((module.stem, f.name))
     rule3 = {("game_board", "step"), ("game_board", "step_inverse"), ("game_board", "hold")}
     lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
-    lay |= {("meeting", "relaid"), ("giving", "laid_increment"), ("giving", "laid_by_count")}
-    lay |= {("giving", "laid_packet")}  # the open board's packet, the lay (A) along a drawn direction
+    lay |= {("meeting", "relaid"), ("giving", "laid_by_count")}
+    lay |= {("lay", "written")}  # the one lay act's write step: the source in time and the packet
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
 
 

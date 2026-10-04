@@ -19,10 +19,9 @@ from event_universe.features.click import (
     rotated,
     transverse_cosine,
 )
-from event_universe.lay import division_act_in_time, uniform_removed
+from event_universe.lay import laid, laid_in_time, written
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import Node
-from event_universe.reports import lay
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
@@ -31,7 +30,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class Source:
-    """A quantum given as a source in time at one Node (the mathematician's hand with the advisor's second, two hands): the record's family, the Node at the file's coordinates, the resonance (num, den) with cos Omega = num / den, the total S = SUM_t A_t^2 of the span (the exact root), the span tau, the intervals laid so far, the span's increments computed whole at the source's start (`increments_of`: A_t with the carry times the reference phasor's value at the scale R, advanced by Omega each interval by the recurrence r_(t+1) = (2 num r_t) div den - r_(t-1)) and, where the span holds a period of the resonance (`holds_period`), corrected by the division act in time so that they lay no uniform mode (`uniform_removed_in_time`), one laid per interval, and the interval the source was begun at (its first increment laid by the click's write step, the rest by `sourced`, one per interval after)."""
+    """A quantum given as a source in time at one Node (the mathematician's hand with the advisor's second, two hands): the record's family, the Node at the file's coordinates, the resonance (num, den) with cos Omega = num / den, the total S = SUM_t A_t^2 of the span (the exact root), the span tau, the intervals laid so far, the span's increments computed whole at the source's start (`increments_of`: A_t with the carry times the reference phasor's value at the scale R, advanced by Omega each interval by the recurrence r_(t+1) = (2 num r_t) div den - r_(t-1)) and, where the span holds a period of the resonance (`holds_period`), corrected by the division act in time so that they lay no uniform mode (`lay.laid_in_time`), one laid per interval, and the interval the source was begun at (its first increment laid by the click's write step, the rest by `sourced`, one per interval after)."""
 
     family: int
     at: Node
@@ -67,10 +66,10 @@ def given_quantum(board: GameBoard, item: Item) -> None:
     total = radiated_total(action, item.resonance)
     scale = count_wall(board.families[item.family], action) ** SCALE_OF
     increments, amplitudes = increments_of(total, item.span, item.resonance, scale)
-    if holds_period(
-        item.span, item.resonance, scale
-    ):  # a shorter span is laid as built, its uniform mode named
-        increments = uniform_removed_in_time(increments, amplitudes)
+    family = board.families[item.family]
+    increments = laid_in_time(  # the one act in time; the loader admitted a span holding its period
+        family.name, family.pair[0] == family.pair[1], increments, amplitudes
+    )
     for at in item.nodes:
         for _ in range(item.delta):
             where = (int(at[0]), int(at[1]), int(at[2]))
@@ -132,14 +131,10 @@ def laid_by_count(board: GameBoard, item: Item) -> None:
 
 
 def laid_packet(board: GameBoard, item: Item) -> None:
-    """The open board's giving (the mathematician's hand; the advisor's seconds, his derivation and his precisions; the owner's word, "a new emitter node_reader also needs to enter"): the given quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the message lay's form (ALGEBRA.md, The message lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/node_reader_declaration.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`meeting.gave`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = isqrt((R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the NodeReader's own act; the mathematician's hand and the advisor's second, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level isqrt(R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = isqrt(R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale, isqrt(R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root isqrt(den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; the two levels then taken through the message lay's division act over the packet's Nodes where the span holds a period of the resonance (`holds_period`; `features/start.uniform_removed`, in proportion to the envelope's amplitudes, the leftover one unit each at the heaviest), so that now and before each sum to 0 over the packet and the lay carries no uniform mode (on the shipped packet world before's sum -80 over 4,992 Nodes taken out, the share +0.17 percent; a train from a span below the period is steep, 16 slices from 49 at tau = 2, and the act would move its levels by a fifth, so it is laid as built) (ALGEBRA.md, The click writes on the GameBoard (5), the giving lays no uniform mode: the energy-form envelope under the carrier has E(k_z) = SUM e_z e^(i k_z z) other than 0 at every top, the two slits' bump of +24,442 in before the same defect; the mathematician's hand); added to the light record's first line at every Node of the packet, the remainder as it stands; one `lay` line per Node changed for the host's tool to cross (written here, the write step's lines for the body's Node alone standing aside); the record's count in the books up by the change."""
+    """The open board's giving (the mathematician's hand; the advisor's seconds, his derivation and his precisions; the owner's word, "a new emitter node_reader also needs to enter"): the given quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the message lay's form (ALGEBRA.md, The message lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/node_reader_declaration.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`meeting.gave`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = isqrt((R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the NodeReader's own act; the mathematician's hand and the advisor's second, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level isqrt(R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = isqrt(R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale, isqrt(R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root isqrt(den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; the two levels then taken through the one lay act over the packet's Nodes where the span holds a period of the resonance (`holds_period`; `lay.laid`, the division act in proportion to the envelope's amplitudes, the leftover one unit each at the heaviest), so that now and before each sum to 0 over the packet and the lay carries no uniform mode (on the shipped packet world before's sum -80 over 4,992 Nodes taken out, the share +0.17 percent; a train from a span below the period is steep, 16 slices from 49 at tau = 2, and the act would move its levels by a fifth, so it is laid as built) (ALGEBRA.md, The click writes on the GameBoard (5), the giving lays no uniform mode: the energy-form envelope under the carrier has E(k_z) = SUM e_z e^(i k_z z) other than 0 at every top, the two slits' bump of +24,442 in before the same defect; the mathematician's hand); added to the light record's first line at every Node of the packet by the act's write step, the remainder as it stands, one `lay` line per Node changed for the host's tool to cross; the record's count in the books up by the change."""
     assert item.resonance is not None and item.span > 0 and item.width and item.direction is not None
     num, den = item.resonance
-    family, state, action = (
-        board.families[item.family],
-        board.states[item.family],
-        board.world.quantum_action,
-    )
+    family, action = board.families[item.family], board.world.quantum_action
     scale = count_wall(family, action) ** SCALE_OF
     doubled = along_cosine(family.pair, item.resonance, item.width, scale)
     assert doubled is not None  # the loader refused a width that cannot carry Omega
@@ -163,8 +158,6 @@ def laid_packet(board: GameBoard, item: Item) -> None:
             quadratures = rotated(
                 0, division_fixed_point(scale * scale - cosine * cosine), doubled, scale, len(amplitudes)
             )
-            line = state.lines[0]
-            now, before = line.now.copy(), line.before.copy()
             levels, earliers = [], []
             for size, wave, quadrature in zip(amplitudes, waves, quadratures, strict=True):
                 levels.append(int(division_forward(size * wave, scale, half_scale)[0]))
@@ -177,34 +170,19 @@ def laid_packet(board: GameBoard, item: Item) -> None:
                         )[0]
                     )
                 )
-            # the message lay's division act over the packet's Nodes: each level's sum over the train and
-            # the cross-section to 0 exactly, in proportion to the envelope (the uniform mode laid none)
-            nows = np.array([[lv] * len(section) for lv in levels], dtype=object)
-            befores = np.array([[e] * len(section) for e in earliers], dtype=object)
-            if holds_period(item.span, item.resonance, scale):  # a shorter span laid as built, named
-                weights = np.array([[size] * len(section) for size in amplitudes], dtype=object)
-                nows, befores = uniform_removed(nows, weights), uniform_removed(befores, weights)
-            for distance in range(len(amplitudes)):
-                for across, node_at in enumerate(section):
-                    level, earlier = int(nows[distance][across]), int(befores[distance][across])
+            # the one lay act over the packet's Nodes: each level's sum over the train and the
+            # cross-section to 0 exactly, in proportion to the envelope (the uniform mode laid none)
+            nows, befores, weights = (np.zeros(board.shape, dtype=object) for _ in range(3))
+            for distance, slice_at in enumerate(zip(levels, earliers, amplitudes, strict=True)):
+                for node_at in section:
                     there = list(node_at)
                     there[axis] += sign * distance
-                    here = tuple(np.add(there, board.offset))
-                    was = [int(now[here]), int(before[here]), int(line.remainder[here])]
-                    now[here] += level
-                    before[here] += earlier
-                    if board.output is not None and (level or earlier):
-                        board.output(
-                            lay(
-                                board.tick,
-                                family.name,
-                                0,
-                                there,
-                                was,
-                                [int(now[here]), int(before[here]), was[2]],
-                            )
-                        )
-            state.lines[0] = node.Record(now, before, line.remainder)
+                    nows[(here := tuple(np.add(there, board.offset)))] = slice_at[0]
+                    befores[here], weights[here] = slice_at[1], slice_at[2]
+            # a span below its period is laid as built, named (`holds_period`); the loader admits none
+            held = holds_period(item.span, item.resonance, scale)
+            origin = None  # the remainders as they stand: the packet adds to light's record (the branch's lay)
+            laid(board, item.family, 0, (nows, befores), weights if held else None, origin)
     board.credit.counts[item.family] += item.delta
 
 
@@ -232,8 +210,8 @@ def increments_of(
     previous = int(division_forward(scale * num, den, division_forward(den, 2, 0)[0])[0])
     half_scale = division_forward(scale, 2, 0)[0]
     carried, increments, amplitudes = 0, [], []
-    for laid in range(span):
-        aimed = division_forward(total * (laid + 1), span, 0)[0]
+    for interval in range(span):
+        aimed = division_forward(total * (interval + 1), span, 0)[0]
         amplitude = division_fixed_point(int(aimed) - carried)
         increments.append(int(division_forward(amplitude * phasor, scale, half_scale)[0]))
         amplitudes.append(amplitude)
@@ -252,15 +230,12 @@ def holds_period(span: int, resonance: tuple[int, int], unit: int) -> bool:
     return num * unit <= den * doubled
 
 
-uniform_removed_in_time = division_act_in_time  # the act's name here, kept while its callers read it
-
-
 def laid_increment(board: GameBoard, source: Source) -> None:
-    """One interval of a source: its increment of the interval (`increments_of`, corrected by `uniform_removed_in_time`) added to its record's first line's level now at its Node, the level before and the remainder as they stand (the previous interval's increment, stepped by Rule3, is the pair's own before: adding the phasor's previous value to the level before as well doubled the action, the share reading 1.63 quanta against sin Omega = 0.745, a check made before the lay entered); the interval counted."""
-    state, at = board.states[source.family], board.mask((source.at,))
-    level = source.increments[source.laid]
-    line = state.lines[0]
-    state.lines[0] = node.Record(line.now + np.where(at, int(level), 0), line.before, line.remainder)
+    """One interval of a source: its increment of the interval (`increments_of`, corrected by `lay.laid_in_time`) added to its record's first line's level now at its Node by the write step of the one act (`lay.written`, its lay line), the level before and the remainder as they stand (the previous interval's increment, stepped by Rule3, is the pair's own before: adding the phasor's previous value to the level before as well doubled the action, the share reading 1.63 quanta against sin Omega = 0.745, a check made before the lay entered); the interval counted."""
+    at = board.mask((source.at,))
+    level = int(source.increments[source.laid])
+    origin = None  # the remainder as it stands: the source adds to its record at its one Node
+    written(board, source.family, 0, (np.where(at, level, 0), np.where(at, 0, 0)), origin)
     source.laid += 1
 
 
@@ -272,20 +247,13 @@ def advanced(phasor: int, previous: int, resonance: tuple[int, int]) -> tuple[in
 
 
 def sourced(board: GameBoard) -> None:
-    """The sources' act at the end of an interval, after the credit and the records' clicks: every source with intervals left lays its interval's pair at its Node (`laid_increment`), one `lay` line each with the line's levels before and after (the host's tool crosses it), and a source whose span is spent leaves the books."""
+    """The sources' act at the end of an interval, after the credit and the records' clicks: every source with intervals left lays its interval's increment at its Node (`laid_increment`, the act's write step with its `lay` line, which the host's tool crosses), and a source whose span is spent leaves the books."""
     kept = []
     for source in board.credit.sources:
         if source.begun == board.tick:  # begun by this interval's click: its first increment laid there
             kept.append(source)
             continue
-        was = line_levels_at(board, source.family, 0, source.at)
-        laid_increment(board, source)
-        if board.output is not None:
-            name, now = (
-                board.families[source.family].name,
-                line_levels_at(board, source.family, 0, source.at),
-            )
-            board.output(lay(board.tick, name, 0, list(source.at), was, now))
+        laid_increment(board, source)  # its lay line the write step's
         if source.laid < source.span:
             kept.append(source)
     board.credit.sources = kept

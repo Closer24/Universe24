@@ -6,6 +6,8 @@ import numpy as np
 
 from event_universe import lay
 from event_universe.game_board import GameBoard
+from event_universe.loader.universe import universe_of
+from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, TOOL, refused
 
@@ -69,3 +71,44 @@ def test_the_write_step_lays_at_the_nodes_with_the_remainder_at_the_origin_and_o
     lay.laid(board, pulse, 0, (-now, -before), weights, half, None, faced)
     assert (int(line.now[first]), int(board.states[pulse].lines[0].now[second])) == (5, 0)
     assert len(lines) == 4 and lines[-1]["node"]["at"] == [3, 2, 1] and lines[-1]["line"] == 0
+
+
+def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_admitted_span():
+    """The span condition (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode, the engine's declared problem 2; `loader/node_reader_declaration.holding_period`, `giving.holds_period`): the resonance world's giver at [2, 3] with the lifetime 4 is refused by name, the least admitted span 8 (tau Omega >= 2 pi, num / den <= cos(2 pi / tau) by the rotation act), and admitted at 8; a giving at [5414, 6000] needs 15."""
+    world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
+    universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
+    families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
+    shape = tuple(world["shape"])
+
+    def rows(lifetime, resonance):
+        body = json.loads(json.dumps(world["bodies"][0]))
+        body["rates"][0]["lifetime"] = lifetime
+        body["transitions"][0]["resonance"] = resonance
+        return [body]
+
+    refusal = refused(
+        "least admitted span is 8",
+        bodies_of,
+        rows(4, [2, 3]),
+        None,
+        "",
+        families,
+        shape,
+        9000,
+        (),
+        action,
+    )
+    assert "lifetime 4" in str(refusal) and "[2, 3]" in str(refusal)
+    assert bodies_of(rows(8, [2, 3]), None, "", families, shape, 9000, (), action)[0].reader is not None
+    refused(
+        "least admitted span is 15",
+        bodies_of,
+        rows(14, [5414, 6000]),
+        None,
+        "",
+        families,
+        shape,
+        9000,
+        (),
+        action,
+    )
