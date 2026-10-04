@@ -238,6 +238,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "DIFFERS on a wrong value and on a wrong label, the shipped screen table in the block's place, UNFILLED without "
         "either, the report's shape and the exit code; the imports stand inside the test so the file is the test alone",
     ),
+    "tests/test_the_paper_claims_engine.py::test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_outside": (
+        421,
+        "the claims table's engine-kind rows as unit tests (the Boss's brief of 2026-10-04 on the advisor's breakers): the "
+        "rows 26, 27, 76 and 133, the hand-named rows E.1 to E.3, the results table's row 1 and S.61, with S.59's re-lay "
+        "and S.42's credit current as the engine holds them, one nested function per row quoting its opening words and "
+        "its breaker, the claim inside its fence and the break outside it, and the owner's shout as the inventory of the "
+        "engine's thirteen write sites outside core/rule3 with their law lines; one function, the file the test alone",
+    ),
     "tests/test_proofs_check_the_law.py::test_every_row_of_the_proofs_inventory_returns_its_verdict_and_the_unchecked_only_fall": (
         77,
         "the proofs' gate (the owner's order of 2026-10-04, 07:50 UTC, that all the proofs be checked by machine; the "
