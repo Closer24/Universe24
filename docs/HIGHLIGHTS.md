@@ -80,7 +80,7 @@ points at the law, the law's line governs and no formula is restated here.
 
 ## The paper
 
-- The paper's one claim is the method: the main text claims the method and the derivations stand in the supplement.
+- The paper's one claim is that Universe24 helps compute things in nature: the main text states what the model computes of nature against measurement, each quantity with its status and its number, the method being how it computes and not the claim, and the derivations stand in the supplement.
 - The paper claims nowhere beyond what was shown and names which experiments ran by Rule3.
 - The paper claims only what cannot be killed; what does not endanger us is the guideline for every sentence.
 - The title is "Universe24: an integer cellular automaton read through clicks, and the formulas it shares with nature", with six keywords, the field Foundations of Physics, arXiv quant-ph with gr-qc and nlin.CG as cross-lists, in the author's voice.
