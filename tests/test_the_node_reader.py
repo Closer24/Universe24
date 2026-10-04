@@ -3,10 +3,13 @@
 import ast
 import json
 import math
+from fractions import Fraction
 
 import numpy as np
 
-from event_universe import meeting, node, node_reader, world_files
+from event_universe import credit, meeting, node, node_reader, reports, world_files
+from event_universe.core import paces
+from event_universe.core.rule3 import division_forward
 from event_universe.features.click import amplitude, spread, squared
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import count_wall
@@ -14,7 +17,20 @@ from event_universe.loader.node_reader_declaration import node_reader_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, TOOL, TOP, booked, chain_body_world, refused
+from tests.laws import (
+    BACK,
+    EVENTS,
+    PACKET,
+    ROOT,
+    TOOL,
+    TOP,
+    booked,
+    chain_body_world,
+    own_lines,
+    refused,
+    shares_of,
+    slit_world,
+)
 
 TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
 
@@ -172,7 +188,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert draws.count(board.tick) == 2 and [t for t, _, _ in node_draws] == [
         board.tick
     ]  # one draw per click
-    assert node_draws[0][1] == [max(w, 0) for w in book[drv]]  # the Node by the window's inflow per Node
+    assert node_draws[0][1] == [
+        max(w, 0) // unit**2 for w in book[drv]
+    ]  # the Node by the inflow per Node
     first, click = clicks[0], ("P", "S", "strong_drive", None, 1, "body 0")
     words = ("realised", "before", "taken", "given", "count", "node_reader")
     assert tuple(first[k] for k in words) == click and first["tick"] == board.tick
@@ -398,3 +416,65 @@ def test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall(tmp_pat
     assert (
         laid_body["count"] == laid_body["carried"] == 7
     )  # the generator lays the declaration in that unit
+
+
+def test_the_node_reader_books_the_conserved_forms_own_current_through_its_front(tmp_path, monkeypatch):
+    """The credit's booking (ALGEBRA.md #the-click-is-the-meeting; the owner's word of 2026-10-04, 11:54 UTC, the mathematician's derivation with the advisor's second, two hands): a NodeReader books through each front Port the conserved form's own current, num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, summed in the unit G^2 and divided once at the close by W_rec G^2, equal to the plain current where no tension stands. A light packet crosses a declared region of two Nodes on the tests' chain whose front Links carry a tension written into the content holder's x axis line (300 behind the region, 200 and 100 across it at the start: the tension 250 on the Link entered, Q - G^2 = -21, and 50 on the Link left, -4, the line then moving under Rule3); at every step the region's weighted share changes by the booked inflow over G^2 plus Rule3's remainder term within the division act's unit per Node, the derived tolerance, two units here, while the plain inflow misses it by far more; the twin without the tension books the plain current times G^2 exactly and `quanta_through` reads the count the plain formula read."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    region, draw = [[13, 0, 0], [14, 0, 0]], {"window": 400, "seed": 7, "multiplier": 5, "increment": 1}
+    packet = {**PACKET, "top": {"x": [8, 8], "y": [0, 0], "z": [0, 0]}, "edge": {"x": 4, "y": 0, "z": 0}}
+    chain = dict(shape=[24, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), faces=[])
+    readers = [{"name": "near", "positions": region}]
+    world = slit_world(
+        tmp_path, TOOL, "chain", messages=[packet], node_readers=readers, draw=draw, **chain
+    )
+    boards = [GameBoard(load_world(world)) for _ in (0, 1)]  # the tension's board and its twin without
+    names, square = [f.name for f in boards[0].families], boards[0].unit ** 2
+    light, gravity = names.index("charge"), names.index("gravity")
+    axis = boards[0].states[gravity].lines[1]  # the content holder's x axis line, the tension's read
+    for x, level in ((slice(0, 13), 300), (13, 200), (14, 100)):
+        axis.now[x], axis.before[x] = level, level
+    at, gamma = boards[0].mask(region), boards[0].world.node_clock
+    facing = reports.front(at, boards[0].wrap, at, boards[0].declared_board())
+    misses, totals = [], [[0, 0], [0, 0]]
+    for _interval in range(8):
+        for k, b in enumerate(boards):
+            read, flow = b.read(light), [np.asarray(c, dtype=object) for c in b.currents()[light]]
+            factors = [np.broadcast_to(np.asarray(q, dtype=object), b.shape) for q in read[1]]
+            weighed = [q * c for q, c in zip(factors, flow, strict=True)]
+            plain, weighted = (
+                int(reports.entering(facing, f).sum(dtype=object)) for f in (flow, weighed)
+            )
+            fronts = [
+                int(q[tuple(n)]) - square
+                for q, f in zip(factors, facing, strict=True)
+                for n in np.argwhere(f)
+            ]
+            assert (min(fronts) < 0) == (k == 0) and len(fronts) == 2  # tension on the front Links
+            was, lines = sum(b.credit.intake.get((light, "near"), {}).values()), own_lines(b, light)
+            start = int(shares_of(b, light, read, lines)[at].sum())
+            squares = np.broadcast_to(np.asarray(paces.link_pace_of(gamma, read[0])) ** 2, b.shape)[at]
+            b.step()
+            moved, remainder = own_lines(b, light), Fraction(0)
+            booked_now = sum(b.credit.intake.get((light, "near"), {}).values()) - was
+            for a, z in zip(lines, moved, strict=True):  # Rule3's remainder term per Node of the region
+                step = (z.now.astype(object) - a.before.astype(object))[at]  # next - before
+                carried = (z.remainder.astype(object) - a.remainder.astype(object))[at]  # r' - r
+                remainder -= sum(
+                    Fraction(int(n), 2 * int(d) * square)
+                    for n, d in zip(step * carried, squares, strict=True)
+                )
+            change = int(shares_of(b, light, read, moved)[at].sum()) - start - remainder
+            print(
+                f"interval {b.tick}, Q - G^2 on the front Links {fronts}: plain {plain}, weighted {weighted} (plain x G^2 {plain * square}), booked {booked_now}, the region's share change less the remainder term {float(change):.3f}, the identity's residual {float(change - Fraction(weighted, square)):.3f}"
+            )
+            assert (
+                booked_now == weighted and abs(change - Fraction(weighted, square)) < 2
+            )  # one unit per Node
+            misses.append((k, abs(change - plain)))
+            totals[k][0], totals[k][1] = totals[k][0] + plain, totals[k][1] + weighted
+    assert max(m for k, m in misses if k == 0) > 2 and all(m < 2 for k, m in misses if k == 1)
+    assert totals[1][1] == totals[1][0] * square  # the twin: the plain current times G^2 exactly
+    twin, unit = boards[1], boards[1].credit.units[light]
+    plain_count = int(division_forward(totals[1][0], unit, division_forward(unit, 2, 0)[0])[0])
+    assert credit.quanta_through(twin.credit, light, totals[1][1], twin.unit) == plain_count > 0

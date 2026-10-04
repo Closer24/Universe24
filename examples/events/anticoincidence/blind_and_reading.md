@@ -8,7 +8,9 @@ at two Nodes each, the Nodes 23 to 24 and 71 to 72, 24 Links from the centre eac
 factors 0 so that they stay; one light record of the family `photon` (light's pair, one real line)
 laid at the centre as two packets toward both, from 48 toward +x and from 47 toward -x, at k = pi / 4
 with the raised cosine of one wavelength beyond the top (so that the packet carries no uniform mode),
-its laid share one whole quantum (the books' count 1 read from the loaded world), the control's two;
+its laid share one whole quantum (the books' count 1 read from the loaded world); the control two
+photons, one per record (two massless families of one pair), each taking bringing its record to 0
+and its front starting at the taking's interval;
 each record reads the light into e at the transition's weight 6 over one window of 48 intervals, the
 passage's end, the run going on to 170 so that the erasing front reaches both packets, and the credit
 draws once over both records' outcomes into the light (the taking the exchange at the record's
@@ -61,8 +63,7 @@ world read the same table, number for number (one photon: 101, 99, 0, 0, alpha 0
 47, 28, 101, alpha 56 / 39). In the one-photon world the light's count reaches 0 at the one taking
 and its front begins from the taker's Node, one shell per interval along the chain, its erasure lines
 in the output; the window has closed by then and the second record's outcome has no share whatever
-the levels show, so the clicks do not move; in the two-photon world the count reaches 0 at the
-second taking, at the window's end, with the same effect.
+the levels show, so the clicks do not move.
 
 **Through the one click act with the face** (the tree at 84f0352d and after, 200 trials per world): the
 same table number for number (one photon: 101, 99, 0, 0, alpha 0, PASS; two photons: 24, 47, 28,

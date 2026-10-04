@@ -23,10 +23,8 @@ CHAIN, QUANTA = (
 )  # the shortest chain (x open) holding the body apart from the end node_readers; the
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
-TOP = [
-    0,
-    6000,
-]  # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
+# the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
+TOP = [0, 6000]
 CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
 
 
