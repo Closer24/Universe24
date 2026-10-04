@@ -47,6 +47,19 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
         "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
     ),
+    "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
+        10,
+        "the documents' gates (the owner's word of 2026-10-04, a perfect algebra; #1793 comment 5974938542): no undated history "
+        "clause in the law or the engine's document beyond tools/history_allowed.json, which only shrinks; the loader of the gates with it",
+    ),
+    "tests/test_documents.py::test_every_shared_number_stands_in_its_one_form": (
+        4,
+        "the documents' gates: every number of tools/numbers.json in its canonical form and in none of its forbidden forms",
+    ),
+    "tests/test_documents.py::test_every_derived_number_is_its_scripts_output": (
+        4,
+        "the documents' gates: every derived number of the table the output of its script under tools/derivations/",
+    ),
     "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
         25,
         "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
