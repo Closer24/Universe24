@@ -35,7 +35,9 @@ their statuses.
 
 - `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
   twice; it needs only its figures.
-- `general_formula/main.pdf`: the compiled paper at the same commit.
+- `general_formula/main.pdf`: the compiled paper at the same commit. The paper's pins:
+  the implementation at the frozen commit 7756546d and the three documents (the law,
+  the engine's document, the decisions) at ed1a3b5d, both of 2026-10-04.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
   its proof, Derivations S.1 to S.63, numbered as added, each naming its section,
@@ -118,11 +120,8 @@ their statuses.
   lay is the one the pinned commit's mode file holds, within the integer
   rounding of a level; the script prints no draw, the clicks' row being the
   folder's. Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`,
-  the script of the paper's own commit (this folder's), on the folder's files as they
-  stand at the pinned commit; the script is not the pinned commit's (its `law_lay`
-  carries the uniform-component correction added after it), so it is run from the
-  paper's revision in a worktree of the pinned commit, and its printed output is the
-  current script's. Its
+  at the pinned commit 7756546d, the frozen commit of 2026-10-04, which holds this
+  folder's script and the folder's files alike; its printed output is that commit's. Its
   printed output stands beside it as `two_slits_real_line.txt`, every
   number with its definition: the total over the whole passage, the twelve
   regions' quanta and shares, the visibility, the wings and the arrival (in the

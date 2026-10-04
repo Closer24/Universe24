@@ -151,10 +151,13 @@ TWINS = [
     (
         "the pins",
         [
-            ("main.tex", "the commit d00aa9e2 of 2026-10-04, the commit the two slits ran at"),
+            (
+                "main.tex",
+                "the commit 7756546d of 2026-10-04, the frozen commit, the commit the two slits ran at",
+            ),
             (
                 "supplement.tex",
-                "the commit d00aa9e2 of 2026-10-04, the pinned commit, the commit the two slits ran at",
+                "the commit 7756546d of 2026-10-04, the frozen commit, the pinned commit, the commit the two slits ran at",
             ),
         ],
     ),
