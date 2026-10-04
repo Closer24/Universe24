@@ -317,11 +317,16 @@ kind, and none of them returns.
    paper's sentence (234, proposals 1 to 3). The advisor computes the blind
    number from the engine's own lines and states the three verdicts; the Boss
    writes them in the brief.
-4. The Boss's worker builds on one short branch from `main`, with a dedicated
-   test, no number in the engine, and reports the numbers and the sentences it
-   removed; the brief grants the tests' ratchet's room for the round, "this round
-   adds N test lines" (234, proposal 7). Workers run on parallel branches by
-   disjoint file set; the engine's branches one at a time (234, proposal 6).
+4. A fix enters as the code on one short branch from `main`, its one unit test,
+   two hands at the sha and the Boss's merge at CI green, nothing around it (the
+   owner, 2026-10-04, #1793 comments 5979384796 and 5979394836: "we fix, make a
+   unit test, and merge after two hands; the new method", "if the function is
+   generic there is no need to keep anything, just a unit test"); a physics change
+   keeps the law's line first (steps 2 and 3). The worker writes no number in the
+   engine and reports the numbers and the sentences it removed; the brief grants
+   the tests' ratchet's room for the round, "this round adds N test lines" (234,
+   proposal 7). Workers run on parallel branches by disjoint file set; the
+   engine's branches one at a time (234, proposal 6).
 5. The gates: the one gate set, `python tools/check.py` locally, then CI on the
    pull request; nothing merges red.
 6. The Boss opens the pull request; its body carries "HANDED BY Boss: ..." and
