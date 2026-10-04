@@ -431,8 +431,10 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     board = GameBoard(load_world(tmp_path / "still.json"), (lines := []).append)
     gravity = board.families.index(next(f for f in board.families if f.rest))
     time = board.states[gravity].lines[0]
-    half = (node.rule_of(board.families[gravity], GAMMA, 0, None, board.unit)[2] - 1) // 2  # the rule's
+    half = node.rule_of(board.families[gravity], GAMMA, 0, None, board.unit)[2] // 2  # the half wall
     assert (time.now == 60).all() and (time.before == 60).all() and (time.remainder == half).all()
+    for i, h in ((i, board.half_wall(i)) for i in board.held):  # the lay's origin and the start's alike
+        assert board.origins[i] == h and (board.states[i].lines[0].remainder == h).all()
     for _ in range(30):
         board.step()
     assert (board.states[gravity].lines[0].now == 60).all() and board.shape[0] == 24

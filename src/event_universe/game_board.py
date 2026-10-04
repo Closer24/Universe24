@@ -63,7 +63,7 @@ class GameBoard:
             )
             for index, family in enumerate(self.families)
         ]
-        # every line's remainder at birth, the half wall; the start gives each held row's time line its rest's own
+        # each line born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start)
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
         for number, (record, row) in enumerate(self.laid_rows()):
             if isinstance(row, BodyRow) and row.reader is not None:
