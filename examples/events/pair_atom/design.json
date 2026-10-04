@@ -8,5 +8,7 @@
  "centre": [15, 15, 15],
  "ticks": 1000,
  "lay": {"kind": "fixed_point", "stop": 2, "passes": 30, "tolerance": [1, 100], "confidence": [32, 1], "seed": "one_node"},
+ "senses": [1, -1],
+ "pixels": [0, 1],
  "nature": {"isotope_shift_meV": 2.775, "positronium_1s_eV": -6.80, "positronium_1s_2s_eV": 5.10, "muonic_hydrogen_1s_keV": -2.53}
 }

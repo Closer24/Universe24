@@ -57,7 +57,7 @@ record's at the same alpha_law is mu / m* = 1 / 2 exactly in the formula, the on
 world reads against the line when it runs (the rotation's beat at the body, a GameBoard reading).
 
 The lay (GAMEBOARD, the generator's own lines): both bodies laid as the one-Node record of one
-quantum at their declared Nodes by `--pixel 0 1 --sense 1 -1`, the amplitude 6073, the record's
+quantum at their declared Nodes by the design's `pixels` [0, 1] and `senses` [1, -1], the amplitude 6073, the record's
 share at the Node 4 quanta by the generator's reading (1 / sin omega_s of its quanta over the
 plane's two lines, admitted by the gate within its rounding), no fixed point and no standing
 check; the world's `lay` key declares the fixed-point lay with its tolerance [1, 100] for the

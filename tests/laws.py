@@ -48,6 +48,15 @@ def refused(match: str, call, *args, **keys):
     return refusal.value
 
 
+def design_beside(folder: Path, stem: str, **keys: object) -> Path:
+    """The folder's design file with the generator's keys for one world (`worlds[stem]`: `quanta`, `senses`, `pixels`, the inputs the generator reads from the design file beside the world and never from the command line; the owner's decision C2, #1793 comment 5982379080), the other worlds' entries kept."""
+    path = folder / "design.json"
+    design = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"worlds": {}}
+    design["worlds"][stem] = {**design["worlds"].get(stem, {}), **keys}
+    path.write_text(json.dumps(design), encoding="utf-8")
+    return path
+
+
 TOOLS = ("pixel_mode", "back_in_time", "run_inputs")  # the generator, the back-in-time gate, the runner
 TOOL, BACK, RUN = (load_file(name, ROOT / "tools" / f"{name}.py") for name in TOOLS)
 RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the look's reader
@@ -66,7 +75,7 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
 
 
 def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
-    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the node_reader `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (`--pixel`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the node_readers `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
+    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the node_reader `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (the design file's `pixels` and `senses` beside the chain, `design_beside`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the node_readers `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
     at = at or (chain // 2,)  # the chain's centre where no Node is named
     families = [CHARGED["name"] if i < len(senses) and senses[i] else "matter" for i in range(len(at))]
     universe_beside(folder, charged=CHARGED["name"] in families)
@@ -79,9 +88,10 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
     world = dict(shape=[chain, 1, 1], node_readers=node_readers, bodies=bodies, ticks=400, face_depth=1)
     world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
     (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
-    if mode:  # the charged body the one-Node record of its quantum (--pixel), matter at its fixed point
-        pixels = [str(n) for n, c in enumerate(charged) if c]
-        tool.main(["--input", str(path), "--sense", *map(str, senses), "--pixel", *pixels])
+    pixels = [n for n, c in enumerate(charged) if c]  # the charged body a one-Node record
+    design_beside(folder, path.stem, senses=list(senses), pixels=pixels)  # the design's keys beside
+    if mode:  # the charged body laid by the design's `pixels` in its sense, matter at its fixed point
+        tool.main(["--input", str(path)])
     return path
 
 
