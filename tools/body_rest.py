@@ -1,4 +1,4 @@
-"""The bodies' rest, a GameBoard reading labelled so and no measurement (docs/ENGINE.md #6-how-to-run-a-world; ALGEBRA.md #the-stable-body, #a-familys-declaration; the families round's worlds under examples/events/): a world of one or two bodies on any board is loaded as tools/run_inputs.py loads it and stepped by the engine's own step over the window; at the window's ends every body is read from its record and from the rows it sources. Per body: its centre (the declared Node of its largest count); the three levels of its record about one interval at the centre, [before, now, next], whose ratio (next + before) / now is 2 cos omega_b, the rest rotation of the standing record, an exact fraction (ALGEBRA.md #the-bound-body-is-one-node); its Wronskian at the centre where the body is a plane (its sense, the source of the holder of the sign); its share in quanta at the centre Node and summed over its region (the half of the board nearer its centre along the axis joining two bodies' centres, the whole board for a single body); the centroid of its share over its region and the share-weighted second moment about the centroid (the rms radius squared), exact fractions at the file's coordinates; its well over its region, the form D = now^2 - next x before summed over the region and divided by T, in quanta (the source of the rows holding the content); its record's level along each axis from the centre outward (the tail) with the ratios of successive levels (e^(-kappa) per Link where the tail is evanescent); and every held row's time level along the same axes (a holder of the content's rest about a body, 3 G(r) s on an open box; the holder of the sign's about a plane, light as the sum of its rows, `GameBoard.record`). For two bodies the separation of the centroids along the joining axis at the window's ends and its change; the books at the end. With a run's output file the `field` lines of the regions the expectation names (or of every region) are read over the window, each region's least and largest reading with their intervals and the count of its local maxima (a swinging count's beat). With an expectation file its blind is printed beside the readings. The tool compares nothing, holds no number of the law and writes nothing to the engine.
+"""The bodies' rest, a GameBoard reading labelled so and no measurement (docs/ENGINE.md #6-how-to-run-a-world; ALGEBRA.md #the-stable-body, #a-familys-declaration; the families round's worlds under examples/events/): a world of one or two bodies on any board is loaded as tools/run_inputs.py loads it and stepped by the engine's own step over the window; at the window's ends every body is read from its record and from the rows it sources. Per body: its centre (the declared Node of its largest count); the three levels of its record about one interval at the centre, [before, now, next], whose ratio (next + before) / now is 2 cos omega_b, the rest rotation of the standing record, an exact fraction (ALGEBRA.md #the-bound-body-is-one-node); its Wronskian at the centre where the body is a plane (its sense, the source of the holder of the sign); its share in quanta at the centre Node and summed over its region (the half of the board nearer its centre along the axis joining two bodies' centres, the whole board for a single body); the centroid of its share over its region and the share-weighted second moment about the centroid (the rms radius squared), exact fractions at the file's coordinates; its well over its region, the form D = now^2 - next x before summed over the region and divided by T, in quanta (the source of the rows holding the content); its record's level along each axis from the centre outward (the tail) with the ratios of successive levels (e^(-kappa) per Link where the tail is evanescent); and every held row's time level along the same axes (a holder of the content's rest about a body, 3 G(r) s on an open box; the holder of the sign's about a plane, light as the sum of its rows, `GameBoard.record`). For two bodies the separation of the centroids along the joining axis at the window's ends and its change; the books at the end and, beside their drift, the two terms of the drift's identity summed over every interval the reader stepped (ALGEBRA.md #the-count-is-the-records-share, The share's change is the currents: at the paces a step read, the share's change is the weighted currents less Rule3's remainder term, exactly in rationals; #the-conserved-form: the form changes by the work term where the paces move): the work term of L510, the share of the step's pair at the paces after the step less the same pair at the paces the step read (`work_term`), and Rule3's remainder term, the rounding of the level (`remainder_term`), so that the books' drift is their sum plus the currents through the faces, to the per-Node division's rounding; in the current's units and in quanta, a GameBoard reading and no fence. With a run's output file the `field` lines of the regions the expectation names (or of every region) are read over the window, each region's least and largest reading with their intervals and the count of its local maxima (a swinging count's beat). With an expectation file its blind is printed beside the readings. The tool compares nothing, holds no number of the law and writes nothing to the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -15,8 +15,9 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import node
+from event_universe import node, share
 from event_universe.game_board import GameBoard
+from event_universe.loader.derived import count_wall, quanta_records
 from event_universe.loader.keys import AXES
 from event_universe.world_files import load_world
 
@@ -138,19 +139,121 @@ def body_reading(
     }
 
 
-def grown(array: np.ndarray, shape: tuple[int, ...], offset: Node, board: GameBoard) -> np.ndarray:
-    """An array kept before a step brought to the board's shape after it: where a receding face grew the GameBoard during the step (`growth.resize`), the layers grown before the origin (the offset's change) are prepended and the rest appended, as zeros, so that the interval's start and its end are read at the same Nodes."""
+def grown(
+    array: np.ndarray, shape: tuple[int, ...], offset: Node, board: GameBoard, fill: int = 0
+) -> np.ndarray:
+    """An array kept before a step brought to the board's shape after it: where a receding face grew the GameBoard during the step (`growth.resize`), the layers grown before the origin (the offset's change) are prepended and the rest appended, filled with `fill` (0 for a level or a content, the vacuum's G^2 for a Link's factor), so that the interval's start and its end are read at the same Nodes."""
     pads = []
     for axis in range(len(AXES)):
         low = board.offset[axis] - offset[axis]
         pads.append((low, board.shape[axis] - shape[axis] - low))
-    return np.pad(array, pads) if any(pad != (0, 0) for pad in pads) else array
+    return np.pad(array, pads, constant_values=fill) if any(pad != (0, 0) for pad in pads) else array
+
+
+def paces_read(board: GameBoard, index: int) -> list[tuple[Any, node.Factors]]:
+    """A family of quanta's reads at the interval's start, one per record (`GameBoard.read`): the content at every Node and its six Links' factors, the paces the step from this interval reads, kept so that the step's pair can be read again at them after the step."""
+    return [board.read(index, 1, record) for record in quanta_records(board.families, index)]
+
+
+def work_term(
+    board: GameBoard,
+    index: int,
+    reads: list[tuple[Any, node.Factors]],
+    shape: tuple[int, ...],
+    offset: Node,
+) -> int:
+    """The work term of L510 over the one step the board has taken since `reads` were kept, summed over the GameBoard in the current's units, a GameBoard reading (ALGEBRA.md #the-conserved-form: the form is exact where the paces stand and changes by the work term where they move; #the-count-is-the-records-share, The share's change is the currents: at the paces the step read, the share's change is the weighted currents less Rule3's remainder term exactly): the family's share of the step's pair at the paces after the step (`GameBoard.share_of`) less the same pair at the paces the step read (`share.family_share` with the kept content and factors, grown with the board where a face grew during the step, the vacuum's content 0 and factor G^2 on the grown layers), so that the books' drift is this term's sum over the run plus the currents through the faces, to the rounding."""
+    family, gamma, unit = board.families[index], board.world.node_clock, board.unit
+    after = int(board.share_of(index)[0].sum(dtype=object))
+    at_read = 0
+    for record, (content, factors) in zip(quanta_records(board.families, index), reads, strict=True):
+        kept = grown(content, shape, offset, board) if np.ndim(content) else content
+        links = tuple(
+            grown(factor, shape, offset, board, unit * unit) if np.ndim(factor) else factor
+            for factor in factors
+        )
+        lines = board.lines_of(index, record)
+        found = share.family_share(family, lines, board.wrap, gamma, kept, links, unit)
+        at_read += int(found.sum(dtype=object))
+    return after - at_read
+
+
+def remainder_term(
+    board: GameBoard,
+    index: int,
+    reads: list[tuple[Any, node.Factors]],
+    kept: list[list[node.Record]],
+    shape: tuple[int, ...],
+    offset: Node,
+) -> int:
+    """Rule3's remainder term over the one step the board has taken since `kept` and `reads` were kept, summed over the GameBoard in the current's units, a GameBoard reading (ALGEBRA.md #the-count-is-the-records-share, The share's change is the currents, the identity's second term: (next_i - before_i) (r_i - r'_i) over 2 p_i^2 G^2 at the paces the step read, r and r' the record's remainder before and after the step, Rule3's own rounding of the level, by the division act at every Node (`share.over_pace`); the kept arrays grown with the board where a face grew during the step, the level 0 and the family's origin remainder on the grown layers), so that the books' drift is this term plus the work term plus the currents through the faces, to the per-Node division's rounding."""
+    gamma, unit, origin = board.world.node_clock, board.unit, board.origins[index]
+    found = 0
+    for record, (content, _factors), begun in zip(
+        quanta_records(board.families, index), reads, kept, strict=True
+    ):
+        for old, new in zip(begun, board.lines_of(index, record), strict=True):
+            before = grown(old.before, shape, offset, board)
+            carried = grown(
+                np.broadcast_to(np.asarray(old.remainder), shape), shape, offset, board, origin
+            )
+            left = np.broadcast_to(np.asarray(new.remainder), new.now.shape)
+            at = (new.now != 0) | (before != 0)
+            moved = new.now[at].astype(object) - before[at].astype(object)
+            numerator = moved * (carried[at].astype(object) - left[at].astype(object))
+            paced = grown(content, shape, offset, board)[at] if np.ndim(content) else content
+            found += int(share.over_pace(numerator, gamma, paced, unit).sum(dtype=object))
+    return found
+
+
+def stepped(board: GameBoard, terms: dict[int, dict[str, int]]) -> None:
+    """The board stepped once, the step's two terms of the drift's identity added to every family of quanta's running sums (`work_term`, `remainder_term`): the reads, the records and the board's shape kept before the step, so that the step's pair is read at the paces the step read, over the board as grown."""
+    shape, offset = tuple(board.shape), tuple(board.offset)
+    reads = {index: paces_read(board, index) for index in board.order}
+    kept = {
+        index: [
+            [
+                node.Record(line.now.copy(), line.before.copy(), np.array(line.remainder, copy=True))
+                for line in board.lines_of(index, record)
+            ]
+            for record in quanta_records(board.families, index)
+        ]
+        for index in board.order
+    }
+    board.step()
+    for index in board.order:
+        terms[index]["work_term"] += work_term(board, index, reads[index], shape, offset)
+        terms[index]["remainder_term"] += remainder_term(
+            board, index, reads[index], kept[index], shape, offset
+        )
+
+
+def in_quanta(value: int, wall: int) -> dict[str, int]:
+    """A sum in the current's units with the same in quanta over the family's wall by the books' own rounding (`share.quanta_of`)."""
+    return {
+        "share": value,
+        "quanta": int(share.quanta_of(np.array([value], dtype=object), wall, object)[0]),
+    }
+
+
+def work_books(board: GameBoard, terms: dict[int, dict[str, int]]) -> dict[str, dict[str, Any]]:
+    """The work term of L510 summed over every interval the reader stepped, per family of quanta, printed beside the books' drift with Rule3's remainder term, the other term of the drift's identity (`remainder_term`): each in the current's units (`share`) and in quanta (`in_quanta`), labelled a GameBoard reading and no fence; the books' drift is the two plus the currents through the faces, to the per-Node division's rounding."""
+    found: dict[str, dict[str, Any]] = {}
+    for index in board.order:
+        wall = count_wall(board.families[index], board.world.quantum_action)
+        work, remainder = terms[index]["work_term"], terms[index]["remainder_term"]
+        found[board.families[index].name] = {
+            "label": LABEL,
+            **in_quanta(work, wall),
+            "remainder_term": in_quanta(remainder, wall),
+        }
+    return found
 
 
 def read_about_one_interval(
-    board: GameBoard, centres: list[Node], reach: int
+    board: GameBoard, centres: list[Node], reach: int, terms: dict[int, dict[str, int]]
 ) -> list[dict[str, object]]:
-    """Every body's reading about the interval the board is at: the records, shares and quanta of the start are kept, the board steps once (grown at a receding face where the front reaches it, the kept arrays grown with it, `grown`), the regions are read at the board's shape after the step, and each body is read (`body_reading`)."""
+    """Every body's reading about the interval the board is at: the records, shares and quanta of the start are kept, the board steps once (`stepped`, the step's two terms of the drift's identity added to `terms`; grown at a receding face where the front reaches it, the kept arrays grown with it, `grown`), the regions are read at the board's shape after the step, and each body is read (`body_reading`)."""
     shape, offset = tuple(board.shape), tuple(board.offset)
     kept = {}
     for number, row in enumerate(board.world.bodies):
@@ -158,7 +261,7 @@ def read_about_one_interval(
             copied(line) for line in board.states[row.family].lines[: board.families[row.family].record]
         ]
         kept[number] = (begun, board.share_of(row.family)[0].copy(), board.quanta(row.family)[0].copy())
-    board.step()
+    stepped(board, terms)
     masks = regions(board, centres)
     found = []
     for number in range(len(board.world.bodies)):
@@ -192,7 +295,7 @@ def separation(readings: list[dict[str, object]], centres: list[Node]) -> Fracti
 
 
 def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
-    """One world's reading: the bodies at the start and after `intervals` intervals (the world's ticks without it), each read about one interval, so the board steps once more than the window; the separation for two bodies; the books at the end; labelled GAMEBOARD."""
+    """One world's reading: the bodies at the start and after `intervals` intervals (the world's ticks without it), each read about one interval, so the board steps once more than the window; the separation for two bodies; the books at the end with the two terms of their drift's identity summed over every step, the work term of L510 and Rule3's remainder term (`work_books`); labelled GAMEBOARD."""
     board = GameBoard(load_world(path))
     if len(board.world.bodies) not in (1, 2):
         raise ValueError(
@@ -200,10 +303,11 @@ def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
         )
     steps = board.world.ticks if intervals is None else intervals
     centres = [centre_of(board, number) for number in range(len(board.world.bodies))]
-    start = read_about_one_interval(board, centres, reach)
+    terms = {index: {"work_term": 0, "remainder_term": 0} for index in board.order}
+    start = read_about_one_interval(board, centres, reach, terms)
     while board.tick < steps and board.ended is None:
-        board.step()
-    end = read_about_one_interval(board, centres, reach) if board.ended is None else None
+        stepped(board, terms)
+    end = read_about_one_interval(board, centres, reach, terms) if board.ended is None else None
     found: dict[str, Any] = {
         "label": LABEL,
         "input": path.name,
@@ -216,6 +320,7 @@ def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
         "start": start,
         "end": end,
         "books": board.books(),
+        "work_term": work_books(board, terms),
     }
     if len(centres) == 2:
         apart = [separation(readings, centres) if readings else None for readings in (start, end)]
