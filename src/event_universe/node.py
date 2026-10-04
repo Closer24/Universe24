@@ -184,18 +184,8 @@ def step(
     level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
     arrived = ports(level, wrap, fill)
     if faces[0]:
-        befores = ports(other, wrap, fill)  # the neighbours' levels before, the hole's Link terms
         arrived = presented(
-            arrived,
-            reads,
-            self_coefficient,
-            wall,
-            level,
-            other,
-            record.remainder,
-            *faces,
-            direction,
-            befores,
+            arrived, reads, self_coefficient, wall, level, other, record.remainder, *faces, direction
         )
     found, remainder = rule3(
         reads, arrived, self_coefficient, wall, level, other, record.remainder, direction

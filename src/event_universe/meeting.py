@@ -1,4 +1,4 @@
-"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words; the owner's word, the click the heart): a node_reader is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the node_reader's own transition's quantum read back from the realised click, the click their meeting; a node_reader always receives two quanta, the arriving one and its own, a region node_reader's own quantum implicit in its declared window and whole, and for a record declared a NodeReader at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an reader's window at the Node named (the declared window's length, or, for a body with a probe, the tick of the probe's lay at its Node: the window bounded by clicks, opened at the body's last write and closed at the probe's taking, ALGEBRA.md, The pulsed gate), 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the resonant two-mode act, the two-quadrature form: the arriving level summed over the window against the record's two reference records at the transition's declared resonance, the plane's size over the scale the window's turn at the declared weight, applied once at the window's close as W sub-turns with the carry, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form, `resonance.gathered`, `resonance.window_turn`, `turned_labels`); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there: the arriving record's levels and remainder to 0 (the hole; for a dense record, whose share at the Node exceeds its own quantum, its two levels scaled so that one quantum's share leaves and the phase stands, the hole of a dense record, `faced`) and its count in the books down by one, the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn at the lifetime's hazard 1 / tau per interval, per window while a window stands and per interval in the dark at the now (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid as a source in time at that Node over the giving's lifetime at the transition's declared resonance (`giving.given_quantum`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the click line (`reports.credit`, the one click line kind of every reader), the window, the reader, the family and the parts, never a Node, the Node written standing in the GAMEBOARD `lay` and `face` lines beside it. The record declared a NodeReader is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the node_reader's region is), its books the reader's own and at no Node; the Node knows no click."""
+"""The meeting at a Node (ALGEBRA.md #the-click-is-the-meeting, The click writes on the GameBoard; HIGHLIGHTS.md, the owner's words; the owner's word, the click the heart): a node_reader is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the node_reader's own transition's quantum read back from the realised click, the click their meeting; a node_reader always receives two quanta, the arriving one and its own, a region node_reader's own quantum implicit in its declared window and whole, and for a record declared a NodeReader at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the giving's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of an reader's window at the Node named (the declared window's length, or, for a body with a probe, the tick of the probe's lay at its Node: the window bounded by clicks, opened at the body's last write and closed at the probe's taking, ALGEBRA.md, The pulsed gate), 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the resonant two-mode act, the two-quadrature form: the arriving level summed over the window against the record's two reference records at the transition's declared resonance, the plane's size over the scale the window's turn at the declared weight, applied once at the window's close as W sub-turns with the carry, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form, `resonance.gathered`, `resonance.window_turn`, `turned_labels`); 2, the draw, with the declared seed and generator, once per window; 3, the write at that Node, one whole quantum passing between the two records there, the drive's item carrying the sign of the transition's direction in the body's declared order of parts (`exchange`): climbing, the arriving record's levels and remainder to 0 (the hole to 0 where the record's booked share at the Node is at most its own quantum; for a dense record, a beam of many quanta per Node, nothing on the board, the quantum passing in the books alone with the deficit printed, the undepleted beam, `faced`) and its count in the books down by one; descending, stimulated emission, one quantum given back into the drive (by the count where it is local and whole at the Node, nothing where it is a beam) and its count up by one; the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves (the phase passing with the quantum), the remainder at the lay's origin, the part it leaves at N - 1 (the taking); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, one function); 5, the giving, at a Node whose record stands in an upper part, drawn at the lifetime's hazard 1 / tau per interval, per window while a window stands and per interval in the dark at the now (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid as a source in time at that Node over the giving's lifetime at the transition's declared resonance (`giving.given_quantum`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the click line (`reports.credit`, the one click line kind of every reader), the window, the reader, the family and the parts, never a Node, the Node written standing in the GAMEBOARD `lay` and `face` lines beside it. The record declared a NodeReader is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the node_reader's region is), its books the reader's own and at no Node; the Node knows no click."""
 
 from __future__ import annotations
 
@@ -9,10 +9,9 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import front, node
-from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
-from event_universe.features.click import Face, Hole, laid_pairs, standing
+from event_universe.features.click import Face, laid_pairs, standing
 from event_universe.giving import given_quantum
 from event_universe.lay import laid
 from event_universe.loader.derived import count_wall
@@ -189,30 +188,34 @@ def click_act(
 
 
 def written(board: GameBoard, items: list[Item]) -> None:
-    """The write step of the act, the one swappable step, item by item: a spread record's quantum taken by the face at every Node named (`faced`, every line of the record whatever their number) or given by the lay of one whole quantum there (`given_quantum`), its count in the credit's books moved; a record declared a NodeReader at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node of its items, and where it stays at one or more the restoring front begins from every hole (`front.restoring`, the holes `faced` returns) (`front.started`); every lay of the step is the one lay act's, which writes every line a lay changed at a Node, levels or remainder, as one `lay` line with the levels before and after (`lay.written`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
-    leaving = [item for item in items if item.body is not None and item.delta < 0]
-    phases = {item.body: leaving_phase(board, item) for item in leaving}
+    """The write step of the act, the one swappable step, item by item (ALGEBRA.md, The click writes on the GameBoard, the undepleted beam; the two hands' line at the owner's word for the simple solution): a spread record's quantum is taken or given at the Nodes named through one comparison, `faced`, the record's booked share at the Node against its own quantum W_rec; where the record is local and whole there the taking is the hole to 0 by the face (every line of the record whatever their number) and the giving the lay of one whole quantum (`given_quantum`), and where the record is a beam, many quanta per Node, nothing is written on the board: the quantum passes in the books alone, the count moved by the item's change as for every item and the family's deficit, the board's share over the books' count in quanta, moved against it (`credit.Books.deficits`, up by one for a taking written at no Node named, down by one for a giving not laid, the deficit's condition the complement of the lay's: a giving naming several Nodes with a beam among them lays nothing and moves the deficit, though no shipped list names several Nodes for a giving; printed in the books' line); a record declared a NodeReader at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node faced (`front.started`), and a record whose count stays at one or more has no front; every lay of the step is the one lay act's, which writes every line a lay changed at a Node, levels or remainder, as one `lay` line with the levels before and after (`lay.written`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
+    phases = {i.body: leaving_phase(board, i) for i in items if i.body is not None and i.delta < 0}
     touched: list[NodeBooks] = []
-    holes: dict[int, dict[Node, list[list[Hole]]]] = {}
+    holes: dict[int, list[Node]] = {}
     for item in items:
-        if item.body is None and item.delta < 0:
-            for at, written_there in faced(board, item).items():
-                holes.setdefault(item.family, {}).setdefault(at, []).append(written_there)
+        if item.body is not None:
+            parted(board, books := books_named(board, item.body), item, phases.get(item.body))
+            touched += [books] if books not in touched else []
             continue
-        if item.body is None:
+        whole = faced(board, item)
+        unwritten = not whole if item.delta < 0 else len(whole) < len(item.nodes)
+        if item.delta > 0 and not unwritten:
             given_quantum(board, item)
-            continue
-        parted(board, books := books_named(board, item.body), item, phases.get(item.body))
-        touched += [books] if books not in touched else []
+        else:
+            board.credit.counts[item.family] += item.delta
+        if item.delta < 0:
+            holes.setdefault(item.family, []).extend(whole)
+        if (
+            unwritten
+        ):  # the quantum in the books alone, the undepleted beam: the deficit against the count
+            board.credit.deficits[item.family] = board.credit.deficits.get(item.family, 0) - item.delta
     for books in touched:
         books.part = max(range(len(books.counts)), key=lambda k: books.counts[k])
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]
     for family, taken in sorted(holes.items()):
-        if board.credit.counts[family] <= 0:  # the count at 0: its front from every Node written
-            front.started(board, family, [at for i in items if i.family == family for at in i.nodes])
-        else:
-            front.restoring(board, family, taken)
+        if board.credit.counts[family] <= 0 and taken:  # the count at 0: its front from every Node faced
+            front.started(board, family, taken)
 
 
 def books_named(board: GameBoard, body: int) -> NodeBooks:
@@ -227,22 +230,16 @@ def leaving_phase(board: GameBoard, item: Item) -> Phase:
     return (re, im), 1 if re * im_before - im * re_before >= 0 else -1
 
 
-def faced(board: GameBoard, item: Item) -> dict[Node, list[Hole]]:
-    """A spread record's quantum taken at the Nodes named, the face (features/click, `Face`; ALGEBRA.md, The click writes on the GameBoard (b) and (d), and the hole of a dense record): for every line of the record and every Node, one face at the next two intervals, the first Port preferred, so that Rule3 writes the level 0 and then the level before 0 with its own remainder where the record's booked share at the Node, O + C / 2, is at most its own quantum (the mathematician's hand; the front erasing what spread beyond the Node), and otherwise (a dense record, the Zeno drive at 3.5 quanta per Node or the ion's drive at 55) each face writes its level by the booking identity, one `Hole` per line and Node shared by its two faces carrying the record's unit from the books in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (the share's weight, `share.over_pace`, p_i the Node's Link pace under the record's read), the first face removing one quantum or the most one write can and recording exactly what left, the second the rest the same way (`features/click.rest_of`; the mathematician's hand with the advisor's second); the record's count in the credit's books down by the item's change; nothing assigned at any Node."""
+def faced(board: GameBoard, item: Item) -> list[Node]:
+    """The one comparison of the taking and the giving at a spread record's Nodes (features/click, `Face`; ALGEBRA.md, The click writes on the GameBoard (b) and (d), the undepleted beam): at each Node named the record's booked share, the share the credit reads there (`GameBoard.share_of`, the conserved form's density at the Node, `share.share`, read at the click from the levels the next step reads), against the record's own quantum W_rec (`credit.Books.units`); the Nodes where it is at most W_rec, the record there local and whole, are returned, the Nodes the click writes, and for a taking the hole to 0 is booked there: for every line of the record one face at the next two intervals, the first Port preferred, so that Rule3 writes the level 0 and then the level before 0 with its own remainder (the mathematician's hand; the front erasing what spread beyond the Node where the count reaches 0); at a Node where the share is above W_rec a record of many quanta per Node is a beam, nature's undepleted beam, exact as the count per Node grows: no face, no lay and no front there, the levels standing (a one-Node lay into a beam would be the same point defect the hole of a dense record was), the quantum passing in the books alone (`written`: the count and the deficit); nothing assigned at any Node."""
     lines, ticks = range(board.families[item.family].record), (board.tick + 1, board.tick + 2)
-    unit, gamma, link = board.credit.units[item.family], board.world.node_clock, board.unit
-    content = board.read(item.family, 1, 0)[0]
-    holes: dict[Node, list[Hole]] = {}
-    for at, line in itertools.product(item.nodes, lines):
-        node_at, here = (int(at[0]), int(at[1]), int(at[2])), tuple(np.add(at, board.offset))
-        pace = int(paces.link_pace_of(gamma, np.asarray(content)[here] if np.ndim(content) else content))
-        hole = Hole(unit * 2 * pace * pace * link * link)  # W_rec in the form's own units at the Node
-        holes.setdefault(node_at, []).append(hole)
-        for tick in ticks:
-            found = Face(item.family, line, node_at, 0, tick, None, hole, tick == ticks[1])
-            board.credit.faces.setdefault(tick, []).append(found)
-    board.credit.counts[item.family] += item.delta
-    return holes
+    unit = board.credit.units[item.family]
+    shares = board.share_of(item.family, 1, board.mask(item.nodes))[0]
+    nodes = [(int(n[0]), int(n[1]), int(n[2])) for n in item.nodes]
+    whole = [n for n in nodes if int(shares[tuple(np.add(n, board.offset))]) <= unit]
+    for node_at, line, tick in itertools.product(whole if item.delta < 0 else [], lines, ticks):
+        board.credit.faces.setdefault(tick, []).append(Face(item.family, line, node_at, 0, tick))
+    return whole
 
 
 def parted(board: GameBoard, books: NodeBooks, item: Item, phase: Phase | None) -> None:
@@ -272,12 +269,19 @@ def faces_reported(board: GameBoard) -> None:
         board.output(face(board.tick, name, found.line, at, found.port, found.value))
 
 
-def exchange(books: NodeBooks, leaves: int, enters: int) -> list[Item]:
-    """The record's own half of a click's list: one quantum of its count from the part `leaves` to the part `enters` at its Node."""
-    return [
+def exchange(
+    board: GameBoard, books: NodeBooks, leaves: int, enters: int, drive: int | None = None
+) -> list[Item]:
+    """The record's own half of a click's list, one quantum of its count from the part `leaves` to the part `enters` at its Node, and before it, for a transition by a `drive`, the drive's item at the Node the drive's inflow draws (`hole_node`): the drive's quantum taken, -1, where the transition climbs, the part entered above the part left in the body's declared order of parts (the first part the lowest, `loader/node_reader_declaration.parts_of`), and given back, +1, where it descends, stimulated emission, by the count at the drive's own pair where the drive is local and whole at the Node and nothing where it is a beam (`written`, `faced`, the undepleted beam; the two hands' line)."""
+    parts = [
         Item(books.index, books.number, part, delta, books.nodes)
         for part, delta in ((enters, 1), (leaves, -1))
     ]
+    if drive is None:
+        return parts
+    sign = -1 if enters > leaves else 1
+    pair = board.families[drive].pair if sign > 0 else None
+    return [Item(drive, None, None, sign, (hole_node(board, books, drive),), pair), *parts]
 
 
 def null_window(board: GameBoard, books: NodeBooks) -> None:
@@ -307,7 +311,7 @@ def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
             if pick < len(directions):
                 laid_at = drawn_node(board, books, list(books.weights))
                 given = Item(rate.light, None, None, 1, (laid_at,), None, rate.resonance, rate.lifetime)
-                items = exchange(books, rate.leaves, rate.enters)
+                items = exchange(board, books, rate.leaves, rate.enters)
                 written(board, items + [replace(given, width=rate.width, direction=directions[pick])])
                 reported(board, books, (rate.enters, rate.leaves), (None, rate.light))
                 return True
@@ -315,20 +319,12 @@ def gave(board: GameBoard, books: NodeBooks, grain: int) -> bool:
 
 
 def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
-    """The takings drawn at the windows' end, one draw at a time per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the GameBoard (f): the credit draws once over all the NodeReaders that read one record, one quantum one click; the owner's word): the outcomes the transitions out of the part each record stands in reading that family, each weighted by its label squared, the two-mode line's share, and the outcome that none takes weighted by the rest of the count's unit; the first closing record's generator; none while the arriving record's count stands at 0 in the books; the taking's list the drawn outcome's (the arriving record at -1 at that Node, the record's part entered at +1 and left at -1; `click`); a record that took is done for the window; returns the records done."""
+    """The takings drawn at the windows' end, one draw at a time per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the GameBoard (f): the credit draws once over all the NodeReaders that read one record, one quantum one click; the owner's word): the outcomes the transitions out of the part each record stands in reading that family, each weighted by its label squared, the two-mode line's share, and the outcome that none takes weighted by the rest of the count's unit; the first closing record's generator; none while the arriving record's count stands at 0 in the books; the drawn outcome's list (`exchange`: the drive at -1 at that Node where the transition climbs in the declared order of parts and at +1, given back, where it descends, the record's part entered at +1 and left at -1); a record that took or gave back is done for the window; returns the records done."""
     done: set[int] = set()
-    drives = sorted(
-        {t.drive for books in closing for t in books.declared.transitions if t.leaves == books.part}
-    )
-    for drive in drives:
+    pairs = [(b, t) for b in closing for t in b.declared.transitions if t.leaves == b.part]
+    for drive in sorted({t.drive for _books, t in pairs}):
         while board.credit.counts[drive] > 0:
-            outcomes = [
-                (books, transition)
-                for books in closing
-                if books.number not in done
-                for transition in books.declared.transitions
-                if transition.leaves == books.part and transition.drive == drive
-            ]
+            outcomes = [(b, t) for b, t in pairs if b.number not in done and t.drive == drive]
             if not outcomes:
                 break
             weights = [books.labels[transition.enters] ** 2 for books, transition in outcomes]
@@ -341,9 +337,9 @@ def took(board: GameBoard, closing: list[NodeBooks]) -> set[int]:
             if pick >= len(outcomes):
                 break
             books, transition = outcomes[pick]
-            hole = Item(drive, None, None, -1, (hole_node(board, books, drive),))
-            written(board, [hole, *exchange(books, transition.leaves, transition.enters)])
-            reported(board, books, (transition.enters, transition.leaves), (drive, None))
+            parts, up = (transition.enters, transition.leaves), transition.enters > transition.leaves
+            written(board, exchange(board, books, transition.leaves, transition.enters, drive))
+            reported(board, books, parts, (drive, None) if up else (None, drive))
             done.add(books.number)
     return done
 
@@ -373,13 +369,10 @@ def probe_click(board: GameBoard, books: NodeBooks) -> None:
         if taken.leaves == taken.enters:
             written(board, [Item(books.index, books.number, taken.leaves, 0, books.nodes)])
         else:
-            at = (hole_node(board, books, taken.drive),)
-            written(
-                board,
-                [Item(taken.drive, None, None, -1, at), *exchange(books, taken.leaves, taken.enters)],
-            )
-        light = taken.drive if taken.leaves == taken.enters else None
-        reported(board, books, (taken.enters, taken.leaves), (taken.drive, light))
+            written(board, exchange(board, books, taken.leaves, taken.enters, taken.drive))
+        up, down = taken.enters >= taken.leaves, taken.enters <= taken.leaves
+        traded = (taken.drive if up else None, taken.drive if down else None)
+        reported(board, books, (taken.enters, taken.leaves), traded)
     elif len(books.counts) > 1:  # a record of one part reads none
         null_window(board, books)
 

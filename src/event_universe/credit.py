@@ -36,7 +36,7 @@ Clock = list[
 
 @dataclass
 class Books:
-    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeReaders with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked_regions`) and the count of the windows closed, the node_readers' event clock."""
+    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node, the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeReaders with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked_regions`), the count of the windows closed, the node_readers' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `meeting.faced`; the board's share exceeds the books' count by it, printed in the books' line, `GameBoard.books`)."""
 
     declaration: Draw | None
     elapsed: int
@@ -53,6 +53,7 @@ class Books:
     empty: set[int] = field(default_factory=set)
     clocks: dict[tuple[int, str], Clock] = field(default_factory=dict)
     windows: int = 0
+    deficits: dict[int, int] = field(default_factory=dict)
 
     def window_of(self, tick: int) -> list[int]:
         """The window closing at `tick`, [first, last], the declaration's length of intervals."""

@@ -1,4 +1,4 @@
-"""The simple cubic lattice's Green's function on an axis, the law's kernel row 3 G(r) (ALGEBRA.md, The lattice constants): the differences G(0) - G(r) from the periodic Green's function of a box of 128 Nodes by one Fourier transform (the images' leading terms cancel, the rest below 10^-6 at r <= 5), anchored at Watson's G(0) = 0.2527310098 for the infinite lattice, with 3 G(0) - 3 G(1) = 1 / 2 exactly as the check.
+"""The simple cubic lattice's Green's function on an axis, the law's kernel row 3 G(r) (ALGEBRA.md, The lattice constants): the differences G(0) - G(r) from the periodic Green's function of a box of 128 Nodes by one Fourier transform (the images' leading terms cancel, the remaining term 2 x 10^-6 at r = 5 and below 10^-6 at r <= 3, 4 pi r G(r) at r = 5 reading 1.01179 against 1.01166 from a box of 512, harmless at the printed 1.012), anchored at Watson's G(0) = 0.2527310098 for the infinite lattice, with 3 G(0) - 3 G(1) = 1 / 2 exactly as the check.
 
 Usage: `python tools/derivations/greens_function.py` prints 3 G(r) at r = 0 to 5 and 4 pi r G(r) at r = 1 to 5.
 """
