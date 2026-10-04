@@ -27,7 +27,7 @@ paper reports are the gates' (Section 3.7): the back-in-time gate's MATCH on
 every file, taken by the owner's word of 2026-10-01 ("if there is a run of
 the reversal that looks good and agrees with nature, take it"), and the two
 slits', Bell's and GHZ's gates, the blind written first and the runs of Bell's and
-the GHZ's identical to theirs, the two slits' 278 against its Huygens blind 273, the engine's check of the algebra and no experiment against nature;
+the GHZ's identical to theirs, the two slits' 270 against its Huygens blind 273 (the law's line 269.3), the engine's check of the algebra and no experiment against nature;
 only a NodeReader's click is a measurement, and a number read off the GameBoard
 is a diagnostic. Table 1 of the paper lists every result with its
 kind, its fence and what it rests on, and Table 2 the formulas of clicks with
