@@ -20,7 +20,14 @@ from event_universe.loader.draw import (
     patterns_of_the_law,
     ports_of,
 )
-from event_universe.loader.faces import RecedingFace, faces_of, layer_of, receding_of
+from event_universe.loader.faces import (
+    RecedingFace,
+    connected,
+    extent_across,
+    faces_of,
+    layer_of,
+    receding_of,
+)
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.messages import MessageRow, WholeMessage, messages_of, wholes_of
@@ -250,24 +257,6 @@ def node_readers_of(
     return tuple(found)
 
 
-def connected(nodes: tuple[Node, ...], shape: Node, periodic: tuple[bool, bool, bool]) -> bool:
-    """Whether a set of Nodes is one region: every Node reached from the first along the Links, across a periodic wrap too."""
-    region, seen, front = set(nodes), {nodes[0]}, [nodes[0]]
-    while front:
-        node = front.pop()
-        for axis in range(3):
-            for side in (1, -1):
-                there = list(node)
-                there[axis] += side
-                if periodic[axis]:
-                    there[axis] %= shape[axis]
-                at = (there[0], there[1], there[2])
-                if at in region and at not in seen:
-                    seen.add(at)
-                    front.append(at)
-    return seen == region
-
-
 def regions_of_the_law(
     node_readers: tuple[NodeReaderRow, ...],
     messages: tuple[MessageRow, ...],
@@ -275,18 +264,25 @@ def regions_of_the_law(
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyRule, ...],
 ) -> None:
-    """The size rule of a node_reader's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words, the uncertainty principle upheld): a declared region, a reader with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a reader with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate, is under q / p (extent x |p| < q) are refused by name; a node_reader reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
+    """The size rule of a node_reader's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words, the uncertainty principle upheld): a declared region, a reader with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a reader with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a Node named twice (the refusal naming the reader and the Node, as `bodies_of` refuses a body naming one Node twice; the size rule reads the distinct Nodes), a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate on an open or closed axis and through the wrap on a periodic axis, the smallest arc of the ring that covers its coordinates (`loader/faces.extent_across`), is under q / p (extent x |p| < q) are refused by name (the advisor's breaker over the engine at 7756546d, #1793: a region naming one Node twice was admitted as two Nodes, and a region two Nodes wide through the wrap was read as five); a node_reader reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
     for node_reader in node_readers:
         if not node_reader.declared:
             continue
-        if len(node_reader.positions) < 2:
+        nodes = tuple(dict.fromkeys(node_reader.positions))  # the distinct Nodes, in the order named
+        if len(nodes) < len(node_reader.positions):
+            twice = [list(node) for node in nodes if node_reader.positions.count(node) > 1]
+            raise ValueError(
+                f"node_reader {node_reader.name!r} names the Node {twice} twice: a region's Nodes are distinct, "
+                "each named once, as a body's Nodes are"
+            )
+        if len(nodes) < 2:
             raise ValueError(
                 f"node_reader {node_reader.name!r} is one Node: a region of a travelling wave, a reader with Nodes alone, "
                 "reads the net current through its boundary Ports, and through one Node what enters leaves, so it "
                 "stands on two Nodes or more, never one Node; a reader with a record of its own may stand on one "
                 "Node (ALGEBRA.md, The NodeReader is one declaration kind for every experiment)"
             )
-        if not connected(node_reader.positions, shape, periodic):
+        if not connected(nodes, shape, periodic):
             raise ValueError(
                 f"node_reader {node_reader.name!r} is not one connected region: its Nodes fall into pieces with "
                 "no Link between them"
@@ -296,11 +292,11 @@ def regions_of_the_law(
             for axis in range(3):
                 if axis == message.along or shape[axis] < 2:
                     continue
-                coordinates = [node[axis] for node in node_reader.positions]
-                extent = max(coordinates) - min(coordinates) + 1
+                extent = extent_across([node[axis] for node in nodes], shape[axis], periodic[axis])
                 if extent * abs(p) < q:
+                    wrapped = ", read through its wrap" if periodic[axis] else ""
                     raise ValueError(
-                        f"node_reader {node_reader.name!r} is {extent} Node(s) across the {AXES[axis]} axis, under half "
+                        f"node_reader {node_reader.name!r} is {extent} Node(s) across the {AXES[axis]} axis{wrapped}, under half "
                         f"the wavelength of the {families[message.family].name!r} message's wave [{p}, {q}], "
                         f"{q} / {abs(p)} Nodes: no click names a position finer than the amplitudes carry"
                     )
