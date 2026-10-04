@@ -4,12 +4,7 @@
     "breaker": "Rule3 on a 3x3x3 periodic board with random integer levels under each of the cube's 48 maps commutes with the map (0 misses expected); a rotation outside the group: the band's cos omega at k = 0.5 per Link on a massless family reads 0.9592 along an axis, 0.9588 along a face diagonal and 0.9586 along the body diagonal (the mathematician's hand, 5982319424), the lattice's anisotropy at the fourth order of S.21: the claim holds since the three differ and would break only if they agreed.",
     "state": "to write"
   },
-  "Beyond P the mode at wave number pi on every axis grows with": {
-    "kind": "a",
-    "breaker": "Random paces p at or below P on 2x2x2 to 4x4x4 periodic boards, the coefficients fixed, 200 steps at every pair up to [4000, 6000]: the largest level bounded, no mode growing; p = P + 1: the pi mode grows (the claim's first half). Outside the fence: the coefficients changing in time (the parametric sequence of #1901, R326) with every instant's pace below P: one solution grows, so the fence 'at coefficients fixed in time' is where the sentence says.",
-    "state": "to write"
-  },
-  "In the clicks there are conservations other than the boards": {
+  "In the clicks there are conservations other than the GameBoa": {
     "kind": "a",
     "breaker": "The board's conservations: the weighted form and Wronskian on random boards at static paces in exact rationals (the rows of Theorem 3 and 5.5); no total energy: the clicks' energy T sin omega and the holder's form move together (R316), a world where a body's level grows and the form falls, both read; the credit's conservation of the count the engine's own act (kind (e): one quantum one click on the tests' universe, the count before and after).",
     "state": "to write"
@@ -44,12 +39,12 @@
     "breaker": "A region of random shape on a random board: the sum of the shares' rational changes equals the weighted boundary currents plus the remainder terms, the interior Links cancelling pairwise (the Link factor the same from both ends); a region of one Node and a region of the whole periodic board as the two ends; a reader's floor the one further term.",
     "state": "to write"
   },
-  "The total share of a closed or periodic GameBoard is nonnega": {
+  "The total share of any GameBoard whose Links read the same f": {
     "kind": "a",
     "breaker": "Random integer levels on closed and periodic boards at the vacuum's coefficients for every pair with |num| <= den: the total share non-negative, 0 at a static uniform level of light (the equality); outside: |num| > den (beyond the guard) or a board with an open face reading 0 beyond: the total can go negative, the fence's two conditions each needed.",
     "state": "to write"
   },
-  "The direction of time belongs to the clicks and not to the b": {
+  "The direction of time belongs to the clicks and not to the G": {
     "kind": "a",
     "breaker": "The step on random states is a bijection (its inverse found for every state, no two states to one); the draw's write is not (two states, the quantum taken from either of two Nodes, map to one board): the arrow is the click's, the step's reversibility the first half of 5.1.",
     "state": "to write"
@@ -209,7 +204,7 @@
     "breaker": "The band's expansion at small k on the exact band: m* from the curvature, c_m^2 from the Lorentz form's inversion (S.21), E = omega_0 at k = 0; the three read on one band at [2, 3], [9, 10], [999, 1000], c_m / c = 0.867 at [2, 3] and 1 as the gap closes; outside: k near the band's top where no quadratic form fits.",
     "state": "to write"
   },
-  "tab:adds: The postNewtonian parameters with the gap gammaK den num bet": {
+  "tab:adds: The postNewtonian parameters with the gap for 0 num le den g": {
     "kind": "a",
     "breaker": "S.19's conversion of the exponential metric's forms to Kepler's potential at the pair: gamma_K = den / num, beta_K = (den + num) / (2 num), 1 + alpha_K = tan omega_0 / omega_0 at [2, 3] (1.5, 1.25, 1.329) and at [999, 1000] (1.001, 1.0005, 1.0000003); the orbit step of S.19 against the formula's precession at both pairs; outside: the band's k^4 term at the computed pair's k, the ten percent named.",
     "state": "to write"
@@ -224,7 +219,7 @@
     "breaker": "Root-finding on b(r) = r e^{2U}, U = m / r: the minimum at r = 2m, b = 2 e m = 5.44 m exactly, against 3 sqrt 3 m = 5.20 m; the general lens equation at finite k reproduces it as k -> 0 (S.30); the 4.6 percent and the two EHT standard deviations as printed.",
     "state": "to write"
   },
-  "tab:adds: The gravity of light a light packet pulls at 1 times E c2 ag": {
+  "tab:adds: The gravity of light a light packets integrated write at 1 t": {
     "kind": "a",
     "breaker": "S.41's write of a light packet into the sign holder's source against a matter quantum of the same E on one Node and on a chain in exact rationals: the factor 1 against general relativity's 2 (the pressure's share absent); outside: a packet whose form is not the conserved one (a plain read) writes another factor, named.",
     "state": "to write"
@@ -729,7 +724,7 @@
     "breaker": "Schroedinger's slow limit: the three conditions each tested outside its order (the budget's bound per laid mode (R325), the spatial second difference's k^2 / 12 and the band's own 1 / (12 sin^2 omega_0) (#1908 (7)), the envelope's second difference); the Gaussian packet's centre 71.4 against 71.6 and the width 32.38 against 32.40 (schroedinger_check.py re-run).",
     "state": "to write"
   },
-  "Each act is a call of Rule3 on wholeboard arrays of integers": {
+  "Each act is a call of Rule3 on wholeGameBoard arrays of inte": {
     "kind": "e",
     "breaker": "The owner's rule (2026-10-04): every act of the engine on a Node's levels is Rule3's one line or the division act with the half, as the law has them (the lay, the write, the hole, the start, the credit's division); the breaker scans src/event_universe for arithmetic on a Node's levels outside core/rule3 and the division act, and every per-Node computation found there that is not of Rule3's form is a red row by itself and a finding shouted on the reviewer's ledger (the alignment audit's A1 to A3 and S.61's 26 rows the first list); kind (e), the advisor's engine breaker and the mathematician's audit.",
     "state": "to write"
@@ -747,5 +742,10 @@
   "S.64": {
     "kind": "a",
     "breaker": "Niven's theorem and the integer recurrence: 2 cos(2 pi p / q) rational only in {-2, -1, 0, 1, 2}; Rule3 at the vacuum's paces on a uniform record returns in 6, 4 and 3 steps at [3000, 6000], [0, 6000] and [-3000, 6000] with the carry 0, never at [6000, 6000]; outside: [4000, 6000] from a = 1,000 returns after 3,795 steps, not after its rotation's 7.47, so a pair with 2 cos omega_0 not an integer never closes at its period; the gap 1 / 2 of the one gapped closing pair against the electron's below 2e-28."
+  },
+  "Beyond P the extreme mode grows without bound the mode at wa": {
+    "kind": "a",
+    "breaker": "Random paces p at or below P on 2x2x2 to 4x4x4 periodic boards, the coefficients fixed, 200 steps at every pair up to [4000, 6000]: the largest level bounded, no mode growing; p = P + 1: the pi mode grows (the claim's first half). Outside the fence: the coefficients changing in time (the parametric sequence of #1901, R326) with every instant's pace below P: one solution grows, so the fence 'at coefficients fixed in time' is where the sentence says.",
+    "state": "to write"
   }
 }

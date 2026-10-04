@@ -58,8 +58,8 @@ their statuses.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
   engine's own look of the shipped two-slits file, labelled a GameBoard reading, and none by a
-  generative tool, with 8 pt lettering at the drawn size (Figs. 1 and 2 are
-  included at that size, the other four at 0.66 to 0.75 of the text width), within the
+  generative tool, with 6 to 8 pt lettering at the drawn size (Figs. 1 and 2 are
+  included at that size, the other six at 0.66 to 0.75 of the text width), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
   every line at least 0.3 pt, black and grey, no transparency), with an EPS
