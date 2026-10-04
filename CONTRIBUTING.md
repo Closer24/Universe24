@@ -67,8 +67,15 @@ the short procedure of [the shared workflow](skills/workflow.md).
   the model owner is one line in `docs/HIGHLIGHTS.md`, replacing the line it
   changes; a finding or approval of one pull request is a comment on it; a list
   across pull requests is one issue with a checklist.
+- The pull request that prints a finding's state in a document changes the finding's
+  row in [docs/REVIEW_LEDGER.md](docs/REVIEW_LEDGER.md) in the same pull request; the
+  reviewer names the state at the hash.
 - A document cites a path in backticks only where the tree holds it;
   `tests/test_documents.py` refuses a pull request otherwise.
+- A history clause in the law or the engine's document is dated or struck, never
+  left; a number that stands in two places is one row of `tools/numbers.json`, and a
+  derived number has its script under `tools/derivations/`; `tools/documents_gates.py`
+  refuses a pull request otherwise (ENGINE.md, section 8).
 - Write all comments, docstrings and documents in English under the rule in
   [AGENTS.md](AGENTS.md#repository-language-english); translate prose from older
   branches before integration.
