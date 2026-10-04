@@ -7,7 +7,7 @@ from event_universe.game_board import GameBoard
 from event_universe.loader import faces, keys, lay, messages, mode, universe
 from event_universe.loader.derived import PLANE_LINE, REAL_LINE
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, TOOL, refused, slit_world, universe_beside
+from tests.laws import EVENTS, PACKET, TOOL, refused, slit_world, universe_beside
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
@@ -260,3 +260,34 @@ def test_the_loader_derives_the_pair_of_two_bound_records(tmp_path):
         ([2, 3, 4], "must be \\[num, den\\]"),
     ):
         refused(match, universe.universe_of, {**document, "families": [*rows, row("x", pair)]})
+
+
+def test_the_region_rule_refuses_a_node_named_twice_and_reads_the_extent_through_the_wrap(
+    tmp_path, monkeypatch
+):
+    """The loader's region rule against two admissions the advisor's breaker found over the engine at 7756546d (#1793; `loader/world.regions_of_the_law` with `loader/faces.extent_across`): (a) a region naming one Node twice, [[2, 2, 2], [2, 2, 2]], admitted before as a region of two Nodes while it stands on one, is refused by name with the reader and the Node, and a region of two distinct Nodes is admitted; (b) under the slit world's message, the wave [1, 4] along x and so a half wavelength of 4 Nodes across y, a region at y = 0 and y = 4 of a board 5 Nodes on y periodic on y is 2 Nodes across through the wrap, read before as 5 from its least to its greatest coordinate, and is refused by name with the extent 2, while on y open the two Nodes meet through no wrap and the region is refused as one in pieces, the connection rule standing before the extent's; the extent's arithmetic on the ring of 5 written by hand: 0 and 4 are 2 Nodes across wrapped and 5 open, 1, 2 and 3 are 3 either way, the whole ring 5 and one coordinate 1 (every refusal's words printed)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe_beside(tmp_path)
+    world = dict(shape=[4, 4, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=1)
+    world.update(universe="u.json", engine="e.json", bodies=[])
+    for name, positions in (("twice", [[2, 2, 2], [2, 2, 2]]), ("two", [[2, 2, 2], [2, 2, 1]])):
+        readers = [{"name": name, "positions": positions}]
+        (tmp_path / f"{name}.json").write_text(json.dumps({**world, "node_readers": readers}), "utf-8")
+    refusal = str(refused("names the Node", load_world, tmp_path / "twice.json"))
+    print(refusal)
+    assert "'twice'" in refusal and "[[2, 2, 2]] twice" in refusal
+    assert load_world(tmp_path / "two.json").node_readers[0].positions == ((2, 2, 2), (2, 2, 1))
+    narrow = {**PACKET, "top": {**PACKET["top"], "y": [0, 4]}}  # the slit's packet over 5 Nodes of y
+    board = dict(shape=[24, 5, 1], messages=[narrow])
+    board["node_readers"] = [{"name": "ring", "positions": [[20, 0, 0], [20, 4, 0]]}]
+    wrapped = slit_world(
+        tmp_path, TOOL, "wrap", boundary=dict(x="open", y="periodic", z="periodic"), **board
+    )
+    refusal = str(refused("under half the wavelength", load_world, wrapped))
+    print(refusal)
+    assert (
+        "'ring' is 2 Node(s) across the y axis, read through its wrap" in refusal and "[1, 4]" in refusal
+    )
+    print(refused("not one connected region", load_world, slit_world(tmp_path, TOOL, "open", **board)))
+    assert faces.extent_across([0, 4], 5, True) == 2 and faces.extent_across([0, 4], 5, False) == 5
+    assert [faces.extent_across(c, 5, True) for c in ([1, 2, 3], range(5), [2, 2])] == [3, 5, 1]

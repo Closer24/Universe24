@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from itertools import pairwise
 
 from event_universe.loader.keys import AXES, Node, integer, keyed, span_of
 
@@ -105,3 +106,31 @@ def faces_of(value: object, shape: Node) -> tuple[Node, ...]:
     if beyond and len(beyond) >= shape[0] * shape[1] * shape[2]:
         raise ValueError("faces leave no Node on the board")
     return tuple(sorted(beyond))
+
+
+def connected(nodes: tuple[Node, ...], shape: Node, periodic: tuple[bool, bool, bool]) -> bool:
+    """Whether a set of Nodes is one region: every Node reached from the first along the Links, across a periodic wrap too."""
+    region, seen, front = set(nodes), {nodes[0]}, [nodes[0]]
+    while front:
+        node = front.pop()
+        for axis in range(3):
+            for side in (1, -1):
+                there = list(node)
+                there[axis] += side
+                if periodic[axis]:
+                    there[axis] %= shape[axis]
+                at = (there[0], there[1], there[2])
+                if at in region and at not in seen:
+                    seen.add(at)
+                    front.append(at)
+    return seen == region
+
+
+def extent_across(coordinates: Iterable[int], length: int, wraps: bool) -> int:
+    """The extent of a region on one axis, in Nodes, for the size rule of `loader/world.regions_of_the_law`: from its least to its greatest distinct coordinate on an open or closed axis, and across a periodic axis of `length` Nodes the smallest arc of the ring that covers its coordinates, the length less the largest gap between cyclic neighbours (the gap through the wrap included) plus 1, so that y = 0 and y = 4 of 5 are 2 Nodes across, 1, 2 and 3 of 5 are 3, the same as from the least to the greatest, the whole ring is 5 and one coordinate is 1 (the advisor's breaker over the engine at 7756546d, #1793: a region two Nodes wide through the wrap was read as 5 and admitted under a wider half wavelength)."""
+    distinct = sorted(set(coordinates))
+    if not wraps:
+        return distinct[-1] - distinct[0] + 1
+    gaps = [after - before for before, after in pairwise(distinct)]
+    gaps.append(length - distinct[-1] + distinct[0])  # the wrap's gap, the whole ring at one coordinate
+    return length - max(gaps) + 1
