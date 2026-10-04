@@ -68,7 +68,7 @@ points at the law, the law's line governs and no formula is restated here.
 - Bell and GHZ are gates, not experiments.
 - The Zeno gate's seeds take the jump-ahead substreams, as both hands agreed.
 - The removed worlds (the atom's worlds, the cloud, the four charge worlds at 10,000 quanta per record, through_neutral, the free light world, like_or_unlike, matter_and_binding and its pair, frozen_proton, matter_and_gravity's well, nuclide, three_lines, parallel_charges, standing_17 and standing_19, the matter_alone variants, the train, the earlier which-way and dilute worlds, the comb Bell, the two speeds, the polarisation row) are removed because none was in the paper or on a test, loaded, or passed the count-1 gate; their rows stand in the law as dated clauses.
-- The shelved ion is redesigned by the experimenter on his branch at the hands' line and never on main, the diagnosis first and no world file change before it: open faces or the drive laid as a source in time, the hands' line deciding which and deriving the folder's blind before any run; one world at a time, each run under a minute, labelled, nothing of the engine, the Boss's pull request at both hands and CI.
+- The shelved ion's refusal is read to its mechanism, the band's top mode driven by the front and by Rule3's rounding on a board periodic on three even axes; the remedy is the front's restoration of both double roots, the mathematician's commit under the mandate above, and the file's one odd side, z = 7, on the experimenter's branch at the hands' line with the folder's blind re-derived before any run, never on main; nothing runs on the ion until the sha is named.
 
 ## The team and the method
 
