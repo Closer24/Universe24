@@ -173,7 +173,7 @@ def test_a_messages_mode_count_is_the_books_count_read_once_over_the_board(tmp_p
 
 
 def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rounding():
-    """The exact message lay (ALGEBRA.md, The message lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)) on the shipped worlds whose messages carry an envelope, the two slits, the which-way, the GHZ and Bell worlds (the anticoincidence's photons at the amplitudes 116 and 112 are left out: their rounding bound is 7 x 10^-2, above the bound that means something): each message laid by the generator as the mode file holds it (`pixel_mode`, through the division act) and read mode by mode against the law's exact lay in real numbers, the test's own floats from the file's keys (a_i = b e_i cos(k x_i + phi) and s_i = b e_i sin(k x_i + phi), the band cos omega(q) = (cos q_x + cos q_y + cos q_z) / 3 at the board's wave numbers, the before level the real part of the packet z = a + i s with every component advanced by its own omega(q), the uniform content of each level out in proportion to the envelope). The roots per bin, N_q = fftn(now) and B_q = fftn(before), u_q = (B_q - N_q e^(-i omega_q)) / (2 i sin omega_q) forward in time and v_q = (N_q e^(i omega_q) - B_q) / (2 i sin omega_q) backward, the bins with sin omega_q = 0 skipped (the uniform mode the division act removed, the staggered mode); a real pair's mirror bins carry the conjugate roots, u_(-q) = conj(v_q), so the backward root is read over the carrier's half-space, 0 < sign(p) q_along < pi, as its departure from the exact lay's own v*_q (the packet's mirror content, 0 beyond it before the rounding): misplaced = SUM_q |v_q - v*_q|^2 sin omega_q over the exact lay's forward form F* = SUM_q |u*_q|^2 sin omega_q. The same number for the plain lay's pair, before_i = b e_i cos(k x_i + phi + omega_k) from the same a and s (the engine's lay before this commit, the law's beta per component), rounded the same way. The bound from the rounding alone, from the file's own numbers: every laid level is off the real line by at most one half at every Node (the exact before level's tails reach every Node of the board, sqrt(1 - **L**^2) being no local read), so each level's error has the form at most N^2 / 4 over the bins (Parseval, N the board's Nodes) and the two levels' errors add in amplitude, SUM_q |R_q e^(i omega_q) - T_q|^2 <= N^2, the backward form from the error at most N^2 / (4 sin omega_min), sin omega_min the board's smallest nonzero sin omega_q: bound = N^2 / (4 sin omega_min F*). Printed per file, the plain lay's share, the exact lay's and the bound: the two slits 6.2 x 10^-2, 5.0 x 10^-6 and 2.0 x 10^-4, the which-way 6.2 x 10^-2, 6.5 x 10^-6 and 2.0 x 10^-4, the GHZ's three beams 2.8 x 10^-2, 4.3 x 10^-6 and 3.4 x 10^-4, Bell's two 7.2 x 10^-2, 1.2 x 10^-5 and 1.3 x 10^-5 and 3.1 x 10^-4 (the law's first-order estimate of the plain lay's share, 3.4 percent at the top 1 and the edge 6, is the band's narrow-width line; the exact per-component share at the shipped widths is larger); asserted: the exact lay's share below the bound and below the plain lay's by two orders, the bound below 10^-3. A single plane wave over a whole periodic box (the shipped Zeno drive, no edge, the top the whole axis) has one component, so its before level is the plain lay's, b cos(k x + phi + omega_k) by the same rounding, at every Node exactly."""
+    """The exact message lay (ALGEBRA.md, The message lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)) on the shipped worlds whose messages carry an envelope, the two slits, the which-way, the GHZ and Bell worlds (the anticoincidence's photons at the amplitudes 116 and 112 are left out: their rounding bound is 7 x 10^-2, above the bound that means something): each message laid by the generator as the mode file holds it (`pixel_mode`, through the division act) and read mode by mode against the law's exact lay in real numbers, the test's own floats from the file's keys (a_i = b e_i cos(k x_i + phi) and s_i = b e_i sin(k x_i + phi), the band cos omega(q) = (cos q_x + cos q_y + cos q_z) / 3 at the board's wave numbers, the before level the real part of the packet z = a + i s with every component advanced by its own omega(q), the uniform content of each level out in proportion to the envelope). The roots per bin, N_q = fftn(now) and B_q = fftn(before), u_q = (B_q - N_q e^(-i omega_q)) / (2 i sin omega_q) forward in time and v_q = (N_q e^(i omega_q) - B_q) / (2 i sin omega_q) backward, the bins with sin omega_q = 0 skipped (the uniform mode the division act removed, the staggered mode); a real pair's mirror bins carry the conjugate roots, u_(-q) = conj(v_q), so the backward root is read over the carrier's half-space, 0 < sign(p) q_along < pi, as its departure from the exact lay's own v*_q (the packet's mirror content, 0 beyond it before the rounding): misplaced = SUM_q |v_q - v*_q|^2 sin omega_q over the exact lay's forward form F* = SUM_q |u*_q|^2 sin omega_q. The backward root's absolute share, SUM_q |v_q|^2 sin omega_q over F*, stays at the analytic packet's own leakage into the mirror bins (a + i s of a finite envelope is not one-sided; the advisor's remark, #1793 comment 5980093560 (2)), 3.6 x 10^-4 of the form at the two slits at the weight sin omega and 2.3 x 10^-4 at sin^2 omega (Bell's 3.1 x 10^-4 and 2.7 x 10^-4, the GHZ's 6.8 x 10^-3 with its envelope across the beam), and the misplaced share is the integer lay's departure from it, the rounding's. The same number for the plain lay's pair, before_i = b e_i cos(k x_i + phi + omega_k) from the same a and s (the engine's lay before this commit, the law's beta per component), rounded the same way. The bound from the rounding alone, from the file's own numbers: every laid level is off the real line by at most one half at every Node (the exact before level's tails reach every Node of the board, sqrt(1 - **L**^2) being no local read), so each level's error has the form at most N^2 / 4 over the bins (Parseval, N the board's Nodes) and the two levels' errors add in amplitude, SUM_q |R_q e^(i omega_q) - T_q|^2 <= N^2, the backward form from the error at most N^2 / (4 sin omega_min), sin omega_min the board's smallest nonzero sin omega_q: bound = N^2 / (4 sin omega_min F*). The transform runs over the board at its largest declared extents (a receding axis's `largest`, the packet at its coordinates, the before level cropped to the board), as the generator's does. Printed per file, the plain lay's share, the exact lay's and the bound (a GameBoard diagnostic read at this commit, re-read at the frozen hash): the two slits 6.6 x 10^-2, 6.8 x 10^-6 and 2.3 x 10^-4, the which-way 6.6 x 10^-2, 6.2 x 10^-6 and 2.3 x 10^-4, the GHZ's three beams 2.8 x 10^-2, 4.3 x 10^-6 and 3.4 x 10^-4, Bell's two 7.6 x 10^-2, 9.5 x 10^-6 and 6.5 x 10^-6 and 3.1 x 10^-4 (the law's first-order estimate of the plain lay's share, 3.4 percent at the top 1 and the edge 6, is the band's narrow-width line; the exact per-component share at the shipped widths is larger); asserted: the exact lay's share below the bound and below the plain lay's by two orders, the bound below 10^-3. A single plane wave over a whole periodic box (the shipped Zeno drive, no edge, the top the whole axis) has one component, so its before level is the plain lay's, b cos(k x + phi + omega_k) by the same rounding, at every Node exactly."""
 
     def real_line(document, message):
         """The law's a and s in the test's floats from the file's keys, the envelope b e_i and the carrier's omega_k."""
@@ -207,19 +207,24 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
     def rounded(level):
         return np.floor(level + 0.5)
 
-    def laid_by(document):
-        """The world's messages as the generator lays them, dense over the board, with omega(q) and the bins."""
-        shape = tuple(document["shape"])
+    def band(shape):
+        """The board's bins per axis and omega(q) over a shape."""
         bins = [
             2 * np.pi * np.fft.fftfreq(n).reshape([-1 if a == axis else 1 for a in range(3)])
             for axis, n in enumerate(shape)
         ]
-        omega = np.arccos(np.clip(sum(np.cos(q) for q in bins) / 3, -1, 1))
+        return bins, np.arccos(np.clip(sum(np.cos(q) for q in bins) / 3, -1, 1))
+
+    def laid_by(document):
+        """The world's messages as the generator lays them, dense over the board, with omega(q), the bins and the largest extents (a receding axis's `largest`, else the shape's)."""
+        shape = tuple(document["shape"])
+        receding = document.get("receding", {})
+        largest = tuple(receding.get(n, {}).get("largest", k) for n, k in zip("xyz", shape, strict=True))
         entries = TOOL.pixel_mode(document)["messages"]
         pairs = [
             tuple(dense(entry["moving"][word], shape) for word in ("now", "before")) for entry in entries
         ]
-        return pairs, omega, bins
+        return pairs, *band(shape), largest
 
     worlds = (
         ("two_slits", "two_slits"),
@@ -229,14 +234,18 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
     )
     for folder, name in worlds:
         document = json.loads((EVENTS / folder / f"{name}.json").read_text(encoding="utf-8"))
-        pairs, omega, bins = laid_by(document)
+        pairs, bins, omega, largest = laid_by(document)
         for number, (message, pair) in enumerate(zip(document["messages"], pairs, strict=True)):
             a, s, envelope, omega_k = real_line(document, message)
             q_along = bins["xyz".index(message["along"])]
             half = np.broadcast_to(
                 (np.sign(message["wave"][0]) * q_along > 0) & (np.abs(q_along) < np.pi), a.shape
             )
-            advanced = np.real(np.fft.ifftn(np.fft.fftn(a + 1j * s) * np.exp(1j * omega)))
+            packet, within = np.zeros(largest, dtype=complex), tuple(slice(0, n) for n in a.shape)
+            packet[within] = (
+                a + 1j * s
+            )  # the packet at its coordinates on the board at its largest extents
+            advanced = np.real(np.fft.ifftn(np.fft.fftn(packet) * np.exp(1j * band(largest)[1])))[within]
             beyond = np.zeros(a.shape, dtype=bool)  # the Nodes beyond an inner face, 0 before the act
             for at in faces_of(document["faces"], a.shape) if "faces" in document else ():
                 beyond[at] = True

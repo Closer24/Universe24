@@ -1255,9 +1255,9 @@ def half_up(levels: np.ndarray) -> np.ndarray:
 
 
 def message_levels(
-    board: Board, message: dict[str, Any], beyond: np.ndarray, massless: bool
+    board: Board, message: dict[str, Any], beyond: np.ndarray, massless: bool, largest: Axis
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The message's two levels (ALGEBRA.md #the-generator, The message lay): now_i = b e_i cos(k x_i + phi), k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`); every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board. The before level is the exact lay (ALGEBRA.md, The message lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)): with a = b e cos(k x + phi) the now level and s = b e sin(k x + phi) its quadrature (the cosine a quarter turn back), z = a + i s is the packet, every component e^(i q x) of z is advanced by its own omega(q), and the before level is Re of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, **L** the line's own read whose eigenvalue on e^(i q x) is cos omega(q), the backward root 0; the generator lays it mode by mode in real arithmetic (the tool's floats, exact to 10^-13 of the amplitude), a and s read at the lay's scale over the whole board and the packet advanced through its transform over the board's shape (`advanced_real_part`), rounded once half up to integers (`half_up`) as the now level is by the division act with the half. For a massless family of quanta (`massless`, the pair [den, den]; a holder of the content's kick is laid as declared) the uniform mode's content is then taken out of each level, the division act last on the finished shape (`lay.corrected`: the level's sum over the board divided among the packet's Nodes in proportion to the envelope by the division act, the leftover one unit each at the heaviest Nodes), so that now and before each sum to 0 exactly and the massless row's double root at wave number 0 carries neither level nor velocity (ALGEBRA.md, The message lay; the experimenter's bug report, #1827 comment 5975131359)."""
+    """The message's two levels (ALGEBRA.md #the-generator, The message lay): now_i = b e_i cos(k x_i + phi), k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`); every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board. The before level is the exact lay (ALGEBRA.md, The message lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)): with a = b e cos(k x + phi) the now level and s = b e sin(k x + phi) its quadrature (the cosine a quarter turn back), z = a + i s is the packet, every component e^(i q x) of z is advanced by its own omega(q), and the before level is Re of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, **L** the line's own read whose eigenvalue on e^(i q x) is cos omega(q), the backward root 0; the generator lays it mode by mode in real arithmetic (the tool's floats, exact to 10^-13 of the amplitude), a and s read at the lay's scale over the whole board and the packet advanced through its transform over the board at its largest declared extents (`largest`: along an axis with a receding face the extent the board grows to, the file's `receding.largest`, the packet at its coordinates and the before level cropped to the board as declared, so that a world growing by its receding face lays the levels of the same world declared at the full extent up to the division act on the board's own sums, and no tail wraps across a receding face; an axis without one keeps its extent, a periodic axis wrapping as it should; `advanced_real_part`), rounded once half up to integers (`half_up`) as the now level is by the division act with the half. The exact before level is not compactly supported (sqrt(1 - **L**^2) is no local read), so a packet whose quadrature sums to S level units carries a tail of order S / (2 pi sqrt 3 r^3) at r Links, one unit at twenty Links for the two slits. For a massless family of quanta (`massless`, the pair [den, den]; a holder of the content's kick is laid as declared) the uniform mode's content is then taken out of each level, the division act last on the finished shape (`lay.corrected`: the level's sum over the board divided among the packet's Nodes in proportion to the envelope by the division act, the leftover one unit each at the heaviest Nodes), so that now and before each sum to 0 exactly and the massless row's double root at wave number 0 carries neither level nor velocity (ALGEBRA.md, The message lay; the experimenter's bug report, #1827 comment 5975131359)."""
     along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
     turned, whole_turn = message["phase"]
     sideways = {
@@ -1298,13 +1298,15 @@ def message_levels(
     half = int(division_forward(scale, 2, 0)[0])
     # the exact lay: a and its quadrature s = b e sin(k x + phi) read at the scale in the tool's floats,
     # the packet z = a + i s advanced mode by mode by its own omega(q), its real part rounded once
-    real_now, real_quadrature = (
-        np.vectorize(lambda numerator: numerator / scale, otypes=[float])(level)
-        for level in (now, envelope_here * quadrature * unit)
-    )
+    extended = [np.zeros(largest), np.zeros(largest)]  # the board at its largest declared extents
+    within = tuple(
+        slice(0, extent) for extent in board.shape
+    )  # the board as declared, at its coordinates
+    for whole, level in zip(extended, (now, envelope_here * quadrature * unit), strict=True):
+        whole[within] = np.vectorize(lambda numerator: numerator / scale, otypes=[float])(level)
     levels = [
         np.where(beyond, 0, np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, now + half)[0])),
-        np.where(beyond, 0, half_up(advanced_real_part(real_now, real_quadrature))),
+        np.where(beyond, 0, half_up(advanced_real_part(extended[0], extended[1])[within])),
     ]
     # the one lay act's correction last (`lay.corrected`): for a massless family the uniform mode's
     # content out of each level in proportion to the envelope, so that each sums to 0 over the board
@@ -1321,11 +1323,16 @@ def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[i
 
 
 def message_entry(
-    board: Board, message: dict[str, Any], beyond: np.ndarray, family: FamilyRule, label: str
+    board: Board,
+    message: dict[str, Any],
+    beyond: np.ndarray,
+    family: FamilyRule,
+    label: str,
+    largest: Axis,
 ) -> dict[str, Any]:
     """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `GameBoard.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes."""
     massless = family.quanta and family.pair[0] == family.pair[1]  # light: no uniform mode laid
-    now, before = message_levels(board, message, beyond, massless)
+    now, before = message_levels(board, message, beyond, massless, largest)
     weights = (1,) if family.plane else laid_weights(message, label, family)
     counted = (
         weights[:1] if family.wronskian else weights
@@ -1423,6 +1430,12 @@ def pixel_mode(
         records.append(min(events[:number].count(family_index), families[family_index].records - 1))
     records += [0] * len(document_messages)
     laid_messages: Laid = []  # every message's record on its family, as the engine lays it
+    receding = cast(dict[str, Any], document.get("receding", {}))
+    largest = (  # the board at its largest declared extents, the message lay's transform (`message_levels`)
+        int(receding[AXES[0]]["largest"]) if AXES[0] in receding else shape[0],
+        int(receding[AXES[1]]["largest"]) if AXES[1] in receding else shape[1],
+        int(receding[AXES[2]]["largest"]) if AXES[2] in receding else shape[2],
+    )
     for number, message in enumerate(document_messages):
         family = str(message["family"])
         board = board_of(shape, wrap, gamma, integers, pairs[family])
@@ -1430,7 +1443,7 @@ def pixel_mode(
         rule = families[names.index(family)]
         massless = rule.quanta and rule.pair[0] == rule.pair[1]
         laid_messages.append(
-            (names.index(family), slot, [message_levels(board, message, beyond, massless)])
+            (names.index(family), slot, [message_levels(board, message, beyond, massless, largest)])
         )
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
@@ -1558,6 +1571,7 @@ def pixel_mode(
             beyond,
             family_of(universe, str(message["family"])),
             f"messages[{number}]",
+            largest,
         )
         for number, message in enumerate(document_messages)
     ]
