@@ -391,7 +391,16 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/clicks.py",
+   "function": "frozen_node",
+   "expected": [
+    0.0,
+    4.7,
+    4.7
+   ],
+   "digits": 2,
+   "note": "R_a at a pace 0 and the content U above which the Node's pace rounds to 0 at Gamma = 6,000, the law's 4.70, by the logarithm and by the exact clock"
   },
   {
    "line": 308,
@@ -414,8 +423,18 @@
    "source": "none named",
    "existing_script": "paper/general_formula/click_body.py",
    "proposed_module": "clicks.py",
-   "status": "scriptless",
-   "note": "the figure is drawn from the definitions, no number"
+   "status": "scripted",
+   "note": "the caption's one formula, the ball (2d + 1)(2d^2 + 2d + 3) / 3 at d = 0 to 4 by enumeration",
+   "script": "tools/derivations/clicks.py",
+   "function": "front_ball",
+   "expected": [
+    1,
+    7,
+    25,
+    63,
+    129
+   ],
+   "digits": 0
   },
   {
    "line": 318,
@@ -426,8 +445,16 @@
    "source": "S.8, S.50",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless",
-   "note": "the region's reading factor and the draw's scatter sqrt(N p (1 - p)), S.8"
+   "status": "scripted",
+   "note": "S.8's reading factor at n = 4, Lambda = 16, its zero at Lambda = n, and the scatter at the Huygens blind's N = 273, p = 1 / 12",
+   "script": "tools/derivations/clicks.py",
+   "function": "declaration_costs",
+   "expected": [
+    0.91,
+    0.0,
+    4.57
+   ],
+   "digits": 2
   },
   {
    "line": 320,
@@ -442,8 +469,16 @@
    "source": "S.62, S.61",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless",
-   "note": "the NodeReader's own clock, the carried sum of p_0 / Gamma"
+   "status": "scripted",
+   "note": "S.61 line 12's omega = 0.4456 at k = pi / 4 and the photons per unit 1 / sin omega (626.5 / 270 = 2.3204), and the own clock's advance per interval at the vacuum's content",
+   "script": "tools/derivations/clicks.py",
+   "function": "own_clock_and_units",
+   "expected": [
+    0.4456,
+    2.3204,
+    1.0
+   ],
+   "digits": 4
   },
   {
    "line": 328,
@@ -454,8 +489,15 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless",
-   "note": "one draw over all the NodeReaders reading one record"
+   "status": "scripted",
+   "note": "the credit's clicks from a record of count 1 shared over three NodeReaders, and the coincidences",
+   "script": "tools/derivations/clicks.py",
+   "function": "one_draw_per_record",
+   "expected": [
+    1,
+    0
+   ],
+   "digits": 0
   },
   {
    "line": 328,
@@ -466,7 +508,16 @@
    "source": "sec:bodyclicks",
    "existing_script": null,
    "proposed_module": "body_clicks.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "resonance_envelope",
+   "expected": [
+    1.0,
+    0.5,
+    4.0
+   ],
+   "digits": 4,
+   "note": "Rabi's envelope at the detuning 0 and 2 Omega_R and the full width at half transfer in units of Omega_R"
   },
   {
    "line": 328,
@@ -479,8 +530,16 @@
    "source": "S.59",
    "existing_script": "tools/derivations/zeno.py",
    "proposed_module": "zeno.py",
-   "status": "scriptless",
-   "note": "zeno.formula_column: the formula at n = 1 kills the body's own period as its window"
+   "status": "scripted",
+   "note": "P(e) at n = 1, the body's period 2 pi / omega_b at the computed pair's rest rotation, and P(e) with that period as the window over S.59's T_pi = 768 ticks (103 windows)",
+   "script": "tools/derivations/zeno.py",
+   "function": "own_period_as_window",
+   "expected": [
+    1.0,
+    7.47,
+    0.023
+   ],
+   "digits": 3
   },
   {
    "line": 328,
@@ -491,7 +550,14 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/clicks.py",
+   "function": "arrival_window",
+   "expected": [
+    62.2
+   ],
+   "digits": 1,
+   "note": "the probe's arrival from its lay by the band's group velocity over the two slits' 34 Links at k = pi / 4, the inputs chosen here"
   },
   {
    "line": 328,
@@ -502,7 +568,15 @@
    "source": "sec:meeting",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/clicks.py",
+   "function": "decision_form",
+   "expected": [
+    0.0,
+    0.1857
+   ],
+   "digits": 4,
+   "note": "D = now^2 - next x before against A^2 sin^2 omega for a plane wave at the band's omega, and sin^2 omega at k = pi / 4"
   },
   {
    "line": 332,
@@ -513,8 +587,14 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless",
-   "note": "a structural statement; the gate tests/test_the_features.py holds it on the engine"
+   "status": "scripted",
+   "note": "the conserved form's change over 50 intervals in exact rationals, the count's measure between clicks; the engine's structural statement is tests/test_the_features.py's",
+   "script": "tools/derivations/clicks.py",
+   "function": "counts_move_only_at_clicks",
+   "expected": [
+    0
+   ],
+   "digits": 0
   },
   {
    "line": 340,
@@ -540,8 +620,15 @@
    "source": "S.42",
    "existing_script": null,
    "proposed_module": "body_clicks.py",
-   "status": "scriptless",
-   "note": "S.42 (b)"
+   "status": "scripted",
+   "note": "light's phase speed at the zone's edge and matter's largest group speed along the diagonal at [2, 3], S.42 (b)'s two numbers",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "uniform_motion_writes_no_light",
+   "expected": [
+    0.392,
+    0.385
+   ],
+   "digits": 3
   },
   {
    "line": 348,
@@ -552,8 +639,15 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "two_slits.py",
-   "status": "scriptless",
-   "note": "the opaque NodeReader's envelope, the continuity of the one inflow"
+   "status": "scripted",
+   "note": "the minima of the Huygens row across the central pattern with two gaps and with one gap opaque",
+   "script": "tools/derivations/two_slits.py",
+   "function": "opaque_reader_envelope",
+   "expected": [
+    2.0,
+    0.0
+   ],
+   "digits": 0
   },
   {
    "line": 395,
@@ -721,7 +815,16 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/clicks.py",
+   "function": "a_quantum_never_breaks",
+   "expected": [
+    1,
+    0,
+    5
+   ],
+   "digits": 0,
+   "note": "the credit's clicks from a count of 1, the count after, and a body of count 5 parting one quantum per click"
   },
   {
    "line": 468,
@@ -744,7 +847,15 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "body_clicks.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "steady_rotation_writes_no_light",
+   "expected": [
+    0.0,
+    0.4135
+   ],
+   "digits": 4,
+   "note": "W's spread over 1,000 intervals of the stepped plane record and S.42's radiated factor 3 sqrt 3 / (4 pi)"
   },
   {
    "line": 478,
@@ -755,8 +866,16 @@
    "source": "S.14",
    "existing_script": "paper/general_formula/invariant_check.py",
    "proposed_module": "body_clicks.py",
-   "status": "scriptless",
-   "note": "the adiabatic invariant A^2 sin omega and the drift, S.14"
+   "status": "scripted",
+   "note": "the invariant's relative change (4 x 10^-5) over S.14's run, D's fall by a quarter and sin omega's ratio",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "invariant_and_drift",
+   "expected": [
+    0.0,
+    0.76,
+    0.76
+   ],
+   "digits": 2
   },
   {
    "line": 478,
@@ -767,8 +886,15 @@
    "source": "none named",
    "existing_script": "tools/derivations/units.py",
    "proposed_module": "body_clicks.py",
-   "status": "scriptless",
-   "note": "the quantum's form T sin omega"
+   "status": "scripted",
+   "note": "2 A^2 sin omega / T and the share 2 A^2 sin^2 omega / T for one quantum laid by the count at [2, 3], T = 32,768",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "planck_on_the_lattice",
+   "expected": [
+    1.0,
+    0.745
+   ],
+   "digits": 3
   },
   {
    "line": 480,
@@ -791,8 +917,14 @@
    "source": "S.16",
    "existing_script": null,
    "proposed_module": "body_clicks.py",
-   "status": "scriptless",
-   "note": "Rabi's rate Omega_R = epsilon_ij / (4 sqrt(sin omega_i sin omega_j)), S.16"
+   "status": "scripted",
+   "note": "T_pi = pi / (2 Omega_R) over the measured first full transfer on a two-Node body of [2, 3] modulated at the difference line with epsilon = 0.02 (1.011, the first order); body_clicks.parametric_growth gives S.16's one-mode check 0.004654 against the stepped 0.004653",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "rabi_transfer",
+   "expected": [
+    1.0
+   ],
+   "digits": 1
   },
   {
    "line": 482,
@@ -803,8 +935,15 @@
    "source": "S.43",
    "existing_script": null,
    "proposed_module": "body_clicks.py",
-   "status": "scriptless",
-   "note": "S.43"
+   "status": "scripted",
+   "note": "the growth under the time turn at 2 omega_b (the gauge) against the pace read's mu at S.16's numbers",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "one_mode_line_under_the_rotation",
+   "expected": [
+    0.0,
+    0.00465
+   ],
+   "digits": 5
   },
   {
    "line": 484,
@@ -815,8 +954,16 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "body_clicks.py",
-   "status": "scriptless",
-   "note": "the drift under a moving well, Eq. (13)"
+   "status": "scripted",
+   "note": "Eq. (13)'s two factors and their product between the vacuum and a well of content 600 at Gamma = 6,000 for [2, 3], inputs chosen here (U = 0.1)",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "drift_under_a_moving_well",
+   "expected": [
+    0.921,
+    1.492,
+    1.374
+   ],
+   "digits": 3
   },
   {
    "line": 484,
@@ -827,8 +974,15 @@
    "source": "S.14",
    "existing_script": null,
    "proposed_module": "body_clicks.py",
-   "status": "scriptless",
-   "note": "Millikan's slope T"
+   "status": "scripted",
+   "note": "the half-angle identity's residual at the two-Node body's modes and T (sin omega_j - sin omega_i) over T sin omega_L at small modes 10^-3 and 2 x 10^-3",
+   "script": "tools/derivations/body_clicks.py",
+   "function": "millikan_slope",
+   "expected": [
+    0.0,
+    1.0
+   ],
+   "digits": 5
   },
   {
    "line": 484,
@@ -839,8 +993,15 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless",
-   "note": "a common unit cancels in every ratio"
+   "status": "scripted",
+   "note": "the regions' probabilities between two units of the share and Bell's E between two common factors of the parts' products, exact",
+   "script": "tools/derivations/clicks.py",
+   "function": "common_unit_cancels",
+   "expected": [
+    0,
+    0
+   ],
+   "digits": 0
   },
   {
    "line": 490,
@@ -851,7 +1012,14 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/clicks.py",
+   "function": "moves_only_by_clicks",
+   "expected": [
+    1
+   ],
+   "digits": 0,
+   "note": "Eq. (13) at fixed paces between clicks, exact"
   },
   {
    "line": 492,
@@ -1132,8 +1300,19 @@
    "source": "S.33",
    "existing_script": null,
    "proposed_module": "sign.py",
-   "status": "scriptless",
-   "note": "the odd lines' source, the halved current, S.33"
+   "status": "scripted",
+   "note": "the continuity identity's residual in exact rationals, flux over density against the group velocity, the halving, c_s^2 / c^2 at [2, 3] and 1 / gamma at S.33's beta = 0.1 and 0.5",
+   "script": "tools/derivations/sign.py",
+   "function": "odd_lines_source",
+   "expected": [
+    0.0,
+    0.0,
+    0.5,
+    0.66667,
+    0.99499,
+    0.86603
+   ],
+   "digits": 5
   },
   {
    "line": 534,
@@ -1214,8 +1393,31 @@
    "source": "S.23",
    "existing_script": "paper/general_formula/two_slits_real_line.py",
    "proposed_module": "two_slits.py",
-   "status": "scriptless",
-   "note": "the near-field minima 15.3 and 32.7 at L = 2 d, printed by two_slits_real_line.py; the folder's module recomputes them from the band alone"
+   "status": "differs",
+   "note": "the near-field minima 15.3 and 32.7 at L = 2 d, printed by two_slits_real_line.py; the folder's module recomputes them from the band alone",
+   "script": "tools/derivations/two_slits.py",
+   "function": "near_field_minima",
+   "expected": [
+    16.0,
+    15.3,
+    32.7,
+    3.0,
+    8.0,
+    24.0,
+    23.5
+   ],
+   "digits": 1,
+   "computed": [
+    16.0,
+    15.28,
+    32.72,
+    3.0,
+    8.0,
+    24.0,
+    23.5,
+    "the Huygens regional sums' dips: 3 and 8"
+   ],
+   "reason": "the derivation's numbers agree (lambda L / d = 16, the minima rows 15.28 and 32.72 in the blocks 3 and 8, the centres 24 and 23.5), but the blind's regional dips, printed as expectation.json's regions 4 and 8, come out at 3 and 8 from the Huygens sum of the two gaps' Nodes under every kernel tried (1 / sqrt r, 1 / r, no decay, the obliquity factor; two_slits.huygens_dips), so the region 4 is the blind file's own reading and not this derivation's"
   },
   {
    "line": 542,
@@ -1289,8 +1491,14 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "bell.py",
-   "status": "scriptless",
-   "note": "the root's sum cos(a - b) at the weights (1, 1)"
+   "status": "scripted",
+   "note": "the root's sum cos(a - b) at the weights (1, 1)",
+   "script": "tools/derivations/bell.py",
+   "function": "root_sum_is_cos_difference",
+   "expected": [
+    0.0
+   ],
+   "digits": 12
   },
   {
    "line": 561,
@@ -1301,8 +1509,18 @@
    "source": "S.10",
    "existing_script": null,
    "proposed_module": "bell.py",
-   "status": "scriptless",
-   "note": "the four lines of Eq. (bell), S.10; the blind's S = 478 / 169 is examples/events/bell/build_world.py's"
+   "status": "scripted",
+   "note": "the four lines' S at the ideal angles a = 0, a' = pi / 4, b = pi / 8, b' = 3 pi / 8 and the contrast credit's efficiency 2 / pi, the local credits averaged over the pair's phase on S.10's grid of 2 x 10^5 points",
+   "script": "tools/derivations/bell.py",
+   "function": "four_lines_of_bell",
+   "expected": [
+    2.8284,
+    1.4142,
+    2.0,
+    2.8284,
+    0.6366
+   ],
+   "digits": 4
   },
   {
    "line": 561,
@@ -1330,8 +1548,17 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "bell.py",
-   "status": "scriptless",
-   "note": "rho = 2 r / (1 + r^2), S = sqrt 2 (1 + rho)"
+   "status": "scripted",
+   "note": "the residuals of E and of S = sqrt 2 (1 + rho) over r and the angles, then rho and S at the law's example r = 0.95",
+   "script": "tools/derivations/bell.py",
+   "function": "unequal_parts",
+   "expected": [
+    0.0,
+    0.0,
+    0.9987,
+    2.8266
+   ],
+   "digits": 4
   },
   {
    "line": 561,
@@ -1345,8 +1572,18 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "bell.py",
-   "status": "scriptless",
-   "note": "478 / 169 = 2.828 below 2 sqrt 2 at the rational angles; examples/events/bell/build_world.py computes it by Lagrange's identity"
+   "status": "scripted",
+   "note": "exact rationals by Lagrange's identity on the declared ports; bell.below_tsirelson gives 2.828402 against 2 sqrt 2 = 2.828427, the difference 2.5 x 10^-5",
+   "script": "tools/derivations/bell.py",
+   "function": "declared_pairs",
+   "expected": [
+    "119/169",
+    "-119/169",
+    "120/169",
+    "120/169",
+    "478/169"
+   ],
+   "digits": 0
   },
   {
    "line": 563,
@@ -1357,7 +1594,14 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "bell.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/bell.py",
+   "function": "local_credits_on_the_same_file",
+   "expected": [
+    1.4142,
+    2.0
+   ],
+   "digits": 4
   },
   {
    "line": 563,
@@ -1372,8 +1616,20 @@
    "source": "S.40",
    "existing_script": null,
    "proposed_module": "bell.py",
-   "status": "scriptless",
-   "note": "E_3 = cos 2(a + b + c), M = -4, S.40; examples/events/ghz/build_world.py's blind"
+   "status": "scripted",
+   "note": "E_3 on the four GHZ files, the largest pairwise |E|, Mermin's M and the largest |M| of a local assignment of signs, exact",
+   "script": "tools/derivations/bell.py",
+   "function": "ghz",
+   "expected": [
+    -1,
+    -1,
+    -1,
+    1,
+    0,
+    -4,
+    2
+   ],
+   "digits": 0
   },
   {
    "line": 563,
@@ -1384,8 +1640,16 @@
    "source": "S.56 (14)",
    "existing_script": null,
    "proposed_module": "bell.py",
-   "status": "scriptless",
-   "note": "the bound 2 sqrt 2 of the declared credit"
+   "status": "scripted",
+   "note": "the local credits' bound 2 over every assignment of signs, the declared credit's largest S over the angles and Tsirelson's 2 sqrt(1 + rho^2) at rho = 1; nature's S of Rowe and Storz are not in the script",
+   "script": "tools/derivations/bell.py",
+   "function": "bounds_of_the_credits",
+   "expected": [
+    2.0,
+    2.8284,
+    2.8284
+   ],
+   "digits": 4
   },
   {
    "line": 566,
@@ -1805,8 +2069,18 @@
    "source": "S.56 (15)",
    "existing_script": null,
    "proposed_module": "clicks.py",
-   "status": "scriptless",
-   "note": "the shape of the statistics from the rate equations, S.56 (15)"
+   "status": "scripted",
+   "note": "the mean bright period from the geometric series against R / Omega_w^2, the bright fraction, Poisson's Fano factor and the telegraph's 1 + (1 - f) lambda tau_bin at a declared example (h = 1 / 1000, tau_D = 500, the bright rate 0.1 over a bin of 100), the inputs chosen here",
+   "script": "tools/derivations/clicks.py",
+   "function": "telegraph_statistics",
+   "expected": [
+    1000.0,
+    1000.0,
+    0.667,
+    1.0,
+    4.333
+   ],
+   "digits": 3
   },
   {
    "line": 622,
