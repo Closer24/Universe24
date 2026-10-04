@@ -72,8 +72,10 @@ def faces_from(board: GameBoard, lines: Lines) -> None:
 
 
 def crossed(board: GameBoard, lines: Lines) -> None:
-    """The lays of the GameBoard's interval undone from their `lay` lines before the step back: every line a lay changed at a Node set back to its levels [now, before, remainder] before the lay, every other Node as it stands."""
-    for line in [line for line in lines if line["event"] == "lay" and line["tick"] == board.tick]:
+    """The lays of the GameBoard's interval undone from their `lay` lines before the step back: every line a lay changed at a Node set back to its levels [now, before, remainder] before the lay, the interval's lines in reverse order (two fronts' shares on one Node in one interval are two lines, the second's `before` the first's `after`), every other Node as it stands."""
+    for line in reversed(
+        [line for line in lines if line["event"] == "lay" and line["tick"] == board.tick]
+    ):
         index, at = node_of(board, line)
         here = (at[0] + board.offset[0], at[1] + board.offset[1], at[2] + board.offset[2])
         record, number = board.states[index].lines[int(str(line["line"]))], int(str(line["line"]))

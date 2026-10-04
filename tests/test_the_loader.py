@@ -184,10 +184,10 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     assert layer == ((0, 0, 0), (0, 1, 0))  # the high side recedes: the low face's two Nodes alone
 
 
-def test_a_massless_message_lays_no_uniform_mode_and_the_loader_refuses_one_that_does(
+def test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_does(
     tmp_path, monkeypatch
 ):
-    """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The message lay), and a mode entry whose level sums otherwise is refused by name."""
+    """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The message lay), and a mode entry whose level sums otherwise is refused by name at the board's construction, through the one lay act's guard (`GameBoard.lay`, `lay.guarded`; the loader builds no board and refuses nothing of this)."""
     for world in ("anticoincidence/one_photon", "two_slits/two_slits", "bell/bell_a_b"):
         board = GameBoard(load_world(EVENTS / f"{world}.json"), lambda line: None)
         for index, family in enumerate(board.families):

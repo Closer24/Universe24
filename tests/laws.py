@@ -109,6 +109,64 @@ def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, ticks: i
     return path
 
 
+def ion_universe_beside(folder: Path) -> None:
+    """The shelved ion's universe copied beside a world as u.json with the engine file as e.json: four families, no holder of the content, so a periodic box needs no sink."""
+    (folder / "u.json").write_bytes((EVENTS / "shelved_ion" / "mercury_ion.json").read_bytes())
+    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+
+
+def ion_world(folder: Path, tool, ticks: int = 23, amplitude: int = 600) -> Path:  # type: ignore[no-untyped-def]
+    """The ion-like world on a periodic box of 8 by 6 by 4: the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its giving to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18; the telegraph's shape, its mode file written by the generator."""
+    ion_universe_beside(folder)
+    at, beside = [3, 3, 2], [4, 3, 2]
+    parts = [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
+    draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
+    nodes = [{"node": at, "weight": 1}, {"node": beside, "weight": 1}]
+    record = {"family": "ion", "nodes": nodes, "parts": parts, "node_reader": draw}
+    record["transitions"] = [
+        {"from": "S", "to": "P", "drive": "strong_drive", "weight": 1, "resonance": [2, 3]}
+    ]
+    record["rates"] = [{"from": "P", "to": "S", "lifetime": 8, "gives_to": "fluorescence"}]
+    drive = {
+        "family": "strong_drive",
+        "along": "x",
+        "wave": [1, 2],
+        "phase": [0, 1],
+        "amplitude": amplitude,
+    }
+    drive.update(top={"x": [0, 7], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
+    counter = {"name": "counter", "positions": [[0, y, z] for y in range(6) for z in range(4)]}
+    world = dict(shape=[8, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=ticks)
+    world.update(universe="u.json", engine="e.json", bodies=[record], messages=[drive])
+    world.update(node_readers=[counter], draw={**draw, "window": 18, "seed": 24})
+    (path := folder / "ion_like.json").write_text(json.dumps(world), encoding="utf-8")
+    tool.main(["--input", str(path)])
+    return path
+
+
+def packet_box(folder: Path, tool, amplitude: int = 110) -> Path:  # type: ignore[no-untyped-def]
+    """A massless packet of several quanta alone on the periodic box of 8 by 6 by 4: the fluorescence row's packet along x at k = pi / 2, the top x in [2, 5] with the edge 2 over the full cross-section, at `amplitude` (22 quanta at 110), no body and no reader; its mode file written by the generator."""
+    ion_universe_beside(folder)
+    message = {
+        "family": "fluorescence",
+        "along": "x",
+        "wave": [1, 2],
+        "phase": [0, 1],
+        "amplitude": amplitude,
+    }
+    message.update(top={"x": [2, 5], "y": [0, 5], "z": [0, 3]}, edge={"x": 2, "y": 0, "z": 0})
+    world = dict(shape=[8, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=200)
+    world.update(universe="u.json", engine="e.json", bodies=[], messages=[message], node_readers=[])
+    (path := folder / "packet_box.json").write_text(json.dumps(world), encoding="utf-8")
+    tool.main(["--input", str(path)])
+    return path
+
+
+def link_distance(a, b, shape) -> int:  # type: ignore[no-untyped-def]
+    """The Link-metric distance of two Nodes on a periodic box, per axis the shorter way round."""
+    return sum(min(abs(x - y), n - abs(x - y)) for x, y, n in zip(a, b, shape, strict=True))
+
+
 def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
     universe_beside(folder)
     path = folder / f"{name}.json"

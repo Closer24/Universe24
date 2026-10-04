@@ -12,6 +12,7 @@ from event_universe import growth, share
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, drawn
+from event_universe.front import Front
 from event_universe.giving import Source
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Ports, ports_of
@@ -23,9 +24,6 @@ from event_universe.reports import PORT_NAMES, credit
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
 
-Front = tuple[
-    int, Node, int
-]  # a front: the record's family, the click's Node (the file's coordinates), the click's interval
 Intake = dict[Node, int]  # per boundary Node of a region, at the file's coordinates, the window's inflow
 Joints = dict[
     tuple[int, ...], int

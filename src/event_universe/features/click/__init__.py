@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 import numpy as np
@@ -32,11 +32,12 @@ def drawn(
 
 @dataclass
 class Hole:
-    """The hole of one line at one Node, shared by its two faces: the record's own quantum W_rec (`credit.Books.units`) in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (`meeting.faced`), the factor the first face sets from the Node's booked share at its interval (None until then; (0, 1) for the hole to 0 where the booked share O + C / 2 is at most W_rec, (1, 1) for the identity's faces otherwise), and the form the first face removed, exactly, its face term (x - before) R_face (value - arrival) negated (tests/laws.py, the booking identity), so that the second face removes the rest."""
+    """The hole of one line at one Node, shared by its two faces: the record's own quantum W_rec (`credit.Books.units`) in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (`meeting.faced`), the factor the first face sets from the Node's booked share at its interval (None until then; (0, 1) for the hole to 0 where the booked share O + C / 2 is at most W_rec, (1, 1) for the identity's faces otherwise), the form the first face removed, exactly, its face term (x - before) R_face (value - arrival) negated (tests/laws.py, the booking identity), so that the second face removes the rest, and the two faces' kicks, each R_face (value - arrival), the face's change of the record's velocity invariant w (SUM now - SUM before) + SUM r, exact (the restoring front reads the hole's content from them, `front.content_of`)."""
 
     unit: int
     factor: tuple[int, int] | None = None
     removed: int = 0
+    kicks: list[int] = field(default_factory=list)
 
 
 @dataclass
@@ -136,9 +137,13 @@ def presented(
             else:  # a face without a hole: the hole to 0
                 target = 0
             face.value = face_value(self_term + rest - int(wall) * target, here[face.port])
-            if face.hole is not None and not face.scaled:  # what the first face removed, exactly
-                arrival = int(found[face.port][at])
-                face.hole.removed = -(target - before) * here[face.port] * (face.value - arrival)
+            if (
+                face.hole is not None
+            ):  # the face's kick, R_face (value - arrival): its change of the record's velocity invariant
+                kick = here[face.port] * (face.value - int(found[face.port][at]))
+                face.hole.kicks.append(kick)
+                if not face.scaled:  # what the first face removed, exactly
+                    face.hole.removed = -(target - before) * kick
         if face.port not in copied:
             found[face.port] = np.array(found[face.port], copy=True)
             copied.add(face.port)

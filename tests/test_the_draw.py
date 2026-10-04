@@ -13,6 +13,7 @@ from event_universe.credit import record_unit
 from event_universe.features.click import along_cosine, envelope, exact_total, line_total
 from event_universe.features.hold import hold
 from event_universe.features.write import carried
+from event_universe.front import Front
 from event_universe.game_board import GameBoard
 from event_universe.giving import born_unit, radiated_total
 from event_universe.loader.derived import count_wall
@@ -200,7 +201,7 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
     }  # the hole's one Node, the face books'
     since, origin = 48, list(next(iter(holes)))
     assert len(holes) == 1 and "node" not in jumps[0]
-    assert board.credit.fronts == [(light, tuple(origin), since)]
+    assert board.credit.fronts == [Front(light, (origin[0], origin[1], origin[2]), since)]
     checked = 0
 
     def ball(

@@ -219,7 +219,8 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     [still.step() for _ in range(still.tick, board.tick)]
     for _ in range(board.tick, 23):
         booked(board, monkeypatch, ion, drv, light), still.step(), still.credit.fronts.clear()
-        for index, origin, since in board.credit.fronts:  # the theorem: nothing differs beyond the ball
+        for found in board.credit.fronts:  # the theorem: nothing differs beyond the ball
+            index, origin, since = found.family, found.origin, found.since
             gap = np.abs(np.indices(board.shape) - np.reshape(origin, (3, 1, 1, 1)))
             far = (
                 np.minimum(gap, np.reshape(board.shape, (3, 1, 1, 1)) - gap).sum(0) > board.tick - since

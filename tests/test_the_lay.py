@@ -5,12 +5,22 @@ import json
 import numpy as np
 import pytest
 
-from event_universe import lay, world_files
+from event_universe import lay, meeting, world_files
 from event_universe.game_board import GameBoard
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, TOOL, packet_world, refused, slit_world
+from tests.laws import (
+    BACK,
+    EVENTS,
+    TOOL,
+    ion_world,
+    link_distance,
+    packet_box,
+    packet_world,
+    refused,
+    slit_world,
+)
 
 
 def test_the_division_act_keeps_the_two_sums_and_the_guard_refuses_a_lay_that_moves_one():
@@ -138,3 +148,67 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
     assert (door == "the loader's lay") == (not lays)
     assert [sum(c["after"][k] - c["before"][k] for c in lays) for k in (0, 1)] == [0, 0]
     assert BACK.verdict(GameBoard(load_world(path)), intervals)["verdict"] == "MATCH"
+
+
+def test_the_restoring_front_keeps_the_telegraph_like_worlds_mean_level_within_a_few_units(
+    tmp_path, monkeypatch
+):
+    """The restoring front, the hole's local form (ALGEBRA.md, The click writes on the GameBoard (6); `front.restoring`, `front.restored`, `meeting.written`): on the ion-like world, a periodic box of 192 Nodes with the drive's record of 1,171 quanta taken by the ion over 170 intervals (three takings, the last after the interval 100), every front in the books is a restoring one, the drive's count stands, and the drive's mean level over the board stays within 5 units through the run (4.7 at most), where the engine without the restoring front drifts to -403 by the interval 170 (the hole's uniform mode standing until the last taking, the engine's declared problem 3); the fluorescence, given and never taken here, within one unit."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board = GameBoard(load_world(ion_world(tmp_path, TOOL, ticks=170)), (lines := []).append)
+    names = [f.name for f in board.families]
+    drive, light = names.index("strong_drive"), names.index("fluorescence")
+    means: dict[int, list[float]] = {drive: [], light: []}
+    for _ in range(170):
+        board.step()
+        for index, found in means.items():
+            found.append(int(board.states[index].lines[0].now.sum(dtype=object)) / 192)
+        assert all(f.restoring is not None for f in board.credit.fronts)  # no count reached 0
+    taken = [c for c in lines if c["event"] == "credit" and c["taken"] == "strong_drive"]
+    assert len(taken) >= 3 and taken[-1]["tick"] > 100 and board.credit.counts[drive] >= 1
+    assert max(abs(m) for m in means[drive]) <= 5, max(abs(m) for m in means[drive])
+    assert max(abs(m) for m in means[light]) <= 1
+
+
+def test_the_restoring_front_writes_at_its_reach_and_restores_the_velocity_sum_exactly(
+    tmp_path, monkeypatch
+):
+    """The restoring front's three clauses (ALGEBRA.md, The restoring front, the hole's local form; `front.scheduled`, `front.content_of`, `features/click.Hole.kicks`): a packet of 22 quanta on the periodic box of 8 by 6 by 4 takes one hole by hand at the interval 5 at (4, 2, 1), the count 21, beside its twin without the hole. Locality: every share is written at the interval of the front's reach, the lay line's Node at the Link distance exactly t - 5 - 1 from the hole at the interval t, the first at 7 (one interval behind the causal bound, as the erasure is), none beyond and none at the hole's Node, the faces'. The sums: the two faces' kicks, R_face (value - arrival) each, change the velocity invariant w (SUM now - SUM before) + SUM r by -39 w here, where the law's nominal -(now_i - before_i) is -41 (over 25 holes on this packet the nominal misses the faces' own change by up to 162 units, so the content is the faces'); once the front has ended the invariant equals the twin's exactly and stays so over 40 intervals, while the level sums differ from the twin's by one constant uniform level, about (now_i - before_i) times the restoration's mean delay over the Nodes (within 3 units of the mean, the offset printed), moving only by the remainders' walk."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    path = packet_box(tmp_path, TOOL)
+    board, twin = GameBoard(load_world(path), (lines := []).append), GameBoard(load_world(path))
+    index, at, nodes = [f.name for f in board.families].index("fluorescence"), (4, 2, 1), 192
+    wall = 2 * board.half_wall(index)
+
+    def sums(b):
+        line = b.states[index].lines[0]
+        now, before, rest = (int(a.sum(dtype=object)) for a in (line.now, line.before, line.remainder))
+        return now, before, wall * (now - before) + rest
+
+    for _ in range(5):
+        board.step(), twin.step()
+    line = board.states[index].lines[0]
+    taken = (int(line.now[at]), int(line.before[at]))
+    meeting.written(board, [meeting.Item(index, None, None, -1, (at,))])
+    (front,) = board.credit.fronts
+    assert front.restoring is not None and board.credit.counts[index] == 21 and taken == (-46, -87)
+    kicks: list[int] = []
+    while board.credit.fronts:
+        board.step(), twin.step()
+        if board.tick == 7:
+            kicks = [k for hole in front.restoring.holes[0] for k in hole.kicks]
+            assert len(kicks) == 2 and sums(board)[2] - sums(twin)[2] == sum(kicks)  # the faces' own
+    assert sum(kicks) == -39 * wall and -(taken[0] - taken[1]) == -41  # the law's nominal, missed by 2
+    lays = [c for c in lines if c["event"] == "lay"]
+    assert lays and {c["tick"] for c in lays} <= set(range(7, board.tick + 1))
+    assert all(link_distance(c["node"]["at"], at, (8, 6, 4)) == c["tick"] - 5 - 1 for c in lays)
+    assert all(tuple(c["node"]["at"]) != at for c in lays)
+    offsets = []
+    for _ in range(40):
+        board.step(), twin.step()
+        mine, its = sums(board), sums(twin)
+        assert mine[2] == its[2]  # the velocity invariant restored exactly
+        offsets.append((mine[0] - its[0], mine[1] - its[1]))
+    spread = max(o[0] for o in offsets) - min(o[0] for o in offsets)
+    assert spread <= 2 * nodes, spread  # the remainders' walk
+    assert all(abs(o[0]) <= 3 * nodes and abs(o[1]) <= 3 * nodes for o in offsets), offsets[-1]
