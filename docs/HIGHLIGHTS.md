@@ -53,6 +53,8 @@ points at the law, the law's line governs and no formula is restated here.
 - Every world passes the back-in-time gate (the tool says MATCH across the world's clicks) before its run, and its readings carry the labels NODEREADER for a click's count and GAMEBOARD for a board reading.
 - The pages of a run are built from the output file outside the repository, in dark mode only, with a fixed camera, the moving quanta green, every part of a run a graphic beside its blind table.
 - The experimenter keeps a bug ledger on his issue and reports every problem the moment it is seen, looking at every run physically, frame by frame, and not only at the data; a difference from a blind or a folder's note is a report for the hands, who decide whether it is the engine's.
+- When the experimenter finds a bug he stops on it until it is gone completely and the experiment reads what nature gives; no next experiment before.
+- Every experiment shows its page from the output file; the experimenter looks at the page, understands what the run showed, says what should be seen and writes whether it is close to nature, before any number is given.
 - The one approved experiment is the two slits; the next is the click's world, anticoincidence, at ticks 72 with the window 40; the gate to which-way opens after the two slits.
 - Bell and GHZ are gates, not experiments.
 - The Zeno gate's seeds take the jump-ahead substreams, as both hands agreed.
