@@ -2,8 +2,11 @@
 geometric optics of its band, x' = d omega / d k, k' = - d omega / d x, with omega(k, U) the rotation Rule3's coefficients give
 at the paces of a static well U(r) = U_1 / r (the held level over the Node clock). Measured, not assumed: light's deflection
 past the well against Newton's 2 U_1 / b and Einstein's 4 U_1 / b, and a massive orbit's periapsis advance against
-Einstein's 6 pi U_1 / (a (1 - e^2)). Two forms of the self coefficient: the law's line (S = 12 den G^2 - 12 (den - num) p_0^2
-- 4 num SUM p_a^2, the conformal pace) and the engine on main (S = 12 den G^2 - 6 (den - num)(p_0^2 + G^2) - 4 num SUM p_a^2);
+Einstein's 6 pi U_1 / (a (1 - e^2)). One form of the self coefficient is the law's and the engine's on main, S = 12 den G^2 - 12 (den - num) p_0^2
+- 4 num SUM p_a^2, the conformal pace; the scan keeps beside it an earlier reading no document holds,
+S = 12 den G^2 - 6 (den - num)(p_0^2 + G^2) - 4 num SUM p_a^2, printed as "main" in the rows below, on which
+nothing the rows say depends (they agree to the printed digits, the orbit being set per form to one a and e),
+while at k = 0 the two differ by a factor two in the rest rotation's redshift in a well;
 two readings of the Link's pace: once (p_a = p_0) and twice (p_a = Gamma - 2 c); two readings of the clock: the first
 order (p_0 = Gamma - c) and its second order (p_0 = Gamma - c + c^2 / (2 Gamma), the law's line). The band taken isotropic at small k
 (SUM cos k_a = 3 - k^2 / 2) so that the lattice's cubic anisotropy adds no precession of its own."""

@@ -71,6 +71,7 @@ def faces() -> list[list[tuple[int, int, int]]]:
 
 
 def lattice(output: Path) -> None:
+    panel = "(a)"
     """The GameBoard in space: 6 x 6 x 6 Nodes, the Links faint, one Node and its six neighbours marked."""
     n = 6
     fig = plt.figure(figsize=(SIDE, SIDE))
@@ -102,12 +103,14 @@ def lattice(output: Path) -> None:
     ax.view_init(elev=22, azim=-58)
     ax.set_axis_off()
     fig.subplots_adjust(left=-0.08, right=1.08, bottom=-0.08, top=1.08)
+    fig.text(0.03, 0.97, panel, ha="left", va="top", color=INK)
     output.mkdir(parents=True, exist_ok=True)
     save(fig, output / "lattice.pdf")
     plt.close(fig)
 
 
 def draw(output: Path) -> None:
+    panel = "(b)"
     fig = plt.figure(figsize=(SIDE, SIDE))
     ax = fig.add_subplot(111, projection="3d")
     ax.set_proj_type("ortho")
@@ -171,6 +174,7 @@ def draw(output: Path) -> None:
     ax.view_init(elev=20, azim=-35)
     ax.set_axis_off()
     fig.subplots_adjust(left=-0.08, right=1.08, bottom=-0.08, top=1.08)
+    fig.text(0.03, 0.97, panel, ha="left", va="top", color=INK)
     output.mkdir(parents=True, exist_ok=True)
     save(fig, output / "octahedron.pdf")
     plt.close(fig)

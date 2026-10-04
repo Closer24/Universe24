@@ -30,13 +30,19 @@ def energy(d: int, M: int, N: int, R: float) -> tuple[float, float]:
 
 
 def kind(d: int, M: int, N: int) -> tuple[str, float, float]:
-    """The body's kind at M: a body, a cloud or a collapse, with its width and its well."""
+    """The body's kind at M: a body, a cloud, a collapse or the saddle's edge, with its width and its well.
+
+    A minimum at the scan's smallest width is the scan's floor and not a minimum of the functional, so it is
+    named the saddle's edge and never a body: in a box the one critical point is a maximum along the dilation.
+    """
     curve = [(R, *energy(d, M, N, R)) for R in WIDTHS]
     R, F, peak = min(curve, key=lambda t: t[1])
     if R == WIDTHS[-1] or F >= 0:
         return "cloud", R, peak
     if peak > GAMMA / 2:
         return "collapse", R, peak
+    if R == WIDTHS[0]:
+        return "edge", R, peak
     return "body", R, peak
 
 

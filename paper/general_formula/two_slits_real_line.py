@@ -20,8 +20,9 @@ centroid and its half-maximum span, in the engine's labels and in the physical o
 with the source face open as the meeting round's world had it, the same world scaled toward the
 continuum (every extent and the run times s, the wave number over s, the result over s), the
 Huygens blind row of the expectation file beside, the separation of the central maximum from the
-first minima in the draw's scatter sqrt(N p (1 - p)), and the arrival's spread sigma_t from the
-band's group velocity and curvature with the lay's sigma_x and sigma_k.
+first minima in the draw's scatter sqrt(N p (1 - p)), the arrival's spread sigma_t from the band's
+group velocity and curvature with the lay's sigma_x and sigma_k, and the integer budget's bound on
+the run's N (the walk sigma sqrt(n) of the integer step against the amplitude).
 
     PYTHONPATH=src python paper/general_formula/two_slits_real_line.py [--scales 2 4 8] \\
         > paper/general_formula/two_slits_real_line.txt
@@ -53,7 +54,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from click_counts import apportioned, drawn, extrema, nearest  # noqa: E402  # the reader's own rules
+from click_counts import apportioned, extrema, nearest  # noqa: E402  # the reader's own rules
 
 Node = tuple[int, int]
 # the in-plane Ports of the flat board, (axis, side); the folded z axis returns the Node itself
@@ -217,7 +218,7 @@ def board_of(world: World, screen: list[str]) -> Board:
     )
     regions = {
         d.name: tuple((int(x), int(y)) for x, y, _z in d.positions)
-        for d in world.detectors
+        for d in world.node_readers
         if d.declared
     }
     missing = [name for name in screen if name not in regions]
@@ -247,9 +248,13 @@ def raised_cosine(extent: int, top: tuple[int, int], edge: int) -> np.ndarray:
 
 
 def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
-    """The message lay in real arithmetic over the declared board: now_i = b e_i cos(k x_i) and
-    before_i = b e_i cos(k x_i + omega), the record one interval earlier, cos omega the band at k
-    along x, e_i the product of the two axes' raised cosines; 0 at every Node beyond the board."""
+    """The message lay in real arithmetic over the declared board, the law's (h): now_i = b e_i cos(k x_i)
+    and before_i = b e_i cos(k x_i + omega), the plane record's level one interval earlier under the same
+    envelope, cos omega the band at k along x, e_i the product of the two axes' raised cosines; 0 at
+    every Node beyond the board. The message lay carries no uniform mode: the sums over the board of
+    the levels now and of the levels before are each 0, the uniform component taken out of each level at
+    the lay by the division act (the level's sum divided among the packet's Nodes in proportion to the
+    envelope), here in real arithmetic and with no remainder."""
     p = board.packet
     x = np.arange(board.length)[:, None].astype(float)
     envelope = (
@@ -260,7 +265,10 @@ def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
     now = p.amplitude * envelope * np.cos(p.wave_number * x)
     before = p.amplitude * envelope * np.cos(p.wave_number * x + omega)
     for x_wall, y_wall in board.beyond:
-        now[x_wall, y_wall] = before[x_wall, y_wall] = 0.0
+        now[x_wall, y_wall] = before[x_wall, y_wall] = envelope[x_wall, y_wall] = 0.0
+    weight = envelope / envelope.sum()
+    now -= weight * now.sum()
+    before -= weight * before.sum()
     return now, before
 
 
@@ -452,7 +460,7 @@ def report_reading(
     tail: tuple[float, float],
 ) -> None:
     """One reading of the screen printed: N, the regions, the shares, the extrema, the visibility,
-    the deviation from the blind, the wings, the rounded shares and the clicks by the reader's rules
+    the deviation from the blind, the wings and the rounded shares by the reader's rules
     at N rounded, and the arrival."""
     central, minima = int(expected["central"]), [int(at) for at in expected["minima"]]
     wings = [int(at) for at in expected["wings"]["regions"]]
@@ -482,8 +490,6 @@ def report_reading(
     print(
         f"  N to the nearest whole {quanta}, apportioned by the largest remainders (the rounded shares): {rounded}"
     )
-    clicks = drawn(quanta, units, int(expected["seed"]))
-    print(f"  one draw of {quanta} by the shares at the seed {expected['seed']} (the clicks): {clicks}")
     peak, centroid, span, spread = arrival(reading.profile)
     print(
         f"  the arrival in {reading.labels}: the peak at {peak:.0f}, the centroid {centroid:.2f}, the"
@@ -529,7 +535,7 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     world = load_world(args.world)
     expected = json.loads(args.expectation.read_text(encoding="utf-8"))
-    screen = [str(name) for name in expected["detector"]]
+    screen = [str(name) for name in expected["node_reader"]]
     window = (int(expected["window"][0]), int(expected["window"][1]))
     board = board_of(world, screen)
     family = world.messages[0].family
@@ -698,13 +704,15 @@ def main(argv: list[str] | None = None) -> None:
         ),
     ):
         found = separations(row, total, central, minima)
+        over_central = found["over the central's scatter"]
+        over_difference = found["over the difference's scatter"]
         print(
             f"  {title}: the central region {central} {found['central count']:.2f} with the scatter"
             f" {found['central scatter']:.2f}; the minima at {minima}"
             f" {row_text([found[f'minimum at the region {at}'] for at in minima], 2)} with the scatters"
             f" {row_text([found[f'its scatter at the region {at}'] for at in minima], 2)}; the central less the"
-            f" minima's mean {found['minima mean']:.2f} is {found["over the central's scatter"]:.2f} of the"
-            f" central's scatter and {found["over the difference's scatter"]:.2f} of the difference's own"
+            f" minima's mean {found['minima mean']:.2f} is {over_central:.2f} of the"
+            f" central's scatter and {over_difference:.2f} of the difference's own"
         )
 
     sigma_x, sigma_k, centre = lay_widths(board)
@@ -794,6 +802,29 @@ def main(argv: list[str] | None = None) -> None:
         f" {arrival(physical.profile)[1]:.2f} against {found[max(found)][4]:.2f}, the wings"
         f" {row_text([physical.regions[at] for at in wings], 1)} against"
         f" {found[max(found)][1]:.1f}, {found[max(found)][2]:.1f}"
+    )
+
+    carrier_cos = line.cos_omega(k)
+    per_mode = math.sqrt(board.ticks / (12 * (1 + carrier_cos)))
+    cells = 192
+    midpoints = [-math.pi + (cell + 0.5) * 2 * math.pi / cells for cell in range(cells)]
+    zone_mean = sum(1 / (1 + line.cos_omega(kx, ky)) for kx in midpoints for ky in midpoints) / cells**2
+    per_node = math.sqrt(zone_mean * board.ticks / 12)
+    total = sum(physical.regions)
+    print(
+        "\n7. The integer budget's walk on the run (the law's clause): the integer step differs from the line"
+        " applied to the integer levels by below one level per Node per interval, n levels over the run the hard"
+        " bound; under the model of independent uniform remainders the deviation walks per band mode as"
+        " sqrt(n / (12 (1 + cos omega_k))), the plane's per-Node figure the zone's mean of 1 / (1 + cos omega)"
+        " over (k_x, k_y) with k_z folded (the midpoint rule on 192^2 cells)"
+    )
+    print(
+        f"  at the carrier cos omega = {carrier_cos:.4f}: {per_mode:.2f} levels per mode over n = {board.ticks};"
+        f" the zone's mean {zone_mean:.3f}, {per_node:.2f} levels per Node; against b = {p.amplitude:.0f}:"
+        f" {200 * per_mode / p.amplitude:.2f} to {200 * per_node / p.amplitude:.2f} percent of the share,"
+        f" {total * 2 * per_mode / p.amplitude:.2f} to {total * 2 * per_node / p.amplitude:.2f} units of"
+        f" N = {total:.2f} (the physical labels); the run's integer N stands within this walk of the line's or"
+        " the difference is named"
     )
 
 
