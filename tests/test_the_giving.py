@@ -11,7 +11,7 @@ from event_universe.giving import holds_period, increments_of, radiated_total
 from event_universe.lay import division_act_in_time
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, TOOL, refused
+from tests.laws import BACK, EVENTS, ROOT, TOOL, packet_world, refused
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
@@ -51,17 +51,7 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
 
 def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
     """The packet's two levels take the message lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the GameBoard (5) and The message lay; `giving.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
-    world = json.loads((EVENTS / "packet_giving" / "packet_giving.json").read_text(encoding="utf-8"))
-    giver = world["bodies"][0]
-    rate = {**giver["rates"][0], "width": 3, "lifetime": 8}
-    nodes = [{"node": [80, 2, 2], "weight": 1}, {"node": [81, 2, 2], "weight": 1}]
-    small = {**world, "shape": [160, 5, 5], "ticks": 60, "node_readers": []}
-    small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate]}]
-    small["bodies"][0]["node_reader"] = {**giver["node_reader"], "window": 2}
-    del small["draw"]
-    (path := tmp_path / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
-    TOOL.main(["--input", str(path)])
-    board = GameBoard(load_world(path), (lines := []).append)
+    board = GameBoard(load_world(packet_world(tmp_path, TOOL)), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     while board.tick < 60 and not any(c["event"] == "credit" and c["given"] == "pulse" for c in lines):
         board.step()

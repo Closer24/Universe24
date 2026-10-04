@@ -322,8 +322,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
                     writers.add((module.stem, f.name))
     rule3 = {("game_board", "step"), ("game_board", "step_inverse"), ("game_board", "hold")}
     lay = {("game_board", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
-    lay |= {("meeting", "relaid"), ("giving", "laid_by_count")}
-    lay |= {("lay", "written")}  # the one lay act's write step: the source in time and the packet
+    lay |= {("lay", "written")}  # the one lay act's write step, every door's (ALGEBRA.md, the principle)
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
 
 

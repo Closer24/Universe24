@@ -3,13 +3,14 @@
 import json
 
 import numpy as np
+import pytest
 
-from event_universe import lay
+from event_universe import lay, world_files
 from event_universe.game_board import GameBoard
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, TOOL, refused
+from tests.laws import BACK, EVENTS, TOOL, packet_world, refused, slit_world
 
 
 def test_the_division_act_keeps_the_two_sums_and_the_guard_refuses_a_lay_that_moves_one():
@@ -23,7 +24,7 @@ def test_the_division_act_keeps_the_two_sums_and_the_guard_refuses_a_lay_that_mo
     now, before = lay.corrected("light", True, (level, level * 2), weights)
     assert (int(now.sum()), int(before.sum())) == (0, 0) and list(before) == [0, 3, 1, -4]
     refused("wakes the zero mode", lay.corrected, "light", True, (level, level), weights * 0)
-    refused("'light'", lay.guarded, "light", True, 7, 0, lay.IN_SPACE)
+    refused("'light'", lay.guarded, "light", True, 7, 0, False)
     assert (
         lay.corrected("matter", False, (level, level), weights)[0] is level
     )  # a gapped family: as given
@@ -112,3 +113,28 @@ def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_a
         (),
         action,
     )
+
+
+@pytest.mark.parametrize("door", ["the loader's lay", "the source in time", "the open board's packet"])
+def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
+    door, tmp_path, monkeypatch
+):
+    """Every door of the act on a massless record changes the two sums by 0 and the back-in-time gate reads MATCH across it (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode: the loader's lay of the file's levels, `GameBoard.lay`; the source in time's increments over its span, `giving.given_quantum`; the open board's packet, `giving.laid_packet`): the act's change read from its lay lines (the loader's lay has none, the sums themselves 0 at the start), the division act's leftover units among them, since `lay.written` is the one place that writes a level from outside Rule3 and the host's tool crosses every write from the lay lines."""
+    if door == "the loader's lay":  # the scratch world beside its universe
+        monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+        path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
+    elif door == "the source in time":
+        path, name, intervals = EVENTS / "resonance" / "resonant.json", "pulse", 92
+    else:
+        path, name, intervals = packet_world(tmp_path, TOOL), "pulse", 20
+    board = GameBoard(load_world(path), (lines := []).append)
+    index = [f.name for f in board.families].index(name)
+    assert not lines and board.families[index].pair[0] == board.families[index].pair[1]
+    line = board.states[index].lines[0]
+    assert (int(line.now.sum(dtype=object)), int(line.before.sum(dtype=object))) == (0, 0)
+    for _ in range(intervals):
+        board.step()
+    lays = [c for c in lines if c["event"] == "lay" and c["family"] == name]
+    assert (door == "the loader's lay") == (not lays)
+    assert [sum(c["after"][k] - c["before"][k] for c in lays) for k in (0, 1)] == [0, 0]
+    assert BACK.verdict(GameBoard(load_world(path)), intervals)["verdict"] == "MATCH"

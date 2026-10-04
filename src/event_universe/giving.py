@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import node
 from event_universe.core.ports import PORTS, SIDES
 from event_universe.core.rule3 import division_fixed_point, division_forward
 from event_universe.features.click import (
@@ -40,12 +39,6 @@ class Source:
     laid: int
     increments: list[int]
     begun: int
-
-
-def line_levels_at(board: GameBoard, index: int, line: int, at: Node) -> list[int]:
-    """One line's [now, before, remainder] at a Node named at the file's coordinates, read from its arrays."""
-    record, here = board.states[index].lines[line], tuple(np.add(at, board.offset))
-    return [int(record.now[here]), int(record.before[here]), int(record.remainder[here])]
 
 
 def given_quantum(board: GameBoard, item: Item) -> None:
@@ -107,26 +100,21 @@ def given_lines(family: FamilyRule) -> list[int]:
 
 
 def laid_by_count(board: GameBoard, item: Item) -> None:
-    """A spread record given `delta` whole quanta at the Nodes named by the count (features/click, `amplitude`), at the pair the item names, the conversion's records out at their family's massless pair [den, den] (the two hands: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum), every laid line of the record alike, the symmetric lay (`given_lines`; the mathematician's hand: the law's form names no line of a record), A_l^2 = count T div (2 laid) with `laid` the record's real lines or its planes (128 on one line or one plane; 73 on each of three planes, the fixed point of the division act on 5,461, the share then 0.976 of a quantum at T = 32,768, the file's rounding and not the form's, read beside the count: no three squares sum to 2^14, so no exact equal split exists at a power-of-two T, and the alike lay at the fixed point is laid rather than the unequal (74, 74, 73), the record's own unit absorbing the rounding in the count, the advisor's second): a real line at the two levels alike, (A_l, A_l), the level before the level now turned by the pair's rest rotation, none at the massless pair; a plane on its two lines with the sense the item carries from the conversion's table (`Item.sense`, +1 or -1), the real line (A_l, 0) and the sense line (0, sense A_l), the level before the level now turned a quarter in the record's sense as `laid_pairs` lays a plane at the quarter turn [0, den], the one lay at which the count's unit and the charge's unit coincide: the share per plane 3 den (A_l^2 + A_l^2) and the Wronskian re_now im_before - im_now re_before = sense A_l^2, over the planes count W_c and sense count T div 2 to the root's rounding (|W| is at most (|z_now|^2 + |z_before|^2) / 2, so no other lay has both), so that the sign row is written at the Node from the lay on (ALGEBRA.md #the-paces, The sign is the rotation sense; round F of the board, the neutron reading's row 2; the worker's four points to both hands and the mathematician's hand); every laid line's remainder at the lay's origin, the half wall; the record's count in the books up by the change."""
+    """A spread record given `delta` whole quanta at the Nodes named by the count (features/click, `amplitude`), at the pair the item names, the conversion's records out at their family's massless pair [den, den] (the two hands: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum), every laid line of the record alike, the symmetric lay (`given_lines`; the mathematician's hand: the law's form names no line of a record), A_l^2 = count T div (2 laid) with `laid` the record's real lines or its planes (128 on one line or one plane; 73 on each of three planes, the fixed point of the division act on 5,461, the share then 0.976 of a quantum at T = 32,768, the file's rounding and not the form's, read beside the count: no three squares sum to 2^14, so no exact equal split exists at a power-of-two T, and the alike lay at the fixed point is laid rather than the unequal (74, 74, 73), the record's own unit absorbing the rounding in the count, the advisor's second): a real line at the two levels alike, (A_l, A_l), the level before the level now turned by the pair's rest rotation, none at the massless pair; a plane on its two lines with the sense the item carries from the conversion's table (`Item.sense`, +1 or -1), the real line (A_l, 0) and the sense line (0, sense A_l), the level before the level now turned a quarter in the record's sense as `laid_pairs` lays a plane at the quarter turn [0, den], the one lay at which the count's unit and the charge's unit coincide: the share per plane 3 den (A_l^2 + A_l^2) and the Wronskian re_now im_before - im_now re_before = sense A_l^2, over the planes count W_c and sense count T div 2 to the root's rounding (|W| is at most (|z_now|^2 + |z_before|^2) / 2, so no other lay has both), so that the sign row is written at the Node from the lay on (ALGEBRA.md #the-paces, The sign is the rotation sense; round F of the board, the neutron reading's row 2; the worker's four points to both hands and the mathematician's hand); every laid line's remainder at the lay's origin, the half wall, through the one act with no weights (`lay.laid`, a one-Node lay laid as built, its lay lines the write step's); the record's count in the books up by the change."""
     assert item.pair is not None
-    family, state = board.families[item.family], board.states[item.family]
-    gamma, unit, at = board.world.node_clock, board.unit, board.mask(item.nodes)
+    family, at = board.families[item.family], board.mask(item.nodes)
     num, den = item.pair
-    laid = 1 if family.held else family.laid  # a holder of the sign: its time line alone, not its rows
-    size = amplitude(item.delta, board.world.quantum_action, item.pair, laid)
+    lines = 1 if family.held else family.laid  # a holder of the sign: its time line alone, not its rows
+    size = amplitude(item.delta, board.world.quantum_action, item.pair, lines)
     if family.plane:  # the loader admits a plane given by the count with the table's sense alone
         assert item.sense != 0
-        pairs = [pair for _ in range(laid) for pair in ((size, 0), (0, item.sense * size))]
+        pairs = [pair for _ in range(lines) for pair in ((size, 0), (0, item.sense * size))]
     else:
-        pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * laid
-    origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
+        pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * lines
+    origin = board.half_wall(item.family)  # a fresh lay by the count: the Node's remainder at the origin
     for number, (now, was) in zip(given_lines(family), pairs, strict=True):
-        line = state.lines[number]
-        state.lines[number] = node.Record(
-            line.now + np.where(at, now, 0),
-            line.before + np.where(at, was, 0),
-            np.where(at, origin, line.remainder),
-        )
+        # the one act with no weights: a one-Node lay's uniform part is the lay itself, laid as built, named
+        laid(board, item.family, number, (np.where(at, now, 0), np.where(at, was, 0)), None, origin, at)
     board.credit.counts[item.family] += item.delta
 
 

@@ -16,6 +16,7 @@ from event_universe.core.rule3 import coefficients, division_forward
 from event_universe.features.currents import Vector
 from event_universe.features.start import Sourced, held_rests
 from event_universe.features.write import carried
+from event_universe.lay import laid
 from event_universe.loader.derived import (
     PLANE,
     count_wall,
@@ -44,7 +45,10 @@ class GameBoard:
 
     def __init__(self, world: World, output: Output | None = None) -> None:
         paces.clear_memo()  # the paces computed once per content value within this run, kept between none
-        self.world, self.output, self.tick = world, output, 0
+        self.world, self.tick = world, 0
+        self.output: Output | None = (
+            None  # the lays of the start are the initial state, no event of the run
+        )
         self.shape, self.offset = world.shape, (0, 0, 0)
         self.growths: list[growth.Growth] = []
         self.ended: dict[str, object] | None = None
@@ -74,6 +78,7 @@ class GameBoard:
         for record, row in self.laid_rows():
             if not self.families[row.family].quanta:
                 self.lay(row, record)  # the kick: the row's own travelling events on its rest, no count
+        self.output = output
         self.densities: dict[tuple[int, str], tuple[int | None, int | None]] = {}  # the last readings
         for index in self.order:
             node.guarded(index, self.families, self.states, self.world.node_clock, self.wrap, self.unit)
@@ -103,21 +108,24 @@ class GameBoard:
         return found + [(0, message) for message in self.world.messages]
 
     def lay(self, row: BodyRow | MessageRow, record: int = 0) -> None:
-        """A body's or a message's levels from the mode file added to its family's lines of the record `record` (`node.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting) and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the message, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same."""
-        family, lines = self.families[row.family], self.states[row.family].lines
+        """A body's or a message's levels from the mode file added to its family's lines of the record `record` (`node.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting) and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the message, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same. The loader's door of the one lay act (`lay.laid`; ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode): a message's levels are the generator's, corrected at the lay, so no weight carries a correction here (the zero weights) and the guard is the loader's refusal of a massless message whose two sums are not 0; a body's levels and a kick on a holder of the content are laid as declared; the remainders stand at the half wall every line was born with (`node.empty_state`), the origin None; the lay is the initial state and no event of the run, so it reports no lay line (the output is handed to the GameBoard after its construction)."""
+        family = self.families[row.family]
         span, step = node.record_slice(family, record), PLANE if family.plane else 1
+        guarded = isinstance(row, MessageRow) and family.quanta  # a massless message: the guard alone
+        weights = node.zeros(self.shape, object) if guarded else None
+        origin = None  # the remainders as born, at the half wall of every line
         for first in range(span.start, span.stop, family.width):
             for line, weight in zip(range(first, first + family.width, step), row.weights, strict=True):
-                lines[line] = self.added(lines[line], row.now, row.before, weight)
+                laid(
+                    self, row.family, line, self.levels_of(row.now, row.before, weight), weights, origin
+                )
                 if family.plane:  # the plane's second line is its sense, every plane alike
-                    lines[line + 1] = self.added(
-                        lines[line + 1], row.second_now, row.second_before, weight
-                    )
+                    levels = self.levels_of(row.second_now, row.second_before, weight)
+                    laid(self, row.family, line + 1, levels, weights, origin)
 
-    def added(self, record: node.Record, now: Levels, before: Levels, weight: int) -> node.Record:
-        """A line with a body's or a message's two levels from the mode file, times the line's weight, added over the GameBoard."""
-        now_added = record.now + weight * self.board_array(now)
-        return replace(record, now=now_added, before=record.before + weight * self.board_array(before))
+    def levels_of(self, now: Levels, before: Levels, weight: int) -> tuple[np.ndarray, np.ndarray]:
+        """A body's or a message's two levels from the mode file, times the line's weight, as the act's change over the GameBoard."""
+        return weight * self.board_array(now), weight * self.board_array(before)
 
     def board_array(self, values: Levels) -> np.ndarray:
         """The levels the mode file lays as an array over the GameBoard: the nonzero Nodes' flat x-major indexes with their levels, 0 elsewhere."""

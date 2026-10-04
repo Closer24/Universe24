@@ -94,6 +94,21 @@ PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "phase": [0, 1], "am
 PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
 
 
+def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, ticks: int = 60) -> Path:  # type: ignore[no-untyped-def]
+    """The open board's packet world cut small: the shipped packet giving's giver over two Nodes of a 160 by 5 by 5 board with one giving at `lifetime` and `width`, its window 2, no reader and no draw, its mode file written by the generator."""
+    world = json.loads((EVENTS / "packet_giving" / "packet_giving.json").read_text(encoding="utf-8"))
+    giver = world["bodies"][0]
+    rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
+    nodes = [{"node": [80, 2, 2], "weight": 1}, {"node": [81, 2, 2], "weight": 1}]
+    small = {**world, "shape": [160, 5, 5], "ticks": ticks, "node_readers": []}
+    reader = {**giver["node_reader"], "window": 2}
+    small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate], "node_reader": reader}]
+    del small["draw"]
+    (path := folder / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
+    tool.main(["--input", str(path)])
+    return path
+
+
 def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
     universe_beside(folder)
     path = folder / f"{name}.json"

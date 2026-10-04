@@ -15,8 +15,6 @@ if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
 
 Changes = tuple[Any, Any]  # the act's change of the level now and of the level before over the GameBoard
-IN_SPACE = ("SUM now", "SUM before")  # the two sums the act keeps over the board
-IN_TIME = ("the sum over the span", "the first moment over the span")  # the two it keeps in time
 
 
 def shares_of(total: int, weights: Sequence[int]) -> list[int]:
@@ -58,13 +56,17 @@ def division_act_in_time(increments: list[int], amplitudes: list[int]) -> list[i
     return found
 
 
-def guarded(name: str, kept: bool, first: int, second: int, words: tuple[str, str]) -> None:
-    """The guard of the act: where the two sums are kept (a massless family under the correction) the act's change of each is 0, else the act refuses by name with the family and the two changes; `words` name the two sums (`IN_SPACE`, `IN_TIME`). The guard reads the act's change and never the sums themselves, which Rule3's own floors walk."""
+def guarded(name: str, kept: bool, first: int, second: int, in_time: bool) -> None:
+    """The guard of the act: where the two sums are kept (a massless family under the correction) the act's change of each is 0, else the act refuses by name with the family and the two changes, SUM now and SUM before over the board, or in time the sum and the first moment over the span. The guard reads the act's change and never the sums themselves, which Rule3's own floors walk."""
     if kept and (first or second):
         raise ValueError(
-            f"the lay on the massless family {name!r} wakes the zero mode: the act changes {words[0]} by "
-            f"{first} and {words[1]} by {second}, and both must be 0 (ALGEBRA.md, No write from outside Rule3 "
-            "wakes the massless row's zero mode)"
+            f"the lay on the massless family {name!r} wakes the zero mode: the act changes "
+            + (
+                f"the sum over the span by {first} and the first moment over the span by {second}"
+                if in_time
+                else f"SUM now by {first} and SUM before by {second}"
+            )
+            + ", and both must be 0 (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode)"
         )
 
 
@@ -75,14 +77,14 @@ def corrected(name: str, massless: bool, changes: Changes, weights: Any | None) 
     if massless and weights is not None:
         now, before = division_act(now, weights), division_act(before, weights)
     sums = (int(np.asarray(now, dtype=object).sum()), int(np.asarray(before, dtype=object).sum()))
-    guarded(name, kept, sums[0], sums[1], IN_SPACE)
+    guarded(name, kept, sums[0], sums[1], False)
     return now, before
 
 
 def laid_in_time(name: str, massless: bool, increments: list[int], amplitudes: list[int]) -> list[int]:
     """The one lay act in time, the source in time's increments over its span as one lay (ALGEBRA.md, The click writes on the GameBoard (5)): for a massless family the division act in time (`division_act_in_time`, in proportion to the amplitudes) and the guard on the change of the sum and of the first moment over the span; a gapped family's increments as given; each increment then written at its interval by the write step (`written`)."""
     found = division_act_in_time(increments, amplitudes) if massless else list(increments)
-    guarded(name, massless, sum(found), sum(t * d for t, d in enumerate(found)), IN_TIME)
+    guarded(name, massless, sum(found), sum(t * d for t, d in enumerate(found)), True)
     return found
 
 
