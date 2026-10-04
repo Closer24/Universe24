@@ -11,7 +11,7 @@ import numpy as np
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import PORTS, SIDES, Wrap, arrival
-from event_universe.core.rule3 import NO_READ, Reads, coefficients, rule3
+from event_universe.core.rule3 import NO_READ, Reads, coefficients, division_forward, rule3
 
 Pair = tuple[int, int]
 SignReads = tuple[
@@ -367,3 +367,22 @@ def held_rests(
         ):  # two division acts composed: the rest's and the booking's
             return fields
         levels = found
+
+
+def uniform_removed(levels: np.ndarray, weights: np.ndarray) -> np.ndarray:
+    """A laid level of a massless record with the uniform mode's content taken out (ALGEBRA.md, The message lay: the massless row's double root at wave number 0 carries neither level nor velocity, so a laid packet's two levels each sum to 0 over the board): the level's sum over the board divided among the laid Nodes in proportion to the envelope's weights by the division act, floor by floor, the division's leftover one unit each at the heaviest Nodes in x-major order, so that the sum is exactly 0 and the packet keeps the envelope's taper; a level whose sum is 0 as it stands, or whose weights are all 0, is returned as it is."""
+    flat, heavy = (
+        np.asarray(levels, dtype=object).ravel().copy(),
+        np.asarray(weights, dtype=object).ravel(),
+    )
+    total, mass = int(flat.sum()), int(heavy.sum())
+    if total == 0 or mass == 0:
+        return levels
+    laid = [int(i) for i in np.flatnonzero(heavy != 0)]
+    taken = {i: int(division_forward(-total * int(heavy[i]), mass, 0)[0]) for i in laid}
+    leftover = -total - sum(taken.values())  # the floors fall short by less than one unit per Node
+    for i in sorted(laid, key=lambda i: -int(heavy[i]))[:leftover]:
+        taken[i] += 1
+    for i, change in taken.items():
+        flat[i] += change
+    return flat.reshape(np.shape(levels))

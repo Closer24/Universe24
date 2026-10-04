@@ -79,3 +79,4 @@ jobs:
           path: |
             candidates.txt
             kept.txt
+          retention-days: 1

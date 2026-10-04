@@ -27,10 +27,14 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     k, omega = math.pi / 4, math.acos((math.cos(math.pi / 4) + 2) / 3)
     away = [abs(x - 5) for x in range(24)]
     envelope = [(1 + math.cos(math.pi * d / 4)) / 2 if d <= 4 else 0 for d in away]
-    for x, e in enumerate(envelope):
-        assert abs(now[x, 4, 0] - 1328 * e * math.cos(k * x)) <= 1
-        assert abs(before[x, 4, 0] - 1328 * e * math.cos(k * x + omega)) <= 1
+    mean, lag = (
+        sum(e * math.cos(k * x + p) for x, e in enumerate(envelope)) / sum(envelope) for p in (0, omega)
+    )
+    for x, e in enumerate(envelope):  # the uniform mode's content out, in proportion to the envelope
+        assert abs(now[x, 4, 0] - 1328 * e * (math.cos(k * x) - mean)) <= 2
+        assert abs(before[x, 4, 0] - 1328 * e * (math.cos(k * x + omega) - lag)) <= 2
     assert (now[:, 4:5, :] == now).all() and mode["count"] > 0 and not now[12].any()
+    assert int(now.sum()) == 0 and int(before.sum()) == 0
     inner, at = "beyond the board's inner face", {"node": [12, 0, 0], "count": 50}
     for change, reason in (
         (
@@ -52,8 +56,10 @@ def test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it
     before = json.loads(turned.with_suffix(".mode.json").read_text())["messages"][0]["moving"]["before"]
     mirrored = dense(before)
     tilted = math.acos((math.cos(math.pi / 4) + math.cos(math.pi / 8) + 1) / 3)  # the band with k_y
+    wave = lambda x, y: math.cos(-k * x + math.pi / 2 + math.pi * y / 8 + tilted)  # noqa: E731
+    mean = sum(e * wave(x, y) for x, e in enumerate(envelope) for y in range(9)) / (9 * sum(envelope))
     for x, e in enumerate(envelope):
-        assert abs(mirrored[x, 4, 0] - 1328 * e * math.cos(-k * x + math.pi + tilted)) <= 1
+        assert abs(mirrored[x, 4, 0] - 1328 * e * (wave(x, 4) - mean)) <= 2
     body = {"family": "matter", "nodes": [at]}
     refused(f"{inner}: nothing stands there", TOOL.pixel_mode, {**SLIT, "bodies": [body]})
     tampered = json.loads(mode_file.read_text(encoding="utf-8"))
@@ -147,7 +153,7 @@ def test_a_messages_mode_count_is_the_books_count_read_once_over_the_board(tmp_p
             board.credit.counts[names.index(e["family"])] for e in entries
         ]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    dilute = slit_world(tmp_path, TOOL, "dilute", messages=[{**PACKET, "amplitude": 60}])
+    dilute = slit_world(tmp_path, TOOL, "dilute", messages=[{**PACKET, "amplitude": 80}])
     entry = json.loads(dilute.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"][0]
     board = GameBoard(load_world(dilute))
     charge = [family.name for family in board.families].index("charge")

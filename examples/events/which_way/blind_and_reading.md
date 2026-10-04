@@ -102,3 +102,33 @@ report by the engine's label (ENGINE.md section 5, `reports.click` and `reports.
 own words call the shares a GameBoard reading beside the clicks, a stricter label than the engine's).
 No number is read from a Node. The lines carry the board's `tick` and the `window` in board intervals
 and nothing of the NodeReader's own clock. The crude Huygens rows of item 4 are the design's.
+
+## On the lay without the uniform mode, 2026-10-04 (branch click-share-fix, PR #1862)
+
+The message lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; ALGEBRA.md, The
+message lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0 and
+-24,442 for now and before, a velocity of the uniform mode that Rule3 carries exactly, the level's mean
+growing by 11 per interval over the board; the fix takes the uniform content out of each level at the
+lay, so both sums are 0, and the lay's count moves from 1,998 to 1,805 at the design's amplitude 996
+(the amplitude the design's number, the count a reading). The three worlds re-run on the branch, the
+blind untouched, the seed 24 of the design (`tools/run_inputs.py`, the clicks per region from the
+output files as `tests/test_the_draw.py` reads them, NODEREADER):
+
+| region | two_gaps clicks | one_gap clicks | which_way clicks |
+| --- | --- | --- | --- |
+| 0 to 4 (shadowed) | 28, 15, 24, 18, 7 | 0, 0, 0, 0, 0 | 0, 0, 0, 0, 0 |
+| 5 | 37 | 14 | 13 |
+| 6 | 44 | 36 | 32 |
+| 7 | 13 | 9 | 16 |
+| 8 | 13 | 25 | 19 |
+| 9 | 25 | 16 | 25 |
+| 10 | 24 | 16 | 9 |
+| 11 | 22 | 19 | 13 |
+| N | 270 | 135 | 269 (the screen 127, the channel 142) |
+
+The shadowed regions 0 exactly (PASS); the channel 142 against the blind's 136.5 within the draw's
+scatter (PASS); the which-way screen against the one-gap row, one draw against another at the same
+shares, chi-square 8.1 on 7 regions (PASS); the two slits' minimum at the region 8 read as the one gap's
+within the scatter (19 against 25) and above the two gaps' 13, the visibility about the regions 6 and 8
+below half the two slits' (PASS); the two-gaps row the two slits' gate row at this lay, N 270 against the
+blind's 273. The night's table above stands as history at its commit.

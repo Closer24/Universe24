@@ -35,6 +35,7 @@ from event_universe.features.start import (
     held_rests,
     returned,
     settled_rows,
+    uniform_removed,
 )
 from event_universe.loader.derived import FamilyRule, held_write_of, turns, with_records
 from event_universe.loader.faces import faces_of
@@ -1236,9 +1237,9 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
 
 
 def message_levels(
-    board: Board, message: dict[str, Any], beyond: np.ndarray
+    board: Board, message: dict[str, Any], beyond: np.ndarray, massless: bool
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a, sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board."""
+    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a, sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board. For a massless family of quanta (`massless`, the pair [den, den]; a holder of the content's kick is laid as declared) the uniform mode's content is taken out of each level (`features.start.uniform_removed`: the level's sum over the board divided among the packet's Nodes in proportion to the envelope by the division act, the leftover one unit each at the heaviest Nodes), so that now and before each sum to 0 exactly and the massless row's double root at wave number 0 carries neither level nor velocity (ALGEBRA.md, The message lay; the experimenter's bug report, #1827 comment 5975131359)."""
     along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
     turned, whole_turn = message["phase"]
     sideways = {
@@ -1283,7 +1284,10 @@ def message_levels(
     found = []
     for numerator in (now, before):
         levels = np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, numerator + half)[0])
-        found.append(np.where(beyond, 0, levels.astype(board.kind)))
+        laid = np.where(beyond, 0, levels)
+        if massless:  # the uniform mode's content out: each level sums to 0 over the board
+            laid = uniform_removed(laid, np.where(beyond, 0, envelope_here))
+        found.append(np.asarray(laid, dtype=object).astype(board.kind))
     return found[0], found[1]
 
 
@@ -1296,7 +1300,8 @@ def message_entry(
     board: Board, message: dict[str, Any], beyond: np.ndarray, family: FamilyRule, label: str
 ) -> dict[str, Any]:
     """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `GameBoard.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes."""
-    now, before = message_levels(board, message, beyond)
+    massless = family.quanta and family.pair[0] == family.pair[1]  # light: no uniform mode laid
+    now, before = message_levels(board, message, beyond, massless)
     weights = (1,) if family.plane else laid_weights(message, label, family)
     counted = (
         weights[:1] if family.wronskian else weights
@@ -1398,7 +1403,11 @@ def pixel_mode(
         family = str(message["family"])
         board = board_of(shape, wrap, gamma, integers, pairs[family])
         slot = records[len(bodies) + number]
-        laid_messages.append((names.index(family), slot, [message_levels(board, message, beyond)]))
+        rule = families[names.index(family)]
+        massless = rule.quanta and rule.pair[0] == rule.pair[1]
+        laid_messages.append(
+            (names.index(family), slot, [message_levels(board, message, beyond, massless)])
+        )
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
     # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its share);

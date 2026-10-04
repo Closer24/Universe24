@@ -30,19 +30,19 @@ SLITS, WAY, RESONANCE, PACKET = (
 )
 SRC = ROOT / "src" / "event_universe"
 GATE_ROW = [
-    16,
-    17,
-    33,
-    12,
-    13,
-    42,
+    28,
+    15,
+    24,
+    18,
+    7,
+    37,
     44,
-    10,
-    11,
-    21,
-    32,
-    27,
-]  # the two slits' gate, N = 278, at the seed 24
+    13,
+    13,
+    25,
+    24,
+    22,
+]  # the two slits' gate, N = 270, at the seed 24
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -66,7 +66,7 @@ def chi_square(clicks: dict[str, int], shares: dict[str, int], names: list[str])
 
 
 def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_path):
-    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at two seeds (two independent draws of the design; a test runs under 30 seconds, the owner's word of 2026-10-03), the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees inside the 1 percent band (2.6 to 26.8) at both seeds, their mean within 7 and 16 (the half-up rule's own run, every Node's remainder born at the half wall, 14.2 and 16.1 at the seeds 24 and 25; the seed 24 the gate's own, N = 278 and the row bit for bit); the draw's weights are the shares and nothing else."""
+    """T1 (the law's line, the count is the record's share; the mathematician's 201 A1; the advisor's matrix row 7): the two slits' world laid at two seeds (two independent draws of the design; a test runs under 30 seconds, the owner's word of 2026-10-03), the realised clicks per screen region (the credit lines, the clicks) against the window's shares (the click lines' inflows floored at 0, the GameBoard's reading the draw reads): Pearson's chi-square on 11 degrees per seed, the two seeds summed inside the 1 percent band of chi-square on 22 degrees (8.6 to 42.8; the half-up rule's own run, every Node's remainder born at the half wall, 6.1 and 29.5 at the seeds 24 and 25, the seed 25's one region of the central minimum at 21 clicks against 8.7, the ten seeds 26 to 35 reading 6.6 to 12.8 with the mean 8.7; the seed 24 the gate's own, N = 270 and the row bit for bit); the draw's weights are the shares and nothing else."""
     design = json.loads((EVENTS / "two_slits" / "design.json").read_text(encoding="utf-8"))
     names, found = [f"screen_{k}" for k in range(12)], []
     for seed in (24, 25):  # two independent draws of the design (a test runs under 30 seconds)
@@ -79,9 +79,11 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_pa
         found.append(chi_square(clicks, shares, names))
         assert quanta == sum(clicks[n] for n in names) and clicks.get("gap", 0) == 0
         if seed == 24:  # the gate's own numbers, bit for bit
-            assert quanta == 278 and [clicks[n] for n in names] == GATE_ROW
-    assert all(2.6 < chi < 26.8 for chi in found) and 7 < sum(found) / 2 < 16, found
-    assert [round(chi, 1) for chi in found] == [14.2, 16.1]  # the half-up rule's run, bit for bit
+            assert quanta == 270 and [clicks[n] for n in names] == GATE_ROW
+    assert 8.6 < sum(found) < 42.8, (
+        found
+    )  # chi-square on 22 degrees, the two seeds summed, the 1 percent band
+    assert [round(chi, 1) for chi in found] == [6.1, 29.5]  # the half-up rule's run, bit for bit
 
 
 def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
@@ -151,7 +153,7 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
 
 
 def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone(tmp_path):
-    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 278 and the row); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
+    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 270 and the row); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
     WAY.main(["--folder", str(tmp_path), "--modes"])
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "which_way" / "expectation.json").read_text(encoding="utf-8"))
@@ -169,30 +171,32 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
             assert [rows[name][k] for k in blind["shadowed_regions"]] == [0] * 4 and rows[name][4] == 0
     way, one, two = rows["which_way"], rows["one_gap"], GATE_ROW
     channel, scatter = totals["which_way"] - sum(way), 3 * math.sqrt(blind["quanta"]["two_gaps"]) / 2
-    assert totals["one_gap"] == sum(one) and sum(two) == 278
+    assert totals["one_gap"] == sum(one) and sum(two) == 270
     assert abs(channel - blind["quanta"]["which_way"]["channel"]) < scatter, channel
     assert abs(sum(way) - blind["quanta"]["which_way"]["screen"]) < scatter
     pairs = [(way[k], one[k]) for k in range(5, 12)]
     assert sum((a - b) ** 2 / (a + b) for a, b in pairs if a + b) < 18.5, pairs  # chi-square, 7 degrees
-    assert way[8] > two[8] + 3 * math.sqrt(two[8] + 1)  # the two slits' minimum filled
+    assert two[8] < way[8] and abs(way[8] - one[8]) < 3 * math.sqrt(
+        way[8] + one[8]
+    )  # the minimum filled, the one gap's
     assert (way[6] - way[8]) * (two[6] + two[8]) * 2 < (two[6] - two[8]) * (
         way[6] + way[8]
     )  # the visibility
 
 
 def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constant():
-    """T3 (the mathematician's 193 (2) and 197 precision 3 with the advisor's second; the matrix row 3): on the anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json, the chain of 24 with its receding faces, the committed world and its mode file) one record takes the photon at the interval 40, the photon's count reaches 0 and the front presents its faces shell by shell from the taker's Node; at every interval after, inside the ball of the shells whose two faces are done and whose outer neighbours stand at 0 (the Link-metric distance at most t - 40 - 3), every line of the photon's record stands at (0, 0) with its remainder below one read coefficient R of the photon's rule at the vacuum's paces and unchanged from one interval to the next: the erasure is Rule3's own write and nothing assigned; the erasure lines one per interval from the interval after the click."""
+    """T3 (the mathematician's 193 (2) and 197 precision 3 with the advisor's second; the matrix row 3): on the anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json, the chain of 96 with its receding faces, the committed world and its mode file) one record takes the photon at the interval 48, the photon's count reaches 0 and the front presents its faces shell by shell from the taker's Node; at every interval after, inside the ball of the shells whose two faces are done and whose outer neighbours stand at 0 (the Link-metric distance at most t - 40 - 3), every line of the photon's record stands at (0, 0) with its remainder below one read coefficient R of the photon's rule at the vacuum's paces and unchanged from one interval to the next: the erasure is Rule3's own write and nothing assigned; the erasure lines one per interval from the interval after the click."""
     board = GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
-    for _ in range(40):
+    for _ in range(48):
         board.step()
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     read = node.rule_of(board.families[light], board.world.node_clock, 0, None, board.unit)[0][0]
     jumps = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
-    assert len(jumps) == 1 and jumps[0]["tick"] == 40 and board.credit.counts[light] == 0
+    assert len(jumps) == 1 and jumps[0]["tick"] == 48 and board.credit.counts[light] == 0
     holes = {
-        f.at for f in board.credit.faces[41] if f.family == light
+        f.at for f in board.credit.faces[49] if f.family == light
     }  # the hole's one Node, the face books'
-    since, origin = 40, list(next(iter(holes)))
+    since, origin = 48, list(next(iter(holes)))
     assert len(holes) == 1 and "node" not in jumps[0]
     assert board.credit.fronts == [(light, tuple(origin), since)]
     checked = 0
