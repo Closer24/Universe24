@@ -41,6 +41,16 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_loader_refuses_one_that_does": (
+        24,
+        "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
+        "packet's two levels each sum to 0 on the committed worlds, and the loader refuses a mode entry whose sums are not 0",
+    ),
+    "tests/test_the_meeting.py::test_the_taking_at_an_empty_node_removes_share_and_leaves_every_other_node_as_it_was": (
+        28,
+        "the lay's uniform mode (#1827 comment 5975131359): the hole at a Node the packet has passed removes share and adds no "
+        "kink, every Node outside its first shell bit for bit a no-taking run's",
+    ),
     "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
         10,
         "the documents' gates (the owner's word of 2026-10-04, a perfect algebra; #1793 comment 5974938542): no undated history "

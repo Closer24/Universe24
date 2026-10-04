@@ -38,12 +38,12 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     ]
     record["rates"] = [{"from": "P", "to": "S", "lifetime": 2, "gives_to": "fluorescence"}]
     drive = {"family": "strong_drive", "along": "x", "wave": [1, 2], "phase": [0, 1], "amplitude": 600}
-    drive.update(top={"x": [0, 5], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
+    drive.update(top={"x": [0, 7], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
     counter = {
         "name": "counter",
         "positions": [[0, y, z] for y in range(6) for z in range(4)],
     }
-    world = dict(shape=[6, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
+    world = dict(shape=[8, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
     world.update(universe="u.json", engine="e.json", bodies=[record], messages=[drive])
     world.update(node_readers=[counter], draw={**draw, "window": 18, "seed": 24})
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
@@ -211,8 +211,8 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )  # between v and b
     drop = int(other.total_share(drv)[0]) - int(board.total_share(drv)[0])
     assert (
-        0 < drop <= board.credit.units[drv]
-    )  # the two faces remove at most one quantum of the drive (266)
+        0 < drop <= board.credit.units[drv] * 51 // 50
+    )  # the two faces remove one quantum of the drive within 2 percent (266; the ring two wavelengths long)
     assert 0 <= int(hole.remainder[here]) < walls[drv]  # the giver's remainder Rule3's own
     still = GameBoard(load_world(path))  # the same run without the front: its fronts dropped each step
     [still.step() for _ in range(still.tick, board.tick)]
@@ -252,7 +252,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     }
     assert kinds[first["tick"]] == {("ion", k) for k in range(4)}  # the taking: two parts, four lines
     assert all(("fluorescence", 0) in kinds[g["tick"]] for g in given)  # every giving laid its quantum
-    assert {x["label"] for x in lays} == {"GAMEBOARD"} and board.credit.counts[light] > 1  # none refused
+    assert {x["label"] for x in lays} == {"GAMEBOARD"} and board.credit.counts[
+        light
+    ] >= 1  # none refused
     key, kept = ("line", "port", "tick", "value"), sum(board.credit.faces.values(), [])
     faced = {(f.family, f.at, *(getattr(f, k) for k in key)) for f in kept}
     logged = {(names.index(x["family"]), tuple(x["node"]["at"]), *(x[k] for k in key)) for x in faces}

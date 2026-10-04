@@ -385,4 +385,4 @@ def uniform_removed(levels: np.ndarray, weights: np.ndarray) -> np.ndarray:
         taken[i] += 1
     for i, change in taken.items():
         flat[i] += change
-    return flat.reshape(np.shape(levels)).astype(np.asarray(levels).dtype)
+    return flat.reshape(np.shape(levels))

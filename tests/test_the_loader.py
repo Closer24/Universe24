@@ -2,9 +2,11 @@
 
 import json
 
+from event_universe.game_board import GameBoard
 from event_universe.loader import faces, keys, lay, messages, mode, universe
 from event_universe.loader.derived import PLANE_LINE, REAL_LINE
-from tests.laws import refused, universe_beside
+from event_universe.world_files import load_world
+from tests.laws import EVENTS, refused, universe_beside
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
@@ -179,3 +181,27 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     assert fixed == lay.Lay("fixed_point", 2, 30, None, None, "one_node", None)
     layer = faces.layer_of(shape, (True, False, False), 1, (faces.RecedingFace(0, 1, 9, 1),))
     assert layer == ((0, 0, 0), (0, 1, 0))  # the high side recedes: the low face's two Nodes alone
+
+
+def test_a_massless_message_lays_no_uniform_mode_and_the_loader_refuses_one_that_does(tmp_path):
+    """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The message lay), and a mode entry whose level sums otherwise is refused by name."""
+    for world in ("anticoincidence/one_photon", "two_slits/two_slits", "bell/bell_a_b"):
+        board = GameBoard(load_world(EVENTS / f"{world}.json"), lambda line: None)
+        for index, family in enumerate(board.families):
+            if family.quanta and family.pair[0] == family.pair[1]:
+                line = board.states[index].lines[0]
+                assert int(line.now.sum(dtype=object)) == 0 and int(line.before.sum(dtype=object)) == 0
+    universe_beside(tmp_path, charged=True)
+    families = universe.universe_of(json.loads((tmp_path / "u.json").read_text(encoding="utf-8")))[1]
+    light = next(family for family in families if family.name == "charge")
+    packet = {"family": "charge", "along": "x", "wave": [1, 2], "phase": [0, 1], "amplitude": 3}
+    packet.update(top={"x": [1, 1], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0})
+
+    def laid(now, before):
+        entry = {"family": "charge", "pair": list(light.pair), "moving": {"now": now, "before": before}}
+        beside = {"world_digest": "d", "bodies": [], "messages": [entry]}
+        return messages.messages_of([packet], beside, "d", families, (4, 1, 1), 10, ())
+
+    assert len(laid([0, 3, -3, 0], [0, 2, -2, 0])) == 1
+    refused("carries the uniform mode", laid, [0, 3, -1, 0], [0, 2, -2, 0])
+    refused("carries the uniform mode", laid, [0, 3, -3, 0], [0, 2, 0, 0])

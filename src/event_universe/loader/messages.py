@@ -156,7 +156,8 @@ def messages_of(
             bound,
             beyond,
         )
-        if families[family].pair[0] == families[family].pair[1]:  # massless: no uniform mode laid
+        rule = families[family]
+        if rule.quanta and rule.pair[0] == rule.pair[1]:  # massless quanta: no uniform mode laid
             for word, pairs in zip(("now", "before"), levels[:2], strict=True):
                 total = sum(int(v) for _at, v in pairs)
                 if total != 0:
