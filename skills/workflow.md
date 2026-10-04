@@ -9,11 +9,12 @@ current documents, judges every line by its status, computes the blind numbers
 and writes nothing to the law, the engine, the paper or HIGHLIGHTS.md; at the
 owner's word of 2026-10-04 it builds tests and tools on a branch from `main` for
 the Boss's HANDED BY pull request, nothing of src/event_universe/; its card is
-[the advisor's card](advisor/SKILL.md). The
-mathematician is the second hand on every derivation and at every sha (#1836).
-The reviewer reads the paper, the supplement and the law whole and keeps the
-ledger (#1793). The writer holds the paper (#1538). The experimenter runs the
-shipped worlds against their blinds and keeps each folder's reading (#1827).
+[the advisor's card](advisor/SKILL.md). The mathematician is the second hand on
+every derivation and at every sha, and the first hand where the Boss routes it
+(#1836). The reviewer reads the paper, the supplement and the law whole and
+keeps the ledger (#1793). The writer holds the paper (#1538). The experimenter
+runs the shipped worlds against their blinds and keeps each folder's reading
+(#1827).
 This file is what the team shares. A skill is an instruction, not a grant of
 permission: the user's scope binds every session.
 
@@ -45,10 +46,13 @@ all the project's documents synchronized):
 | docs/REVIEW_LEDGER.md, the reviewer's ledger | Every finding with its state, one row each: its place, its station, its hand and the hash it was checked at; changed by the pull request that prints |
 | docs/PROVENANCE.md, the provenance | Who said what and when, under the law's line names: the hands' comments, the owner's dated words, the pull requests; the law's lines give it up in part 4 of the fill and keep the statement |
 
-The skills are this file and the two role cards. The entry files are README.md,
-AGENTS.md and CONTRIBUTING.md. No log and no status page: the two records are
-the only files beside the three documents, and HIGHLIGHTS.md holds the decisions
-only, one line each, no diary.
+The skills are this file and the two role cards that exist, the Boss's
+(`skills/boss-orchestrator/SKILL.md`) and the advisor's (`skills/advisor/SKILL.md`);
+the other four hands, the mathematician, the reviewer, the writer and the
+experimenter, have their issues as their cards until their cards are written.
+The entry files are README.md, AGENTS.md and CONTRIBUTING.md. No log and no
+status page: the two records are the only files beside the three documents, and
+HIGHLIGHTS.md holds the decisions only, one line each, no diary.
 
 ## The documents rule (the owner, 2026-09-30 and 2026-10-04)
 
