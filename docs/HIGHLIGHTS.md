@@ -35,7 +35,7 @@ points at the law, the law's line governs and no formula is restated here.
 - A theorem's proof stays in words beside its mark, and its script checks the claim on the engine's integers.
 - Two gates run on every pull request: the documents gate on the law and the engine's document (the stale phrases, the numbers table, the derivation scripts) and the paper's gate, the writer's (the marks, the struck phrases and the twins).
 - The conventions and units table is a section of the law (the one orientation, the tension's sign, the step's phase, the matrices and the energy, T and the walls, form against share against inflow), drafted by the first hand and confirmed by the second, its identities asserted in the integer algebra test.
-- The readings gate, tools/reading_gate.py, re-runs the gate worlds and compares their output bit for bit to the folders' blind_and_reading documents.
+- The readings gate re-runs the gate worlds and compares their output bit for bit to the folders' blind_and_reading documents.
 - The engine's derivation ledger is a section of the law: every number the engine prints that the law derives stands there with its derivation.
 - Fill 17 part 2 is merged: the law's lines two-handed, the deleted worlds' rows as dated clauses, count-unit's items; part 3 follows on its own branch.
 - The law's lines are split into the statement (docs/ALGEBRA.md keeps the algebraic line, its inputs and numbers, status, fence and the engine's place) and the provenance (docs/PROVENANCE.md keeps who said it when and where, under the line's name), as part 4 after part 3, by the advisor's tool in one pull request read by both hands, then the hands' second pass section by section.
