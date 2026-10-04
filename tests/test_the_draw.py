@@ -104,9 +104,9 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
 
 
 def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
-    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click that writes on the board (the records' and the counter's credit lines, the one click line kind, no Node: the Nodes written read from the GAMEBOARD lines beside them, the given quantum's lay lines and the hole's face lines after a taking) lies inside the cone of the written click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the ion's takings from its two drives, beams of many quanta per Node, write nothing (the undepleted beam, `meeting.faced`) and name no Node in any line; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
+    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 400 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file, the counter's window 320), every click that writes on the board (the records' and the counter's credit lines, the one click line kind, no Node: the Nodes written read from the GAMEBOARD lines beside them, the given quantum's lay lines and the hole's face lines after a taking) lies inside the cone of the written click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the giving that laid it, the clicks causally continuous and not Node to Node; the ion's takings from its two drives, beams of many quanta per Node, write nothing (the undepleted beam, `meeting.faced`) and name no Node in any line; the box 12 x 12 x 7, the ion at [6, 6, 4]."""
     board = GameBoard(load_world(EVENTS / "shelved_ion" / "shelved_ion.json"), (lines := []).append)
-    for _ in range(200):
+    for _ in range(400):
         board.step()
     shape = board.world.shape
 
@@ -136,7 +136,7 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
     ]  # read in the books alone
     assert (
         len(clicks) > 20 and beams and all("node" not in c for c in clicks)
-    )  # the lifetime 8: half of 4's
+    )  # the lifetime 8, one window of 320 closed in 400
     assert all(not nodes_of(c) for c in beams)
     clicks = [c for c in clicks if c not in beams]
     assert clicks and all(nodes_of(c) for c in clicks)
