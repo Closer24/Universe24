@@ -179,3 +179,31 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     assert fixed == lay.Lay("fixed_point", 2, 30, None, None, "one_node", None)
     layer = faces.layer_of(shape, (True, False, False), 1, (faces.RecedingFace(0, 1, 9, 1),))
     assert layer == ((0, 0, 0), (0, 1, 0))  # the high side recedes: the low face's two Nodes alone
+
+
+def test_the_loader_derives_the_pair_of_two_bound_records(tmp_path):
+    """The pair of two bound records (ALGEBRA.md, a hypothesis under its own name; tools/derivations/two_body.py): from two [2, 3] rows at the declared den 6,000 the loader derives the relative part's pair [5237, 6000] and the centre's [2449, 6000] by the division act (the floats' 5,237.2 and 2,449.5), their inertias 3 tan omega one half and twice the record's within the pair's rounding; refused by name: a massless constituent, a name declared later or never, a den below 1, both parts or neither, a pair of three numbers."""
+    universe_beside(tmp_path)
+    document = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+
+    def row(name, pair):
+        return {"name": name, "pair": pair, "dimension": 2, "reads": {}}
+
+    rows = [*document["families"], row("a", [2, 3]), row("b", [2, 3])]
+    relative, centre = {"relative_of": ["a", "b"], "den": 6000}, {"centre_of": ["a", "b"], "den": 6000}
+    families = universe.universe_of(
+        {**document, "families": [*rows, row("mu", relative), row("M", centre)]}
+    )[1]
+    pairs = {family.name: family.pair for family in families}
+    assert (pairs["mu"], pairs["M"]) == ((5237, 6000), (2449, 6000))
+    inertia = {name: (den * den - num * num) ** 0.5 / num for name, (num, den) in pairs.items()}
+    assert abs(inertia["mu"] / inertia["a"] - 0.5) < 2e-3 and abs(inertia["M"] / inertia["a"] - 2) < 2e-3
+    for pair, match in (
+        ({"relative_of": ["a", "gravity"], "den": 6000}, "massive pair of positive num"),
+        ({"relative_of": ["a", "nobody"], "den": 6000}, "no family declared before it"),
+        ({"relative_of": ["a", "b"], "den": 0}, "den must be an integer from 1"),
+        ({**relative, **centre}, "one of the two parts"),
+        ({"den": 6000}, "one of the two parts"),
+        ([2, 3, 4], "must be \\[num, den\\]"),
+    ):
+        refused(match, universe.universe_of, {**document, "families": [*rows, row("x", pair)]})

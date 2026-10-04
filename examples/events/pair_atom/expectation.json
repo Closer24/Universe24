@@ -1,0 +1,47 @@
+{
+ "relative_pair": [
+  5237,
+  6000
+ ],
+ "centre_pair": [
+  2449,
+  6000
+ ],
+ "inertia_ratio_relative": 0.5001,
+ "inertia_ratio_centre": 2.0005,
+ "energy_line": true,
+ "alpha_law": 0.18046,
+ "bohr_radius_links": 5.72,
+ "binding_1s_rad_per_interval": 0.0091,
+ "binding_ratio_to_one_record": 0.5,
+ "reduced_masses": [
+  0.999456,
+  0.999728,
+  0.995187,
+  0.5,
+  185.840832
+ ],
+ "ground_levels_hartree": [
+  -0.499728,
+  -0.499864,
+  -0.497593,
+  -0.25
+ ],
+ "against_nature": [
+  2.7751,
+  -6.8028,
+  5.1021,
+  -2.5285
+ ],
+ "nature": {
+  "isotope_shift_meV": 2.775,
+  "positronium_1s_eV": -6.8,
+  "positronium_1s_2s_eV": 5.1,
+  "muonic_hydrogen_1s_keV": -2.53
+ },
+ "rest_contents": [
+  1.4907,
+  1.4008
+ ],
+ "run": "nothing run; the world loads and waits for the experimenter at the owner's word"
+}
