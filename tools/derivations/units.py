@@ -45,9 +45,12 @@ def against_the_engine() -> list[float]:
         from event_universe.loader.derived import FamilyRule, count_wall
     except ImportError:
         return [0.0, 0.0, 0.0]
-    matter, light = FamilyRule.__new__(FamilyRule), FamilyRule.__new__(FamilyRule)
-    object.__setattr__(matter, "pair", (4000, 6000))
-    object.__setattr__(light, "pair", (6000, 6000))
+
+    def family(name: str, pair: tuple[int, int]) -> FamilyRule:
+        """A family row holding nothing but its pair, the one field `count_wall` reads."""
+        return FamilyRule(name, pair, 1, 1, False, False, False, None, None, 0, ())
+
+    matter, light = family("matter", (4000, 6000)), family("light", (6000, 6000))
     return [count_wall(matter, 32768), count_wall(light, 32768), squared(1, 32768, (2, 3), 1)]
 
 
