@@ -208,6 +208,32 @@ def test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_
         assert f"SUM {word} by 2" in str(refusal) and "'charge'" in str(refusal)
 
 
+def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(
+    tmp_path, monkeypatch
+):
+    """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose gravity and charge rows are massless (the first named), a box of 4 by 4 by 2 periodic on all three axes is refused by name at load, the message naming the family, the shape, the staggered mode (-1)^(x + y + z + t) walked by Rule3's own rounding and the way out (printed); the same box with one odd extent, 4 by 4 by 3, and the even box with its x axis open are admitted, the mode a bounded response there."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe_beside(tmp_path)
+    world = dict(boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=1, universe="u.json")
+    world.update(engine="e.json", bodies=[], messages=[], node_readers=[])
+
+    def written(name, **changes):
+        (path := tmp_path / f"{name}.json").write_text(
+            json.dumps({**world, **changes}), encoding="utf-8"
+        )
+        return path
+
+    refusal = str(refused("staggered mode", load_world, written("even", shape=[4, 4, 2])))
+    print(refusal)
+    assert "'gravity'" in refusal and "[4, 4, 2]" in refusal and "odd extent or open it" in refusal
+    assert GameBoard(load_world(written("odd", shape=[4, 4, 3]))).shape == (4, 4, 3)
+    opened = dict(x="open", y="periodic", z="periodic")
+    assert (
+        GameBoard(load_world(written("open", shape=[4, 4, 2], boundary=opened, face_depth=1))).shape[0]
+        == 4
+    )
+
+
 def test_the_loader_derives_the_pair_of_two_bound_records(tmp_path):
     """The pair of two bound records (ALGEBRA.md, a hypothesis under its own name; tools/derivations/two_body.py): from two [2, 3] rows at the declared den 6,000 the loader derives the relative part's pair [5237, 6000] and the centre's [2449, 6000] by the division act (the floats' 5,237.2 and 2,449.5), their inertias 3 tan omega one half and twice the record's within the pair's rounding; refused by name: a massless constituent, a name declared later or never, a den below 1, both parts or neither, a pair of three numbers."""
     universe_beside(tmp_path)
