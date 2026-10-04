@@ -19,7 +19,7 @@ from event_universe.features.click import (
     rotated,
     transverse_cosine,
 )
-from event_universe.features.start import shares_of, uniform_removed
+from event_universe.lay import division_act_in_time, uniform_removed
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import Node
 from event_universe.reports import lay
@@ -252,17 +252,7 @@ def holds_period(span: int, resonance: tuple[int, int], unit: int) -> bool:
     return num * unit <= den * doubled
 
 
-def uniform_removed_in_time(increments: list[int], amplitudes: list[int]) -> list[int]:
-    """The source in time's increments with the uniform mode's content taken out (ALGEBRA.md, The click writes on the GameBoard (5), the giving lays no uniform mode; the mathematician's hand): on the massless row a level delta added at the one Node at the interval t puts into the double root at wave number 0 the velocity delta and, by the interval s, the level (s - t + 1) delta, so a span of increments leaves the board a uniform velocity SUM delta_t and, once that is 0, a uniform level -SUM t delta_t, growing with no bound in the first case and standing for ever in the second; both are taken out by the division act, exact in the integers: the velocity's sum divided among the increments in proportion to the amplitudes (`features/start.shares_of`), then the moment SUM t delta_t divided among the running sums s_0 .. s_(tau - 2) in proportion to the parabola (t + 1) (tau - 1 - t), the increments corrected by the running sums' differences s_t - s_(t - 1) with s_(-1) = s_(tau - 1) = 0, which leave the sum at 0 and move the moment by -SUM s_t exactly; the correction a slope over the span below one level per interval at the shipped lifetimes, the laid form on the chain 0.2 and 0.6 percent under the uncorrected (the mathematician's scratch at [2, 3] and [5414, 6000], tau 48), where the second difference of the moment, nature's dipole, would have amplified the onset's transient by the band's top over the resonance, 2 (1 - cos pi) / (2 (1 - cos Omega)), to 1.08 and 1.83 quanta; increments summing to 0 with the moment 0, or a span of one interval, are returned as they are."""
-    found = list(increments)
-    velocity = sum(found)
-    if velocity:
-        found = [d + c for d, c in zip(found, shares_of(-velocity, amplitudes), strict=True)]
-    span, moment = len(found), sum(t * d for t, d in enumerate(found))
-    if moment and span > 1:
-        running = [0, *shares_of(moment, [(t + 1) * (span - 1 - t) for t in range(span - 1)]), 0]
-        found = [d + (running[t + 1] - running[t]) for t, d in enumerate(found)]
-    return found
+uniform_removed_in_time = division_act_in_time  # the act's name here, kept while its callers read it
 
 
 def laid_increment(board: GameBoard, source: Source) -> None:
