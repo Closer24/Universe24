@@ -5,14 +5,14 @@
  "intervals": 48,
  "blind": {
   "one_photon": {
-   "reading": "over the trials the fraction with a taking at the record A alone, at B alone, at both and at neither (tools/meeting_trials.py, the jump lines), and alpha = P(both) / (P(A) P(B))",
+   "reading": "over the trials the fraction with an absorption at the record A alone, at B alone, at both and at neither (tools/meeting_trials.py, the jump lines), and alpha = P(both) / (P(A) P(B))",
    "blind": "P(A only) = P(B only) = s with s at most 1 / 2, exact by the lay's symmetry (each packet as far from its atom as the other) and the seeds' draw alone, P(both) = 0 exactly, alpha = 0 (independent draws, classical light, would give 1)",
    "status": "derived from the credit's one draw per record and the count conserved (S.57 (b)); the share s the two-mode line's transfer over the passage at the declared weight, not predicted here",
    "fence": "clicks"
   },
   "two_photons": {
    "reading": "the same over the control's trials",
-   "blind": "P(both) above 0: two quanta, two takings possible, alpha 1 / 2 in S.57 (c)'s form (the ordered pairs), 1 for two independent sequential takings at the same share",
+   "blind": "P(both) above 0: two quanta, two absorptions possible, alpha 1 / 2 in S.57 (c)'s form (the ordered pairs), 1 for two independent sequential absorptions at the same share",
    "status": "S.57 (c), the control of two quanta",
    "fence": "clicks"
   }

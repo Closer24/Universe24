@@ -115,7 +115,7 @@ def counts_move_only_at_clicks(intervals: int = 50, nodes: int = 24) -> list[Fra
 
 
 def a_quantum_never_breaks() -> list[int]:
-    """[the clicks a record of count 1 gives, its count after, the clicks a body of count 5 gives one quantum at a time]: 1, 0 and 5; a click at a body's front parts one quantum, and a quantum of count 1 has no part the click credits (the paper's Section 7.3)."""
+    """[the clicks a record of count 1 gives, its count after, the clicks a body of count 5 emits one quantum at a time]: 1, 0 and 5; a click at a body's front parts one quantum, and a quantum of count 1 has no part the click credits (the paper's Section 7.3)."""
     whole = [Fraction(1)]
     taken = credit(whole, 1)
     body_count, clicks = 5, 0

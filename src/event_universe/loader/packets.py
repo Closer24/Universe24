@@ -49,7 +49,7 @@ class PacketRow:
 
 @dataclass(frozen=True)
 class WholePacket:
-    """A packet laid whole at one Node by the count at a declared interval of the run (the probe of the pulsed gate; the two hands): its family (a family of quanta), the Node at the file's coordinates, the whole quanta laid (from 1) and the interval at whose end the engine lays them (from 1, within the run), by the one-Node lay by the count at the family's massless pair, A^2 = count T div 2 on its first line (`giving.laid_by_count`, the conversion's lay of a given quantum; `meeting.laid_whole`); the experimenter's lay in time, a declaration of the world's protocol and nothing of the engine's."""
+    """A packet laid whole at one Node by the count at a declared interval of the run (the probe of the pulsed gate; the two hands): its family (a family of quanta), the Node at the file's coordinates, the whole quanta laid (from 1) and the interval at whose end the engine lays them (from 1, within the run), by the one-Node lay by the count at the family's massless pair, A^2 = count T div 2 on its first line (`emission.laid_by_count`, the conversion's lay of a emitted quantum; `meeting.laid_whole`); the experimenter's lay in time, a declaration of the world's protocol and nothing of the engine's."""
 
     family: int
     at: Node

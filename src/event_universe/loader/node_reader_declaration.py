@@ -1,4 +1,4 @@
-"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the giving at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `node_reader` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
+"""A body's declaration as a NodeReader with a record of its own (ALGEBRA.md, The NodeReader is one declaration kind for every experiment; The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): its `parts`, the modes' labels with the count in one of them at the start (`parts_of`), its `transitions` (which arriving family's quantum moves it from which part to which, at the declared weight and `resonance`; a transition of a part into itself the probe's, `transitions_of`), its `rates` (the emission at a declared lifetime, inside a guide as a source in time and in the open board as a packet of the declared `width`, the loader deciding by the board's shape, `rates_of`, `packet_form`), its own `node_reader` (its draw with its window, or the generator alone beside a probe, `loader/draw.py`) and, in place of its parts, its `conversion` (the records out and the rate, `conversion_of`); the keys of such a body (`READER_RECORD_KEYS`), each read into `NodeReaderDeclaration` by `node_reader_of`, every defect refused by name and no default written."""
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ import itertools
 from dataclasses import dataclass, replace
 
 from event_universe.core.rule3 import division_forward
+from event_universe.emission import holds_period
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
-from event_universe.giving import holds_period
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.draw import Generator, draw_of, generator_of
 from event_universe.loader.keys import integer, keyed
@@ -27,7 +27,7 @@ RATE_KEYS = (
     "to",
     "lifetime",
     "gives_to",
-)  # a giving's keys; its resonance the transition's between the parts
+)  # an emission's keys; its resonance the transition's between the parts
 RATE_OPTIONAL = (
     "width",
 )  # the open board's packet's Nodes across, the one declared number of its shape
@@ -43,7 +43,7 @@ OUT_KEYS, OUT_REQUIRED = (
 
 @dataclass(frozen=True)
 class Transition:
-    """A transition of a record at a Node that is a NodeReader (ALGEBRA.md, The click writes on the lattice (j), the taking click): the part the record leaves, the part it enters, the family whose arriving quantum it takes climbing or receives back descending (the parts' declared order, `parts_of`; `meeting.exchange`), by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands): it names the family whose lay at the body's Node closes the body's window, the body taking it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
+    """A transition of a record at a Node that is a NodeReader (ALGEBRA.md, The click writes on the lattice (j), the absorption click): the part the record leaves, the part it enters, the family whose arriving quantum it takes climbing or receives back descending (the parts' declared order, `parts_of`; `meeting.exchange`), by their positions, and the weight the arriving record's level is read into the record's phase with, the two-mode line's coupling, a number of the file (the advisor's k_r), at the declared resonance. A transition of a part into itself is the probe's (ALGEBRA.md, The pulsed gate; the two hands): it names the family whose lay at the body's Node closes the body's window, the body absorption it by that part with no turn (the weight 0 and the band's top as its resonance, read by nothing), the draw at the close by the labels' squares (`meeting.probe_click`)."""
 
     leaves: int
     enters: int
@@ -63,7 +63,7 @@ def pair_of(value: object, label: str) -> tuple[int, int]:
 
 @dataclass(frozen=True)
 class Rate:
-    """A giving of a body as a NodeReader (the fifth act, the giving click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions; in the open board the packet's `width`, its Nodes across (None inside a guide, the source in time), and the directions the board holds for its lay from the body's Node, (axis, sense) each, drawn by the giver (`packet_form`; `giving.laid_packet`)."""
+    """An emission of a body as a NodeReader (the fifth act, the emission click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions; in the open board the packet's `width`, its Nodes across (None inside a guide, the source in time), and the directions the board holds for its lay from the body's Node, (axis, sense) each, drawn by the giver (`packet_form`; `emission.laid_packet`)."""
 
     leaves: int
     enters: int
@@ -85,7 +85,7 @@ class Conversion:
 
 @dataclass(frozen=True)
 class NodeReaderDeclaration:
-    """A body as a NodeReader as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its givings, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
+    """A body as a NodeReader as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its emissions, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
 
     names: tuple[str, ...]
     counts: tuple[int, ...]
@@ -156,9 +156,9 @@ def rates_of(
     own: int,
     transitions: tuple[Transition, ...],
 ) -> tuple[Rate, ...]:
-    """A body's `rates`: each `from` and `to`, two of its parts' names, `lifetime` from 1 (the giving at 1 / lifetime per interval, the declared floor), `gives_to`, the family of quanta other than the body's own on which the given quantum is laid, and optionally `width` from 1, the open board's packet's Nodes across (`packet_form` decides its use by the board's shape); refused by name otherwise."""
+    """A body's `rates`: each `from` and `to`, two of its parts' names, `lifetime` from 1 (the emission at 1 / lifetime per interval, the declared floor), `gives_to`, the family of quanta other than the body's own on which the emitted quantum is laid, and optionally `width` from 1, the open board's packet's Nodes across (`packet_form` decides its use by the board's shape); refused by name otherwise."""
     if not isinstance(value, list):
-        raise ValueError(f"{label} must be a list of the body's givings")
+        raise ValueError(f"{label} must be a list of the body's emissions")
     found = []
     for index, entry in enumerate(value):
         row = keyed(entry, f"{label}[{index}]", RATE_KEYS + RATE_OPTIONAL, RATE_KEYS)
@@ -170,7 +170,7 @@ def rates_of(
         lifetime = integer(row["lifetime"], f"{label}[{index}].lifetime", 1)
         light = family_named(row["gives_to"], f"{label}[{index}].gives_to", quanta, own)
         between = [t for t in transitions if {t.leaves, t.enters} == {leaves, enters}]
-        if not between:  # the giving's frequency is the transition's declared resonance
+        if not between:  # the emission's frequency is the transition's declared resonance
             raise ValueError(
                 f"{label}[{index}] gives between {names[leaves]!r} and {names[enters]!r}, and no transition "
                 "between them declares the resonance the light is born at"
@@ -186,7 +186,7 @@ def rates_of(
 
 
 def holding_period(rate: Rate, name: str, families: tuple[FamilyRule, ...], action: int) -> Rate:
-    """The span condition on every giving, the source in time and the open board's packet alike (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode; The click writes on the lattice (5)): the giving's lifetime holds one period of its resonance, tau Omega >= 2 pi, that is num / den <= cos(2 pi / tau) by the rotation act (`giving.holds_period`; 8 at [2, 3], 15 at [5414, 6000]), else the loader refuses by name with the lifetime and the least admitted span, since a lay below its period is mostly uniform mode and the division act would take most of it; the rate as declared where it holds, the one rule on the span in one place."""
+    """The span condition on every emission, the source in time and the open board's packet alike (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode; The click writes on the lattice (5)): the emission's lifetime holds one period of its resonance, tau Omega >= 2 pi, that is num / den <= cos(2 pi / tau) by the rotation act (`emission.holds_period`; 8 at [2, 3], 15 at [5414, 6000]), else the loader refuses by name with the lifetime and the least admitted span, since a lay below its period is mostly uniform mode and the division act would take most of it; the rate as declared where it holds, the one rule on the span in one place."""
     scale = count_wall(families[rate.light], action) ** SCALE_OF
     if holds_period(rate.lifetime, rate.resonance, scale):
         return rate
@@ -207,7 +207,7 @@ def packet_form(
     shape: tuple[int, int, int],
     action: int,
 ) -> NodeReaderDeclaration:
-    """The loader's decision on each giving's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`giving.given_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`giving.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
+    """The loader's decision on each emission's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`emission.emitted_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`emission.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
     guide = sum(1 for extent in shape if extent > 1) <= 1
     rates = []
     for index, declared in enumerate(found.rates):
@@ -287,7 +287,7 @@ def sense_of(value: object, label: str, plane: bool) -> int:
 def conversion_of(
     value: object, label: str, families: tuple[FamilyRule, ...], own: int, quanta: dict[str, int]
 ) -> tuple[Conversion, int]:
-    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the lattice; the two hands, the advisor's (c) and the mathematician's hand: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count: a family's name for a record of real lines, and for a plane family an entry {`family`, `sense`}, the sense +1 or -1 of its lay, `giving.laid_by_count`; a plane family named without its sense and a record of real lines with one are refused by name, `sense_of`; the mathematician's hand), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
+    """A body's `conversion` (the fifth list of the act, ALGEBRA.md, The click writes on the lattice; the two hands, the advisor's (c) and the mathematician's hand: the neutron's table and rate): `rate`, the intervals per expected conversion from 1 (the declared floor), `to`, the records out (each a family of quanta other than the body's own, given one whole quantum at the Node by the count: a family's name for a record of real lines, and for a plane family an entry {`family`, `sense`}, the sense +1 or -1 of its lay, `emission.laid_by_count`; a plane family named without its sense and a record of real lines with one are refused by name, `sense_of`; the mathematician's hand), and the body's own lay's `sense` beside them where its record is a plane; returns the conversion and that sense; refused by name otherwise."""
     found = keyed(value, label, CONVERSION_KEYS, CONVERSION_REQUIRED)
     rate = integer(found["rate"], f"{label}.rate", 1)
     if not isinstance(found["to"], list) or not found["to"]:

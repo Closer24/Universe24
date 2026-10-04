@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import conversion, credit, front, giving, growth, meeting, node, reports, share
+from event_universe import conversion, credit, emission, front, growth, meeting, node, reports, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -294,7 +294,7 @@ class Lattice:
         }
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the node_readers (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the node_readers' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the NodeReaders' acts from outside the Node (`credit.counted_windows`, `meeting.jumped`, `conversion.drawn_conversions`, `giving.sourced`, `front.advanced_fronts`)."""
+        """One interval forward, each act one loop over the families or the node_readers (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the node_readers' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the NodeReaders' acts from outside the Node (`credit.counted_windows`, `meeting.jumped`, `conversion.drawn_conversions`, `emission.sourced`, `front.advanced_fronts`)."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.interval}: {self.ended}")
         if not growth.grow(self):
@@ -318,7 +318,7 @@ class Lattice:
         credit.counted_windows(self)
         meeting.jumped(self)
         conversion.drawn_conversions(self)
-        giving.sourced(self)
+        emission.sourced(self)
         front.advanced_fronts(self)
 
     def hold(

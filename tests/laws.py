@@ -107,8 +107,8 @@ PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0,
 
 
 def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, intervals: int = 60) -> Path:  # type: ignore[no-untyped-def]
-    """The open board's packet world cut small: the shipped packet giving's giver over two Nodes of a 160 by 5 by 5 board with one giving at `lifetime` and `width`, its window 2, no reader and no draw, its mode file written by the generator."""
-    world = json.loads((EVENTS / "packet_giving" / "packet_giving.json").read_text(encoding="utf-8"))
+    """The open board's packet world cut small: the shipped packet emission's giver over two Nodes of a 160 by 5 by 5 board with one emission at `lifetime` and `width`, its window 2, no reader and no draw, its mode file written by the generator."""
+    world = json.loads((EVENTS / "packet_emission" / "packet_emission.json").read_text(encoding="utf-8"))
     giver = world["bodies"][0]
     rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
     nodes = [{"node": [80, 2, 2], "weight": 1}, {"node": [81, 2, 2], "weight": 1}]
@@ -128,7 +128,7 @@ def ion_universe_beside(folder: Path) -> None:
 
 
 def ion_world(folder: Path, tool, intervals: int = 23, amplitude: int = 600, body: bool = True) -> Path:  # type: ignore[no-untyped-def]
-    """The ion-like world on a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board): the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its giving to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18; the telegraph's shape, its mode file written by the generator; without the ion (`body` False) the drive and the counter alone as beam_alone.json, the twin of the undepleted beam."""
+    """The ion-like world on a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board): the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its emission to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18; the telegraph's shape, its mode file written by the generator; without the ion (`body` False) the drive and the counter alone as beam_alone.json, the twin of the undepleted beam."""
     ion_universe_beside(folder)
     shape = (8, 6, 5)
     at, beside = [3, 3, 2], [4, 3, 2]
@@ -207,7 +207,7 @@ def shares_of(board: Lattice, index: int, read, pairs) -> np.ndarray:  # type: i
 
 
 def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fraction]]:  # type: ignore[no-untyped-def]
-    """One step of the lattice with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the taking's and the giving's parts, the given quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
+    """One step of the lattice with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the absorption's and the emission's parts, the emitted quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
     growth.grow(board)  # the receding faces read first, as the step reads them
     gamma, unit, begun, shape = board.world.node_clock, board.unit, {}, board.shape
     for index in indexes:

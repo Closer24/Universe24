@@ -7,7 +7,7 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import meeting, node, resonance, world_files
-from event_universe.giving import laid_by_count
+from event_universe.emission import laid_by_count
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall, row_of
 from event_universe.loader.draw import (
@@ -188,7 +188,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
 
 
 def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_path):
-    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c), 5964082980, 5964520368 and 5964754600; src/event_universe/conversion.py, loader/node_reader_declaration.py `conversion_of`): the neutron conversion's committed world (examples/events/neutron_conversion) at the rate 1 and the window 2, so the first window, closing at the second interval, draws it. (i) The loader: a rate of 0, a record out of the body's own family, an empty table, a sense on a record of real lines, a conversion beside parts and one without its draw are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the reader's count 1. (iii) The click: one conversion line naming the reader, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; each record out given one whole quantum by the count on every laid line alike, A_l^2 = T div (2 laid): the antineutrino's real line (128, 128), the electron's plane (128, 0) and (0, 128) and the proton's three planes (73, 0) and (0, -73) each at the senses the table declares (`giving.laid_by_count`), the credit's counts 1 each and the share 1 per quantum at the Node (the two hands; the proton's 0.976 rounding to 1); one lay line per line the write changed, the record's three, the proton's six, the electron's two and the antineutrino's one, and the back-in-time gate MATCH across the conversion from them; no second conversion, no front (the body cut) and no null window of a record of one part."""
+    """The conversion, the fifth list of the one act (ALGEBRA.md, A family's declaration, item 5; the two hands of 2026-10-03, #1572 comments 5963954612 (c), 5964082980, 5964520368 and 5964754600; src/event_universe/conversion.py, loader/node_reader_declaration.py `conversion_of`): the neutron conversion's committed world (examples/events/neutron_conversion) at the rate 1 and the window 2, so the first window, closing at the second interval, draws it. (i) The loader: a rate of 0, a record out of the body's own family, an empty table, a sense on a record of real lines, a conversion beside parts and one without its draw are refused by name. (ii) The lay: the three lines at the Node at (95, -76) by the invariant, A_l^2 = T den div (2 s x 3), the reader's count 1. (iii) The click: one conversion line naming the reader, the three families out and the Node as a diagnostic; the neutron's three lines (0, 0) at the Node and its count 0; each record out given one whole quantum by the count on every laid line alike, A_l^2 = T div (2 laid): the antineutrino's real line (128, 128), the electron's plane (128, 0) and (0, 128) and the proton's three planes (73, 0) and (0, -73) each at the senses the table declares (`emission.laid_by_count`), the credit's counts 1 each and the share 1 per quantum at the Node (the two hands; the proton's 0.976 rounding to 1); one lay line per line the write changed, the record's three, the proton's six, the electron's two and the antineutrino's one, and the back-in-time gate MATCH across the conversion from them; no second conversion, no front (the body cut) and no null window of a record of one part."""
     folder = EVENTS / "neutron_conversion"
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
@@ -251,7 +251,7 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
 def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row(
     tmp_path,
 ):
-    """The lay by the count with the sense (round F of the board of 2026-10-03, the neutron reading's row 2; the two hands' one-Node lay, #1572 comments 5964520368 and 5964754600; the worker's four points to both hands, 5967852499, and the mathematician's 244 on them, 5967913000: the quarter turn, every plane alike, the sense in the conversion's table per record out; src/event_universe/giving.py `laid_by_count` and `given_lines`, loader/node_reader_declaration.py `conversion_of`): (i) the loader: a `to` entry of a plane family is {family, sense}, the sense +1 or -1 (the shipped world's proton -1 and electron +1); a plane family named without its sense, a record of real lines with one, a sense of 0 or 2 and an entry with another key are refused by name. (ii) The lay, on the committed world at the rate 1 and the window 1 (the conversion drawn at the first interval, the weights [1, 0]): every laid line alike, A_l^2 = T div (2 laid), the electron's plane at (128, 0) and (0, 128), the proton's three planes at (73, 0) and (0, -73) each (the fixed point of 5,461), the antineutrino's real line (128, 128); the Wronskians at the Node 16,384 and -15,987 (3 x 73^2, the root's rounding), the senses opposite; the share at the Node 1 quantum each (the proton's 0.976 of W_c rounding to 1), the books and the share agreeing; twelve lay lines, the neutron's three, the proton's six, the electron's two and the antineutrino's one, and the back-in-time gate MATCH across the conversion from them. (iii) The sign row: the holder's rows 0 at the Node before the conversion and the free row 0 throughout; from the conversion on the proton's row and the electron's row are written at the Node, each record's W over the wall E_s T about half a level per interval carried, the first level other than 0 within four intervals the record's sense, -1 and +1."""
+    """The lay by the count with the sense (round F of the board of 2026-10-03, the neutron reading's row 2; the two hands' one-Node lay, #1572 comments 5964520368 and 5964754600; the worker's four points to both hands, 5967852499, and the mathematician's 244 on them, 5967913000: the quarter turn, every plane alike, the sense in the conversion's table per record out; src/event_universe/emission.py `laid_by_count` and `emitted_lines`, loader/node_reader_declaration.py `conversion_of`): (i) the loader: a `to` entry of a plane family is {family, sense}, the sense +1 or -1 (the shipped world's proton -1 and electron +1); a plane family named without its sense, a record of real lines with one, a sense of 0 or 2 and an entry with another key are refused by name. (ii) The lay, on the committed world at the rate 1 and the window 1 (the conversion drawn at the first interval, the weights [1, 0]): every laid line alike, A_l^2 = T div (2 laid), the electron's plane at (128, 0) and (0, 128), the proton's three planes at (73, 0) and (0, -73) each (the fixed point of 5,461), the antineutrino's real line (128, 128); the Wronskians at the Node 16,384 and -15,987 (3 x 73^2, the root's rounding), the senses opposite; the share at the Node 1 quantum each (the proton's 0.976 of W_c rounding to 1), the books and the share agreeing; twelve lay lines, the neutron's three, the proton's six, the electron's two and the antineutrino's one, and the back-in-time gate MATCH across the conversion from them. (iii) The sign row: the holder's rows 0 at the Node before the conversion and the free row 0 throughout; from the conversion on the proton's row and the electron's row are written at the Node, each record's W over the wall E_s T about half a level per interval carried, the first level other than 0 within four intervals the record's sense, -1 and +1."""
     folder = EVENTS / "neutron_conversion"
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
@@ -315,7 +315,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
 
 
 def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
-    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/resonance.py and `meeting.turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the giving's one recurrence (giving.advanced, through `gathered` at the level 0) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the NodeReader's act; (vi) the window's turn is applied as W equal sub-turns with the carry (`resonance.sheared`), so the labels' angle at the Zeno world's n = 1 is 48 x 2 arctan(9,408 / (12,000 x 48)) = 1.568 and not the one shear's 1.330, the tangent half-angle's compression the advisor's second found on the first build."""
+    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/resonance.py and `meeting.turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the emission's one recurrence (emission.advanced, through `gathered` at the level 0) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the NodeReader's act; (vi) the window's turn is applied as W equal sub-turns with the carry (`resonance.sheared`), so the labels' angle at the Zeno world's n = 1 is 48 x 2 arctan(9,408 / (12,000 x 48)) = 1.568 and not the one shear's 1.330, the tangent half-angle's compression the advisor's second found on the first build."""
     omega, detuned, bound, room = math.acos(2 / 3), math.acos(1 / 3), 9266, 2**63 - 1
     assert [resonance.scale_of(room, bound, w) for w in (48, 96, 12)] == [2**12, 2**11, 2**14]
     scale, transitions = resonance.scale_of(room, bound, 48), (Transition(0, 1, 1, 1, (2, 3)),)
@@ -349,10 +349,10 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
     assert abs(angles[0] - 1.5680) <= 0.002 and abs(angles[1] - 1.330) <= 0.002  # the sub-turns add
 
 
-def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking(
+def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_absorption(
     tmp_path, monkeypatch
 ):
-    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/packets.py `wholes_of`, loader/draw.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the intervals 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `interval`, an interval beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw a Draw. (ii) The window stands from the lay to the probe's interval: no close before it, the generator at its seed, the body dark under the probe alone; at the interval the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEREADER with the window [1, 3], the body's proper time 3 and the window's index 1, `taken` and `given` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's taking is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's intervals' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's intervals are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
+    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/packets.py `wholes_of`, loader/draw.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the intervals 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `interval`, an interval beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw a Draw. (ii) The window stands from the lay to the probe's interval: no close before it, the generator at its seed, the body dark under the probe alone; at the interval the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEREADER with the window [1, 3], the body's proper time 3 and the window's index 1, `absorbed` and `emitted` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's absorption is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's intervals' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's intervals are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
     path, folder = pulsed_world(tmp_path, monkeypatch), EVENTS / "zeno_pulsed"
     world = json.loads(path.read_text(encoding="utf-8"))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
@@ -386,7 +386,17 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     assert (int(line.now[here]), int(line.before[here])) == (128, 128)
     assert (board.credit.counts[probed], int(board.quanta(probed)[0][here])) == (1, 1)
     jumps = [x for x in lines if x["event"] == "credit"]
-    keys = ("label", "interval", "window", "proper", "windows", "realised", "before", "taken", "given")
+    keys = (
+        "label",
+        "interval",
+        "window",
+        "proper",
+        "windows",
+        "realised",
+        "before",
+        "absorbed",
+        "emitted",
+    )
     click = ("NODEREADER", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
     assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
     laid = [(x["family"], x["interval"]) for x in lines if x["event"] == "lay"]
@@ -402,8 +412,8 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     for _ in range(4):
         board.step()
     jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER"]
-    taking = ("NODEREADER", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
-    assert [tuple(x[k] for k in keys) for x in jumps[1:]] == [taking] and state != books.state
+    absorption = ("NODEREADER", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
+    assert [tuple(x[k] for k in keys) for x in jumps[1:]] == [absorption] and state != books.state
     assert (books.part, board.credit.counts[pulse], board.credit.counts[probed]) == (1, 0, 2)
     faces = {(f.family, f.interval) for faces in board.credit.faces.values() for f in faces}
     assert faces == {(pulse, 8), (pulse, 9)} and (books.windows, books.clock) == (2, [7, 0])
@@ -427,16 +437,16 @@ def test_the_pulsed_closes_two_keys_are_g_by_pulse_from_e_and_g_by_probe_from_g(
         while board.interval < interval:
             board.step()
         clicks = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER"]
-        keyed = [(click_key(x), x["before"], x["given"], x["taken"]) for x in clicks]
+        keyed = [(click_key(x), x["before"], x["emitted"], x["absorbed"]) for x in clicks]
         assert keyed == expected and (books.part, books.counts) == (0, [1, 0])
         assert list(books.shares.values()) == [share] and meeting.dark(board, books)
     first = [x for x in lines if x["event"] == "credit" and x["interval"] == 3]
-    assert len(first) == 1 and "probe" not in (first[0]["taken"], first[0]["given"])
+    assert len(first) == 1 and "probe" not in (first[0]["absorbed"], first[0]["emitted"])
     assert not [x for x in lines if x["event"] == "lay" and x["family"] == "pulse"]
 
 
-def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
-    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `Lattice.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), at the trial seed 2, beside its untouched twin. The taking at 72, g to e climbing (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 24 under the state modulo the total until the clean main of 2026-10-04), books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books read at 84, between the taking and the return; the books' `drift` over W_c and one quantum of the reading's rounding, printed); the return, e to g descending by the pulse at the next window's close, 96 (`meeting.exchange`, stimulated emission), gives the quantum back into the dense pulse: nothing laid, no source in time, the count back to the start and the deficit 0, the arrays the twin's still; the back-in-time gate MATCH across the taking and the return, the atom's lays crossed from their lines."""
+def test_a_absorption_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
+    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `Lattice.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), at the trial seed 2, beside its untouched twin. The absorption at 72, g to e climbing (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 24 under the state modulo the total until the clean main of 2026-10-04), books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books read at 84, between the absorption and the return; the books' `drift` over W_c and one quantum of the reading's rounding, printed); the return, e to g descending by the pulse at the next window's close, 96 (`meeting.exchange`, stimulated emission), emits the quantum back into the dense pulse: nothing laid, no source in time, the count back to the start and the deficit 0, the arrays the twin's still; the back-in-time gate MATCH across the absorption and the return, the atom's lays crossed from their lines."""
     zeno = EVENTS / "zeno" / "zeno_2.json"
     board, twin = Lattice(load_world(zeno), (lines := []).append), Lattice(load_world(zeno))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
@@ -453,9 +463,9 @@ def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
             assert np.array_equal(mine, its)  # the undepleted beam: nothing written on the drive
         if board.interval == 84:
             books, its_books = board.books()["pulse"], twin.books()["pulse"]
-        returns = [x for x in lines if x["event"] == "credit" and x["given"] == "pulse"]
-    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER" and x["taken"]]
-    assert [x["interval"] for x in jumps][:1] == [72] and jumps[0]["taken"] == "pulse"
+        returns = [x for x in lines if x["event"] == "credit" and x["emitted"] == "pulse"]
+    jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER" and x["absorbed"]]
+    assert [x["interval"] for x in jumps][:1] == [72] and jumps[0]["absorbed"] == "pulse"
     assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
     assert not board.credit.fronts and not board.credit.sources
     print(
@@ -467,17 +477,17 @@ def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
     assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
     assert books["share"] == its_books["share"] and books["drift"] == its_books["drift"]
     cycled = board.books()["pulse"]
-    print(f"the return at {returns[0]['interval']} after {len(jumps)} takings: the books {cycled}")
+    print(f"the return at {returns[0]['interval']} after {len(jumps)} absorptions: the books {cycled}")
     assert (cycled["count"], cycled["deficit"]) == (count - len(jumps) + 1, len(jumps) - 1)
     gate = Lattice(load_world(zeno))
     gate.credit.bodies[0].state = 2
     assert (
         BACK.verdict(gate, returns[0]["interval"])["verdict"] == "MATCH"
-    )  # across the taking and the return
+    )  # across the absorption and the return
 
 
-def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_path):
-    """The undepleted beam at the giving (ALGEBRA.md, The click writes on the lattice; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `meeting.written`, `meeting.faced`, `giving.given_quantum`): the Zeno n = 2 world with a rate e to g at the lifetime 8 giving to the pulse itself, the dense record at the reader's Node, at the trial seed 2, beside the pulse alone (the return by the rate or by the transition's descent, `meeting.exchange`, both givings into the beam): the takings and the giving write nothing on the pulse, whose three arrays stand bit for bit as the pulse alone over the run, no source in time begins and no lay line names the pulse, the count down by one per taking and up by one per giving, the deficit the takings less the givings (the books' line printed); the sparse giving's own tests stand in `tests/test_the_giving.py`."""
+def test_a_emission_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_path):
+    """The undepleted beam at the emission (ALGEBRA.md, The click writes on the lattice; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `meeting.written`, `meeting.faced`, `emission.emitted_quantum`): the Zeno n = 2 world with a rate e to g at the lifetime 8 emission to the pulse itself, the dense record at the reader's Node, at the trial seed 2, beside the pulse alone (the return by the rate or by the transition's descent, `meeting.exchange`, both emissions into the beam): the absorptions and the emission write nothing on the pulse, whose three arrays stand bit for bit as the pulse alone over the run, no source in time begins and no lay line names the pulse, the count down by one per absorption and up by one per emission, the deficit the absorptions less the emissions (the books' line printed); the sparse emission's own tests stand in `tests/test_the_emission.py`."""
     world = json.loads((EVENTS / "zeno" / "zeno_2.json").read_text(encoding="utf-8"))
     world["bodies"][0]["rates"] = [{"from": "e", "to": "g", "lifetime": 8, "gives_to": "pulse"}]
     world["intervals"] = 480
@@ -491,11 +501,11 @@ def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_
     count, given = board.credit.counts[pulse], []
     while board.interval < world["intervals"] and not given:
         board.step(), twin.step()
-        given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
-    taken = [c for c in lines if c["event"] == "credit" and c["taken"] == "pulse"]
+        given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
+    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
     assert (
         given and taken and given[0]["interval"] > taken[0]["interval"]
-    )  # a taking, then the giving back
+    )  # an absorption, then the emission back
     for key in ("now", "before", "remainder"):
         assert np.array_equal(
             getattr(board.states[pulse].lines[0], key), getattr(twin.states[pulse].lines[0], key)
@@ -505,7 +515,7 @@ def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_
     )
     books = board.books()["pulse"]
     print(
-        f"the Zeno pulse after {len(taken)} takings and {len(given)} giving at {board.interval}: the books {books}"
+        f"the Zeno pulse after {len(taken)} absorptions and {len(given)} emission at {board.interval}: the books {books}"
     )
     assert (books["count"], books["deficit"]) == (
         count - len(taken) + len(given),
@@ -542,7 +552,7 @@ def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_b
     assert largest < 300, largest  # bounded: 50 by the lattice's rule on this box, 6,268 under the floor
 
 
-def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
+def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark():
     """The committed one-photon world at the lay without the uniform mode (ALGEBRA.md, The click writes on the lattice (3) and (6)): one atom takes at the window's close and the count falls to 0; the light's share over the lattice never rises above the lay's by more than the hole's and the front's transient (one part in seven, the known one), and once the front has swept both packets the share is 0 exactly, the board dark."""
     board = Lattice(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
     photon, shares = [f.name for f in board.families].index("photon"), []
@@ -550,7 +560,9 @@ def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
     for _ in range(200):
         board.step()
         shares.append(board.books()["photon"]["share"])
-    credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
+    credits = [
+        c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["absorbed"]
+    ]
     assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
     assert {line["event"] for line in lines if line["interval"] > 48} <= {
@@ -562,7 +574,7 @@ def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
-    """The taking among several drives (ALGEBRA.md, The click writes on the lattice (f); The two-mode line; `meeting.turned_labels`, `took`): two atoms, each with the transitions g to e by `photon` and by `photon_b`, one packet of each laid at the centre toward one atom, the left atom's window closing first while `photon`'s count stands: a drive's weight at a body is its own transfer share, so the left atom takes `photon_b`, the drive that passed it, and the right `photon`; with `photon_b` removed the one drive's share is the composed label squared bit for bit at both atoms, and `photon`'s share at each atom is the same number in both worlds."""
+    """The absorption among several drives (ALGEBRA.md, The click writes on the lattice (f); The two-mode line; `meeting.turned_labels`, `absorbed`): two atoms, each with the transitions g to e by `photon` and by `photon_b`, one packet of each laid at the centre toward one atom, the left atom's window closing first while `photon`'s count stands: a drive's weight at a body is its own transfer share, so the left atom takes `photon_b`, the drive that passed it, and the right `photon`; with `photon_b` removed the one drive's share is the composed label squared bit for bit at both atoms, and `photon`'s share at each atom is the same number in both worlds."""
     seen, turned = [], meeting.turned_labels
 
     def kept(board, books):  # the labels and the shares at the window's close, before the click
@@ -592,11 +604,15 @@ def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_pa
         board = Lattice(load_world(path), (lines := []).append)
         while board.interval < 56:
             board.step()
-        clicks[drives] = [(c["interval"], c["node_reader"], c["taken"]) for c in lines if c.get("taken")]
+        clicks[drives] = [
+            (c["interval"], c["node_reader"], c["absorbed"]) for c in lines if c.get("absorbed")
+        ]
     assert clicks["photon", "photon_b"] == [(44, "body 0", "photon_b"), (56, "body 1", "photon")]
     assert clicks[("photon",)] == [(56, "body 1", "photon")]
     two, one = seen[:2], seen[2:]  # the closes at 44 and 56 per world; the drives photon 1, photon_b 2
-    print(f"takings by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}")
+    print(
+        f"absorptions by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}"
+    )
     assert [labels[1] ** 2 for labels, _ in one] == [shares[1] for _, shares in one]  # one drive
     assert [shares[1] for _, shares in two] == [shares[1] for _, shares in one]  # photon's own share
     assert two[0][1][1] * 1000 < two[0][1][2] and two[1][1][2] * 1000 < two[1][1][1]

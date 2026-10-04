@@ -12,9 +12,9 @@ import numpy as np
 from event_universe import growth, share
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
+from event_universe.emission import Source
 from event_universe.features.click import Face, drawn
 from event_universe.front import Front
-from event_universe.giving import Source
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Ports, ports_of
 from event_universe.loader.keys import Node
@@ -37,7 +37,7 @@ Clock = list[
 
 @dataclass
 class Books:
-    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node in the unit G^2 (`booked`), the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeReaders with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's intervals, `clocked_regions`), the count of the windows closed, the node_readers' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `meeting.faced`; the board's share exceeds the books' count by it, printed in the books' line, `Lattice.books`), and per family the share its windows left untaken (`untaken`, keyed by the family of quanta as the counts are, one record per family in every shipped world, an account to be split by record where a world declares several records of one family; in the readers' labels' unit: the count's share at the record's first draw, down by every null window's shares, dropped when a quantum passes into or out of the record, so that a later reader's draw reads its share conditionally on the earlier windows' nulls, `meeting.took`, `meeting.written`; ALGEBRA.md, The click writes on the lattice (7), the mathematician's line) with the denominator each untaken share is kept in (`untaken_units`, the closing bodies' norms' least common multiple at the draw that wrote it, read in another closing set's denominator by the division act, `untaken_in`; ALGEBRA.md, The taking, the draw (b))."""
+    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node in the unit G^2 (`booked`), the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeReaders with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `emission.emitted_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's intervals, `clocked_regions`), the count of the windows closed, the node_readers' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `meeting.faced`; the board's share exceeds the books' count by it, printed in the books' line, `Lattice.books`), and per family the share its windows left unabsorbed (`unabsorbed`, keyed by the family of quanta as the counts are, one record per family in every shipped world, an account to be split by record where a world declares several records of one family; in the readers' labels' unit: the count's share at the record's first draw, down by every null window's shares, dropped when a quantum passes into or out of the record, so that a later reader's draw reads its share conditionally on the earlier windows' nulls, `meeting.absorbed`, `meeting.written`; ALGEBRA.md, The click writes on the lattice (7), the mathematician's line) with the denominator each unabsorbed share is kept in (`unabsorbed_units`, the closing bodies' norms' least common multiple at the draw that wrote it, read in another closing set's denominator by the division act, `unabsorbed_in`; ALGEBRA.md, The absorption, the draw (b))."""
 
     declaration: Draw | None
     elapsed: int
@@ -55,26 +55,26 @@ class Books:
     clocks: dict[tuple[int, str], Clock] = field(default_factory=dict)
     windows: int = 0
     deficits: dict[int, int] = field(default_factory=dict)
-    untaken: dict[int, int] = field(default_factory=dict)
-    untaken_units: dict[int, int] = field(default_factory=dict)
+    unabsorbed: dict[int, int] = field(default_factory=dict)
+    unabsorbed_units: dict[int, int] = field(default_factory=dict)
 
-    def untaken_in(self, drive: int, norms: list[int]) -> tuple[int, int]:
-        """The one denominator of the bodies closing a drive's interval and the record's untaken share read in it (ALGEBRA.md, The taking, the draw (b); `meeting.took`): the denominator the least common multiple of the bodies' norms, each the sum of its labels' squares, by the division act, so that each body's transfer share scales to it exactly; the untaken share the count's at the record's first draw, and a share left by an earlier draw in another denominator (`untaken_units`) brought to this one by the division act and kept in it from here; a body with no labels, its norm 0, has no transfer and cannot close, refused by name."""
+    def unabsorbed_in(self, drive: int, norms: list[int]) -> tuple[int, int]:
+        """The one denominator of the bodies closing a drive's interval and the record's unabsorbed share read in it (ALGEBRA.md, The absorption, the draw (b); `meeting.absorbed`): the denominator the least common multiple of the bodies' norms, each the sum of its labels' squares, by the division act, so that each body's transfer share scales to it exactly; the unabsorbed share the count's at the record's first draw, and a share left by an earlier draw in another denominator (`unabsorbed_units`) brought to this one by the division act and kept in it from here; a body with no labels, its norm 0, has no transfer and cannot close, refused by name."""
         if min(norms) <= 0:
             raise ValueError("a body closing a drive's interval holds labels: its norm is above 0")
         unit = norms[0]
         for norm in norms[1:]:
             unit = int(division_forward(unit * norm, gcd(unit, norm), 0)[0])
-        kept = self.untaken.setdefault(drive, self.counts[drive] * unit)
-        born = self.untaken_units.setdefault(drive, unit)
-        self.untaken[drive] = share = int(division_forward(kept * unit, born, 0)[0])
-        self.untaken_units[drive] = unit
+        kept = self.unabsorbed.setdefault(drive, self.counts[drive] * unit)
+        born = self.unabsorbed_units.setdefault(drive, unit)
+        self.unabsorbed[drive] = share = int(division_forward(kept * unit, born, 0)[0])
+        self.unabsorbed_units[drive] = unit
         return unit, share
 
     def account_ended(self, family: int) -> None:
-        """The record's windows' account ends as a quantum passes into or out of it (`meeting.written`): its untaken share and the denominator it is kept in dropped, to begin again at the count left."""
-        self.untaken.pop(family, None)
-        self.untaken_units.pop(family, None)
+        """The record's windows' account ends as a quantum passes into or out of it (`meeting.written`): its unabsorbed share and the denominator it is kept in dropped, to begin again at the count left."""
+        self.unabsorbed.pop(family, None)
+        self.unabsorbed_units.pop(family, None)
 
     def window_of(self, interval: int) -> list[int]:
         """The window closing at `interval`, [first, last], the declaration's length of intervals."""
@@ -115,7 +115,7 @@ def counted(board: Lattice, index: int, total: int | None) -> int:
 
 
 def record_unit(board: Lattice, index: int, total: int | None, count: int) -> int:
-    """The unit of one quantum of a record, W_rec, read and not declared (the advisor's line with the mathematician's second, two hands; the count's line, Q(z) = count x W_c sin omega for a monochromatic record): the record's share over the board at the books' origin over its count there, (total + count div 2) div count by the division act, read once and held through the run (a face removes one quantum's share with one count, the ratio unchanged; the roundings' drift moves it not); W_c where the books hold no count or no reading (nothing to credit), until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`giving.given_quantum`, `born_unit`), so a born quantum below the half-top energy is credited 1 and not 0. For a record laid by share with its count the share over W_c it is W_c within the lay's own rounding; for a born quantum of count 1 at Omega it is W_c sin Omega, the node_reader counting in the record's own quantum with no transition declared on any region."""
+    """The unit of one quantum of a record, W_rec, read and not declared (the advisor's line with the mathematician's second, two hands; the count's line, Q(z) = count x W_c sin omega for a monochromatic record): the record's share over the board at the books' origin over its count there, (total + count div 2) div count by the division act, read once and held through the run (a face removes one quantum's share with one count, the ratio unchanged; the roundings' drift moves it not); W_c where the books hold no count or no reading (nothing to credit), until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`emission.emitted_quantum`, `born_unit`), so a born quantum below the half-top energy is credited 1 and not 0. For a record laid by share with its count the share over W_c it is W_c within the lay's own rounding; for a born quantum of count 1 at Omega it is W_c sin Omega, the node_reader counting in the record's own quantum with no transition declared on any region."""
     wall = count_wall(board.families[index], board.world.quantum_action)
     if total is None or count <= 0:
         return wall

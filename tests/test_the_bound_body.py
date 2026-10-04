@@ -47,7 +47,7 @@ GATED = (  # the smallest shipped world of each builder whose load is seconds; t
     ("bell", "bell_a_prime_b_prime"),
     ("ghz", "ghz_y_x_y"),
     ("neutron_conversion", "neutron_conversion"),
-    ("packet_giving", "packet_giving"),
+    ("packet_emission", "packet_emission"),
     ("resonance", "detuned"),
     ("shelved_ion", "shelved_ion"),
     ("two_slits", "two_slits"),

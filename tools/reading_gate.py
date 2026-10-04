@@ -39,7 +39,10 @@ RUN, TRIALS, BACK = (
     "back_in_time",
 )  # the row's `by`: the tool that re-runs
 NONE = "none"  # a reading that is None, as the document writes it
-EXCHANGES = {"takings": "taken", "givings": "given"}  # a record's clicks by the family exchanged
+EXCHANGES = {
+    "absorptions": "absorbed",
+    "emissions": "emitted",
+}  # a record's clicks by the family exchanged
 COINCIDENCE = {
     "A only": "A_only",
     "B only": "B_only",
@@ -55,8 +58,8 @@ RUN_READINGS = (
     "density <node_reader> <family>",
     "clicks [<node_reader>]",
     "inflow <node_reader> <family>",
-    "takings <node_reader>",
-    "givings <node_reader>",
+    "absorptions <node_reader>",
+    "emissions <node_reader>",
     "conversions <node_reader>",
 )  # the readings of one run's output file
 TRIAL_READINGS = ("trials", "refused", "ends in <part> <node_reader>", *COINCIDENCE, "clicks <kind>")
@@ -163,7 +166,7 @@ def printed(value: Value) -> str:
 
 
 def credits(output: dict[str, Any], node_reader: str | None, exchanged: str | None = None) -> int:
-    """The quanta the `credit` lines labelled NODEREADER count (the null window's LATTICE lines left out), every reader's or one reader's by name, and among them those exchanging a quantum with another family where `exchanged` is `taken` or `given`."""
+    """The quanta the `credit` lines labelled NODEREADER count (the null window's LATTICE lines left out), every reader's or one reader's by name, and among them those exchanging a quantum with another family where `exchanged` is `absorbed` or `emitted`."""
     lines = [
         line for line in output["lines"] if line["event"] == "credit" and line["label"] == MEASUREMENT
     ]

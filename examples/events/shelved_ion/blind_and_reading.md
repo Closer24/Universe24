@@ -28,12 +28,12 @@ The ion is a record declared a NodeReader at its one Node [6, 6, 4]: its three p
 its record, S laid at the count 1 as the standing record of the pair [1, 1299] (A = 128, the share
 reading 1), P and D at 0, its six Link factors 0 for its family so that it stays, rotating at its
 rest rotation; the drives arrive at that Node as the plane waves the generator laid; at the end of
-every window of 1 interval the record draws with its own seed: the giving out of P at the declared
+every window of 1 interval the record draws with its own seed: the emission out of P at the declared
 floor 1 / 4 (one whole quantum of the fluorescence row laid at the Node by its count, the two
 levels alike, 128 and 128, the row's count up by one, the record moved P to S), else over its parts
 by the two-mode line's shares (the strong drive's level at the Node read into the record's phase
 at the weight 1, the turn per proper interval, accumulated in the labels as the Rabi form) and,
-the part P drawn, the taking: the strong drive's levels and remainder at the Node set to 0 (the
+the part P drawn, the absorption: the strong drive's levels and remainder at the Node set to 0 (the
 hole), its count in the books down by one, the record moved S to P; the null window re-lays the
 record in S at its count and ends the labels' coherence. The counter of every other Node draws per
 window of 160 with the world's seed from its front inflows and writes its hole at the entry Node,
@@ -50,10 +50,10 @@ read the outputs; the numbers below are its, every one a click unless labelled a
 final build, the credit's one draw over the records reading one arriving record), "the family
 'fluorescence' reached the level 9394, above the world's amplitude bound A = 9266"; the first build
 of the night, each record drawing alone over its parts, had been refused at 344 on the strong
-drive's row. The 452 intervals: 70 jumps, 35 takings of the strong drive's quantum into P and 35
-givings of one quantum to the fluorescence row (the spacing of the givings 12.3 intervals, its
-standard deviation over its mean 0.80; the first build 8.44 and 0.48 over 40 givings; the blind's R
-= 1 / (2 tau_P) is one giving per 8 intervals, the two runs 2 standard errors apart on 35 events),
+drive's row. The 452 intervals: 70 jumps, 35 absorptions of the strong drive's quantum into P and 35
+emissions of one quantum to the fluorescence row (the spacing of the emissions 12.3 intervals, its
+standard deviation over its mean 0.80; the first build 8.44 and 0.48 over 40 emissions; the blind's R
+= 1 / (2 tau_P) is one emission per 8 intervals, the two runs 2 standard errors apart on 35 events),
 no shelving (the weak drive's share per window Omega_w^2 cos^2, about 4 x 10^-5, gives 0.02
 shelvings in 452 intervals, none expected); the counter's bins: 14 and 13 counts in the two whole
 bins (the first build 19 and 18; row 1: the blind 20 +/- 4.5, the final build's bins 1.3 and 1.6
@@ -64,18 +64,18 @@ Lattice reading of the books, PASS).
 
 **The telegraph world with the erasing front (the round's last act, two hands at 04:30 Israel):
 REFUSED inside the run at interval 166**, "the family 'fluorescence' reached the level 9668", six
-intervals after the counter's first window. The 166 intervals: 15 takings and 14 givings (the
+intervals after the counter's first window. The 166 intervals: 15 absorptions and 14 emissions (the
 spacing 9.6 against the blind's 8), the counter's first bin 14 counts (the blind 20 +/- 4.5, 1.3
 widths under), the second bin cut; at the window's end 14 credits took the fluorescence row's count
 to 0 and 14 fronts began from the 14 entry Nodes, the six neighbours of the ion among them: 70
-erasure lines over the intervals 161 to 166, the first shells of 6 Nodes each taking up to 6,089
+erasure lines over the intervals 161 to 166, the first shells of 6 Nodes each absorption up to 6,089
 in the sizes of the row's two levels (the row's levels already drifted to thousands by the
 uniform mode, below), and the row's largest level passing the bound at 166. The front erases what
 it reaches, as the two hands state it; on this lattice the erasure of a drifted light row shell by
 shell is a further kick to the row's marginal modes inside the ball, and the run ends sooner than
 without it (452): the same finding, the front named as its third source beside the lay's
 remainders and the holes. No number of a click moved by the front before the refusal (the first
-window's 14 counts, the 15 takings and 14 givings are the run's own up to 160).
+window's 14 counts, the 15 absorptions and 14 emissions are the run's own up to 160).
 
 **The control, `shelved_ion_control.json`: REFUSED inside the run at interval 18,820**, "the
 family 'strong_drive' reached the level 9279, above the bound 9266"; 118 whole bins, every count
@@ -97,14 +97,14 @@ interval 100 and 14,294 at 300 with the remainders at 0, and 18 and 137 with the
 the half wall, the real recurrence's 40 and 129; the drives' rows are laid by the mode file with
 their remainders at 0 (no source rests them, so the start never sets the half wall), which is the
 control's drift to the bound at 18,820 and the strong drive's `drift` of 10^11 in the books after
-400 intervals; (b) the hole of the taking click sets the arriving record's levels now and before
+400 intervals; (b) the hole of the absorption click sets the arriving record's levels now and before
 at the Node to 0 whatever they are, and for a travelling plane wave of amplitude 3,000 now and
 before differ there, so every hole kicks the uniform mode's velocity by (now - before) over the
 Nodes' number with a sign set by the wave's phase at that interval, a random walk of the velocity,
 about 41 holes in 344 intervals in the first build, the strong drive's mean level reaching 860 by
 the interval 200 and its largest level the bound at 344; in the final build the fluorescence row's
 lays and the counter's holes reached the bound first, at 452. The law's remedy for (a), the remainder at the lay's origin
-(the mathematician's 174 (b)), is built for the record's own lays and the given quanta and would
+(the mathematician's 174 (b)), is built for the record's own lays and the emitted quanta and would
 need the drives' rows laid at the half wall too (an edit of the mode file's lay or of the start,
 which this round does not make: the gate worlds' bits); (b) is the law's own line for the hole
 (the levels taken whatever they are, two hands) and has no remedy in the law as written: on this
@@ -114,10 +114,10 @@ these prefixes: the empty wave's form keeps writing into the holders it sources 
 shows here.
 
 **What the two prefixes say of the law's line**: the exchange at one Node runs as the four hands
-settled it, the taking and the giving alternate at the blind's rates (one fluorescence quantum per
+settled it, the absorption and the emission alternate at the blind's rates (one fluorescence quantum per
 8.4 intervals against 8, the bins 19 and 18 against 20), the arriving quantum's hole and the
 record's re-lay stand at one Node (the dedicated test's one-Node assertion), the counter credits
-the given quanta and nothing of the drives (the fluorescence spacing 8.4 then 12.3 against 8, the
+the emitted quanta and nothing of the drives (the fluorescence spacing 8.4 then 12.3 against 8, the
 bins 19 and 18 then 14 and 13 against 20); the body's own Zeno clock is its declared window (1
 interval), so the shelving rate the design wrote, R / Omega_w^2 with the resets at the fluorescence
 clicks, would read as Omega_w^2 cos^2 per interval, about 4 x 10^-5, under the null window's write
@@ -126,8 +126,8 @@ every interval (the owner's "yes, both of them"), a bright mean of about 25,000 
 
 **Not built this night, by name**: the record's own NodeReader region around its Node (the
 mathematician's 180); the back-in-time tool's crossing of a jump from the click line; the booking of
-the share's difference T (sin omega_L - sin omega_e + sin omega_g) at the giving (0 for parts of
-one pair); the beat's current in the giving's rate (0 for a one-part record at one Node, the
+the share's difference T (sin omega_L - sin omega_e + sin omega_g) at the emission (0 for parts of
+one pair); the beat's current in the emission's rate (0 for a one-part record at one Node, the
 declared floor alone); the phase phi_L of the arriving light added to the realised part's phase
 (the part's own phase alone, phi_L of a real line at one Node being undefined without its
 rotation); the erasing front from the clicking record's Node is built (two hands at 04:30 Israel; above); the anticoincidence world (S.57) and the Zeno world (S.59) stand in their own folders with
@@ -137,21 +137,21 @@ their readings.
 
 The run is refused by name at the interval 434 (the family `strong_drive` reached the level 10,314 above
 the bound 9,266), 3.3 bins of 160 intervals read, against 166 and 452 on the earlier builds. The
-giving is now massless, one quantum of light at A^2 = T div 2 (the earlier build laid the light at the
+emission is now massless, one quantum of light at A^2 = T div 2 (the earlier build laid the light at the
 ion pair's born rotation, a massive pair from the root's rounding, about 325 times one quantum's share:
-a FINDING of the build, mended in `meeting.given_quantum`), so the fluorescence row no longer ends the
-run; the strong drive's row does, pumped by its own holes at the ion's Node (43 takings in 434
-intervals, every taking the face at one Node of a plane wave of the massless pair, the uniform mode's
+a FINDING of the build, mended in `meeting.emitted_quantum`), so the fluorescence row no longer ends the
+run; the strong drive's row does, pumped by its own holes at the ion's Node (43 absorptions in 434
+intervals, every absorption the face at one Node of a plane wave of the massless pair, the uniform mode's
 drift named above). Read in the 434 intervals: counts per bin 8, 0, 0 (the blind 20 +/- 4.5 per bright
 bin, so the one bright bin is a FINDING, the counter's window of 160 reading the second and third bins
-as dark while 43 quanta of fluorescence were given, 8 credited); 43 takings `P by strong_drive` and 43
-givings `S by fluorescence`, their spacing 9.69 +/- 6.2 intervals (the blind 8, the declared
+as dark while 43 quanta of fluorescence were given, 8 credited); 43 absorptions `P by strong_drive` and 43
+emissions `S by fluorescence`, their spacing 9.69 +/- 6.2 intervals (the blind 8, the declared
 lifetime's floor, PASS within the spread); no shelving, no bright or dark period, no switch (the blind
 about 30 of each over the full run; not read, the run too short, a FINDING by name and no adjustment
 of the blind); 422 returns of `strong_drive` (the blind none: a FINDING, the telegraph reader counting
 the drive's own `credit` lines at the counter as returns).
 
-**The giving's frequency, by name** (the advisor's second on the massless lay, #1572 comment 5963954612):
+**The emission's frequency, by name** (the advisor's second on the massless lay, #1572 comment 5963954612):
 the born quantum belongs to light's record and is massless, but its rotation should be the
 transition's resonance Omega with A^2 = T div (2 sin Omega) and the phase phi_e - phi_g; the engine's
 declarations hold no resonance for a rate (a `Rate` is `from`, `to`, `lifetime`, `gives_to`), so the
@@ -163,14 +163,14 @@ this night: the rate's declared resonance as a key of the file and the lay at it
 
 The round of the NodeReader's own quantum (the mathematician's 213, 214, 220, 221 and 223, #1572 comments
 5965054791, 5965082449, 5965303134, 5965498522 and 5965727937; the advisor's seconds, #1563 comments
-5965316267 and 5965700890, #1572 comments 5965312353 and 5965700585) changed the giving: the born
+5965316267 and 5965700890, #1572 comments 5965312353 and 5965700585) changed the emission: the born
 quantum is laid as a source in time at the ion's Node over the rate's lifetime at the transition's
 declared resonance ([2, 3], the drive's rotation at k = pi / 2), with the exact root and the carried
 lay, in place of the one-instant massless lay; the counter declares the band's top [0, 6000], so its
 wall is W_c as before. Re-run and read by `tools/telegraph.py` on 8382b8b9, beside the reading of the
 one click act above (84f0352d): REFUSED at the interval 434 as before (the strong drive's row at
-10,314 above 9,266, the uniform mode pumped by the takings' holes, named above), 43 takings
-`P by strong_drive` and 43 givings `S by fluorescence` as before, their spacing 9.69 +/- 6.2 as
+10,314 above 9,266, the uniform mode pumped by the absorptions' holes, named above), 43 absorptions
+`P by strong_drive` and 43 emissions `S by fluorescence` as before, their spacing 9.69 +/- 6.2 as
 before; the counter's credits changed, counts per bin 5, 9, 0 against 8, 0, 0 (14 of the 43 given
 quanta credited in 434 intervals against 8; the blind 20 per bright bin, a FINDING as before), the
 dark fraction 0.333 against 0.667, the returns 422 the same. The counter still reads: its Nodes stand
@@ -184,22 +184,22 @@ in a small box, named there.
 The mathematician's line on the change (#1572 comment 5966081562) with the advisor's second (#1572
 comment 5966129376, 08:55 Israel; two hands): the counter's change is a finding by name moved by the
 lay's form and not more, in the direction the floor predicts,
-since a source in time over tau = 48 holds the given quantum beside the ion for 48 intervals (A_t =
+since a source in time over tau = 48 holds the emitted quantum beside the ion for 48 intervals (A_t =
 isqrt(S / tau) = 30, the floor's reach 0.28 A_t about 8 Links) where the one-instant lay passed the
 counter in one transit, so a counter within that reach credits more of the 43 (14 against 8) and the
-bins fill nearer the givings; the condition it states by name: the counter's Nodes within 0.28 A_t of
+bins fill nearer the emissions; the condition it states by name: the counter's Nodes within 0.28 A_t of
 the ion, else nothing is credited; the advisor's word for this folder: the telegraph's bins move with
-every form of the giving and read nothing of the blind until the strong drive's row is fixed, so each
+every form of the emission and read nothing of the blind until the strong drive's row is fixed, so each
 section names the form it was read on, as this one does.
 
 ## Under the dark grain, 2026-10-03 (branch dark-grain)
 
-The giving's clock became the lifetime's hazard 1 / tau per interval, drawn per window while a window
+The emission's clock became the lifetime's hazard 1 / tau per interval, drawn per window while a window
 stands and per interval in the dark (the mathematician's 223 (a), #1572 comment 5965727937, and 224
 (2)(a), 5966081562; the advisor's 5965918924 (a) and his second 5966129376; two hands; `meeting.dark`,
-`meeting.gave`). Named before the run (`examples/events/resonance/design.json`, `dark_grain`) and read
+`meeting.emitted`). Named before the run (`examples/events/resonance/design.json`, `dark_grain`) and read
 after it: this world is unchanged, the run's output and `tools/telegraph.py`'s reading byte-identical to
-the own-quantum reading above (43 takings `P by strong_drive`, 43 givings `S by fluorescence`, the counts
+the own-quantum reading above (43 absorptions `P by strong_drive`, 43 emissions `S by fluorescence`, the counts
 per bin 5, 9, 0, REFUSED at the interval 434), since the ion's window is 1, so its window's draw was
 already one draw per interval at the hazard with the weights [1, tau - 1] in the labels' unit, and its
 two drives, plane waves, stand at its Node at every interval, never both levels 0, so the ion is never
@@ -227,9 +227,9 @@ seconds, 5965918924 and 5966129376 with #1563 comment 5966129628; the hands' pre
 morning, #1572 comments 5966338551 and 5966387795; the form in `examples/events/resonance/blind_and_reading.md`)
 with the window's turn as W sub-turns, read on the tree holding main's dark grain, leaves this world's
 reading as it was on 8382b8b9 and under the dark grain, number for number: REFUSED at the interval 434
-(the strong drive's row at 10,314 above 9,266), counts per bin 5, 9, 0, 43 takings `P by strong_drive`
-and 43 givings `S by fluorescence`, their spacing 9.69 +/- 6.2, the dark fraction 0.333, the returns
+(the strong drive's row at 10,314 above 9,266), counts per bin 5, 9, 0, 43 absorptions `P by strong_drive`
+and 43 emissions `S by fluorescence`, their spacing 9.69 +/- 6.2, the dark fraction 0.333, the returns
 422. The ion's window is one interval, the one window at which the two forms coincide: the plane's
 size over one interval is |a_t| R within the reference records' rounding and one sub-turn is one shear,
-so the turn per window is k |a_t| as the magnitude form had it. The telegraph's bins move with every form of the giving and
+so the turn per window is k |a_t| as the magnitude form had it. The telegraph's bins move with every form of the emission and
 read nothing of the blind until the strong drive's row is fixed, as the advisor's second says.

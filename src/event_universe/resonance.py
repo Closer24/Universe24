@@ -1,18 +1,18 @@
-"""The resonant read of a record declared a NodeReader at one Node, the two-quadrature form (ALGEBRA.md #what-is-open, item 50; The click writes on the lattice (b), the share at resonance; the mathematician's and the advisor's hands with their precisions, two hands): the taker keeps per transition two reference records at its declared resonance pair [num_d, den_d], r_t = R cos(Omega_d t) and r'_t = R sin(Omega_d t), advanced every interval by the one recurrence the giving's phasor uses (`giving.advanced`, Chebyshev's recurrence, one rounding half up), the sine record begun at (0, isqrt(R^2 (den_d^2 - num_d^2)) div den_d), one root at the declaration as the node_reader's wall's is; over the window the arriving level a_t at the Node is summed against both, X = SUM a_t r_t and Y' = SUM a_t r'_t, so that X^2 + Y'^2 = R^2 |SUM a_t e^(i Omega_d t)|^2, and at the window's close the turn of the labels is theta_W = k isqrt(X^2 + Y'^2) div R, the plane's size over the scale at the transition's declared weight k, applied at the window's close as W equal sub-turns with the carry (`sheared`, `meeting.turned_labels`), nothing reading the labels inside the window; the first-order change of the labels over a window is k |SUM a_t e^(i Omega_d t)|, A W / 2 at resonance at every arrival phase and A W sinc(delta W / 2) / 2 detuned by delta, the counter-rotating residue below 2 / W, where the magnitude form the engine ran before accumulated (2 / pi) k A W at every frequency and read no resonance. The scale R is derived from the file's amplitude bound, the record's window and the width and never declared; no s_d anywhere; the root once per window is the NodeReader's own act as the lay's root is and no act of Rule3, which takes none. The engine holds no number and no family name; the records stand in the books and at no Node."""
+"""The resonant read of a record declared a NodeReader at one Node, the two-quadrature form (ALGEBRA.md #what-is-open, item 50; The click writes on the lattice (b), the share at resonance; the mathematician's and the advisor's hands with their precisions, two hands): the taker keeps per transition two reference records at its declared resonance pair [num_d, den_d], r_t = R cos(Omega_d t) and r'_t = R sin(Omega_d t), advanced every interval by the one recurrence the emission's phasor uses (`emission.advanced`, Chebyshev's recurrence, one rounding half up), the sine record begun at (0, isqrt(R^2 (den_d^2 - num_d^2)) div den_d), one root at the declaration as the node_reader's wall's is; over the window the arriving level a_t at the Node is summed against both, X = SUM a_t r_t and Y' = SUM a_t r'_t, so that X^2 + Y'^2 = R^2 |SUM a_t e^(i Omega_d t)|^2, and at the window's close the turn of the labels is theta_W = k isqrt(X^2 + Y'^2) div R, the plane's size over the scale at the transition's declared weight k, applied at the window's close as W equal sub-turns with the carry (`sheared`, `meeting.turned_labels`), nothing reading the labels inside the window; the first-order change of the labels over a window is k |SUM a_t e^(i Omega_d t)|, A W / 2 at resonance at every arrival phase and A W sinc(delta W / 2) / 2 detuned by delta, the counter-rotating residue below 2 / W, where the magnitude form the engine ran before accumulated (2 / pi) k A W at every frequency and read no resonance. The scale R is derived from the file's amplitude bound, the record's window and the width and never declared; no s_d anywhere; the root once per window is the NodeReader's own act as the lay's root is and no act of Rule3, which takes none. The engine holds no number and no family name; the records stand in the books and at no Node."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
 from event_universe.core.rule3 import division_fixed_point, division_forward
+from event_universe.emission import advanced
 from event_universe.features import rotation
-from event_universe.giving import advanced
 from event_universe.loader.node_reader_declaration import Transition
 
 
 @dataclass
 class Reference:
-    """A transition's two reference records at the taker's Node and its window's two sums: the transition's resonance pair (num, den), the scale R (`scale_of`), the cosine record (r_t, r_(t-1)) begun at (R, R num div den), so that r_t = R cos(Omega_d t), the sine record (r'_t, r'_(t-1)) begun at r'_0 = 0 and r'_1 = isqrt(R^2 (den^2 - num^2)) div den, the one root at the declaration, so that r'_t = R sin(Omega_d t), both advanced by `giving.advanced`, the window's two sums over the arriving level a_t at the Node, X = SUM a_t r_t and Y' = SUM a_t r'_t, and the arrival, the two sums as the close read them, held past their reset for the taking's lay (ALGEBRA.md, The two-mode line, row 16: the phase passes with the quantum); the books' and at no Node."""
+    """A transition's two reference records at the taker's Node and its window's two sums: the transition's resonance pair (num, den), the scale R (`scale_of`), the cosine record (r_t, r_(t-1)) begun at (R, R num div den), so that r_t = R cos(Omega_d t), the sine record (r'_t, r'_(t-1)) begun at r'_0 = 0 and r'_1 = isqrt(R^2 (den^2 - num^2)) div den, the one root at the declaration, so that r'_t = R sin(Omega_d t), both advanced by `emission.advanced`, the window's two sums over the arriving level a_t at the Node, X = SUM a_t r_t and Y' = SUM a_t r'_t, and the arrival, the two sums as the close read them, held past their reset for the absorption's lay (ALGEBRA.md, The two-mode line, row 16: the phase passes with the quantum); the books' and at no Node."""
 
     resonance: tuple[int, int]
     scale: int
@@ -23,7 +23,7 @@ class Reference:
     arrival: tuple[int, int] = (0, 0)
 
     def closed(self) -> None:
-        """The window's close: the two sums held as the arrival for this interval's taking lay and reset for the next window."""
+        """The window's close: the two sums held as the arrival for this interval's absorption lay and reset for the next window."""
         self.arrival, self.in_phase, self.quadrature = (self.in_phase, self.quadrature), 0, 0
 
 
@@ -36,7 +36,7 @@ def scale_of(room: int, bound: int, window: int) -> int:
 
 
 def references_of(scale: int, transitions: tuple[Transition, ...]) -> list[Reference]:
-    """One `Reference` per transition at the scale: the cosine record at (R, R num div den rounded half up, the giving's own start), the sine record at (0, -r'_1) with r'_1 = isqrt(R^2 (den^2 - num^2)) div den, the one root at the declaration, and the window's sums at 0."""
+    """One `Reference` per transition at the scale: the cosine record at (R, R num div den rounded half up, the emission's own start), the sine record at (0, -r'_1) with r'_1 = isqrt(R^2 (den^2 - num^2)) div den, the one root at the declaration, and the window's sums at 0."""
     found = []
     for transition in transitions:
         num, den = transition.resonance
@@ -50,7 +50,7 @@ def references_of(scale: int, transitions: tuple[Transition, ...]) -> list[Refer
 def gathered(
     references: list[Reference], transitions: tuple[Transition, ...], levels: dict[int, int]
 ) -> None:
-    """One interval of the taker's read inside its window, a read and no write, no root and no draw: for every transition the arriving family's level a_t at the Node (`levels`, per drive family) times each reference record is added to the window's two sums, X += a_t r_t and Y' += a_t r'_t, and both records advance by the transition's resonance (`giving.advanced`); nothing reads the labels inside the window."""
+    """One interval of the taker's read inside its window, a read and no write, no root and no draw: for every transition the arriving family's level a_t at the Node (`levels`, per drive family) times each reference record is added to the window's two sums, X += a_t r_t and Y' += a_t r'_t, and both records advance by the transition's resonance (`emission.advanced`); nothing reads the labels inside the window."""
     for transition, reference in zip(transitions, references, strict=True):
         level = levels[transition.drive]
         reference.in_phase += level * reference.cosine[0]
@@ -62,7 +62,7 @@ def gathered(
 def arrival_of(
     transitions: tuple[Transition, ...], references: list[Reference], key: tuple[int, int, int | None]
 ) -> tuple[int, int] | None:
-    """The arriving record's phase (X, Y') held at the close for the transition `key` names by (leaves, enters, drive), None where none matches, the giving's items among them (no drive)."""
+    """The arriving record's phase (X, Y') held at the close for the transition `key` names by (leaves, enters, drive), None where none matches, the emission's items among them (no drive)."""
     pairs = zip(transitions, references, strict=True)
     return next((r.arrival for t, r in pairs if (t.leaves, t.enters, t.drive) == key), None)
 

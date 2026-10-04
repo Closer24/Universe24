@@ -1,4 +1,4 @@
-"""The one lay act (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode; `src/event_universe/lay.py`): every write from outside Rule3 is one call of `laid`, the division act taking the uniform part out of each level's change, the guard refusing by name a lay that moves one of the two sums, the write step at the lay's Nodes with the remainder at the division's origin and one lay line per written Node."""
+"""The one lay act (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode; `src/event_universe/lay.py`): every write from outside Rule3 is one call of `laid`, the division act absorption the uniform part out of each level's change, the guard refusing by name a lay that moves one of the two sums, the write step at the lay's Nodes with the remainder at the division's origin and one lay line per written Node."""
 
 import json
 
@@ -84,7 +84,7 @@ def test_the_write_step_lays_at_the_nodes_with_the_remainder_at_the_origin_and_o
 
 
 def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_admitted_span():
-    """The span condition (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode, the engine's declared problem 2; `loader/node_reader_declaration.holding_period`, `giving.holds_period`): the resonance world's giver at [2, 3] with the lifetime 4 is refused by name, the least admitted span 8 (tau Omega >= 2 pi, num / den <= cos(2 pi / tau) by the rotation act), and admitted at 8; a giving at [5414, 6000] needs 15."""
+    """The span condition (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode, the engine's declared problem 2; `loader/node_reader_declaration.holding_period`, `emission.holds_period`): the resonance world's giver at [2, 3] with the lifetime 4 is refused by name, the least admitted span 8 (tau Omega >= 2 pi, num / den <= cos(2 pi / tau) by the rotation act), and admitted at 8; an emission at [5414, 6000] needs 15."""
     world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
@@ -128,12 +128,16 @@ def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_a
 def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
     door, tmp_path, monkeypatch
 ):
-    """Every door of the act on a massless record changes the two sums by 0 and the back-in-time gate reads MATCH across it (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode: the loader's lay of the file's levels, `Lattice.lay`; the source in time's increments over its span, `giving.given_quantum`; the open board's packet, `giving.laid_packet`): the act's change read from its lay lines (the loader's lay has none, the sums themselves 0 at the start), the division act's leftover units among them, since `lay.written` is the one place that writes a level from outside Rule3 and the host's tool crosses every write from the lay lines."""
+    """Every door of the act on a massless record changes the two sums by 0 and the back-in-time gate reads MATCH across it (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode: the loader's lay of the file's levels, `Lattice.lay`; the source in time's increments over its span, `emission.emitted_quantum`; the open board's packet, `emission.laid_packet`): the act's change read from its lay lines (the loader's lay has none, the sums themselves 0 at the start), the division act's leftover units among them, since `lay.written` is the one place that writes a level from outside Rule3 and the host's tool crosses every write from the lay lines."""
     if door == "the loader's lay":  # the scratch world beside its universe
         monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
         path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
     elif door == "the source in time":
-        path, name, intervals = EVENTS / "resonance" / "resonant.json", "pulse", 112  # the giving at 61
+        path, name, intervals = (
+            EVENTS / "resonance" / "resonant.json",
+            "pulse",
+            112,
+        )  # the emission at 61
     else:
         path, name, intervals = packet_world(tmp_path, TOOL), "pulse", 20
     board = Lattice(load_world(path), (lines := []).append)
@@ -149,10 +153,10 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
     assert BACK.verdict(Lattice(load_world(path)), intervals)["verdict"] == "MATCH"
 
 
-def test_a_taking_writes_nothing_on_a_dense_record_and_the_books_carry_the_deficit(
+def test_a_absorption_writes_nothing_on_a_dense_record_and_the_books_carry_the_deficit(
     tmp_path, monkeypatch
 ):
-    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `Lattice.books`): on the ion-like world, a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board), the drive's record of several quanta per Node (its booked share at the ion's two Nodes above its quantum W_rec) is taken by the ion over 170 intervals: no face is booked for the drive and no front begins from it, its three arrays stand bit for bit as the twin's without the ion at every interval (the drive reads no holder, so its step is the same Rule3), its four sums (plain and staggered of now and before, sigma = (-1)^(x + y + z) over the board) and its largest level printed with the twin's and equal; the books' count down by one per taking, the deficit the takings' count and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift`, Rule3's own rounding, over W_c, and one quantum of the reading's rounding; the books' line and the tolerance printed); the back-in-time gate reads MATCH over the run across the takings, the ion's lays crossed from their lines."""
+    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `Lattice.books`): on the ion-like world, a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board), the drive's record of several quanta per Node (its booked share at the ion's two Nodes above its quantum W_rec) is taken by the ion over 170 intervals: no face is booked for the drive and no front begins from it, its three arrays stand bit for bit as the twin's without the ion at every interval (the drive reads no holder, so its step is the same Rule3), its four sums (plain and staggered of now and before, sigma = (-1)^(x + y + z) over the board) and its largest level printed with the twin's and equal; the books' count down by one per absorption, the deficit the absorptions' count and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift`, Rule3's own rounding, over W_c, and one quantum of the reading's rounding; the books' line and the tolerance printed); the back-in-time gate reads MATCH over the run across the absorptions, the ion's lays crossed from their lines."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path, alone = (ion_world(tmp_path, TOOL, intervals=170, body=body) for body in (True, False))
     board, twin = Lattice(load_world(path), (lines := []).append), Lattice(load_world(alone))
@@ -172,19 +176,19 @@ def test_a_taking_writes_nothing_on_a_dense_record_and_the_books_carry_the_defic
         mine, its = read(board), read(twin)
         assert mine[:2] == its[:2]
         assert all(np.array_equal(a, b) for a, b in zip(mine[2], its[2], strict=True))
-    takings = [c for c in lines if c["event"] == "credit" and c["taken"] == "strong_drive"]
+    absorptions = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "strong_drive"]
     books, its_books = board.books()["strong_drive"], twin.books()["strong_drive"]
     print(
         f"the drive's sums [now, staggered now, before, staggered before] {mine[0]} and the twin's {its[0]}"
     )
     print(
-        f"the largest level {mine[1]} and {its[1]}, {len(takings)} takings, the books {books}, the twin's {its_books}"
+        f"the largest level {mine[1]} and {its[1]}, {len(absorptions)} absorptions, the books {books}, the twin's {its_books}"
     )
-    assert len(takings) >= 2 and not any(
+    assert len(absorptions) >= 2 and not any(
         f.family == drive for fs in board.credit.faces.values() for f in fs
     )
     assert all(f.family != drive for f in board.credit.fronts)
-    assert (books["count"], books["deficit"]) == (count - len(takings), len(takings))
+    assert (books["count"], books["deficit"]) == (count - len(absorptions), len(absorptions))
     wall = count_wall(board.families[drive], board.world.quantum_action)
     within = abs(books["drift"]) // wall + 1  # the share's drift in quanta and the reading's rounding
     print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")

@@ -43,7 +43,7 @@ RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_hazard_window.py::test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_ones_their_own_grain": (
         39,
-        "the giving's hazard over a declared window (A3 of the alignment audit, #1793 comment 5982140872; the advisor's second "
+        "the emission's hazard over a declared window (A3 of the alignment audit, #1793 comment 5982140872; the advisor's second "
         "5982171035 (2)): the dark intervals drawn at their own grain as they pass, the close at the lit count, every interval "
         "of the window in exactly one draw's span, and a window with no dark interval at its length bit for bit",
     ),
@@ -64,9 +64,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
         "packet's two levels each sum to 0 on the committed worlds, and the board refuses at its construction, through the one lay act's guard, a mode entry whose sums are not 0",
     ),
-    "tests/test_the_meeting.py::test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark": (
+    "tests/test_the_meeting.py::test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark": (
         14,
-        "the lay's uniform mode (#1827 comment 5975131359): the committed one-photon world's taking at 48, the share never "
+        "the lay's uniform mode (#1827 comment 5975131359): the committed one-photon world's absorption at 48, the share never "
         "above the lay's by more than the known transient, and 0 exactly once the front has swept both packets",
     ),
     "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
@@ -98,7 +98,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "count-unit (the two hands' word on #1793's R8): the taker's lay at 2 A^2 sin omega = T per quantum, the "
         "family's wall W_c sin omega_0 by one root, light's W_c, the [1, 1299] amplitude unchanged, a laid body's books",
     ),
-    "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
+    "tests/test_the_draw.py::test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry": (
         79,
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
         "the band's line with the transverse mode, the loader's three refusals, the lay on an open board with the "
@@ -112,7 +112,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_draw.py::test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay": (
         24,
         "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the unit of a "
-        "record empty at the books' origin set at its first lay to the giving's own W_c sin Omega, a born quantum "
+        "record empty at the books' origin set at its first lay to the emission's own W_c sin Omega, a born quantum "
         "below the half-top energy credited 1 and not 0",
     ),
     "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_counts_in_its_own_quantum": (
@@ -121,18 +121,18 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
-    "tests/test_the_giving.py::test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period": (
+    "tests/test_the_emission.py::test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period": (
         33,
-        'the giving lays no uniform mode (the owner\'s "yes to everything" of 2026-10-04, #1793 comment 5975629873; the '
+        'the emission lays no uniform mode (the owner\'s "yes to everything" of 2026-10-04, #1793 comment 5975629873; the '
         "mathematician's 5975866852 and 5975925032): the source's increments corrected by the division act in time where the "
         "span holds a period, the period by the rotation act, a short span laid as built, the resonance world's sums and share",
     ),
-    "tests/test_the_giving.py::test_the_open_boards_packet_lays_no_uniform_mode": (
+    "tests/test_the_emission.py::test_the_open_boards_packet_lays_no_uniform_mode": (
         20,
-        "the giving lays no uniform mode (2026-10-04): the open board's packet's two levels through the packet lay's "
+        "the emission lays no uniform mode (2026-10-04): the open board's packet's two levels through the packet lay's "
         "division act, each summing to 0 over the board after the lay, the quantum standing",
     ),
-    "tests/test_the_giving.py::test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark": (
+    "tests/test_the_emission.py::test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark": (
         38,
         "the front's taper (the owner's \"yes to everything\" of 2026-10-04, #1793 comment 5975629873): the world's "
         "`erasure` L, the ball behind the last L shells at (0, 0) exactly, the shells before the reach falling, the erasure "
@@ -172,7 +172,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
         33,
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
-        "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
+        "numbers, the two reference records by the emission's recurrence, A W / 2 at every arrival phase, the "
         "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
     ),
     "tests/test_integer_algebra.py::test_a_composed_product_of_literals_is_refused_outside_core_rule3": (
@@ -200,11 +200,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
         "self-read 0 to the bit over three intervals, a count above 1 refused by name",
     ),
-    "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
+    "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_absorption": (
         70,
         "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
         "window bounded by the probe's lays, the lay by the count at the declared interval, the probe's click and the "
-        "drive's taking by the labels' squares, the body's clock and the window's index on the click line, the "
+        "drive's absorption by the labels' squares, the body's clock and the window's index on the click line, the "
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
@@ -219,7 +219,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "Boss's brief): the ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, "
         "the share credited 1, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "
         "uniform mode's recurrence to the bit, the drive projected on the reader's normalised mode, one draw per click "
-        "with the write's Node drawn after the outcome by the window's inflow booked per Node, the giving's Node by "
+        "with the write's Node drawn after the outcome by the window's inflow booked per Node, the emission's Node by "
         "the record's share (the mathematician's 299 with the advisor's second, two hands)",
     ),
     "tests/test_the_node_reader.py::test_a_reader_with_its_own_record_stands_on_one_node": (

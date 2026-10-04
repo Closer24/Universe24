@@ -1,12 +1,12 @@
-"""The giving lays no uniform mode and the front writes to 0 over L declared shells (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the packet lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
+"""The emission lays no uniform mode and the front writes to 0 over L declared shells (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the packet lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
 
 import json
 
 import numpy as np
 
 from event_universe import world_files
+from event_universe.emission import holds_period, increments_of, radiated_total
 from event_universe.features.click import SCALE_OF
-from event_universe.giving import holds_period, increments_of, radiated_total
 from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.loader.derived import count_wall
@@ -15,7 +15,7 @@ from tests.laws import BACK, EVENTS, ROOT, TOOL, packet_world, refused
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
-    """The giving lays no uniform mode (ALGEBRA.md, The click writes on the lattice (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `giving.increments_of`, `lay.division_act_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; on the resonance world the giver gives at 61 (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 41 under the state modulo the total until the clean main of 2026-10-04) and at the interval 116, the span laid, the light's two sums over the chain of 48 are within one level per Node (3 and 6, against 797 and 765 before the correction) while the share reads the quantum, 0.7518 W_c against sin Omega = 0.745 (0.7582 uncorrected)."""
+    """The emission lays no uniform mode (ALGEBRA.md, The click writes on the lattice (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `emission.increments_of`, `lay.division_act_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; on the resonance world the giver gives at 61 (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 41 under the state modulo the total until the clean main of 2026-10-04) and at the interval 116, the span laid, the light's two sums over the chain of 48 are within one level per Node (3 and 6, against 797 and 765 before the correction) while the share reads the quantum, 0.7518 W_c against sin Omega = 0.745 (0.7582 uncorrected)."""
     scale, total = (3 * 6000 * 32768) ** SCALE_OF, radiated_total(32768, (2, 3))
     raw, amplitudes = increments_of(total, 48, (2, 3), scale)
     fixed = division_act_in_time(raw, amplitudes)
@@ -41,7 +41,7 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
     pulse = [f.name for f in board.families].index("pulse")
     for _ in range(116):
         board.step()
-    given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
+    given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
     line = board.states[pulse].lines[0]
     sums = (int(line.now.sum(dtype=object)), int(line.before.sum(dtype=object)))
     assert len(given) == 1 and given[0]["interval"] == 61 and max(map(abs, sums)) <= 48
@@ -50,11 +50,11 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
 
 
 def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
-    """The packet's two levels take the packet lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The packet lay; `giving.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
+    """The packet's two levels take the packet lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The packet lay; `emission.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
     board = Lattice(load_world(packet_world(tmp_path, TOOL)), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     while board.interval < 60 and not any(
-        c["event"] == "credit" and c["given"] == "pulse" for c in lines
+        c["event"] == "credit" and c["emitted"] == "pulse" for c in lines
     ):
         board.step()
     lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
@@ -83,7 +83,9 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     laid = board.books()["photon"]["share"]
     for _ in range(48):
         board.step()
-    credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
+    credits = [
+        c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["absorbed"]
+    ]
     assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
     origin = next(f.at for f in board.credit.faces[49] if f.family == photon)
     tapered = 0

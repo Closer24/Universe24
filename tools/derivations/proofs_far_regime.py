@@ -260,7 +260,7 @@ def check_the_fringes_near_field_minima() -> Check:
 
 
 def check_newtons_constant_and_alpha_laws_numbers() -> Check:
-    """S.25, Eq. (20): the massless holder's rest far from a static source of s quanta per interval is 3 s / (4 pi r) over E_g, so U = 3 s / (4 pi r Gamma E_g), and nature's U = G M / (c^2 r) with M = s and c^2 = 1 / 3 gives G_clock = 1 / (4 pi Gamma E_g); S.26 (b): alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s) = 0.20675 k / (Gamma E_s), and nature's 1 / 137.036 fixes k / (Gamma E_s) = 1 / 28.33, no integer Gamma E_s giving it at k = 1 (28 gives 1 / 135.43 and 29 gives 1 / 140.27); the algebra exact with pi as a symbol cancelled, the numbers recomputed."""
+    """S.25, Eq. (20): the massless holder's rest far from a static source of s quanta per interval is 3 s / (4 pi r) over E_g, so U = 3 s / (4 pi r Gamma E_g), and nature's U = G M / (c^2 r) with M = s and c^2 = 1 / 3 gives G_clock = 1 / (4 pi Gamma E_g); S.26 (b): alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s) = 0.20675 k / (Gamma E_s), and nature's 1 / 137.036 fixes k / (Gamma E_s) = 1 / 28.33, no integer Gamma E_s emission it at k = 1 (28 gives 1 / 135.43 and 29 gives 1 / 140.27); the algebra exact with pi as a symbol cancelled, the numbers recomputed."""
     for s, r, gamma, e_g in ((3, 7, 11, 5), (1, 2, 6000, 10)):
         level = Fraction(3 * s, 4 * r * gamma * e_g)  # U times pi
         g_over_c2 = level * r / s  # G / c^2 times pi

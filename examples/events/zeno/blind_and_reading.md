@@ -23,7 +23,7 @@ and column C (no write) 1 at every n beside it, what the law would give without 
 ## The reading (branch ion-world, the night of 2026-10-03, 120 trials per world, the seeds 1 to 120)
 
 The tree at the reading: the one draw over the records reading one arriving record
-(`meeting.took`) and the erasing front (`front.py`); the trials `tools/meeting_trials.py`, the
+(`meeting.absorbed`) and the erasing front (`front.py`); the trials `tools/meeting_trials.py`, the
 part each record stands in at the end and its `jump` lines labelled NODEREADER.
 
 | n | window | trials ending in e | P(e at T_pi) | blind | column B | column C |
@@ -39,7 +39,7 @@ Every n reads column A within one standard error: PASS at n = 1, 2, 4, 8 and 16 
 column C, 1 at every n, is excluded at every n above 1, and column B at n = 8 and 16, 0.005 and
 0.000, is excluded. The jumps: at n = 2, 95 transfers g to e and 34 e to g over the 120 trials; at
 n = 4, 64 and 18; at n = 16, 16 and 1. The front changes no number here: the pulse's count in the
-books is 413 whole quanta and no taking brings it to 0, so no front begins (checked on eight seeds,
+books is 413 whole quanta and no absorption brings it to 0, so no front begins (checked on eight seeds,
 the front on and off, the jumps identical); an earlier table in this file, 0.408 and 0.292 at n = 2
 and 4, was read on the build before the one draw over the outcomes entered (the per-record draw) and
 is replaced by this one, the build that shipped at bd300d4c reading as above on the same seeds.
@@ -62,13 +62,13 @@ tuned to 1.568 against 1.571.
 
 PASS at every n within one standard error of column A (0.045 at the middle, 0.03 at the ends); columns
 B and C excluded as above. The jumps: n = 2, 95 g to e and 34 e to g; n = 4, 62 and 18; n = 8, 32 and
-4; n = 16, 16 and 0. The generic act writes the taking as its list (the pulse's record at -1 by the
+4; n = 16, 16 and 0. The generic act writes the absorption as its list (the pulse's record at -1 by the
 face, the atom's parts at +1 and -1 by the lay) and the null window as its list at the change 0.
 
 ## What is not built, by name
 
 The record's own NodeReader region around its Node (the mathematician's 180); the booking of the
-share's difference at a giving (no giving in this world); the trials' seeds as a key of the world
+share's difference at an emission (no emission in this world); the trials' seeds as a key of the world
 file (one world file holds one seed; the trials set each record's generator from the design's
 seeds, the host's declaration, `tools/meeting_trials.py`).
 
@@ -168,7 +168,7 @@ The one shear's angle at n = 1 is 2 arctan(9,408 / 12,000) = 1.3298 exactly, the
 rounding; the sub-turn form's 48 x 2 arctan(196 / 12,000) = 1.5679. The resonance world's detuned and
 four-phase readings: the four-phase turns are the dedicated test's and unchanged (they read the turn's
 numerator); the detuned taker is read on the tree that also holds main's dark grain, which moved the
-givings, so its number stands in `examples/events/resonance/blind_and_reading.md` against the blinds
+emissions, so its number stands in `examples/events/resonance/blind_and_reading.md` against the blinds
 there and not against this line. The function named `meeting.sheared` in the blind lives in
 `src/event_universe/resonance.py` as `sheared`, called by `meeting.turned_labels`.
 
@@ -189,11 +189,11 @@ and the first build's 67 of 120 on the seeds 1 to 120 the same bias at a quarter
 and not the draw. The two windows separated: the first window alone flips 221 of 480 (0.460, within
 2 standard errors); in the second window 159 of the 259 left in g flipped to e (0.61) and only 85 of
 the 221 in e flipped back to g, 0.385 against 0.5, 3.5 standard errors low. The asymmetry is the
-finding by name: after a taking, the return e to g is suppressed. The cause by one hand, the
-advisor's reading: the taking's write is the hole, the arriving record's levels at the Node to 0 by
+finding by name: after an absorption, the return e to g is suppressed. The cause by one hand, the
+advisor's reading: the absorption's write is the hole, the arriving record's levels at the Node to 0 by
 the face with its count down by one, and the Zeno drive at A = 392 holds at the reader's Node
 the share 3 den A^2 sin^2 omega = 1.54 x 10^9 against one quantum's W_c sin omega = 4.40 x 10^8 at
-T = 32,768, 3.5 quanta's share per Node, so the hole of one taking removes three and a half quanta's
+T = 32,768, 3.5 quanta's share per Node, so the hole of one absorption removes three and a half quanta's
 worth of the drive at the Node, which Rule3 refills from the neighbours over the following intervals,
 and the second window's sum at that Node is short; not the resonant act's (the magnitude form had the
 same hole, 120 trials hid it) and not statistics; the one-quantum records of the gates are untouched
@@ -206,9 +206,9 @@ the five worlds' trials untouched tonight.
 The diagnostic the advisor asked, run before any change, labelled LATTICE (a reading of the board
 and no measurement): `zeno_2.json` at the seed 2 (the record's generator at the state 2, as the trials
 set it), whose record takes at the first window's close, the interval 24, g to e, and ends in e; beside
-it the same seed with the taking suppressed (`meeting.took` returning no taking, so the record writes
+it the same seed with the absorption suppressed (`meeting.absorbed` returning no absorption, so the record writes
 its null window at 24 and ends in g, the drive untouched). The drive's level at the reader's Node
-[4, 4, 2] (`meeting.arriving`, the pulse's time line) at the intervals 22 to 48, with the taking and
+[4, 4, 2] (`meeting.arriving`, the pulse's time line) at the intervals 22 to 48, with the absorption and
 with it suppressed: 22: 361, 361; 23: 337, 337; 24: 82, 82; 25: 0, -234; 26: 0, -400; 27: -384, -305;
 28: -147, -14; 29: 312, 279; 30: 433, 379; 31: 230, 219; 32: -74, -95; 33: -340, -353; 34: -368,
 -384; 35: -170, -168; 36: 144, 152; 37: 381, 362; 38: 352, 322; 39: 104, 58; 40: -182, -255; 41:
@@ -216,14 +216,14 @@ with it suppressed: 22: 361, 361; 23: 337, 337; 24: 82, 82; 25: 0, -234; 26: 0, 
 48: -368, -367. The face holds the level at 0 over the intervals 25 and 26, Rule3 refills the Node from
 its neighbours from 27 on, and the wave at the Node differs from the untouched run by up to 180 levels
 through the window; over the second window, the intervals 25 to 48, the plane's size SUM a_t
-e^(i Omega t) reads 4,428 with the taking against 4,765 without (A W / 2 = 4,704), 7 percent short,
+e^(i Omega t) reads 4,428 with the absorption against 4,765 without (A W / 2 = 4,704), 7 percent short,
 and SUM |a_t| 5,792 against 6,026. No number of the blind is adjusted.
 
 ## On the partial hole, 2026-10-03
 
 The hole of a dense record (the mathematician's 237, #1572 comment 5967012316, with the advisor's
 second, 5967123679, two hands; branch partial-hole): where the arriving record's share at the Node
-exceeds its own quantum W_rec, the taking's face writes the record's two time levels scaled by
+exceeds its own quantum W_rec, the absorption's face writes the record's two time levels scaled by
 isqrt((s - W_rec) x 2^(2m)) div (isqrt(s) x 2^m) instead of 0, the phase and the sense at the Node
 standing and one quantum's share leaving; where the share is at most W_rec the hole to 0 as before.
 The trials from now 480 per world, the design's seeds 1 to 480 (the advisor's word), `tools/meeting_trials.py`.

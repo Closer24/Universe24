@@ -35,7 +35,7 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
 
 
 def world(design: dict[str, Any]) -> dict[str, object]:
-    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and taking no share), the receding face, the intervals."""
+    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and absorption no share), the receding face, the intervals."""
     gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
     node_readers = screen_regions(design)
     region = design["aside"]

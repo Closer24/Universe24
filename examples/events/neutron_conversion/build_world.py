@@ -69,7 +69,7 @@ def expectation(design: dict[str, Any]) -> dict[str, Any]:
 
 
 def laid(path: Path) -> None:
-    """The generator's mode file beside the world (no body of it laid by the generator, the record converted whole taking no mode entry); a refusal by name is printed and the world stays declared without a mode file."""
+    """The generator's mode file beside the world (no body of it laid by the generator, the record converted whole absorption no mode entry); a refusal by name is printed and the world stays declared without a mode file."""
     command = [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path)]
     found = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
     if found.returncode:

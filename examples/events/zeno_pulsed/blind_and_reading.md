@@ -21,10 +21,10 @@ level read; at the close the body's one draw by its labels' squares as the shear
 the part it stood in, [cos^2 (theta_W / 2), sin^2 (theta_W / 2)] for (the part it stands in, the
 other): the probe's click re-lays the body whole in g (the probe taken and given back at one interval
 and one Node, no write on its record, the fluorescence by name its own wave continuing), the
-drive's taking exchanges the parts (the hole of round A), the rest the null window, the body whole
+drive's absorption exchanges the parts (the hole of round A), the rest the null window, the body whole
 in its part. The reading is the part the body stands in at the run's end over the trials, each the
 same lay with the body's generator at one of the design's 480 seeds (`tools/meeting_trials.py`), the
-click lines labelled NODEREADER (`taken` the family read, `proper` the body's own clock, `windows` the
+click lines labelled NODEREADER (`absorbed` the family read, `proper` the body's own clock, `windows` the
 window's index) and the windows closed beside it. The blind is `expectation.json`, written by
 `build_world.py` from the design before any run and never edited after; the reading is appended
 here after the run; a reading that misses the blind is a finding, written as such and never
@@ -87,8 +87,8 @@ exactly, the double root; the growth stands in Rule3's integer step on this latt
 localise against the engine's division act (#1572, Worker PULSE's finding); no change to the engine
 from this round.
 Beside it, lattice matters named and not adjusted: the drive's holes excite the same growth
-slowly (the drive's level 3,155 at the interval 768 under twelve takings at the Node clock 6000, 840
-under fifteen on another seed), one or two takings per pulsed run leaving it far below the bound; the
+slowly (the drive's level 3,155 at the interval 768 under twelve absorptions at the Node clock 6000, 840
+under fifteen on another seed), one or two absorptions per pulsed run leaving it far below the bound; the
 antineutrino of the neutron conversion world is laid by the count at the massless pair over 40
 intervals, its share 1.13 of a quantum at the interval 20 by the same growth, unread there; at [96,000,
 96,000] the universe's amplitude bound would read 578 against 9,266 (the currents' room grows with
@@ -125,7 +125,7 @@ the part realised and the family taken or given).
 
 The acceptance: every row within two standard errors after round A (the hole of a dense record,
 branch partial-hole) lands on main; before it the rows n >= 2 carry the hole's bias by name (the
-return e to g weakened for two intervals after each taking, the shipped n = 2 row's 0.615 at 480 seeds
+return e to g weakened for two intervals after each absorption, the shipped n = 2 row's 0.615 at 480 seeds
 on main), the n = 2 row the same 0.500 within 0.023 as that round's blind; the first window of n = 2
 alone, the part at the interval 384 over 480 seeds, 0.500 within 0.023 (its window of 384 holds no
 hole); the windows closed n exactly in every trial; the stray share of earlier probes at the body's
@@ -133,7 +133,7 @@ Node at most n / 256 quanta (n quanta spread over the box's 256 Nodes), the draw
 by it; the walk of the body's levels under the rounding a lattice diagnostic (the body re-laid at
 every close in this form, so the walk is a window's); the shipped 48-interval Zeno worlds, the
 anticoincidence and the telegraph bit for bit (the gate tests); the dedicated test
-`tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking`.
+`tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_absorption`.
 A reading on the branch is a diagnostic by name; the experiment is run on main after the merge.
 
 ## The trials' protocol (the owner's word of 2026-10-03: a quiet machine runs what this one cannot)
@@ -149,7 +149,7 @@ core, so 480 seeds take about 2.7 hours per row; the seeds may be split over cor
 design with disjoint `seeds` lists and the counts summed). The reading per row: `ends_in_part`
 (`body 0`, the trials ending in e over the trials, P(e at T_pi) against the blind's row),
 `windows_closed` (n in every trial), `jumps` (`body 0 g by probe` the probe's clicks, `g by
-pulse` the drive's return, `e by pulse` the drive's taking; the fluorescence clicks per run the two
+pulse` the drive's return, `e by pulse` the drive's absorption; the fluorescence clicks per run the two
 g kinds over the trials) and `refused` (empty; a trial the guard refused is read, never hidden). The
 first window of n = 2 alone: the same world with a copy of the design whose `intervals` is 384, P(e)
 0.500 within 0.023.
@@ -171,7 +171,7 @@ gate; the experiment is run on main after the merge at 480 seeds on a quiet mach
 | 64 | 20 | 0 | 0.000 | 0.000 | 0.037 | 64 in every trial | 64.00 | 0.00 | 0.00 | 0 |
 
 The windows closed are n exactly in every trial, every close a probe's; n = 1 reads the column
-exactly (the one probe at T_pi finds e in every trial: no g click, one taking of the drive per run);
+exactly (the one probe at T_pi finds e in every trial: no g click, one absorption of the drive per run);
 n = 2 and n = 4 read above the column by 0.9 and 1.6 standard errors at 20 seeds, the hole's bias
 by name (the main's shipped n = 2 at 0.615 over 480 seeds); n = 8, 16 and 32 read within one
 standard error of the column (0.20, 0.10 and 0.00 against 0.235, 0.133 and 0.072; at n = 32 the drive

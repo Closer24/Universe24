@@ -215,7 +215,7 @@ line 4 the count kept to 0.4 percent, the record not static (a finding). The def
 not read on a compact pixel because none is laid at this count: the compact branch's threshold on
 this engine stands above 8,000 quanta (the law's line, about 13,000 under the form-sourced start,
 the number the generator's to find), and a lay above it on the 11-cube is the run proposed. The
-advisor's correction of the verdict (#1563 comment 5958925235, 2026-10-02, 18:39, taking the
+advisor's correction of the verdict (#1563 comment 5958925235, 2026-10-02, 18:39, absorption the
 Boss's correction of his 5958624379 whole): the blind's window was written without the composed
 paces' factor the law's line carries (ALGEBRA.md, **The compact pixel under the composed paces**:
 the write's factor at the body's own paces e^(-4 U) = 0.72 of the count's well moves the compact
