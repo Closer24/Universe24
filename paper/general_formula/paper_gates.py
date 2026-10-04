@@ -261,7 +261,7 @@ def gate_scripts(texts: dict[str, str]) -> list[str]:
     text = texts["main.tex"]
     for m in re.finditer(r"\\claimmark\{(derived|computed)\}", text):
         around = enclosing_parenthesis(text, m.start())
-        if not re.search(r"\\texttt\{(?:[a-z]+(?:\\_)?)+\.py\}", around):
+        if not re.search(r"\\texttt\{(?:[a-z0-9]+(?:\\_)?)+\.py\}", around):
             misses.append(f"main.tex:{line_of(text, m.start())}: {m.group(0)} names no script")
     return misses
 

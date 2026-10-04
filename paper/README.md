@@ -147,8 +147,12 @@ beside every derived or theorem mark of the main text), the struck phrases (the 
 removed, with the history forms "pending", "not yet", "earlier version" and their kin, none allowed
 back), and the twins (a number or a word printed in two places asserted equal). The derivation
 scripts' count is a ratchet the same test holds: of the 127 derived and computed marks of the main
-text, 5 name a Python script beside them (`dark_matter_check.py`, `invariant_check.py`, `schroedinger_check.py`, `surplus_check.py`, `test_the_draw.py`) and
-122 name none; the count may only fall, and the paper claims nothing beyond it (the supplement
+text, 117 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
+line alone with no engine import and no run's file, the paper's own check scripts, or, for a computed
+mark, the run's reader) and 10 name none: the qualitative statements (a body's four statements, Theorem 4's
+mark, the three kinds of binding, the k^4 term's ten percent, the seat of the electromagnetic binding
+energy, confinement, the polarisations, the Lorentz form, Bjorken's finding) and the integer Wronskian's
+witness of S.9; the count may only fall, and the paper claims nothing beyond it (the supplement
 carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
 
 ## Submission rules and status
