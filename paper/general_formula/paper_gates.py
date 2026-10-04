@@ -95,7 +95,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "the two slits over $130$ intervals, Bell's four over $100$, the GHZ's four over $60$",
+                "at 7ed11fdf the two slits over $130$ intervals, Bell's four over $100$ and the GHZ's four over $60$",
             )
         ],
     ),
