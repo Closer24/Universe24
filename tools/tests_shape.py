@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
+        93,
+        "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
+        "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
+        "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
+    ),
     "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_loader_refuses_one_that_does": (
         24,
         "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "

@@ -28,6 +28,13 @@ HISTORY = [  # a clause about the state of the work, which the law states dated 
         r"\bthe engine's to-do\b",
         r"\ba round of its own\b",
         r"\bthe next version\b",
+        r"\btoday\b",
+        r"\btonight\b",
+        r"\bmerging\b",
+        r"\bthis round\b",
+        r"\buntil the (?:act|round) lands\b",
+        r"\b(?:since|before) the locality round\b",
+        r"\bpresent convention\b",
     )
 ]
 WINDOW = 36  # the characters kept on either side of a clause, its key in the list
