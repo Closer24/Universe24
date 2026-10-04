@@ -134,7 +134,9 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--design", type=Path, default=HERE / "design.json")
     parser.add_argument("--folder", type=Path, default=HERE)
     parser.add_argument(
-        "--modes", action="store_true", help="lay both bodies as one-Node records by the generator"
+        "--modes",
+        action="store_true",
+        help="lay both bodies by the generator, one-Node records in the design's `senses` and `pixels`",
     )
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
@@ -147,7 +149,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     if args.modes:
         tool = [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(folder / WORLD)]
-        subprocess.run([*tool, "--pixel", "0", "1", "--sense", "1", "-1"], check=True, cwd=ROOT)
+        subprocess.run(tool, check=True, cwd=ROOT)  # the senses and the one-Node lays the design's
 
 
 if __name__ == "__main__":

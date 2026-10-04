@@ -29,7 +29,18 @@ from event_universe.loader.derived import (
 from event_universe.loader.lay import least_action
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, CHAIN, EVENTS, PACKET, QUANTA, TOOL, chain_body_world, load_file, refused
+from tests.laws import (
+    BACK,
+    CHAIN,
+    EVENTS,
+    PACKET,
+    QUANTA,
+    TOOL,
+    chain_body_world,
+    design_beside,
+    load_file,
+    refused,
+)
 
 GATED = (  # the smallest shipped world of each builder whose load is seconds; the long loads are the runner's gate
     ("anticoincidence", "one_photon"),
@@ -116,7 +127,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     packet = {**PACKET, "amplitude": 400, "top": dict(x=[5, 5], y=[0, 0], z=[0, 0])}
     document = {**json.loads(world.read_text(encoding="utf-8")), "messages": [packet]}
     world.write_text(json.dumps(document), encoding="utf-8")
-    TOOL.main(["--input", str(world), "--sense", "1", "--pixel", "0"])  # the one-Node record
+    TOOL.main(["--input", str(world)])  # the one-Node record, the design's `pixels` beside the chain
     board = GameBoard(load_world(world))
     message, light = board.world.messages[0], board.states[CHARGE].lines[0]
     now, before = board.board_array(message.now), board.board_array(message.before)
@@ -202,7 +213,7 @@ def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte
 def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused(
     tmp_path, monkeypatch
 ):
-    """The count-1 gate and the lay of each quantum of charge as its own record (ALGEBRA.md, No record reads its own write of the sign; what is open, item 43 (1)): a universe of a holder of the content at a level weight so large that its rest is 0 at every Node (the paces Gamma, the write's factor 1 and the turn's numerator the level itself), the holder of the sign under the rotation at E_s = 1 and k_w by the energy line (k_w Gamma den = E_s T num, 4 at T = 36,000) and the charged plane of matter's pair; a chain of ten Nodes (x open) with two bodies of the charged family of count 1 in the senses +1 and -1, each laid by the generator as the one-Node record of its quantum (`--pixel`: one unit of the invariant 2 A^2 sin omega = T, A = isqrt(T den div (2 sine)) with sine = isqrt(den^2 - num^2), its Wronskian A x (A sine div den) at its Node and 0 elsewhere, sense x T / 2 within 2 A of the rounding) and admitted by the gate at the start: each body its own record, the holder three rows of four lines (the free row 0 and one per record), each row sourced by its own record alone (`row_sources`), the free row 0 at every Node (nothing sources it, no light laid) and each record's row at the start of the sign of its own sense; over three intervals, for each record, the turn's time numerator is bit for bit the other record's row's time line and its odd angles the other row's odd lines, the same bit for bit with the record's own row zeroed (the self-read 0 to the bit), and the row's time line after the step is Rule3's plain step of the row (the massless pair at the vacuum's paces) plus (k_w x W + r) div (E_s T) with W the record's own Wronskian booking and r the write's remainder before, the other record's Wronskian entering nowhere; a body of count 2, and a body of two Nodes of count 1, of the charged family are refused by name as one quantum of its family."""
+    """The count-1 gate and the lay of each quantum of charge as its own record (ALGEBRA.md, No record reads its own write of the sign; what is open, item 43 (1)): a universe of a holder of the content at a level weight so large that its rest is 0 at every Node (the paces Gamma, the write's factor 1 and the turn's numerator the level itself), the holder of the sign under the rotation at E_s = 1 and k_w by the energy line (k_w Gamma den = E_s T num, 4 at T = 36,000) and the charged plane of matter's pair; a chain of ten Nodes (x open) with two bodies of the charged family of count 1 in the senses +1 and -1, each laid by the generator as the one-Node record of its quantum (the design's `pixels`: one unit of the invariant 2 A^2 sin omega = T, A = isqrt(T den div (2 sine)) with sine = isqrt(den^2 - num^2), its Wronskian A x (A sine div den) at its Node and 0 elsewhere, sense x T / 2 within 2 A of the rounding) and admitted by the gate at the start: each body its own record, the holder three rows of four lines (the free row 0 and one per record), each row sourced by its own record alone (`row_sources`), the free row 0 at every Node (nothing sources it, no light laid) and each record's row at the start of the sign of its own sense; over three intervals, for each record, the turn's time numerator is bit for bit the other record's row's time line and its odd angles the other row's odd lines, the same bit for bit with the record's own row zeroed (the self-read 0 to the bit), and the row's time line after the step is Rule3's plain step of the row (the massless pair at the vacuum's paces) plus (k_w x W + r) div (E_s T) with W the record's own Wronskian booking and r the write's remainder before, the other record's Wronskian entering nowhere; a body of count 2, and a body of two Nodes of count 1, of the charged family are refused by name as one quantum of its family."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     k_w = T * PAIR[0] // (GAMMA * PAIR[1])  # the energy line at E_s = 1: k_w Gamma den = E_s T num
     content = {
@@ -223,7 +234,8 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
     quanta = [{"family": "charged", "nodes": [{"node": [x, 0, 0], "count": 1}]} for x in (3, 6)]
     world.update(ticks=3, universe="u.json", engine="e.json", node_readers=[], bodies=quanta)
     (path := tmp_path / "quanta.json").write_text(json.dumps(world), encoding="utf-8")
-    TOOL.main(["--input", str(path), "--sense", "1", "-1", "--pixel", "0", "1"])  # each its own record
+    design_beside(tmp_path, "quanta", senses=[1, -1], pixels=[0, 1])  # the design's keys beside
+    TOOL.main(["--input", str(path)])  # each its own record
     board = GameBoard(load_world(path))
     families, charge, charged = board.families, 1, 2
     sources = [row_sources(families, charge, row) for row in range(3)]  # the free row, one per record
