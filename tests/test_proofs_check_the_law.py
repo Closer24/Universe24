@@ -19,7 +19,7 @@ def test_every_row_of_the_proofs_inventory_returns_its_verdict_and_the_unchecked
         "proofs_far_regime.py",
     )
     theorems_without_machine_check = (
-        13  # the ratchet: the rows of the kinds A, B and C with no check or a witness only
+        12  # the ratchet: the rows of the kinds A, B and C with no check or a witness only
     )
     document = json.loads((derivations / "proofs_inventory.json").read_text(encoding="utf-8"))
     rows, counts = document["rows"], document["header"]["counts"]

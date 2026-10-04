@@ -356,12 +356,42 @@ def check_the_forms_change_under_moving_paces() -> Check:
     return paper_holds, {"witnesses with differing paces": len(departures) + 4}
 
 
-def check_the_laws_form_change_without_the_transpose() -> Check:
-    """The mass defect is the form's fall at a kept count (ALGEBRA.md, The surplus leaves): "the line a_next = M(t) a_now - a_before with the paces changing in time changes the total form D = |a_now|^2 - <a_next, a_before> by exactly D(t + 1) - D(t) = <a_next, (M(t) - M(t + 1)) a_now> (Theorem, from the line by substitution)": the identity as printed holds where M(t + 1) is symmetric, the paces uniform over the board, which is where its check was run; where the paces differ across the board the exact change carries M(t + 1)^T (the paper's Section 4.3), and the law's form departs from it; a finding, the law's line to carry the transpose or the clause "at paces uniform over the board"."""
-    _, law_holds, departures = forms_change_under_moving_paces()
-    return law_holds, {
-        "the law's form departs at differing paces by": departures[:3],
+def check_the_laws_weighted_form_change_as_printed() -> Check:
+    """The mass defect is the form's fall at a kept count (ALGEBRA.md at 3a334eeb, The surplus leaves): "the line a_next = M(t) a_now - a_before with the paces changing in time changes the weighted total form E = <a_now, D a_now> + <a_before, D a_before> - <a_next, D a_before>, D = diag(1 / p_i^2), by exactly E(t + 1) - E(t) = <a_next, D (M(t) - M(t + 1)) a_now> (Theorem, from the line by substitution), 0 at fixed paces, the plain D = |a_now|^2 - <a_next, a_before> the same at uniform paces": as printed E carries <a_before, D a_before> once too often, since Theorem 3's form over w, SUM_i [w (now_i^2 + before_i^2) - S_i now_i before_i] / p_i^2 - SUM_ij (R_ij / p_i^2) now_i before_j, is <a_now, D a_now> - <a_next, D a_before> by the line itself; the printed E changes by the claimed term plus <a_now, D a_now> - <a_before, D a_before>, not 0 at fixed paces, while the two-level weighted form <a_now, D a_now> - <a_next, D a_before> satisfies the identity exactly at any paces (row L21) and the plain form at uniform paces (at 915c6a7b the paragraph printed the plain form without the transpose, a finding of this inventory then, which 3a334eeb replaced); exact fractions, the weights of the paces at t + 1."""
+    draw = random.Random(SEED)
+    departures, surplus_is_the_node_terms = [], True
+    for num, den in pairs(draw, 3):
+        gamma = draw.randint(4, 20)
+        for shape, arrivals in BOARDS[1:]:
+            clocks_1, factors_1 = witness(draw, arrivals, gamma, uniform=False, tension=True)
+            clocks_2, factors_2 = witness(draw, arrivals, gamma, uniform=False, tension=True)
+            wall, reads_1, selves_1, _ = read(arrivals, clocks_1, factors_1, num, den, gamma)
+            _, reads_2, selves_2, paces = read(arrivals, clocks_2, factors_2, num, den, gamma)
+            count = len(arrivals)
+            now = [Fraction(draw.randint(-50, 50)) for _ in range(count)]
+            before = [Fraction(draw.randint(-50, 50)) for _ in range(count)]
+            after = step_line(arrivals, reads_1, selves_1, wall, now, before)
+            further = step_line(arrivals, reads_2, selves_2, wall, after, now)
+            weight = [1 / p**2 for p in paces]
+            m1_now = [v / wall for v in apply_read(arrivals, reads_1, selves_1, now)]
+            m2_now = [v / wall for v in apply_read(arrivals, reads_2, selves_2, now)]
+            claimed = sum(after[i] * (m1_now[i] - m2_now[i]) * weight[i] for i in range(count))
+            printed_now = sum(
+                (now[i] ** 2 + before[i] ** 2 - after[i] * before[i]) * weight[i] for i in range(count)
+            )
+            printed_next = sum(
+                (after[i] ** 2 + now[i] ** 2 - further[i] * now[i]) * weight[i] for i in range(count)
+            )
+            surplus = printed_next - printed_now - claimed
+            surplus_is_the_node_terms = surplus_is_the_node_terms and surplus == sum(
+                (now[i] ** 2 - before[i] ** 2) * weight[i] for i in range(count)
+            )
+            if surplus != 0:
+                departures.append((shape, surplus))
+    return not departures, {
+        "the printed E's change minus the claimed term, the first three": departures[:3],
         "cases": len(departures),
+        "the surplus is <a_now, D a_now> - <a_before, D a_before> at every witness": surplus_is_the_node_terms,
     }
 
 

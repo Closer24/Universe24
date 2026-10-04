@@ -51,7 +51,7 @@ def integrated_exponent(z: float) -> float:
 
 
 def check_theorem_4s_integrated_exponent() -> Check:
-    """The audit's item 1 (the writer's 5977872784 and the advisor's 5977935062 on Theorem 4, main 7.2, S.13): for a Gaussian body the integrated well energy of a Yukawa kernel is C I(kappa R) / R with I(z) = integral_0^inf u e^(-u^2 / 4 - z u) du, so its exponent is s = 1 + z <u^2> / <u>: 1.0176, 2.130, 2.971, 2.9997 at kappa R = 0.01, 1, 10, 100, tending to the contact kernel's 3 and not to 1 + kappa R, the pair kernel's log-derivative at one separation (101 at kappa R = 100); s = 1 + sqrt pi kappa R + O((kappa R)^2) at kappa R << 1 and s = 3 - 3 / (kappa R)^2 + O((kappa R)^-4) at kappa R >> 1; s crosses 2 at kappa R = 0.821; the paper's "s(R) = 1 + kappa R ... holds in the two asymptotic regimes" holds at kappa R << 1 and fails at kappa R >> 1 (3 against infinity); the moments in closed form through erfc, the values recomputed, the two asymptotes by the residual's order, the crossing by bisection."""
+    """The audit's item 1 (the writer's 5977872784 and the advisor's 5977935062 on Theorem 4, main 7.2, S.13): for a Gaussian body the integrated well energy of a Yukawa kernel is C I(kappa R) / R with I(z) = integral_0^inf u e^(-u^2 / 4 - z u) du, so its exponent is s = 1 + z <u^2> / <u>: 1.0176, 2.130, 2.971, 2.9997 at kappa R = 0.01, 1, 10, 100, tending to the contact kernel's 3 and not to 1 + kappa R, the pair kernel's log-derivative at one separation (101 at kappa R = 100); s = 1 + sqrt pi kappa R + O((kappa R)^2) at kappa R << 1 and s = 3 - 3 / (kappa R)^2 + O((kappa R)^-4) at kappa R >> 1; s crosses 2 at kappa R = 0.821; the paper's sentence at 2836519e, "s(R) = 1 + kappa R ... holds in the two asymptotic regimes", holds at kappa R << 1 and fails at kappa R >> 1 (3 against infinity), and main 7.2 and S.13 since 9775922e print the integrated exponent, 2.130 at kappa R = 1, 2.971 at 10 and the crossing of 2 at 0.82; the moments in closed form through erfc, the values recomputed, the two asymptotes by the residual's order, the crossing by bisection."""
     values = {z: round(integrated_exponent(z), 4) for z in (0.01, 1.0, 10.0, 100.0)}
     small, orders_small = has_order(
         lambda z: integrated_exponent(z) - (1 + math.sqrt(math.pi) * z), 2, step=0.02
@@ -88,14 +88,15 @@ def check_theorem_4s_integrated_exponent() -> Check:
     }
 
 
-def monopole_at_the_two_node_witness() -> tuple[bool, int]:
-    """(the weighted monopole SUM W_i / p_i^2 is conserved at every witness, the count of witnesses where the plain sum SUM W_i moved) at the audit's two-Node witness, paces squared (1, 2) and couplings (a, 2 a)."""
+def monopole_at_the_two_node_witness(
+    paces_squared: tuple[Fraction, Fraction] = (Fraction(1), Fraction(2)),
+) -> tuple[bool, int]:
+    """(the weighted monopole SUM W_i / p_i^2 is conserved at every witness, the count of witnesses where the plain sum SUM W_i moved) at the audit's two-Node witness, the paces squared given and the couplings (a p_1^2, a p_2^2), (a, 2 a) at the audit's (1, 2), so that D M is symmetric."""
     draw = random.Random(SEED)
     moved = 0
     for _ in range(20):
         a = Fraction(draw.randint(1, 9), 4)
-        paces_squared = (Fraction(1), Fraction(2))
-        reads = ((Fraction(0), a), (2 * a, Fraction(0)))
+        reads = ((Fraction(0), a * paces_squared[0]), (a * paces_squared[1], Fraction(0)))
         selves = (Fraction(draw.randint(-9, 9), 3), Fraction(draw.randint(-9, 9), 3))
         z_now = [Gaussian(draw.randint(-9, 9), draw.randint(-9, 9)) for _ in range(2)]
         z_before = [Gaussian(draw.randint(-9, 9), draw.randint(-9, 9)) for _ in range(2)]
@@ -116,10 +117,16 @@ def check_the_weighted_monopole_at_the_two_node_witness() -> Check:
     return weighted_holds and moved > 0, {"plain sums that moved, of 20": moved}
 
 
-def check_s42s_plain_monopole_as_printed() -> Check:
-    """S.42's input as printed, "SUM_i W_i over a body is exactly conserved for a static self-level": at static non-uniform paces the plain sum moves at the audit's two-Node witness while the weighted sum stands (the advisor's item 3: the weighted sum in S.42's inputs and (c)'s constant monopole); a finding of the audit, the hands' line given."""
-    _, moved = monopole_at_the_two_node_witness()
-    return moved == 0, {"plain sums that moved, of 20": moved}
+def check_the_plain_monopole_is_the_uniform_pace_case() -> Check:
+    """S.42's inputs since 9775922e, "the weighted sum SUM_i W_i / p_i^2 over a body is exactly conserved for a static self-level, the plain sum its uniform-pace case" (at 2836519e the plain sum was printed as the conserved one, the audit's item 3, a finding of this inventory then): at the two-Node witness the plain sum moves at the paces squared (1, 2) and stands with the weighted one at the paces squared (1, 1); exact Gaussian rationals."""
+    weighted_at_two, moved_at_two = monopole_at_the_two_node_witness((Fraction(1), Fraction(2)))
+    weighted_at_one, moved_at_one = monopole_at_the_two_node_witness((Fraction(1), Fraction(1)))
+    return weighted_at_two and weighted_at_one and moved_at_two > 0 and moved_at_one == 0, {
+        "plain sums that moved, of 20, at the paces squared (1, 2) and (1, 1)": (
+            moved_at_two,
+            moved_at_one,
+        )
+    }
 
 
 def check_s39s_band_is_real_for_every_pair() -> Check:
@@ -203,7 +210,7 @@ def check_a_uniform_link_phase_is_a_gauge() -> Check:
 
 
 def check_s17s_beat_mean_bound() -> Check:
-    """The audit's item 6 (S.17's beat; witness only): the finite window's mean of the current of two standing records is the sum-frequency term's, bounded by 2 / ((omega_1 + omega_2) n T_b) for n beats of length T_b, falling as 1 / n and never 0 at a finite window: 0.0083 over one beat at A = B = num = 1, omega_1 = 0.4, omega_2 = 0.4 + 2 pi / 20 (T_b = 20) and 1.1 x 10^-4 over 100 beats, the bounds 0.09 and 0.0009; the means and the bounds recomputed, the inequality checked at random phases."""
+    """The audit's item 6 (S.17's beat, printed since 9775922e as "its mean over n beats is 0 to the order of the fast term over the window, 1 / ((omega_1 + omega_2) n T_b)"; witness only): the finite window's mean of the current of two standing records is the sum-frequency term's, bounded by 2 / ((omega_1 + omega_2) n T_b) for n beats of length T_b, falling as 1 / n and never 0 at a finite window: 0.0083 over one beat at A = B = num = 1, omega_1 = 0.4, omega_2 = 0.4 + 2 pi / 20 (T_b = 20) and 1.1 x 10^-4 over 100 beats, the bounds 0.09 and 0.0009; the means and the bounds recomputed, the inequality checked at random phases."""
     omega_1, omega_2 = 0.4, 0.4 + 2 * math.pi / 20
     beat = 20
 

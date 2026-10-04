@@ -77,15 +77,19 @@ order test, the general read with Link factors, the integer witnesses).
 | `proofs_credit.py` | the click | Bell's lines and the local credits, GHZ, the three shears, the units of one quantum, the region's factor, the wall, Zeno |
 | `proofs_bodies.py` | the bodies | the stable body theorem, the functional's gradient, the adiabatic invariant, the slow limit, the resonances, the budget, the two-mode line, the atom and the nucleus |
 | `proofs_audit.py` | the audit | Theorem 4's exponent, the monopole, the band's reality, the Link phase gauge, the beat's mean, the orientation coefficient, (d')'s remainder |
-| `proofs_far_regime.py` | the far ends | every claim that says for all, exactly, at every step, in the limit or to O(...), computed at the far end of its stated domain |
+| `proofs_far_regime.py` | the far ends | every claim that says for all, exactly, at every step, in the limit or to O(...), computed at the far end of its stated domain; the heads' new claims (the massless row's double roots, light's stress at finite k, the division act's stop, the shears' angle) |
 
 The gate, `tests/test_proofs_check_the_law.py`: every row with a check runs
 to its verdict (`holds` and `witness only` True, `finding` False, the
 discrepancy reproduced), every `check_` function of the `proofs_` modules is
 a row's, the rows of the kinds A, B and C without a machine check are a
-ratchet that only falls (`theorems_without_machine_check`, 13 today: three
+ratchet that only falls (`theorems_without_machine_check`, 12 today: two
 witness-only rows and ten without a check), the header's counts are the
 rows', and no `proofs_` module imports the engine or names a run's file.
+The inventory's header names the heads its statements are quoted at
+(`law.head`, `paper.head`) and the heads first read; where a text moved
+between them, the row's note names both, and a row raised as a finding at
+the first read keeps its id with its verdict against the head.
 
 ## The inventory
 

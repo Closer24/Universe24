@@ -401,5 +401,123 @@ def check_the_fourier_weight_of_a_smooth_body() -> Check:
     }
 
 
+def check_the_massless_rows_two_double_roots() -> Check:
+    """ALGEBRA.md at 3a334eeb (No write from outside Rule3 wakes either double root of the massless row): the massless row's band cos omega_k = (1 / 3) SUM_a cos k_a has two double roots, the uniform mode at k = 0, omega = 0, and the staggered mode (-1)^(x + y + z + t) at k = (pi, pi, pi), omega = pi; each carries neither form nor share, 3 den (a^2 + b^2) - den a SUM_j b_j = 0 for a = b uniform and for the staggered pair b = -a; each is an exact mode of a board periodic on three axes of even extent, and in either a level stands and a velocity impulse is a slope that grows as tau + 1 for ever; a gapped row has no double root. The band's line 2 cos omega - (2 / 3) SUM_a cos k_a and its omega-derivative -2 sin omega are both 0 at the two roots, exact in rationals; the two modes are stepped by the vacuum's massless line a_next = (1 / 3) SUM_j a_j - a_before on the periodic boxes (2, 2, 2) and (4, 2, 2) exactly, the share and the form 0 at every Node, the slope of a uniform impulse growing by one level per interval over ten intervals, the staggered pattern no mode of the odd box (3, 2, 2); a gapped pair's sin omega_0 is not 0."""
+    one, minus_one = Fraction(1), Fraction(-1)
+    roots = (
+        2 * one - Fraction(2, 3) * 3 * one == 0  # k = 0: cos omega = 1, the line 0
+        and 2 * minus_one - Fraction(2, 3) * 3 * minus_one == 0  # k = (pi, pi, pi): cos omega = -1
+        and all(1 - c * c == 0 for c in (one, minus_one))  # sin omega = 0 at both, the double roots
+    )
+    gapped = all(1 - Fraction(num * num, den * den) != 0 for num, den in ((2, 3), (999, 1000), (1, 2)))
+    gamma = 7
+    stepped = True
+    for shape in ((2, 2, 2), (4, 2, 2)):
+        arrivals, nodes = box_arrivals(shape), box_nodes(shape)
+        sigma = [Fraction((-1) ** (x + y + z)) for x, y, z in nodes]
+        uniform = [Fraction(5)] * len(nodes)
+        for now, before, expected in (
+            (sigma, [-s for s in sigma], [-s for s in sigma]),
+            (uniform, uniform, uniform),
+        ):
+            nxt = [sum(now[j] for j in ports) / 3 - before[i] for i, ports in enumerate(arrivals)]
+            share = [
+                3 * (now[i] ** 2 + before[i] ** 2) - now[i] * sum(before[j] for j in ports)
+                for i, ports in enumerate(arrivals)
+            ]
+            form = [
+                6 * gamma**2 * (now[i] ** 2 + before[i] ** 2)
+                - 2 * gamma**2 * now[i] * sum(before[j] for j in ports)
+                for i, ports in enumerate(arrivals)
+            ]
+            stepped = stepped and nxt == expected and not any(share) and not any(form)
+        before, now = uniform, [u + 1 for u in uniform]
+        for tau in range(10):
+            before, now = (
+                now,
+                [sum(now[j] for j in ports) / 3 - before[i] for i, ports in enumerate(arrivals)],
+            )
+            stepped = stepped and now == [u + tau + 2 for u in uniform]
+    odd_arrivals, odd_nodes = box_arrivals((3, 2, 2)), box_nodes((3, 2, 2))
+    odd_sigma = [Fraction((-1) ** (x + y + z)) for x, y, z in odd_nodes]
+    odd_next = [
+        sum(odd_sigma[j] for j in ports) / 3 + odd_sigma[i] for i, ports in enumerate(odd_arrivals)
+    ]
+    return roots and gapped and stepped and odd_next != [-s for s in odd_sigma], {
+        "double roots at k = 0 and (pi, pi, pi)": roots,
+        "the two modes stepped exactly with 0 share and 0 form, the impulse's slope": stepped,
+        "the staggered pattern a mode of the odd box": odd_next == [-s for s in odd_sigma],
+    }
+
+
+def lights_stress_over_energy(k: float) -> float:
+    """(num / 3 den) sin^2 k / sin^2 omega at light's pair along an axis, cos omega = (2 + cos k) / 3."""
+    cosine = (2 + math.cos(k)) / 3
+    return math.sin(k) ** 2 / (3 * (1 - cosine * cosine))
+
+
+def check_lights_written_stress_over_energy_at_finite_k() -> Check:
+    """main.tex 4.3 since 5f5df82b: on light's wave the written stress over the written energy is (num / 3 den) sin^2 k / sin^2 omega, 1 at long wavelength (nature's T_xx = T_00), 0.90 at k = pi / 4, and 3 / 5 where sin k = 1, at k = pi / 2 (printed as "the band's top along an axis", row F08); at light's pair cos omega = (2 + cos k) / 3: the long-wavelength limit 1 by the residual's order 2, 0.897 at pi / 4, 3 / 5 exactly at k = pi / 2 (sin^2 omega = 5 / 9) and 0 at the band's top k = pi, where sin k = 0."""
+    held, orders = has_order(lambda h: lights_stress_over_energy(h) - 1, 2, step=0.2)
+    at_quarter = round(lights_stress_over_energy(math.pi / 4), 2)
+    at_half = Fraction(1, 3) * 1 / (1 - Fraction(2, 3) ** 2)  # sin^2 k = 1, cos omega = 2 / 3
+    at_top = Fraction(1, 3) * 0 / (1 - Fraction(1, 3) ** 2)  # sin^2 pi = 0, cos omega = 1 / 3
+    return held and at_quarter == 0.9 and at_half == Fraction(3, 5) and at_top == 0, {
+        "orders of the limit": orders,
+        "at pi / 4": at_quarter,
+        "at pi / 2": at_half,
+        "at the band's top, k = pi": at_top,
+    }
+
+
+def check_lights_stress_at_the_band_top_as_printed() -> Check:
+    """main.tex 4.3 as printed since 5f5df82b, "3 / 5 at the band's top along an axis": at the band's top along an axis, k = pi with cos omega = 1 / 3 for light, sin k = 0 and the written stress over the written energy is 0; 3 / 5 is its value at k = pi / 2, where sin k = 1 and the group speed along the axis is largest; a finding on the number's place."""
+    at_top = Fraction(1, 3) * 0 / (1 - Fraction(1, 3) ** 2)
+    at_half = Fraction(1, 3) * 1 / (1 - Fraction(2, 3) ** 2)
+    return at_top == Fraction(3, 5), {"at the band's top k = pi": at_top, "at k = pi / 2": at_half}
+
+
+def check_the_division_acts_stop() -> Check:
+    """main.tex since 5f5df82b (the one root, Section 5): the integer square root at a lay is the stop of the division act x <- (x + n div x) div 2, the law's fixed point, where the iterate stops falling (at n = 3 the iterates 2, 1, 2 alternate and the stop is 1); from x_0 = n the stop is isqrt(n) for every n to 5,000, exact integers."""
+
+    def stop(n: int) -> int:
+        x = n
+        while True:
+            y = (x + n // x) // 2
+            if y >= x:
+                return x
+            x = y
+
+    def iterates(n: int, count: int) -> list[int]:
+        xs = [n]
+        for _ in range(count):
+            xs.append((xs[-1] + n // xs[-1]) // 2)
+        return xs
+
+    every = all(stop(n) == math.isqrt(n) for n in range(1, 5001))
+    return every and iterates(3, 3) == [3, 2, 1, 2] and stop(3) == 1, {
+        "n = 3": iterates(3, 3),
+        "the stop isqrt(n) for n to 5,000": every,
+    }
+
+
+def check_the_shears_exact_angle_at_small_angles() -> Check:
+    """main.tex 5.5 since d7e97674: the exact angle of the three shears is 2 arctan(L p_0 / (2 Gamma^2)), which is (L / Gamma)(p_0 / Gamma) at small angles; with x = L p_0 / Gamma^2 the remainder 2 arctan(x / 2) - x is of the third order, -x^3 / 12, and the exact angle's sine is x / (1 + x^2 / 4) at every rational x (the Pythagorean point of tan(theta / 2) = x / 2, sin^2 + cos^2 = 1 exactly)."""
+    held, orders = has_order(lambda x: 2 * math.atan(x / 2) - x, 3, step=0.2)
+    coefficient = (2 * math.atan(0.05) - 0.1) / 0.1**3
+    draw = random.Random(SEED)
+    exact = True
+    for _ in range(20):
+        x = Fraction(draw.randint(-40, 40), draw.randint(1, 40))
+        t = x / 2
+        sine, cosine = 2 * t / (1 + t * t), (1 - t * t) / (1 + t * t)
+        exact = exact and sine == x / (1 + x * x / 4) and sine * sine + cosine * cosine == 1
+    return held and exact and abs(coefficient + 1 / 12) < 1e-3, {
+        "orders of the remainder": orders,
+        "its coefficient": round(coefficient, 4),
+        "at the largest turn x = 2 (exact angle, small-angle)": (round(2 * math.atan(1), 3), 2),
+    }
+
+
 if __name__ == "__main__":
     sys.exit(run(sys.modules[__name__]))

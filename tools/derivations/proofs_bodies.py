@@ -191,14 +191,17 @@ def ansatz_residual(ramp: float, midpoint: bool) -> float:
     return level(11) + level(9) - 2 * math.cos(omega_at(10)) * level(10)
 
 
-def check_s14s_ansatz_as_printed() -> Check:
-    """S.14 as printed: "the ansatz a_t = C cos(SUM_(s <= t) omega_s + phi) / sqrt(sin omega_t) satisfies the line to the first order in omega_(t+1) - omega_t": with the phase's increment omega_(t+1), as the sum reads, the line's residual is of the first order in the ramp (-Delta cos Phi sin omega), not the second; with the midpoint increment (omega_t + omega_(t+1)) / 2 it is of the second order, which is the statement's content; a finding on the phase's wording."""
-    held, orders = has_order(lambda ramp: ansatz_residual(ramp, midpoint=False), 2, step=0.001)
-    return held, {
-        "orders of the residual with the printed phase": orders,
-        "with the midpoint phase": has_order(
-            lambda ramp: ansatz_residual(ramp, midpoint=True), 2, step=0.001
-        )[1],
+def check_s14s_plain_phase_fails_at_the_first_order() -> Check:
+    """S.14 since d7e97674: "the ansatz a_t = C cos(theta_t + phi) / sqrt(sin omega_t) with the midpoint phase theta_t = SUM_(s <= t) (omega_s + omega_(s+1)) / 2 satisfies the line to the second order in omega_(t+1) - omega_t (the phase SUM_(s <= t) omega_s fails at the first order)"; at 2836519e the plain phase was printed with the first order, a finding of this inventory then: the line's residual with the plain phase, the increment omega_(t+1), is of the first order in the ramp (-Delta cos Phi sin omega) and with the midpoint increment of the second, by the residual's order at halving."""
+    plain_first, orders_plain = has_order(
+        lambda ramp: ansatz_residual(ramp, midpoint=False), 1, step=0.001
+    )
+    midpoint_second, orders_midpoint = has_order(
+        lambda ramp: ansatz_residual(ramp, midpoint=True), 2, step=0.001
+    )
+    return plain_first and midpoint_second, {
+        "orders of the residual with the plain phase": orders_plain,
+        "with the midpoint phase": orders_midpoint,
     }
 
 
@@ -722,10 +725,15 @@ def check_the_quanta_a_cloud_gives_to_settle() -> Check:
 
 
 def check_the_total_share_is_non_negative() -> Check:
-    """S.6 (a hand proof by the norm of S_6, its witness here): SUM_i e_i = 3 den (|n|^2 + |b|^2) - num n . S_6 b >= 3 (den - |num|) (|n|^2 + |b|^2) >= 0 on a closed or periodic board for |num| <= den, with equality at the static uniform level of light and, on an even periodic board, its checkerboard with before = -now, whose shares are 0; a Node's share at fixed before_i and s = S_6(before)_i is a quadratic in now_i with the minimum 3 den before_i^2 - num^2 s^2 / (12 den), negative iff |s| > 6 (den / num) |before_i|; the inequality on random integer boards, the equality cases and the minimum exact."""
+    """S.6; ALGEBRA.md, The share's sign and the credit's floor (a) (at the vacuum's coefficients since 3a334eeb, the bound in a well the hands' to state): SUM_i e_i = 3 den (|n|^2 + |b|^2) - num n . S_6 b >= 3 (den - |num|) (|n|^2 + |b|^2) >= 0 on a closed or periodic board for |num| <= den, with equality at the static uniform level of light and, on an even periodic board, its checkerboard with before = -now, whose shares are 0; the total is the quadratic form of the symmetric integer matrix [[3 den I, -(num / 2) S_6], [-(num / 2) S_6^T, 3 den I]], every row of which carries six neighbours counted with multiplicity, so its Gershgorin discs lie in [3 den - 3 |num|, 3 den + 3 |num|] and the bound is Gershgorin's theorem on the integer rows, the machine's (S.6's hand proof by the norm of S_6 restated), the random boards its witnesses; a Node's share at fixed before_i and s = S_6(before)_i is a quadratic in now_i with the minimum 3 den before_i^2 - num^2 s^2 / (12 den), negative iff |s| > 6 (den / num) |before_i|, exact."""
     draw = random.Random(SEED)
     for shape in ((4, 1, 1), (4, 4, 1), (2, 2, 2), (4, 2, 2)):
         arrivals = box_arrivals(shape)
+        count = len(arrivals)
+        neighbours = [[0] * count for _ in range(count)]  # S_6 with multiplicity
+        for i, ports in enumerate(arrivals):
+            for j in ports:
+                neighbours[i][j] += 1
         for num, den in pairs(draw, 6):
             now = [draw.randint(-30, 30) for _ in arrivals]
             before = [draw.randint(-30, 30) for _ in arrivals]
@@ -736,6 +744,22 @@ def check_the_total_share_is_non_negative() -> Check:
             bound = 3 * (den - abs(num)) * (sum(x * x for x in now) + sum(x * x for x in before))
             if total < bound or total < 0:
                 return False, {"pair": (num, den), "board": shape, "total": total, "bound": bound}
+            levels = now + before
+            matrix = [[Fraction(0)] * (2 * count) for _ in range(2 * count)]
+            for i in range(count):
+                matrix[i][i] = matrix[count + i][count + i] = Fraction(3 * den)
+                for j in range(count):
+                    matrix[i][count + j] -= Fraction(num * neighbours[i][j], 2)
+                    matrix[count + j][i] -= Fraction(num * neighbours[i][j], 2)
+            quadratic = sum(
+                levels[r] * matrix[r][c] * levels[c] for r in range(2 * count) for c in range(2 * count)
+            )
+            gershgorin = min(
+                matrix[r][r] - sum(abs(matrix[r][c]) for c in range(2 * count) if c != r)
+                for r in range(2 * count)
+            )
+            if quadratic != total or gershgorin != 3 * (den - abs(num)) or gershgorin < 0:
+                return False, {"pair": (num, den), "board": shape, "Gershgorin": gershgorin}
         uniform = sum(
             3 * (a * a + a * a) - a * sum(a for _ in ports)
             for a, ports in zip([7] * len(arrivals), arrivals, strict=True)

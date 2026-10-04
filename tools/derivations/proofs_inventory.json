@@ -6,7 +6,8 @@
   "law": {
    "file": "docs/ALGEBRA.md",
    "branch": "main",
-   "head": "3a334eeb1d49c6be256b39e92e875d6cd64dd9e4"
+   "head": "3a334eeb1d49c6be256b39e92e875d6cd64dd9e4",
+   "first_read": "915c6a7b"
   },
   "paper": {
    "files": [
@@ -14,8 +15,11 @@
     "paper/general_formula/supplement.tex"
    ],
    "branch": "paper",
-   "head": "f83fe8e719e344ce6523b6aa947cbb194bb65322"
+   "head": "d7e976743f45c00ad705dbd01d5a911498caf03d",
+   "first_read": "2836519e"
   },
+  "heads": "every statement is quoted at the head named; where the text moved between the first read and the head (the audit's corrections 5f5df82b and 9775922e, the convention rows d7e97674, fill 17's pushes seven and eight on main), the row's note names both",
+  "ids": "A the audit's ten items, L the law's and the supplement's lines, R the far-regime rows and the heads' new claims, F the rows raised as findings at the first read (the verdict is against the head), N the rows with no check",
   "kinds": {
    "A": "an exact identity, polynomial or trigonometric in the law's integers, checked exactly in Python's integers, Fractions and Gaussian rationals at random rational witnesses with the symmetric cases forced (a trigonometric identity at the Pythagorean rational points of the circle is a polynomial identity), or a derivative identity by the centred difference's order 2",
    "B": "a series expansion with its order, checked by the residual against the exact function at two step sizes, the ratio 2^order the test of the order, with the far end of the claim's domain computed beside the claim",
@@ -32,26 +36,25 @@
   "far_regime_witnesses": "a row with the field far_regime_witness carries the claim's quantity at the far end of its stated domain beside the claim's value (the owner's order of 08:20 UTC)",
   "checks": "tools/derivations/proofs_<module>.py, each check a function check_<name>() returning (held, computed); proofs_ground.py the shared ground, rule3.py the one Rule3; `python tools/derivations/proofs_<module>.py` prints the module's verdicts; tests/test_proofs_check_the_law.py runs every row's check to its verdict",
   "counts": {
-   "rows": 130,
+   "rows": 136,
    "by_kind": {
-    "A": 90,
-    "B": 21,
-    "C": 13,
-    "D": 6
+    "A": 95,
+    "B": 22,
+    "C": 12,
+    "D": 7
    },
    "by_verdict": {
-    "holds": 104,
-    "witness only": 3,
-    "none": 16,
-    "finding": 7
+    "holds": 111,
+    "witness only": 2,
+    "none": 17,
+    "finding": 6
    },
-   "with_far_regime_witness": 23,
-   "without_machine_check": 13,
+   "with_far_regime_witness": 26,
+   "without_machine_check": 12,
    "without_machine_check_rows": [
     "A06",
     "A09",
     "L73",
-    "L84",
     "L85",
     "N03",
     "N04",
@@ -77,13 +80,13 @@
     "function": "check_theorem_4s_integrated_exponent"
    },
    "verdict": "holds",
-   "note": "The paper's printed sentence, 's(R) = 1 + kappa R ... holds in the two asymptotic regimes', holds at kappa R << 1 and fails at kappa R >> 1: the far-regime witness.",
-   "far_regime_witness": "kappa R = 100: the integrated exponent 2.9997 against the printed 1 + kappa R = 101; the small end 1 + sqrt pi kappa R + O(z^2) and the large end 3 - 3 / z^2 + O(z^-4) both to their orders"
+   "note": "The paper's sentence at 2836519e, 's(R) = 1 + kappa R ... holds in the two asymptotic regimes', held at kappa R << 1 and failed at kappa R >> 1 (the audit's item 1); main 7.2 and S.13 since 9775922e print the integrated exponent, 2.130 at kappa R = 1, 2.971 at 10 and the crossing of 2 at 0.82, recomputed.",
+   "far_regime_witness": "kappa R = 100: the integrated exponent 2.9997 against the printed large end 3 (3 - 3 / z^2 + O(z^-4)) and against 1 + kappa R = 101 of the sentence at 2836519e; the small end 1 + sqrt pi kappa R + O(z^2) to its order"
   },
   {
    "id": "A02",
    "name": "The time-Link recurrence's Wronskian",
-   "place": "main.tex 5.5 against S.43 and ALGEBRA.md row 9 of The conventions and the units; the writer's (2), the advisor's (2)",
+   "place": "main.tex 5.5, S.9, S.33 and ALGEBRA.md row 9 of The conventions and the units, the two-angle form at every place since d7e97674; the writer's (2), the advisor's (2)",
    "statement": "The law's step e^(i theta_t) z_next + e^(-i theta_(t-1)) z_before = M z_now / w conserves W_i = Im(conj(z_now) e^(-i theta_(t-1)) z_before) under the per-Node continuity identity for any paces, Link phases and time angles, and the weighted total SUM W_i / p_i^2 exactly; the one-theta form of 5.5 conserves W at a static angle only, |z_2| = 1.93 against the law's 1.00 at the audit's one-Node witness.",
    "ground": "exact Gaussian rationals on four periodic boards with Link factors; the audit's witness in floats",
    "kind": "A",
@@ -92,7 +95,7 @@
     "function": "check_the_wronskian_under_the_time_link_turn_for_any_angle_in_time"
    },
    "verdict": "holds",
-   "note": "The slip is the paper's 5.5 sentence (one theta on both levels); the engine's rotation act and the law's row 9 step the two-angle form."
+   "note": "The slip was the paper's 5.5 sentence at 2836519e (one theta on both levels); since d7e97674 main 5.5, S.9 and S.33 print the two-angle step with the Wronskian booked from the turned levels and conserved exactly for any level in time, as the law's row 9 and the engine's rotation act have it; the one-theta witness is kept as the contrast."
   },
   {
    "id": "A03",
@@ -106,7 +109,7 @@
     "function": "check_the_weighted_monopole_at_the_two_node_witness"
    },
    "verdict": "holds",
-   "note": "S.42's input as printed, the plain sum 'exactly conserved for a static self-level', is row F05."
+   "note": "S.42's input at 2836519e, the plain sum 'exactly conserved for a static self-level', was the audit's finding; since 9775922e S.42 prints the weighted sum with 'the plain sum its uniform-pace case', row F05's check."
   },
   {
    "id": "A04",
@@ -119,7 +122,8 @@
     "module": "tools/derivations/proofs_audit.py",
     "function": "check_s39s_band_is_real_for_every_pair"
    },
-   "verdict": "holds"
+   "verdict": "holds",
+   "note": "S.39 (b)'s clause at 2836519e, 'a range below one Link, whose quanta would be above the band's top', reads since 5f5df82b 'where the kernel's lattice sum departs from its continuum integral'; the band's reality for every pair stands as the check."
   },
   {
    "id": "A05",
@@ -132,7 +136,8 @@
     "module": "tools/derivations/proofs_audit.py",
     "function": "check_a_uniform_link_phase_is_a_gauge"
    },
-   "verdict": "holds"
+   "verdict": "holds",
+   "note": "S.43 (e) since 9775922e: 'a static holder level with a gradient across the body (omega_L = 0, grad b_L not 0) mixes the modes without a transition, Stark's shift; a uniform static phase is a gauge', the check's content."
   },
   {
    "id": "A06",
@@ -146,7 +151,7 @@
     "function": "check_s17s_beat_mean_bound"
    },
    "verdict": "witness only",
-   "note": "S.17's printed 'its mean over the beat is 0' holds to the order of the fast term over the window, the advisor's clause."
+   "note": "S.17 at 2836519e printed 'its mean over the beat is 0'; since 9775922e 'its mean over n beats is 0 to the order of the fast term over the window, 1 / ((omega_1 + omega_2) n T_b) with T_b the beat's length', the bound the witness recomputes."
   },
   {
    "id": "A07",
@@ -160,13 +165,14 @@
     "function": "check_the_orientation_coefficient"
    },
    "verdict": "holds",
+   "note": "S.24 since 9775922e prints 'The orientation', C(n), the mean's 2 / 5 and the caps of 4 and 0.4 degrees, and main 10.2 the sentence on the bounds' comparison; recomputed.",
    "far_regime_witness": "the eight body diagonals, where the bound is void: the caps of 4.1 and 0.41 degrees, 1.0 and 0.01 percent of the sky"
   },
   {
    "id": "A08",
    "name": "S.57's wall",
    "place": "S.57 (a); the writer's (8), the advisor's (8)",
-   "statement": "One quantum's inflow is Phi_A + Phi_B <= W_c sin Omega, the born unit, and s_X = eta Phi_X / (W_c sin Omega), so complete equal absorption gives s = eta / 2 and P(neither) = 1 - eta, where the printed rule s_X = eta Phi_X / W_c would leave 1 - eta sin Omega; alpha = 0 for one quantum under the one draw, and for two quanta 1 / 2 by the mean counts and 2 / (2 - s)^2 per trial, 8 / 9 at s = 1 / 2.",
+   "statement": "One quantum's inflow is Phi_A + Phi_B <= W_c sin Omega, the born unit, and s_X = eta Phi_X / (W_c sin Omega), so complete equal absorption gives s = eta / 2 and P(neither) = 1 - eta, where the rule at 2836519e, s_X = eta Phi_X / W_c, would leave 1 - eta sin Omega (S.57 since 9775922e prints the born unit W_c sin Omega in the wall and in the transfer); alpha = 0 for one quantum under the one draw, and for two quanta 1 / 2 by the mean counts and 2 / (2 - s)^2 per trial, 8 / 9 at s = 1 / 2.",
    "ground": "exact rationals",
    "kind": "A",
    "check": {
@@ -184,7 +190,7 @@
    "kind": "C",
    "check": null,
    "verdict": "none",
-   "note": "No machine check applies to a sentence's logical ground."
+   "note": "No machine check applies to a sentence's logical ground; main 10.2 since 9775922e carries the premise, 'with no pair created between clicks (S.37)'."
   },
   {
    "id": "A10",
@@ -198,7 +204,7 @@
     "function": "check_s26_d_primes_finite_step_remainder"
    },
    "verdict": "holds",
-   "far_regime_witness": "the largest turn the law allows (the tangent half-angle at most 1, Delta theta = pi / 2): the exact ratio at [2, 3] is 1.348 against the first order's 1.878, so 'at every step and for every motion' is first order in the turn"
+   "far_regime_witness": "the largest turn the law allows (the tangent half-angle at most 1, Delta theta = pi / 2): the exact ratio at [2, 3] is 1.348 against the first order's 1.878, so 'at every step and for every motion' is first order in the turn, as S.26 (d') since 9775922e says, 'to first order in the turn at every step and for every motion', the remainder (Delta theta / 2) tan omega_s printed"
   },
   {
    "id": "L01",
@@ -541,7 +547,7 @@
   {
    "id": "L27",
    "name": "The velocity invariant of the massless row",
-   "place": "ALGEBRA.md, The click writes on the GameBoard (the restoring front's third test); ENGINE.md, the face's kicks",
+   "place": "ALGEBRA.md at 915c6a7b, The click writes on the GameBoard (the restoring front's third test; the front is history at 3a334eeb under the dense record's clause, the identity of the line standing); ENGINE.md, the face's kicks",
    "statement": "For a record at uniform paces with S + SUM R = 2 w the velocity sum SUM now - SUM before is kept by the line and the integer V = w (SUM now - SUM before) + SUM r is exactly invariant on a periodic board; for a gapped pair it moves by -12 (den - num) Gamma^2 SUM now per interval.",
    "ground": "exact integers by rule3.step on four periodic boards, 100 intervals",
    "kind": "A",
@@ -1021,7 +1027,7 @@
    "id": "L63",
    "name": "The units of one quantum",
    "place": "rows 12, 13, 17 and 18 of The conventions and the units; S.49 (4), (5); S.26 (a)",
-   "statement": "(W_c sin omega_0)^2 = 9 T^2 (den^2 - num^2), the count wall; A^2 = count T den / (2 laid sqrt(den^2 - num^2)) gives 2 A^2 sin omega = (count / laid) T; one quantum's share 6 den A^2 sin^2 omega = W_c sin omega; the Wronskian A^2 sin omega = T / 2 for every family, so one quantum writes 1 / (2 E_s) and |q_p| = |q_e|; |W| / (count T) = 1 / (2 sin omega_0) = 0.6708 for a record laid by share at [2, 3] and 1 / 2 for a record of count 1.",
+   "statement": "(W_c sin omega_0)^2 = 9 T^2 (den^2 - num^2), the count wall; A^2 = count T den / (2 laid sqrt(den^2 - num^2)) gives 2 A^2 sin omega = (count / laid) T; one quantum's share 6 den A^2 sin^2 omega = W_c sin omega; the Wronskian |W| = A^2 sin omega = T / 2 for a charged circular quantum (0 for a real record, S.49 (4) since d7e97674), so one quantum writes 1 / (2 E_s) and |q_p| = |q_e|; |W| / (count T) = 1 / (2 sin omega_0) = 0.6708 for a record laid by share at [2, 3] and 1 / 2 for a record of count 1.",
    "ground": "exact rationals in the squares, rule3's isqrt",
    "kind": "A",
    "check": {
@@ -1299,15 +1305,15 @@
   {
    "id": "L84",
    "name": "The total share is non-negative",
-   "place": "S.6; ALGEBRA.md, The share's sign and the credit's floor; main.tex 4.4",
-   "statement": "SUM_i e_i >= 3 (den - |num|) (|n|^2 + |b|^2) >= 0 on a closed or periodic board for |num| <= den, with equality at the static uniform level of light and the even board's checkerboard with before = -now; a Node's share has the minimum 3 den before_i^2 - num^2 s^2 / (12 den), negative iff |s| > 6 (den / num) |before_i|.",
-   "ground": "the inequality a hand proof by the norm of S_6, its witness on random integer boards; the equality cases and the minimum exact",
-   "kind": "C",
+   "place": "S.6; ALGEBRA.md, The share's sign and the credit's floor (a), at the vacuum's coefficients since 3a334eeb, the bound in a well the hands' to state; main.tex 4.4",
+   "statement": "At the vacuum's coefficients SUM_i e_i = 3 den (|n|^2 + |b|^2) - num n . S_6 b >= 3 (den - |num|) (|n|^2 + |b|^2) >= 0 on a closed or periodic board for |num| <= den, with equality at the static uniform level of light and the even board's checkerboard with before = -now; a Node's share has the minimum 3 den before_i^2 - num^2 s^2 / (12 den), negative iff |s| > 6 (den / num) |before_i|.",
+   "ground": "Gershgorin's theorem on the form's symmetric integer matrix [[3 den I, -(num / 2) S_6], [-(num / 2) S_6^T, 3 den I]], every row's disc in [3 den - 3 |num|, 3 den + 3 |num|] since every row carries six neighbours with multiplicity, exact on four boards; the random boards witnesses; the equality cases and the minimum exact",
+   "kind": "A",
    "check": {
     "module": "tools/derivations/proofs_bodies.py",
     "function": "check_the_total_share_is_non_negative"
    },
-   "verdict": "witness only"
+   "verdict": "holds"
   },
   {
    "id": "L85",
@@ -1524,17 +1530,17 @@
   },
   {
    "id": "F01",
-   "name": "The law's form change without the transpose",
-   "place": "ALGEBRA.md, The mass defect is the form's fall at a kept count",
-   "statement": "As printed: D(t + 1) - D(t) = <a_next, (M(t) - M(t + 1)) a_now>, from the line by substitution. The exact change carries M(t + 1)^T (the paper's 4.3); the printed form holds at paces uniform over the board, where M is symmetric, and departs where the paces differ.",
-   "ground": "exact fractions on three boards, two reads with different contents",
+   "name": "The law's weighted form change as printed",
+   "place": "ALGEBRA.md at 3a334eeb, The mass defect is the form's fall at a kept count (The surplus leaves)",
+   "statement": "As printed: the line a_next = M(t) a_now - a_before with the paces changing in time changes the weighted total form E = <a_now, D a_now> + <a_before, D a_before> - <a_next, D a_before>, D = diag(1 / p_i^2), by exactly E(t + 1) - E(t) = <a_next, D (M(t) - M(t + 1)) a_now>, 0 at fixed paces. As printed E carries <a_before, D a_before> once too often: Theorem 3's form over w, SUM_i [w (now_i^2 + before_i^2) - S_i now_i before_i] / p_i^2 - SUM_ij (R_ij / p_i^2) now_i before_j, is <a_now, D a_now> - <a_next, D a_before> by the line itself, and the printed E changes by the claimed term plus <a_now, D a_now> - <a_before, D a_before>, not 0 at fixed paces; the two-level weighted form satisfies the identity exactly at any paces (row L21) and the plain form at uniform paces, as the paragraph also says.",
+   "ground": "exact fractions on three boards, two reads with different contents and tensions, the weights of the paces at t + 1",
    "kind": "A",
    "check": {
     "module": "tools/derivations/proofs_form.py",
-    "function": "check_the_laws_form_change_without_the_transpose"
+    "function": "check_the_laws_weighted_form_change_as_printed"
    },
    "verdict": "finding",
-   "note": "The law's line to carry the transpose or the clause 'at paces uniform over the board'; the check (10^-15) was run at uniform paces."
+   "note": "At 915c6a7b the paragraph printed the plain form D = |a_now|^2 - <a_next, a_before> without the transpose, exact at uniform paces only, this inventory's finding then; 3a334eeb (fill 17, push eight) moved to the weighted form and carries one Node term too many: the line to read E = <a_now, D a_now> - <a_next, D a_before>, Theorem 3's E over w, with which the identity is exact at any paces."
   },
   {
    "id": "F02",
@@ -1566,31 +1572,31 @@
   },
   {
    "id": "F04",
-   "name": "S.14's ansatz phase as printed",
-   "place": "S.14",
-   "statement": "As printed: the ansatz a_t = C cos(SUM_(s <= t) omega_s + phi) / sqrt(sin omega_t) satisfies the line to the first order in omega_(t+1) - omega_t. With the phase's increment omega_(t+1), as the sum reads, the residual is of the first order in the ramp; with the midpoint increment (omega_t + omega_(t+1)) / 2 it is of the second order, the statement's content.",
-   "ground": "the residual's order at two step sizes",
+   "name": "S.14's plain phase fails at the first order",
+   "place": "S.14 (since d7e97674)",
+   "statement": "The ansatz a_t = C cos(theta_t + phi) / sqrt(sin omega_t) with the midpoint phase theta_t = SUM_(s <= t) (omega_s + omega_(s+1)) / 2 satisfies the line to the second order in omega_(t+1) - omega_t, and the phase SUM_(s <= t) omega_s fails at the first order: the residual with the plain phase, the increment omega_(t+1), is of the first order in the ramp and with the midpoint increment of the second.",
+   "ground": "the residual's order at two step sizes, for both phases",
    "kind": "B",
    "check": {
     "module": "tools/derivations/proofs_bodies.py",
-    "function": "check_s14s_ansatz_as_printed"
+    "function": "check_s14s_plain_phase_fails_at_the_first_order"
    },
-   "verdict": "finding",
-   "note": "A wording finding on the phase: the midpoint increment makes the sentence exact to its order."
+   "verdict": "holds",
+   "note": "At 2836519e S.14 printed the plain phase with the first order, this inventory's finding then; d7e97674 (R165's midpoint phase) prints the midpoint phase and the plain phase's failure, which the check confirms."
   },
   {
    "id": "F05",
-   "name": "S.42's plain monopole as printed",
-   "place": "S.42, inputs",
-   "statement": "As printed: SUM_i W_i over a body is exactly conserved for a static self-level. At static non-uniform paces the plain sum moves and the weighted SUM_i W_i / p_i^2 stands (the audit's item 3, row A03).",
-   "ground": "exact Gaussian rationals at the two-Node witness",
+   "name": "The plain monopole is the uniform-pace case",
+   "place": "S.42, inputs (since 9775922e)",
+   "statement": "The weighted sum SUM_i W_i / p_i^2 over a body is exactly conserved for a static self-level, the plain sum its uniform-pace case: at the two-Node witness the plain sum moves at the paces squared (1, 2) and stands with the weighted one at the paces squared (1, 1).",
+   "ground": "exact Gaussian rationals at the two-Node witness at two pairs of paces",
    "kind": "A",
    "check": {
     "module": "tools/derivations/proofs_audit.py",
-    "function": "check_s42s_plain_monopole_as_printed"
+    "function": "check_the_plain_monopole_is_the_uniform_pace_case"
    },
-   "verdict": "finding",
-   "note": "The audit's finding; the hands' line given in 5977935062 (3)."
+   "verdict": "holds",
+   "note": "At 2836519e S.42 printed the plain sum as the conserved one, the audit's item 3 and this inventory's finding then; the hands' line of 5977935062 (3) is printed since 9775922e, and the check holds it."
   },
   {
    "id": "F06",
@@ -1619,6 +1625,75 @@
    },
    "verdict": "finding",
    "note": "A finding of the far-regime sweep on 'for every body of the paper'."
+  },
+  {
+   "id": "F08",
+   "name": "Light's stress at the band's top as printed",
+   "place": "main.tex 4.3 (since 5f5df82b)",
+   "statement": "As printed: on light's wave the written stress over the written energy, (num / 3 den) sin^2 k / sin^2 omega, is '3 / 5 at the band's top along an axis'. At the band's top along an axis, k = pi with cos omega = 1 / 3 for light, sin k = 0 and the ratio is 0; 3 / 5 is the ratio at k = pi / 2, where sin k = 1 and the group speed along the axis is largest.",
+   "ground": "exact rationals at k = pi / 2 and k = pi",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_lights_stress_at_the_band_top_as_printed"
+   },
+   "verdict": "finding",
+   "note": "A finding of the sweep at d7e97674 on the number's place: 3 / 5 is right at k = pi / 2, and 'the band's top' names k = pi, where the written stress is 0."
+  },
+  {
+   "id": "R16",
+   "name": "The massless row's two double roots and the staggered mode",
+   "place": "ALGEBRA.md at 3a334eeb, No write from outside Rule3 wakes either double root of the massless row (the generator; the shelved ion's remedy)",
+   "statement": "cos omega_k = (1 / 3) SUM_a cos k_a has two double roots, the uniform mode at k = 0, omega = 0, and the staggered mode (-1)^(x + y + z + t) at k = (pi, pi, pi), omega = pi; each carries neither form nor share, 3 den (a^2 + b^2) - den a SUM_j b_j = 0 for a = b uniform and for the staggered pair b = -a; each is an exact mode of a board periodic on three axes of even extent; in either a level stands and a velocity impulse is a slope that grows as tau + 1 for ever; a gapped row has no double root.",
+   "ground": "the band's line and its omega-derivative at the two roots exact in rationals; the two modes stepped by the vacuum's massless line a_next = (1 / 3) SUM_j a_j - a_before on the periodic boxes (2, 2, 2) and (4, 2, 2) in exact fractions, the share and the form 0 at every Node, the impulse's slope over ten intervals, the odd box (3, 2, 2) the contrast",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_massless_rows_two_double_roots"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "the staggered root, the band's top omega = pi at k = (pi, pi, pi): the mode steps exactly with 0 share and 0 form on the even boxes and is no mode of the odd box"
+  },
+  {
+   "id": "R17",
+   "name": "Light's written stress over its written energy at finite k",
+   "place": "main.tex 4.3 (since 5f5df82b)",
+   "statement": "On light's wave the written stress over the written energy is (num / 3 den) sin^2 k / sin^2 omega, 1 at long wavelength (nature's T_xx = T_00), 0.90 at k = pi / 4 and 3 / 5 where sin k = 1, at k = pi / 2; at the band's top k = pi it is 0.",
+   "ground": "the long-wavelength limit by the residual's order 2, 0.897 at pi / 4, the values at k = pi / 2 and pi exact in rationals",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_lights_written_stress_over_energy_at_finite_k"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "k = pi, the band's top along an axis: the ratio 0 (sin k = 0) against the long-wavelength 1; 3 / 5 is the ratio at k = pi / 2 (row F08)"
+  },
+  {
+   "id": "R18",
+   "name": "The division act's stop is the integer square root",
+   "place": "main.tex, the one root (since 5f5df82b); ALGEBRA.md, The six verbs",
+   "statement": "The integer square root at a lay is the stop of the division act x <- (x + n div x) div 2, the law's fixed point, where the iterate stops falling (at n = 3 the iterates 2, 1, 2 alternate and the stop is 1).",
+   "ground": "exact integers, the stop from x_0 = n against isqrt(n) for every n to 5,000",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_division_acts_stop"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R19",
+   "name": "The shears' exact angle at small angles",
+   "place": "main.tex 5.5 (since d7e97674); S.61 row 9",
+   "statement": "The exact angle of the three shears is 2 arctan(L p_0 / (2 Gamma^2)), which is (L / Gamma)(p_0 / Gamma) at small angles.",
+   "ground": "the remainder 2 arctan(x / 2) - x of the order 3 with the coefficient -1 / 12, and the exact angle's sine x / (1 + x^2 / 4) at rational x, the Pythagorean point of tan(theta / 2) = x / 2",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_shears_exact_angle_at_small_angles"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "x = L p_0 / Gamma^2 = 2, the largest turn the law allows (tan(theta / 2) = 1): the exact angle pi / 2 = 1.571 against the small-angle 2"
   },
   {
    "id": "N01",
@@ -1758,6 +1833,17 @@
    "check": null,
    "verdict": "none",
    "note": "Held by the documents gate (3) through tools/numbers.json."
+  },
+  {
+   "id": "N14",
+   "name": "The draw's share to within s_k / 2^63",
+   "place": "ALGEBRA.md at 3a334eeb, The click's algebraic definition (the draw)",
+   "statement": "P(region k) = s_k / SUM s to within s_k / 2^63 over the generator's full period whatever the seed, exact where SUM s divides 2^63.",
+   "ground": "the engine's generator (the full period of the linear congruential generator); tests/test_the_draw.py",
+   "kind": "D",
+   "check": null,
+   "verdict": "none",
+   "note": "A statement of the engine's draw; the engine's tests show it."
   }
  ]
 }
