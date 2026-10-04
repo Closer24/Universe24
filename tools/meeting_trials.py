@@ -57,14 +57,15 @@ def one_trial(
 
 
 def coincidence_rows(took: Counter[tuple[int, ...]], bodies: int, trials: int) -> dict[str, object]:
-    """The coincidence rows over the records, derived from their count and from no fixed key (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): every record alone and every pair (`itertools.combinations` over the records), each row the trials with a taking at those records and at no other (`took`, the trials by the set of records that took), a record named by its letter in the world's order (A, B, C, ...), a row `<letters>_only` and `both` where the pair is every record, so that two records' rows read A_only, B_only, both, neither and alpha as the shipped two-body worlds' reports do; `neither` the trials with no taking; and per pair the anticoincidence parameter P(both) / (P(A) P(B)) where defined, P(A) over the trials with a taking at A whatever the others took, `alpha` for two records and `alpha_<letters>` beside; no row under two records (a coincidence is between records); a world of three records gets its three singles and its three pairs, a taking at the third alone its own row."""
+    """The coincidence rows over the records, derived from their count and from no fixed key (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): every record alone and every pair (`itertools.combinations` over the records), each row the trials with a taking at those records and at no other (`took`, the trials by the set of records that took), a record named by its letter in the world's order (A, B, C, ...), a row `<letters>_only` and `both` where the pair is every record, so that two records' rows read A_only, B_only, both, neither and alpha as the shipped two-body worlds' reports do; `neither` the trials with no taking; and per pair the anticoincidence parameter P(both) / (P(A) P(B)) where defined, P(A) over the trials with a taking at A whatever the others took, `alpha` for two records and `alpha_<letters>` beside; no row under two records (a coincidence is between records); a world of three records gets its three singles, its three pairs and `all`, the trials where every record took (the mathematician's note, #1793 comment 5982776069), so that every trial with a taking stands in exactly one row."""
     if bodies < 2:
         return {}
     letters = [ascii_uppercase[number] for number in range(bodies)]
     rows: dict[str, object] = {}
-    for size in (1, 2):
+    for size in range(1, bodies + 1):  # every subset of the records, the all-took trials their own row
         for subset in combinations(range(bodies), size):
-            name = "both" if size == bodies else "_".join(letters[n] for n in subset) + "_only"
+            whole = "both" if bodies == 2 else "all"
+            name = whole if size == bodies else "_".join(letters[n] for n in subset) + "_only"
             rows[name] = [took[subset], trials]
     rows["neither"] = [took[()], trials]
     for first, second in combinations(range(bodies), 2):
