@@ -47,10 +47,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
         "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
     ),
-    "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_loader_refuses_one_that_does": (
+    "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_does": (
         24,
         "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
-        "packet's two levels each sum to 0 on the committed worlds, and the loader refuses a mode entry whose sums are not 0",
+        "packet's two levels each sum to 0 on the committed worlds, and the board refuses at its construction, through the one lay act's guard, a mode entry whose sums are not 0",
     ),
     "tests/test_the_meeting.py::test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark": (
         14,
@@ -120,6 +120,23 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the generic node_reader round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
+    ),
+    "tests/test_the_giving.py::test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period": (
+        33,
+        'the giving lays no uniform mode (the owner\'s "yes to everything" of 2026-10-04, #1793 comment 5975629873; the '
+        "mathematician's 5975866852 and 5975925032): the source's increments corrected by the division act in time where the "
+        "span holds a period, the period by the rotation act, a short span laid as built, the resonance world's sums and share",
+    ),
+    "tests/test_the_giving.py::test_the_open_boards_packet_lays_no_uniform_mode": (
+        20,
+        "the giving lays no uniform mode (2026-10-04): the open board's packet's two levels through the message lay's "
+        "division act, each summing to 0 over the board after the lay, the quantum standing",
+    ),
+    "tests/test_the_giving.py::test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark": (
+        38,
+        "the front's taper (the owner's \"yes to everything\" of 2026-10-04, #1793 comment 5975629873): the world's "
+        "`erasure` L, the ball behind the last L shells at (0, 0) exactly, the shells before the reach falling, the erasure "
+        "line's take and unit, the board dark at 200 and the back-in-time gate MATCH across the tapered faces",
     ),
     "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
         36,

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 import numpy as np
@@ -32,16 +32,17 @@ def drawn(
 
 @dataclass
 class Hole:
-    """The hole of one line at one Node, shared by its two faces: the record's own quantum W_rec (`credit.Books.units`) in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (`meeting.faced`), the factor the first face sets from the Node's booked share at its interval (None until then; (0, 1) for the hole to 0 where the booked share O + C / 2 is at most W_rec, (1, 1) for the identity's faces otherwise), and the form the first face removed, exactly, its face term (x - before) R_face (value - arrival) negated (tests/laws.py, the booking identity), so that the second face removes the rest."""
+    """The hole of one line at one Node, shared by its two faces: the record's own quantum W_rec (`credit.Books.units`) in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (`meeting.faced`), the factor the first face sets from the Node's booked share at its interval (None until then; (0, 1) for the hole to 0 where the booked share O + C / 2 is at most W_rec, (1, 1) for the identity's faces otherwise), the form the first face removed, exactly, its face term (x - before) R_face (value - arrival) negated (tests/laws.py, the booking identity), so that the second face removes the rest, and the two faces' kicks, each R_face (value - arrival), the face's change of the record's velocity invariant w (SUM now - SUM before) + SUM r, exact (the restoring front reads the hole's content from them, `front.content_of`)."""
 
     unit: int
     factor: tuple[int, int] | None = None
     removed: int = 0
+    kicks: list[int] = field(default_factory=list)
 
 
 @dataclass
 class Face:
-    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Port preferred (the first in Port order whose read is not 0 at the step is taken and kept), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, the hole it belongs to (`Hole`, None for the hole to 0 whatever the share, the faces rebuilt from the lines), and whether this is the second of the hole's two faces, the one that removes the rest of the quantum."""
+    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Port preferred (the first in Port order whose read is not 0 at the step is taken and kept), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, the hole it belongs to (`Hole`, None for the hole to 0 whatever the share, the faces rebuilt from the lines), whether this is the second of the hole's two faces, the one that removes the rest of the quantum, and the front's taper (`fraction`, (p, q): the target the fraction p / q of Rule3's own level by the division act on its size, toward 0, so that a level of size 1 falls to 0 at any fraction below 1 and no leading edge of ones rides the band; None the target 0; src/event_universe/front.py)."""
 
     family: int
     line: int
@@ -51,6 +52,7 @@ class Face:
     value: int | None = None
     hole: Hole | None = None
     scaled: bool = False
+    fraction: tuple[int, int] | None = None
 
 
 def face_value(total: int, read: int) -> int:
@@ -84,7 +86,7 @@ def presented(
     direction: int,
     befores: tuple[Any, ...],
 ) -> tuple[Any, ...]:
-    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed from the arrivals, the Node's two levels and its remainder as the step reads them (`face_value` at the target, 0 or the identity's root, the first Port from the preferred one whose read is not 0 at the Node, kept in the face; a Node with every read 0 refused by name), the first face reading the Node's booked share from its own form at its interval, its two levels, the six arrivals and the neighbours' levels before through the same Ports, `befores`, the hole to 0 where it is at most W_rec and the identity's root otherwise, the second face removing the rest (`rest_of`), a face without a hole the hole to 0, backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
+    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed from the arrivals, the Node's two levels and its remainder as the step reads them (`face_value` at the target, 0, the taper's fraction of Rule3's own level or the identity's root, the first Port from the preferred one whose read is not 0 at the Node, kept in the face; a Node with every read 0 refused by name), the first face reading the Node's booked share from its own form at its interval, its two levels, the six arrivals and the neighbours' levels before through the same Ports, `befores`, the hole to 0 where it is at most W_rec and the identity's root otherwise, the second face removing the rest (`rest_of`), a face without a hole the hole to 0, backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
     found, copied = list(arrived), set()
     for face in faces:
         at = (face.at[0] + offset[0], face.at[1] + offset[1], face.at[2] + offset[2])
@@ -124,12 +126,24 @@ def presented(
                 else:  # the first face by the booking identity, as the second: one quantum or the most
                     face.hole.factor = (1, 1)
                     target = rest_of(face.hole, self_term + rest + own, wall_term, int(wall))
+            elif (
+                face.fraction is not None
+            ):  # the front's taper: the fraction of Rule3's own level, toward 0
+                own_level = int(division_forward(self_term + rest + own, int(wall), 0)[0])
+                scaled = int(division_forward(face.fraction[0] * abs(own_level), face.fraction[1], 0)[0])
+                target = (
+                    scaled if own_level >= 0 else -scaled
+                )  # a level of size 1 goes to 0 at any fraction
             else:  # a face without a hole: the hole to 0
                 target = 0
             face.value = face_value(self_term + rest - int(wall) * target, here[face.port])
-            if face.hole is not None and not face.scaled:  # what the first face removed, exactly
-                arrival = int(found[face.port][at])
-                face.hole.removed = -(target - before) * here[face.port] * (face.value - arrival)
+            if (
+                face.hole is not None
+            ):  # the face's kick, R_face (value - arrival): its change of the record's velocity invariant
+                kick = here[face.port] * (face.value - int(found[face.port][at]))
+                face.hole.kicks.append(kick)
+                if not face.scaled:  # what the first face removed, exactly
+                    face.hole.removed = -(target - before) * kick
         if face.port not in copied:
             found[face.port] = np.array(found[face.port], copy=True)
             copied.add(face.port)

@@ -174,8 +174,11 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 41
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
     assert all(dict(p for f in kept[42] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 42
-    for _ in range(99):
-        board.step_inverse()  # the faces presented again: the inverse crosses the clicks bit for bit
+    for _ in range(99):  # the faces presented again and the restoring front's lays crossed from their
+        (
+            BACK.crossed(board, lines),
+            board.step_inverse(),
+        )  # lines: the inverse crosses the clicks bit for bit
         assert BACK.first_difference(kept[board.tick], BACK.snapshot(board)) is None
     assert BACK.verdict(GameBoard(load_world(twin)), 39)["verdict"] == "MATCH"
     empty = GameBoard(load_world(cut), (none := []).append)
@@ -457,7 +460,7 @@ def test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_sta
         0 < abs(now[0]) <= abs(before[0]) and board.credit.counts[pulse] == count - 1
     )  # the rest's root
     assert (
-        not board.credit.fronts
+        all(f.restoring is not None for f in board.credit.fronts)  # the count stands: no erasing front
         and board.credit.faces[26][0].scaled
         and not board.credit.faces[25][0].scaled
     )
@@ -475,6 +478,7 @@ def test_the_two_faces_remove_exactly_one_quantum_from_a_dense_record():
     unit = board.credit.units[pulse]
     for _ in range(24):
         board.step(), twin.step()
+    board.credit.fronts.clear()  # the two faces alone: the restoring front's shares held off here
     record, (content, factors) = twin.states[pulse].lines[0], twin.read(pulse, 1, 0)
     reads, coefficient, wall = node.rule_of(family, gamma, content, factors, twin.unit)
     here, pick = (

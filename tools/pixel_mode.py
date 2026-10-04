@@ -35,8 +35,8 @@ from event_universe.features.start import (
     held_rests,
     returned,
     settled_rows,
-    uniform_removed,
 )
+from event_universe.lay import corrected
 from event_universe.loader.derived import FamilyRule, held_write_of, turns, with_records
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES, weights_of
@@ -1281,14 +1281,17 @@ def message_levels(
     before = envelope_here * (wave * cosine - quadrature * sine)
     scale = unit * unit * unit * unit * unit
     half = int(division_forward(scale, 2, 0)[0])
-    found = []
-    for numerator in (now, before):
-        levels = np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, numerator + half)[0])
-        laid = np.where(beyond, 0, levels)
-        if massless:  # the uniform mode's content out: each level sums to 0 over the board
-            laid = uniform_removed(laid, np.where(beyond, 0, envelope_here))
-        found.append(np.asarray(laid, dtype=object).astype(board.kind))
-    return found[0], found[1]
+    levels = [
+        np.where(beyond, 0, np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, numerator + half)[0]))
+        for numerator in (now, before)
+    ]
+    # the one lay act's correction (`lay.corrected`): for a massless family the uniform mode's content
+    # out of each level in proportion to the envelope, so that each sums to 0 over the board, guarded
+    found = corrected(
+        str(message["family"]), massless, (levels[0], levels[1]), np.where(beyond, 0, envelope_here)
+    )
+    now, before = (np.asarray(level, dtype=object).astype(board.kind) for level in found)
+    return now, before
 
 
 def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[int, ...]:

@@ -13,7 +13,8 @@ from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import Face, Hole, laid_pairs, standing
-from event_universe.giving import given_lines, given_quantum, line_levels_at
+from event_universe.giving import given_quantum
+from event_universe.lay import laid
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
@@ -29,7 +30,7 @@ from event_universe.node_reader import (
     reported,
 )
 from event_universe.plane import Faces
-from event_universe.reports import face, lay
+from event_universe.reports import face
 from event_universe.resonance import gathered, sheared, window_turn
 
 if TYPE_CHECKING:
@@ -79,12 +80,11 @@ def cut(board: GameBoard, index: int) -> node.Factors | None:
 def relaid(
     board: GameBoard, books: NodeBooks, part: int, count: int, phase: tuple[int, int], sense: int
 ) -> None:
-    """The lay of one part of the record over the reader\'s Nodes (features/click, `standing`, `laid_pairs`): at every Node of the region the part\'s two lines set to the levels of its share of `count` quanta, A_i^2 = A^2 weight_i / total in the counts\' proportion, standing in the direction `phase` and the sense `sense`, the remainder at the lay\'s origin; the count\'s own lines alone, the other parts untouched."""
-    family, state = board.families[books.index], board.states[books.index]
-    gamma, unit, action = board.world.node_clock, board.unit, board.world.quantum_action
-    origin = division_forward(node.rule_of(family, gamma, 0, None, unit)[2], 2, 0)[0]
+    """The lay of one part of the record over the reader's Nodes through the one act (features/click, `standing`, `laid_pairs`; `lay.laid`): at every Node of the region the part's lines move to the levels of its share of `count` quanta, A_i^2 = A^2 weight_i / total in the counts' proportion, standing in the direction `phase` and the sense `sense`, the change from what stands handed to the act with no weights (a record at its Node is laid as built, named) and the remainder at the division's origin at every Node of the region, the lay lines the write step's; the count's own lines alone, the other parts untouched."""
+    family, action = board.families[books.index], board.world.quantum_action
     first = node.record_slice(family, books.record).start + part * family.width
-    total = sum(books.weights)
+    total, at = sum(books.weights), board.mask(books.nodes)
+    levels: list[tuple[np.ndarray, np.ndarray]] = []
     for here, weight in zip(books.nodes, books.weights, strict=True):
         share = (weight, total)
         if books.declared.conversions:
@@ -94,14 +94,19 @@ def relaid(
         else:
             (re, im), (re_before, im_before) = standing(count, action, family.pair, phase, sense, share)
             pairs = [(re, re_before), (im, im_before)]
-        at = board.mask((here,))
-        for number, (now, before) in zip(range(first, first + len(pairs)), pairs, strict=True):
-            line = state.lines[number]
-            state.lines[number] = node.Record(
-                np.where(at, now, line.now),
-                np.where(at, before, line.before),
-                np.where(at, origin, line.remainder),
-            )
+        levels = levels or [
+            (node.zeros(board.shape, object), node.zeros(board.shape, object)) for _ in pairs
+        ]
+        where = tuple(np.add(here, board.offset))
+        for (now, before), (nows, befores) in zip(pairs, levels, strict=True):
+            nows[where], befores[where] = now, before
+    origin = board.half_wall(
+        books.index
+    )  # a fresh lay of the part: every Node of the region at the origin
+    for number, (nows, befores) in enumerate(levels):
+        line = board.states[books.index].lines[first + number]
+        changes = (np.where(at, nows - line.now, 0), np.where(at, befores - line.before, 0))
+        laid(board, books.index, first + number, changes, None, origin, at)
 
 
 def laid_record(board: GameBoard, number: int, record: int) -> None:
@@ -184,21 +189,18 @@ def click_act(
 
 
 def written(board: GameBoard, items: list[Item]) -> None:
-    """The write step of the act, the one swappable step, item by item: a spread record's quantum taken by the face at every Node named (`faced`, every line of the record whatever their number) or given by the lay of one whole quantum there (`given_quantum`), its count in the credit's books moved; a record declared a NodeReader at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node of its items (`front.started`); every line a lay changed at a Node, levels or remainder, written as one `lay` line with the levels before and after (`laid_lines`, `line_levels_at`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
+    """The write step of the act, the one swappable step, item by item: a spread record's quantum taken by the face at every Node named (`faced`, every line of the record whatever their number) or given by the lay of one whole quantum there (`given_quantum`), its count in the credit's books moved; a record declared a NodeReader at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node of its items, and where it stays at one or more the restoring front begins from every hole (`front.restoring`, the holes `faced` returns) (`front.started`); every lay of the step is the one lay act's, which writes every line a lay changed at a Node, levels or remainder, as one `lay` line with the levels before and after (`lay.written`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
     leaving = [item for item in items if item.body is not None and item.delta < 0]
     phases = {item.body: leaving_phase(board, item) for item in leaving}
-    laid = [
-        (i.family, line, at)
-        for i in items
-        if i.direction is None  # a packet writes its own lay lines at every Node it lays
-        for line in laid_lines(board, i)
-        for at in i.nodes
-    ]
-    before = [line_levels_at(board, *entry) for entry in laid]
     touched: list[NodeBooks] = []
+    holes: dict[int, dict[Node, list[list[Hole]]]] = {}
     for item in items:
+        if item.body is None and item.delta < 0:
+            for at, written_there in faced(board, item).items():
+                holes.setdefault(item.family, {}).setdefault(at, []).append(written_there)
+            continue
         if item.body is None:
-            (faced if item.delta < 0 else given_quantum)(board, item)
+            given_quantum(board, item)
             continue
         parted(board, books := books_named(board, item.body), item, phases.get(item.body))
         touched += [books] if books not in touched else []
@@ -206,23 +208,11 @@ def written(board: GameBoard, items: list[Item]) -> None:
         books.part = max(range(len(books.counts)), key=lambda k: books.counts[k])
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]
-    for family in sorted({i.family for i in items if i.body is None and i.delta < 0}):
+    for family, taken in sorted(holes.items()):
         if board.credit.counts[family] <= 0:  # the count at 0: its front from every Node written
             front.started(board, family, [at for i in items if i.family == family for at in i.nodes])
-    for (index, line, at), was in zip(laid, before, strict=True):
-        now = line_levels_at(board, index, line, at)
-        if now != was and board.output is not None:
-            board.output(lay(board.tick, board.families[index].name, line, list(at), was, now))
-
-
-def laid_lines(board: GameBoard, item: Item) -> list[int]:
-    """The lines of a record an item lays at its Nodes: the lines of the part of a record declared a NodeReader at one Node (`parted`), the lines of a spread record given whole quanta (`given_quantum`, `giving.given_lines`: every laid line of one part of its first record, a plane's two lines per plane, a holder of the sign's time line alone), none for a quantum taken by the face."""
-    if item.body is None:
-        return given_lines(board.families[item.family]) if item.delta > 0 else []
-    assert item.part is not None
-    family, books = board.families[item.family], books_named(board, item.body)
-    first = node.record_slice(family, books.record).start + item.part * family.width
-    return list(range(first, first + family.width))
+        else:
+            front.restoring(board, family, taken)
 
 
 def books_named(board: GameBoard, body: int) -> NodeBooks:
@@ -237,19 +227,22 @@ def leaving_phase(board: GameBoard, item: Item) -> Phase:
     return (re, im), 1 if re * im_before - im * re_before >= 0 else -1
 
 
-def faced(board: GameBoard, item: Item) -> None:
+def faced(board: GameBoard, item: Item) -> dict[Node, list[Hole]]:
     """A spread record's quantum taken at the Nodes named, the face (features/click, `Face`; ALGEBRA.md, The click writes on the GameBoard (b) and (d), and the hole of a dense record): for every line of the record and every Node, one face at the next two intervals, the first Port preferred, so that Rule3 writes the level 0 and then the level before 0 with its own remainder where the record's booked share at the Node, O + C / 2, is at most its own quantum (the mathematician's hand; the front erasing what spread beyond the Node), and otherwise (a dense record, the Zeno drive at 3.5 quanta per Node or the ion's drive at 55) each face writes its level by the booking identity, one `Hole` per line and Node shared by its two faces carrying the record's unit from the books in the form's own units at the Node, W_rec x 2 p_i^2 G^2 (the share's weight, `share.over_pace`, p_i the Node's Link pace under the record's read), the first face removing one quantum or the most one write can and recording exactly what left, the second the rest the same way (`features/click.rest_of`; the mathematician's hand with the advisor's second); the record's count in the credit's books down by the item's change; nothing assigned at any Node."""
     lines, ticks = range(board.families[item.family].record), (board.tick + 1, board.tick + 2)
     unit, gamma, link = board.credit.units[item.family], board.world.node_clock, board.unit
     content = board.read(item.family, 1, 0)[0]
+    holes: dict[Node, list[Hole]] = {}
     for at, line in itertools.product(item.nodes, lines):
         node_at, here = (int(at[0]), int(at[1]), int(at[2])), tuple(np.add(at, board.offset))
         pace = int(paces.link_pace_of(gamma, np.asarray(content)[here] if np.ndim(content) else content))
         hole = Hole(unit * 2 * pace * pace * link * link)  # W_rec in the form's own units at the Node
+        holes.setdefault(node_at, []).append(hole)
         for tick in ticks:
             found = Face(item.family, line, node_at, 0, tick, None, hole, tick == ticks[1])
             board.credit.faces.setdefault(tick, []).append(found)
     board.credit.counts[item.family] += item.delta
+    return holes
 
 
 def parted(board: GameBoard, books: NodeBooks, item: Item, phase: Phase | None) -> None:
