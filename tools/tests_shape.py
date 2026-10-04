@@ -50,7 +50,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_does": (
         24,
         "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
-        "packet's two levels each sum to 0 on the committed worlds, and the loader refuses a mode entry whose sums are not 0",
+        "packet's two levels each sum to 0 on the committed worlds, and the board refuses at its construction, through the one lay act's guard, a mode entry whose sums are not 0",
     ),
     "tests/test_the_meeting.py::test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark": (
         14,

@@ -170,6 +170,15 @@ def test_the_restoring_front_keeps_the_telegraph_like_worlds_mean_level_within_a
     assert max(abs(m) for m in means[light]) <= 1
 
 
+def test_the_back_in_time_gate_crosses_the_restoring_fronts_shares(tmp_path, monkeypatch):
+    """The host's tool crosses the restoring front's shares as it crosses every lay, from their lay lines (`tools/back_in_time.py`, `crossed`): on the ion-like world over its 170 intervals, three restoring fronts on the drive (two of them from holes written in one window, whose shells reach one Node at the same interval, two lay lines on that Node crossed in reverse order, the second's before the first's after), the gate reads MATCH over 169 intervals back to the first."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board = GameBoard(load_world(ion_world(tmp_path, TOOL, ticks=170)), (lines := []).append)
+    verdict = BACK.verdict(board, 169)
+    fronts = [c for c in lines if c["event"] == "credit" and c["taken"] == "strong_drive"]
+    assert verdict["verdict"] == "MATCH" and verdict["interval"] == 1 and len(fronts) == 3
+
+
 def test_the_restoring_front_writes_at_its_reach_and_restores_the_velocity_sum_exactly(
     tmp_path, monkeypatch
 ):
