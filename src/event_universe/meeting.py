@@ -211,7 +211,7 @@ def written(board: GameBoard, items: list[Item]) -> None:
     for family, taken in sorted(holes.items()):
         if board.credit.counts[family] <= 0:  # the count at 0: its front from every Node written
             front.started(board, family, [at for i in items if i.family == family for at in i.nodes])
-        else:  # the count stands: the restoring front from every hole, its content back to the record
+        else:
             front.restoring(board, family, taken)
 
 
