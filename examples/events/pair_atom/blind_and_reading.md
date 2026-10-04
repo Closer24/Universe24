@@ -31,6 +31,13 @@ The rest contents add in sin omega and the inertias in tan omega: at [2, 3] two 
 nature's gaps the centre's part alone carries the two quanta's rest to O(omega^3); the relative
 part's rest rotation is the lay's bookkeeping of its inertia and enters no book.
 
+The pinned centre of the toy is a stand-in (the advisor's line, #1793 comment 5975578155 item 3):
+the classical centre of the paper's line (2) has no record, so the toy lays it as a one-Node record
+whose pair is the relative part's, [5237, 6000], and not the centre's part's own, [2449, 6000],
+which the line gives it (3 tan omega_M = m_1 + m_2); the stand-in's pair enters no level the toy
+reads (its sign row is the Coulomb level, its inertia plays no part since it does not move), and
+the loader's energy line is what fixes it to the relative part's pair.
+
 ## The toy universe (`pair.json`) and world (`positronium_toy.json`), derived from the files
 
 Two equal records `first` and `second` at matter's pair [4000, 6000] (cos omega_0 = 2 / 3,
