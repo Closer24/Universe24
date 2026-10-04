@@ -68,7 +68,7 @@ points at the law, the law's line governs and no formula is restated here.
 - Bell and GHZ are gates, not experiments.
 - The Zeno gate's seeds take the jump-ahead substreams, as both hands agreed.
 - The removed worlds (the atom's worlds, the cloud, the four charge worlds at 10,000 quanta per record, through_neutral, the free light world, like_or_unlike, matter_and_binding and its pair, frozen_proton, matter_and_gravity's well, nuclide, three_lines, parallel_charges, standing_17 and standing_19, the matter_alone variants, the train, the earlier which-way and dilute worlds, the comb Bell, the two speeds, the polarisation row) are removed because none was in the paper or on a test, loaded, or passed the count-1 gate; their rows stand in the law as dated clauses.
-- The shelved ion's files are at z = 7 on main, the counter over the ion's two Nodes' complement, the loader's refusal of a massless family on a board periodic on three even axes in the engine; the ion is not run at the frozen hash, the expected telegraph the hands' derivation.
+- The shelved ion's files are at z = 7 on main, the counter over the ion's two Nodes' complement, the loader's refusal of a massless family on a board periodic on three even axes in the engine; the ion world is cancelled for now, the owner's word, the shelved ion as shipped, its refusal at 18,099 a known issue with the mechanism and the agreed design written down for later in ENGINE.md's known issues, the loader's guard of a box with no face that draws into a region parked with it.
 
 ## The team and the method
 
