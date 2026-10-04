@@ -74,6 +74,9 @@ STALE_PATTERNS = [
     (r"\bearlier versions?\b", "R228"),
     (r"\buntil then\b", "R228"),
     (r"\bnow (refuses|stands|reads|holds|carries|gives|writes|lays|runs)\b|\blaid now\b", "R228"),
+    (r"\bearlier (review|reading|finding|lay|version)\b", "R228, the supplement's side"),
+    (r"\bno longer\b|\bsince replaced\b|\buntil read\b|\bas before\b|\bnot settled\b|\bstood open\b", "R228, the supplement's side"),
+    (r"on \\texttt\{main\}", "R228, the supplement's side (the pinned commit, not the branch)"),
 ]
 # a struck phrase allowed in one named sentence, by a fragment of that sentence
 STALE_ALLOWED = {
