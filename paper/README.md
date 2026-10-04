@@ -16,7 +16,7 @@ for a lattice of integers stepped by one local rule); the meeting of the past wi
 statement of what a click is. The source carries a submission switch
 (`\submissiontrue` in the preamble of each document): the project's documents
 are then cited as [1], [2], [3] alone, without their line names, and the
-journal's name leaves the supplement's title. The paper is kept to about 34 pages and to what is safe: the rule, its exact
+journal's name leaves the supplement's title. The paper is kept to about 35 pages and to what is safe: the rule, its exact
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
@@ -179,7 +179,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "34 pages, 7 figures, 4 tables; supplementary material of 34 pages as an
+  "35 pages, 7 figures, 4 tables; supplementary material of 35 pages as an
   ancillary file; code and documents at doi:10.5281/zenodo.22738746". The journal's abstract file has 309 words and 1,842
   characters counted with its TeX signs, below the cap; the paper's own abstract is longer and is not the arXiv text.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
