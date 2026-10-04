@@ -9,7 +9,10 @@ from types import ModuleType
 
 ROOT = Path(__file__).resolve().parents[1]
 GATES = ROOT / "paper" / "general_formula" / "paper_gates.py"
-FENCELESS_MARKS_TONIGHT = 25  # the hands' word on each fence brings this to 0
+FENCELESS_MARKS_TONIGHT = 0  # every derived or theorem mark carries its fence since ecf653d
+SCRIPTLESS_MARKS_TONIGHT = (
+    124  # the derived and computed marks naming no derivation script; part 4's map brings this to 0
+)
 
 
 def gates() -> tuple[ModuleType, dict[str, str]]:
@@ -38,3 +41,9 @@ def test_every_mark_and_fence_is_in_the_key_and_the_fenceless_marks_only_fall() 
     assert outside == []
     fenceless = [m for m in misses if "no fence beside it" in m]
     assert len(fenceless) <= FENCELESS_MARKS_TONIGHT, fenceless
+
+
+def test_the_marks_naming_no_script_only_fall() -> None:
+    module, texts = gates()
+    scriptless = module.gate_scripts(texts)
+    assert len(scriptless) <= SCRIPTLESS_MARKS_TONIGHT, len(scriptless)

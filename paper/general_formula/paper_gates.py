@@ -212,6 +212,18 @@ def gate_twins(texts: dict[str, str]) -> list[str]:
     return misses
 
 
+def gate_scripts(texts: dict[str, str]) -> list[str]:
+    """The derived and computed marks of the main text that name no derivation script (the Boss's rule of 2026-10-04,
+    #1793 comment 5975147735): a ratchet, the count may only fall; it reaches 0 with part 4's map of marks to scripts."""
+    misses = []
+    text = texts["main.tex"]
+    for m in re.finditer(r"\\claimmark\{(derived|computed)\}", text):
+        around = enclosing_parenthesis(text, m.start())
+        if not re.search(r"\\texttt\{[a-z_]+\\?_?[a-z_]*\.py\}", around):
+            misses.append(f"main.tex:{line_of(text, m.start())}: {m.group(0)} names no script")
+    return misses
+
+
 def main() -> int:
     texts = {name: path.read_text(encoding="utf-8") for name, path in FILES.items()}
     report = []
