@@ -30,20 +30,8 @@ SLITS, WAY, RESONANCE, PACKET = (
     for n in ("two_slits", "which_way", "resonance", "packet_giving")
 )
 SRC = ROOT / "src" / "event_universe"
-GATE_ROW = [
-    28,
-    15,
-    24,
-    18,
-    7,
-    37,
-    44,
-    13,
-    13,
-    25,
-    24,
-    22,
-]  # the two slits' gate, N = 270, at the seed 24
+# the two slits' gate, N = 270, at the seed 24
+GATE_ROW = [28, 15, 24, 18, 7, 37, 44, 13, 13, 25, 24, 22]
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -450,10 +438,8 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     nodes = {tuple(c["node"]["at"]) for c in lays}
     spans = [sorted({at[a] for at in nodes}) for a in range(3)]
     along = [a for a in range(3) if len(spans[a]) > 3]
-    drawn_x = {
-        17,
-        18,
-    }  # the giver's region, two Nodes along x: the packet from the one Node the draw picked
+    # the giver's region, two Nodes along x: the packet from the one Node the draw picked
+    drawn_x = {17, 18}
     assert len(along) == 1 and (drawn_x if along[0] == 0 else {17}) & {
         spans[along[0]][0],
         spans[along[0]][-1],
@@ -522,3 +508,34 @@ def test_the_source_in_time_lays_the_form_it_radiates():
         abs(radiated_total(action, (4, 5)) / (2 / 3 * action * 4 / 5) - 1) > 0.1
     )  # isqrt(21) = 4 misses
     assert radiated_total(action, (1, 3)) == 0 and radiated_total(action, (3, 3)) == 0
+
+
+def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_falls_to_zero(tmp_path):
+    """The control's two photons as two records (ALGEBRA.md, The click writes on the GameBoard (3) and (6), one event one record one root; the advisor's design of the control, two massless families of one pair, and his asked assertion, #1793 comment 5979746881 (3)): the shipped control's chain cut to 64 Nodes, the atoms 16 Links from the centre with their windows apart, the left atom's at 44 and the right atom's at 56, the -x packet `photon_b` passing the left atom and the +x packet `photon` the right one; each atom's click names the drive whose packet passed it (the taking drawn by each drive's own transfer share, `meeting.took`), body 0 by `photon_b` at 44 and body 1 by `photon` at 56, whichever closes first; after the first taking that record's count is 0 with its front from the taker's Node at the taking's interval and every level of its line 0 within the front's reach (the Link-metric distance at most t - 44 - 3, T3's margin), while the other record stands whole, its count 1 and its one quantum in the books, no front; at 56 both stand at 0 with a front each; the deficits 0 throughout (both records sparse, every taking a hole to 0)."""
+    world = json.loads((EVENTS / "anticoincidence" / "two_photons.json").read_text(encoding="utf-8"))
+    for body, at, window in zip(world["bodies"], (15, 47), (44, 56), strict=True):
+        body["nodes"] = [{"node": [at, 0, 0], "weight": 1}, {"node": [at + 1, 0, 0], "weight": 1}]
+        body["node_reader"] = {**body["node_reader"], "window": window}
+    for message, x in zip(world["messages"], (32, 31), strict=True):
+        message["top"] = {**message["top"], "x": [x, x]}
+    (path := tmp_path / "control.json").write_text(json.dumps({**world, "shape": [64, 1, 1]}))
+    TOOL.main(["--input", str(path)])
+    board = GameBoard(load_world(path), (lines := []).append)
+    photon, photon_b = ([f.name for f in board.families].index(n) for n in ("photon", "photon_b"))
+    for tick in (47, 52, 55, 56, 60):
+        while board.tick < tick:
+            board.step()
+        took = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
+        taken = [(c["tick"], c["node_reader"], c["taken"]) for c in took]
+        books = {name: (b["quanta"], b["count"], b["deficit"]) for name, b in board.books().items()}
+        second = tick >= 56  # the right atom's taking at its window's close, photon's record then at 0
+        assert taken == [(44, "body 0", "photon_b"), (56, "body 1", "photon")][: 1 + second]
+        fronts = [(f.family, f.since) for f in board.credit.fronts]
+        assert fronts == [(photon_b, 44), (photon, 56)][: 1 + second]
+        assert books["photon_b"][1:] == (0, 0) and books["photon"][1:] == (1 - second, 0)
+        assert second or books["photon"][0] == 1  # the other record stands whole until its taking
+        origin = board.credit.fronts[0].origin[0] + board.offset[0]  # the hole's Node as the board grew
+        reach = np.abs(np.arange(board.shape[0]) - origin) <= tick - 44 - 3  # the shells faced by now
+        line = board.states[photon_b].lines[0]
+        assert not line.now.reshape(-1)[reach].any() and not line.before.reshape(-1)[reach].any()
+    assert {c["node_reader"]: c["taken"] for c in took} == {"body 0": "photon_b", "body 1": "photon"}

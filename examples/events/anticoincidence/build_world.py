@@ -1,4 +1,4 @@
-"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeReaders at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record taking it into e at the transition's declared weight over its one window of `intervals`, the run going on for `ticks` past the window's close so that the taking's hole and the erasing front stand in the output interval by interval and the front reaches both packets (the owner's word of 2026-10-04, the click's experiment; the redesign at the lay without the uniform mode, the edge one wavelength on the chain of 96); and `two_photons.json`, the control, the same packets at the amplitude of two quanta; and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
+"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeReaders at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record taking it into e at the transition's declared weight over its one window of `intervals`, the run going on for `ticks` past the window's close so that the taking's hole and the erasing front stand in the output interval by interval and the front reaches both packets (the owner's word of 2026-10-04, the click's experiment; the redesign at the lay without the uniform mode, the edge one wavelength on the chain of 96); and `two_photons.json`, the control, the same two packets at the control's amplitude on the universe `two_atoms_two_records.json`: two photons, one per record (two massless families of one pair), each atom's transition into e by either, each taking bringing its record to 0 and its front starting at the taking's interval (the design's `control`); and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/anticoincidence/build_world.py --modes [--folder <folder>]
 """
@@ -15,9 +15,10 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
 
-def world_of(design: dict, amplitude: int) -> dict:
-    """One world: the two records and the two packets at the amplitude given."""
+def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
+    """One world: the two records and the two packets at the amplitude given; the control (the design's `control`, its `universe` and its `families`, one massless family per packet, the +x packet's first) lays each packet as its own record and gives each atom a transition into e by either."""
     length = design["length"]
+    lights = list(control["families"]) if control else [design["light"]["family"]] * 2
     records = []
     for at in design["records"]["nodes"]:
         records.append(
@@ -32,10 +33,11 @@ def world_of(design: dict, amplitude: int) -> dict:
                     {
                         "from": "g",
                         "to": "e",
-                        "drive": design["light"]["family"],
+                        "drive": light,
                         "weight": design["records"]["weight"],
                         "resonance": design["resonance"],
                     }
+                    for light in dict.fromkeys(lights)
                 ],
                 "rates": [],
                 "node_reader": {
@@ -48,7 +50,7 @@ def world_of(design: dict, amplitude: int) -> dict:
     centre, edge = design["light"]["centre"], design["light"]["edge"]
     messages = [
         {
-            "family": design["light"]["family"],
+            "family": light,
             "along": "x",
             "wave": [sign, design["light"]["quarters"]],
             "phase": [0, 1],
@@ -56,14 +58,14 @@ def world_of(design: dict, amplitude: int) -> dict:
             "top": {"x": [centre[k], centre[k]], "y": [0, 0], "z": [0, 0]},
             "edge": {"x": edge, "y": 0, "z": 0},
         }
-        for k, sign in ((1, 1), (0, -1))
+        for light, (k, sign) in zip(lights, ((1, 1), (0, -1)), strict=True)
     ]
     return {
         "shape": [length, 1, 1],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "face_depth": 1,
         "ticks": design["ticks"],  # the run goes on past the window's close: the front spreads
-        "universe": design["universe"],
+        "universe": control["universe"] if control else design["universe"],
         "engine": design["engine"],
         "bodies": records,
         "messages": messages,
@@ -82,9 +84,11 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
     args.folder.mkdir(parents=True, exist_ok=True)
+    control = design.get("control")  # the control's universe and families, its world by name
     for name, amplitude in design["worlds"].items():
         path = args.folder / f"{name}.json"
-        path.write_text(json.dumps(world_of(design, int(amplitude))) + "\n", encoding="utf-8")
+        own = control if control and control["world"] == name else None
+        path.write_text(json.dumps(world_of(design, int(amplitude), own)) + "\n", encoding="utf-8")
         if args.modes:
             import pixel_mode
 

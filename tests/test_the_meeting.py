@@ -18,10 +18,7 @@ from event_universe.loader.draw import (
     pattern_of,
     patterns_of_the_law,
 )
-from event_universe.loader.node_reader_declaration import (
-    Transition,
-    node_reader_of,
-)
+from event_universe.loader.node_reader_declaration import Transition, node_reader_of
 from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import node_readers_of
 from event_universe.world_files import load_world
@@ -245,12 +242,8 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
         (f, k) for f, m in zip(names[1:], (6, 2, 1), strict=True) for k in range(m)
     ]  # the record's lines once per Node of its region, the records out at the drawn Node
     board.step(), board.step()
-    others = (
-        "click",
-        "lay",
-        "density",
-        "parts",
-    )  # the region `around` holds the record's second Node: its parts read
+    # the region `around` holds the record's second Node: its parts read
+    others = ("click", "lay", "density", "parts")
     assert [x["event"] for x in lines if x["event"] not in others] == ["conversion"]
     assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
 
@@ -282,11 +275,8 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     p, e, nu = outs = [quanta[row["family"] if isinstance(row, dict) else row] for row in table]
     sign = next(k for k, f in enumerate(board.families) if f.wronskian)
 
-    at = (
-        4,
-        4,
-        4,
-    )  # the records out at the one Node of the region the conversion's draw picks, read below
+    # the records out at the one Node of the region the conversion's draw picks, read below
+    at = (4, 4, 4)
 
     def levels(k):
         return [(int(r.now[at]), int(r.before[at])) for r in board.states[k].lines]
@@ -552,11 +542,7 @@ def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
     assert len(credits) == 1 and credits[0]["tick"] == 48 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert all(
-        line["event"] == "erasure"
-        for line in lines
-        if line["tick"] > 48 and line["event"] not in ("face", "credit", "lay")
-    )
+    assert {line["event"] for line in lines if line["tick"] > 48} <= {"erasure", "face", "credit", "lay"}
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
