@@ -124,7 +124,8 @@ their statuses.
   from the paper's commit on the folder's files as they stand at the pinned commit
   7756546d (a worktree of it); the script lays the before level as the generator does at
   that commit (`tools/pixel_mode.advanced_real_part`), so its lay is the mode file's to the
-  rounding and its printed output is the line at the engine's own lay. Its
+  rounding of the quadrature before the transform (0.4 percent of the amplitude in the
+  before level) and its printed output is the line at the engine's own lay. Its
   printed output stands beside it as `two_slits_real_line.txt`, every
   number with its definition: the total over the whole passage, the twelve
   regions' quanta and shares, the visibility, the wings and the arrival (in the
