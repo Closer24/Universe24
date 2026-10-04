@@ -105,9 +105,9 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$269.3$ in the paper's labelling ($269.2$ when the pair after $t$ steps is labelled $t$)",
+                "$284.7$ in the paper's labelling ($284.5$ when the pair after $t$ steps is labelled $t$)",
             ),
-            ("main.tex", "$N = 269.18$ in the engine's labels"),
+            ("main.tex", "$N = 284.50$ in the engine's labels"),
         ],
     ),
     (
@@ -132,12 +132,12 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$N = 270$ units of $W_c$ ($626.5$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4456$",
+                "$N = 284$ units of $W_c$ at both seeds ($659$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4456$",
             ),
-            ("main.tex", "the run $N = 270$ in the NodeReader's unit"),
-            ("main.tex", "the two slits' $270$ stands against the blind $273$"),
-            ("main.tex", "The run of the implementation gives $N = 270$"),
-            ("supplement.tex", "The two slits' $270$ units are $626.5$ photons"),
+            ("main.tex", "the run $N = 284$ at both of its seeds in the NodeReader's unit"),
+            ("main.tex", "the two slits' $284$ at both seeds stands against it"),
+            ("main.tex", "The run of the implementation gives $N = 284$ at both seeds"),
+            ("supplement.tex", "The two slits' $284$ units are $659$ photons"),
         ],
     ),
     (
@@ -167,15 +167,15 @@ TWINS = [
             ("main.tex", "\\textsc{match} on the two slits' file over $40$ intervals"),
             (
                 "supplement.tex",
-                "the two slits' \\textsc{match} over $40$ intervals at the pinned commit",
+                "the two slits' \\textsc{match} over $40$ intervals at the frozen commit at both seeds",
             ),
         ],
     ),
     (
         "the walk and not a bound",
         [
-            ("main.tex", "stands within that walk of the line's $269.3$"),
-            ("main.tex", "within the integer step's walk of the line"),
+            ("main.tex", "stands within that walk of the line's $284.7$"),
+            ("main.tex", "stands against it within the integer step's walk"),
             ("supplement.tex", "within the integer step's walk"),
         ],
     ),

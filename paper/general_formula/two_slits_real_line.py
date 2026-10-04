@@ -8,8 +8,9 @@ light at the vacuum's paces in real arithmetic (floating point: no integer divis
 remainder) on the same declared world: the flat board with its third axis folded (the Node itself
 through both z Ports), the wall's Nodes beyond the board read as 0, the y faces open (read as 0),
 the x faces receding (zeros without end, by a padding no signal crosses within the run), the
-emitter the law's message lay now_i = b e_i cos(k x_i) and before_i = b e_i cos(k x_i + omega)
-under the raised-cosine envelope e_i, and the screen's twelve regions read exactly as the engine
+emitter the law's message lay now_i = b e_i cos(k x_i) under the raised-cosine envelope e_i and
+before_i the exact before level, the packet now + i quadrature advanced mode by mode by its own band
+phase (the generator's act at the frozen commit, tools/pixel_mode.advanced_real_part), and the screen's twelve regions read exactly as the engine
 reports them: the net current through each region's front boundary Ports, F = num (now_i before_j
 - before_i now_j) into the region's Node i from its neighbour j on the declared board outside the
 instrument, at the pair the step starts from (the engine's click at the tick t reports the state
@@ -55,6 +56,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from click_counts import apportioned, extrema, nearest  # noqa: E402  # the reader's own rules
+from pixel_mode import advanced_real_part  # noqa: E402  # the generator's exact before level
 
 Node = tuple[int, int]
 # the in-plane Ports of the flat board, (axis, side); the folded z axis returns the Node itself
@@ -248,10 +250,12 @@ def raised_cosine(extent: int, top: tuple[int, int], edge: int) -> np.ndarray:
 
 
 def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
-    """The message lay in real arithmetic over the declared board, the law's (h): now_i = b e_i cos(k x_i)
-    and before_i = b e_i cos(k x_i + omega), the plane record's level one interval earlier under the same
-    envelope, cos omega the band at k along x, e_i the product of the two axes' raised cosines; 0 at
-    every Node beyond the board. The message lay carries no uniform mode: the sums over the board of
+    """The message lay in real arithmetic over the declared board, the law's (h) with the generator's exact
+    before level (the law's line (c)): now_i = b e_i cos(k x_i), and before_i the real part of the packet
+    b e_i (cos k x_i + i sin k x_i) advanced mode by mode by its own band phase omega(q) over the board's
+    transform (`tools/pixel_mode.advanced_real_part`, the generator's own function), the plane record's
+    level one interval earlier; e_i the product of the two axes' raised cosines; 0 at every Node beyond
+    the board. The message lay carries no uniform mode: the sums over the board of
     the levels now and of the levels before are each 0, the uniform component taken out of each level at
     the lay by the division act (the level's sum divided among the packet's Nodes in proportion to the
     envelope), here in real arithmetic and with no remainder."""
@@ -261,11 +265,13 @@ def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
         raised_cosine(board.length, p.top_x, p.edge_x)[:, None]
         * raised_cosine(board.height, p.top_y, p.edge_y)[None, :]
     )
-    omega = line.omega(p.wave_number)
     now = p.amplitude * envelope * np.cos(p.wave_number * x)
-    before = p.amplitude * envelope * np.cos(p.wave_number * x + omega)
+    quadrature = p.amplitude * envelope * np.sin(p.wave_number * x)
     for x_wall, y_wall in board.beyond:
-        now[x_wall, y_wall] = before[x_wall, y_wall] = envelope[x_wall, y_wall] = 0.0
+        now[x_wall, y_wall] = quadrature[x_wall, y_wall] = envelope[x_wall, y_wall] = 0.0
+    # the exact before level, the generator's own act at the frozen commit (the law's line (c)): the packet
+    # a + i s over the board's transform, every mode advanced by its own band phase omega(q), the real part
+    before = advanced_real_part(now[:, :, None], quadrature[:, :, None])[:, :, 0]
     weight = envelope / envelope.sum()
     now -= weight * now.sum()
     before -= weight * before.sum()
