@@ -517,7 +517,7 @@ def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_
 
 
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):
-    """The law's line of the start (the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands): every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2), the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor. A Node holding no level and the half wall steps to itself exactly; and one massless quantum laid whole by the count at one Node of an even periodic box, whose uniform mode is a double root of the rule, stays bounded: under the floor it grew as t^2 to 6,268 at the interval 200 (Worker PULSE's 5968413761), the lattice's half-up rule reads 172 and the reals 242."""
+    """The law's line of the start (the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands): every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2), the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor. A Node holding no level and the half wall steps to itself exactly; and one massless quantum laid whole by the count at one Node of the shipped Zeno box, 8 by 8 by 5 periodic on all three axes (one odd extent; the uniform mode is a double root of the rule on any periodic board), stays bounded: the lattice's half-up rule reads the largest level 50 at the interval 200, printed from the run (on the former 8 by 8 by 4 box it read 172, the reals 242 and the floor grew as t^2 to 6,268, Worker PULSE's 5968413761)."""
     world = json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8"))
     world.update(bodies=[], messages=[], node_readers=[], ticks=200)
     path = tmp_path / "box.json"
@@ -537,9 +537,8 @@ def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_b
     for _ in range(200):
         board.step()
     largest = int(np.abs(board.states[pulse].lines[0].now).max())
-    assert largest < 300, (
-        largest
-    )  # bounded: 172 by the lattice's rule, 242 in reals, 6,268 under the floor
+    print(f"the lone quantum's largest level at the interval 200 on the box {board.shape}: {largest}")
+    assert largest < 300, largest  # bounded: 50 by the lattice's rule on this box, 6,268 under the floor
 
 
 def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():

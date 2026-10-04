@@ -8,6 +8,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import (
@@ -305,6 +306,17 @@ def regions_of_the_law(
                     )
 
 
+def even_box_refused(shape: Node, periodic: tuple[bool, ...], families: tuple[FamilyRule, ...]) -> None:
+    """The board against the massless row's second double root (ALGEBRA.md, the two hands' line; the mathematician's reading of the shelved ion's refusal, branch `front-two-modes`): the massless band cos omega_k = (1 / 3) SUM_a cos k_a has two double roots, the uniform mode at k = 0 and the staggered mode (-1)^(x + y + z + t) at k = (pi, pi, pi), omega = pi, each of zero form and zero share; on a board periodic on all three axes with every extent even the staggered mode is an exact mode of a massless family (num = den), and Rule3's own rounding walks it as t^(3/2) / (3 sqrt N) with no bound, so such a board is refused by name with the family and the shape, the way out one odd extent or an open axis, where the mode is a bounded response; a gapped family has no double root there and is admitted; the extents' parity by the division act, no number of the law."""
+    if all(periodic) and not any(division_forward(extent, 2, 0)[1] for extent in shape):
+        for family in (f for f in families if f.pair[0] == f.pair[1]):
+            raise ValueError(
+                f"the massless family {family.name!r} on the board {list(shape)} periodic on all three axes with "
+                "every extent even: the staggered mode (-1)^(x + y + z + t), the band's top, is an exact mode of such "
+                "a board and Rule3's own rounding walks it without bound; give one axis an odd extent or open it"
+            )
+
+
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
     """The world from its document, the files it names (the universe, the engine start file, the mode file beside it, read by the host) and its digest; every defect refused by name."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
@@ -321,6 +333,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         raise ValueError(f"boundary gives every axis one of {list(FACES)}")
     periodic = tuple(faces[axis] == "periodic" for axis in AXES)
     open_axes = tuple(faces[axis] == "open" for axis in AXES)
+    even_box_refused(shape, periodic, families)
     if any(open_axes) and "face_depth" not in world:
         raise ValueError(
             "face_depth is required on a GameBoard with an open face: the depth of its layer"
