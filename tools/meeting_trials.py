@@ -1,4 +1,4 @@
-"""The trials of a world of records declared NodeReaders (examples/events/zeno, examples/events/anticoincidence; ALGEBRA.md, The click writes on the GameBoard (j); the paper's S.57 and S.59): one world file run as many times as the design names seeds, each run from the same lay with every reader's generator at a state of its own from the trial's seed (the seed times the records' number plus the record's number) (the design's list of seeds, `seeds`, the host's declaration standing where one world file holds one seed; the counter's generator untouched), over the design's intervals, and at the end the part each record stands in (its books, the reader's own), its windows closed (its books' count, the pulsed gate's n) and its `credit` lines labelled NODEREADER naming `taken` or `given`, the clicks (the null window's GAMEBOARD-labelled lines left out); the readings over the trials: per record the fraction of trials ending in each part and the windows closed per trial, the clicks per kind, the trials the run refused inside (the guard's refusal with its interval, by seed, read and not hidden), and over the records the fractions of trials with a taking at one record alone, at both and at neither, the anticoincidence parameter P(both) / (P(A) P(B)) where defined. Every number a click (the clicks, the parts the writes left) and no array is read; the tool holds no number of the law and compares nothing, the blind printed beside the readings where an expectation file is given.
+"""The trials of a world of records declared NodeReaders (examples/events/zeno, examples/events/anticoincidence; ALGEBRA.md, The click writes on the GameBoard (j); the paper's S.57 and S.59): one world file run as many times as the design names seeds, each run from the same lay with every reader's generator at a state of its own from the trial's seed, the hash of the trial's label (the seed times the records' number plus the record's number; `hashed_state`: the generator is affine, so labels in arithmetic progression would stay one progression at every draw's depth and the trials' variates one Weyl sequence and not independent draws, the mathematician's finding of 2026-10-04 on #1827 at the advisor's second) (the design's list of seeds, `seeds`, the host's declaration standing where one world file holds one seed; the counter's generator untouched), over the design's intervals, and at the end the part each record stands in (its books, the reader's own), its windows closed (its books' count, the pulsed gate's n) and its `credit` lines labelled NODEREADER naming `taken` or `given`, the clicks (the null window's GAMEBOARD-labelled lines left out); the readings over the trials: per record the fraction of trials ending in each part and the windows closed per trial, the clicks per kind, the trials the run refused inside (the guard's refusal with its interval, by seed, read and not hidden), and over the records the fractions of trials with a taking at one record alone, at both and at neither, the anticoincidence parameter P(both) / (P(A) P(B)) where defined. Every number a click (the clicks, the parts the writes left) and no array is read; the tool holds no number of the law and compares nothing, the blind printed beside the readings where an expectation file is given.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -8,6 +8,7 @@ Run with PYTHONPATH set to the checkout's src:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from collections import Counter
 from fractions import Fraction
@@ -17,6 +18,12 @@ from event_universe.game_board import GameBoard
 from event_universe.world_files import load_world
 
 
+def hashed_state(label: int, width: int) -> int:
+    """The generator's state for one record in one trial from the trial's label (the seed times the records' number plus the record's number): SHA-256 of the label's decimal text read as one little-endian integer and reduced to the generator's modulus (`width` the universe's largest integer, 2^bits - 1, the modulus 2^bits). The generator is affine, x <- (multiplier x + increment) mod modulus, so states in arithmetic progression stay one progression at every depth of the draw and the trials' variates at a fixed depth are one Weyl sequence, not independent draws (the control's second draw fell in the even tenths alone across its 200 trials); a hash of the label breaks the progression, and the seeds' list of the design stands as written."""
+    digest = hashlib.sha256(str(int(label)).encode("ascii")).digest()
+    return int.from_bytes(digest, "little") % (1 << int(width).bit_length())
+
+
 def one_trial(
     path: Path, seed: int, intervals: int
 ) -> tuple[list[str], list[int], list[dict[str, object]], str | None]:
@@ -24,7 +31,7 @@ def one_trial(
     lines: list[dict[str, object]] = []
     board = GameBoard(load_world(path), lines.append)
     for books in board.credit.bodies:  # every record its own state, distinct per record and per trial
-        books.state = seed * len(board.credit.bodies) + books.number
+        books.state = hashed_state(seed * len(board.credit.bodies) + books.number, board.world.width)
     refused = None
     try:
         for _ in range(intervals):
