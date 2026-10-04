@@ -115,6 +115,23 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
     ),
+    "tests/test_the_giving.py::test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period": (
+        33,
+        'the giving lays no uniform mode (the owner\'s "yes to everything" of 2026-10-04, #1793 comment 5975629873; the '
+        "mathematician's 5975866852 and 5975925032): the source's increments corrected by the division act in time where the "
+        "span holds a period, the period by the rotation act, a short span laid as built, the resonance world's sums and share",
+    ),
+    "tests/test_the_giving.py::test_the_open_boards_packet_lays_no_uniform_mode": (
+        20,
+        "the giving lays no uniform mode (2026-10-04): the open board's packet's two levels through the message lay's "
+        "division act, each summing to 0 over the board after the lay, the quantum standing",
+    ),
+    "tests/test_the_giving.py::test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark": (
+        38,
+        "the front's taper (the owner's \"yes to everything\" of 2026-10-04, #1793 comment 5975629873): the world's "
+        "`erasure` L, the ball behind the last L shells at (0, 0) exactly, the shells before the reach falling, the erasure "
+        "line's take and unit, the board dark at 200 and the back-in-time gate MATCH across the tapered faces",
+    ),
     "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
         36,
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
