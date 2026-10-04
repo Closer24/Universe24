@@ -18,7 +18,7 @@
    "status": "scriptless (no script here yet), scripted (its script's function returns the printed numbers to the digits named, fields script, function, expected, digits) or differs (it does not: fields computed and reason, a finding for the hands)"
   },
   "counts": {
-   "scriptless": 91,
+   "scriptless": 18,
    "derived": 112,
    "computed": 11,
    "with_existing_script": 44,
@@ -73,10 +73,44 @@
     "zeno.py": 1
    },
    "by_status": {
-    "scriptless": 91,
-    "scripted": 31,
+    "scriptless": 18,
+    "scripted": 104,
     "differs": 1
-   }
+   },
+   "by_mark_and_status": {
+    "derived": {
+     "scriptless": 7,
+     "scripted": 104,
+     "differs": 1
+    },
+    "computed": {
+     "scriptless": 11,
+     "scripted": 0,
+     "differs": 0
+    }
+   },
+   "scripted_by_script": {
+    "constants.py": 15,
+    "weak_field.py": 15,
+    "clicks.py": 12,
+    "body_clicks.py": 9,
+    "bands.py": 8,
+    "paces.py": 8,
+    "bell.py": 7,
+    "families.py": 6,
+    "frame.py": 5,
+    "atom.py": 3,
+    "moving_clock.py": 3,
+    "rule3.py": 3,
+    "bodies.py": 2,
+    "cosmology.py": 2,
+    "two_slits.py": 2,
+    "nuclear.py": 1,
+    "sign.py": 1,
+    "tension.py": 1,
+    "zeno.py": 1
+   },
+   "modules_without_rule3_root": 4
   },
   "computed_marks": [
    {
@@ -219,7 +253,7 @@
    "script": "tools/derivations/bands.py",
    "function": "diagonal_dispersion",
    "expected": [
-    0,
+    0.0,
     0.5774
    ],
    "digits": 4,
@@ -347,7 +381,7 @@
    "script": "tools/derivations/paces.py",
    "function": "exact_variable",
    "expected": [
-    0,
+    0.0,
     6.3,
     5.9
    ],
@@ -432,9 +466,9 @@
    "script": "tools/derivations/paces.py",
    "function": "no_horizon",
    "expected": [
-    2207,
-    0,
-    28178
+    2207.0,
+    0.0,
+    28178.0
    ],
    "digits": 0,
    "closure_note": "the composed Link pace at c = Gamma / 2, the truncation's 0 there and the frozen content (Gamma / 2) ln 2 Gamma, the paper's 28,178"
@@ -511,8 +545,8 @@
    "script": "tools/derivations/tension.py",
    "function": "dust_stress",
    "expected": [
-    1,
-    1
+    1.0,
+    1.0
    ],
    "digits": 6,
    "closure_note": "the Link's booking over 2 c v_a v_b on light's wave, c = D / T and v in units of light's c, the xx and xy parts"
@@ -807,10 +841,10 @@
    "script": "tools/derivations/families.py",
    "function": "universe_table",
    "expected": [
-    0,
-    20,
+    0.0,
+    20.0,
     0.6667,
-    4
+    4.0
    ],
    "digits": 2,
    "closure_note": "gravity's kappa, the binding holder's range, matter's cos omega_0 and the holder's 1 + 3 parts"
@@ -896,8 +930,8 @@
    "script": "tools/derivations/families.py",
    "function": "gap_is_the_inverse_reach",
    "expected": [
-    0,
-    4,
+    0.0,
+    4.0,
     0.127,
     0.48
    ],
@@ -1549,7 +1583,7 @@
    "function": "de_broglie",
    "expected": [
     0.003,
-    0,
+    0.0,
     0.2508
    ],
    "digits": 4,
@@ -1785,9 +1819,9 @@
    "script": "tools/derivations/bands.py",
    "function": "folded_axis_band",
    "expected": [
-    0,
-    0,
-    0
+    0.0,
+    0.0,
+    0.0
    ],
    "digits": 6
   },
@@ -1841,8 +1875,8 @@
    "source": "S.23",
    "existing_script": "paper/general_formula/two_slits_real_line.py",
    "proposed_module": "two_slits.py",
-   "status": "differs",
-   "note": "the near-field minima 15.3 and 32.7 at L = 2 d, printed by two_slits_real_line.py; the folder's module recomputes them from the band alone",
+   "status": "scripted",
+   "note": "the advisor's reading of the blind's builder (#1793 comment 5976930478, item (3)): the blind file's row is a literal of design.json, a reference form; its regional dips at 4 and 8 are the far field's (the per-Node row's minima at the rows 16 and 32, eight from the centre 24); the near field's exact minima 15.3 and 32.7 fall in the blocks 3 and 8, as near_field_minima and the Huygens sum (two_slits.huygens_dips, kept as the near-field check) give them, and the paper's sentence states both",
    "script": "tools/derivations/two_slits.py",
    "function": "near_field_minima",
    "expected": [
@@ -1854,18 +1888,7 @@
     24.0,
     23.5
    ],
-   "digits": 1,
-   "computed": [
-    16.0,
-    15.28,
-    32.72,
-    3.0,
-    8.0,
-    24.0,
-    23.5,
-    "the Huygens regional sums' dips: 3 and 8"
-   ],
-   "reason": "the derivation's numbers agree (lambda L / d = 16, the minima rows 15.28 and 32.72 in the blocks 3 and 8, the centres 24 and 23.5), but the blind's regional dips, printed as expectation.json's regions 4 and 8, come out at 3 and 8 from the Huygens sum of the two gaps' Nodes under every kernel tried (1 / sqrt r, 1 / r, no decay, the obliquity factor; two_slits.huygens_dips), so the region 4 is the blind file's own reading and not this derivation's"
+   "digits": 1
   },
   {
    "line": 542,
@@ -2217,10 +2240,10 @@
    "script": "tools/derivations/constants.py",
    "function": "energy_line",
    "expected": [
-    1,
-    1,
-    21845,
-    6000
+    1.0,
+    1.0,
+    21845.0,
+    6000.0
    ],
    "digits": 0,
    "closure_note": "the loss over the gain at the charged universe's and the turning file's integers, and the rule's file's T cos omega_s against Gamma"
@@ -2396,8 +2419,8 @@
    "function": "calibration_series",
    "expected": [
     28.33,
-    1,
-    0
+    1.0,
+    0.0
    ],
    "digits": 2,
    "closure_note": "the table's forms of reading: 28.33 from nature's alpha, 4 pi Gamma E_g G_clock = 1 and c_vac = 0"
@@ -2463,7 +2486,7 @@
    "script": "tools/derivations/constants.py",
    "function": "masses_from_the_click",
    "expected": [
-    1,
+    1.0,
     1.34,
     1.4
    ],
@@ -2762,7 +2785,7 @@
    "script": "tools/derivations/families.py",
    "function": "gapped_holder_kernel",
    "expected": [
-    20,
+    20.0,
     0.9546,
     0.92,
     0.95

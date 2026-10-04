@@ -28,8 +28,9 @@ the engine.
   read a run are a ratchet that only falls (`PAPER_SCRIPTS_LEANING_ON_THE_ENGINE`,
   2 at the paper's head d75c42a9); (b) the modules here that do not import
   `rule3` are a ratchet that only falls (`MODULES_WITHOUT_RULE3_ROOT`, at most
-  8; an `import rule3` anywhere in the module counts), so a new module roots in
-  `rule3.py`; (c) `rule3.py`'s own checks: a
+  4, the four modules below that receive no mark; an `import rule3` anywhere in
+  the module counts), so a new module roots in `rule3.py`; (c) `rule3.py`'s own
+  checks: a
   plane wave at the derived omega satisfies the line to rounding on a chain,
   the conserved form is exact over 50 intervals on a periodic chain of 24
   Nodes with integer levels and the integer step's walk of it is the law's
@@ -37,7 +38,7 @@ the engine.
   status one of `scriptless` (no script here yet), `scripted` (its `script`,
   `function`, `expected` and `digits` named) or `differs` (its `computed` and
   `reason` named, a finding for the hands), and the scriptless count is a
-  ratchet that only falls (`SCRIPTLESS_MARKS`, at most 91); (e) every scripted
+  ratchet that only falls (`SCRIPTLESS_MARKS`, at most 18); (e) every scripted
   entry's function returns its printed numbers in order, a `num/den` string as
   an exact Fraction, an int as it stands and a float to `digits` decimal places.
 
@@ -87,23 +88,23 @@ replaces it.
 
 | Module | Marks | Subject |
 | --- | --- | --- |
-| `weak_field.py` (new) | 16 | the redshift, the bending, Shapiro's delay, the perihelion, the fall, Newton, the lens, the shadow, the gravity of light |
-| `constants.py` (new) | 15 | G_clock and Kepler's G, charge universality, alpha_law, the energy line, the Link's bound, the lattice's properties, the calibration series, the masses |
-| `clicks.py` (new) | 12 | the click's formulas: the frozen Node, the declarations' costs, the one draw, the arrival window, the write's form, decay statistics |
-| `body_clicks.py` (new) | 9 | a body's clicks: the resonance, Rabi's rate, the invariant and the drift, E = hbar omega, Millikan's slope |
+| `weak_field.py` | 16 | the redshift, the bending, Shapiro's delay, the perihelion, the fall, Newton, the lens, the shadow, the gravity of light |
+| `constants.py` | 15 | G_clock and Kepler's G, charge universality, alpha_law, the energy line, the Link's bound, the lattice's properties, the calibration series, the masses |
+| `clicks.py` | 12 | the click's formulas: the frozen Node, the declarations' costs, the one draw, the arrival window, the write's form, decay statistics |
+| `body_clicks.py` | 9 | a body's clicks: the resonance, Rabi's rate, the invariant and the drift, E = hbar omega, Millikan's slope |
 | `bands.py` | 8 | the bands along an axis and the diagonal, the slow limit, de Broglie, the folded axis, light's speed |
-| `bell.py` (new) | 8 | the root's sum, the four lines of Bell, unequal parts, 478 / 169, the GHZ correlation, the bound |
+| `bell.py` | 8 | the root's sum, the four lines of Bell, unequal parts, 478 / 169, the GHZ correlation, the bound |
 | `paces.py` | 8 | the clock's composition, the acts' factors, the index, the mirror, the horizon, the two clocks |
-| `families.py` (new) | 6 | the universe table's columns, the holder's rest, the gap as the inverse reach, the two speeds, the gapped kernel |
-| `frame.py` (new) | 6 | the lattice's frame: alpha_1, the polarisations, no g_0a, the five forms, Gravity Probe B |
-| `bodies.py` (new) | 5 | the four statements, the functional's barrier, the kinds of binding, the binding bound |
-| `moving_clock.py` (new) | 4 | the tick's factor from the band, the Lorentz form, Michelson-Morley |
-| `atom.py` (new) | 3 | Bohr's levels, the orbital Zeeman g = 1, the nuclear holder's exclusion |
+| `families.py` | 6 | the universe table's columns, the holder's rest, the gap as the inverse reach, the two speeds, the gapped kernel |
+| `frame.py` | 6 | the lattice's frame: alpha_1, the polarisations, no g_0a, the five forms, Gravity Probe B |
+| `bodies.py` | 5 | the four statements, the functional's barrier, the kinds of binding, the binding bound |
+| `moving_clock.py` | 4 | the tick's factor from the band, the Lorentz form, Michelson-Morley |
+| `atom.py` | 3 | Bohr's levels, the orbital Zeeman g = 1, the nuclear holder's exclusion |
 | `nuclear.py` | 3 | confinement, the nuclear findings, the explicit finding |
-| `rule3.py` (new, written) | 3 | the band at a pace, the form's walk with the rounding, the backward reading |
+| `rule3.py` | 3 | the band at a pace, the form's walk with the rounding, the backward reading |
 | `cosmology.py` | 2 | the ball of dust's deceleration, the Doppler period times the moving clock |
-| `sign.py` (new) | 2 | the Wronskian's walk witness, the odd lines' source |
-| `two_slits.py` (new) | 2 | the near-field minima, the opaque NodeReader's envelope |
+| `sign.py` | 2 | the Wronskian's walk witness, the odd lines' source |
+| `two_slits.py` | 2 | the near-field minima, the opaque NodeReader's envelope |
 | `tension.py` | 1 | the stress of dust |
 | `zeno.py` | 1 | nature's n = 1 against the body's own period |
 | (computed, no module) | 9 | the back-in-time gate, the two branches' solution, the two slits' run, the Bell efficiency, the atom's readings: readers named |

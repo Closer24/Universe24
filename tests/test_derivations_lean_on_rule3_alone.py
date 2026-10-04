@@ -19,13 +19,15 @@ INVENTORY = DERIVATIONS / "paper_marks.json"
 # the engine's package, its folder and a tool that imports it; a run's files
 ENGINE = ("event_universe", "src", "click_counts")
 RUN_FILE = ("runs/", ".output.json", ".look.json")
-# the modules of pull request #1854 and after, written before rule3.py; cosmology and nuclear rooted since
-MODULES_WITHOUT_RULE3_ROOT = 8
+# the four modules of pull request #1854 written before rule3.py that receive no mark of the inventory
+# (greens_function, two_body, units, wells); every other module roots in rule3 since the derivations' map
+MODULES_WITHOUT_RULE3_ROOT = 4
 # at origin/paper d75c42a9: two_slits_real_line.py imports the engine, two_slits_frames.py reads a run's look
 PAPER_SCRIPTS_LEANING_ON_THE_ENGINE = 2
 # the derived and computed marks of main.tex naming no script at d75c42a9 (123) whose inventory entry still has no
-# script here, the status "scriptless"; a ceiling the count may only fall below
-SCRIPTLESS_MARKS = 91
+# script here, the status "scriptless"; a ceiling the count may only fall below (the 11 computed marks, closed by
+# their readers and never by a derivation, and 7 derived marks after the derivations' map)
+SCRIPTLESS_MARKS = 18
 FIELDS = (
     "line",
     "mark",
