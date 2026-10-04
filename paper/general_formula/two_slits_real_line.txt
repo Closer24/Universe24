@@ -1,5 +1,3 @@
-<frozen site>:101: RuntimeWarning: Unexpected value in sys.prefix, expected /tmp/claude-0/-home-user-Universe24/a0f0577f-4d2e-5289-bb4d-cb9434531841/scratchpad/uv314, got /tmp/claude-0/-home-user-Universe24/a0f0577f-4d2e-5289-bb4d-cb9434531841/scratchpad/frozen/../uv314
-<frozen site>:101: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /tmp/claude-0/-home-user-Universe24/a0f0577f-4d2e-5289-bb4d-cb9434531841/scratchpad/uv314, got /tmp/claude-0/-home-user-Universe24/a0f0577f-4d2e-5289-bb4d-cb9434531841/scratchpad/frozen/../uv314
 The two slits by the law's real line (docs/ALGEBRA.md row (g); the paper's Sections 9.1 and 9.2)
 the world examples/events/two_slits/two_slits.json, the expectation examples/events/two_slits/expectation.json
 the family 'charge' with the pair [6000, 6000], Gamma = 6000, T = 32768, W_c = 589824000 (the count wall, 3 den T)
