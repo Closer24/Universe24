@@ -60,6 +60,7 @@ points at the law, the law's line governs and no formula is restated here.
 
 ## The team and the method
 
+- The method's standard is that the paper's reviewers can find no problem, no bug, none in the derivations, nothing; every gate and every whole read serves that standard.
 - Two hands, the first hand and the confirm, before anything enters the law, the engine or the paper.
 - The Boss writes no code: workers, decision lines, issue comments, briefs and pull request bodies alone; the Boss opens every pull request, with "HANDED BY Boss" and the files when a worker wrote it.
 - A hand may fix a defect of the engine on a branch from main with its dedicated test, at the owner's word, for the other hand's second at the sha and the Boss's merge at two hands and CI green; the Boss writes no code.
