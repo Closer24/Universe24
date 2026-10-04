@@ -144,11 +144,9 @@ the journal.
 ### Foundations of Physics
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
-  unspecified reference; there are 4 to 6 keywords. Met by the journal's
-  version of the abstract, `abstract_journal.txt` beside the paper: the
-  arXiv abstract without its opening question, light's speed sentence, the
-  cube's 48, the alpha clause and the shadow, 316 words, to be cut to 250 before submission,
-  every formula in it the arXiv abstract's.
+  unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
+  and `abstract_journal.txt` beside it are one text of 250 words of prose
+  (277 tokens with the TeX signs), every formula in it the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
   interests, ethics and consent, data availability, author contributions.
@@ -165,9 +163,13 @@ the journal.
   cited in numerical order, every table has a caption, and a figure's
   label reads "Fig." in bold. Met.
 - Artwork: vector figures with embedded fonts, lettering of 8 to 12 pt at
-  the final size, lines of at least 0.3 pt, at most 119 mm wide. Not met as
-  drawn: four figures are drawn 174 mm wide and included at 0.70 to 0.75 of the
-  text width, their lettering scaled with them; the journal's typesetting resizes them.
+  the final size, lines of at least 0.3 pt, the widths 39, 84, 129 or 174 mm
+  and the height at most 234 mm (Springer's general artwork guidelines, as the
+  writer holds them; the author checks the journal's page before submitting,
+  the venues' pages being unreachable from the writer's session). Met: the
+  four figures drawn 174 mm wide are
+  included at that size, their lettering 8 pt at the final size, and the four
+  drawn narrower at theirs.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
 - The scope is the conceptual bases of modern physics; a desk rejection
@@ -183,8 +185,8 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "35 pages, 7 figures, 4 tables; supplementary material of 35 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The journal's abstract file has 316 words and 1,867
-  characters counted with its TeX signs, below the cap; the paper's own abstract is longer and is not the arXiv text.
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,630
+  characters counted with its TeX signs, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
   scripts; it compiles under pdflatex in a clean directory, and no `.bbl`
