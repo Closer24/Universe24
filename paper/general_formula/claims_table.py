@@ -171,6 +171,70 @@ def table_rows(text: str) -> list[dict[str, str]]:
     return found
 
 
+DERIVATION = re.compile(r"\\begin\{derivation\}\[([^\]]*)\](.*?)\\end\{derivation\}", re.S)
+INPUTS = re.compile(r"\\emph\{Inputs:\}(.*?)\\emph\{Steps:\}", re.S)
+# the cycles of the Inputs graph known tonight, each named until its fix prints; the set may only shrink (the breakers'
+# RED_ROWS rule): S.1 and S.63 (the budget clause borrowed forward; S.21 and S.22 ride in through S.22's body, which has
+# no Inputs line), S.40 and S.51 (the parts' amplitudes borrowed forward; S.51 has no Inputs line)
+KNOWN_CYCLES: frozenset[tuple[int, ...]] = frozenset({(1, 21, 22, 63), (40, 51)})
+
+
+def inputs_graph(supplement: str) -> dict[int, set[int]]:
+    """S.i to the set of S.m its Inputs line names; where a derivation has no Inputs line, the mentions of its body."""
+    graph: dict[int, set[int]] = {}
+    for number, match in enumerate(DERIVATION.finditer(supplement), 1):
+        body = match.group(2)
+        inputs = " ".join(INPUTS.findall(body)) or body
+        graph[number] = {int(x) for x in re.findall(r"S\.(\d+)", inputs)} - {number}
+    return {i: {m for m in rests if m in graph} for i, rests in graph.items()}
+
+
+def cycles(graph: dict[int, set[int]]) -> list[tuple[int, ...]]:
+    """The strongly connected components of two or more derivations (Tarjan), each sorted."""
+    index: dict[int, int] = {}
+    low: dict[int, int] = {}
+    stack: list[int] = []
+    on_stack: set[int] = set()
+    found: list[tuple[int, ...]] = []
+    counter = [0]
+
+    def visit(node: int) -> None:
+        index[node] = low[node] = counter[0]
+        counter[0] += 1
+        stack.append(node)
+        on_stack.add(node)
+        for other in graph.get(node, ()):
+            if other not in index:
+                visit(other)
+                low[node] = min(low[node], low[other])
+            elif other in on_stack:
+                low[node] = min(low[node], index[other])
+        if low[node] == index[node]:
+            component = []
+            while True:
+                top = stack.pop()
+                on_stack.discard(top)
+                component.append(top)
+                if top == node:
+                    break
+            if len(component) > 1:
+                found.append(tuple(sorted(component)))
+
+    for node in graph:
+        if node not in index:
+            visit(node)
+    return sorted(found)
+
+
+def gate_inputs_graph(supplement: str) -> list[str]:
+    """The misses: every cycle of the derivations' Inputs graph not named in KNOWN_CYCLES."""
+    return [
+        "a cycle among the derivations' Inputs lines: " + " and ".join(f"S.{n}" for n in component)
+        for component in cycles(inputs_graph(supplement))
+        if component not in KNOWN_CYCLES
+    ]
+
+
 def build() -> str:
     main = MAIN.read_text(encoding="utf-8")
     supplement = SUPPLEMENT.read_text(encoding="utf-8")
