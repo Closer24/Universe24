@@ -188,7 +188,7 @@ def click_act(
 
 
 def written(board: GameBoard, items: list[Item]) -> None:
-    """The write step of the act, the one swappable step, item by item (ALGEBRA.md, The click writes on the GameBoard, the undepleted beam; the two hands' line at the owner's word for the simple solution): a spread record's quantum is taken or given at the Nodes named through one comparison, `faced`, the record's booked share at the Node against its own quantum W_rec; where the record is local and whole there the taking is the hole to 0 by the face (every line of the record whatever their number) and the giving the lay of one whole quantum (`given_quantum`), and where the record is a beam, many quanta per Node, nothing is written on the board: the quantum passes in the books alone, the count moved by the item's change as for every item and the family's deficit, the board's share over the books' count in quanta, moved against it (`credit.Books.deficits`, up by one for a taking, down by one for a giving, printed in the books' line); a record declared a NodeReader at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node faced (`front.started`), and a record whose count stays at one or more has no front; every lay of the step is the one lay act's, which writes every line a lay changed at a Node, levels or remainder, as one `lay` line with the levels before and after (`lay.written`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
+    """The write step of the act, the one swappable step, item by item (ALGEBRA.md, The click writes on the GameBoard, the undepleted beam; the two hands' line at the owner's word for the simple solution): a spread record's quantum is taken or given at the Nodes named through one comparison, `faced`, the record's booked share at the Node against its own quantum W_rec; where the record is local and whole there the taking is the hole to 0 by the face (every line of the record whatever their number) and the giving the lay of one whole quantum (`given_quantum`), and where the record is a beam, many quanta per Node, nothing is written on the board: the quantum passes in the books alone, the count moved by the item's change as for every item and the family's deficit, the board's share over the books' count in quanta, moved against it (`credit.Books.deficits`, up by one for a taking written at no Node named, down by one for a giving not laid, the deficit's condition the complement of the lay's: a giving naming several Nodes with a beam among them lays nothing and moves the deficit, though no shipped list names several Nodes for a giving; printed in the books' line); a record declared a NodeReader at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node faced (`front.started`), and a record whose count stays at one or more has no front; every lay of the step is the one lay act's, which writes every line a lay changed at a Node, levels or remainder, as one `lay` line with the levels before and after (`lay.written`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line)."""
     phases = {i.body: leaving_phase(board, i) for i in items if i.body is not None and i.delta < 0}
     touched: list[NodeBooks] = []
     holes: dict[int, list[Node]] = {}
@@ -198,14 +198,15 @@ def written(board: GameBoard, items: list[Item]) -> None:
             touched += [books] if books not in touched else []
             continue
         whole = faced(board, item)
-        if item.delta > 0 and len(whole) == len(item.nodes):
+        unwritten = not whole if item.delta < 0 else len(whole) < len(item.nodes)
+        if item.delta > 0 and not unwritten:
             given_quantum(board, item)
         else:
             board.credit.counts[item.family] += item.delta
         if item.delta < 0:
             holes.setdefault(item.family, []).extend(whole)
         if (
-            not whole
+            unwritten
         ):  # the quantum in the books alone, the undepleted beam: the deficit against the count
             board.credit.deficits[item.family] = board.credit.deficits.get(item.family, 0) - item.delta
     for books in touched:
