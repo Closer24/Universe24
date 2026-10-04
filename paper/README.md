@@ -16,7 +16,7 @@ for a lattice of integers stepped by one local rule); the meeting of the past wi
 statement of what a click is. The source carries a submission switch
 (`\submissiontrue` in the preamble of each document): the project's documents
 are then cited as [1], [2], [3] alone, without their line names, and the
-journal's name leaves the supplement's title. The paper is kept to about 34 pages and to what is safe: the rule, its exact
+journal's name leaves the supplement's title. The paper is kept to about 35 pages and to what is safe: the rule, its exact
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
@@ -87,6 +87,10 @@ their statuses.
   slow limit of the line, a Gaussian packet stepped by the line without the remainder on a
   chain against Schroedinger's centre and spread with the band's inertia 3 tan omega_0
   (Section 3.3). Run with `python paper/general_formula/schroedinger_check.py`.
+- `general_formula/dark_matter_check.py`: Section 7.5's dark matter in kind checked on the
+  band: a one-line record's Wronskian 0, the fall of a free quantum of the scalar row the same at
+  every amplitude and count and equal to S.18's closed form, the free quantum cold (its group
+  velocity to 0 with k). Run with `python paper/general_formula/dark_matter_check.py`.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.
@@ -142,8 +146,8 @@ the marks (every `\claimmark` one of the key's eight words, every `\fence` one o
 beside every derived or theorem mark of the main text), the struck phrases (the words earlier prints
 removed, with the history forms "pending", "not yet", "earlier version" and their kin, none allowed
 back), and the twins (a number or a word printed in two places asserted equal). The derivation
-scripts' count is a ratchet the same test holds: of the 126 derived and computed marks of the main
-text, 4 name a Python script beside them (`invariant_check.py`, `schroedinger_check.py`, `surplus_check.py`, `test_the_draw.py`) and
+scripts' count is a ratchet the same test holds: of the 127 derived and computed marks of the main
+text, 5 name a Python script beside them (`dark_matter_check.py`, `invariant_check.py`, `schroedinger_check.py`, `surplus_check.py`, `test_the_draw.py`) and
 122 name none; the count may only fall, and the paper claims nothing beyond it (the supplement
 carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
 
@@ -198,7 +202,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "34 pages, 7 figures, 4 tables; supplementary material of 31 pages as an
+  "35 pages, 7 figures, 4 tables; supplementary material of 32 pages as an
   ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,630
   characters counted with its TeX signs, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
