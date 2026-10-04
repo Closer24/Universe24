@@ -1344,9 +1344,8 @@ def pixel_mode(
         raise ValueError(
             "the universe file declares no quantum_action T: the count c = D div T needs it"
         )
-    pairs = {
-        family["name"]: (int(family["pair"][0]), int(family["pair"][1]))
-        for family in universe["families"]
+    pairs = {  # the loader's pairs, a derived pair among them (`loader/universe.pair_of`)
+        family.name: family.pair for family in universe_of(universe)[1]
     }
     shape = (int(document["shape"][0]), int(document["shape"][1]), int(document["shape"][2]))
     beyond = np.zeros(shape, dtype=bool)
