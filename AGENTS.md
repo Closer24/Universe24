@@ -1,13 +1,14 @@
 # Instructions for every contributor
 
-The project keeps three current documents, the skills and the entry files, and
-nothing else. Start from the current checkout, never from a previous conversation.
+The project keeps three current documents, the reviewer's ledger, the skills and
+the entry files, and nothing else. Start from the current checkout, never from a previous conversation.
 
 | What | Where |
 | --- | --- |
 | The law: one algebraic line per rule, the families, the bodies, the clicks, every experiment's formula and blind expectation | [docs/ALGEBRA.md](docs/ALGEBRA.md) |
 | The engine as the code holds it on `main`: the words, the main loop and Rule3, the folders and the register, the loader and the files, the output, the gates, how to run a world and how to add a feature | [docs/ENGINE.md](docs/ENGINE.md) |
 | The decisions in force, one line each; a decision of the model owner replaces the line it changes | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) |
+| The reviewer's ledger: every finding of the paper and the law with its state, changed by the pull request that prints it | [docs/REVIEW_LEDGER.md](docs/REVIEW_LEDGER.md) |
 | The team's roles, the short procedure and every shared way of working | [skills/workflow.md](skills/workflow.md), [the Boss's card](skills/boss-orchestrator/SKILL.md) and [the advisor's card](skills/advisor/SKILL.md) |
 | Every edit, check and Git operation | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
