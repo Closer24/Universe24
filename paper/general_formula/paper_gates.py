@@ -161,6 +161,10 @@ TWINS = [
         ],
     ),
     (
+        "the lock at d00aa9e2",
+        [("main.tex", "The engine is locked at d00aa9e2 at the owner's word of 2026-10-04"), ("supplement.tex", "The engine is locked at d00aa9e2 at the owner's word of 2026-10-04")],
+    ),
+    (
         "the two slits at the fixed lay",
         [
             ("main.tex", "$N = 270$ units of $W_c$ ($626.5$ photons at $\\omega = 0.4456$"),
