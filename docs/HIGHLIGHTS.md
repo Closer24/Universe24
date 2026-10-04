@@ -18,6 +18,7 @@ points at the law, the law's line governs and no formula is restated here.
 - The engine holds no number but Rule3's own and the world's keys; every physical value comes from the run's files and every primitive is one folder found by its name.
 - Rule3 is not changed; a problem is solved with Rule3 as it stands, and floor division and modulo live in Rule3's module alone.
 - Three acts write a NodeState: Rule3, the lay and the face; nothing is kept at a Node beyond the law's own numbers.
+- The message lay carries no uniform mode (the sum of the levels before equals the sum of the levels now, the edge one wavelength and the top one Node or one plus whole wavelengths), and the loader refuses a message otherwise; the giving's packet takes the same rule by its own law line; the shipped worlds' mode files are rebuilt and their readings re-read when a lay rule changes.
 - NodeReader is the one name of a reader: a seed and a connected region of two Nodes or more for a reader with Nodes alone, one Node allowed for a reader with a record of its own; the click line names no Node; the nouns detector, instrument, emitter, absorber, observer and measurer are out of the engine, the law and the paper.
 - A click writes on the GameBoard: a hole at one Node, an erasing front one shell per interval, the count at the record's root read through the root; no record reads its own write of the sign.
 - There is no limit on clicks per window, and a bound body has no window of its own.
@@ -41,7 +42,9 @@ points at the law, the law's line governs and no formula is restated here.
 - The law's lines are split into the statement (docs/ALGEBRA.md keeps the algebraic line, its inputs and numbers, status, fence and the engine's place) and the provenance (docs/PROVENANCE.md keeps who said it when and where, under the line's name), as the fill's last part, by the advisor's tool in one pull request read by both hands, then the hands' second pass section by section.
 - A count is one quantum of the invariant T sin omega_0; the law's line on the count governs.
 - The vacuum's content is 0; the vacuum's writes (Lambda) are a hypothesis under its own name; there is no field, only events.
+- The vacuum's write at a declared Lambda is open as a declaration under its own name at the hands' lines; the cross term's write waits for a derivation; the nuclear holder's declared weights are not opened.
 - The forces are the law's holders by name: the weak force is the conversion click, confinement the record's indivisibility, nuclear binding the declared holder, the electromagnetic force the sign holder, gravity the massless holder; the nucleus is a bound body of the nuclear holder and the atom a bound body of the sign holder, each a hypothesis by name until shown.
+- The pair of two bound records, one record of two parts (the centre's with the inertias' sum and the relative part with the reduced inertia, each a family of its own), is open as a hypothesis under its own name, with its folder, test, blind and derivation script; it enters the law's line and the paper only after its world has run at two hands, printed "declared" and never "derived".
 - Universe24's clicks are the mechanism's own; nature is not said to have clicks.
 - HIGHLIGHTS is the decisions in force, one line each, no diary; the night's narrative lives in the issues and the git history and the findings' states in the reviewer's ledger in the repository; nothing is a decision until it is a line here.
 - A change to a document replaces what it touches and deletes what no longer holds in the same pull request; the documents are English and ASCII, simple and precise, every symbol named at its first use.
@@ -51,6 +54,7 @@ points at the law, the law's line governs and no formula is restated here.
 - The experimenter alone runs worlds: one shipped world at a time, on main, each run under a minute.
 - Every run is blind first: the statement with its formula and blind expectation is approved by two hands before the run, and the result is read against it; the next experiment does not start before the statement of the previous one is posted.
 - Every world passes the back-in-time gate (the tool says MATCH across the world's clicks) before its run, and its readings carry the labels NODEREADER for a click's count and GAMEBOARD for a board reading.
+- A reading of a world is re-read, its blind untouched, whenever the lay or the engine changes under it.
 - The pages of a run are built from the output file outside the repository, in dark mode only, with a fixed camera, the moving quanta green, every part of a run a graphic beside its blind table.
 - The experimenter keeps a bug ledger on his issue and reports every problem the moment it is seen, looking at every run physically, frame by frame, and not only at the data; a difference from a blind or a folder's note is a report for the hands, who decide whether it is the engine's.
 - When the experimenter finds a bug he stops on it until it is gone completely and the experiment reads what nature gives; no next experiment before.
