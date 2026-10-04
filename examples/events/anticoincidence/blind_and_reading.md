@@ -1,17 +1,23 @@
 # One photon on two bodies, the anticoincidence: the blind and the reading
 
 The paper's S.57 (the mathematician's 144 and 145, two hands by the law as it stands; the owner's
-word of 2026-10-03, 03:25): a chain of 24 Nodes open on x with both faces receding, y and z folded;
-two records of two parts (g, e) of the pair [1, 1299] declared NodeReaders at one Node each, the
-Nodes 6 and 17, equidistant from the centre, their six Link factors 0 so that they stay; one light
-record of the family `photon` (light's pair, one real line) laid at the centre as two packets toward
-both at k = pi / 4, its laid share one whole quantum (the books' count 1 read from the loaded
-world), the control's two; each record reads the light into e at the transition's weight 6 over one
-window, the run of 40 intervals, and the credit draws once over both records' outcomes into the
-light (the taking the exchange at the record's Node). The blind is `expectation.json`, written by
-`build_world.py` before any run and never edited after; the reading is appended here after the
-night's run, every number a click (the `jump` lines over the trials, `tools/meeting_trials.py`); a
-reading that misses the blind is a finding, written as such and never adjusted.
+word of 2026-10-03, 03:25; the redesign of 2026-10-04 at the lay without the uniform mode, two
+hands, #1827 comments 5975470305 and 5975568700): a chain of 96 Nodes open on x with both faces
+receding, y and z folded; two records of two parts (g, e) of the pair [1, 1299] declared NodeReaders
+at two Nodes each, the Nodes 23 to 24 and 71 to 72, 24 Links from the centre each, their six Link
+factors 0 so that they stay; one light record of the family `photon` (light's pair, one real line)
+laid at the centre as two packets toward both, from 48 toward +x and from 47 toward -x, at k = pi / 4
+with the raised cosine of one wavelength beyond the top (so that the packet carries no uniform mode),
+its laid share one whole quantum (the books' count 1 read from the loaded world), the control's two;
+each record reads the light into e at the transition's weight 6 over one window of 48 intervals, the
+passage's end, the run going on to 170 so that the erasing front reaches both packets, and the credit
+draws once over both records' outcomes into the light (the taking the exchange at the record's
+Node). The blind is `expectation.json`, written by `build_world.py` before any run and never edited
+after; the reading is appended here after each run, every number a click (the credit lines over the
+trials, `tools/meeting_trials.py`); a reading that misses the blind is a finding, written as such and
+never adjusted. The sections below carry the folder's history at their commits: the chain of 24 with
+the atoms at the Nodes 6 and 17 and the window of 40, laid at top 1 and edge 3, until the redesign of
+2026-10-04 (the last section).
 
 ## The blind (expectation.json)
 
@@ -63,12 +69,16 @@ same table number for number (one photon: 101, 99, 0, 0, alpha 0, PASS; two phot
 101, alpha 56 / 39), the photon's quantum taken by the face at the taker's Node over two intervals and
 the record's parts laid; the front's faces on the chain after the count reaches 0.
 
-## What is not built, by name
+## What is open, by name (2026-10-04)
 
-The record's own NodeReader region around its Node (the mathematician's 180); the one draw's
-generator the first closing record's (the world has no draw of its own); the face form of the
-hole (the mathematician's 193, 195 and 197, the advisor's second in #1572 comment 5963391333), the
-morning's unless the gate worlds read MATCH across the click with it tonight.
+The front's taper (the shell at a distance within the last L written at a fraction of Rule3's own
+level, 0 behind, so that the hole's and the front's transients, 5 and 12 percent of a quantum for
+about eight intervals, leave the picture; a law line at the owner's word, the hands' counsel #1827
+comments 5975438107 and 5975470305); the giving's packet and the source in time without a uniform
+mode (the mathematician's first and the advisor's second, the second pull request); the erasure
+line's `taken` printed as the faces' booked take in quanta in place of the levels' sizes. The one
+draw's generator is the first closing record's (the world has no draw of its own); the record's own
+NodeReader region and the face form of the hole are built.
 
 ## On the own quantum, 2026-10-03 (branch own-quantum, 8382b8b9)
 

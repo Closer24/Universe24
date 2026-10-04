@@ -210,9 +210,10 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         v_next, first_root
     )  # between v and b
     drop = int(other.total_share(drv)[0]) - int(board.total_share(drv)[0])
+    rounding = 2 * max(abs(v), abs(leaving)) * board.credit.units[drv] // board.world.quantum_action
     assert (
-        0 < drop <= board.credit.units[drv] * 51 // 50
-    )  # the two faces remove one quantum of the drive within 2 percent (266; the ring two wavelengths long)
+        0 < drop <= board.credit.units[drv] + rounding
+    )  # one quantum within one level's rounding at the drive's amplitude A: 6 den A of the form, 2 A / T of W_c = 3 den T (266)
     assert 0 <= int(hole.remainder[here]) < walls[drv]  # the giver's remainder Rule3's own
     still = GameBoard(load_world(path))  # the same run without the front: its fronts dropped each step
     [still.step() for _ in range(still.tick, board.tick)]
