@@ -1049,38 +1049,66 @@ def unit_fixed_point(
     )
 
 
-def declared(
-    body: dict[str, Any], shape: Axis, quanta: int | None = None
-) -> tuple[np.ndarray, Axis, int]:
-    """A body's first lay from the world: its counts at its declared Nodes, its centre (the Node of its largest count) and its quanta: the sum of the declared counts for a new body, one Node carrying its quanta, and for a body laid before (declared on its Nodes) the design's count where it is given (`quanta`, the input of every re-lay: the declared Nodes' counts are the engine's reading of the lay before, the output, and never the input)."""
+ENGINE_LAID = ("parts", "conversion")  # a body the engine lays at its one Node, no mode entry
+QUANTA = "quanta"  # the design file's key naming a body's count, the generator's input
+
+
+def laid_by_the_engine(body: dict[str, Any]) -> bool:
+    """A body the engine lays at its one Node and the generator leaves (loader/node_reader_declaration.py): one declaring its parts, or converted whole."""
+    return any(key in body for key in ENGINE_LAID)
+
+
+def declared_counts(body: dict[str, Any], shape: Axis) -> tuple[np.ndarray, Axis]:
+    """A body's declared counts at its Nodes over the board and its centre, the Node of its largest count."""
     counts = np.zeros(shape, dtype=np.int64)
     for entry in cast(list[dict[str, Any]], body["nodes"]):
         node = (int(entry["node"][0]), int(entry["node"][1]), int(entry["node"][2]))
         counts[node] += int(entry["count"])
     centre = tuple(int(index) for index in np.unravel_index(int(counts.argmax()), shape))
-    return (
-        counts,
-        (centre[0], centre[1], centre[2]),
-        int(counts.sum()) if quanta is None or int(np.count_nonzero(counts)) <= 1 else int(quanta),
-    )
+    return counts, (centre[0], centre[1], centre[2])
 
 
-def designed_quanta(world: Path, bodies: int) -> list[int | None]:
-    """The design's count of every body of a world file, the input of a re-lay: the folder's design file (`design.json` beside the world, its world's entry `quanta` or the design's own `quanta`, one count for every body of the world), else the mode file beside the world (`<world>.mode.json`, each body's `count`, the first lay's design), else none (the world's declared counts sum to a new body's quanta)."""
-    design = world.with_name("design.json")
+def declared(
+    body: dict[str, Any], shape: Axis, quanta: int | None, label: str
+) -> tuple[np.ndarray, Axis, int]:
+    """A body's first lay from the world: its counts at its declared Nodes, its centre and its quanta: the sum of the declared counts for a new body, one Node carrying its quanta, and for a body laid before (declared on its Nodes) the design's count `quanta`, the input of every re-lay, refused by name without it (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the declared Nodes' counts are the engine's reading of the lay before, the output and never the input (ALGEBRA.md #the-generator), and the generator sums them for no re-lay."""
+    counts, centre = declared_counts(body, shape)
+    nodes = int(np.count_nonzero(counts))
+    if nodes <= 1:
+        return counts, centre, int(counts.sum())
+    if quanta is None:
+        raise ValueError(
+            f"{label} is declared on {nodes} Nodes, a body laid before, and no design names its count: the "
+            f"generator's input is the design file's `{QUANTA}` (the folder's design.json beside the world, "
+            "its world's entry or the design's own) and never the declared Nodes' counts, the engine's "
+            "reading of the lay before (ALGEBRA.md #the-generator)"
+        )
+    return counts, centre, int(quanta)
+
+
+def designed_quanta(world: Path, document: dict[str, Any]) -> list[int | None]:
+    """The design's count of every body of a world file, the generator's input (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the folder's design file beside the world (`design.json`, its world's entry `quanta` or the design's own `quanta`, one count for every body of the world), None for every body where it carries none; a body declared on its Nodes, laid before, is then refused by name here, naming the folder, the world and the key (`declared` refuses it again for a caller without a design): its declared counts are the engine's reading of the lay before, the output and never the input (ALGEBRA.md #the-generator), and no mode file beside the world stands for the design, a mode file written elsewhere carrying another lay's count (the shipped pixel re-laid at its Nodes' sum against its design's count, in a scratch)."""
+    design, quanta = world.with_name("design.json"), None
     if design.exists():
-        document = json.loads(design.read_text(encoding="utf-8"))
-        worlds = cast(dict[str, Any], document.get("worlds", {}))
+        designed = json.loads(design.read_text(encoding="utf-8"))
+        worlds = cast(dict[str, Any], designed.get("worlds", {}))
         entry = worlds.get(world.stem, {})  # a design may name its world in prose alone
-        quanta = (entry if isinstance(entry, dict) else {}).get("quanta", document.get("quanta"))
-        if quanta is not None:
-            return [int(quanta)] * bodies
-    mode = world.with_suffix(".mode.json")
-    if mode.exists():
-        laid = cast(list[dict[str, Any]], json.loads(mode.read_text(encoding="utf-8")).get("bodies", []))
-        if len(laid) == bodies:
-            return [int(body["count"]) for body in laid]
-    return [None] * bodies
+        quanta = (entry if isinstance(entry, dict) else {}).get(QUANTA, designed.get(QUANTA))
+    bodies = cast(list[dict[str, Any]], document.get("bodies", []))
+    shape = (int(document["shape"][0]), int(document["shape"][1]), int(document["shape"][2]))
+    for number, body in enumerate(bodies):
+        nodes = 0 if laid_by_the_engine(body) else int(np.count_nonzero(declared_counts(body, shape)[0]))
+        if nodes > 1 and quanta is None:
+            where = (
+                f"the design file {design}" if design.exists() else f"no design.json in {world.parent}"
+            )
+            raise ValueError(
+                f"{world.parent.name}/{world.name} bodies[{number}] is declared on {nodes} Nodes, a body laid "
+                f"before, and {where} names no `{QUANTA}` for it (its world's entry `{world.stem}` or the "
+                "design's own): the generator's input is the design's count and never the declared Nodes' "
+                "counts, the engine's reading of the lay before (ALGEBRA.md #the-generator)"
+            )
+    return [None if quanta is None else int(quanta)] * len(bodies)
 
 
 def body_entry(
@@ -1254,11 +1282,29 @@ def half_up(levels: np.ndarray) -> np.ndarray:
     return np.vectorize(int, otypes=[object])(np.floor((2 * levels + 1) / 2))
 
 
+def wave_of(message: dict[str, Any], label: str) -> tuple[int, int]:
+    """A message's wave number as declared, [p, q] for k = pi p / q per Link along its axis, refused by name at p = 0 before any lay (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the generator laid the wave [0, q] as it lays any, for a massless family the now level 0 at every Node (the uniform mode's content out of a level proportional to the envelope, `lay.corrected`) and the before level nonzero, a lay the loader alone refused (loader/messages.py); the tool refuses it itself, naming the message and the wave."""
+    turns, halves = (int(number) for number in message["wave"])
+    if turns == 0:
+        raise ValueError(
+            f"{label}.wave's p is 0 in the wave [0, {halves}]: a message has a wave number pi p / q per Link, "
+            "p not 0, its sign the direction along the axis, and the generator lays none at p = 0 (the now "
+            "level of a massless family 0 at every Node with the before level nonzero; ALGEBRA.md, The "
+            "message lay)"
+        )
+    return turns, halves
+
+
 def message_levels(
-    board: Board, message: dict[str, Any], beyond: np.ndarray, massless: bool, largest: Axis
+    board: Board,
+    message: dict[str, Any],
+    beyond: np.ndarray,
+    massless: bool,
+    largest: Axis,
+    label: str,
 ) -> tuple[np.ndarray, np.ndarray]:
     """The message's two levels (ALGEBRA.md #the-generator, The message lay): now_i = b e_i cos(k x_i + phi), k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`); every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board. The before level is the exact lay (ALGEBRA.md, The message lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)): with a = b e cos(k x + phi) the now level and s = b e sin(k x + phi) its quadrature (the cosine a quarter turn back), z = a + i s is the packet, every component e^(i q x) of z is advanced by its own omega(q), and the before level is Re of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, **L** the line's own read whose eigenvalue on e^(i q x) is cos omega(q), the backward root 0; the generator lays it mode by mode in real arithmetic (the tool's floats, exact to 10^-13 of the amplitude), a and s read at the lay's scale over the whole board and the packet advanced through its transform over the board at its largest declared extents (`largest`: along an axis with a receding face the extent the board grows to, the file's `receding.largest`, the packet at its coordinates and the before level cropped to the board as declared, so that a world growing by its receding face lays the levels of the same world declared at the full extent up to the division act on the board's own sums, and no tail wraps across a receding face; an axis without one keeps its extent, a periodic axis wrapping as it should; `advanced_real_part`), rounded once half up to integers (`half_up`) as the now level is by the division act with the half. The exact before level is not compactly supported (sqrt(1 - **L**^2) is no local read), so a packet whose quadrature sums to S level units carries a tail of order S / (2 pi sqrt 3 r^3) at r Links, one unit at twenty Links for the two slits. For a massless family of quanta (`massless`, the pair [den, den]; a holder of the content's kick is laid as declared) the uniform mode's content is then taken out of each level, the division act last on the finished shape (`lay.corrected`: the level's sum over the board divided among the packet's Nodes in proportion to the envelope by the division act, the leftover one unit each at the heaviest Nodes), so that now and before each sum to 0 exactly and the massless row's double root at wave number 0 carries neither level nor velocity (ALGEBRA.md, The message lay; the experimenter's bug report, #1827 comment 5975131359)."""
-    along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
+    along, (turns, halves) = AXES.index(str(message["along"])), wave_of(message, label)
     turned, whole_turn = message["phase"]
     sideways = {
         AXES.index(str(name)): (int(r), int(s)) for name, (r, s) in message.get("transverse", {}).items()
@@ -1332,7 +1378,7 @@ def message_entry(
 ) -> dict[str, Any]:
     """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `GameBoard.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes."""
     massless = family.quanta and family.pair[0] == family.pair[1]  # light: no uniform mode laid
-    now, before = message_levels(board, message, beyond, massless, largest)
+    now, before = message_levels(board, message, beyond, massless, largest, label)
     weights = (1,) if family.plane else laid_weights(message, label, family)
     counted = (
         weights[:1] if family.wronskian else weights
@@ -1388,14 +1434,22 @@ def pixel_mode(
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
-    # a body declaring its parts, or converted whole, is laid by the engine at its one Node (loader/node_reader_declaration.py)
-    kept = [n for n, body in enumerate(rows) if not any(k in body for k in ("parts", "conversion"))]
+    kept = [n for n, body in enumerate(rows) if not laid_by_the_engine(body)]
     bodies = [rows[number] for number in kept]
+    document_messages = [  # the start's messages: one laid whole at a tick of the run takes no mode entry
+        message
+        for message in cast(list[dict[str, Any]], document.get("messages", []))
+        if "tick" not in message
+    ]
+    for number, message in enumerate(document_messages):  # a wave at p = 0 refused before any lay
+        wave_of(message, f"messages[{number}]")
     lay = lay_of(document["lay"], "lay") if "lay" in document else None  # the lay by name
     lays: list[tuple[np.ndarray, Pairs, Axis, int]] = []
     zero = np.zeros(shape, dtype=np.int64)
     for number, body in enumerate(bodies):
-        counts, centre, quanta = declared(body, shape, (designed or [None] * len(rows))[kept[number]])
+        counts, centre, quanta = declared(
+            body, shape, (designed or [None] * len(rows))[kept[number]], f"bodies[{number}]"
+        )
         if bool(counts[beyond].any()):
             raise ValueError(
                 f"bodies[{number}] declares a Node beyond the board's inner face: nothing stands there"
@@ -1418,11 +1472,6 @@ def pixel_mode(
         zero,
     )
     names = [family.name for family in universe_of(universe)[1]]
-    document_messages = [  # the start's messages: one laid whole at a tick of the run takes no mode entry
-        message
-        for message in cast(list[dict[str, Any]], document.get("messages", []))
-        if "tick" not in message
-    ]
     events = [names.index(str(row["family"])) for row in bodies]
     families = with_records(universe_of(universe)[1], [events.count(i) for i in range(len(names))])
     records = []  # each body's record number within its family; a message lays on the first record, 0
@@ -1442,9 +1491,8 @@ def pixel_mode(
         slot = records[len(bodies) + number]
         rule = families[names.index(family)]
         massless = rule.quanta and rule.pair[0] == rule.pair[1]
-        laid_messages.append(
-            (names.index(family), slot, [message_levels(board, message, beyond, massless, largest)])
-        )
+        laid_pair = message_levels(board, message, beyond, massless, largest, f"messages[{number}]")
+        laid_messages.append((names.index(family), slot, [laid_pair]))
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
     # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its share);
@@ -1530,7 +1578,7 @@ def pixel_mode(
                 ) from refusal
             stands = weighted > 0
             if not stands.any():  # the law's count 1 over the mode's Nodes: the declaration stands
-                weighted, stands = declared(body, shape)[0], region & (pairs_kept[0][0] != 0)
+                weighted, stands = declared_counts(body, shape)[0], region & (pairs_kept[0][0] != 0)
                 print(
                     f"GAMEBOARD no Node carries a whole quantum of the body of {quanta} quanta about the Node "
                     f"{list(centre)}: its count stands at its declared Node, which the gate admits within its "
@@ -1607,7 +1655,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
-    designed = designed_quanta(args.input, len(cast(list[Any], document.get("bodies", []))))
+    designed = designed_quanta(args.input, document)
     mode = pixel_mode(document, list(args.sense), designed, tuple(args.pixel))
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")

@@ -272,3 +272,61 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
     )  # one plane wave
     a, s, _envelope, omega_k = real_line(document, document["messages"][0])
     assert (laid_by(document)[0][0][1] == rounded(a * math.cos(omega_k) - s * math.sin(omega_k))).all()
+
+
+def test_the_generators_count_is_the_designs_and_a_re_lay_without_the_designs_key_is_refused(
+    tmp_path, monkeypatch
+):
+    """The generator's input count (`designed_quanta`, `declared`; the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): a body declared on its Nodes, a body laid before, is re-laid at the design file's `quanta` and never at its Nodes' sum, the engine's reading of the lay before (the shipped pixel's design names its count where its Nodes' sum is the reading); the tool refuses such a world by name, naming the folder, the world and the key, with no design file beside it, with the mode file beside it alone (a mode file written elsewhere stands for no design) and with a design file naming no `quanta` for its world; a direct call of `pixel_mode` without the count is refused by name too; with the key the design's count is the lay's input, the mode entry's `count`, its share and the re-laid Nodes' sum within the rounding, and a new body on one Node keeps its declared count beside a design's."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    world = chain_body_world(tmp_path, TOOL, mode=False)  # one Node carrying 6, a new body
+    document = json.loads(world.read_text(encoding="utf-8"))
+    nodes = [{"node": [x, 0, 0], "count": c} for x, c in ((11, 1), (12, 3), (13, 1))]  # a lay before, 5
+    document["bodies"][0]["nodes"] = nodes
+    world.write_text(json.dumps(document), encoding="utf-8")
+    named = f"{tmp_path.name}/chain.json bodies\\[0\\] is declared on 3 Nodes, a body laid before, and "
+    refused(named + "no design.json in .* names no `quanta`", TOOL.main, ["--input", str(world)])
+    world.with_suffix(".mode.json").write_text(json.dumps({"bodies": [{"count": 5}]}), encoding="utf-8")
+    refused(named + "no design.json", TOOL.main, ["--input", str(world)])  # the mode file is no design
+    design = tmp_path / "design.json"
+    design.write_text(json.dumps({"worlds": {"chain": {"ticks": 400}}}), encoding="utf-8")
+    refused(named + f"the design file {design} names no `quanta`", TOOL.main, ["--input", str(world)])
+    refused("bodies\\[0\\] is declared on 3 Nodes.*design file's `quanta`", TOOL.pixel_mode, document)
+    pixel = EVENTS / "matter_alone" / "pixel.json"
+    shipped = json.loads((pixel.parent / "design.json").read_text(encoding="utf-8"))["worlds"]["pixel"]
+    assert TOOL.designed_quanta(pixel, json.loads(pixel.read_text(encoding="utf-8"))) == [
+        shipped["quanta"]
+    ]
+    design.write_text(json.dumps({"worlds": {"chain": {"quanta": 6}}}), encoding="utf-8")
+    one = {"family": "matter", "nodes": [{"node": [12, 0, 0], "count": 5}]}
+    assert (
+        TOOL.designed_quanta(world, document) == [6]
+        and TOOL.declared(one, (CHAIN, 1, 1), 6, "b")[2] == 5
+    )
+    TOOL.main(["--input", str(world)])
+    entry = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
+    laid = sum(n["count"] for n in json.loads(world.read_text(encoding="utf-8"))["bodies"][0]["nodes"])
+    print(f"the body declared on 3 Nodes summing to 5 re-laid at the design's {entry['count']}: {entry}")
+    assert entry["count"] == 6 and TOOL.agree(entry["carried"], 6) and TOOL.agree(laid, 6)
+
+
+def test_the_generator_refuses_a_wave_at_p_0_by_name_before_any_lay(tmp_path, monkeypatch, capsys):
+    """The generator's own refusal of a wave at p = 0 (`wave_of`; the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the tool laid the wave [0, q] as any, the now level 0 at every Node of a massless family and the before level nonzero, a lay the loader alone refused; a world with the wave [0, 4] is refused by the tool by name, naming the message and the wave, through its command (no mode file written) and through `pixel_mode` with a body declared beside the message (nothing laid, no round printed); the loader's own refusal stands on a world file carrying the wave under its mode file's digest; the shipped two slits' world lays as its mode file holds it."""
+    two_slits = EVENTS / "two_slits" / "two_slits.json"
+    shipped = json.loads(two_slits.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"]
+    entries = TOOL.pixel_mode(json.loads(two_slits.read_text(encoding="utf-8")))["messages"]
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    still, words = {**PACKET, "wave": [0, 4]}, "messages\\[0\\].wave's p is 0 in the wave \\[0, 4\\]"
+    refused(words, slit_world, tmp_path, TOOL, "still", messages=[still])
+    assert not (tmp_path / "still.mode.json").exists()
+    body, _ = {"family": "matter", "nodes": [{"node": [5, 4, 0], "count": 6}]}, capsys.readouterr()
+    refusal = refused(words, TOOL.pixel_mode, {**SLIT, "messages": [still], "bodies": [body]})
+    assert capsys.readouterr().err == ""  # no lay and no round printed before the refusal
+    path = slit_world(tmp_path, TOOL)  # the wave [1, 4] laid, then the file turned to p = 0 by hand
+    document = {**json.loads(path.read_text(encoding="utf-8")), "messages": [still]}
+    path.write_text(json.dumps(document), encoding="utf-8")
+    mode = json.loads((mode_path := path.with_suffix(".mode.json")).read_text(encoding="utf-8"))
+    mode_path.write_text(json.dumps({**mode, "world_digest": input_digest(document)}), encoding="utf-8")
+    refused("messages\\[0\\].wave's p is 0: a message has", lambda: load_world(path))  # the loader's own
+    print(f"the tool's refusal: {refusal}; the two slits' message laid as shipped: {entries == shipped}")
+    assert entries == shipped
