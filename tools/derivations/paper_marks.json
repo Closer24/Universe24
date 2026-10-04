@@ -186,8 +186,20 @@
    "source": "none named",
    "existing_script": "paper/general_formula/bands.py",
    "proposed_module": "bands.py",
-   "status": "scriptless",
-   "note": "the figure's formula cos omega = (num / (3 den)) (2 + cos k) at [1, 1] and [2, 3]"
+   "status": "scripted",
+   "note": "the figure's formula cos omega = (num / (3 den)) (2 + cos k) at [1, 1] and [2, 3]",
+   "script": "tools/derivations/bands.py",
+   "function": "figure_bands",
+   "expected": [
+    0.841,
+    3.354,
+    1.231,
+    1.347,
+    0.4456,
+    0.8862
+   ],
+   "digits": 3,
+   "closure_note": "the caption's numbers to three decimals; its period 14.1, printed to one decimal, is bands.two_slits_period"
   },
   {
    "line": 175,
@@ -198,7 +210,15 @@
    "source": "S.1",
    "existing_script": "paper/general_formula/bands.py",
    "proposed_module": "bands.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/bands.py",
+   "function": "diagonal_dispersion",
+   "expected": [
+    0,
+    0.5774
+   ],
+   "digits": 4,
+   "closure_note": "the sentence prints no number: the residual |cos omega - cos k| along the diagonal and light's speed there"
   },
   {
    "line": 175,
@@ -209,8 +229,18 @@
    "source": "sec:bodyclicks",
    "existing_script": "tools/derivations/two_body.py",
    "proposed_module": "bands.py",
-   "status": "scriptless",
-   "note": "two_body.inertia gives m* = 3 tan omega_0; the potential omega_0 f(omega_0) U is the rest push of ALGEBRA.md, The push on a moving record"
+   "status": "scripted",
+   "note": "two_body.inertia gives m* = 3 tan omega_0; the potential omega_0 f(omega_0) U is the rest push of ALGEBRA.md, The push on a moving record",
+   "script": "tools/derivations/bands.py",
+   "function": "schroedinger_limit",
+   "expected": [
+    3.3541,
+    0.8944,
+    1.0634,
+    0.8944
+   ],
+   "digits": 4,
+   "closure_note": "the sentence prints no number: m* = 3 tan omega_0, the potential's coefficient 2 tan(omega_0 / 2), f(omega_0) = 1.0634 of the law and omega_0 f(omega_0) at [2, 3]"
   },
   {
    "line": 175,
@@ -221,8 +251,17 @@
    "source": "S.18, S.21",
    "existing_script": "paper/general_formula/moving_clock.py",
    "proposed_module": "bands.py",
-   "status": "scriptless",
-   "note": "moving_clock.py holds c_m^2 = omega_0 / (3 tan omega_0)"
+   "status": "scripted",
+   "note": "moving_clock.py holds c_m^2 = omega_0 / (3 tan omega_0)",
+   "script": "tools/derivations/bands.py",
+   "function": "rest_energy_departure",
+   "expected": [
+    0.7523,
+    0.7642,
+    1.0001
+   ],
+   "digits": 4,
+   "closure_note": "the sentence prints no number: omega_0 / tan omega_0 and 1 - omega_0^2 / 3 at [2, 3], their ratio's limit at [999, 1000]"
   },
   {
    "line": 175,
@@ -233,8 +272,18 @@
    "source": "sec:calibration",
    "existing_script": null,
    "proposed_module": "bands.py",
-   "status": "scriptless",
-   "note": "one pair fixes cos omega_0 and c_m together"
+   "status": "scripted",
+   "note": "one pair fixes cos omega_0 and c_m together",
+   "script": "tools/derivations/bands.py",
+   "function": "pair_fixes_mass_and_speed",
+   "expected": [
+    0.6667,
+    0.2222,
+    0.2508,
+    3.3541
+   ],
+   "digits": 4,
+   "closure_note": "the sentence prints no number: cos omega_0, c_s^2, c_m^2 (S.22's 0.2508) and m* at [2, 3]"
   },
   {
    "line": 187,
@@ -245,8 +294,18 @@
    "source": "none named",
    "existing_script": "tools/derivations/paces.py",
    "proposed_module": "paces.py",
-   "status": "scriptless",
-   "note": "paces.clock"
+   "status": "scripted",
+   "note": "paces.clock",
+   "script": "tools/derivations/paces.py",
+   "function": "clock_composes",
+   "expected": [
+    0.951225,
+    0.951229,
+    0,
+    0
+   ],
+   "digits": 6,
+   "closure_note": "S.34 (a)'s check at Gamma = 6,000 and c = 300 and the composition's two residuals"
   },
   {
    "line": 187,
@@ -257,8 +316,17 @@
    "source": "S.34",
    "existing_script": null,
    "proposed_module": "paces.py",
-   "status": "scriptless",
-   "note": "the acts' factors per proper volume and per proper interval, S.34"
+   "status": "scripted",
+   "note": "the acts' factors per proper volume and per proper interval, S.34",
+   "script": "tools/derivations/paces.py",
+   "function": "acts_factors",
+   "expected": [
+    1,
+    1,
+    1
+   ],
+   "digits": 12,
+   "closure_note": "the three factors over N^5, N^4 and N, exact in the rationals"
   },
   {
    "line": 187,
@@ -269,8 +337,17 @@
    "source": "S.31",
    "existing_script": null,
    "proposed_module": "paces.py",
-   "status": "scriptless",
-   "note": "the exponential metric, S.31"
+   "status": "scripted",
+   "note": "the exponential metric, S.31",
+   "script": "tools/derivations/paces.py",
+   "function": "exact_variable",
+   "expected": [
+    0,
+    6.3,
+    5.9
+   ],
+   "digits": 1,
+   "closure_note": "the residual in the exact variable and the preceding sentence's 6.3 and 5.9 percent; its 3 x 10^-29 and 10^-20 are paces.finite_rotation_correction_at_natures_bounds in those units"
   },
   {
    "line": 189,
@@ -281,8 +358,16 @@
    "source": "S.1",
    "existing_script": "paper/general_formula/einstein_check.py",
    "proposed_module": "rule3.py",
-   "status": "scriptless",
-   "note": "rule3.dispersion_at_paces transcribes the band at a pace; einstein_check.py builds omega(k, U) from the same coefficients"
+   "status": "scripted",
+   "note": "rule3.dispersion_at_paces transcribes the band at a pace; einstein_check.py builds omega(k, U) from the same coefficients",
+   "script": "tools/derivations/rule3.py",
+   "function": "band_at_a_pace",
+   "expected": [
+    0.6903,
+    0
+   ],
+   "digits": 4,
+   "closure_note": "cos omega from the line's coefficients at [2, 3], Gamma = 6,000, c = 300, k = 0.3 and its difference from Eq. (4)"
   },
   {
    "line": 193,
@@ -293,8 +378,20 @@
    "source": "S.2",
    "existing_script": "paper/general_formula/band_and_channels.py",
    "proposed_module": "paces.py",
-   "status": "scriptless",
-   "note": "light's speed (1 - 2 x) / sqrt 3 at a content, the index"
+   "status": "scripted",
+   "note": "light's speed (1 - 2 x) / sqrt 3 at a content, the index",
+   "script": "tools/derivations/paces.py",
+   "function": "light_index",
+   "expected": [
+    0.9048,
+    0.9048,
+    1.1052,
+    1.1111,
+    0.1052,
+    0.1
+   ],
+   "digits": 4,
+   "closure_note": "the sentence prints no number: N^2, e^(-2 x), n, 1 / (1 - 2 x), n - 1 and 2 x at x = 0.05"
   },
   {
    "line": 193,
@@ -305,8 +402,16 @@
    "source": "none named",
    "existing_script": "tools/derivations/paces.py",
    "proposed_module": "paces.py",
-   "status": "scriptless",
-   "note": "paces.mirror_thresholds"
+   "status": "scripted",
+   "note": "paces.mirror_thresholds",
+   "script": "tools/derivations/paces.py",
+   "function": "mirror_threshold",
+   "expected": [
+    1733,
+    2464
+   ],
+   "digits": 0,
+   "closure_note": "the sentence prints no number; the law's contents 1,733 and 2,465 at Gamma = 10^4: the exact fraction gives 2,464 at lambda = 4.78, one unit under the law's, within the wavelength's third digit"
   },
   {
    "line": 196,
@@ -317,8 +422,17 @@
    "source": "S.3",
    "existing_script": "tools/derivations/paces.py",
    "proposed_module": "paces.py",
-   "status": "scriptless",
-   "note": "paces.frozen_content: the composed clock never closes"
+   "status": "scripted",
+   "note": "paces.frozen_content: the composed clock never closes",
+   "script": "tools/derivations/paces.py",
+   "function": "no_horizon",
+   "expected": [
+    2207,
+    0,
+    28178
+   ],
+   "digits": 0,
+   "closure_note": "the composed Link pace at c = Gamma / 2, the truncation's 0 there and the frozen content (Gamma / 2) ln 2 Gamma, the paper's 28,178"
   },
   {
    "line": 213,
@@ -367,8 +481,16 @@
    "source": "S.5",
    "existing_script": null,
    "proposed_module": "rule3.py",
-   "status": "scriptless",
-   "note": "rule3.conserved_form and the remainder's walk (r - r') (next - before) / (w p_i^2) on a chain"
+   "status": "scripted",
+   "note": "rule3.conserved_form and the remainder's walk (r - r') (next - before) / (w p_i^2) on a chain",
+   "script": "tools/derivations/rule3.py",
+   "function": "three_level_form_walk",
+   "expected": [
+    0,
+    0
+   ],
+   "digits": 12,
+   "closure_note": "the two forms' walks less the remainders' terms on a periodic chain, exact in the rationals"
   },
   {
    "line": 274,
@@ -379,8 +501,16 @@
    "source": "S.7",
    "existing_script": "tools/derivations/tension.py",
    "proposed_module": "tension.py",
-   "status": "scriptless",
-   "note": "the plane wave's current and the stress of dust 2 c v_a v_b"
+   "status": "scripted",
+   "note": "the plane wave's current and the stress of dust 2 c v_a v_b",
+   "script": "tools/derivations/tension.py",
+   "function": "dust_stress",
+   "expected": [
+    1,
+    1
+   ],
+   "digits": 6,
+   "closure_note": "the Link's booking over 2 c v_a v_b on light's wave, c = D / T and v in units of light's c, the xx and xy parts"
   },
   {
    "line": 306,
@@ -402,8 +532,15 @@
    "source": "sec:direction",
    "existing_script": null,
    "proposed_module": "rule3.py",
-   "status": "scriptless",
-   "note": "rule3.step_backward: the backward reading exists to the bit at fixed paces"
+   "status": "scripted",
+   "note": "rule3.step_backward: the backward reading exists to the bit at fixed paces",
+   "script": "tools/derivations/rule3.py",
+   "function": "backward_reading_to_the_bit",
+   "expected": [
+    0
+   ],
+   "digits": 0,
+   "closure_note": "the Nodes differing after 50 intervals forward and back at fixed integer paces"
   },
   {
    "line": 310,
@@ -566,8 +703,18 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "families.py",
-   "status": "scriptless",
-   "note": "the universe table's derived columns: the gap, the reach and the free number from the pair and the shape"
+   "status": "scripted",
+   "note": "the universe table's derived columns: the gap, the reach and the free number from the pair and the shape",
+   "script": "tools/derivations/families.py",
+   "function": "universe_table",
+   "expected": [
+    0,
+    20,
+    0.6667,
+    4
+   ],
+   "digits": 2,
+   "closure_note": "gravity's kappa, the binding holder's range, matter's cos omega_0 and the holder's 1 + 3 parts"
   },
   {
    "line": 410,
@@ -578,7 +725,15 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "families.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/families.py",
+   "function": "what_rule3_reads",
+   "expected": [
+    1,
+    3,
+    4
+   ],
+   "digits": 0
   },
   {
    "line": 412,
@@ -589,8 +744,18 @@
    "source": "S.38",
    "existing_script": "tools/derivations/greens_function.py",
    "proposed_module": "families.py",
-   "status": "scriptless",
-   "note": "greens_function.three_g and four_pi_r_g: 3 G(r) s toward 3 s / (4 pi r)"
+   "status": "scripted",
+   "note": "greens_function.three_g and four_pi_r_g: 3 G(r) s toward 3 s / (4 pi r)",
+   "script": "tools/derivations/families.py",
+   "function": "poisson_rest",
+   "expected": [
+    3,
+    0.2387,
+    0.7582,
+    1.012
+   ],
+   "digits": 3,
+   "closure_note": "the rest line's 3, 3 / (4 pi), 3 G(0) and 4 pi r G(r) at r = 5 from greens_function"
   },
   {
    "line": 412,
@@ -601,7 +766,16 @@
    "source": "S.2",
    "existing_script": "paper/general_formula/band_and_channels.py",
    "proposed_module": "paces.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/paces.py",
+   "function": "index_is_the_links_pace",
+   "expected": [
+    1.1052,
+    1.1052,
+    1.1052
+   ],
+   "digits": 4,
+   "closure_note": "the sentence prints no number: Gamma / p_a, the phase index and e^(2 x) at x = 0.05"
   },
   {
    "line": 416,
@@ -618,8 +792,17 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "families.py",
-   "status": "scriptless",
-   "note": "cosh kappa = 4: kappa = 2.063, e^-kappa = 0.127 per Link, 1 / kappa = 0.48 Links"
+   "status": "scripted",
+   "note": "cosh kappa = 4: kappa = 2.063, e^-kappa = 0.127 per Link, 1 / kappa = 0.48 Links",
+   "script": "tools/derivations/families.py",
+   "function": "gap_is_the_inverse_reach",
+   "expected": [
+    0,
+    4,
+    0.127,
+    0.48
+   ],
+   "digits": 2
   },
   {
    "line": 430,
@@ -633,8 +816,18 @@
    "source": "S.12",
    "existing_script": null,
    "proposed_module": "families.py",
-   "status": "scriptless",
-   "note": "the two speeds' difference 0 under Every row reads the content, S.12; GW170817's bounds are nature's"
+   "status": "scripted",
+   "note": "the two speeds' difference 0 under Every row reads the content, S.12; GW170817's bounds are nature's",
+   "script": "tools/derivations/families.py",
+   "function": "two_speeds",
+   "expected": [
+    0,
+    0,
+    182.2,
+    1
+   ],
+   "digits": 1,
+   "closure_note": "the two speeds' difference and their delays' difference 0; the superseded version's separation over 1,000 Links at x = 0.05 and 0 within GW170817's bounds, nature's, held as constants"
   },
   {
    "line": 430,
@@ -1018,8 +1211,17 @@
    "source": "S.22",
    "existing_script": "tools/derivations/bands.py",
    "proposed_module": "bands.py",
-   "status": "scriptless",
-   "note": "row (h), de Broglie: the band's group velocity"
+   "status": "scripted",
+   "note": "row (h), de Broglie: the band's group velocity",
+   "script": "tools/derivations/bands.py",
+   "function": "de_broglie",
+   "expected": [
+    0.003,
+    0,
+    0.2508
+   ],
+   "digits": 4,
+   "closure_note": "the row prints no number: v at k = 0.01, the residual of k = omega_b v / c_m^2 and c_m^2 at [2, 3]"
   },
   {
    "line": 521,
@@ -1147,8 +1349,17 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "the band's one speed against the MAGIC and LHAASO bounds"
+   "status": "scripted",
+   "note": "the band's one speed against the MAGIC and LHAASO bounds",
+   "script": "tools/derivations/constants.py",
+   "function": "one_light_speed",
+   "expected": [
+    0,
+    2.0,
+    6.7
+   ],
+   "digits": 1,
+   "closure_note": "the sentence prints the orders 10^-28 and 10^-20; the paragraph's 2.0 x 10^-28 and 6.7 x 10^-20 in those units, from MAGIC's and LHAASO's bounds, nature's inputs"
   },
   {
    "line": 538,
@@ -1161,8 +1372,16 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "bands.py",
-   "status": "scriptless",
-   "note": "the folded axis: k_z = 0"
+   "status": "scripted",
+   "note": "the folded axis: k_z = 0",
+   "script": "tools/derivations/bands.py",
+   "function": "folded_axis_band",
+   "expected": [
+    0,
+    0,
+    0
+   ],
+   "digits": 6
   },
   {
    "line": 538,
@@ -1396,8 +1615,18 @@
    "source": "S.25",
    "existing_script": "tools/derivations/greens_function.py",
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "G_clock = 3 / (4 pi Gamma E_g) c^2 from the holder's rest 3 s / (4 pi r), S.25"
+   "status": "scripted",
+   "note": "G_clock = 3 / (4 pi Gamma E_g) c^2 from the holder's rest 3 s / (4 pi r), S.25",
+   "script": "tools/derivations/constants.py",
+   "function": "newton_constant",
+   "expected": [
+    3,
+    0.2387,
+    0.3333,
+    0.0796
+   ],
+   "digits": 4,
+   "closure_note": "the rest line's 3, 3 / (4 pi), c^2 and G_clock Gamma E_g = 1 / (4 pi)"
   },
   {
    "line": 570,
@@ -1411,8 +1640,15 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "2 cos omega_0 / (1 + cos omega_0) = 0.8 at [2, 3]"
+   "status": "scripted",
+   "note": "2 cos omega_0 / (1 + cos omega_0) = 0.8 at [2, 3]",
+   "script": "tools/derivations/constants.py",
+   "function": "kepler_factor",
+   "expected": [
+    0.2667,
+    0.8
+   ],
+   "digits": 4
   },
   {
    "line": 571,
@@ -1425,8 +1661,17 @@
    "source": "S.26",
    "existing_script": "tools/derivations/units.py",
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "the quantum one unit of the invariant 2 A^2 sin omega = T, S.26"
+   "status": "scripted",
+   "note": "the quantum one unit of the invariant 2 A^2 sin omega = T, S.26",
+   "script": "tools/derivations/constants.py",
+   "function": "charge_universality",
+   "expected": [
+    0.5,
+    0.5,
+    1
+   ],
+   "digits": 4,
+   "closure_note": "the Wronskian over T at two pairs by the integer lay, 1 / 2 to the root's rounding; nature's 10^-21 is a comparison"
   },
   {
    "line": 571,
@@ -1437,8 +1682,16 @@
    "source": "S.26",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s), S.26"
+   "status": "scripted",
+   "note": "alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s), S.26",
+   "script": "tools/derivations/constants.py",
+   "function": "alpha_law",
+   "expected": [
+    0.20675,
+    1
+   ],
+   "digits": 4,
+   "closure_note": "the prefactor 3 sqrt 3 / (8 pi) of the law and the gap's cancellation"
   },
   {
    "line": 571,
@@ -1449,7 +1702,13 @@
    "source": "S.26, S.43",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/constants.py",
+   "function": "reciprocal_pair",
+   "expected": [
+    1
+   ],
+   "digits": 12
   },
   {
    "line": 571,
@@ -1460,8 +1719,18 @@
    "source": "S.26",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "E_s T cos omega_s = k_w Gamma, the line of one energy"
+   "status": "scripted",
+   "note": "E_s T cos omega_s = k_w Gamma, the line of one energy",
+   "script": "tools/derivations/constants.py",
+   "function": "energy_line",
+   "expected": [
+    1,
+    1,
+    21845,
+    6000
+   ],
+   "digits": 0,
+   "closure_note": "the loss over the gain at the charged universe's and the turning file's integers, and the rule's file's T cos omega_s against Gamma"
   },
   {
    "line": 571,
@@ -1474,7 +1743,14 @@
    "source": "S.26",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/constants.py",
+   "function": "charge_per_record",
+   "expected": [
+    1,
+    5
+   ],
+   "digits": 6
   },
   {
    "line": 571,
@@ -1485,8 +1761,17 @@
    "source": "S.44",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "S.44"
+   "status": "scripted",
+   "note": "S.44",
+   "script": "tools/derivations/constants.py",
+   "function": "two_forces_ratio",
+   "expected": [
+    0,
+    3.3714,
+    3.3713
+   ],
+   "digits": 4,
+   "closure_note": "the identity's residual and the paragraph's (m_p / m_e)^2 and nature's quotient in 10^6"
   },
   {
    "line": 571,
@@ -1502,8 +1787,19 @@
    "source": "S.24, S.27",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "the Link's bound from MAGIC: omega_e < 2.0 x 10^-14 on an axis, 3.1 x 10^-14 averaged, S.24 and S.27"
+   "status": "scripted",
+   "note": "the Link's bound from MAGIC: omega_e < 2.0 x 10^-14 on an axis, 3.1 x 10^-14 averaged, S.24 and S.27",
+   "script": "tools/derivations/constants.py",
+   "function": "link_bound",
+   "expected": [
+    2.0,
+    3.1,
+    2.0,
+    4.9,
+    4
+   ],
+   "digits": 1,
+   "closure_note": "omega_e in 10^-14 and gamma_K - 1 in 10^-28 along an axis and averaged, and LHAASO's four orders; the direction average by the sphere's SUM n_a^4 = 3 / 5 on the band's k^4 term"
   },
   {
    "line": 571,
@@ -1514,7 +1810,15 @@
    "source": "S.26",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/constants.py",
+   "function": "dithered_level",
+   "expected": [
+    0,
+    0.142857
+   ],
+   "digits": 6,
+   "closure_note": "the sentence prints no number: a source of 1 / 7 per interval, its mean level exact and its mean redshift times Gamma"
   },
   {
    "line": 575,
@@ -1525,8 +1829,18 @@
    "source": "S.54",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "the lattice's properties with no number, S.54: the group of 48, 1 / sqrt 3, the bound 1"
+   "status": "scripted",
+   "note": "the lattice's properties with no number, S.54: the group of 48, 1 / sqrt 3, the bound 1",
+   "script": "tools/derivations/constants.py",
+   "function": "lattice_fixes",
+   "expected": [
+    48,
+    0.5774,
+    1,
+    0.2387
+   ],
+   "digits": 4,
+   "closure_note": "the paragraph's 48, 1 / sqrt 3, 1 and 3 / (4 pi); alpha_1 = -8 is frame.py's"
   },
   {
    "line": 577,
@@ -1540,8 +1854,16 @@
    "source": "none named",
    "existing_script": "tools/derivations/bands.py",
    "proposed_module": "bands.py",
-   "status": "scriptless",
-   "note": "bands.light_speed"
+   "status": "scripted",
+   "note": "bands.light_speed",
+   "script": "tools/derivations/bands.py",
+   "function": "light_speed_and_causal_bound",
+   "expected": [
+    0.5774,
+    0.5774,
+    1
+   ],
+   "digits": 4
   },
   {
    "line": 577,
@@ -1552,8 +1874,19 @@
    "source": "S.31",
    "existing_script": null,
    "proposed_module": "paces.py",
-   "status": "scriptless",
-   "note": "the two clocks under the principle, S.31"
+   "status": "scripted",
+   "note": "the two clocks under the principle, S.31",
+   "script": "tools/derivations/paces.py",
+   "function": "two_clocks",
+   "expected": [
+    0.3916,
+    0.4,
+    0.392,
+    0.8,
+    0.64
+   ],
+   "digits": 4,
+   "closure_note": "S.31's beat at N = 0.8, omega_1 = 0.4, omega_2 = 0.9, the cavity of bodies' N and the declared faces' N^2"
   },
   {
    "line": 580,
@@ -1564,8 +1897,17 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "the calibration series' forms of reading"
+   "status": "scripted",
+   "note": "the calibration series' forms of reading",
+   "script": "tools/derivations/constants.py",
+   "function": "calibration_series",
+   "expected": [
+    28.33,
+    1,
+    0
+   ],
+   "digits": 2,
+   "closure_note": "the table's forms of reading: 28.33 from nature's alpha, 4 pi Gamma E_g G_clock = 1 and c_vac = 0"
   },
   {
    "line": 598,
@@ -1604,8 +1946,17 @@
    "source": "S.55",
    "existing_script": "tools/derivations/two_body.py",
    "proposed_module": "constants.py",
-   "status": "scriptless",
-   "note": "the rest energy m* c_m^2 from two_body.inertia and the band's c_m, S.53 and S.55"
+   "status": "scripted",
+   "note": "the rest energy m* c_m^2 from two_body.inertia and the band's c_m, S.53 and S.55",
+   "script": "tools/derivations/constants.py",
+   "function": "masses_from_the_click",
+   "expected": [
+    1,
+    1.34,
+    1.4
+   ],
+   "digits": 2,
+   "closure_note": "m* c_m^2 / omega_0, the ceiling 1 / sin omega_0 = 1.34 in the rule's universe and LHAASO's 1.4 PeV; 1,836 has no cause and is not computed"
   },
   {
    "line": 602,
@@ -1616,7 +1967,14 @@
    "source": "none named",
    "existing_script": null,
    "proposed_module": "constants.py",
-   "status": "scriptless"
+   "status": "scripted",
+   "script": "tools/derivations/constants.py",
+   "function": "universality_and_equivalence",
+   "expected": [
+    1,
+    1
+   ],
+   "digits": 4
   },
   {
    "line": 604,
@@ -1793,8 +2151,18 @@
    "source": "S.39",
    "existing_script": null,
    "proposed_module": "families.py",
-   "status": "scriptless",
-   "note": "the gapped holder's kernel, S.39"
+   "status": "scripted",
+   "note": "the gapped holder's kernel, S.39",
+   "script": "tools/derivations/families.py",
+   "function": "gapped_holder_kernel",
+   "expected": [
+    20,
+    0.9546,
+    0.92,
+    0.95
+   ],
+   "digits": 2,
+   "closure_note": "S.39's range 20 Links, G_kappa(1) / G_0(1) = 0.9546, the slope 0.92 and 1 - 1 / R"
   },
   {
    "line": 618,
