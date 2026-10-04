@@ -37,7 +37,7 @@ points at the law, the law's line governs and no formula is restated here.
 - The conventions and units table is a section of the law (the one orientation, the tension's sign, the step's phase, the matrices and the energy, T and the walls, form against share against inflow), drafted by the first hand and confirmed by the second, its identities asserted in the integer algebra test.
 - The readings gate re-runs the gate worlds and compares their output bit for bit to the folders' blind_and_reading documents.
 - The engine's derivation ledger is a section of the law: every number the engine prints that the law derives stands there with its derivation.
-- Fill 17 part 2 is merged: the law's lines two-handed, the deleted worlds' rows as dated clauses, count-unit's items; part 3 follows on its own branch.
+- The law's fill proceeds in numbered parts, each its own pull request read by both hands.
 - The law's lines are split into the statement (docs/ALGEBRA.md keeps the algebraic line, its inputs and numbers, status, fence and the engine's place) and the provenance (docs/PROVENANCE.md keeps who said it when and where, under the line's name), as part 4 after part 3, by the advisor's tool in one pull request read by both hands, then the hands' second pass section by section.
 - A count is one quantum of the invariant T sin omega_0; the law's line on the count governs.
 - The vacuum's content is 0; the vacuum's writes (Lambda) are a hypothesis under its own name; there is no field, only events.
@@ -65,7 +65,7 @@ points at the law, the law's line governs and no formula is restated here.
 - The method's standard is that the paper's reviewers can find no problem, no bug, none in the derivations, nothing; every gate and every whole read serves that standard.
 - Two hands, the first hand and the confirm, before anything enters the law, the engine or the paper.
 - The Boss writes no code: workers, decision lines, issue comments, briefs and pull request bodies alone; the Boss opens every pull request, with "HANDED BY Boss" and the files when a worker wrote it.
-- A hand may fix a defect of the engine on a branch from main with its dedicated test, at the owner's word, for the other hand's second at the sha and the Boss's merge at two hands and CI green; the Boss writes no code.
+- A hand may fix a defect of the engine on a branch from main with its dedicated test, at the owner's word, for the other hand's second at the sha and the Boss's merge at two hands and CI green.
 - The team works by one method written in [skills/workflow.md](../skills/workflow.md) (one source per fact; one loop per finding in the repository's ledger; one gate set on every pull request, nothing merges red; whole reads until silence, zero read from the ledger and never declared; one pace, no restructuring while a fill is open); this document points at it and does not restate it.
 - The priorities are the algebra first, then the paper and its supplement on it; everyone works on these and on bug fixing but the experimenter, who runs the worlds.
 - A definition is named in one clause on every sign, factor and normalization.
