@@ -62,9 +62,7 @@ def world_of(design: dict, amplitude: int) -> dict:
         "shape": [length, 1, 1],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "face_depth": 1,
-        "ticks": design[
-            "ticks"
-        ],  # the run goes on past the window's close, so that the front spreads in the output
+        "ticks": design["ticks"],  # the run goes on past the window's close: the front spreads
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": records,
