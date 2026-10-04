@@ -186,7 +186,7 @@ def drawn_node(board: GameBoard, books: NodeBooks, weights: list[int]) -> Node:
 
 
 def drawn_weights(board: GameBoard, inflows: Iterable[int]) -> list[int]:
-    """The draw's weights from the books' inflows booked in the unit G^2 (`booked_inflow`, `credit.booked`): each floored at 0 and divided once at the close by G^2 by the division act, the current's units the generator draws in (features/click, `drawn`: the index by the state mod the weights' total, so the weights' scale is part of the realisation), the plain inflows bit for bit where no tension stood and the draw's realisation with them (ALGEBRA.md #the-click-is-the-meeting, the credit's booking: every reading at the vacuum's paces unchanged bit for bit), the law's ratios under tension; one division at the close and none per Link, the count's own division by W_rec G^2 beside it (`credit.quanta_through`)."""
+    """The draw's weights from the books' inflows booked in the unit G^2 (`booked_inflow`, `credit.booked`): each floored at 0 and divided once at the close by G^2 by the division act, the current's units the generator draws in (features/click, `drawn`: the pick the state's fraction of the weights' total, (state times total) div 2^width, so the weights' ratios realise the draw and their one rounding at the close is part of the realisation), the plain inflows bit for bit where no tension stood and the draw's realisation with them (ALGEBRA.md #the-click-is-the-meeting, the credit's booking: every reading at the vacuum's paces unchanged bit for bit), the law's ratios under tension; one division at the close and none per Link, the count's own division by W_rec G^2 beside it (`credit.quanta_through`)."""
     square = board.unit * board.unit
     return [int(division_forward(max(int(inflow), 0), square, 0)[0]) for inflow in inflows]
 
@@ -233,12 +233,21 @@ def reported(
 
 
 def weighed_currents(board: GameBoard) -> Weighed:
-    """Every record of quanta's current through each Port at every Node (`node.currents_of`, as `GameBoard.currents` reads it, per record) with the factor Q_ij of each of its six Links in the unit G^2 (`GameBoard.read`, the record's own), both at the pair the step starts from: the pieces of the conserved form's own current, SUM over the family's records of Q_ij F_ij per Port, the one weight a NodeReader books through its front Ports (`reports.weighted`, `GameBoard.report`, `booked_inflows`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, equal to the plain current where no tension stands); the records of a charged family each with its own read, as `GameBoard.share_of` loops them."""
+    """Every record of quanta's current through each Port at every Node (`node.currents_of`, as `GameBoard.currents` reads it, per record) with the factor Q_ij of each of its six Links in the unit G^2 (`GameBoard.read`, the record's own), both at the pair the step starts from: the pieces of the conserved form's own current, SUM over the family's records of Q_ij F_ij per Port, the one weight a NodeReader books through its front Ports (`reports.weighted`, `GameBoard.report`, `booked_inflows`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, equal to the plain current where no tension stands); the records of a charged family each with its own read, as `GameBoard.share_of` loops them, a turned record's currents from the same turned pair its share reads, its level before turned by the previous interval's angle (`node.lines_as_read`; ALGEBRA.md, The share's change is the currents, under the rotation)."""
     return {
         index: [
             (
                 node.currents_of(
-                    board.families[index].pair[0], board.lines_of(index, record), board.wrap
+                    board.families[index].pair[0],
+                    node.lines_as_read(
+                        index,
+                        board.families,
+                        board.states,
+                        board.world.node_clock,
+                        record,
+                        board.lines_of(index, record),
+                    ),
+                    board.wrap,
                 ),
                 board.read(index, 1, record)[1],
             )

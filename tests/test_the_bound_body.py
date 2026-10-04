@@ -333,7 +333,7 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
     for index in (names.index(n) for n in ("gravity", "binding", "nuclear")):  # the sourced held rows
         state, walls = board.states[index], board.walls(index)
         assert all((r == w // 2).all() for r, w in zip(state.write_remainders, walls, strict=True))
-        half = (coefficients(*families[index].pair, gamma, gamma, gamma, None, board.unit)[2] - 1) // 2
+        half = coefficients(*families[index].pair, gamma, gamma, gamma, None, board.unit)[2] // 2
         assert board.origins[index] == half and (state.lines[0].remainder == half).all()  # the rest's
     num, den_h = families[nuclear].pair  # the nuclear row's exact line at its own composed paces
     levels = [board.states[r.family].lines[0].now.astype(object) for r in families[nuclear].reads]

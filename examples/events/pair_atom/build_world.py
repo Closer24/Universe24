@@ -101,7 +101,7 @@ def world(design: dict[str, Any], folder: Path) -> dict[str, Any]:
 
 
 def expectation(design: dict[str, Any]) -> dict[str, Any]:
-    """The blind: the derived pairs by the loader's own function, the inertia ratios, the toy's coupling, radius and binding from the files' integers, and the line's numbers against nature from the derivation script; every float rounded once to the digits printed."""
+    """The blind: the derived pairs by the loader's own function (the centre's pair labelled a derived number and no family of the toy file, which pins the centre at the relative part's pair), the inertia ratios, the toy's coupling, radius and binding from the files' integers, and the line's numbers against nature from the derivation script; every float rounded once to the digits printed."""
     pair, den = tuple(int(v) for v in design["constituents"]["pair"]), int(design["den"])
     relative, centre = composed_pair(pair, pair, den, True), composed_pair(pair, pair, den, False)
     script = two_body()
@@ -111,6 +111,7 @@ def expectation(design: dict[str, Any]) -> dict[str, Any]:
     return {
         "relative_pair": list(relative),
         "centre_pair": list(centre),
+        "centre_pair_status": "a derived number of the folder's derivation (the loader's composed_pair at the declared den, the centre's part of the two constituents) and no family of the toy file, which pins the centre at the relative part's pair, relative_pair above",
         "inertia_ratio_relative": round(m_relative / m_record, 4),
         "inertia_ratio_centre": round(script.inertia(*centre) / m_record, 4),
         "energy_line": int(design["integers"]["quantum_action"]) * relative[0]
