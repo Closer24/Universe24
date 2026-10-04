@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe import credit, growth, node, share
+from event_universe import credit, growth, node, share, world_files
 from event_universe.core import paces
 from event_universe.game_board import GameBoard
 from event_universe.loader.derived import Row, quanta_records
@@ -162,6 +162,30 @@ def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Pat
     path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")
     tool.main(["--input", str(path)])
     return path
+
+
+def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-def]
+    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json with the engine file as e.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the ticks 3 and 7, no node_readers; the world's path."""
+    (folder / "u.json").write_bytes((EVENTS / "zeno_pulsed" / "pulsed_atom.json").read_bytes())
+    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
+    draw = {"seed": 25, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
+    parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
+    ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
+    turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
+    region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
+    record = {"family": "atom", "nodes": region, "parts": parts, "rates": [], "node_reader": draw}
+    record["transitions"] = [*turns, {**probe, "drive": "probe"}]
+    lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
+    world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
+    world.update(universe="u.json", engine="e.json", bodies=[record], messages=lays, node_readers=[])
+    (path := folder / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    return path
+
+
+def click_key(line: dict[str, object]) -> str:
+    """A click line's key as tools/meeting_trials.py counts the kinds: the reader, the part realised and the family taken or given."""
+    return f"{line['node_reader']} {line['realised']} by {line['taken'] or line['given']}"
 
 
 def own_lines(board: GameBoard, index: int) -> list[node.Record]:
