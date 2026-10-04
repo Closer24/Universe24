@@ -213,6 +213,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the hole and the lay at the only Node, the back-in-time gate across the run, and a reader with Nodes alone "
         "at one Node still refused by name",
     ),
+    "tests/test_reading_gate.py::test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit": (
+        100,
+        "the reading gate's dedicated test in its own file (the owner's word of 2026-10-04 relayed by the advisor on "
+        "#1793, the Boss's brief): the gate's table of a copy of the shipped Zeno world re-read row by row, the run, "
+        "the trials over three seeds and the back-in-time pass, MATCH on the numbers the test reads from the same run, "
+        "DIFFERS on a wrong value and on a wrong label, the shipped screen table in the block's place, UNFILLED without "
+        "either, the report's shape and the exit code; the imports stand inside the test so the file is the test alone",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
